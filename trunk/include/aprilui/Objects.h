@@ -28,6 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "Exception.h"
 #include "atres/Atres.h"
 #include "Vector.h"
+#include "AprilUIExport.h"
 
 struct _xmlNode;
 
@@ -37,7 +38,7 @@ namespace AprilUI
 	class Object;
 	class Dataset;
 
-	class EventArgs
+	class AprilUIExport EventArgs
 	{
 	public:
 		EventArgs(Object* o,float x_pos=0,float y_pos=0,char* extra_string=0) { x=x_pos; y=y_pos; object=o; extra=extra_string; }
@@ -46,7 +47,7 @@ namespace AprilUI
 		char* extra;
 	};
 
-	class Event
+	class AprilUIExport Event
 	{
 	public:
 		virtual void execute(void* params)=0;
@@ -60,7 +61,7 @@ namespace AprilUI
 		void execute(void* params);
 	};
 
-	class Object
+	class AprilUIExport Object
 	{
 	protected:
 		Object* mParent;
@@ -152,7 +153,7 @@ namespace AprilUI
 		TOP,BOTTOM
 	};
 	/*******************************************************************************/
-	class DummyObject : public Object
+	class AprilUIExport DummyObject : public Object
 	{
 	public:
 		DummyObject(std::string name,float x,float y,float w,float h);
@@ -173,7 +174,7 @@ namespace AprilUI
 		bool OnMouseUp(int button,float x,float y);
 	};
 	/*******************************************************************************/
-	class StaticImage : public Object
+	class AprilUIExport StaticImage : public Object
 	{
 	protected:
 		Image* mImage;
@@ -191,7 +192,7 @@ namespace AprilUI
 		bool OnMouseUp(int button,float x,float y);
 	};
 	/*******************************************************************************/
-	class RotationImage : public StaticImage
+	class AprilUIExport RotationImage : public StaticImage
 	{
 	protected:
 		float mAngle;
@@ -205,7 +206,7 @@ namespace AprilUI
 		void setProperty(std::string name,std::string value);
 	};
 	/*******************************************************************************/
-	class RotatableImage : public RotationImage
+	class AprilUIExport RotatableImage : public RotationImage
 	{
 	protected:
 		float mDestAngle;
@@ -224,7 +225,7 @@ namespace AprilUI
 		void update(float k);
 	};
 	/*******************************************************************************/
-	class Label : public Object
+	class AprilUIExport Label : public Object
 	{
 	protected:
 		std::string mText;
@@ -260,7 +261,7 @@ namespace AprilUI
 		April::Color getTextColor() { return mTextColor; }
 	};
 	/*******************************************************************************/
-	class TextButton : public Label
+	class AprilUIExport TextButton : public Label
 	{
 	protected:
 		bool mPushed;
@@ -274,7 +275,7 @@ namespace AprilUI
 	};
 
 	/*******************************************************************************/
-	class Slider : public StaticImage
+	class AprilUIExport Slider : public StaticImage
 	{
 		bool mPushed;
 		float mValue;
@@ -290,7 +291,7 @@ namespace AprilUI
 		
 	};
 	/*******************************************************************************/
-	class Button : public StaticImage
+	class AprilUIExport Button : public StaticImage
 	{
 	protected:
 		Image *mPushedImage,*mHoverImage,*mNormalImage;
@@ -314,7 +315,7 @@ namespace AprilUI
 		void setProperty(std::string name,std::string value);
 	};
 	/*******************************************************************************/
-	class ToggleButton : public Button
+	class AprilUIExport ToggleButton : public Button
 	{
 	public:
 		ToggleButton(std::string name,float x,float y,float w,float h);

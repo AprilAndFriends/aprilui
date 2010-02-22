@@ -25,6 +25,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include <string>
 #include "Exception.h"
 #include "TextMap.h"
+#include "AprilUIExport.h"
 
 namespace April
 {
@@ -40,7 +41,7 @@ namespace AprilUI
 	class Image;
 
 
-	class Dataset
+	class AprilUIExport Dataset
 	{
 		std::string mFilename;
 		std::string mFilenamePrefix;
@@ -79,6 +80,7 @@ namespace AprilUI
 		void _destroyImage(Image* img);
 
 		Object* getObject(std::string name);
+		April::Texture* getTexture(std::string name);
 		Image* getImage(std::string name);
 
 		

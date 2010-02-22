@@ -18,20 +18,15 @@ this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 Place - Suite 330, Boston, MA 02111-1307, USA, or go to
 http://www.gnu.org/copyleft/lesser.txt.
 *************************************************************************************/
-#ifndef APRILUI_EXPORT_H
-#define APRILUI_EXPORT_H
+#ifndef APRILUI_H
+#define APRILUI_H
 
-#ifdef _WIN32
-#ifdef APRIL_EXPORTS
-#define AprilUIExport __declspec(dllexport)
-#else
-#define AprilUIExport __declspec(dllimport)
-#endif
-#else
+#include "AprilUIExport.h"
 
-#define AprilUIExport __attribute__ ((visibility("default")))
+namespace AprilUI
+{
+	void AprilUIExport init();
+	void AprilUIExport destroy();
+}
 
 #endif
-
-#endif
-

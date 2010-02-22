@@ -18,30 +18,21 @@ this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 Place - Suite 330, Boston, MA 02111-1307, USA, or go to
 http://www.gnu.org/copyleft/lesser.txt.
 *************************************************************************************/
-#ifndef TEXT_MAP_H
-#define TEXT_MAP_H
-
-#include <string>
-#include <map>
-#include "AprilUIExport.h"
+#include "AprilUI.h"
+#include "atres/Atres.h"
+#include "AtresRenderInterface.h"
 
 namespace AprilUI
 {
-	class AprilUIExport TextMap
+	AtresAprilInterface* atres_render_iface=0;
+	void init()
 	{
-		char* mBuffer;
-		int mBufferPos;
-		std::map<std::string,unsigned int> mTexts;
-		
-	public:
-		TextMap();
-		
-		void load(std::string folder);
-		void destroy();
-		bool exists(std::string name);
-
-		char* operator [] (std::string name);
-		
-	};
+		atres_render_iface=new AtresAprilInterface();
+		Atres::setRenderInterface(atres_render_iface);
+	}
+	
+	void destroy()
+	{
+		if (atres_render_iface) delete atres_render_iface;
+	}
 }
-#endif

@@ -21,12 +21,13 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef IMAGE_H
 #define IMAGE_H
 #include "april/RenderSystem.h"
+#include "AprilUIExport.h"
 
 #include <string>
 
 namespace AprilUI
 {
-	class Image
+	class AprilUIExport Image
 	{
 	protected:
 		April::TexturedVertex mVertices[4];
@@ -53,7 +54,7 @@ namespace AprilUI
 		void setBlendMode(April::BlendMode mode) { mBlendMode=mode; }
 	};
 
-	class ColoredImage : public Image
+	class AprilUIExport ColoredImage : public Image
 	{
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
@@ -66,7 +67,7 @@ namespace AprilUI
 		void setColor(float a,float r,float g,float b);
 	};
 
-	class ColorImage : public Image
+	class AprilUIExport ColorImage : public Image
 	{
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
@@ -76,7 +77,7 @@ namespace AprilUI
 	};
 
 
-	class NullImage : public Image
+	class AprilUIExport NullImage : public Image
 	{
 	public:
 		NullImage();

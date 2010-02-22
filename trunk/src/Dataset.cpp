@@ -263,6 +263,16 @@ namespace AprilUI
 			throw ResourceNotExistsException(name,"Object",this);
 		return o;
 	}
+	
+	April::Texture* Dataset::getTexture(std::string name)
+	{
+		April::Texture* t;
+	
+		t=mTextures[name];
+
+		if (!t) throw ResourceNotExistsException(name,"Texture",this);
+		return t;
+	}
 
 	Image* Dataset::getImage(std::string name)
 	{
