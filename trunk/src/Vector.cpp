@@ -18,34 +18,67 @@ this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 Place - Suite 330, Boston, MA 02111-1307, USA, or go to
 http://www.gnu.org/copyleft/lesser.txt.
 *************************************************************************************/
-#include "april/RenderSystem.h"
+#include <math.h>
+#include "Vector.h"
 
-April::Texture* tex;
-
-bool render(float time_increase)
+namespace AprilUI
 {
-	rendersys->setViewport(800,600);
-	rendersys->setTexture(tex);
-	
-	April::TexturedVertex v[4];
-	
-	v[0].x=0;   v[0].y=0;   v[0].z=0; v[0].u=0; v[0].v=0;
-	v[1].x=800; v[1].y=0;   v[1].z=0; v[1].u=1; v[1].v=0;
-	v[2].x=0;   v[2].y=600; v[2].z=0; v[2].u=0; v[2].v=1;
-	v[3].x=800; v[3].y=600; v[3].z=0; v[3].u=1; v[3].v=1;
-	
-	rendersys->render(April::TriangleStrip,v,4);
-	return true;
-}
+	Vector::Vector(float x_value,float y_value)
+	{
+		x=x_value;
+		y=y_value;
+	}
 
-int main()
-{
-	April::init("OpenGL",800,600,0,"demo_simple");
-	rendersys->registerUpdateCallback(render);
+	Vector Vector::operator +(const Vector& v)
+	{
+		return Vector(x+v.x,y+v.y);
+	}
 
-	tex=rendersys->loadTexture("../media/texture.jpg");
+	Vector Vector::operator -(const Vector& v)
+	{
+		return Vector(x-v.x,y-v.y);
+	}
 
-	rendersys->enterMainLoop();
-	April::destroy();
-	return 0;
+	Vector Vector::operator *(const float f)
+	{
+		return Vector(x*f,y*f);
+	}
+
+	void Vector::operator +=(const Vector& v)
+	{
+		x+=v.x; y+=v.y;
+	}
+
+	void Vector::operator -=(const Vector& v)
+	{
+		x-=v.x; y-=v.y;
+	}
+
+	void Vector::operator *=(const float f)
+	{
+		x*=f; y*=f;
+	}
+
+	float Vector::length()
+	{
+		return sqrt(x*x+y*y);
+	}
+
+	float Vector::squaredLength()
+	{
+		return	x*x+y*y;
+	}
+
+	void Vector::normalise()
+	{
+		float len=length();
+		x/=len; y/=len;
+	}
+
+	Vector Vector::normalised()
+	{
+		Vector v(x,y);
+		v.normalise();
+		return v;
+	}
 }
