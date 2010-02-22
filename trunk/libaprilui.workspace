@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Workspace Name="libaprilui" Database="./libaprilui.tags">
+  <Project Name="libaprilui" Path="libaprilui.project" Active="No"/>
+  <Project Name="demo_simple" Path="demos/demo_simple/demo_simple.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="libaprilui" ConfigName="Debug"/>
+      <Project Name="demo_simple" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="libaprilui" ConfigName="Release"/>
+      <Project Name="demo_simple" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
