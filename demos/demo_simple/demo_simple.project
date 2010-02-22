@@ -5,6 +5,9 @@
   <VirtualDirectory Name="src">
     <File Name="demo_simple.cpp"/>
   </VirtualDirectory>
+  <Dependencies Name="Release">
+    <Project Name="libaprilui"/>
+  </Dependencies>
   <Settings Type="Executable">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -14,6 +17,7 @@
         <LibraryPath Value="../../bin/Debug"/>
         <Library Value="libapril_d"/>
         <Library Value="libaprilui_d"/>
+        <Library Value="libatres_d"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/Debug" Command="../../bin/Debug/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
@@ -46,6 +50,7 @@
         <LibraryPath Value="../../bin/Release"/>
         <Library Value="libapril"/>
         <Library Value="libaprilui"/>
+        <Library Value="libatres"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/Release" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
@@ -80,9 +85,6 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Release">
-    <Project Name="libaprilui"/>
-  </Dependencies>
   <Dependencies Name="Debug">
     <Project Name="libaprilui"/>
   </Dependencies>

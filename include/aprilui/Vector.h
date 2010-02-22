@@ -21,9 +21,11 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include "AprilUIExport.h"
+
 namespace AprilUI
 {
-	class Vector
+	class AprilUIExport Vector
 	{
 	public:
 		float x,y;

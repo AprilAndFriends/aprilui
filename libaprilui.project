@@ -11,10 +11,12 @@
     <File Name="src/Dataset.cpp"/>
     <File Name="src/Exception.cpp"/>
     <File Name="src/Image.cpp"/>
-    <File Name="src/Objects.cpp"/>
     <File Name="src/TextMap.cpp"/>
     <File Name="src/Util.cpp"/>
     <File Name="src/Vector.cpp"/>
+    <File Name="src/Objects.cpp"/>
+    <File Name="src/AprilUI.cpp"/>
+    <File Name="src/AtresRenderInterface.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/aprilui/ApriluiExport.h"/>
@@ -25,6 +27,8 @@
     <File Name="include/aprilui/TextMap.h"/>
     <File Name="include/aprilui/Vector.h"/>
     <File Name="src/Util.h"/>
+    <File Name="include/aprilui/AprilUI.h"/>
+    <File Name="src/AtresRenderInterface.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Dynamic Library">

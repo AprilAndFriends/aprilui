@@ -42,9 +42,9 @@ namespace AprilUI
 			if (vertical)
 			{
 				mVertices[0].u=sx/w;      mVertices[0].v=sy/h;
-				mVertices[1].u=(sx)/w; mVertices[1].v=(sy+sw)/h;
+				mVertices[1].u=(sx)/w;    mVertices[1].v=(sy+sw)/h;
 				mVertices[2].u=(sx-sh)/w; mVertices[2].v=(sy+sw)/h;
-				mVertices[3].u=(sx-sh)/w;      mVertices[3].v=sy/h;
+				mVertices[3].u=(sx-sh)/w; mVertices[3].v=sy/h;
 			}
 			else
 			{
@@ -53,6 +53,7 @@ namespace AprilUI
 				mVertices[2].u=(sx+sw)/w; mVertices[2].v=(sy+sh)/h;
 				mVertices[3].u=sx/w;      mVertices[3].v=(sy+sh)/h;
 			}
+			mVertices[0].z=mVertices[1].z=mVertices[2].z=mVertices[3].z=0;
 		}
 	}
 
