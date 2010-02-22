@@ -7,10 +7,26 @@
   </Plugins>
   <Description/>
   <Dependencies/>
-  <VirtualDirectory Name="src"/>
-  <VirtualDirectory Name="include"/>
+  <VirtualDirectory Name="src">
+    <File Name="src/Dataset.cpp"/>
+    <File Name="src/Exception.cpp"/>
+    <File Name="src/Image.cpp"/>
+    <File Name="src/Objects.cpp"/>
+    <File Name="src/TextMap.cpp"/>
+    <File Name="src/Util.cpp"/>
+    <File Name="src/Vector.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="include/aprilui/ApriluiExport.h"/>
+    <File Name="include/aprilui/Dataset.h"/>
+    <File Name="include/aprilui/Exception.h"/>
+    <File Name="include/aprilui/Image.h"/>
+    <File Name="include/aprilui/Objects.h"/>
+    <File Name="include/aprilui/TextMap.h"/>
+    <File Name="include/aprilui/Vector.h"/>
+    <File Name="src/Util.h"/>
+  </VirtualDirectory>
   <Dependencies Name="Release"/>
-  <Dependencies Name="Debug"/>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -77,21 +93,16 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="./include"/>
-        <IncludePath Value="./include/april"/>
-        <IncludePath Value="./rendersystems/OpenGL"/>
+        <IncludePath Value="./include/aprilui"/>
         <Preprocessor Value="_WIN32"/>
-        <Preprocessor Value="libaprilui_EXPORTS"/>
+        <Preprocessor Value="APRILUI_EXPORTS"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="./lib"/>
-        <Library Value="libOpenGL32"/>
-        <Library Value="libglu32"/>
-        <Library Value="libglut32"/>
-        <Library Value="libDevIL"/>
-        <Library Value="libILU"/>
-        <Library Value="libILUT"/>
+        <Library Value="libxml2"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug"/>
 </CodeLite_Project>
