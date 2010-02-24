@@ -92,6 +92,7 @@ namespace AprilUI
 		~Object();
 
 		void addChild(Object* o);
+		void removeChild(Object* o);
 		Object* getParent() { return mParent; }
 		void removeAllChildren();
 

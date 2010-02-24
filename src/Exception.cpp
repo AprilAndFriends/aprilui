@@ -70,7 +70,14 @@ namespace AprilUI
 														 std::string file,int line) :
 							   _GenericException("","ObjectHasParentException",file,line)
 	{
-	mErrText="Cannot attach object '"+child+"' to object '"+parent+"', object already attached to another parent";
+		mErrText="Cannot attach object '"+child+"' to object '"+parent+"', object already attached to another parent";
+	}
+
+	_ObjectNotChildException::_ObjectNotChildException(const std::string child,std::string parent,
+														 std::string file,int line) :
+							   _GenericException("","ObjectNotChildException",file,line)
+	{
+		mErrText="Cannot detach object '"+child+"' from object '"+parent+"', object is not a child";
 	}
 
 
