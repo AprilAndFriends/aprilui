@@ -20,9 +20,13 @@ http://www.gnu.org/copyleft/lesser.txt.
 *************************************************************************************/
 #include "AtresRenderInterface.h"
 #include "atres/Atres.h"
+#include "april/RenderSystem.h"
+#include <map>
 
 namespace AprilUI
 {
+	extern std::map<int,April::Texture*> g_font_textures;
+	
 	AtresAprilInterface::AtresAprilInterface()
 	{
 		
@@ -35,7 +39,10 @@ namespace AprilUI
 
 	unsigned int AtresAprilInterface::loadResource(std::string filename)
 	{
-		return 0;//loadTexture(filename.c_str());
+		static int index=1;
+		April::Texture* t=rendersys->loadTexture(filename);
+		g_font_textures[index]=t;
+		return index++;
 	}
 
 	void AtresAprilInterface::render(Atres::CharacterRenderOp* rops,int n)

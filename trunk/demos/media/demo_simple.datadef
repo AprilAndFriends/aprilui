@@ -3,6 +3,6 @@
 	<Texture filename="texture.jpg">
 		<Image name="center" x="0" y="0" w="512" h="512"/>
     </Texture>
-	<!--<Object type="TextButton" name="obj01" text="texture/center" x="100" y="100" w="600" h="400"/>-->
+	<Object type="TextButton" name="obj02" Font="arial" text="texture/center" x="100" y="5" w="600" h="400"/>
     <Object type="StaticImage" name="obj01" image="texture/center" x="100" y="100" w="600" h="400"/>
 </DataDefinition>

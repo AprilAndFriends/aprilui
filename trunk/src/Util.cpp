@@ -20,7 +20,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 *************************************************************************************/
 #include <algorithm>
 #include <math.h>
-#include <dirent.h>
+#include "dirent.h"
 #include <map>
 #include "Util.h"
 #include <libxml/xmlmemory.h>

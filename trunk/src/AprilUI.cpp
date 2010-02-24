@@ -21,9 +21,12 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "AprilUI.h"
 #include "atres/Atres.h"
 #include "AtresRenderInterface.h"
+#include "april/RenderSystem.h"
+#include <map>
 
 namespace AprilUI
 {
+	std::map<int,April::Texture*> g_font_textures;
 	AtresAprilInterface* atres_render_iface=0;
 	void init()
 	{
