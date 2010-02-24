@@ -106,6 +106,16 @@ namespace AprilUI
 
 	//---------------------------------------------------------------------------------------------------------
 
+	class _ObjectNotChildException : public _GenericException
+	{
+	public:
+		_ObjectNotChildException(const std::string child,std::string parent,std::string file="",int line=0);
+	};
+
+	#define ObjectNotChildException(child,parent) _ObjectNotChildException(child,parent,__FILE__,__LINE__)
+
+	//---------------------------------------------------------------------------------------------------------
+
 	class _XMLException : public _GenericException
 	{
 	public:

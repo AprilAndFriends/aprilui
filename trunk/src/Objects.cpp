@@ -71,6 +71,13 @@ namespace AprilUI
 		sortChildren();
 		o->setParent(this);
 	}
+	
+	void Object::removeChild(Object* o)
+	{
+		if (o->getParent() != this) throw ObjectNotChildException(o->getName(),getName());
+		mChildren.remove(o);
+		o->setParent(NULL);
+	}
 
 	void Object::removeAllChildren()
 	{
