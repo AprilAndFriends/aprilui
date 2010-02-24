@@ -37,5 +37,10 @@ namespace AprilUI
 	void destroy()
 	{
 		if (atres_render_iface) delete atres_render_iface;
+
+		for (std::map<int,April::Texture*>::iterator it=g_font_textures.begin();it!=g_font_textures.end();it++)
+		{
+			delete it->second;
+		}
 	}
 }
