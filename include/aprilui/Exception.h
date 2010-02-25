@@ -22,13 +22,14 @@ http://www.gnu.org/copyleft/lesser.txt.
 #define EXCEPTION_H
 
 #include <string>
+#include "AprilUIExport.h"
 
 struct _xmlNode;
 namespace AprilUI
 {
 	
 	class Dataset;
-	class _GenericException
+	class AprilUIExport _GenericException
 	{
 	public:
 		std::string mErrText,mFile,mType;
@@ -49,7 +50,7 @@ namespace AprilUI
 	#define GenericException(msg) _GenericException(msg,"GenericException",__FILE__,__LINE__)
 
 
-	#define exception_cls(name) class name : public _GenericException \
+	#define exception_cls(name) class AprilUIExport name : public _GenericException \
 	{ \
 	public: \
 		name(const std::string& errorText,std::string type="",std::string file="",int line=0) : \
@@ -96,7 +97,7 @@ namespace AprilUI
 
 	//---------------------------------------------------------------------------------------------------------
 
-	class _ObjectHasParentException : public _GenericException
+	class AprilUIExport _ObjectHasParentException : public _GenericException
 	{
 	public:
 		_ObjectHasParentException(const std::string child,std::string parent,std::string file="",int line=0);
@@ -106,7 +107,7 @@ namespace AprilUI
 
 	//---------------------------------------------------------------------------------------------------------
 
-	class _ObjectNotChildException : public _GenericException
+	class AprilUIExport _ObjectNotChildException : public _GenericException
 	{
 	public:
 		_ObjectNotChildException(const std::string child,std::string parent,std::string file="",int line=0);
@@ -116,7 +117,7 @@ namespace AprilUI
 
 	//---------------------------------------------------------------------------------------------------------
 
-	class _XMLException : public _GenericException
+	class AprilUIExport _XMLException : public _GenericException
 	{
 	public:
 		_XMLException(const std::string err_msg,_xmlNode* node,std::string type,std::string file,int line);

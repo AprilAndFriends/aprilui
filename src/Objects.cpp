@@ -387,7 +387,7 @@ namespace AprilUI
 		   mTextColor(1,1,1)
 	{
 		mHorzFormatting=Atres::LEFT;
-		mVertFormatting=TOP;
+		mVertFormatting=VERT_TOP;
 		mFontEffect=Atres::NONE;
 		mText="Label: "+name;
 	}
@@ -398,7 +398,10 @@ namespace AprilUI
 		Atres::Font* font=Atres::getFont(mFontName);
 		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
 		
-		if (mVertFormatting == BOTTOM) offset_y+=mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
+		if      (mVertFormatting == VERT_BOTTOM)
+			offset_y+=mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
+		else if (mVertFormatting == VERT_CENTER)
+			offset_y+=(mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText))/2;
 		
 		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth*0.45f;
 		if (!isEnabled()) alpha /= 2;
@@ -426,8 +429,9 @@ namespace AprilUI
 		}
 		if (name == "vert_formatting")
 		{
-			if (value == "top")    setVertFormatting(TOP);
-			if (value == "bottom") setVertFormatting(BOTTOM);
+			if (value == "top")    setVertFormatting(VERT_TOP);
+			if (value == "center") setVertFormatting(VERT_CENTER);
+			if (value == "bottom") setVertFormatting(VERT_BOTTOM);
 		}
 		if (name == "color") mTextColor.setHex(value);
 		if (name == "effect")
@@ -441,8 +445,8 @@ namespace AprilUI
 	TextButton::TextButton(std::string name,float x,float y,float w,float h) :
 				Label(name,x,y,w,h)
 	{
-		mHorzFormatting=Atres::LEFT;
-		mVertFormatting=TOP;
+		mHorzFormatting=Atres::CENTER;
+		mVertFormatting=VERT_CENTER;
 		mFontEffect=Atres::NONE;
 		mText="TextButton: "+name;
 		mTypeName="TextButton";
@@ -454,7 +458,7 @@ namespace AprilUI
 		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7+0.3*mPushed);
 
 		float h=Atres::getWrappedTextHeight(mFontName,mWidth,mText,mHorzFormatting);
-		Label::OnDraw(offset_x+2,offset_y+(mHeight-h)/2);
+		Label::OnDraw(offset_x,offset_y);
 	}
 
 	bool TextButton::OnMouseDown(int button,float x,float y)
@@ -591,7 +595,7 @@ namespace AprilUI
 	{
 		_setTypeName("TextImageButton");
 		mHorzFormatting=Atres::LEFT;
-		mVertFormatting=TOP;
+		mVertFormatting=VERT_TOP;
 		mFontEffect=Atres::NONE;
 		mText="TextImageButton: "+name;
 	}
@@ -603,7 +607,11 @@ namespace AprilUI
 		Atres::Font* font=Atres::getFont(mFontName);
 		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
 		
-		if (mVertFormatting == BOTTOM) offset_y+=mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
+		if      (mVertFormatting == VERT_BOTTOM)
+			offset_y+=mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
+		else if (mVertFormatting == VERT_CENTER)
+			offset_y+=(mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText))/2;
+		
 		
 		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth*0.45f;
 		if (!isEnabled()) alpha /= 2;
@@ -631,8 +639,9 @@ namespace AprilUI
 		}
 		if (name == "vert_formatting")
 		{
-			if (value == "top")    setVertFormatting(TOP);
-			if (value == "bottom") setVertFormatting(BOTTOM);
+			if (value == "top")    setVertFormatting(VERT_TOP);
+			if (value == "center") setVertFormatting(VERT_CENTER);
+			if (value == "bottom") setVertFormatting(VERT_BOTTOM);
 		}
 		if (name == "color") mTextColor.setHex(value);
 		if (name == "effect")

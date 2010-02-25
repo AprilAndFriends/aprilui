@@ -153,7 +153,7 @@ namespace AprilUI
 
 	enum VertFormatting
 	{
-		TOP,BOTTOM
+		VERT_TOP,VERT_CENTER,VERT_BOTTOM
 	};
 	/*******************************************************************************/
 	class AprilUIExport DummyObject : public Object
