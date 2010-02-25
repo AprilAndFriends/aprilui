@@ -279,24 +279,24 @@ namespace AprilUI
 		return false;
 	}
 	/********************************************************************************************************/
-	StaticImage::StaticImage(std::string name,float x,float y,float w,float h) :
-				 Object("StaticImage",name,x,y,w,h)
+	ImageBox::ImageBox(std::string name,float x,float y,float w,float h) :
+				 Object("ImageBox",name,x,y,w,h)
 	{
 		mImage=0;
 	}
 
-	void StaticImage::setImage(Image* image)
+	void ImageBox::setImage(Image* image)
 	{
 		mImage=image;
 		if (mWidth == -1) mWidth=image->getSourceW();
 		if (mHeight == -1) mHeight=image->getSourceH();
 	}
-	void StaticImage::setImageByName(std::string image)
+	void ImageBox::setImageByName(std::string image)
 	{
 		setImage(mDataPtr->getImage(image));
 	}
 
-	void StaticImage::OnDraw(float offset_x,float offset_y)
+	void ImageBox::OnDraw(float offset_x,float offset_y)
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha(this);
@@ -305,13 +305,13 @@ namespace AprilUI
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
-	void StaticImage::setProperty(std::string name,std::string value)
+	void ImageBox::setProperty(std::string name,std::string value)
 	{
 		Object::setProperty(name,value);
 		if (name == "image") setImage(mDataPtr->getImage(value));
 	}
 
-	bool StaticImage::OnMouseDown(int button,float x,float y)
+	bool ImageBox::OnMouseDown(int button,float x,float y)
 	{
 		if (Object::OnMouseDown(button,x,y)) return true;
 		
@@ -323,7 +323,7 @@ namespace AprilUI
 		return false;
 	}
 
-	bool StaticImage::OnMouseUp(int button,float x,float y)
+	bool ImageBox::OnMouseUp(int button,float x,float y)
 	{
 		if (Object::OnMouseUp(button,x,y)) return true;
 		if (isPointInside(x,y))
@@ -335,24 +335,24 @@ namespace AprilUI
 	}
 
 	/********************************************************************************************************/
-	RotationImage::RotationImage(std::string name,float x,float y,float w,float h) : StaticImage(name,x,y,w,h)
+	RotationImageBox::RotationImageBox(std::string name,float x,float y,float w,float h) : ImageBox(name,x,y,w,h)
 	{
 		mAngle=0;
 	}
 
-	void RotationImage::setProperty(std::string name,std::string value)
+	void RotationImageBox::setProperty(std::string name,std::string value)
 	{
-		StaticImage::setProperty(name,value);
+		ImageBox::setProperty(name,value);
 
 		if (name == "angle") mAngle=str_to_float(value);
 	}
 
-	void RotationImage::OnDraw(float offset_x,float offset_y)
+	void RotationImageBox::OnDraw(float offset_x,float offset_y)
 	{
 		mImage->draw(mX+offset_x+mWidth/2,mY+offset_y+mHeight/2,mWidth,mHeight,mAngle,1,1,1,mAlpha);
 	}
 
-	bool RotationImage::angleEquals(float angle)
+	bool RotationImageBox::angleEquals(float angle)
 	{
 		float c=2*3.14159265f/360.0f;
 		float s1=sin(angle*c),s2=sin(mAngle*c);
@@ -360,13 +360,13 @@ namespace AprilUI
 		return fabs(s1-s2) < 0.01f && fabs(c1-c2) < 0.01f;
 	}
 	/********************************************************************************************************/
-	RotatableImage::RotatableImage(std::string name,float x,float y,float w,float h) : RotationImage(name,x,y,w,h)
+	RotatableImageBox::RotatableImageBox(std::string name,float x,float y,float w,float h) : RotationImageBox(name,x,y,w,h)
 	{
 		mDestAngle=0;
 		mRotationSpeed=90;
 	}
 
-	void RotatableImage::update(float k)
+	void RotatableImageBox::update(float k)
 	{
 		Object::update(k);
 		if (fabs(mDestAngle-mAngle) > 0.01f)
@@ -377,7 +377,7 @@ namespace AprilUI
 		}
 	}
 
-	bool RotatableImage::isRotating()
+	bool RotatableImageBox::isRotating()
 	{
 		return (fabs(mAngle-mDestAngle) > 0.01f);
 	}
@@ -485,7 +485,7 @@ namespace AprilUI
 	}
 	/********************************************************************************************************/
 	ImageButton::ImageButton(std::string name,float x,float y,float w,float h) :
-			StaticImage(name,x,y,w,h)
+			ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("ImageButton");
 		mNormalImage=mPushedImage=mHoverImage=mDisabledImage=0;
@@ -498,7 +498,7 @@ namespace AprilUI
 			if (!mDisabledImage) mDisabledImage=mDataPtr->getImage("null");
 			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,1);
 		}
-		else if (mImage) StaticImage::OnDraw(offset_x,offset_y);
+		else if (mImage) ImageBox::OnDraw(offset_x,offset_y);
 		else
 		{
 			if (!mNormalImage) mNormalImage=mDataPtr->getImage("null");
@@ -538,7 +538,7 @@ namespace AprilUI
 
 	void ImageButton::setImage(Image* image)
 	{
-		StaticImage::setImage(image);
+		ImageBox::setImage(image);
 		mNormalImage=mImage;
 	}
 
@@ -644,7 +644,7 @@ namespace AprilUI
 	}
 	/********************************************************************************************************/
 	Slider::Slider(std::string name,float x,float y,float w,float h) :
-			StaticImage(name,x,y,w,h)
+			ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("Slider");
 		mValue=0;
@@ -706,7 +706,7 @@ namespace AprilUI
 
 	void Slider::setProperty(std::string name,std::string value)
 	{
-		StaticImage::setProperty(name,value);
+		ImageBox::setProperty(name,value);
 	}
 	/********************************************************************************************************/
 	ToggleButton::ToggleButton(std::string name,float x,float y,float w,float h) :

@@ -90,7 +90,7 @@ namespace AprilUI
 		void _moveChildToBack(Object* o);
 	public:
 		Object(std::string type_name,std::string name,int x,int y,int w,int h);
-		~Object();
+		virtual ~Object();
 
 		void addChild(Object* o);
 		void removeChild(Object* o);
@@ -177,14 +177,14 @@ namespace AprilUI
 		bool OnMouseUp(int button,float x,float y);
 	};
 	/*******************************************************************************/
-	class AprilUIExport StaticImage : public Object
+	class AprilUIExport ImageBox : public Object
 	{
 	protected:
 		Image* mImage;
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		StaticImage(std::string name,float x,float y,float w,float h);
+		ImageBox(std::string name,float x,float y,float w,float h);
 		
 		virtual Image* getImage() { return mImage; };
 		virtual void setImage(Image* image);
@@ -195,13 +195,13 @@ namespace AprilUI
 		bool OnMouseUp(int button,float x,float y);
 	};
 	/*******************************************************************************/
-	class AprilUIExport RotationImage : public StaticImage
+	class AprilUIExport RotationImageBox : public ImageBox
 	{
 	protected:
 		float mAngle;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		RotationImage(std::string name,float x,float y,float w,float h);
+		RotationImageBox(std::string name,float x,float y,float w,float h);
 
 		virtual void setAngle(float angle) { mAngle=angle; }
 		float getAngle() { return mAngle; }
@@ -209,13 +209,13 @@ namespace AprilUI
 		void setProperty(std::string name,std::string value);
 	};
 	/*******************************************************************************/
-	class AprilUIExport RotatableImage : public RotationImage
+	class AprilUIExport RotatableImageBox : public RotationImageBox
 	{
 	protected:
 		float mDestAngle;
 		float mRotationSpeed;
 	public:
-		RotatableImage(std::string name,float x,float y,float w,float h);
+		RotatableImageBox(std::string name,float x,float y,float w,float h);
 		
 		void setRotationSpeed(float speed) { mRotationSpeed=speed; }
 		float getRotationSpeed() { return mRotationSpeed; }
@@ -279,7 +279,7 @@ namespace AprilUI
 	};
 
 	/*******************************************************************************/
-	class AprilUIExport Slider : public StaticImage
+	class AprilUIExport Slider : public ImageBox
 	{
 		bool mPushed;
 		float mValue;
@@ -295,7 +295,7 @@ namespace AprilUI
 		
 	};
 	/*******************************************************************************/
-	class AprilUIExport ImageButton : public StaticImage
+	class AprilUIExport ImageButton : public ImageBox
 	{
 	protected:
 		Image *mPushedImage,*mHoverImage,*mNormalImage,*mDisabledImage;
