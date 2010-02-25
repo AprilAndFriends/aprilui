@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Workspace Name="libaprilui" Database="./libaprilui.tags">
   <Project Name="libaprilui" Path="libaprilui.project" Active="No"/>
-  <Project Name="demo_simple" Path="demos/demo_simple/demo_simple.project" Active="No"/>
-  <Project Name="demo_zorder" Path="demos/demo_zorder/demo_zorder.project" Active="Yes"/>
+  <Project Name="demo_simple" Path="demos/demo_simple/demo_simple.project" Active="Yes"/>
+  <Project Name="demo_zorder" Path="demos/demo_zorder/demo_zorder.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="libaprilui" ConfigName="Debug"/>
