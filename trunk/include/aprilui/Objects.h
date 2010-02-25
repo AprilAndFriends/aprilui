@@ -295,7 +295,7 @@ namespace AprilUI
 		
 	};
 	/*******************************************************************************/
-	class AprilUIExport Button : public StaticImage
+	class AprilUIExport ImageButton : public StaticImage
 	{
 	protected:
 		Image *mPushedImage,*mHoverImage,*mNormalImage,*mDisabledImage;
@@ -304,7 +304,7 @@ namespace AprilUI
 		void OnUpdate(float k);
 	public:
 		
-		Button(std::string name,float x,float y,float w,float h);
+		ImageButton(std::string name,float x,float y,float w,float h);
 		Image* getPushedImage() { return mPushedImage; }
 		Image* getHoverImage() { return mHoverImage; }
 		Image* getDisabledImage() { return mDisabledImage; }
@@ -324,7 +324,43 @@ namespace AprilUI
 		void setProperty(std::string name,std::string value);
 	};
 	/*******************************************************************************/
-	class AprilUIExport ToggleButton : public Button
+	class AprilUIExport TextImageButton : public ImageButton
+	{
+	protected:
+		std::string mText;
+		std::string mFontName;
+		Atres::Alignment mHorzFormatting;
+		VertFormatting mVertFormatting;
+		Atres::Effect mFontEffect;
+		
+		April::Color mTextColor;
+
+		void OnDraw(float offset_x,float offset_y);
+	public:
+		TextImageButton(std::string name,float x,float y,float w,float h);
+		
+		std::string getText() { return mText; }
+		void setText(std::string text) { mText=text; }
+		
+		std::string getFont() { return mFontName; }
+		void setFont(std::string font) { mFontName=font; }
+		
+		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
+		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
+		
+		void setFontEffect(Atres::Effect f) { mFontEffect=f; }
+		Atres::Effect getFontEffect() { return mFontEffect; }
+		
+		void setVertFormatting(VertFormatting f) { mVertFormatting=f; }
+		VertFormatting getVertFormatting() { return mVertFormatting; }
+		
+		void setProperty(std::string name,std::string value);
+
+		void setTextColor(April::Color color) { mTextColor=color; }
+		April::Color getTextColor() { return mTextColor; }
+	};
+	/*******************************************************************************/
+	class AprilUIExport ToggleButton : public ImageButton
 	{
 	public:
 		ToggleButton(std::string name,float x,float y,float w,float h);
