@@ -4,12 +4,12 @@
 		<Image name="center" x="0" y="0" w="512" h="512"/>
     </Texture>
 	<Object type="DummyObject" name="root" x="0" y="0" w="800" h="600">
-		<Object type="StaticImage" name="obj01" image="texture/center" x="100" y="100" w="100" h="100"/>
-		<Object type="StaticImage" name="obj02" image="texture/center" x="150" y="150" w="100" h="100"/>
-		<Object type="StaticImage" name="obj03" image="texture/center" x="200" y="200" w="100" h="100"/>
-		<Object type="StaticImage" name="obj04" image="texture/center" x="250" y="250" w="100" h="100"/>
-		<Object type="StaticImage" name="obj05" image="texture/center" x="300" y="300" w="100" h="100"/>
-		<Object type="StaticImage" name="obj06" image="texture/center" x="350" y="350" w="100" h="100"/>
-		<Object type="StaticImage" name="obj07" image="texture/center" x="400" y="400" w="100" h="100"/>
+		<Object type="StaticImage" name="obj01" image="texture/center" zorder="0" x="100" y="100" w="100" h="100"/>
+		<Object type="StaticImage" name="obj02" image="texture/center" zorder="1" x="150" y="150" w="100" h="100"/>
+		<Object type="StaticImage" name="obj03" image="texture/center" zorder="2" x="200" y="200" w="100" h="100"/>
+		<Object type="StaticImage" name="obj04" image="texture/center" zorder="50" x="250" y="250" w="100" h="100"/>
+		<Object type="StaticImage" name="obj05" image="texture/center" zorder="5" x="300" y="300" w="100" h="100"/>
+		<Object type="StaticImage" name="obj06" image="texture/center" zorder="6" x="350" y="350" w="100" h="100"/>
+		<Object type="StaticImage" name="obj07" image="texture/center" zorder="7" x="400" y="400" w="100" h="100"/>
 	</Object>
 </DataDefinition>

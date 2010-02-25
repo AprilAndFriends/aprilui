@@ -45,7 +45,7 @@ namespace AprilUI
 		mTypeName=type_name;
 		mName=name;
 		mParent=0;
-		mZOrder=50;
+		mZOrder=0;
 		mX=x; mY=y; mWidth=w; mHeight=h;
 		mVisible=1;
 		mEnabled=1;
@@ -199,9 +199,10 @@ namespace AprilUI
 
 	void Object::setProperty(std::string name,std::string value)
 	{
-		if (name == "visible") setVisible(bool(str_to_int(value)));
-		if (name == "enabled") setEnabled(bool(str_to_int(value)));
-		if (name == "alpha") setAlpha(str_to_float(value));
+		if      (name == "visible") setVisible(bool(str_to_int(value)));
+		else if (name == "zorder")  setZOrder(str_to_int(value));
+		else if (name == "enabled") setEnabled(bool(str_to_int(value)));
+		else if (name == "alpha")   setAlpha(str_to_float(value));
 	}
 
 	Object* Object::getChildUnderPoint(int x,int y)
