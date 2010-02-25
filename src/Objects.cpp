@@ -489,7 +489,7 @@ namespace AprilUI
 			StaticImage(name,x,y,w,h)
 	{
 		_setTypeName("ImageButton");
-		mPushedImage=mHoverImage=mDisabledImage=0;
+		mNormalImage=mPushedImage=mHoverImage=mDisabledImage=0;
 	}
 
 	void ImageButton::OnDraw(float offset_x,float offset_y)
