@@ -390,7 +390,6 @@ namespace AprilUI
 		mVertFormatting=TOP;
 		mFontEffect=Atres::NONE;
 		mText="Label: "+name;
-		
 	}
 
 	void Label::OnDraw(float offset_x,float offset_y)
@@ -613,12 +612,17 @@ namespace AprilUI
 			mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
 	}
 
+	void TextImageButton::setTextKey(std::string key)
+	{
+		setText(mDataPtr->texts[key]);
+	}
+
 	void TextImageButton::setProperty(std::string name,std::string value)
 	{
 		ImageButton::setProperty(name,value);
 		if (name == "font") setFont(value);
 		if (name == "text") setText(value);
-		if (name == "textkey") setText(mDataPtr->texts[value]);
+		if (name == "textkey") setTextKey(value);
 		if (name == "horz_formatting")
 		{
 			if (value == "left")  setHorzFormatting(Atres::LEFT);
