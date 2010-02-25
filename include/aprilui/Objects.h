@@ -72,6 +72,7 @@ namespace AprilUI
 		
 		std::map<std::string,Event*> mEvents;
 		bool mVisible;
+		bool mEnabled;
 		float mAlpha;
 		
 		Dataset* mDataPtr;
@@ -120,6 +121,8 @@ namespace AprilUI
 
 		void setVisible(bool visible) { mVisible=visible; }
 		bool isVisible() { return mVisible && mAlpha > 0; }
+		void setEnabled(bool enabled) { mEnabled=enabled; }
+		bool isEnabled() { return mEnabled; }
 		bool getVisibilityFlag() { return mVisible; }
 		
 		void setAlpha(float alpha) { mAlpha=alpha; }
@@ -135,7 +138,7 @@ namespace AprilUI
 		// if a childs event returns true, event is not propagated to parents
 		virtual bool OnMouseDown(int button,float x,float y);
 		virtual bool OnMouseUp(int button,float x,float y);
-		virtual void OnMouseMove(int button,float x,float y);
+		virtual void OnMouseMove(float x,float y);
 		
 		
 		virtual void update(float k);
@@ -284,7 +287,7 @@ namespace AprilUI
 		Slider(std::string name,float x,float y,float w,float h);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
-		void OnMouseMove(int button,float x,float y);
+		void OnMouseMove(float x,float y);
 		void OnDraw(float offset_x,float offset_y);
 		void setProperty(std::string name,std::string value);
 		float getValue() { return mValue; }
@@ -295,7 +298,7 @@ namespace AprilUI
 	class AprilUIExport Button : public StaticImage
 	{
 	protected:
-		Image *mPushedImage,*mHoverImage,*mNormalImage;
+		Image *mPushedImage,*mHoverImage,*mNormalImage,*mDisabledImage;
 		bool mPushed;
 		
 		void OnUpdate(float k);
@@ -304,8 +307,13 @@ namespace AprilUI
 		Button(std::string name,float x,float y,float w,float h);
 		Image* getPushedImage() { return mPushedImage; }
 		Image* getHoverImage() { return mHoverImage; }
+		Image* getDisabledImage() { return mDisabledImage; }
 		void setPushedImage(Image* image);
 		void setHoverImage(Image* image);
+		void setDisabledImage(Image* image);
+		void setPushedImageByName(std::string image);
+		void setHoverImageByName(std::string image);
+		void setDisabledImageByName(std::string image);
 		void OnDraw(float offset_x,float offset_y);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* image);
