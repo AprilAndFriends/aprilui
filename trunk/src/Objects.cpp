@@ -618,7 +618,7 @@ namespace AprilUI
 		ImageButton::setProperty(name,value);
 		if (name == "font") setFont(value);
 		if (name == "text") setText(value);
-		if (name == "loc") setText(mDataPtr->texts[value]);
+		if (name == "textkey") setText(mDataPtr->texts[value]);
 		if (name == "horz_formatting")
 		{
 			if (value == "left")  setHorzFormatting(Atres::LEFT);
