@@ -60,9 +60,15 @@ namespace AprilUI
 		}
 	}
 
+	bool _objectSortCallback(Object* lhs, Object* rhs)
+	{
+		return lhs->getZOrder() < rhs->getZOrder();
+	}
+
+
 	void Object::sortChildren()
 	{
-
+		mChildren.sort(_objectSortCallback);
 	}
 
 	void Object::addChild(Object* o)
@@ -91,7 +97,8 @@ namespace AprilUI
 	void Object::setZOrder(int zorder)
 	{
 		mZOrder=zorder;
-		sortChildren();
+		if (mParent)
+			mParent->sortChildren();
 	}
 
 	float Object::getDerivedAlpha(Object* o)
@@ -479,9 +486,9 @@ namespace AprilUI
 
 	void Button::OnDraw(float offset_x,float offset_y)
 	{
-		if (!isEnabled())   mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,1);
-		else if (mImage)    StaticImage::OnDraw(offset_x,offset_y);
-		else                mNormalImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,1);
+		if (!mEnabled)   mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,1);
+		else if (mImage) StaticImage::OnDraw(offset_x,offset_y);
+		else             mNormalImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,1);
 	}
 
 	void Button::setPushedImage(Image* image)

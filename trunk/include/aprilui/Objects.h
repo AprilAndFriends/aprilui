@@ -104,8 +104,7 @@ namespace AprilUI
 		
 		virtual bool isPointInside(float x,float y);
 		void registerEvent(std::string event_name,void (*callback)(EventArgs*));
-		
-		
+
 		Vector getPosition() { return Vector(mX,mY); };
 		float getXPosition() { return mX; }
 		float getYPosition() { return mY; }
