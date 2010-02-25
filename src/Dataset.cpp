@@ -176,7 +176,7 @@ namespace AprilUI
 		else  parse(TextButton);
 		else  parse(RotationImage);
 		else  parse(RotatableImage);
-		else throw XMLUnknowClassException(class_name,node);
+		else throw XMLUnknownClassException(class_name,node);
 		o->_setDataset(this);
 		
 		for (xmlAttr* attr=node->properties;attr != 0; attr=attr->next)
