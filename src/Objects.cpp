@@ -485,14 +485,14 @@ namespace AprilUI
 		return false;
 	}
 	/********************************************************************************************************/
-	Button::Button(std::string name,float x,float y,float w,float h) :
+	ImageButton::ImageButton(std::string name,float x,float y,float w,float h) :
 			StaticImage(name,x,y,w,h)
 	{
-		_setTypeName("Button");
+		_setTypeName("ImageButton");
 		mPushedImage=mHoverImage=mDisabledImage=0;
 	}
 
-	void Button::OnDraw(float offset_x,float offset_y)
+	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
 		if (!mEnabled)
 		{
@@ -507,48 +507,48 @@ namespace AprilUI
 		}
 	}
 
-	void Button::setPushedImage(Image* image)
+	void ImageButton::setPushedImage(Image* image)
 	{
 		mPushedImage=image;
 	}
 
-	void Button::setHoverImage(Image* image)
+	void ImageButton::setHoverImage(Image* image)
 	{
 		mHoverImage=image;
 	}
 
-	void Button::setDisabledImage(Image* image)
+	void ImageButton::setDisabledImage(Image* image)
 	{
 		mDisabledImage=image;
 	}
 
-	void Button::setPushedImageByName(std::string image)
+	void ImageButton::setPushedImageByName(std::string image)
 	{
 		setPushedImage(mDataPtr->getImage(image));
 	}
 
-	void Button::setHoverImageByName(std::string image)
+	void ImageButton::setHoverImageByName(std::string image)
 	{
 		setHoverImage(mDataPtr->getImage(image));
 	}
 
-	void Button::setDisabledImageByName(std::string image)
+	void ImageButton::setDisabledImageByName(std::string image)
 	{
 		setDisabledImage(mDataPtr->getImage(image));
 	}
 
-	void Button::setImage(Image* image)
+	void ImageButton::setImage(Image* image)
 	{
 		StaticImage::setImage(image);
 		mNormalImage=mImage;
 	}
 
-	void Button::OnUpdate(float k)
+	void ImageButton::OnUpdate(float k)
 	{
 		
 	}
 
-	bool Button::OnMouseDown(int button,float x,float y)
+	bool ImageButton::OnMouseDown(int button,float x,float y)
 	{
 		if (Object::OnMouseDown(button,x,y)) return true;
 		
@@ -562,7 +562,7 @@ namespace AprilUI
 		return false;
 	}
 
-	bool Button::OnMouseUp(int button,float x,float y)
+	bool ImageButton::OnMouseUp(int button,float x,float y)
 	{
 		if (Object::OnMouseUp(button,x,y)) return true;
 		mImage=mNormalImage;
@@ -577,13 +577,66 @@ namespace AprilUI
 		return false;
 	}
 
-	void Button::setProperty(std::string name,std::string value)
+	void ImageButton::setProperty(std::string name,std::string value)
 	{
 		Object::setProperty(name,value);
 		if (name == "image")			setImage(mDataPtr->getImage(value));
 		if (name == "pushed_image")     setPushedImage(mDataPtr->getImage(value));
 		if (name == "hover_image")      setHoverImage(mDataPtr->getImage(value));
 		if (name == "disabled_image")   setDisabledImage(mDataPtr->getImage(value));
+	}
+	/********************************************************************************************************/
+	TextImageButton::TextImageButton(std::string name,float x,float y,float w,float h) :
+			ImageButton(name,x,y,w,h),
+			mTextColor(1,1,1)
+	{
+		_setTypeName("TextImageButton");
+		mHorzFormatting=Atres::LEFT;
+		mVertFormatting=TOP;
+		mFontEffect=Atres::NONE;
+		mText="TextImageButton: "+name;
+	}
+
+	void TextImageButton::OnDraw(float offset_x,float offset_y)
+	{
+		ImageButton::OnDraw(offset_x,offset_y);
+		float alpha=getDerivedAlpha(this);
+		Atres::Font* font=Atres::getFont(mFontName);
+		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
+		
+		if (mVertFormatting == BOTTOM) offset_y+=mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
+		
+		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth*0.45f;
+		if (!isEnabled()) alpha /= 2;
+		Atres::drawWrappedText(font->getName(),mX+offset_x,mY+offset_y,mWidth,mText,
+			mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
+			mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+	}
+
+	void TextImageButton::setProperty(std::string name,std::string value)
+	{
+		ImageButton::setProperty(name,value);
+		if (name == "font") setFont(value);
+		if (name == "text") setText(value);
+		if (name == "loc") setText(mDataPtr->texts[value]);
+		if (name == "horz_formatting")
+		{
+			if (value == "left")  setHorzFormatting(Atres::LEFT);
+			else if (value == "right") setHorzFormatting(Atres::RIGHT);
+			else if (value == "center") setHorzFormatting(Atres::CENTER);
+		}
+		if (name == "vert_formatting")
+		{
+			if (value == "top")    setVertFormatting(TOP);
+			if (value == "bottom") setVertFormatting(BOTTOM);
+		}
+		if (name == "color") mTextColor.setHex(value);
+		if (name == "effect")
+		{
+			if (value == "none")   setFontEffect(Atres::NONE);
+			if (value == "shadow") setFontEffect(Atres::SHADOW);
+			if (value == "border") setFontEffect(Atres::BORDER);
+		}
 	}
 	/********************************************************************************************************/
 	Slider::Slider(std::string name,float x,float y,float w,float h) :
@@ -645,7 +698,6 @@ namespace AprilUI
 		rendersys->drawColoredQuad(x+mHeight/2+2,y+2+mHeight*0.375f,mValue*(mWidth-mHeight-4),mHeight/4-4,0,0,0,alpha);
 		
 		mImage->draw(x+mHeight/4+mValue*(mWidth-mHeight),y+mHeight/4,mHeight/2,mHeight/2,1,1,1,alpha);
-		
 	}
 
 	void Slider::setProperty(std::string name,std::string value)
@@ -654,7 +706,7 @@ namespace AprilUI
 	}
 	/********************************************************************************************************/
 	ToggleButton::ToggleButton(std::string name,float x,float y,float w,float h) :
-				  Button(name,x,y,w,h)
+				  ImageButton(name,x,y,w,h)
 	{
 		_setTypeName("ToggleButton");
 		mPushed=0;
