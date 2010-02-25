@@ -282,6 +282,7 @@ namespace AprilUI
 	StaticImage::StaticImage(std::string name,float x,float y,float w,float h) :
 				 Object("StaticImage",name,x,y,w,h)
 	{
+		mImage=0;
 	}
 
 	void StaticImage::setImage(Image* image)
@@ -297,6 +298,7 @@ namespace AprilUI
 
 	void StaticImage::OnDraw(float offset_x,float offset_y)
 	{
+		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha(this);
 		if (alpha < 1) mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		else           mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight);
@@ -406,12 +408,17 @@ namespace AprilUI
 			mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
 	}
 
+	void Label::setTextKey(std::string key)
+	{
+		setText(mDataPtr->texts[key]);
+	}
+
 	void Label::setProperty(std::string name,std::string value)
 	{
 		Object::setProperty(name,value);
 		if (name == "font") setFont(value);
 		if (name == "text") setText(value);
-		if (name == "loc") setText(mDataPtr->texts[value]);
+		if (name == "textkey") setTextKey(value);
 		if (name == "horz_formatting")
 		{
 			if (value == "left")  setHorzFormatting(Atres::LEFT);
@@ -482,14 +489,22 @@ namespace AprilUI
 			StaticImage(name,x,y,w,h)
 	{
 		_setTypeName("Button");
-		mPushedImage=mHoverImage=0;
+		mPushedImage=mHoverImage=mDisabledImage=0;
 	}
 
 	void Button::OnDraw(float offset_x,float offset_y)
 	{
-		if (!mEnabled)   mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,1);
+		if (!mEnabled)
+		{
+			if (!mDisabledImage) mDisabledImage=mDataPtr->getImage("null");
+			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,1);
+		}
 		else if (mImage) StaticImage::OnDraw(offset_x,offset_y);
-		else             mNormalImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,1);
+		else
+		{
+			if (!mNormalImage) mNormalImage=mDataPtr->getImage("null");
+			mNormalImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,1);
+		}
 	}
 
 	void Button::setPushedImage(Image* image)

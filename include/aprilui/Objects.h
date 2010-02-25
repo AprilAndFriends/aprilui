@@ -245,6 +245,7 @@ namespace AprilUI
 		
 		std::string getText() { return mText; }
 		void setText(std::string text) { mText=text; }
+		void setTextKey(std::string key);
 		
 		std::string getFont() { return mFontName; }
 		void setFont(std::string font) { mFontName=font; }
