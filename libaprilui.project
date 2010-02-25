@@ -31,12 +31,15 @@
     <File Name="src/AtresRenderInterface.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <IncludePath Value="."/>
       </Compiler>
       <Linker Options="" Required="yes">
+        <LibraryPath Value="./bin/Debug"/>
+        <LibraryPath Value="./lib"/>
         <Library Value="libapril_d"/>
         <Library Value="libatres_d"/>
       </Linker>
@@ -68,6 +71,8 @@
         <IncludePath Value="."/>
       </Compiler>
       <Linker Options="-O2" Required="yes">
+        <LibraryPath Value="./bin/Release"/>
+        <LibraryPath Value="./lib"/>
         <Library Value="libapril"/>
         <Library Value="libatres"/>
       </Linker>
@@ -102,11 +107,9 @@
         <Preprocessor Value="APRILUI_EXPORTS"/>
       </Compiler>
       <Linker Options="">
-        <LibraryPath Value="./lib"/>
         <Library Value="libxml2"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug"/>
 </CodeLite_Project>
