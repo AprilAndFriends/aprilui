@@ -168,15 +168,15 @@ namespace AprilUI
 		
 		/*if*/parse(DummyObject);
 		else  parse(ColoredQuad);
-		else  parse(StaticImage);
+		else  parse(ImageBox);
 		else  parse(ImageButton);
 		else  parse(TextImageButton);
 		else  parse(Slider);
 		else  parse(ToggleButton);
 		else  parse(Label);
 		else  parse(TextButton);
-		else  parse(RotationImage);
-		else  parse(RotatableImage);
+		else  parse(RotationImageBox);
+		else  parse(RotatableImageBox);
 		else throw XMLUnknownClassException(class_name,node);
 		o->_setDataset(this);
 		
