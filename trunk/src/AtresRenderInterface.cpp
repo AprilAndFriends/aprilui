@@ -21,6 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "AtresRenderInterface.h"
 #include "atres/Atres.h"
 #include "april/RenderSystem.h"
+#include "Exception.h"
 #include <map>
 
 namespace AprilUI
@@ -41,6 +42,7 @@ namespace AprilUI
 	{
 		static int index=1;
 		April::Texture* t=rendersys->loadTexture(filename);
+		if (!t) throw FileNotFoundException(filename);
 		g_font_textures[index]=t;
 		return index++;
 	}

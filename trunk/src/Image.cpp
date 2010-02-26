@@ -35,25 +35,32 @@ namespace AprilUI
 		mSourceW=sw;
 		mSourceH=sh;
 		mBlendMode=April::ALPHA_BLEND;
-		if (tex) // allowed due to derived classes
+		mVertical=vertical;
+		mUnloadedFlag=0;
+
+		updateTexCoords();
+		mVertices[0].z=mVertices[1].z=mVertices[2].z=mVertices[3].z=0;
+	}
+	void Image::updateTexCoords()
+	{
+		if (mTexture) // allowed due to derived classes
 		{
-			int w=tex->getWidth(),h=tex->getHeight();
-			
-			if (vertical)
+			if (!mTexture->isLoaded()) { mUnloadedFlag=1; return; }
+			int w=mTexture->getWidth(),h=mTexture->getHeight();
+			if (mVertical)
 			{
-				mVertices[0].u=sx/w;      mVertices[0].v=sy/h;
-				mVertices[1].u=(sx)/w;    mVertices[1].v=(sy+sw)/h;
-				mVertices[2].u=(sx-sh)/w; mVertices[2].v=(sy+sw)/h;
-				mVertices[3].u=(sx-sh)/w; mVertices[3].v=sy/h;
+				mVertices[0].u=mSourceX/w;            mVertices[0].v=mSourceY/h;
+				mVertices[1].u=(mSourceX)/w;          mVertices[1].v=(mSourceY+mSourceW)/h;
+				mVertices[2].u=(mSourceX-mSourceH)/w; mVertices[2].v=(mSourceY+mSourceW)/h;
+				mVertices[3].u=(mSourceX-mSourceH)/w; mVertices[3].v=mSourceY/h;
 			}
 			else
 			{
-				mVertices[0].u=sx/w;      mVertices[0].v=sy/h;
-				mVertices[1].u=(sx+sw)/w; mVertices[1].v=sy/h;
-				mVertices[2].u=(sx+sw)/w; mVertices[2].v=(sy+sh)/h;
-				mVertices[3].u=sx/w;      mVertices[3].v=(sy+sh)/h;
+				mVertices[0].u=mSourceX/w;            mVertices[0].v=mSourceY/h;
+				mVertices[1].u=(mSourceX+mSourceW)/w; mVertices[1].v=mSourceY/h;
+				mVertices[2].u=(mSourceX+mSourceW)/w; mVertices[2].v=(mSourceY+mSourceH)/h;
+				mVertices[3].u=mSourceX/w;            mVertices[3].v=(mSourceY+mSourceH)/h;
 			}
-			mVertices[0].z=mVertices[1].z=mVertices[2].z=mVertices[3].z=0;
 		}
 	}
 
@@ -68,6 +75,11 @@ namespace AprilUI
 		mVertices[3].x=dx;    mVertices[3].y=dy+dh;
 		
 		rendersys->setTexture(mTexture);
+		if (mUnloadedFlag && mTexture->isLoaded())
+		{
+			updateTexCoords();
+			mUnloadedFlag=0;
+		}
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
 		if (r != 1 || g != 1 || b != 1 || a != 1)
 			rendersys->render(April::TriangleFan,mVertices,4,r,g,b,a);

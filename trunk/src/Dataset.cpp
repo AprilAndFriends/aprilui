@@ -83,7 +83,9 @@ namespace AprilUI
 		}
 		catch (_XMLException) { }
 		
-		April::Texture* t=mTextures[tex_name]=rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
+		April::Texture* t=rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
+		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
+		mTextures[tex_name]=t;
 		if (dynamic_load) t->_setDimensions(w,h);
 		// extract image definitions
 		if (node->xmlChildrenNode == 0) // if there are no images defined, create one that fills the whole area

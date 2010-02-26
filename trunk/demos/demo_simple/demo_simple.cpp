@@ -32,9 +32,7 @@ bool render(float time_increase)
 	rendersys->clear();
 	rendersys->setViewport(800,600);
 
-	dataset->getObject("obj01")->draw();
-	dataset->getObject("obj02")->draw();
-
+	dataset->getObject("root")->draw();
 	return true;
 }
 
