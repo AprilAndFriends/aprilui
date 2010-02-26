@@ -26,6 +26,8 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "Util.h"
 #include "atres/Atres.h"
 #include "atres/Font.h"
+#include "atres/Exception.h"
+
 
 namespace AprilUI
 {
@@ -395,19 +397,31 @@ namespace AprilUI
 	void Label::OnDraw(float offset_x,float offset_y)
 	{
 		float alpha=getDerivedAlpha(this);
-		Atres::Font* font=Atres::getFont(mFontName);
+		Atres::Font* font;
+		try   { font=Atres::getFont(mFontName); }
+		catch (Atres::FontNotFoundException e)
+			  {
+				  throw GenericException(e.repr());
+			  }
+
 		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
 		
+		float fonth=Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
 		if      (mVertFormatting == VERT_BOTTOM)
-			offset_y+=mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
+			offset_y+=mHeight-fonth;
 		else if (mVertFormatting == VERT_CENTER)
-			offset_y+=(mHeight-Atres::getWrappedTextHeight(font->getName(),mWidth,mText))/2;
+			offset_y+=(mHeight-fonth)/2;
 		
 		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth*0.45f;
 		if (!isEnabled()) alpha /= 2;
-		Atres::drawWrappedText(font->getName(),mX+offset_x,mY+offset_y,mWidth,mText,
-			mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-			mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+		try
+		{
+			Atres::drawWrappedText(font->getName(),mX+offset_x,mY+offset_y,mWidth,mText,
+				mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
+				mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+		}
+		catch (Atres::FontNotFoundException e)
+		{ throw GenericException(e.repr()); }
 	}
 
 	void Label::setTextKey(std::string key)
@@ -457,7 +471,6 @@ namespace AprilUI
 	{
 		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7+0.3*mPushed);
 
-		float h=Atres::getWrappedTextHeight(mFontName,mWidth,mText,mHorzFormatting);
 		Label::OnDraw(offset_x,offset_y);
 	}
 
@@ -604,7 +617,10 @@ namespace AprilUI
 	{
 		ImageButton::OnDraw(offset_x,offset_y);
 		float alpha=getDerivedAlpha(this);
-		Atres::Font* font=Atres::getFont(mFontName);
+		Atres::Font* font;
+		try   { font=Atres::getFont(mFontName); }
+		catch (Atres::FontNotFoundException e)
+			  { throw GenericException(e.repr()); }
 		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
 		
 		if      (mVertFormatting == VERT_BOTTOM)
@@ -615,9 +631,14 @@ namespace AprilUI
 		
 		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth*0.45f;
 		if (!isEnabled()) alpha /= 2;
-		Atres::drawWrappedText(font->getName(),mX+offset_x,mY+offset_y,mWidth,mText,
-			mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-			mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+		try
+		{
+			Atres::drawWrappedText(font->getName(),mX+offset_x,mY+offset_y,mWidth,mText,
+				mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
+				mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+		}
+		catch (Atres::FontNotFoundException e)
+		{ throw GenericException(e.repr()); }
 	}
 
 	void TextImageButton::setTextKey(std::string key)
