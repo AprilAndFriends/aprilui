@@ -36,6 +36,8 @@ namespace AprilUI
 		std::string mImageName;
 		float mSourceX, mSourceY, mSourceW, mSourceH;
 		April::BlendMode mBlendMode;
+		bool mVertical,mUnloadedFlag;
+		void updateTexCoords();
 	public:
 		
 		Image(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical=false);
