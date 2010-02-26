@@ -39,6 +39,11 @@ namespace AprilUI
 		mFilename=filename;
 		mLoaded=0;
 	}
+	
+	Dataset::~Dataset()
+	{
+		if (isLoaded()) unload();
+	}
 
 	std::string Dataset::getName()
 	{
@@ -247,7 +252,7 @@ namespace AprilUI
 		foreach_in_map(Object*,mObjects)          delete it->second; mObjects.clear();
 		foreach_in_map(Image*,mImages)            delete it->second; mImages.clear();
 		foreach_in_map(April::Texture*,mTextures) delete it->second; mTextures.clear();
-		texts.destroy();
+		mCallbacks.clear();
 		
 		mLoaded=0;
 	}

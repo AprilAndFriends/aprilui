@@ -45,7 +45,7 @@ namespace AprilUI
 	{
 		if (mTexture) // allowed due to derived classes
 		{
-			if (!mTexture->isLoaded()) { mUnloadedFlag=1; return; }
+ 			if (!mTexture->isLoaded()) { mUnloadedFlag=1; return; }
 			int w=mTexture->getWidth(),h=mTexture->getHeight();
 			if (mVertical)
 			{

@@ -63,6 +63,7 @@ namespace AprilUI
 		TextMap texts;
 		
 		Dataset(std::string filename);
+		~Dataset();
 
 		void load();
 		void unload();

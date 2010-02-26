@@ -39,6 +39,11 @@ namespace AprilUI
 		mBuffer=0;
 		mBufferPos=1; // 1 in order to detect KeyErrors
 	}
+	
+	TextMap::~TextMap()
+	{
+		destroy();
+	}
 
 	bool TextMap::exists(std::string name)
 	{

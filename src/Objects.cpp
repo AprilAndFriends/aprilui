@@ -403,8 +403,6 @@ namespace AprilUI
 			  {
 				  throw GenericException(e.repr());
 			  }
-
-		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
 		
 		float fonth=Atres::getWrappedTextHeight(font->getName(),mWidth,mText);
 		if      (mVertFormatting == VERT_BOTTOM)
@@ -412,7 +410,8 @@ namespace AprilUI
 		else if (mVertFormatting == VERT_CENTER)
 			offset_y+=(mHeight-fonth)/2;
 		
-		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth*0.45f;
+		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
+		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth/2;
 		if (!isEnabled()) alpha /= 2;
 		try
 		{

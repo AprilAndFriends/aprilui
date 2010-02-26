@@ -43,8 +43,10 @@ int main()
 		April::init("OpenGL",800,600,0,"demo_simple");
 		rendersys->registerUpdateCallback(render);
 		AprilUI::init();
+
 		dataset=new AprilUI::Dataset("../media/demo_simple.datadef");
 		dataset->load();
+
 		Atres::loadFont("../media/arial.font");
 
 		rendersys->enterMainLoop();
