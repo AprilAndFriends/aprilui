@@ -35,6 +35,7 @@ namespace AprilUI
 		
 	public:
 		TextMap();
+		~TextMap();
 		
 		void load(std::string folder);
 		void destroy();
