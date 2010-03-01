@@ -99,11 +99,9 @@ namespace AprilUI
 
 			v.x+=k*mSpeedW;
 			v.y+=k*mSpeedH;
-			
+
 			mParent->setSize(v.x,v.y);
 		}
-
-
 
 		Rotator::Rotator(std::string name) : Object("Animators::Scaler",name,0,0,1,1)
 		{

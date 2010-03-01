@@ -33,6 +33,7 @@ namespace AprilUI
 			void update(float k);
 		};
 
+
 		class Rotator : public Object
 		{
 			float mInitialSpeed,mInitialAngle,mSpeed,mAccel;
