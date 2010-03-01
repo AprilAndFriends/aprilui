@@ -73,8 +73,7 @@ namespace AprilUI
 
 	class AprilUIExport TiledImage  : public Image
 	{
-		float mTileW,mTileH;
-		April::TexturedVertex mTiledVertices[12];
+		float mTileW,mTileH,mScrollX,mScrollY;
 	public:
 		TiledImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh);
 		void setTileW(float tile) { mTileW=tile; }
@@ -82,6 +81,13 @@ namespace AprilUI
 		void setTiles(float tilew,float tileh) { mTileW=tilew; mTileH=tileh; }
 		float getTileW() { return mTileW; }
 		float getTileH() { return mTileH; }
+
+		void setScrollX(float scroll) { mScrollX=scroll; }
+		void setScrollY(float scroll) { mScrollY=scroll; }
+		void setScroll(float scrollx,float scrolly) { mScrollX=scrollx; mScrollY=scrolly; }
+		float getScrollX() { return mScrollX; }
+		float getScrollY() { return mScrollY; }	
+
 		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 	};
