@@ -167,9 +167,6 @@ namespace AprilUI
 
 	void TiledImage::draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a)
 	{
-		mScrollX+=0.6f;
-		mScrollY-=0.27662f;
-		
 		float basew=(mTileW > 0) ? dw/mTileW : -mTileW,
 		      baseh=(mTileH > 0) ? dh/mTileH : -mTileH,
 			  ox=fabs(mScrollX),oy=fabs(mScrollY);
