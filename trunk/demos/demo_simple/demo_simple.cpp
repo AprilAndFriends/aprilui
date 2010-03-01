@@ -33,6 +33,7 @@ bool render(float time_increase)
 	rendersys->setViewport(800,600);
 
 	dataset->getObject("root")->draw();
+	dataset->getObject("root")->update(time_increase);
 	return true;
 }
 

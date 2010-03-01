@@ -34,6 +34,7 @@ namespace AprilUI
 		mSourceY=sy;
 		mSourceW=sw;
 		mSourceH=sh;
+	
 		mBlendMode=April::ALPHA_BLEND;
 		mVertical=vertical;
 		mUnloadedFlag=0;
@@ -41,6 +42,12 @@ namespace AprilUI
 		updateTexCoords();
 		mVertices[0].z=mVertices[1].z=mVertices[2].z=mVertices[3].z=0;
 	}
+	
+	Image::~Image()
+	{
+		
+	}
+	
 	void Image::updateTexCoords()
 	{
 		if (mTexture) // allowed due to derived classes
@@ -119,8 +126,7 @@ namespace AprilUI
 	{
 		return mTexture;
 	}
-
-
+	
 	ColoredImage::ColoredImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
 				  Image(tex,name,sx,sy,sw,sh,vertical)
 	{
@@ -148,6 +154,69 @@ namespace AprilUI
 		mAlpha=a; mRed=r; mGreen=g; mBlue=b;
 	}
 
+
+	TiledImage::TiledImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh) :
+				  Image(tex,name,sx,sy,sw,sh,vertical)
+	{
+		mTileW=tilew; mTileH=tileh;
+		
+		
+	}
+	
+
+
+	void TiledImage::draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a)
+	{
+		
+		float basew=(mTileW > 0) ? dw/mTileW : -mTileW,
+		      baseh=(mTileH > 0) ? dh/mTileH : -mTileH;
+		float tilew=dw/basew,tileh=dh/baseh;
+		
+		for (int y=0;y<(int) tileh;y++)
+			for (int x=0;x<(int) tilew;x++)
+				Image::draw(dx+x*basew,dy+y*baseh,basew,baseh,r,g,b,a);
+		
+		float osw=mSourceW,osh=mSourceH;
+		if (tilew-(int) tilew > 0)
+		{
+			mSourceW=(dw-((int) tilew)*basew)*mSourceW/basew;
+			float x=dx+((int) tilew)*basew;
+			updateTexCoords();
+			for (int y=0;y<(int) tileh;y++)
+				Image::draw(x,dy+y*baseh,(dw-((int) tilew)*basew),baseh,r,g,b,a);
+		}
+		
+		if (tileh-(int) tileh > 0)
+		{
+			mSourceW=osw;
+			mSourceH=(dh-((int) tileh)*baseh)*mSourceH/baseh;
+			float y=dy+((int) tileh)*baseh;
+			updateTexCoords();
+			for (int x=0;x<(int) tilew;x++)
+				Image::draw(dx+x*basew,y,basew,(dh-((int) tileh)*baseh),r,g,b,a);
+		}
+		if (tilew-(int) tilew > 0 && tileh-(int) tileh > 0)
+		{
+			mSourceW=(dw-((int) tilew)*basew)*osw/basew;
+			mSourceH=(dh-((int) tileh)*baseh)*osh/baseh;
+			updateTexCoords();
+			Image::draw(dx+((int) tilew)*basew,dy+((int) tileh)*baseh,
+					   (dw-((int) tilew)*basew),(dh-((int) tileh)*baseh),r,g,b,a);
+		}
+		
+		if (tilew-(int) tilew > 0 || tileh-(int) tileh > 0)
+		{
+			mSourceW=osw; mSourceH=osh;
+			updateTexCoords();
+		}
+	}
+
+	void TiledImage::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
+	{
+		
+	}
+
+	
 
 	ColorImage::ColorImage(std::string name) : Image(0,name,0,0,0,0,0)
 	{
