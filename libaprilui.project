@@ -33,7 +33,6 @@
     <File Name="include/aprilui/Animators.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
-  <Dependencies Name="Debug"/>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -41,6 +40,8 @@
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="./bin/Debug"/>
+        <LibraryPath Value="../april/bin/Debug"/>
+        <LibraryPath Value="../atres/bin/Debug"/>
         <LibraryPath Value="./lib"/>
         <Library Value="libapril_d"/>
         <Library Value="libatres_d"/>
@@ -104,14 +105,23 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="./include"/>
+        <IncludePath Value="../include"/>
+        <IncludePath Value="../april/include"/>
+        <IncludePath Value="../atres/include"/>
         <IncludePath Value="./include/aprilui"/>
         <Preprocessor Value="_WIN32"/>
         <Preprocessor Value="APRILUI_EXPORTS"/>
       </Compiler>
       <Linker Options="">
+        <LibraryPath Value="./lib"/>
+        <LibraryPath Value="../lib"/>
         <Library Value="libxml2"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libatres"/>
+    <Project Name="libapril"/>
+  </Dependencies>
 </CodeLite_Project>
