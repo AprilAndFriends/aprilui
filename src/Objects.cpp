@@ -632,7 +632,7 @@ namespace AprilUI
 		if (!isEnabled()) alpha /= 2;
 		try
 		{
-			Atres::drawWrappedText(font->getName(),mX+offset_x,mY+offset_y,mWidth,mText,
+			Atres::drawWrappedText(mFontName,mX+offset_x,mY+offset_y,mWidth,mText,
 				mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
 				mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
 		}
