@@ -41,6 +41,7 @@ namespace AprilUI
 	public:
 		
 		Image(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical=false);
+		virtual ~Image();
 		virtual void draw(float dx,float dy,float dw=-1,float dh=-1,float r=1,float g=1,float b=1,float a=1);
 		virtual void draw(float centerx,float centery,float dw,float dh,float angle);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
@@ -52,6 +53,7 @@ namespace AprilUI
 		float getSourceY() const { return mSourceY; }
 		float getSourceW() const { return mSourceW; }
 		float getSourceH() const { return mSourceH; }
+		
 		April::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(April::BlendMode mode) { mBlendMode=mode; }
 	};
@@ -69,6 +71,21 @@ namespace AprilUI
 		void setColor(float a,float r,float g,float b);
 	};
 
+	class AprilUIExport TiledImage  : public Image
+	{
+		float mTileW,mTileH;
+		April::TexturedVertex mTiledVertices[12];
+	public:
+		TiledImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh);
+		void setTileW(float tile) { mTileW=tile; }
+		void setTileH(float tile) { mTileW=tile; }
+		void setTiles(float tilew,float tileh) { mTileW=tilew; mTileH=tileh; }
+		float getTileW() { return mTileW; }
+		float getTileH() { return mTileH; }
+		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
+		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
+	};
+	
 	class AprilUIExport ColorImage : public Image
 	{
 		float mRed,mGreen,mBlue,mAlpha;

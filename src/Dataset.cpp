@@ -23,6 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "Dataset.h"
 #include "Exception.h"
 #include "Objects.h"
+#include "Animators.h"
 #include "april/RenderSystem.h"
 #include "Image.h"
 #include "Util.h"
@@ -112,16 +113,26 @@ namespace AprilUI
 						  w=xmlGetPropFloat(node,"w"), h=xmlGetPropFloat(node,"h");
 					
 					bool vertical=0;
+					float tile_w=1,tile_h=1;
 					try { vertical=xmlGetPropInt(node,"vertical"); } catch (_XMLException) { }
 					
-					try
+					try   { tile_w=xmlGetPropFloat(node,"tile_w"); }
+					catch (_XMLException) { }
+					try   { tile_h=xmlGetPropFloat(node,"tile_h"); }
+					catch (_XMLException) { }
+					
+					if (tile_w != 1 || tile_h != 1) i=new TiledImage(t,name,x,y,w,h,vertical,tile_w,tile_h);
+					else
 					{
-						unsigned int color=xmlGetPropHex(node,"color");
-						i=new ColoredImage(t,name,x,y,w,h,vertical,color);
-					}
-					catch (_XMLException)
-					{
-						i=new Image(t,name,x,y,w,h,vertical);    
+						try
+						{
+							unsigned int color=xmlGetPropHex(node,"color");
+							i=new ColoredImage(t,name,x,y,w,h,vertical,color);
+						}
+						catch (_XMLException)
+						{
+							i=new Image(t,name,x,y,w,h,vertical);    
+						}
 					}
 					try
 					{
@@ -129,6 +140,8 @@ namespace AprilUI
 						if (mode == "add") i->setBlendMode(April::ADD);
 					}
 					catch (_XMLException) { }
+					
+
 					
 					mImages[name]=i;
 				}
@@ -164,6 +177,8 @@ namespace AprilUI
 			try { h=xmlGetPropFloat(node,"h"); }
 			catch (_XMLException) { h=-1; }
 		}
+			else if (XML_EQ(node,"Animator")) obj_name=generateName("Animator");
+
 		
 		if (mObjects[obj_name]) throw ResourceExistsException(obj_name,"Object",this);
 
@@ -184,6 +199,14 @@ namespace AprilUI
 		else  parse(TextButton);
 		else  parse(RotationImageBox);
 		else  parse(RotatableImageBox);
+		else if (XML_EQ(node,"Animator"))
+		{
+			if      (class_name == "Mover")           o=new Animators::Mover(obj_name);
+			else if (class_name == "Scaler")          o=new Animators::Scaler(obj_name);
+			else if (class_name == "Rotator")         o=new Animators::Rotator(obj_name);
+			else if (class_name == "ColorAlternator") o=new Animators::ColorAlternator(obj_name);
+			else if (class_name == "AlphaFader")      o=new Animators::AlphaFader(obj_name);
+		}
 		else throw XMLUnknownClassException(class_name,node);
 		o->_setDataset(this);
 		
