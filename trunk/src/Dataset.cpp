@@ -149,6 +149,21 @@ namespace AprilUI
 		
 	}
 
+	void Dataset::parseExternalXMLNode(_xmlNode* node)
+	{
+		
+	}
+	
+	Image* Dataset::getExternalImage(std::string name)
+	{
+		return 0;
+	}
+	
+	Object* Dataset::parseExternalObjectClass(_xmlNode* node,std::string obj_name,float x,float y,float w,float h)
+	{
+		return 0;
+	}
+
 	void Dataset::parseObject(_xmlNode* node)
 	{
 		recursiveObjectParse(node,0);
@@ -180,7 +195,8 @@ namespace AprilUI
 			else if (XML_EQ(node,"Animator")) obj_name=generateName("Animator");
 
 		
-		if (mObjects[obj_name]) throw ResourceExistsException(obj_name,"Object",this);
+		if (mObjects[obj_name])
+			throw ResourceExistsException(obj_name,"Object",this);
 
 		Object* o;
 		
@@ -207,7 +223,9 @@ namespace AprilUI
 			else if (class_name == "ColorAlternator") o=new Animators::ColorAlternator(obj_name);
 			else if (class_name == "AlphaFader")      o=new Animators::AlphaFader(obj_name);
 		}
-		else throw XMLUnknownClassException(class_name,node);
+		else o=parseExternalObjectClass(node,obj_name,x,y,w,h);
+		
+		if (!o) throw XMLUnknownClassException(class_name,node);
 		o->_setDataset(this);
 		
 		for (xmlAttr* attr=node->properties;attr != 0; attr=attr->next)
@@ -217,7 +235,13 @@ namespace AprilUI
 		if (parent) parent->addChild(o);
 		
 		for (node = node->xmlChildrenNode; node != 0; node=node->next)
-			if (!XML_EQ(node,"text") && !XML_EQ(node,"comment")) recursiveObjectParse(node,o);
+			if (node->type !=  XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
+			{
+				if (XML_EQ(node,"Property"))
+					o->setProperty(xmlGetPropString(node,"name"),xmlGetPropString(node,"value"));
+				else 
+				recursiveObjectParse(node,o);
+			}
 	}
 
 	void Dataset::readFile(std::string filename)
@@ -238,16 +262,15 @@ namespace AprilUI
 		}
 		
 		if (xmlStrcmp(cur->name, (const xmlChar *) "DataDefinition"))
+			parseExternalXMLNode(cur);
+		
+		for (xmlNodePtr p = cur->xmlChildrenNode; p != 0; p=p->next)
 		{
-			xmlFreeDoc(doc);
-			throw GenericException("Unable to parse datadef '"+mFilename+"', root node is of invalid type");
+			if      (XML_EQ(p,"Texture")) parseTexture(p);
+			else if (XML_EQ(p,"Object")) parseObject(p);
+			else if (p->type !=  XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
+				     parseExternalXMLNode(p);
 		}
-
-		for (xmlNodePtr p = cur->xmlChildrenNode; p != 0; p=p->next)
-			if (XML_EQ(p,"Texture")) parseTexture(p);
-
-		for (xmlNodePtr p = cur->xmlChildrenNode; p != 0; p=p->next)
-			if (XML_EQ(p,"Object")) parseObject(p);
 	// done!
 		xmlFreeDoc(doc);
 	}
@@ -310,10 +333,13 @@ namespace AprilUI
 		Image* i;
 		if (name == "null") return &g_null_img;
 
-		i=mImages[name];
-		if (!i && startswith(name,"0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
+		
+		if (mImages.find(name) == mImages.end() && startswith(name,"0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
 			i=mImages[name]=new ColorImage(name);
+		else
+			i=mImages[name];
 
+		if (!i) i=getExternalImage(name);
 		if (!i) throw ResourceNotExistsException(name,"Image",this);
 		return i;
 	}
