@@ -82,12 +82,12 @@ namespace AprilUI
 	#define UnknownVariableException(msg) _UnknownVariableException(msg+" does not exist","UnknownVariableException ",__FILE__,__LINE__)
 	//---------------------------------------------------------------------------------------------------------
 
-	class _ResourceExistsException : public _GenericException
+	class AprilUIExport _ResourceExistsException : public _GenericException
 	{
 	public:
 		_ResourceExistsException(const std::string object_name,std::string class_name,Dataset* dict,std::string file="",int line=0);
 	};
-	class _ResourceNotExistsException : public _GenericException
+	class AprilUIExport _ResourceNotExistsException : public _GenericException
 	{
 	public:
 		_ResourceNotExistsException(const std::string object_name,std::string class_name,Dataset* dict,std::string file="",int line=0);
