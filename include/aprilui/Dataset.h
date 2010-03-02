@@ -43,6 +43,7 @@ namespace AprilUI
 
 	class AprilUIExport Dataset
 	{
+	protected:
 		std::string mFilename;
 		std::string mFilenamePrefix;
 		bool mLoaded;
@@ -53,6 +54,9 @@ namespace AprilUI
 		std::map<std::string,void (*)()> mCallbacks;
 
 		void parseTexture(_xmlNode* node);
+		virtual void parseExternalXMLNode(_xmlNode* node);
+		virtual Object* parseExternalObjectClass(_xmlNode* node,std::string obj_name,float x,float y,float w,float h);
+		virtual Image* getExternalImage(std::string name);
 		
 		void recursiveObjectParse(_xmlNode* node,Object* parent);
 		
@@ -63,7 +67,7 @@ namespace AprilUI
 		TextMap texts;
 		
 		Dataset(std::string filename);
-		~Dataset();
+		virtual ~Dataset();
 
 		void load();
 		void unload();
@@ -72,6 +76,8 @@ namespace AprilUI
 
 		void registerCallback(std::string name,void (*callback)());
 		void triggerCallback(std::string name);
+
+		
 
 		void update(float k);
 		
