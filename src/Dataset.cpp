@@ -222,6 +222,7 @@ namespace AprilUI
 			else if (class_name == "Rotator")         o=new Animators::Rotator(obj_name);
 			else if (class_name == "ColorAlternator") o=new Animators::ColorAlternator(obj_name);
 			else if (class_name == "AlphaFader")      o=new Animators::AlphaFader(obj_name);
+			else o=parseExternalObjectClass(node,obj_name,x,y,w,h);
 		}
 		else o=parseExternalObjectClass(node,obj_name,x,y,w,h);
 		
