@@ -42,6 +42,7 @@ namespace AprilUI
 	std::string xmlGetPropString(_xmlNode* node,std::string prop);
 	float xmlGetPropFloat(_xmlNode* node,std::string prop);
 	int xmlGetPropInt(_xmlNode* node,std::string prop);
+	bool xmlPropertyExists(_xmlNode* node,const char* name);
 	unsigned int xmlGetPropHex(_xmlNode* node,std::string prop);
 	std::string str(int i);
 	std::string str_toupper(std::string s);
