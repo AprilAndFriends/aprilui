@@ -78,6 +78,11 @@ namespace AprilUI
 		return x;
 	}
 
+	bool xmlPropertyExists(_xmlNode* node,const char* name)
+	{
+		return xmlGetProp(node, (const xmlChar*) name) != 0;
+	}
+
 	std::string str(int i)
 	{
 		char s[32];
