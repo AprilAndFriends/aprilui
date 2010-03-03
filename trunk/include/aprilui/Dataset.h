@@ -58,11 +58,11 @@ namespace AprilUI
 		virtual Object* parseExternalObjectClass(_xmlNode* node,std::string obj_name,float x,float y,float w,float h);
 		virtual Image* getExternalImage(std::string name);
 		
-		void recursiveObjectParse(_xmlNode* node,Object* parent);
+		Object* recursiveObjectParse(_xmlNode* node,Object* parent);
 		
 		void readFile(std::string filename);
 	public:
-		void parseObject(_xmlNode* node);
+		Object* parseObject(_xmlNode* node);
 
 		TextMap texts;
 		

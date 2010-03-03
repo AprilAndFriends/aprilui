@@ -164,12 +164,12 @@ namespace AprilUI
 		return 0;
 	}
 
-	void Dataset::parseObject(_xmlNode* node)
+	Object* Dataset::parseObject(_xmlNode* node)
 	{
-		recursiveObjectParse(node,0);
+		return recursiveObjectParse(node,0);
 	}
 
-	void Dataset::recursiveObjectParse(_xmlNode* node,Object* parent)
+	Object* Dataset::recursiveObjectParse(_xmlNode* node,Object* parent)
 	{
 		std::string obj_name;
 		float x=0,y=0,w=1,h=1;
@@ -192,7 +192,7 @@ namespace AprilUI
 			try { h=xmlGetPropFloat(node,"h"); }
 			catch (_XMLException) { h=-1; }
 		}
-			else if (XML_EQ(node,"Animator")) obj_name=generateName("Animator");
+		else if (XML_EQ(node,"Animator")) obj_name=generateName("Animator");
 
 		
 		if (mObjects[obj_name])
@@ -243,6 +243,7 @@ namespace AprilUI
 				else 
 				recursiveObjectParse(node,o);
 			}
+		return o;
 	}
 
 	void Dataset::readFile(std::string filename)
