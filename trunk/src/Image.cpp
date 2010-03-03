@@ -57,10 +57,10 @@ namespace AprilUI
 			int w=mTexture->getWidth(),h=mTexture->getHeight();
 			if (mVertical)
 			{
-				mVertices[0].u=mSourceX/w;            mVertices[0].v=mSourceY/h;
-				mVertices[1].u=(mSourceX)/w;          mVertices[1].v=(mSourceY+mSourceW)/h;
-				mVertices[2].u=(mSourceX-mSourceH)/w; mVertices[2].v=(mSourceY+mSourceW)/h;
-				mVertices[3].u=(mSourceX-mSourceH)/w; mVertices[3].v=mSourceY/h;
+				mVertices[0].u=(mSourceX+mSourceH)/w; mVertices[0].v=mSourceY/h;
+				mVertices[1].u=(mSourceX+mSourceH)/w; mVertices[1].v=(mSourceY+mSourceW)/h;
+				mVertices[2].u=(mSourceX)/w;          mVertices[2].v=(mSourceY+mSourceW)/h;
+				mVertices[3].u=(mSourceX)/w;          mVertices[3].v=mSourceY/h;
 			}
 			else
 			{

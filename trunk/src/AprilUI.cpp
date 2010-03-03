@@ -28,12 +28,13 @@ namespace AprilUI
 {
 	std::map<int,April::Texture*> g_font_textures;
 	AtresAprilInterface* atres_render_iface=0;
+
 	void init()
 	{
 		atres_render_iface=new AtresAprilInterface();
 		Atres::setRenderInterface(atres_render_iface);
 	}
-	
+
 	void destroy()
 	{
 		if (atres_render_iface) delete atres_render_iface;
