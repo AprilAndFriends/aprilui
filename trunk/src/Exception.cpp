@@ -34,6 +34,11 @@ namespace AprilUI
 		mLineNumber=line;
 		mFile=file;
 	}
+	
+	_GenericException::~_GenericException()
+	{
+		
+	}
 
 
 	std::string _GenericException::repr()
