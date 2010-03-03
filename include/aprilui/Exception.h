@@ -36,7 +36,7 @@ namespace AprilUI
 		int mLineNumber;
 
 		_GenericException(const std::string& errorText,std::string type="",std::string file="",int line=0);
-		virtual ~_GenericException() {}
+		virtual ~_GenericException();
 		
 		virtual std::string repr();
 		
