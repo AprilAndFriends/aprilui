@@ -29,6 +29,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 
 namespace AprilUI
 {
+	bool register_lock=0;
 	std::map<int,April::Texture*> g_font_textures;
 	AtresAprilInterface* atres_render_iface=0;
 	std::map<std::string,Dataset*> g_datasets;
@@ -48,6 +49,7 @@ namespace AprilUI
 
 	void _registerDataset(std::string name,Dataset* d)
 	{
+		if (register_lock) return;
 		if (g_datasets.find(name) != g_datasets.end())
 			throw GenericException("Unable to register dataset '"+name+"', another dataset with the same name exists!");	
 		g_datasets[name]=d;
@@ -55,18 +57,21 @@ namespace AprilUI
 	
 	void _unregisterDataset(std::string name,Dataset* d)
 	{
+		if (register_lock) return;
 		g_datasets.erase(name);
 	}
 
 	void destroy()
 	{
+		register_lock=1;
 		if (atres_render_iface) delete atres_render_iface;
 
 		for (std::map<int,April::Texture*>::iterator it=g_font_textures.begin();it!=g_font_textures.end();it++)
 			delete it->second;
 		
-		for (std::map<std::string,Dataset*>::iterator it=g_datasets.begin();it!=g_datasets.end();it++)
-			delete it->second;
-
+		for (std::map<std::string,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
+		{
+			delete it2->second;
+		}
 	}
 }
