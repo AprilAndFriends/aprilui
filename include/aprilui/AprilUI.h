@@ -22,11 +22,16 @@ http://www.gnu.org/copyleft/lesser.txt.
 #define APRILUI_H
 
 #include "AprilUIExport.h"
+#include <string>
 
 namespace AprilUI
 {
+	class Dataset;
+	
 	void AprilUIExport init();
 	void AprilUIExport destroy();
+	
+	Dataset* AprilUIExport getDatasetByName(std::string name);
 }
 
 #endif
