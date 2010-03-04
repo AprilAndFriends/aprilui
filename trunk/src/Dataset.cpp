@@ -20,6 +20,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 *************************************************************************************/
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
+#include "AprilUI.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Objects.h"
@@ -30,25 +31,33 @@ http://www.gnu.org/copyleft/lesser.txt.
 
 namespace AprilUI
 {
-
+	void _registerDataset(std::string name,Dataset* d);
+	void _unregisterDataset(std::string name,Dataset* d);
+	
 	NullImage g_null_img;
 
 	Dataset::Dataset(std::string filename)
 	{
+		
 		int slash=filename.rfind("/");
-		mFilenamePrefix=filename.substr(0,slash);	
+		int dot=filename.rfind(".");
+		mFilenamePrefix=filename.substr(0,slash);
 		mFilename=filename;
+		mName=filename.substr(slash+1,dot-slash-1);
 		mLoaded=0;
+		
+		_registerDataset(mName,this);
 	}
 	
 	Dataset::~Dataset()
 	{
 		if (isLoaded()) unload();
+		_unregisterDataset(mName,this);
 	}
 
 	std::string Dataset::getName()
 	{
-		return mFilename;
+		return mName;
 	}
 
 	void Dataset::_destroyTexture(April::Texture* tex)
@@ -152,11 +161,6 @@ namespace AprilUI
 	void Dataset::parseExternalXMLNode(_xmlNode* node)
 	{
 		
-	}
-	
-	Image* Dataset::getExternalImage(std::string name)
-	{
-		return 0;
 	}
 	
 	Object* Dataset::parseExternalObjectClass(_xmlNode* node,std::string obj_name,float x,float y,float w,float h)
@@ -341,8 +345,19 @@ namespace AprilUI
 		else
 			i=mImages[name];
 
-		if (!i) i=getExternalImage(name);
-		if (!i) throw ResourceNotExistsException(name,"Image",this);
+		if (!i)
+		{
+			int dot=name.find(".");
+			if (dot > -1)
+			{
+				Dataset* d=getDatasetByName(name.substr(0,dot));
+				if (!d) throw ResourceNotExistsException(name.substr(0,dot),"Dataset",this);
+				return d->getImage(name.substr(dot+1,100));
+			}
+			else throw ResourceNotExistsException(name,"Image",this);
+		}
+		
+			
 		return i;
 	}
 
