@@ -327,7 +327,7 @@ namespace AprilUI
 	{
 		Object* o=mObjects[name];
 		if (!o)
-a			throw ResourceNotExistsException(name,"Object",this);
+			throw ResourceNotExistsException(name,"Object",this);
 		return o;
 	}
 	
