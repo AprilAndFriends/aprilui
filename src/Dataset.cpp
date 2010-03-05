@@ -316,6 +316,13 @@ namespace AprilUI
 		o->_setDataset(this);
 	}
 
+	void Dataset::unregisterManualObject(Object* o)
+	{
+		if (!mObjects[o->getName()]) throw ResourceNotExistsException(o->getName(),"Object",this);
+		mObjects.erase(o->getName());
+		o->_setDataset(NULL);
+	}
+
 	Object* Dataset::getObject(std::string name)
 	{
 		Object* o=mObjects[name];
