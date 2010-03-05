@@ -619,16 +619,18 @@ namespace AprilUI
 		Atres::Font* font;
 		try   { font=Atres::getFont(mFontName); }
 		catch (Atres::FontNotFoundException e)
-			  { throw GenericException(e.repr()); }
-		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
+			  {
+				  throw GenericException(e.repr());
+			  }
 		
+		float fonth=Atres::getWrappedTextHeight(mFontName,mWidth,mText);
 		if      (mVertFormatting == VERT_BOTTOM)
-			offset_y+=mHeight-Atres::getWrappedTextHeight(mFontName,mWidth,mText);
+			offset_y+=mHeight-fonth;
 		else if (mVertFormatting == VERT_CENTER)
-			offset_y+=(mHeight-Atres::getWrappedTextHeight(mFontName,mWidth,mText))/2;
+			offset_y+=(mHeight-fonth)/2;
 		
-		
-		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth*0.45f;
+		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
+		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth/2;
 		if (!isEnabled()) alpha /= 2;
 		try
 		{
