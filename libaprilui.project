@@ -2,7 +2,7 @@
 <CodeLite_Project Name="libaprilui" InternalType="Library">
   <Plugins>
     <Plugin Name="qmake">
-      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
+      <![CDATA[00010001N0007Release000000000000]]>
     </Plugin>
   </Plugins>
   <Description/>
@@ -33,8 +33,8 @@
     <File Name="include/aprilui/Animators.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
-  <Settings Type="Static Library">
-    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Static Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+  <Settings Type="Dynamic Library">
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <IncludePath Value="."/>
       </Compiler>
@@ -42,6 +42,7 @@
         <LibraryPath Value="./bin/Debug"/>
         <LibraryPath Value="../april/bin/Debug"/>
         <LibraryPath Value="../atres/bin/Debug"/>
+        <LibraryPath Value="./lib"/>
         <Library Value="libapril_d"/>
         <Library Value="libatres_d"/>
       </Linker>
@@ -74,6 +75,7 @@
       </Compiler>
       <Linker Options="-O2" Required="yes">
         <LibraryPath Value="./bin/Release"/>
+        <LibraryPath Value="./lib"/>
         <Library Value="libapril"/>
         <Library Value="libatres"/>
       </Linker>
