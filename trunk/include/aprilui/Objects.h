@@ -27,7 +27,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "april/RenderSystem.h"
 #include "Exception.h"
 #include "atres/Atres.h"
-#include "Vector.h"
+#include "gtypes/Vector2.h"
 #include "AprilUIExport.h"
 
 struct _xmlNode;
@@ -105,14 +105,14 @@ namespace AprilUI
 		virtual bool isPointInside(float x,float y);
 		void registerEvent(std::string event_name,void (*callback)(EventArgs*));
 
-		Vector getPosition() { return Vector(mX,mY); };
+		gtypes::Vector2 getPosition() { return gtypes::Vector2(mX,mY); };
 		float getXPosition() { return mX; }
 		float getYPosition() { return mY; }
-		Vector getSize() { return Vector(mWidth,mHeight); }
+		gtypes::Vector2 getSize() { return gtypes::Vector2(mWidth,mHeight); }
 		float getWidth() { return mWidth; }
 		float getHeight() { return mHeight; }
 		void setPosition(float x,float y) { mX=x; mY=y; }
-		void setPosition(Vector v) { mX=v.x; mY=v.y; }
+		void setPosition(gtypes::Vector2 v) { mX=v.x; mY=v.y; }
 		void setXPosition(float x) { mX=x; }
 		void setYPosition(float y) { mY=y; }
 

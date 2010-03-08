@@ -78,6 +78,7 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="../../include"/>
+        <IncludePath Value="../../../gtypes/include"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../lib"/>

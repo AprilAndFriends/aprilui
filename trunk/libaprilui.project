@@ -13,7 +13,6 @@
     <File Name="src/Image.cpp"/>
     <File Name="src/TextMap.cpp"/>
     <File Name="src/Util.cpp"/>
-    <File Name="src/Vector.cpp"/>
     <File Name="src/Objects.cpp"/>
     <File Name="src/AprilUI.cpp"/>
     <File Name="src/AtresRenderInterface.cpp"/>
@@ -26,13 +25,13 @@
     <File Name="include/aprilui/Image.h"/>
     <File Name="include/aprilui/Objects.h"/>
     <File Name="include/aprilui/TextMap.h"/>
-    <File Name="include/aprilui/Vector.h"/>
     <File Name="src/Util.h"/>
     <File Name="include/aprilui/AprilUI.h"/>
     <File Name="src/AtresRenderInterface.h"/>
     <File Name="include/aprilui/Animators.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug"/>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -43,8 +42,10 @@
         <LibraryPath Value="../april/bin/Debug"/>
         <LibraryPath Value="../atres/bin/Debug"/>
         <LibraryPath Value="./lib"/>
+        <LibraryPath Value="../gtypes/bin/Debug"/>
         <Library Value="libapril_d"/>
         <Library Value="libatres_d"/>
+        <Library Value="libgtypes_d"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/libaprilui_d.dll" IntermediateDirectory="./bin/Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
@@ -109,6 +110,7 @@
         <IncludePath Value="../april/include"/>
         <IncludePath Value="../atres/include"/>
         <IncludePath Value="./include/aprilui"/>
+        <IncludePath Value="../gtypes/include"/>
         <Preprocessor Value="_WIN32"/>
         <Preprocessor Value="APRILUI_EXPORTS"/>
       </Compiler>
@@ -120,8 +122,4 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="libatres"/>
-    <Project Name="libapril"/>
-  </Dependencies>
 </CodeLite_Project>

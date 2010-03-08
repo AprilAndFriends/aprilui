@@ -41,7 +41,7 @@ namespace AprilUI
 
 		void Mover::update(float k)
 		{
-			Vector v=mParent->getPosition();
+			gtypes::Vector2 v=mParent->getPosition();
 			if (fabs(mAccelX) > 0.01f || fabs(mAccelY) > 0.01f)
 			{
 				mSpeedX+=mAccelX*k;
@@ -90,7 +90,7 @@ namespace AprilUI
 
 		void Scaler::update(float k)
 		{
-			Vector v=mParent->getSize();
+			gtypes::Vector2 v=mParent->getSize();
 			if (fabs(mAccelW) > 0.01f || fabs(mAccelH) > 0.01f)
 			{
 				mSpeedW+=mAccelW*k;
