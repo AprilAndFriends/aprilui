@@ -2,6 +2,7 @@
 #include "Animators.h"
 #include "Util.h"
 #include "Image.h"
+#include <stdlib.h>
 
 namespace AprilUI
 {
@@ -23,7 +24,7 @@ namespace AprilUI
 
 		void Mover::notifyEvent(std::string event_name,void* params)
 		{
-			if (event_name == "AttachToScene")
+			if (event_name == "AttachToObject")
 			{
 				if (mInitialX < -9000)
 				{
@@ -72,7 +73,7 @@ namespace AprilUI
 
 		void Scaler::notifyEvent(std::string event_name,void* params)
 		{
-			if (event_name == "AttachToScene")
+			if (event_name == "AttachToObject")
 			{
 				if (mInitialW < -9000)
 				{
@@ -118,7 +119,7 @@ namespace AprilUI
 
 		void Rotator::notifyEvent(std::string event_name,void* params)
 		{
-			if (event_name == "AttachToScene")
+			if (event_name == "AttachToObject")
 			{
 				if (mInitialAngle < -1000000)
 					mInitialAngle=((RotationImageBox*) mParent)->getAngle();
@@ -156,7 +157,7 @@ namespace AprilUI
 
 		void AlphaFader::notifyEvent(std::string event_name,void* params)
 		{
-			if (event_name == "AttachToScene")
+			if (event_name == "AttachToObject")
 			{
 				if (mInitialAlpha < -10000)
 					mInitialAlpha=mParent->getAlpha();
@@ -209,5 +210,52 @@ namespace AprilUI
 
 			img->setColor(a,r,g,b);
 		}
+		
+		Blinker::Blinker(std::string name) : Object("Animators::Blinker",name,0,0,1,1)
+		{
+			mDelay=mDuration=mTimer=mDelayTimer=mDurationTimer=0;
+			mStartVisibility=mEndVisibility=0;
+			mFrequency=100;
+		}
+
+		void Blinker::setProperty(std::string name,std::string value)
+		{
+			if      (name == "delay")    mDelay=str_to_float(value);
+			else if (name == "duration") mDuration=str_to_float(value);
+			else if (name == "freq")     mFrequency=str_to_float(value);
+			else if (name == "start_visibility") mStartVisibility=(bool) str_to_int(value);
+			else if (name == "end_visibility")   mEndVisibility=(bool) str_to_int(value);
+
+		}
+
+		void Blinker::notifyEvent(std::string event_name,void* params)
+		{
+			if (event_name == "AttachToObject")
+			{
+				mDelayTimer=mDelay;
+				mDurationTimer=mDuration;
+				mParent->setVisible(mStartVisibility);
+			}
+		}
+
+		void Blinker::update(float k)
+		{
+			if (mDelayTimer > 0) mDelayTimer-=k;
+			else if (mDuration >= 0)
+			{
+				mTimer-=k;
+				if (mTimer < 0)
+				{
+					mParent->setVisible(!mParent->isVisible());
+					mTimer=((rand()%10000)/10000.0f)/mFrequency;
+				}
+				mDuration-=k;
+				if (mDuration < 0)
+				{
+					mParent->setVisible(mEndVisibility);
+				}
+			}
+		}
+
 	}
 }
