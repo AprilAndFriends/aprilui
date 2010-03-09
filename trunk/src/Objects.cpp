@@ -387,8 +387,8 @@ namespace AprilUI
 	LabelBase::LabelBase(std::string name) :
 		   mTextColor(1,1,1)
 	{
-		mHorzFormatting=Atres::LEFT;
-		mVertFormatting=VERT_TOP;
+		mHorzFormatting=Atres::CENTER;
+		mVertFormatting=VERT_CENTER;
 		mFontEffect=Atres::NONE;
 		mText="Label: "+name;
 	}

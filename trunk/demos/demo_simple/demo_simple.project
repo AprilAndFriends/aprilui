@@ -15,6 +15,9 @@
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="../../bin/Debug"/>
+        <LibraryPath Value="../../../april/bin/Debug"/>
+        <LibraryPath Value="../../../atres/bin/Debug"/>
+        <LibraryPath Value="../../../gtypes/bin/Debug"/>
         <Library Value="libapril_d"/>
         <Library Value="libaprilui_d"/>
         <Library Value="libatres_d"/>
@@ -78,10 +81,14 @@
     <GlobalSettings>
       <Compiler Options="">
         <IncludePath Value="../../include"/>
+        <IncludePath Value="../../../include"/>
         <IncludePath Value="../../../gtypes/include"/>
+        <IncludePath Value="../../../april/include"/>
+        <IncludePath Value="../../../atres/include"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="../../lib"/>
+        <LibraryPath Value="../../../lib"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
