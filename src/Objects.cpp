@@ -384,8 +384,7 @@ namespace AprilUI
 		return (fabs(mAngle-mDestAngle) > 0.01f);
 	}
 	/********************************************************************************************************/
-	Label::Label(std::string name,float x,float y,float w,float h) :
-		   Object("Label",name,x,y,w,h),
+	LabelBase::LabelBase(std::string name) :
 		   mTextColor(1,1,1)
 	{
 		mHorzFormatting=Atres::LEFT;
@@ -394,28 +393,27 @@ namespace AprilUI
 		mText="Label: "+name;
 	}
 
-	void Label::OnDraw(float offset_x,float offset_y)
+	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
 	{
-		float alpha=getDerivedAlpha(this);
 		Atres::Font* font;
 		try   { font=Atres::getFont(mFontName); }
 		catch (Atres::FontNotFoundException e)
 			  {
 				  throw GenericException(e.repr());
 			  }
-		
-		float fonth=Atres::getWrappedTextHeight(mFontName,mWidth,mText);
+
+		float fonth=Atres::getWrappedTextHeight(mFontName,width,mText);
 		if      (mVertFormatting == VERT_BOTTOM)
-			offset_y+=mHeight-fonth;
+			offset_y+=height-fonth;
 		else if (mVertFormatting == VERT_CENTER)
-			offset_y+=(mHeight-fonth)/2;
+			offset_y+=(height-fonth)/2;
 		
-		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
-		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth/2;
-		if (!isEnabled()) alpha /= 2;
+		if      (mHorzFormatting == Atres::RIGHT)  offset_x+=width;
+		else if (mHorzFormatting == Atres::CENTER) offset_x+=width/2;
+
 		try
 		{
-			Atres::drawWrappedText(mFontName,mX+offset_x,mY+offset_y,mWidth,mText,
+			Atres::drawWrappedText(mFontName,offset_x,offset_y,width,mText,
 				mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
 				mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
 		}
@@ -423,17 +421,10 @@ namespace AprilUI
 		{ throw GenericException(e.repr()); }
 	}
 
-	void Label::setTextKey(std::string key)
+	void LabelBase::setProperty(std::string name,std::string value)
 	{
-		setText(mDataPtr->texts[key]);
-	}
-
-	void Label::setProperty(std::string name,std::string value)
-	{
-		Object::setProperty(name,value);
 		if (name == "font") setFont(value);
 		if (name == "text") setText(value);
-		if (name == "textkey") setTextKey(value);
 		if (name == "horz_formatting")
 		{
 			if (value == "left")  setHorzFormatting(Atres::LEFT);
@@ -453,6 +444,32 @@ namespace AprilUI
 			if (value == "shadow") setFontEffect(Atres::SHADOW);
 			if (value == "border") setFontEffect(Atres::BORDER);
 		}
+	}
+	/********************************************************************************************************/
+	Label::Label(std::string name,float x,float y,float w,float h) :
+			LabelBase(name),
+			Object("Label",name,x,y,w,h)
+	{
+	}
+
+	void Label::OnDraw(float offset_x,float offset_y)
+	{
+		Object::OnDraw(offset_x, offset_y);
+		float alpha=getDerivedAlpha(this);
+		if (!isEnabled()) alpha /= 2;
+		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
+	}
+
+	void Label::setTextKey(std::string key)
+	{
+		setText(mDataPtr->texts[key]);
+	}
+
+	void Label::setProperty(std::string name,std::string value)
+	{
+		LabelBase::setProperty(name,value);
+		Object::setProperty(name,value);
+		if (name == "textkey") setTextKey(value);
 	}
 	/********************************************************************************************************/
 	TextButton::TextButton(std::string name,float x,float y,float w,float h) :
@@ -602,44 +619,19 @@ namespace AprilUI
 	}
 	/********************************************************************************************************/
 	TextImageButton::TextImageButton(std::string name,float x,float y,float w,float h) :
-			ImageButton(name,x,y,w,h),
-			mTextColor(1,1,1)
+			LabelBase(name),
+			ImageButton(name,x,y,w,h)
 	{
 		_setTypeName("TextImageButton");
-		mHorzFormatting=Atres::LEFT;
-		mVertFormatting=VERT_TOP;
-		mFontEffect=Atres::NONE;
 		mText="TextImageButton: "+name;
 	}
 
 	void TextImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		ImageButton::OnDraw(offset_x,offset_y);
+		ImageButton::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha(this);
-		Atres::Font* font;
-		try   { font=Atres::getFont(mFontName); }
-		catch (Atres::FontNotFoundException e)
-			  {
-				  throw GenericException(e.repr());
-			  }
-		
-		float fonth=Atres::getWrappedTextHeight(mFontName,mWidth,mText);
-		if      (mVertFormatting == VERT_BOTTOM)
-			offset_y+=mHeight-fonth;
-		else if (mVertFormatting == VERT_CENTER)
-			offset_y+=(mHeight-fonth)/2;
-		
-		if (mHorzFormatting == Atres::RIGHT) offset_x+=mWidth;
-		if (mHorzFormatting == Atres::CENTER) offset_x+=mWidth/2;
 		if (!isEnabled()) alpha /= 2;
-		try
-		{
-			Atres::drawWrappedText(mFontName,mX+offset_x,mY+offset_y,mWidth,mText,
-				mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-				mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
-		}
-		catch (Atres::FontNotFoundException e)
-		{ throw GenericException(e.repr()); }
+		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
 	void TextImageButton::setTextKey(std::string key)
@@ -649,29 +641,9 @@ namespace AprilUI
 
 	void TextImageButton::setProperty(std::string name,std::string value)
 	{
+		LabelBase::setProperty(name,value);
 		ImageButton::setProperty(name,value);
-		if (name == "font") setFont(value);
-		if (name == "text") setText(value);
 		if (name == "textkey") setTextKey(value);
-		if (name == "horz_formatting")
-		{
-			if (value == "left")  setHorzFormatting(Atres::LEFT);
-			else if (value == "right") setHorzFormatting(Atres::RIGHT);
-			else if (value == "center") setHorzFormatting(Atres::CENTER);
-		}
-		if (name == "vert_formatting")
-		{
-			if (value == "top")    setVertFormatting(VERT_TOP);
-			if (value == "center") setVertFormatting(VERT_CENTER);
-			if (value == "bottom") setVertFormatting(VERT_BOTTOM);
-		}
-		if (name == "color") mTextColor.setHex(value);
-		if (name == "effect")
-		{
-			if (value == "none")   setFontEffect(Atres::NONE);
-			if (value == "shadow") setFontEffect(Atres::SHADOW);
-			if (value == "border") setFontEffect(Atres::BORDER);
-		}
 	}
 	/********************************************************************************************************/
 	Slider::Slider(std::string name,float x,float y,float w,float h) :

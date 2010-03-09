@@ -228,7 +228,7 @@ namespace AprilUI
 		void update(float k);
 	};
 	/*******************************************************************************/
-	class AprilUIExport Label : public Object
+	class LabelBase
 	{
 	protected:
 		std::string mText;
@@ -239,13 +239,12 @@ namespace AprilUI
 		
 		April::Color mTextColor;
 
-		void OnDraw(float offset_x,float offset_y);
+		void _drawLabel(float offset_x,float offset_y,float width,float height,float alpha);
 	public:
-		Label(std::string name,float x,float y,float w,float h);
+		LabelBase(std::string name);
 		
 		std::string getText() { return mText; }
 		void setText(std::string text) { mText=text; }
-		void setTextKey(std::string key);
 		
 		std::string getFont() { return mFontName; }
 		void setFont(std::string font) { mFontName=font; }
@@ -259,10 +258,22 @@ namespace AprilUI
 		void setVertFormatting(VertFormatting f) { mVertFormatting=f; }
 		VertFormatting getVertFormatting() { return mVertFormatting; }
 		
-		void setProperty(std::string name,std::string value);
+		virtual void setProperty(std::string name,std::string value);
 
 		void setTextColor(April::Color color) { mTextColor=color; }
 		April::Color getTextColor() { return mTextColor; }
+	};
+	/*******************************************************************************/
+	class AprilUIExport Label : public Object, public LabelBase
+	{
+	protected:
+		void OnDraw(float offset_x,float offset_y);
+	public:
+		Label(std::string name,float x,float y,float w,float h);
+		
+		void setTextKey(std::string key);
+		void setProperty(std::string name,std::string value);
+
 	};
 	/*******************************************************************************/
 	class AprilUIExport TextButton : public Label
@@ -324,41 +335,16 @@ namespace AprilUI
 		void setProperty(std::string name,std::string value);
 	};
 	/*******************************************************************************/
-	class AprilUIExport TextImageButton : public ImageButton
+	class AprilUIExport TextImageButton : public ImageButton, public LabelBase
 	{
 	protected:
-		std::string mText;
-		std::string mFontName;
-		Atres::Alignment mHorzFormatting;
-		VertFormatting mVertFormatting;
-		Atres::Effect mFontEffect;
-		
-		April::Color mTextColor;
-
 		void OnDraw(float offset_x,float offset_y);
+
 	public:
 		TextImageButton(std::string name,float x,float y,float w,float h);
 		
-		std::string getText() { return mText; }
-		void setText(std::string text) { mText=text; }
 		void setTextKey(std::string key);
-		
-		std::string getFont() { return mFontName; }
-		void setFont(std::string font) { mFontName=font; }
-		
-		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
-		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
-		
-		void setFontEffect(Atres::Effect f) { mFontEffect=f; }
-		Atres::Effect getFontEffect() { return mFontEffect; }
-		
-		void setVertFormatting(VertFormatting f) { mVertFormatting=f; }
-		VertFormatting getVertFormatting() { return mVertFormatting; }
-		
 		void setProperty(std::string name,std::string value);
-
-		void setTextColor(April::Color color) { mTextColor=color; }
-		April::Color getTextColor() { return mTextColor; }
 	};
 	/*******************************************************************************/
 	class AprilUIExport ToggleButton : public ImageButton
