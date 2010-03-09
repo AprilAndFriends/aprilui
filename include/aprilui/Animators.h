@@ -68,6 +68,17 @@ namespace AprilUI
 			void update(float k);
 		};
 
+		class Blinker : public Object
+		{
+			float mDelay,mDuration,mFrequency,mTimer,mDelayTimer,mDurationTimer;
+			bool mStartVisibility,mEndVisibility;
+		public:
+			Blinker(std::string name);
+
+			void notifyEvent(std::string event_name,void* params);
+			void setProperty(std::string name,std::string value);
+			void update(float k);
+		};
 	}
 }
 

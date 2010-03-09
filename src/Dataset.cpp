@@ -207,6 +207,7 @@ namespace AprilUI
 
 
 	#define parse(cls) if (class_name ==  #cls) o=new cls(obj_name,x,y,w,h)
+	#define parse_animator(cls) if (class_name ==  #cls) o=new Animators::cls(obj_name)
 		
 		/*if*/parse(DummyObject);
 		else  parse(ColoredQuad);
@@ -221,11 +222,12 @@ namespace AprilUI
 		else  parse(RotatableImageBox);
 		else if (XML_EQ(node,"Animator"))
 		{
-			if      (class_name == "Mover")           o=new Animators::Mover(obj_name);
-			else if (class_name == "Scaler")          o=new Animators::Scaler(obj_name);
-			else if (class_name == "Rotator")         o=new Animators::Rotator(obj_name);
-			else if (class_name == "ColorAlternator") o=new Animators::ColorAlternator(obj_name);
-			else if (class_name == "AlphaFader")      o=new Animators::AlphaFader(obj_name);
+			/*if*/parse_animator(Mover);
+			else  parse_animator(Scaler);
+			else  parse_animator(Rotator);
+			else  parse_animator(ColorAlternator);
+			else  parse_animator(AlphaFader);
+			else  parse_animator(Blinker);
 			else o=parseExternalObjectClass(node,obj_name,x,y,w,h);
 		}
 		else o=parseExternalObjectClass(node,obj_name,x,y,w,h);
