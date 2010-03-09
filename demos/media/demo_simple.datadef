@@ -5,10 +5,9 @@
 		<Image name="center2" x="0" y="0" w="128" h="128" tile_w="-128" tile_h="-135"/>
     </Texture>
 	<Object type="DummyObject" name="root" x="0" y="0" w="800" h="600">
+		<Object type="TextButton" text="test_text_j" font="Arial" x="250" y="150" w="150" h="24"/>
+		<Object type="TextImageButton" text="test_text_j" image="texture/center2" font="Arial" x="250" y="250" w="150" h="24"/>
 
-		<Object type="ImageBox" name="obj03" image="texture/center2" x="200" y="100" w="400" h="400">
-		    <Animator type="Scaler" speed_w="0" speed_h="0"/>
-		</Object>
 	</Object>
 </DataDefinition>
 
