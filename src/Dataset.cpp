@@ -347,12 +347,8 @@ namespace AprilUI
 	
 	April::Texture* Dataset::getTexture(std::string name)
 	{
-		April::Texture* t;
-	
-		t=mTextures[name];
-
-		if (!t) throw ResourceNotExistsException(name,"Texture",this);
-		return t;
+		if (mTextures.find(name) == mTextures.end()) throw ResourceNotExistsException(name,"Texture",this);
+		return mTextures[name];
 	}
 
 	Image* Dataset::getImage(std::string name)
@@ -395,6 +391,7 @@ namespace AprilUI
 
 	void Dataset::update(float k)
 	{
-
+		foreach_in_map(April::Texture*,mTextures)
+			it->second->update(k);
 	}
 }
