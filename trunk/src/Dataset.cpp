@@ -85,23 +85,16 @@ namespace AprilUI
 		std::string filename=xmlGetPropString(node,"filename");
 		int slash=filename.find("/")+1;
 		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
-		int w=0,h=0;
 		if (mTextures[tex_name]) throw ObjectExistsException(filename);
 
 		bool prefix_images=1,dynamic_load=0;
 		try { prefix_images=xmlGetPropInt(node,"prefix_images"); } catch (_XMLException) { }
-		try
-		{
-			dynamic_load=xmlGetPropInt(node,"dynamic_load");
-			w=xmlGetPropInt(node,"w");
-			h=xmlGetPropInt(node,"h");
-		}
+		try { dynamic_load=xmlGetPropInt(node,"dynamic_load"); }
 		catch (_XMLException) { }
 		
 		April::Texture* t=rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
 		mTextures[tex_name]=t;
-		if (dynamic_load) t->_setDimensions(w,h);
 		// extract image definitions
 		if (node->xmlChildrenNode == 0) // if there are no images defined, create one that fills the whole area
 		{
@@ -157,6 +150,24 @@ namespace AprilUI
 		}
 		
 	}
+
+	void Dataset::parseRAMTexture(_xmlNode* node)
+	{
+		std::string filename=xmlGetPropString(node,"filename");
+		int slash=filename.find("/")+1;
+		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
+		if (mTextures[tex_name]) throw ObjectExistsException(filename);
+
+		bool dynamic_load=0;
+		try   { dynamic_load=xmlGetPropInt(node,"dynamic_load"); }
+		catch (_XMLException) { }
+		
+		April::Texture* t=rendersys->loadRAMTexture(mFilenamePrefix+"/"+filename,dynamic_load);
+		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
+		mTextures[tex_name]=t;
+	
+	}
+
 
 	void Dataset::parseExternalXMLNode(_xmlNode* node)
 	{
@@ -275,6 +286,7 @@ namespace AprilUI
 		for (xmlNodePtr p = cur->xmlChildrenNode; p != 0; p=p->next)
 		{
 			if      (XML_EQ(p,"Texture")) parseTexture(p);
+			else if (XML_EQ(p,"RAMTexture")) parseRAMTexture(p);
 			else if (XML_EQ(p,"Object")) parseObject(p);
 			else if (p->type !=  XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
 				     parseExternalXMLNode(p);
