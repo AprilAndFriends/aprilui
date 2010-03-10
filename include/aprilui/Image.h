@@ -37,6 +37,7 @@ namespace AprilUI
 		float mSourceX, mSourceY, mSourceW, mSourceH;
 		April::BlendMode mBlendMode;
 		bool mVertical,mUnloadedFlag;
+		
 		void updateTexCoords();
 	public:
 		
@@ -100,7 +101,6 @@ namespace AprilUI
 		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 	};
-
 
 	class AprilUIExport NullImage : public Image
 	{
