@@ -247,7 +247,7 @@ namespace AprilUI
 		struct dirent *dirp;
 		if((dp  = opendir(dir.c_str())) == NULL) {
 			//std::cout << "Error(" << errno << ") opening " << dir << std::endl;
-			return errno;
+			return 1;
 		}
 
 		std::string x;
