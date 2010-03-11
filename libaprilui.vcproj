@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="libaprilui"
-	ProjectGUID="{A1E808A0-FE36-47FE-9E3B-CF195EA31F0A}"
+	ProjectGUID="{04EE1F5A-BCC4-4A75-B3AA-7DA3BA827897}"
 	RootNamespace="libaprilui"
 	TargetFrameworkVersion="196613"
 	>
@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="2"
