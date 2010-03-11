@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Project Name="demo_simple" InternalType="Console">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0011Linux_Debug000000000000]]>
+    </Plugin>
+  </Plugins>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="demo_simple.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Release">
+    <Project Name="libaprilui"/>
+  </Dependencies>
+  <Dependencies Name="Debug">
     <Project Name="libaprilui"/>
   </Dependencies>
   <Settings Type="Executable">
@@ -30,6 +38,47 @@
       </Debugger>
       <PreBuild/>
       <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+    </Configuration>
+    <Configuration Name="Linux_Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" Required="yes" PreCompiledHeader="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <LibraryPath Value="../../bin/Linux_Debug"/>
+        <LibraryPath Value="../../../april/bin/Linux_Debug"/>
+        <LibraryPath Value="../../../atres/bin/Linux_Debug"/>
+        <LibraryPath Value="../../../gtypes/bin/Linux_Debug"/>
+        <Library Value="libgtypes_d"/>
+        <Library Value="libapril_d"/>
+        <Library Value="libaprilui_d"/>
+        <Library Value="libatres_d"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/Linux_Debug" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild>
+        <Command Enabled="yes">cp ../../../gtypes/bin/Linux_Debug/libgtypes_d.so ../../bin/Linux_Debug/libgtypes_d.so</Command>
+        <Command Enabled="yes">cp ../../../april/bin/Linux_Debug/libapril_d.so ../../bin/Linux_Debug/libapril_d.so</Command>
+        <Command Enabled="yes">cp ../../../atres/bin/Linux_Debug/libatres_d.so ../../bin/Linux_Debug/libatres_d.so</Command>
+      </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -93,7 +142,5 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="libaprilui"/>
-  </Dependencies>
+  <Dependencies Name="Linux_Debug"/>
 </CodeLite_Project>
