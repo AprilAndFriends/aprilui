@@ -19,9 +19,6 @@
   <VirtualDirectory Name="data">
     <File Name="../media/demo_simple.datadef"/>
   </VirtualDirectory>
-  <Dependencies Name="Linux_Debug">
-    <Project Name="libaprilui"/>
-  </Dependencies>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="">
@@ -148,4 +145,7 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
+  <Dependencies Name="Linux_Debug">
+    <Project Name="libaprilui"/>
+  </Dependencies>
 </CodeLite_Project>

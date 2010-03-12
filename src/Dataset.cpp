@@ -85,7 +85,7 @@ namespace AprilUI
 		std::string filename=xmlGetPropString(node,"filename");
 		int slash=filename.find("/")+1;
 		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
-		if (mTextures[tex_name]) throw ObjectExistsException(filename);
+		if (mTextures.find(tex_name) != mTextures.end()) throw ObjectExistsException(filename);
 
 		bool prefix_images=1,dynamic_load=0;
 		try { prefix_images=xmlGetPropInt(node,"prefix_images"); } catch (_XMLException) { }
@@ -98,7 +98,7 @@ namespace AprilUI
 		// extract image definitions
 		if (node->xmlChildrenNode == 0) // if there are no images defined, create one that fills the whole area
 		{
-			if (mImages[tex_name]) throw ResourceExistsException(filename,"April::Texture",this);	
+			if (mImages.find(tex_name) != mImages.end()) throw ResourceExistsException(filename,"April::Texture",this);	
 			mImages[tex_name]=new Image(t,filename,0,0,t->getWidth(),t->getHeight());
 		}
 		else
@@ -110,7 +110,7 @@ namespace AprilUI
 					std::string name;
 					if (prefix_images) name=tex_name+"/"+xmlGetPropString(node,"name");
 					else               name=xmlGetPropString(node,"name");
-					if (mImages[name]) throw ResourceExistsException(name,"Image",this);
+					if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"Image",this);
 					float x=xmlGetPropFloat(node,"x"), y=xmlGetPropFloat(node,"y"),
 						  w=xmlGetPropFloat(node,"w"), h=xmlGetPropFloat(node,"h");
 					
@@ -230,7 +230,7 @@ namespace AprilUI
 		else if (XML_EQ(node,"Animator")) obj_name=generateName("Animator");
 
 		
-		if (mObjects[obj_name])
+		if (mObjects.find(obj_name) != mObjects.end())
 			throw ResourceExistsException(obj_name,"Object",this);
 
 		Object* o;
@@ -346,14 +346,14 @@ namespace AprilUI
 
 	void Dataset::registerManualObject(Object* o)
 	{
-		if (mObjects[o->getName()]) throw ResourceExistsException(o->getName(),"Object",this);
+		if (mObjects.find(o->getName()) != mObjects.end()) throw ResourceExistsException(o->getName(),"Object",this);
 		mObjects[o->getName()]=o;
 		o->_setDataset(this);
 	}
 
 	void Dataset::unregisterManualObject(Object* o)
 	{
-		if (!mObjects[o->getName()]) throw ResourceNotExistsException(o->getName(),"Object",this);
+		if (mObjects.find(o->getName()) == mObjects.end()) throw ResourceNotExistsException(o->getName(),"Object",this);
 		mObjects.erase(o->getName());
 		o->_setDataset(NULL);
 	}
