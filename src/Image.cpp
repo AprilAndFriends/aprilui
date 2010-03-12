@@ -98,7 +98,6 @@ namespace AprilUI
 
 	void Image::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
 	{
-
 		mVertices[0].x=-dw/2; mVertices[0].y=-dh/2;
 		mVertices[1].x= dw/2; mVertices[1].y=-dh/2;
 		mVertices[2].x= dw/2; mVertices[2].y= dh/2;
@@ -289,7 +288,36 @@ namespace AprilUI
 		
 	}
 
+
+	CompositeImage::CompositeImage(std::string name,float sw,float sh) : Image(0,name,0,0,sw,sh)
+	{
+		
+	}
 	
+	void CompositeImage::addImageRef(Image* img,float x,float y,float w,float h)
+	{
+		ImageRef ref;
+		ref.img=img;
+		ref.x=x; ref.y=y; ref.w=w; ref.h=h;
+		
+		mImages.push_back(ref);
+	}
+
+	
+	void CompositeImage::draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a)
+	{
+		float xf=dw/mSourceW,yf=dh/mSourceH;
+		foreach_v(ImageRef,mImages)
+		{
+			it->img->draw(dx+it->x*xf,dy+it->y*yf,it->w*xf,it->h*yf,r,g,b,a);
+		}
+	}
+	
+	void CompositeImage::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
+	{
+		
+	}
+
 
 	ColorImage::ColorImage(std::string name) : Image(0,name,0,0,0,0,0)
 	{

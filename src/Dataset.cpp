@@ -156,7 +156,7 @@ namespace AprilUI
 		std::string filename=xmlGetPropString(node,"filename");
 		int slash=filename.find("/")+1;
 		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
-		if (mTextures[tex_name]) throw ObjectExistsException(filename);
+		if (mTextures.find(tex_name) != mTextures.end()) throw ResourceExistsException(filename,"RAMTexture",this);
 
 		bool dynamic_load=0;
 		try   { dynamic_load=xmlGetPropInt(node,"dynamic_load"); }
@@ -166,6 +166,26 @@ namespace AprilUI
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
 		mTextures[tex_name]=t;
 	
+	}
+	
+	void Dataset::parseCompositeImage(_xmlNode* node)
+	{
+		std::string name=xmlGetPropString(node,"name"),refname;
+		if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"CompositeImage",this);
+
+		CompositeImage* img=new CompositeImage(name,xmlGetPropFloat(node,"w"),xmlGetPropFloat(node,"h"));
+		
+		for (node = node->xmlChildrenNode; node != 0; node=node->next)
+		{
+			if (XML_EQ(node,"ImageRef"))
+			{
+				refname=xmlGetPropString(node,"name");
+				img->addImageRef(getImage(refname),xmlGetPropFloat(node,"x"),xmlGetPropFloat(node,"y"),
+				                                   xmlGetPropFloat(node,"w"),xmlGetPropFloat(node,"h"));
+			}
+		}
+		
+		mImages[name]=img;
 	}
 
 
@@ -287,6 +307,7 @@ namespace AprilUI
 		{
 			if      (XML_EQ(p,"Texture")) parseTexture(p);
 			else if (XML_EQ(p,"RAMTexture")) parseRAMTexture(p);
+			else if (XML_EQ(p,"CompositeImage")) parseCompositeImage(p);
 			else if (XML_EQ(p,"Object")) parseObject(p);
 			else if (p->type !=  XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
 				     parseExternalXMLNode(p);

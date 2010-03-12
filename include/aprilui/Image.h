@@ -24,6 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "AprilUIExport.h"
 
 #include <string>
+#include <vector>
 
 namespace AprilUI
 {
@@ -72,7 +73,7 @@ namespace AprilUI
 		void setColor(float a,float r,float g,float b);
 	};
 
-	class AprilUIExport TiledImage  : public Image
+	class AprilUIExport TiledImage : public Image
 	{
 		float mTileW,mTileH,mScrollX,mScrollY;
 	public:
@@ -89,6 +90,24 @@ namespace AprilUI
 		float getScrollX() { return mScrollX; }
 		float getScrollY() { return mScrollY; }	
 
+		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
+		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
+	};
+	
+
+	class AprilUIExport CompositeImage : public Image
+	{
+		struct ImageRef
+		{
+			Image* img;
+			float x,y,w,h;		
+		};
+		std::vector<ImageRef> mImages;
+	public:
+		CompositeImage(std::string name,float sw,float sh);
+		
+		void addImageRef(Image* img,float x,float y,float w,float h);
+		
 		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 	};

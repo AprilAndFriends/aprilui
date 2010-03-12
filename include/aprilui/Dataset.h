@@ -56,6 +56,7 @@ namespace AprilUI
 
 		void parseTexture(_xmlNode* node);
 		void parseRAMTexture(_xmlNode* node);
+		void parseCompositeImage(_xmlNode* node);
 		virtual void parseExternalXMLNode(_xmlNode* node);
 		virtual Object* parseExternalObjectClass(_xmlNode* node,std::string obj_name,float x,float y,float w,float h);
 		
