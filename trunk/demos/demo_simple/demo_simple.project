@@ -16,7 +16,27 @@
   <Dependencies Name="Debug">
     <Project Name="libaprilui"/>
   </Dependencies>
+  <VirtualDirectory Name="data">
+    <File Name="../media/demo_simple.datadef"/>
+  </VirtualDirectory>
+  <Dependencies Name="Linux_Debug">
+    <Project Name="libaprilui"/>
+  </Dependencies>
   <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="../../include"/>
+        <IncludePath Value="../../../include"/>
+        <IncludePath Value="../../../gtypes/include"/>
+        <IncludePath Value="../../../april/include"/>
+        <IncludePath Value="../../../atres/include"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="../../lib"/>
+        <LibraryPath Value="../../../lib"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <IncludePath Value="."/>
@@ -127,20 +147,5 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
-    <GlobalSettings>
-      <Compiler Options="">
-        <IncludePath Value="../../include"/>
-        <IncludePath Value="../../../include"/>
-        <IncludePath Value="../../../gtypes/include"/>
-        <IncludePath Value="../../../april/include"/>
-        <IncludePath Value="../../../atres/include"/>
-      </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="../../lib"/>
-        <LibraryPath Value="../../../lib"/>
-      </Linker>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
   </Settings>
-  <Dependencies Name="Linux_Debug"/>
 </CodeLite_Project>
