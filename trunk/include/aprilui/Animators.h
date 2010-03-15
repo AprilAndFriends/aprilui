@@ -79,6 +79,19 @@ namespace AprilUI
 			void setProperty(std::string name,std::string value);
 			void update(float k);
 		};
+		
+		class FrameAnimation : public Object
+		{
+			std::string mImageBaseName;
+			int mStartFrame,mEndFrame;
+			float mAnimationTime,mTimer;
+		public:
+			FrameAnimation(std::string name);
+
+			void notifyEvent(std::string event_name,void* params);
+			void setProperty(std::string name,std::string value);
+			void update(float k);
+		};
 	}
 }
 

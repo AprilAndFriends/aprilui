@@ -257,5 +257,40 @@ namespace AprilUI
 			}
 		}
 
+		FrameAnimation::FrameAnimation(std::string name) : Object("Animators::FrameAnimation",name,0,0,1,1)
+		{
+			mStartFrame=0; mEndFrame=100;
+			mAnimationTime=10;
+			mTimer=0;
+		}
+
+		void FrameAnimation::setProperty(std::string name,std::string value)
+		{
+			if      (name == "start_frame") mStartFrame=str_to_int(value);
+			else if (name == "end_frame")   mEndFrame=str_to_int(value);
+			else if (name == "time")        mAnimationTime=str_to_float(value);
+			else if (name == "base_name")   mImageBaseName=value;
+		}
+
+		void FrameAnimation::notifyEvent(std::string event_name,void* params)
+		{
+			if (event_name == "AttachToObject")
+			{
+				mTimer=0;
+			}
+		}
+
+		void FrameAnimation::update(float k)
+		{
+			mTimer+=k;
+			if (mTimer >= mAnimationTime) mTimer-=mAnimationTime;
+			int frame=mStartFrame+(int) ((mEndFrame-mStartFrame)*mTimer/mAnimationTime);
+			ImageBox* img=dynamic_cast<ImageBox*>(mParent);
+			if (img)
+			{
+				img->setImageByName(mImageBaseName+str(frame));
+			}
+			else writelog("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+		}
 	}
 }

@@ -38,7 +38,7 @@ namespace AprilUI
 	
 		mBlendMode=April::ALPHA_BLEND;
 		mVertical=vertical;
-		mUnloadedFlag=0;
+		mUnloadedFlag=mInvertX=mInvertY=0;
 
 		updateTexCoords();
 		mVertices[0].z=mVertices[1].z=mVertices[2].z=mVertices[3].z=0;
