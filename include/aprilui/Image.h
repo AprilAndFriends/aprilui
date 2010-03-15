@@ -37,7 +37,7 @@ namespace AprilUI
 		std::string mImageName;
 		float mSourceX, mSourceY, mSourceW, mSourceH;
 		April::BlendMode mBlendMode;
-		bool mVertical,mUnloadedFlag;
+		bool mVertical,mUnloadedFlag,mInvertX,mInvertY;
 		
 		void updateTexCoords();
 	public:
@@ -100,7 +100,7 @@ namespace AprilUI
 		struct ImageRef
 		{
 			Image* img;
-			float x,y,w,h;		
+			float x,y,w,h;
 		};
 		std::vector<ImageRef> mImages;
 	public:

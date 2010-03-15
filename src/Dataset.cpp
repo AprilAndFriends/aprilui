@@ -259,6 +259,7 @@ namespace AprilUI
 			else  parse_animator(ColorAlternator);
 			else  parse_animator(AlphaFader);
 			else  parse_animator(Blinker);
+			else  parse_animator(FrameAnimation);
 			else o=parseExternalObjectClass(node,obj_name,x,y,w,h);
 		}
 		else o=parseExternalObjectClass(node,obj_name,x,y,w,h);
