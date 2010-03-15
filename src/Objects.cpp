@@ -529,7 +529,8 @@ namespace AprilUI
 		if (!mEnabled)
 		{
 			if (!mDisabledImage) mDisabledImage=mDataPtr->getImage("null");
-			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,1);
+			float alpha=getDerivedAlpha(this);
+			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,alpha);
 		}
 		else if (mImage) ImageBox::OnDraw(offset_x,offset_y);
 		else
