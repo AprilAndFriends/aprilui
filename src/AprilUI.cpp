@@ -60,6 +60,12 @@ namespace AprilUI
 		if (register_lock) return;
 		g_datasets.erase(name);
 	}
+	
+	void update(float time_increase)
+	{
+		for (std::map<std::string,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
+			it2->second->update(time_increase);
+	}
 
 	void destroy()
 	{
@@ -70,8 +76,6 @@ namespace AprilUI
 			delete it->second;
 		
 		for (std::map<std::string,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
-		{
 			delete it2->second;
-		}
 	}
 }
