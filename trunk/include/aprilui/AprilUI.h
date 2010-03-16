@@ -32,6 +32,7 @@ namespace AprilUI
 	void AprilUIExport destroy();
 	
 	Dataset* AprilUIExport getDatasetByName(std::string name);
+	void AprilUIExport update(float time_increase);
 }
 
 #endif

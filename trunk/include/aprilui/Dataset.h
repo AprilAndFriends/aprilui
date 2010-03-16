@@ -82,7 +82,7 @@ namespace AprilUI
 
 		
 
-		void update(float k);
+		virtual void update(float k);
 		
 		void _destroyTexture(std::string tex);
 		void _destroyImage(std::string img);
