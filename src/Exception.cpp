@@ -61,14 +61,14 @@ namespace AprilUI
 													   Dataset* dict,std::string file,int line) :
 							  _GenericException("","ResourceExistsException",file,line)
 	{
-		mErrText=class_name+" already exists: "+object_name+" in data dictionary "+dict->getName();
+		mErrText=class_name+" already exists: "+object_name+" in dataset "+dict->getName();
 	}
 
 	_ResourceNotExistsException::_ResourceNotExistsException(const std::string object_name,std::string class_name,
 														  Dataset* dict,std::string file,int line) :
 								 _GenericException("","ResourceNotExistsException",file,line)
 	{
-		mErrText=class_name+" doesn't exist: "+object_name+" in data dictionary "+dict->getName();
+		mErrText=class_name+" doesn't exist: "+object_name+" in dataset "+dict->getName();
 	}
 
 	_ObjectHasParentException::_ObjectHasParentException(const std::string child,std::string parent,

@@ -335,7 +335,7 @@ namespace AprilUI
 
 	void Dataset::unload()
 	{
-		if (!mLoaded) throw GenericException("Unable to unload data dictionary '"+getName()+"', data not loaded!");
+		if (!mLoaded) throw GenericException("Unable to unload dataset '"+getName()+"', data not loaded!");
 
 		foreach_in_map(Object*,mObjects)          delete it->second; mObjects.clear();
 		foreach_in_map(Image*,mImages)            delete it->second; mImages.clear();
@@ -389,8 +389,10 @@ namespace AprilUI
 			int dot=name.find(".");
 			if (dot > -1)
 			{
-				Dataset* d=getDatasetByName(name.substr(0,dot));
-				if (!d) throw ResourceNotExistsException(name.substr(0,dot),"Dataset",this);
+				
+				Dataset* d;
+				try { d=getDatasetByName(name.substr(0,dot)); }
+				catch (_GenericException) { throw ResourceNotExistsException(name,"Image",this); }
 				return d->getImage(name.substr(dot+1,100));
 			}
 			else throw ResourceNotExistsException(name,"Image",this);

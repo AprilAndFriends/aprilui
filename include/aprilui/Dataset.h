@@ -18,8 +18,8 @@ this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 Place - Suite 330, Boston, MA 02111-1307, USA, or go to
 http://www.gnu.org/copyleft/lesser.txt.
 *************************************************************************************/
-#ifndef DATA_DICTIONARY_H
-#define DATA_DICTIONARY_H
+#ifndef DATASET_H
+#define DATASET_H
 
 #include <map>
 #include <string>
