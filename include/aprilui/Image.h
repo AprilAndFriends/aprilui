@@ -42,11 +42,15 @@ namespace AprilUI
 		void updateTexCoords();
 	public:
 		
-		Image(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical=false);
+		Image(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical=0,bool invertx=0,bool inverty=0);
 		virtual ~Image();
 		virtual void draw(float dx,float dy,float dw=-1,float dh=-1,float r=1,float g=1,float b=1,float a=1);
 		virtual void draw(float centerx,float centery,float dw,float dh,float angle);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
+		
+		bool isVertical() { return mVertical; };
+		bool isXInverted() { return mInvertX; };
+		bool isYInverted() { return mInvertY; };
 
 		April::Texture* getTexture();
 		std::string getName() const { return mName; }
@@ -64,7 +68,7 @@ namespace AprilUI
 	{
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
-		ColoredImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical=false,unsigned int color=0xFFFFFF);
+		ColoredImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical=false,unsigned int color=0xFFFFFF);
 		void draw(float dx,float dy,float dw=-1,float dh=-1,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 
@@ -77,7 +81,7 @@ namespace AprilUI
 	{
 		float mTileW,mTileH,mScrollX,mScrollY;
 	public:
-		TiledImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh);
+		TiledImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh);
 		void setTileW(float tile) { mTileW=tile; }
 		void setTileH(float tile) { mTileW=tile; }
 		void setTiles(float tilew,float tileh) { mTileW=tilew; mTileH=tileh; }
@@ -97,26 +101,31 @@ namespace AprilUI
 
 	class AprilUIExport CompositeImage : public Image
 	{
+	public:
 		struct ImageRef
 		{
 			Image* img;
 			float x,y,w,h;
 		};
+	protected:
 		std::vector<ImageRef> mImages;
 	public:
-		CompositeImage(std::string name,float sw,float sh);
+		CompositeImage(const std::string& name,float sw,float sh);
+		CompositeImage(const std::string& name,CompositeImage& base);
 		
 		void addImageRef(Image* img,float x,float y,float w,float h);
 		
 		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
+		
+		const std::vector<ImageRef>& getImageList() { return mImages; }
 	};
 	
 	class AprilUIExport ColorImage : public Image
 	{
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
-		ColorImage(std::string name);
+		ColorImage(const std::string& name);
 		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 	};

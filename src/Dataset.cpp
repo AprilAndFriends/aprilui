@@ -114,9 +114,11 @@ namespace AprilUI
 					float x=xmlGetPropFloat(node,"x"), y=xmlGetPropFloat(node,"y"),
 						  w=xmlGetPropFloat(node,"w"), h=xmlGetPropFloat(node,"h");
 					
-					bool vertical=0;
+					bool vertical=0,invertx=0,inverty=0;
 					float tile_w=1,tile_h=1;
 					try { vertical=xmlGetPropInt(node,"vertical"); } catch (_XMLException) { }
+					try { invertx=xmlGetPropInt(node,"invertx"); } catch (_XMLException) { }
+					try { inverty=xmlGetPropInt(node,"inverty"); } catch (_XMLException) { }
 					
 					try   { tile_w=xmlGetPropFloat(node,"tile_w"); }
 					catch (_XMLException) { }
@@ -133,7 +135,7 @@ namespace AprilUI
 						}
 						catch (_XMLException)
 						{
-							i=new Image(t,name,x,y,w,h,vertical);    
+							i=new Image(t,name,x,y,w,h,vertical,invertx,inverty);    
 						}
 					}
 					try
@@ -357,6 +359,18 @@ namespace AprilUI
 		if (mObjects.find(o->getName()) == mObjects.end()) throw ResourceNotExistsException(o->getName(),"Object",this);
 		mObjects.erase(o->getName());
 		o->_setDataset(NULL);
+	}
+	
+	void Dataset::registerManualImage(Image* img)
+	{
+		if (mImages.find(img->getName()) != mImages.end()) throw ResourceExistsException(img->getName(),"Image",this);
+		mImages[img->getName()]=img;
+	}
+	
+	void Dataset::unregisterManualImage(Image* img)
+	{
+		if (mImages.find(img->getName()) == mImages.end()) throw ResourceNotExistsException(img->getName(),"Image",this);
+		mImages.erase(img->getName());
 	}
 
 	Object* Dataset::getObject(std::string name)

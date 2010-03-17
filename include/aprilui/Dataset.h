@@ -76,6 +76,8 @@ namespace AprilUI
 		bool isLoaded() { return mLoaded; }
 		void registerManualObject(Object* o);
 		void unregisterManualObject(Object* o);
+		void registerManualImage(Image* img);
+		void unregisterManualImage(Image* img);
 
 		void registerCallback(std::string name,void (*callback)());
 		void triggerCallback(std::string name);

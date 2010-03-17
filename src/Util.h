@@ -59,9 +59,9 @@ namespace AprilUI
 	std::string pathGetFilename(std::string path,bool with_suffix=1);
 	std::string pathGetBaseDir(std::string path);
 
-	int hexstr_to_int(std::string s);
-	void hexstr_to_argb(std::string& hex,byte* a,byte* r,byte* g,byte* b);
-	void hexstr_to_argb_float(std::string& hex,float* a,float* r,float* g,float* b);
+	int hexstr_to_int(const std::string& s);
+	void hexstr_to_argb(const std::string& hex,byte* a,byte* r,byte* g,byte* b);
+	void hexstr_to_argb_float(const std::string& hex,float* a,float* r,float* g,float* b);
 
 	float Sin(float angle);
 	float Cos(float angle);
