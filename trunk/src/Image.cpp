@@ -26,7 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 
 namespace AprilUI
 {
-	Image::Image(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical)
+	Image::Image(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,bool invertx,bool inverty)
 	{
 		mTexture=tex;
 		mName=name;
@@ -35,10 +35,12 @@ namespace AprilUI
 		mSourceY=sy;
 		mSourceW=sw;
 		mSourceH=sh;
-	
+
 		mBlendMode=April::ALPHA_BLEND;
 		mVertical=vertical;
-		mUnloadedFlag=mInvertX=mInvertY=0;
+		mUnloadedFlag=0;
+		mInvertX=invertx;
+		mInvertY=inverty;
 
 		updateTexCoords();
 		mVertices[0].z=mVertices[1].z=mVertices[2].z=mVertices[3].z=0;
@@ -59,15 +61,27 @@ namespace AprilUI
 			{
 				mVertices[0].u=(mSourceX+mSourceH)/w; mVertices[0].v=mSourceY/h;
 				mVertices[1].u=(mSourceX+mSourceH)/w; mVertices[1].v=(mSourceY+mSourceW)/h;
-				mVertices[2].u=(mSourceX)/w;          mVertices[2].v=(mSourceY+mSourceW)/h;
-				mVertices[3].u=(mSourceX)/w;          mVertices[3].v=mSourceY/h;
+				mVertices[2].u=(mSourceX)/w;          mVertices[2].v=mSourceY/h;
+				mVertices[3].u=(mSourceX)/w;          mVertices[3].v=(mSourceY+mSourceW)/h;
 			}
 			else
 			{
 				mVertices[0].u=mSourceX/w;            mVertices[0].v=mSourceY/h;
 				mVertices[1].u=(mSourceX+mSourceW)/w; mVertices[1].v=mSourceY/h;
-				mVertices[2].u=(mSourceX+mSourceW)/w; mVertices[2].v=(mSourceY+mSourceH)/h;
-				mVertices[3].u=mSourceX/w;            mVertices[3].v=(mSourceY+mSourceH)/h;
+				mVertices[2].u=mSourceX/w;            mVertices[2].v=(mSourceY+mSourceH)/h;
+				mVertices[3].u=(mSourceX+mSourceW)/w; mVertices[3].v=(mSourceY+mSourceH)/h;
+			}
+			if (mInvertX)
+			{
+				float t;
+				t=mVertices[0].u; mVertices[0].u=mVertices[1].u; mVertices[1].u=t;
+				t=mVertices[2].u; mVertices[2].u=mVertices[3].u; mVertices[3].u=t;
+			}
+			if (mInvertY)
+			{
+				float t;
+				t=mVertices[0].v; mVertices[0].v=mVertices[2].v; mVertices[2].v=t;
+				t=mVertices[1].v; mVertices[1].v=mVertices[3].v; mVertices[3].v=t;
 			}
 		}
 	}
@@ -79,8 +93,9 @@ namespace AprilUI
 
 		mVertices[0].x=dx;    mVertices[0].y=dy;
 		mVertices[1].x=dx+dw; mVertices[1].y=dy;
-		mVertices[2].x=dx+dw; mVertices[2].y=dy+dh;
-		mVertices[3].x=dx;    mVertices[3].y=dy+dh;
+		mVertices[2].x=dx;    mVertices[2].y=dy+dh;
+		mVertices[3].x=dx+dw; mVertices[3].y=dy+dh;
+		
 		
 		rendersys->setTexture(mTexture);
 		if (mUnloadedFlag && mTexture->isLoaded())
@@ -90,9 +105,9 @@ namespace AprilUI
 		}
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
 		if (r != 1 || g != 1 || b != 1 || a != 1)
-			rendersys->render(April::TriangleFan,mVertices,4,r,g,b,a);
+			rendersys->render(April::TriangleStrip,mVertices,4,r,g,b,a);
 		else
-			rendersys->render(April::TriangleFan,mVertices,4);
+			rendersys->render(April::TriangleStrip,mVertices,4);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
 	}
 
@@ -100,8 +115,9 @@ namespace AprilUI
 	{
 		mVertices[0].x=-dw/2; mVertices[0].y=-dh/2;
 		mVertices[1].x= dw/2; mVertices[1].y=-dh/2;
-		mVertices[2].x= dw/2; mVertices[2].y= dh/2;
-		mVertices[3].x=-dw/2; mVertices[3].y= dh/2;
+		mVertices[2].x=-dw/2; mVertices[2].y= dh/2;
+		mVertices[3].x= dw/2; mVertices[3].y= dh/2;
+		
 		
 		rendersys->pushTransform();
 		rendersys->setIdentityTransform();
@@ -110,9 +126,9 @@ namespace AprilUI
 		rendersys->setTexture(mTexture);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
 		if (r != 1 || g != 1 || b != 1 || a != 1)
-			rendersys->render(April::TriangleFan,mVertices,4,r,g,b,a);
+			rendersys->render(April::TriangleStrip,mVertices,4,r,g,b,a);
 		else
-			rendersys->render(April::TriangleFan,mVertices,4);
+			rendersys->render(April::TriangleStrip,mVertices,4);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
 		rendersys->popTransform();
 	}
@@ -127,7 +143,7 @@ namespace AprilUI
 		return mTexture;
 	}
 	
-	ColoredImage::ColoredImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
+	ColoredImage::ColoredImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
 				  Image(tex,name,sx,sy,sw,sh,vertical)
 	{
 		if (color > 0xFFFFFF)
@@ -155,7 +171,7 @@ namespace AprilUI
 	}
 
 
-	TiledImage::TiledImage(April::Texture* tex,std::string name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh) :
+	TiledImage::TiledImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh) :
 				  Image(tex,name,sx,sy,sw,sh,vertical)
 	{
 		mTileW=tilew; mTileH=tileh;
@@ -289,9 +305,15 @@ namespace AprilUI
 	}
 
 
-	CompositeImage::CompositeImage(std::string name,float sw,float sh) : Image(0,name,0,0,sw,sh)
+	CompositeImage::CompositeImage(const std::string& name,float sw,float sh) : Image(0,name,0,0,sw,sh)
 	{
 		
+	}
+	
+	CompositeImage::CompositeImage(const std::string& name,CompositeImage& base) : Image(0,name,0,0,base.getSourceW(),base.getSourceH())
+	{
+		foreach_v(ImageRef,base.mImages)
+			addImageRef(it->img,it->x,it->y,it->w,it->h);
 	}
 	
 	void CompositeImage::addImageRef(Image* img,float x,float y,float w,float h)
@@ -319,7 +341,7 @@ namespace AprilUI
 	}
 
 
-	ColorImage::ColorImage(std::string name) : Image(0,name,0,0,0,0,0)
+	ColorImage::ColorImage(const std::string& name) : Image(0,name,0,0,0,0,0)
 	{
 		unsigned char a,r,g,b;
 		hexstr_to_argb(name,&a,&r,&g,&b);
@@ -332,18 +354,23 @@ namespace AprilUI
 	void ColorImage::draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a)
 	{
 		April::PlainVertex v[4];
-		v[0].x=dx;    v[0].y=dy;	v[1].x=dx+dw; v[1].y=dy;
-		v[2].x=dx+dw; v[2].y=dy+dh;	v[3].x=dx;    v[3].y=dy+dh;
+		v[0].x=dx;    v[0].y=dy;
+		v[1].x=dx+dw; v[1].y=dy;
+		v[2].x=dx;    v[2].y=dy+dh;
+		v[3].x=dx+dw; v[3].y=dy+dh;
+		
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
-		rendersys->render(April::TriangleFan,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
+		rendersys->render(April::TriangleStrip,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
 	}
 
 	void ColorImage::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
 	{
 		April::PlainVertex v[4];
-		v[0].x=-dw/2; v[0].y=-dh/2;	v[1].x= dw/2; v[1].y=-dh/2;
-		v[2].x= dw/2; v[2].y= dh/2;	v[3].x=-dw/2; v[3].y= dh/2;
+		v[0].x=-dw/2; v[0].y=-dh/2;
+		v[1].x= dw/2; v[1].y=-dh/2;
+		v[2].x=-dw/2; v[2].y= dh/2;
+		v[3].x= dw/2; v[3].y= dh/2;
 
 		
 		rendersys->pushTransform();
@@ -351,7 +378,7 @@ namespace AprilUI
 		rendersys->translate(centerx,centery);
 		rendersys->rotate(angle);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
-		rendersys->render(April::TriangleFan,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
+		rendersys->render(April::TriangleStrip,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
 		rendersys->popTransform();
 	}
