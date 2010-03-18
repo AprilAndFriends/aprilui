@@ -209,8 +209,8 @@ namespace AprilUI
 
 	Object* Object::getChildUnderPoint(int x,int y)
 	{
-		if (!isVisible()) return 0;
-		if (!isEnabled()) return 0;
+		if (!mVisible) return 0;
+		if (!mEnabled) return 0;
 		bool inside=isPointInside(x,y);
 		if (mChildren.size() == 0)
 			return inside ? this : 0;
@@ -302,6 +302,7 @@ namespace AprilUI
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha(this);
+		if (!mEnabled) alpha /= 2;
 		if (alpha < 1) mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		else           mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
@@ -456,7 +457,7 @@ namespace AprilUI
 	{
 		Object::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha(this);
-		if (!isEnabled()) alpha /= 2;
+		if (!mEnabled) alpha /= 2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
@@ -526,10 +527,9 @@ namespace AprilUI
 
 	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		if (!mEnabled)
+		if (!mEnabled && mDisabledImage)
 		{
-			if (!mDisabledImage) mDisabledImage=mDataPtr->getImage("null");
-			float alpha=getDerivedAlpha(this);
+			float alpha=getDerivedAlpha(this)/2;
 			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,alpha);
 		}
 		else if (mImage) ImageBox::OnDraw(offset_x,offset_y);
@@ -631,7 +631,7 @@ namespace AprilUI
 	{
 		ImageButton::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha(this);
-		if (!isEnabled()) alpha /= 2;
+		if (!mEnabled) alpha /= 2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
