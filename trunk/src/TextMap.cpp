@@ -45,13 +45,12 @@ namespace AprilUI
 		destroy();
 	}
 
-	bool TextMap::exists(std::string name)
+	bool TextMap::exists(const std::string& name)
 	{
-		unsigned int s=mTexts[name];
-		return (s != 0);
+		return (mTexts.find(name) != mTexts.end());
 	}
 
-	void TextMap::load(std::string folder)
+	void TextMap::load(const std::string& folder)
 	{
 		FILE* f;
 		char buff[2][513];
@@ -113,11 +112,10 @@ namespace AprilUI
 		mTexts.clear();
 	}
 
-	char* TextMap::operator [] (std::string name)
+	char* TextMap::operator [] (const std::string& name)
 	{
 		if (name == "") return "";
-		unsigned int s=mTexts[name];
-		if (!s)
+		if (!exists(name))
 		{
 	#ifdef _DEBUG
 			throw KeyException("Unable to find text entry '"+name+"'");
@@ -126,6 +124,6 @@ namespace AprilUI
 			return key_error_text;
 	#endif
 		}
-		return mBuffer+s;
+		return mBuffer+mTexts[name];
 	}
 }

@@ -37,11 +37,11 @@ namespace AprilUI
 		TextMap();
 		~TextMap();
 		
-		void load(std::string folder);
+		void load(const std::string& folder);
 		void destroy();
-		bool exists(std::string name);
+		bool exists(const std::string& name);
 
-		char* operator [] (std::string name);
+		char* operator [] (const std::string& name);
 		
 	};
 }
