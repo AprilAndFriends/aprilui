@@ -80,7 +80,7 @@ namespace AprilUI
 		
 	}
 
-	void Dataset::parseTexture(_xmlNode* node)
+	April::Texture* Dataset::parseTexture(_xmlNode* node)
 	{
 		std::string filename=xmlGetPropString(node,"filename");
 		int slash=filename.find("/")+1;
@@ -105,6 +105,7 @@ namespace AprilUI
 		{
 			Image* i;
 			for (node = node->xmlChildrenNode; node != 0; node=node->next)
+			{
 				if (XML_EQ(node,"Image"))
 				{
 					std::string name;
@@ -149,7 +150,9 @@ namespace AprilUI
 					
 					mImages[name]=i;
 				}
+		    }
 		}
+		return t;
 		
 	}
 
@@ -306,14 +309,36 @@ namespace AprilUI
 		if (xmlStrcmp(cur->name, (const xmlChar *) "DataDefinition"))
 			parseExternalXMLNode(cur);
 		
+		std::map<April::Texture*,std::string> dynamic_links;
+		std::string links;
 		for (xmlNodePtr p = cur->xmlChildrenNode; p != 0; p=p->next)
 		{
-			if      (XML_EQ(p,"Texture")) parseTexture(p);
+			if      (XML_EQ(p,"Texture"))
+			{
+				April::Texture* t=parseTexture(p);
+				try
+				{
+					links=xmlGetPropString(p,"dynamic_link");
+					dynamic_links[t]=links;
+				}
+				catch (_XMLException) { }
+				
+			}
 			else if (XML_EQ(p,"RAMTexture")) parseRAMTexture(p);
 			else if (XML_EQ(p,"CompositeImage")) parseCompositeImage(p);
 			else if (XML_EQ(p,"Object")) parseObject(p);
 			else if (p->type !=  XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
 				     parseExternalXMLNode(p);
+		}
+		
+	// adjust dynamic texture links
+		std::map<April::Texture*,std::string>::iterator map_it;
+		std::vector<std::string> dlst;
+		for (map_it = dynamic_links.begin();map_it != dynamic_links.end();map_it++)
+		{
+			dlst=str_split(map_it->second,",");
+			foreach_v(std::string,dlst)
+				map_it->first->addDynamicLink(getTexture(*it));
 		}
 	// done!
 		xmlFreeDoc(doc);
