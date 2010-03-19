@@ -54,7 +54,7 @@ namespace AprilUI
 
 		std::map<std::string,void (*)()> mCallbacks;
 
-		void parseTexture(_xmlNode* node);
+		April::Texture* parseTexture(_xmlNode* node);
 		void parseRAMTexture(_xmlNode* node);
 		void parseCompositeImage(_xmlNode* node);
 		virtual void parseExternalXMLNode(_xmlNode* node);
