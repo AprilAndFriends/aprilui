@@ -124,8 +124,8 @@ namespace AprilUI
 	};
 
 	#define XMLException(msg,node) _XMLException(msg,node,type,__FILE__,__LINE__)
-	#define XMLPropertyNotExistsException(msg,node) _XMLException("XML property doesn't exist: "+msg,node,"XMLException",__FILE__,__LINE__)
-	#define XMLUnknownClassException(msg,node) _XMLException("Unknown class detected in XML file: "+msg,node,"XMLUnknownClassException",__FILE__,__LINE__)
+	#define XMLPropertyNotExistsException(msg,node) _XMLException(std::string("XML property doesn't exist: ")+msg,node,"XMLException",__FILE__,__LINE__)
+	#define XMLUnknownClassException(msg,node) _XMLException(std::string("Unknown class detected in XML file: ")+msg,node,"XMLUnknownClassException",__FILE__,__LINE__)
 
 }
 
