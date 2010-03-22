@@ -47,7 +47,7 @@ namespace AprilUI
 
 		class AlphaFader : public Object
 		{
-			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel;
+			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay;
 		public:
 			AlphaFader(std::string name);
 

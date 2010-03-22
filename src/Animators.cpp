@@ -145,7 +145,7 @@ namespace AprilUI
 
 		AlphaFader::AlphaFader(std::string name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
-			mAccel=mSpeed=mInitialSpeed=0;
+			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
 			mInitialAlpha=-10001;
 		}
 
@@ -153,6 +153,7 @@ namespace AprilUI
 		{
 			if      (name == "speed") mSpeed=mInitialSpeed=str_to_float(value);
 			else if (name == "accel") mAccel=str_to_float(value);
+			else if (name == "delay") mDelay=str_to_float(value);
 		}
 
 		void AlphaFader::notifyEvent(std::string event_name,void* params)
@@ -163,12 +164,15 @@ namespace AprilUI
 					mInitialAlpha=mParent->getAlpha();
 				else
 					mParent->setAlpha(mInitialAlpha);
+					
+				if (mDelay) mTimer=mDelay;
 				mSpeed=mInitialSpeed;
 			}
 		}
 
 		void AlphaFader::update(float k)
 		{
+			if (mTimer > 0) { mTimer-=k; return; }
 			float alpha=mParent->getAlpha();
 			if (fabs(mAccel) > 0.01f)
 				mSpeed+=mAccel*k;
