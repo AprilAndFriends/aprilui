@@ -168,7 +168,7 @@ namespace AprilUI
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
 		ColoredQuad(std::string name,float x,float y,float w,float h);
-		void setColor(float r,float g,float b,float a);
+		void setColor(float a,float r,float g,float b);
 		
 		void OnDraw(float offset_x,float offset_y);
 		void setProperty(std::string name,std::string value);
@@ -193,6 +193,22 @@ namespace AprilUI
 		void setProperty(std::string name,std::string value);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
+	};
+	/*******************************************************************************/
+	class AprilUIExport ColoredImageBox : public ImageBox
+	{
+	protected:
+		April::Color mColor;
+		
+		void OnDraw(float offset_x,float offset_y);
+	public:
+		ColoredImageBox(std::string name,float x,float y,float w,float h);
+		
+		void setColor(std::string color);
+		void setColor(April::Color color) { mColor=color; } ;
+		April::Color getColor() { return mColor; };
+
+		void setProperty(std::string name,std::string value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport RotationImageBox : public ImageBox
@@ -261,6 +277,7 @@ namespace AprilUI
 		virtual void setProperty(std::string name,std::string value);
 
 		void setTextColor(April::Color color) { mTextColor=color; }
+		void setTextColor(std::string hex);
 		April::Color getTextColor() { return mTextColor; }
 	};
 	/*******************************************************************************/

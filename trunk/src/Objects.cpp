@@ -242,9 +242,9 @@ namespace AprilUI
 		
 	}
 
-	void ColoredQuad::setColor(float r,float g,float b,float a)
+	void ColoredQuad::setColor(float a,float r,float g,float b)
 	{
-		mRed=r; mGreen=g; mBlue=b; mAlpha=a;
+		mAlpha=a; mRed=r; mGreen=g; mBlue=b;
 	}
 
 	void ColoredQuad::OnDraw(float offset_x,float offset_y)
@@ -257,10 +257,10 @@ namespace AprilUI
 	{
 		Object::setProperty(name,value);
 
-		if      (name == "r") mRed=  str_to_float(value);
+		if      (name == "a") mAlpha=str_to_float(value);
+		else if (name == "r") mRed=  str_to_float(value);
 		else if (name == "g") mGreen=str_to_float(value);
 		else if (name == "b") mBlue= str_to_float(value);
-		else if (name == "a") mAlpha=str_to_float(value);
 	}
 
 	bool ColoredQuad::OnMouseDown(int button,float x,float y)
@@ -293,6 +293,7 @@ namespace AprilUI
 		if (mWidth == -1) mWidth=image->getSourceW();
 		if (mHeight == -1) mHeight=image->getSourceH();
 	}
+
 	void ImageBox::setImageByName(std::string image)
 	{
 		setImage(mDataPtr->getImage(image));
@@ -302,7 +303,7 @@ namespace AprilUI
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha(this);
-		if (!mEnabled) alpha /= 2;
+		if (!mEnabled) alpha/=2;
 		if (alpha < 1) mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		else           mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
@@ -335,6 +336,33 @@ namespace AprilUI
 			return true;
 		}
 		return false;
+	}
+
+	/********************************************************************************************************/
+	ColoredImageBox::ColoredImageBox(std::string name,float x,float y,float w,float h) :
+				 ImageBox(name,x,y,w,h)
+	{
+		_setTypeName("ColoredImageBox");
+	}
+
+	void ColoredImageBox::setColor(std::string color)
+	{
+		mColor.setColor(color);
+	}
+
+	void ColoredImageBox::OnDraw(float offset_x,float offset_y)
+	{
+		if (!mImage) mImage=mDataPtr->getImage("null");
+		float alpha=getDerivedAlpha(this);
+		if (!mEnabled) alpha/=2;
+		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,mColor.r,mColor.g,mColor.b,alpha);
+		//rendersys->setBlendMode(April::ALPHA_BLEND);
+	}
+
+	void ColoredImageBox::setProperty(std::string name,std::string value)
+	{
+		ImageBox::setProperty(name,value);
+		if (name == "color") setColor(value);
 	}
 
 	/********************************************************************************************************/
@@ -438,13 +466,18 @@ namespace AprilUI
 			if (value == "center") setVertFormatting(VERT_CENTER);
 			if (value == "bottom") setVertFormatting(VERT_BOTTOM);
 		}
-		if (name == "color") mTextColor.setHex(value);
+		if (name == "color") setTextColor(value);
 		if (name == "effect")
 		{
 			if (value == "none")   setFontEffect(Atres::NONE);
 			if (value == "shadow") setFontEffect(Atres::SHADOW);
 			if (value == "border") setFontEffect(Atres::BORDER);
 		}
+	}
+
+	void LabelBase::setTextColor(std::string hex)
+	{
+		mTextColor.setColor(hex);
 	}
 	/********************************************************************************************************/
 	Label::Label(std::string name,float x,float y,float w,float h) :
@@ -530,7 +563,7 @@ namespace AprilUI
 		if (!mEnabled && mDisabledImage)
 		{
 			float alpha=getDerivedAlpha(this)/2;
-			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1.0f,1.0f,1.0f,alpha);
+			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		}
 		else if (mImage) ImageBox::OnDraw(offset_x,offset_y);
 		else
