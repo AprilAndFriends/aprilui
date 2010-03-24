@@ -248,6 +248,7 @@ namespace AprilUI
 		/*if*/parse(DummyObject);
 		else  parse(ColoredQuad);
 		else  parse(ImageBox);
+		else  parse(ColoredImageBox);
 		else  parse(ImageButton);
 		else  parse(TextImageButton);
 		else  parse(Slider);
