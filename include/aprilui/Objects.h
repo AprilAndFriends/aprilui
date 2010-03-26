@@ -296,14 +296,14 @@ namespace AprilUI
 	class AprilUIExport TextButton : public Label
 	{
 	protected:
-		bool mPushed;
+		bool mPushed,mBackgroundEnabled;
 		void OnDraw(float offset_x,float offset_y);
 	public:
 		TextButton(std::string name,float x,float y,float w,float h);
 		
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
-
+		void setProperty(std::string name,std::string value);
 	};
 
 	/*******************************************************************************/

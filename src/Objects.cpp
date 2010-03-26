@@ -515,13 +515,24 @@ namespace AprilUI
 		mText="TextButton: "+name;
 		mTypeName="TextButton";
 		mPushed=0;
+		mBackgroundEnabled=1;
 	}
 
 	void TextButton::OnDraw(float offset_x,float offset_y)
 	{
-		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7+0.3*mPushed);
-
+		unsigned char a=mTextColor.a;
+		if (mBackgroundEnabled)
+			rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3*mPushed);
+		else
+			mTextColor.a*=1.0f-0.3f*mPushed;
 		Label::OnDraw(offset_x,offset_y);
+		if (!mBackgroundEnabled) mTextColor.a=a;
+	}
+	
+	void TextButton::setProperty(std::string name,std::string value)
+	{
+		if (name == "background") mBackgroundEnabled=(bool) str_to_int(value);
+		else Label::setProperty(name,value);
 	}
 
 	bool TextButton::OnMouseDown(int button,float x,float y)
