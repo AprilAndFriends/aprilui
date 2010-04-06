@@ -112,7 +112,7 @@ namespace AprilUI
 		mTexts.clear();
 	}
 
-	char* TextMap::operator [] (const std::string& name)
+	const char* TextMap::operator [] (const std::string& name)
 	{
 		if (name == "") return "";
 		if (!exists(name))

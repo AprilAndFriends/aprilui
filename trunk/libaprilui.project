@@ -19,7 +19,6 @@
     <File Name="src/Animators.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="include/aprilui/ApriluiExport.h"/>
     <File Name="include/aprilui/Dataset.h"/>
     <File Name="include/aprilui/Exception.h"/>
     <File Name="include/aprilui/Image.h"/>
@@ -29,6 +28,7 @@
     <File Name="include/aprilui/AprilUI.h"/>
     <File Name="src/AtresRenderInterface.h"/>
     <File Name="include/aprilui/Animators.h"/>
+    <File Name="include/aprilui/AprilUIExport.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>

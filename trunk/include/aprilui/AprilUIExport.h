@@ -23,15 +23,19 @@ http://www.gnu.org/copyleft/lesser.txt.
 
 	#ifdef _STATICLIB
 		#define AprilUIExport
+		#define AprilUIFnExport
 	#else
 		#ifdef _WIN32
 			#ifdef APRILUI_EXPORTS
 				#define AprilUIExport __declspec(dllexport)
+				#define AprilUIExport __declspec(dllexport)
 			#else
+				#define AprilUIExport __declspec(dllimport)
 				#define AprilUIExport __declspec(dllimport)
 			#endif
 		#else
 			#define AprilUIExport __attribute__ ((visibility("default")))
+			#define AprilUIFnExport
 		#endif
 	#endif
 
