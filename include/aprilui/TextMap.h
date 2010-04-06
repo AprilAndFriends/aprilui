@@ -41,7 +41,7 @@ namespace AprilUI
 		void destroy();
 		bool exists(const std::string& name);
 
-		char* operator [] (const std::string& name);
+		const char* operator [] (const std::string& name);
 		
 	};
 }
