@@ -136,7 +136,7 @@ namespace AprilUI
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
 		for (std::list<Object*>::reverse_iterator it=mChildren.rbegin();it != mChildren.rend();it++)
-			if ((*it)->isVisible() && (*it)->isEnabled())
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 				if ((*it)->OnMouseDown(button,x-mX,y-mY)) return true;
 		
 		return false;
@@ -145,14 +145,14 @@ namespace AprilUI
 	void Object::OnMouseMove(float x,float y)
 	{
 		for (std::list<Object*>::reverse_iterator it=mChildren.rbegin();it != mChildren.rend();it++)
-			if ((*it)->isVisible() && (*it)->isEnabled())
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 				(*it)->OnMouseMove(x-mX,y-mY);
 	}
 
 	bool Object::OnMouseUp(int button,float x,float y)
 	{
 		for (std::list<Object*>::reverse_iterator it=mChildren.rbegin();it != mChildren.rend();it++)
-			if ((*it)->isVisible() && (*it)->isEnabled())
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
 		
 		return false;
@@ -162,6 +162,7 @@ namespace AprilUI
 	{
 		mEvents[event_name]=new CallbackEvent(callback);
 	}
+
 	void Object::triggerEvent(std::string name,float x,float y,char* extra)
 	{
 		Event* e=mEvents[name];
@@ -175,6 +176,11 @@ namespace AprilUI
 	void Object::notifyEvent(std::string event_name,void* params)
 	{
 		foreach(Object*,mChildren) (*it)->notifyEvent(event_name,params);
+	}
+
+	bool Object::isDerivedEnabled()
+	{
+		return (isEnabled() && (!mParent || mParent->isDerivedEnabled()));
 	}
 
 	void Object::moveToFront()
@@ -210,7 +216,6 @@ namespace AprilUI
 	Object* Object::getChildUnderPoint(int x,int y)
 	{
 		if (!mVisible) return 0;
-		if (!mEnabled) return 0;
 		bool inside=isPointInside(x,y);
 		if (mChildren.size() == 0)
 			return inside ? this : 0;
@@ -303,7 +308,7 @@ namespace AprilUI
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha(this);
-		if (!mEnabled) alpha/=2;
+		if (!isDerivedEnabled()) alpha/=2;
 		if (alpha < 1) mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		else           mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
@@ -354,7 +359,7 @@ namespace AprilUI
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha(this);
-		if (!mEnabled) alpha/=2;
+		if (!isDerivedEnabled()) alpha/=2;
 		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,mColor.r_float(),mColor.g_float(),mColor.b_float(),alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
@@ -490,7 +495,7 @@ namespace AprilUI
 	{
 		Object::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha(this);
-		if (!mEnabled) alpha /= 2;
+		if (!isDerivedEnabled()) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
@@ -571,7 +576,7 @@ namespace AprilUI
 
 	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		if (!mEnabled && mDisabledImage)
+		if (!isDerivedEnabled() && mDisabledImage)
 		{
 			float alpha=getDerivedAlpha(this)/2;
 			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
@@ -675,7 +680,7 @@ namespace AprilUI
 	{
 		ImageButton::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha(this);
-		if (!mEnabled) alpha /= 2;
+		if (!isDerivedEnabled()) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 

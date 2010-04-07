@@ -122,6 +122,7 @@ namespace AprilUI
 		bool isVisible() { return mVisible && mAlpha > 0; }
 		void setEnabled(bool enabled) { mEnabled=enabled; }
 		bool isEnabled() { return mEnabled; }
+		bool isDerivedEnabled();
 		bool getVisibilityFlag() { return mVisible; }
 		
 		void setAlpha(float alpha) { mAlpha=alpha; }
