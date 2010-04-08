@@ -25,7 +25,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "Dataset.h"
 #include "Exception.h"
 #include <map>
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 
 namespace AprilUI
 {
