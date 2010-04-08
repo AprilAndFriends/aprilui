@@ -227,8 +227,8 @@ namespace AprilUI
 			if      (name == "delay")    mDelay=str_to_float(value);
 			else if (name == "duration") mDuration=str_to_float(value);
 			else if (name == "freq")     mFrequency=str_to_float(value);
-			else if (name == "start_visibility") mStartVisibility=(bool) str_to_int(value);
-			else if (name == "end_visibility")   mEndVisibility=(bool) str_to_int(value);
+			else if (name == "start_visibility") mStartVisibility=str_to_int(value)!=0;
+			else if (name == "end_visibility")   mEndVisibility=str_to_int(value)!=0;
 
 		}
 

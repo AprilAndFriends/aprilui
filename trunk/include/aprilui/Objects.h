@@ -80,7 +80,7 @@ namespace AprilUI
 		void sortChildren();
 		
 		void triggerEvent(std::string name,float x=0,float y=0,char* extra=0);
-		float getDerivedAlpha(Object* o);
+		float getDerivedAlpha();
 		
 		virtual void OnDraw(float offset_x,float offset_y) { };
 		virtual void OnUpdate(float k) { };
@@ -89,7 +89,7 @@ namespace AprilUI
 		void _moveChildToFront(Object* o);
 		void _moveChildToBack(Object* o);
 	public:
-		Object(std::string type_name,std::string name,int x,int y,int w,int h);
+		Object(std::string type_name,std::string name,float x,float y,float w,float h);
 		virtual ~Object();
 
 		void addChild(Object* o);
@@ -97,7 +97,7 @@ namespace AprilUI
 		Object* getParent() { return mParent; }
 		void removeAllChildren();
 
-		Object* getChildUnderPoint(int x,int y);
+		Object* getChildUnderPoint(float x,float y);
 
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);

@@ -87,9 +87,9 @@ namespace AprilUI
 		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ObjectExistsException(filename);
 
-		bool prefix_images=1,dynamic_load=0;
-		try { prefix_images=xmlGetPropInt(node,"prefix_images"); } catch (_XMLException) { }
-		try { dynamic_load=xmlGetPropInt(node,"dynamic_load"); }
+		bool prefix_images=true,dynamic_load=0;
+		try { prefix_images=xmlGetPropInt(node,"prefix_images")!=0; } catch (_XMLException) { }
+		try { dynamic_load=xmlGetPropInt(node,"dynamic_load")!=0; }
 		catch (_XMLException) { }
 		
 		April::Texture* t=rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
@@ -99,7 +99,7 @@ namespace AprilUI
 		if (node->xmlChildrenNode == 0) // if there are no images defined, create one that fills the whole area
 		{
 			if (mImages.find(tex_name) != mImages.end()) throw ResourceExistsException(filename,"April::Texture",this);	
-			mImages[tex_name]=new Image(t,filename,0,0,t->getWidth(),t->getHeight());
+			mImages[tex_name]=new Image(t,filename,0,0,(float)t->getWidth(),(float)t->getHeight());
 		}
 		else
 		{
@@ -115,11 +115,11 @@ namespace AprilUI
 					float x=xmlGetPropFloat(node,"x"), y=xmlGetPropFloat(node,"y"),
 						  w=xmlGetPropFloat(node,"w"), h=xmlGetPropFloat(node,"h");
 					
-					bool vertical=0,invertx=0,inverty=0;
+					bool vertical=false,invertx=false,inverty=false;
 					float tile_w=1,tile_h=1;
-					try { vertical=xmlGetPropInt(node,"vertical"); } catch (_XMLException) { }
-					try { invertx=xmlGetPropInt(node,"invertx"); } catch (_XMLException) { }
-					try { inverty=xmlGetPropInt(node,"inverty"); } catch (_XMLException) { }
+					try { vertical=xmlGetPropInt(node,"vertical")!=0; } catch (_XMLException) { }
+					try { invertx=xmlGetPropInt(node,"invertx")!=0; } catch (_XMLException) { }
+					try { inverty=xmlGetPropInt(node,"inverty")!=0; } catch (_XMLException) { }
 					
 					try   { tile_w=xmlGetPropFloat(node,"tile_w"); }
 					catch (_XMLException) { }
@@ -163,8 +163,8 @@ namespace AprilUI
 		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ResourceExistsException(filename,"RAMTexture",this);
 
-		bool dynamic_load=0;
-		try   { dynamic_load=xmlGetPropInt(node,"dynamic_load"); }
+		bool dynamic_load=false;
+		try   { dynamic_load=xmlGetPropInt(node,"dynamic_load")!=0; }
 		catch (_XMLException) { }
 		
 		April::Texture* t=rendersys->loadRAMTexture(mFilenamePrefix+"/"+filename,dynamic_load);
