@@ -32,6 +32,7 @@
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Debug"/>
+  <Dependencies Name="Linux_Debug"/>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -46,9 +47,11 @@
         <LibraryPath Value="../atres/bin/Debug"/>
         <LibraryPath Value="./lib"/>
         <LibraryPath Value="../gtypes/bin/Debug"/>
+        <LibraryPath Value="../hltypes/bin/Debug"/>
         <Library Value="libapril_d"/>
         <Library Value="libatres_d"/>
         <Library Value="libgtypes_d"/>
+        <Library Value="libhltypes_d"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/libaprilui_d.dll" IntermediateDirectory="./bin/Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
@@ -162,5 +165,4 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
-  <Dependencies Name="Linux_Debug"/>
 </CodeLite_Project>
