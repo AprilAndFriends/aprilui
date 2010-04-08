@@ -44,17 +44,6 @@ namespace AprilUI
 	int xmlGetPropInt(_xmlNode* node,const char* prop);
 	bool xmlPropertyExists(_xmlNode* node,const char* name);
 	unsigned int xmlGetPropHex(_xmlNode* node,const char* prop);
-	hstr str(int i);
-	hstr str_toupper(hstr s);
-	int str_to_int(hstr s);
-	float str_to_float(hstr s);
-	bool str_split(hstr s,hstr splitter,hstr& out_left,hstr& out_right);
-	std::vector<hstr> str_split(hstr s,hstr splitter);
-
-
-	bool startswith(hstr s,hstr with_what);
-	bool endswith(hstr s,hstr with_what);
-	hstr remove_spaces(hstr s);
 
 	hstr pathGetFilename(hstr path,bool with_suffix=1);
 	hstr pathGetBaseDir(hstr path);

@@ -16,10 +16,10 @@ namespace AprilUI
 
 		void Mover::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed_x") mSpeedX=mInitialSX=str_to_float(value);
-			else if (name == "speed_y") mSpeedY=mInitialSY=str_to_float(value);
-			else if (name == "accel_x") mAccelX=str_to_float(value);
-			else if (name == "accel_y") mAccelY=str_to_float(value);
+			if      (name == "speed_x") mSpeedX=mInitialSX=value;
+			else if (name == "speed_y") mSpeedY=mInitialSY=value;
+			else if (name == "accel_x") mAccelX=value;
+			else if (name == "accel_y") mAccelY=value;
 		}
 
 		void Mover::notifyEvent(chstr event_name,void* params)
@@ -65,10 +65,10 @@ namespace AprilUI
 
 		void Scaler::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed_w") mSpeedW=mInitialSW=str_to_float(value);
-			else if (name == "speed_h") mSpeedH=mInitialSH=str_to_float(value);
-			else if (name == "accel_w") mAccelW=str_to_float(value);
-			else if (name == "accel_h") mAccelH=str_to_float(value);
+			if      (name == "speed_w") mSpeedW=mInitialSW=value;
+			else if (name == "speed_h") mSpeedH=mInitialSH=value;
+			else if (name == "accel_w") mAccelW=value;
+			else if (name == "accel_h") mAccelH=value;
 		}
 
 		void Scaler::notifyEvent(chstr event_name,void* params)
@@ -113,8 +113,8 @@ namespace AprilUI
 
 		void Rotator::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed") mSpeed=mInitialSpeed=str_to_float(value);
-			else if (name == "accel") mAccel=str_to_float(value);
+			if      (name == "speed") mSpeed=mInitialSpeed=value;
+			else if (name == "accel") mAccel=value;
 		}
 
 		void Rotator::notifyEvent(chstr event_name,void* params)
@@ -151,9 +151,9 @@ namespace AprilUI
 
 		void AlphaFader::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed") mSpeed=mInitialSpeed=str_to_float(value);
-			else if (name == "accel") mAccel=str_to_float(value);
-			else if (name == "delay") mDelay=str_to_float(value);
+			if      (name == "speed") mSpeed=mInitialSpeed=value;
+			else if (name == "accel") mAccel=value;
+			else if (name == "delay") mDelay=value;
 		}
 
 		void AlphaFader::notifyEvent(chstr event_name,void* params)
@@ -195,7 +195,7 @@ namespace AprilUI
 		{
 			if (name == "low_color")       hexstr_to_argb_float(value,&mLow[0],&mLow[1],&mLow[2],&mLow[3]);
 			else if (name == "high_color") hexstr_to_argb_float(value,&mHigh[0],&mHigh[1],&mHigh[2],&mHigh[3]);
-			else if (name == "speed")      mSpeed=str_to_float(value);
+			else if (name == "speed")      mSpeed=value;
 		}
 
 		void ColorAlternator::update(float k)
@@ -224,11 +224,11 @@ namespace AprilUI
 
 		void Blinker::setProperty(chstr name,chstr value)
 		{
-			if      (name == "delay")    mDelay=str_to_float(value);
-			else if (name == "duration") mDuration=str_to_float(value);
-			else if (name == "freq")     mFrequency=str_to_float(value);
-			else if (name == "start_visibility") mStartVisibility=str_to_int(value)!=0;
-			else if (name == "end_visibility")   mEndVisibility=str_to_int(value)!=0;
+			if      (name == "delay")    mDelay=value;
+			else if (name == "duration") mDuration=value;
+			else if (name == "freq")     mFrequency=value;
+			else if (name == "start_visibility") mStartVisibility=((int) value)!=0;
+			else if (name == "end_visibility")   mEndVisibility=((int) value)!=0;
 
 		}
 
@@ -270,9 +270,9 @@ namespace AprilUI
 
 		void FrameAnimation::setProperty(chstr name,chstr value)
 		{
-			if      (name == "start_frame") mStartFrame=str_to_int(value);
-			else if (name == "end_frame")   mEndFrame=str_to_int(value);
-			else if (name == "time")        mAnimationTime=str_to_float(value);
+			if      (name == "start_frame") mStartFrame=value;
+			else if (name == "end_frame")   mEndFrame=value;
+			else if (name == "time")        mAnimationTime=value;
 			else if (name == "base_name")   mImageBaseName=value;
 		}
 
@@ -292,7 +292,7 @@ namespace AprilUI
 			ImageBox* img=dynamic_cast<ImageBox*>(mParent);
 			if (img)
 			{
-				img->setImageByName(mImageBaseName+str(frame));
+				img->setImageByName(mImageBaseName+hstr(frame));
 			}
 			else writelog("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 		}

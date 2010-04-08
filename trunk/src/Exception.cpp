@@ -46,7 +46,7 @@ namespace AprilUI
 		hstr text=getType();
 		if (text != "") text+=": ";
 
-		if (mFile != "") text+="["+mFile+":"+str(mLineNumber)+"] - ";
+		if (mFile != "") text+="["+mFile+":"+hstr(mLineNumber)+"] - ";
 
 		return text + getErrorText();
 	}
@@ -89,6 +89,6 @@ namespace AprilUI
 	_XMLException::_XMLException(const hstr err_msg,_xmlNode* node,hstr type,hstr file,int line):
 				   _GenericException("",type,file,line)
 	{
-		mErrText=err_msg+" in file "+hstr((char*) node->doc->URL)+", line "+str(node->line);
+		mErrText=err_msg+" in file "+hstr((char*) node->doc->URL)+", line "+hstr(node->line);
 	}
 }

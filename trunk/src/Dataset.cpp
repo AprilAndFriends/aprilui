@@ -337,7 +337,7 @@ namespace AprilUI
 		std::vector<hstr> dlst;
 		for (map_it = dynamic_links.begin();map_it != dynamic_links.end();map_it++)
 		{
-			dlst=str_split(map_it->second,",");
+			dlst=map_it->second.split(',');
 			foreach_v(hstr,dlst)
 				map_it->first->addDynamicLink(getTexture(*it));
 		}
@@ -419,7 +419,7 @@ namespace AprilUI
 		if (name == "null") return &g_null_img;
 
 		
-		if (mImages.find(name) == mImages.end() && startswith(name,"0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
+		if (mImages.find(name) == mImages.end() && name.startswith("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
 			i=mImages[name]=new ColorImage(name);
 		else
 			i=mImages[name];

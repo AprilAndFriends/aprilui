@@ -205,10 +205,10 @@ namespace AprilUI
 
 	void Object::setProperty(chstr name,chstr value)
 	{
-		if      (name == "visible") setVisible(str_to_int(value)!=0);
-		else if (name == "zorder")  setZOrder(str_to_int(value));
-		else if (name == "enabled") setEnabled(str_to_int(value)!=0);
-		else if (name == "alpha")   setAlpha(str_to_float(value));
+		if      (name == "visible") setVisible(((int)value)!=0);
+		else if (name == "zorder")  setZOrder(value);
+		else if (name == "enabled") setEnabled(((int) value)!=0);
+		else if (name == "alpha")   setAlpha(value);
 	}
 
 	Object* Object::getChildUnderPoint(float x,float y)
@@ -377,7 +377,7 @@ namespace AprilUI
 	{
 		ImageBox::setProperty(name,value);
 
-		if (name == "angle") mAngle=str_to_float(value);
+		if (name == "angle") mAngle=value;
 	}
 
 	void RotationImageBox::OnDraw(float offset_x,float offset_y)
@@ -533,7 +533,7 @@ namespace AprilUI
 	
 	void TextButton::setProperty(chstr name,chstr value)
 	{
-		if (name == "background") mBackgroundEnabled=str_to_int(value)!=0;
+		if (name == "background") mBackgroundEnabled=((int) value)!=0;
 		else Label::setProperty(name,value);
 	}
 
