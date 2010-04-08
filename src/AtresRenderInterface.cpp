@@ -52,7 +52,7 @@ namespace AprilUI
 		April::TexturedVertex v[4096];
 		April::Texture* t=g_font_textures[rops[0].resource];
 		int i=0;
-		float w=t->getWidth(),h=t->getHeight();
+		float w=(float)t->getWidth(),h=(float)t->getHeight();
 		for (Atres::CharacterRenderOp* op=rops;op < rops+n;op++)
 		{
 			v[i].x=op->dx;        v[i].y=op->dy;        v[i].z=0; v[i].u=op->sx/w;          v[i].v=op->sy/h;          i++;

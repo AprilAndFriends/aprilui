@@ -48,7 +48,7 @@ namespace AprilUI
 		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
 		float x=0;
-		sscanf(nodeValue,"%f",&x);
+		sscanf_s(nodeValue,"%f",&x);
 		xmlFree(nodeValue);
 		
 		return x;
@@ -59,7 +59,7 @@ namespace AprilUI
 		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
 		int x=0;
-		sscanf(nodeValue,"%i",&x);
+		sscanf_s(nodeValue,"%i",&x);
 		xmlFree(nodeValue);
 		
 		return x;
@@ -71,8 +71,8 @@ namespace AprilUI
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
 		unsigned int x=0;
 		if (nodeValue[0] == '0' && nodeValue[1] == 'x')
-			sscanf(nodeValue+2,"%x",&x);
-		else sscanf(nodeValue,"%x",&x);
+			sscanf_s(nodeValue+2,"%x",&x);
+		else sscanf_s(nodeValue,"%x",&x);
 		xmlFree(nodeValue);
 		
 		return x;
@@ -86,28 +86,28 @@ namespace AprilUI
 	std::string str(int i)
 	{
 		char s[32];
-		sprintf(s,"%d",i);
+		sprintf_s(s,"%d",i);
 		return std::string(s);
 	}
 
 	int str_to_int(std::string s)
 	{
 		int i;
-		sscanf(s.c_str(),"%d",&i);
+		sscanf_s(s.c_str(),"%d",&i);
 		return i;
 	}
 
 	float str_to_float(std::string s)
 	{
 		float f;
-		sscanf(s.c_str(),"%f",&f);
+		sscanf_s(s.c_str(),"%f",&f);
 		return f;
 	}
 
 	int hexstr_to_int(const std::string& s)
 	{
 		int i;
-		sscanf(s.c_str(),"%x",&i);
+		sscanf_s(s.c_str(),"%x",&i);
 		return i;
 	}
 
@@ -139,7 +139,7 @@ namespace AprilUI
 			lst.push_back(s.substr(last,index-last));
 			last=index+splitter.size();
 		}
-		if (last < s.size()) lst.push_back(s.substr(last,s.size()));
+		if (last < (int)s.size()) lst.push_back(s.substr(last,s.size()));
 		
 		return lst;
 	}

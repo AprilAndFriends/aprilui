@@ -42,7 +42,7 @@ namespace AprilUI
 	}
 
 
-	Object::Object(std::string type_name,std::string name,int x,int y,int w,int h)
+	Object::Object(std::string type_name,std::string name,float x,float y,float w,float h)
 	{
 		mTypeName=type_name;
 		mName=name;
@@ -103,12 +103,11 @@ namespace AprilUI
 			mParent->sortChildren();
 	}
 
-	float Object::getDerivedAlpha(Object* o)
+	float Object::getDerivedAlpha()
 	{
 		// recursive function that combines all the alpha from the parents (if any)
-		float alpha=o->getAlpha();
-		Object *parent=o->getParent();
-		if (parent) alpha*=getDerivedAlpha(parent);
+		float alpha=this->getAlpha();
+		if (mParent) alpha*=mParent->getDerivedAlpha();
 		return alpha;
 	}
 
@@ -207,13 +206,13 @@ namespace AprilUI
 
 	void Object::setProperty(const std::string& name,const std::string& value)
 	{
-		if      (name == "visible") setVisible(bool(str_to_int(value)));
+		if      (name == "visible") setVisible(str_to_int(value)!=0);
 		else if (name == "zorder")  setZOrder(str_to_int(value));
-		else if (name == "enabled") setEnabled(bool(str_to_int(value)));
+		else if (name == "enabled") setEnabled(str_to_int(value)!=0);
 		else if (name == "alpha")   setAlpha(str_to_float(value));
 	}
 
-	Object* Object::getChildUnderPoint(int x,int y)
+	Object* Object::getChildUnderPoint(float x,float y)
 	{
 		if (!mVisible) return 0;
 		bool inside=isPointInside(x,y);
@@ -254,8 +253,8 @@ namespace AprilUI
 
 	void ColoredQuad::OnDraw(float offset_x,float offset_y)
 	{
-		float alpha=getDerivedAlpha(this);
-		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, mRed, mGreen, mBlue, mAlpha*alpha);
+		float alpha=getDerivedAlpha();
+		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, mRed, mGreen, mBlue, alpha);
 	}
 
 	void ColoredQuad::setProperty(const std::string& name,const std::string& value)
@@ -307,10 +306,9 @@ namespace AprilUI
 	void ImageBox::OnDraw(float offset_x,float offset_y)
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
-		float alpha=getDerivedAlpha(this);
+		float alpha=getDerivedAlpha();
 		if (!isDerivedEnabled()) alpha/=2;
-		if (alpha < 1) mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
-		else           mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight);
+		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
@@ -358,7 +356,7 @@ namespace AprilUI
 	void ColoredImageBox::OnDraw(float offset_x,float offset_y)
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
-		float alpha=getDerivedAlpha(this);
+		float alpha=getDerivedAlpha();
 		if (!isDerivedEnabled()) alpha/=2;
 		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,mColor.r_float(),mColor.g_float(),mColor.b_float(),alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
@@ -407,7 +405,7 @@ namespace AprilUI
 		Object::update(k);
 		if (fabs(mDestAngle-mAngle) > 0.01f)
 		{
-			mAngle+=sign(mDestAngle-mAngle)*std::min(k*mRotationSpeed,(float) fabs(mDestAngle-mAngle));
+			mAngle+=sign(mDestAngle-mAngle)*std::min(k*mRotationSpeed,(float)fabs(mDestAngle-mAngle));
 			if (fabs(mDestAngle-mAngle) < 0.01f)
 				mAngle=mDestAngle;
 		}
@@ -494,7 +492,7 @@ namespace AprilUI
 	void Label::OnDraw(float offset_x,float offset_y)
 	{
 		Object::OnDraw(offset_x, offset_y);
-		float alpha=getDerivedAlpha(this);
+		float alpha=getDerivedAlpha();
 		if (!isDerivedEnabled()) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
@@ -527,16 +525,16 @@ namespace AprilUI
 	{
 		unsigned char a=mTextColor.a;
 		if (mBackgroundEnabled)
-			rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3*mPushed);
+			rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		else
-			mTextColor.a*=1.0f-0.3f*mPushed;
+			mTextColor.a*=(unsigned char)(1.0f-0.3f*mPushed);
 		Label::OnDraw(offset_x,offset_y);
 		if (!mBackgroundEnabled) mTextColor.a=a;
 	}
 	
 	void TextButton::setProperty(const std::string& name,const std::string& value)
 	{
-		if (name == "background") mBackgroundEnabled=(bool) str_to_int(value);
+		if (name == "background") mBackgroundEnabled=str_to_int(value)!=0;
 		else Label::setProperty(name,value);
 	}
 
@@ -576,16 +574,17 @@ namespace AprilUI
 
 	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
+		float alpha=getDerivedAlpha();
 		if (!isDerivedEnabled() && mDisabledImage)
 		{
-			float alpha=getDerivedAlpha(this)/2;
+			alpha/=2;
 			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		}
 		else if (mImage) ImageBox::OnDraw(offset_x,offset_y);
 		else
 		{
 			if (!mNormalImage) mNormalImage=mDataPtr->getImage("null");
-			mNormalImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,1);
+			mNormalImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,alpha);
 		}
 	}
 
@@ -679,7 +678,7 @@ namespace AprilUI
 	void TextImageButton::OnDraw(float offset_x,float offset_y)
 	{
 		ImageButton::OnDraw(offset_x, offset_y);
-		float alpha=getDerivedAlpha(this);
+		float alpha=getDerivedAlpha();
 		if (!isDerivedEnabled()) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
@@ -747,7 +746,7 @@ namespace AprilUI
 	void Slider::OnDraw(float offset_x,float offset_y)
 	{
 		float x=mX+offset_x,y=mY+offset_y;
-		float alpha=getDerivedAlpha(this);
+		float alpha=getDerivedAlpha();
 		//rendersys->drawColoredQuad(x,y,mWidth,mHeight,1,1,1,alpha/2);
 		
 		rendersys->drawColoredQuad(x+mHeight/2,y+mHeight*0.375f,mWidth-mHeight,mHeight/4,0,0,0,alpha);
@@ -771,7 +770,7 @@ namespace AprilUI
 
 	void ToggleButton::OnDraw(float offset_x,float offset_y)
 	{
-		float alpha=getDerivedAlpha(this);
+		float alpha=getDerivedAlpha();
 		if (mPushed) mPushedImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 	}
