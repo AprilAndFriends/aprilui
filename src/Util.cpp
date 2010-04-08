@@ -83,51 +83,6 @@ namespace AprilUI
 		return xmlGetProp(node, (const xmlChar*) name) != 0;
 	}
 
-	hstr str(int i)
-	{
-		char s[32];
-		sprintf(s,"%d",i);
-		return hstr(s);
-	}
-
-	int str_to_int(hstr s)
-	{
-		int i;
-		sscanf(s.c_str(),"%d",&i);
-		return i;
-	}
-
-	float str_to_float(hstr s)
-	{
-		float f;
-		sscanf(s.c_str(),"%f",&f);
-		return f;
-	}
-
-	int hexstr_to_int(chstr s)
-	{
-		int i;
-		sscanf(s.c_str(),"%x",&i);
-		return i;
-	}
-
-	hstr str_toupper(hstr s)
-	{
-		std::transform(s.begin(), s.end(), s.begin(), toupper);
-		return s;
-	}
-
-	bool str_split(hstr s,hstr splitter,hstr& out_left,hstr& out_right)
-	{
-		int index=s.find(splitter);
-		if (index < 0) return 0;
-		
-		out_left=s.substr(0,index);
-		out_right=s.substr(index+splitter.size(),1000);
-		
-		return 1;
-	}
-
 	std::vector<hstr> str_split(hstr s,hstr splitter)
 	{
 		std::vector<hstr> lst;
@@ -142,27 +97,6 @@ namespace AprilUI
 		if (last < (int)s.size()) lst.push_back(s.substr(last,s.size()));
 		
 		return lst;
-	}
-
-	hstr remove_spaces(hstr s)
-	{
-		hstr out="";
-		for(hstr::iterator it=s.begin();it!=s.end();it++)
-		{
-			if (*it != ' ') out+=*it;
-		}
-		return out;
-	}
-
-	bool startswith(hstr s,hstr with_what)
-	{
-		return (s.substr(0,with_what.size()) == with_what);
-	}
-
-	bool endswith(hstr s,hstr with_what)
-	{
-		int size=with_what.size();
-		return (s.substr(s.size()-size,size) == with_what);
 	}
 
 	hstr pathGetFilename(hstr path,bool with_suffix)
@@ -202,25 +136,32 @@ namespace AprilUI
 		return value;
 	}
 
-void hexstr_to_argb(chstr hex,byte* a,byte* r,byte* g,byte* b)
-{
-	hstr h=(hex.substr(0,2) == "0x") ? hex : "0x"+hex;
-    if (h.size() == 8)
-    {
-        *r=hexstr_to_int(h.substr(2,2));
-        *g=hexstr_to_int(h.substr(4,2));
-        *b=hexstr_to_int(h.substr(6,2));
-        *a=255;
-    }
-    else if (h.size() == 10)
-    {
-        *r=hexstr_to_int(h.substr(4,2));
-        *g=hexstr_to_int(h.substr(6,2));
-        *b=hexstr_to_int(h.substr(8,2));
-        *a=hexstr_to_int(h.substr(2,2));
-    }
-	else throw AprilUI::GenericException("Color format must be either 0xAARRGGBB or 0xRRGGBB");
-}
+	int hexstr_to_int(chstr s)
+	{
+		int i;
+		sscanf(s.c_str(),"%x",&i);
+		return i;
+	}
+
+	void hexstr_to_argb(chstr hex,byte* a,byte* r,byte* g,byte* b)
+	{
+		hstr h=(hex.substr(0,2) == "0x") ? hex : "0x"+hex;
+		if (h.size() == 8)
+		{
+			*r=hexstr_to_int(h.substr(2,2));
+			*g=hexstr_to_int(h.substr(4,2));
+			*b=hexstr_to_int(h.substr(6,2));
+			*a=255;
+		}
+		else if (h.size() == 10)
+		{
+			*r=hexstr_to_int(h.substr(4,2));
+			*g=hexstr_to_int(h.substr(6,2));
+			*b=hexstr_to_int(h.substr(8,2));
+			*a=hexstr_to_int(h.substr(2,2));
+		}
+		else throw AprilUI::GenericException("Color format must be either 0xAARRGGBB or 0xRRGGBB");
+	}
 
 	void hexstr_to_argb_float(chstr hex,float* a,float* r,float* g,float* b)
 	{
@@ -238,7 +179,7 @@ void hexstr_to_argb(chstr hex,byte* a,byte* r,byte* g,byte* b)
 		int cnt=counters[prefix];
 		cnt++;
 		counters[prefix]=cnt;
-		return prefix+str(cnt);
+		return prefix+hstr(cnt);
 	}
 	
 	int getdir (hstr dir, std::vector<hstr> &files)
