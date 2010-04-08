@@ -39,11 +39,11 @@ namespace AprilUI
 	#define foreach_in_map(type,list) for (std::map<std::string,type>::iterator it=list.begin();it != list.end(); it++)
 
 	float sign(float number);
-	std::string xmlGetPropString(_xmlNode* node,std::string prop);
-	float xmlGetPropFloat(_xmlNode* node,std::string prop);
-	int xmlGetPropInt(_xmlNode* node,std::string prop);
+	std::string xmlGetPropString(_xmlNode* node,const char* prop);
+	float xmlGetPropFloat(_xmlNode* node,const char* prop);
+	int xmlGetPropInt(_xmlNode* node,const char* prop);
 	bool xmlPropertyExists(_xmlNode* node,const char* name);
-	unsigned int xmlGetPropHex(_xmlNode* node,std::string prop);
+	unsigned int xmlGetPropHex(_xmlNode* node,const char* prop);
 	std::string str(int i);
 	std::string str_toupper(std::string s);
 	int str_to_int(std::string s);

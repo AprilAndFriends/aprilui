@@ -16,8 +16,8 @@ namespace AprilUI
 		public:
 			Mover(std::string name);
 
-			void notifyEvent(std::string event_name,void* params);
-			void setProperty(std::string name,std::string value);
+			void notifyEvent(const std::string& event_name,void* params);
+			void setProperty(const std::string& name,const std::string& value);
 			void update(float k);
 		};
 		class Scaler : public Object
@@ -28,8 +28,8 @@ namespace AprilUI
 		public:
 			Scaler(std::string name);
 
-			void notifyEvent(std::string event_name,void* params);
-			void setProperty(std::string name,std::string value);
+			void notifyEvent(const std::string& event_name,void* params);
+			void setProperty(const std::string& name,const std::string& value);
 			void update(float k);
 		};
 
@@ -40,8 +40,8 @@ namespace AprilUI
 		public:
 			Rotator(std::string name);
 
-			void notifyEvent(std::string event_name,void* params);
-			void setProperty(std::string name,std::string value);
+			void notifyEvent(const std::string& event_name,void* params);
+			void setProperty(const std::string& name,const std::string& value);
 			void update(float k);
 		};
 
@@ -51,8 +51,8 @@ namespace AprilUI
 		public:
 			AlphaFader(std::string name);
 
-			void notifyEvent(std::string event_name,void* params);
-			void setProperty(std::string name,std::string value);
+			void notifyEvent(const std::string& event_name,void* params);
+			void setProperty(const std::string& name,const std::string& value);
 			void update(float k);
 		};
 
@@ -64,7 +64,7 @@ namespace AprilUI
 			float mTimer,mSpeed;
 		public:
 			ColorAlternator(std::string name);
-			void setProperty(std::string name,std::string value);
+			void setProperty(const std::string& name,const std::string& value);
 			void update(float k);
 		};
 
@@ -75,8 +75,8 @@ namespace AprilUI
 		public:
 			Blinker(std::string name);
 
-			void notifyEvent(std::string event_name,void* params);
-			void setProperty(std::string name,std::string value);
+			void notifyEvent(const std::string& event_name,void* params);
+			void setProperty(const std::string& name,const std::string& value);
 			void update(float k);
 		};
 		
@@ -88,8 +88,8 @@ namespace AprilUI
 		public:
 			FrameAnimation(std::string name);
 
-			void notifyEvent(std::string event_name,void* params);
-			void setProperty(std::string name,std::string value);
+			void notifyEvent(const std::string& event_name,void* params);
+			void setProperty(const std::string& name,const std::string& value);
 			void update(float k);
 		};
 	}
