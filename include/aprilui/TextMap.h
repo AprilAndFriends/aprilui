@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef TEXT_MAP_H
 #define TEXT_MAP_H
 
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 #include <map>
 #include "AprilUIExport.h"
 

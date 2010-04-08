@@ -22,7 +22,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #define DATASET_H
 
 #include <map>
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 #include "Exception.h"
 #include "TextMap.h"
 #include "AprilUIExport.h"

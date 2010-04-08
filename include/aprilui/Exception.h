@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 #include "AprilUIExport.h"
 
 struct _xmlNode;

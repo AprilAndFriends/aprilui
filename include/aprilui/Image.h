@@ -23,7 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "april/RenderSystem.h"
 #include "AprilUIExport.h"
 
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 #include <vector>
 
 namespace AprilUI

@@ -22,7 +22,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #define APRILUI_H
 
 #include "AprilUIExport.h"
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 
 namespace AprilUI
 {

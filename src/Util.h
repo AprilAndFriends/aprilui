@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef APRILUI_UTIL_H
 #define UTIL_H
 
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 #include <vector>
 struct _xmlNode;
 

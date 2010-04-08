@@ -41,7 +41,7 @@ namespace AprilUI
 		mCallback((EventArgs*) params);
 	}
 
-	Object::Object(hstr type_name,hstr name,int x,int y,int w,int h)
+	Object::Object(hstr type_name,hstr name,float x,float y,float w,float h)
 	{
 		mTypeName=type_name;
 		mName=name;

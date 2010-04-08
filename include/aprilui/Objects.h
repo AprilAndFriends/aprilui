@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
-#include <hltypes/hstring.h>
+#include "hltypes/hstring.h"
 #include <map>
 #include <list>
 #include "april/RenderSystem.h"
@@ -90,7 +90,7 @@ namespace AprilUI
 		void _moveChildToBack(Object* o);
 	public:
 
-		Object(hstr type_name,hstr name,int x,int y,int w,int h);
+		Object(hstr type_name,hstr name,float x,float y,float w,float h);
 		virtual ~Object();
 
 		void addChild(Object* o);
