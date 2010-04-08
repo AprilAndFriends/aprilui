@@ -22,7 +22,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #define APRILUI_H
 
 #include "AprilUIExport.h"
-#include <string>
+#include <hltypes/hstring.h>
 
 namespace AprilUI
 {
@@ -31,7 +31,7 @@ namespace AprilUI
 	void AprilUIExport init();
 	void AprilUIExport destroy();
 	
-	Dataset* AprilUIFnExport getDatasetByName(std::string name);
+	Dataset* AprilUIFnExport getDatasetByName(hstr name);
 	void AprilUIFnExport update(float time_increase);
 }
 

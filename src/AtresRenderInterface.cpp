@@ -38,11 +38,11 @@ namespace AprilUI
 		
 	}
 
-	unsigned int AtresAprilInterface::loadResource(std::string filename)
+	unsigned int AtresAprilInterface::loadResource(const char* filename)
 	{
 		static int index=1;
 		April::Texture* t=rendersys->loadTexture(filename);
-		if (!t) throw FileNotFoundException(filename);
+		if (!t) throw FileNotFoundException(std::string(filename));
 		g_font_textures[index]=t;
 		return index++;
 	}

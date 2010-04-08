@@ -33,11 +33,11 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "april/RenderSystem.h"
 namespace AprilUI
 {
-	std::string xmlGetPropString(_xmlNode* node,const char* prop)
+	hstr xmlGetPropString(_xmlNode* node,const char* prop)
 	{
 		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
-		std::string value = nodeValue;
+		hstr value = nodeValue;
 		xmlFree(nodeValue);
 		
 		return value;
@@ -83,41 +83,41 @@ namespace AprilUI
 		return xmlGetProp(node, (const xmlChar*) name) != 0;
 	}
 
-	std::string str(int i)
+	hstr str(int i)
 	{
 		char s[32];
 		sprintf(s,"%d",i);
-		return std::string(s);
+		return hstr(s);
 	}
 
-	int str_to_int(std::string s)
+	int str_to_int(hstr s)
 	{
 		int i;
 		sscanf(s.c_str(),"%d",&i);
 		return i;
 	}
 
-	float str_to_float(std::string s)
+	float str_to_float(hstr s)
 	{
 		float f;
 		sscanf(s.c_str(),"%f",&f);
 		return f;
 	}
 
-	int hexstr_to_int(const std::string& s)
+	int hexstr_to_int(chstr s)
 	{
 		int i;
 		sscanf(s.c_str(),"%x",&i);
 		return i;
 	}
 
-	std::string str_toupper(std::string s)
+	hstr str_toupper(hstr s)
 	{
 		std::transform(s.begin(), s.end(), s.begin(), toupper);
 		return s;
 	}
 
-	bool str_split(std::string s,std::string splitter,std::string& out_left,std::string& out_right)
+	bool str_split(hstr s,hstr splitter,hstr& out_left,hstr& out_right)
 	{
 		int index=s.find(splitter);
 		if (index < 0) return 0;
@@ -128,9 +128,9 @@ namespace AprilUI
 		return 1;
 	}
 
-	std::vector<std::string> str_split(std::string s,std::string splitter)
+	std::vector<hstr> str_split(hstr s,hstr splitter)
 	{
-		std::vector<std::string> lst;
+		std::vector<hstr> lst;
 		int index=0,last=0;
 		for (;;)
 		{
@@ -144,36 +144,36 @@ namespace AprilUI
 		return lst;
 	}
 
-	std::string remove_spaces(std::string s)
+	hstr remove_spaces(hstr s)
 	{
-		std::string out="";
-		for(std::string::iterator it=s.begin();it!=s.end();it++)
+		hstr out="";
+		for(hstr::iterator it=s.begin();it!=s.end();it++)
 		{
 			if (*it != ' ') out+=*it;
 		}
 		return out;
 	}
 
-	bool startswith(std::string s,std::string with_what)
+	bool startswith(hstr s,hstr with_what)
 	{
 		return (s.substr(0,with_what.size()) == with_what);
 	}
 
-	bool endswith(std::string s,std::string with_what)
+	bool endswith(hstr s,hstr with_what)
 	{
 		int size=with_what.size();
 		return (s.substr(s.size()-size,size) == with_what);
 	}
 
-	std::string pathGetFilename(std::string path,bool with_suffix)
+	hstr pathGetFilename(hstr path,bool with_suffix)
 	{
 		int index1=path.rfind("/"); if (index1 < 0) index1=path.rfind("\\");
 		int index2=(with_suffix) ? path.size() : path.rfind(".");
-		std::string name=path.substr(index1+1,index2-index1-1);
+		hstr name=path.substr(index1+1,index2-index1-1);
 		return name;
 	}
 
-	std::string pathGetBaseDir(std::string path)
+	hstr pathGetBaseDir(hstr path)
 	{
 		int index=path.rfind("/");  if (index < 0) index=path.rfind("\\");
 		return path.substr(0,index);
@@ -202,9 +202,9 @@ namespace AprilUI
 		return value;
 	}
 
-void hexstr_to_argb(const std::string& hex,byte* a,byte* r,byte* g,byte* b)
+void hexstr_to_argb(chstr hex,byte* a,byte* r,byte* g,byte* b)
 {
-	std::string h=(hex.substr(0,2) == "0x") ? hex : "0x"+hex;
+	hstr h=(hex.substr(0,2) == "0x") ? hex : "0x"+hex;
     if (h.size() == 8)
     {
         *r=hexstr_to_int(h.substr(2,2));
@@ -222,7 +222,7 @@ void hexstr_to_argb(const std::string& hex,byte* a,byte* r,byte* g,byte* b)
 	else throw AprilUI::GenericException("Color format must be either 0xAARRGGBB or 0xRRGGBB");
 }
 
-	void hexstr_to_argb_float(const std::string& hex,float* a,float* r,float* g,float* b)
+	void hexstr_to_argb_float(chstr hex,float* a,float* r,float* g,float* b)
 	{
 		byte ba,br,bg,bb;
 		hexstr_to_argb(hex,&ba,&br,&bg,&bb);
@@ -232,16 +232,16 @@ void hexstr_to_argb(const std::string& hex,byte* a,byte* r,byte* g,byte* b)
 		*b=bb/255.0f;
 	}
 
-	std::string generateName(std::string prefix)
+	hstr generateName(hstr prefix)
 	{
-		static std::map<std::string,int> counters;
+		static std::map<hstr,int> counters;
 		int cnt=counters[prefix];
 		cnt++;
 		counters[prefix]=cnt;
 		return prefix+str(cnt);
 	}
 	
-	int getdir (std::string dir, std::vector<std::string> &files)
+	int getdir (hstr dir, std::vector<hstr> &files)
 	{
 		DIR *dp;
 		struct dirent *dirp;
@@ -250,9 +250,9 @@ void hexstr_to_argb(const std::string& hex,byte* a,byte* r,byte* g,byte* b)
 			return 1;
 		}
 
-		std::string x;
+		hstr x;
 		while ((dirp = readdir(dp)) != NULL) {
-			x=std::string(dirp->d_name);
+			x=hstr(dirp->d_name);
 			if (x == "." || x == ".." || x == ".svn") continue;
 			files.push_back(getPWD() + "/" + dir + "/" + x);
 		}
@@ -260,12 +260,12 @@ void hexstr_to_argb(const std::string& hex,byte* a,byte* r,byte* g,byte* b)
 		return 0;
 	}
 	
-	std::string getPWD()
+	hstr getPWD()
 	{
 		return ".";
 	}
 	
-	void writelog(std::string msg)
+	void writelog(hstr msg)
 	{
 		rendersys->logMessage(msg);
 	}

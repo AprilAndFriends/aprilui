@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef TEXT_MAP_H
 #define TEXT_MAP_H
 
-#include <string>
+#include <hltypes/hstring.h>
 #include <map>
 #include "AprilUIExport.h"
 
@@ -31,17 +31,17 @@ namespace AprilUI
 	{
 		char* mBuffer;
 		int mBufferPos;
-		std::map<std::string,unsigned int> mTexts;
+		std::map<hstr,unsigned int> mTexts;
 		
 	public:
 		TextMap();
 		~TextMap();
 		
-		void load(const std::string& folder);
+		void load(chstr folder);
 		void destroy();
-		bool exists(const std::string& name);
+		bool exists(chstr name);
 
-		const char* operator [] (const std::string& name);
+		const char* operator [] (chstr name);
 		
 	};
 }

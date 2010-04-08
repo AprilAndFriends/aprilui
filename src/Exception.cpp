@@ -26,7 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 
 namespace AprilUI
 {
-	_GenericException::_GenericException(const std::string& errorText,std::string type,std::string file,int line)
+	_GenericException::_GenericException(chstr errorText,hstr type,hstr file,int line)
 	{
 		mErrText = errorText;
 		int src=file.find("src");
@@ -41,9 +41,9 @@ namespace AprilUI
 	}
 
 
-	std::string _GenericException::repr()
+	hstr _GenericException::repr()
 	{
-		std::string text=getType();
+		hstr text=getType();
 		if (text != "") text+=": ";
 
 		if (mFile != "") text+="["+mFile+":"+str(mLineNumber)+"] - ";
@@ -57,38 +57,38 @@ namespace AprilUI
 	}
 
 
-	_ResourceExistsException::_ResourceExistsException(const std::string object_name,std::string class_name,
-													   Dataset* dict,std::string file,int line) :
+	_ResourceExistsException::_ResourceExistsException(const hstr object_name,hstr class_name,
+													   Dataset* dict,hstr file,int line) :
 							  _GenericException("","ResourceExistsException",file,line)
 	{
 		mErrText=class_name+" already exists: "+object_name+" in dataset "+dict->getName();
 	}
 
-	_ResourceNotExistsException::_ResourceNotExistsException(const std::string object_name,std::string class_name,
-														  Dataset* dict,std::string file,int line) :
+	_ResourceNotExistsException::_ResourceNotExistsException(const hstr object_name,hstr class_name,
+														  Dataset* dict,hstr file,int line) :
 								 _GenericException("","ResourceNotExistsException",file,line)
 	{
 		mErrText=class_name+" doesn't exist: "+object_name+" in dataset "+dict->getName();
 	}
 
-	_ObjectHasParentException::_ObjectHasParentException(const std::string child,std::string parent,
-														 std::string file,int line) :
+	_ObjectHasParentException::_ObjectHasParentException(const hstr child,hstr parent,
+														 hstr file,int line) :
 							   _GenericException("","ObjectHasParentException",file,line)
 	{
 		mErrText="Cannot attach object '"+child+"' to object '"+parent+"', object already attached to another parent";
 	}
 
-	_ObjectNotChildException::_ObjectNotChildException(const std::string child,std::string parent,
-														 std::string file,int line) :
+	_ObjectNotChildException::_ObjectNotChildException(const hstr child,hstr parent,
+														 hstr file,int line) :
 							   _GenericException("","ObjectNotChildException",file,line)
 	{
 		mErrText="Cannot detach object '"+child+"' from object '"+parent+"', object is not a child";
 	}
 
 
-	_XMLException::_XMLException(const std::string err_msg,_xmlNode* node,std::string type,std::string file,int line):
+	_XMLException::_XMLException(const hstr err_msg,_xmlNode* node,hstr type,hstr file,int line):
 				   _GenericException("",type,file,line)
 	{
-		mErrText=err_msg+" in file "+std::string((char*) node->doc->URL)+", line "+str(node->line);
+		mErrText=err_msg+" in file "+hstr((char*) node->doc->URL)+", line "+str(node->line);
 	}
 }

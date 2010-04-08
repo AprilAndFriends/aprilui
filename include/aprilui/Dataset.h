@@ -22,7 +22,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #define DATASET_H
 
 #include <map>
-#include <string>
+#include <hltypes/hstring.h>
 #include "Exception.h"
 #include "TextMap.h"
 #include "AprilUIExport.h"
@@ -44,31 +44,31 @@ namespace AprilUI
 	class AprilUIExport Dataset
 	{
 	protected:
-		std::string mName;
-		std::string mFilename;
-		std::string mFilenamePrefix;
+		hstr mName;
+		hstr mFilename;
+		hstr mFilenamePrefix;
 		bool mLoaded;
-		std::map<std::string,Object*> mObjects;
-		std::map<std::string,April::Texture*> mTextures;
-		std::map<std::string,Image*> mImages;
+		std::map<hstr,Object*> mObjects;
+		std::map<hstr,April::Texture*> mTextures;
+		std::map<hstr,Image*> mImages;
 
-		std::map<std::string,void (*)()> mCallbacks;
+		std::map<hstr,void (*)()> mCallbacks;
 
 		April::Texture* parseTexture(_xmlNode* node);
 		void parseRAMTexture(_xmlNode* node);
 		void parseCompositeImage(_xmlNode* node);
 		virtual void parseExternalXMLNode(_xmlNode* node);
-		virtual Object* parseExternalObjectClass(_xmlNode* node,std::string obj_name,float x,float y,float w,float h);
+		virtual Object* parseExternalObjectClass(_xmlNode* node,chstr obj_name,float x,float y,float w,float h);
 		
 		Object* recursiveObjectParse(_xmlNode* node,Object* parent);
 		
-		void readFile(std::string filename);
+		void readFile(hstr filename);
 	public:
 		Object* parseObject(_xmlNode* node);
 
 		TextMap texts;
 		
-		Dataset(std::string filename);
+		Dataset(hstr filename);
 		virtual ~Dataset();
 
 		void load();
@@ -79,24 +79,24 @@ namespace AprilUI
 		void registerManualImage(Image* img);
 		void unregisterManualImage(Image* img);
 
-		void registerCallback(std::string name,void (*callback)());
-		void triggerCallback(std::string name);
+		void registerCallback(hstr name,void (*callback)());
+		void triggerCallback(hstr name);
 
 		
 
 		virtual void update(float k);
 		
-		void _destroyTexture(std::string tex);
-		void _destroyImage(std::string img);
+		void _destroyTexture(hstr tex);
+		void _destroyImage(hstr img);
 		void _destroyTexture(April::Texture* tex);
 		void _destroyImage(Image* img);
 
-		Object* getObject(std::string name);
-		April::Texture* getTexture(std::string name);
-		Image* getImage(std::string name);
+		Object* getObject(hstr name);
+		April::Texture* getTexture(hstr name);
+		Image* getImage(hstr name);
 
 		
-		std::string getName();
+		hstr getName();
 	};
 
 }

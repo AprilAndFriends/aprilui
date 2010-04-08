@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
-#include <string>
+#include <hltypes/hstring.h>
 #include <map>
 #include <list>
 #include "april/RenderSystem.h"
@@ -65,12 +65,12 @@ namespace AprilUI
 	{
 	protected:
 		Object* mParent;
-		std::string mTypeName,mName;
+		hstr mTypeName,mName;
 		int mZOrder;
 		float mX,mY,mWidth,mHeight;
 		std::list<Object*> mChildren;
 		
-		std::map<std::string,Event*> mEvents;
+		std::map<hstr,Event*> mEvents;
 		bool mVisible;
 		bool mEnabled;
 		float mAlpha;
@@ -79,7 +79,7 @@ namespace AprilUI
 		
 		void sortChildren();
 		
-		void triggerEvent(std::string name,float x=0,float y=0,char* extra=0);
+		void triggerEvent(hstr name,float x=0,float y=0,char* extra=0);
 		float getDerivedAlpha();
 		
 		virtual void OnDraw(float offset_x,float offset_y) { };
@@ -89,7 +89,8 @@ namespace AprilUI
 		void _moveChildToFront(Object* o);
 		void _moveChildToBack(Object* o);
 	public:
-		Object(std::string type_name,std::string name,float x,float y,float w,float h);
+
+		Object(hstr type_name,hstr name,int x,int y,int w,int h);
 		virtual ~Object();
 
 		void addChild(Object* o);
@@ -103,7 +104,7 @@ namespace AprilUI
 		void setZOrder(int zorder);
 		
 		virtual bool isPointInside(float x,float y);
-		void registerEvent(std::string event_name,void (*callback)(EventArgs*));
+		void registerEvent(hstr event_name,void (*callback)(EventArgs*));
 
 		gtypes::Vector2 getPosition() { return gtypes::Vector2(mX,mY); };
 		float getXPosition() { return mX; }
@@ -131,9 +132,9 @@ namespace AprilUI
 		void moveToFront();
 		void moveToBack();
 		
-		void _setTypeName(std::string type) { mTypeName=type; }
-		const std::string& getType() { return mTypeName; }
-		const std::string& getName() { return mName; }
+		void _setTypeName(hstr type) { mTypeName=type; }
+		chstr getType() { return mTypeName; }
+		chstr getName() { return mName; }
 		
 		// if a childs event returns true, event is not propagated to parents
 		virtual bool OnMouseDown(int button,float x,float y);
@@ -145,9 +146,9 @@ namespace AprilUI
 		void draw(float offset_x=0,float offset_y=0);
 		
 
-		virtual void notifyEvent(const std::string& event_name,void* params);
+		virtual void notifyEvent(chstr event_name,void* params);
 		
-		virtual void setProperty(const std::string& name,const std::string& value);
+		virtual void setProperty(chstr name,chstr value);
 		// system call, do not use!
 		void _setDataset(Dataset* d) { mDataPtr=d; }
 	};
@@ -160,19 +161,19 @@ namespace AprilUI
 	class AprilUIExport DummyObject : public Object
 	{
 	public:
-		DummyObject(std::string name,float x,float y,float w,float h);
-		void setProperty(const std::string& name,const std::string& value);
+		DummyObject(hstr name,float x,float y,float w,float h);
+		void setProperty(chstr name,chstr value);
 	};
 
 	class ColoredQuad : public Object
 	{
-		float mRed,mGreen,mBlue,mAlpha;
+		April::Color mColor;
 	public:
-		ColoredQuad(std::string name,float x,float y,float w,float h);
+		ColoredQuad(hstr name,float x,float y,float w,float h);
 		void setColor(float a,float r,float g,float b);
 		
 		void OnDraw(float offset_x,float offset_y);
-		void setProperty(const std::string& name,const std::string& value);
+		void setProperty(chstr name,chstr value);
 
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
@@ -185,13 +186,13 @@ namespace AprilUI
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		ImageBox(std::string name,float x,float y,float w,float h);
+		ImageBox(hstr name,float x,float y,float w,float h);
 		
 		virtual Image* getImage() { return mImage; };
 		virtual void setImage(Image* image);
-		void setImageByName(std::string image);
+		void setImageByName(hstr image);
 		
-		void setProperty(const std::string& name,const std::string& value);
+		void setProperty(chstr name,chstr value);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 	};
@@ -203,13 +204,13 @@ namespace AprilUI
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		ColoredImageBox(std::string name,float x,float y,float w,float h);
+		ColoredImageBox(hstr name,float x,float y,float w,float h);
 		
-		void setColor(std::string color);
+		void setColor(hstr color);
 		void setColor(April::Color color) { mColor=color; } ;
 		April::Color getColor() { return mColor; };
 
-		void setProperty(const std::string& name,const std::string& value);
+		void setProperty(chstr name,chstr value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport RotationImageBox : public ImageBox
@@ -218,12 +219,12 @@ namespace AprilUI
 		float mAngle;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		RotationImageBox(std::string name,float x,float y,float w,float h);
+		RotationImageBox(hstr name,float x,float y,float w,float h);
 
 		virtual void setAngle(float angle) { mAngle=angle; }
 		float getAngle() { return mAngle; }
 		bool angleEquals(float angle);
-		void setProperty(const std::string& name,const std::string& value);
+		void setProperty(chstr name,chstr value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport RotatableImageBox : public RotationImageBox
@@ -232,7 +233,7 @@ namespace AprilUI
 		float mDestAngle;
 		float mRotationSpeed;
 	public:
-		RotatableImageBox(std::string name,float x,float y,float w,float h);
+		RotatableImageBox(hstr name,float x,float y,float w,float h);
 		
 		void setRotationSpeed(float speed) { mRotationSpeed=speed; }
 		float getRotationSpeed() { return mRotationSpeed; }
@@ -248,8 +249,8 @@ namespace AprilUI
 	class LabelBase
 	{
 	protected:
-		std::string mText;
-		std::string mFontName;
+		hstr mText;
+		hstr mFontName;
 		Atres::Alignment mHorzFormatting;
 		VertFormatting mVertFormatting;
 		Atres::Effect mFontEffect;
@@ -258,13 +259,13 @@ namespace AprilUI
 
 		void _drawLabel(float offset_x,float offset_y,float width,float height,float alpha);
 	public:
-		LabelBase(std::string name);
+		LabelBase(hstr name);
 		
-		std::string getText() { return mText; }
-		void setText(std::string text) { mText=text; }
+		hstr getText() { return mText; }
+		void setText(hstr text) { mText=text; }
 		
-		std::string getFont() { return mFontName; }
-		void setFont(std::string font) { mFontName=font; }
+		hstr getFont() { return mFontName; }
+		void setFont(hstr font) { mFontName=font; }
 		
 		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
 		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
@@ -275,10 +276,10 @@ namespace AprilUI
 		void setVertFormatting(VertFormatting f) { mVertFormatting=f; }
 		VertFormatting getVertFormatting() { return mVertFormatting; }
 		
-		virtual void setProperty(const std::string& name,const std::string& value);
+		virtual void setProperty(chstr name,chstr value);
 
 		void setTextColor(April::Color color) { mTextColor=color; }
-		void setTextColor(std::string hex);
+		void setTextColor(hstr hex);
 		April::Color getTextColor() { return mTextColor; }
 	};
 	/*******************************************************************************/
@@ -287,10 +288,10 @@ namespace AprilUI
 	protected:
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		Label(std::string name,float x,float y,float w,float h);
+		Label(hstr name,float x,float y,float w,float h);
 		
-		void setTextKey(std::string key);
-		void setProperty(const std::string& name,const std::string& value);
+		void setTextKey(hstr key);
+		void setProperty(chstr name,chstr value);
 
 	};
 	/*******************************************************************************/
@@ -300,11 +301,11 @@ namespace AprilUI
 		bool mPushed,mBackgroundEnabled;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		TextButton(std::string name,float x,float y,float w,float h);
+		TextButton(hstr name,float x,float y,float w,float h);
 		
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
-		void setProperty(const std::string& name,const std::string& value);
+		void setProperty(chstr name,chstr value);
 	};
 
 	/*******************************************************************************/
@@ -313,12 +314,12 @@ namespace AprilUI
 		bool mPushed;
 		float mValue;
 	public:
-		Slider(std::string name,float x,float y,float w,float h);
+		Slider(hstr name,float x,float y,float w,float h);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 		void OnMouseMove(float x,float y);
 		void OnDraw(float offset_x,float offset_y);
-		void setProperty(const std::string& name,const std::string& value);
+		void setProperty(chstr name,chstr value);
 		float getValue() { return mValue; }
 		void setValue(float value) { mValue=value; }
 		
@@ -333,16 +334,16 @@ namespace AprilUI
 		void OnUpdate(float k);
 	public:
 		
-		ImageButton(std::string name,float x,float y,float w,float h);
+		ImageButton(hstr name,float x,float y,float w,float h);
 		Image* getPushedImage() { return mPushedImage; }
 		Image* getHoverImage() { return mHoverImage; }
 		Image* getDisabledImage() { return mDisabledImage; }
 		void setPushedImage(Image* image);
 		void setHoverImage(Image* image);
 		void setDisabledImage(Image* image);
-		void setPushedImageByName(std::string image);
-		void setHoverImageByName(std::string image);
-		void setDisabledImageByName(std::string image);
+		void setPushedImageByName(hstr image);
+		void setHoverImageByName(hstr image);
+		void setDisabledImageByName(hstr image);
 		void OnDraw(float offset_x,float offset_y);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* image);
@@ -350,7 +351,7 @@ namespace AprilUI
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 		
-		void setProperty(const std::string& name,const std::string& value);
+		void setProperty(chstr name,chstr value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport TextImageButton : public ImageButton, public LabelBase
@@ -359,16 +360,16 @@ namespace AprilUI
 		void OnDraw(float offset_x,float offset_y);
 
 	public:
-		TextImageButton(std::string name,float x,float y,float w,float h);
+		TextImageButton(hstr name,float x,float y,float w,float h);
 		
-		void setTextKey(std::string key);
-		void setProperty(const std::string& name,const std::string& value);
+		void setTextKey(hstr key);
+		void setProperty(chstr name,chstr value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport ToggleButton : public ImageButton
 	{
 	public:
-		ToggleButton(std::string name,float x,float y,float w,float h);
+		ToggleButton(hstr name,float x,float y,float w,float h);
 
 		void OnDraw(float offset_x,float offset_y);
 		bool OnMouseDown(int button,float x,float y);

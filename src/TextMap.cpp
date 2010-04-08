@@ -45,18 +45,18 @@ namespace AprilUI
 		destroy();
 	}
 
-	bool TextMap::exists(const std::string& name)
+	bool TextMap::exists(chstr name)
 	{
 		return (mTexts.find(name) != mTexts.end());
 	}
 
-	void TextMap::load(const std::string& folder)
+	void TextMap::load(chstr folder)
 	{
 		FILE* f;
 		char buff[2][513];
 		int len,mode,c; // mode: 0 - seeking for title, 1 - reading text
-		std::vector<std::string> content;
-		std::string key;
+		std::vector<hstr> content;
+		hstr key;
 		char *trp,utfc; // performance optimisation
 		unsigned int str_start;
 		
@@ -66,7 +66,7 @@ namespace AprilUI
 		
 		getdir(folder,content);
 		
-		foreach_v(std::string,content)
+		foreach_v(hstr,content)
 		{
 			f=fopen(it->c_str(),"rb");
 			for (utfc=-1;utfc < 0;utfc=fgetc(f));
@@ -112,7 +112,7 @@ namespace AprilUI
 		mTexts.clear();
 	}
 
-	const char* TextMap::operator [] (const std::string& name)
+	const char* TextMap::operator [] (chstr name)
 	{
 		if (name == "") return "";
 		if (!exists(name))
