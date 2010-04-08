@@ -246,7 +246,7 @@ namespace AprilUI
 		void update(float k);
 	};
 	/*******************************************************************************/
-	class LabelBase
+	class AprilUIExport LabelBase
 	{
 	protected:
 		hstr mText;
