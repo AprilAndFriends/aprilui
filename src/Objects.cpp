@@ -173,7 +173,7 @@ namespace AprilUI
 		}
 	}
 
-	void Object::notifyEvent(std::string event_name,void* params)
+	void Object::notifyEvent(const std::string& event_name,void* params)
 	{
 		foreach(Object*,mChildren) (*it)->notifyEvent(event_name,params);
 	}
@@ -205,7 +205,7 @@ namespace AprilUI
 		mChildren.push_front(o);
 	}
 
-	void Object::setProperty(std::string name,std::string value)
+	void Object::setProperty(const std::string& name,const std::string& value)
 	{
 		if      (name == "visible") setVisible(bool(str_to_int(value)));
 		else if (name == "zorder")  setZOrder(str_to_int(value));
@@ -236,7 +236,7 @@ namespace AprilUI
 		
 	}
 
-	void DummyObject::setProperty(std::string name,std::string value)
+	void DummyObject::setProperty(const std::string& name,const std::string& value)
 	{
 		Object::setProperty(name,value);
 	}
@@ -258,7 +258,7 @@ namespace AprilUI
 		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, mRed, mGreen, mBlue, mAlpha*alpha);
 	}
 
-	void ColoredQuad::setProperty(std::string name,std::string value)
+	void ColoredQuad::setProperty(const std::string& name,const std::string& value)
 	{
 		Object::setProperty(name,value);
 
@@ -314,7 +314,7 @@ namespace AprilUI
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
-	void ImageBox::setProperty(std::string name,std::string value)
+	void ImageBox::setProperty(const std::string& name,const std::string& value)
 	{
 		Object::setProperty(name,value);
 		if (name == "image") setImage(mDataPtr->getImage(value));
@@ -364,7 +364,7 @@ namespace AprilUI
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
-	void ColoredImageBox::setProperty(std::string name,std::string value)
+	void ColoredImageBox::setProperty(const std::string& name,const std::string& value)
 	{
 		ImageBox::setProperty(name,value);
 		if (name == "color") setColor(value);
@@ -376,7 +376,7 @@ namespace AprilUI
 		mAngle=0;
 	}
 
-	void RotationImageBox::setProperty(std::string name,std::string value)
+	void RotationImageBox::setProperty(const std::string& name,const std::string& value)
 	{
 		ImageBox::setProperty(name,value);
 
@@ -455,7 +455,7 @@ namespace AprilUI
 		{ throw GenericException(e.repr()); }
 	}
 
-	void LabelBase::setProperty(std::string name,std::string value)
+	void LabelBase::setProperty(const std::string& name,const std::string& value)
 	{
 		if (name == "font") setFont(value);
 		if (name == "text") setText(value);
@@ -504,7 +504,7 @@ namespace AprilUI
 		setText(mDataPtr->texts[key]);
 	}
 
-	void Label::setProperty(std::string name,std::string value)
+	void Label::setProperty(const std::string& name,const std::string& value)
 	{
 		LabelBase::setProperty(name,value);
 		Object::setProperty(name,value);
@@ -534,7 +534,7 @@ namespace AprilUI
 		if (!mBackgroundEnabled) mTextColor.a=a;
 	}
 	
-	void TextButton::setProperty(std::string name,std::string value)
+	void TextButton::setProperty(const std::string& name,const std::string& value)
 	{
 		if (name == "background") mBackgroundEnabled=(bool) str_to_int(value);
 		else Label::setProperty(name,value);
@@ -659,7 +659,7 @@ namespace AprilUI
 		return false;
 	}
 
-	void ImageButton::setProperty(std::string name,std::string value)
+	void ImageButton::setProperty(const std::string& name,const std::string& value)
 	{
 		Object::setProperty(name,value);
 		if (name == "image")			setImage(mDataPtr->getImage(value));
@@ -689,7 +689,7 @@ namespace AprilUI
 		setText(mDataPtr->texts[key]);
 	}
 
-	void TextImageButton::setProperty(std::string name,std::string value)
+	void TextImageButton::setProperty(const std::string& name,const std::string& value)
 	{
 		LabelBase::setProperty(name,value);
 		ImageButton::setProperty(name,value);
@@ -757,7 +757,7 @@ namespace AprilUI
 		mImage->draw(x+mHeight/4+mValue*(mWidth-mHeight),y+mHeight/4,mHeight/2,mHeight/2,1,1,1,alpha);
 	}
 
-	void Slider::setProperty(std::string name,std::string value)
+	void Slider::setProperty(const std::string& name,const std::string& value)
 	{
 		ImageBox::setProperty(name,value);
 	}

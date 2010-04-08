@@ -132,8 +132,8 @@ namespace AprilUI
 		void moveToBack();
 		
 		void _setTypeName(std::string type) { mTypeName=type; }
-		std::string getType() { return mTypeName; }
-		std::string getName() { return mName; }
+		const std::string& getType() { return mTypeName; }
+		const std::string& getName() { return mName; }
 		
 		// if a childs event returns true, event is not propagated to parents
 		virtual bool OnMouseDown(int button,float x,float y);
@@ -145,9 +145,9 @@ namespace AprilUI
 		void draw(float offset_x=0,float offset_y=0);
 		
 
-		virtual void notifyEvent(std::string event_name,void* params);
+		virtual void notifyEvent(const std::string& event_name,void* params);
 		
-		virtual void setProperty(std::string name,std::string value);
+		virtual void setProperty(const std::string& name,const std::string& value);
 		// system call, do not use!
 		void _setDataset(Dataset* d) { mDataPtr=d; }
 	};
@@ -161,7 +161,7 @@ namespace AprilUI
 	{
 	public:
 		DummyObject(std::string name,float x,float y,float w,float h);
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 	};
 
 	class ColoredQuad : public Object
@@ -172,7 +172,7 @@ namespace AprilUI
 		void setColor(float a,float r,float g,float b);
 		
 		void OnDraw(float offset_x,float offset_y);
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
@@ -191,7 +191,7 @@ namespace AprilUI
 		virtual void setImage(Image* image);
 		void setImageByName(std::string image);
 		
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 	};
@@ -209,7 +209,7 @@ namespace AprilUI
 		void setColor(April::Color color) { mColor=color; } ;
 		April::Color getColor() { return mColor; };
 
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport RotationImageBox : public ImageBox
@@ -223,7 +223,7 @@ namespace AprilUI
 		virtual void setAngle(float angle) { mAngle=angle; }
 		float getAngle() { return mAngle; }
 		bool angleEquals(float angle);
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport RotatableImageBox : public RotationImageBox
@@ -275,7 +275,7 @@ namespace AprilUI
 		void setVertFormatting(VertFormatting f) { mVertFormatting=f; }
 		VertFormatting getVertFormatting() { return mVertFormatting; }
 		
-		virtual void setProperty(std::string name,std::string value);
+		virtual void setProperty(const std::string& name,const std::string& value);
 
 		void setTextColor(April::Color color) { mTextColor=color; }
 		void setTextColor(std::string hex);
@@ -290,7 +290,7 @@ namespace AprilUI
 		Label(std::string name,float x,float y,float w,float h);
 		
 		void setTextKey(std::string key);
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 
 	};
 	/*******************************************************************************/
@@ -304,7 +304,7 @@ namespace AprilUI
 		
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 	};
 
 	/*******************************************************************************/
@@ -318,7 +318,7 @@ namespace AprilUI
 		bool OnMouseUp(int button,float x,float y);
 		void OnMouseMove(float x,float y);
 		void OnDraw(float offset_x,float offset_y);
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 		float getValue() { return mValue; }
 		void setValue(float value) { mValue=value; }
 		
@@ -350,7 +350,7 @@ namespace AprilUI
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 		
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport TextImageButton : public ImageButton, public LabelBase
@@ -362,7 +362,7 @@ namespace AprilUI
 		TextImageButton(std::string name,float x,float y,float w,float h);
 		
 		void setTextKey(std::string key);
-		void setProperty(std::string name,std::string value);
+		void setProperty(const std::string& name,const std::string& value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport ToggleButton : public ImageButton

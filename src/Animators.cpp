@@ -14,7 +14,7 @@ namespace AprilUI
 			mInitialX=mInitialY=-10000;
 		}
 
-		void Mover::setProperty(std::string name,std::string value)
+		void Mover::setProperty(const std::string& name,const std::string& value)
 		{
 			if      (name == "speed_x") mSpeedX=mInitialSX=str_to_float(value);
 			else if (name == "speed_y") mSpeedY=mInitialSY=str_to_float(value);
@@ -22,7 +22,7 @@ namespace AprilUI
 			else if (name == "accel_y") mAccelY=str_to_float(value);
 		}
 
-		void Mover::notifyEvent(std::string event_name,void* params)
+		void Mover::notifyEvent(const std::string& event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -63,7 +63,7 @@ namespace AprilUI
 			mInitialW=mInitialH=-10000;
 		}
 
-		void Scaler::setProperty(std::string name,std::string value)
+		void Scaler::setProperty(const std::string& name,const std::string& value)
 		{
 			if      (name == "speed_w") mSpeedW=mInitialSW=str_to_float(value);
 			else if (name == "speed_h") mSpeedH=mInitialSH=str_to_float(value);
@@ -71,7 +71,7 @@ namespace AprilUI
 			else if (name == "accel_h") mAccelH=str_to_float(value);
 		}
 
-		void Scaler::notifyEvent(std::string event_name,void* params)
+		void Scaler::notifyEvent(const std::string& event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -111,13 +111,13 @@ namespace AprilUI
 			mInitialAngle=-10000001;
 		}
 
-		void Rotator::setProperty(std::string name,std::string value)
+		void Rotator::setProperty(const std::string& name,const std::string& value)
 		{
 			if      (name == "speed") mSpeed=mInitialSpeed=str_to_float(value);
 			else if (name == "accel") mAccel=str_to_float(value);
 		}
 
-		void Rotator::notifyEvent(std::string event_name,void* params)
+		void Rotator::notifyEvent(const std::string& event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -149,14 +149,14 @@ namespace AprilUI
 			mInitialAlpha=-10001;
 		}
 
-		void AlphaFader::setProperty(std::string name,std::string value)
+		void AlphaFader::setProperty(const std::string& name,const std::string& value)
 		{
 			if      (name == "speed") mSpeed=mInitialSpeed=str_to_float(value);
 			else if (name == "accel") mAccel=str_to_float(value);
 			else if (name == "delay") mDelay=str_to_float(value);
 		}
 
-		void AlphaFader::notifyEvent(std::string event_name,void* params)
+		void AlphaFader::notifyEvent(const std::string& event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -191,7 +191,7 @@ namespace AprilUI
 			mSpeed=2;
 		}
 
-		void ColorAlternator::setProperty(std::string name,std::string value)
+		void ColorAlternator::setProperty(const std::string& name,const std::string& value)
 		{
 			if (name == "low_color")       hexstr_to_argb_float(value,&mLow[0],&mLow[1],&mLow[2],&mLow[3]);
 			else if (name == "high_color") hexstr_to_argb_float(value,&mHigh[0],&mHigh[1],&mHigh[2],&mHigh[3]);
@@ -222,7 +222,7 @@ namespace AprilUI
 			mFrequency=100;
 		}
 
-		void Blinker::setProperty(std::string name,std::string value)
+		void Blinker::setProperty(const std::string& name,const std::string& value)
 		{
 			if      (name == "delay")    mDelay=str_to_float(value);
 			else if (name == "duration") mDuration=str_to_float(value);
@@ -232,7 +232,7 @@ namespace AprilUI
 
 		}
 
-		void Blinker::notifyEvent(std::string event_name,void* params)
+		void Blinker::notifyEvent(const std::string& event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -268,7 +268,7 @@ namespace AprilUI
 			mTimer=0;
 		}
 
-		void FrameAnimation::setProperty(std::string name,std::string value)
+		void FrameAnimation::setProperty(const std::string& name,const std::string& value)
 		{
 			if      (name == "start_frame") mStartFrame=str_to_int(value);
 			else if (name == "end_frame")   mEndFrame=str_to_int(value);
@@ -276,7 +276,7 @@ namespace AprilUI
 			else if (name == "base_name")   mImageBaseName=value;
 		}
 
-		void FrameAnimation::notifyEvent(std::string event_name,void* params)
+		void FrameAnimation::notifyEvent(const std::string& event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{

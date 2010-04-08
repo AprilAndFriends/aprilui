@@ -33,9 +33,9 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "april/RenderSystem.h"
 namespace AprilUI
 {
-	std::string xmlGetPropString(_xmlNode* node,std::string prop)
+	std::string xmlGetPropString(_xmlNode* node,const char* prop)
 	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop.c_str());
+		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
 		std::string value = nodeValue;
 		xmlFree(nodeValue);
@@ -43,9 +43,9 @@ namespace AprilUI
 		return value;
 	}
 
-	float xmlGetPropFloat(_xmlNode* node,std::string prop)
+	float xmlGetPropFloat(_xmlNode* node,const char* prop)
 	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop.c_str());
+		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
 		float x=0;
 		sscanf(nodeValue,"%f",&x);
@@ -54,9 +54,9 @@ namespace AprilUI
 		return x;
 	}
 
-	int xmlGetPropInt(_xmlNode* node,std::string prop)
+	int xmlGetPropInt(_xmlNode* node,const char* prop)
 	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop.c_str());
+		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
 		int x=0;
 		sscanf(nodeValue,"%i",&x);
@@ -65,9 +65,9 @@ namespace AprilUI
 		return x;
 	}
 
-	unsigned int xmlGetPropHex(_xmlNode* node,std::string prop)
+	unsigned int xmlGetPropHex(_xmlNode* node,const char* prop)
 	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop.c_str());
+		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
 		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
 		unsigned int x=0;
 		if (nodeValue[0] == '0' && nodeValue[1] == 'x')
