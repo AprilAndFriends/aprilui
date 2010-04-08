@@ -8,13 +8,13 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Mover::Mover(std::string name) : Object("Animators::Mover",name,0,0,1,1)
+		Mover::Mover(hstr name) : Object("Animators::Mover",name,0,0,1,1)
 		{
 			mAccelX=mAccelY=mSpeedX=mSpeedY=mInitialSY=mInitialSX=0;
 			mInitialX=mInitialY=-10000;
 		}
 
-		void Mover::setProperty(const std::string& name,const std::string& value)
+		void Mover::setProperty(chstr name,chstr value)
 		{
 			if      (name == "speed_x") mSpeedX=mInitialSX=str_to_float(value);
 			else if (name == "speed_y") mSpeedY=mInitialSY=str_to_float(value);
@@ -22,7 +22,7 @@ namespace AprilUI
 			else if (name == "accel_y") mAccelY=str_to_float(value);
 		}
 
-		void Mover::notifyEvent(const std::string& event_name,void* params)
+		void Mover::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -57,13 +57,13 @@ namespace AprilUI
 
 
 
-		Scaler::Scaler(std::string name) : Object("Animators::Scaler",name,0,0,1,1)
+		Scaler::Scaler(hstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccelW=mAccelH=mSpeedW=mSpeedH=mInitialW=mInitialH=0;
 			mInitialW=mInitialH=-10000;
 		}
 
-		void Scaler::setProperty(const std::string& name,const std::string& value)
+		void Scaler::setProperty(chstr name,chstr value)
 		{
 			if      (name == "speed_w") mSpeedW=mInitialSW=str_to_float(value);
 			else if (name == "speed_h") mSpeedH=mInitialSH=str_to_float(value);
@@ -71,7 +71,7 @@ namespace AprilUI
 			else if (name == "accel_h") mAccelH=str_to_float(value);
 		}
 
-		void Scaler::notifyEvent(const std::string& event_name,void* params)
+		void Scaler::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -104,20 +104,20 @@ namespace AprilUI
 			mParent->setSize(v.x,v.y);
 		}
 
-		Rotator::Rotator(std::string name) : Object("Animators::Scaler",name,0,0,1,1)
+		Rotator::Rotator(hstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel=mSpeed=0;
 			mInitialSpeed=-10000;
 			mInitialAngle=-10000001;
 		}
 
-		void Rotator::setProperty(const std::string& name,const std::string& value)
+		void Rotator::setProperty(chstr name,chstr value)
 		{
 			if      (name == "speed") mSpeed=mInitialSpeed=str_to_float(value);
 			else if (name == "accel") mAccel=str_to_float(value);
 		}
 
-		void Rotator::notifyEvent(const std::string& event_name,void* params)
+		void Rotator::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -143,20 +143,20 @@ namespace AprilUI
 
 
 
-		AlphaFader::AlphaFader(std::string name) : Object("Animators::Scaler",name,0,0,1,1)
+		AlphaFader::AlphaFader(hstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
 			mInitialAlpha=-10001;
 		}
 
-		void AlphaFader::setProperty(const std::string& name,const std::string& value)
+		void AlphaFader::setProperty(chstr name,chstr value)
 		{
 			if      (name == "speed") mSpeed=mInitialSpeed=str_to_float(value);
 			else if (name == "accel") mAccel=str_to_float(value);
 			else if (name == "delay") mDelay=str_to_float(value);
 		}
 
-		void AlphaFader::notifyEvent(const std::string& event_name,void* params)
+		void AlphaFader::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -183,7 +183,7 @@ namespace AprilUI
 
 
 
-		ColorAlternator::ColorAlternator(std::string name) : Object("Animators::ColorAlternator",name,0,0,1,1)
+		ColorAlternator::ColorAlternator(hstr name) : Object("Animators::ColorAlternator",name,0,0,1,1)
 		{
 			mLow[0]=mLow[1]=mLow[2]=mLow[3]=0;
 			mHigh[0]=mHigh[1]=mHigh[2]=mHigh[3]=1;
@@ -191,7 +191,7 @@ namespace AprilUI
 			mSpeed=2;
 		}
 
-		void ColorAlternator::setProperty(const std::string& name,const std::string& value)
+		void ColorAlternator::setProperty(chstr name,chstr value)
 		{
 			if (name == "low_color")       hexstr_to_argb_float(value,&mLow[0],&mLow[1],&mLow[2],&mLow[3]);
 			else if (name == "high_color") hexstr_to_argb_float(value,&mHigh[0],&mHigh[1],&mHigh[2],&mHigh[3]);
@@ -215,14 +215,14 @@ namespace AprilUI
 			img->setColor(a,r,g,b);
 		}
 		
-		Blinker::Blinker(std::string name) : Object("Animators::Blinker",name,0,0,1,1)
+		Blinker::Blinker(hstr name) : Object("Animators::Blinker",name,0,0,1,1)
 		{
 			mDelay=mDuration=mTimer=mDelayTimer=mDurationTimer=0;
 			mStartVisibility=mEndVisibility=0;
 			mFrequency=100;
 		}
 
-		void Blinker::setProperty(const std::string& name,const std::string& value)
+		void Blinker::setProperty(chstr name,chstr value)
 		{
 			if      (name == "delay")    mDelay=str_to_float(value);
 			else if (name == "duration") mDuration=str_to_float(value);
@@ -232,7 +232,7 @@ namespace AprilUI
 
 		}
 
-		void Blinker::notifyEvent(const std::string& event_name,void* params)
+		void Blinker::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
@@ -261,14 +261,14 @@ namespace AprilUI
 			}
 		}
 
-		FrameAnimation::FrameAnimation(std::string name) : Object("Animators::FrameAnimation",name,0,0,1,1)
+		FrameAnimation::FrameAnimation(hstr name) : Object("Animators::FrameAnimation",name,0,0,1,1)
 		{
 			mStartFrame=0; mEndFrame=100;
 			mAnimationTime=10;
 			mTimer=0;
 		}
 
-		void FrameAnimation::setProperty(const std::string& name,const std::string& value)
+		void FrameAnimation::setProperty(chstr name,chstr value)
 		{
 			if      (name == "start_frame") mStartFrame=str_to_int(value);
 			else if (name == "end_frame")   mEndFrame=str_to_int(value);
@@ -276,7 +276,7 @@ namespace AprilUI
 			else if (name == "base_name")   mImageBaseName=value;
 		}
 
-		void FrameAnimation::notifyEvent(const std::string& event_name,void* params)
+		void FrameAnimation::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{

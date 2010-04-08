@@ -151,6 +151,7 @@
         <IncludePath Value="../atres/include"/>
         <IncludePath Value="./include/aprilui"/>
         <IncludePath Value="../gtypes/include"/>
+        <IncludePath Value="../hltypes/include"/>
         <Preprocessor Value="APRILUI_EXPORTS"/>
       </Compiler>
       <Linker Options="">

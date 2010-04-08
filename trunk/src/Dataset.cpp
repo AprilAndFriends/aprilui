@@ -31,12 +31,12 @@ http://www.gnu.org/copyleft/lesser.txt.
 
 namespace AprilUI
 {
-	void _registerDataset(std::string name,Dataset* d);
-	void _unregisterDataset(std::string name,Dataset* d);
+	void _registerDataset(hstr name,Dataset* d);
+	void _unregisterDataset(hstr name,Dataset* d);
 	
 	NullImage g_null_img;
 
-	Dataset::Dataset(std::string filename)
+	Dataset::Dataset(hstr filename)
 	{
 		
 		int slash=filename.rfind("/");
@@ -55,7 +55,7 @@ namespace AprilUI
 		_unregisterDataset(mName,this);
 	}
 
-	std::string Dataset::getName()
+	hstr Dataset::getName()
 	{
 		return mName;
 	}
@@ -70,21 +70,21 @@ namespace AprilUI
 		
 	}
 
-	void Dataset::_destroyTexture(std::string tex)
+	void Dataset::_destroyTexture(hstr tex)
 	{
 		
 	}
 
-	void Dataset::_destroyImage(std::string img)
+	void Dataset::_destroyImage(hstr img)
 	{
 		
 	}
 
 	April::Texture* Dataset::parseTexture(_xmlNode* node)
 	{
-		std::string filename=xmlGetPropString(node,"filename");
+		hstr filename=xmlGetPropString(node,"filename");
 		int slash=filename.find("/")+1;
-		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
+		hstr tex_name=filename.substr(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ObjectExistsException(filename);
 
 		bool prefix_images=true,dynamic_load=0;
@@ -108,7 +108,7 @@ namespace AprilUI
 			{
 				if (XML_EQ(node,"Image"))
 				{
-					std::string name;
+					hstr name;
 					if (prefix_images) name=tex_name+"/"+xmlGetPropString(node,"name");
 					else               name=xmlGetPropString(node,"name");
 					if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"Image",this);
@@ -141,7 +141,7 @@ namespace AprilUI
 					}
 					try
 					{
-						std::string mode=xmlGetPropString(node,"blend_mode");
+						hstr mode=xmlGetPropString(node,"blend_mode");
 						if (mode == "add") i->setBlendMode(April::ADD);
 					}
 					catch (_XMLException) { }
@@ -158,9 +158,9 @@ namespace AprilUI
 
 	void Dataset::parseRAMTexture(_xmlNode* node)
 	{
-		std::string filename=xmlGetPropString(node,"filename");
+		hstr filename=xmlGetPropString(node,"filename");
 		int slash=filename.find("/")+1;
-		std::string tex_name=filename.substr(slash,filename.rfind(".")-slash);
+		hstr tex_name=filename.substr(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ResourceExistsException(filename,"RAMTexture",this);
 
 		bool dynamic_load=false;
@@ -175,7 +175,7 @@ namespace AprilUI
 	
 	void Dataset::parseCompositeImage(_xmlNode* node)
 	{
-		std::string name=xmlGetPropString(node,"name"),refname;
+		hstr name=xmlGetPropString(node,"name"),refname;
 		if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"CompositeImage",this);
 
 		CompositeImage* img=new CompositeImage(name,xmlGetPropFloat(node,"w"),xmlGetPropFloat(node,"h"));
@@ -199,7 +199,7 @@ namespace AprilUI
 		
 	}
 	
-	Object* Dataset::parseExternalObjectClass(_xmlNode* node,std::string obj_name,float x,float y,float w,float h)
+	Object* Dataset::parseExternalObjectClass(_xmlNode* node,chstr obj_name,float x,float y,float w,float h)
 	{
 		return 0;
 	}
@@ -211,10 +211,10 @@ namespace AprilUI
 
 	Object* Dataset::recursiveObjectParse(_xmlNode* node,Object* parent)
 	{
-		std::string obj_name;
+		hstr obj_name;
 		float x=0,y=0,w=1,h=1;
 
-		std::string class_name=xmlGetPropString(node,"type");
+		hstr class_name=xmlGetPropString(node,"type");
 
 		if (XML_EQ(node,"Object"))
 		{
@@ -290,7 +290,7 @@ namespace AprilUI
 		return o;
 	}
 
-	void Dataset::readFile(std::string filename)
+	void Dataset::readFile(hstr filename)
 	{
 		// parse datadef xml file, error checking first
 		xmlDocPtr doc;
@@ -310,8 +310,8 @@ namespace AprilUI
 		if (xmlStrcmp(cur->name, (const xmlChar *) "DataDefinition"))
 			parseExternalXMLNode(cur);
 		
-		std::map<April::Texture*,std::string> dynamic_links;
-		std::string links;
+		std::map<April::Texture*,hstr> dynamic_links;
+		hstr links;
 		for (xmlNodePtr p = cur->xmlChildrenNode; p != 0; p=p->next)
 		{
 			if      (XML_EQ(p,"Texture"))
@@ -333,12 +333,12 @@ namespace AprilUI
 		}
 		
 	// adjust dynamic texture links
-		std::map<April::Texture*,std::string>::iterator map_it;
-		std::vector<std::string> dlst;
+		std::map<April::Texture*,hstr>::iterator map_it;
+		std::vector<hstr> dlst;
 		for (map_it = dynamic_links.begin();map_it != dynamic_links.end();map_it++)
 		{
 			dlst=str_split(map_it->second,",");
-			foreach_v(std::string,dlst)
+			foreach_v(hstr,dlst)
 				map_it->first->addDynamicLink(getTexture(*it));
 		}
 	// done!
@@ -347,8 +347,8 @@ namespace AprilUI
 
 	void Dataset::load()
 	{
-		std::string base_dir=pathGetBaseDir(mFilename);
-		std::list<std::string> scenes;
+		hstr base_dir=pathGetBaseDir(mFilename);
+		std::list<hstr> scenes;
 
 		// texts
 		writelog("loading texts");
@@ -399,7 +399,7 @@ namespace AprilUI
 		mImages.erase(img->getName());
 	}
 
-	Object* Dataset::getObject(std::string name)
+	Object* Dataset::getObject(hstr name)
 	{
 		Object* o=mObjects[name];
 		if (!o)
@@ -407,13 +407,13 @@ namespace AprilUI
 		return o;
 	}
 	
-	April::Texture* Dataset::getTexture(std::string name)
+	April::Texture* Dataset::getTexture(hstr name)
 	{
 		if (mTextures.find(name) == mTextures.end()) throw ResourceNotExistsException(name,"Texture",this);
 		return mTextures[name];
 	}
 
-	Image* Dataset::getImage(std::string name)
+	Image* Dataset::getImage(hstr name)
 	{
 		Image* i;
 		if (name == "null") return &g_null_img;
@@ -442,12 +442,12 @@ namespace AprilUI
 		return i;
 	}
 
-	void Dataset::registerCallback(std::string name,void (*callback)())
+	void Dataset::registerCallback(hstr name,void (*callback)())
 	{
 		mCallbacks[name]=callback;
 	}
 
-	void Dataset::triggerCallback(std::string name)
+	void Dataset::triggerCallback(hstr name)
 	{
 		void (*callback)()=mCallbacks[name];
 		if (callback) callback();

@@ -31,7 +31,7 @@ public:
 	AtresAprilInterface();
 	~AtresAprilInterface();
 	
-	unsigned int loadResource(std::string filename);
+	unsigned int loadResource(const char* filename);
 	void render(Atres::CharacterRenderOp* rops,int n);
 };
 }

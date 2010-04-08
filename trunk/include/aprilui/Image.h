@@ -23,7 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "april/RenderSystem.h"
 #include "AprilUIExport.h"
 
-#include <string>
+#include <hltypes/hstring.h>
 #include <vector>
 
 namespace AprilUI
@@ -33,8 +33,8 @@ namespace AprilUI
 	protected:
 		April::TexturedVertex mVertices[4];
 		April::Texture* mTexture;
-		std::string mName;
-		std::string mImageName;
+		hstr mName;
+		hstr mImageName;
 		float mSourceX, mSourceY, mSourceW, mSourceH;
 		April::BlendMode mBlendMode;
 		bool mVertical,mUnloadedFlag,mInvertX,mInvertY;
@@ -42,7 +42,7 @@ namespace AprilUI
 		void updateTexCoords();
 	public:
 		
-		Image(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical=0,bool invertx=0,bool inverty=0);
+		Image(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical=0,bool invertx=0,bool inverty=0);
 		virtual ~Image();
 		virtual void draw(float dx,float dy,float dw=-1,float dh=-1,float r=1,float g=1,float b=1,float a=1);
 		virtual void draw(float centerx,float centery,float dw,float dh,float angle);
@@ -53,8 +53,8 @@ namespace AprilUI
 		bool isYInverted() { return mInvertY; };
 
 		April::Texture* getTexture();
-		std::string getName() const { return mName; }
-		std::string getImageName() const { return mImageName; }
+		hstr getName() const { return mName; }
+		hstr getImageName() const { return mImageName; }
 		float getSourceX() const { return mSourceX; }
 		float getSourceY() const { return mSourceY; }
 		float getSourceW() const { return mSourceW; }
@@ -68,7 +68,7 @@ namespace AprilUI
 	{
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
-		ColoredImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical=false,unsigned int color=0xFFFFFF);
+		ColoredImage(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical=false,unsigned int color=0xFFFFFF);
 		void draw(float dx,float dy,float dw=-1,float dh=-1,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 
@@ -81,7 +81,7 @@ namespace AprilUI
 	{
 		float mTileW,mTileH,mScrollX,mScrollY;
 	public:
-		TiledImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh);
+		TiledImage(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh);
 		void setTileW(float tile) { mTileW=tile; }
 		void setTileH(float tile) { mTileW=tile; }
 		void setTiles(float tilew,float tileh) { mTileW=tilew; mTileH=tileh; }
@@ -110,8 +110,8 @@ namespace AprilUI
 	protected:
 		std::vector<ImageRef> mImages;
 	public:
-		CompositeImage(const std::string& name,float sw,float sh);
-		CompositeImage(const std::string& name,CompositeImage& base);
+		CompositeImage(chstr name,float sw,float sh);
+		CompositeImage(chstr name,CompositeImage& base);
 		
 		void addImageRef(Image* img,float x,float y,float w,float h);
 		
@@ -125,7 +125,7 @@ namespace AprilUI
 	{
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
-		ColorImage(const std::string& name);
+		ColorImage(chstr name);
 		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 	};

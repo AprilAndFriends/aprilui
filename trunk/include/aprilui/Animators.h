@@ -14,10 +14,10 @@ namespace AprilUI
 			float mAccelX,mAccelY;
 			float mSpeedX,mSpeedY;
 		public:
-			Mover(std::string name);
+			Mover(hstr name);
 
-			void notifyEvent(const std::string& event_name,void* params);
-			void setProperty(const std::string& name,const std::string& value);
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
 		class Scaler : public Object
@@ -26,10 +26,10 @@ namespace AprilUI
 			float mAccelW,mAccelH;
 			float mSpeedW,mSpeedH;
 		public:
-			Scaler(std::string name);
+			Scaler(hstr name);
 
-			void notifyEvent(const std::string& event_name,void* params);
-			void setProperty(const std::string& name,const std::string& value);
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
 
@@ -38,10 +38,10 @@ namespace AprilUI
 		{
 			float mInitialSpeed,mInitialAngle,mSpeed,mAccel;
 		public:
-			Rotator(std::string name);
+			Rotator(hstr name);
 
-			void notifyEvent(const std::string& event_name,void* params);
-			void setProperty(const std::string& name,const std::string& value);
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
 
@@ -49,10 +49,10 @@ namespace AprilUI
 		{
 			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay;
 		public:
-			AlphaFader(std::string name);
+			AlphaFader(hstr name);
 
-			void notifyEvent(const std::string& event_name,void* params);
-			void setProperty(const std::string& name,const std::string& value);
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
 
@@ -63,8 +63,8 @@ namespace AprilUI
 			float mLow[4],mHigh[4];
 			float mTimer,mSpeed;
 		public:
-			ColorAlternator(std::string name);
-			void setProperty(const std::string& name,const std::string& value);
+			ColorAlternator(hstr name);
+			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
 
@@ -73,23 +73,23 @@ namespace AprilUI
 			float mDelay,mDuration,mFrequency,mTimer,mDelayTimer,mDurationTimer;
 			bool mStartVisibility,mEndVisibility;
 		public:
-			Blinker(std::string name);
+			Blinker(hstr name);
 
-			void notifyEvent(const std::string& event_name,void* params);
-			void setProperty(const std::string& name,const std::string& value);
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
 		
 		class FrameAnimation : public Object
 		{
-			std::string mImageBaseName;
+			hstr mImageBaseName;
 			int mStartFrame,mEndFrame;
 			float mAnimationTime,mTimer;
 		public:
-			FrameAnimation(std::string name);
+			FrameAnimation(hstr name);
 
-			void notifyEvent(const std::string& event_name,void* params);
-			void setProperty(const std::string& name,const std::string& value);
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
 	}

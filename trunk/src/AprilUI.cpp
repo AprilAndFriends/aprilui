@@ -25,14 +25,14 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "Dataset.h"
 #include "Exception.h"
 #include <map>
-#include <string>
+#include <hltypes/hstring.h>
 
 namespace AprilUI
 {
 	bool register_lock=0;
 	std::map<int,April::Texture*> g_font_textures;
 	AtresAprilInterface* atres_render_iface=0;
-	std::map<std::string,Dataset*> g_datasets;
+	std::map<hstr,Dataset*> g_datasets;
 
 	void init()
 	{
@@ -40,14 +40,14 @@ namespace AprilUI
 		Atres::setRenderInterface(atres_render_iface);
 	}
 
-	Dataset* getDatasetByName(std::string name)
+	Dataset* getDatasetByName(hstr name)
 	{
 		if (g_datasets.find(name) == g_datasets.end())
 			throw GenericException("Dataset '"+name+"' doesn't exist!");
 		return g_datasets[name];
 	}
 
-	void _registerDataset(std::string name,Dataset* d)
+	void _registerDataset(hstr name,Dataset* d)
 	{
 		if (register_lock) return;
 		if (g_datasets.find(name) != g_datasets.end())
@@ -55,7 +55,7 @@ namespace AprilUI
 		g_datasets[name]=d;
 	}
 	
-	void _unregisterDataset(std::string name,Dataset* d)
+	void _unregisterDataset(hstr name,Dataset* d)
 	{
 		if (register_lock) return;
 		g_datasets.erase(name);
@@ -63,7 +63,7 @@ namespace AprilUI
 	
 	void update(float time_increase)
 	{
-		for (std::map<std::string,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
+		for (std::map<hstr,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
 			it2->second->update(time_increase);
 	}
 
@@ -75,7 +75,7 @@ namespace AprilUI
 		for (std::map<int,April::Texture*>::iterator it=g_font_textures.begin();it!=g_font_textures.end();it++)
 			delete it->second;
 		
-		for (std::map<std::string,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
+		for (std::map<hstr,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
 			delete it2->second;
 	}
 }

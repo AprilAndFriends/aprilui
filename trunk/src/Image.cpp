@@ -26,7 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 
 namespace AprilUI
 {
-	Image::Image(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,bool invertx,bool inverty)
+	Image::Image(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical,bool invertx,bool inverty)
 	{
 		mTexture=tex;
 		mName=name;
@@ -143,7 +143,7 @@ namespace AprilUI
 		return mTexture;
 	}
 	
-	ColoredImage::ColoredImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
+	ColoredImage::ColoredImage(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
 				  Image(tex,name,sx,sy,sw,sh,vertical)
 	{
 		if (color > 0xFFFFFF)
@@ -171,7 +171,7 @@ namespace AprilUI
 	}
 
 
-	TiledImage::TiledImage(April::Texture* tex,const std::string& name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh) :
+	TiledImage::TiledImage(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical,float tilew,float tileh) :
 				  Image(tex,name,sx,sy,sw,sh,vertical)
 	{
 		mTileW=tilew; mTileH=tileh;
@@ -305,12 +305,12 @@ namespace AprilUI
 	}
 
 
-	CompositeImage::CompositeImage(const std::string& name,float sw,float sh) : Image(0,name,0,0,sw,sh)
+	CompositeImage::CompositeImage(chstr name,float sw,float sh) : Image(0,name,0,0,sw,sh)
 	{
 		
 	}
 	
-	CompositeImage::CompositeImage(const std::string& name,CompositeImage& base) : Image(0,name,0,0,base.getSourceW(),base.getSourceH())
+	CompositeImage::CompositeImage(chstr name,CompositeImage& base) : Image(0,name,0,0,base.getSourceW(),base.getSourceH())
 	{
 		foreach_v(ImageRef,base.mImages)
 			addImageRef(it->img,it->x,it->y,it->w,it->h);
@@ -341,7 +341,7 @@ namespace AprilUI
 	}
 
 
-	ColorImage::ColorImage(const std::string& name) : Image(0,name,0,0,0,0,0)
+	ColorImage::ColorImage(chstr name) : Image(0,name,0,0,0,0,0)
 	{
 		unsigned char a,r,g,b;
 		hexstr_to_argb(name,&a,&r,&g,&b);

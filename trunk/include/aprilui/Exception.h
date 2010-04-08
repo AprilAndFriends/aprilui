@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-#include <string>
+#include <hltypes/hstring.h>
 #include "AprilUIExport.h"
 
 struct _xmlNode;
@@ -32,19 +32,19 @@ namespace AprilUI
 	class AprilUIExport _GenericException
 	{
 	public:
-		std::string mErrText,mFile,mType;
+		hstr mErrText,mFile,mType;
 		int mLineNumber;
 
-		_GenericException(const std::string& errorText,std::string type="",std::string file="",int line=0);
+		_GenericException(chstr errorText,hstr type="",hstr file="",int line=0);
 		virtual ~_GenericException();
 		
-		virtual std::string repr();
+		virtual hstr repr();
 		
 		void writeOutput();
 		
-		virtual const std::string& getErrorText() { return mErrText; }
+		virtual chstr getErrorText() { return mErrText; }
 		
-		const std::string getType(){ return mType; }
+		const hstr getType(){ return mType; }
 	};
 
 	#define GenericException(msg) _GenericException(msg,"GenericException",__FILE__,__LINE__)
@@ -53,7 +53,7 @@ namespace AprilUI
 	#define exception_cls(name) class AprilUIExport name : public _GenericException \
 	{ \
 	public: \
-		name(const std::string& errorText,std::string type="",std::string file="",int line=0) : \
+		name(chstr errorText,hstr type="",hstr file="",int line=0) : \
 		  _GenericException(errorText,type,file,line){} \
 	}
 
@@ -85,12 +85,12 @@ namespace AprilUI
 	class AprilUIExport _ResourceExistsException : public _GenericException
 	{
 	public:
-		_ResourceExistsException(const std::string object_name,std::string class_name,Dataset* dict,std::string file="",int line=0);
+		_ResourceExistsException(const hstr object_name,hstr class_name,Dataset* dict,hstr file="",int line=0);
 	};
 	class AprilUIExport _ResourceNotExistsException : public _GenericException
 	{
 	public:
-		_ResourceNotExistsException(const std::string object_name,std::string class_name,Dataset* dict,std::string file="",int line=0);
+		_ResourceNotExistsException(const hstr object_name,hstr class_name,Dataset* dict,hstr file="",int line=0);
 	};
 	#define ResourceExistsException(name,cls,data) _ResourceExistsException(name,cls,data,__FILE__,__LINE__)
 	#define ResourceNotExistsException(name,cls,data) _ResourceNotExistsException(name,cls,data,__FILE__,__LINE__)
@@ -100,7 +100,7 @@ namespace AprilUI
 	class AprilUIExport _ObjectHasParentException : public _GenericException
 	{
 	public:
-		_ObjectHasParentException(const std::string child,std::string parent,std::string file="",int line=0);
+		_ObjectHasParentException(const hstr child,hstr parent,hstr file="",int line=0);
 	};
 
 	#define ObjectHasParentException(child,parent) _ObjectHasParentException(child,parent,__FILE__,__LINE__)
@@ -110,7 +110,7 @@ namespace AprilUI
 	class AprilUIExport _ObjectNotChildException : public _GenericException
 	{
 	public:
-		_ObjectNotChildException(const std::string child,std::string parent,std::string file="",int line=0);
+		_ObjectNotChildException(const hstr child,hstr parent,hstr file="",int line=0);
 	};
 
 	#define ObjectNotChildException(child,parent) _ObjectNotChildException(child,parent,__FILE__,__LINE__)
@@ -120,12 +120,12 @@ namespace AprilUI
 	class AprilUIExport _XMLException : public _GenericException
 	{
 	public:
-		_XMLException(const std::string err_msg,_xmlNode* node,std::string type,std::string file,int line);
+		_XMLException(const hstr err_msg,_xmlNode* node,hstr type,hstr file,int line);
 	};
 
 	#define XMLException(msg,node) _XMLException(msg,node,type,__FILE__,__LINE__)
-	#define XMLPropertyNotExistsException(msg,node) _XMLException(std::string("XML property doesn't exist: ")+msg,node,"XMLException",__FILE__,__LINE__)
-	#define XMLUnknownClassException(msg,node) _XMLException(std::string("Unknown class detected in XML file: ")+msg,node,"XMLUnknownClassException",__FILE__,__LINE__)
+	#define XMLPropertyNotExistsException(msg,node) _XMLException(hstr("XML property doesn't exist: ")+msg,node,"XMLException",__FILE__,__LINE__)
+	#define XMLUnknownClassException(msg,node) _XMLException(hstr("Unknown class detected in XML file: ")+msg,node,"XMLUnknownClassException",__FILE__,__LINE__)
 
 }
 
