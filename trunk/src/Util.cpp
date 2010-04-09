@@ -208,6 +208,6 @@ namespace AprilUI
 	
 	void writelog(hstr msg)
 	{
-		rendersys->logMessage(msg);
+		rendersys->logMessage(msg,"[cage] ");
 	}
 }

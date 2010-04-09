@@ -87,8 +87,7 @@ namespace AprilUI
 					if (strncmp(buff[c],"}",1) == 0)
 					{
 						mode=0;
-						mBuffer[mBufferPos-1]=0; // get rid of last newline
-						//printf("%s:-----\n%s\n",key.c_str(),str);
+						mBuffer[mBufferPos-1]=0;
 						mTexts[key]=str_start;
 					}
 					else
