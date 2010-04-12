@@ -28,6 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "april/RenderSystem.h"
 #include "Image.h"
 #include "Util.h"
+#include "hltypes/Array.h"
 
 namespace AprilUI
 {
@@ -334,7 +335,7 @@ namespace AprilUI
 		
 	// adjust dynamic texture links
 		std::map<April::Texture*,hstr>::iterator map_it;
-		std::vector<hstr> dlst;
+		harray<hstr> dlst;
 		for (map_it = dynamic_links.begin();map_it != dynamic_links.end();map_it++)
 		{
 			dlst=map_it->second.split(',');
@@ -419,7 +420,7 @@ namespace AprilUI
 		if (name == "null") return &g_null_img;
 
 		
-		if (mImages.find(name) == mImages.end() && name.startswith("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
+		if (mImages.find(name) == mImages.end() && name.starts_with("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
 			i=mImages[name]=new ColorImage(name);
 		else
 			i=mImages[name];
