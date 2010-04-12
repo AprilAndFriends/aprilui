@@ -234,6 +234,7 @@ namespace AprilUI
 			catch (_XMLException) { h=-1; }
 		}
 		else if (XML_EQ(node,"Animator")) obj_name=generateName("Animator");
+		else return 0;
 
 		
 		if (mObjects.find(obj_name) != mObjects.end())
@@ -273,6 +274,7 @@ namespace AprilUI
 		
 		if (!o) throw XMLUnknownClassException(class_name,node);
 		o->_setDataset(this);
+		
 		
 		for (xmlAttr* attr=node->properties;attr != 0; attr=attr->next)
 			o->setProperty((char*) attr->name,(char*) attr->children->content);
