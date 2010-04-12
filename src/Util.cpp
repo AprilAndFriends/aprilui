@@ -83,22 +83,6 @@ namespace AprilUI
 		return xmlGetProp(node, (const xmlChar*) name) != 0;
 	}
 
-	harray<hstr> str_split(hstr s,hstr splitter)
-	{
-		harray<hstr> lst;
-		int index=0,last=0;
-		for (;;)
-		{
-			index=s.find(splitter,last);
-			if (index < 0) break;
-			lst.push_back(s.substr(last,index-last));
-			last=index+splitter.size();
-		}
-		if (last < (int)s.size()) lst.push_back(s.substr(last,s.size()));
-		
-		return lst;
-	}
-
 	hstr pathGetFilename(hstr path,bool with_suffix)
 	{
 		int index1=path.rfind("/"); if (index1 < 0) index1=path.rfind("\\");
