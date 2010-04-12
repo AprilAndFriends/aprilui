@@ -21,8 +21,8 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef APRILUI_UTIL_H
 #define UTIL_H
 
+#include "hltypes/Array.h"
 #include "hltypes/hstring.h"
-#include <vector>
 struct _xmlNode;
 
 namespace AprilUI
@@ -31,10 +31,8 @@ namespace AprilUI
 
 	#define XML_EQ(a,b) xmlStrcmp(a->name, (const xmlChar *) b) == 0
 
-	#define foreach(type,lst) for (std::list<type>::iterator it=lst.begin();it != lst.end(); it++)
-	#define foreach_reverse(type,lst) for (std::list<type>::reverse_iterator it=lst.rbegin();it != lst.rend(); it++)
-	#define foreach_v(type,lst) for (std::vector<type>::iterator it=lst.begin();it != lst.end(); it++)
-	#define foreach_rv(type,lst) for (std::vector<type>::reverse_iterator it=lst.rbegin();it != lst.rend(); it++)
+	#define foreach(type,lst) for (type* it = lst.iter(); it; it = lst.next())
+	#define foreach_reverse(type,lst) for (type* it = lst.riter(); it; it = lst.rnext())
 
 	#define foreach_in_map(type,list) for (std::map<hstr,type>::iterator it=list.begin();it != list.end(); it++)
 
@@ -58,7 +56,7 @@ namespace AprilUI
 	float clamp(float value,float min_value,float max_value);
 
 	hstr generateName(hstr prefix);
-	int getdir (hstr dir, std::vector<hstr> &files);
+	int getdir (hstr dir, harray<hstr> &files);
 	
 	void writelog(hstr msg);
 	

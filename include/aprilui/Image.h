@@ -23,8 +23,8 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "april/RenderSystem.h"
 #include "AprilUIExport.h"
 
+#include "hltypes/Array.h"
 #include "hltypes/hstring.h"
-#include <vector>
 
 namespace AprilUI
 {
@@ -108,7 +108,7 @@ namespace AprilUI
 			float x,y,w,h;
 		};
 	protected:
-		std::vector<ImageRef> mImages;
+		harray<ImageRef> mImages;
 	public:
 		CompositeImage(chstr name,float sw,float sh);
 		CompositeImage(chstr name,CompositeImage& base);
@@ -118,7 +118,7 @@ namespace AprilUI
 		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 		
-		const std::vector<ImageRef>& getImageList() { return mImages; }
+		const harray<ImageRef>& getImageList() { return mImages; }
 	};
 	
 	class AprilUIExport ColorImage : public Image

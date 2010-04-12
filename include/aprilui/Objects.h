@@ -21,9 +21,9 @@ http://www.gnu.org/copyleft/lesser.txt.
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
+#include "hltypes/Array.h"
 #include "hltypes/hstring.h"
 #include <map>
-#include <list>
 #include "april/RenderSystem.h"
 #include "Exception.h"
 #include "atres/Atres.h"
@@ -68,7 +68,7 @@ namespace AprilUI
 		hstr mTypeName,mName;
 		int mZOrder;
 		float mX,mY,mWidth,mHeight;
-		std::list<Object*> mChildren;
+		harray<Object*> mChildren;
 		
 		std::map<hstr,Event*> mEvents;
 		bool mVisible;

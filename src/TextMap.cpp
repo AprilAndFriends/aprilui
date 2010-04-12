@@ -21,7 +21,6 @@ http://www.gnu.org/copyleft/lesser.txt.
 #include "TextMap.h"
 #include "Exception.h"
 #include "Util.h"
-#include <list>
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
@@ -55,7 +54,7 @@ namespace AprilUI
 		FILE* f;
 		char buff[2][513];
 		int len,mode,c; // mode: 0 - seeking for title, 1 - reading text
-		std::vector<hstr> content;
+		harray<hstr> content;
 		hstr key;
 		char *trp,utfc; // performance optimisation
 		unsigned int str_start;
@@ -66,7 +65,7 @@ namespace AprilUI
 		
 		getdir(folder,content);
 		
-		foreach_v(hstr,content)
+		foreach(hstr,content)
 		{
 			f=fopen(it->c_str(),"rb");
 			for (utfc=-1;utfc < 0;utfc=fgetc(f));
