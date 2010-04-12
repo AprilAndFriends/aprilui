@@ -339,7 +339,7 @@ namespace AprilUI
 		for (map_it = dynamic_links.begin();map_it != dynamic_links.end();map_it++)
 		{
 			dlst=map_it->second.split(',');
-			foreach_v(hstr,dlst)
+			foreach(hstr,dlst)
 				map_it->first->addDynamicLink(getTexture(*it));
 		}
 	// done!
@@ -349,7 +349,7 @@ namespace AprilUI
 	void Dataset::load()
 	{
 		hstr base_dir=pathGetBaseDir(mFilename);
-		std::list<hstr> scenes;
+		harray<hstr> scenes;
 
 		// texts
 		writelog("loading texts");

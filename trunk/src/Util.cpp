@@ -83,9 +83,9 @@ namespace AprilUI
 		return xmlGetProp(node, (const xmlChar*) name) != 0;
 	}
 
-	std::vector<hstr> str_split(hstr s,hstr splitter)
+	harray<hstr> str_split(hstr s,hstr splitter)
 	{
-		std::vector<hstr> lst;
+		harray<hstr> lst;
 		int index=0,last=0;
 		for (;;)
 		{
@@ -182,7 +182,7 @@ namespace AprilUI
 		return prefix+hstr(cnt);
 	}
 	
-	int getdir (hstr dir, std::vector<hstr> &files)
+	int getdir (hstr dir, harray<hstr> &files)
 	{
 		DIR *dp;
 		struct dirent *dirp;

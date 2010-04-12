@@ -115,14 +115,14 @@ namespace AprilUI
 		if (isVisible())
 		{
 			OnDraw(offset_x,offset_y);
-			for (std::list<Object*>::iterator it=mChildren.begin();it != mChildren.end();it++)
+			for (Object** it=mChildren.iter();it;it=mChildren.next())
 				(*it)->draw(offset_x+mX,offset_y+mY);
 		}
 	}
 
 	void Object::update(float k)
 	{
-		for (std::list<Object*>::iterator it=mChildren.begin();it != mChildren.end();it++)
+		for (Object** it=mChildren.iter();it;it=mChildren.next())
 			(*it)->update(k);
 	}
 
@@ -133,7 +133,7 @@ namespace AprilUI
 
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
-		for (std::list<Object*>::reverse_iterator it=mChildren.rbegin();it != mChildren.rend();it++)
+		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 				if ((*it)->OnMouseDown(button,x-mX,y-mY)) return true;
 		
@@ -142,14 +142,14 @@ namespace AprilUI
 
 	void Object::OnMouseMove(float x,float y)
 	{
-		for (std::list<Object*>::reverse_iterator it=mChildren.rbegin();it != mChildren.rend();it++)
+		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 				(*it)->OnMouseMove(x-mX,y-mY);
 	}
 
 	bool Object::OnMouseUp(int button,float x,float y)
 	{
-		for (std::list<Object*>::reverse_iterator it=mChildren.rbegin();it != mChildren.rend();it++)
+		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
 		
