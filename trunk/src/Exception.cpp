@@ -53,7 +53,7 @@ namespace AprilUI
 
 	void _GenericException::writeOutput()
 	{
-		writelog("----------------\nException Error!\n\n"+repr()+"\n----------------");
+		writelog("\n----------------\nException Error!\n\n"+repr()+"\n----------------");
 	}
 
 
