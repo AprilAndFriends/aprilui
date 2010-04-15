@@ -96,7 +96,7 @@ namespace AprilUI
 		Image* getImage(hstr name);
 
 		
-		hstr getName();
+		chstr getName();
 	};
 
 }

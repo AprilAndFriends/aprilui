@@ -56,7 +56,7 @@ namespace AprilUI
 		_unregisterDataset(mName,this);
 	}
 
-	hstr Dataset::getName()
+	chstr Dataset::getName()
 	{
 		return mName;
 	}
