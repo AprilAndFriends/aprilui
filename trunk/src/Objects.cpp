@@ -455,21 +455,21 @@ namespace AprilUI
 	void LabelBase::setProperty(chstr name,chstr value)
 	{
 		if (name == "font") setFont(value);
-		if (name == "text") setText(value);
-		if (name == "horz_formatting")
+		else if (name == "text") setText(value);
+		else if (name == "horz_formatting")
 		{
 			if (value == "left")  setHorzFormatting(Atres::LEFT);
 			else if (value == "right") setHorzFormatting(Atres::RIGHT);
 			else if (value == "center") setHorzFormatting(Atres::CENTER);
 		}
-		if (name == "vert_formatting")
+		else if (name == "vert_formatting")
 		{
 			if (value == "top")    setVertFormatting(VERT_TOP);
 			if (value == "center") setVertFormatting(VERT_CENTER);
 			if (value == "bottom") setVertFormatting(VERT_BOTTOM);
 		}
-		if (name == "color") setTextColor(value);
-		if (name == "effect")
+		else if (name == "color") setTextColor(value);
+		else if (name == "effect")
 		{
 			if (value == "none")   setFontEffect(Atres::NONE);
 			if (value == "shadow") setFontEffect(Atres::SHADOW);
