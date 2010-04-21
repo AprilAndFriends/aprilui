@@ -124,6 +124,12 @@ namespace AprilUI
 		rendersys->translate(centerx,centery);
 		rendersys->rotate(angle);
 		rendersys->setTexture(mTexture);
+		if (mUnloadedFlag && mTexture->isLoaded())
+		{
+			updateTexCoords();
+			mUnloadedFlag=0;
+		}
+		
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
 		if (r != 1 || g != 1 || b != 1 || a != 1)
 			rendersys->render(April::TriangleStrip,mVertices,4,r,g,b,a);
