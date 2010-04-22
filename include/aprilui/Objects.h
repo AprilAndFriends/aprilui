@@ -19,7 +19,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "gtypes/Vector2.h"
 #include "AprilUIExport.h"
 
-struct _xmlNode;
+struct xml_node;
 
 namespace AprilUI
 {

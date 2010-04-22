@@ -12,13 +12,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 
 #include "hltypes/Array.h"
 #include "hltypes/hstring.h"
-struct _xmlNode;
+struct xml_node;
 
 namespace AprilUI
 {
 	typedef unsigned char byte;
-
-	#define XML_EQ(a,b) xmlStrcmp(a->name, (const xmlChar *) b) == 0
 
 	#define foreach(type,lst) for (type* it = lst.iter(); it; it = lst.next())
 	#define foreach_reverse(type,lst) for (type* it = lst.riter(); it; it = lst.rnext())
@@ -26,11 +24,6 @@ namespace AprilUI
 	#define foreach_in_map(type,list) for (std::map<hstr,type>::iterator it=list.begin();it != list.end(); it++)
 
 	float sign(float number);
-	hstr xmlGetPropString(_xmlNode* node,const char* prop);
-	float xmlGetPropFloat(_xmlNode* node,const char* prop);
-	int xmlGetPropInt(_xmlNode* node,const char* prop);
-	bool xmlPropertyExists(_xmlNode* node,const char* name);
-	unsigned int xmlGetPropHex(_xmlNode* node,const char* prop);
 
 	hstr pathGetFilename(hstr path,bool with_suffix=1);
 	hstr pathGetBaseDir(hstr path);

@@ -17,6 +17,7 @@
     <File Name="src/AprilUI.cpp"/>
     <File Name="src/AtresRenderInterface.cpp"/>
     <File Name="src/Animators.cpp"/>
+    <File Name="src/xmlHelper.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/aprilui/Dataset.h"/>
@@ -29,6 +30,7 @@
     <File Name="src/AtresRenderInterface.h"/>
     <File Name="include/aprilui/Animators.h"/>
     <File Name="include/aprilui/AprilUIExport.h"/>
+    <File Name="include/aprilui/xmlHelper.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Settings Type="Dynamic Library">

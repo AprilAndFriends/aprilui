@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 \************************************************************************************/
 #include <algorithm>
 #include <math.h>
+#include <stdio.h>
 #ifdef _WIN32
 	#include "_dirent.h"
 #else
@@ -16,62 +17,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #endif
 #include <map>
 #include "Util.h"
-#include <libxml/xmlmemory.h>
-#include <libxml/parser.h>
 #include "Exception.h"
 #include "april/RenderSystem.h"
 namespace AprilUI
 {
-	hstr xmlGetPropString(_xmlNode* node,const char* prop)
-	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
-		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
-		hstr value = nodeValue;
-		xmlFree(nodeValue);
-		
-		return value;
-	}
-
-	float xmlGetPropFloat(_xmlNode* node,const char* prop)
-	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
-		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
-		float x=0;
-		sscanf(nodeValue,"%f",&x);
-		xmlFree(nodeValue);
-		
-		return x;
-	}
-
-	int xmlGetPropInt(_xmlNode* node,const char* prop)
-	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
-		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
-		int x=0;
-		sscanf(nodeValue,"%i",&x);
-		xmlFree(nodeValue);
-		
-		return x;
-	}
-
-	unsigned int xmlGetPropHex(_xmlNode* node,const char* prop)
-	{
-		char* nodeValue = (char*) xmlGetProp(node, (xmlChar*) prop);
-		if (!nodeValue) throw XMLPropertyNotExistsException(prop,node);
-		unsigned int x=0;
-		if (nodeValue[0] == '0' && nodeValue[1] == 'x')
-			sscanf(nodeValue+2,"%x",&x);
-		else sscanf(nodeValue,"%x",&x);
-		xmlFree(nodeValue);
-		
-		return x;
-	}
-
-	bool xmlPropertyExists(_xmlNode* node,const char* name)
-	{
-		return xmlGetProp(node, (const xmlChar*) name) != 0;
-	}
-
 	hstr pathGetFilename(hstr path,bool with_suffix)
 	{
 		int index1=path.rfind("/"); if (index1 < 0) index1=path.rfind("\\");
@@ -181,6 +130,6 @@ namespace AprilUI
 	
 	void writelog(hstr msg)
 	{
-		rendersys->logMessage(msg,"[cage] ");
+		rendersys->logMessage(msg,"[aprilui] ");
 	}
 }

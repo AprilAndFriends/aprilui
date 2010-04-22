@@ -7,8 +7,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <libxml/xmlmemory.h>
-#include <libxml/parser.h>
+#include <xmlHelper.h>
 #include "Exception.h"
 #include "Dataset.h"
 #include "Util.h"
@@ -75,9 +74,9 @@ namespace AprilUI
 	}
 
 
-	_XMLException::_XMLException(const hstr err_msg,_xmlNode* node,hstr type,hstr file,int line):
+	_XMLException::_XMLException(const hstr err_msg,xml_node* node,hstr type,hstr file,int line):
 				   _GenericException("",type,file,line)
 	{
-		mErrText=err_msg+" in file "+hstr((char*) node->doc->URL)+", line "+hstr(node->line);
+		mErrText=err_msg+", in file "+hstr((char*) node->doc->URL)+", line "+hstr(node->line);
 	}
 }
