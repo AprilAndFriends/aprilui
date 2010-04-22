@@ -7,8 +7,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <libxml/xmlmemory.h>
-#include <libxml/parser.h>
+#include <xmlHelper.h>
 #include "AprilUI.h"
 #include "Dataset.h"
 #include "Exception.h"
@@ -70,23 +69,23 @@ namespace AprilUI
 		
 	}
 
-	April::Texture* Dataset::parseTexture(_xmlNode* node)
+	April::Texture* Dataset::parseTexture(xml_node* node)
 	{
-		hstr filename=xmlGetPropString(node,"filename");
+		hstr filename=node->pstr("filename");
 		int slash=filename.find("/")+1;
 		hstr tex_name=filename.substr(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ObjectExistsException(filename);
 
 		bool prefix_images=true,dynamic_load=0;
-		try { prefix_images=xmlGetPropInt(node,"prefix_images")!=0; } catch (_XMLException) { }
-		try { dynamic_load=xmlGetPropInt(node,"dynamic_load")!=0; }
+		try { prefix_images=node->pint("prefix_images")!=0; } catch (_XMLException) { }
+		try { dynamic_load=node->pint("dynamic_load")!=0; }
 		catch (_XMLException) { }
 		
 		April::Texture* t=rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
 		mTextures[tex_name]=t;
 		// extract image definitions
-		if (node->xmlChildrenNode == 0) // if there are no images defined, create one that fills the whole area
+		if (node->iter_children() == 0) // if there are no images defined, create one that fills the whole area
 		{
 			if (mImages.find(tex_name) != mImages.end()) throw ResourceExistsException(filename,"April::Texture",this);	
 			mImages[tex_name]=new Image(t,filename,0,0,(float)t->getWidth(),(float)t->getHeight());
@@ -94,26 +93,26 @@ namespace AprilUI
 		else
 		{
 			Image* i;
-			for (node = node->xmlChildrenNode; node != 0; node=node->next)
+			for (node = node->iter_children(); node != 0; node=node->next())
 			{
-				if (XML_EQ(node,"Image"))
+				if (*node == "Image")
 				{
 					hstr name;
-					if (prefix_images) name=tex_name+"/"+xmlGetPropString(node,"name");
-					else               name=xmlGetPropString(node,"name");
+					if (prefix_images) name=tex_name+"/"+node->pstr("name");
+					else               name=node->pstr("name");
 					if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"Image",this);
-					float x=xmlGetPropFloat(node,"x"), y=xmlGetPropFloat(node,"y"),
-						  w=xmlGetPropFloat(node,"w"), h=xmlGetPropFloat(node,"h");
+					float x=node->pfloat("x"), y=node->pfloat("y"),
+						  w=node->pfloat("w"), h=node->pfloat("h");
 					
 					bool vertical=false,invertx=false,inverty=false;
 					float tile_w=1,tile_h=1;
-					try { vertical=xmlGetPropInt(node,"vertical")!=0; } catch (_XMLException) { }
-					try { invertx=xmlGetPropInt(node,"invertx")!=0; } catch (_XMLException) { }
-					try { inverty=xmlGetPropInt(node,"inverty")!=0; } catch (_XMLException) { }
+					try { vertical=node->pint("vertical")!=0; } catch (_XMLException) { }
+					try { invertx=node->pint("invertx")!=0; } catch (_XMLException) { }
+					try { inverty=node->pint("inverty")!=0; } catch (_XMLException) { }
 					
-					try   { tile_w=xmlGetPropFloat(node,"tile_w"); }
+					try   { tile_w=node->pfloat("tile_w"); }
 					catch (_XMLException) { }
-					try   { tile_h=xmlGetPropFloat(node,"tile_h"); }
+					try   { tile_h=node->pfloat("tile_h"); }
 					catch (_XMLException) { }
 					
 					if (tile_w != 1 || tile_h != 1) i=new TiledImage(t,name,x,y,w,h,vertical,tile_w,tile_h);
@@ -121,7 +120,7 @@ namespace AprilUI
 					{
 						try
 						{
-							unsigned int color=xmlGetPropHex(node,"color");
+							unsigned int color=node->phex("color");
 							i=new ColoredImage(t,name,x,y,w,h,vertical,color);
 						}
 						catch (_XMLException)
@@ -131,7 +130,7 @@ namespace AprilUI
 					}
 					try
 					{
-						hstr mode=xmlGetPropString(node,"blend_mode");
+						hstr mode=node->pstr("blend_mode");
 						if (mode == "add") i->setBlendMode(April::ADD);
 					}
 					catch (_XMLException) { }
@@ -146,15 +145,15 @@ namespace AprilUI
 		
 	}
 
-	void Dataset::parseRAMTexture(_xmlNode* node)
+	void Dataset::parseRAMTexture(xml_node* node)
 	{
-		hstr filename=xmlGetPropString(node,"filename");
+		hstr filename=node->pstr("filename");
 		int slash=filename.find("/")+1;
 		hstr tex_name=filename.substr(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ResourceExistsException(filename,"RAMTexture",this);
 
 		bool dynamic_load=false;
-		try   { dynamic_load=xmlGetPropInt(node,"dynamic_load")!=0; }
+		try   { dynamic_load=node->pint("dynamic_load")!=0; }
 		catch (_XMLException) { }
 		
 		April::Texture* t=rendersys->loadRAMTexture(mFilenamePrefix+"/"+filename,dynamic_load);
@@ -163,20 +162,20 @@ namespace AprilUI
 	
 	}
 	
-	void Dataset::parseCompositeImage(_xmlNode* node)
+	void Dataset::parseCompositeImage(xml_node* node)
 	{
-		hstr name=xmlGetPropString(node,"name"),refname;
+		hstr name=node->pstr("name"),refname;
 		if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"CompositeImage",this);
 
-		CompositeImage* img=new CompositeImage(name,xmlGetPropFloat(node,"w"),xmlGetPropFloat(node,"h"));
+		CompositeImage* img=new CompositeImage(name,node->pfloat("w"),node->pfloat("h"));
 		
-		for (node = node->xmlChildrenNode; node != 0; node=node->next)
+		for (node = node->iter_children(); node != 0; node=node->next())
 		{
-			if (XML_EQ(node,"ImageRef"))
+			if (*node == "ImageRef")
 			{
-				refname=xmlGetPropString(node,"name");
-				img->addImageRef(getImage(refname),xmlGetPropFloat(node,"x"),xmlGetPropFloat(node,"y"),
-				                                   xmlGetPropFloat(node,"w"),xmlGetPropFloat(node,"h"));
+				refname=node->pstr("name");
+				img->addImageRef(getImage(refname),node->pfloat("x"),node->pfloat("y"),
+				                                   node->pfloat("w"),node->pfloat("h"));
 			}
 		}
 		
@@ -184,45 +183,45 @@ namespace AprilUI
 	}
 
 
-	void Dataset::parseExternalXMLNode(_xmlNode* node)
+	void Dataset::parseExternalXMLNode(xml_node* node)
 	{
 		
 	}
 	
-	Object* Dataset::parseExternalObjectClass(_xmlNode* node,chstr obj_name,float x,float y,float w,float h)
+	Object* Dataset::parseExternalObjectClass(xml_node* node,chstr obj_name,float x,float y,float w,float h)
 	{
 		return 0;
 	}
 
-	Object* Dataset::parseObject(_xmlNode* node)
+	Object* Dataset::parseObject(xml_node* node)
 	{
 		return recursiveObjectParse(node,0);
 	}
 
-	Object* Dataset::recursiveObjectParse(_xmlNode* node,Object* parent)
+	Object* Dataset::recursiveObjectParse(xml_node* node,Object* parent)
 	{
 		hstr obj_name;
 		float x=0,y=0,w=1,h=1;
 
-		hstr class_name=xmlGetPropString(node,"type");
+		hstr class_name=node->pstr("type");
 
-		if (XML_EQ(node,"Object"))
+		if (*node == "Object")
 		{
-			try { obj_name=xmlGetPropString(node,"name"); }
+			try { obj_name=node->pstr("name"); }
 			catch (_XMLException)
 			{
 				obj_name=generateName(class_name);
 				xmlSetProp(node,(xmlChar*) "name",(xmlChar*) obj_name.c_str());
 			}
-			x=xmlGetPropFloat(node,"x");
-			y=xmlGetPropFloat(node,"y");
+			x=node->pfloat("x");
+			y=node->pfloat("y");
 
-			try { w=xmlGetPropFloat(node,"w"); }
+			try { w=node->pfloat("w"); }
 			catch (_XMLException) { w=-1; }
-			try { h=xmlGetPropFloat(node,"h"); }
+			try { h=node->pfloat("h"); }
 			catch (_XMLException) { h=-1; }
 		}
-		else if (XML_EQ(node,"Animator")) obj_name=generateName("Animator");
+		else if (*node == "Animator") obj_name=generateName("Animator");
 		else return 0;
 
 		
@@ -248,7 +247,7 @@ namespace AprilUI
 		else  parse(TextButton);
 		else  parse(RotationImageBox);
 		else  parse(RotatableImageBox);
-		else if (XML_EQ(node,"Animator"))
+		else if (*node == "Animator")
 		{
 			/*if*/parse_animator(Mover);
 			else  parse_animator(Scaler);
@@ -265,17 +264,17 @@ namespace AprilUI
 		o->_setDataset(this);
 		
 		
-		for (xmlAttr* attr=node->properties;attr != 0; attr=attr->next)
-			o->setProperty((char*) attr->name,(char*) attr->children->content);
+		for (xml_prop* prop=node->iter_properties();prop != 0; prop=prop->next())
+			o->setProperty(prop->name(),prop->value());
 		
 		mObjects[obj_name]=o;
 		if (parent) parent->addChild(o);
 		
-		for (node = node->xmlChildrenNode; node != 0; node=node->next)
+		for (node = node->iter_children(); node != 0; node=node->next())
 			if (node->type !=  XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
 			{
-				if (XML_EQ(node,"Property"))
-					o->setProperty(xmlGetPropString(node,"name"),xmlGetPropString(node,"value"));
+				if (*node == "Property")
+					o->setProperty(node->pstr("name"),node->pstr("value"));
 				else 
 				recursiveObjectParse(node,o);
 			}
@@ -285,41 +284,29 @@ namespace AprilUI
 	void Dataset::readFile(hstr filename)
 	{
 		// parse datadef xml file, error checking first
-		xmlDocPtr doc;
-		xmlNodePtr cur;
-		
-		doc = xmlParseFile((getPWD()+"/"+filename).c_str());
-		
-		if (doc == NULL) throw GenericException("Unable to parse datadef '"+mFilename+"', document does not exist or is invalid");
-		
-		cur = xmlDocGetRootElement(doc);
-		if (cur == NULL)
-		{
-			xmlFreeDoc(doc);
-			throw GenericException("Unable to parse datadef '"+mFilename+"', document is empty");
-		}
-		
-		if (xmlStrcmp(cur->name, (const xmlChar *) "DataDefinition"))
-			parseExternalXMLNode(cur);
+		xml_doc doc(getPWD()+"/"+filename);
+		xml_node* cur=doc.root("DataDefinition");
+
+		parseExternalXMLNode(cur);
 		
 		std::map<April::Texture*,hstr> dynamic_links;
 		hstr links;
-		for (xmlNodePtr p = cur->xmlChildrenNode; p != 0; p=p->next)
+		for (xml_node* p = cur->iter_children(); p != 0; p=p->next())
 		{
-			if      (XML_EQ(p,"Texture"))
+			if      (*p == "Texture")
 			{
 				April::Texture* t=parseTexture(p);
 				try
 				{
-					links=xmlGetPropString(p,"dynamic_link");
+					links=p->pstr("dynamic_link");
 					dynamic_links[t]=links;
 				}
 				catch (_XMLException) { }
 				
 			}
-			else if (XML_EQ(p,"RAMTexture")) parseRAMTexture(p);
-			else if (XML_EQ(p,"CompositeImage")) parseCompositeImage(p);
-			else if (XML_EQ(p,"Object")) parseObject(p);
+			else if (*p == "RAMTexture") parseRAMTexture(p);
+			else if (*p == "CompositeImage") parseCompositeImage(p);
+			else if (*p == "Object") parseObject(p);
 			else if (p->type !=  XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
 				     parseExternalXMLNode(p);
 		}
@@ -333,8 +320,6 @@ namespace AprilUI
 			foreach(hstr,dlst)
 				map_it->first->addDynamicLink(getTexture(*it));
 		}
-	// done!
-		xmlFreeDoc(doc);
 	}
 
 	void Dataset::load()

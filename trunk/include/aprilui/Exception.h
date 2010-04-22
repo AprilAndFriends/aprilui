@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "hltypes/hstring.h"
 #include "AprilUIExport.h"
 
-struct _xmlNode;
+struct xml_node;
 namespace AprilUI
 {
 	
@@ -109,7 +109,7 @@ namespace AprilUI
 	class AprilUIExport _XMLException : public _GenericException
 	{
 	public:
-		_XMLException(const hstr err_msg,_xmlNode* node,hstr type,hstr file,int line);
+		_XMLException(const hstr err_msg,xml_node* node,hstr type,hstr file,int line);
 	};
 
 	#define XMLException(msg,node) _XMLException(msg,node,type,__FILE__,__LINE__)

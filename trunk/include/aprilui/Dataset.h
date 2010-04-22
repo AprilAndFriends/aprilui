@@ -21,7 +21,7 @@ namespace April
 	class Texture;
 }
 
-struct _xmlNode;
+struct xml_node;
 namespace AprilUI
 {
 	#define REGISTER_CALLBACK(data_dict,fn) data_dict->registerCallback(#fn,fn)
@@ -43,17 +43,17 @@ namespace AprilUI
 
 		std::map<hstr,void (*)()> mCallbacks;
 
-		April::Texture* parseTexture(_xmlNode* node);
-		void parseRAMTexture(_xmlNode* node);
-		void parseCompositeImage(_xmlNode* node);
-		virtual void parseExternalXMLNode(_xmlNode* node);
-		virtual Object* parseExternalObjectClass(_xmlNode* node,chstr obj_name,float x,float y,float w,float h);
+		April::Texture* parseTexture(xml_node* node);
+		void parseRAMTexture(xml_node* node);
+		void parseCompositeImage(xml_node* node);
+		virtual void parseExternalXMLNode(xml_node* node);
+		virtual Object* parseExternalObjectClass(xml_node* node,chstr obj_name,float x,float y,float w,float h);
 		
-		Object* recursiveObjectParse(_xmlNode* node,Object* parent);
+		Object* recursiveObjectParse(xml_node* node,Object* parent);
 		
 		void readFile(hstr filename);
 	public:
-		Object* parseObject(_xmlNode* node);
+		Object* parseObject(xml_node* node);
 
 		TextMap texts;
 		
