@@ -249,10 +249,10 @@ namespace AprilUI
 	{
 		Object::setProperty(name,value);
 
-		if      (name == "a") mColor.a=(float) value*255;
-		else if (name == "r") mColor.r=(float) value*255;
-		else if (name == "g") mColor.g=(float) value*255;
-		else if (name == "b") mColor.b=(float) value*255;
+		if      (name == "a") mColor.a=(unsigned char) ((float) value*255);
+		else if (name == "r") mColor.r=(unsigned char) ((float) value*255);
+		else if (name == "g") mColor.g=(unsigned char) ((float) value*255);
+		else if (name == "b") mColor.b=(unsigned char) ((float) value*255);
 	}
 
 	bool ColoredQuad::OnMouseDown(int button,float x,float y)

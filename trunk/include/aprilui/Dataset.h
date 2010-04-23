@@ -46,8 +46,8 @@ namespace AprilUI
 		April::Texture* parseTexture(xml_node* node);
 		void parseRAMTexture(xml_node* node);
 		void parseCompositeImage(xml_node* node);
-		virtual void parseExternalXMLNode(xml_node* node);
-		virtual Object* parseExternalObjectClass(xml_node* node,chstr obj_name,float x,float y,float w,float h);
+		virtual void parseExternalXMLNode(xml_node* node) {};
+		virtual Object* parseExternalObjectClass(xml_node* node,chstr obj_name,float x,float y,float w,float h) { return 0; };
 		
 		Object* recursiveObjectParse(xml_node* node,Object* parent);
 		

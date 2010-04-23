@@ -20,8 +20,8 @@ namespace AprilUI
 	void AprilUIExport init();
 	void AprilUIExport destroy();
 	
-	Dataset* AprilUIFnExport getDatasetByName(hstr name);
-	void AprilUIFnExport update(float time_increase);
+	AprilUIFnExport Dataset* getDatasetByName(hstr name);
+	AprilUIFnExport void update(float time_increase);
 }
 
 #endif
