@@ -23,8 +23,7 @@ public:
 	hstr value();
 };
 
-
-class AprilUIExport xml_node : public _xmlNode
+struct AprilUIExport xml_node : public _xmlNode
 {
 	const char* find_prop(const char* property);
 	

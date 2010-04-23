@@ -183,16 +183,6 @@ namespace AprilUI
 	}
 
 
-	void Dataset::parseExternalXMLNode(xml_node* node)
-	{
-		
-	}
-	
-	Object* Dataset::parseExternalObjectClass(xml_node* node,chstr obj_name,float x,float y,float w,float h)
-	{
-		return 0;
-	}
-
 	Object* Dataset::parseObject(xml_node* node)
 	{
 		return recursiveObjectParse(node,0);

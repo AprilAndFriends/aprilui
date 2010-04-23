@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="windows-1250"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="libaprilui"
-	ProjectGUID="{04EE1F5A-BCC4-4A75-B3AA-7DA3BA827897}"
-	RootNamespace="libaprilui"
-	TargetFrameworkVersion="196613"
+	ProjectGUID="{72D6EAF0-BC83-47BE-89AA-663C8B3CEF46}"
+	RootNamespace="hltypes"
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -16,11 +17,11 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="2"
+			Name="win32_Debug|Win32"
+			OutputDirectory="$(ProjectDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -40,11 +41,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../include;include;include/aprilui;src;../atres/include;../april/include;../gtypes/include"
-				PreprocessorDefinitions="_DEBUG;APRIL_EXPORTS;_WIN32;_STATICLIB"
+				AdditionalIncludeDirectories="include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include"
+				PreprocessorDefinitions="_WIN32;_DEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -58,12 +60,16 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
-				AdditionalLibraryDirectories="../atres/Debug;../april/Debug;../gtypes/Debug;../lib"
+				Name="VCLinkerTool"
+				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libapril_d.lib libatres_d.lib libxml2.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
+				AdditionalLibraryDirectories="../lib/msvc;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../atres/bin/win32_Debug;../april/bin/win32_Debug"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -75,15 +81,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="2"
+			Name="win32_Release|Win32"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="bin\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -105,11 +114,12 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="include/aprilui;include;src"
-				PreprocessorDefinitions="APRIL_EXPORTS;_WIN32;_STATICLIB"
+				AdditionalIncludeDirectories="include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include"
+				PreprocessorDefinitions="_WIN32;NDEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				WarningLevel="3"
+				UsePrecompiledHeader="0"
+				WarningLevel="2"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -122,12 +132,15 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(ProjectName)_d.lib"
-				AdditionalLibraryDirectories="../libatres/Debug;../libapril/Debug"
+				Name="VCLinkerTool"
+				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
+				AdditionalLibraryDirectories="../lib/msvc;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../atres/bin/win32_Release;../april/bin/win32_Release"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -137,6 +150,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -151,6 +167,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\src\_dirent.h"
+				>
+			</File>
 			<File
 				RelativePath=".\src\Animators.cpp"
 				>
@@ -195,6 +215,10 @@
 				RelativePath=".\src\Util.h"
 				>
 			</File>
+			<File
+				RelativePath=".\src\xmlHelper.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -233,12 +257,10 @@
 				RelativePath=".\include\aprilui\TextMap.h"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
+			<File
+				RelativePath=".\include\aprilui\xmlHelper.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

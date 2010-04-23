@@ -63,8 +63,10 @@ namespace AprilUI
 
 		for (std::map<int,April::Texture*>::iterator it=g_font_textures.begin();it!=g_font_textures.end();it++)
 			delete it->second;
+		g_font_textures.clear();
 		
 		for (std::map<hstr,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
 			delete it2->second;
+		g_datasets.clear();
 	}
 }
