@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="libaprilui"
-	ProjectGUID="{72D6EAF0-BC83-47BE-89AA-663C8B3CEF46}"
+	ProjectGUID="{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}"
 	RootNamespace="hltypes"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
@@ -49,6 +49,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4251"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -121,6 +122,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="2"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4251"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
