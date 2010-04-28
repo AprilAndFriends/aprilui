@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "april/RenderSystem.h"
 #include "Image.h"
 #include "Util.h"
-#include "hltypes/Array.h"
+#include "hltypes/harray.h"
 
 namespace AprilUI
 {

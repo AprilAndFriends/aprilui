@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "april/RenderSystem.h"
 #include "AprilUIExport.h"
 
-#include "hltypes/Array.h"
+#include "hltypes/harray.h"
 #include "hltypes/hstring.h"
 
 namespace AprilUI

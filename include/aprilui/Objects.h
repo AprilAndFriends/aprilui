@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
-#include "hltypes/Array.h"
+#include "hltypes/harray.h"
 #include "hltypes/hstring.h"
 #include <map>
 #include "april/RenderSystem.h"
