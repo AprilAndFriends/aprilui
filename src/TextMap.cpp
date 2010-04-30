@@ -56,6 +56,7 @@ namespace AprilUI
 		
 		foreach(hstr,content)
 		{
+			writelog("Reading text file: "+*it);
 			f=fopen(it->c_str(),"rb");
 			for (utfc=-1;utfc < 0;utfc=fgetc(f));
 			fseek(f, -1, SEEK_CUR);

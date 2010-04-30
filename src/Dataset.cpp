@@ -324,7 +324,7 @@ namespace AprilUI
 		// audio
 		mLoaded=1;
 
-		writelog("loading datadef");
+		writelog("loading datadef: "+mFilename);
 		readFile(mFilename);
 	}
 
