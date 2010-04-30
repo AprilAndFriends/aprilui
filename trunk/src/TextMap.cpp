@@ -107,7 +107,7 @@ namespace AprilUI
 	#ifdef _DEBUG
 			throw KeyException("Unable to find text entry '"+name+"'");
 	#else
-			sprintf(key_error_text,"<Text entry '%s' doesn't exist>",name.c_str());
+			sprintf(key_error_text,"[Text entry '%s' doesn't exist]",name.c_str());
 			return key_error_text;
 	#endif
 		}
