@@ -108,7 +108,7 @@ namespace AprilUI
 		mVertices[3].x= dw/2; mVertices[3].y= dh/2;
 		
 		
-		rendersys->pushTransform();
+		gtypes::Matrix4 temp_matrix=rendersys->getModelviewMatrix();
 		rendersys->setIdentityTransform();
 		rendersys->translate(centerx,centery);
 		rendersys->rotate(angle);
@@ -125,7 +125,7 @@ namespace AprilUI
 		else
 			rendersys->render(April::TriangleStrip,mVertices,4);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
-		rendersys->popTransform();
+		rendersys->setModelviewMatrix(temp_matrix);
 	}
 
 	void Image::draw(float centerx,float centery,float dw,float dh,float angle)
@@ -368,14 +368,14 @@ namespace AprilUI
 		v[3].x= dw/2; v[3].y= dh/2;
 
 		
-		rendersys->pushTransform();
+		gtypes::Matrix4 temp_matrix=rendersys->getModelviewMatrix();
 		rendersys->setIdentityTransform();
 		rendersys->translate(centerx,centery);
 		rendersys->rotate(angle);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
 		rendersys->render(April::TriangleStrip,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
 		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
-		rendersys->popTransform();
+		rendersys->setModelviewMatrix(temp_matrix);
 	}
 
 	NullImage::NullImage() : Image(0,"null",0,0,0,0,0)
