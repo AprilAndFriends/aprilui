@@ -34,7 +34,10 @@ namespace AprilUI
 		mFilename=filename;
 		mName=filename.substr(slash+1,dot-slash-1);
 		mLoaded=0;
-		
+		mObjectIterator=mObjects.end();
+		mTextureIterator=mTextures.end();
+		mImageIterator=mImages.end();
+
 		_registerDataset(mName,this);
 	}
 	
@@ -266,7 +269,7 @@ namespace AprilUI
 				if (*node == "Property")
 					o->setProperty(node->pstr("name"),node->pstr("value"));
 				else 
-				recursiveObjectParse(node,o);
+					recursiveObjectParse(node,o);
 			}
 		return o;
 	}
@@ -424,5 +427,53 @@ namespace AprilUI
 	{
 		foreach_in_map(April::Texture*,mTextures)
 			it->second->update(k);
+	}
+	
+	Object** Dataset::iterateObjects()
+	{
+		mObjectIterator=mObjects.begin();
+		if (mObjectIterator==mObjects.end())
+			return NULL;
+		return &mObjectIterator->second;
+	}
+	
+	Object** Dataset::nextObject()
+	{
+		mObjectIterator++;
+		if (mObjectIterator==mObjects.end())
+			return NULL;
+		return &mObjectIterator->second;
+	}
+	
+	April::Texture** Dataset::iterateTextures()
+	{
+		mTextureIterator=mTextures.begin();
+		if (mTextureIterator==mTextures.end())
+			return NULL;
+		return &mTextureIterator->second;
+	}
+	
+	April::Texture** Dataset::nextTexture()
+	{
+		mTextureIterator++;
+		if (mTextureIterator==mTextures.end())
+			return NULL;
+		return &mTextureIterator->second;
+	}
+	
+	Image** Dataset::iterateImages()
+	{
+		mImageIterator=mImages.begin();
+		if (mImageIterator==mImages.end())
+			return NULL;
+		return &mImageIterator->second;
+	}
+	
+	Image** Dataset::nextImage()
+	{
+		mImageIterator++;
+		if (mImageIterator==mImages.end())
+			return NULL;
+		return &mImageIterator->second;
 	}
 }
