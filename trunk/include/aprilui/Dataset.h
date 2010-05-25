@@ -40,6 +40,9 @@ namespace AprilUI
 		std::map<hstr,Object*> mObjects;
 		std::map<hstr,April::Texture*> mTextures;
 		std::map<hstr,Image*> mImages;
+		std::map<hstr,Object*>::iterator mObjectIterator;
+		std::map<hstr,April::Texture*>::iterator mTextureIterator;
+		std::map<hstr,Image*>::iterator mImageIterator;
 
 		std::map<hstr,void (*)()> mCallbacks;
 
@@ -86,6 +89,13 @@ namespace AprilUI
 
 		
 		chstr getName();
+		
+		Object** iterateObjects();
+		Object** nextObject();
+		April::Texture** iterateTextures();
+		April::Texture** nextTexture();
+		Image** iterateImages();
+		Image** nextImage();
 	};
 
 }
