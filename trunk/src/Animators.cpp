@@ -305,5 +305,53 @@ namespace AprilUI
 			}
 			else writelog("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 		}
+		
+		
+		Earthquake::Earthquake(chstr name) : Object("Animators::Earthquake",name,0,0,1,1)
+		{
+			mIntensity=0;
+			mDuration=1;
+			mConstDuration=1;
+			mFreq=10;
+		}
+
+		void Earthquake::notifyEvent(chstr event_name,void* params)
+		{
+			if (event_name == "AttachToObject")
+			{
+				mInitialX=mParent->getXPosition();
+				mInitialY=mParent->getYPosition();
+				mTimer=mFreqTimer=0;
+			}
+		}
+		
+		void Earthquake::setProperty(chstr name,chstr value)
+		{
+			if      (name == "intensity") mIntensity=value;
+			else if (name == "duration")  mDuration=value;
+			else if (name == "const_duration")  mConstDuration=value;
+			else if (name == "freq")  mFreq=value;
+		}
+		
+		void Earthquake::update(float k)
+		{
+			mTimer+=k; mFreqTimer+=k;
+			float intensity=mIntensity;
+			if (mTimer > mConstDuration)
+			{
+				intensity*=(mDuration-mTimer)/(mDuration-mConstDuration);
+			}
+			if (mTimer > mDuration)
+			{
+				mParent->setPosition(mInitialX,mInitialY);
+			}
+			else if (mFreqTimer > 1.0f/mFreq)
+			{
+				mFreqTimer-=1/mFreq;
+				mParent->setPosition(mInitialX+(((float) rand())/RAND_MAX)*intensity,
+								     mInitialY+(((float) rand())/RAND_MAX)*intensity);
+				
+			}
+		}
 	}
 }
