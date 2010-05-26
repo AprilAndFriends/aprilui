@@ -101,6 +101,20 @@ namespace AprilUI
 			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
+		
+		class Earthquake : public Object
+		{
+			float mInitialX,mInitialY;
+			float mIntensity,mDuration,mConstDuration,mFreq;
+			float mTimer,mFreqTimer;
+		public:
+			Earthquake(chstr name);
+
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
+			void update(float k);
+		};
+
 	}
 }
 
