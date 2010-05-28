@@ -447,22 +447,23 @@ namespace AprilUI
 		else if (name == "text") setText(value);
 		else if (name == "horz_formatting")
 		{
-			if (value == "left")  setHorzFormatting(Atres::LEFT);
-			else if (value == "right") setHorzFormatting(Atres::RIGHT);
+			if (value == "left")        setHorzFormatting(Atres::LEFT);
+			else if (value == "right")  setHorzFormatting(Atres::RIGHT);
 			else if (value == "center") setHorzFormatting(Atres::CENTER);
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")    setVertFormatting(VERT_TOP);
-			if (value == "center") setVertFormatting(VERT_CENTER);
-			if (value == "bottom") setVertFormatting(VERT_BOTTOM);
+			if (value == "top")         setVertFormatting(VERT_TOP);
+			else if (value == "center") setVertFormatting(VERT_CENTER);
+			else if (value == "bottom") setVertFormatting(VERT_BOTTOM);
 		}
 		else if (name == "color") setTextColor(value);
 		else if (name == "effect")
 		{
-			if (value == "none")   setFontEffect(Atres::NONE);
-			if (value == "shadow") setFontEffect(Atres::SHADOW);
-			if (value == "border") setFontEffect(Atres::BORDER);
+			if (value == "none")           setFontEffect(Atres::NONE);
+			else if (value == "shadow")    setFontEffect(Atres::SHADOW);
+			else if (value == "border")    setFontEffect(Atres::BORDER);
+			else if (value == "border_ex") setFontEffect(Atres::BORDER_EX);
 		}
 	}
 
