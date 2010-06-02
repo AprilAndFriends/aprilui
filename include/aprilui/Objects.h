@@ -60,8 +60,7 @@ namespace AprilUI
 		harray<Object*> mChildren;
 		
 		std::map<hstr,Event*> mEvents;
-		bool mVisible;
-		bool mEnabled;
+		bool mVisible,mEnabled,mClickthrough;
 		float mAlpha;
 		
 		Dataset* mDataPtr;
@@ -70,6 +69,10 @@ namespace AprilUI
 		
 		void triggerEvent(hstr name,float x=0,float y=0,char* extra=0);
 		float getDerivedAlpha();
+		bool getDerivedEnabled();
+		bool getDerivedClickthrough();
+
+		
 		
 		virtual void OnDraw(float offset_x,float offset_y) { };
 		virtual void OnUpdate(float k) { };
@@ -112,7 +115,8 @@ namespace AprilUI
 		bool isVisible() { return mVisible && mAlpha > 0; }
 		void setEnabled(bool enabled) { mEnabled=enabled; }
 		bool isEnabled() { return mEnabled; }
-		bool isDerivedEnabled();
+		void setClickthrough(bool clickthrough) { mClickthrough=clickthrough; }
+		bool getClickthrough() { return mClickthrough; }
 		bool getVisibilityFlag() { return mVisible; }
 		
 		void setAlpha(float alpha) { mAlpha=alpha; }
