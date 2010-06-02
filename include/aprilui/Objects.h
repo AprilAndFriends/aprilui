@@ -252,6 +252,7 @@ namespace AprilUI
 		
 		hstr getText() { return mText; }
 		void setText(hstr text) { mText=text; }
+		virtual void setTextKey(hstr key) = 0;
 		
 		hstr getFont() { return mFontName; }
 		void setFont(hstr font) { mFontName=font; }
@@ -292,6 +293,7 @@ namespace AprilUI
 	public:
 		TextButton(hstr name,float x,float y,float w,float h);
 		
+		void setTextKey(hstr key);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 		void setProperty(chstr name,chstr value);
