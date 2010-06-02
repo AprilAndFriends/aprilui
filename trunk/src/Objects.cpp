@@ -510,6 +510,11 @@ namespace AprilUI
 		mBackgroundEnabled=1;
 	}
 
+	void TextButton::setTextKey(hstr key)
+	{
+		setText(mDataPtr->texts[key]);
+	}
+
 	void TextButton::OnDraw(float offset_x,float offset_y)
 	{
 		unsigned char a=mTextColor.a;
