@@ -37,8 +37,8 @@ namespace AprilUI
 		mParent=0;
 		mZOrder=0;
 		mX=x; mY=y; mWidth=w; mHeight=h;
-		mVisible=1;
-		mEnabled=1;
+		mVisible=mEnabled=1;
+		mClickthrough=0;
 		mAlpha=1.0f;
 	}
 
@@ -122,8 +122,10 @@ namespace AprilUI
 
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
+		if (mClickthrough) return false;
+		
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
+			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
 				if ((*it)->OnMouseDown(button,x-mX,y-mY)) return true;
 		
 		return false;
@@ -132,14 +134,15 @@ namespace AprilUI
 	void Object::OnMouseMove(float x,float y)
 	{
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
+			if ((*it)->isVisible() && (*it)->getDerivedEnabled())
 				(*it)->OnMouseMove(x-mX,y-mY);
 	}
 
 	bool Object::OnMouseUp(int button,float x,float y)
 	{
+		if (mClickthrough) return false;
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
+			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
 				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
 		
 		return false;
@@ -165,9 +168,15 @@ namespace AprilUI
 		foreach(Object*,mChildren) (*it)->notifyEvent(event_name,params);
 	}
 
-	bool Object::isDerivedEnabled()
+	bool Object::getDerivedEnabled()
 	{
-		return (isEnabled() && (!mParent || mParent->isDerivedEnabled()));
+		return (isEnabled() && (!mParent || mParent->getDerivedEnabled()));
+	}
+	bool Object::getDerivedClickthrough()
+	{
+		if (!mClickthrough) return 0;
+		else if (!mParent) return 1;
+		else return mParent->getDerivedClickthrough();
 	}
 
 	void Object::moveToFront()
@@ -194,10 +203,12 @@ namespace AprilUI
 
 	void Object::setProperty(chstr name,chstr value)
 	{
-		if      (name == "visible") setVisible(((int)value)!=0);
-		else if (name == "zorder")  setZOrder(value);
-		else if (name == "enabled") setEnabled(((int) value)!=0);
-		else if (name == "alpha")   setAlpha(value);
+		if      (name == "visible")      setVisible(value);
+		else if (name == "zorder")       setZOrder(value);
+		else if (name == "enabled")      setEnabled(value);
+		else if (name == "clickthrough") setClickthrough(value);
+		else if (name == "alpha")        setAlpha(value);
+		
 	}
 
 	Object* Object::getChildUnderPoint(float x,float y)
@@ -295,7 +306,7 @@ namespace AprilUI
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled()) alpha/=2;
+		if (!getDerivedEnabled()) alpha/=2;
 		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
@@ -345,7 +356,7 @@ namespace AprilUI
 	{
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled()) alpha/=2;
+		if (!getDerivedEnabled()) alpha/=2;
 		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,mColor.r_float(),mColor.g_float(),mColor.b_float(),alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
@@ -482,7 +493,7 @@ namespace AprilUI
 	{
 		Object::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled()) alpha/=2;
+		if (!getDerivedEnabled()) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
@@ -569,7 +580,7 @@ namespace AprilUI
 	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
 		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled() && mDisabledImage)
+		if (!getDerivedEnabled() && mDisabledImage)
 		{
 			alpha/=2;
 			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
@@ -673,7 +684,7 @@ namespace AprilUI
 	{
 		ImageButton::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled()) alpha/=2;
+		if (!getDerivedEnabled()) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
