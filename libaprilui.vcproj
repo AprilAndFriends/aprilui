@@ -65,6 +65,7 @@
 				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libapril_d.lib libatres_d.lib libxml2.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
 				AdditionalLibraryDirectories="../lib/msvc;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../atres/bin/win32_Debug;../april/bin/win32_Debug"
+				GenerateDebugInformation="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
