@@ -574,6 +574,7 @@ namespace AprilUI
 			ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("ImageButton");
+		mPushed=0;
 		mNormalImage=mPushedImage=mHoverImage=mDisabledImage=0;
 	}
 
@@ -588,8 +589,9 @@ namespace AprilUI
 		else if (mImage) ImageBox::OnDraw(offset_x,offset_y);
 		else
 		{
-			if (!mNormalImage) mNormalImage=mDataPtr->getImage("null");
-			mNormalImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,alpha);
+			Image* image=mNormalImage;
+			if (!image) image=mDataPtr->getImage("null");
+			image->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,alpha);
 		}
 	}
 
@@ -682,9 +684,9 @@ namespace AprilUI
 
 	void TextImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		ImageButton::OnDraw(offset_x, offset_y);
+		ImageButton::OnDraw(offset_x,offset_y);
 		float alpha=getDerivedAlpha();
-		if (!getDerivedEnabled()) alpha/=2;
+		if (!getDerivedEnabled() || !mImage && !mNormalImage && !mPushedImage && mPushed) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
