@@ -54,22 +54,36 @@ namespace AprilUI
 
 	void Dataset::_destroyTexture(April::Texture* tex)
 	{
-		
+		if (mTextures.find(tex->getFilename()) == mTextures.end())
+			throw ResourceNotExistsException(tex->getFilename(),"Texture",this);
+		mTextures.erase(tex->getFilename());
+		delete tex;
 	}
 
 	void Dataset::_destroyImage(Image* img)
 	{
-		
+		if (mImages.find(img->getName()) == mImages.end())
+			throw ResourceNotExistsException(img->getName(),"Image",this);
+		mImages.erase(img->getName());
+		delete img;
 	}
 
 	void Dataset::_destroyTexture(hstr tex)
 	{
-		
+		if (mTextures.find(tex) == mTextures.end())
+			throw ResourceNotExistsException(tex,"April::Texture",this);
+		April::Texture* i=mTextures[tex];
+		mTextures.erase(tex);
+		delete i;
 	}
 
 	void Dataset::_destroyImage(hstr img)
 	{
-		
+		if (mImages.find(img) == mImages.end())
+			throw ResourceNotExistsException(img,"Image",this);
+		Image* i=mImages[img];
+		mImages.erase(img);
+		delete i;
 	}
 
 	April::Texture* Dataset::parseTexture(xml_node* node)
