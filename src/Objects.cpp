@@ -301,6 +301,11 @@ namespace AprilUI
 	{
 		setImage(mDataPtr->getImage(image));
 	}
+	
+	void ImageBox::resizeToFitImage()
+	{
+		if (mImage) setSize(mImage->getSourceW(), mImage->getSourceH());
+	}
 
 	void ImageBox::OnDraw(float offset_x,float offset_y)
 	{

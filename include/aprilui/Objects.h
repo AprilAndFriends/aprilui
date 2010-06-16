@@ -185,6 +185,8 @@ namespace AprilUI
 		virtual void setImage(Image* image);
 		void setImageByName(hstr image);
 		
+		void resizeToFitImage();
+		
 		void setProperty(chstr name,chstr value);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
