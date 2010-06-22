@@ -19,7 +19,7 @@ AprilUI::Dataset* dataset;
 bool render(float time_increase)
 {
 	rendersys->clear();
-	rendersys->setViewport(800,600);
+	rendersys->setOrthoProjection(800,600);
 
 	dataset->getObject("root")->draw();
 	dataset->getObject("root")->update(time_increase);

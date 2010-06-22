@@ -30,9 +30,9 @@ namespace AprilUI
 		
 		int slash=filename.rfind("/");
 		int dot=filename.rfind(".");
-		mFilenamePrefix=filename.substr(0,slash);
+		mFilenamePrefix=filename(0,slash);
 		mFilename=filename;
-		mName=filename.substr(slash+1,dot-slash-1);
+		mName=filename(slash+1,dot-slash-1);
 		mLoaded=0;
 		mObjectIterator=mObjects.end();
 		mTextureIterator=mTextures.end();
@@ -90,7 +90,7 @@ namespace AprilUI
 	{
 		hstr filename=node->pstr("filename");
 		int slash=filename.find("/")+1;
-		hstr tex_name=filename.substr(slash,filename.rfind(".")-slash);
+		hstr tex_name=filename(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ObjectExistsException(filename);
 
 		bool prefix_images=true,dynamic_load=0;
@@ -166,7 +166,7 @@ namespace AprilUI
 	{
 		hstr filename=node->pstr("filename");
 		int slash=filename.find("/")+1;
-		hstr tex_name=filename.substr(slash,filename.rfind(".")-slash);
+		hstr tex_name=filename(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ResourceExistsException(filename,"RAMTexture",this);
 
 		bool dynamic_load=false;
@@ -416,9 +416,9 @@ namespace AprilUI
 			{
 				
 				Dataset* d;
-				try { d=getDatasetByName(name.substr(0,dot)); }
+				try { d=getDatasetByName(name(0,dot)); }
 				catch (_GenericException) { throw ResourceNotExistsException(name,"Image",this); }
-				return d->getImage(name.substr(dot+1,100));
+				return d->getImage(name(dot+1,100));
 			}
 			else throw ResourceNotExistsException(name,"Image",this);
 		}

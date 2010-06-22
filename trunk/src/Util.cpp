@@ -25,14 +25,14 @@ namespace AprilUI
 	{
 		int index1=path.rfind("/"); if (index1 < 0) index1=path.rfind("\\");
 		int index2=(with_suffix) ? path.size() : path.rfind(".");
-		hstr name=path.substr(index1+1,index2-index1-1);
+		hstr name=path(index1+1,index2-index1-1);
 		return name;
 	}
 
 	hstr pathGetBaseDir(hstr path)
 	{
 		int index=path.rfind("/");  if (index < 0) index=path.rfind("\\");
-		return path.substr(0,index);
+		return path(0,index);
 	}
 
 	float sign(float number)
@@ -67,20 +67,20 @@ namespace AprilUI
 
 	void hexstr_to_argb(chstr hex,byte* a,byte* r,byte* g,byte* b)
 	{
-		hstr h=(hex.substr(0,2) == "0x") ? hex : "0x"+hex;
+		hstr h=(hex(0,2) == "0x") ? hex : "0x"+hex;
 		if (h.size() == 8)
 		{
-			*r=hexstr_to_int(h.substr(2,2));
-			*g=hexstr_to_int(h.substr(4,2));
-			*b=hexstr_to_int(h.substr(6,2));
+			*r=hexstr_to_int(h(2,2));
+			*g=hexstr_to_int(h(4,2));
+			*b=hexstr_to_int(h(6,2));
 			*a=255;
 		}
 		else if (h.size() == 10)
 		{
-			*r=hexstr_to_int(h.substr(4,2));
-			*g=hexstr_to_int(h.substr(6,2));
-			*b=hexstr_to_int(h.substr(8,2));
-			*a=hexstr_to_int(h.substr(2,2));
+			*r=hexstr_to_int(h(4,2));
+			*g=hexstr_to_int(h(6,2));
+			*b=hexstr_to_int(h(8,2));
+			*a=hexstr_to_int(h(2,2));
 		}
 		else throw AprilUI::GenericException("Color format must be either 0xAARRGGBB or 0xRRGGBB");
 	}

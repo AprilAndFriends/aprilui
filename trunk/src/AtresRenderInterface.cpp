@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "atres/Atres.h"
 #include "april/RenderSystem.h"
 #include "Exception.h"
+#include "hltypes/hstring.h"
 #include <map>
 
 namespace AprilUI
@@ -31,7 +32,7 @@ namespace AprilUI
 	{
 		static int index=1;
 		April::Texture* t=rendersys->loadTexture(filename);
-		if (!t) throw FileNotFoundException(std::string(filename));
+		if (!t) throw FileNotFoundException(hstr(filename));
 		g_font_textures[index]=t;
 		return index++;
 	}

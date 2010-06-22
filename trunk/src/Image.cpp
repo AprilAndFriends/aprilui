@@ -19,7 +19,7 @@ namespace AprilUI
 	{
 		mTexture=tex;
 		mName=name;
-		mImageName=name.substr(name.find("/")+1,name.size()); // the name without the dataset's name prefix
+		mImageName=name(name.find("/")+1,name.size()); // the name without the dataset's name prefix
 		mSourceX=sx;
 		mSourceY=sy;
 		mSourceW=sw;

@@ -12,28 +12,22 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "aprilui/Dataset.h"
 #include "aprilui/Objects.h"
 #include "atres/Atres.h"
+#include "hltypes/hstring.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 AprilUI::Dataset* dataset;
 
-std::string str(int i)
-{
-	char s[32];
-	sprintf(s,"%d",i);
-	return std::string(s);
-}
-
 bool render(float time_increase)
 {
 	rendersys->clear();
-	rendersys->setViewport(800,600);
+	rendersys->setOrthoProjection(800,600);
 
 	dataset->getObject("root")->draw();
 
 	int i=rand()%7+1;
 	
-	dataset->getObject("obj0"+str(i))->setZOrder(rand()%100);
+	dataset->getObject("obj0"+hstr(i))->setZOrder(rand()%100);
 
 	return true;
 }

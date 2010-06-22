@@ -18,7 +18,7 @@ namespace AprilUI
 	{
 		mErrText = errorText;
 		int src=file.find("src");
-		if (src >= 0) file=file.substr(src+4,1000);
+		if (src >= 0) file=file(src+4,1000);
 		mLineNumber=line;
 		mFile=file;
 	}
