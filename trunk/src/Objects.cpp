@@ -213,7 +213,7 @@ namespace AprilUI
 
 	Object* Object::getChildUnderPoint(float x,float y)
 	{
-		if (!mVisible) return 0;
+		if (!isVisible()) return 0;
 		bool inside=isPointInside(x,y);
 		if (mChildren.size() == 0)
 			return inside ? this : 0;
