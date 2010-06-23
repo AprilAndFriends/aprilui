@@ -24,16 +24,16 @@ namespace AprilUI
 		hstr mErrText,mFile,mType;
 		int mLineNumber;
 
-		_GenericException(chstr errorText,hstr type="",hstr file="",int line=0);
+		_GenericException(chstr errorText,chstr type="",chstr file="",int line=0);
 		virtual ~_GenericException();
 		
 		virtual hstr repr();
 		
 		void writeOutput();
 		
-		virtual chstr getErrorText() { return mErrText; }
+		virtual hstr getErrorText() { return mErrText; }
 		
-		const hstr getType(){ return mType; }
+		hstr getType(){ return mType; }
 	};
 
 	#define GenericException(msg) _GenericException(msg,"GenericException",__FILE__,__LINE__)
@@ -42,7 +42,7 @@ namespace AprilUI
 	#define exception_cls(name) class AprilUIExport name : public _GenericException \
 	{ \
 	public: \
-		name(chstr errorText,hstr type="",hstr file="",int line=0) : \
+		name(chstr errorText,chstr type="",chstr file="",int line=0) : \
 		  _GenericException(errorText,type,file,line){} \
 	}
 
@@ -74,12 +74,12 @@ namespace AprilUI
 	class AprilUIExport _ResourceExistsException : public _GenericException
 	{
 	public:
-		_ResourceExistsException(const hstr object_name,hstr class_name,Dataset* dict,hstr file="",int line=0);
+		_ResourceExistsException(chstr object_name,chstr class_name,Dataset* dict,chstr file="",int line=0);
 	};
 	class AprilUIExport _ResourceNotExistsException : public _GenericException
 	{
 	public:
-		_ResourceNotExistsException(const hstr object_name,hstr class_name,Dataset* dict,hstr file="",int line=0);
+		_ResourceNotExistsException(chstr object_name,chstr class_name,Dataset* dict,chstr file="",int line=0);
 	};
 	#define ResourceExistsException(name,cls,data) _ResourceExistsException(name,cls,data,__FILE__,__LINE__)
 	#define ResourceNotExistsException(name,cls,data) _ResourceNotExistsException(name,cls,data,__FILE__,__LINE__)
@@ -89,7 +89,7 @@ namespace AprilUI
 	class AprilUIExport _ObjectHasParentException : public _GenericException
 	{
 	public:
-		_ObjectHasParentException(const hstr child,hstr parent,hstr file="",int line=0);
+		_ObjectHasParentException(chstr child,chstr parent,chstr file="",int line=0);
 	};
 
 	#define ObjectHasParentException(child,parent) _ObjectHasParentException(child,parent,__FILE__,__LINE__)
@@ -99,7 +99,7 @@ namespace AprilUI
 	class AprilUIExport _ObjectNotChildException : public _GenericException
 	{
 	public:
-		_ObjectNotChildException(const hstr child,hstr parent,hstr file="",int line=0);
+		_ObjectNotChildException(chstr child,chstr parent,chstr file="",int line=0);
 	};
 
 	#define ObjectNotChildException(child,parent) _ObjectNotChildException(child,parent,__FILE__,__LINE__)
@@ -109,7 +109,7 @@ namespace AprilUI
 	class AprilUIExport _XMLException : public _GenericException
 	{
 	public:
-		_XMLException(const hstr err_msg,xml_node* node,hstr type,hstr file,int line);
+		_XMLException(chstr err_msg,xml_node* node,chstr type,chstr file,int line);
 	};
 
 	#define XMLException(msg,node) _XMLException(msg,node,type,__FILE__,__LINE__)

@@ -67,7 +67,7 @@ namespace AprilUI
 		
 		void sortChildren();
 		
-		void triggerEvent(hstr name,float x=0,float y=0,char* extra=0);
+		void triggerEvent(chstr name,float x=0,float y=0,char* extra=0);
 		float getDerivedAlpha();
 		bool getDerivedEnabled();
 		bool getDerivedClickthrough();
@@ -82,7 +82,7 @@ namespace AprilUI
 		void _moveChildToBack(Object* o);
 	public:
 
-		Object(hstr type_name,hstr name,float x,float y,float w,float h);
+		Object(chstr type_name,chstr name,float x,float y,float w,float h);
 		virtual ~Object();
 
 		void addChild(Object* o);
@@ -96,7 +96,7 @@ namespace AprilUI
 		void setZOrder(int zorder);
 		
 		virtual bool isPointInside(float x,float y);
-		void registerEvent(hstr event_name,void (*callback)(EventArgs*));
+		void registerEvent(chstr event_name,void (*callback)(EventArgs*));
 
 		gtypes::Vector2 getPosition() { return gtypes::Vector2(mX,mY); };
 		float getXPosition() { return mX; }
@@ -125,9 +125,9 @@ namespace AprilUI
 		void moveToFront();
 		void moveToBack();
 		
-		void _setTypeName(hstr type) { mTypeName=type; }
-		chstr getType() { return mTypeName; }
-		chstr getName() { return mName; }
+		void _setTypeName(chstr type) { mTypeName=type; }
+		hstr getType() { return mTypeName; }
+		hstr getName() { return mName; }
 		
 		// if a childs event returns true, event is not propagated to parents
 		virtual bool OnMouseDown(int button,float x,float y);
@@ -154,7 +154,7 @@ namespace AprilUI
 	class AprilUIExport DummyObject : public Object
 	{
 	public:
-		DummyObject(hstr name,float x,float y,float w,float h);
+		DummyObject(chstr name,float x,float y,float w,float h);
 		void setProperty(chstr name,chstr value);
 	};
 
@@ -162,7 +162,7 @@ namespace AprilUI
 	{
 		April::Color mColor;
 	public:
-		ColoredQuad(hstr name,float x,float y,float w,float h);
+		ColoredQuad(chstr name,float x,float y,float w,float h);
 		void setColor(float a,float r,float g,float b);
 		
 		void OnDraw(float offset_x,float offset_y);
@@ -179,11 +179,11 @@ namespace AprilUI
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		ImageBox(hstr name,float x,float y,float w,float h);
+		ImageBox(chstr name,float x,float y,float w,float h);
 		
 		virtual Image* getImage() { return mImage; };
 		virtual void setImage(Image* image);
-		void setImageByName(hstr image);
+		void setImageByName(chstr image);
 		
 		void resizeToFitImage();
 		
@@ -199,9 +199,9 @@ namespace AprilUI
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		ColoredImageBox(hstr name,float x,float y,float w,float h);
+		ColoredImageBox(chstr name,float x,float y,float w,float h);
 		
-		void setColor(hstr color);
+		void setColor(chstr color);
 		void setColor(April::Color color) { mColor=color; } ;
 		April::Color getColor() { return mColor; };
 
@@ -214,7 +214,7 @@ namespace AprilUI
 		float mAngle;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		RotationImageBox(hstr name,float x,float y,float w,float h);
+		RotationImageBox(chstr name,float x,float y,float w,float h);
 
 		virtual void setAngle(float angle) { mAngle=angle; }
 		float getAngle() { return mAngle; }
@@ -228,7 +228,7 @@ namespace AprilUI
 		float mDestAngle;
 		float mRotationSpeed;
 	public:
-		RotatableImageBox(hstr name,float x,float y,float w,float h);
+		RotatableImageBox(chstr name,float x,float y,float w,float h);
 		
 		void setRotationSpeed(float speed) { mRotationSpeed=speed; }
 		float getRotationSpeed() { return mRotationSpeed; }
@@ -254,14 +254,14 @@ namespace AprilUI
 
 		void _drawLabel(float offset_x,float offset_y,float width,float height,float alpha);
 	public:
-		LabelBase(hstr name);
+		LabelBase(chstr name);
 		
 		hstr getText() { return mText; }
-		void setText(hstr text) { mText=text; }
-		virtual void setTextKey(hstr key) = 0;
+		void setText(chstr text) { mText=text; }
+		virtual void setTextKey(chstr key) = 0;
 		
 		hstr getFont() { return mFontName; }
-		void setFont(hstr font) { mFontName=font; }
+		void setFont(chstr font) { mFontName=font; }
 		
 		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
 		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
@@ -275,7 +275,7 @@ namespace AprilUI
 		virtual void setProperty(chstr name,chstr value);
 
 		void setTextColor(April::Color color) { mTextColor=color; }
-		void setTextColor(hstr hex);
+		void setTextColor(chstr hex);
 		April::Color getTextColor() { return mTextColor; }
 	};
 	/*******************************************************************************/
@@ -284,9 +284,9 @@ namespace AprilUI
 	protected:
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		Label(hstr name,float x,float y,float w,float h);
+		Label(chstr name,float x,float y,float w,float h);
 		
-		void setTextKey(hstr key);
+		void setTextKey(chstr key);
 		void setProperty(chstr name,chstr value);
 
 	};
@@ -297,9 +297,9 @@ namespace AprilUI
 		bool mPushed,mBackgroundEnabled;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		TextButton(hstr name,float x,float y,float w,float h);
+		TextButton(chstr name,float x,float y,float w,float h);
 		
-		void setTextKey(hstr key);
+		void setTextKey(chstr key);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 		void setProperty(chstr name,chstr value);
@@ -311,7 +311,7 @@ namespace AprilUI
 		bool mPushed;
 		float mValue;
 	public:
-		Slider(hstr name,float x,float y,float w,float h);
+		Slider(chstr name,float x,float y,float w,float h);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 		void OnMouseMove(float x,float y);
@@ -331,16 +331,16 @@ namespace AprilUI
 		void OnUpdate(float k);
 	public:
 		
-		ImageButton(hstr name,float x,float y,float w,float h);
+		ImageButton(chstr name,float x,float y,float w,float h);
 		Image* getPushedImage() { return mPushedImage; }
 		Image* getHoverImage() { return mHoverImage; }
 		Image* getDisabledImage() { return mDisabledImage; }
 		void setPushedImage(Image* image);
 		void setHoverImage(Image* image);
 		void setDisabledImage(Image* image);
-		void setPushedImageByName(hstr image);
-		void setHoverImageByName(hstr image);
-		void setDisabledImageByName(hstr image);
+		void setPushedImageByName(chstr image);
+		void setHoverImageByName(chstr image);
+		void setDisabledImageByName(chstr image);
 		void OnDraw(float offset_x,float offset_y);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* image);
@@ -357,16 +357,16 @@ namespace AprilUI
 		void OnDraw(float offset_x,float offset_y);
 
 	public:
-		TextImageButton(hstr name,float x,float y,float w,float h);
+		TextImageButton(chstr name,float x,float y,float w,float h);
 		
-		void setTextKey(hstr key);
+		void setTextKey(chstr key);
 		void setProperty(chstr name,chstr value);
 	};
 	/*******************************************************************************/
 	class AprilUIExport ToggleButton : public ImageButton
 	{
 	public:
-		ToggleButton(hstr name,float x,float y,float w,float h);
+		ToggleButton(chstr name,float x,float y,float w,float h);
 
 		void OnDraw(float offset_x,float offset_y);
 		bool OnMouseDown(int button,float x,float y);

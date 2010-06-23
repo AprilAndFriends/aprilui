@@ -17,7 +17,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Mover::Mover(hstr name) : Object("Animators::Mover",name,0,0,1,1)
+		Mover::Mover(chstr name) : Object("Animators::Mover",name,0,0,1,1)
 		{
 			mAccelX=mAccelY=mSpeedX=mSpeedY=mInitialSY=mInitialSX=0;
 			mInitialX=mInitialY=-10000;
@@ -66,7 +66,7 @@ namespace AprilUI
 
 
 
-		Scaler::Scaler(hstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		Scaler::Scaler(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccelW=mAccelH=mSpeedW=mSpeedH=mInitialW=mInitialH=0;
 			mInitialW=mInitialH=-10000;
@@ -113,7 +113,7 @@ namespace AprilUI
 			mParent->setSize(v.x,v.y);
 		}
 
-		Rotator::Rotator(hstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		Rotator::Rotator(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel=mSpeed=0;
 			mInitialSpeed=-10000;
@@ -152,7 +152,7 @@ namespace AprilUI
 
 
 
-		AlphaFader::AlphaFader(hstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		AlphaFader::AlphaFader(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
 			mInitialAlpha=-10001;
@@ -192,7 +192,7 @@ namespace AprilUI
 
 
 
-		ColorAlternator::ColorAlternator(hstr name) : Object("Animators::ColorAlternator",name,0,0,1,1)
+		ColorAlternator::ColorAlternator(chstr name) : Object("Animators::ColorAlternator",name,0,0,1,1)
 		{
 			mLow[0]=mLow[1]=mLow[2]=mLow[3]=0;
 			mHigh[0]=mHigh[1]=mHigh[2]=mHigh[3]=1;
@@ -224,7 +224,7 @@ namespace AprilUI
 			img->setColor(a,r,g,b);
 		}
 		
-		Blinker::Blinker(hstr name) : Object("Animators::Blinker",name,0,0,1,1)
+		Blinker::Blinker(chstr name) : Object("Animators::Blinker",name,0,0,1,1)
 		{
 			mDelay=mDuration=mTimer=mDelayTimer=mDurationTimer=0;
 			mStartVisibility=mEndVisibility=0;
@@ -270,7 +270,7 @@ namespace AprilUI
 			}
 		}
 
-		FrameAnimation::FrameAnimation(hstr name) : Object("Animators::FrameAnimation",name,0,0,1,1)
+		FrameAnimation::FrameAnimation(chstr name) : Object("Animators::FrameAnimation",name,0,0,1,1)
 		{
 			mStartFrame=0; mEndFrame=100;
 			mAnimationTime=10;

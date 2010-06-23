@@ -23,7 +23,7 @@ namespace AprilUI
 			float mAccelX,mAccelY;
 			float mSpeedX,mSpeedY;
 		public:
-			Mover(hstr name);
+			Mover(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
@@ -35,7 +35,7 @@ namespace AprilUI
 			float mAccelW,mAccelH;
 			float mSpeedW,mSpeedH;
 		public:
-			Scaler(hstr name);
+			Scaler(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
@@ -47,7 +47,7 @@ namespace AprilUI
 		{
 			float mInitialSpeed,mInitialAngle,mSpeed,mAccel;
 		public:
-			Rotator(hstr name);
+			Rotator(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
@@ -58,7 +58,7 @@ namespace AprilUI
 		{
 			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay;
 		public:
-			AlphaFader(hstr name);
+			AlphaFader(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
@@ -72,7 +72,7 @@ namespace AprilUI
 			float mLow[4],mHigh[4];
 			float mTimer,mSpeed;
 		public:
-			ColorAlternator(hstr name);
+			ColorAlternator(chstr name);
 			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
@@ -82,7 +82,7 @@ namespace AprilUI
 			float mDelay,mDuration,mFrequency,mTimer,mDelayTimer,mDurationTimer;
 			bool mStartVisibility,mEndVisibility;
 		public:
-			Blinker(hstr name);
+			Blinker(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
@@ -95,7 +95,7 @@ namespace AprilUI
 			int mStartFrame,mEndFrame;
 			float mAnimationTime,mTimer;
 		public:
-			FrameAnimation(hstr name);
+			FrameAnimation(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);

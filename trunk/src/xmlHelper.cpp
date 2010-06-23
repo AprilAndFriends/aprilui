@@ -103,7 +103,7 @@ hstr xml_prop::value()
 	return hstr((const char*) this->children->content);
 }
 /*****************************************************************************/
-xml_doc::xml_doc(hstr filename)
+xml_doc::xml_doc(chstr filename)
 {
 	this->doc=xmlParseFile((filename).c_str());
 	if (this->doc == NULL)
@@ -115,7 +115,7 @@ xml_doc::~xml_doc()
 	xmlFreeDoc(this->doc);
 }
 
-xml_node* xml_doc::root(hstr root_element_query)
+xml_node* xml_doc::root(chstr root_element_query)
 {
 	xml_node* root=(xml_node*) xmlDocGetRootElement(this->doc);
 	if (!root)
