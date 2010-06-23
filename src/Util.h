@@ -25,8 +25,8 @@ namespace AprilUI
 
 	float sign(float number);
 
-	hstr pathGetFilename(hstr path,bool with_suffix=1);
-	hstr pathGetBaseDir(hstr path);
+	hstr pathGetFilename(chstr path,bool with_suffix=1);
+	hstr pathGetBaseDir(chstr path);
 
 	int hexstr_to_int(chstr s);
 	void hexstr_to_argb(chstr hex,byte* a,byte* r,byte* g,byte* b);
@@ -37,10 +37,10 @@ namespace AprilUI
 
 	float clamp(float value,float min_value,float max_value);
 
-	hstr generateName(hstr prefix);
-	int getdir (hstr dir, harray<hstr> &files);
+	hstr generateName(chstr prefix);
+	int getdir(chstr dir, harray<hstr> &files);
 	
-	void writelog(hstr msg);
+	void writelog(chstr msg);
 	
 	hstr getPWD();
 }

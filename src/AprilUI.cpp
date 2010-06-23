@@ -29,14 +29,14 @@ namespace AprilUI
 		Atres::setRenderInterface(atres_render_iface);
 	}
 
-	Dataset* getDatasetByName(hstr name)
+	Dataset* getDatasetByName(chstr name)
 	{
 		if (g_datasets.find(name) == g_datasets.end())
 			throw GenericException("Dataset '"+name+"' doesn't exist!");
 		return g_datasets[name];
 	}
 
-	void _registerDataset(hstr name,Dataset* d)
+	void _registerDataset(chstr name,Dataset* d)
 	{
 		if (register_lock) return;
 		if (g_datasets.find(name) != g_datasets.end())
@@ -44,7 +44,7 @@ namespace AprilUI
 		g_datasets[name]=d;
 	}
 	
-	void _unregisterDataset(hstr name,Dataset* d)
+	void _unregisterDataset(chstr name,Dataset* d)
 	{
 		if (register_lock) return;
 		g_datasets.erase(name);

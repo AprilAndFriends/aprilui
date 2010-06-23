@@ -30,7 +30,7 @@ namespace AprilUI
 		mCallback((EventArgs*) params);
 	}
 
-	Object::Object(hstr type_name,hstr name,float x,float y,float w,float h)
+	Object::Object(chstr type_name,chstr name,float x,float y,float w,float h)
 	{
 		mTypeName=type_name;
 		mName=name;
@@ -148,12 +148,12 @@ namespace AprilUI
 		return false;
 	}
 
-	void Object::registerEvent(hstr event_name,void (*callback)(EventArgs*))
+	void Object::registerEvent(chstr event_name,void (*callback)(EventArgs*))
 	{
 		mEvents[event_name]=new CallbackEvent(callback);
 	}
 
-	void Object::triggerEvent(hstr name,float x,float y,char* extra)
+	void Object::triggerEvent(chstr name,float x,float y,char* extra)
 	{
 		Event* e=mEvents[name];
 		if (e)
@@ -228,7 +228,7 @@ namespace AprilUI
 		return o ? o : this;
 	}
 	/********************************************************************************************************/
-	DummyObject::DummyObject(hstr name,float x,float y,float w,float h) :
+	DummyObject::DummyObject(chstr name,float x,float y,float w,float h) :
 				 Object("DummyObject",name,x,y,w,h)
 	{
 		
@@ -239,7 +239,7 @@ namespace AprilUI
 		Object::setProperty(name,value);
 	}
 	/********************************************************************************************************/
-	ColoredQuad::ColoredQuad(hstr name,float x,float y,float w,float h) :
+	ColoredQuad::ColoredQuad(chstr name,float x,float y,float w,float h) :
 				 Object("DummyObject",name,x,y,w,h)
 	{
 		
@@ -284,7 +284,7 @@ namespace AprilUI
 		return false;
 	}
 	/********************************************************************************************************/
-	ImageBox::ImageBox(hstr name,float x,float y,float w,float h) :
+	ImageBox::ImageBox(chstr name,float x,float y,float w,float h) :
 				 Object("ImageBox",name,x,y,w,h)
 	{
 		mImage=0;
@@ -297,7 +297,7 @@ namespace AprilUI
 		if (mHeight == -1) mHeight=image->getSourceH();
 	}
 
-	void ImageBox::setImageByName(hstr image)
+	void ImageBox::setImageByName(chstr image)
 	{
 		setImage(mDataPtr->getImage(image));
 	}
@@ -346,13 +346,13 @@ namespace AprilUI
 	}
 
 	/********************************************************************************************************/
-	ColoredImageBox::ColoredImageBox(hstr name,float x,float y,float w,float h) :
+	ColoredImageBox::ColoredImageBox(chstr name,float x,float y,float w,float h) :
 				 ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("ColoredImageBox");
 	}
 
-	void ColoredImageBox::setColor(hstr color)
+	void ColoredImageBox::setColor(chstr color)
 	{
 		mColor.setColor(color);
 	}
@@ -373,7 +373,7 @@ namespace AprilUI
 	}
 
 	/********************************************************************************************************/
-	RotationImageBox::RotationImageBox(hstr name,float x,float y,float w,float h) : ImageBox(name,x,y,w,h)
+	RotationImageBox::RotationImageBox(chstr name,float x,float y,float w,float h) : ImageBox(name,x,y,w,h)
 	{
 		mAngle=0;
 	}
@@ -398,7 +398,7 @@ namespace AprilUI
 		return fabs(s1-s2) < 0.01f && fabs(c1-c2) < 0.01f;
 	}
 	/********************************************************************************************************/
-	RotatableImageBox::RotatableImageBox(hstr name,float x,float y,float w,float h) : RotationImageBox(name,x,y,w,h)
+	RotatableImageBox::RotatableImageBox(chstr name,float x,float y,float w,float h) : RotationImageBox(name,x,y,w,h)
 	{
 		mDestAngle=0;
 		mRotationSpeed=90;
@@ -420,7 +420,7 @@ namespace AprilUI
 		return (fabs(mAngle-mDestAngle) > 0.01f);
 	}
 	/********************************************************************************************************/
-	LabelBase::LabelBase(hstr name) :
+	LabelBase::LabelBase(chstr name) :
 		   mTextColor(1,1,1)
 	{
 		mHorzFormatting=Atres::CENTER;
@@ -483,12 +483,12 @@ namespace AprilUI
 		}
 	}
 
-	void LabelBase::setTextColor(hstr hex)
+	void LabelBase::setTextColor(chstr hex)
 	{
 		mTextColor.setColor(hex);
 	}
 	/********************************************************************************************************/
-	Label::Label(hstr name,float x,float y,float w,float h) :
+	Label::Label(chstr name,float x,float y,float w,float h) :
 			LabelBase(name),
 			Object("Label",name,x,y,w,h)
 	{
@@ -502,7 +502,7 @@ namespace AprilUI
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
-	void Label::setTextKey(hstr key)
+	void Label::setTextKey(chstr key)
 	{
 		setText(mDataPtr->texts[key]);
 	}
@@ -514,7 +514,7 @@ namespace AprilUI
 		if (name == "textkey") setTextKey(value);
 	}
 	/********************************************************************************************************/
-	TextButton::TextButton(hstr name,float x,float y,float w,float h) :
+	TextButton::TextButton(chstr name,float x,float y,float w,float h) :
 				Label(name,x,y,w,h)
 	{
 		mHorzFormatting=Atres::CENTER;
@@ -526,7 +526,7 @@ namespace AprilUI
 		mBackgroundEnabled=1;
 	}
 
-	void TextButton::setTextKey(hstr key)
+	void TextButton::setTextKey(chstr key)
 	{
 		setText(mDataPtr->texts[key]);
 	}
@@ -575,7 +575,7 @@ namespace AprilUI
 		return false;
 	}
 	/********************************************************************************************************/
-	ImageButton::ImageButton(hstr name,float x,float y,float w,float h) :
+	ImageButton::ImageButton(chstr name,float x,float y,float w,float h) :
 			ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("ImageButton");
@@ -615,17 +615,17 @@ namespace AprilUI
 		mDisabledImage=image;
 	}
 
-	void ImageButton::setPushedImageByName(hstr image)
+	void ImageButton::setPushedImageByName(chstr image)
 	{
 		setPushedImage(mDataPtr->getImage(image));
 	}
 
-	void ImageButton::setHoverImageByName(hstr image)
+	void ImageButton::setHoverImageByName(chstr image)
 	{
 		setHoverImage(mDataPtr->getImage(image));
 	}
 
-	void ImageButton::setDisabledImageByName(hstr image)
+	void ImageButton::setDisabledImageByName(chstr image)
 	{
 		setDisabledImage(mDataPtr->getImage(image));
 	}
@@ -679,7 +679,7 @@ namespace AprilUI
 		if (name == "disabled_image")   setDisabledImage(mDataPtr->getImage(value));
 	}
 	/********************************************************************************************************/
-	TextImageButton::TextImageButton(hstr name,float x,float y,float w,float h) :
+	TextImageButton::TextImageButton(chstr name,float x,float y,float w,float h) :
 			LabelBase(name),
 			ImageButton(name,x,y,w,h)
 	{
@@ -695,7 +695,7 @@ namespace AprilUI
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
-	void TextImageButton::setTextKey(hstr key)
+	void TextImageButton::setTextKey(chstr key)
 	{
 		setText(mDataPtr->texts[key]);
 	}
@@ -707,7 +707,7 @@ namespace AprilUI
 		if (name == "textkey") setTextKey(value);
 	}
 	/********************************************************************************************************/
-	Slider::Slider(hstr name,float x,float y,float w,float h) :
+	Slider::Slider(chstr name,float x,float y,float w,float h) :
 			ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("Slider");
@@ -773,7 +773,7 @@ namespace AprilUI
 		ImageBox::setProperty(name,value);
 	}
 	/********************************************************************************************************/
-	ToggleButton::ToggleButton(hstr name,float x,float y,float w,float h) :
+	ToggleButton::ToggleButton(chstr name,float x,float y,float w,float h) :
 				  ImageButton(name,x,y,w,h)
 	{
 		_setTypeName("ToggleButton");

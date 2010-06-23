@@ -21,7 +21,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "april/RenderSystem.h"
 namespace AprilUI
 {
-	hstr pathGetFilename(hstr path,bool with_suffix)
+	hstr pathGetFilename(chstr path,bool with_suffix)
 	{
 		int index1=path.rfind("/"); if (index1 < 0) index1=path.rfind("\\");
 		int index2=(with_suffix) ? path.size() : path.rfind(".");
@@ -29,7 +29,7 @@ namespace AprilUI
 		return name;
 	}
 
-	hstr pathGetBaseDir(hstr path)
+	hstr pathGetBaseDir(chstr path)
 	{
 		int index=path.rfind("/");  if (index < 0) index=path.rfind("\\");
 		return path(0,index);
@@ -95,7 +95,7 @@ namespace AprilUI
 		*b=bb/255.0f;
 	}
 
-	hstr generateName(hstr prefix)
+	hstr generateName(chstr prefix)
 	{
 		static std::map<hstr,int> counters;
 		int cnt=counters[prefix];
@@ -104,7 +104,7 @@ namespace AprilUI
 		return prefix+hstr(cnt);
 	}
 	
-	int getdir (hstr dir, harray<hstr> &files)
+	int getdir (chstr dir, harray<hstr> &files)
 	{
 		DIR *dp;
 		struct dirent *dirp;
@@ -128,7 +128,7 @@ namespace AprilUI
 		return ".";
 	}
 	
-	void writelog(hstr msg)
+	void writelog(chstr msg)
 	{
 		rendersys->logMessage(msg,"[aprilui] ");
 	}

@@ -50,9 +50,9 @@ class AprilUIExport xml_doc
 {
 	xmlDocPtr doc;
 public:
-	xml_doc(hstr filename);
+	xml_doc(chstr filename);
 	~xml_doc();
-	xml_node* root(hstr root_element_query="");
+	xml_node* root(chstr root_element_query="");
 };
 
 

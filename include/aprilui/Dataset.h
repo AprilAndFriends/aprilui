@@ -54,13 +54,13 @@ namespace AprilUI
 		
 		Object* recursiveObjectParse(xml_node* node,Object* parent);
 		
-		void readFile(hstr filename);
+		void readFile(chstr filename);
 	public:
 		Object* parseObject(xml_node* node);
 
 		TextMap texts;
 		
-		Dataset(hstr filename);
+		Dataset(chstr filename);
 		virtual ~Dataset();
 
 		void load();
@@ -71,24 +71,24 @@ namespace AprilUI
 		void registerManualImage(Image* img);
 		void unregisterManualImage(Image* img);
 
-		void registerCallback(hstr name,void (*callback)());
-		void triggerCallback(hstr name);
+		void registerCallback(chstr name,void (*callback)());
+		void triggerCallback(chstr name);
 
 		
 
 		virtual void update(float k);
 		
-		void _destroyTexture(hstr tex);
-		void _destroyImage(hstr img);
+		void _destroyTexture(chstr tex);
+		void _destroyImage(chstr img);
 		void _destroyTexture(April::Texture* tex);
 		void _destroyImage(Image* img);
 
-		Object* getObject(hstr name);
-		April::Texture* getTexture(hstr name);
-		Image* getImage(hstr name);
+		Object* getObject(chstr name);
+		April::Texture* getTexture(chstr name);
+		Image* getImage(chstr name);
 
 		
-		chstr getName();
+		hstr getName();
 		
 		Object** iterateObjects();
 		Object** nextObject();

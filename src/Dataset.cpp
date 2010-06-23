@@ -20,12 +20,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 
 namespace AprilUI
 {
-	void _registerDataset(hstr name,Dataset* d);
-	void _unregisterDataset(hstr name,Dataset* d);
+	void _registerDataset(chstr name,Dataset* d);
+	void _unregisterDataset(chstr name,Dataset* d);
 	
 	NullImage g_null_img;
 
-	Dataset::Dataset(hstr filename)
+	Dataset::Dataset(chstr filename)
 	{
 		
 		int slash=filename.rfind("/");
@@ -47,7 +47,7 @@ namespace AprilUI
 		_unregisterDataset(mName,this);
 	}
 
-	chstr Dataset::getName()
+	hstr Dataset::getName()
 	{
 		return mName;
 	}
@@ -68,7 +68,7 @@ namespace AprilUI
 		delete img;
 	}
 
-	void Dataset::_destroyTexture(hstr tex)
+	void Dataset::_destroyTexture(chstr tex)
 	{
 		if (mTextures.find(tex) == mTextures.end())
 			throw ResourceNotExistsException(tex,"April::Texture",this);
@@ -77,7 +77,7 @@ namespace AprilUI
 		delete i;
 	}
 
-	void Dataset::_destroyImage(hstr img)
+	void Dataset::_destroyImage(chstr img)
 	{
 		if (mImages.find(img) == mImages.end())
 			throw ResourceNotExistsException(img,"Image",this);
@@ -289,7 +289,7 @@ namespace AprilUI
 		return o;
 	}
 
-	void Dataset::readFile(hstr filename)
+	void Dataset::readFile(chstr filename)
 	{
 		// parse datadef xml file, error checking first
 		xml_doc doc(getPWD()+"/"+filename);
@@ -384,7 +384,7 @@ namespace AprilUI
 		mImages.erase(img->getName());
 	}
 
-	Object* Dataset::getObject(hstr name)
+	Object* Dataset::getObject(chstr name)
 	{
 		Object* o=mObjects[name];
 		if (!o)
@@ -392,13 +392,13 @@ namespace AprilUI
 		return o;
 	}
 	
-	April::Texture* Dataset::getTexture(hstr name)
+	April::Texture* Dataset::getTexture(chstr name)
 	{
 		if (mTextures.find(name) == mTextures.end()) throw ResourceNotExistsException(name,"Texture",this);
 		return mTextures[name];
 	}
 
-	Image* Dataset::getImage(hstr name)
+	Image* Dataset::getImage(chstr name)
 	{
 		Image* i;
 		if (name == "null") return &g_null_img;
@@ -427,12 +427,12 @@ namespace AprilUI
 		return i;
 	}
 
-	void Dataset::registerCallback(hstr name,void (*callback)())
+	void Dataset::registerCallback(chstr name,void (*callback)())
 	{
 		mCallbacks[name]=callback;
 	}
 
-	void Dataset::triggerCallback(hstr name)
+	void Dataset::triggerCallback(chstr name)
 	{
 		void (*callback)()=mCallbacks[name];
 		if (callback) callback();
