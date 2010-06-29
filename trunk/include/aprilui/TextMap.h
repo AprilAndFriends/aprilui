@@ -20,6 +20,7 @@ namespace AprilUI
 	{
 		char* mBuffer;
 		int mBufferPos;
+		hstr mName;
 		std::map<hstr,unsigned int> mTexts;
 		
 	public:
