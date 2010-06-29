@@ -40,6 +40,7 @@ namespace AprilUI
 
 	void TextMap::load(chstr folder)
 	{
+		mName=folder;
 		FILE* f;
 		char buff[2][513];
 		int len,mode,c; // mode: 0 - seeking for title, 1 - reading text
@@ -56,7 +57,7 @@ namespace AprilUI
 		
 		foreach(hstr,content)
 		{
-			writelog("Reading text file: "+*it);
+			//writelog("Reading text file: "+*it);
 			f=fopen(it->c_str(),"rb");
 			for (utfc=-1;utfc < 0;utfc=fgetc(f));
 			fseek(f, -1, SEEK_CUR);
@@ -95,9 +96,12 @@ namespace AprilUI
 
 	void TextMap::destroy()
 	{
-		writelog("destroying texts");
-		if (mBuffer) { free(mBuffer); mBuffer=0; mBufferPos=1; }
-		mTexts.clear();
+		if (mBuffer)
+		{
+			writelog("destroying TextMap [ "+mName+" ]");
+			{ free(mBuffer); mBuffer=0; mBufferPos=1; }
+			mTexts.clear();
+		}
 	}
 
 	const char* TextMap::operator [] (chstr name)
