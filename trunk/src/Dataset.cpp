@@ -228,7 +228,14 @@ namespace AprilUI
 			try { h=node->pfloat("h"); }
 			catch (_XMLException) { h=-1; }
 		}
-		else if (*node == "Animator") obj_name=generateName("Animator");
+		else if (*node == "Animator")
+		{
+			try { obj_name=node->pstr("name"); }
+			catch (_XMLException)
+			{
+				obj_name=generateName("Animator");
+			}
+		}
 		else return 0;
 
 		
