@@ -239,6 +239,23 @@ namespace AprilUI
 		Object::setProperty(name,value);
 	}
 	/********************************************************************************************************/
+	CallbackObject::CallbackObject(chstr name,float x,float y,float w,float h) :
+				 Object("CallbackObject",name,x,y,w,h)
+	{
+		mCallback=0;
+	}
+
+	void CallbackObject::setProperty(chstr name,chstr value)
+	{
+		Object::setProperty(name,value);
+	}
+	
+	void CallbackObject::OnDraw(float offset_x,float offset_y)
+	{
+		if (mCallback) (*mCallback)();
+		Object::OnDraw(offset_x,offset_y);
+	}
+	/********************************************************************************************************/
 	ColoredQuad::ColoredQuad(chstr name,float x,float y,float w,float h) :
 				 Object("DummyObject",name,x,y,w,h)
 	{

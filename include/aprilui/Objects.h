@@ -157,7 +157,20 @@ namespace AprilUI
 		DummyObject(chstr name,float x,float y,float w,float h);
 		void setProperty(chstr name,chstr value);
 	};
-
+	/*******************************************************************************/
+	class AprilUIExport CallbackObject : public Object
+	{
+		void (*mCallback)();
+	public:
+		CallbackObject(chstr name,float x,float y,float w,float h);
+		void setProperty(chstr name,chstr value);
+		
+		void setCallback(void (*callback)()) { mCallback=callback; }
+		void (*getCallback())() { return mCallback; }
+		
+		void OnDraw(float offset_x=0,float offset_y=0);
+	};
+	/*******************************************************************************/
 	class ColoredQuad : public Object
 	{
 		April::Color mColor;
