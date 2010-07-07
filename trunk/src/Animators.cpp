@@ -21,6 +21,7 @@ namespace AprilUI
 		{
 			mAccelX=mAccelY=mSpeedX=mSpeedY=mInitialSY=mInitialSX=0;
 			mInitialX=mInitialY=-10000;
+			mDestX=mDestY=-10000;
 		}
 
 		void Mover::setProperty(chstr name,chstr value)
@@ -29,6 +30,8 @@ namespace AprilUI
 			else if (name == "speed_y") mSpeedY=mInitialSY=value;
 			else if (name == "accel_x") mAccelX=value;
 			else if (name == "accel_y") mAccelY=value;
+			else if (name == "dest_x")  mDestX=value;
+			else if (name == "dest_y")  mDestY=value;
 		}
 
 		void Mover::notifyEvent(chstr event_name,void* params)
@@ -52,6 +55,8 @@ namespace AprilUI
 		void Mover::update(float k)
 		{
 			gtypes::Vector2 v=mParent->getPosition();
+			if (v.x == mDestX && v.y == mDestY) return;
+			gtypes::Vector2 old=v;
 			if (fabs(mAccelX) > 0.01f || fabs(mAccelY) > 0.01f)
 			{
 				mSpeedX+=mAccelX*k;
@@ -60,16 +65,17 @@ namespace AprilUI
 
 			v.x+=k*mSpeedX;
 			v.y+=k*mSpeedY;
+			if (sign(mDestX-old.x) != sign(mDestX-v.x)) v.x=mDestX;
+			if (sign(mDestY-old.y) != sign(mDestY-v.y)) v.y=mDestY;
 			
 			mParent->setPosition(v);
 		}
-
-
-
+/********************************************************************************************************/
 		Scaler::Scaler(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccelW=mAccelH=mSpeedW=mSpeedH=mInitialW=mInitialH=0;
 			mInitialW=mInitialH=-10000;
+			mDestW=mDestH=-10000;
 		}
 
 		void Scaler::setProperty(chstr name,chstr value)
@@ -78,6 +84,8 @@ namespace AprilUI
 			else if (name == "speed_h") mSpeedH=mInitialSH=value;
 			else if (name == "accel_w") mAccelW=value;
 			else if (name == "accel_h") mAccelH=value;
+			else if (name == "dest_w") mDestW=value;
+			else if (name == "dest_h") mDestH=value;
 		}
 
 		void Scaler::notifyEvent(chstr event_name,void* params)
@@ -101,6 +109,8 @@ namespace AprilUI
 		void Scaler::update(float k)
 		{
 			gtypes::Vector2 v=mParent->getSize();
+			if (v.x == mDestW && v.y == mDestH) return;
+			gtypes::Vector2 old=v;
 			if (fabs(mAccelW) > 0.01f || fabs(mAccelH) > 0.01f)
 			{
 				mSpeedW+=mAccelW*k;
@@ -109,10 +119,13 @@ namespace AprilUI
 
 			v.x+=k*mSpeedW;
 			v.y+=k*mSpeedH;
+			if (sign(mDestW-old.x) != sign(mDestW-v.x)) v.x=mDestW;
+			if (sign(mDestH-old.y) != sign(mDestH-v.y)) v.y=mDestH;
+
 
 			mParent->setSize(v.x,v.y);
 		}
-
+/********************************************************************************************************/
 		Rotator::Rotator(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel=mSpeed=0;
@@ -149,12 +162,11 @@ namespace AprilUI
 			
 			((RotationImageBox*) mParent)->setAngle(angle);
 		}
-
-
-
+/********************************************************************************************************/
 		AlphaFader::AlphaFader(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
+			mDestAlpha=-10000;
 			mInitialAlpha=-10001;
 		}
 
@@ -163,6 +175,7 @@ namespace AprilUI
 			if      (name == "speed") mSpeed=mInitialSpeed=value;
 			else if (name == "accel") mAccel=value;
 			else if (name == "delay") mDelay=value;
+			else if (name == "dest_alpha") mDestAlpha=value;
 		}
 
 		void AlphaFader::notifyEvent(chstr event_name,void* params)
@@ -183,15 +196,49 @@ namespace AprilUI
 		{
 			if (mTimer > 0) { mTimer-=k; return; }
 			float alpha=mParent->getAlpha();
+			if (alpha == mDestAlpha) return;
+			float prevalpha=alpha;
 			if (fabs(mAccel) > 0.01f)
 				mSpeed+=mAccel*k;
+			
 			alpha+=k*mSpeed;
+			if (sign(mDestAlpha-alpha) != sign(mDestAlpha-prevalpha)) alpha=mDestAlpha;
 
 			mParent->setAlpha(std::max(0.0f,std::min(1.0f,alpha)));
 		}
+/********************************************************************************************************/
+		AlphaOscillator::AlphaOscillator(chstr name) : Object("Animators::Oscillator",name,0,0,1,1)
+		{
+			mBaseline=0.5; mAmplitude=0.5; mSpeed=360;
+			mInitialAlpha=-10001;
+		}
 
+		void AlphaOscillator::setProperty(chstr name,chstr value)
+		{
+			if      (name == "base") mBaseline=value;
+			else if (name == "amplitude") mAmplitude=value;
+			else if (name == "speed") mSpeed=value;
+		}
 
+		void AlphaOscillator::notifyEvent(chstr event_name,void* params)
+		{
+			if (event_name == "AttachToObject")
+			{
+				if (mInitialAlpha < -10000)
+					mInitialAlpha=mParent->getAlpha();
+				else
+					mParent->setAlpha(mInitialAlpha);
+				mTimer=0;
+			}
+		}
 
+		void AlphaOscillator::update(float k)
+		{
+			mTimer+=k;
+			float alpha=sin(mTimer*mSpeed/57.29578)*mAmplitude+mBaseline;
+			mParent->setAlpha(std::max(0.0f,std::min(1.0f,alpha)));
+		}
+/********************************************************************************************************/
 		ColorAlternator::ColorAlternator(chstr name) : Object("Animators::ColorAlternator",name,0,0,1,1)
 		{
 			mLow[0]=mLow[1]=mLow[2]=mLow[3]=0;
@@ -223,7 +270,7 @@ namespace AprilUI
 
 			img->setColor(a,r,g,b);
 		}
-		
+/********************************************************************************************************/
 		Blinker::Blinker(chstr name) : Object("Animators::Blinker",name,0,0,1,1)
 		{
 			mDelay=mDuration=mTimer=mDelayTimer=mDurationTimer=0;
@@ -269,7 +316,7 @@ namespace AprilUI
 				}
 			}
 		}
-
+/********************************************************************************************************/
 		FrameAnimation::FrameAnimation(chstr name) : Object("Animators::FrameAnimation",name,0,0,1,1)
 		{
 			mStartFrame=0; mEndFrame=100;
@@ -305,8 +352,7 @@ namespace AprilUI
 			}
 			else writelog("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 		}
-		
-		
+/********************************************************************************************************/
 		Earthquake::Earthquake(chstr name) : Object("Animators::Earthquake",name,0,0,1,1)
 		{
 			mIntensity=0;

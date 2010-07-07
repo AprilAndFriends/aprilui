@@ -83,9 +83,9 @@ namespace AprilUI
 		void _destroyTexture(April::Texture* tex);
 		void _destroyImage(Image* img);
 
-		Object* getObject(chstr name);
-		April::Texture* getTexture(chstr name);
-		Image* getImage(chstr name);
+		virtual Object* getObject(chstr name);
+		virtual April::Texture* getTexture(chstr name);
+		virtual Image* getImage(chstr name);
 
 		
 		hstr getName();
