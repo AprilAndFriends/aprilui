@@ -269,6 +269,7 @@ namespace AprilUI
 			else  parse_animator(Rotator);
 			else  parse_animator(ColorAlternator);
 			else  parse_animator(AlphaFader);
+			else  parse_animator(AlphaOscillator);
 			else  parse_animator(Blinker);
 			else  parse_animator(FrameAnimation);
 			else  parse_animator(Earthquake);

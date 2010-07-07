@@ -22,6 +22,7 @@ namespace AprilUI
 			float mInitialX,mInitialY,mInitialSX,mInitialSY;
 			float mAccelX,mAccelY;
 			float mSpeedX,mSpeedY;
+			float mDestX,mDestY;
 		public:
 			Mover(chstr name);
 
@@ -34,6 +35,7 @@ namespace AprilUI
 			float mInitialW,mInitialH,mInitialSW,mInitialSH;
 			float mAccelW,mAccelH;
 			float mSpeedW,mSpeedH;
+			float mDestW,mDestH;
 		public:
 			Scaler(chstr name);
 
@@ -56,9 +58,20 @@ namespace AprilUI
 
 		class AlphaFader : public Object
 		{
-			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay;
+			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay,mDestAlpha;
 		public:
 			AlphaFader(chstr name);
+
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
+			void update(float k);
+		};
+		
+		class AlphaOscillator : public Object
+		{
+			float mBaseline,mAmplitude,mSpeed,mTimer,mInitialAlpha;
+		public:
+			AlphaOscillator(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
