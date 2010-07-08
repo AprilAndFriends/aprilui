@@ -131,7 +131,7 @@ namespace AprilUI
 
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
-		if (mClickthrough) return false;
+		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
 		
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
@@ -149,7 +149,7 @@ namespace AprilUI
 
 	bool Object::OnMouseUp(int button,float x,float y)
 	{
-		if (mClickthrough) return false;
+		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
 				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
