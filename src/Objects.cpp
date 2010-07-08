@@ -115,6 +115,15 @@ namespace AprilUI
 			(*it)->update(k);
 	}
 
+	bool Object::isCursorInside()
+	{
+		gtypes::Vector2 pos=rendersys->getCursorPos();
+		
+		for (Object* p=mParent;p != 0;p=p->mParent)
+			pos-=p->getPosition();
+		return isPointInside(pos.x,pos.y);
+	}
+
 	bool Object::isPointInside(float x,float y)
 	{
 		return (x >= mX && y >= mY && x <= mX+mWidth && y <= mY+mHeight);
