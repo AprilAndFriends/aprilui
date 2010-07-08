@@ -211,6 +211,7 @@ namespace AprilUI
 		{
 			mBaseline=0.5; mAmplitude=0.5; mSpeed=360;
 			mInitialAlpha=-10001;
+			mTimer=0;
 		}
 
 		void AlphaOscillator::setProperty(chstr name,chstr value)
@@ -227,8 +228,8 @@ namespace AprilUI
 				if (mInitialAlpha < -10000)
 					mInitialAlpha=mParent->getAlpha();
 				else
-					mParent->setAlpha(mInitialAlpha);
-				mTimer=0;
+					update(0); // preserve alpha
+			//	mTimer=0;
 			}
 		}
 
@@ -237,6 +238,7 @@ namespace AprilUI
 			mTimer+=k;
 			float alpha=sin(mTimer*mSpeed/57.29578)*mAmplitude+mBaseline;
 			mParent->setAlpha(std::max(0.0f,std::min(1.0f,alpha)));
+
 		}
 /********************************************************************************************************/
 		AlphaHover::AlphaHover(chstr name) : Object("Animators::AlphaHover",name,0,0,1,1)
