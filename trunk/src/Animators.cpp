@@ -239,6 +239,36 @@ namespace AprilUI
 			mParent->setAlpha(std::max(0.0f,std::min(1.0f,alpha)));
 		}
 /********************************************************************************************************/
+		AlphaHover::AlphaHover(chstr name) : Object("Animators::AlphaHover",name,0,0,1,1)
+		{
+			mMin=mOwnerAlpha=0; mMax=1; mSpeed=1;
+			
+		}
+
+		void AlphaHover::setProperty(chstr name,chstr value)
+		{
+			if      (name == "min") mMin=mOwnerAlpha=value;
+			else if (name == "max") mMax=value;
+			else if (name == "speed") mSpeed=value;
+		}	
+
+		void AlphaHover::notifyEvent(chstr event_name,void* params)
+		{
+			if (event_name == "AttachToObject")
+			{
+				mParent->setAlpha(mOwnerAlpha);
+			}
+		}
+
+		void AlphaHover::update(float k)
+		{
+			float direction=(mParent->isCursorInside()) ? 1 : -1;
+			mOwnerAlpha+=k*mSpeed*direction;
+			if (mOwnerAlpha < mMin) mOwnerAlpha=mMin;
+			if (mOwnerAlpha > mMax) mOwnerAlpha=mMax;
+			mParent->setAlpha(mOwnerAlpha);
+		}
+/********************************************************************************************************/
 		ColorAlternator::ColorAlternator(chstr name) : Object("Animators::ColorAlternator",name,0,0,1,1)
 		{
 			mLow[0]=mLow[1]=mLow[2]=mLow[3]=0;

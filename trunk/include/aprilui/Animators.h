@@ -77,6 +77,17 @@ namespace AprilUI
 			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
+		
+		class AlphaHover : public Object
+		{
+			float mMin,mMax,mSpeed,mOwnerAlpha;
+		public:
+			AlphaHover(chstr name);
+
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
+			void update(float k);
+		};
 
 
 		// note: only works on ColoredImages

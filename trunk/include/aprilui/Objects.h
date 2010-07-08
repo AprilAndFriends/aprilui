@@ -95,6 +95,7 @@ namespace AprilUI
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
 		
+		bool isCursorInside();
 		virtual bool isPointInside(float x,float y);
 		void registerEvent(chstr event_name,void (*callback)(EventArgs*));
 
