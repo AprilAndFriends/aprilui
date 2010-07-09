@@ -319,6 +319,7 @@ namespace AprilUI
 	void ImageBox::setImage(Image* image)
 	{
 		mImage=image;
+		mImageName=image->getName();
 		if (mWidth == -1) mWidth=image->getSourceW();
 		if (mHeight == -1) mHeight=image->getSourceH();
 	}
@@ -326,6 +327,7 @@ namespace AprilUI
 	void ImageBox::setImageByName(chstr image)
 	{
 		setImage(mDataPtr->getImage(image));
+		mImageName=image;
 	}
 	
 	void ImageBox::resizeToFitImage()
@@ -345,7 +347,7 @@ namespace AprilUI
 	void ImageBox::setProperty(chstr name,chstr value)
 	{
 		Object::setProperty(name,value);
-		if (name == "image") setImage(mDataPtr->getImage(value));
+		if (name == "image") setImageByName(value);
 	}
 
 	bool ImageBox::OnMouseDown(int button,float x,float y)
