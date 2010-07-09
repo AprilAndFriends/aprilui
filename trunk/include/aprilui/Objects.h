@@ -190,6 +190,7 @@ namespace AprilUI
 	{
 	protected:
 		Image* mImage;
+		hstr mImageName;
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
@@ -198,6 +199,7 @@ namespace AprilUI
 		virtual Image* getImage() { return mImage; };
 		virtual void setImage(Image* image);
 		void setImageByName(chstr image);
+		hstr getImageName() { return mImageName; }
 		
 		void resizeToFitImage();
 		
