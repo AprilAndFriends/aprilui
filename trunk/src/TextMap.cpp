@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "TextMap.h"
 #include "Exception.h"
 #include "Util.h"
-#include <malloc.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
