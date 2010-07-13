@@ -319,7 +319,10 @@ namespace AprilUI
 	void ImageBox::setImage(Image* image)
 	{
 		mImage=image;
-		mImageName=image->getName();
+		if (image)
+			mImageName=image->getName();
+		else
+			mImageName="null";
 		if (mWidth == -1) mWidth=image->getSourceW();
 		if (mHeight == -1) mHeight=image->getSourceH();
 	}
