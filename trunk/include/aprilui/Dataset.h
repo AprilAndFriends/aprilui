@@ -43,6 +43,7 @@ namespace AprilUI
 		std::map<hstr,Object*>::iterator mObjectIterator;
 		std::map<hstr,April::Texture*>::iterator mTextureIterator;
 		std::map<hstr,Image*>::iterator mImageIterator;
+		TextMap mTexts;
 
 		std::map<hstr,void (*)()> mCallbacks;
 
@@ -57,8 +58,6 @@ namespace AprilUI
 		void readFile(chstr filename);
 	public:
 		Object* parseObject(xml_node* node);
-
-		TextMap texts;
 		
 		Dataset(chstr filename);
 		virtual ~Dataset();
@@ -86,6 +85,9 @@ namespace AprilUI
 		virtual Object* getObject(chstr name);
 		virtual April::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
+		virtual const char* getText(chstr name);
+		virtual bool textExists(chstr name);
+		TextMap& getTextmap() { return mTexts; }
 
 		
 		hstr getName();

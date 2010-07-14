@@ -28,7 +28,7 @@ namespace AprilUI
 		~TextMap();
 		
 		void load(chstr folder);
-		void destroy();
+		void unload();
 		bool exists(chstr name);
 
 		const char* operator [] (chstr name);

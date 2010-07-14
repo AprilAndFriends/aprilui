@@ -200,6 +200,7 @@ namespace AprilUI
 		virtual void setImage(Image* image);
 		void setImageByName(chstr image);
 		hstr getImageName() { return mImageName; }
+		void notifyEvent(chstr event_name,void* params);
 		
 		void resizeToFitImage();
 		
@@ -298,13 +299,15 @@ namespace AprilUI
 	class AprilUIExport Label : public Object, public LabelBase
 	{
 	protected:
+		hstr mTextKey;
 		void OnDraw(float offset_x,float offset_y);
 	public:
 		Label(chstr name,float x,float y,float w,float h);
 		
 		void setTextKey(chstr key);
+		chstr getTextXey() { return mTextKey; }
 		void setProperty(chstr name,chstr value);
-
+		void notifyEvent(chstr event_name,void* params);
 	};
 	/*******************************************************************************/
 	class AprilUIExport TextButton : public Label

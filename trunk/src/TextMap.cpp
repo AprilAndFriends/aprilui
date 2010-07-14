@@ -30,7 +30,7 @@ namespace AprilUI
 	
 	TextMap::~TextMap()
 	{
-		destroy();
+		unload();
 	}
 
 	bool TextMap::exists(chstr name)
@@ -94,7 +94,7 @@ namespace AprilUI
 		}
 	}
 
-	void TextMap::destroy()
+	void TextMap::unload()
 	{
 		if (mBuffer)
 		{
