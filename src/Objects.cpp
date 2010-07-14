@@ -333,6 +333,14 @@ namespace AprilUI
 		mImageName=image;
 	}
 	
+	void ImageBox::notifyEvent(chstr event_name,void* params)
+	{	
+		if (event_name == "UpdateImage")
+		{
+			setImageByName(mImageName);
+		}
+	}
+	
 	void ImageBox::resizeToFitImage()
 	{
 		if (mImage) setSize(mImage->getSourceW(), mImage->getSourceH());
@@ -527,15 +535,23 @@ namespace AprilUI
 
 	void Label::OnDraw(float offset_x,float offset_y)
 	{
+		
 		Object::OnDraw(offset_x, offset_y);
 		float alpha=getDerivedAlpha();
 		if (!getDerivedEnabled()) alpha/=2;
 		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
+	void Label::notifyEvent(chstr event_name,void* params)
+	{
+		if (event_name == "UpdateText")
+			setTextKey(mTextKey);
+	}
+
 	void Label::setTextKey(chstr key)
 	{
-		setText(mDataPtr->texts[key]);
+		mTextKey=key;
+		setText(mDataPtr->getText(key));
 	}
 
 	void Label::setProperty(chstr name,chstr value)
@@ -559,7 +575,7 @@ namespace AprilUI
 
 	void TextButton::setTextKey(chstr key)
 	{
-		setText(mDataPtr->texts[key]);
+		setText(mDataPtr->getText(key));
 	}
 
 	void TextButton::OnDraw(float offset_x,float offset_y)
@@ -728,7 +744,7 @@ namespace AprilUI
 
 	void TextImageButton::setTextKey(chstr key)
 	{
-		setText(mDataPtr->texts[key]);
+		setText(mDataPtr->getText(key));
 	}
 
 	void TextImageButton::setProperty(chstr name,chstr value)

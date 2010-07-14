@@ -347,7 +347,7 @@ namespace AprilUI
 
 		// texts
 		writelog("loading texts");
-		texts.load(mFilenamePrefix+"/texts");
+		mTexts.load(mFilenamePrefix+"/texts");
 		
 		// audio
 		mLoaded=1;
@@ -364,6 +364,7 @@ namespace AprilUI
 		foreach_in_map(Image*,mImages)            delete it->second; mImages.clear();
 		foreach_in_map(April::Texture*,mTextures) delete it->second; mTextures.clear();
 		mCallbacks.clear();
+		mTexts.unload();
 		
 		mLoaded=0;
 	}
@@ -436,6 +437,17 @@ namespace AprilUI
 			
 		return i;
 	}
+	
+	const char* Dataset::getText(chstr name)
+	{
+		return mTexts[name];
+	}
+
+	bool Dataset::textExists(chstr name)
+	{
+		return mTexts.exists(name);
+	}
+
 
 	void Dataset::registerCallback(chstr name,void (*callback)())
 	{
