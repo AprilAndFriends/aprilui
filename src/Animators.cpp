@@ -20,7 +20,6 @@ namespace AprilUI
 		Mover::Mover(chstr name) : Object("Animators::Mover",name,0,0,1,1)
 		{
 			mAccelX=mAccelY=mSpeedX=mSpeedY=mInitialSY=mInitialSX=0;
-			mInitialX=mInitialY=-10000;
 			mDestX=mDestY=-10000;
 		}
 
@@ -38,18 +37,10 @@ namespace AprilUI
 		{
 			if (event_name == "AttachToObject")
 			{
-				if (mInitialX < -9000)
-				{
-					mInitialX=mParent->getXPosition();
-					mInitialY=mParent->getYPosition();
-				}
-				else
-				{
-					mParent->setPosition(mInitialX,mInitialY);
-				}
 				mSpeedX=mInitialSX;
 				mSpeedY=mInitialSY;
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void Mover::update(float k)
@@ -74,7 +65,6 @@ namespace AprilUI
 		Scaler::Scaler(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccelW=mAccelH=mSpeedW=mSpeedH=mInitialW=mInitialH=0;
-			mInitialW=mInitialH=-10000;
 			mDestW=mDestH=-10000;
 		}
 
@@ -92,18 +82,10 @@ namespace AprilUI
 		{
 			if (event_name == "AttachToObject")
 			{
-				if (mInitialW < -9000)
-				{
-					mInitialW=mParent->getWidth();
-					mInitialH=mParent->getHeight();
-				}
-				else
-				{
-					mParent->setSize(mInitialW,mInitialH);
-				}
 				mSpeedH=mInitialSH;
 				mSpeedW=mInitialSW;
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void Scaler::update(float k)
@@ -149,6 +131,7 @@ namespace AprilUI
 					((RotationImageBox*) mParent)->setAngle(mInitialAngle);
 				mSpeed=mInitialSpeed;
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void Rotator::update(float k)
@@ -190,6 +173,7 @@ namespace AprilUI
 				if (mDelay) mTimer=mDelay;
 				mSpeed=mInitialSpeed;
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void AlphaFader::update(float k)
@@ -231,6 +215,7 @@ namespace AprilUI
 					update(0); // preserve alpha
 			//	mTimer=0;
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void AlphaOscillator::update(float k)
@@ -260,6 +245,7 @@ namespace AprilUI
 			{
 				mParent->setAlpha(mOwnerAlpha);
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void AlphaHover::update(float k)
@@ -328,6 +314,7 @@ namespace AprilUI
 				mDurationTimer=mDuration;
 				mParent->setVisible(mStartVisibility);
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void Blinker::update(float k)
@@ -370,6 +357,7 @@ namespace AprilUI
 			{
 				mTimer=0;
 			}
+			Object::notifyEvent(event_name,params);
 		}
 
 		void FrameAnimation::update(float k)
@@ -401,6 +389,7 @@ namespace AprilUI
 				mInitialY=mParent->getYPosition();
 				mTimer=mFreqTimer=0;
 			}
+			Object::notifyEvent(event_name,params);
 		}
 		
 		void Earthquake::setProperty(chstr name,chstr value)

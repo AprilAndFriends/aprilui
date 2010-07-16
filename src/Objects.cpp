@@ -339,6 +339,7 @@ namespace AprilUI
 		{
 			setImageByName(mImageName);
 		}
+		Object::notifyEvent(event_name,params);
 	}
 	
 	void ImageBox::resizeToFitImage()
@@ -546,6 +547,7 @@ namespace AprilUI
 	{
 		if (event_name == "UpdateText")
 			setTextKey(mTextKey);
+		Object::notifyEvent(event_name,params);
 	}
 
 	void Label::setTextKey(chstr key)

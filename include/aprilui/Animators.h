@@ -19,13 +19,13 @@ namespace AprilUI
 	{ // dummy objects who perform operations on their parents
 		class Mover : public Object
 		{
-			float mInitialX,mInitialY,mInitialSX,mInitialSY;
+			float mInitialSX,mInitialSY;
 			float mAccelX,mAccelY;
 			float mSpeedX,mSpeedY;
 			float mDestX,mDestY;
 		public:
 			Mover(chstr name);
-
+			
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
 			void update(float k);
@@ -77,7 +77,7 @@ namespace AprilUI
 			void setProperty(chstr name,chstr value);
 			void update(float k);
 		};
-		
+
 		class AlphaHover : public Object
 		{
 			float mMin,mMax,mSpeed,mOwnerAlpha;
