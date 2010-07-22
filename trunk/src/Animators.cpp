@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "Util.h"
 #include "Image.h"
 #include <stdlib.h>
+#include <hltypes/util.h>
 
 namespace AprilUI
 {
