@@ -16,6 +16,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "atres/Atres.h"
 #include "atres/Font.h"
 #include "atres/Exception.h"
+#include <hltypes/util.h>
 
 
 namespace AprilUI

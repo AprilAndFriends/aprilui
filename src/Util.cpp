@@ -35,29 +35,6 @@ namespace AprilUI
 		return path(0,index);
 	}
 
-	float sign(float number)
-	{
-		if (number >= 0) return 1;
-		else             return -1;
-	}
-
-	float Sin(float angle)
-	{
-		return sin(angle/57.295779513f);
-	}
-
-	float Cos(float angle)
-	{
-		return cos(angle/57.295779513f);
-	}
-
-	float clamp(float value,float min_value,float max_value)
-	{
-		if      (value < min_value) value=min_value;
-		else if (value > max_value) value=max_value;
-		return value;
-	}
-
 	int hexstr_to_int(chstr s)
 	{
 		int i;
