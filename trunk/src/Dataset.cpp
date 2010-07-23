@@ -336,7 +336,7 @@ namespace AprilUI
 		for (map_it = dynamic_links.begin();map_it != dynamic_links.end();map_it++)
 		{
 			dlst=map_it->second.split(',');
-			foreach(hstr,dlst)
+			foreach(hstr,it,dlst)
 				map_it->first->addDynamicLink(getTexture(*it));
 		}
 	}
@@ -361,9 +361,9 @@ namespace AprilUI
 	{
 		if (!mLoaded) throw GenericException("Unable to unload dataset '"+getName()+"', data not loaded!");
 
-		foreach_in_map(Object*,mObjects)          delete it->second; mObjects.clear();
-		foreach_in_map(Image*,mImages)            delete it->second; mImages.clear();
-		foreach_in_map(April::Texture*,mTextures) delete it->second; mTextures.clear();
+		foreach_in_map(Object*,it,mObjects)          delete it->second; mObjects.clear();
+		foreach_in_map(Image*,it,mImages)            delete it->second; mImages.clear();
+		foreach_in_map(April::Texture*,it,mTextures) delete it->second; mTextures.clear();
 		mCallbacks.clear();
 		mTexts.unload();
 		
@@ -463,7 +463,7 @@ namespace AprilUI
 
 	void Dataset::update(float k)
 	{
-		foreach_in_map(April::Texture*,mTextures)
+		foreach_in_map(April::Texture*,it,mTextures)
 			it->second->update(k);
 	}
 	

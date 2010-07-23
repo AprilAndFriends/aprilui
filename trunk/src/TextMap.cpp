@@ -56,7 +56,7 @@ namespace AprilUI
 		
 		getdir(folder,content);
 		
-		foreach(hstr,content)
+		foreach(hstr,it,content)
 		{
 			//writelog("Reading text file: "+*it);
 			f=fopen(it->c_str(),"rb");
