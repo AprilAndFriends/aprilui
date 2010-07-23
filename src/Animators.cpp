@@ -57,8 +57,8 @@ namespace AprilUI
 
 			v.x+=k*mSpeedX;
 			v.y+=k*mSpeedY;
-			if (sign(mDestX-old.x) != sign(mDestX-v.x)) v.x=mDestX;
-			if (sign(mDestY-old.y) != sign(mDestY-v.y)) v.y=mDestY;
+			if (sgn(mDestX-old.x) != sgn(mDestX-v.x)) v.x=mDestX;
+			if (sgn(mDestY-old.y) != sgn(mDestY-v.y)) v.y=mDestY;
 			
 			mParent->setPosition(v);
 		}
@@ -102,8 +102,8 @@ namespace AprilUI
 
 			v.x+=k*mSpeedW;
 			v.y+=k*mSpeedH;
-			if (sign(mDestW-old.x) != sign(mDestW-v.x)) v.x=mDestW;
-			if (sign(mDestH-old.y) != sign(mDestH-v.y)) v.y=mDestH;
+			if (sgn(mDestW-old.x) != sgn(mDestW-v.x)) v.x=mDestW;
+			if (sgn(mDestH-old.y) != sgn(mDestH-v.y)) v.y=mDestH;
 
 
 			mParent->setSize(v.x,v.y);
@@ -187,7 +187,7 @@ namespace AprilUI
 				mSpeed+=mAccel*k;
 			
 			alpha+=k*mSpeed;
-			if (sign(mDestAlpha-alpha) != sign(mDestAlpha-prevalpha)) alpha=mDestAlpha;
+			if (sgn(mDestAlpha-alpha) != sgn(mDestAlpha-prevalpha)) alpha=mDestAlpha;
 
 			mParent->setAlpha(std::max(0.0f,std::min(1.0f,alpha)));
 		}

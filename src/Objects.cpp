@@ -45,7 +45,7 @@ namespace AprilUI
 
 	Object::~Object()
 	{
-		foreach_in_map(Event*,mEvents)
+		foreach_in_map(Event*,it,mEvents)
 		{
 			delete it->second;
 		}
@@ -79,7 +79,7 @@ namespace AprilUI
 
 	void Object::removeAllChildren()
 	{
-		foreach(Object*,mChildren)
+		foreach(Object*,it,mChildren)
 			(*it)->setParent(0);
 		mChildren.clear();
 
@@ -175,7 +175,7 @@ namespace AprilUI
 
 	void Object::notifyEvent(chstr event_name,void* params)
 	{
-		foreach(Object*,mChildren) (*it)->notifyEvent(event_name,params);
+		foreach(Object*,it,mChildren) (*it)->notifyEvent(event_name,params);
 	}
 
 	bool Object::getDerivedEnabled()
@@ -230,7 +230,7 @@ namespace AprilUI
 		else if (!inside) return 0;
 
 		Object* o=0;
-		foreach_reverse(Object*,mChildren)
+		foreach_r(Object*,it,mChildren)
 		{
 			o=(*it)->getChildUnderPoint(x-mX,y-mY);
 			if (o) break;
@@ -450,7 +450,7 @@ namespace AprilUI
 		Object::update(k);
 		if (fabs(mDestAngle-mAngle) > 0.01f)
 		{
-			mAngle+=sign(mDestAngle-mAngle)*std::min(k*mRotationSpeed,(float)fabs(mDestAngle-mAngle));
+			mAngle+=sgn(mDestAngle-mAngle)*hmin(k*mRotationSpeed,(float)fabs(mDestAngle-mAngle));
 			if (fabs(mDestAngle-mAngle) < 0.01f)
 				mAngle=mDestAngle;
 		}

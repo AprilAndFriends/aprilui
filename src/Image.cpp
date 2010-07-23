@@ -308,7 +308,7 @@ namespace AprilUI
 	
 	CompositeImage::CompositeImage(chstr name,CompositeImage& base) : Image(0,name,0,0,base.getSourceW(),base.getSourceH())
 	{
-		foreach(ImageRef,base.mImages)
+		foreach(ImageRef,it,base.mImages)
 			addImageRef(it->img,it->x,it->y,it->w,it->h);
 	}
 	
@@ -325,7 +325,7 @@ namespace AprilUI
 	void CompositeImage::draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a)
 	{
 		float xf=dw/mSourceW,yf=dh/mSourceH;
-		foreach(ImageRef,mImages)
+		foreach(ImageRef,it,mImages)
 		{
 			it->img->draw(dx+it->x*xf,dy+it->y*yf,it->w*xf,it->h*yf,r,g,b,a);
 		}
