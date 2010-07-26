@@ -26,14 +26,14 @@ namespace AprilUI
 	
 	NullImage g_null_img;
 
-	Dataset::Dataset(chstr filename)
+	Dataset::Dataset(chstr filename,chstr name_override)
 	{
 		
 		int slash=filename.rfind("/");
 		int dot=filename.rfind(".");
 		mFilenamePrefix=filename(0,slash);
 		mFilename=filename;
-		mName=filename(slash+1,dot-slash-1);
+		mName=(name_override != "") ? filename(slash+1,dot-slash-1) : name_override;
 		mLoaded=0;
 		mObjectIterator=mObjects.end();
 		mTextureIterator=mTextures.end();
