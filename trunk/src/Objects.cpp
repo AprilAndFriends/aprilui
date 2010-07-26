@@ -587,7 +587,7 @@ namespace AprilUI
 		if (mBackgroundEnabled)
 			rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		else
-			mTextColor.a*=(unsigned char)(1.0f-0.3f*mPushed);
+			mTextColor.a=(unsigned char)(mTextColor.a*(1.0f-0.3f*mPushed));
 		Label::OnDraw(offset_x,offset_y);
 		if (!mBackgroundEnabled) mTextColor.a=a;
 	}
