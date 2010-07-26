@@ -89,7 +89,7 @@ namespace AprilUI
 		void removeChild(Object* o);
 		Object* getParent() { return mParent; }
 		void removeAllChildren();
-
+		harray<Object*>& getChildren() { return mChildren; }
 		Object* getChildUnderPoint(float x,float y);
 
 		int getZOrder() { return mZOrder; }
