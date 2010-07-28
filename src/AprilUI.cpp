@@ -22,6 +22,7 @@ namespace AprilUI
 	std::map<int,April::Texture*> g_font_textures;
 	AtresAprilInterface* atres_render_iface=0;
 	std::map<hstr,Dataset*> g_datasets;
+	float default_scale=1;
 
 	void init()
 	{
@@ -54,6 +55,16 @@ namespace AprilUI
 	{
 		for (std::map<hstr,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
 			it2->second->update(time_increase);
+	}
+
+	void setDefaultScale(float value)
+	{
+		default_scale=value;
+	}
+	
+	float getDefaultScale()
+	{
+		return default_scale;
 	}
 
 	void destroy()
