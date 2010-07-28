@@ -17,6 +17,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "atres/Font.h"
 #include "atres/Exception.h"
 #include <hltypes/util.h>
+#include "AprilUI.h"
 
 
 namespace AprilUI
@@ -324,8 +325,8 @@ namespace AprilUI
 			mImageName=image->getName();
 		else
 			mImageName="null";
-		if (mWidth == -1) mWidth=image->getSourceW();
-		if (mHeight == -1) mHeight=image->getSourceH();
+		if (mWidth == -1) mWidth=image->getSourceW()*getDefaultScale();
+		if (mHeight == -1) mHeight=image->getSourceH()*getDefaultScale();
 	}
 
 	void ImageBox::setImageByName(chstr image)

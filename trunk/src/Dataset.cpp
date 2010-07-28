@@ -33,7 +33,7 @@ namespace AprilUI
 		int dot=filename.rfind(".");
 		mFilenamePrefix=filename(0,slash);
 		mFilename=filename;
-		mName=(name_override != "") ? filename(slash+1,dot-slash-1) : name_override;
+		mName=(name_override == "") ? filename(slash+1,dot-slash-1) : name_override;
 		mLoaded=0;
 		mObjectIterator=mObjects.end();
 		mTextureIterator=mTextures.end();

@@ -73,7 +73,11 @@ namespace AprilUI
 		void registerCallback(chstr name,void (*callback)());
 		void triggerCallback(chstr name);
 
-		
+		// use these functions only in debug purposes
+		void _setFilename(chstr filename) { mFilename=filename; }
+		void _setFilenamePrefix(chstr prefix) { mFilenamePrefix=prefix; }
+		hstr _getFilename() { return mFilename; }
+		hstr _getFilenamePrefix() { return mFilenamePrefix; }
 
 		virtual void update(float k);
 		

@@ -17,8 +17,12 @@ namespace AprilUI
 {
 	class Dataset;
 	
-	void AprilUIExport init();
-	void AprilUIExport destroy();
+	void AprilUIFnExport init();
+	void AprilUIFnExport destroy();
+	
+	//! used to determine width and height of objects who don't have w & h params in xml
+	void AprilUIFnExport setDefaultScale(float value);
+	float AprilUIFnExport getDefaultScale();
 	
 	AprilUIFnExport Dataset* getDatasetByName(chstr name);
 	AprilUIFnExport void update(float time_increase);
