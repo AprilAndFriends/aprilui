@@ -8,7 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #ifndef APRILUI_UTIL_H
-#define UTIL_H
+#define APRILUI_UTIL_H
 
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>

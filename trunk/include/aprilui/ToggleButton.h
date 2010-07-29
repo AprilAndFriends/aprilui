@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef TOGGLE_BUTTON_H
-#define TOGGLE_BUTTON_H
+#ifndef APRILUI_TOGGLE_BUTTON_H
+#define APRILUI_TOGGLE_BUTTON_H
 
 #include <hltypes/hstring.h>
 

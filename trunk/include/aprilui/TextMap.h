@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef TEXT_MAP_H
-#define TEXT_MAP_H
+#ifndef APRILUI_TEXT_MAP_H
+#define APRILUI_TEXT_MAP_H
 
 #include <map>
 

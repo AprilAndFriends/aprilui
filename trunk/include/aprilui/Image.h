@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef APRILUI_IMAGE_H
+#define APRILUI_IMAGE_H
 
 #include <april/RenderSystem.h>
 #include <hltypes/harray.h>
