@@ -29,7 +29,7 @@ namespace AprilUI
 
 	Dataset::Dataset(chstr filename,chstr name_override)
 	{
-		
+		mFocusedObject=0;
 		int slash=filename.rfind("/");
 		int dot=filename.rfind(".");
 		mFilenamePrefix=filename(0,slash);
@@ -397,7 +397,7 @@ namespace AprilUI
 		if (mImages.find(img->getName()) == mImages.end()) throw ResourceNotExistsException(img->getName(),"Image",this);
 		mImages.erase(img->getName());
 	}
-
+	
 	Object* Dataset::getObject(chstr name)
 	{
 		Object* o=mObjects[name];

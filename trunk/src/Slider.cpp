@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include <hltypes/hstring.h>
 
 #include "Image.h"
-#include "Objects.h"
+#include "Slider.h"
 
 namespace AprilUI
 {

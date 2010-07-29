@@ -48,6 +48,25 @@
     <File Name="include/aprilui/Animators.h"/>
     <File Name="include/aprilui/AprilUIExport.h"/>
     <File Name="include/aprilui/xmlHelper.h"/>
+    <File Name="include/aprilui/CallbackEvent.h"/>
+    <File Name="include/aprilui/CallbackObject.h"/>
+    <File Name="include/aprilui/ColoredImageBox.h"/>
+    <File Name="include/aprilui/ColoredQuad.h"/>
+    <File Name="include/aprilui/DummyObject.h"/>
+    <File Name="include/aprilui/EditBox.h"/>
+    <File Name="include/aprilui/ImageBox.h"/>
+    <File Name="include/aprilui/ImageButton.h"/>
+    <File Name="include/aprilui/Label.h"/>
+    <File Name="include/aprilui/LabelBase.h"/>
+    <File Name="include/aprilui/Object.h"/>
+    <File Name="include/aprilui/RotatableImageBox.h"/>
+    <File Name="include/aprilui/RotationImageBox.h"/>
+    <File Name="include/aprilui/Slider.h"/>
+    <File Name="include/aprilui/TextButton.h"/>
+    <File Name="include/aprilui/TextImageButton.h"/>
+    <File Name="include/aprilui/ToggleButton.h"/>
+    <File Name="include/aprilui/Event.h"/>
+    <File Name="include/aprilui/EventArgs.h"/>
   </VirtualDirectory>
   <Dependencies Name="Linux_Debug"/>
   <Dependencies Name="Release"/>

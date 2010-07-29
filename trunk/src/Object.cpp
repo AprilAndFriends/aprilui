@@ -7,10 +7,14 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <gtypes/Vector2.h>
+#include <map>
+
+#include <april/RenderSystem.h>
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "Dataset.h"
 #include "Exception.h"
 #include "Objects.h"
 
@@ -116,6 +120,7 @@ namespace AprilUI
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
+		mDataPtr->setFocusedObject(0);
 		
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())

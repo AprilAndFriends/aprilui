@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <atres/Exception.h>
 #include <hltypes/hstring.h>
 
+#include "Exception.h"
 #include "Objects.h"
 
 namespace AprilUI
