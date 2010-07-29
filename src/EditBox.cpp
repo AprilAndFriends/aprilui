@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <atres/Atres.h>
 #include <hltypes/hstring.h>
 
+#include "Dataset.h"
 #include "Objects.h"
 
 namespace AprilUI
@@ -52,6 +53,7 @@ namespace AprilUI
 	bool EditBox::OnMouseUp(int button,float x,float y)
 	{
 		if (Object::OnMouseUp(button,x,y)) return true;
+		mDataPtr->setFocusedObject(this);
 		if (mPushed && isPointInside(x,y))
 		{
 			mPushed=false;

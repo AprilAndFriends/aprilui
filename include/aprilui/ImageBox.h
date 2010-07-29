@@ -7,45 +7,41 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#ifndef IMAGE_BOX_H
+#define IMAGE_BOX_H
+
 #include <hltypes/hstring.h>
 
-#include "Dataset.h"
-#include "Label.h"
+#include "AprilUIExport.h"
+#include "Object.h"
 
 namespace AprilUI
 {
-	Label::Label(chstr name,float x,float y,float w,float h) :
-		LabelBase(name),
-		Object("Label",name,x,y,w,h)
+	class Image;
+	
+	class AprilUIExport ImageBox : public Object
 	{
-	}
-
-	void Label::OnDraw(float offset_x,float offset_y)
-	{
-		Object::OnDraw(offset_x, offset_y);
-		float alpha=getDerivedAlpha();
-		if (!getDerivedEnabled()) alpha/=2;
-		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
-	}
-
-	void Label::notifyEvent(chstr event_name,void* params)
-	{
-		if (event_name == "UpdateText")
-			setTextKey(mTextKey);
-		Object::notifyEvent(event_name,params);
-	}
-
-	void Label::setTextKey(chstr key)
-	{
-		mTextKey=key;
-		setText(mDataPtr->getText(key));
-	}
-
-	void Label::setProperty(chstr name,chstr value)
-	{
-		LabelBase::setProperty(name,value);
-		Object::setProperty(name,value);
-		if (name == "textkey") setTextKey(value);
-	}
+	protected:
+		Image* mImage;
+		hstr mImageName;
+		
+		void OnDraw(float offset_x,float offset_y);
+	public:
+		ImageBox(chstr name,float x,float y,float w,float h);
+		
+		virtual Image* getImage() { return mImage; };
+		virtual void setImage(Image* image);
+		void setImageByName(chstr image);
+		hstr getImageName() { return mImageName; }
+		void notifyEvent(chstr event_name,void* params);
+		
+		void resizeToFitImage();
+		
+		void setProperty(chstr name,chstr value);
+		bool OnMouseDown(int button,float x,float y);
+		bool OnMouseUp(int button,float x,float y);
+	};
 	
 }
+
+#endif

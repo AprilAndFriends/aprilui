@@ -15,10 +15,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "AprilUIExport.h"
 
 struct xml_node;
+
 namespace AprilUI
 {
-	
 	class Dataset;
+	
 	class AprilUIExport _GenericException
 	{
 	public:
