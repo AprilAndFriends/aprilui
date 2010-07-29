@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 #include "Dataset.h"
 #include "Image.h"
 #include "Objects.h"
-
+#include "AprilUI.h"
 namespace AprilUI
 {
 	ImageBox::ImageBox(chstr name,float x,float y,float w,float h) :
@@ -28,8 +28,8 @@ namespace AprilUI
 			mImageName=image->getName();
 		else
 			mImageName="null";
-		if (mWidth == -1) mWidth=image->getSourceW();
-		if (mHeight == -1) mHeight=image->getSourceH();
+		if (mWidth == -1) mWidth=image->getSourceW()*getDefaultScale();
+		if (mHeight == -1) mHeight=image->getSourceH()*getDefaultScale();
 	}
 
 	void ImageBox::setImageByName(chstr image)
@@ -49,7 +49,7 @@ namespace AprilUI
 	
 	void ImageBox::resizeToFitImage()
 	{
-		if (mImage) setSize(mImage->getSourceW(), mImage->getSourceH());
+		if (mImage) setSize(mImage->getSourceW()*getDefaultScale(), mImage->getSourceH()*getDefaultScale());
 	}
 
 	void ImageBox::OnDraw(float offset_x,float offset_y)
