@@ -9,37 +9,25 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <hltypes/hstring.h>
 
-#include "Dataset.h"
-#include "Objects.h"
+#include "CallbackObject.h"
 
 namespace AprilUI
 {
-	TextImageButton::TextImageButton(chstr name,float x,float y,float w,float h) :
-		LabelBase(name),
-		ImageButton(name,x,y,w,h)
+	CallbackObject::CallbackObject(chstr name,float x,float y,float w,float h) :
+		Object("CallbackObject",name,x,y,w,h)
 	{
-		_setTypeName("TextImageButton");
-		mText="TextImageButton: "+name;
+		mCallback=0;
 	}
 
-	void TextImageButton::OnDraw(float offset_x,float offset_y)
+	void CallbackObject::setProperty(chstr name,chstr value)
 	{
-		ImageButton::OnDraw(offset_x,offset_y);
-		float alpha=getDerivedAlpha();
-		if (!getDerivedEnabled() || !mImage && !mNormalImage && !mPushedImage && mPushed) alpha/=2;
-		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
+		Object::setProperty(name,value);
 	}
-
-	void TextImageButton::setTextKey(chstr key)
+	
+	void CallbackObject::OnDraw(float offset_x,float offset_y)
 	{
-		setText(mDataPtr->getText(key));
-	}
-
-	void TextImageButton::setProperty(chstr name,chstr value)
-	{
-		LabelBase::setProperty(name,value);
-		ImageButton::setProperty(name,value);
-		if (name == "textkey") setTextKey(value);
+		if (mCallback) (*mCallback)();
+		Object::OnDraw(offset_x,offset_y);
 	}
 	
 }

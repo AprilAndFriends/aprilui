@@ -10,48 +10,48 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "Animators.h"
-#include "RotationImageBox.h"
+#include "Util.h"
+#include "ImageBox.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		FrameAnimation::FrameAnimation(chstr name) : Object("Animators::FrameAnimation",name,0,0,1,1)
 		{
-			mAccel=mSpeed=0;
-			mInitialSpeed=-10000;
-			mInitialAngle=-10000001;
+			mStartFrame=0; mEndFrame=100;
+			mAnimationTime=10;
+			mTimer=0;
 		}
 
-		void Rotator::setProperty(chstr name,chstr value)
+		void FrameAnimation::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed") mSpeed=mInitialSpeed=value;
-			else if (name == "accel") mAccel=value;
+			if      (name == "start_frame") mStartFrame=value;
+			else if (name == "end_frame")   mEndFrame=value;
+			else if (name == "time")        mAnimationTime=value;
+			else if (name == "base_name")   mImageBaseName=value;
 		}
 
-		void Rotator::notifyEvent(chstr event_name,void* params)
+		void FrameAnimation::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
-				if (mInitialAngle < -1000000)
-					mInitialAngle=((RotationImageBox*) mParent)->getAngle();
-				else
-					((RotationImageBox*) mParent)->setAngle(mInitialAngle);
-				mSpeed=mInitialSpeed;
+				mTimer=0;
 			}
 			Object::notifyEvent(event_name,params);
 		}
 
-		void Rotator::update(float k)
+		void FrameAnimation::update(float k)
 		{
-			float angle=((RotationImageBox*) mParent)->getAngle();
-			if (fabs(mAccel) > 0.01f)
+			mTimer+=k;
+			if (mTimer >= mAnimationTime) mTimer-=mAnimationTime;
+			int frame=mStartFrame+(int) ((mEndFrame-mStartFrame)*mTimer/mAnimationTime);
+			ImageBox* img=dynamic_cast<ImageBox*>(mParent);
+			if (img)
 			{
-				mSpeed+=mAccel*k;
+				img->setImageByName(mImageBaseName+hstr(frame));
 			}
-			angle+=k*mSpeed;
-			
-			((RotationImageBox*) mParent)->setAngle(angle);
+			else writelog("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 		}
 	}
 }

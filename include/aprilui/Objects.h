@@ -11,13 +11,13 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #define APRILUI_OBJECTS_H
 
 #include "CallbackEvent.h"
+#include "Event.h"
+#include "EventArgs.h"
 #include "CallbackObject.h"
 #include "ColoredImageBox.h"
 #include "ColoredQuad.h"
 #include "DummyObject.h"
 #include "EditBox.h"
-#include "Event.h"
-#include "EventArgs.h"
 #include "ImageButton.h"
 #include "Label.h"
 #include "LabelBase.h"

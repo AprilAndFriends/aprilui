@@ -8,6 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
 #include "Animators.h"
 
@@ -45,8 +46,8 @@ namespace AprilUI
 		void AlphaOscillator::update(float k)
 		{
 			mTimer+=k;
-			float alpha=sin(mTimer*mSpeed/57.29578)*mAmplitude+mBaseline;
-			mParent->setAlpha(std::max(0.0f,std::min(1.0f,alpha)));
+			float alpha=dsin(mTimer*mSpeed)*mAmplitude+mBaseline;
+			mParent->setAlpha(hmax(0.0f,hmin(1.0f,alpha)));
 		}
 	}
 }

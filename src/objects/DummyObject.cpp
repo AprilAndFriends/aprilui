@@ -7,18 +7,21 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#include <hltypes/hstring.h>
 
-#include "AlphaFader.h"
-#include "AlphaHover.h"
-#include "AlphaOscillator.h"
-#include "Blinker.h"
-#include "ColorAlternator.h"
-#include "Earthquake.h"
-#include "FrameAnimation.h"
-#include "Mover.h"
-#include "Rotator.h"
-#include "Scaler.h"
+#include "DummyObject.h"
 
-#endif
+namespace AprilUI
+{
+	/********************************************************************************************************/
+	DummyObject::DummyObject(chstr name,float x,float y,float w,float h) :
+		Object("DummyObject",name,x,y,w,h)
+	{
+	}
+
+	void DummyObject::setProperty(chstr name,chstr value)
+	{
+		Object::setProperty(name,value);
+	}
+	
+}

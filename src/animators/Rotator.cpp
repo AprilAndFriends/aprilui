@@ -7,58 +7,53 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <math.h>
+
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
 #include "Animators.h"
+#include "RotationImageBox.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		AlphaFader::AlphaFader(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		Rotator::Rotator(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
-			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
-			mDestAlpha=-10000;
-			mInitialAlpha=-10001;
+			mAccel=mSpeed=0;
+			mInitialSpeed=-10000;
+			mInitialAngle=-10000001;
 		}
 
-		void AlphaFader::setProperty(chstr name,chstr value)
+		void Rotator::setProperty(chstr name,chstr value)
 		{
 			if      (name == "speed") mSpeed=mInitialSpeed=value;
 			else if (name == "accel") mAccel=value;
-			else if (name == "delay") mDelay=value;
-			else if (name == "dest_alpha") mDestAlpha=value;
 		}
 
-		void AlphaFader::notifyEvent(chstr event_name,void* params)
+		void Rotator::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
-				if (mInitialAlpha < -10000)
-					mInitialAlpha=mParent->getAlpha();
+				if (mInitialAngle < -1000000)
+					mInitialAngle=((RotationImageBox*) mParent)->getAngle();
 				else
-					mParent->setAlpha(mInitialAlpha);
-					
-				if (mDelay) mTimer=mDelay;
+					((RotationImageBox*) mParent)->setAngle(mInitialAngle);
 				mSpeed=mInitialSpeed;
 			}
 			Object::notifyEvent(event_name,params);
 		}
 
-		void AlphaFader::update(float k)
+		void Rotator::update(float k)
 		{
-			if (mTimer > 0) { mTimer-=k; return; }
-			float alpha=mParent->getAlpha();
-			if (alpha == mDestAlpha) return;
-			float prevalpha=alpha;
+			float angle=((RotationImageBox*) mParent)->getAngle();
 			if (fabs(mAccel) > 0.01f)
+			{
 				mSpeed+=mAccel*k;
+			}
+			angle+=k*mSpeed;
 			
-			alpha+=k*mSpeed;
-			if (sgn(mDestAlpha-alpha) != sgn(mDestAlpha-prevalpha)) alpha=mDestAlpha;
-
-			mParent->setAlpha(std::max(0.0f,std::min(1.0f,alpha)));
+			((RotationImageBox*) mParent)->setAngle(angle);
 		}
 	}
 }

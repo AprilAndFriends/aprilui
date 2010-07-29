@@ -11,8 +11,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "Animators.h"
 #include "Image.h"
-#include "ImageBox.h"
 #include "Util.h"
+#include "ImageBox.h"
 
 namespace AprilUI
 {

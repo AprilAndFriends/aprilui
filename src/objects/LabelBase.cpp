@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "Exception.h"
-#include "Objects.h"
+#include "LabelBase.h"
 
 namespace AprilUI
 {

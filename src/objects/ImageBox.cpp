@@ -9,10 +9,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                             
 \************************************************************************************/
 #include <hltypes/hstring.h>
 
+#include "AprilUI.h"
 #include "Dataset.h"
 #include "Image.h"
-#include "Objects.h"
-#include "AprilUI.h"
+#include "ImageBox.h"
+
 namespace AprilUI
 {
 	ImageBox::ImageBox(chstr name,float x,float y,float w,float h) :

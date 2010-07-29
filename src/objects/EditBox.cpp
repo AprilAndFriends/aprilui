@@ -11,45 +11,35 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
-#include "Objects.h"
+#include "EditBox.h"
 
 namespace AprilUI
 {
-	TextButton::TextButton(chstr name,float x,float y,float w,float h) :
+	EditBox::EditBox(chstr name,float x,float y,float w,float h) :
 		Label(name,x,y,w,h)
 	{
 		mHorzFormatting=Atres::CENTER;
 		mVertFormatting=VERT_CENTER;
 		mFontEffect=Atres::NONE;
-		mText="TextButton: "+name;
-		mTypeName="TextButton";
+		mText="EditBox: "+name;
+		mTypeName="EditBox";
 		mPushed=0;
-		mBackgroundEnabled=1;
+		//mCaratIndex=0;
 	}
 
-	void TextButton::setTextKey(chstr key)
-	{
-		setText(mDataPtr->getText(key));
-	}
-
-	void TextButton::OnDraw(float offset_x,float offset_y)
+	void EditBox::OnDraw(float offset_x,float offset_y)
 	{
 		unsigned char a=mTextColor.a;
-		if (mBackgroundEnabled)
-			rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
-		else
-			mTextColor.a*=(unsigned char)(1.0f-0.3f*mPushed);
+		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		Label::OnDraw(offset_x,offset_y);
-		if (!mBackgroundEnabled) mTextColor.a=a;
 	}
 	
-	void TextButton::setProperty(chstr name,chstr value)
+	void EditBox::setProperty(chstr name,chstr value)
 	{
-		if (name == "background") mBackgroundEnabled=((int) value)!=0;
-		else Label::setProperty(name,value);
+		Label::setProperty(name,value);
 	}
 
-	bool TextButton::OnMouseDown(int button,float x,float y)
+	bool EditBox::OnMouseDown(int button,float x,float y)
 	{
 		if (Object::OnMouseDown(button,x,y)) return true;
 		if (isPointInside(x,y))
@@ -60,9 +50,10 @@ namespace AprilUI
 		return false;
 	}
 
-	bool TextButton::OnMouseUp(int button,float x,float y)
+	bool EditBox::OnMouseUp(int button,float x,float y)
 	{
 		if (Object::OnMouseUp(button,x,y)) return true;
+		//mDataPtr->setFocusedObject(this);
 		if (mPushed && isPointInside(x,y))
 		{
 			mPushed=false;

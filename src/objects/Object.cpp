@@ -14,9 +14,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "CallbackEvent.h"
 #include "Dataset.h"
+#include "Event.h"
+#include "EventArgs.h"
 #include "Exception.h"
-#include "Objects.h"
+#include "Object.h"
 
 namespace AprilUI
 {
@@ -120,7 +123,7 @@ namespace AprilUI
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
-		mDataPtr->setFocusedObject(0);
+		//mDataPtr->setFocusedObject(0);
 		
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
