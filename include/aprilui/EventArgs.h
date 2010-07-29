@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef EVENT_ARGS_H
-#define EVENT_ARGS_H
+#ifndef APRILUI_EVENT_ARGS_H
+#define APRILUI_EVENT_ARGS_H
 
 #include "AprilUIExport.h"
 
