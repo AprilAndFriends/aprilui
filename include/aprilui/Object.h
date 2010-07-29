@@ -114,6 +114,10 @@ namespace AprilUI
 		virtual bool OnMouseUp(int button,float x,float y);
 		virtual void OnMouseMove(float x,float y);
 		
+		virtual void OnKeyDown(unsigned int keycode);
+		virtual void OnKeyUp(unsigned int keycode);
+		virtual void OnChar(unsigned int charcode);
+		
 		
 		virtual void update(float k);
 		void draw(float offset_x=0,float offset_y=0);

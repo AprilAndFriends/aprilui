@@ -124,11 +124,22 @@ namespace AprilUI
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
-		if (mDataPtr) mDataPtr->setFocusedObject(0);
 		
+		if (mDataPtr) mDataPtr->setFocusedObject(0);
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
 				if ((*it)->OnMouseDown(button,x-mX,y-mY)) return true;
+		
+		return false;
+	}
+
+	bool Object::OnMouseUp(int button,float x,float y)
+	{
+		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
+		
+		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
+			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
+				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
 		
 		return false;
 	}
@@ -140,14 +151,26 @@ namespace AprilUI
 				(*it)->OnMouseMove(x-mX,y-mY);
 	}
 
-	bool Object::OnMouseUp(int button,float x,float y)
+	void Object::OnKeyDown(unsigned int keycode)
 	{
-		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
-		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
-			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
-				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
+		if (!isVisible() || !getDerivedEnabled()) return;
 		
-		return false;
+		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
+			if ((*it)->isVisible() && (*it)->getDerivedEnabled())
+				(*it)->OnKeyDown(keycode);
+	}
+
+	void Object::OnKeyUp(unsigned int keycode)
+	{
+		if (!isVisible() || !getDerivedEnabled()) return;
+		
+		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
+			if ((*it)->isVisible() && (*it)->getDerivedEnabled())
+				(*it)->OnKeyUp(keycode);
+	}
+
+	void Object::OnChar(unsigned int charcode)
+	{
 	}
 
 	void Object::registerEvent(chstr event_name,void (*callback)(EventArgs*))
