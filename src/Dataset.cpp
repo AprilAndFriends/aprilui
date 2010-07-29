@@ -2,22 +2,23 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                                  *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <xmlHelper.h>
+#include <april/RenderSystem.h>
+#include <hltypes/harray.h>
+#include <hltypes/util.h>
+
+#include "Animators.h"
 #include "AprilUI.h"
 #include "Dataset.h"
 #include "Exception.h"
-#include "Objects.h"
-#include "Animators.h"
-#include "april/RenderSystem.h"
 #include "Image.h"
+#include "Objects.h"
 #include "Util.h"
-#include <hltypes/harray.h>
-#include <hltypes/util.h>
+#include "xmlHelper.h"
 
 namespace AprilUI
 {
@@ -261,6 +262,7 @@ namespace AprilUI
 		else  parse(ToggleButton);
 		else  parse(Label);
 		else  parse(TextButton);
+		else  parse(EditBox);
 		else  parse(RotationImageBox);
 		else  parse(RotatableImageBox);
 		else if (*node == "Animator")
