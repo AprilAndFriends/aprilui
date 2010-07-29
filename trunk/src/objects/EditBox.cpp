@@ -64,4 +64,12 @@ namespace AprilUI
 		return false;
 	}
 	
+	void EditBox::OnChar(unsigned int charcode)
+	{
+		//2DO - implement unicode handling!
+		this->mText += (char)charcode;
+	}
+
+	
+	
 }
