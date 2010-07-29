@@ -10,7 +10,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_CALLBACK_EVENT_H
 #define APRILUI_CALLBACK_EVENT_H
 
-#include "AprilUIExport.h"
 #include "Event.h"
 
 namespace AprilUI
