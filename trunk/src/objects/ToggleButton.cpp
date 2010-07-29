@@ -9,8 +9,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <hltypes/hstring.h>
 
+#include "Event.h"
+#include "EventArgs.h"
 #include "Image.h"
-#include "Objects.h"
+#include "ToggleButton.h"
 
 namespace AprilUI
 {

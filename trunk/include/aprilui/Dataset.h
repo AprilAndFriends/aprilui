@@ -24,6 +24,7 @@ namespace April
 }
 
 struct xml_node;
+
 namespace AprilUI
 {
 	#define REGISTER_CALLBACK(data_dict,fn) data_dict->registerCallback(#fn,fn)

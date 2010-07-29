@@ -7,34 +7,39 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <april/RenderSystem.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
-#include "Objects.h"
+#include "Dataset.h"
+#include "Image.h"
+#include "ColoredImageBox.h"
 
 namespace AprilUI
 {
-	RotatableImageBox::RotatableImageBox(chstr name,float x,float y,float w,float h) :
-		RotationImageBox(name,x,y,w,h)
+	ColoredImageBox::ColoredImageBox(chstr name,float x,float y,float w,float h) :
+		ImageBox(name,x,y,w,h)
 	{
-		mDestAngle=0;
-		mRotationSpeed=90;
+		_setTypeName("ColoredImageBox");
 	}
 
-	void RotatableImageBox::update(float k)
+	void ColoredImageBox::setColor(chstr color)
 	{
-		Object::update(k);
-		if (fabs(mDestAngle-mAngle) > 0.01f)
-		{
-			mAngle+=sgn(mDestAngle-mAngle)*hmin(k*mRotationSpeed,(float)fabs(mDestAngle-mAngle));
-			if (fabs(mDestAngle-mAngle) < 0.01f)
-				mAngle=mDestAngle;
-		}
+		mColor.setColor(color);
 	}
 
-	bool RotatableImageBox::isRotating()
+	void ColoredImageBox::OnDraw(float offset_x,float offset_y)
 	{
-		return (fabs(mAngle-mDestAngle) > 0.01f);
+		if (!mImage) mImage=mDataPtr->getImage("null");
+		float alpha=getDerivedAlpha();
+		if (!getDerivedEnabled()) alpha/=2;
+		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,mColor.r_float(),mColor.g_float(),mColor.b_float(),alpha);
+		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
-	
+
+	void ColoredImageBox::setProperty(chstr name,chstr value)
+	{
+		ImageBox::setProperty(name,value);
+		if (name == "color") setColor(value);
+	}
+
 }

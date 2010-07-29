@@ -7,18 +7,28 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#ifndef APRILUI_ALPHA_FADER_H
+#define APRILUI_ALPHA_FADER_H
 
-#include "AlphaFader.h"
-#include "AlphaHover.h"
-#include "AlphaOscillator.h"
-#include "Blinker.h"
-#include "ColorAlternator.h"
-#include "Earthquake.h"
-#include "FrameAnimation.h"
-#include "Mover.h"
-#include "Rotator.h"
-#include "Scaler.h"
+#include <hltypes/hstring.h>
+
+#include "Object.h"
+
+namespace AprilUI
+{
+	namespace Animators
+	{
+		class AlphaFader : public Object
+		{
+			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay,mDestAlpha;
+		public:
+			AlphaFader(chstr name);
+
+			void notifyEvent(chstr event_name,void* params);
+			void setProperty(chstr name,chstr value);
+			void update(float k);
+		};
+	}
+}
 
 #endif
