@@ -33,6 +33,7 @@ namespace AprilUI
 		mVisible=mEnabled=1;
 		mClickthrough=0;
 		mAlpha=1.0f;
+		mDataPtr=0;
 	}
 
 	Object::~Object()
@@ -123,7 +124,7 @@ namespace AprilUI
 	bool Object::OnMouseDown(int button,float x,float y)
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
-		//mDataPtr->setFocusedObject(0);
+		if (mDataPtr) mDataPtr->setFocusedObject(0);
 		
 		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())

@@ -53,7 +53,7 @@ namespace AprilUI
 	bool EditBox::OnMouseUp(int button,float x,float y)
 	{
 		if (Object::OnMouseUp(button,x,y)) return true;
-		//mDataPtr->setFocusedObject(this);
+		if (mDataPtr) mDataPtr->setFocusedObject(this);
 		if (mPushed && isPointInside(x,y))
 		{
 			mPushed=false;
