@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <april/Keys.h>
 #include <atres/Atres.h>
 #include <hltypes/hstring.h>
 
@@ -64,12 +65,26 @@ namespace AprilUI
 		return false;
 	}
 	
-	void EditBox::OnChar(unsigned int charcode)
+	void EditBox::OnKeyDown(unsigned int keycode)
 	{
-		//2DO - implement unicode handling!
-		this->mText += (char)charcode;
+		switch (keycode)
+		{
+		case AK_BACK:
+			if (this->mText.size() > 0)
+			{
+				this->mText = this->mText(0, this->mText.size() - 1);
+			}
+			break;
+		}
 	}
 
-	
-	
+	void EditBox::OnChar(unsigned int charcode)
+	{
+		//2DO - change to: if charcode exists in Font Manager
+		if (isprint(charcode))
+		{
+			this->mText += (char)charcode;
+		}
+	}
+
 }

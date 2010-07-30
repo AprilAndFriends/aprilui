@@ -153,20 +153,10 @@ namespace AprilUI
 
 	void Object::OnKeyDown(unsigned int keycode)
 	{
-		if (!isVisible() || !getDerivedEnabled()) return;
-		
-		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
-			if ((*it)->isVisible() && (*it)->getDerivedEnabled())
-				(*it)->OnKeyDown(keycode);
 	}
 
 	void Object::OnKeyUp(unsigned int keycode)
 	{
-		if (!isVisible() || !getDerivedEnabled()) return;
-		
-		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
-			if ((*it)->isVisible() && (*it)->getDerivedEnabled())
-				(*it)->OnKeyUp(keycode);
 	}
 
 	void Object::OnChar(unsigned int charcode)
