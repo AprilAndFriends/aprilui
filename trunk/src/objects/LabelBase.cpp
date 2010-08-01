@@ -8,7 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <atres/Atres.h>
-#include <atres/Exception.h>
+#include <hltypes/exception.h>
 #include <hltypes/hstring.h>
 
 #include "Exception.h"
@@ -29,10 +29,10 @@ namespace AprilUI
 	{
 		Atres::Font* font;
 		try   { font=Atres::getFont(mFontName); }
-		catch (Atres::FontNotFoundException e)
-			  {
-				  throw GenericException(e.repr());
-			  }
+		catch (hltypes::_resource_error e)
+		{
+			throw e;
+		}
 
 		float fonth=Atres::getWrappedTextHeight(mFontName,width,mText);
 		if      (mVertFormatting == VERT_BOTTOM)
@@ -49,8 +49,8 @@ namespace AprilUI
 				mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
 				mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
 		}
-		catch (Atres::FontNotFoundException e)
-		{ throw GenericException(e.repr()); }
+		catch (hltypes::_resource_error e)
+		{ throw e; }
 	}
 
 	void LabelBase::setProperty(chstr name,chstr value)
