@@ -222,43 +222,43 @@
 				Name="Animators"
 				>
 				<File
-					RelativePath=".\src\animators\AlphaFader.cpp"
+					RelativePath=".\src\animators\AnimatorAlphaFader.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AlphaHover.cpp"
+					RelativePath=".\src\animators\AnimatorAlphaHover.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AlphaOscillator.cpp"
+					RelativePath=".\src\animators\AnimatorAlphaOscillator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\Blinker.cpp"
+					RelativePath=".\src\animators\AnimatorBlinker.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\ColorAlternator.cpp"
+					RelativePath=".\src\animators\AnimatorColorAlternator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\Earthquake.cpp"
+					RelativePath=".\src\animators\AnimatorEarthquake.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\FrameAnimation.cpp"
+					RelativePath=".\src\animators\AnimatorFrameAnimation.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\Mover.cpp"
+					RelativePath=".\src\animators\AnimatorMover.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\Rotator.cpp"
+					RelativePath=".\src\animators\AnimatorRotator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\Scaler.cpp"
+					RelativePath=".\src\animators\AnimatorScaler.cpp"
 					>
 				</File>
 			</Filter>
@@ -266,67 +266,67 @@
 				Name="Objects"
 				>
 				<File
-					RelativePath=".\src\objects\CallbackObject.cpp"
+					RelativePath=".\src\objects\ObjectCallbackObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ColoredImageBox.cpp"
+					RelativePath=".\src\objects\ObjectColoredImageBox.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ColoredQuad.cpp"
+					RelativePath=".\src\objects\ObjectColoredQuad.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\DummyObject.cpp"
+					RelativePath=".\src\objects\ObjectDummyObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\EditBox.cpp"
+					RelativePath=".\src\objects\ObjectEditBox.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ImageBox.cpp"
+					RelativePath=".\src\objects\ObjectImageBox.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ImageButton.cpp"
+					RelativePath=".\src\objects\ObjectImageButton.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\Label.cpp"
+					RelativePath=".\src\objects\ObjectLabel.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\LabelBase.cpp"
+					RelativePath=".\src\objects\ObjectLabelBase.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\Object.cpp"
+					RelativePath=".\src\objects\ObjectObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\RotatableImageBox.cpp"
+					RelativePath=".\src\objects\ObjectRotatableImageBox.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\RotationImageBox.cpp"
+					RelativePath=".\src\objects\ObjectRotationImageBox.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\Slider.cpp"
+					RelativePath=".\src\objects\ObjectSlider.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\TextButton.cpp"
+					RelativePath=".\src\objects\ObjectTextButton.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\TextImageButton.cpp"
+					RelativePath=".\src\objects\ObjectTextImageButton.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ToggleButton.cpp"
+					RelativePath=".\src\objects\ObjectToggleButton.cpp"
 					>
 				</File>
 			</Filter>
@@ -388,43 +388,43 @@
 				Name="Animators"
 				>
 				<File
-					RelativePath=".\include\aprilui\AlphaFader.h"
+					RelativePath=".\include\aprilui\AnimatorAlphaFader.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AlphaHover.h"
+					RelativePath=".\include\aprilui\AnimatorAlphaHover.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AlphaOscillator.h"
+					RelativePath=".\include\aprilui\AnimatorAlphaOscillator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Blinker.h"
+					RelativePath=".\include\aprilui\AnimatorBlinker.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ColorAlternator.h"
+					RelativePath=".\include\aprilui\AnimatorColorAlternator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Earthquake.h"
+					RelativePath=".\include\aprilui\AnimatorEarthquake.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\FrameAnimation.h"
+					RelativePath=".\include\aprilui\AnimatorFrameAnimation.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Mover.h"
+					RelativePath=".\include\aprilui\AnimatorMover.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Rotator.h"
+					RelativePath=".\include\aprilui\AnimatorRotator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Scaler.h"
+					RelativePath=".\include\aprilui\AnimatorScaler.h"
 					>
 				</File>
 			</Filter>
@@ -432,67 +432,67 @@
 				Name="Objects"
 				>
 				<File
-					RelativePath=".\include\aprilui\CallbackObject.h"
+					RelativePath=".\include\aprilui\ObjectCallbackObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ColoredImageBox.h"
+					RelativePath=".\include\aprilui\ObjectColoredImageBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ColoredQuad.h"
+					RelativePath=".\include\aprilui\ObjectColoredQuad.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\DummyObject.h"
+					RelativePath=".\include\aprilui\ObjectDummyObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\EditBox.h"
+					RelativePath=".\include\aprilui\ObjectEditBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ImageBox.h"
+					RelativePath=".\include\aprilui\ObjectImageBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ImageButton.h"
+					RelativePath=".\include\aprilui\ObjectImageButton.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Label.h"
+					RelativePath=".\include\aprilui\ObjectLabel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\LabelBase.h"
+					RelativePath=".\include\aprilui\ObjectLabelBase.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Object.h"
+					RelativePath=".\include\aprilui\ObjectObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\RotatableImageBox.h"
+					RelativePath=".\include\aprilui\ObjectRotatableImageBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\RotationImageBox.h"
+					RelativePath=".\include\aprilui\ObjectRotationImageBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\Slider.h"
+					RelativePath=".\include\aprilui\ObjectSlider.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\TextButton.h"
+					RelativePath=".\include\aprilui\ObjectTextButton.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\TextImageButton.h"
+					RelativePath=".\include\aprilui\ObjectTextImageButton.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ToggleButton.h"
+					RelativePath=".\include\aprilui\ObjectToggleButton.h"
 					>
 				</File>
 			</Filter>

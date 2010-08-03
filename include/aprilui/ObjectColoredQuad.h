@@ -7,18 +7,33 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#ifndef APRILUI_COLORED_QUAD_H
+#define APRILUI_COLORED_QUAD_H
 
-#include "AnimatorAlphaFader.h"
-#include "AnimatorAlphaHover.h"
-#include "AnimatorAlphaOscillator.h"
-#include "AnimatorBlinker.h"
-#include "AnimatorColorAlternator.h"
-#include "AnimatorEarthquake.h"
-#include "AnimatorFrameAnimation.h"
-#include "AnimatorMover.h"
-#include "AnimatorRotator.h"
-#include "AnimatorScaler.h"
+#include <map>
+
+#include <april/RenderSystem.h>
+#include <hltypes/hstring.h>
+
+#include "AprilUIExport.h"
+#include "ObjectObject.h"
+
+namespace AprilUI
+{
+	class ColoredQuad : public Object
+	{
+		April::Color mColor;
+	public:
+		ColoredQuad(chstr name,float x,float y,float w,float h);
+		void setColor(float a,float r,float g,float b);
+		
+		void OnDraw(float offset_x,float offset_y);
+		void setProperty(chstr name,chstr value);
+
+		bool OnMouseDown(int button,float x,float y);
+		bool OnMouseUp(int button,float x,float y);
+	};
+	
+}
 
 #endif
