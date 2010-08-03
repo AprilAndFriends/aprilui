@@ -14,6 +14,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/exception.h>
 #include "AprilUIExport.h"
 
+#ifndef DEPRECATED_ATTRIBUTE
+// if the way to deprecate attributes is not defined
+// in project settings/makefile, then let's just not
+// deprecate attributes at all. just define to none.
+#define DEPRECATED_ATTRIBUTE
+#endif
 struct xml_node;
 
 namespace AprilUI
@@ -26,6 +32,7 @@ namespace AprilUI
 		hstr mType;
 		_GenericException(chstr errorText,chstr type="",const char* file="",int line=0);
 		hstr getType(){ return mType; }
+		hstr getErrorText() DEPRECATED_ATTRIBUTE { return mType; }
 	};
 
 	#define GenericException(msg) _GenericException(msg,"GenericException",__FILE__,__LINE__)
