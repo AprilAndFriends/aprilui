@@ -7,18 +7,30 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#ifndef APRILUI_ROTATION_IMAGE_BOX_H
+#define APRILUI_ROTATION_IMAGE_BOX_H
 
-#include "AnimatorAlphaFader.h"
-#include "AnimatorAlphaHover.h"
-#include "AnimatorAlphaOscillator.h"
-#include "AnimatorBlinker.h"
-#include "AnimatorColorAlternator.h"
-#include "AnimatorEarthquake.h"
-#include "AnimatorFrameAnimation.h"
-#include "AnimatorMover.h"
-#include "AnimatorRotator.h"
-#include "AnimatorScaler.h"
+#include <hltypes/hstring.h>
+
+#include "AprilUIExport.h"
+#include "ObjectImageBox.h"
+
+namespace AprilUI
+{
+	class AprilUIExport RotationImageBox : public ImageBox
+	{
+	protected:
+		float mAngle;
+		void OnDraw(float offset_x,float offset_y);
+	public:
+		RotationImageBox(chstr name,float x,float y,float w,float h);
+
+		virtual void setAngle(float angle) { mAngle=angle; }
+		float getAngle() { return mAngle; }
+		bool angleEquals(float angle);
+		void setProperty(chstr name,chstr value);
+	};
+	
+}
 
 #endif
