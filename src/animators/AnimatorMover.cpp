@@ -45,11 +45,11 @@ namespace AprilUI
 			Object::notifyEvent(event_name,params);
 		}
 		
-		void Mover::move(float dest_x,float dest_y,float speed)
+		void Mover::move(float dest_x,float dest_y,float time)
 		{
 			mDest.x=dest_x; mDest.y=dest_y;
 			mSpeed=mDest-mParent->getPosition();
-			mSpeed=mSpeed.normalised()*(mSpeed.length()/speed);
+			mSpeed=mSpeed.normalised()*(mSpeed.length()/time);
 			mAccel.set(0,0);
 		}
 

@@ -39,7 +39,7 @@ namespace AprilUI
 		harray<Object*> mChildren;
 		
 		std::map<hstr,Event*> mEvents;
-		bool mVisible,mEnabled,mClickthrough;
+		bool mVisible,mEnabled,mClickthrough,mInheritsAlpha;
 		float mAlpha;
 		
 		Dataset* mDataPtr;
@@ -97,6 +97,8 @@ namespace AprilUI
 		bool isEnabled() { return mEnabled; }
 		void setClickthrough(bool clickthrough) { mClickthrough=clickthrough; }
 		bool getClickthrough() { return mClickthrough; }
+		void setInheritsAlpha(bool value) { mInheritsAlpha=value; }
+		bool getInheritsAlpha() { return mInheritsAlpha; }
 		bool getVisibilityFlag() { return mVisible; }
 		
 		void setAlpha(float alpha) { mAlpha=alpha; }
