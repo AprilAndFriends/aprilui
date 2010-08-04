@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
-#include "Animators.h"
+#include "AnimatorEArthquake.h"
 
 namespace AprilUI
 {

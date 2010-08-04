@@ -12,13 +12,20 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
-#include "Animators.h"
+#include "AnimatorAlphaFader.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
 		AlphaFader::AlphaFader(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		{
+			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
+			mDestAlpha=-10000;
+			mInitialAlpha=-10001;
+		}
+		
+		void AlphaFader::reset()
 		{
 			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
 			mDestAlpha=-10000;
@@ -54,7 +61,7 @@ namespace AprilUI
 			float diff=mDestAlpha-mParent->getAlpha();
 			mSpeed=sgn(diff)*fabs(diff)/time;
 			mAccel=0; mDelay=0;
-		}	
+		}
 		
 	
 		void AlphaFader::update(float k)
@@ -67,7 +74,11 @@ namespace AprilUI
 				mSpeed+=mAccel*k;
 			
 			alpha+=k*mSpeed;
-			if (sgn(mDestAlpha-alpha) != sgn(mDestAlpha-prevalpha)) alpha=mDestAlpha;
+			if (sgn(mDestAlpha-alpha) != sgn(mDestAlpha-prevalpha))
+			{
+				alpha=mDestAlpha;
+				reset();
+			}
 
 			mParent->setAlpha(hclamp(alpha,0.0f,1.0f));
 		}
