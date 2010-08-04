@@ -32,6 +32,7 @@ namespace AprilUI
 		mX=x; mY=y; mWidth=w; mHeight=h;
 		mVisible=mEnabled=1;
 		mClickthrough=0;
+		mInheritsAlpha=1;
 		mAlpha=1.0f;
 		mDataPtr=0;
 	}
@@ -87,7 +88,7 @@ namespace AprilUI
 	{
 		// recursive function that combines all the alpha from the parents (if any)
 		float alpha=this->getAlpha();
-		if (mParent) alpha*=mParent->getDerivedAlpha();
+		if (mInheritsAlpha && mParent) alpha*=mParent->getDerivedAlpha();
 		return alpha;
 	}
 
@@ -218,11 +219,12 @@ namespace AprilUI
 
 	void Object::setProperty(chstr name,chstr value)
 	{
-		if      (name == "visible")      setVisible(value);
-		else if (name == "zorder")       setZOrder(value);
-		else if (name == "enabled")      setEnabled(value);
-		else if (name == "clickthrough") setClickthrough(value);
-		else if (name == "alpha")        setAlpha(value);
+		if      (name == "visible")        setVisible(value);
+		else if (name == "zorder")         setZOrder(value);
+		else if (name == "enabled")        setEnabled(value);
+		else if (name == "clickthrough")   setClickthrough(value);
+		else if (name == "inherits_alpha") setInheritsAlpha(value);
+		else if (name == "alpha")          setAlpha(value);
 	}
 
 	Object* Object::getChildUnderPoint(float x,float y)

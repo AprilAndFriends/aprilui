@@ -27,7 +27,7 @@ namespace AprilUI
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
-			void fade(float dest,float speed);
+			void fade(float dest,float time);
 			void update(float k);
 		};
 	}
