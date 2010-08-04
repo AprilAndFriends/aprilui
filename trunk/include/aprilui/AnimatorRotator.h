@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
-
+#include "AprilUIExport.h"
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class Rotator : public Object
+		class AprilUIExport Rotator : public Object
 		{
 			float mInitialSpeed,mInitialAngle,mSpeed,mAccel;
 		public:

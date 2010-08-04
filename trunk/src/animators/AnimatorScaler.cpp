@@ -21,45 +21,53 @@ namespace AprilUI
 	{
 		Scaler::Scaler(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
 		{
-			mAccelW=mAccelH=mSpeedW=mSpeedH=mInitialW=mInitialH=0;
-			mDestW=mDestH=-10000;
+			mAccel.y=mAccel.x=mSpeed.y=mSpeed.x=mInitialSize.y=mInitialSize.x=0;
+			mDest.y=mDest.x=-10000;
 		}
 
 		void Scaler::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed_w") mSpeedW=mInitialSW=value;
-			else if (name == "speed_h") mSpeedH=mInitialSH=value;
-			else if (name == "accel_w") mAccelW=value;
-			else if (name == "accel_h") mAccelH=value;
-			else if (name == "dest_w") mDestW=value;
-			else if (name == "dest_h") mDestH=value;
+			if      (name == "speed_w") mSpeed.y=mInitialS.y=value;
+			else if (name == "speed_h") mSpeed.x=mInitialS.x=value;
+			else if (name == "accel_w") mAccel.y=value;
+			else if (name == "accel_h") mAccel.x=value;
+			else if (name == "dest_w") mDest.y=value;
+			else if (name == "dest_h") mDest.x=value;
 		}
 
 		void Scaler::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
-				mSpeedH=mInitialSH;
-				mSpeedW=mInitialSW;
+				mSpeed.x=mInitialS.x;
+				mSpeed.y=mInitialS.y;
 			}
 			Object::notifyEvent(event_name,params);
+		}
+
+		void Scaler::scale(float dest_w,float dest_h,float time)
+		{
+			mDest.x=dest_w; mDest.y=dest_h;
+			mSpeed=mDest-mParent->getSize();
+			mSpeed=mSpeed.normalised()*(mSpeed.length()/time);
+			mAccel.set(0,0);
 		}
 
 		void Scaler::update(float k)
 		{
 			gtypes::Vector2 v=mParent->getSize();
-			if (v.x == mDestW && v.y == mDestH) return;
+			if (v.x == mDest.y && v.y == mDest.x) return;
 			gtypes::Vector2 old=v;
-			if (fabs(mAccelW) > 0.01f || fabs(mAccelH) > 0.01f)
+			if (fabs(mAccel.y) > 0.01f || fabs(mAccel.x) > 0.01f)
 			{
-				mSpeedW+=mAccelW*k;
-				mSpeedH+=mAccelH*k;
+				mSpeed.y+=mAccel.y*k;
+				mSpeed.x+=mAccel.x*k;
 			}
 
-			v.x+=k*mSpeedW;
-			v.y+=k*mSpeedH;
-			if (sgn(mDestW-old.x) != sgn(mDestW-v.x)) v.x=mDestW;
-			if (sgn(mDestH-old.y) != sgn(mDestH-v.y)) v.y=mDestH;
+			v.x+=k*mSpeed.y;
+			v.y+=k*mSpeed.x;
+			if (sgn(mDest.y-old.x) != sgn(mDest.y-v.x)) v.x=mDest.y;
+			if (sgn(mDest.x-old.y) != sgn(mDest.x-v.y)) v.y=mDest.x;
 
 			mParent->setSize(v.x,v.y);
 		}

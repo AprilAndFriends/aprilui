@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
-
+#include "AprilUIExport.h"
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class Earthquake : public Object
+		class AprilUIExport Earthquake : public Object
 		{
 			float mInitialX,mInitialY;
 			float mIntensity,mDuration,mConstDuration,mFreq;

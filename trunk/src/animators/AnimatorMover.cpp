@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
-#include "Animators.h"
+#include "AnimatorMover.h"
 
 namespace AprilUI
 {
@@ -21,45 +21,52 @@ namespace AprilUI
 	{
 		Mover::Mover(chstr name) : Object("Animators::Mover",name,0,0,1,1)
 		{
-			mAccelX=mAccelY=mSpeedX=mSpeedY=mInitialSY=mInitialSX=0;
-			mDestX=mDestY=-10000;
+			mAccel.x=mAccel.y=mSpeed.x=mSpeed.y=mInitialS.y=mInitialS.x=0;
+			mDest.x=mDest.y=-10000;
 		}
 
 		void Mover::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed_x") mSpeedX=mInitialSX=value;
-			else if (name == "speed_y") mSpeedY=mInitialSY=value;
-			else if (name == "accel_x") mAccelX=value;
-			else if (name == "accel_y") mAccelY=value;
-			else if (name == "dest_x")  mDestX=value;
-			else if (name == "dest_y")  mDestY=value;
+			if      (name == "speed_x") mSpeed.x=mInitialS.x=value;
+			else if (name == "speed_y") mSpeed.y=mInitialS.y=value;
+			else if (name == "accel_x") mAccel.x=value;
+			else if (name == "accel_y") mAccel.y=value;
+			else if (name == "dest_x")  mDest.x=value;
+			else if (name == "dest_y")  mDest.y=value;
 		}
 
 		void Mover::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
 			{
-				mSpeedX=mInitialSX;
-				mSpeedY=mInitialSY;
+				mSpeed.x=mInitialS.x;
+				mSpeed.y=mInitialS.y;
 			}
 			Object::notifyEvent(event_name,params);
+		}
+		
+		void Mover::move(float dest_x,float dest_y,float speed)
+		{
+			mDest.x=dest_x; mDest.y=dest_y;
+			mSpeed=mDest-mParent->getPosition();
+			mSpeed=mSpeed.normalised()*(mSpeed.length()/speed);
+			mAccel.set(0,0);
 		}
 
 		void Mover::update(float k)
 		{
 			gtypes::Vector2 v=mParent->getPosition();
-			if (v.x == mDestX && v.y == mDestY) return;
+			if (v.x == mDest.x && v.y == mDest.y) return;
 			gtypes::Vector2 old=v;
-			if (fabs(mAccelX) > 0.01f || fabs(mAccelY) > 0.01f)
+			v.x+=k*mSpeed.x;
+			v.y+=k*mSpeed.y;
+			if (sgn(mDest.x-old.x) != sgn(mDest.x-v.x)) v.x=mDest.x;
+			if (sgn(mDest.y-old.y) != sgn(mDest.y-v.y)) v.y=mDest.y;
+			if (fabs(mAccel.x) > 0.01f || fabs(mAccel.y) > 0.01f)
 			{
-				mSpeedX+=mAccelX*k;
-				mSpeedY+=mAccelY*k;
+				mSpeed.x+=mAccel.x*k;
+				mSpeed.y+=mAccel.y*k;
 			}
-
-			v.x+=k*mSpeedX;
-			v.y+=k*mSpeedY;
-			if (sgn(mDestX-old.x) != sgn(mDestX-v.x)) v.x=mDestX;
-			if (sgn(mDestY-old.y) != sgn(mDestY-v.y)) v.y=mDestY;
 			
 			mParent->setPosition(v);
 		}

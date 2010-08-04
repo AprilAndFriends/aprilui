@@ -13,12 +13,13 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
+#include "AprilUIExport.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class AlphaFader : public Object
+		class AprilUIExport AlphaFader : public Object
 		{
 			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay,mDestAlpha;
 		public:
@@ -26,6 +27,7 @@ namespace AprilUI
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
+			void fade(float dest,float speed);
 			void update(float k);
 		};
 	}
