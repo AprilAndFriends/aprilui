@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
-
+#include "AprilUIExport.h"
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class Blinker : public Object
+		class AprilUIExport Blinker : public Object
 		{
 			float mDelay,mDuration,mFrequency,mTimer,mDelayTimer,mDurationTimer;
 			bool mStartVisibility,mEndVisibility;

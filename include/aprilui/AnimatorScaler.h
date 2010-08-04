@@ -13,20 +13,23 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
+#include "AprilUIExport.h"
+#include <gtypes/Vector2.h>
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class Scaler : public Object
+		class AprilUIExport Scaler : public Object
 		{
-			float mInitialW,mInitialH,mInitialSW,mInitialSH;
-			float mAccelW,mAccelH;
-			float mSpeedW,mSpeedH;
-			float mDestW,mDestH;
+			gtypes::Vector2 mInitialSize,mInitialS;
+			gtypes::Vector2 mAccel;
+			gtypes::Vector2 mSpeed;
+			gtypes::Vector2 mDest;
 		public:
 			Scaler(chstr name);
 
+			void scale(float dest_w,float dest_h,float time);
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
 			void update(float k);

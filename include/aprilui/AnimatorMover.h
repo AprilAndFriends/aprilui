@@ -13,23 +13,26 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
+#include <gtypes/Vector2.h>
+#include "AprilUIExport.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class Mover : public Object
+		class AprilUIExport Mover : public Object
 		{
-			float mInitialSX,mInitialSY;
-			float mAccelX,mAccelY;
-			float mSpeedX,mSpeedY;
-			float mDestX,mDestY;
+			gtypes::Vector2 mInitialS;
+			gtypes::Vector2 mAccel;
+			gtypes::Vector2 mSpeed;
+			gtypes::Vector2 mDest;
 		public:
 			Mover(chstr name);
 			
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
 			void update(float k);
+			void move(float dest_x,float dest_y,float time);
 		};
 	}
 }

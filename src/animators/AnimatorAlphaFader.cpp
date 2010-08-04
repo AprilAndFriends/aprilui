@@ -47,7 +47,15 @@ namespace AprilUI
 			}
 			Object::notifyEvent(event_name,params);
 		}
-
+		
+		void AlphaFader::fade(float dest,float speed)
+		{
+			mDestAlpha=dest;
+			mSpeed=sgn(mDestAlpha-mParent->getAlpha())*speed;
+			mAccel=0; mDelay=0;
+		}	
+		
+	
 		void AlphaFader::update(float k)
 		{
 			if (mTimer > 0) { mTimer-=k; return; }
