@@ -11,7 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include <hltypes/hstring.h>
 
-#include "Animators.h"
+#include "AnimatorRotator.h"
 #include "ObjectRotationImageBox.h"
 
 namespace AprilUI

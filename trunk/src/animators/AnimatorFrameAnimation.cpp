@@ -9,7 +9,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <hltypes/hstring.h>
 
-#include "Animators.h"
+#include "AnimatorFrameAnimation.h"
 #include "Util.h"
 #include "ObjectColoredImageBox.h"
 

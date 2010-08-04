@@ -29,6 +29,7 @@ namespace AprilUI
 			void setProperty(chstr name,chstr value);
 			void fade(float dest,float time);
 			void update(float k);
+			void reset();
 		};
 	}
 }
