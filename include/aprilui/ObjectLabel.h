@@ -14,7 +14,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "AprilUIExport.h"
 #include "ObjectLabelBase.h"
-#include "ObjectObject.h"
+#include "Object.h"
 
 namespace AprilUI
 {

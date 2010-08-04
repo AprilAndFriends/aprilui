@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
-#include "ObjectObject.h" // needed because of VertFormatting
+#include "Object.h" // needed because of VertFormatting
 
 namespace AprilUI
 {
