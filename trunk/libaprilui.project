@@ -27,13 +27,13 @@
       <File Name="src/objects/ObjectImageButton.cpp"/>
       <File Name="src/objects/ObjectLabel.cpp"/>
       <File Name="src/objects/ObjectLabelBase.cpp"/>
-      <File Name="src/objects/ObjectObject.cpp"/>
       <File Name="src/objects/ObjectRotatableImageBox.cpp"/>
       <File Name="src/objects/ObjectRotationImageBox.cpp"/>
       <File Name="src/objects/ObjectSlider.cpp"/>
       <File Name="src/objects/ObjectTextButton.cpp"/>
       <File Name="src/objects/ObjectTextImageButton.cpp"/>
       <File Name="src/objects/ObjectToggleButton.cpp"/>
+      <File Name="src/objects/Object.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="animators">
       <File Name="src/animators/AnimatorAlphaFader.cpp"/>
@@ -92,7 +92,7 @@
       <File Name="include/aprilui/ObjectTextButton.h"/>
       <File Name="include/aprilui/ObjectTextImageButton.h"/>
       <File Name="include/aprilui/ObjectToggleButton.h"/>
-      <File Name="include/aprilui/ObjectObject.h"/>
+      <File Name="include/aprilui/Object.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Dependencies Name="Linux_Debug"/>

@@ -266,6 +266,10 @@
 				Name="Objects"
 				>
 				<File
+					RelativePath=".\src\objects\Object.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\objects\ObjectCallbackObject.cpp"
 					>
 				</File>
@@ -299,10 +303,6 @@
 				</File>
 				<File
 					RelativePath=".\src\objects\ObjectLabelBase.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\objects\ObjectObject.cpp"
 					>
 				</File>
 				<File
@@ -432,6 +432,10 @@
 				Name="Objects"
 				>
 				<File
+					RelativePath=".\include\aprilui\Object.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\aprilui\ObjectCallbackObject.h"
 					>
 				</File>
@@ -465,10 +469,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectLabelBase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\ObjectObject.h"
 					>
 				</File>
 				<File
