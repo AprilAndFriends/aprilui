@@ -70,6 +70,7 @@ namespace AprilUI
 		void removeAllChildren();
 		harray<Object*>& getChildren() { return mChildren; }
 		Object* getChildUnderPoint(float x,float y);
+		Object* getChildUnderPoint(gtypes::Vector2 pos);
 
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
