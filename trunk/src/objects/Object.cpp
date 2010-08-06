@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
-
+#include "Animator.h"
 #include "CallbackEvent.h"
 #include "Dataset.h"
 #include "Event.h"
@@ -238,7 +238,8 @@ namespace AprilUI
 		foreach_r(Object*,it,mChildren)
 		{
 			o=(*it)->getChildUnderPoint(x-mX,y-mY);
-			if (o) break;
+			
+			if (o && !dynamic_cast<AprilUI::Animator*>(o)) break;
 		}
 		return (o ? o : this);
 	}

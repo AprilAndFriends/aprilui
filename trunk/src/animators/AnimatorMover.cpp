@@ -19,7 +19,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Mover::Mover(chstr name) : Object("Animators::Mover",name,0,0,1,1)
+		Mover::Mover(chstr name) : Animator("Animators::Mover",name,0,0,1,1)
 		{
 			mAccel.x=mAccel.y=mSpeed.x=mSpeed.y=mInitialS.y=mInitialS.x=0;
 			mDest.x=mDest.y=-10000;

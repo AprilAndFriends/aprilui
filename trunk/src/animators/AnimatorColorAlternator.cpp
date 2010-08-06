@@ -18,7 +18,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		ColorAlternator::ColorAlternator(chstr name) : Object("Animators::ColorAlternator",name,0,0,1,1)
+		ColorAlternator::ColorAlternator(chstr name) : Animator("Animators::ColorAlternator",name,0,0,1,1)
 		{
 			mLow[0]=mLow[1]=mLow[2]=mLow[3]=0;
 			mHigh[0]=mHigh[1]=mHigh[2]=mHigh[3]=1;

@@ -16,7 +16,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Earthquake::Earthquake(chstr name) : Object("Animators::Earthquake",name,0,0,1,1)
+		Earthquake::Earthquake(chstr name) : Animator("Animators::Earthquake",name,0,0,1,1)
 		{
 			mIntensity=0;
 			mDuration=1;

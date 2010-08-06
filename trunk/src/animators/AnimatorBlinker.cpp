@@ -15,7 +15,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Blinker::Blinker(chstr name) : Object("Animators::Blinker",name,0,0,1,1)
+		Blinker::Blinker(chstr name) : Animator("Animators::Blinker",name,0,0,1,1)
 		{
 			mDelay=mDuration=mTimer=mDelayTimer=mDurationTimer=0;
 			mStartVisibility=mEndVisibility=0;

@@ -13,13 +13,13 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
-#include "AprilUIExport.h"
+#include "Animator.h"
 namespace AprilUI
 {
 	namespace Animators
 	{
 		// note: only works on ColoredImages
-		class AprilUIExport ColorAlternator : public Object
+		class AprilUIExport ColorAlternator : public Animator
 		{
 			float mLow[4],mHigh[4];
 			float mTimer,mSpeed;

@@ -19,7 +19,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Scaler::Scaler(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		Scaler::Scaler(chstr name) : Animator("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel.y=mAccel.x=mSpeed.y=mSpeed.x=mInitialSize.y=mInitialSize.x=0;
 			mDest.y=mDest.x=-10000;
