@@ -242,5 +242,8 @@ namespace AprilUI
 		}
 		return (o ? o : this);
 	}
-	
+	Object* Object::getChildUnderPoint(gtypes::Vector2 pos)
+	{
+		return getChildUnderPoint(pos.x,pos.y);
+	}
 }
