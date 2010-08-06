@@ -17,7 +17,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		FrameAnimation::FrameAnimation(chstr name) : Object("Animators::FrameAnimation",name,0,0,1,1)
+		FrameAnimation::FrameAnimation(chstr name) : Animator("Animators::FrameAnimation",name,0,0,1,1)
 		{
 			mStartFrame=0; mEndFrame=100;
 			mAnimationTime=10;

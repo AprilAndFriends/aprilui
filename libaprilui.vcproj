@@ -222,6 +222,10 @@
 				Name="Animators"
 				>
 				<File
+					RelativePath=".\src\animators\Animator.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\animators\AnimatorAlphaFader.cpp"
 					>
 				</File>
@@ -387,6 +391,10 @@
 			<Filter
 				Name="Animators"
 				>
+				<File
+					RelativePath=".\include\aprilui\Animator.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorAlphaFader.h"
 					>

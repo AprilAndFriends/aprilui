@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
-#include "AprilUIExport.h"
+#include "Animator.h"
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class AprilUIExport AlphaHover : public Object
+		class AprilUIExport AlphaHover : public Animator
 		{
 			float mMin,mMax,mSpeed,mOwnerAlpha;
 		public:

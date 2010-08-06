@@ -14,13 +14,13 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "ObjectCallbackObject.h"
 #include <gtypes/Vector2.h>
-#include "AprilUIExport.h"
+#include "Animator.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class AprilUIExport Mover : public Object
+		class AprilUIExport Mover : public Animator
 		{
 			gtypes::Vector2 mInitialS;
 			gtypes::Vector2 mAccel;

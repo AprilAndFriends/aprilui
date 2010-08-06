@@ -18,7 +18,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		AlphaFader::AlphaFader(chstr name) : Object("Animators::Scaler",name,0,0,1,1)
+		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler",name,0,0,1,1)
 		{
 			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
 			mDestAlpha=-10000;
