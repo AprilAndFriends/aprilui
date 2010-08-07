@@ -102,7 +102,7 @@ namespace AprilUI
 		bool getInheritsAlpha() { return mInheritsAlpha; }
 		bool getVisibilityFlag() { return mVisible; }
 		
-		void setAlpha(float alpha) { mAlpha=alpha; }
+		void setAlpha(float alpha);
 		float getAlpha() { return mAlpha; }
 
 		void moveToFront();
