@@ -194,6 +194,11 @@ namespace AprilUI
 		else if (!mParent) return 1;
 		else return mParent->getDerivedClickthrough();
 	}
+	
+	void Object::setAlpha(float alpha)
+	{
+		mAlpha=hclamp(alpha, 0.0f, 1.0f);
+	}
 
 	void Object::moveToFront()
 	{
