@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F33B200120FE16F004B5E89 /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F33B1FF120FE16F004B5E89 /* Animator.cpp */; };
+		7F33B208120FE2D5004B5E89 /* Animator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F33B207120FE2D5004B5E89 /* Animator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C69F12096793002B5134 /* AnimatorAlphaFader.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68512096793002B5134 /* AnimatorAlphaFader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6A012096793002B5134 /* AnimatorAlphaHover.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68612096793002B5134 /* AnimatorAlphaHover.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6A112096793002B5134 /* AnimatorAlphaOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68712096793002B5134 /* AnimatorAlphaOscillator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -91,6 +93,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F33B1FF120FE16F004B5E89 /* Animator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animator.cpp; sourceTree = "<group>"; };
+		7F33B207120FE2D5004B5E89 /* Animator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animator.h; path = include/aprilui/Animator.h; sourceTree = "<group>"; };
 		7F38C68512096793002B5134 /* AnimatorAlphaFader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorAlphaFader.h; path = include/aprilui/AnimatorAlphaFader.h; sourceTree = "<group>"; };
 		7F38C68612096793002B5134 /* AnimatorAlphaHover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorAlphaHover.h; path = include/aprilui/AnimatorAlphaHover.h; sourceTree = "<group>"; };
 		7F38C68712096793002B5134 /* AnimatorAlphaOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorAlphaOscillator.h; path = include/aprilui/AnimatorAlphaOscillator.h; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 		7F6D54811201B06200A2BDF6 /* animators */ = {
 			isa = PBXGroup;
 			children = (
+				7F33B1FF120FE16F004B5E89 /* Animator.cpp */,
 				7F38C718120967CC002B5134 /* AnimatorAlphaFader.cpp */,
 				7F38C719120967CC002B5134 /* AnimatorAlphaHover.cpp */,
 				7F38C71A120967CC002B5134 /* AnimatorAlphaOscillator.cpp */,
@@ -312,6 +317,7 @@
 		7FC8041211EC71CF00851062 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				7F33B207120FE2D5004B5E89 /* Animator.h */,
 				7FB0C7B0120AE117005EA739 /* Object.h */,
 				7F38C68512096793002B5134 /* AnimatorAlphaFader.h */,
 				7F38C68612096793002B5134 /* AnimatorAlphaHover.h */,
@@ -412,6 +418,7 @@
 				7F38C6B712096793002B5134 /* ObjectTextImageButton.h in Headers */,
 				7F38C6B812096793002B5134 /* ObjectToggleButton.h in Headers */,
 				7FB0C7B1120AE117005EA739 /* Object.h in Headers */,
+				7F33B208120FE2D5004B5E89 /* Animator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +512,7 @@
 				7F38C72A120967CC002B5134 /* AnimatorRotator.cpp in Sources */,
 				7F38C72B120967CC002B5134 /* AnimatorScaler.cpp in Sources */,
 				7FB0C7AF120AE107005EA739 /* Object.cpp in Sources */,
+				7F33B200120FE16F004B5E89 /* Animator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
