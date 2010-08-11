@@ -35,7 +35,7 @@ namespace AprilUI
 		LabelBase(chstr name);
 		
 		hstr getText() { return mText; }
-		void setText(chstr text) { mText=text; }
+		virtual void setText(chstr text) { mText=text; }
 		virtual void setTextKey(chstr key) = 0;
 		
 		hstr getFont() { return mFontName; }
