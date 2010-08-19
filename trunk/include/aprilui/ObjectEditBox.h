@@ -26,6 +26,7 @@ namespace AprilUI
 		char mPasswordChar;
 		bool mCtrlMode;
 		hstr mFilter;
+		float mBlinkTimer;
 		
 		void OnDraw(float offset_x,float offset_y);
 		
@@ -36,9 +37,11 @@ namespace AprilUI
 		void _deleteLeftWord();
 		void _deleteRightWord();
 		void _insertText(chstr text);
+		
 	public:
 		EditBox(chstr name,float x,float y,float w,float h);
 		
+		void update(float time);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
 		void OnKeyDown(unsigned int keycode);

@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <april/Keys.h>
 #include <atres/Atres.h>
+#include <atres/Font.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
@@ -31,6 +32,14 @@ namespace AprilUI
 		mCursorIndex=0;
 		mCtrlMode=0;
 		mFilter="";
+		mBlinkTimer=0;
+	}
+	
+	void EditBox::update(float time)
+	{
+		Label::update(time);
+		mBlinkTimer+=time * 2;
+		mBlinkTimer=(mBlinkTimer-(int)mBlinkTimer);
 	}
 
 	void EditBox::OnDraw(float offset_x,float offset_y)
@@ -42,8 +51,13 @@ namespace AprilUI
 			mText=hstr(mPasswordChar,mText.size());
 		}
 		Label::OnDraw(offset_x,offset_y);
-		//2DO - add cursor drawing
-		//rendersys->drawColoredQuad(x, y, 1, 0.8*font_h, 1, 1, 1, 1);
+		if (mDataPtr && this == mDataPtr->getFocusedObject() && mBlinkTimer < 0.5f)
+		{
+			int w=Atres::getTextWidth(mFontName,mText(0,mCursorIndex));
+			int h=Atres::getFont(mFontName)->getHeight();
+			rendersys->drawColoredQuad(mX+offset_x+w, mY+offset_y+(mHeight-h)/2, 2, h,
+				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
+		}
 		mText=text;
 	}
 	
@@ -58,6 +72,7 @@ namespace AprilUI
 	void EditBox::setCursorIndex(int cursorIndex)
 	{
 		mCursorIndex=hclamp(cursorIndex,0,mText.size());
+		mBlinkTimer=0;
 	}
 	
 	void EditBox::setMaxLength(int maxLength)
@@ -87,6 +102,7 @@ namespace AprilUI
 				mText.replace(*it,"");
 			}
 		}
+		setCursorIndex(mCursorIndex);
 	}
 
 	bool EditBox::OnMouseDown(int button,float x,float y)
@@ -103,7 +119,11 @@ namespace AprilUI
 	bool EditBox::OnMouseUp(int button,float x,float y)
 	{
 		if (Object::OnMouseUp(button,x,y)) return true;
-		if (mDataPtr) mDataPtr->setFocusedObject(this);
+		if (mDataPtr)
+		{
+			mDataPtr->setFocusedObject(this);
+			mBlinkTimer=0;
+		}
 		if (mPushed && isPointInside(x,y))
 		{
 			mPushed=false;
@@ -155,8 +175,7 @@ namespace AprilUI
 	void EditBox::OnChar(unsigned int charcode)
 	{
 		char c=(char)charcode;
-		//2DO - add: if charcode exists in Font Manager
-		if (mFilter == "" || mFilter.contains(c))
+		if (Atres::getFont(mFontName)->hasChar(charcode) && (mFilter == "" || mFilter.contains(c)))
 		{
 			_insertText(c);
 		}
@@ -166,12 +185,14 @@ namespace AprilUI
 	{
 		while (mCursorIndex > 0 && mText[mCursorIndex-1] == ' ') mCursorIndex--;
 		while (mCursorIndex > 0 && mText[mCursorIndex-1] != ' ') mCursorIndex--;
+		mBlinkTimer=0;
 	}
 	
 	void EditBox::_cursorMoveRightWord()
 	{
 		while (mCursorIndex <= mText.size() && mText[mCursorIndex] != ' ') mCursorIndex++;
 		while (mCursorIndex <= mText.size() && mText[mCursorIndex] == ' ') mCursorIndex++;
+		mBlinkTimer=0;
 	}
 	
 	void EditBox::_deleteLeft(int count)
@@ -185,6 +206,7 @@ namespace AprilUI
 		hstr right=(mCursorIndex < mText.size() ? mText(mCursorIndex,mText.size()-mCursorIndex) : "");
 		mCursorIndex-=count;
 		mText=left+right;
+		mBlinkTimer=0;
 	}
 	
 	void EditBox::_deleteRight(int count)
@@ -234,6 +256,7 @@ namespace AprilUI
 		hstr right=(mCursorIndex < mText.size() ? mText(mCursorIndex,mText.size()-mCursorIndex) : "");
 		mCursorIndex+=new_text.size();
 		mText=left+new_text+right;
+		mBlinkTimer=0;
 	}
 	
 
