@@ -100,8 +100,17 @@ namespace AprilUI
 		try { dynamic_load=node->pint("dynamic_load")!=0; }
 		catch (_XMLException) { }
 		
+		
 		April::Texture* t=rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
+		if (node->pexists("filter"))
+		{
+			hstr filter=node->pstr("filter");
+			if      (filter == "linear")  t->setTextureFilter(April::Linear);
+			else if (filter == "nearest") t->setTextureFilter(April::Nearest);
+			else throw hl_exception("texture filter '"+filter+"' not supported");
+			
+		}
 		mTextures[tex_name]=t;
 		// extract image definitions
 		if (node->iter_children() == 0) // if there are no images defined, create one that fills the whole area
