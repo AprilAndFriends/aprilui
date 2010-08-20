@@ -24,6 +24,7 @@ namespace AprilUI
 	protected:
 		hstr mText;
 		hstr mFontName;
+		bool mWrapText;
 		Atres::Alignment mHorzFormatting;
 		VertFormatting mVertFormatting;
 		Atres::Effect mFontEffect;
@@ -40,6 +41,9 @@ namespace AprilUI
 		
 		hstr getFont() { return mFontName; }
 		void setFont(chstr font) { mFontName=font; }
+		
+		bool getWrapText() { return mWrapText; }
+		void setWrapText(bool wrapText) { mWrapText=wrapText; }
 		
 		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
 		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
