@@ -66,8 +66,8 @@ namespace AprilUI
 
 			v.x+=k*mSpeed.y;
 			v.y+=k*mSpeed.x;
-			if (sgn(mDest.y-old.x) != sgn(mDest.y-v.x)) v.x=mDest.y;
-			if (sgn(mDest.x-old.y) != sgn(mDest.x-v.y)) v.y=mDest.x;
+			if (sgn(mDest.y-old.x) != sgn(mDest.y-v.x) || sgn(mDest.x-old.y) != sgn(mDest.x-v.y))
+				v.x=mDest.y,v.y=mDest.x;
 
 			mParent->setSize(v.x,v.y);
 		}
