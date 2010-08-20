@@ -60,8 +60,8 @@ namespace AprilUI
 			gtypes::Vector2 old=v;
 			v.x+=k*mSpeed.x;
 			v.y+=k*mSpeed.y;
-			if (sgn(mDest.x-old.x) != sgn(mDest.x-v.x)) v.x=mDest.x;
-			if (sgn(mDest.y-old.y) != sgn(mDest.y-v.y)) v.y=mDest.y;
+			if (sgn(mDest.x-old.x) != sgn(mDest.x-v.x) || sgn(mDest.y-old.y) != sgn(mDest.y-v.y))
+				v.x=mDest.x,v.y=mDest.y;
 			if (fabs(mAccel.x) > 0.01f || fabs(mAccel.y) > 0.01f)
 			{
 				mSpeed.x+=mAccel.x*k;
