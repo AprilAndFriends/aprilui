@@ -33,6 +33,7 @@ namespace AprilUI
 		mCtrlMode=0;
 		mFilter="";
 		mBlinkTimer=0;
+		mWrapText=0;
 	}
 	
 	void EditBox::update(float time)
@@ -50,12 +51,12 @@ namespace AprilUI
 		{
 			mText=hstr(mPasswordChar,mText.size());
 		}
-		Label::OnDraw(offset_x,offset_y);
+		Label::OnDraw(offset_x+2,offset_y);
 		if (mDataPtr && this == mDataPtr->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
 			int w=Atres::getTextWidth(mFontName,mText(0,mCursorIndex));
-			int h=Atres::getFont(mFontName)->getHeight();
-			rendersys->drawColoredQuad(mX+offset_x+w, mY+offset_y+(mHeight-h)/2, 2, h,
+			int h=Atres::getTextHeight(mFontName,mText);
+			rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2, 2, h,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
 		}
 		mText=text;

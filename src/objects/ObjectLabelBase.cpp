@@ -23,6 +23,7 @@ namespace AprilUI
 		mVertFormatting=VERT_CENTER;
 		mFontEffect=Atres::NONE;
 		mText="LabelBase: "+name;
+		mWrapText=1;
 	}
 
 	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
@@ -33,21 +34,37 @@ namespace AprilUI
 		{
 			throw e;
 		}
-
-		float fonth=Atres::getWrappedTextHeight(mFontName,width,mText);
+		
+		float fonth=0;
+		if (mWrapText)
+		{
+			fonth=Atres::getWrappedTextHeight(mFontName,width,mText);
+		}
+		else
+		{
+			fonth=Atres::getTextHeight(mFontName,mText);
+		}
 		if      (mVertFormatting == VERT_BOTTOM)
 			offset_y+=height-fonth;
 		else if (mVertFormatting == VERT_CENTER)
 			offset_y+=(height-fonth)/2;
-		
 		if      (mHorzFormatting == Atres::RIGHT)  offset_x+=width;
 		else if (mHorzFormatting == Atres::CENTER) offset_x+=width/2;
 
 		try
 		{
-			Atres::drawWrappedText(mFontName,offset_x,offset_y,width,mText,
-				mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-				mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+			if (mWrapText)
+			{
+				Atres::drawWrappedText(mFontName,offset_x,offset_y,width,mText,
+					mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
+					mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+			}
+			else
+			{
+				Atres::drawText(mFontName,offset_x,offset_y,mText,
+					mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
+					mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+			}
 		}
 		catch (hltypes::_resource_error e)
 		{ throw e; }
@@ -57,6 +74,7 @@ namespace AprilUI
 	{
 		if (name == "font") setFont(value);
 		else if (name == "text") setText(value);
+		else if (name == "wrap_text") setWrapText(value)
 		else if (name == "horz_formatting")
 		{
 			if (value == "left")        setHorzFormatting(Atres::LEFT);
