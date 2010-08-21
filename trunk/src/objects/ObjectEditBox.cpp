@@ -191,8 +191,8 @@ namespace AprilUI
 	
 	void EditBox::_cursorMoveRightWord()
 	{
-		while (mCursorIndex <= mText.size() && mText[mCursorIndex] != ' ') mCursorIndex++;
-		while (mCursorIndex <= mText.size() && mText[mCursorIndex] == ' ') mCursorIndex++;
+		while (mCursorIndex < mText.size() && mText[mCursorIndex] != ' ') mCursorIndex++;
+		while (mCursorIndex < mText.size() && mText[mCursorIndex] == ' ') mCursorIndex++;
 		mBlinkTimer=0;
 	}
 	
@@ -231,11 +231,11 @@ namespace AprilUI
 	void EditBox::_deleteRightWord()
 	{
 		int index=mCursorIndex;
-		while (index <= mText.size() && mText[index] != ' ') index++;
-		while (index <= mText.size() && mText[index] == ' ') index++;
+		while (index < mText.size() && mText[index] != ' ') index++;
+		while (index < mText.size() && mText[index] == ' ') index++;
 		if (index > mCursorIndex)
 		{
-			_deleteLeft(index-mCursorIndex);
+			_deleteRight(index-mCursorIndex);
 		}
 	}
 	
