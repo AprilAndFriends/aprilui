@@ -74,7 +74,7 @@ namespace AprilUI
 	{
 		if (name == "font") setFont(value);
 		else if (name == "text") setText(value);
-		else if (name == "wrap_text") setWrapText(value)
+		else if (name == "wrap_text") setWrapText(value);
 		else if (name == "horz_formatting")
 		{
 			if (value == "left")        setHorzFormatting(Atres::LEFT);
