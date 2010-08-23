@@ -94,11 +94,7 @@ namespace AprilUI
 	
 	void EditBox::setText(chstr text)
 	{
-		if (text.size() > mMaxLength)
-		{
-			text=text(0,mMaxLength);
-		}
-		Label::setText(text);
+		Label::setText(text.size() > mMaxLength ? text(0,mMaxLength) : text);
 		harray<char> chars=harray<char>(mText.c_str(),mText.size());
 		foreach (char,it,chars)
 		{
