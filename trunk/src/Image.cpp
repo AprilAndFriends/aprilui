@@ -49,12 +49,23 @@ namespace AprilUI
 		{
  			if (!mTexture->isLoaded()) { mUnloadedFlag=1; return; }
 			int w=mTexture->getWidth(),h=mTexture->getHeight();
+			float t;
 			if (mVertical)
 			{
 				mVertices[0].u=(mSourceX+mSourceH)/w; mVertices[0].v=mSourceY/h;
 				mVertices[1].u=(mSourceX+mSourceH)/w; mVertices[1].v=(mSourceY+mSourceW)/h;
 				mVertices[2].u=(mSourceX)/w;          mVertices[2].v=mSourceY/h;
 				mVertices[3].u=(mSourceX)/w;          mVertices[3].v=(mSourceY+mSourceW)/h;
+				if (mInvertY)
+				{
+					t=mVertices[0].u; mVertices[0].u=mVertices[2].u; mVertices[2].u=t;
+					t=mVertices[1].u; mVertices[1].u=mVertices[3].u; mVertices[3].u=t;
+				}
+				if (mInvertX)
+				{
+					t=mVertices[0].v; mVertices[0].v=mVertices[1].v; mVertices[1].v=t;
+					t=mVertices[2].v; mVertices[2].v=mVertices[3].v; mVertices[3].v=t;
+				}
 			}
 			else
 			{
@@ -62,19 +73,18 @@ namespace AprilUI
 				mVertices[1].u=(mSourceX+mSourceW)/w; mVertices[1].v=mSourceY/h;
 				mVertices[2].u=mSourceX/w;            mVertices[2].v=(mSourceY+mSourceH)/h;
 				mVertices[3].u=(mSourceX+mSourceW)/w; mVertices[3].v=(mSourceY+mSourceH)/h;
+				if (mInvertX)
+				{
+					t=mVertices[0].u; mVertices[0].u=mVertices[1].u; mVertices[1].u=t;
+					t=mVertices[2].u; mVertices[2].u=mVertices[3].u; mVertices[3].u=t;
+				}
+				if (mInvertY)
+				{
+					t=mVertices[0].v; mVertices[0].v=mVertices[2].v; mVertices[2].v=t;
+					t=mVertices[1].v; mVertices[1].v=mVertices[3].v; mVertices[3].v=t;
+				}
 			}
-			if (mInvertX)
-			{
-				float t;
-				t=mVertices[0].u; mVertices[0].u=mVertices[1].u; mVertices[1].u=t;
-				t=mVertices[2].u; mVertices[2].u=mVertices[3].u; mVertices[3].u=t;
-			}
-			if (mInvertY)
-			{
-				float t;
-				t=mVertices[0].v; mVertices[0].v=mVertices[2].v; mVertices[2].v=t;
-				t=mVertices[1].v; mVertices[1].v=mVertices[3].v; mVertices[3].v=t;
-			}
+
 		}
 	}
 
