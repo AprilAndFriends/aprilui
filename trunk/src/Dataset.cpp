@@ -211,9 +211,9 @@ namespace AprilUI
 	}
 
 
-	Object* Dataset::parseObject(xml_node* node)
+	Object* Dataset::parseObject(xml_node* node,Object* parent)
 	{
-		return recursiveObjectParse(node,0);
+		return recursiveObjectParse(node,parent);
 	}
 
 	Object* Dataset::recursiveObjectParse(xml_node* node,Object* parent)
