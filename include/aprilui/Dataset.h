@@ -61,7 +61,7 @@ namespace AprilUI
 		
 		void readFile(chstr filename);
 	public:
-		Object* parseObject(xml_node* node);
+		Object* parseObject(xml_node* node,Object* parent=0);
 		
 		Dataset(chstr filename,chstr name_override="");
 		virtual ~Dataset();
