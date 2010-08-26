@@ -93,7 +93,7 @@ namespace AprilUI
 			if (value == "none")           setFontEffect(Atres::NONE);
 			else if (value == "shadow")    setFontEffect(Atres::SHADOW);
 			else if (value == "border")    setFontEffect(Atres::BORDER);
-			else if (value == "border_ex") setFontEffect(Atres::BORDER_EX);
+			else if (value == "border_4")  setFontEffect(Atres::BORDER_4);
 		}
 	}
 
