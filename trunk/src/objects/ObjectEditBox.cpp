@@ -30,6 +30,7 @@ namespace AprilUI
 		mMaxLength=0;
 		mPasswordChar=0;
 		mCursorIndex=0;
+		mOffsetIndex=0;
 		mCtrlMode=0;
 		mFilter="";
 		mBlinkTimer=0;
@@ -51,10 +52,34 @@ namespace AprilUI
 		{
 			mText=hstr(mPasswordChar,mText.size());
 		}
+		while (mOffsetIndex > 0 && mOffsetIndex >= mCursorIndex)
+		{
+			mOffsetIndex=hmax(0,mCursorIndex-5);
+		}
+		mWidth-=12;
+		int count;
+		while (true)
+		{
+			count=Atres::getWrappedTextCount(mFontName,mWidth,0,mText(mOffsetIndex,mText.size()-mOffsetIndex));
+			if (mOffsetIndex > mCursorIndex)
+			{
+				mOffsetIndex=mCursorIndex;
+			}
+			else if (mOffsetIndex < mCursorIndex - count)
+			{
+				mOffsetIndex=mCursorIndex-count;
+			}
+			else
+			{
+				break;
+			}
+		}
+		mText=mText(mOffsetIndex,mText.size()-mOffsetIndex);
 		Label::OnDraw(offset_x+2,offset_y);
+		mWidth+=12;
 		if (mDataPtr && this == mDataPtr->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
-			int w=Atres::getTextWidth(mFontName,mText(0,mCursorIndex));
+			int w=Atres::getTextWidth(mFontName,mText(0,mCursorIndex-mOffsetIndex));
 			int h=Atres::getTextHeight(mFontName,mText);
 			rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2, 2, h,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
@@ -162,12 +187,13 @@ namespace AprilUI
 			break;
 		}
 	}
-
+	
 	void EditBox::OnKeyUp(unsigned int keycode)
 	{
 		switch (keycode)
 		{
 		case AK_CONTROL:
+		case AK_MENU:
 			mCtrlMode=0;
 			break;
 		}
