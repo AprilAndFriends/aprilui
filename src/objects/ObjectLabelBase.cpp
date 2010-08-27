@@ -25,7 +25,7 @@ namespace AprilUI
 		mText="LabelBase: "+name;
 		mWrapText=1;
 	}
-
+	
 	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
 	{
 		Atres::Font* font;
@@ -36,16 +36,31 @@ namespace AprilUI
 		}
 		
 		float fonth=0;
+		int count=0;
+		hstr text=mText;
 		if (mWrapText)
 		{
-			fonth=Atres::getWrappedTextHeight(mFontName,width,mText);
+			if (mVertFormatting == VERT_BOTTOM)
+			{
+				if (text[text.size()-1] == '\n') text=text(0,text.size()-1);
+				count=Atres::getWrappedTextCount(mFontName,width,height,text.reverse());
+				if (text[text.size()-count] == '\n') count--;
+				fonth=Atres::getWrappedTextHeight(mFontName,width,text.reverse()(0,count));
+			}
+			else
+				fonth=Atres::getWrappedTextHeight(mFontName,width,text);
 		}
 		else
 		{
-			fonth=Atres::getTextHeight(mFontName,mText);
+			fonth=Atres::getTextHeight(mFontName,text);
 		}
 		if      (mVertFormatting == VERT_BOTTOM)
-			offset_y+=height-fonth;
+		{
+			if (fonth < height)
+			{
+				offset_y+=height-fonth;
+			}
+		}
 		else if (mVertFormatting == VERT_CENTER)
 			offset_y+=(height-fonth)/2;
 		if      (mHorzFormatting == Atres::RIGHT)  offset_x+=width;
@@ -55,13 +70,22 @@ namespace AprilUI
 		{
 			if (mWrapText)
 			{
-				Atres::drawWrappedText(mFontName,offset_x,offset_y,width,mText,
-					mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-					mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+				if (count > 0)
+				{
+					Atres::drawWrappedText(mFontName,offset_x,offset_y,width,height,text(text.size()-count, count),
+						mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
+						mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+				}
+				else
+				{
+					Atres::drawWrappedText(mFontName,offset_x,offset_y,width,height,text,
+						mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
+						mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+				}
 			}
 			else
 			{
-				Atres::drawText(mFontName,offset_x,offset_y,mText,
+				Atres::drawText(mFontName,offset_x,offset_y,width,height,text,
 					mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
 					mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
 			}

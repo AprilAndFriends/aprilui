@@ -22,6 +22,7 @@ namespace AprilUI
 	protected:
 		bool mPushed;
 		int mCursorIndex;
+		int mOffsetIndex;
 		int mMaxLength;
 		char mPasswordChar;
 		bool mCtrlMode;
