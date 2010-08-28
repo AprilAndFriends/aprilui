@@ -101,6 +101,17 @@ namespace AprilUI
 		mBlinkTimer=0;
 	}
 	
+	void EditBox::setCursorIndexAt(float x,float y)
+	{
+		hstr text=mText;
+		if (mPasswordChar && text != "")
+		{
+			text=hstr(mPasswordChar,text.size());
+		}
+		int count=Atres::getWrappedTextCount(mFontName,x-mX,0,text(mOffsetIndex,text.size()-mOffsetIndex));
+		setCursorIndex(mOffsetIndex+count);
+	}
+	
 	void EditBox::setMaxLength(int maxLength)
 	{
 		mMaxLength=maxLength;
@@ -147,6 +158,7 @@ namespace AprilUI
 		if (Object::OnMouseUp(button,x,y)) return true;
 		if (mPushed && isPointInside(x,y))
 		{
+			setCursorIndexAt(x,y);
 			if (mDataPtr)
 			{
 				mDataPtr->setFocusedObject(this);

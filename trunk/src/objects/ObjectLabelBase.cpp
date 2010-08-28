@@ -34,6 +34,10 @@ namespace AprilUI
 		{
 			throw e;
 		}
+		if (mText.size() == 0)
+		{
+			return;
+		}
 		
 		float fonth=0;
 		int count=0;
