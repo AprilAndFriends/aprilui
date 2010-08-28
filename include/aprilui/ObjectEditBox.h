@@ -52,6 +52,7 @@ namespace AprilUI
 		
 		int getCursorIndex() { return mCursorIndex; }
 		void setCursorIndex(int cursorIndex);
+		void setCursorIndexAt(float x,float y);
 		int getMaxLength() { return mMaxLength; }
 		void setMaxLength(int maxLength);
 		char getPasswordChar() { return mPasswordChar; }
