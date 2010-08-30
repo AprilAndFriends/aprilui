@@ -109,8 +109,8 @@ namespace AprilUI
 			if      (filter == "linear")  t->setTextureFilter(April::Linear);
 			else if (filter == "nearest") t->setTextureFilter(April::Nearest);
 			else throw hl_exception("texture filter '"+filter+"' not supported");
-			
 		}
+		if (node->pexists("wrap")) t->setTextureWrapping(node->pbool("wrap"));
 		mTextures[tex_name]=t;
 		// extract image definitions
 		if (node->iter_children() == 0) // if there are no images defined, create one that fills the whole area
