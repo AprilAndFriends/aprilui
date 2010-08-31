@@ -17,7 +17,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 namespace AprilUI
 {
 	LabelBase::LabelBase(chstr name) :
-		   mTextColor(1,1,1,1)
+		   mTextColor(255,255,255,255)
 	{
 		mHorzFormatting=Atres::CENTER;
 		mVertFormatting=VERT_CENTER;
