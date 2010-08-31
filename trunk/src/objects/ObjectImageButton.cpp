@@ -95,7 +95,7 @@ namespace AprilUI
 	bool ImageButton::OnMouseUp(int button,float x,float y)
 	{
 		if (Object::OnMouseUp(button,x,y)) return true;
-		mImage=mNormalImage;
+		mImage=((mHoverImage && isPointInside(x,y) && getDerivedEnabled()) ? mHoverImage : mNormalImage);
 		if (mPushed && isPointInside(x,y))
 		{
 			mPushed=false;
@@ -104,6 +104,15 @@ namespace AprilUI
 		}
 		mPushed=false;
 		return false;
+	}
+
+	void ImageButton::OnMouseMove(float x,float y)
+	{
+		Object::OnMouseMove(x,y);
+		if (!mPushed)
+		{
+			mImage=((mHoverImage && isPointInside(x,y) && getDerivedEnabled()) ? mHoverImage : mNormalImage);
+		}
 	}
 
 	void ImageButton::setProperty(chstr name,chstr value)

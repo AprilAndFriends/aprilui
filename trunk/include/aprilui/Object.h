@@ -50,8 +50,6 @@ namespace AprilUI
 		float getDerivedAlpha();
 		bool getDerivedEnabled();
 		bool getDerivedClickthrough();
-
-		
 		
 		virtual void OnDraw(float offset_x,float offset_y) { };
 		virtual void OnUpdate(float k) { };
