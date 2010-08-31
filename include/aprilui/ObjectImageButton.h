@@ -43,6 +43,7 @@ namespace AprilUI
 		
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
+		void OnMouseMove(float x,float y);
 		
 		void setProperty(chstr name,chstr value);
 	};
