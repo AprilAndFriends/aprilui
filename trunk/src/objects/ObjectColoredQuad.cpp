@@ -21,7 +21,7 @@ namespace AprilUI
 
 	void ColoredQuad::setColor(float a,float r,float g,float b)
 	{
-		mColor.setColor(r,g,b,a);
+		mColor.setColor(a,r,g,b);
 	}
 
 	void ColoredQuad::OnDraw(float offset_x,float offset_y)
