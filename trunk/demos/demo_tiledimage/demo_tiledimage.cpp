@@ -31,7 +31,7 @@ bool render(float time)
 	rendersys->clear();
 	rendersys->setOrthoProjection(800,600);
 	
-	AprilUI::TiledImage* image = (AprilUI::TiledImage*)dataset->getImage("texture/test");
+	AprilUI::TiledImage* image = (AprilUI::TiledImage*)dataset->getImage("transparency/test");
 	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
 					 image->getScrollY() - time * SCROLL_SPEED_Y);
 	
