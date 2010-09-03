@@ -45,7 +45,7 @@ namespace AprilUI
 	
 	void Image::updateTexCoords()
 	{
-		if (mTexture) // allowed due to derived classes
+		if (mTexture) // mTexture is allowed to be null, since we have derived classes
 		{
  			if (!mTexture->isLoaded()) { mUnloadedFlag=1; return; }
 			int w=mTexture->getWidth(),h=mTexture->getHeight();

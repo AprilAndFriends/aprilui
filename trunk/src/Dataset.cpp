@@ -143,7 +143,10 @@ namespace AprilUI
 					try   { tile_h=node->pfloat("tile_h"); }
 					catch (_XMLException) { }
 					
-					if (tile_w != 1 || tile_h != 1) i=new TiledImage(t,name,x,y,w,h,vertical,tile_w,tile_h);
+					if (tile_w != 1 || tile_h != 1) 
+					{
+						i=new TiledImage(t,name,x,y,w,h,vertical,tile_w,tile_h);
+					}
 					else
 					{
 						try

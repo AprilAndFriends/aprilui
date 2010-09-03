@@ -8,6 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com),                            
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include "april/main.h"
 #include "april/RenderSystem.h"
 #include "aprilui/AprilUI.h"
 #include "aprilui/Dataset.h"
@@ -21,17 +22,25 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com),                            
 
 AprilUI::Dataset* dataset;
 
-bool render(float time_increase)
+#define SCROLL_SPEED_X 10
+#define SCROLL_SPEED_Y 10
+
+bool render(float time)
 {
+	
 	rendersys->clear();
 	rendersys->setOrthoProjection(800,600);
-
+	
+	AprilUI::TiledImage* image = (AprilUI::TiledImage*)dataset->getImage("texture/test");
+	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
+					 image->getScrollY() - time * SCROLL_SPEED_Y);
+	
 	dataset->getObject("root")->draw();
-	dataset->getObject("root")->update(time_increase);
+	dataset->getObject("root")->update(time);
 	return true;
 }
 
-int main()
+int main(int argc, char** argv)
 {
 #ifdef __APPLE__
 	// On MacOSX, the current working directory is not set by
@@ -79,11 +88,11 @@ int main()
 #endif
 	try
 	{
-		April::init("OpenGL",800,600,0,"demo_simple");
+		April::init("OpenGL",800,600,0,"demo_tiledimage");
 		rendersys->registerUpdateCallback(render);
 		AprilUI::init();
 
-		dataset=new AprilUI::Dataset("../media/demo_simple.datadef");
+		dataset=new AprilUI::Dataset("../media/demo_tiledimage.datadef");
 		dataset->load();
 
 		Atres::loadFont("../media/arial.font");
@@ -95,7 +104,7 @@ int main()
 	}
 	catch (AprilUI::_GenericException e)
 	{
-		std::cout << e.getType() << "\n";
+		std::cout << "Exception: " << e.getErrorText() << "\n";
 	}
 	return 0;
 }
