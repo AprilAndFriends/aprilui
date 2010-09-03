@@ -32,7 +32,7 @@ namespace AprilUI
 		hstr mType;
 		_GenericException(chstr errorText,chstr type="",const char* file="",int line=0);
 		hstr getType(){ return mType; }
-		hstr getErrorText() DEPRECATED_ATTRIBUTE { return mType; }
+		hstr getErrorText() { return msg; }
 	};
 
 	#define GenericException(msg) _GenericException(msg,"GenericException",__FILE__,__LINE__)
