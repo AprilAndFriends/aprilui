@@ -25,6 +25,8 @@ namespace AprilUI
 		mTypeName="TextButton";
 		mPushed=0;
 		mBackgroundEnabled=1;
+		mPushedTextColor.setColor("FF333333");
+		mHoverTextColor.setColor("FF7F7F7F");
 	}
 
 	void TextButton::setTextKey(chstr key)
@@ -34,18 +36,41 @@ namespace AprilUI
 
 	void TextButton::OnDraw(float offset_x,float offset_y)
 	{
-		unsigned char a=mTextColor.a;
+		April::Color temp=mTextColor;
 		if (mBackgroundEnabled)
 			rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
-		else
-			mTextColor.a*=(unsigned char)(1.0f-0.3f*mPushed);
+		if (mPushed) mTextColor=mPushedTextColor;
+		else if (isCursorInside()) mTextColor=mHoverTextColor;
 		Label::OnDraw(offset_x,offset_y);
-		if (!mBackgroundEnabled) mTextColor.a=a;
+
+		mTextColor=temp;
+	}
+	
+	void TextButton::setHoverTextColor(April::Color color)
+	{
+		mHoverTextColor=color;
+	}
+
+	void TextButton::setHoverTextColor(chstr hex)
+	{
+		mHoverTextColor.setColor(hex);
+	}
+
+	void TextButton::setPushedTextColor(April::Color color)
+	{
+		mPushedTextColor=color;
+	}
+
+	void TextButton::setPushedTextColor(chstr hex)
+	{
+		mHoverTextColor.setColor(hex);
 	}
 	
 	void TextButton::setProperty(chstr name,chstr value)
 	{
 		if (name == "background") mBackgroundEnabled=((int) value)!=0;
+		else if (name == "hover_color") setHoverTextColor(value);
+		else if (name == "pushed_color") setPushedTextColor(value);
 		else Label::setProperty(name,value);
 	}
 

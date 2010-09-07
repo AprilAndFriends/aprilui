@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #define APRILUI_H
 
 #include <hltypes/hstring.h>
+#include <gtypes/Vector2.h>
 
 #include "AprilUIExport.h"
 
@@ -27,6 +28,9 @@ namespace AprilUI
 	
 	AprilUIFnExport Dataset* getDatasetByName(chstr name);
 	AprilUIFnExport void update(float time_increase);
+	
+	AprilUIFnExport void setCursorPos(float x,float y);
+	AprilUIFnExport gvec2 getCursorPos();
 }
 
 #endif

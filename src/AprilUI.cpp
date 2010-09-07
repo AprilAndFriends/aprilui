@@ -25,6 +25,18 @@ namespace AprilUI
 	AtresAprilInterface* atres_render_iface=0;
 	std::map<hstr,Dataset*> g_datasets;
 	float default_scale=1;
+	gvec2 cursor_pos;
+
+
+	void setCursorPos(float x,float y)
+	{
+		cursor_pos.set(x,y);
+	}
+	
+	gvec2 getCursorPos()
+	{
+		return cursor_pos;
+	}
 
 	void init()
 	{

@@ -21,10 +21,16 @@ namespace AprilUI
 	{
 	protected:
 		bool mPushed,mBackgroundEnabled;
+		April::Color mHoverTextColor,mPushedTextColor;
 		void OnDraw(float offset_x,float offset_y);
 	public:
 		TextButton(chstr name,float x,float y,float w,float h);
 		
+		void setHoverTextColor(April::Color color);
+		void setHoverTextColor(chstr hex);
+		void setPushedTextColor(April::Color color);
+		void setPushedTextColor(chstr hex);
+
 		void setTextKey(chstr key);
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);

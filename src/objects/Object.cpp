@@ -20,6 +20,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "EventArgs.h"
 #include "Exception.h"
 #include "ObjectCallbackObject.h"
+#include "AprilUI.h"
 
 namespace AprilUI
 {
@@ -110,7 +111,7 @@ namespace AprilUI
 
 	bool Object::isCursorInside()
 	{
-		gtypes::Vector2 pos=rendersys->getCursorPos();
+		gtypes::Vector2 pos=getCursorPos();
 		
 		for (Object* p=mParent;p != 0;p=p->mParent)
 			pos-=p->getPosition();
