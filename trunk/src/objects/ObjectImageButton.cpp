@@ -75,6 +75,15 @@ namespace AprilUI
 		ImageBox::setImage(image);
 		mNormalImage=mImage;
 	}
+	
+	void ImageButton::setEnabled(bool enabled)
+	{
+		ImageBox::setEnabled(enabled);
+		if (!enabled)
+		{
+			mImage=(mDisabledImage ? mDisabledImage : mNormalImage);
+		}
+	}
 
 	void ImageButton::OnUpdate(float k)
 	{
