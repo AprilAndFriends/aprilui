@@ -92,7 +92,7 @@ namespace AprilUI
 
 		void setVisible(bool visible) { mVisible=visible; }
 		bool isVisible() { return mVisible && mAlpha > 0; }
-		void setEnabled(bool enabled) { mEnabled=enabled; }
+		virtual void setEnabled(bool enabled) { mEnabled=enabled; }
 		bool isEnabled() { return mEnabled; }
 		void setClickthrough(bool clickthrough) { mClickthrough=clickthrough; }
 		bool getClickthrough() { return mClickthrough; }

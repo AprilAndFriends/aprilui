@@ -40,6 +40,7 @@ namespace AprilUI
 		void OnDraw(float offset_x,float offset_y);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* image);
+		void setEnabled(bool enabled);
 		
 		bool OnMouseDown(int button,float x,float y);
 		bool OnMouseUp(int button,float x,float y);
