@@ -10,8 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_TEXT_MAP_H
 #define APRILUI_TEXT_MAP_H
 
-#include <map>
-
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -23,7 +22,7 @@ namespace AprilUI
 		char* mBuffer;
 		int mBufferPos;
 		hstr mName;
-		std::map<hstr,unsigned int> mTexts;
+		hmap<hstr,unsigned int> mTexts;
 		
 	public:
 		TextMap();

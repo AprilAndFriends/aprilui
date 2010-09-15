@@ -10,8 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_DATASET_H
 #define APRILUI_DATASET_H
 
-#include <map>
-
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -41,15 +40,15 @@ namespace AprilUI
 		hstr mFilenamePrefix;
 		bool mLoaded;
 		Object* mFocusedObject;
-		std::map<hstr,Object*> mObjects;
-		std::map<hstr,April::Texture*> mTextures;
-		std::map<hstr,Image*> mImages;
-		std::map<hstr,Object*>::iterator mObjectIterator;
-		std::map<hstr,April::Texture*>::iterator mTextureIterator;
-		std::map<hstr,Image*>::iterator mImageIterator;
+		hmap<hstr,Object*> mObjects;
+		hmap<hstr,April::Texture*> mTextures;
+		hmap<hstr,Image*> mImages;
+		hmap<hstr,Object*>::iterator mObjectIterator;
+		hmap<hstr,April::Texture*>::iterator mTextureIterator;
+		hmap<hstr,Image*>::iterator mImageIterator;
 		TextMap mTexts;
 
-		std::map<hstr,void (*)()> mCallbacks;
+		hmap<hstr,void (*)()> mCallbacks;
 
 		April::Texture* parseTexture(xml_node* node);
 		void parseRAMTexture(xml_node* node);
