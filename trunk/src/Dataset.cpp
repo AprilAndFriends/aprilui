@@ -376,9 +376,9 @@ namespace AprilUI
 	{
 		if (!mLoaded) throw GenericException("Unable to unload dataset '"+getName()+"', data not loaded!");
 
-		foreach_m (Object*,it,mObjects)          delete it->second; mObjects.clear();
-		foreach_m (Image*,it,mImages)            delete it->second; mImages.clear();
-		foreach_m (April::Texture*,it,mTextures) delete it->second; mTextures.clear();
+		foreach_m(Object*,it,mObjects)          delete it->second; mObjects.clear();
+		foreach_m(Image*,it,mImages)            delete it->second; mImages.clear();
+		foreach_m(April::Texture*,it,mTextures) delete it->second; mTextures.clear();
 		mCallbacks.clear();
 		mTexts.unload();
 		
@@ -478,7 +478,7 @@ namespace AprilUI
 
 	void Dataset::update(float k)
 	{
-		foreach_m (April::Texture*,it,mTextures)
+		foreach_m(April::Texture*,it,mTextures)
 			it->second->update(k);
 	}
 	
