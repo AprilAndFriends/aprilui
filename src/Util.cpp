@@ -15,9 +15,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #else
 	#include <dirent.h>
 #endif
-#include <map>
 
 #include <april/RenderSystem.h>
+#include <hltypes/hmap.h>
 
 #include "Util.h"
 #include "Exception.h"
@@ -77,7 +77,7 @@ namespace AprilUI
 
 	hstr generateName(chstr prefix)
 	{
-		static std::map<hstr,int> counters;
+		static hmap<hstr,int> counters;
 		int cnt=counters[prefix];
 		cnt++;
 		counters[prefix]=cnt;

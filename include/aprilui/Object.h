@@ -10,10 +10,9 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_OBJECT_H
 #define APRILUI_OBJECT_H
 
-#include <map>
-
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -38,7 +37,7 @@ namespace AprilUI
 		float mX,mY,mWidth,mHeight;
 		harray<Object*> mChildren;
 		
-		std::map<hstr,Event*> mEvents;
+		hmap<hstr,Event*> mEvents;
 		bool mVisible,mEnabled,mClickthrough,mInheritsAlpha;
 		float mAlpha;
 		

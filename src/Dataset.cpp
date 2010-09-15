@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 \************************************************************************************/
 #include <april/RenderSystem.h>
 #include <hltypes/harray.h>
+#include <hltypes/hmap.h>
 #include <hltypes/util.h>
 
 #include "Animators.h"
@@ -322,7 +323,7 @@ namespace AprilUI
 
 		parseExternalXMLNode(cur);
 		
-		std::map<April::Texture*,hstr> dynamic_links;
+		hmap<April::Texture*,hstr> dynamic_links;
 		hstr links;
 		for (xml_node* p = cur->iter_children(); p != 0; p=p->next())
 		{
@@ -345,7 +346,7 @@ namespace AprilUI
 		}
 		
 	// adjust dynamic texture links
-		std::map<April::Texture*,hstr>::iterator map_it;
+		hmap<April::Texture*,hstr>::iterator map_it;
 		harray<hstr> dlst;
 		for (map_it = dynamic_links.begin();map_it != dynamic_links.end();map_it++)
 		{
@@ -375,9 +376,9 @@ namespace AprilUI
 	{
 		if (!mLoaded) throw GenericException("Unable to unload dataset '"+getName()+"', data not loaded!");
 
-		foreach_in_map(Object*,it,mObjects)          delete it->second; mObjects.clear();
-		foreach_in_map(Image*,it,mImages)            delete it->second; mImages.clear();
-		foreach_in_map(April::Texture*,it,mTextures) delete it->second; mTextures.clear();
+		foreach_m (Object*,it,mObjects)          delete it->second; mObjects.clear();
+		foreach_m (Image*,it,mImages)            delete it->second; mImages.clear();
+		foreach_m (April::Texture*,it,mTextures) delete it->second; mTextures.clear();
 		mCallbacks.clear();
 		mTexts.unload();
 		
@@ -477,7 +478,7 @@ namespace AprilUI
 
 	void Dataset::update(float k)
 	{
-		foreach_in_map(April::Texture*,it,mTextures)
+		foreach_m (April::Texture*,it,mTextures)
 			it->second->update(k);
 	}
 	

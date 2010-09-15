@@ -40,7 +40,7 @@ namespace AprilUI
 
 	Object::~Object()
 	{
-		foreach_in_map(Event*,it,mEvents)
+		foreach_m (Event*,it,mEvents)
 		{
 			delete it->second;
 		}
