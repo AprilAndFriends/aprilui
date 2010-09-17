@@ -13,7 +13,6 @@
     <File Name="src/TextMap.cpp"/>
     <File Name="src/Util.cpp"/>
     <File Name="src/xmlHelper.cpp"/>
-    <File Name="src/AtresRenderInterface.cpp"/>
     <File Name="src/AprilUI.cpp"/>
     <File Name="src/CallbackEvent.cpp"/>
     <File Name="src/Image.cpp"/>
@@ -56,7 +55,6 @@
     <File Name="include/aprilui/TextMap.h"/>
     <File Name="src/Util.h"/>
     <File Name="include/aprilui/AprilUI.h"/>
-    <File Name="src/AtresRenderInterface.h"/>
     <File Name="include/aprilui/Animators.h"/>
     <File Name="include/aprilui/AprilUIExport.h"/>
     <File Name="include/aprilui/xmlHelper.h"/>
