@@ -98,14 +98,14 @@ namespace AprilUI
 		if (isVisible())
 		{
 			OnDraw(offset_x,offset_y);
-			for (Object** it=mChildren.iter();it;it=mChildren.next())
+			foreach (Object*, it, mChildren)
 				(*it)->draw(offset_x+mX,offset_y+mY);
 		}
 	}
 
 	void Object::update(float k)
 	{
-		for (Object** it=mChildren.iter();it;it=mChildren.next())
+		foreach (Object*, it, mChildren)
 			(*it)->update(k);
 	}
 
@@ -128,7 +128,7 @@ namespace AprilUI
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
 		
 		if (mDataPtr) mDataPtr->setFocusedObject(0);
-		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
+		foreach_r (Object*, it, mChildren)
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
 				if ((*it)->OnMouseDown(button,x-mX,y-mY)) return true;
 		
@@ -139,7 +139,7 @@ namespace AprilUI
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
 		
-		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
+		foreach_r (Object*, it, mChildren)
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
 				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
 		
@@ -148,7 +148,7 @@ namespace AprilUI
 
 	void Object::OnMouseMove(float x,float y)
 	{
-		for (Object** it=mChildren.riter();it;it=mChildren.rnext())
+		foreach_r (Object*, it, mChildren)
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled())
 				(*it)->OnMouseMove(x-mX,y-mY);
 	}
@@ -241,7 +241,7 @@ namespace AprilUI
 			return inside ? this : 0;
 		else if (!inside) return 0;
 		Object* o=0;
-		foreach_r(Object*,it,mChildren)
+		foreach_r (Object*,it,mChildren)
 		{
 			o=(*it)->getChildUnderPoint(x-mX,y-mY);
 			
