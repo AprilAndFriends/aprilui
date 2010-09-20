@@ -120,7 +120,7 @@ namespace AprilUI
 
 	bool Object::isPointInside(float x,float y)
 	{
-		return (x >= mX && y >= mY && x <= mX+mWidth && y <= mY+mHeight);
+		return (x >= mX && y >= mY && x < mX+mWidth && y < mY+mHeight);
 	}
 
 	bool Object::OnMouseDown(int button,float x,float y)
