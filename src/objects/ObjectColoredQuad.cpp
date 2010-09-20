@@ -27,7 +27,7 @@ namespace AprilUI
 	void ColoredQuad::OnDraw(float offset_x,float offset_y)
 	{
 		float alpha=getDerivedAlpha()*mColor.a_float();
-		April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, mColor.r, mColor.g, mColor.b, alpha);
+		April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, mColor.r_float(), mColor.g_float(), mColor.b_float(), alpha);
 	}
 
 	void ColoredQuad::setProperty(chstr name,chstr value)
