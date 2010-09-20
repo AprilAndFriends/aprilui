@@ -46,7 +46,7 @@ namespace AprilUI
 
 	void EditBox::OnDraw(float offset_x,float offset_y)
 	{
-		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
+		April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		hstr text=mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -81,7 +81,7 @@ namespace AprilUI
 		{
 			int w=Atres::getTextWidth(mFontName,mText(0,mCursorIndex-mOffsetIndex));
 			int h=Atres::getTextHeight(mFontName,mText);
-			rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2, 2, h,
+			April::rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2, 2, h,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
 		}
 		mText=text;

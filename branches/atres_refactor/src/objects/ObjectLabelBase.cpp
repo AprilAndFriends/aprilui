@@ -67,8 +67,6 @@ namespace AprilUI
 		}
 		else if (mVertFormatting == VERT_CENTER)
 			offset_y+=(height-fonth)/2;
-		if      (mHorzFormatting == Atres::RIGHT)  offset_x+=width;
-		else if (mHorzFormatting == Atres::CENTER) offset_x+=width/2;
 
 		try
 		{
