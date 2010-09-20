@@ -21,9 +21,6 @@ namespace AprilUI
 	EditBox::EditBox(chstr name,float x,float y,float w,float h) :
 		Label(name,x,y,w,h)
 	{
-		mHorzFormatting=Atres::CENTER;
-		mVertFormatting=VERT_CENTER;
-		mFontEffect=Atres::NONE;
 		mText="EditBox: "+name;
 		mTypeName="EditBox";
 		mPushed=0;

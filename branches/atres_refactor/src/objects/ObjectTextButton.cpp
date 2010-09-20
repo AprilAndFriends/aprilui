@@ -18,9 +18,6 @@ namespace AprilUI
 	TextButton::TextButton(chstr name,float x,float y,float w,float h) :
 		Label(name,x,y,w,h)
 	{
-		mHorzFormatting=Atres::CENTER;
-		mVertFormatting=VERT_CENTER;
-		mFontEffect=Atres::NONE;
 		mText="TextButton: "+name;
 		mTypeName="TextButton";
 		mPushed=0;

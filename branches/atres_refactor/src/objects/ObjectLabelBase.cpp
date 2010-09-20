@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/exception.h>
 #include <hltypes/hstring.h>
 
+#include "AprilUI.h"
 #include "Exception.h"
 #include "ObjectLabelBase.h"
 
@@ -20,7 +21,7 @@ namespace AprilUI
 		   mTextColor(255,255,255,255)
 	{
 		mHorzFormatting=Atres::CENTER;
-		mVertFormatting=VERT_CENTER;
+		mVertFormatting=Atres::CENTER;
 		mFontEffect=Atres::NONE;
 		mText="LabelBase: "+name;
 		mWrapText=1;
@@ -44,7 +45,8 @@ namespace AprilUI
 		hstr text=mText;
 		if (mWrapText)
 		{
-			if (mVertFormatting == VERT_BOTTOM)
+			//2DO - to be removed later
+			if (mVertFormatting == Atres::BOTTOM)
 			{
 				if (text[text.size()-1] == '\n') text=text(0,text.size()-1);
 				count=Atres::getWrappedTextCount(mFontName,width,height,text.reverse());
@@ -58,39 +60,23 @@ namespace AprilUI
 		{
 			fonth=Atres::getTextHeight(mFontName,text);
 		}
-		if      (mVertFormatting == VERT_BOTTOM)
+		//2DO - to be removed later
+		if      (mVertFormatting == Atres::BOTTOM)
 		{
 			if (fonth < height)
 			{
 				offset_y+=height-fonth;
 			}
 		}
-		else if (mVertFormatting == VERT_CENTER)
+		//2DO - to be removed later
+		else if (mVertFormatting == Atres::CENTER)
 			offset_y+=(height-fonth)/2;
-
+		April::Color color(mTextColor);
+		color.a *= alpha;
 		try
 		{
-			if (mWrapText)
-			{
-				if (count > 0)
-				{
-					Atres::drawWrappedText(mFontName,offset_x,offset_y,width,height,text(text.size()-count, count),
-						mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-						mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
-				}
-				else
-				{
-					Atres::drawWrappedText(mFontName,offset_x,offset_y,width,height,text,
-						mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-						mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
-				}
-			}
-			else
-			{
-				Atres::drawText(mFontName,offset_x,offset_y,width,height,text,
-					mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-					mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
-			}
+			Atres::drawText(mFontName,offset_x,offset_y,width,height,text,
+				mHorzFormatting,color,mFontEffect);
 		}
 		catch (hltypes::_resource_error e)
 		{ throw e; }
@@ -100,18 +86,37 @@ namespace AprilUI
 	{
 		if (name == "font") setFont(value);
 		else if (name == "text") setText(value);
-		else if (name == "wrap_text") setWrapText(value);
+		else if (name == "wrap_text")
+		{
+			setWrapText(value);
+			logMessage("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
+			if (mWrapText)
+			{
+				if (mHorzFormatting == Atres::LEFT) setHorzFormatting(Atres::LEFT_WRAPPED);
+				if (mHorzFormatting == Atres::RIGHT) setHorzFormatting(Atres::RIGHT_WRAPPED);
+				if (mHorzFormatting == Atres::CENTER) setHorzFormatting(Atres::CENTER_WRAPPED);
+			}
+			else
+			{
+				if (mHorzFormatting == Atres::LEFT_WRAPPED) setHorzFormatting(Atres::LEFT);
+				if (mHorzFormatting == Atres::RIGHT_WRAPPED) setHorzFormatting(Atres::RIGHT);
+				if (mHorzFormatting == Atres::CENTER_WRAPPED) setHorzFormatting(Atres::CENTER);
+			}
+		}
 		else if (name == "horz_formatting")
 		{
-			if (value == "left")        setHorzFormatting(Atres::LEFT);
-			else if (value == "right")  setHorzFormatting(Atres::RIGHT);
-			else if (value == "center") setHorzFormatting(Atres::CENTER);
+			if (value == "left")                setHorzFormatting(Atres::LEFT);
+			else if (value == "right")          setHorzFormatting(Atres::RIGHT);
+			else if (value == "center")         setHorzFormatting(Atres::CENTER);
+			else if (value == "left_wrapped")   setHorzFormatting(Atres::LEFT_WRAPPED);
+			else if (value == "right_wrapped")  setHorzFormatting(Atres::RIGHT_WRAPPED);
+			else if (value == "center_wrapped") setHorzFormatting(Atres::CENTER_WRAPPED);
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")         setVertFormatting(VERT_TOP);
-			else if (value == "center") setVertFormatting(VERT_CENTER);
-			else if (value == "bottom") setVertFormatting(VERT_BOTTOM);
+			if (value == "top")         setVertFormatting(Atres::TOP);
+			else if (value == "center") setVertFormatting(Atres::CENTER);
+			else if (value == "bottom") setVertFormatting(Atres::BOTTOM);
 		}
 		else if (name == "color") setTextColor(value);
 		else if (name == "effect")

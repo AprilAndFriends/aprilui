@@ -24,7 +24,8 @@ namespace AprilUI
 	hmap<hstr,Dataset*> g_datasets;
 	float default_scale=1;
 	gvec2 cursor_pos;
-
+	
+	void logMessage(chstr message) {}
 
 	void setCursorPos(float x,float y)
 	{
