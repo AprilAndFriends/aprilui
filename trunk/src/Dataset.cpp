@@ -362,13 +362,13 @@ namespace AprilUI
 		harray<hstr> scenes;
 
 		// texts
-		writelog("loading texts");
+		logMessage("loading texts");
 		mTexts.load(mFilenamePrefix+"/texts");
 		
 		// audio
 		mLoaded=1;
 
-		writelog("loading datadef: "+mFilename);
+		logMessage("loading datadef: "+mFilename);
 		readFile(mFilename);
 	}
 

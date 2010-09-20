@@ -11,7 +11,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "Dataset.h"
 #include "Exception.h"
-#include "Util.h"
 
 namespace AprilUI
 {

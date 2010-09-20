@@ -108,8 +108,4 @@ namespace AprilUI
 		return ".";
 	}
 	
-	void writelog(chstr msg)
-	{
-		rendersys->logMessage(msg,"[aprilui] ");
-	}
 }

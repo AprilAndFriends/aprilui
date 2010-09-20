@@ -29,8 +29,6 @@ namespace AprilUI
 	hstr generateName(chstr prefix);
 	int getdir(chstr dir, harray<hstr> &files);
 	
-	void writelog(chstr msg);
-	
 	hstr getPWD();
 }
 #endif

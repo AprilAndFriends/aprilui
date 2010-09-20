@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "AnimatorFrameAnimation.h"
-#include "Util.h"
+#include "AprilUI.h"
 #include "ObjectColoredImageBox.h"
 
 namespace AprilUI
@@ -51,7 +51,7 @@ namespace AprilUI
 			{
 				img->setImageByName(mImageBaseName+hstr(frame));
 			}
-			else writelog("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+			else logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 		}
 	}
 }
