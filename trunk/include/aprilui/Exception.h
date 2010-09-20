@@ -14,12 +14,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/exception.h>
 #include "AprilUIExport.h"
 
-#ifndef DEPRECATED_ATTRIBUTE
-// if the way to deprecate attributes is not defined
-// in project settings/makefile, then let's just not
-// deprecate attributes at all. just define to none.
-#define DEPRECATED_ATTRIBUTE
-#endif
 struct xml_node;
 
 namespace AprilUI
