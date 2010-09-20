@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <stdio.h>
 
 #include <april/RenderSystem.h>
 #include <atres/Atres.h>
@@ -26,8 +27,23 @@ namespace AprilUI
 	hmap<hstr,Dataset*> g_datasets;
 	float default_scale=1;
 	gvec2 cursor_pos;
-
-
+	void (*g_logFunction)(chstr)=aprilui_writelog;
+	
+	void logMessage(chstr message, chstr prefix)
+	{
+		g_logFunction(prefix + message);
+	}
+	
+	void aprilui_writelog(chstr message)
+	{
+		printf("%s\n", message.c_str());		
+	}
+	
+	void setLogFunction(void (*fnptr)(chstr))
+	{
+		g_logFunction=fnptr;
+	}
+	
 	void setCursorPos(float x,float y)
 	{
 		cursor_pos.set(x,y);

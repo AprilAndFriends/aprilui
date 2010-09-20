@@ -14,6 +14,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "AprilUI.h"
 #include "Exception.h"
 #include "TextMap.h"
 #include "Util.h"
@@ -53,7 +54,7 @@ namespace AprilUI
 		char *trp,utfc; // performance optimization
 		unsigned int str_start;
 		
-		writelog("loading texts from '"+folder+"'");
+		logMessage("loading texts from '"+folder+"'");
 		
 		if (mBuffer == 0) mBuffer=(char*) malloc(BLOCK_SIZE);
 		
@@ -61,7 +62,7 @@ namespace AprilUI
 		
 		foreach(hstr,it,content)
 		{
-			//writelog("Reading text file: "+*it);
+			//logMessage("Reading text file: "+*it);
 			f=fopen((*it).c_str(),"rb");
 			for (utfc=-1;utfc < 0;utfc=fgetc(f));
 			fseek(f, -1, SEEK_CUR);
@@ -102,7 +103,7 @@ namespace AprilUI
 	{
 		if (mBuffer)
 		{
-			writelog("destroying TextMap [ "+mName+" ]");
+			logMessage("destroying TextMap [ "+mName+" ]");
 			{ free(mBuffer); mBuffer=0; mBufferPos=1; }
 			mTexts.clear();
 		}
