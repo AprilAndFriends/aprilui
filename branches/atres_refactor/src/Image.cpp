@@ -99,18 +99,18 @@ namespace AprilUI
 		mVertices[3].x=dx+dw; mVertices[3].y=dy+dh;
 		
 		
-		rendersys->setTexture(mTexture);
+		April::rendersys->setTexture(mTexture);
 		if (mUnloadedFlag && mTexture->isLoaded())
 		{
 			updateTexCoords();
 			mUnloadedFlag=0;
 		}
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(mBlendMode);
 		if (r != 1 || g != 1 || b != 1 || a != 1)
-			rendersys->render(April::TriangleStrip,mVertices,4,r,g,b,a);
+			April::rendersys->render(April::TriangleStrip,mVertices,4,r,g,b,a);
 		else
-			rendersys->render(April::TriangleStrip,mVertices,4);
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
+			April::rendersys->render(April::TriangleStrip,mVertices,4);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(April::DEFAULT);
 	}
 
 	void Image::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
@@ -121,24 +121,24 @@ namespace AprilUI
 		mVertices[3].x= dw/2; mVertices[3].y= dh/2;
 		
 		
-		gtypes::Matrix4 temp_matrix=rendersys->getModelviewMatrix();
-		rendersys->setIdentityTransform();
-		rendersys->translate(centerx,centery);
-		rendersys->rotate(angle);
-		rendersys->setTexture(mTexture);
+		gtypes::Matrix4 temp_matrix=April::rendersys->getModelviewMatrix();
+		April::rendersys->setIdentityTransform();
+		April::rendersys->translate(centerx,centery);
+		April::rendersys->rotate(angle);
+		April::rendersys->setTexture(mTexture);
 		if (mUnloadedFlag && mTexture->isLoaded())
 		{
 			updateTexCoords();
 			mUnloadedFlag=0;
 		}
 		
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(mBlendMode);
 		if (r != 1 || g != 1 || b != 1 || a != 1)
-			rendersys->render(April::TriangleStrip,mVertices,4,r,g,b,a);
+			April::rendersys->render(April::TriangleStrip,mVertices,4,r,g,b,a);
 		else
-			rendersys->render(April::TriangleStrip,mVertices,4);
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
-		rendersys->setModelviewMatrix(temp_matrix);
+			April::rendersys->render(April::TriangleStrip,mVertices,4);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(April::DEFAULT);
+		April::rendersys->setModelviewMatrix(temp_matrix);
 	}
 
 	void Image::draw(float centerx,float centery,float dw,float dh,float angle)
@@ -367,9 +367,9 @@ namespace AprilUI
 		v[2].x=dx;    v[2].y=dy+dh;
 		v[3].x=dx+dw; v[3].y=dy+dh;
 		
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
-		rendersys->render(April::TriangleStrip,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(mBlendMode);
+		April::rendersys->render(April::TriangleStrip,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(April::DEFAULT);
 	}
 
 	void ColorImage::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
@@ -381,14 +381,14 @@ namespace AprilUI
 		v[3].x= dw/2; v[3].y= dh/2;
 
 		
-		gtypes::Matrix4 temp_matrix=rendersys->getModelviewMatrix();
-		rendersys->setIdentityTransform();
-		rendersys->translate(centerx,centery);
-		rendersys->rotate(angle);
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(mBlendMode);
-		rendersys->render(April::TriangleStrip,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
-		if (mBlendMode != April::ALPHA_BLEND) rendersys->setBlendMode(April::DEFAULT);
-		rendersys->setModelviewMatrix(temp_matrix);
+		gtypes::Matrix4 temp_matrix=April::rendersys->getModelviewMatrix();
+		April::rendersys->setIdentityTransform();
+		April::rendersys->translate(centerx,centery);
+		April::rendersys->rotate(angle);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(mBlendMode);
+		April::rendersys->render(April::TriangleStrip,v,4,mRed*r,mGreen*g,mBlue*b,mAlpha*a);
+		if (mBlendMode != April::ALPHA_BLEND) April::rendersys->setBlendMode(April::DEFAULT);
+		April::rendersys->setModelviewMatrix(temp_matrix);
 	}
 
 	NullImage::NullImage() : Image(0,"null",0,0,0,0,0)
