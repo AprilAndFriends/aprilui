@@ -110,6 +110,6 @@ namespace AprilUI
 	
 	void writelog(chstr msg)
 	{
-		rendersys->logMessage(msg,"[aprilui] ");
+		April::rendersys->logMessage(msg,"[aprilui] ");
 	}
 }
