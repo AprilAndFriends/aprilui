@@ -39,42 +39,11 @@ namespace AprilUI
 			return;
 		}
 		
-		float fonth=0;
-		int count=0;
-		hstr text=mText;
-		if (true) // if wrapped, remove
-		{
-			//2DO - to be removed later
-			if (mVertFormatting == Atres::BOTTOM)
-			{
-				if (text[text.size()-1] == '\n') text=text(0,text.size()-1);
-				count=Atres::getTextCount(mFontName,text.reverse(),width,height);
-				if (text[text.size()-count] == '\n') count--;
-				fonth=Atres::getTextHeight(mFontName,text.reverse()(0,count),width);
-			}
-			else
-				fonth=Atres::getTextHeight(mFontName,text,width);
-		}
-		else
-		{
-			fonth=Atres::getFontHeight(mFontName);
-		}
-		//2DO - to be removed later
-		if      (mVertFormatting == Atres::BOTTOM)
-		{
-			if (fonth < height)
-			{
-				offset_y+=height-fonth;
-			}
-		}
-		//2DO - to be removed later
-		else if (mVertFormatting == Atres::CENTER)
-			offset_y+=(height-fonth)/2;
 		April::Color color(mTextColor);
 		color.a *= alpha;
 		try
 		{
-			Atres::drawText(mFontName,offset_x,offset_y,width,height,text,
+			Atres::drawText(mFontName,offset_x,offset_y,width,height,mText,
 				mHorzFormatting,mVertFormatting,color,mFontEffect);
 		}
 		catch (hltypes::_resource_error e)
@@ -90,14 +59,14 @@ namespace AprilUI
 			logMessage("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
 			if ((bool)value)
 			{
-				if (mHorzFormatting == Atres::LEFT) setHorzFormatting(Atres::LEFT_WRAPPED);
-				if (mHorzFormatting == Atres::RIGHT) setHorzFormatting(Atres::RIGHT_WRAPPED);
+				if (mHorzFormatting == Atres::LEFT)   setHorzFormatting(Atres::LEFT_WRAPPED);
+				if (mHorzFormatting == Atres::RIGHT)  setHorzFormatting(Atres::RIGHT_WRAPPED);
 				if (mHorzFormatting == Atres::CENTER) setHorzFormatting(Atres::CENTER_WRAPPED);
 			}
 			else
 			{
-				if (mHorzFormatting == Atres::LEFT_WRAPPED) setHorzFormatting(Atres::LEFT);
-				if (mHorzFormatting == Atres::RIGHT_WRAPPED) setHorzFormatting(Atres::RIGHT);
+				if (mHorzFormatting == Atres::LEFT_WRAPPED)   setHorzFormatting(Atres::LEFT);
+				if (mHorzFormatting == Atres::RIGHT_WRAPPED)  setHorzFormatting(Atres::RIGHT);
 				if (mHorzFormatting == Atres::CENTER_WRAPPED) setHorzFormatting(Atres::CENTER);
 			}
 		}
