@@ -49,16 +49,16 @@ namespace AprilUI
 			if (mVertFormatting == Atres::BOTTOM)
 			{
 				if (text[text.size()-1] == '\n') text=text(0,text.size()-1);
-				count=Atres::getWrappedTextCount(mFontName,width,height,text.reverse());
+				count=Atres::getWrappedTextCount(mFontName,text.reverse(),width,height);
 				if (text[text.size()-count] == '\n') count--;
-				fonth=Atres::getWrappedTextHeight(mFontName,width,text.reverse()(0,count));
+				fonth=Atres::getWrappedTextHeight(mFontName,text.reverse()(0,count),width);
 			}
 			else
-				fonth=Atres::getWrappedTextHeight(mFontName,width,text);
+				fonth=Atres::getWrappedTextHeight(mFontName,text,width);
 		}
 		else
 		{
-			fonth=Atres::getTextHeight(mFontName,text);
+			fonth=Atres::getFontHeight(mFontName);
 		}
 		//2DO - to be removed later
 		if      (mVertFormatting == Atres::BOTTOM)
