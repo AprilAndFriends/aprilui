@@ -24,7 +24,6 @@ namespace AprilUI
 		mVertFormatting=Atres::CENTER;
 		mFontEffect=Atres::NONE;
 		mText="LabelBase: "+name;
-		mWrapText=1;
 	}
 	
 	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
@@ -43,18 +42,18 @@ namespace AprilUI
 		float fonth=0;
 		int count=0;
 		hstr text=mText;
-		if (mWrapText)
+		if (true) // if wrapped, remove
 		{
 			//2DO - to be removed later
 			if (mVertFormatting == Atres::BOTTOM)
 			{
 				if (text[text.size()-1] == '\n') text=text(0,text.size()-1);
-				count=Atres::getWrappedTextCount(mFontName,text.reverse(),width,height);
+				count=Atres::getTextCount(mFontName,text.reverse(),width,height);
 				if (text[text.size()-count] == '\n') count--;
-				fonth=Atres::getWrappedTextHeight(mFontName,text.reverse()(0,count),width);
+				fonth=Atres::getTextHeight(mFontName,text.reverse()(0,count),width);
 			}
 			else
-				fonth=Atres::getWrappedTextHeight(mFontName,text,width);
+				fonth=Atres::getTextHeight(mFontName,text,width);
 		}
 		else
 		{
@@ -76,7 +75,7 @@ namespace AprilUI
 		try
 		{
 			Atres::drawText(mFontName,offset_x,offset_y,width,height,text,
-				mHorzFormatting,color,mFontEffect);
+				mHorzFormatting,mVertFormatting,color,mFontEffect);
 		}
 		catch (hltypes::_resource_error e)
 		{ throw e; }
@@ -88,9 +87,8 @@ namespace AprilUI
 		else if (name == "text") setText(value);
 		else if (name == "wrap_text")
 		{
-			setWrapText(value);
 			logMessage("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
-			if (mWrapText)
+			if ((bool)value)
 			{
 				if (mHorzFormatting == Atres::LEFT) setHorzFormatting(Atres::LEFT_WRAPPED);
 				if (mHorzFormatting == Atres::RIGHT) setHorzFormatting(Atres::RIGHT_WRAPPED);
