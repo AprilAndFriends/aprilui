@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <aprilui/AprilUI.h>
 #include <atres/Atres.h>
 #include <hltypes/hstring.h>
 
@@ -34,8 +35,12 @@ namespace AprilUI
 	void TextButton::OnDraw(float offset_x,float offset_y)
 	{
 		April::Color temp=mTextColor;
+#ifndef _DEBUG
 		if (mBackgroundEnabled)
-			April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
+#else
+		if (!AprilUI::isDebugMode() && mBackgroundEnabled)
+#endif
+		April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		if (mPushed) mTextColor=mPushedTextColor;
 		else if (isCursorInside()) mTextColor=mHoverTextColor;
 		Label::OnDraw(offset_x,offset_y);
