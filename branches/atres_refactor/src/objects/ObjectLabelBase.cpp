@@ -34,6 +34,12 @@ namespace AprilUI
 		{
 			throw e;
 		}
+#ifdef _DEBUG
+		if (AprilUI::isDebugMode())
+		{
+			April::rendersys->drawColoredQuad(offset_x, offset_y, width, height, 0, 0, 0, 0.5f);
+		}
+#endif
 		if (mText.size() == 0)
 		{
 			return;

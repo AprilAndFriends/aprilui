@@ -24,6 +24,9 @@ namespace AprilUI
 	hmap<hstr,Dataset*> g_datasets;
 	float default_scale=1;
 	gvec2 cursor_pos;
+#ifdef _DEBUG
+	bool g_debug_mode = false;
+#endif
 	
 	void logMessage(chstr message) {}
 
@@ -67,6 +70,18 @@ namespace AprilUI
 		for (hmap<hstr,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
 			it2->second->update(time_increase);
 	}
+
+#ifdef _DEBUG
+	void setDebugMode(bool value)
+	{
+		g_debug_mode = value;
+	}
+	
+	bool isDebugMode()
+	{
+		return g_debug_mode;
+	}
+#endif
 
 	void setDefaultScale(float value)
 	{
