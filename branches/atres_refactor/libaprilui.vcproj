@@ -179,14 +179,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\AtresRenderInterface.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\AtresRenderInterface.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\CallbackEvent.cpp"
 				>
 			</File>
