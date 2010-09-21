@@ -23,6 +23,7 @@ namespace AprilUI
 	{
 		mText="EditBox: "+name;
 		mTypeName="EditBox";
+		mHorzFormatting=Atres::LEFT;
 		mPushed=0;
 		mMaxLength=0;
 		mPasswordChar=0;
@@ -31,7 +32,6 @@ namespace AprilUI
 		mCtrlMode=0;
 		mFilter="";
 		mBlinkTimer=0;
-		mWrapText=0;
 	}
 	
 	void EditBox::update(float time)
@@ -57,7 +57,7 @@ namespace AprilUI
 		int count;
 		while (true)
 		{
-			count=Atres::getWrappedTextCount(mFontName,mText(mOffsetIndex,mText.size()-mOffsetIndex),mWidth,0);
+			count=Atres::getTextCount(mFontName,mText(mOffsetIndex,mText.size()-mOffsetIndex),mWidth,0);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex=mCursorIndex;
@@ -105,7 +105,7 @@ namespace AprilUI
 		{
 			text=hstr(mPasswordChar,text.size());
 		}
-		int count=Atres::getWrappedTextCount(mFontName,text(mOffsetIndex,text.size()-mOffsetIndex),x-mX,0);
+		int count=Atres::getTextCount(mFontName,text(mOffsetIndex,text.size()-mOffsetIndex),x-mX,0);
 		setCursorIndex(mOffsetIndex+count);
 	}
 	
