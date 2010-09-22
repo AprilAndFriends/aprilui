@@ -23,6 +23,7 @@ namespace AprilUI
 			hstr mImageBaseName;
 			int mStartFrame,mEndFrame;
 			float mAnimationTime,mTimer;
+			int mLoop;
 		public:
 			FrameAnimation(chstr name);
 
