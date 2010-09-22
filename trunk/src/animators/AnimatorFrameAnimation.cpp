@@ -22,6 +22,7 @@ namespace AprilUI
 			mStartFrame=0; mEndFrame=100;
 			mAnimationTime=10;
 			mTimer=0;
+			mLoop=1;
 		}
 
 		void FrameAnimation::setProperty(chstr name,chstr value)
@@ -30,8 +31,8 @@ namespace AprilUI
 			else if (name == "end_frame")   mEndFrame=value;
 			else if (name == "time")        mAnimationTime=value;
 			else if (name == "base_name")   mImageBaseName=value;
+			else if (name == "loop")        mLoop=value;
 		}
-
 		void FrameAnimation::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
@@ -44,14 +45,23 @@ namespace AprilUI
 		void FrameAnimation::update(float k)
 		{
 			mTimer+=k;
-			if (mTimer >= mAnimationTime) mTimer-=mAnimationTime;
-			int frame=mStartFrame+(int) ((mEndFrame-mStartFrame)*mTimer/mAnimationTime);
-			ImageBox* img=dynamic_cast<ImageBox*>(mParent);
-			if (img)
+			if (mTimer >= mAnimationTime)
 			{
-				img->setImageByName(mImageBaseName+hstr(frame));
+				if (mLoop)
+				{
+					mTimer-=mAnimationTime;
+				}
 			}
-			else logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+			if (mTimer < mAnimationTime)
+			{
+				int frame=mStartFrame+(int) ((mEndFrame-mStartFrame)*mTimer/mAnimationTime);
+				ImageBox* img=dynamic_cast<ImageBox*>(mParent);
+				if (img)
+				{
+					img->setImageByName(mImageBaseName+hstr(frame));
+				}
+				else logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+			}
 		}
 	}
 }
