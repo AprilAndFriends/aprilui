@@ -50,7 +50,7 @@ namespace AprilUI
 		try
 		{
 			Atres::drawText(mFontName,offset_x,offset_y,width,height,mText,
-				mHorzFormatting,mVertFormatting,color,mFontEffect);
+				mHorzFormatting,mVertFormatting,color,gvec2(),mFontEffect);
 		}
 		catch (hltypes::_resource_error e)
 		{ throw e; }
