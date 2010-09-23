@@ -8,6 +8,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <atres/Atres.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/hstring.h>
 
@@ -49,8 +50,19 @@ namespace AprilUI
 		color.a *= alpha;
 		try
 		{
-			Atres::drawText(mFontName,offset_x,offset_y,width,height,mText,
-				mHorzFormatting,mVertFormatting,color,gvec2(),mFontEffect);
+			grect rect(offset_x,offset_y,width,height);
+			switch (mFontEffect)
+			{
+			case Atres::BORDER:
+				Atres::drawTextBordered(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
+				break;
+			case Atres::SHADOW:
+				Atres::drawTextShadowed(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
+				break;
+			default:
+				Atres::drawText(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
+				break;
+			}
 		}
 		catch (hltypes::_resource_error e)
 		{ throw e; }
@@ -97,7 +109,6 @@ namespace AprilUI
 			if (value == "none")           setFontEffect(Atres::NONE);
 			else if (value == "shadow")    setFontEffect(Atres::SHADOW);
 			else if (value == "border")    setFontEffect(Atres::BORDER);
-			else if (value == "border_4")  setFontEffect(Atres::BORDER_4);
 		}
 	}
 
