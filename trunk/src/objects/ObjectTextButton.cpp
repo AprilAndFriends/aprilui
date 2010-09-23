@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <atres/Atres.h>
 #include <hltypes/hstring.h>
 
+#include "AprilUI.h"
 #include "Dataset.h"
 #include "ObjectTextButton.h"
 
@@ -18,9 +19,6 @@ namespace AprilUI
 	TextButton::TextButton(chstr name,float x,float y,float w,float h) :
 		Label(name,x,y,w,h)
 	{
-		mHorzFormatting=Atres::CENTER;
-		mVertFormatting=VERT_CENTER;
-		mFontEffect=Atres::NONE;
 		mText="TextButton: "+name;
 		mTypeName="TextButton";
 		mPushed=0;
@@ -37,8 +35,12 @@ namespace AprilUI
 	void TextButton::OnDraw(float offset_x,float offset_y)
 	{
 		April::Color temp=mTextColor;
+#ifndef _DEBUG
 		if (mBackgroundEnabled)
-			rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
+#else
+		if (!AprilUI::isDebugMode() && mBackgroundEnabled)
+#endif
+			April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		if (mPushed) mTextColor=mPushedTextColor;
 		else if (isCursorInside()) mTextColor=mHoverTextColor;
 		Label::OnDraw(offset_x,offset_y);

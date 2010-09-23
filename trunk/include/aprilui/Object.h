@@ -23,11 +23,6 @@ namespace AprilUI
 	class Event;
 	class EventArgs;
 	
-	enum VertFormatting
-	{
-		VERT_TOP,VERT_CENTER,VERT_BOTTOM
-	};
-	
 	class AprilUIExport Object
 	{
 	protected:

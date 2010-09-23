@@ -13,7 +13,6 @@
     <File Name="src/TextMap.cpp"/>
     <File Name="src/Util.cpp"/>
     <File Name="src/xmlHelper.cpp"/>
-    <File Name="src/AtresRenderInterface.cpp"/>
     <File Name="src/AprilUI.cpp"/>
     <File Name="src/CallbackEvent.cpp"/>
     <File Name="src/Image.cpp"/>
@@ -56,7 +55,6 @@
     <File Name="include/aprilui/TextMap.h"/>
     <File Name="src/Util.h"/>
     <File Name="include/aprilui/AprilUI.h"/>
-    <File Name="src/AtresRenderInterface.h"/>
     <File Name="include/aprilui/Animators.h"/>
     <File Name="include/aprilui/AprilUIExport.h"/>
     <File Name="include/aprilui/xmlHelper.h"/>
@@ -99,10 +97,37 @@
   </VirtualDirectory>
   <Dependencies Name="Linux_Debug"/>
   <Dependencies Name="Release"/>
+  <Dependencies Name="Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+  </Dependencies>
   <Settings Type="Dynamic Library">
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="."/>
+        <IncludePath Value="./src"/>
+        <IncludePath Value="../include/iconv"/>
+        <IncludePath Value="./include"/>
+        <IncludePath Value="../include"/>
+        <IncludePath Value="../april/include"/>
+        <IncludePath Value="../atres/include"/>
+        <IncludePath Value="./include/aprilui"/>
+        <IncludePath Value="../gtypes/include"/>
+        <IncludePath Value="../hltypes/include"/>
+        <Preprocessor Value="APRILUI_EXPORTS"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="./lib"/>
+        <LibraryPath Value="../lib"/>
+        <Library Value="libxml2"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <Preprocessor Value="_WIN32"/>
+        <Preprocessor Value="_DEBUG"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="./bin/Debug"/>
@@ -142,6 +167,7 @@
     <Configuration Name="Linux_Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
         <IncludePath Value="."/>
+        <Preprocessor Value="_DEBUG"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="./bin/Linux_Debug"/>
@@ -215,31 +241,5 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
-    <GlobalSettings>
-      <Compiler Options="">
-        <IncludePath Value="."/>
-        <IncludePath Value="./src"/>
-        <IncludePath Value="../include/iconv"/>
-        <IncludePath Value="./include"/>
-        <IncludePath Value="../include"/>
-        <IncludePath Value="../april/include"/>
-        <IncludePath Value="../atres/include"/>
-        <IncludePath Value="./include/aprilui"/>
-        <IncludePath Value="../gtypes/include"/>
-        <IncludePath Value="../hltypes/include"/>
-        <Preprocessor Value="APRILUI_EXPORTS"/>
-      </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="./lib"/>
-        <LibraryPath Value="../lib"/>
-        <Library Value="libxml2"/>
-      </Linker>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-  </Dependencies>
 </CodeLite_Project>

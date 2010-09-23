@@ -47,7 +47,7 @@ namespace AprilUI
 		{
 			mTimer+=k;
 			float alpha=dsin(mTimer*mSpeed)*mAmplitude+mBaseline;
-			mParent->setAlpha(hmax(0.0f,hmin(1.0f,alpha)));
+			mParent->setAlpha(hclamp(alpha,0.0f,1.0f));
 		}
 	}
 }

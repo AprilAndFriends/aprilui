@@ -15,7 +15,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "AprilUI.h"
-#include "AtresRenderInterface.h"
 #include "Dataset.h"
 #include "Exception.h"
 
@@ -23,10 +22,13 @@ namespace AprilUI
 {
 	bool register_lock=0;
 	hmap<int,April::Texture*> g_font_textures;
-	AtresAprilInterface* atres_render_iface=0;
 	hmap<hstr,Dataset*> g_datasets;
 	float default_scale=1;
 	gvec2 cursor_pos;
+#ifdef _DEBUG
+	bool g_debug_mode = false;
+#endif
+	
 	void (*g_logFunction)(chstr)=aprilui_writelog;
 	
 	void logMessage(chstr message, chstr prefix)
@@ -56,8 +58,6 @@ namespace AprilUI
 
 	void init()
 	{
-		atres_render_iface=new AtresAprilInterface();
-		Atres::setRenderInterface(atres_render_iface);
 	}
 
 	Dataset* getDatasetByName(chstr name)
@@ -87,6 +87,18 @@ namespace AprilUI
 			it2->second->update(time_increase);
 	}
 
+#ifdef _DEBUG
+	void setDebugMode(bool value)
+	{
+		g_debug_mode = value;
+	}
+	
+	bool isDebugMode()
+	{
+		return g_debug_mode;
+	}
+#endif
+
 	void setDefaultScale(float value)
 	{
 		default_scale=value;
@@ -100,7 +112,6 @@ namespace AprilUI
 	void destroy()
 	{
 		register_lock=1;
-		if (atres_render_iface) delete atres_render_iface;
 
 		for (hmap<int,April::Texture*>::iterator it=g_font_textures.begin();it!=g_font_textures.end();it++)
 			delete it->second;

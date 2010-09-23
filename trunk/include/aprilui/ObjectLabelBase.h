@@ -15,7 +15,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
-#include "Object.h" // needed because of VertFormatting
 
 namespace AprilUI
 {
@@ -24,14 +23,13 @@ namespace AprilUI
 	protected:
 		hstr mText;
 		hstr mFontName;
-		bool mWrapText;
 		Atres::Alignment mHorzFormatting;
-		VertFormatting mVertFormatting;
+		Atres::Alignment mVertFormatting;
 		Atres::Effect mFontEffect;
-		
 		April::Color mTextColor;
 
 		void _drawLabel(float offset_x,float offset_y,float width,float height,float alpha);
+		
 	public:
 		LabelBase(chstr name);
 		
@@ -42,17 +40,14 @@ namespace AprilUI
 		hstr getFont() { return mFontName; }
 		void setFont(chstr font) { mFontName=font; }
 		
-		bool getWrapText() { return mWrapText; }
-		void setWrapText(bool wrapText) { mWrapText=wrapText; }
-		
 		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
 		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
 		
 		void setFontEffect(Atres::Effect f) { mFontEffect=f; }
 		Atres::Effect getFontEffect() { return mFontEffect; }
 		
-		void setVertFormatting(VertFormatting f) { mVertFormatting=f; }
-		VertFormatting getVertFormatting() { return mVertFormatting; }
+		void setVertFormatting(Atres::Alignment f) { mVertFormatting=f; }
+		Atres::Alignment getVertFormatting() { return mVertFormatting; }
 		
 		virtual void setProperty(chstr name,chstr value);
 
