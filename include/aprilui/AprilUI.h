@@ -25,6 +25,11 @@ namespace AprilUI
 	void logMessage(chstr message, chstr prefix = "[aprilui] ");
 	void aprilui_writelog(chstr message);
 	
+#ifdef _DEBUG
+	AprilUIFnExport void setDebugMode(bool value);
+	AprilUIFnExport bool isDebugMode();
+#endif
+	
 	//! used to determine width and height of objects who don't have w & h params in xml
 	AprilUIFnExport void setDefaultScale(float value);
 	AprilUIFnExport float getDefaultScale();

@@ -21,11 +21,9 @@ namespace AprilUI
 	EditBox::EditBox(chstr name,float x,float y,float w,float h) :
 		Label(name,x,y,w,h)
 	{
-		mHorzFormatting=Atres::CENTER;
-		mVertFormatting=VERT_CENTER;
-		mFontEffect=Atres::NONE;
 		mText="EditBox: "+name;
 		mTypeName="EditBox";
+		mHorzFormatting=Atres::LEFT;
 		mPushed=0;
 		mMaxLength=0;
 		mPasswordChar=0;
@@ -34,7 +32,6 @@ namespace AprilUI
 		mCtrlMode=0;
 		mFilter="";
 		mBlinkTimer=0;
-		mWrapText=0;
 	}
 	
 	void EditBox::update(float time)
@@ -46,7 +43,7 @@ namespace AprilUI
 
 	void EditBox::OnDraw(float offset_x,float offset_y)
 	{
-		rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
+		April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		hstr text=mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -60,7 +57,7 @@ namespace AprilUI
 		int count;
 		while (true)
 		{
-			count=Atres::getWrappedTextCount(mFontName,mWidth,0,mText(mOffsetIndex,mText.size()-mOffsetIndex));
+			count=Atres::getTextCount(mFontName,mText(mOffsetIndex,mText.size()-mOffsetIndex),mWidth,0);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex=mCursorIndex;
@@ -80,8 +77,8 @@ namespace AprilUI
 		if (mDataPtr && this == mDataPtr->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
 			int w=Atres::getTextWidth(mFontName,mText(0,mCursorIndex-mOffsetIndex));
-			int h=Atres::getTextHeight(mFontName,mText);
-			rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2, 2, h,
+			int h=Atres::getFontHeight(mFontName);
+			April::rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2, 2, h,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
 		}
 		mText=text;
@@ -108,7 +105,7 @@ namespace AprilUI
 		{
 			text=hstr(mPasswordChar,text.size());
 		}
-		int count=Atres::getWrappedTextCount(mFontName,x-mX,0,text(mOffsetIndex,text.size()-mOffsetIndex));
+		int count=Atres::getTextCount(mFontName,text(mOffsetIndex,text.size()-mOffsetIndex),x-mX,0);
 		setCursorIndex(mOffsetIndex+count);
 	}
 	

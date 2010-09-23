@@ -8,9 +8,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <atres/Atres.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/hstring.h>
 
+#include "AprilUI.h"
 #include "Exception.h"
 #include "ObjectLabelBase.h"
 
@@ -20,10 +22,9 @@ namespace AprilUI
 		   mTextColor(255,255,255,255)
 	{
 		mHorzFormatting=Atres::CENTER;
-		mVertFormatting=VERT_CENTER;
+		mVertFormatting=Atres::CENTER;
 		mFontEffect=Atres::NONE;
 		mText="LabelBase: "+name;
-		mWrapText=1;
 	}
 	
 	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
@@ -34,64 +35,33 @@ namespace AprilUI
 		{
 			throw e;
 		}
+#ifdef _DEBUG
+		if (AprilUI::isDebugMode())
+		{
+			April::rendersys->drawColoredQuad(offset_x, offset_y, width, height, 0, 0, 0, 0.5f);
+		}
+#endif
 		if (mText.size() == 0)
 		{
 			return;
 		}
 		
-		float fonth=0;
-		int count=0;
-		hstr text=mText;
-		if (mWrapText)
-		{
-			if (mVertFormatting == VERT_BOTTOM)
-			{
-				if (text[text.size()-1] == '\n') text=text(0,text.size()-1);
-				count=Atres::getWrappedTextCount(mFontName,width,height,text.reverse());
-				if (text[text.size()-count] == '\n') count--;
-				fonth=Atres::getWrappedTextHeight(mFontName,width,text.reverse()(0,count));
-			}
-			else
-				fonth=Atres::getWrappedTextHeight(mFontName,width,text);
-		}
-		else
-		{
-			fonth=Atres::getTextHeight(mFontName,text);
-		}
-		if      (mVertFormatting == VERT_BOTTOM)
-		{
-			if (fonth < height)
-			{
-				offset_y+=height-fonth;
-			}
-		}
-		else if (mVertFormatting == VERT_CENTER)
-			offset_y+=(height-fonth)/2;
-		if      (mHorzFormatting == Atres::RIGHT)  offset_x+=width;
-		else if (mHorzFormatting == Atres::CENTER) offset_x+=width/2;
-
+		April::Color color(mTextColor);
+		color.a *= alpha;
 		try
 		{
-			if (mWrapText)
+			grect rect(offset_x,offset_y,width,height);
+			switch (mFontEffect)
 			{
-				if (count > 0)
-				{
-					Atres::drawWrappedText(mFontName,offset_x,offset_y,width,height,text(text.size()-count, count),
-						mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-						mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
-				}
-				else
-				{
-					Atres::drawWrappedText(mFontName,offset_x,offset_y,width,height,text,
-						mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-						mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
-				}
-			}
-			else
-			{
-				Atres::drawText(mFontName,offset_x,offset_y,width,height,text,
-					mTextColor.r_float(),mTextColor.g_float(),mTextColor.b_float(),
-					mTextColor.a_float()*alpha,mHorzFormatting,mFontEffect);
+			case Atres::BORDER:
+				Atres::drawTextBordered(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
+				break;
+			case Atres::SHADOW:
+				Atres::drawTextShadowed(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
+				break;
+			default:
+				Atres::drawText(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
+				break;
 			}
 		}
 		catch (hltypes::_resource_error e)
@@ -102,18 +72,36 @@ namespace AprilUI
 	{
 		if (name == "font") setFont(value);
 		else if (name == "text") setText(value);
-		else if (name == "wrap_text") setWrapText(value);
+		else if (name == "wrap_text")
+		{
+			logMessage("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
+			if ((bool)value)
+			{
+				if (mHorzFormatting == Atres::LEFT)   setHorzFormatting(Atres::LEFT_WRAPPED);
+				if (mHorzFormatting == Atres::RIGHT)  setHorzFormatting(Atres::RIGHT_WRAPPED);
+				if (mHorzFormatting == Atres::CENTER) setHorzFormatting(Atres::CENTER_WRAPPED);
+			}
+			else
+			{
+				if (mHorzFormatting == Atres::LEFT_WRAPPED)   setHorzFormatting(Atres::LEFT);
+				if (mHorzFormatting == Atres::RIGHT_WRAPPED)  setHorzFormatting(Atres::RIGHT);
+				if (mHorzFormatting == Atres::CENTER_WRAPPED) setHorzFormatting(Atres::CENTER);
+			}
+		}
 		else if (name == "horz_formatting")
 		{
-			if (value == "left")        setHorzFormatting(Atres::LEFT);
-			else if (value == "right")  setHorzFormatting(Atres::RIGHT);
-			else if (value == "center") setHorzFormatting(Atres::CENTER);
+			if (value == "left")                setHorzFormatting(Atres::LEFT);
+			else if (value == "right")          setHorzFormatting(Atres::RIGHT);
+			else if (value == "center")         setHorzFormatting(Atres::CENTER);
+			else if (value == "left_wrapped")   setHorzFormatting(Atres::LEFT_WRAPPED);
+			else if (value == "right_wrapped")  setHorzFormatting(Atres::RIGHT_WRAPPED);
+			else if (value == "center_wrapped") setHorzFormatting(Atres::CENTER_WRAPPED);
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")         setVertFormatting(VERT_TOP);
-			else if (value == "center") setVertFormatting(VERT_CENTER);
-			else if (value == "bottom") setVertFormatting(VERT_BOTTOM);
+			if (value == "top")         setVertFormatting(Atres::TOP);
+			else if (value == "center") setVertFormatting(Atres::CENTER);
+			else if (value == "bottom") setVertFormatting(Atres::BOTTOM);
 		}
 		else if (name == "color") setTextColor(value);
 		else if (name == "effect")
@@ -121,7 +109,6 @@ namespace AprilUI
 			if (value == "none")           setFontEffect(Atres::NONE);
 			else if (value == "shadow")    setFontEffect(Atres::SHADOW);
 			else if (value == "border")    setFontEffect(Atres::BORDER);
-			else if (value == "border_4")  setFontEffect(Atres::BORDER_4);
 		}
 	}
 

@@ -102,7 +102,7 @@ namespace AprilUI
 		catch (_XMLException) { }
 		
 		
-		April::Texture* t=rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
+		April::Texture* t=April::rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
 		if (node->pexists("filter"))
 		{
@@ -188,7 +188,7 @@ namespace AprilUI
 		try   { dynamic_load=node->pint("dynamic_load")!=0; }
 		catch (_XMLException) { }
 		
-		April::Texture* t=rendersys->loadRAMTexture(mFilenamePrefix+"/"+filename,dynamic_load);
+		April::Texture* t=April::rendersys->loadRAMTexture(mFilenamePrefix+"/"+filename,dynamic_load);
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
 		mTextures[tex_name]=t;
 	
