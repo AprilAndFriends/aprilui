@@ -13,6 +13,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "AprilUI.h"
 #include "Dataset.h"
 #include "ObjectEditBox.h"
 
@@ -43,7 +44,10 @@ namespace AprilUI
 
 	void EditBox::OnDraw(float offset_x,float offset_y)
 	{
-		April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
+#ifdef _DEBUG
+		if (!AprilUI::isDebugMode())
+#endif
+			April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
 		hstr text=mText;
 		if (mPasswordChar && mText != "")
 		{
