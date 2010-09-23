@@ -21,7 +21,7 @@ namespace AprilUI
 	LabelBase::LabelBase(chstr name) :
 		   mTextColor(255,255,255,255)
 	{
-		mHorzFormatting=Atres::CENTER;
+		mHorzFormatting=Atres::CENTER_WRAPPED;
 		mVertFormatting=Atres::CENTER;
 		mFontEffect=Atres::NONE;
 		mText="LabelBase: "+name;
@@ -75,18 +75,6 @@ namespace AprilUI
 		else if (name == "wrap_text")
 		{
 			logMessage("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
-			if ((bool)value)
-			{
-				if (mHorzFormatting == Atres::LEFT)   setHorzFormatting(Atres::LEFT_WRAPPED);
-				if (mHorzFormatting == Atres::RIGHT)  setHorzFormatting(Atres::RIGHT_WRAPPED);
-				if (mHorzFormatting == Atres::CENTER) setHorzFormatting(Atres::CENTER_WRAPPED);
-			}
-			else
-			{
-				if (mHorzFormatting == Atres::LEFT_WRAPPED)   setHorzFormatting(Atres::LEFT);
-				if (mHorzFormatting == Atres::RIGHT_WRAPPED)  setHorzFormatting(Atres::RIGHT);
-				if (mHorzFormatting == Atres::CENTER_WRAPPED) setHorzFormatting(Atres::CENTER);
-			}
 		}
 		else if (name == "horz_formatting")
 		{

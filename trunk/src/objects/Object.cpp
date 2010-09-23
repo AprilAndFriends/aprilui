@@ -155,14 +155,29 @@ namespace AprilUI
 
 	void Object::OnKeyDown(unsigned int keycode)
 	{
+		if (mDataPtr)
+		{
+			Object* object=mDataPtr->getFocusedObject();
+			if (object) object->OnKeyDown(keycode);
+		}
 	}
 
 	void Object::OnKeyUp(unsigned int keycode)
 	{
+		if (mDataPtr)
+		{
+			Object* object=mDataPtr->getFocusedObject();
+			if (object) object->OnKeyUp(keycode);
+		}
 	}
-
+	
 	void Object::OnChar(unsigned int charcode)
 	{
+		if (mDataPtr)
+		{
+			Object* object=mDataPtr->getFocusedObject();
+			if (object) object->OnChar(charcode);
+		}
 	}
 
 	void Object::registerEvent(chstr event_name,void (*callback)(EventArgs*))
