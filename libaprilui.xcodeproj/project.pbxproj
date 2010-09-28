@@ -71,7 +71,6 @@
 		7FC8042511EC721E00851062 /* TextMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041C11EC721E00851062 /* TextMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042611EC721E00851062 /* xmlHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041D11EC721E00851062 /* xmlHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8043211EC725B00851062 /* AprilUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042811EC725B00851062 /* AprilUI.cpp */; };
-		7FC8043311EC725B00851062 /* AtresRenderInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042911EC725B00851062 /* AtresRenderInterface.cpp */; };
 		7FC8043411EC725B00851062 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
 		7FC8043511EC725B00851062 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
 		7FC8043611EC725B00851062 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042C11EC725B00851062 /* Image.cpp */; };
@@ -79,7 +78,6 @@
 		7FC8043911EC725B00851062 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042F11EC725B00851062 /* Util.cpp */; };
 		7FC8043A11EC725B00851062 /* xmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8043011EC725B00851062 /* xmlHelper.cpp */; };
 		7FC8044011EC727100851062 /* _dirent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8043D11EC727100851062 /* _dirent.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		7FC8044111EC727100851062 /* AtresRenderInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8043E11EC727100851062 /* AtresRenderInterface.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8044211EC727100851062 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8043F11EC727100851062 /* Util.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7FC8045E11EC739000851062 /* april.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8045D11EC739000851062 /* april.framework */; };
 		7FC8046011EC739900851062 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8045F11EC739900851062 /* gtypes.framework */; };
@@ -157,7 +155,6 @@
 		7FC8041C11EC721E00851062 /* TextMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextMap.h; path = include/aprilui/TextMap.h; sourceTree = "<group>"; };
 		7FC8041D11EC721E00851062 /* xmlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlHelper.h; path = include/aprilui/xmlHelper.h; sourceTree = "<group>"; };
 		7FC8042811EC725B00851062 /* AprilUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AprilUI.cpp; path = src/AprilUI.cpp; sourceTree = "<group>"; };
-		7FC8042911EC725B00851062 /* AtresRenderInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AtresRenderInterface.cpp; path = src/AtresRenderInterface.cpp; sourceTree = "<group>"; };
 		7FC8042A11EC725B00851062 /* Dataset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Dataset.cpp; path = src/Dataset.cpp; sourceTree = "<group>"; };
 		7FC8042B11EC725B00851062 /* Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Exception.cpp; path = src/Exception.cpp; sourceTree = "<group>"; };
 		7FC8042C11EC725B00851062 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = src/Image.cpp; sourceTree = "<group>"; };
@@ -165,7 +162,6 @@
 		7FC8042F11EC725B00851062 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = src/Util.cpp; sourceTree = "<group>"; };
 		7FC8043011EC725B00851062 /* xmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlHelper.cpp; path = src/xmlHelper.cpp; sourceTree = "<group>"; };
 		7FC8043D11EC727100851062 /* _dirent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _dirent.h; path = src/_dirent.h; sourceTree = "<group>"; };
-		7FC8043E11EC727100851062 /* AtresRenderInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtresRenderInterface.h; path = src/AtresRenderInterface.h; sourceTree = "<group>"; };
 		7FC8043F11EC727100851062 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = src/Util.h; sourceTree = "<group>"; };
 		7FC8045D11EC739000851062 /* april.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = april.framework; path = Library/Frameworks/april.framework; sourceTree = SDKROOT; };
 		7FC8045F11EC739900851062 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = Library/Frameworks/gtypes.framework; sourceTree = SDKROOT; };
@@ -303,7 +299,6 @@
 				7F6D548C1201B06200A2BDF6 /* objects */,
 				7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */,
 				7FC8042811EC725B00851062 /* AprilUI.cpp */,
-				7FC8042911EC725B00851062 /* AtresRenderInterface.cpp */,
 				7FC8042A11EC725B00851062 /* Dataset.cpp */,
 				7FC8042B11EC725B00851062 /* Exception.cpp */,
 				7FC8042C11EC725B00851062 /* Image.cpp */,
@@ -364,7 +359,6 @@
 			isa = PBXGroup;
 			children = (
 				7FC8043D11EC727100851062 /* _dirent.h */,
-				7FC8043E11EC727100851062 /* AtresRenderInterface.h */,
 				7FC8043F11EC727100851062 /* Util.h */,
 			);
 			name = "Private Includes";
@@ -387,7 +381,6 @@
 				7FC8042511EC721E00851062 /* TextMap.h in Headers */,
 				7FC8042611EC721E00851062 /* xmlHelper.h in Headers */,
 				7FC8044011EC727100851062 /* _dirent.h in Headers */,
-				7FC8044111EC727100851062 /* AtresRenderInterface.h in Headers */,
 				7FC8044211EC727100851062 /* Util.h in Headers */,
 				7FCD397112018C7B00608217 /* CallbackEvent.h in Headers */,
 				7FCD397712018C7B00608217 /* Event.h in Headers */,
@@ -451,7 +444,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libaprilui" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* libaprilui */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
@@ -478,7 +478,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FC8043211EC725B00851062 /* AprilUI.cpp in Sources */,
-				7FC8043311EC725B00851062 /* AtresRenderInterface.cpp in Sources */,
 				7FC8043411EC725B00851062 /* Dataset.cpp in Sources */,
 				7FC8043511EC725B00851062 /* Exception.cpp in Sources */,
 				7FC8043611EC725B00851062 /* Image.cpp in Sources */,
@@ -524,6 +523,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -533,6 +534,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = aprilui;
+				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
