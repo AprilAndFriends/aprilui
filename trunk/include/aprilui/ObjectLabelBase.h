@@ -23,6 +23,7 @@ namespace AprilUI
 	protected:
 		hstr mText;
 		hstr mFontName;
+		bool mTextFormatting;
 		Atres::Alignment mHorzFormatting;
 		Atres::Alignment mVertFormatting;
 		Atres::Effect mFontEffect;

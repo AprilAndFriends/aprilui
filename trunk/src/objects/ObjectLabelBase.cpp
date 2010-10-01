@@ -24,6 +24,7 @@ namespace AprilUI
 		mHorzFormatting=Atres::CENTER_WRAPPED;
 		mVertFormatting=Atres::CENTER;
 		mFontEffect=Atres::NONE;
+		mTextFormatting=true;
 		mText="LabelBase: "+name;
 	}
 	
@@ -46,22 +47,28 @@ namespace AprilUI
 			return;
 		}
 		
+		hstr text=mText;
+		switch (mFontEffect)
+		{
+		case Atres::BORDER:
+			text="[b]"+text;
+			break;
+		case Atres::SHADOW:
+			text="[s]"+text;
+			break;
+		}
 		April::Color color(mTextColor);
 		color.a *= alpha;
+		grect rect(offset_x,offset_y,width,height);
 		try
 		{
-			grect rect(offset_x,offset_y,width,height);
-			switch (mFontEffect)
+			if (mTextFormatting)
 			{
-			case Atres::BORDER:
-				Atres::drawTextBordered(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
-				break;
-			case Atres::SHADOW:
-				Atres::drawTextShadowed(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
-				break;
-			default:
-				Atres::drawText(mFontName,rect,mText,mHorzFormatting,mVertFormatting,color);
-				break;
+				Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
+			}
+			else
+			{
+				Atres::drawTextUnformatted(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
 			}
 		}
 		catch (hltypes::_resource_error e)
