@@ -25,6 +25,7 @@ namespace AprilUI
 		mText="EditBox: "+name;
 		mTypeName="EditBox";
 		mHorzFormatting=Atres::LEFT;
+		mTextFormatting=false;
 		mPushed=0;
 		mMaxLength=0;
 		mPasswordChar=0;
@@ -61,7 +62,7 @@ namespace AprilUI
 		int count;
 		while (true)
 		{
-			count=Atres::getTextCount(mFontName,mText(mOffsetIndex,mText.size()-mOffsetIndex),mWidth);
+			count=Atres::getTextCountUnformatted(mFontName,mText(mOffsetIndex,mText.size()-mOffsetIndex),mWidth);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex=mCursorIndex;
@@ -80,7 +81,7 @@ namespace AprilUI
 		mWidth+=12;
 		if (mDataPtr && this == mDataPtr->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
-			float w=Atres::getTextWidth(mFontName,mText(0,mCursorIndex-mOffsetIndex));
+			float w=Atres::getTextWidthUnformatted(mFontName,mText(0,mCursorIndex-mOffsetIndex));
 			float h=Atres::getFontHeight(mFontName);
 			April::rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2+2, 2, h - 4,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
@@ -109,7 +110,7 @@ namespace AprilUI
 		{
 			text=hstr(mPasswordChar,text.size());
 		}
-		int count=Atres::getTextCount(mFontName,text(mOffsetIndex,text.size()-mOffsetIndex),x-mX);
+		int count=Atres::getTextCountUnformatted(mFontName,text(mOffsetIndex,text.size()-mOffsetIndex),x-mX);
 		setCursorIndex(mOffsetIndex+count);
 	}
 	
