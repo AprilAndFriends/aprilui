@@ -114,12 +114,11 @@ namespace AprilUI
 		if (name == "") return "";
 		if (!exists(name))
 		{
-	#ifdef _DEBUG
-			throw KeyException("Unable to find text entry '"+name+"'");
-	#else
-			sprintf(key_error_text,"[Text entry '%s' doesn't exist]",name.c_str());
-			return key_error_text;
-	#endif
+			hstr error_message = hsprintf("Text entry '%s' doesn't exist",name.c_str());
+#ifdef _DEBUG
+			logMessage(error_message);
+#endif
+			return ("[" + error_message + "]").c_str();
 		}
 		return mBuffer+mTexts[name];
 	}
