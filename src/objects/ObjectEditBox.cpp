@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <atres/Font.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
+#include <april/Window.h>
 
 #include "AprilUI.h"
 #include "Dataset.h"
@@ -166,6 +167,7 @@ namespace AprilUI
 				mDataPtr->setFocusedObject(this);
 				mBlinkTimer=0;
 			}
+			April::rendersys->getWindow()->beginKeyboardHandling();
 			mPushed=false;
 			triggerEvent("Click",x,y,0);
 			return true;

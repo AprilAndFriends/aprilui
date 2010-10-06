@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <map>
 
 #include <april/RenderSystem.h>
+#include <april/Window.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
@@ -127,7 +128,14 @@ namespace AprilUI
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
 		
-		if (mDataPtr) mDataPtr->setFocusedObject(0);
+		if (mDataPtr) 
+		{
+			if(mDataPtr->getFocusedObject())
+			{
+				April::rendersys->getWindow()->terminateKeyboardHandling();
+			}
+			mDataPtr->setFocusedObject(0);
+		}
 		foreach_r (Object*, it, mChildren)
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
 				if ((*it)->OnMouseDown(button,x-mX,y-mY)) return true;
