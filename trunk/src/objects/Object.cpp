@@ -182,7 +182,8 @@ namespace AprilUI
 
 	void Object::registerEvent(chstr event_name,void (*callback)(EventArgs*))
 	{
-		mEvents[event_name]=new CallbackEvent(callback);
+        if (callback == 0) mEvents.remove_key(event_name);
+        else mEvents[event_name]=new CallbackEvent(callback);
 	}
 
 	void Object::triggerEvent(chstr name,float x,float y,char* extra)
