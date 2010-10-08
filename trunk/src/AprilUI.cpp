@@ -28,6 +28,7 @@ namespace AprilUI
 #ifdef _DEBUG
 	bool g_debug_mode = false;
 #endif
+	hstr defaultTextsPath;
 	
 	void (*g_logFunction)(chstr)=aprilui_writelog;
 	
@@ -99,6 +100,16 @@ namespace AprilUI
 	}
 #endif
 
+	hstr getDefaultTextsPath()
+	{
+		return defaultTextsPath;
+	}
+	
+	void setDefaultTextsPath(chstr path)
+	{
+		defaultTextsPath=path;
+	}
+	
 	void setDefaultScale(float value)
 	{
 		default_scale=value;

@@ -92,7 +92,7 @@ namespace AprilUI
 	April::Texture* Dataset::parseTexture(xml_node* node)
 	{
 		hstr filename=node->pstr("filename");
-		int slash=filename.find("/")+1;
+		int slash=filename.rfind("/")+1;
 		hstr tex_name=filename(slash,filename.rfind(".")-slash);
 		if (mTextures.find(tex_name) != mTextures.end()) throw ObjectExistsException(filename);
 
@@ -356,14 +356,15 @@ namespace AprilUI
 		}
 	}
 
-	void Dataset::load()
+	void Dataset::load(chstr path)
 	{
+		hstr textsPath=(path != "" ? path : getDefaultTextsPath());
 		hstr base_dir=pathGetBaseDir(mFilename);
 		harray<hstr> scenes;
 
 		// texts
 		logMessage("loading texts");
-		mTexts.load(mFilenamePrefix+"/texts");
+		mTexts.load(mFilenamePrefix+"/"+textsPath);
 		
 		// audio
 		mLoaded=1;
