@@ -65,7 +65,7 @@ namespace AprilUI
 		Dataset(chstr filename,chstr name_override="");
 		virtual ~Dataset();
 
-		void load();
+		void load(chstr path="");
 		void unload();
 		bool isLoaded() { return mLoaded; }
 		void registerManualObject(Object* o);
