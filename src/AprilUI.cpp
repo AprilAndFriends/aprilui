@@ -28,7 +28,7 @@ namespace AprilUI
 #ifdef _DEBUG
 	bool g_debug_mode = false;
 #endif
-	hstr defaultTextsPath;
+	hstr defaultTextsPath="texts";
 	
 	void (*g_logFunction)(chstr)=aprilui_writelog;
 	
