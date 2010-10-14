@@ -23,16 +23,18 @@ namespace AprilUI
 		{
 			mAccel.y=mAccel.x=mSpeed.y=mSpeed.x=mInitialSize.y=mInitialSize.x=0;
 			mDest.y=mDest.x=-10000;
+            mDelay=0;
 		}
 
 		void Scaler::setProperty(chstr name,chstr value)
 		{
-			if      (name == "speed_w") mSpeed.y=mInitialS.y=value;
-			else if (name == "speed_h") mSpeed.x=mInitialS.x=value;
-			else if (name == "accel_w") mAccel.y=value;
-			else if (name == "accel_h") mAccel.x=value;
-			else if (name == "dest_w") mDest.y=value;
-			else if (name == "dest_h") mDest.x=value;
+			if      (name == "speed_w") mSpeed.x=mInitialS.x=value;
+			else if (name == "speed_h") mSpeed.y=mInitialS.y=value;
+			else if (name == "accel_w") mAccel.x=value;
+			else if (name == "accel_h") mAccel.y=value;
+			else if (name == "dest_w")  mDest.x=value;
+			else if (name == "dest_h")  mDest.y=value;
+            else if (name == "delay")   mDelay=value;
 		}
 
 		void Scaler::notifyEvent(chstr event_name,void* params)
@@ -57,6 +59,11 @@ namespace AprilUI
 		{
 			gtypes::Vector2 v=mParent->getSize();
 			if (v.x == mDest.y && v.y == mDest.x) return;
+            if (mDelay > 0)
+            {
+                mDelay=hmax(0.0f,mDelay-k);
+                return;
+            }
 			gtypes::Vector2 old=v;
 			if (fabs(mAccel.y) > 0.01f || fabs(mAccel.x) > 0.01f)
 			{

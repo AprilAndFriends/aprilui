@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "AnimatorFrameAnimation.h"
 #include "AprilUI.h"
 #include "ObjectColoredImageBox.h"
+#include <hltypes/util.h>
 
 namespace AprilUI
 {
@@ -23,6 +24,7 @@ namespace AprilUI
 			mAnimationTime=10;
 			mTimer=0;
 			mLoop=1;
+            mDelay=0;
 		}
 
 		void FrameAnimation::setProperty(chstr name,chstr value)
@@ -32,7 +34,9 @@ namespace AprilUI
 			else if (name == "time")        mAnimationTime=value;
 			else if (name == "base_name")   mImageBaseName=value;
 			else if (name == "loop")        mLoop=value;
+            else if (name == "delay")       mDelay=value;
 		}
+
 		void FrameAnimation::notifyEvent(chstr event_name,void* params)
 		{
 			if (event_name == "AttachToObject")
@@ -44,6 +48,11 @@ namespace AprilUI
 
 		void FrameAnimation::update(float k)
 		{
+            if (mDelay > 0)
+            {
+                mDelay=hmax(0.0f,mDelay-k);
+                return;
+            }
 			mTimer+=k;
 			if (mTimer >= mAnimationTime)
 			{

@@ -24,12 +24,15 @@ namespace AprilUI
 			int mStartFrame,mEndFrame;
 			float mAnimationTime,mTimer;
 			int mLoop;
+            float mDelay;
 		public:
 			FrameAnimation(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
 			void update(float k);
+            
+            void setDelay(float delay) { mDelay=delay; }
 		};
 	}
 }

@@ -26,6 +26,7 @@ namespace AprilUI
 			gtypes::Vector2 mAccel;
 			gtypes::Vector2 mSpeed;
 			gtypes::Vector2 mDest;
+            float mDelay;
 		public:
 			Mover(chstr name);
 			
@@ -33,6 +34,8 @@ namespace AprilUI
 			void setProperty(chstr name,chstr value);
 			void update(float k);
 			void move(float dest_x,float dest_y,float time);
+            
+            void setDelay(float delay) { mDelay=delay; }
 		};
 	}
 }

@@ -23,6 +23,7 @@ namespace AprilUI
 		{
 			mAccel.x=mAccel.y=mSpeed.x=mSpeed.y=mInitialS.y=mInitialS.x=0;
 			mDest.x=mDest.y=-10000;
+            mDelay=0;
 		}
 
 		void Mover::setProperty(chstr name,chstr value)
@@ -33,6 +34,7 @@ namespace AprilUI
 			else if (name == "accel_y") mAccel.y=value;
 			else if (name == "dest_x")  mDest.x=value;
 			else if (name == "dest_y")  mDest.y=value;
+            else if (name == "delay")   mDelay=value;
 		}
 
 		void Mover::notifyEvent(chstr event_name,void* params)
@@ -57,6 +59,11 @@ namespace AprilUI
 		{
 			gtypes::Vector2 v=mParent->getPosition();
 			if (v.x == mDest.x && v.y == mDest.y) return;
+            if (mDelay > 0)
+            {
+                mDelay=hmax(0.0f,mDelay-k);
+                return;
+            }
 			gtypes::Vector2 old=v;
 			v.x+=k*mSpeed.x;
 			v.y+=k*mSpeed.y;
