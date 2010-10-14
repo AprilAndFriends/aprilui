@@ -24,6 +24,8 @@ namespace AprilUI
 		mHorzFormatting=Atres::CENTER_WRAPPED;
 		mVertFormatting=Atres::CENTER;
 		mFontEffect=Atres::NONE;
+		mDrawOffsetX=0.0f;
+		mDrawOffsetY=0.0f;
 		mTextFormatting=true;
 		mText="LabelBase: "+name;
 	}
@@ -57,11 +59,11 @@ namespace AprilUI
 		grect rect(offset_x,offset_y,width,height);
 		if (mTextFormatting)
 		{
-			Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
+			Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color,gvec2(-mDrawOffsetX,-mDrawOffsetY));
 		}
 		else
 		{
-			Atres::drawTextUnformatted(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
+			Atres::drawTextUnformatted(mFontName,rect,text,mHorzFormatting,mVertFormatting,color,gvec2(-mDrawOffsetX,-mDrawOffsetY));
 		}
 	}
 
@@ -95,6 +97,8 @@ namespace AprilUI
 			else if (value == "shadow")    setFontEffect(Atres::SHADOW);
 			else if (value == "border")    setFontEffect(Atres::BORDER);
 		}
+		else if (name == "offset_x") setDrawOffsetX(value);
+		else if (name == "offset_y") setDrawOffsetY(value);
 	}
 
 	void LabelBase::setTextColor(chstr hex)
