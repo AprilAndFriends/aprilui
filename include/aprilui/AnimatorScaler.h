@@ -26,6 +26,7 @@ namespace AprilUI
 			gtypes::Vector2 mAccel;
 			gtypes::Vector2 mSpeed;
 			gtypes::Vector2 mDest;
+            float mDelay;
 		public:
 			Scaler(chstr name);
 
@@ -33,6 +34,8 @@ namespace AprilUI
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);
 			void update(float k);
+            
+            void setDelay(float delay) { mDelay=delay; }
 		};
 	}
 }
