@@ -15,7 +15,7 @@ const char* xml_node::find_prop(const char* property)
 	for (_xmlAttr* a=this->properties;a != 0;a=a->next)
 		if (xmlStrcmp(a->name, (const xmlChar *) property) == 0)
 			return (const char*) a->children->content;
-	throw AprilUI::XMLPropertyNotExistsException(property,this);
+	//throw AprilUI::XMLPropertyNotExistsException(property,this);
 	return 0;
 }
 
@@ -28,7 +28,14 @@ bool xml_node::pbool(const char* property)
 
 bool xml_node::pbool(const char* property, bool defaultValue)
 {
-	return (this->pexists(property) ? this->pbool(property) : defaultValue);
+	const char* nodeValue=this->find_prop(property);
+	if (!nodeValue)
+	{
+		return defaultValue;
+	}
+	int i;
+	sscanf(nodeValue,"%d",&i);
+	return (i != 0);
 }
 
 int xml_node::pint(const char* property)
@@ -40,7 +47,14 @@ int xml_node::pint(const char* property)
 
 int xml_node::pint(const char* property, int defaultValue)
 {
-	return (this->pexists(property) ? this->pint(property) : defaultValue);
+	const char* nodeValue=this->find_prop(property);
+	if (!nodeValue)
+	{
+		return defaultValue;
+	}
+	int i;
+	sscanf(nodeValue,"%d",&i);
+	return i;
 }
 
 float xml_node::pfloat(const char* property)
@@ -52,7 +66,14 @@ float xml_node::pfloat(const char* property)
 
 float xml_node::pfloat(const char* property, float defaultValue)
 {
-	return (this->pexists(property) ? this->pfloat(property) : defaultValue);
+	const char* nodeValue=this->find_prop(property);
+	if (!nodeValue)
+	{
+		return defaultValue;
+	}
+	float f;
+	sscanf(nodeValue,"%f",&f);
+	return f;
 }
 
 hstr xml_node::pstr(const char* property)
@@ -62,7 +83,12 @@ hstr xml_node::pstr(const char* property)
 
 hstr xml_node::pstr(const char* property, chstr defaultValue)
 {
-	return (this->pexists(property) ? this->pstr(property) : defaultValue);
+	const char* nodeValue=this->find_prop(property);
+	if (!nodeValue)
+	{
+		return defaultValue;
+	}
+	return hstr(nodeValue);
 }
 
 unsigned int xml_node::phex(const char* property)
@@ -77,14 +103,21 @@ unsigned int xml_node::phex(const char* property)
 
 unsigned int xml_node::phex(const char* property, unsigned int defaultValue)
 {
-	return (this->pexists(property) ? this->phex(property) : defaultValue);
+	const char* nodeValue=this->find_prop(property);
+	if (!nodeValue)
+	{
+		return defaultValue;
+	}
+	unsigned int x=0;
+	if (nodeValue[0] == '0' && nodeValue[1] == 'x')
+		sscanf(nodeValue+2,"%x",&x);
+	else sscanf(nodeValue,"%x",&x);
+	return x;
 }
 
 bool xml_node::pexists(const char* property)
 {
-	try { this->find_prop(property); }
-	catch (AprilUI::_XMLException) { return 0; }
-	return 1;
+	return (this->find_prop(property) != 0);
 }
 
 bool xml_node::operator ==(const char* s)
