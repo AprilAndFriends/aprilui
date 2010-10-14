@@ -30,9 +30,7 @@ namespace AprilUI
 	
 	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
 	{
-		Atres::Font* font;
-		if (!Atres::hasFont(mFontName)) throw resource_error("Font", mFontName, "Atres");
-		font=Atres::getFont(mFontName);
+		Atres::Font* font=Atres::getFont(mFontName);
 #ifdef _DEBUG
 		if (AprilUI::isDebugMode())
 		{
