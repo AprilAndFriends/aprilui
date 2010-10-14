@@ -31,10 +31,15 @@ struct AprilUIExport xml_node : public _xmlNode
 	
 public:
 	bool pbool(const char* property);
+	bool pbool(const char* property, bool defaultValue);
 	int pint(const char* property);
+	int pint(const char* property, int defaultValue);
 	float pfloat(const char* property);
+	float pfloat(const char* property, float defaultValue);
 	hstr pstr(const char* property);
+	hstr pstr(const char* property, chstr defaultValue);
 	unsigned int phex(const char* property);
+	unsigned int phex(const char* property, unsigned int defaultValue);
 	
 	bool pexists(const char* property);
 	

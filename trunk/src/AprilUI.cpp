@@ -63,7 +63,7 @@ namespace AprilUI
 
 	Dataset* getDatasetByName(chstr name)
 	{
-		if (g_datasets.find(name) == g_datasets.end())
+		if (!g_datasets.has_key(name))
 			throw GenericException("Dataset '"+name+"' doesn't exist!");
 		return g_datasets[name];
 	}
@@ -71,7 +71,7 @@ namespace AprilUI
 	void _registerDataset(chstr name,Dataset* d)
 	{
 		if (register_lock) return;
-		if (g_datasets.find(name) != g_datasets.end())
+		if (g_datasets.has_key(name))
 			throw GenericException("Unable to register dataset '"+name+"', another dataset with the same name exists!");	
 		g_datasets[name]=d;
 	}
@@ -79,13 +79,13 @@ namespace AprilUI
 	void _unregisterDataset(chstr name,Dataset* d)
 	{
 		if (register_lock) return;
-		g_datasets.erase(name);
+		g_datasets.remove_key(name);
 	}
 	
 	void update(float time_increase)
 	{
-		for (hmap<hstr,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
-			it2->second->update(time_increase);
+		foreach_m (Dataset*, it, g_datasets)
+			it->second->update(time_increase);
 	}
 
 #ifdef _DEBUG
@@ -128,8 +128,8 @@ namespace AprilUI
 			delete it->second;
 		g_font_textures.clear();
 		
-		for (hmap<hstr,Dataset*>::iterator it2=g_datasets.begin();it2!=g_datasets.end();it2++)
-			delete it2->second;
+		foreach_m (Dataset*, it, g_datasets)
+			delete it->second;
 		g_datasets.clear();
 	}
 }

@@ -31,11 +31,8 @@ namespace AprilUI
 	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
 	{
 		Atres::Font* font;
-		try   { font=Atres::getFont(mFontName); }
-		catch (hltypes::_resource_error e)
-		{
-			throw e;
-		}
+		if (!Atres::hasFont(mFontName)) throw resource_error("Font", mFontName, "Atres");
+		font=Atres::getFont(mFontName);
 #ifdef _DEBUG
 		if (AprilUI::isDebugMode())
 		{
@@ -60,19 +57,14 @@ namespace AprilUI
 		April::Color color(mTextColor);
 		color.a *= alpha;
 		grect rect(offset_x,offset_y,width,height);
-		try
+		if (mTextFormatting)
 		{
-			if (mTextFormatting)
-			{
-				Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
-			}
-			else
-			{
-				Atres::drawTextUnformatted(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
-			}
+			Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
 		}
-		catch (hltypes::_resource_error e)
-		{ throw e; }
+		else
+		{
+			Atres::drawTextUnformatted(mFontName,rect,text,mHorzFormatting,mVertFormatting,color);
+		}
 	}
 
 	void LabelBase::setProperty(chstr name,chstr value)
