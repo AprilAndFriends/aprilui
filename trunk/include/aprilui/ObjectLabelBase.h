@@ -24,6 +24,8 @@ namespace AprilUI
 		hstr mText;
 		hstr mFontName;
 		bool mTextFormatting;
+		float mDrawOffsetY;
+		float mDrawOffsetX;
 		Atres::Alignment mHorzFormatting;
 		Atres::Alignment mVertFormatting;
 		Atres::Effect mFontEffect;
@@ -40,6 +42,12 @@ namespace AprilUI
 		
 		hstr getFont() { return mFontName; }
 		void setFont(chstr font) { mFontName=font; }
+		
+		float getDrawOffsetX() { return mDrawOffsetX; }
+		void setDrawOffsetX(float drawOffsetX) { mDrawOffsetX=drawOffsetX; }
+		
+		float getDrawOffsetY() { return mDrawOffsetY; }
+		void setDrawOffsetY(float drawOffsetY) { mDrawOffsetY=drawOffsetY; }
 		
 		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
 		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
