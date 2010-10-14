@@ -43,9 +43,6 @@ namespace AprilUI
 		hmap<hstr,Object*> mObjects;
 		hmap<hstr,April::Texture*> mTextures;
 		hmap<hstr,Image*> mImages;
-		hmap<hstr,Object*>::iterator mObjectIterator;
-		hmap<hstr,April::Texture*>::iterator mTextureIterator;
-		hmap<hstr,Image*>::iterator mImageIterator;
 		TextMap mTexts;
 
 		hmap<hstr,void (*)()> mCallbacks;
@@ -84,7 +81,7 @@ namespace AprilUI
 		void _setFilenamePrefix(chstr prefix) { mFilenamePrefix=prefix; }
 		hstr _getFilename() { return mFilename; }
 		hstr _getFilenamePrefix() { return mFilenamePrefix; }
-		
+		hmap<hstr,Object*>& getObjects() { return mObjects; }
 
 		virtual void update(float k);
 		
@@ -103,12 +100,6 @@ namespace AprilUI
 		
 		hstr getName();
 		
-		Object** iterateObjects();
-		Object** nextObject();
-		April::Texture** iterateTextures();
-		April::Texture** nextTexture();
-		Image** iterateImages();
-		Image** nextImage();
 	};
 
 }

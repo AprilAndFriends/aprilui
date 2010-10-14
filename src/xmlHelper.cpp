@@ -23,7 +23,12 @@ bool xml_node::pbool(const char* property)
 {
 	int i;
 	sscanf(this->find_prop(property),"%d",&i);
-	return (i == 1);
+	return (i != 0);
+}
+
+bool xml_node::pbool(const char* property, bool defaultValue)
+{
+	return (this->pexists(property) ? this->pbool(property) : defaultValue);
 }
 
 int xml_node::pint(const char* property)
@@ -33,6 +38,11 @@ int xml_node::pint(const char* property)
 	return i;
 }
 
+int xml_node::pint(const char* property, int defaultValue)
+{
+	return (this->pexists(property) ? this->pint(property) : defaultValue);
+}
+
 float xml_node::pfloat(const char* property)
 {
 	float f;
@@ -40,9 +50,19 @@ float xml_node::pfloat(const char* property)
 	return f;
 }
 
+float xml_node::pfloat(const char* property, float defaultValue)
+{
+	return (this->pexists(property) ? this->pfloat(property) : defaultValue);
+}
+
 hstr xml_node::pstr(const char* property)
 {
 	return hstr(this->find_prop(property));
+}
+
+hstr xml_node::pstr(const char* property, chstr defaultValue)
+{
+	return (this->pexists(property) ? this->pstr(property) : defaultValue);
 }
 
 unsigned int xml_node::phex(const char* property)
@@ -53,6 +73,11 @@ unsigned int xml_node::phex(const char* property)
 		sscanf(nodeValue+2,"%x",&x);
 	else sscanf(nodeValue,"%x",&x);
 	return x;
+}
+
+unsigned int xml_node::phex(const char* property, unsigned int defaultValue)
+{
+	return (this->pexists(property) ? this->phex(property) : defaultValue);
 }
 
 bool xml_node::pexists(const char* property)

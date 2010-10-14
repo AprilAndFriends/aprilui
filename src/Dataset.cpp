@@ -37,9 +37,6 @@ namespace AprilUI
 		mFilename=filename;
 		mName=(name_override == "") ? filename(slash+1,dot-slash-1) : name_override;
 		mLoaded=0;
-		mObjectIterator=mObjects.end();
-		mTextureIterator=mTextures.end();
-		mImageIterator=mImages.end();
 
 		_registerDataset(mName,this);
 	}
@@ -57,7 +54,7 @@ namespace AprilUI
 
 	void Dataset::_destroyTexture(April::Texture* tex)
 	{
-		if (mTextures.find(tex->getFilename()) == mTextures.end())
+		if (!mTextures.has_key(tex->getFilename()))
 			throw ResourceNotExistsException(tex->getFilename(),"Texture",this);
 		mTextures.erase(tex->getFilename());
 		delete tex;
@@ -65,7 +62,7 @@ namespace AprilUI
 
 	void Dataset::_destroyImage(Image* img)
 	{
-		if (mImages.find(img->getName()) == mImages.end())
+		if (!mImages.has_key(img->getName()))
 			throw ResourceNotExistsException(img->getName(),"Image",this);
 		mImages.erase(img->getName());
 		delete img;
@@ -73,7 +70,7 @@ namespace AprilUI
 
 	void Dataset::_destroyTexture(chstr tex)
 	{
-		if (mTextures.find(tex) == mTextures.end())
+		if (!mTextures.has_key(tex))
 			throw ResourceNotExistsException(tex,"April::Texture",this);
 		April::Texture* i=mTextures[tex];
 		mTextures.erase(tex);
@@ -82,7 +79,7 @@ namespace AprilUI
 
 	void Dataset::_destroyImage(chstr img)
 	{
-		if (mImages.find(img) == mImages.end())
+		if (!mImages.has_key(img))
 			throw ResourceNotExistsException(img,"Image",this);
 		Image* i=mImages[img];
 		mImages.erase(img);
@@ -94,13 +91,10 @@ namespace AprilUI
 		hstr filename=node->pstr("filename");
 		int slash=filename.rfind("/")+1;
 		hstr tex_name=filename(slash,filename.rfind(".")-slash);
-		if (mTextures.find(tex_name) != mTextures.end()) throw ObjectExistsException(filename);
+		if (mTextures.has_key(tex_name)) throw ObjectExistsException(filename);
 
-		bool prefix_images=true,dynamic_load=0;
-		try { prefix_images=node->pint("prefix_images")!=0; } catch (_XMLException) { }
-		try { dynamic_load=node->pint("dynamic_load")!=0; }
-		catch (_XMLException) { }
-		
+		bool prefix_images=node->pbool("prefix_images",true);
+		bool dynamic_load=node->pbool("dynamic_load",false);
 		
 		April::Texture* t=April::rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
@@ -116,7 +110,7 @@ namespace AprilUI
 		// extract image definitions
 		if (node->iter_children() == 0) // if there are no images defined, create one that fills the whole area
 		{
-			if (mImages.find(tex_name) != mImages.end()) throw ResourceExistsException(filename,"April::Texture",this);	
+			if (mImages.has_key(tex_name)) throw ResourceExistsException(filename,"April::Texture",this);	
 			mImages[tex_name]=new Image(t,filename,0,0,(float)t->getWidth(),(float)t->getHeight());
 		}
 		else
@@ -129,20 +123,16 @@ namespace AprilUI
 					hstr name;
 					if (prefix_images) name=tex_name+"/"+node->pstr("name");
 					else               name=node->pstr("name");
-					if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"Image",this);
+					if (mImages.has_key(name)) throw ResourceExistsException(name,"Image",this);
 					float x=node->pfloat("x"), y=node->pfloat("y"),
 						  w=node->pfloat("w"), h=node->pfloat("h");
 					
-					bool vertical=false,invertx=false,inverty=false;
-					float tile_w=1,tile_h=1;
-					try { vertical=node->pint("vertical")!=0; } catch (_XMLException) { }
-					try { invertx=node->pint("invertx")!=0; } catch (_XMLException) { }
-					try { inverty=node->pint("inverty")!=0; } catch (_XMLException) { }
+					bool vertical=node->pbool("vertical",false);
+					bool invertx=node->pbool("invertx",false);
+					bool inverty=node->pbool("inverty",false);
 					
-					try   { tile_w=node->pfloat("tile_w"); }
-					catch (_XMLException) { }
-					try   { tile_h=node->pfloat("tile_h"); }
-					catch (_XMLException) { }
+					float tile_w=node->pfloat("tile_w",1);
+					float tile_h=node->pfloat("tile_h",1);
 					
 					if (tile_w != 1 || tile_h != 1) 
 					{
@@ -150,24 +140,21 @@ namespace AprilUI
 					}
 					else
 					{
-						try
+						if (node->pexists("color"))
 						{
 							unsigned int color=node->phex("color");
 							i=new ColoredImage(t,name,x,y,w,h,vertical,color);
 						}
-						catch (_XMLException)
+						else
 						{
 							i=new Image(t,name,x,y,w,h,vertical,invertx,inverty);    
 						}
 					}
-					try
+					if (node->pexists("blend_mode"))
 					{
 						hstr mode=node->pstr("blend_mode");
 						if (mode == "add") i->setBlendMode(April::ADD);
 					}
-					catch (_XMLException) { }
-					
-
 					
 					mImages[name]=i;
 				}
@@ -182,11 +169,9 @@ namespace AprilUI
 		hstr filename=node->pstr("filename");
 		int slash=filename.find("/")+1;
 		hstr tex_name=filename(slash,filename.rfind(".")-slash);
-		if (mTextures.find(tex_name) != mTextures.end()) throw ResourceExistsException(filename,"RAMTexture",this);
+		if (mTextures.has_key(tex_name)) throw ResourceExistsException(filename,"RAMTexture",this);
 
-		bool dynamic_load=false;
-		try   { dynamic_load=node->pint("dynamic_load")!=0; }
-		catch (_XMLException) { }
+		bool dynamic_load=node->pbool("dynamic_load",false);
 		
 		April::Texture* t=April::rendersys->loadRAMTexture(mFilenamePrefix+"/"+filename,dynamic_load);
 		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
@@ -197,7 +182,7 @@ namespace AprilUI
 	void Dataset::parseCompositeImage(xml_node* node)
 	{
 		hstr name=node->pstr("name"),refname;
-		if (mImages.find(name) != mImages.end()) throw ResourceExistsException(name,"CompositeImage",this);
+		if (mImages.has_key(name)) throw ResourceExistsException(name,"CompositeImage",this);
 
 		CompositeImage* img=new CompositeImage(name,node->pfloat("w"),node->pfloat("h"));
 		
@@ -229,32 +214,29 @@ namespace AprilUI
 
 		if (*node == "Object")
 		{
-			try { obj_name=node->pstr("name"); }
-			catch (_XMLException)
+			if (node->pexists("name"))
+			{
+				obj_name=node->pstr("name");
+			}
+			else
 			{
 				obj_name=generateName(class_name);
 				xmlSetProp(node,(xmlChar*) "name",(xmlChar*) obj_name.c_str());
 			}
 			x=node->pfloat("x");
 			y=node->pfloat("y");
-
-			try { w=node->pfloat("w"); }
-			catch (_XMLException) { w=-1; }
-			try { h=node->pfloat("h"); }
-			catch (_XMLException) { h=-1; }
+			
+			w=node->pfloat("w",-1.0f);
+			h=node->pfloat("h",-1.0f);
 		}
 		else if (*node == "Animator")
 		{
-			try { obj_name=node->pstr("name"); }
-			catch (_XMLException)
-			{
-				obj_name=generateName("Animator");
-			}
+			obj_name=node->pstr("name",generateName("Animator"));
 		}
 		else return 0;
 
 		
-		if (mObjects.find(obj_name) != mObjects.end())
+		if (mObjects.has_key(obj_name))
 			throw ResourceExistsException(obj_name,"Object",this);
 
 		Object* o;
@@ -330,18 +312,17 @@ namespace AprilUI
 			if      (*p == "Texture")
 			{
 				April::Texture* t=parseTexture(p);
-				try
+				if (p->pexists("dynamic_link"))
 				{
 					links=p->pstr("dynamic_link");
 					dynamic_links[t]=links;
 				}
-				catch (_XMLException) { }
 				
 			}
 			else if (*p == "RAMTexture") parseRAMTexture(p);
 			else if (*p == "CompositeImage") parseCompositeImage(p);
 			else if (*p == "Object") parseObject(p);
-			else if (p->type !=  XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
+			else if (p->type != XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
 				     parseExternalXMLNode(p);
 		}
 		
@@ -388,41 +369,39 @@ namespace AprilUI
 
 	void Dataset::registerManualObject(Object* o)
 	{
-		if (mObjects.find(o->getName()) != mObjects.end()) throw ResourceExistsException(o->getName(),"Object",this);
+		if (mObjects.has_key(o->getName())) throw ResourceExistsException(o->getName(),"Object",this);
 		mObjects[o->getName()]=o;
 		o->_setDataset(this);
 	}
 
 	void Dataset::unregisterManualObject(Object* o)
 	{
-		if (mObjects.find(o->getName()) == mObjects.end()) throw ResourceNotExistsException(o->getName(),"Object",this);
-		mObjects.erase(o->getName());
+		if (!mObjects.has_key(o->getName())) throw ResourceNotExistsException(o->getName(),"Object",this);
+		mObjects.remove_key(o->getName());
 		o->_setDataset(NULL);
 	}
 	
 	void Dataset::registerManualImage(Image* img)
 	{
-		if (mImages.find(img->getName()) != mImages.end()) throw ResourceExistsException(img->getName(),"Image",this);
+		if (mImages.has_key(img->getName())) throw ResourceExistsException(img->getName(),"Image",this);
 		mImages[img->getName()]=img;
 	}
 	
 	void Dataset::unregisterManualImage(Image* img)
 	{
-		if (mImages.find(img->getName()) == mImages.end()) throw ResourceNotExistsException(img->getName(),"Image",this);
-		mImages.erase(img->getName());
+		if (!mImages.has_key(img->getName())) throw ResourceNotExistsException(img->getName(),"Image",this);
+		mImages.remove_key(img->getName());
 	}
 	
 	Object* Dataset::getObject(chstr name)
 	{
-		Object* o=mObjects[name];
-		if (!o)
-			throw ResourceNotExistsException(name,"Object",this);
-		return o;
+		if (!mObjects.has_key(name)) throw ResourceNotExistsException(name,"Object",this);
+		return mObjects[name];
 	}
 	
 	April::Texture* Dataset::getTexture(chstr name)
 	{
-		if (mTextures.find(name) == mTextures.end()) throw ResourceNotExistsException(name,"Texture",this);
+		if (!mTextures.has_key(name)) throw ResourceNotExistsException(name,"Texture",this);
 		return mTextures[name];
 	}
 
@@ -432,7 +411,7 @@ namespace AprilUI
 		if (name == "null") return &g_null_img;
 
 		
-		if (mImages.find(name) == mImages.end() && name.starts_with("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
+		if (!mImages.has_key(name) && name.starts_with("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
 			i=mImages[name]=new ColorImage(name);
 		else
 			i=mImages[name];
@@ -483,51 +462,4 @@ namespace AprilUI
 			it->second->update(k);
 	}
 	
-	Object** Dataset::iterateObjects()
-	{
-		mObjectIterator=mObjects.begin();
-		if (mObjectIterator==mObjects.end())
-			return NULL;
-		return &mObjectIterator->second;
-	}
-	
-	Object** Dataset::nextObject()
-	{
-		mObjectIterator++;
-		if (mObjectIterator==mObjects.end())
-			return NULL;
-		return &mObjectIterator->second;
-	}
-	
-	April::Texture** Dataset::iterateTextures()
-	{
-		mTextureIterator=mTextures.begin();
-		if (mTextureIterator==mTextures.end())
-			return NULL;
-		return &mTextureIterator->second;
-	}
-	
-	April::Texture** Dataset::nextTexture()
-	{
-		mTextureIterator++;
-		if (mTextureIterator==mTextures.end())
-			return NULL;
-		return &mTextureIterator->second;
-	}
-	
-	Image** Dataset::iterateImages()
-	{
-		mImageIterator=mImages.begin();
-		if (mImageIterator==mImages.end())
-			return NULL;
-		return &mImageIterator->second;
-	}
-	
-	Image** Dataset::nextImage()
-	{
-		mImageIterator++;
-		if (mImageIterator==mImages.end())
-			return NULL;
-		return &mImageIterator->second;
-	}
 }
