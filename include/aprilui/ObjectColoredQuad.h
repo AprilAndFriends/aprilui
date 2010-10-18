@@ -30,8 +30,8 @@ namespace AprilUI
 		void OnDraw(float offset_x,float offset_y);
 		void setProperty(chstr name,chstr value);
 
-		bool OnMouseDown(int button,float x,float y);
-		bool OnMouseUp(int button,float x,float y);
+		bool OnMouseDown(float x,float y,int button);
+		bool OnMouseUp(float x,float y,int button);
 	};
 	
 }

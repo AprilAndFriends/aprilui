@@ -24,8 +24,8 @@ namespace AprilUI
 		ToggleButton(chstr name,float x,float y,float w,float h);
 
 		void OnDraw(float offset_x,float offset_y);
-		bool OnMouseDown(int button,float x,float y);
-		bool OnMouseUp(int button,float x,float y);
+		bool OnMouseDown(float x,float y,int button);
+		bool OnMouseUp(float x,float y,int button);
 		void untoggle() { mPushed=0; }
 		void toggle() { mPushed=!mPushed; }
 		void turnOn() { mPushed=1; }

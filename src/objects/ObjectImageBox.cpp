@@ -68,9 +68,9 @@ namespace AprilUI
 		if (name == "image") setImageByName(value);
 	}
 
-	bool ImageBox::OnMouseDown(int button,float x,float y)
+	bool ImageBox::OnMouseDown(float x,float y,int button)
 	{
-		if (Object::OnMouseDown(button,x,y)) return true;
+		if (Object::OnMouseDown(x,y,button)) return true;
 		if (isPointInside(x,y))
 		{
 			return true;
@@ -78,9 +78,9 @@ namespace AprilUI
 		return false;
 	}
 
-	bool ImageBox::OnMouseUp(int button,float x,float y)
+	bool ImageBox::OnMouseUp(float x,float y,int button)
 	{
-		if (Object::OnMouseUp(button,x,y)) return true;
+		if (Object::OnMouseUp(x,y,button)) return true;
 		if (isPointInside(x,y))
 		{
 			triggerEvent("Click",x,y,0);

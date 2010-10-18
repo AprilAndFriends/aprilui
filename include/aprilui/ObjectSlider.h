@@ -23,8 +23,8 @@ namespace AprilUI
 		float mValue;
 	public:
 		Slider(chstr name,float x,float y,float w,float h);
-		bool OnMouseDown(int button,float x,float y);
-		bool OnMouseUp(int button,float x,float y);
+		bool OnMouseDown(float x,float y,int button);
+		bool OnMouseUp(float x,float y,int button);
 		void OnMouseMove(float x,float y);
 		void OnDraw(float offset_x,float offset_y);
 		void setProperty(chstr name,chstr value);

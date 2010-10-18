@@ -30,9 +30,9 @@ namespace AprilUI
 		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 	}
 
-	bool ToggleButton::OnMouseDown(int button,float x,float y)
+	bool ToggleButton::OnMouseDown(float x,float y,int button)
 	{
-		if (Object::OnMouseDown(button,x,y)) return true;
+		if (Object::OnMouseDown(x,y,button)) return true;
 		if (isPointInside(x,y))
 		{
 			mPushed=!mPushed;
@@ -49,9 +49,9 @@ namespace AprilUI
 		return false;
 	}
 
-	bool ToggleButton::OnMouseUp(int button,float x,float y)
+	bool ToggleButton::OnMouseUp(float x,float y,int button)
 	{
-		if (Object::OnMouseUp(button,x,y)) return true;
+		if (Object::OnMouseUp(x,y,button)) return true;
 		if (isPointInside(x,y))
 		{
 			triggerEvent("Click",x,y,0);

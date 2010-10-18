@@ -76,9 +76,9 @@ namespace AprilUI
 		else Label::setProperty(name,value);
 	}
 
-	bool TextButton::OnMouseDown(int button,float x,float y)
+	bool TextButton::OnMouseDown(float x,float y,int button)
 	{
-		if (Object::OnMouseDown(button,x,y)) return true;
+		if (Object::OnMouseDown(x,y,button)) return true;
 		if (isPointInside(x,y))
 		{
 			mPushed=true;
@@ -87,9 +87,9 @@ namespace AprilUI
 		return false;
 	}
 
-	bool TextButton::OnMouseUp(int button,float x,float y)
+	bool TextButton::OnMouseUp(float x,float y,int button)
 	{
-		if (Object::OnMouseUp(button,x,y)) return true;
+		if (Object::OnMouseUp(x,y,button)) return true;
 		if (mPushed && isPointInside(x,y))
 		{
 			mPushed=false;

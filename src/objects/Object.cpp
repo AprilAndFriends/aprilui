@@ -124,7 +124,7 @@ namespace AprilUI
 		return (x >= mX && y >= mY && x < mX+mWidth && y < mY+mHeight);
 	}
 
-	bool Object::OnMouseDown(int button,float x,float y)
+	bool Object::OnMouseDown(float x,float y,int button)
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
 		
@@ -138,18 +138,18 @@ namespace AprilUI
 		}
 		foreach_r (Object*, it, mChildren)
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
-				if ((*it)->OnMouseDown(button,x-mX,y-mY)) return true;
+				if ((*it)->OnMouseDown(x-mX,y-mY,button)) return true;
 		
 		return false;
 	}
 
-	bool Object::OnMouseUp(int button,float x,float y)
+	bool Object::OnMouseUp(float x,float y,int button)
 	{
 		if (mClickthrough || !isVisible() || !getDerivedEnabled()) return false;
 		
 		foreach_r (Object*, it, mChildren)
 			if ((*it)->isVisible() && (*it)->getDerivedEnabled() && !(*it)->getClickthrough())
-				if ((*it)->OnMouseUp(button,x-mX,y-mY)) return true;
+				if ((*it)->OnMouseUp(x-mX,y-mY,button)) return true;
 		
 		return false;
 	}
