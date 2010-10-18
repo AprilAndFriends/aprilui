@@ -105,8 +105,8 @@ namespace AprilUI
 		hstr getName() { return mName; }
 		
 		// if a childs event returns true, event is not propagated to parents
-		virtual bool OnMouseDown(int button,float x,float y);
-		virtual bool OnMouseUp(int button,float x,float y);
+		virtual bool OnMouseDown(float x,float y,int button);
+		virtual bool OnMouseUp(float x,float y,int button);
 		virtual void OnMouseMove(float x,float y);
 		
 		virtual void OnKeyDown(unsigned int keycode);

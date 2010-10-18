@@ -43,8 +43,8 @@ namespace AprilUI
 		EditBox(chstr name,float x,float y,float w,float h);
 		
 		void update(float time);
-		bool OnMouseDown(int button,float x,float y);
-		bool OnMouseUp(int button,float x,float y);
+		bool OnMouseDown(float x,float y,int button);
+		bool OnMouseUp(float x,float y,int button);
 		void OnKeyDown(unsigned int keycode);
 		void OnKeyUp(unsigned int keycode);
 		void OnChar(unsigned int charcode);

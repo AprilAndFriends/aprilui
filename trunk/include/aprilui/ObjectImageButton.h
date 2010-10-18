@@ -42,8 +42,8 @@ namespace AprilUI
 		void setImage(Image* image);
 		void setEnabled(bool enabled);
 		
-		bool OnMouseDown(int button,float x,float y);
-		bool OnMouseUp(int button,float x,float y);
+		bool OnMouseDown(float x,float y,int button);
+		bool OnMouseUp(float x,float y,int button);
 		void OnMouseMove(float x,float y);
 		
 		void setProperty(chstr name,chstr value);

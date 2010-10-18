@@ -39,16 +39,16 @@ namespace AprilUI
 		else if (name == "b") mColor.b=(unsigned char) ((float) value*255);
 	}
 
-	bool ColoredQuad::OnMouseDown(int button,float x,float y)
+	bool ColoredQuad::OnMouseDown(float x,float y,int button)
 	{
-		if (Object::OnMouseDown(button,x,y)) return true;
+		if (Object::OnMouseDown(x,y,button)) return true;
 		if (isPointInside(x,y)) return true;
 		return false;
 	}
 
-	bool ColoredQuad::OnMouseUp(int button,float x,float y)
+	bool ColoredQuad::OnMouseUp(float x,float y,int button)
 	{
-		if (Object::OnMouseUp(button,x,y)) return true;
+		if (Object::OnMouseUp(x,y,button)) return true;
 		if (isPointInside(x,y))
 		{
 			triggerEvent("Click",x,y,0);
