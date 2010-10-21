@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "Dataset.h"
 #include "Image.h"
 #include "ObjectRotationImageBox.h"
 
@@ -29,7 +30,10 @@ namespace AprilUI
 
 	void RotationImageBox::OnDraw(float offset_x,float offset_y)
 	{
-		mImage->draw(mX+offset_x+mWidth/2,mY+offset_y+mHeight/2,mWidth,mHeight,mAngle,1,1,1,mAlpha);
+		if (!mImage) mImage=mDataPtr->getImage("null");
+		float alpha=getDerivedAlpha();
+		if (!getDerivedEnabled()) alpha/=2;
+		mImage->draw(mX+offset_x+mWidth/2,mY+offset_y+mHeight/2,mWidth,mHeight,mAngle,1,1,1,alpha);
 	}
 
 	bool RotationImageBox::angleEquals(float angle)
