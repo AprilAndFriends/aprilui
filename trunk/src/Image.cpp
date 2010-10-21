@@ -115,11 +115,13 @@ namespace AprilUI
 
 	void Image::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
 	{
+		if (dw == -1) dw=mSourceW;
+		if (dh == -1) dh=mSourceH;
+
 		mVertices[0].x=-dw/2; mVertices[0].y=-dh/2;
 		mVertices[1].x= dw/2; mVertices[1].y=-dh/2;
 		mVertices[2].x=-dw/2; mVertices[2].y= dh/2;
 		mVertices[3].x= dw/2; mVertices[3].y= dh/2;
-		
 		
 		gtypes::Matrix4 temp_matrix=April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
@@ -345,9 +347,12 @@ namespace AprilUI
 	
 	void CompositeImage::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
 	{
-		
+		float xf=dw/mSourceW,yf=dh/mSourceH;
+		foreach(ImageRef,it,mImages)
+		{
+			(*it).img->draw(centerx+(*it).x*xf,centery+(*it).y*yf,(*it).w*xf,(*it).h*yf,angle,r,g,b,a);
+		}
 	}
-
 
 	ColorImage::ColorImage(chstr name) : Image(0,name,0,0,0,0,0)
 	{

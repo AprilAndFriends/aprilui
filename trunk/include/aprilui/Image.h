@@ -34,9 +34,9 @@ namespace AprilUI
 		
 		Image(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical=0,bool invertx=0,bool inverty=0);
 		virtual ~Image();
-		virtual void draw(float dx,float dy,float dw=-1,float dh=-1,float r=1,float g=1,float b=1,float a=1);
+		virtual void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a);
 		virtual void draw(float centerx,float centery,float dw,float dh,float angle);
-		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
+		virtual void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 		
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };
@@ -59,7 +59,7 @@ namespace AprilUI
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
 		ColoredImage(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical=false,unsigned int color=0xFFFFFF);
-		void draw(float dx,float dy,float dw=-1,float dh=-1,float r=1,float g=1,float b=1,float a=1);
+		void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 
 		float getAlpha() { return mAlpha; }
@@ -84,7 +84,7 @@ namespace AprilUI
 		float getScrollX() { return mScrollX; }
 		float getScrollY() { return mScrollY; }	
 
-		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
+		void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 	};
 	
@@ -105,7 +105,7 @@ namespace AprilUI
 		
 		void addImageRef(Image* img,float x,float y,float w,float h);
 		
-		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
+		void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 		
 		const harray<ImageRef>& getImageList() { return mImages; }
@@ -116,7 +116,7 @@ namespace AprilUI
 		float mRed,mGreen,mBlue,mAlpha;
 	public:
 		ColorImage(chstr name);
-		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1);
+		void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a);
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
 	};
 
@@ -124,7 +124,7 @@ namespace AprilUI
 	{
 	public:
 		NullImage();
-		void draw(float dx,float dy,float dw,float dh,float r=1,float g=1,float b=1,float a=1) {}
+		void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a) {}
 		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a) {}
 	};
 
