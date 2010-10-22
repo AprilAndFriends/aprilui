@@ -46,6 +46,7 @@
       <File Name="src/animators/AnimatorRotator.cpp"/>
       <File Name="src/animators/AnimatorScaler.cpp"/>
       <File Name="src/animators/Animator.cpp"/>
+      <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
@@ -73,6 +74,7 @@
       <File Name="include/aprilui/AnimatorRotator.h"/>
       <File Name="include/aprilui/AnimatorScaler.h"/>
       <File Name="include/aprilui/Animator.h"/>
+      <File Name="include/aprilui/AnimatorRotationOscillator.h"/>
     </VirtualDirectory>
     <File Name="src/_dirent.h"/>
     <File Name="include/aprilui/Objects.h"/>

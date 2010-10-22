@@ -14,6 +14,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "ObjectCallbackObject.h"
 #include "Animator.h"
+
 namespace AprilUI
 {
 	namespace Animators

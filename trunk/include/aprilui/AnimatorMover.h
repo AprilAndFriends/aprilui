@@ -10,10 +10,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_MOVER_H
 #define APRILUI_MOVER_H
 
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
-#include <gtypes/Vector2.h>
 #include "Animator.h"
 
 namespace AprilUI
@@ -22,10 +22,10 @@ namespace AprilUI
 	{
 		class AprilUIExport Mover : public Animator
 		{
-			gtypes::Vector2 mInitialS;
-			gtypes::Vector2 mAccel;
-			gtypes::Vector2 mSpeed;
-			gtypes::Vector2 mDest;
+			gvec2 mInitialS;
+			gvec2 mAccel;
+			gvec2 mSpeed;
+			gvec2 mDest;
             float mDelay;
 		public:
 			Mover(chstr name);

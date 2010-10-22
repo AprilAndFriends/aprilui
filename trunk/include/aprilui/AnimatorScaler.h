@@ -10,11 +10,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_SCALER_H
 #define APRILUI_SCALER_H
 
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
 #include "Animator.h"
-#include <gtypes/Vector2.h>
 
 namespace AprilUI
 {
@@ -22,10 +22,10 @@ namespace AprilUI
 	{
 		class AprilUIExport Scaler : public Animator
 		{
-			gtypes::Vector2 mInitialSize,mInitialS;
-			gtypes::Vector2 mAccel;
-			gtypes::Vector2 mSpeed;
-			gtypes::Vector2 mDest;
+			gvec2 mInitialSize,mInitialS;
+			gvec2 mAccel;
+			gvec2 mSpeed;
+			gvec2 mDest;
             float mDelay;
 		public:
 			Scaler(chstr name);
