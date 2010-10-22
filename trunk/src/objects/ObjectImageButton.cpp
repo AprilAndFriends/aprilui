@@ -31,12 +31,15 @@ namespace AprilUI
 			alpha/=2;
 			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		}
-		else if (mImage) ImageBox::OnDraw(offset_x,offset_y);
+		else if (mImage && mImage != mHoverImage)
+		{
+			ImageBox::OnDraw(offset_x,offset_y);
+		}
 		else
 		{
 			Image* image=mNormalImage;
 			if (!image) image=mDataPtr->getImage("null");
-			image->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.5f,0.5f,0.5f,alpha);
+			image->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.6f,0.6f,0.6f,alpha);
 		}
 	}
 
