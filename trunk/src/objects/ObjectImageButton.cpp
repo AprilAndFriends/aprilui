@@ -31,7 +31,7 @@ namespace AprilUI
 			alpha/=2;
 			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		}
-		else if (mImage && mImage != mHoverImage)
+		else if (mImage)
 		{
 			ImageBox::OnDraw(offset_x,offset_y);
 		}
