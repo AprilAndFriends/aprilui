@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_EARTHQUAKE_H
-#define APRILUI_EARTHQUAKE_H
+#ifndef APRILUI_ROTATION_OSCILLATOR_H
+#define APRILUI_ROTATION_OSCILLATOR_H
 
 #include <hltypes/hstring.h>
 
@@ -19,13 +19,11 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		class AprilUIExport Earthquake : public Animator
+		class AprilUIExport RotationOscillator : public Animator
 		{
-			float mInitialX,mInitialY;
-			float mIntensity,mDuration,mConstDuration,mFreq;
-			float mTimer,mFreqTimer;
+			float mBaseline,mAmplitude,mSpeed,mTimer,mInitialAngle;
 		public:
-			Earthquake(chstr name);
+			RotationOscillator(chstr name);
 
 			void notifyEvent(chstr event_name,void* params);
 			void setProperty(chstr name,chstr value);

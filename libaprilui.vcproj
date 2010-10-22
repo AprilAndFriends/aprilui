@@ -250,6 +250,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\animators\AnimatorRotationOscillator.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\animators\AnimatorRotator.cpp"
 					>
 				</File>
@@ -417,6 +421,10 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorMover.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\AnimatorRotationOscillator.h"
 					>
 				</File>
 				<File
