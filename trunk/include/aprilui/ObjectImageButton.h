@@ -23,7 +23,6 @@ namespace AprilUI
 	protected:
 		Image *mPushedImage,*mHoverImage,*mNormalImage,*mDisabledImage;
 		bool mPushed;
-		float mXMouse,mYMouse;
 		
 		void OnUpdate(float k);
 	public:
