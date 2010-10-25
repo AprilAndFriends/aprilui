@@ -22,7 +22,7 @@ namespace AprilUI
 	{
 	protected:
 		Image *mPushedImage,*mHoverImage,*mNormalImage,*mDisabledImage;
-		bool mPushed;
+		bool mPushed,mHovering;
 		
 		void OnUpdate(float k);
 	public:
@@ -40,7 +40,7 @@ namespace AprilUI
 		void OnDraw(float offset_x,float offset_y);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* image);
-		void setEnabled(bool enabled);
+		void setImageByName(chstr image);
 		
 		bool OnMouseDown(float x,float y,int button);
 		bool OnMouseUp(float x,float y,int button);
