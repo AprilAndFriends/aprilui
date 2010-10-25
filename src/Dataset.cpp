@@ -461,7 +461,12 @@ namespace AprilUI
 		foreach_m(April::Texture*,it,mTextures)
 			it->second->update(k);
 		foreach_m(AprilUI::Object*,it,mObjects)
-			it->second->update(k);
+		{
+			if (!it->second->getParent())
+			{
+				it->second->update(k);
+			}
+		}
 	}
 	
 }

@@ -34,18 +34,19 @@ namespace AprilUI
 
 	void TextButton::OnDraw(float offset_x,float offset_y)
 	{
-		April::Color temp=mTextColor;
 #ifndef _DEBUG
 		if (mBackgroundEnabled)
 #else
 		if (!AprilUI::isDebugMode() && mBackgroundEnabled)
 #endif
 			April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
-		if (mPushed) mTextColor=mPushedTextColor;
-		else if (isCursorInside()) mTextColor=mHoverTextColor;
+		April::Color color=mTextColor;
+		if (isCursorInside())
+		{
+			mTextColor=(mPushed ? mPushedTextColor : mHoverTextColor);
+		}
 		Label::OnDraw(offset_x,offset_y);
-
-		mTextColor=temp;
+		mTextColor=color;
 	}
 	
 	void TextButton::setHoverTextColor(April::Color color)
@@ -65,7 +66,7 @@ namespace AprilUI
 
 	void TextButton::setPushedTextColor(chstr hex)
 	{
-		mHoverTextColor.setColor(hex);
+		mPushedTextColor.setColor(hex);
 	}
 	
 	void TextButton::setProperty(chstr name,chstr value)
@@ -79,7 +80,7 @@ namespace AprilUI
 	bool TextButton::OnMouseDown(float x,float y,int button)
 	{
 		if (Object::OnMouseDown(x,y,button)) return true;
-		if (isPointInside(x,y))
+		if (isCursorInside())
 		{
 			mPushed=true;
 			return true;
@@ -90,7 +91,7 @@ namespace AprilUI
 	bool TextButton::OnMouseUp(float x,float y,int button)
 	{
 		if (Object::OnMouseUp(x,y,button)) return true;
-		if (mPushed && isPointInside(x,y))
+		if (mPushed && isCursorInside())
 		{
 			mPushed=false;
 			triggerEvent("Click",x,y,0);
