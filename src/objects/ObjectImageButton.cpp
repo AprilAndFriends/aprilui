@@ -20,7 +20,8 @@ namespace AprilUI
 	{
 		_setTypeName("ImageButton");
 		mPushed=0;
-		mHovering=0;
+		mXMouse=0;
+		mYMouse=0;
 		mNormalImage=mPushedImage=mHoverImage=mDisabledImage=0;
 	}
 
@@ -42,7 +43,7 @@ namespace AprilUI
 			}
 			mImage=mDisabledImage;
 		}
-		else if (mHovering)
+		else if (isPointInside(mXMouse,mYMouse))
 		{
 			if (mPushed && mPushedImage)
 			{
@@ -104,7 +105,7 @@ namespace AprilUI
 	bool ImageButton::OnMouseDown(float x,float y,int button)
 	{
 		if (Object::OnMouseDown(x,y,button)) return true;
-		if (mHovering)
+		if (isPointInside(mXMouse,mYMouse))
 		{
 			mPushed=true;
 			return true;
@@ -115,7 +116,7 @@ namespace AprilUI
 	bool ImageButton::OnMouseUp(float x,float y,int button)
 	{
 		if (Object::OnMouseUp(x,y,button)) return true;
-		if (mPushed && mHovering)
+		if (mPushed && isPointInside(mXMouse,mYMouse))
 		{
 			mPushed=false;
 			triggerEvent("Click",x,y,0);
@@ -128,7 +129,8 @@ namespace AprilUI
 	void ImageButton::OnMouseMove(float x,float y)
 	{
 		Object::OnMouseMove(x,y);
-		mHovering=isPointInside(x,y);
+		mXMouse=x;
+		mYMouse=y;
 	}
 
 	void ImageButton::setProperty(chstr name,chstr value)
