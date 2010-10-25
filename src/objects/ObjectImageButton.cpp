@@ -25,7 +25,6 @@ namespace AprilUI
 
 	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		float alpha=getDerivedAlpha();
 		mImage=mNormalImage;
 		if (!mImage)
 		{
@@ -33,15 +32,13 @@ namespace AprilUI
 		}
 		if (!getDerivedEnabled())
 		{
-			if (!mDisabledImage)
-			{
-				alpha/=2;
-				mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
-				return;
-			}
-			mImage=mDisabledImage;
+			float alpha=getDerivedAlpha();
+			if (mDisabledImage) mImage=mDisabledImage;
+			else alpha/=2;
+			mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
+			return;
 		}
-		else if (isCursorInside())
+		if (isCursorInside())
 		{
 			if (mPushed && mPushedImage)
 			{
