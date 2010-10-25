@@ -36,6 +36,7 @@ namespace AprilUI
 	
 	AprilUIFnExport Dataset* getDatasetByName(chstr name);
 	AprilUIFnExport void update(float time_increase);
+	AprilUIFnExport void updateTextures(float time_increase);
 	AprilUIFnExport hstr getDefaultTextsPath();
 	AprilUIFnExport void setDefaultTextsPath(chstr path);
 	

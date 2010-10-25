@@ -83,6 +83,7 @@ namespace AprilUI
 		hstr _getFilenamePrefix() { return mFilenamePrefix; }
 		hmap<hstr,Object*>& getObjects() { return mObjects; }
 
+		void updateTextures(float k);
 		virtual void update(float k);
 		
 		void _destroyTexture(chstr tex);

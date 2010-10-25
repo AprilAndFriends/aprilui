@@ -82,6 +82,12 @@ namespace AprilUI
 		g_datasets.remove_key(name);
 	}
 	
+	void updateTextures(float time_increase)
+	{
+		foreach_m (Dataset*, it, g_datasets)
+			it->second->updateTextures(time_increase);
+	}
+	
 	void update(float time_increase)
 	{
 		foreach_m (Dataset*, it, g_datasets)
