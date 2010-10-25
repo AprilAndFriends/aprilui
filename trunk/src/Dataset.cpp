@@ -455,11 +455,16 @@ namespace AprilUI
 		void (*callback)()=mCallbacks[name];
 		if (callback) callback();
 	}
+	
+	void Dataset::updateTextures(float k)
+	{
+		foreach_m(April::Texture*,it,mTextures)
+		it->second->update(k);
+	}
 
 	void Dataset::update(float k)
 	{
-		foreach_m(April::Texture*,it,mTextures)
-			it->second->update(k);
+		updateTextures(k);
 		foreach_m(AprilUI::Object*,it,mObjects)
 		{
 			if (!it->second->getParent())
