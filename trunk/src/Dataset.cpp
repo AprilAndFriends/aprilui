@@ -352,6 +352,7 @@ namespace AprilUI
 
 		logMessage("loading datadef: "+mFilename);
 		readFile(mFilename);
+		this->update(0);
 	}
 
 	void Dataset::unload()
