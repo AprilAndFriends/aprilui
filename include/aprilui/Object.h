@@ -46,7 +46,6 @@ namespace AprilUI
 		bool getDerivedClickthrough();
 		
 		virtual void OnDraw(float offset_x,float offset_y) { };
-		virtual void OnUpdate(float k) { };
 		void setParent(Object* parent) { mParent=parent; }
 
 		void _moveChildToFront(Object* o);

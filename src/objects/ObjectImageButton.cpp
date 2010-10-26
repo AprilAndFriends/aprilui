@@ -25,6 +25,18 @@ namespace AprilUI
 
 	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
+		float alpha=getDerivedAlpha();
+		if (!getDerivedEnabled() && !mDisabledImage)
+		{
+			alpha/=2;
+			mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
+			return;
+		}
+		ImageBox::OnDraw(offset_x,offset_y);
+	}
+
+	void ImageButton::update(float k)
+	{
 		mImage=mNormalImage;
 		if (!mImage)
 		{
@@ -32,11 +44,7 @@ namespace AprilUI
 		}
 		if (!getDerivedEnabled())
 		{
-			float alpha=getDerivedAlpha();
 			if (mDisabledImage) mImage=mDisabledImage;
-			else alpha/=2;
-			mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
-			return;
 		}
 		if (isCursorInside())
 		{
@@ -49,7 +57,7 @@ namespace AprilUI
 				mImage=mHoverImage;
 			}
 		}
-		ImageBox::OnDraw(offset_x,offset_y);
+		ImageBox::update(k);
 	}
 
 	void ImageButton::setPushedImage(Image* image)
@@ -85,6 +93,7 @@ namespace AprilUI
 	void ImageButton::setImage(Image* image)
 	{
 		mNormalImage=image;
+		update(0);
 	}
 	
 	void ImageButton::setImageByName(chstr image)
@@ -93,10 +102,6 @@ namespace AprilUI
 		mImageName=image;
 	}
 	
-	void ImageButton::OnUpdate(float k)
-	{
-	}
-
 	bool ImageButton::OnMouseDown(float x,float y,int button)
 	{
 		if (Object::OnMouseDown(x,y,button)) return true;

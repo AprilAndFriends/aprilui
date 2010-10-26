@@ -24,7 +24,7 @@ namespace AprilUI
 		Image *mPushedImage,*mHoverImage,*mNormalImage,*mDisabledImage;
 		bool mPushed;
 		
-		void OnUpdate(float k);
+		void update(float k);
 	public:
 		
 		ImageButton(chstr name,float x,float y,float w,float h);
