@@ -135,11 +135,14 @@ namespace AprilUI
 	{
 		Label::setText(text.size() > mMaxLength ? text(0,mMaxLength) : text);
 		harray<char> chars=harray<char>(mText.c_str(),mText.size());
-		foreach (char,it,chars)
+		if (mFilter != "")
 		{
-			if (!mFilter.contains(*it))
+			foreach (char,it,chars)
 			{
-				mText.replace(*it,"");
+				if (!mFilter.contains(*it))
+				{
+					mText.replace(*it,"");
+				}
 			}
 		}
 		setCursorIndex(mCursorIndex);
