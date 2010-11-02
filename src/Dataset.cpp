@@ -89,6 +89,7 @@ namespace AprilUI
 	April::Texture* Dataset::parseTexture(xml_node* node)
 	{
 		hstr filename=node->pstr("filename");
+		hstr filepath=normalize_path(mFilenamePrefix+"/"+filename);
 		int slash=filename.rfind("/")+1;
 		hstr tex_name=filename(slash,filename.rfind(".")-slash);
 		if (mTextures.has_key(tex_name)) throw ObjectExistsException(filename);
@@ -96,8 +97,8 @@ namespace AprilUI
 		bool prefix_images=node->pbool("prefix_images",true);
 		bool dynamic_load=node->pbool("dynamic_load",false);
 		
-		April::Texture* t=April::rendersys->loadTexture(mFilenamePrefix+"/"+filename,dynamic_load);
-		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
+		April::Texture* t=April::rendersys->loadTexture(filepath,dynamic_load);
+		if (!t) throw FileNotFoundException(filepath);
 		if (node->pexists("filter"))
 		{
 			hstr filter=node->pstr("filter");
@@ -167,14 +168,15 @@ namespace AprilUI
 	void Dataset::parseRAMTexture(xml_node* node)
 	{
 		hstr filename=node->pstr("filename");
+		hstr filepath=normalize_path(mFilenamePrefix+"/"+filename);
 		int slash=filename.find("/")+1;
 		hstr tex_name=filename(slash,filename.rfind(".")-slash);
 		if (mTextures.has_key(tex_name)) throw ResourceExistsException(filename,"RAMTexture",this);
 
 		bool dynamic_load=node->pbool("dynamic_load",false);
 		
-		April::Texture* t=April::rendersys->loadRAMTexture(mFilenamePrefix+"/"+filename,dynamic_load);
-		if (!t) throw FileNotFoundException(mFilenamePrefix+"/"+filename);
+		April::Texture* t=April::rendersys->loadRAMTexture(filepath,dynamic_load);
+		if (!t) throw FileNotFoundException(filepath);
 		mTextures[tex_name]=t;
 	
 	}
@@ -345,7 +347,8 @@ namespace AprilUI
 
 		// texts
 		logMessage("loading texts");
-		mTexts.load(mFilenamePrefix+"/"+textsPath);
+		hstr filepath=normalize_path(mFilenamePrefix+"/"+textsPath);
+		mTexts.load(filepath);
 		
 		// audio
 		mLoaded=1;

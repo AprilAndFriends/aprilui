@@ -130,7 +130,7 @@ namespace AprilUI
 		
 		if (mDataPtr) 
 		{
-			if(mDataPtr->getFocusedObject())
+			if (mDataPtr->getFocusedObject())
 			{
 				April::rendersys->getWindow()->terminateKeyboardHandling();
 			}
