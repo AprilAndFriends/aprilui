@@ -116,7 +116,7 @@ namespace AprilUI
 		{
 			hstr error_message = hsprintf("Text entry '%s' doesn't exist",name.c_str());
 #ifdef _DEBUG
-			logMessage(error_message);
+			throw key_error(name,mName+" texts");
 #endif
 			return ("[" + error_message + "]").c_str();
 		}

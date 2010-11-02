@@ -15,14 +15,16 @@ const char* xml_node::find_prop(const char* property)
 	for (_xmlAttr* a=this->properties;a != 0;a=a->next)
 		if (xmlStrcmp(a->name, (const xmlChar *) property) == 0)
 			return (const char*) a->children->content;
-	//throw AprilUI::XMLPropertyNotExistsException(property,this);
+	
 	return 0;
 }
 
 bool xml_node::pbool(const char* property)
 {
 	int i;
-	sscanf(this->find_prop(property),"%d",&i);
+	const char* prop=this->find_prop(property);
+	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
+	sscanf(prop,"%d",&i);
 	return (i != 0);
 }
 
@@ -41,7 +43,9 @@ bool xml_node::pbool(const char* property, bool defaultValue)
 int xml_node::pint(const char* property)
 {
 	int i;
-	sscanf(this->find_prop(property),"%d",&i);
+	const char* prop=this->find_prop(property);
+	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
+	sscanf(prop,"%d",&i);
 	return i;
 }
 
@@ -60,7 +64,9 @@ int xml_node::pint(const char* property, int defaultValue)
 float xml_node::pfloat(const char* property)
 {
 	float f;
-	sscanf(this->find_prop(property),"%f",&f);
+	const char* prop=this->find_prop(property);
+	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
+	sscanf(prop,"%f",&f);
 	return f;
 }
 
@@ -78,7 +84,9 @@ float xml_node::pfloat(const char* property, float defaultValue)
 
 hstr xml_node::pstr(const char* property)
 {
-	return hstr(this->find_prop(property));
+	const char* prop=this->find_prop(property);
+	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
+	return prop;
 }
 
 hstr xml_node::pstr(const char* property, chstr defaultValue)
@@ -93,7 +101,9 @@ hstr xml_node::pstr(const char* property, chstr defaultValue)
 
 unsigned int xml_node::phex(const char* property)
 {
-	const char* nodeValue=this->find_prop(property);
+	const char* prop=this->find_prop(property);
+	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
+	const char* nodeValue=prop;
 	unsigned int x=0;
 	if (nodeValue[0] == '0' && nodeValue[1] == 'x')
 		sscanf(nodeValue+2,"%x",&x);
