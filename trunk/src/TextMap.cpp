@@ -64,6 +64,8 @@ namespace AprilUI
 		{
 			//logMessage("Reading text file: "+*it);
 			f=fopen((*it).c_str(),"rb");
+			if(!f)
+				throw hl_exception(hstr("Failed to load file ") + *it);
 			for (utfc=-1;utfc < 0;utfc=fgetc(f));
 			fseek(f, -1, SEEK_CUR);
 
