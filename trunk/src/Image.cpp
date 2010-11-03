@@ -350,7 +350,7 @@ namespace AprilUI
 		float xf=dw/mSourceW,yf=dh/mSourceH;
 		foreach(ImageRef,it,mImages)
 		{
-			(*it).img->draw(centerx+(*it).x*xf,centery+(*it).y*yf,(*it).w*xf,(*it).h*yf,angle,r,g,b,a);
+			(*it).img->draw(centerx-dw/2+(*it).x*xf+(*it).w/2,centery-dh/2+(*it).y*yf+(*it).h/2,(*it).w*xf,(*it).h*yf,angle,r,g,b,a);
 		}
 	}
 
