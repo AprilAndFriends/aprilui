@@ -32,7 +32,7 @@ namespace AprilUI
 		void unload();
 		bool exists(chstr name);
 
-		const char* operator [] (chstr name);
+		hstr operator [] (chstr name);
 		
 	};
 }
