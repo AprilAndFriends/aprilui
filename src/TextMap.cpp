@@ -111,16 +111,12 @@ namespace AprilUI
 		}
 	}
 
-	const char* TextMap::operator [] (chstr name)
+	hstr TextMap::operator [] (chstr name)
 	{
 		if (name == "") return "";
 		if (!exists(name))
 		{
-			hstr error_message = hsprintf("Text entry '%s' doesn't exist",name.c_str());
-#ifdef _DEBUG
-			throw key_error(name,mName+" texts");
-#endif
-			return ("[" + error_message + "]").c_str();
+			return hsprintf("[Text entry '%s' doesn't exist]",name.c_str());
 		}
 		return mBuffer+mTexts[name];
 	}

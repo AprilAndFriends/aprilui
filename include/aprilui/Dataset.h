@@ -94,7 +94,7 @@ namespace AprilUI
 		virtual Object* getObject(chstr name);
 		virtual April::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
-		virtual const char* getText(chstr name);
+		virtual hstr getText(chstr name);
 		virtual bool textExists(chstr name);
 		TextMap& getTextmap() { return mTexts; }
 

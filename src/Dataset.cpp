@@ -438,7 +438,7 @@ namespace AprilUI
 		return i;
 	}
 	
-	const char* Dataset::getText(chstr name)
+	hstr Dataset::getText(chstr name)
 	{
 		return mTexts[name];
 	}
