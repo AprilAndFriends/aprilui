@@ -24,14 +24,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace AprilUI
 {
-	hstr pathGetFilename(chstr path,bool with_suffix)
-	{
-		int index1=path.rfind("/"); if (index1 < 0) index1=path.rfind("\\");
-		int index2=(with_suffix) ? path.size() : path.rfind(".");
-		hstr name=path(index1+1,index2-index1-1);
-		return name;
-	}
-
 	hstr pathGetBaseDir(chstr path)
 	{
 		int index=path.rfind("/");  if (index < 0) index=path.rfind("\\");

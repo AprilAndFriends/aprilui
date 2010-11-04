@@ -19,7 +19,6 @@ namespace AprilUI
 {
 	typedef unsigned char byte;
 
-	hstr pathGetFilename(chstr path,bool with_suffix=1);
 	hstr pathGetBaseDir(chstr path);
 
 	int hexstr_to_int(chstr s);

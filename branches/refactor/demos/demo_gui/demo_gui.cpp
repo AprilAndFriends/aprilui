@@ -19,13 +19,10 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com),                            
 #include <aprilui/AprilUI.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
-#include <aprilui/TiledImage.h>
 #include <atres/Atres.h>
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define SCROLL_SPEED_X 10
-#define SCROLL_SPEED_Y 10
 
 AprilUI::Dataset* dataset;
 
@@ -33,9 +30,6 @@ bool render(float time)
 {
 	April::rendersys->clear();
 	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
-	AprilUI::TiledImage* image = (AprilUI::TiledImage*)dataset->getImage("texture/test");
-	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
-					 image->getScrollY() - time * SCROLL_SPEED_Y);
 	dataset->getObject("root")->draw();
 	dataset->update(time);
 	return true;
@@ -89,11 +83,12 @@ int main()
 #endif
 	try
 	{
-		April::init("Tiled Image", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_tiledimage");
+		April::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
 		April::rendersys->getWindow()->setUpdateCallback(&render);
 		AprilUI::init();
 		Atres::init();
-		dataset = new AprilUI::Dataset("../media/demo_tiledimage.datadef");
+		Atres::loadFont("../media/arial.font");
+		dataset = new AprilUI::Dataset("../media/demo_gui.datadef");
 		dataset->load();
 		April::rendersys->getWindow()->enterMainLoop();
 		delete dataset;

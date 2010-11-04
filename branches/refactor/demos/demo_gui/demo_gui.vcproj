@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="demo_zorder"
-	ProjectGUID="{0AC0BEAB-AFC2-476C-8B3C-565AD0408A5E}"
+	Name="demo_gui"
+	ProjectGUID="{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}"
 	RootNamespace="demo_zorder"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
@@ -166,7 +166,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\atres\bin\$(ConfigurationName)\libatres.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\april\bin\libapril.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\gtypes\bin\$(ConfigurationName)\libgtypes.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\hltypes\bin\$(ConfigurationName)\libhltypes.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\lib\msvc\*.dll ..\..\bin\$(ConfigurationName)"
+				CommandLine="copy ..\..\..\atres\bin\$(ConfigurationName)\libatres.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\april\bin\libapril.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\gtypes\bin\$(ConfigurationName)\libgtypes.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\hltypes\bin\$(ConfigurationName)\libhltypes.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\lib\msvc\*.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -179,7 +179,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\demo_zorder.cpp"
+				RelativePath=".\demo_gui.cpp"
 				>
 			</File>
 		</Filter>

@@ -15,7 +15,6 @@
     <File Name="src/xmlHelper.cpp"/>
     <File Name="src/AprilUI.cpp"/>
     <File Name="src/CallbackEvent.cpp"/>
-    <File Name="src/Image.cpp"/>
     <VirtualDirectory Name="objects">
       <File Name="src/objects/ObjectCallbackObject.cpp"/>
       <File Name="src/objects/ObjectColoredImageBox.cpp"/>
@@ -48,11 +47,18 @@
       <File Name="src/animators/Animator.cpp"/>
       <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="images">
+      <File Name="src/Image.cpp"/>
+      <File Name="src/ColoredImage.cpp"/>
+      <File Name="src/ColorImage.cpp"/>
+      <File Name="src/CompositeImage.cpp"/>
+      <File Name="src/NullImage.cpp"/>
+      <File Name="src/TiledImage.cpp"/>
+    </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/aprilui/Dataset.h"/>
     <File Name="include/aprilui/Exception.h"/>
-    <File Name="include/aprilui/Image.h"/>
     <File Name="include/aprilui/TextMap.h"/>
     <File Name="src/Util.h"/>
     <File Name="include/aprilui/AprilUI.h"/>
@@ -96,14 +102,17 @@
       <File Name="include/aprilui/ObjectToggleButton.h"/>
       <File Name="include/aprilui/Object.h"/>
     </VirtualDirectory>
+    <VirtualDirectory Name="images">
+      <File Name="include/aprilui/Image.h"/>
+      <File Name="include/aprilui/ColoredImage.h"/>
+      <File Name="include/aprilui/CompositeImage.h"/>
+      <File Name="include/aprilui/TiledImage.h"/>
+      <File Name="include/aprilui/NullImage.h"/>
+      <File Name="include/aprilui/ColorImage.h"/>
+    </VirtualDirectory>
+    <File Name="include/aprilui/Images.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Linux_Debug"/>
   <Dependencies Name="Release"/>
-  <Dependencies Name="Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-  </Dependencies>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="">
@@ -145,6 +154,7 @@
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)_d.dll" IntermediateDirectory="./bin/Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -183,6 +193,7 @@
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/libaprilui_d.so" IntermediateDirectory="./bin/Linux_Debug" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -222,6 +233,7 @@
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName).dll" IntermediateDirectory="./bin/Release_Win32" Command="" CommandArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -244,4 +256,22 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
+  <Dependencies Name="Release_Win32">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+  </Dependencies>
+  <Dependencies Name="Linux_Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+  </Dependencies>
+  <Dependencies Name="Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+  </Dependencies>
 </CodeLite_Project>

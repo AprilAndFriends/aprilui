@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <hltypes/hstring.h>
 
 #include "AnimatorColorAlternator.h"
-#include "Image.h"
+#include "ColoredImage.h"
 #include "Util.h"
 #include "ObjectColoredImageBox.h"
 
