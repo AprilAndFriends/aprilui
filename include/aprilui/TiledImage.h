@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_TILED_IMAGE_H
 
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 
 #include "Image.h"
 
@@ -21,7 +22,7 @@ namespace AprilUI
 	class AprilUIExport TiledImage : public Image
 	{
 	public:
-		TiledImage(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical, float tileW, float tileH);
+		TiledImage(April::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
 		
 		float getTileW() { return mTileW; }
 		void setTileW(float w) { mTileW = w; }

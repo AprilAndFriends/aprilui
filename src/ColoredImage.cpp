@@ -8,13 +8,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 
 #include "ColoredImage.h"
 
 namespace AprilUI
 {
-	ColoredImage::ColoredImage(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical, unsigned int color) :
-				  Image(texture, name, sx, sy, sw, sh, vertical)
+	ColoredImage::ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical, unsigned int color) :
+				  Image(texture, name, source, vertical)
 	{
 		mColor.setColor(color);
 	}

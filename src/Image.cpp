@@ -21,16 +21,13 @@ namespace AprilUI
 	April::TexturedVertex tVertices[4];
 	April::PlainVertex pVertices[4];
 	
-	Image::Image(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical, bool invertX, bool invertY)
+	Image::Image(April::Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY)
 	{
 		mTexture = texture;
 		mName = name;
 		int index = name.find("/") + 1;
 		mImageName = name(index, name.size() - index); // the name without the dataset's name prefix
-		mSourceX = sx;
-		mSourceY = sy;
-		mSourceW = sw;
-		mSourceH = sh;
+		mSource = source;
 
 		mBlendMode = April::ALPHA_BLEND;
 		mVertical = vertical;
@@ -58,10 +55,10 @@ namespace AprilUI
 			float t;
 			if (!mVertical)
 			{
-				tVertices[0].u = mSourceX / w;              tVertices[0].v = mSourceY / h;
-				tVertices[1].u = (mSourceX + mSourceW) / w; tVertices[1].v = mSourceY / h;
-				tVertices[2].u = mSourceX / w;              tVertices[2].v = (mSourceY + mSourceH) / h;
-				tVertices[3].u = (mSourceX + mSourceW) / w; tVertices[3].v = (mSourceY + mSourceH) / h;
+				tVertices[0].u = mSource.x / w;               tVertices[0].v = mSource.y / h;
+				tVertices[1].u = (mSource.x + mSource.w) / w; tVertices[1].v = mSource.y / h;
+				tVertices[2].u = mSource.x / w;               tVertices[2].v = (mSource.y + mSource.h) / h;
+				tVertices[3].u = (mSource.x + mSource.w) / w; tVertices[3].v = (mSource.y + mSource.h) / h;
 				if (mInvertX)
 				{
 					t = tVertices[0].u; tVertices[0].u = tVertices[1].u; tVertices[1].u = t;
@@ -75,10 +72,10 @@ namespace AprilUI
 			}
 			else
 			{
-				tVertices[0].u = (mSourceX + mSourceH) / w; tVertices[0].v = mSourceY / h;
-				tVertices[1].u = (mSourceX + mSourceH) / w; tVertices[1].v = (mSourceY + mSourceW) / h;
-				tVertices[2].u = (mSourceX) / w;            tVertices[2].v = mSourceY / h;
-				tVertices[3].u = (mSourceX) / w;            tVertices[3].v = (mSourceY + mSourceW) / h;
+				tVertices[0].u = (mSource.x + mSource.h) / w; tVertices[0].v = mSource.y / h;
+				tVertices[1].u = (mSource.x + mSource.h) / w; tVertices[1].v = (mSource.y + mSource.w) / h;
+				tVertices[2].u = (mSource.x) / w;             tVertices[2].v = mSource.y / h;
+				tVertices[3].u = (mSource.x) / w;             tVertices[3].v = (mSource.y + mSource.w) / h;
 				if (mInvertY)
 				{
 					t = tVertices[0].u; tVertices[0].u = tVertices[2].u; tVertices[2].u = t;
@@ -103,11 +100,11 @@ namespace AprilUI
 	{
 		if (w == -1)
 		{
-			w = mSourceW;
+			w = mSource.w;
 		}
 		if (h == -1)
 		{
-			h = mSourceH;
+			h = mSource.h;
 		}
 		tVertices[0].x = x;     tVertices[0].y = y;
 		tVertices[1].x = x + w; tVertices[1].y = y;
@@ -139,11 +136,11 @@ namespace AprilUI
 	{
 		if (w == -1)
 		{
-			w = mSourceW;
+			w = mSource.w;
 		}
 		if (h == -1)
 		{
-			h = mSourceH;
+			h = mSource.h;
 		}
 		
 		tVertices[0].x = -w / 2; tVertices[0].y = -h / 2;

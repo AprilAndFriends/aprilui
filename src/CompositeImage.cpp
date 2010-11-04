@@ -18,13 +18,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace AprilUI
 {
 	CompositeImage::CompositeImage(chstr name, float sourceW, float sourceH) :
-		Image(0, name, 0, 0, sourceW, sourceH)
+		Image(0, name, grect(0, 0, sourceW, sourceH))
 	{
 		
 	}
 	
 	CompositeImage::CompositeImage(chstr name, CompositeImage& base) :
-		Image(0, name, 0, 0, base.getSourceW(), base.getSourceH())
+		Image(0, name, grect(0, 0, base.getSource().w, base.getSource().h))
 	{
 		foreach(ImageRef, it, base.mImages)
 		{
@@ -47,8 +47,8 @@ namespace AprilUI
 
 	void CompositeImage::draw(float x, float y, float w, float h, float r, float g, float b, float a)
 	{
-		float wf = w / mSourceW;
-		float hf = h / mSourceH;
+		float wf = w / mSource.w;
+		float hf = h / mSource.h;
 		foreach(ImageRef, it, mImages)
 		{
 			(*it).image->draw(x + (*it).rect.x * wf, y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf, r, g, b, a);
@@ -57,8 +57,8 @@ namespace AprilUI
 	
 	void CompositeImage::draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle)
 	{
-		float wf = w / mSourceW;
-		float hf = h / mSourceH;
+		float wf = w / mSource.w;
+		float hf = h / mSource.h;
 		foreach(ImageRef, it, mImages)
 		{
 			(*it).image->draw(x + (*it).rect.x * wf, y + (*it).rect.y * hf,
