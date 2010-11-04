@@ -13,31 +13,35 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ColoredImage::ColoredImage(April::Texture* texture, chstr name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
-				  Image(texture,name,sx,sy,sw,sh,vertical)
+	ColoredImage::ColoredImage(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical, unsigned int color) :
+				  Image(texture, name, sx, sy, sw, sh, vertical)
 	{
-		if (color > 0xFFFFFF)
-			mAlpha=(color >> 24) / 255.0f;
-		else
-			mAlpha=1;
-		mRed=((color >> 16) & 0xFF) / 255.0f;
-		mBlue=(color & 0xFF) / 255.0f;
-		mGreen=((color >> 8) & 0xFF) / 255.0f;
+		mColor.setColor(color);
 	}
 
-	void ColoredImage::draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a)
+	float ColoredImage::getAlpha()
 	{
-		Image::draw(dx,dy,dw,dh,r*mRed,g*mGreen,b*mBlue,a*mAlpha);
+		return mColor.a_float();
+	}
+	
+	void ColoredImage::setAlpha(float alpha)
+	{
+		mColor.a = alpha * 255.0f;
+	}
+		
+	void ColoredImage::draw(float x, float y, float w, float h, float r, float g, float b, float a)
+	{
+		Image::draw(x, y, w, h, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r);
 	}
 
-	void ColoredImage::draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a)
+	void ColoredImage::draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a)
 	{
-		Image::draw(centerx,centery,dw,dh,angle,r*mRed,g*mGreen,b*mBlue,a*mAlpha);
+		Image::draw(x, y, w, h, angle, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r);
 	}
 
-	void ColoredImage::setColor(float a,float r,float g,float b)
+	void ColoredImage::setColor(float a, float r, float g, float b)
 	{
-		mAlpha=a; mRed=r; mGreen=g; mBlue=b;
+		mColor.setColor(a, r, g, b);
 	}
 
 }

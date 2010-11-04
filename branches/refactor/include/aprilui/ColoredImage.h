@@ -20,15 +20,19 @@ namespace AprilUI
 {
 	class AprilUIExport ColoredImage : public Image
 	{
-		float mRed,mGreen,mBlue,mAlpha;
 	public:
-		ColoredImage(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical=false,unsigned int color=0xFFFFFF);
-		void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a);
-		void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
+		ColoredImage(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical = false, unsigned int color = 0xFFFFFFFF);
+		
+		void draw(float x, float y, float w, float h, float r, float g, float b, float a);
+		void draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a);
 
-		float getAlpha() { return mAlpha; }
-		void setAlpha(float alpha) { mAlpha=alpha; }
-		void setColor(float a,float r,float g,float b);
+		float getAlpha();
+		void setAlpha(float alpha);
+		void setColor(float a, float r, float g, float b);
+		
+	protected:
+		April::Color mColor;
+		
 	};
 
 }
