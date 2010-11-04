@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -27,8 +27,6 @@ public:
 
 struct AprilUIExport xml_node : public _xmlNode
 {
-	const char* find_prop(const char* property);
-	
 public:
 	bool pbool(const char* property);
 	bool pbool(const char* property, bool defaultValue);
@@ -49,18 +47,22 @@ public:
 	
 	bool operator ==(const char* s);
 	bool operator !=(const char* s);
+	
+protected:
+	const char* find_prop(const char* property);
+	
 };
-
-
 
 class AprilUIExport xml_doc
 {
-	xmlDocPtr doc;
 public:
 	xml_doc(chstr filename);
 	~xml_doc();
-	xml_node* root(chstr root_element_query="");
+	xml_node* root(chstr rootElementQuery = "");
+	
+protected:
+	xmlDocPtr doc;
+	
 };
-
 
 #endif

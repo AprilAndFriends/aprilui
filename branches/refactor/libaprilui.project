@@ -10,7 +10,6 @@
   <VirtualDirectory Name="src">
     <File Name="src/Dataset.cpp"/>
     <File Name="src/Exception.cpp"/>
-    <File Name="src/TextMap.cpp"/>
     <File Name="src/Util.cpp"/>
     <File Name="src/xmlHelper.cpp"/>
     <File Name="src/AprilUI.cpp"/>
@@ -55,11 +54,11 @@
       <File Name="src/NullImage.cpp"/>
       <File Name="src/TiledImage.cpp"/>
     </VirtualDirectory>
+    <File Name="src/EventArgs.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/aprilui/Dataset.h"/>
     <File Name="include/aprilui/Exception.h"/>
-    <File Name="include/aprilui/TextMap.h"/>
     <File Name="src/Util.h"/>
     <File Name="include/aprilui/AprilUI.h"/>
     <File Name="include/aprilui/Animators.h"/>
@@ -82,7 +81,6 @@
       <File Name="include/aprilui/Animator.h"/>
       <File Name="include/aprilui/AnimatorRotationOscillator.h"/>
     </VirtualDirectory>
-    <File Name="src/_dirent.h"/>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">
       <File Name="include/aprilui/ObjectCallbackObject.h"/>

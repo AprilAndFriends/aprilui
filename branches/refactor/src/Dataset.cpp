@@ -2,13 +2,16 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
+#include <hltypes/hdir.h>
+#include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
 #include <hltypes/util.h>
 
@@ -193,8 +196,8 @@ namespace AprilUI
 			if (*node == "ImageRef")
 			{
 				refname=node->pstr("name");
-				img->addImageRef(getImage(refname),node->pfloat("x"),node->pfloat("y"),
-				                                   node->pfloat("w"),node->pfloat("h"));
+				img->addImageRef(getImage(refname),grect(node->pfloat("x"),node->pfloat("y"),
+				                                         node->pfloat("w"),node->pfloat("h")));
 			}
 		}
 		
@@ -348,7 +351,8 @@ namespace AprilUI
 		// texts
 		logMessage("loading texts");
 		hstr filepath=normalize_path(mFilenamePrefix+"/"+textsPath);
-		mTexts.load(filepath);
+		
+		_loadTexts(filepath);
 		
 		// audio
 		mLoaded=1;
@@ -358,6 +362,112 @@ namespace AprilUI
 		this->update(0);
 	}
 
+	void Dataset::_loadTexts(chstr path)
+	{
+		logMessage("loading texts from '" + path + "'");
+		harray<hstr> files = hdir::files(path, true);
+		harray<hstr> lines;
+		harray<hstr> values;
+		bool keyMode = true;
+		hstr key;
+		hfile f;
+		foreach (hstr, it, files)
+		{
+			f.open(*it);
+			if (!f.is_open())
+			{
+				throw hl_exception("Failed to load file " + (*it));
+			}
+			lines = f.read_lines();
+			f.close();
+			foreach (hstr, it2, lines)
+			{
+				if (keyMode)
+				{
+					if ((*it2) == "{")
+					{
+						values.clear();
+						keyMode = false;
+					}
+					else
+					{
+						key = (*it2);
+					}
+				}
+				else if ((*it2) == "}")
+				{
+					keyMode = true;
+					if (key != "")
+					{
+						mTexts[key] = values.join('\n');
+					}
+				}
+				else
+				{
+					values += (*it2);
+				}
+			}
+		}
+		
+		
+		/*
+		mName=path;
+		FILE* f;
+		char buff[2][513];
+		int len,mode,c; // mode: 0 - seeking for title, 1 - reading text
+		harray<hstr> content;
+		hstr key;
+		char *trp,utfc; // performance optimization
+		unsigned int str_start;
+		
+		logMessage("loading texts from '"+folder+"'");
+		
+		if (mBuffer == 0) mBuffer=(char*) malloc(BLOCK_SIZE);
+		
+		content=hdir::files(folder, true);
+		
+		foreach(hstr,it,content)
+		{
+			//logMessage("Reading text file: "+*it);
+			f=fopen((*it).c_str(),"rb");
+			if(!f)
+				throw hl_exception(hstr("Failed to load file ") + *it);
+			for (utfc=-1;utfc < 0;utfc=fgetc(f));
+			fseek(f, -1, SEEK_CUR);
+
+			for (mode=c=0;fgets(buff[c],512,f);c=!c)
+			{
+				len=strlen(buff[c]); trp=buff[c]+len-2;
+				if (len > 1 && *trp == '\r') { *trp='\n'; trp[1]=0; len--; }
+				if (mode == 0 && strncmp(buff[c],"{",1) == 0)
+				{
+					buff[!c][strlen(buff[!c])-1]=0;
+					key=buff[!c]; mode=1;
+					str_start=mBufferPos;
+				}
+				else if (mode == 1)
+				{
+					if (strncmp(buff[c],"}",1) == 0)
+					{
+						mode=0;
+						mBuffer[mBufferPos-1]=0;
+						mTexts[key]=str_start;
+					}
+					else
+					{
+						int bp=(mBufferPos+len+1)/BLOCK_SIZE;
+						if  (bp > mBufferPos/BLOCK_SIZE) mBuffer=(char*) realloc(mBuffer,(bp+1)*BLOCK_SIZE);
+						strcpy(mBuffer+mBufferPos,buff[c]);
+						mBufferPos+=len;
+					}
+				}
+			}
+			
+			fclose(f);
+		}
+		*/
+	}
+	
 	void Dataset::unload()
 	{
 		if (!mLoaded) throw GenericException("Unable to unload dataset '"+getName()+"', data not loaded!");
@@ -366,7 +476,7 @@ namespace AprilUI
 		foreach_m(Image*,it,mImages)            delete it->second; mImages.clear();
 		foreach_m(April::Texture*,it,mTextures) delete it->second; mTextures.clear();
 		mCallbacks.clear();
-		mTexts.unload();
+		mTexts.clear();
 		
 		mLoaded=0;
 	}
@@ -445,7 +555,7 @@ namespace AprilUI
 
 	bool Dataset::textExists(chstr name)
 	{
-		return mTexts.exists(name);
+		return mTexts.has_key(name);
 	}
 
 

@@ -2,8 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com),                                 *
-                   Ivan Vucica (ivan@vucica.net)
+Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -24,8 +23,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com),                            
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define SCROLL_SPEED_X 10
-#define SCROLL_SPEED_Y 10
+#define SCROLL_SPEED_X 50
+#define SCROLL_SPEED_Y 50
 
 AprilUI::Dataset* dataset;
 

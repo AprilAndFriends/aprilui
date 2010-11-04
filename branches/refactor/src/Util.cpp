@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -10,11 +10,6 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include <algorithm>
 #include <math.h>
 #include <stdio.h>
-#ifdef _WIN32
-	#include "_dirent.h"
-#else
-	#include <dirent.h>
-#endif
 
 #include <april/RenderSystem.h>
 #include <hltypes/hmap.h>
@@ -74,25 +69,6 @@ namespace AprilUI
 		cnt++;
 		counters[prefix]=cnt;
 		return prefix+hstr(cnt);
-	}
-	
-	int getdir (chstr dir, harray<hstr> &files)
-	{
-		DIR *dp;
-		struct dirent *dirp;
-		if((dp  = opendir(dir.c_str())) == NULL) {
-			//std::cout << "Error(" << errno << ") opening " << dir << std::endl;
-			return 1;
-		}
-
-		hstr x;
-		while ((dirp = readdir(dp)) != NULL) {
-			x=hstr(dirp->d_name);
-			if (x == "." || x == ".." || x == ".svn") continue;
-			files.push_back(getPWD() + "/" + dir + "/" + x);
-		}
-		closedir(dp);
-		return 0;
 	}
 	
 	hstr getPWD()
