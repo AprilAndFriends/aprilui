@@ -17,25 +17,19 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
+	extern April::TexturedVertex tVertices[4];
+	extern April::PlainVertex pVertices[4];
+	
 	class AprilUIExport Image
 	{
-	protected:
-		April::TexturedVertex mVertices[4];
-		April::Texture* mTexture;
-		hstr mName;
-		hstr mImageName;
-		float mSourceX, mSourceY, mSourceW, mSourceH;
-		April::BlendMode mBlendMode;
-		bool mVertical,mUnloadedFlag,mInvertX,mInvertY;
-		
-		void updateTexCoords();
 	public:
 		
-		Image(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical=0,bool invertx=0,bool inverty=0);
+		Image(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical = false, bool invertX = false, bool invertY = false);
 		virtual ~Image();
-		virtual void draw(float dx,float dy,float dw,float dh,float r,float g,float b,float a);
-		virtual void draw(float centerx,float centery,float dw,float dh,float angle);
-		virtual void draw(float centerx,float centery,float dw,float dh,float angle,float r,float g,float b,float a);
+		
+		virtual void draw(float x, float y, float w, float h, float r, float g, float b, float a);
+		virtual void draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a);
+		virtual void draw(float x, float y, float w, float h, float angle);
 		
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };
@@ -50,7 +44,24 @@ namespace AprilUI
 		float getSourceH() const { return mSourceH; }
 		
 		April::BlendMode getBlendMode() { return mBlendMode; }
-		void setBlendMode(April::BlendMode mode) { mBlendMode=mode; }
+		void setBlendMode(April::BlendMode mode) { mBlendMode = mode; }
+		
+	protected:
+		April::Texture* mTexture;
+		hstr mName;
+		hstr mImageName;
+		float mSourceX;
+		float mSourceY;
+		float mSourceW;
+		float mSourceH;
+		April::BlendMode mBlendMode;
+		bool mVertical;
+		bool mUnloadedFlag;
+		bool mInvertX;
+		bool mInvertY;
+		
+		void _updateTexCoords();
+		
 	};
 
 }
