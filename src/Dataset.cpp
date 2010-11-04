@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "AprilUI.h"
 #include "Dataset.h"
 #include "Exception.h"
-#include "Image.h"
+#include "Images.h"
 #include "Objects.h"
 #include "Util.h"
 #include "xmlHelper.h"

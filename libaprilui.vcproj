@@ -191,10 +191,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Image.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\TextMap.cpp"
 				>
 			</File>
@@ -330,6 +326,34 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Images"
+				>
+				<File
+					RelativePath=".\src\ColoredImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ColorImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\CompositeImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\Image.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\NullImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\TiledImage.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -369,7 +393,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\aprilui\Image.h"
+				RelativePath=".\include\aprilui\Images.h"
 				>
 			</File>
 			<File
@@ -501,6 +525,34 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectToggleButton.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Images"
+				>
+				<File
+					RelativePath=".\include\aprilui\ColoredImage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\ColorImage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\CompositeImage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\Image.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\NullImage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\TiledImage.h"
 					>
 				</File>
 			</Filter>
