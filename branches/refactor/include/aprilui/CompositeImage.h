@@ -36,7 +36,7 @@ namespace AprilUI
 		void addImageRef(Image* image, grect rect);
 		
 		void draw(float x, float y, float w, float h, float r, float g, float b, float a);
-		void draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a);
+		void draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle);
 		
 		const harray<ImageRef>& getImageList() { return mImages; }
 		

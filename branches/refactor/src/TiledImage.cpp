@@ -38,124 +38,152 @@ namespace AprilUI
 
 	void TiledImage::draw(float x, float y, float w, float h, float r, float g, float b, float a)
 	{
-		float basew=(mTileW > 0) ? w/mTileW : -mTileW,
-		      baseh=(mTileH > 0) ? h/mTileH : -mTileH,
-			  ox=fabs(mScrollX),oy=fabs(mScrollY);
+		float basew = (mTileW > 0 ? w / mTileW : -mTileW);
+		float baseh = (mTileH > 0 ? h / mTileH : -mTileH);
+		float ox = fabs(mScrollX);
+		float oy = fabs(mScrollY);
 			  
 		if (mScrollX != 0)
 		{
-			while (ox >= basew) ox-=basew;
-			if (mScrollX < 0) ox=basew-ox;
-			x+=ox; w-=ox;
+			ox = fmod(ox, basew);
+			if (mScrollX < 0)
+			{
+				ox = basew - ox;
+			}
+			x += ox;
+			w -= ox;
 		}
 
 		if (mScrollY != 0)
 		{
-			while (oy >= baseh) oy-=baseh;
-			if (mScrollY < 0) oy=baseh-oy;
-			y+=oy; h-=oy;
+			oy = fmod(oy, baseh);
+			if (mScrollY < 0)
+			{
+				oy = baseh - oy;
+			}
+			y += oy;
+			h -= oy;
 		}
 		
-		float tilew=w/basew;
-		float tileh=h/baseh;
+		float tilew = w / basew;
+		float tileh = h / baseh;
 		
-		for (int j=0;j<(int) tileh;j++)
-			for (int i=0;i<(int) tilew;i++)
-				Image::draw(x+i*basew,y+j*baseh,basew,baseh,r,g,b,a);
+		for (int j = 0; j < (int)tileh; j++)
+		{
+			for (int i = 0; i < (int)tilew; i++)
+			{
+				Image::draw(x + i * basew, y + j * baseh, basew, baseh, r ,g ,b, a);
+			}
+		}
 		
-		float osx=mSourceX,osy=mSourceY,osw=mSourceW,osh=mSourceH;
+		float osx = mSourceX;
+		float osy = mSourceY;
+		float osw = mSourceW;
+		float osh = mSourceH;
 		// RIGHT
 		if (tilew-(int) tilew > 0)
 		{
-			mSourceW=(w-((int) tilew)*basew)*osw/basew;
-			float dx=x+((int) tilew)*basew;
+			mSourceW = (w - (int)tilew * basew) * osw / basew;
+			float dx = x + (int)tilew * basew;
 			_updateTexCoords();
-			for (int j=0;j<(int) tileh;j++)
-				Image::draw(dx,y+j*baseh,(w-((int) tilew)*basew),baseh,r,g,b,a);
-			mSourceW=osw;
+			for (int j = 0; j < (int)tileh; j++)
+			{
+				Image::draw(dx, y + j * baseh, (w - (int)tilew * basew), baseh, r, g, b, a);
+			}
+			mSourceW = osw;
 		}
 		// LEFT
 		if (ox > 0)
 		{
-			mSourceW=(ox/basew)*osw;
-			mSourceX=osx+((basew-ox)/basew)*osw;
-			
+			mSourceW = ox / basew * osw;
+			mSourceX = osx + (basew - ox) / basew * osw;
 			_updateTexCoords();
-			for (int j=0;j<(int) tileh;j++)
-				Image::draw(x-ox,y+j*baseh,ox,baseh,r,g,b,a);
-			mSourceX=osx; mSourceW=osw;
+			for (int j = 0; j < (int)tileh; j++)
+			{
+				Image::draw(x - ox, y + j * baseh, ox, baseh, r, g, b, a);
+			}
+			mSourceX = osx;
+			mSourceW = osw;
 		}
 		// DOWN
-		if (tileh-(int) tileh > 0)
+		if (tileh - (int)tileh > 0)
 		{
-			mSourceH=(h-((int) tileh)*baseh)*osh/baseh;
-			float dy=y+((int) tileh)*baseh;
+			mSourceH = (h - (int)tileh * baseh) * osh / baseh;
+			float dy = y + (int)tileh * baseh;
 			_updateTexCoords();
-			for (int i=0;i<(int) tilew;i++)
-				Image::draw(x+i*basew,dy,basew,(h-((int) tileh)*baseh),r,g,b,a);
-			mSourceH=osh;
+			for (int i = 0; i < (int)tilew; i++)
+			{
+				Image::draw(x + i * basew, dy, basew, (h - (int)tileh * baseh), r, g, b, a);
+			}
+			mSourceH = osh;
 		}
 		// UP
 		if (oy > 0)
 		{
-			mSourceH=(oy/baseh)*osh;
-			mSourceY=osy+((baseh-oy)/baseh)*osh;
-			
+			mSourceH = oy / baseh * osh;
+			mSourceY = osy + (baseh - oy) / baseh * osh;
 			_updateTexCoords();
-			for (int i=0;i<(int) tilew;i++)
-				Image::draw(x+i*basew,y-oy,basew,oy,r,g,b,a);
-			mSourceY=osy; mSourceW=osw;
+			for (int i = 0; i < (int)tilew; i++)
+			{
+				Image::draw(x + i * basew, y - oy, basew, oy, r, g, b, a);
+			}
+			mSourceY = osy;
+			mSourceW = osw;
 		}
-		
 		
 		if (ox > 0 && oy > 0)
 		{
 			// UPPER-LEFT CORNER
-			mSourceW=(ox/basew)*osw;
-			mSourceH=(oy/baseh)*osh;
-			mSourceX=osx+((basew-ox)/basew)*osw;
-			mSourceY=osy+((baseh-oy)/baseh)*osh;
+			mSourceW = ox / basew * osw;
+			mSourceH = oy / baseh * osh;
+			mSourceX = osx + (basew - ox) / basew * osw;
+			mSourceY = osy + (baseh - oy) / baseh * osh;
 			_updateTexCoords();
-			Image::draw(x-ox,y-oy,ox,oy,r,g,b,a);
+			Image::draw(x - ox, y - oy, ox, oy, r, g, b, a);
 			
 			// UPPER-RIGHT CORNER
-			mSourceW=(w-((int) tilew)*basew)*osw/basew;
-			mSourceH=(oy/baseh)*osh;
-			mSourceX=osx;
-			mSourceY=osy+((baseh-oy)/baseh)*osh;
+			mSourceW = (w - (int)tilew * basew) * osw / basew;
+			mSourceH = oy / baseh * osh;
+			mSourceX = osx;
+			mSourceY = osy + (baseh - oy) / baseh * osh;
 			_updateTexCoords();
-			Image::draw(x+((int) tilew)*basew,y-oy,w-((int) tilew)*basew,oy,r,g,b,a);
+			Image::draw(x + (int)tilew * basew, y - oy, w - (int)tilew * basew, oy, r, g, b, a);
 			
 			// LOWER-LEFT CORNER
-			mSourceW=(ox/basew)*osw;
-			mSourceH=(h-((int) tileh)*baseh)*osh/baseh;
-			mSourceX=osx+((basew-ox)/basew)*osw;
-			mSourceY=osy;
+			mSourceW = ox / basew * osw;
+			mSourceH = (h - (int)tileh * baseh) * osh / baseh;
+			mSourceX = osx + (basew - ox) / basew * osw;
+			mSourceY = osy;
 			_updateTexCoords();
-			Image::draw(x-ox,y+((int) tileh)*baseh,ox,h-(((int) tileh)*baseh),r,g,b,a);
+			Image::draw(x - ox, y + (int)tileh * baseh, ox, h - (int)tileh * baseh, r, g, b, a);
 			
-			
-			mSourceX=osx; mSourceW=osw; mSourceY=osy; mSourceW=osw;
+			mSourceX = osx;
+			mSourceY = osy;
+			mSourceW = osw;
+			mSourceH = osh;
 		}
 		
 		// LOWER-RIGHT CORNER
-		if (tilew-(int) tilew > 0 && tileh-(int) tileh > 0)
+		if (tilew - (int)tilew > 0 && tileh - (int)tileh > 0)
 		{
-			mSourceW=(w-((int) tilew)*basew)*osw/basew;
-			mSourceH=(h-((int) tileh)*baseh)*osh/baseh;
+			mSourceW = w - (int)tilew * basew * osw / basew;
+			mSourceH = h - (int)tileh * baseh * osh / baseh;
 			_updateTexCoords();
-			Image::draw(x+((int) tilew)*basew,y+((int) tileh)*baseh,
-					   (w-((int) tilew)*basew),(h-((int) tileh)*baseh),r,g,b,a);
+			Image::draw(x + (int)tilew * basew, y + (int)tileh * baseh,
+					    w - (int)tilew * basew, h - (int)tileh * baseh, r, g, b, a);
 		}
 		
-		if (tilew-(int) tilew > 0 || tileh-(int) tileh > 0 || ox > 0 || oy > 0)
+		if (tilew - (int)tilew > 0 || tileh - (int)tileh > 0 || ox > 0 || oy > 0)
 		{
-			mSourceX=osx; mSourceY=osy; mSourceW=osw; mSourceH=osh;
+			mSourceX = osx;
+			mSourceY = osy;
+			mSourceW = osw;
+			mSourceH = osh;
 			_updateTexCoords();
 		}
 	}
 
-	void TiledImage::draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a)
+	void TiledImage::draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle)
 	{
 		
 	}

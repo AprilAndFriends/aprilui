@@ -37,8 +37,6 @@ namespace AprilUI
 		mUnloadedFlag = false;
 		mInvertX = invertX;
 		mInvertY = invertY;
-
-		_updateTexCoords();
 	}
 	
 	Image::~Image()
@@ -96,6 +94,11 @@ namespace AprilUI
 		}
 	}
 
+	void Image::draw(float x, float y, float w, float h)
+	{
+		draw(x, y, w, h, 1, 1, 1, 1);
+	}
+	
 	void Image::draw(float x, float y, float w, float h, float r, float g, float b, float a)
 	{
 		if (w == -1)
@@ -112,11 +115,8 @@ namespace AprilUI
 		tVertices[3].x = x + w; tVertices[3].y = y + h;
 		
 		April::rendersys->setTexture(mTexture);
-		if (mUnloadedFlag && mTexture->isLoaded())
-		{
-			_updateTexCoords();
-			mUnloadedFlag = false;
-		}
+		_updateTexCoords();
+			
 		if (mBlendMode != April::ALPHA_BLEND)
 		{
 			April::rendersys->setBlendMode(mBlendMode);
@@ -135,7 +135,7 @@ namespace AprilUI
 		}
 	}
 
-	void Image::draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a)
+	void Image::draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle)
 	{
 		if (w == -1)
 		{
@@ -145,6 +145,7 @@ namespace AprilUI
 		{
 			h = mSourceH;
 		}
+		
 		tVertices[0].x = -w / 2; tVertices[0].y = -h / 2;
 		tVertices[1].x =  w / 2; tVertices[1].y = -h / 2;
 		tVertices[2].x = -w / 2; tVertices[2].y =  h / 2;
@@ -152,14 +153,10 @@ namespace AprilUI
 		
 		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
-		April::rendersys->translate(x, y);
+		April::rendersys->translate(x + w / 2, y + h / 2);
 		April::rendersys->rotate(angle);
 		April::rendersys->setTexture(mTexture);
-		if (mUnloadedFlag && mTexture->isLoaded())
-		{
-			_updateTexCoords();
-			mUnloadedFlag = false;
-		}
+		_updateTexCoords();
 		
 		if (mBlendMode != April::ALPHA_BLEND)
 		{
@@ -182,7 +179,7 @@ namespace AprilUI
 
 	void Image::draw(float x, float y, float w, float h, float angle)
 	{
-		draw(x, y, w, h, angle, 1, 1, 1, 1);
+		draw(x, y, w, h, 1, 1, 1, 1, angle);
 	}
 
 	April::Texture* Image::getTexture()
