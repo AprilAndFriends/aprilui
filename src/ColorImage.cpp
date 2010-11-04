@@ -2,22 +2,24 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <gtypes/Matrix4.h>
 #include <april/RenderSystem.h>
+#include <gtypes/Matrix4.h>
 
 #include "ColorImage.h"
 #include "Util.h"
 
 namespace AprilUI
 {
-	ColorImage::ColorImage(chstr name) : Image(0,name,0,0,0,0,0)
+	ColorImage::ColorImage(chstr name) : Image(0, name, 0, 0, 0, 0, 0)
 	{
 		unsigned char a,r,g,b;
+		//April::Color c()
+		April::Color* c = new April::Color(name);
 		hexstr_to_argb(name,&a,&r,&g,&b);
 		mRed=r/255.0f;
 		mGreen=g/255.0f;

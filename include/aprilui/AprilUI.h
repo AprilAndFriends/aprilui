@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -10,8 +10,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_H
 #define APRILUI_H
 
-#include <hltypes/hstring.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
 
@@ -35,12 +35,12 @@ namespace AprilUI
 	AprilUIFnExport float getDefaultScale();
 	
 	AprilUIFnExport Dataset* getDatasetByName(chstr name);
-	AprilUIFnExport void update(float time_increase);
-	AprilUIFnExport void updateTextures(float time_increase);
+	AprilUIFnExport void update(float time);
+	AprilUIFnExport void updateTextures(float time);
 	AprilUIFnExport hstr getDefaultTextsPath();
 	AprilUIFnExport void setDefaultTextsPath(chstr path);
 	
-	AprilUIFnExport void setCursorPos(float x,float y);
+	AprilUIFnExport void setCursorPos(float x, float y);
 	AprilUIFnExport gvec2 getCursorPos();
 }
 

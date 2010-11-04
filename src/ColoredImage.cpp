@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -13,8 +13,8 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace AprilUI
 {
-	ColoredImage::ColoredImage(April::Texture* tex,chstr name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
-				  Image(tex,name,sx,sy,sw,sh,vertical)
+	ColoredImage::ColoredImage(April::Texture* texture, chstr name,float sx,float sy,float sw,float sh,bool vertical,unsigned int color) :
+				  Image(texture,name,sx,sy,sw,sh,vertical)
 	{
 		if (color > 0xFFFFFF)
 			mAlpha=(color >> 24) / 255.0f;

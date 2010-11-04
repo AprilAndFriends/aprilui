@@ -171,10 +171,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\_dirent.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\AprilUI.cpp"
 				>
 			</File>
@@ -187,11 +183,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Exception.cpp"
+				RelativePath=".\src\EventArgs.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\TextMap.cpp"
+				RelativePath=".\src\Exception.cpp"
 				>
 			</File>
 			<File
@@ -398,10 +394,6 @@
 			</File>
 			<File
 				RelativePath=".\include\aprilui\Objects.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\aprilui\TextMap.h"
 				>
 			</File>
 			<File
