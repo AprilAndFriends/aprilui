@@ -27,8 +27,9 @@ namespace AprilUI
 		Image(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical = false, bool invertX = false, bool invertY = false);
 		virtual ~Image();
 		
+		virtual void draw(float x, float y, float w, float h);
 		virtual void draw(float x, float y, float w, float h, float r, float g, float b, float a);
-		virtual void draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a);
+		virtual void draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle);
 		virtual void draw(float x, float y, float w, float h, float angle);
 		
 		bool isVertical() { return mVertical; };

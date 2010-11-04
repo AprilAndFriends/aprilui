@@ -36,7 +36,7 @@ namespace AprilUI
 
 	void ColoredImage::draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a)
 	{
-		Image::draw(x, y, w, h, angle, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r);
+		Image::draw(x, y, w, h, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, angle);
 	}
 
 	void ColoredImage::setColor(float a, float r, float g, float b)

@@ -55,14 +55,14 @@ namespace AprilUI
 		}
 	}
 	
-	void CompositeImage::draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a)
+	void CompositeImage::draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle)
 	{
 		float wf = w / mSourceW;
 		float hf = h / mSourceH;
 		foreach(ImageRef, it, mImages)
 		{
-			(*it).image->draw(x - w / 2 + (*it).rect.x * wf + (*it).rect.w / 2, y - h / 2 + (*it).rect.y * hf + (*it).rect.h / 2,
-				(*it).rect.w * wf, (*it).rect.h * hf, angle, r, g, b, a);
+			(*it).image->draw(x + (*it).rect.x * wf, y + (*it).rect.y * hf,
+				(*it).rect.w * wf, (*it).rect.h * hf, r, g, b, a, angle);
 		}
 	}
 

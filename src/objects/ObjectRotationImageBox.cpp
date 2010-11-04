@@ -33,7 +33,7 @@ namespace AprilUI
 		if (!mImage) mImage=mDataPtr->getImage("null");
 		float alpha=getDerivedAlpha();
 		if (!getDerivedEnabled()) alpha/=2;
-		mImage->draw(mX+offset_x+mWidth/2,mY+offset_y+mHeight/2,mWidth,mHeight,mAngle,1,1,1,alpha);
+		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha,mAngle);
 	}
 
 	bool RotationImageBox::angleEquals(float angle)
