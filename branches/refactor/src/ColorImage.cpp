@@ -9,13 +9,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <april/RenderSystem.h>
 #include <gtypes/Matrix4.h>
+#include <gtypes/Rectangle.h>
 
 #include "ColorImage.h"
 #include "Util.h"
 
 namespace AprilUI
 {
-	ColorImage::ColorImage(chstr name) : Image(0, name, 0, 0, 0, 0, 0)
+	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
 		mColor.setColor(name);
 	}

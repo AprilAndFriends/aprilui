@@ -115,7 +115,7 @@ namespace AprilUI
 		if (node->iter_children() == 0) // if there are no images defined, create one that fills the whole area
 		{
 			if (mImages.has_key(tex_name)) throw ResourceExistsException(filename,"April::Texture",this);	
-			mImages[tex_name]=new Image(t,filename,0,0,(float)t->getWidth(),(float)t->getHeight());
+			mImages[tex_name]=new Image(t,filename,grect(0,0,(float)t->getWidth(),(float)t->getHeight()));
 		}
 		else
 		{
@@ -140,18 +140,18 @@ namespace AprilUI
 					
 					if (tile_w != 1 || tile_h != 1) 
 					{
-						i=new TiledImage(t,name,x,y,w,h,vertical,tile_w,tile_h);
+						i=new TiledImage(t,name,grect(x,y,w,h),vertical,tile_w,tile_h);
 					}
 					else
 					{
 						if (node->pexists("color"))
 						{
 							unsigned int color=node->phex("color");
-							i=new ColoredImage(t,name,x,y,w,h,vertical,color);
+							i=new ColoredImage(t,name,grect(x,y,w,h),vertical,color);
 						}
 						else
 						{
-							i=new Image(t,name,x,y,w,h,vertical,invertx,inverty);    
+							i=new Image(t,name,grect(x,y,w,h),vertical,invertx,inverty);    
 						}
 					}
 					if (node->pexists("blend_mode"))

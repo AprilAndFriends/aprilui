@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_IMAGE_H
 
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -23,8 +24,7 @@ namespace AprilUI
 	class AprilUIExport Image
 	{
 	public:
-		
-		Image(April::Texture* texture, chstr name, float sx, float sy, float sw, float sh, bool vertical = false, bool invertX = false, bool invertY = false);
+		Image(April::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
 		virtual ~Image();
 		
 		virtual void draw(float x, float y, float w, float h);
@@ -39,10 +39,11 @@ namespace AprilUI
 		April::Texture* getTexture();
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
-		float getSourceX() const { return mSourceX; }
-		float getSourceY() const { return mSourceY; }
-		float getSourceW() const { return mSourceW; }
-		float getSourceH() const { return mSourceH; }
+		float getSourceX() const DEPRECATED_ATTRIBUTE { return mSource.x; }
+		float getSourceY() const DEPRECATED_ATTRIBUTE { return mSource.y; }
+		float getSourceW() const DEPRECATED_ATTRIBUTE { return mSource.w; }
+		float getSourceH() const DEPRECATED_ATTRIBUTE { return mSource.h; }
+		const grect& getSource() const { return mSource; }
 		
 		April::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(April::BlendMode mode) { mBlendMode = mode; }
@@ -51,10 +52,7 @@ namespace AprilUI
 		April::Texture* mTexture;
 		hstr mName;
 		hstr mImageName;
-		float mSourceX;
-		float mSourceY;
-		float mSourceW;
-		float mSourceH;
+		grect mSource;
 		April::BlendMode mBlendMode;
 		bool mVertical;
 		bool mUnloadedFlag;
