@@ -8,6 +8,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
@@ -16,8 +17,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ColoredImageBox::ColoredImageBox(chstr name,float x,float y,float w,float h) :
-		ImageBox(name,x,y,w,h)
+	ColoredImageBox::ColoredImageBox(chstr name,grect rect) :
+		ImageBox(name,rect)
 	{
 		_setTypeName("ColoredImageBox");
 	}

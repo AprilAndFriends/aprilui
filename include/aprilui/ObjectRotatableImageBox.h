@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_ROTATABLE_IMAGE_BOX_H
 #define APRILUI_ROTATABLE_IMAGE_BOX_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -23,7 +24,7 @@ namespace AprilUI
 		float mDestAngle;
 		float mRotationSpeed;
 	public:
-		RotatableImageBox(chstr name,float x,float y,float w,float h);
+		RotatableImageBox(chstr name,grect rect);
 		
 		void setRotationSpeed(float speed) { mRotationSpeed=speed; }
 		float getRotationSpeed() { return mRotationSpeed; }

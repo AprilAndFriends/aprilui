@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <math.h>
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
@@ -18,7 +19,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler",name,0,0,1,1)
+		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler",name,grect(0,0,1,1))
 		{
 			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
 			mDestAlpha=-10000;

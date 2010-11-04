@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_EDIT_BOX_H
 #define APRILUI_EDIT_BOX_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -40,7 +41,7 @@ namespace AprilUI
 		void _insertText(chstr text);
 		
 	public:
-		EditBox(chstr name,float x,float y,float w,float h);
+		EditBox(chstr name,grect rect);
 		
 		void update(float time);
 		bool OnMouseDown(float x,float y,int button);

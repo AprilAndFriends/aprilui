@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_LABEL_H
 #define APRILUI_LABEL_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -24,7 +25,7 @@ namespace AprilUI
 		hstr mTextKey;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		Label(chstr name,float x,float y,float w,float h);
+		Label(chstr name,grect rect);
 		
 		void setTextKey(chstr key);
 		chstr getTextXey() { return mTextKey; }

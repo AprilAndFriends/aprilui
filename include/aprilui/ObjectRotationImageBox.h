@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_ROTATION_IMAGE_BOX_H
 #define APRILUI_ROTATION_IMAGE_BOX_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -23,7 +24,7 @@ namespace AprilUI
 		float mAngle;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		RotationImageBox(chstr name,float x,float y,float w,float h);
+		RotationImageBox(chstr name,grect rect);
 
 		virtual void setAngle(float angle) { mAngle=angle; }
 		float getAngle() { return mAngle; }

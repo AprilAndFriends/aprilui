@@ -16,8 +16,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ToggleButton::ToggleButton(chstr name,float x,float y,float w,float h) :
-		ImageButton(name,x,y,w,h)
+	ToggleButton::ToggleButton(chstr name,grect rect) :
+		ImageButton(name,rect)
 	{
 		_setTypeName("ToggleButton");
 		mPushed=0;

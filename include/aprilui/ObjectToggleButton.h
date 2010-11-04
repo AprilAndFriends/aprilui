@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_TOGGLE_BUTTON_H
 #define APRILUI_TOGGLE_BUTTON_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -21,7 +22,7 @@ namespace AprilUI
 	class AprilUIExport ToggleButton : public ImageButton
 	{
 	public:
-		ToggleButton(chstr name,float x,float y,float w,float h);
+		ToggleButton(chstr name,grect rect);
 
 		void OnDraw(float offset_x,float offset_y);
 		bool OnMouseDown(float x,float y,int button);

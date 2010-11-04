@@ -16,8 +16,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	RotatableImageBox::RotatableImageBox(chstr name,float x,float y,float w,float h) :
-		RotationImageBox(name,x,y,w,h)
+	RotatableImageBox::RotatableImageBox(chstr name,grect rect) :
+		RotationImageBox(name,rect)
 	{
 		mDestAngle=0;
 		mRotationSpeed=90;

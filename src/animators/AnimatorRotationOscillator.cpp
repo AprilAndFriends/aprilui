@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
@@ -17,7 +18,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		RotationOscillator::RotationOscillator(chstr name) : Animator("Animators::RotationOscillator",name,0,0,1,1)
+		RotationOscillator::RotationOscillator(chstr name) : Animator("Animators::RotationOscillator",name,grect(0,0,1,1))
 		{
 			mBaseline=0.0; mAmplitude=0.5; mSpeed=360;
 			mInitialAngle=-10001;

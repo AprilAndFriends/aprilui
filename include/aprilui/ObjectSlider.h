@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_SLIDER_H
 #define APRILUI_SLIDER_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -22,7 +23,7 @@ namespace AprilUI
 		bool mPushed;
 		float mValue;
 	public:
-		Slider(chstr name,float x,float y,float w,float h);
+		Slider(chstr name,grect rect);
 		bool OnMouseDown(float x,float y,int button);
 		bool OnMouseUp(float x,float y,int button);
 		void OnMouseMove(float x,float y);

@@ -7,13 +7,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <map>
-
 #include <april/RenderSystem.h>
 #include <april/Window.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
+
 #include "Animator.h"
 #include "CallbackEvent.h"
 #include "Dataset.h"
@@ -25,13 +26,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	Object::Object(chstr type_name,chstr name,float x,float y,float w,float h)
+	Object::Object(chstr type_name,chstr name,grect rect)
 	{
 		mTypeName=type_name;
 		mName=name;
 		mParent=0;
 		mZOrder=0;
-		mX=x; mY=y; mWidth=w; mHeight=h;
+		mRect=rect;
+		mX=rect.x; mY=rect.y; mWidth=rect.w; mHeight=rect.h;
 		mVisible=mEnabled=1;
 		mClickthrough=0;
 		mInheritsAlpha=1;

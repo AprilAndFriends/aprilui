@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
@@ -16,8 +17,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	RotationImageBox::RotationImageBox(chstr name,float x,float y,float w,float h) :
-		ImageBox(name,x,y,w,h)
+	RotationImageBox::RotationImageBox(chstr name,grect rect) :
+		ImageBox(name,rect)
 	{
 		mAngle=0;
 	}

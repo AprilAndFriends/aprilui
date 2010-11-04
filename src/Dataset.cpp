@@ -248,7 +248,7 @@ namespace AprilUI
 		
 
 
-	#define parse(cls) if (class_name ==  #cls) o=new cls(obj_name,x,y,w,h)
+	#define parse(cls) if (class_name ==  #cls) o=new cls(obj_name,grect(x,y,w,h))
 	#define parse_animator(cls) if (class_name ==  #cls) o=new Animators::cls(obj_name)
 		
 		/*if*/parse(DummyObject);

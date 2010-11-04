@@ -14,9 +14,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	TextImageButton::TextImageButton(chstr name,float x,float y,float w,float h) :
+	TextImageButton::TextImageButton(chstr name,grect rect) :
 		LabelBase(name),
-		ImageButton(name,x,y,w,h)
+		ImageButton(name,rect)
 	{
 		_setTypeName("TextImageButton");
 		mText="TextImageButton: "+name;
