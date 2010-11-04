@@ -10,8 +10,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_ANIMATOR_H
 #define APRILUI_ANIMATOR_H
 
-#include "AprilUIExport.h"
+#include <gtypes/Rectangle.h>
+
 #include "Object.h"
+
+#include "AprilUIExport.h"
 
 namespace AprilUI
 {
@@ -19,7 +22,7 @@ namespace AprilUI
 	class AprilUIExport Animator : public Object
 	{
 	public:
-		Animator(chstr type_name,chstr name,float x,float y,float w,float h);
+		Animator(chstr type_name,chstr name,grect rect);
 	};
 }
 

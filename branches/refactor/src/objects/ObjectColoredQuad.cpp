@@ -8,14 +8,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "ObjectColoredQuad.h"
 
 namespace AprilUI
 {
-	ColoredQuad::ColoredQuad(chstr name,float x,float y,float w,float h) :
-		Object("DummyObject",name,x,y,w,h)
+	ColoredQuad::ColoredQuad(chstr name,grect rect) :
+		Object("ColoredQuad",name,rect)
 	{
 	}
 

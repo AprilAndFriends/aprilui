@@ -16,8 +16,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ImageBox::ImageBox(chstr name,float x,float y,float w,float h) :
-		Object("ImageBox",name,x,y,w,h)
+	ImageBox::ImageBox(chstr name,grect rect) :
+		Object("ImageBox",name,rect)
 	{
 		mImage=0;
 	}
@@ -29,8 +29,9 @@ namespace AprilUI
 			mImageName=image->getName();
 		else
 			mImageName="null";
-		if (mWidth == -1) mWidth=image->getSourceW()*getDefaultScale();
-		if (mHeight == -1) mHeight=image->getSourceH()*getDefaultScale();
+		grect rect = image->getSource();
+		if (mWidth == -1) mWidth=rect.w*getDefaultScale();
+		if (mHeight == -1) mHeight=rect.h*getDefaultScale();
 	}
 
 	void ImageBox::setImageByName(chstr image)
@@ -50,7 +51,11 @@ namespace AprilUI
 	
 	void ImageBox::resizeToFitImage()
 	{
-		if (mImage) setSize(mImage->getSourceW()*getDefaultScale(), mImage->getSourceH()*getDefaultScale());
+		if (mImage)
+		{
+			grect rect = mImage->getSource();
+			setSize(rect.w*getDefaultScale(), rect.h*getDefaultScale());
+		}
 	}
 
 	void ImageBox::OnDraw(float offset_x,float offset_y)

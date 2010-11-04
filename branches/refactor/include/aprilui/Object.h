@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_OBJECT_H
 
 #include <gtypes/Vector2.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -29,6 +30,7 @@ namespace AprilUI
 		Object* mParent;
 		hstr mTypeName,mName;
 		int mZOrder;
+		grect mRect;
 		float mX,mY,mWidth,mHeight;
 		harray<Object*> mChildren;
 		
@@ -52,7 +54,8 @@ namespace AprilUI
 		void _moveChildToBack(Object* o);
 	public:
 
-		Object(chstr type_name,chstr name,float x,float y,float w,float h);
+		//Object(chstr type_name,chstr name,float x,float y,float w,float h);
+		Object(chstr type_name,chstr name,grect rect);
 		virtual ~Object();
 
 		void addChild(Object* o);

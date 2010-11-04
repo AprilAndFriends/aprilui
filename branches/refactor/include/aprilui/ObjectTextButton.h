@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_TEXT_BUTTON_H
 #define APRILUI_TEXT_BUTTON_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -24,7 +25,7 @@ namespace AprilUI
 		April::Color mHoverTextColor,mPushedTextColor;
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		TextButton(chstr name,float x,float y,float w,float h);
+		TextButton(chstr name,grect rect);
 		
 		void setHoverTextColor(April::Color color);
 		void setHoverTextColor(chstr hex);

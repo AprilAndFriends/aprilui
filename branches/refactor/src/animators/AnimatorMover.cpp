@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <math.h>
 
+#include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
@@ -19,7 +20,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Mover::Mover(chstr name) : Animator("Animators::Mover",name,0,0,1,1)
+		Mover::Mover(chstr name) : Animator("Animators::Mover",name,grect(0,0,1,1))
 		{
 			mAccel.x=mAccel.y=mSpeed.x=mSpeed.y=mInitialS.y=mInitialS.x=0;
 			mDest.x=mDest.y=-10000;

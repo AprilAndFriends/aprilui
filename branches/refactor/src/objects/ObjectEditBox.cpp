@@ -20,8 +20,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	EditBox::EditBox(chstr name,float x,float y,float w,float h) :
-		Label(name,x,y,w,h)
+	EditBox::EditBox(chstr name,grect rect) :
+		Label(name,rect)
 	{
 		mText="EditBox: "+name;
 		mTypeName="EditBox";

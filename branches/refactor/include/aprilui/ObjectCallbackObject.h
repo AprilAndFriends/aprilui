@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_CALLBACK_OBJECT_H
 #define APRILUI_CALLBACK_OBJECT_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -21,7 +22,7 @@ namespace AprilUI
 	{
 		void (*mCallback)();
 	public:
-		CallbackObject(chstr name,float x,float y,float w,float h);
+		CallbackObject(chstr name,grect rect);
 		void setProperty(chstr name,chstr value);
 		
 		void setCallback(void (*callback)()) { mCallback=callback; }

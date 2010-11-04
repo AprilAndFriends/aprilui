@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_TEXT_IMAGE_BUTTON_H
 #define APRILUI_TEXT_IMAGE_BUTTON_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -24,7 +25,7 @@ namespace AprilUI
 		void OnDraw(float offset_x,float offset_y);
 
 	public:
-		TextImageButton(chstr name,float x,float y,float w,float h);
+		TextImageButton(chstr name,grect rect);
 		
 		void setTextKey(chstr key);
 		void setProperty(chstr name,chstr value);

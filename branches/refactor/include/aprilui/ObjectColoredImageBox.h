@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_COLORED_IMAGE_BOX_H
 
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -25,7 +26,7 @@ namespace AprilUI
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		ColoredImageBox(chstr name,float x,float y,float w,float h);
+		ColoredImageBox(chstr name,grect rect);
 		
 		void setColor(chstr color);
 		void setColor(April::Color color) { mColor=color; } ;

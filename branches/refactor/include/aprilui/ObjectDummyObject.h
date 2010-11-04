@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_DUMMY_OBJECT_H
 #define APRILUI_DUMMY_OBJECT_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -20,7 +21,7 @@ namespace AprilUI
 	class AprilUIExport DummyObject : public Object
 	{
 	public:
-		DummyObject(chstr name,float x,float y,float w,float h);
+		DummyObject(chstr name,grect rect);
 		void setProperty(chstr name,chstr value);
 	};
 	

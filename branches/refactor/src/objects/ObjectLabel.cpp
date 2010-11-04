@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
@@ -14,9 +15,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	Label::Label(chstr name,float x,float y,float w,float h) :
+	Label::Label(chstr name,grect rect) :
 		LabelBase(name),
-		Object("Label",name,x,y,w,h)
+		Object("Label",name,rect)
 	{
 	}
 

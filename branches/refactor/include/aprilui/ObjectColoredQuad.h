@@ -10,9 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_COLORED_QUAD_H
 #define APRILUI_COLORED_QUAD_H
 
-#include <map>
-
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -24,7 +23,7 @@ namespace AprilUI
 	{
 		April::Color mColor;
 	public:
-		ColoredQuad(chstr name,float x,float y,float w,float h);
+		ColoredQuad(chstr name,grect rect);
 		void setColor(float a,float r,float g,float b);
 		
 		void OnDraw(float offset_x,float offset_y);

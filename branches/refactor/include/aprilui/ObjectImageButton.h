@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_IMAGE_BUTTON_H
 #define APRILUI_IMAGE_BUTTON_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -27,7 +28,7 @@ namespace AprilUI
 		void update(float k);
 	public:
 		
-		ImageButton(chstr name,float x,float y,float w,float h);
+		ImageButton(chstr name,grect rect);
 		Image* getPushedImage() { return mPushedImage; }
 		Image* getHoverImage() { return mHoverImage; }
 		Image* getDisabledImage() { return mDisabledImage; }

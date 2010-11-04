@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <math.h>
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AnimatorRotator.h"
@@ -18,7 +19,7 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Animator("Animators::Scaler",name,0,0,1,1)
+		Rotator::Rotator(chstr name) : Animator("Animators::Scaler",name,grect(0,0,1,1))
 		{
 			mAccel=mSpeed=0;
 			mInitialSpeed=-10000;

@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_IMAGE_BOX_H
 #define APRILUI_IMAGE_BOX_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -27,7 +28,7 @@ namespace AprilUI
 		
 		void OnDraw(float offset_x,float offset_y);
 	public:
-		ImageBox(chstr name,float x,float y,float w,float h);
+		ImageBox(chstr name,grect rect);
 		
 		virtual Image* getImage() { return mImage; };
 		virtual void setImage(Image* image);
