@@ -32,11 +32,6 @@ namespace AprilUI
 		}
 	}
 	
-	void CompositeImage::addImageRef(Image* image, float x, float y, float w, float h)
-	{
-		addImageRef(image, grect(x, y, w,h));
-	}
-
 	void CompositeImage::addImageRef(Image* image, grect rect)
 	{
 		ImageRef reference;
@@ -45,24 +40,23 @@ namespace AprilUI
 		mImages.push_back(reference);
 	}
 
-	void CompositeImage::draw(float x, float y, float w, float h, float r, float g, float b, float a)
+	void CompositeImage::draw(grect rect, float r, float g, float b, float a)
 	{
-		float wf = w / mSource.w;
-		float hf = h / mSource.h;
+		float wf = rect.w / mSource.w;
+		float hf = rect.h / mSource.h;
 		foreach(ImageRef, it, mImages)
 		{
-			(*it).image->draw(x + (*it).rect.x * wf, y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf, r, g, b, a);
+			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), r, g, b, a);
 		}
 	}
 	
-	void CompositeImage::draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle)
+	void CompositeImage::draw(grect rect, float r, float g, float b, float a, float angle)
 	{
-		float wf = w / mSource.w;
-		float hf = h / mSource.h;
+		float wf = rect.w / mSource.w;
+		float hf = rect.h / mSource.h;
 		foreach(ImageRef, it, mImages)
 		{
-			(*it).image->draw(x + (*it).rect.x * wf, y + (*it).rect.y * hf,
-				(*it).rect.w * wf, (*it).rect.h * hf, r, g, b, a, angle);
+			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), r, g, b, a, angle);
 		}
 	}
 

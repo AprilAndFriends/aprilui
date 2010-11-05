@@ -63,11 +63,13 @@ namespace AprilUI
 	{
 		float x=mRect.x+offset_x,y=mRect.y+offset_y;
 		float alpha=getDerivedAlpha();
-		//rendersys->drawColoredQuad(x,y,mRect.w,mRect.h,1,1,1,alpha/2);
 		April::rendersys->drawColoredQuad(x+mRect.h/2,y+mRect.h*0.375f,mRect.w-mRect.h,mRect.h/4,0,0,0,alpha);
 		April::rendersys->drawColoredQuad(x+mRect.h/2+1,y+1+mRect.h*0.375f,mRect.w-2-mRect.h,mRect.h/4-2,0.89f,0.75f,0.49f,alpha);
 		April::rendersys->drawColoredQuad(x+mRect.h/2+2,y+2+mRect.h*0.375f,mValue*(mRect.w-mRect.h-4),mRect.h/4-4,0,0,0,alpha);
-		mImage->draw(x+mRect.h/4+mValue*(mRect.w-mRect.h),y+mRect.h/4,mRect.h/2,mRect.h/2,1,1,1,alpha);
+		grect rect = mRect / 2;
+		rect.x = x+mRect.h/4+mValue*(mRect.w-mRect.h);
+		rect.y = y+mRect.h/4;
+		mImage->draw(rect,1,1,1,alpha);
 	}
 
 	void Slider::setProperty(chstr name,chstr value)

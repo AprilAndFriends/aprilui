@@ -32,11 +32,10 @@ namespace AprilUI
 		CompositeImage(chstr name, float sourceW, float sourceH);
 		CompositeImage(chstr name, CompositeImage& base);
 		
-		void addImageRef(Image* image, float x, float y, float w, float h) DEPRECATED_ATTRIBUTE;
 		void addImageRef(Image* image, grect rect);
 		
-		void draw(float x, float y, float w, float h, float r, float g, float b, float a);
-		void draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle);
+		void draw(grect rect, float r, float g, float b, float a);
+		void draw(grect rect, float r, float g, float b, float a, float angle);
 		
 		const harray<ImageRef>& getImageList() { return mImages; }
 		

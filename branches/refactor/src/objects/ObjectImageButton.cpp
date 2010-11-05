@@ -28,13 +28,13 @@ namespace AprilUI
 	{
 		if (!isDerivedEnabled() && mDisabledImage)
 		{
-			mDisabledImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,1,1,1,1);
+			mDisabledImage->draw(mRect + gvec2(offset_x, offset_y),1,1,1,1);
 			return;
 		}
 		if (mPushed && !mPushedImage && isCursorInside())
 		{
 			float alpha=getDerivedAlpha();
-			mImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,0.7f,0.7f,0.7f,alpha);
+			mImage->draw(mRect + gvec2(offset_x, offset_y),0.7f,0.7f,0.7f,alpha);
 			return;
 		}
 		ImageBox::OnDraw(offset_x,offset_y);

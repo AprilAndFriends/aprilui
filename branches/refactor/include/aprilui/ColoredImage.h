@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_COLORED_IMAGE_H
 
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
 
 #include "Image.h"
 
@@ -23,8 +24,8 @@ namespace AprilUI
 	public:
 		ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical = false, unsigned int color = 0xFFFFFFFF);
 		
-		void draw(float x, float y, float w, float h, float r, float g, float b, float a);
-		void draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a);
+		void draw(grect rect, float r, float g, float b, float a);
+		void draw(grect rect, float r, float g, float b, float a, float angle);
 
 		float getAlpha();
 		void setAlpha(float alpha);

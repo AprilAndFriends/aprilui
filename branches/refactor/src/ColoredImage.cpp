@@ -30,14 +30,14 @@ namespace AprilUI
 		mColor.a = alpha * 255.0f;
 	}
 		
-	void ColoredImage::draw(float x, float y, float w, float h, float r, float g, float b, float a)
+	void ColoredImage::draw(grect rect, float r, float g, float b, float a)
 	{
-		Image::draw(x, y, w, h, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r);
+		Image::draw(rect, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r);
 	}
 
-	void ColoredImage::draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a)
+	void ColoredImage::draw(grect rect, float r, float g, float b, float a, float angle)
 	{
-		Image::draw(x, y, w, h, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, angle);
+		Image::draw(rect, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, angle);
 	}
 
 	void ColoredImage::setColor(float a, float r, float g, float b)
