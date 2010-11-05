@@ -34,7 +34,9 @@ namespace AprilUI
 		if (!mImage) mImage=mDataset->getImage("null");
 		float alpha=getDerivedAlpha();
 		if (!isDerivedEnabled()) alpha/=2;
-		mImage->draw(mRect + gvec2(offset_x, offset_y),1,1,1,alpha,mAngle);
+		April::Color color;
+		color.a = alpha * 255;
+		mImage->draw(mRect + gvec2(offset_x, offset_y), color, mAngle);
 	}
 
 	bool RotationImageBox::angleEquals(float angle)

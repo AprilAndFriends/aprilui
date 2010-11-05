@@ -93,10 +93,10 @@ namespace AprilUI
 
 	void Image::draw(grect rect)
 	{
-		draw(rect, 1, 1, 1, 1);
+		draw(rect, April::Color());
 	}
 	
-	void Image::draw(grect rect, float r, float g, float b, float a)
+	void Image::draw(grect rect, April::Color color)
 	{
 		if (rect.w == -1)
 		{
@@ -118,9 +118,9 @@ namespace AprilUI
 		{
 			April::rendersys->setBlendMode(mBlendMode);
 		}
-		if (r != 1 || g != 1 || b != 1 || a != 1)
+		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			April::rendersys->render(April::TriangleStrip, tVertices, 4, r, g, b, a);
+			April::rendersys->render(April::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
 		}
 		else
 		{
@@ -132,7 +132,7 @@ namespace AprilUI
 		}
 	}
 
-	void Image::draw(grect rect, float r, float g, float b, float a, float angle)
+	void Image::draw(grect rect, April::Color color, float angle)
 	{
 		if (rect.w == -1)
 		{
@@ -159,9 +159,9 @@ namespace AprilUI
 		{
 			April::rendersys->setBlendMode(mBlendMode);
 		}
-		if (r != 1 || g != 1 || b != 1 || a != 1)
+		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			April::rendersys->render(April::TriangleStrip, tVertices, 4, r, g, b, a);
+			April::rendersys->render(April::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
 		}
 		else
 		{
@@ -176,7 +176,7 @@ namespace AprilUI
 
 	void Image::draw(grect rect, float angle)
 	{
-		draw(rect, 1, 1, 1, 1, angle);
+		draw(rect, April::Color(), angle);
 	}
 
 	April::Texture* Image::getTexture()
