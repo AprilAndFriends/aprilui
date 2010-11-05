@@ -30,7 +30,7 @@ namespace AprilUI
 	AprilUIFnExport bool isDebugMode();
 #endif
 	
-	//! used to determine width and height of objects who don't have w & h params in xml
+	//! used to determine width and height of objects that don't have w & h params in xml
 	AprilUIFnExport void setDefaultScale(float value);
 	AprilUIFnExport float getDefaultScale();
 	

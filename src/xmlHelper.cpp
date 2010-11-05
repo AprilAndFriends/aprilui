@@ -138,7 +138,7 @@ unsigned int xml_node::phex(const char* property, unsigned int defaultValue)
 
 bool xml_node::pexists(const char* property)
 {
-	return (this->find_prop(property) != 0);
+	return (this->find_prop(property, true) != 0);
 }
 
 bool xml_node::operator==(const char* s)
