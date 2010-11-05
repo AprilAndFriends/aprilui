@@ -91,25 +91,25 @@ namespace AprilUI
 		}
 	}
 
-	void Image::draw(float x, float y, float w, float h)
+	void Image::draw(grect rect)
 	{
-		draw(x, y, w, h, 1, 1, 1, 1);
+		draw(rect, 1, 1, 1, 1);
 	}
 	
-	void Image::draw(float x, float y, float w, float h, float r, float g, float b, float a)
+	void Image::draw(grect rect, float r, float g, float b, float a)
 	{
-		if (w == -1)
+		if (rect.w == -1)
 		{
-			w = mSource.w;
+			rect.w = mSource.w;
 		}
-		if (h == -1)
+		if (rect.h == -1)
 		{
-			h = mSource.h;
+			rect.h = mSource.h;
 		}
-		tVertices[0].x = x;     tVertices[0].y = y;
-		tVertices[1].x = x + w; tVertices[1].y = y;
-		tVertices[2].x = x;     tVertices[2].y = y + h;
-		tVertices[3].x = x + w; tVertices[3].y = y + h;
+		tVertices[0].x = rect.x;          tVertices[0].y = rect.y;
+		tVertices[1].x = rect.x + rect.w; tVertices[1].y = rect.y;
+		tVertices[2].x = rect.x;          tVertices[2].y = rect.y + rect.h;
+		tVertices[3].x = rect.x + rect.w; tVertices[3].y = rect.y + rect.h;
 		
 		April::rendersys->setTexture(mTexture);
 		_updateTexCoords();
@@ -132,25 +132,25 @@ namespace AprilUI
 		}
 	}
 
-	void Image::draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle)
+	void Image::draw(grect rect, float r, float g, float b, float a, float angle)
 	{
-		if (w == -1)
+		if (rect.w == -1)
 		{
-			w = mSource.w;
+			rect.w = mSource.w;
 		}
-		if (h == -1)
+		if (rect.h == -1)
 		{
-			h = mSource.h;
+			rect.h = mSource.h;
 		}
 		
-		tVertices[0].x = -w / 2; tVertices[0].y = -h / 2;
-		tVertices[1].x =  w / 2; tVertices[1].y = -h / 2;
-		tVertices[2].x = -w / 2; tVertices[2].y =  h / 2;
-		tVertices[3].x =  w / 2; tVertices[3].y =  h / 2;
+		tVertices[0].x = -rect.w / 2; tVertices[0].y = -rect.h / 2;
+		tVertices[1].x =  rect.w / 2; tVertices[1].y = -rect.h / 2;
+		tVertices[2].x = -rect.w / 2; tVertices[2].y =  rect.h / 2;
+		tVertices[3].x =  rect.w / 2; tVertices[3].y =  rect.h / 2;
 		
 		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
-		April::rendersys->translate(x + w / 2, y + h / 2);
+		April::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
 		April::rendersys->rotate(angle);
 		April::rendersys->setTexture(mTexture);
 		_updateTexCoords();
@@ -174,9 +174,9 @@ namespace AprilUI
 		April::rendersys->setModelviewMatrix(temp_matrix);
 	}
 
-	void Image::draw(float x, float y, float w, float h, float angle)
+	void Image::draw(grect rect, float angle)
 	{
-		draw(x, y, w, h, 1, 1, 1, 1, angle);
+		draw(rect, 1, 1, 1, 1, angle);
 	}
 
 	April::Texture* Image::getTexture()

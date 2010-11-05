@@ -36,8 +36,8 @@ namespace AprilUI
 		void setTile(float w, float h);
 		void setScroll(float x, float y);
 		
-		void draw(float x, float y, float w, float h, float r, float g, float b, float a);
-		void draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle);
+		void draw(grect rect, float r, float g, float b, float a);
+		void draw(grect rect, float r, float g, float b, float a, float angle);
 		
 	protected:
 		float mTileW;

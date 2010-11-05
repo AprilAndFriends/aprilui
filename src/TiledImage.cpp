@@ -36,10 +36,10 @@ namespace AprilUI
 		mScrollY = y;
 	}
 
-	void TiledImage::draw(float x, float y, float w, float h, float r, float g, float b, float a)
+	void TiledImage::draw(grect rect, float r, float g, float b, float a)
 	{
-		float basew = (mTileW > 0 ? w / mTileW : -mTileW);
-		float baseh = (mTileH > 0 ? h / mTileH : -mTileH);
+		float basew = (mTileW > 0 ? rect.w / mTileW : -mTileW);
+		float baseh = (mTileH > 0 ? rect.h / mTileH : -mTileH);
 		float ox = fabs(mScrollX);
 		float oy = fabs(mScrollY);
 			  
@@ -50,8 +50,8 @@ namespace AprilUI
 			{
 				ox = basew - ox;
 			}
-			x += ox;
-			w -= ox;
+			rect.x += ox;
+			rect.w -= ox;
 		}
 
 		if (mScrollY != 0)
@@ -61,18 +61,18 @@ namespace AprilUI
 			{
 				oy = baseh - oy;
 			}
-			y += oy;
-			h -= oy;
+			rect.y += oy;
+			rect.h -= oy;
 		}
 		
-		float tilew = w / basew;
-		float tileh = h / baseh;
+		float tilew = rect.w / basew;
+		float tileh = rect.h / baseh;
 		
 		for (int j = 0; j < (int)tileh; j++)
 		{
 			for (int i = 0; i < (int)tilew; i++)
 			{
-				Image::draw(x + i * basew, y + j * baseh, basew, baseh, r ,g ,b, a);
+				Image::draw(grect(rect.x + i * basew, rect.y + j * baseh, basew, baseh), r ,g ,b, a);
 			}
 		}
 		
@@ -83,12 +83,12 @@ namespace AprilUI
 		// RIGHT
 		if (tilew-(int) tilew > 0)
 		{
-			mSource.w = (w - (int)tilew * basew) * osw / basew;
-			float dx = x + (int)tilew * basew;
+			mSource.w = (rect.w - (int)tilew * basew) * osw / basew;
+			float dx = rect.x + (int)tilew * basew;
 			_updateTexCoords();
 			for (int j = 0; j < (int)tileh; j++)
 			{
-				Image::draw(dx, y + j * baseh, (w - (int)tilew * basew), baseh, r, g, b, a);
+				Image::draw(grect(dx, rect.y + j * baseh, (rect.w - (int)tilew * basew), baseh), r, g, b, a);
 			}
 			mSource.w = osw;
 		}
@@ -100,7 +100,7 @@ namespace AprilUI
 			_updateTexCoords();
 			for (int j = 0; j < (int)tileh; j++)
 			{
-				Image::draw(x - ox, y + j * baseh, ox, baseh, r, g, b, a);
+				Image::draw(grect(rect.x - ox, rect.y + j * baseh, ox, baseh), r, g, b, a);
 			}
 			mSource.x = osx;
 			mSource.w = osw;
@@ -108,12 +108,12 @@ namespace AprilUI
 		// DOWN
 		if (tileh - (int)tileh > 0)
 		{
-			mSource.h = (h - (int)tileh * baseh) * osh / baseh;
-			float dy = y + (int)tileh * baseh;
+			mSource.h = (rect.h - (int)tileh * baseh) * osh / baseh;
+			float dy = rect.y + (int)tileh * baseh;
 			_updateTexCoords();
 			for (int i = 0; i < (int)tilew; i++)
 			{
-				Image::draw(x + i * basew, dy, basew, (h - (int)tileh * baseh), r, g, b, a);
+				Image::draw(grect(rect.x + i * basew, dy, basew, rect.h - (int)tileh * baseh), r, g, b, a);
 			}
 			mSource.h = osh;
 		}
@@ -125,7 +125,7 @@ namespace AprilUI
 			_updateTexCoords();
 			for (int i = 0; i < (int)tilew; i++)
 			{
-				Image::draw(x + i * basew, y - oy, basew, oy, r, g, b, a);
+				Image::draw(grect(rect.x + i * basew, rect.y - oy, basew, oy), r, g, b, a);
 			}
 			mSource.y = osy;
 			mSource.w = osw;
@@ -139,23 +139,23 @@ namespace AprilUI
 			mSource.x = osx + (basew - ox) / basew * osw;
 			mSource.y = osy + (baseh - oy) / baseh * osh;
 			_updateTexCoords();
-			Image::draw(x - ox, y - oy, ox, oy, r, g, b, a);
+			Image::draw(grect(rect.x - ox, rect.y - oy, ox, oy), r, g, b, a);
 			
 			// UPPER-RIGHT CORNER
-			mSource.w = (w - (int)tilew * basew) * osw / basew;
+			mSource.w = (rect.w - (int)tilew * basew) * osw / basew;
 			mSource.h = oy / baseh * osh;
 			mSource.x = osx;
 			mSource.y = osy + (baseh - oy) / baseh * osh;
 			_updateTexCoords();
-			Image::draw(x + (int)tilew * basew, y - oy, w - (int)tilew * basew, oy, r, g, b, a);
+			Image::draw(grect(rect.x + (int)tilew * basew, rect.y - oy, rect.w - (int)tilew * basew, oy), r, g, b, a);
 			
 			// LOWER-LEFT CORNER
 			mSource.w = ox / basew * osw;
-			mSource.h = (h - (int)tileh * baseh) * osh / baseh;
+			mSource.h = (rect.h - (int)tileh * baseh) * osh / baseh;
 			mSource.x = osx + (basew - ox) / basew * osw;
 			mSource.y = osy;
 			_updateTexCoords();
-			Image::draw(x - ox, y + (int)tileh * baseh, ox, h - (int)tileh * baseh, r, g, b, a);
+			Image::draw(grect(rect.x - ox, rect.y + (int)tileh * baseh, ox, rect.h - (int)tileh * baseh), r, g, b, a);
 			
 			mSource.x = osx;
 			mSource.y = osy;
@@ -166,11 +166,11 @@ namespace AprilUI
 		// LOWER-RIGHT CORNER
 		if (tilew - (int)tilew > 0 && tileh - (int)tileh > 0)
 		{
-			mSource.w = w - (int)tilew * basew * osw / basew;
-			mSource.h = h - (int)tileh * baseh * osh / baseh;
+			mSource.w = rect.w - (int)tilew * basew * osw / basew;
+			mSource.h = rect.h - (int)tileh * baseh * osh / baseh;
 			_updateTexCoords();
-			Image::draw(x + (int)tilew * basew, y + (int)tileh * baseh,
-					    w - (int)tilew * basew, h - (int)tileh * baseh, r, g, b, a);
+			Image::draw(grect(rect.x + (int)tilew * basew, rect.y + (int)tileh * baseh,
+							  rect.w - (int)tilew * basew, rect.h - (int)tileh * baseh), r, g, b, a);
 		}
 		
 		if (tilew - (int)tilew > 0 || tileh - (int)tileh > 0 || ox > 0 || oy > 0)
@@ -183,7 +183,7 @@ namespace AprilUI
 		}
 	}
 
-	void TiledImage::draw(float x, float y, float w, float h, float r, float g, float b, float a, float angle)
+	void TiledImage::draw(grect rect, float r, float g, float b, float a, float angle)
 	{
 		
 	}

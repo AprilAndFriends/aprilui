@@ -7,6 +7,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "Event.h"
@@ -26,8 +28,8 @@ namespace AprilUI
 	void ToggleButton::OnDraw(float offset_x,float offset_y)
 	{
 		float alpha=getDerivedAlpha();
-		if (mPushed) mPushedImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,1,1,1,alpha);
-		mImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,1,1,1,alpha);
+		if (mPushed) mPushedImage->draw(mRect + gvec2(offset_x, offset_y),1,1,1,alpha);
+		mImage->draw(mRect + gvec2(offset_x, offset_y),1,1,1,alpha);
 	}
 
 	bool ToggleButton::OnMouseDown(float x,float y,int button)

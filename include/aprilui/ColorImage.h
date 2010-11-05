@@ -23,8 +23,8 @@ namespace AprilUI
 	public:
 		ColorImage(chstr name);
 		
-		void draw(float x, float y, float w, float h, float r, float g, float b, float a);
-		void draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a);
+		void draw(grect rect, float r, float g, float b, float a);
+		void draw(grect rect, float r, float g, float b, float a, float angle);
 		
 	protected:
 		April::Color mColor;

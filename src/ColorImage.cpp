@@ -21,13 +21,13 @@ namespace AprilUI
 		mColor.setColor(name);
 	}
 
-	void ColorImage::draw(float x, float y, float w, float h, float r, float g, float b, float a)
+	void ColorImage::draw(grect rect, float r, float g, float b, float a)
 	{
 		April::PlainVertex v[4];
-		pVertices[0].x = x;     pVertices[0].y = y;
-		pVertices[1].x = x + w; pVertices[1].y = y;
-		pVertices[2].x = x;     pVertices[2].y = y + h;
-		pVertices[3].x = x + w; pVertices[3].y = y + h;
+		pVertices[0].x = rect.x;          pVertices[0].y = rect.y;
+		pVertices[1].x = rect.x + rect.w; pVertices[1].y = rect.y;
+		pVertices[2].x = rect.x;          pVertices[2].y = rect.y + rect.h;
+		pVertices[3].x = rect.x + rect.w; pVertices[3].y = rect.y + rect.h;
 		
 		if (mBlendMode != April::ALPHA_BLEND)
 		{
@@ -41,16 +41,16 @@ namespace AprilUI
 		}
 	}
 
-	void ColorImage::draw(float x, float y, float w, float h, float angle, float r, float g, float b, float a)
+	void ColorImage::draw(grect rect, float r, float g, float b, float a, float angle)
 	{
-		pVertices[0].x = -w / 2; pVertices[0].y = -h / 2;
-		pVertices[1].x =  w / 2; pVertices[1].y = -h / 2;
-		pVertices[2].x = -w / 2; pVertices[2].y =  h / 2;
-		pVertices[3].x =  w / 2; pVertices[3].y =  h / 2;
+		pVertices[0].x = -rect.w / 2; pVertices[0].y = -rect.h / 2;
+		pVertices[1].x =  rect.w / 2; pVertices[1].y = -rect.h / 2;
+		pVertices[2].x = -rect.w / 2; pVertices[2].y =  rect.h / 2;
+		pVertices[3].x =  rect.w / 2; pVertices[3].y =  rect.h / 2;
 		
 		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
-		April::rendersys->translate(x, y);
+		April::rendersys->translate(rect.x, rect.y);
 		April::rendersys->rotate(angle);
 		if (mBlendMode != April::ALPHA_BLEND)
 		{
