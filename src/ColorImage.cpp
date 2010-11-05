@@ -21,7 +21,7 @@ namespace AprilUI
 		mColor.setColor(name);
 	}
 
-	void ColorImage::draw(grect rect, float r, float g, float b, float a)
+	void ColorImage::draw(grect rect, April::Color color)
 	{
 		April::PlainVertex v[4];
 		pVertices[0].x = rect.x;          pVertices[0].y = rect.y;
@@ -33,15 +33,15 @@ namespace AprilUI
 		{
 			April::rendersys->setBlendMode(mBlendMode);
 		}
-		April::rendersys->render(April::TriangleStrip, v, 4, mColor.r_float() * r,
-			mColor.g_float() * g, mColor.b_float() * b, mColor.a_float() * a);
+		color *= mColor;
+		April::rendersys->render(April::TriangleStrip, pVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
 		if (mBlendMode != April::ALPHA_BLEND)
 		{
 			April::rendersys->setBlendMode(April::DEFAULT);
 		}
 	}
 
-	void ColorImage::draw(grect rect, float r, float g, float b, float a, float angle)
+	void ColorImage::draw(grect rect, April::Color color, float angle)
 	{
 		pVertices[0].x = -rect.w / 2; pVertices[0].y = -rect.h / 2;
 		pVertices[1].x =  rect.w / 2; pVertices[1].y = -rect.h / 2;
@@ -56,8 +56,7 @@ namespace AprilUI
 		{
 			April::rendersys->setBlendMode(mBlendMode);
 		}
-		April::rendersys->render(April::TriangleStrip,pVertices, 4, mColor.r_float() * r,
-			mColor.g_float() * g, mColor.b_float() * b, mColor.a_float() * a);
+		April::rendersys->render(April::TriangleStrip, pVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
 		if (mBlendMode != April::ALPHA_BLEND)
 		{
 			April::rendersys->setBlendMode(April::DEFAULT);

@@ -24,8 +24,8 @@ namespace AprilUI
 	public:
 		ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical = false, unsigned int color = 0xFFFFFFFF);
 		
-		void draw(grect rect, float r, float g, float b, float a);
-		void draw(grect rect, float r, float g, float b, float a, float angle);
+		void draw(grect rect, April::Color color);
+		void draw(grect rect, April::Color color, float angle);
 
 		float getAlpha();
 		void setAlpha(float alpha);

@@ -63,7 +63,9 @@ namespace AprilUI
 		if (!mImage) mImage=mDataset->getImage("null");
 		float alpha=getDerivedAlpha();
 		if (!isDerivedEnabled()) alpha/=2;
-		mImage->draw(mRect + gvec2(offset_x, offset_y),1,1,1,alpha);
+		April::Color color;
+		color.a = alpha * 255;
+		mImage->draw(mRect + gvec2(offset_x, offset_y), color);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 

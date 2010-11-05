@@ -40,23 +40,23 @@ namespace AprilUI
 		mImages.push_back(reference);
 	}
 
-	void CompositeImage::draw(grect rect, float r, float g, float b, float a)
+	void CompositeImage::draw(grect rect, April::Color color)
 	{
 		float wf = rect.w / mSource.w;
 		float hf = rect.h / mSource.h;
 		foreach(ImageRef, it, mImages)
 		{
-			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), r, g, b, a);
+			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), color);
 		}
 	}
 	
-	void CompositeImage::draw(grect rect, float r, float g, float b, float a, float angle)
+	void CompositeImage::draw(grect rect, April::Color color, float angle)
 	{
 		float wf = rect.w / mSource.w;
 		float hf = rect.h / mSource.h;
 		foreach(ImageRef, it, mImages)
 		{
-			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), r, g, b, a, angle);
+			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), color, angle);
 		}
 	}
 

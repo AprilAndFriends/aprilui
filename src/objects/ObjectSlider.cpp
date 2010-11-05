@@ -69,7 +69,9 @@ namespace AprilUI
 		grect rect = mRect / 2;
 		rect.x = x+mRect.h/4+mValue*(mRect.w-mRect.h);
 		rect.y = y+mRect.h/4;
-		mImage->draw(rect,1,1,1,alpha);
+		April::Color color;
+		color.a = alpha * 255;
+		mImage->draw(rect, color);
 	}
 
 	void Slider::setProperty(chstr name,chstr value)

@@ -28,8 +28,8 @@ namespace AprilUI
 		virtual ~Image();
 		
 		virtual void draw(grect rect);
-		virtual void draw(grect rect, float r, float g, float b, float a);
-		virtual void draw(grect rect, float r, float g, float b, float a, float angle);
+		virtual void draw(grect rect, April::Color color);
+		virtual void draw(grect rect, April::Color color, float angle);
 		virtual void draw(grect rect, float angle);
 		
 		bool isVertical() { return mVertical; };

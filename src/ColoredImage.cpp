@@ -30,14 +30,14 @@ namespace AprilUI
 		mColor.a = alpha * 255.0f;
 	}
 		
-	void ColoredImage::draw(grect rect, float r, float g, float b, float a)
+	void ColoredImage::draw(grect rect, April::Color color)
 	{
-		Image::draw(rect, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r);
+		Image::draw(rect, mColor * color);
 	}
 
-	void ColoredImage::draw(grect rect, float r, float g, float b, float a, float angle)
+	void ColoredImage::draw(grect rect, April::Color color, float angle)
 	{
-		Image::draw(rect, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, mColor.r_float() * r, angle);
+		Image::draw(rect, mColor * color, angle);
 	}
 
 	void ColoredImage::setColor(float a, float r, float g, float b)
