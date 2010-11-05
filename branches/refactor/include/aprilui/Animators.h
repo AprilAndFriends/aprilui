@@ -19,6 +19,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "AnimatorFrameAnimation.h"
 #include "AnimatorMover.h"
 #include "AnimatorRotator.h"
+#include "AnimatorRotationOscillator.h"
 #include "AnimatorScaler.h"
 
 #endif

@@ -245,9 +245,10 @@ namespace AprilUI
 
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
+		Event* event = NULL;
 		if (mEvents.has_key(name))
 		{
-			delete mEvents[name];
+			event = mEvents[name];
 		}
         if (callback == NULL)
 		{
@@ -257,15 +258,18 @@ namespace AprilUI
 		{
 			mEvents[name] = new CallbackEvent(callback);
 		}
+		if (event != NULL)
+		{
+			delete event;
+		}
 	}
 
 	void Object::triggerEvent(chstr name, float x, float y, chstr extra)
 	{
-		Event* event = mEvents[name];
-		if (event != NULL)
+		if (mEvents.has_key(name))
 		{
 			EventArgs args(this, x, y, extra);
-			event->execute(&args);
+			mEvents[name]->execute(&args);
 		}
 	}
 

@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_DATASET_H
 #define APRILUI_DATASET_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
@@ -94,7 +95,7 @@ namespace AprilUI
 		void parseRAMTexture(xml_node* node);
 		void parseCompositeImage(xml_node* node);
 		virtual void parseExternalXMLNode(xml_node* node) { }
-		virtual Object* parseExternalObjectClass(xml_node* node, chstr obj_name, float x, float y, float w, float h) { return 0; }
+		virtual Object* parseExternalObjectClass(xml_node* node, chstr obj_name, grect rect) { return 0; }
 		
 		Object* recursiveObjectParse(xml_node* node, Object* parent);
 		
