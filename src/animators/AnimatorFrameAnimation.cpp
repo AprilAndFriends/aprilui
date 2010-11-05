@@ -19,59 +19,61 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		FrameAnimation::FrameAnimation(chstr name) : Animator("Animators::FrameAnimation",name,grect(0,0,1,1))
+		FrameAnimation::FrameAnimation(chstr name) : Animator("Animators::FrameAnimation", name, grect(0, 0, 1, 1))
 		{
-			mStartFrame=0; mEndFrame=100;
-			mAnimationTime=10;
-			mTimer=0;
-			mLoop=1;
-            mDelay=0;
+			mStartFrame = 0;
+			mEndFrame = 100;
+			mAnimationTime = 10.0f;
+			mTimer = 0.0f;
+			mLoop = 1;
+            mDelay = 0.0f;
 		}
 
-		void FrameAnimation::setProperty(chstr name,chstr value)
+		void FrameAnimation::setProperty(chstr name, chstr value)
 		{
-			if      (name == "start_frame") mStartFrame=value;
-			else if (name == "end_frame")   mEndFrame=value;
-			else if (name == "time")        mAnimationTime=value;
-			else if (name == "base_name")   mImageBaseName=value;
-			else if (name == "loop")        mLoop=value;
-            else if (name == "delay")       mDelay=value;
+			if      (name == "start_frame") mStartFrame = value;
+			else if (name == "end_frame")   mEndFrame = value;
+			else if (name == "time")        mAnimationTime = value;
+			else if (name == "base_name")   mImageBaseName = value;
+			else if (name == "loop")        mLoop = value;
+            else if (name == "delay")       mDelay = value;
 		}
 
-		void FrameAnimation::notifyEvent(chstr event_name,void* params)
+		void FrameAnimation::notifyEvent(chstr name, void* params)
 		{
-			if (event_name == "AttachToObject")
+			if (name == "AttachToObject")
 			{
-				mTimer=0;
+				mTimer = 0.0f;
 			}
-			Object::notifyEvent(event_name,params);
+			Object::notifyEvent(name, params);
 		}
 
 		void FrameAnimation::update(float k)
 		{
             if (mDelay > 0)
             {
-                mDelay=hmax(0.0f,mDelay-k);
+                mDelay = hmax(0.0f, mDelay - k);
                 return;
             }
-			mTimer+=k;
-			if (mTimer >= mAnimationTime)
+			mTimer += k;
+			if (mTimer >= mAnimationTime && mLoop)
 			{
-				if (mLoop)
-				{
-					mTimer-=mAnimationTime;
-				}
+				mTimer -= mAnimationTime;
 			}
 			if (mTimer < mAnimationTime)
 			{
-				int frame=mStartFrame+(int) ((mEndFrame-mStartFrame)*mTimer/mAnimationTime);
-				ImageBox* img=dynamic_cast<ImageBox*>(mParent);
-				if (img)
+				int frame = mStartFrame + (int)((mEndFrame - mStartFrame) * mTimer / mAnimationTime);
+				ImageBox* image = dynamic_cast<ImageBox*>(mParent);
+				if (image)
 				{
-					img->setImageByName(mImageBaseName+hstr(frame));
+					image->setImageByName(mImageBaseName + hstr(frame));
 				}
-				else logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+				else
+				{
+					logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+				}
 			}
 		}
+		
 	}
 }

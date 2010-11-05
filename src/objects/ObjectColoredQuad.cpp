@@ -8,6 +8,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/RenderSystem.h>
+#include <aprilui/AprilUI.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
@@ -34,10 +35,27 @@ namespace AprilUI
 	void ColoredQuad::setProperty(chstr name,chstr value)
 	{
 		Object::setProperty(name,value);
-		if      (name == "a") mColor.a=(unsigned char) ((float) value*255);
-		else if (name == "r") mColor.r=(unsigned char) ((float) value*255);
-		else if (name == "g") mColor.g=(unsigned char) ((float) value*255);
-		else if (name == "b") mColor.b=(unsigned char) ((float) value*255);
+		if		(name == "r")
+		{
+			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			mColor.r=(unsigned char) ((float) value*255);
+		}
+		else if (name == "g")
+		{
+			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			mColor.g=(unsigned char) ((float) value*255);
+		}
+		else if (name == "b")
+		{
+			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			mColor.b=(unsigned char) ((float) value*255);
+		}
+		else if (name == "a")
+		{
+			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			mColor.a=(unsigned char) ((float) value*255);
+		}
+		else if (name == "color") mColor.setColor(value);
 	}
 
 	bool ColoredQuad::OnMouseDown(float x,float y,int button)

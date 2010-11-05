@@ -20,64 +20,72 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Scaler::Scaler(chstr name) : Animator("Animators::Scaler",name,grect(0,0,1,1))
+		Scaler::Scaler(chstr name) : Animator("Animators::Scaler", name, grect(0, 0, 1, 1))
 		{
-			mAccel.y=mAccel.x=mSpeed.y=mSpeed.x=mInitialSize.y=mInitialSize.x=0;
-			mDest.y=mDest.x=-10000;
-            mDelay=0;
+			mAccel.y = 0.0f;
+			mAccel.x = 0.0f;
+			mSpeed.y = 0.0f;
+			mSpeed.x = 0.0f;
+			mInitialSize.y = 0.0f;
+			mInitialSize.x = 0.0f;
+			mDest.y = -10000.0f;
+			mDest.x = -10000.0f;
+            mDelay = 0.0f;
 		}
 
-		void Scaler::setProperty(chstr name,chstr value)
+		void Scaler::setProperty(chstr name, chstr value)
 		{
-			if      (name == "speed_w") mSpeed.x=mInitialS.x=value;
-			else if (name == "speed_h") mSpeed.y=mInitialS.y=value;
-			else if (name == "accel_w") mAccel.x=value;
-			else if (name == "accel_h") mAccel.y=value;
-			else if (name == "dest_w")  mDest.x=value;
-			else if (name == "dest_h")  mDest.y=value;
-            else if (name == "delay")   mDelay=value;
+			if      (name == "speed_w")	mSpeed.x = mInitialS.x = value;
+			else if (name == "speed_h")	mSpeed.y = mInitialS.y = value;
+			else if (name == "accel_w")	mAccel.x = value;
+			else if (name == "accel_h")	mAccel.y = value;
+			else if (name == "dest_w")	mDest.x = value;
+			else if (name == "dest_h")	mDest.y = value;
+            else if (name == "delay")	mDelay = value;
 		}
 
-		void Scaler::notifyEvent(chstr event_name,void* params)
+		void Scaler::notifyEvent(chstr name, void* params)
 		{
-			if (event_name == "AttachToObject")
+			if (name == "AttachToObject")
 			{
-				mSpeed.x=mInitialS.x;
-				mSpeed.y=mInitialS.y;
+				mSpeed = mInitialS;
 			}
-			Object::notifyEvent(event_name,params);
+			Object::notifyEvent(name, params);
 		}
 
-		void Scaler::scale(float dest_w,float dest_h,float time)
+		void Scaler::scale(float dest_w, float dest_h, float time)
 		{
-			mDest.x=dest_w; mDest.y=dest_h;
-			mSpeed=mDest-mParent->getSize();
-			mSpeed=mSpeed.normalised()*(mSpeed.length()/time);
-			mAccel.set(0,0);
+			mDest.x = dest_w;
+			mDest.y = dest_h;
+			mSpeed = mDest-mParent->getSize();
+			mSpeed = mSpeed.normalised() * (mSpeed.length() / time);
+			mAccel.set(0, 0);
 		}
 
 		void Scaler::update(float k)
 		{
-			gtypes::Vector2 v=mParent->getSize();
-			if (v.x == mDest.y && v.y == mDest.x) return;
+			gvec2 v = mParent->getSize();
+			if (v.x == mDest.x && v.y == mDest.y)
+			{
+				return;
+			}
             if (mDelay > 0)
             {
-                mDelay=hmax(0.0f,mDelay-k);
+                mDelay = hmax(0.0f, mDelay - k);
                 return;
             }
-			gtypes::Vector2 old=v;
+			gvec2 old = v;
 			if (fabs(mAccel.y) > 0.01f || fabs(mAccel.x) > 0.01f)
 			{
-				mSpeed.y+=mAccel.y*k;
-				mSpeed.x+=mAccel.x*k;
+				mSpeed += mAccel * k;
 			}
-
-			v.x+=k*mSpeed.x;
-			v.y+=k*mSpeed.y;
-			if (sgn(mDest.x-old.x) != sgn(mDest.x-v.x) || sgn(mDest.y-old.y) != sgn(mDest.y-v.y))
-				v.x=mDest.x,v.y=mDest.y;
-
-			mParent->setSize(v.x,v.y);
+			v += mSpeed * k;
+			if (sgn(mDest.x - old.x) != sgn(mDest.x - v.x) || sgn(mDest.y - old.y) != sgn(mDest.y - v.y))
+			{
+				v = mDest;
+			}
+			mParent->setSize(v);
 		}
+		
 	}
 }

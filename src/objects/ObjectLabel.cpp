@@ -29,11 +29,11 @@ namespace AprilUI
 		LabelBase::_drawLabel(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,alpha);
 	}
 
-	void Label::notifyEvent(chstr event_name,void* params)
+	void Label::notifyEvent(chstr name,void* params)
 	{
-		if (event_name == "UpdateText")
+		if (name == "UpdateText")
 			setTextKey(mTextKey);
-		Object::notifyEvent(event_name,params);
+		Object::notifyEvent(name,params);
 	}
 
 	void Label::setTextKey(chstr key)

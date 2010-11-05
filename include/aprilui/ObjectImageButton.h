@@ -22,7 +22,7 @@ namespace AprilUI
 	class AprilUIExport ImageButton : public ImageBox
 	{
 	public:
-		ImageButton(chstr name,grect rect);
+		ImageButton(chstr name, grect rect);
 		
 		Image* getPushedImage() { return mPushedImage; }
 		void setPushedImage(Image* value);

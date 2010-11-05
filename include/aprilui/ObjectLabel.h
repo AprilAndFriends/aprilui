@@ -26,8 +26,9 @@ namespace AprilUI
 		
 		chstr getTextXey() { return mTextKey; }
 		void setTextKey(chstr key);
+		
+		void notifyEvent(chstr name, void* params);
 		void setProperty(chstr name, chstr value);
-		void notifyEvent(chstr event_name, void* params);
 		
 	protected:
 		hstr mTextKey;

@@ -17,50 +17,52 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Earthquake::Earthquake(chstr name) : Animator("Animators::Earthquake",name,grect(0,0,1,1))
+		Earthquake::Earthquake(chstr name) : Animator("Animators::Earthquake", name, grect(0, 0, 1, 1))
 		{
-			mIntensity=0;
-			mDuration=1;
-			mConstDuration=1;
-			mFreq=10;
+			mIntensity = 0.0f;
+			mDuration = 1.0f;
+			mConstDuration = 1.0f;
+			mFreq = 10.0f;
 		}
 
-		void Earthquake::notifyEvent(chstr event_name,void* params)
+		void Earthquake::notifyEvent(chstr name, void* params)
 		{
-			if (event_name == "AttachToObject")
+			if (name == "AttachToObject")
 			{
-				mInitialX=mParent->getX();
-				mInitialY=mParent->getY();
-				mTimer=mFreqTimer=0;
+				mInitial = mParent->getPosition();
+				mTimer = 0.0f;
+				mFreqTimer = 0.0f;
 			}
-			Object::notifyEvent(event_name,params);
+			Object::notifyEvent(name, params);
 		}
 		
 		void Earthquake::setProperty(chstr name,chstr value)
 		{
-			if      (name == "intensity") mIntensity=value;
-			else if (name == "duration")  mDuration=value;
-			else if (name == "const_duration")  mConstDuration=value;
-			else if (name == "freq")  mFreq=value;
+			if      (name == "intensity")		mIntensity = value;
+			else if (name == "duration")		mDuration = value;
+			else if (name == "const_duration")	mConstDuration = value;
+			else if (name == "freq")			mFreq = value;
 		}
 		
 		void Earthquake::update(float k)
 		{
-			mTimer+=k; mFreqTimer+=k;
-			float intensity=mIntensity;
+			mTimer += k;
+			mFreqTimer += k;
+			float intensity = mIntensity;
 			if (mTimer > mConstDuration)
 			{
-				intensity*=(mDuration-mTimer)/(mDuration-mConstDuration);
+				intensity *= (mDuration - mTimer) / (mDuration - mConstDuration);
 			}
 			if (mTimer > mDuration)
 			{
-				mParent->setPosition(mInitialX,mInitialY);
+				mParent->setPosition(mInitial);
 			}
-			else if (mFreqTimer > 1.0f/mFreq)
+			else if (mFreqTimer > 1.0f / mFreq)
 			{
-				mFreqTimer-=1/mFreq;
-				mParent->setPosition(mInitialX+hrand(intensity),mInitialY+hrand(intensity));
+				mFreqTimer -= 1.0f / mFreq;
+				mParent->setPosition(mInitial + gvec2(hrand(intensity), hrand(intensity)));
 			}
 		}
+		
 	}
 }

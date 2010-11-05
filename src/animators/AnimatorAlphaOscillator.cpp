@@ -17,38 +17,44 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		AlphaOscillator::AlphaOscillator(chstr name) : Animator("Animators::Oscillator",name,grect(0,0,1,1))
+		AlphaOscillator::AlphaOscillator(chstr name) : Animator("Animators::Oscillator", name, grect(0, 0, 1, 1))
 		{
-			mBaseline=0.5; mAmplitude=0.5; mSpeed=360;
-			mInitialAlpha=-10001;
-			mTimer=0;
+			mBaseline = 0.5f;
+			mAmplitude = 0.5f;
+			mSpeed = 360.0f;
+			mInitialAlpha = -10001.0f;
+			mTimer = 0.0f;
 		}
 
-		void AlphaOscillator::setProperty(chstr name,chstr value)
+		void AlphaOscillator::setProperty(chstr name, chstr value)
 		{
-			if      (name == "base") mBaseline=value;
-			else if (name == "amplitude") mAmplitude=value;
-			else if (name == "speed") mSpeed=value;
+			if      (name == "base")		mBaseline = value;
+			else if (name == "amplitude")	mAmplitude = value;
+			else if (name == "speed")		mSpeed = value;
 		}
 
-		void AlphaOscillator::notifyEvent(chstr event_name,void* params)
+		void AlphaOscillator::notifyEvent(chstr name, void* params)
 		{
-			if (event_name == "AttachToObject")
+			if (name == "AttachToObject")
 			{
-				if (mInitialAlpha < -10000)
-					mInitialAlpha=mParent->getAlpha();
+				if (mInitialAlpha < -10000.0f)
+				{
+					mInitialAlpha = mParent->getAlpha();
+				}
 				else
+				{
 					update(0); // preserve alpha
-			//	mTimer=0;
+				}
 			}
-			Object::notifyEvent(event_name,params);
+			Object::notifyEvent(name, params);
 		}
 
 		void AlphaOscillator::update(float k)
 		{
-			mTimer+=k;
-			float alpha=dsin(mTimer*mSpeed)*mAmplitude+mBaseline;
-			mParent->setAlpha(hclamp(alpha,0.0f,1.0f));
+			mTimer += k;
+			float alpha = dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
+			mParent->setAlpha(hclamp(alpha, 0.0f, 1.0f));
 		}
+		
 	}
 }

@@ -39,10 +39,6 @@ namespace AprilUI
 		April::Texture* getTexture();
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
-		float getSourceX() const DEPRECATED_ATTRIBUTE { return mSource.x; }
-		float getSourceY() const DEPRECATED_ATTRIBUTE { return mSource.y; }
-		float getSourceW() const DEPRECATED_ATTRIBUTE { return mSource.w; }
-		float getSourceH() const DEPRECATED_ATTRIBUTE { return mSource.h; }
 		const grect& getSource() const { return mSource; }
 		
 		April::BlendMode getBlendMode() { return mBlendMode; }

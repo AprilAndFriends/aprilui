@@ -23,13 +23,13 @@ namespace AprilUI
 	class AprilUIExport ImageBox : public Object
 	{
 	public:
-		ImageBox(chstr name,grect rect);
+		ImageBox(chstr name, grect rect);
 		
 		virtual Image* getImage() { return mImage; };
 		virtual void setImage(Image* value);
 		hstr getImageName() { return mImageName; }
 		void setImageByName(chstr name);
-		void notifyEvent(chstr event_name, void* params);
+		void notifyEvent(chstr name, void* params);
 		
 		void resizeToFitImage();
 		

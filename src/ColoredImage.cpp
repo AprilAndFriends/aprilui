@@ -14,10 +14,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ColoredImage::ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical, unsigned int color) :
+	ColoredImage::ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical, April::Color color) :
 				  Image(texture, name, source, vertical)
 	{
-		mColor.setColor(color);
+		mColor = color;
 	}
 
 	float ColoredImage::getAlpha()
