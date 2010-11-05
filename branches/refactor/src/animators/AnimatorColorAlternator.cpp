@@ -21,19 +21,19 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		ColorAlternator::ColorAlternator(chstr name) : Animator("Animators::ColorAlternator",name,grect(0,0,1,1))
+		ColorAlternator::ColorAlternator(chstr name) : Animator("Animators::ColorAlternator", name, grect(0, 0, 1, 1))
 		{
 			mLow.setColor("00000000");
 			mHigh.setColor("FFFFFFFF");
-			mTimer=0;
-			mSpeed=2;
+			mTimer = 0.0f;
+			mSpeed = 2.0f;
 		}
 
-		void ColorAlternator::setProperty(chstr name,chstr value)
+		void ColorAlternator::setProperty(chstr name, chstr value)
 		{
-			if (name == "low_color")       mLow.setColor(value);
-			else if (name == "high_color") mHigh.setColor(value);
-			else if (name == "speed")      mSpeed = value;
+			if		(name == "low_color")	mLow.setColor(value);
+			else if (name == "high_color")	mHigh.setColor(value);
+			else if (name == "speed")		mSpeed = value;
 		}
 
 		void ColorAlternator::update(float k)

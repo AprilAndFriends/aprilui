@@ -22,7 +22,7 @@ namespace AprilUI
 	class AprilUIExport ColoredImage : public Image
 	{
 	public:
-		ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical = false, unsigned int color = 0xFFFFFFFF);
+		ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical = false, April::Color color = April::Color());
 		
 		void draw(grect rect, April::Color color);
 		void draw(grect rect, April::Color color, float angle);

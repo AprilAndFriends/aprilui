@@ -22,7 +22,7 @@ namespace AprilUI
 	class ColoredQuad : public Object
 	{
 	public:
-		ColoredQuad(chstr name,grect rect);
+		ColoredQuad(chstr name, grect rect);
 		
 		void setColor(float a, float r, float g, float b);
 		void setProperty(chstr name, chstr value);

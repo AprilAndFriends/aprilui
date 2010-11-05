@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_EARTHQUAKE_H
 #define APRILUI_EARTHQUAKE_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
@@ -30,8 +31,7 @@ namespace AprilUI
 			void update(float k);
 			
 		protected:
-			float mInitialX;
-			float mInitialY;
+			gvec2 mInitial;
 			float mIntensity;
 			float mDuration;
 			float mConstDuration;

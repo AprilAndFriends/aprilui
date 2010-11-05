@@ -40,13 +40,13 @@ namespace AprilUI
 		mImageName=image;
 	}
 	
-	void ImageBox::notifyEvent(chstr event_name,void* params)
+	void ImageBox::notifyEvent(chstr name,void* params)
 	{	
-		if (event_name == "UpdateImage")
+		if (name == "UpdateImage")
 		{
 			setImageByName(mImageName);
 		}
-		Object::notifyEvent(event_name,params);
+		Object::notifyEvent(name,params);
 	}
 	
 	void ImageBox::resizeToFitImage()

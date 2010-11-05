@@ -21,8 +21,9 @@ namespace AprilUI
 	class AprilUIExport DummyObject : public Object
 	{
 	public:
-		DummyObject(chstr name,grect rect);
-		void setProperty(chstr name,chstr value);
+		DummyObject(chstr name, grect rect);
+		
+		void setProperty(chstr name, chstr value);
 		
 	};
 }

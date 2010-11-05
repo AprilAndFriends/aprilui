@@ -13,8 +13,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	Animator::Animator(chstr type_name,chstr name,grect rect) :
-	          Object(type_name,name,rect)
+	Animator::Animator(chstr type, chstr name, grect rect) :
+		Object(type, name, rect)
 	{
 		
 	}

@@ -17,8 +17,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	CompositeImage::CompositeImage(chstr name, float sourceW, float sourceH) :
-		Image(0, name, grect(0, 0, sourceW, sourceH))
+	CompositeImage::CompositeImage(chstr name, float w, float h) : Image(0, name, grect(0, 0, w, h))
 	{
 		
 	}

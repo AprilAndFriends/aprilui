@@ -19,42 +19,48 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Animator("Animators::Scaler",name,grect(0,0,1,1))
+		Rotator::Rotator(chstr name) : Animator("Animators::Scaler", name, grect(0, 0, 1, 1))
 		{
-			mAccel=mSpeed=0;
-			mInitialSpeed=-10000;
-			mInitialAngle=-10000001;
+			mAccel = 0.0f;
+			mSpeed = 0.0f;
+			mInitialSpeed = -10000.0f;
+			mInitialAngle = -10000001.0f;
 		}
 
-		void Rotator::setProperty(chstr name,chstr value)
+		void Rotator::setProperty(chstr name, chstr value)
 		{
-			if      (name == "speed") mSpeed=mInitialSpeed=value;
-			else if (name == "accel") mAccel=value;
+			if      (name == "speed")	mSpeed = mInitialSpeed = value;
+			else if (name == "accel")	mAccel = value;
 		}
 
-		void Rotator::notifyEvent(chstr event_name,void* params)
+		void Rotator::notifyEvent(chstr name, void* params)
 		{
-			if (event_name == "AttachToObject")
+			if (name == "AttachToObject")
 			{
-				if (mInitialAngle < -1000000)
-					mInitialAngle=((RotationImageBox*) mParent)->getAngle();
+				if (mInitialAngle < -1000000.0f)
+				{
+					mInitialAngle = ((RotationImageBox*)mParent)->getAngle();
+				}
 				else
-					((RotationImageBox*) mParent)->setAngle(mInitialAngle);
-				mSpeed=mInitialSpeed;
+				{
+					((RotationImageBox*)mParent)->setAngle(mInitialAngle);
+				}
+				mSpeed = mInitialSpeed;
 			}
-			Object::notifyEvent(event_name,params);
+			Object::notifyEvent(name, params);
 		}
 
 		void Rotator::update(float k)
 		{
-			float angle=((RotationImageBox*) mParent)->getAngle();
+			RotationImageBox* imageBox = (RotationImageBox*)mParent;
+			float angle = imageBox->getAngle();
 			if (fabs(mAccel) > 0.01f)
 			{
-				mSpeed+=mAccel*k;
+				mSpeed += mAccel * k;
 			}
-			angle+=k*mSpeed;
-			
-			((RotationImageBox*) mParent)->setAngle(angle);
+			angle += k * mSpeed;
+			imageBox->setAngle(angle);
 		}
+		
 	}
 }

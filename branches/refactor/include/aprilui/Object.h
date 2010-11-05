@@ -27,7 +27,7 @@ namespace AprilUI
 	class AprilUIExport Object
 	{
 	public:
-		Object(chstr type_name, chstr name, grect rect);
+		Object(chstr type, chstr name, grect rect);
 		virtual ~Object();
 
 		void addChild(Object* object);
@@ -46,23 +46,22 @@ namespace AprilUI
 		virtual bool isPointInside(float x, float y);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
-		float getXPosition() DEPRECATED_ATTRIBUTE { return mRect.x; }
-		void setXPosition(float x) DEPRECATED_ATTRIBUTE { mRect.x = x; }
-		float getYPosition() DEPRECATED_ATTRIBUTE { return mRect.y; }
-		void setYPosition(float y) DEPRECATED_ATTRIBUTE { mRect.y = y; }
-		
 		float getX() { return mRect.x; }
-		void setX(float x) { mRect.x = x; }
+		void setX(float value) { mRect.x = value; }
 		float getY() { return mRect.y; }
-		void setY(float y) { mRect.y = y; }
+		void setY(float value) { mRect.y = value; }
 		gvec2 getPosition() { return gvec2(mRect.x, mRect.y); }
-		void setPosition(gvec2 v) { mRect.x = v.x; mRect.y = v.y; }
+		void setPosition(gvec2 value) { mRect.x = value.x; mRect.y = value.y; }
 		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
 		float getWidth() { return mRect.w; }
+		void setWidth(float value) { mRect.w = value; }
 		float getHeight() { return mRect.h; }
+		void setHeight(float value) { mRect.h = value; }
 		gvec2 getSize() { return gvec2(mRect.w, mRect.h); }
+		void setSize(gvec2 value) { mRect.w = value.x; mRect.h = value.y; }
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
+		void setRect(grect value) { mRect = value; }
 
 		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
 		void setVisible(bool value) { mVisible = value; }
@@ -96,7 +95,7 @@ namespace AprilUI
 		virtual void update(float k);
 		void draw(float offset_x = 0, float offset_y = 0);
 
-		virtual void notifyEvent(chstr event_name, void* params);
+		virtual void notifyEvent(chstr name, void* params);
 		
 		virtual void setProperty(chstr name, chstr value);
 		// system call, do not use!

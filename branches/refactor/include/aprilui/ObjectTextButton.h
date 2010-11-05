@@ -21,7 +21,7 @@ namespace AprilUI
 	class AprilUIExport TextButton : public Label
 	{
 	public:
-		TextButton(chstr name,grect rect);
+		TextButton(chstr name, grect rect);
 		
 		April::Color getHoverTextColor() { return mHoverTextColor; }
 		void setHoverTextColor(April::Color value) { mHoverTextColor = value; }

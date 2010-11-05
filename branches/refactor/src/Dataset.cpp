@@ -159,7 +159,7 @@ namespace AprilUI
 					}
 					else if (node->pexists("color"))
 					{
-						unsigned int color = node->phex("color", 0xFFFFFFF);
+						April::Color color(node->phex("color"));
 						image = new ColoredImage(texture, name, rect, vertical, color);
 					}
 					else

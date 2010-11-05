@@ -29,7 +29,7 @@ namespace AprilUI
 		};
 		
 	public:
-		CompositeImage(chstr name, float sourceW, float sourceH);
+		CompositeImage(chstr name, float w, float h);
 		CompositeImage(chstr name, CompositeImage& base);
 		
 		void addImageRef(Image* image, grect rect);

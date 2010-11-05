@@ -18,11 +18,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-
 	class AprilUIExport Animator : public Object
 	{
 	public:
-		Animator(chstr type_name,chstr name,grect rect);
+		Animator(chstr type, chstr name, grect rect);
+		
 	};
 }
 

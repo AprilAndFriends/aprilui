@@ -19,69 +19,85 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler",name,grect(0,0,1,1))
+		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler", name, grect(0, 0, 1, 1))
 		{
-			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
-			mDestAlpha=-10000;
-			mInitialAlpha=-10001;
+			reset();
 		}
 		
 		void AlphaFader::reset()
 		{
-			mAccel=mSpeed=mInitialSpeed=mDelay=mTimer=0;
-			mDestAlpha=-10000;
-			mInitialAlpha=-10001;
+			mAccel = 0.0f;
+			mSpeed = 0.0f;
+			mInitialSpeed = 0.0f;
+			mDelay = 0.0f;
+			mTimer = 0.0f;
+			mDestAlpha = -10000.0f;
+			mInitialAlpha = -10001.0f;
 		}
 
-		void AlphaFader::setProperty(chstr name,chstr value)
+		void AlphaFader::setProperty(chstr name, chstr value)
 		{
-			if      (name == "speed") mSpeed=mInitialSpeed=value;
-			else if (name == "accel") mAccel=value;
-			else if (name == "delay") mDelay=value;
-			else if (name == "dest_alpha") mDestAlpha=value;
+			if      (name == "speed")		mSpeed = mInitialSpeed = value;
+			else if (name == "accel")		mAccel = value;
+			else if (name == "delay")		mDelay = value;
+			else if (name == "dest_alpha")	mDestAlpha = value;
 		}
 
-		void AlphaFader::notifyEvent(chstr event_name,void* params)
+		void AlphaFader::notifyEvent(chstr name, void* params)
 		{
-			if (event_name == "AttachToObject")
+			if (name == "AttachToObject")
 			{
-				if (mInitialAlpha < -10000)
-					mInitialAlpha=mParent->getAlpha();
+				if (mInitialAlpha < -10000.0f)
+				{
+					mInitialAlpha = mParent->getAlpha();
+				}
 				else
+				{
 					mParent->setAlpha(mInitialAlpha);
-					
-				if (mDelay) mTimer=mDelay;
-				mSpeed=mInitialSpeed;
+				}
+				if (mDelay != 0.0f)
+				{
+					mTimer = mDelay;
+				}
+				mSpeed = mInitialSpeed;
 			}
-			Object::notifyEvent(event_name,params);
+			Object::notifyEvent(name,params);
 		}
 		
-		void AlphaFader::fade(float dest,float time)
+		void AlphaFader::fade(float dest, float time)
 		{
-			mDestAlpha=dest;
-			float diff=mDestAlpha-mParent->getAlpha();
-			mSpeed=sgn(diff)*fabs(diff)/time;
-			mAccel=0; mDelay=0;
+			mDestAlpha = dest;
+			float diff = mDestAlpha - mParent->getAlpha();
+			mSpeed = sgn(diff) * fabs(diff) / time;
+			mAccel = 0.0f;
+			mDelay = 0.0f;
 		}
 		
-	
 		void AlphaFader::update(float k)
 		{
-			if (mTimer > 0) { mTimer-=k; return; }
-			float alpha=mParent->getAlpha();
-			if (alpha == mDestAlpha) return;
-			float prevalpha=alpha;
-			if (fabs(mAccel) > 0.01f)
-				mSpeed+=mAccel*k;
-			
-			alpha+=k*mSpeed;
-			if (sgn(mDestAlpha-alpha) != sgn(mDestAlpha-prevalpha))
+			if (mTimer > 0.0f)
 			{
-				alpha=mDestAlpha;
+				mTimer-=k;
+				return;
+			}
+			float alpha = mParent->getAlpha();
+			if (alpha == mDestAlpha)
+			{
+				return;
+			}
+			float prevalpha = alpha;
+			if (fabs(mAccel) > 0.01f)
+			{
+				mSpeed += mAccel * k;
+			}
+			alpha += k * mSpeed;
+			if (sgn(mDestAlpha - alpha) != sgn(mDestAlpha - prevalpha))
+			{
+				alpha = mDestAlpha;
 				reset();
 			}
-
-			mParent->setAlpha(hclamp(alpha,0.0f,1.0f));
+			mParent->setAlpha(hclamp(alpha, 0.0f, 1.0f));
 		}
+		
 	}
 }

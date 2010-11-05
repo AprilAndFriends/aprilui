@@ -27,9 +27,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	Object::Object(chstr type_name, chstr name, grect rect)
+	Object::Object(chstr type, chstr name, grect rect)
 	{
-		mTypeName = type_name;
+		mTypeName = type;
 		mName = name;
 		mParent = NULL;
 		mZOrder = 0;
