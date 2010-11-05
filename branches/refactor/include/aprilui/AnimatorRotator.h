@@ -21,13 +21,20 @@ namespace AprilUI
 	{
 		class AprilUIExport Rotator : public Animator
 		{
-			float mInitialSpeed,mInitialAngle,mSpeed,mAccel;
 		public:
 			Rotator(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
 			void update(float k);
+			
+		protected:
+			float mInitialSpeed;
+			float mInitialAngle;
+			float mSpeed;
+			float mAccel;
+			
 		};
 	}
 }

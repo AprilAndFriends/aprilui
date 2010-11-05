@@ -23,8 +23,8 @@ namespace AprilUI
 	public:
 		DummyObject(chstr name,grect rect);
 		void setProperty(chstr name,chstr value);
+		
 	};
-	
 }
 
 #endif

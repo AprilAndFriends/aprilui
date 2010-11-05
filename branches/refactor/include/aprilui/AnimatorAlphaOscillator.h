@@ -21,13 +21,21 @@ namespace AprilUI
 	{
 		class AprilUIExport AlphaOscillator : public Animator
 		{
-			float mBaseline,mAmplitude,mSpeed,mTimer,mInitialAlpha;
 		public:
 			AlphaOscillator(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
 			void update(float k);
+			
+		protected:
+			float mBaseline;
+			float mAmplitude;
+			float mSpeed;
+			float mTimer;
+			float mInitialAlpha;
+			
 		};
 	}
 }

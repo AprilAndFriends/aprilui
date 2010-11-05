@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_COLOR_ALTERNATOR_H
 #define APRILUI_COLOR_ALTERNATOR_H
 
+#include <april/RenderSystem.h>
 #include <hltypes/hstring.h>
 
 #include "ObjectCallbackObject.h"
@@ -22,12 +23,20 @@ namespace AprilUI
 		// note: only works on ColoredImages
 		class AprilUIExport ColorAlternator : public Animator
 		{
-			float mLow[4],mHigh[4];
-			float mTimer,mSpeed;
 		public:
 			ColorAlternator(chstr name);
-			void setProperty(chstr name,chstr value);
+			
+			void setSpeed(float value) { mSpeed = value; }
+			void setProperty(chstr name, chstr value);
+			
 			void update(float k);
+			
+		protected:
+			April::Color mLow;
+			April::Color mHigh;
+			float mTimer;
+			float mSpeed;
+			
 		};
 	}
 }

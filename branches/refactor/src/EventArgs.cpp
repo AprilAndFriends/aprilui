@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	EventArgs::EventArgs(Object* o, float x_pos, float y_pos, char* extra_string)
+	EventArgs::EventArgs(Object* o, float x_pos, float y_pos, chstr extra_string)
 	{
 		object = o;
 		x = x_pos;

@@ -23,17 +23,12 @@ namespace AprilUI
 		_setTypeName("ColoredImageBox");
 	}
 
-	void ColoredImageBox::setColor(chstr color)
-	{
-		mColor.setColor(color);
-	}
-
 	void ColoredImageBox::OnDraw(float offset_x,float offset_y)
 	{
-		if (!mImage) mImage=mDataPtr->getImage("null");
+		if (!mImage) mImage=mDataset->getImage("null");
 		float alpha=getDerivedAlpha();
-		if (!getDerivedEnabled()) alpha/=2;
-		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,mColor.r_float(),mColor.g_float(),mColor.b_float(),alpha);
+		if (!isDerivedEnabled()) alpha/=2;
+		mImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,mColor.r_float(),mColor.g_float(),mColor.b_float(),alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 

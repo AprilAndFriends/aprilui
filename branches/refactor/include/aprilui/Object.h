@@ -26,105 +26,109 @@ namespace AprilUI
 	
 	class AprilUIExport Object
 	{
-	protected:
-		Object* mParent;
-		hstr mTypeName,mName;
-		int mZOrder;
-		grect mRect;
-		float mX,mY,mWidth,mHeight;
-		harray<Object*> mChildren;
-		
-		hmap<hstr,Event*> mEvents;
-		bool mVisible,mEnabled,mClickthrough,mInheritsAlpha;
-		float mAlpha;
-		
-		Dataset* mDataPtr;
-		
-		void sortChildren();
-		
-		void triggerEvent(chstr name,float x=0,float y=0,char* extra=0);
-		float getDerivedAlpha();
-		bool getDerivedEnabled();
-		bool getDerivedClickthrough();
-		
-		virtual void OnDraw(float offset_x,float offset_y) { };
-		void setParent(Object* parent) { mParent=parent; }
-
-		void _moveChildToFront(Object* o);
-		void _moveChildToBack(Object* o);
 	public:
-
-		//Object(chstr type_name,chstr name,float x,float y,float w,float h);
-		Object(chstr type_name,chstr name,grect rect);
+		Object(chstr type_name, chstr name, grect rect);
 		virtual ~Object();
 
-		void addChild(Object* o);
-		void removeChild(Object* o);
+		void addChild(Object* object);
+		void removeChild(Object* object);
 		Object* getParent() { return mParent; }
 		void removeAllChildren();
 		harray<Object*>& getChildren() { return mChildren; }
-		Object* getChildUnderPoint(float x,float y);
-		Object* getChildUnderPoint(gtypes::Vector2 pos);
+		Object* getChildUnderPoint(gvec2 pos);
+		Object* getChildUnderPoint(float x, float y);
 
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
 		
 		bool isCursorInside();
-		virtual bool isPointInside(float x,float y);
-		void registerEvent(chstr event_name,void (*callback)(EventArgs*));
+		virtual bool isPointInside(gvec2 position);
+		virtual bool isPointInside(float x, float y);
+		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
-		gtypes::Vector2 getPosition() { return gtypes::Vector2(mX,mY); };
-		float getXPosition() { return mX; }
-		float getYPosition() { return mY; }
-		gtypes::Vector2 getSize() { return gtypes::Vector2(mWidth,mHeight); }
-		float getWidth() { return mWidth; }
-		float getHeight() { return mHeight; }
-		void setPosition(float x,float y) { mX=x; mY=y; }
-		void setPosition(gtypes::Vector2 v) { mX=v.x; mY=v.y; }
-		void setXPosition(float x) { mX=x; }
-		void setYPosition(float y) { mY=y; }
+		float getXPosition() DEPRECATED_ATTRIBUTE { return mRect.x; }
+		void setXPosition(float x) DEPRECATED_ATTRIBUTE { mRect.x = x; }
+		float getYPosition() DEPRECATED_ATTRIBUTE { return mRect.y; }
+		void setYPosition(float y) DEPRECATED_ATTRIBUTE { mRect.y = y; }
+		
+		float getX() { return mRect.x; }
+		void setX(float x) { mRect.x = x; }
+		float getY() { return mRect.y; }
+		void setY(float y) { mRect.y = y; }
+		gvec2 getPosition() { return gvec2(mRect.x, mRect.y); }
+		void setPosition(gvec2 v) { mRect.x = v.x; mRect.y = v.y; }
+		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
+		float getWidth() { return mRect.w; }
+		float getHeight() { return mRect.h; }
+		gvec2 getSize() { return gvec2(mRect.w, mRect.h); }
+		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
+		grect getRect() { return mRect; }
 
-		void setSize(float w,float h) { mWidth=w; mHeight=h; }
-
-		void setVisible(bool visible) { mVisible=visible; }
-		bool isVisible() { return mVisible && mAlpha > 0; }
-		virtual void setEnabled(bool enabled) { mEnabled=enabled; }
+		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
+		void setVisible(bool value) { mVisible = value; }
 		bool isEnabled() { return mEnabled; }
-		void setClickthrough(bool clickthrough) { mClickthrough=clickthrough; }
-		bool getClickthrough() { return mClickthrough; }
-		void setInheritsAlpha(bool value) { mInheritsAlpha=value; }
-		bool getInheritsAlpha() { return mInheritsAlpha; }
+		void setEnabled(bool value) { mEnabled = value; }
+		bool isClickthrough() { return mClickthrough; }
+		void setClickthrough(bool value) { mClickthrough = value; }
+		bool isInheritsAlpha() { return mInheritsAlpha; }
+		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
 		
-		void setAlpha(float alpha);
 		float getAlpha() { return mAlpha; }
+		void setAlpha(float alpha);
 
 		void moveToFront();
 		void moveToBack();
 		
-		void _setTypeName(chstr type) { mTypeName=type; }
+		void _setTypeName(chstr type) { mTypeName = type; }
 		hstr getType() { return mTypeName; }
 		hstr getName() { return mName; }
 		
 		// if a childs event returns true, event is not propagated to parents
-		virtual bool OnMouseDown(float x,float y,int button);
-		virtual bool OnMouseUp(float x,float y,int button);
-		virtual void OnMouseMove(float x,float y);
+		virtual bool OnMouseDown(float x, float y, int button);
+		virtual bool OnMouseUp(float x, float y, int button);
+		virtual void OnMouseMove(float x, float y);
 		
 		virtual void OnKeyDown(unsigned int keycode);
 		virtual void OnKeyUp(unsigned int keycode);
 		virtual void OnChar(unsigned int charcode);
 		
-		
 		virtual void update(float k);
-		void draw(float offset_x=0,float offset_y=0);
-		
+		void draw(float offset_x = 0, float offset_y = 0);
 
-		virtual void notifyEvent(chstr event_name,void* params);
+		virtual void notifyEvent(chstr event_name, void* params);
 		
-		virtual void setProperty(chstr name,chstr value);
+		virtual void setProperty(chstr name, chstr value);
 		// system call, do not use!
-		void _setDataset(Dataset* d) { mDataPtr=d; }
+		void _setDataset(Dataset* value) { mDataset = value; }
+		
+	protected:
+		Object* mParent;
+		hstr mTypeName;
+		hstr mName;
+		grect mRect;
+		int mZOrder;
+		float mAlpha;
+		bool mVisible;
+		bool mEnabled;
+		bool mClickthrough;
+		bool mInheritsAlpha;
+		harray<Object*> mChildren;
+		hmap<hstr, Event*> mEvents;
+		Dataset* mDataset;
+		
+		void sortChildren();
+		
+		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
+		float getDerivedAlpha();
+		bool isDerivedEnabled();
+		bool isDerivedClickThrough();
+		
+		virtual void OnDraw(float offset_x, float offset_y) { }
+		void setParent(Object* value) { mParent = value; }
+
+		void _moveChildToFront(Object* object);
+		void _moveChildToBack(Object* object);
 	};
 	
 }

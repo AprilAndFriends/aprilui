@@ -21,20 +21,21 @@ namespace AprilUI
 {
 	class AprilUIExport ColoredImageBox : public ImageBox
 	{
+	public:
+		ColoredImageBox(chstr name, grect rect);
+		
+		April::Color getColor() { return mColor; }
+		void setColor(April::Color value) { mColor = value; }
+		void setColor(chstr value) { mColor.setColor(value); }
+
+		void setProperty(chstr name, chstr value);
+		
 	protected:
 		April::Color mColor;
 		
-		void OnDraw(float offset_x,float offset_y);
-	public:
-		ColoredImageBox(chstr name,grect rect);
+		void OnDraw(float offset_x, float offset_y);
 		
-		void setColor(chstr color);
-		void setColor(April::Color color) { mColor=color; } ;
-		April::Color getColor() { return mColor; };
-
-		void setProperty(chstr name,chstr value);
 	};
-	
 }
 
 #endif

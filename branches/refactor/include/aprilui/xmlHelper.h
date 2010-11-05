@@ -49,7 +49,7 @@ public:
 	bool operator !=(const char* s);
 	
 protected:
-	const char* find_prop(const char* property);
+	const char* find_prop(const char* property, bool ignoreError = false);
 	
 };
 

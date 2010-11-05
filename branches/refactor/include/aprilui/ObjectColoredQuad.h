@@ -21,18 +21,21 @@ namespace AprilUI
 {
 	class ColoredQuad : public Object
 	{
-		April::Color mColor;
 	public:
 		ColoredQuad(chstr name,grect rect);
-		void setColor(float a,float r,float g,float b);
 		
-		void OnDraw(float offset_x,float offset_y);
-		void setProperty(chstr name,chstr value);
+		void setColor(float a, float r, float g, float b);
+		void setProperty(chstr name, chstr value);
+		
+		void OnDraw(float offset_x, float offset_y);
 
-		bool OnMouseDown(float x,float y,int button);
-		bool OnMouseUp(float x,float y,int button);
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		
+	protected:
+		April::Color mColor;
+		
 	};
-	
 }
 
 #endif

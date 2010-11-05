@@ -22,20 +22,24 @@ namespace AprilUI
 	{
 		class AprilUIExport Mover : public Animator
 		{
+		public:
+			Mover(chstr name);
+			
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
+			void update(float k);
+			void move(float dest_x, float dest_y, float time);
+            
+            void setDelay(float value) { mDelay = value; }
+			
+		protected:
 			gvec2 mInitialS;
 			gvec2 mAccel;
 			gvec2 mSpeed;
 			gvec2 mDest;
             float mDelay;
-		public:
-			Mover(chstr name);
 			
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
-			void update(float k);
-			void move(float dest_x,float dest_y,float time);
-            
-            void setDelay(float delay) { mDelay=delay; }
 		};
 	}
 }

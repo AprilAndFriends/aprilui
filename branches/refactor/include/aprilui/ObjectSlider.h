@@ -20,17 +20,21 @@ namespace AprilUI
 {
 	class AprilUIExport Slider : public ImageBox
 	{
+	public:
+		Slider(chstr name, grect rect);
+		
+		float getValue() { return mValue; }
+		void setValue(float value) { mValue = value; }
+		
+		void setProperty(chstr name, chstr value);
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		void OnMouseMove(float x, float y);
+		void OnDraw(float offset_x, float offset_y);
+		
+	protected:
 		bool mPushed;
 		float mValue;
-	public:
-		Slider(chstr name,grect rect);
-		bool OnMouseDown(float x,float y,int button);
-		bool OnMouseUp(float x,float y,int button);
-		void OnMouseMove(float x,float y);
-		void OnDraw(float offset_x,float offset_y);
-		void setProperty(chstr name,chstr value);
-		float getValue() { return mValue; }
-		void setValue(float value) { mValue=value; }
 		
 	};
 	

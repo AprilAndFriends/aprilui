@@ -21,16 +21,18 @@ namespace AprilUI
 {
 	class AprilUIExport Label : public Object, public LabelBase
 	{
+	public:
+		Label(chstr name, grect rect);
+		
+		chstr getTextXey() { return mTextKey; }
+		void setTextKey(chstr key);
+		void setProperty(chstr name, chstr value);
+		void notifyEvent(chstr event_name, void* params);
+		
 	protected:
 		hstr mTextKey;
-		void OnDraw(float offset_x,float offset_y);
-	public:
-		Label(chstr name,grect rect);
+		void OnDraw(float offset_x, float offset_y);
 		
-		void setTextKey(chstr key);
-		chstr getTextXey() { return mTextKey; }
-		void setProperty(chstr name,chstr value);
-		void notifyEvent(chstr event_name,void* params);
 	};
 	
 }

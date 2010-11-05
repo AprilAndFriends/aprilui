@@ -10,89 +10,104 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "xmlHelper.h"
 #include "Exception.h"
 
-const char* xml_node::find_prop(const char* property)
+const char* xml_node::find_prop(const char* property, bool ignoreError)
 {
-	for (_xmlAttr* a=this->properties;a != 0;a=a->next)
-		if (xmlStrcmp(a->name, (const xmlChar *) property) == 0)
-			return (const char*) a->children->content;
-	
+	for (_xmlAttr* a = this->properties; a != NULL; a = a->next)
+	{
+		if (xmlStrcmp(a->name, (const xmlChar*)property) == 0)
+		{
+			return (const char*)a->children->content;
+		}
+	}
 	return 0;
 }
 
 bool xml_node::pbool(const char* property)
 {
 	int i;
-	const char* prop=this->find_prop(property);
-	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
-	sscanf(prop,"%d",&i);
+	const char* nodeValue=this->find_prop(property);
+	if (nodeValue == NULL)
+	{
+		throw AprilUI::XMLPropertyNotExistsException(property, this);
+	}
+	sscanf(nodeValue, "%d", &i);
 	return (i != 0);
 }
 
 bool xml_node::pbool(const char* property, bool defaultValue)
 {
-	const char* nodeValue=this->find_prop(property);
-	if (!nodeValue)
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
 	{
 		return defaultValue;
 	}
 	int i;
-	sscanf(nodeValue,"%d",&i);
+	sscanf(nodeValue, "%d", &i);
 	return (i != 0);
 }
 
 int xml_node::pint(const char* property)
 {
 	int i;
-	const char* prop=this->find_prop(property);
-	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
-	sscanf(prop,"%d",&i);
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
+	{
+		throw AprilUI::XMLPropertyNotExistsException(property, this);
+	}
+	sscanf(nodeValue, "%d", &i);
 	return i;
 }
 
 int xml_node::pint(const char* property, int defaultValue)
 {
-	const char* nodeValue=this->find_prop(property);
-	if (!nodeValue)
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
 	{
 		return defaultValue;
 	}
 	int i;
-	sscanf(nodeValue,"%d",&i);
+	sscanf(nodeValue, "%d", &i);
 	return i;
 }
 
 float xml_node::pfloat(const char* property)
 {
 	float f;
-	const char* prop=this->find_prop(property);
-	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
-	sscanf(prop,"%f",&f);
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
+	{
+		throw AprilUI::XMLPropertyNotExistsException(property, this);
+	}
+	sscanf(nodeValue, "%f", &f);
 	return f;
 }
 
 float xml_node::pfloat(const char* property, float defaultValue)
 {
-	const char* nodeValue=this->find_prop(property);
-	if (!nodeValue)
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
 	{
 		return defaultValue;
 	}
 	float f;
-	sscanf(nodeValue,"%f",&f);
+	sscanf(nodeValue, "%f", &f);
 	return f;
 }
 
 hstr xml_node::pstr(const char* property)
 {
-	const char* prop=this->find_prop(property);
-	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
-	return prop;
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
+	{
+		throw AprilUI::XMLPropertyNotExistsException(property, this);
+	}
+	return nodeValue;
 }
 
 hstr xml_node::pstr(const char* property, chstr defaultValue)
 {
-	const char* nodeValue=this->find_prop(property);
-	if (!nodeValue)
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
 	{
 		return defaultValue;
 	}
@@ -101,27 +116,39 @@ hstr xml_node::pstr(const char* property, chstr defaultValue)
 
 unsigned int xml_node::phex(const char* property)
 {
-	const char* prop=this->find_prop(property);
-	if (!prop) throw AprilUI::XMLPropertyNotExistsException(property,this);
-	const char* nodeValue=prop;
-	unsigned int x=0;
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
+	{
+		throw AprilUI::XMLPropertyNotExistsException(property, this);
+	}
+	unsigned int x = 0;
 	if (nodeValue[0] == '0' && nodeValue[1] == 'x')
-		sscanf(nodeValue+2,"%x",&x);
-	else sscanf(nodeValue,"%x",&x);
+	{
+		sscanf(nodeValue + 2, "%x", &x);
+	}
+	else
+	{
+		sscanf(nodeValue, "%x", &x);
+	}
 	return x;
 }
 
 unsigned int xml_node::phex(const char* property, unsigned int defaultValue)
 {
-	const char* nodeValue=this->find_prop(property);
-	if (!nodeValue)
+	const char* nodeValue = this->find_prop(property);
+	if (nodeValue == NULL)
 	{
 		return defaultValue;
 	}
-	unsigned int x=0;
+	unsigned int x = 0;
 	if (nodeValue[0] == '0' && nodeValue[1] == 'x')
-		sscanf(nodeValue+2,"%x",&x);
-	else sscanf(nodeValue,"%x",&x);
+	{
+		sscanf(nodeValue + 2, "%x", &x);
+	}
+	else
+	{
+		sscanf(nodeValue, "%x", &x);
+	}
 	return x;
 }
 
@@ -132,50 +159,52 @@ bool xml_node::pexists(const char* property)
 
 bool xml_node::operator ==(const char* s)
 {
-	return (xmlStrcmp(this->name, (const xmlChar *) s) == 0);
+	return (xmlStrcmp(this->name, (const xmlChar*)s) == 0);
 }
 
 bool xml_node::operator !=(const char* s)
 {
-	return (xmlStrcmp(this->name, (const xmlChar *) s) != 0);
+	return (xmlStrcmp(this->name, (const xmlChar*)s) != 0);
 }
 
 xml_node* xml_node::next()
 {
 	
-	return (xml_node*) ((_xmlNode*) this)->next;
+	return (xml_node*)((_xmlNode*)this)->next;
 }
 
 xml_node* xml_node::iter_children()
 {
-	return (xml_node*) this->children;
+	return (xml_node*)this->children;
 }
 
 xml_prop* xml_node::iter_properties()
 {
-	return (xml_prop*) this->properties;
+	return (xml_prop*)this->properties;
 }
 /*****************************************************************************/
 xml_prop* xml_prop::next()
 {
-	return (xml_prop*) ((_xmlAttr*) this)->next;
+	return (xml_prop*)((_xmlAttr*)this)->next;
 }
 
 hstr xml_prop::name()
 {
-	return hstr((const char*) ((_xmlAttr*) this)->name);
+	return hstr((const char*)((_xmlAttr*)this)->name);
 }
 
 hstr xml_prop::value()
 {
-	return hstr((const char*) this->children->content);
+	return hstr((const char*)this->children->content);
 }
 /*****************************************************************************/
 xml_doc::xml_doc(chstr filename)
 {
-	this->doc=xmlParseFile((filename).c_str());
+	this->doc = xmlParseFile((filename).c_str());
 	if (this->doc == NULL)
-		throw AprilUI::GenericException("Unable to parse xml file '"+filename+"', document does not exist or is invalid");
+	{
+		throw AprilUI::GenericException("Unable to parse xml file '" + filename + "', document does not exist or is invalid");
+	}
 }
 
 xml_doc::~xml_doc()
@@ -183,20 +212,20 @@ xml_doc::~xml_doc()
 	xmlFreeDoc(this->doc);
 }
 
-xml_node* xml_doc::root(chstr root_element_query)
+xml_node* xml_doc::root(chstr rootElementQuery)
 {
-	xml_node* root=(xml_node*) xmlDocGetRootElement(this->doc);
-	if (!root)
+	xml_node* root = (xml_node*)xmlDocGetRootElement(this->doc);
+	if (root == NULL)
 	{
-		hstr docname=(char*) this->doc->URL;
+		hstr docname = (char*)this->doc->URL;
 		xmlFreeDoc(this->doc);
-		throw AprilUI::GenericException("No root node found in xml file '"+docname+"'");
+		throw AprilUI::GenericException("No root node found in xml file '" + docname + "'");
 	}
-	if (root_element_query != "" && *root != root_element_query.c_str())
+	if (rootElementQuery != "" && *root != rootElementQuery.c_str())
 	{
-		hstr docname=(char*) this->doc->URL;
+		hstr docname = (char*)this->doc->URL;
 		xmlFreeDoc(this->doc);
-		throw AprilUI::GenericException("xml root node type is not '"+root_element_query+"' in xml file '"+docname+"'");
+		throw AprilUI::GenericException("xml root node type is not '" + rootElementQuery + "' in xml file '" + docname + "'");
 	}
 	return root;
 }

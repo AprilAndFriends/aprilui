@@ -21,19 +21,25 @@ namespace AprilUI
 	{
 		class AprilUIExport FrameAnimation : public Animator
 		{
-			hstr mImageBaseName;
-			int mStartFrame,mEndFrame;
-			float mAnimationTime,mTimer;
-			int mLoop;
-            float mDelay;
 		public:
 			FrameAnimation(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
+            void setDelay(float value) { mDelay = value; }
+			
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
 			void update(float k);
-            
-            void setDelay(float delay) { mDelay=delay; }
+			
+		protected:
+			hstr mImageBaseName;
+			int mStartFrame;
+			int mEndFrame;
+			float mAnimationTime;
+			float mTimer;
+			int mLoop;
+            float mDelay;
+			
 		};
 	}
 }

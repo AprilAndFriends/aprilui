@@ -29,8 +29,8 @@ namespace AprilUI
 		{
 			if (event_name == "AttachToObject")
 			{
-				mInitialX=mParent->getXPosition();
-				mInitialY=mParent->getYPosition();
+				mInitialX=mParent->getX();
+				mInitialY=mParent->getY();
 				mTimer=mFreqTimer=0;
 			}
 			Object::notifyEvent(event_name,params);

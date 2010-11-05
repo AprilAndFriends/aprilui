@@ -21,13 +21,20 @@ namespace AprilUI
 	{
 		class AprilUIExport AlphaHover : public Animator
 		{
-			float mMin,mMax,mSpeed,mOwnerAlpha;
 		public:
 			AlphaHover(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
 			void update(float k);
+			
+		protected:
+			float mMin;
+			float mMax;
+			float mSpeed;
+			float mOwnerAlpha;
+			
 		};
 	}
 }

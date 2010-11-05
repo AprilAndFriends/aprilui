@@ -21,35 +21,39 @@ namespace AprilUI
 {
 	class AprilUIExport ImageButton : public ImageBox
 	{
+	public:
+		ImageButton(chstr name,grect rect);
+		
+		Image* getPushedImage() { return mPushedImage; }
+		void setPushedImage(Image* value);
+		void setPushedImageByName(chstr image);
+		Image* getHoverImage() { return mHoverImage; }
+		void setHoverImage(Image* value);
+		void setHoverImageByName(chstr image);
+		Image* getDisabledImage() { return mDisabledImage; }
+		void setDisabledImage(Image* value);
+		void setDisabledImageByName(chstr image);
+		void OnDraw(float offset_x, float offset_y);
+		Image* getImage() { return mNormalImage; };
+		void setImage(Image* value);
+		void setImageByName(chstr name);
+		
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		void OnMouseMove(float x, float y);
+		
+		void setProperty(chstr name, chstr value);
+		
 	protected:
-		Image *mPushedImage,*mHoverImage,*mNormalImage,*mDisabledImage;
+		Image* mPushedImage;
+		Image* mHoverImage;
+		Image* mNormalImage;
+		Image* mDisabledImage;
 		bool mPushed;
 		
 		void update(float k);
-	public:
 		
-		ImageButton(chstr name,grect rect);
-		Image* getPushedImage() { return mPushedImage; }
-		Image* getHoverImage() { return mHoverImage; }
-		Image* getDisabledImage() { return mDisabledImage; }
-		void setPushedImage(Image* image);
-		void setHoverImage(Image* image);
-		void setDisabledImage(Image* image);
-		void setPushedImageByName(chstr image);
-		void setHoverImageByName(chstr image);
-		void setDisabledImageByName(chstr image);
-		void OnDraw(float offset_x,float offset_y);
-		Image* getImage() { return mNormalImage; };
-		void setImage(Image* image);
-		void setImageByName(chstr image);
-		
-		bool OnMouseDown(float x,float y,int button);
-		bool OnMouseUp(float x,float y,int button);
-		void OnMouseMove(float x,float y);
-		
-		void setProperty(chstr name,chstr value);
 	};
-	
 }
 
 #endif
