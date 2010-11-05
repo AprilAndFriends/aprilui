@@ -17,16 +17,9 @@ struct xml_node;
 
 namespace AprilUI
 {
-	typedef unsigned char byte;
-
 	hstr pathGetBaseDir(chstr path);
-
-	int hexstr_to_int(chstr s);
-	void hexstr_to_argb(chstr hex, byte* a, byte* r, byte* g, byte* b);
-	void hexstr_to_argb_float(chstr hex, float* a, float* r, float* g, float* b);
-
 	hstr generateName(chstr prefix);
-	
 	hstr getPWD();
+	
 }
 #endif
