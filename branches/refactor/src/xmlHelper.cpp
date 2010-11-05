@@ -19,24 +19,24 @@ const char* xml_node::find_prop(const char* property, bool ignoreError)
 			return (const char*)a->children->content;
 		}
 	}
+	if (!ignoreError)
+	{
+		throw AprilUI::XMLPropertyNotExistsException(property, this);
+	}
 	return 0;
 }
 
 bool xml_node::pbool(const char* property)
 {
+	const char* nodeValue = this->find_prop(property);
 	int i;
-	const char* nodeValue=this->find_prop(property);
-	if (nodeValue == NULL)
-	{
-		throw AprilUI::XMLPropertyNotExistsException(property, this);
-	}
 	sscanf(nodeValue, "%d", &i);
 	return (i != 0);
 }
 
 bool xml_node::pbool(const char* property, bool defaultValue)
 {
-	const char* nodeValue = this->find_prop(property);
+	const char* nodeValue = this->find_prop(property, true);
 	if (nodeValue == NULL)
 	{
 		return defaultValue;
@@ -48,19 +48,15 @@ bool xml_node::pbool(const char* property, bool defaultValue)
 
 int xml_node::pint(const char* property)
 {
-	int i;
 	const char* nodeValue = this->find_prop(property);
-	if (nodeValue == NULL)
-	{
-		throw AprilUI::XMLPropertyNotExistsException(property, this);
-	}
+	int i;
 	sscanf(nodeValue, "%d", &i);
 	return i;
 }
 
 int xml_node::pint(const char* property, int defaultValue)
 {
-	const char* nodeValue = this->find_prop(property);
+	const char* nodeValue = this->find_prop(property, true);
 	if (nodeValue == NULL)
 	{
 		return defaultValue;
@@ -72,19 +68,15 @@ int xml_node::pint(const char* property, int defaultValue)
 
 float xml_node::pfloat(const char* property)
 {
-	float f;
 	const char* nodeValue = this->find_prop(property);
-	if (nodeValue == NULL)
-	{
-		throw AprilUI::XMLPropertyNotExistsException(property, this);
-	}
+	float f;
 	sscanf(nodeValue, "%f", &f);
 	return f;
 }
 
 float xml_node::pfloat(const char* property, float defaultValue)
 {
-	const char* nodeValue = this->find_prop(property);
+	const char* nodeValue = this->find_prop(property, true);
 	if (nodeValue == NULL)
 	{
 		return defaultValue;
@@ -97,16 +89,12 @@ float xml_node::pfloat(const char* property, float defaultValue)
 hstr xml_node::pstr(const char* property)
 {
 	const char* nodeValue = this->find_prop(property);
-	if (nodeValue == NULL)
-	{
-		throw AprilUI::XMLPropertyNotExistsException(property, this);
-	}
 	return nodeValue;
 }
 
 hstr xml_node::pstr(const char* property, chstr defaultValue)
 {
-	const char* nodeValue = this->find_prop(property);
+	const char* nodeValue = this->find_prop(property, true);
 	if (nodeValue == NULL)
 	{
 		return defaultValue;
@@ -117,10 +105,6 @@ hstr xml_node::pstr(const char* property, chstr defaultValue)
 unsigned int xml_node::phex(const char* property)
 {
 	const char* nodeValue = this->find_prop(property);
-	if (nodeValue == NULL)
-	{
-		throw AprilUI::XMLPropertyNotExistsException(property, this);
-	}
 	unsigned int x = 0;
 	if (nodeValue[0] == '0' && nodeValue[1] == 'x')
 	{
@@ -135,7 +119,7 @@ unsigned int xml_node::phex(const char* property)
 
 unsigned int xml_node::phex(const char* property, unsigned int defaultValue)
 {
-	const char* nodeValue = this->find_prop(property);
+	const char* nodeValue = this->find_prop(property, true);
 	if (nodeValue == NULL)
 	{
 		return defaultValue;
@@ -157,12 +141,12 @@ bool xml_node::pexists(const char* property)
 	return (this->find_prop(property) != 0);
 }
 
-bool xml_node::operator ==(const char* s)
+bool xml_node::operator==(const char* s)
 {
 	return (xmlStrcmp(this->name, (const xmlChar*)s) == 0);
 }
 
-bool xml_node::operator !=(const char* s)
+bool xml_node::operator!=(const char* s)
 {
 	return (xmlStrcmp(this->name, (const xmlChar*)s) != 0);
 }

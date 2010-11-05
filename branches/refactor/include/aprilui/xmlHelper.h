@@ -23,6 +23,7 @@ public:
 	xml_prop* next();
 	hstr name();
 	hstr value();
+
 };
 
 struct AprilUIExport xml_node : public _xmlNode
@@ -45,8 +46,8 @@ public:
 	xml_node* iter_children();
 	xml_prop* iter_properties();
 	
-	bool operator ==(const char* s);
-	bool operator !=(const char* s);
+	bool operator==(const char* s);
+	bool operator!=(const char* s);
 	
 protected:
 	const char* find_prop(const char* property, bool ignoreError = false);
