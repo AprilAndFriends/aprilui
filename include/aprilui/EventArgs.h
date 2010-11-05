@@ -26,9 +26,9 @@ namespace AprilUI
 		Object* object;
 		float x;
 		float y;
-		char* extra;
+		hstr extra;
 		
-		EventArgs(Object* o, float x_pos = 0.0f, float y_pos = 0.0f, char* extra_string = NULL);
+		EventArgs(Object* o, float x_pos = 0.0f, float y_pos = 0.0f, chstr extra_string = "");
 	};
 
 }

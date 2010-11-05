@@ -21,15 +21,24 @@ namespace AprilUI
 	{
 		class AprilUIExport Earthquake : public Animator
 		{
-			float mInitialX,mInitialY;
-			float mIntensity,mDuration,mConstDuration,mFreq;
-			float mTimer,mFreqTimer;
 		public:
 			Earthquake(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
 			void update(float k);
+			
+		protected:
+			float mInitialX;
+			float mInitialY;
+			float mIntensity;
+			float mDuration;
+			float mConstDuration;
+			float mFreq;
+			float mTimer;
+			float mFreqTimer;
+			
 		};
 	}
 }

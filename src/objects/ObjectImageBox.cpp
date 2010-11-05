@@ -30,13 +30,13 @@ namespace AprilUI
 		else
 			mImageName="null";
 		grect rect = image->getSource();
-		if (mWidth == -1) mWidth=rect.w*getDefaultScale();
-		if (mHeight == -1) mHeight=rect.h*getDefaultScale();
+		if (mRect.w == -1) mRect.w=rect.w*getDefaultScale();
+		if (mRect.h == -1) mRect.h=rect.h*getDefaultScale();
 	}
 
 	void ImageBox::setImageByName(chstr image)
 	{
-		setImage(mDataPtr->getImage(image));
+		setImage(mDataset->getImage(image));
 		mImageName=image;
 	}
 	
@@ -60,10 +60,10 @@ namespace AprilUI
 
 	void ImageBox::OnDraw(float offset_x,float offset_y)
 	{
-		if (!mImage) mImage=mDataPtr->getImage("null");
+		if (!mImage) mImage=mDataset->getImage("null");
 		float alpha=getDerivedAlpha();
-		if (!getDerivedEnabled()) alpha/=2;
-		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
+		if (!isDerivedEnabled()) alpha/=2;
+		mImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,1,1,1,alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 

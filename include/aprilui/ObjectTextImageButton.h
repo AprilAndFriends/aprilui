@@ -21,14 +21,15 @@ namespace AprilUI
 {
 	class AprilUIExport TextImageButton : public ImageButton, public LabelBase
 	{
-	protected:
-		void OnDraw(float offset_x,float offset_y);
-
 	public:
-		TextImageButton(chstr name,grect rect);
+		TextImageButton(chstr name, grect rect);
 		
 		void setTextKey(chstr key);
-		void setProperty(chstr name,chstr value);
+		void setProperty(chstr name, chstr value);
+		
+	protected:
+		void OnDraw(float offset_x, float offset_y);
+
 	};
 	
 }

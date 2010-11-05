@@ -22,27 +22,28 @@ namespace AprilUI
 	
 	class AprilUIExport ImageBox : public Object
 	{
-	protected:
-		Image* mImage;
-		hstr mImageName;
-		
-		void OnDraw(float offset_x,float offset_y);
 	public:
 		ImageBox(chstr name,grect rect);
 		
 		virtual Image* getImage() { return mImage; };
-		virtual void setImage(Image* image);
-		void setImageByName(chstr image);
+		virtual void setImage(Image* value);
 		hstr getImageName() { return mImageName; }
-		void notifyEvent(chstr event_name,void* params);
+		void setImageByName(chstr name);
+		void notifyEvent(chstr event_name, void* params);
 		
 		void resizeToFitImage();
 		
-		void setProperty(chstr name,chstr value);
-		bool OnMouseDown(float x,float y,int button);
-		bool OnMouseUp(float x,float y,int button);
+		void setProperty(chstr name, chstr value);
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		
+	protected:
+		Image* mImage;
+		hstr mImageName;
+		
+		void OnDraw(float offset_x, float offset_y);
+		
 	};
-	
 }
 
 #endif

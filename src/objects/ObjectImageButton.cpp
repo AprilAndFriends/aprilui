@@ -26,15 +26,15 @@ namespace AprilUI
 
 	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		if (!getDerivedEnabled() && mDisabledImage)
+		if (!isDerivedEnabled() && mDisabledImage)
 		{
-			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,1);
+			mDisabledImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,1,1,1,1);
 			return;
 		}
 		if (mPushed && !mPushedImage && isCursorInside())
 		{
 			float alpha=getDerivedAlpha();
-			mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.7f,0.7f,0.7f,alpha);
+			mImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,0.7f,0.7f,0.7f,alpha);
 			return;
 		}
 		ImageBox::OnDraw(offset_x,offset_y);
@@ -45,9 +45,9 @@ namespace AprilUI
 		mImage=mNormalImage;
 		if (!mImage)
 		{
-			mImage=mDataPtr->getImage("null");
+			mImage=mDataset->getImage("null");
 		}
-		if (!getDerivedEnabled())
+		if (!isDerivedEnabled())
 		{
 			if (mDisabledImage) mImage=mDisabledImage;
 		}
@@ -85,17 +85,17 @@ namespace AprilUI
 
 	void ImageButton::setPushedImageByName(chstr image)
 	{
-		setPushedImage(mDataPtr->getImage(image));
+		setPushedImage(mDataset->getImage(image));
 	}
 
 	void ImageButton::setHoverImageByName(chstr image)
 	{
-		setHoverImage(mDataPtr->getImage(image));
+		setHoverImage(mDataset->getImage(image));
 	}
 
 	void ImageButton::setDisabledImageByName(chstr image)
 	{
-		setDisabledImage(mDataPtr->getImage(image));
+		setDisabledImage(mDataset->getImage(image));
 	}
 
 	void ImageButton::setImage(Image* image)
@@ -105,7 +105,7 @@ namespace AprilUI
 	
 	void ImageButton::setImageByName(chstr image)
 	{
-		setImage(mDataPtr->getImage(image));
+		setImage(mDataset->getImage(image));
 		mImageName=image;
 	}
 	
@@ -141,10 +141,10 @@ namespace AprilUI
 	void ImageButton::setProperty(chstr name,chstr value)
 	{
 		Object::setProperty(name,value);
-		if (name == "image")			setImage(mDataPtr->getImage(value));
-		if (name == "pushed_image")     setPushedImage(mDataPtr->getImage(value));
-		if (name == "hover_image")      setHoverImage(mDataPtr->getImage(value));
-		if (name == "disabled_image")   setDisabledImage(mDataPtr->getImage(value));
+		if (name == "image")			setImage(mDataset->getImage(value));
+		if (name == "pushed_image")     setPushedImage(mDataset->getImage(value));
+		if (name == "hover_image")      setHoverImage(mDataset->getImage(value));
+		if (name == "disabled_image")   setDisabledImage(mDataset->getImage(value));
 	}
 	
 }

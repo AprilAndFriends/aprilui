@@ -21,15 +21,25 @@ namespace AprilUI
 	{
 		class AprilUIExport AlphaFader : public Animator
 		{
-			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay,mDestAlpha;
 		public:
 			AlphaFader(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
-			void fade(float dest,float time);
-			void update(float k);
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			void fade(float dest, float time);
 			void reset();
+			
+			void update(float k);
+			
+		protected:
+			float mInitialSpeed;
+			float mInitialAlpha;
+			float mSpeed;
+			float mAccel;
+			float mTimer;
+			float mDelay;
+			float mDestAlpha;
+			
 		};
 	}
 }

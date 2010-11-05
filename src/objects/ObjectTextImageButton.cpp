@@ -26,13 +26,13 @@ namespace AprilUI
 	{
 		ImageButton::OnDraw(offset_x,offset_y);
 		float alpha=getDerivedAlpha();
-		if (!getDerivedEnabled() || !mImage && !mNormalImage && !mPushedImage && mPushed) alpha/=2;
-		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
+		if (!isDerivedEnabled() || !mImage && !mNormalImage && !mPushedImage && mPushed) alpha/=2;
+		LabelBase::_drawLabel(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,alpha);
 	}
 
 	void TextImageButton::setTextKey(chstr key)
 	{
-		setText(mDataPtr->getText(key));
+		setText(mDataset->getText(key));
 	}
 
 	void TextImageButton::setProperty(chstr name,chstr value)

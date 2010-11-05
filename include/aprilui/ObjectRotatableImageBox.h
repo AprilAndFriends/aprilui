@@ -20,23 +20,24 @@ namespace AprilUI
 {
 	class AprilUIExport RotatableImageBox : public RotationImageBox
 	{
-	protected:
-		float mDestAngle;
-		float mRotationSpeed;
 	public:
-		RotatableImageBox(chstr name,grect rect);
+		RotatableImageBox(chstr name, grect rect);
 		
-		void setRotationSpeed(float speed) { mRotationSpeed=speed; }
 		float getRotationSpeed() { return mRotationSpeed; }
-		void setAngle(float angle) { mAngle=mDestAngle=angle; }
-		void setDestAngle(float angle) { mDestAngle=angle; }
+		void setRotationSpeed(float value) { mRotationSpeed = value; }
+		void setAngle(float value) { mAngle = mDestAngle = value; }
 		float getDestAngle() { return mDestAngle; }
-		void rotate(float angle) { mDestAngle+=angle; }
+		void setDestAngle(float value) { mDestAngle = value; }
+		void rotate(float angle) { mDestAngle += angle; }
 		bool isRotating();
 
 		void update(float k);
+		
+	protected:
+		float mDestAngle;
+		float mRotationSpeed;
+		
 	};
-	
 }
 
 #endif

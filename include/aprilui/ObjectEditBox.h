@@ -20,6 +20,29 @@ namespace AprilUI
 {
 	class AprilUIExport EditBox : public Label
 	{
+	public:
+		EditBox(chstr name, grect rect);
+		
+		int getCursorIndex() { return mCursorIndex; }
+		void setCursorIndex(int cursorIndex);
+		void setCursorIndexAt(float x, float y);
+		int getMaxLength() { return mMaxLength; }
+		void setMaxLength(int maxLength);
+		char getPasswordChar() { return mPasswordChar; }
+		void setPasswordChar(char value) { mPasswordChar = value; }
+		hstr getFilter() { return mFilter; }
+		void setFilter(chstr filter);
+		void setText(chstr text);
+		
+		void update(float time);
+		void setProperty(chstr name, chstr value);
+		
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		void OnKeyDown(unsigned int keycode);
+		void OnKeyUp(unsigned int keycode);
+		void OnChar(unsigned int charcode);
+		
 	protected:
 		bool mPushed;
 		int mCursorIndex;
@@ -30,37 +53,15 @@ namespace AprilUI
 		hstr mFilter;
 		float mBlinkTimer;
 		
-		void OnDraw(float offset_x,float offset_y);
+		void OnDraw(float offset_x, float offset_y);
 		
 		void _cursorMoveLeftWord();
 		void _cursorMoveRightWord();
-		void _deleteLeft(int count=1);
-		void _deleteRight(int count=1);
+		void _deleteLeft(int count = 1);
+		void _deleteRight(int count = 1);
 		void _deleteLeftWord();
 		void _deleteRightWord();
 		void _insertText(chstr text);
-		
-	public:
-		EditBox(chstr name,grect rect);
-		
-		void update(float time);
-		bool OnMouseDown(float x,float y,int button);
-		bool OnMouseUp(float x,float y,int button);
-		void OnKeyDown(unsigned int keycode);
-		void OnKeyUp(unsigned int keycode);
-		void OnChar(unsigned int charcode);
-		void setProperty(chstr name,chstr value);
-		
-		int getCursorIndex() { return mCursorIndex; }
-		void setCursorIndex(int cursorIndex);
-		void setCursorIndexAt(float x,float y);
-		int getMaxLength() { return mMaxLength; }
-		void setMaxLength(int maxLength);
-		char getPasswordChar() { return mPasswordChar; }
-		void setPasswordChar(char passwordChar) { mPasswordChar=passwordChar; }
-		hstr getFilter() { return mFilter; }
-		void setFilter(chstr filter);
-		void setText(chstr text);
 		
 	};
 

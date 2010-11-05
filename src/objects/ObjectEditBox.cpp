@@ -49,7 +49,7 @@ namespace AprilUI
 #ifdef _DEBUG
 		if (!AprilUI::isDebugMode())
 #endif
-			April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
+			April::rendersys->drawColoredQuad(mRect.x+offset_x, mRect.y+offset_y, mRect.w, mRect.h, 0, 0, 0, 0.7f+0.3f*mPushed);
 		hstr text=mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -59,11 +59,11 @@ namespace AprilUI
 		{
 			mOffsetIndex=hmax(0,mCursorIndex-5);
 		}
-		mWidth-=12;
+		mRect.w-=12;
 		int count;
 		while (true)
 		{
-			count=Atres::getTextCountUnformatted(mFontName,mText(mOffsetIndex,mText.size()-mOffsetIndex),mWidth);
+			count=Atres::getTextCountUnformatted(mFontName,mText(mOffsetIndex,mText.size()-mOffsetIndex),mRect.w);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex=mCursorIndex;
@@ -79,12 +79,12 @@ namespace AprilUI
 		}
 		mText=mText(mOffsetIndex,mText.size()-mOffsetIndex);
 		Label::OnDraw(offset_x+2,offset_y);
-		mWidth+=12;
-		if (mDataPtr && this == mDataPtr->getFocusedObject() && mBlinkTimer < 0.5f)
+		mRect.w+=12;
+		if (mDataset && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
 			float w=Atres::getTextWidthUnformatted(mFontName,mText(0,mCursorIndex-mOffsetIndex));
 			float h=Atres::getFontHeight(mFontName);
-			April::rendersys->drawColoredQuad(mX+offset_x+w+2, mY+offset_y+(mHeight-h)/2+2, 2, h - 4,
+			April::rendersys->drawColoredQuad(mRect.x+offset_x+w+2, mRect.y+offset_y+(mRect.h-h)/2+2, 2, h - 4,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
 		}
 		mText=text;
@@ -111,7 +111,7 @@ namespace AprilUI
 		{
 			text=hstr(mPasswordChar,text.size());
 		}
-		int count=Atres::getTextCountUnformatted(mFontName,text(mOffsetIndex,text.size()-mOffsetIndex),x-mX);
+		int count=Atres::getTextCountUnformatted(mFontName,text(mOffsetIndex,text.size()-mOffsetIndex),x-mRect.x);
 		setCursorIndex(mOffsetIndex+count);
 	}
 	
@@ -165,9 +165,9 @@ namespace AprilUI
 		if (mPushed && isPointInside(x,y))
 		{
 			setCursorIndexAt(x,y);
-			if (mDataPtr)
+			if (mDataset)
 			{
-				mDataPtr->setFocusedObject(this);
+				mDataset->setFocusedObject(this);
 				mBlinkTimer=0;
 			}
 			April::rendersys->getWindow()->beginKeyboardHandling();

@@ -100,9 +100,4 @@ namespace AprilUI
 		else if (name == "offset_y") setDrawOffsetY(value);
 	}
 
-	void LabelBase::setTextColor(chstr hex)
-	{
-		mTextColor.setColor(hex);
-	}
-	
 }

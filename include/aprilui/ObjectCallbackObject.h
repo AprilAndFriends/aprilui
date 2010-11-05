@@ -20,17 +20,19 @@ namespace AprilUI
 {
 	class AprilUIExport CallbackObject : public Object
 	{
-		void (*mCallback)();
 	public:
-		CallbackObject(chstr name,grect rect);
-		void setProperty(chstr name,chstr value);
+		CallbackObject(chstr name, grect rect);
+		void setProperty(chstr name, chstr value);
 		
-		void setCallback(void (*callback)()) { mCallback=callback; }
 		void (*getCallback())() { return mCallback; }
+		void setCallback(void (*value)()) { mCallback = value; }
 		
-		void OnDraw(float offset_x=0,float offset_y=0);
+		void OnDraw(float offset_x = 0.0f, float offset_y = 0.0f);
+		
+	protected:
+		void (*mCallback)();
+		
 	};
-	
 }
 
 #endif

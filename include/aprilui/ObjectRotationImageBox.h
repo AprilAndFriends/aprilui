@@ -20,16 +20,18 @@ namespace AprilUI
 {
 	class AprilUIExport RotationImageBox : public ImageBox
 	{
+	public:
+		RotationImageBox(chstr name, grect rect);
+
+		float getAngle() { return mAngle; }
+		virtual void setAngle(float value) { mAngle = value; }
+		bool angleEquals(float angle);
+		void setProperty(chstr name, chstr value);
+		
 	protected:
 		float mAngle;
-		void OnDraw(float offset_x,float offset_y);
-	public:
-		RotationImageBox(chstr name,grect rect);
-
-		virtual void setAngle(float angle) { mAngle=angle; }
-		float getAngle() { return mAngle; }
-		bool angleEquals(float angle);
-		void setProperty(chstr name,chstr value);
+		void OnDraw(float offset_x, float offset_y);
+		
 	};
 	
 }

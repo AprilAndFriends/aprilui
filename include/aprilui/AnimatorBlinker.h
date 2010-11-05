@@ -21,14 +21,24 @@ namespace AprilUI
 	{
 		class AprilUIExport Blinker : public Animator
 		{
-			float mDelay,mDuration,mFrequency,mTimer,mDelayTimer,mDurationTimer;
-			bool mStartVisibility,mEndVisibility;
 		public:
 			Blinker(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
 			void update(float k);
+			
+		protected:
+			float mDelay;
+			float mDuration;
+			float mFrequency;
+			float mTimer;
+			float mDelayTimer;
+			float mDurationTimer;
+			bool mStartVisibility;
+			bool mEndVisibility;
+			
 		};
 	}
 }

@@ -26,8 +26,8 @@ namespace AprilUI
 	void ToggleButton::OnDraw(float offset_x,float offset_y)
 	{
 		float alpha=getDerivedAlpha();
-		if (mPushed) mPushedImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
-		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
+		if (mPushed) mPushedImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,1,1,1,alpha);
+		mImage->draw(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h,1,1,1,alpha);
 	}
 
 	bool ToggleButton::OnMouseDown(float x,float y,int button)

@@ -20,22 +20,34 @@ namespace AprilUI
 {
 	class AprilUIExport TextButton : public Label
 	{
-	protected:
-		bool mPushed,mBackgroundEnabled;
-		April::Color mHoverTextColor,mPushedTextColor;
-		void OnDraw(float offset_x,float offset_y);
 	public:
 		TextButton(chstr name,grect rect);
 		
-		void setHoverTextColor(April::Color color);
-		void setHoverTextColor(chstr hex);
-		void setPushedTextColor(April::Color color);
-		void setPushedTextColor(chstr hex);
+		April::Color getHoverTextColor() { return mHoverTextColor; }
+		void setHoverTextColor(April::Color value) { mHoverTextColor = value; }
+		void setHoverTextColor(chstr value) { mHoverTextColor.setColor(value); }
+		April::Color getPushedTextColor() { return mPushedTextColor; }
+		void setPushedTextColor(April::Color value) { mPushedTextColor = value; }
+		void setPushedTextColor(chstr value) { mPushedTextColor.setColor(value); }
+		April::Color getDisabledTextColor() { return mDisabledTextColor; }
+		void setDisabledTextColor(April::Color value) { mDisabledTextColor = value; }
+		void setDisabledTextColor(chstr value) { mDisabledTextColor.setColor(value); }
 
 		void setTextKey(chstr key);
-		bool OnMouseDown(float x,float y,int button);
-		bool OnMouseUp(float x,float y,int button);
-		void setProperty(chstr name,chstr value);
+		void setProperty(chstr name, chstr value);
+		
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		
+	protected:
+		bool mPushed;
+		bool mBackgroundEnabled;
+		April::Color mHoverTextColor;
+		April::Color mPushedTextColor;
+		April::Color mDisabledTextColor;
+		
+		void OnDraw(float offset_x, float offset_y);
+		
 	};
 }
 

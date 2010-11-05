@@ -29,7 +29,7 @@ namespace AprilUI
 		if (isPointInside(x,y))
 		{
 			mPushed=true;
-			mValue=(x-mX)/mWidth;
+			mValue=(x-mRect.x)/mRect.w;
 			triggerEvent("Set",x,y,0);
 			return true;
 		}
@@ -53,21 +53,21 @@ namespace AprilUI
 		Object::OnMouseMove(x,y);
 		if (mPushed)
 		{
-			if (x < mX) x=mX; if (x > mX+mWidth) x=mX+mWidth;
-			mValue=(x-mX)/mWidth;
+			if (x < mRect.x) x=mRect.x; if (x > mRect.x+mRect.w) x=mRect.x+mRect.h;
+			mValue=(x-mRect.x)/mRect.w;
 			triggerEvent("Set",x,y,0);
 		}
 	}
 
 	void Slider::OnDraw(float offset_x,float offset_y)
 	{
-		float x=mX+offset_x,y=mY+offset_y;
+		float x=mRect.x+offset_x,y=mRect.y+offset_y;
 		float alpha=getDerivedAlpha();
-		//rendersys->drawColoredQuad(x,y,mWidth,mHeight,1,1,1,alpha/2);
-		April::rendersys->drawColoredQuad(x+mHeight/2,y+mHeight*0.375f,mWidth-mHeight,mHeight/4,0,0,0,alpha);
-		April::rendersys->drawColoredQuad(x+mHeight/2+1,y+1+mHeight*0.375f,mWidth-2-mHeight,mHeight/4-2,0.89f,0.75f,0.49f,alpha);
-		April::rendersys->drawColoredQuad(x+mHeight/2+2,y+2+mHeight*0.375f,mValue*(mWidth-mHeight-4),mHeight/4-4,0,0,0,alpha);
-		mImage->draw(x+mHeight/4+mValue*(mWidth-mHeight),y+mHeight/4,mHeight/2,mHeight/2,1,1,1,alpha);
+		//rendersys->drawColoredQuad(x,y,mRect.w,mRect.h,1,1,1,alpha/2);
+		April::rendersys->drawColoredQuad(x+mRect.h/2,y+mRect.h*0.375f,mRect.w-mRect.h,mRect.h/4,0,0,0,alpha);
+		April::rendersys->drawColoredQuad(x+mRect.h/2+1,y+1+mRect.h*0.375f,mRect.w-2-mRect.h,mRect.h/4-2,0.89f,0.75f,0.49f,alpha);
+		April::rendersys->drawColoredQuad(x+mRect.h/2+2,y+2+mRect.h*0.375f,mValue*(mRect.w-mRect.h-4),mRect.h/4-4,0,0,0,alpha);
+		mImage->draw(x+mRect.h/4+mValue*(mRect.w-mRect.h),y+mRect.h/4,mRect.h/2,mRect.h/2,1,1,1,alpha);
 	}
 
 	void Slider::setProperty(chstr name,chstr value)
