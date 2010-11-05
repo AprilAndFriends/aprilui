@@ -22,15 +22,15 @@ namespace AprilUI
 {
 	hstr pathGetBaseDir(chstr path)
 	{
-		int index = normalize_path(path).rfind("/");
-		return (index < 0 ? "" : path(0, index));
+		hstr normalized = normalize_path(path);
+		int index = normalized.rfind('/');
+		return (index < 0 ? "" : normalized(0, index));
 	}
 
 	hstr generateName(chstr prefix)
 	{
 		static hmap<hstr, int> counters;
-		int count = counters[prefix];
-		count++;
+		int count = counters[prefix] + 1;
 		counters[prefix] = count;
 		return prefix + hstr(count);
 	}
