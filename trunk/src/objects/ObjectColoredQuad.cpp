@@ -37,6 +37,7 @@ namespace AprilUI
 		else if (name == "r") mColor.r=(unsigned char) ((float) value*255);
 		else if (name == "g") mColor.g=(unsigned char) ((float) value*255);
 		else if (name == "b") mColor.b=(unsigned char) ((float) value*255);
+		else if (name == "color") mColor.setColor(value);
 	}
 
 	bool ColoredQuad::OnMouseDown(float x,float y,int button)
