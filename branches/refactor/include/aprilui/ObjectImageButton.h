@@ -33,7 +33,6 @@ namespace AprilUI
 		Image* getDisabledImage() { return mDisabledImage; }
 		void setDisabledImage(Image* image) { mDisabledImage = image; }
 		void setDisabledImageByName(chstr image);
-		void OnDraw(float offset_x, float offset_y);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* value);
 		
@@ -51,6 +50,7 @@ namespace AprilUI
 		bool mPushed;
 		
 		void update(float k);
+		void OnDraw(gvec2 offset = gvec2());
 		
 	};
 }

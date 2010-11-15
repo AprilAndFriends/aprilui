@@ -44,12 +44,13 @@ namespace AprilUI
 		mBlinkTimer = (mBlinkTimer - (int)mBlinkTimer);
 	}
 
-	void EditBox::OnDraw(float offset_x, float offset_y)
+	void EditBox::OnDraw(gvec2 offset)
 	{
+		grect rect = mRect + offset;
 #ifdef _DEBUG
 		if (!AprilUI::isDebugMode())
 #endif
-			April::rendersys->drawColoredQuad(mRect.x + offset_x, mRect.y + offset_y, mRect.w, mRect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
+		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
 		hstr text = mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -59,11 +60,11 @@ namespace AprilUI
 		{
 			mOffsetIndex = hmax(0, mCursorIndex - 5);
 		}
-		mRect.w -= 12;
+		rect.w -= 12;
 		int count;
 		while (true)
 		{
-			count = Atres::getTextCountUnformatted(mFontName, mText(mOffsetIndex, mText.size() - mOffsetIndex), mRect.w);
+			count = Atres::getTextCountUnformatted(mFontName, mText(mOffsetIndex, mText.size() - mOffsetIndex), rect.w);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex = mCursorIndex;
@@ -78,13 +79,17 @@ namespace AprilUI
 			}
 		}
 		mText = mText(mOffsetIndex, mText.size() - mOffsetIndex);
-		Label::OnDraw(offset_x + 2, offset_y);
-		mRect.w += 12;
+		offset.x += 2;
+		Label::OnDraw(offset);
 		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
-			float w = Atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
+			rect = mRect + offset;
+			rect.x += Atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
 			float h = Atres::getFontHeight(mFontName);
-			April::rendersys->drawColoredQuad(mRect.x + offset_x + w + 2, mRect.y + offset_y + (mRect.h - h) / 2 + 2, 2, h - 4,
+			rect.y += (rect.h - h) / 2 + 2;
+			rect.w = 2;
+			rect.h = h - 4;
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
 		}
 		mText = text;

@@ -22,15 +22,15 @@ namespace AprilUI
 	{
 	}
 
-	void Label::OnDraw(float offset_x, float offset_y)
+	void Label::OnDraw(gvec2 offset)
 	{
-		Object::OnDraw(offset_x, offset_y);
+		Object::OnDraw(offset);
 		float alpha = getDerivedAlpha();
 		if (!isDerivedEnabled())
 		{
 			alpha /= 2;
 		}
-		LabelBase::_drawLabel(mRect + gvec2(offset_x, offset_y), alpha);
+		LabelBase::_drawLabel(mRect + offset, alpha);
 	}
 
 	void Label::notifyEvent(chstr name, void* params)

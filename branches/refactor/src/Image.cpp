@@ -38,7 +38,6 @@ namespace AprilUI
 	
 	Image::~Image()
 	{
-		
 	}
 	
 	void Image::_updateTexCoords()

@@ -29,7 +29,7 @@ namespace AprilUI
 	{
 		mColor.a = alpha * 255.0f;
 	}
-		
+	
 	void ColoredImage::draw(grect rect, April::Color color)
 	{
 		Image::draw(rect, mColor * color);

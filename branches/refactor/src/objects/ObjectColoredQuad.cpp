@@ -26,17 +26,18 @@ namespace AprilUI
 		mColor.setColor(a, r, g, b);
 	}
 
-	void ColoredQuad::OnDraw(float offset_x,float offset_y)
+	void ColoredQuad::OnDraw(gvec2 offset)
 	{
 		float alpha = getDerivedAlpha() * mColor.a_float();
-		April::rendersys->drawColoredQuad(mRect.x + offset_x, mRect.y + offset_y, mRect.w, mRect.h,
+		grect rect = mRect + offset;
+		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
 			mColor.r_float(), mColor.g_float(), mColor.b_float(), alpha);
 	}
 
 	void ColoredQuad::setProperty(chstr name, chstr value)
 	{
 		Object::setProperty(name, value);
-		if		(name == "r")
+		if (name == "r")
 		{
 			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
 			mColor.r = (unsigned char)((float)value * 255);

@@ -84,7 +84,7 @@ namespace AprilUI
 		virtual bool textExists(chstr name);
 		hmap<hstr, hstr>& getTexts() { return mTexts; }
 
-		hstr getName();
+		hstr getName() { return mName; }
 		
 	protected:
 		hstr mName;

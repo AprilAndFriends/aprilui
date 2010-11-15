@@ -23,7 +23,6 @@ namespace AprilUI
 	public:
 		ToggleButton(chstr name, grect rect);
 
-		void OnDraw(float offset_x, float offset_y);
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
 		void untoggle() { mPushed = false; }
@@ -31,6 +30,9 @@ namespace AprilUI
 		void turnOn() { mPushed = true; }
 		void turnOff() { mPushed = false; }
 		bool isToggled() { return mPushed; }
+		
+	protected:
+		void OnDraw(gvec2 offset = gvec2());
 		
 	};
 }

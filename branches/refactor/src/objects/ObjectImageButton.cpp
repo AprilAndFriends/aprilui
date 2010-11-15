@@ -27,22 +27,23 @@ namespace AprilUI
 		mDisabledImage = NULL;
 	}
 
-	void ImageButton::OnDraw(float offset_x, float offset_y)
+	void ImageButton::OnDraw(gvec2 offset)
 	{
-		if (!isDerivedEnabled() && mDisabledImage)
+		grect rect = mRect + offset;
+		if (!isDerivedEnabled() && mDisabledImage != NULL)
 		{
-			mDisabledImage->draw(mRect + gvec2(offset_x, offset_y));
+			mDisabledImage->draw(rect);
 			return;
 		}
-		if (mPushed && !mPushedImage && isCursorInside())
+		if (mPushed && mPushedImage == NULL && isCursorInside())
 		{
 			April::Color color;
 			color *= 0.7f;
 			color.a = getDerivedAlpha() * 255;
-			mImage->draw(mRect + gvec2(offset_x, offset_y), color);
+			mImage->draw(rect, color);
 			return;
 		}
-		ImageBox::OnDraw(offset_x, offset_y);
+		ImageBox::OnDraw(offset);
 	}
 
 	void ImageButton::update(float k)

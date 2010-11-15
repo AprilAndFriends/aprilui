@@ -33,15 +33,21 @@ namespace AprilUI
 		setText(mDataset->getText(key));
 	}
 
-	void TextButton::OnDraw(float offset_x, float offset_y)
+	void TextButton::OnDraw(gvec2 offset)
 	{
 		bool cursorInside = isCursorInside();
-#ifndef _DEBUG
 		if (mBackground)
-#else
-		if (!AprilUI::isDebugMode() && mBackground)
+		{
+			grect rect = mRect + offset;
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+		}
+#ifdef _DEBUG
+		else if (AprilUI::isDebugMode())
+		{
+			grect rect = mRect + offset;
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+		}
 #endif
-			April::rendersys->drawColoredQuad(mRect.x + offset_x, mRect.y + offset_y, mRect.w, mRect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
 		April::Color color = mTextColor;
 		if (!isDerivedEnabled())
 		{
@@ -51,7 +57,7 @@ namespace AprilUI
 		{
 			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
 		}
-		Label::OnDraw(offset_x, offset_y);
+		Label::OnDraw(offset);
 		mTextColor = color;
 	}
 	

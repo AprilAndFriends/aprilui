@@ -102,40 +102,6 @@ hstr xml_node::pstr(const char* property, chstr defaultValue)
 	return hstr(nodeValue);
 }
 
-unsigned int xml_node::phex(const char* property)
-{
-	const char* nodeValue = this->find_prop(property);
-	unsigned int x = 0;
-	if (nodeValue[0] == '0' && nodeValue[1] == 'x')
-	{
-		sscanf(nodeValue + 2, "%x", &x);
-	}
-	else
-	{
-		sscanf(nodeValue, "%x", &x);
-	}
-	return x;
-}
-
-unsigned int xml_node::phex(const char* property, unsigned int defaultValue)
-{
-	const char* nodeValue = this->find_prop(property, true);
-	if (nodeValue == NULL)
-	{
-		return defaultValue;
-	}
-	unsigned int x = 0;
-	if (nodeValue[0] == '0' && nodeValue[1] == 'x')
-	{
-		sscanf(nodeValue + 2, "%x", &x);
-	}
-	else
-	{
-		sscanf(nodeValue, "%x", &x);
-	}
-	return x;
-}
-
 bool xml_node::pexists(const char* property)
 {
 	return (this->find_prop(property, true) != 0);

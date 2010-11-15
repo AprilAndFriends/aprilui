@@ -52,11 +52,6 @@ namespace AprilUI
 		_unregisterDataset(mName, this);
 	}
 	
-	hstr Dataset::getName()
-	{
-		return mName;
-	}
-	
 	void Dataset::_destroyTexture(April::Texture* texture)
 	{
 		if (!mTextures.has_key(texture->getFilename()))
@@ -159,7 +154,7 @@ namespace AprilUI
 					}
 					else if (node->pexists("color"))
 					{
-						April::Color color(node->phex("color"));
+						April::Color color(node->pstr("color"));
 						image = new ColoredImage(texture, name, rect, vertical, color);
 					}
 					else
@@ -178,7 +173,6 @@ namespace AprilUI
 		    }
 		}
 		return texture;
-		
 	}
 	
 	void Dataset::parseRAMTexture(xml_node* node)
