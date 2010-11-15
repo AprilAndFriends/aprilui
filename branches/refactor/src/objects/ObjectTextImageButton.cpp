@@ -32,7 +32,7 @@ namespace AprilUI
 		{
 			alpha /= 2;
 		}
-		LabelBase::_drawLabel(mRect.x + gvec2(offset_x, offset_y), alpha);
+		LabelBase::_drawLabel(mRect + gvec2(offset_x, offset_y), alpha);
 	}
 
 	void TextImageButton::setTextKey(chstr key)
