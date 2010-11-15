@@ -18,21 +18,21 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ToggleButton::ToggleButton(chstr name,grect rect) :
-		ImageButton(name,rect)
+	ToggleButton::ToggleButton(chstr name, grect rect) :
+		ImageButton(name, rect)
 	{
 		_setTypeName("ToggleButton");
-		mPushed=0;
+		mPushed = false;
 	}
 
-	void ToggleButton::OnDraw(float offset_x,float offset_y)
+	void ToggleButton::OnDraw(float offset_x, float offset_y)
 	{
-		float alpha=getDerivedAlpha();
+		float alpha = getDerivedAlpha();
 		April::Color color;
 		color.a = alpha * 255;
 		if (mPushed && mPushedImage)
 		{
-			mPushedImage->draw(mRect + gvec2(offset_x, offset_y),color);
+			mPushedImage->draw(mRect + gvec2(offset_x, offset_y), color);
 		}
 		else
 		{
@@ -40,18 +40,20 @@ namespace AprilUI
 		}
 	}
 
-	bool ToggleButton::OnMouseDown(float x,float y,int button)
+	bool ToggleButton::OnMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x,y,button)) return true;
-		if (isPointInside(x,y))
+		if (Object::OnMouseDown(x, y, button))
 		{
-			mPushed=!mPushed;
-			Event* e;
-			if (mPushed) e=mEvents["Toggle"];
-			else         e=mEvents["Untoggle"];
-			if (e)
+			return true;
+		}
+		if (isPointInside(x, y))
+		{
+			mPushed = !mPushed;
+			Event* event;
+			event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
+			if (event != NULL)
 			{
-				EventArgs args(this,x,y);
+				EventArgs args(this, x, y);
 				e->execute(&args);
 			}
 			return true;
@@ -59,15 +61,18 @@ namespace AprilUI
 		return false;
 	}
 
-	bool ToggleButton::OnMouseUp(float x,float y,int button)
+	bool ToggleButton::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x,y,button)) return true;
-		if (isPointInside(x,y))
+		if (Object::OnMouseUp(x, y, button))
 		{
-			triggerEvent("Click",x,y,0);
-			return 1;
+			return true;
 		}
-		return 0;
+		if (isPointInside(x, y))
+		{
+			triggerEvent("Click", x, y, 0);
+			return true;
+		}
+		return false;
 	}
 	
 }

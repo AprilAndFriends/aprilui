@@ -50,9 +50,9 @@ namespace AprilUI
 		}
 	}
 
-	bool _objectSortCallback(Object* lhs, Object* rhs)
+	bool _objectSortCallback(Object* a, Object* b)
 	{
-		return (lhs->getZOrder() < rhs->getZOrder());
+		return (a->getZOrder() < b->getZOrder());
 	}
 
 	void Object::sortChildren()
@@ -60,25 +60,25 @@ namespace AprilUI
 		mChildren.sort(_objectSortCallback);
 	}
 
-	void Object::addChild(Object* o)
+	void Object::addChild(Object* object)
 	{
-		if (o->getParent())
+		if (object->getParent())
 		{
-			throw ObjectHasParentException(o->getName(), getName());
+			throw ObjectHasParentException(object->getName(), getName());
 		}
-		mChildren.push_back(o);
+		mChildren += object;
 		sortChildren();
-		o->setParent(this);
+		object->setParent(this);
 	}
 	
-	void Object::removeChild(Object* o)
+	void Object::removeChild(Object* object)
 	{
-		if (o->getParent() != this)
+		if (object->getParent() != this)
 		{
-			throw ObjectNotChildException(o->getName(), getName());
+			throw ObjectNotChildException(object->getName(), getName());
 		}
-		mChildren.remove(o);
-		o->setParent(NULL);
+		mChildren -= object;
+		object->setParent(NULL);
 	}
 
 	void Object::removeAllChildren()
@@ -178,7 +178,7 @@ namespace AprilUI
 		return false;
 	}
 
-	bool Object::OnMouseUp(float x,float y,int button)
+	bool Object::OnMouseUp(float x, float y, int button)
 	{
 		if (mClickthrough || !isVisible() || !isDerivedEnabled())
 		{
@@ -196,7 +196,7 @@ namespace AprilUI
 		return false;
 	}
 
-	void Object::OnMouseMove(float x,float y)
+	void Object::OnMouseMove(float x, float y)
 	{
 		foreach_r (Object*, it, mChildren)
 		{
@@ -321,7 +321,7 @@ namespace AprilUI
 	void Object::_moveChildToBack(Object* object)
 	{
 		mChildren -= object;
-		mChildren += object;
+		mChildren.push_front(object);
 	}
 
 	void Object::setProperty(chstr name, chstr value)

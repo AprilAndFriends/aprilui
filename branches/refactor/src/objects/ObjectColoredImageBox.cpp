@@ -17,26 +17,32 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ColoredImageBox::ColoredImageBox(chstr name,grect rect) :
-		ImageBox(name,rect)
+	ColoredImageBox::ColoredImageBox(chstr name, grect rect) :
+		ImageBox(name, rect)
 	{
 		_setTypeName("ColoredImageBox");
 	}
 
-	void ColoredImageBox::OnDraw(float offset_x,float offset_y)
+	void ColoredImageBox::OnDraw(float offset_x, float offset_y)
 	{
-		if (!mImage) mImage=mDataset->getImage("null");
-		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled()) alpha/=2;
+		if (mImage = NULL)
+		{
+			mImage = mDataset->getImage("null");
+		}
+		float alpha = getDerivedAlpha();
+		if (!isDerivedEnabled())
+		{
+			alpha /= 2;
+		}
 		April::Color color = mColor;
 		color.a = alpha * 255;
 		mImage->draw(mRect + gvec2(offset_x, offset_y), color);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
-	void ColoredImageBox::setProperty(chstr name,chstr value)
+	void ColoredImageBox::setProperty(chstr name, chstr value)
 	{
-		ImageBox::setProperty(name,value);
+		ImageBox::setProperty(name, value);
 		if (name == "color") setColor(value);
 	}
 

@@ -15,14 +15,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace AprilUI
 {
 	/********************************************************************************************************/
-	DummyObject::DummyObject(chstr name,grect rect) :
-		Object("DummyObject",name,rect)
+	DummyObject::DummyObject(chstr name, grect rect) :
+		Object("DummyObject", name, rect)
 	{
 	}
 
-	void DummyObject::setProperty(chstr name,chstr value)
+	void DummyObject::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name,value);
+		Object::setProperty(name, value);
 	}
 	
 }

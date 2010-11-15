@@ -25,18 +25,17 @@ namespace AprilUI
 		ImageButton(chstr name, grect rect);
 		
 		Image* getPushedImage() { return mPushedImage; }
-		void setPushedImage(Image* value);
+		void setPushedImage(Image* image) { mPushedImage = image; }
 		void setPushedImageByName(chstr image);
 		Image* getHoverImage() { return mHoverImage; }
-		void setHoverImage(Image* value);
+		void setHoverImage(Image* image) { mHoverImage = image; }
 		void setHoverImageByName(chstr image);
 		Image* getDisabledImage() { return mDisabledImage; }
-		void setDisabledImage(Image* value);
+		void setDisabledImage(Image* image) { mDisabledImage = image; }
 		void setDisabledImageByName(chstr image);
 		void OnDraw(float offset_x, float offset_y);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* value);
-		void setImageByName(chstr name);
 		
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);

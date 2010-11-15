@@ -30,12 +30,12 @@ namespace AprilUI
 		mText="LabelBase: "+name;
 	}
 	
-	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
+	void LabelBase::_drawLabel(grect rect,float alpha)
 	{
 #ifdef _DEBUG
 		if (AprilUI::isDebugMode())
 		{
-			April::rendersys->drawColoredQuad(offset_x, offset_y, width, height, 0, 0, 0, 0.5f);
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f);
 		}
 #endif
 		if (mText.size() == 0)
@@ -55,7 +55,6 @@ namespace AprilUI
 		}
 		April::Color color(mTextColor);
 		color.a *= alpha;
-		grect rect(offset_x,offset_y,width,height);
 		if (mTextFormatting)
 		{
 			Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color,gvec2(-mDrawOffsetX,-mDrawOffsetY));

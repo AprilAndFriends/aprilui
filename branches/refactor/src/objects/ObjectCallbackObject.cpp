@@ -14,21 +14,24 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	CallbackObject::CallbackObject(chstr name,grect rect) :
-		Object("CallbackObject",name,rect)
+	CallbackObject::CallbackObject(chstr name, grect rect) :
+		Object("CallbackObject", name, rect)
 	{
-		mCallback=0;
+		mCallback = NULL;
 	}
 
-	void CallbackObject::setProperty(chstr name,chstr value)
+	void CallbackObject::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name,value);
+		Object::setProperty(name, value);
 	}
 	
-	void CallbackObject::OnDraw(float offset_x,float offset_y)
+	void CallbackObject::OnDraw(float offset_x, float offset_y)
 	{
-		if (mCallback) (*mCallback)();
-		Object::OnDraw(offset_x,offset_y);
+		if (mCallback)
+		{
+			(*mCallback)();
+		}
+		Object::OnDraw(offset_x, offset_y);
 	}
 	
 }

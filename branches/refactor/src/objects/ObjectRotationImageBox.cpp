@@ -17,23 +17,29 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	RotationImageBox::RotationImageBox(chstr name,grect rect) :
-		ImageBox(name,rect)
+	RotationImageBox::RotationImageBox(chstr name, grect rect) :
+		ImageBox(name, rect)
 	{
-		mAngle=0;
+		mAngle = 0.0f;
 	}
 
-	void RotationImageBox::setProperty(chstr name,chstr value)
+	void RotationImageBox::setProperty(chstr name, chstr value)
 	{
-		ImageBox::setProperty(name,value);
-		if (name == "angle") mAngle=value;
+		ImageBox::setProperty(name, value);
+		if (name == "angle")	mAngle = value;
 	}
 
-	void RotationImageBox::OnDraw(float offset_x,float offset_y)
+	void RotationImageBox::OnDraw(float offset_x, float offset_y)
 	{
-		if (!mImage) mImage=mDataset->getImage("null");
-		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled()) alpha/=2;
+		if (mImage == NULL)
+		{
+			mImage = mDataset->getImage("null");
+		}
+		float alpha = getDerivedAlpha();
+		if (!isDerivedEnabled())
+		{
+			alpha /= 2;
+		}
 		April::Color color;
 		color.a = alpha * 255;
 		mImage->draw(mRect + gvec2(offset_x, offset_y), color, mAngle);
@@ -41,9 +47,11 @@ namespace AprilUI
 
 	bool RotationImageBox::angleEquals(float angle)
 	{
-		float s1=dsin(angle),s2=dsin(mAngle);
-		float c1=dcos(angle),c2=dcos(mAngle);
-		return (fabs(s1-s2) < 0.01f && fabs(c1-c2) < 0.01f);
+		float s1 = dsin(angle);
+		float s2 = dsin(mAngle);
+		float c1 = dcos(angle);
+		float c2 = dcos(mAngle);
+		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
 	}
 	
 }

@@ -16,13 +16,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	TextButton::TextButton(chstr name,grect rect) :
+	TextButton::TextButton(chstr name, grect rect) :
 		Label(name,rect)
 	{
-		mText="TextButton: "+name;
-		mTypeName="TextButton";
-		mPushed=0;
-		mBackgroundEnabled=1;
+		mText = "TextButton: "+name;
+		mTypeName = "TextButton";
+		mPushed = false;
+		mBackgroundEnabled = true;
 		mPushedTextColor.setColor("FF333333");
 		mHoverTextColor.setColor("FF7F7F7F");
 		mDisabledTextColor.setColor("FF7F7F7F");
@@ -40,50 +40,56 @@ namespace AprilUI
 #else
 		if (!AprilUI::isDebugMode() && mBackgroundEnabled)
 #endif
-			April::rendersys->drawColoredQuad(mRect.x+offset_x,mRect.y+offset_y,mRect.w,mRect.h, 0, 0, 0, 0.7f+0.3f*mPushed);
-		April::Color color=mTextColor;
+			April::rendersys->drawColoredQuad(mRect.x + offset_x, mRect.y + offset_y, mRect.w, mRect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
+		April::Color color = mTextColor;
 		if (isDerivedEnabled())
 		{
-			mTextColor=(mDisabledTextColor);
+			mTextColor = mDisabledTextColor;
 		}
 		else if (isCursorInside())
 		{
-			mTextColor=(mPushed ? mPushedTextColor : mHoverTextColor);
+			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
 		}
-		Label::OnDraw(offset_x,offset_y);
-		mTextColor=color;
+		Label::OnDraw(offset_x, offset_y);
+		mTextColor = color;
 	}
 	
-	void TextButton::setProperty(chstr name,chstr value)
+	void TextButton::setProperty(chstr name, chstr value)
 	{
-		if (name == "background") mBackgroundEnabled=(bool)value;
-		else if (name == "hover_color") setHoverTextColor(value);
-		else if (name == "pushed_color") setPushedTextColor(value);
-		else if (name == "disabled_color") setDisabledTextColor(value);
-		else Label::setProperty(name,value);
+		Label::setProperty(name, value);
+		if		(name == "background")		mBackgroundEnabled = (bool)value;
+		else if (name == "hover_color")		setHoverTextColor(value);
+		else if (name == "pushed_color")	setPushedTextColor(value);
+		else if (name == "disabled_color")	setDisabledTextColor(value);
 	}
 
-	bool TextButton::OnMouseDown(float x,float y,int button)
+	bool TextButton::OnMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x,y,button)) return true;
+		if (Object::OnMouseDown(x, y, button))
+		{
+			return true;
+		}
 		if (isCursorInside())
 		{
-			mPushed=true;
+			mPushed = true;
 			return true;
 		}
 		return false;
 	}
 
-	bool TextButton::OnMouseUp(float x,float y,int button)
+	bool TextButton::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x,y,button)) return true;
-		if (mPushed && isCursorInside())
+		if (Object::OnMouseUp(x, y, button))
 		{
-			mPushed=false;
-			triggerEvent("Click",x,y,0);
 			return true;
 		}
-		mPushed=false;
+		if (mPushed && isCursorInside())
+		{
+			mPushed = false;
+			triggerEvent("Click", x, y, 0);
+			return true;
+		}
+		mPushed = false;
 		return false;
 	}
 	
