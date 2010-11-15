@@ -16,44 +16,45 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ColoredQuad::ColoredQuad(chstr name,grect rect) :
-		Object("ColoredQuad",name,rect)
+	ColoredQuad::ColoredQuad(chstr name, grect rect) :
+		Object("ColoredQuad", name, rect)
 	{
 	}
 
-	void ColoredQuad::setColor(float a,float r,float g,float b)
+	void ColoredQuad::setColor(float a, float r, float g, float b)
 	{
-		mColor.setColor(a,r,g,b);
+		mColor.setColor(a, r, g, b);
 	}
 
 	void ColoredQuad::OnDraw(float offset_x,float offset_y)
 	{
-		float alpha=getDerivedAlpha()*mColor.a_float();
-		April::rendersys->drawColoredQuad(mRect.x+offset_x, mRect.y+offset_y, mRect.w, mRect.h, mColor.r_float(), mColor.g_float(), mColor.b_float(), alpha);
+		float alpha = getDerivedAlpha() * mColor.a_float();
+		April::rendersys->drawColoredQuad(mRect.x + offset_x, mRect.y + offset_y, mRect.w, mRect.h,
+			mColor.r_float(), mColor.g_float(), mColor.b_float(), alpha);
 	}
 
-	void ColoredQuad::setProperty(chstr name,chstr value)
+	void ColoredQuad::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name,value);
+		Object::setProperty(name, value);
 		if		(name == "r")
 		{
 			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.r=(unsigned char) ((float) value*255);
+			mColor.r = (unsigned char)((float)value * 255);
 		}
 		else if (name == "g")
 		{
 			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.g=(unsigned char) ((float) value*255);
+			mColor.g = (unsigned char)((float)value * 255);
 		}
 		else if (name == "b")
 		{
 			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.b=(unsigned char) ((float) value*255);
+			mColor.b = (unsigned char)((float)value * 255);
 		}
 		else if (name == "a")
 		{
 			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.a=(unsigned char) ((float) value*255);
+			mColor.a = (unsigned char)((float)value * 255);
 		}
 		else if (name == "color") mColor.setColor(value);
 	}

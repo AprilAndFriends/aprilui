@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <april/RenderSystem.h>
 #include <atres/Atres.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -44,7 +45,7 @@ namespace AprilUI
 		void setTextColor(April::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.setColor(value); }
 		
-		virtual void setProperty(chstr name,chstr value);
+		virtual void setProperty(chstr name, chstr value);
 		
 	protected:
 		hstr mText;
@@ -57,7 +58,7 @@ namespace AprilUI
 		Atres::Effect mFontEffect;
 		April::Color mTextColor;
 		
-		void _drawLabel(float offset_x, float offset_y, float width, float height, float alpha);
+		void _drawLabel(grect rect, float alpha);
 		
 	};
 	

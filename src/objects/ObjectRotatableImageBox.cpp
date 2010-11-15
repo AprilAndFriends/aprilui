@@ -16,27 +16,29 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	RotatableImageBox::RotatableImageBox(chstr name,grect rect) :
-		RotationImageBox(name,rect)
+	RotatableImageBox::RotatableImageBox(chstr name, grect rect) :
+		RotationImageBox(name, rect)
 	{
-		mDestAngle=0;
-		mRotationSpeed=90;
+		mDestAngle = 0.0f;
+		mRotationSpeed = 90;
 	}
 
 	void RotatableImageBox::update(float k)
 	{
 		Object::update(k);
-		if (fabs(mDestAngle-mAngle) > 0.01f)
+		if (fabs(mDestAngle - mAngle) > 0.01f)
 		{
-			mAngle+=sgn(mDestAngle-mAngle)*hmin(k*mRotationSpeed,(float)fabs(mDestAngle-mAngle));
-			if (fabs(mDestAngle-mAngle) < 0.01f)
-				mAngle=mDestAngle;
+			mAngle += sgn(mDestAngle - mAngle) * hmin(k * mRotationSpeed, (float)fabs(mDestAngle - mAngle));
+			if (fabs(mDestAngle - mAngle) < 0.01f)
+			{
+				mAngle = mDestAngle;
+			}
 		}
 	}
 
 	bool RotatableImageBox::isRotating()
 	{
-		return (fabs(mAngle-mDestAngle) > 0.01f);
+		return (fabs(mAngle - mDestAngle) > 0.01f);
 	}
 	
 }

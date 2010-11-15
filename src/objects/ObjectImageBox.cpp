@@ -16,37 +16,40 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ImageBox::ImageBox(chstr name,grect rect) :
-		Object("ImageBox",name,rect)
+	ImageBox::ImageBox(chstr name, grect rect) :
+		Object("ImageBox", name, rect)
 	{
-		mImage=0;
+		mImage = NULL;
 	}
 
 	void ImageBox::setImage(Image* image)
 	{
-		mImage=image;
-		if (image)
-			mImageName=image->getName();
-		else
-			mImageName="null";
+		mImage = image;
+		mImageName = (image != NULL ? image->getName() : "null");
 		grect rect = image->getSource();
-		if (mRect.w == -1) mRect.w=rect.w*getDefaultScale();
-		if (mRect.h == -1) mRect.h=rect.h*getDefaultScale();
+		if (mRect.w == -1)
+		{
+			mRect.w = rect.w * getDefaultScale();
+		}
+		if (mRect.h == -1)
+		{
+			mRect.h = rect.h * getDefaultScale();
+		}
 	}
 
 	void ImageBox::setImageByName(chstr image)
 	{
 		setImage(mDataset->getImage(image));
-		mImageName=image;
+		mImageName = image;
 	}
 	
-	void ImageBox::notifyEvent(chstr name,void* params)
+	void ImageBox::notifyEvent(chstr name, void* params)
 	{	
 		if (name == "UpdateImage")
 		{
 			setImageByName(mImageName);
 		}
-		Object::notifyEvent(name,params);
+		Object::notifyEvent(name, params);
 	}
 	
 	void ImageBox::resizeToFitImage()
@@ -54,43 +57,55 @@ namespace AprilUI
 		if (mImage)
 		{
 			grect rect = mImage->getSource();
-			setSize(rect.w*getDefaultScale(), rect.h*getDefaultScale());
+			setSize(rect.w * getDefaultScale(), rect.h * getDefaultScale());
 		}
 	}
 
-	void ImageBox::OnDraw(float offset_x,float offset_y)
+	void ImageBox::OnDraw(float offset_x, float offset_y)
 	{
-		if (!mImage) mImage=mDataset->getImage("null");
-		float alpha=getDerivedAlpha();
-		if (!isDerivedEnabled()) alpha/=2;
+		if (!mImage)
+		{
+			mImage = mDataset->getImage("null");
+		}
+		float alpha = getDerivedAlpha();
+		if (!isDerivedEnabled())
+		{
+			alpha /= 2;
+		}
 		April::Color color;
 		color.a = alpha * 255;
 		mImage->draw(mRect + gvec2(offset_x, offset_y), color);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
-	void ImageBox::setProperty(chstr name,chstr value)
+	void ImageBox::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name,value);
-		if (name == "image") setImageByName(value);
+		Object::setProperty(name, value);
+		if (name == "image")	setImageByName(value);
 	}
 
-	bool ImageBox::OnMouseDown(float x,float y,int button)
+	bool ImageBox::OnMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x,y,button)) return true;
-		if (isPointInside(x,y))
+		if (Object::OnMouseDown(x, y, button))
+		{
+			return true;
+		}
+		if (isPointInside(x, y))
 		{
 			return true;
 		}
 		return false;
 	}
 
-	bool ImageBox::OnMouseUp(float x,float y,int button)
+	bool ImageBox::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x,y,button)) return true;
-		if (isPointInside(x,y))
+		if (Object::OnMouseUp(x, y, button))
 		{
-			triggerEvent("Click",x,y,0);
+			return true;
+		}
+		if (isPointInside(x, y))
+		{
+			triggerEvent("Click", x, y, 0);
 			return true;
 		}
 		return false;
