@@ -34,14 +34,13 @@ namespace AprilUI
 #ifdef _DEBUG
 		if (AprilUI::isDebugMode())
 		{
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f);
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
 		}
 #endif
 		if (mText.size() == 0)
 		{
 			return;
 		}
-		
 		hstr text = mText;
 		switch (mFontEffect)
 		{
@@ -53,7 +52,7 @@ namespace AprilUI
 			break;
 		}
 		April::Color color(mTextColor);
-		color.a *= alpha;
+		color.a = (unsigned char)(color.a * alpha);
 		if (mTextFormatting)
 		{
 			Atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
