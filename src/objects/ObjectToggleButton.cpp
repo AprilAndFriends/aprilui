@@ -25,18 +25,19 @@ namespace AprilUI
 		mPushed = false;
 	}
 
-	void ToggleButton::OnDraw(float offset_x, float offset_y)
+	void ToggleButton::OnDraw(gvec2 offset)
 	{
 		float alpha = getDerivedAlpha();
 		April::Color color;
 		color.a = alpha * 255;
+		grect rect = mRect + offset;
 		if (mPushed && mPushedImage)
 		{
-			mPushedImage->draw(mRect + gvec2(offset_x, offset_y), color);
+			mPushedImage->draw(rect, color);
 		}
 		else
 		{
-			mImage->draw(mRect + gvec2(offset_x, offset_y), color);
+			mImage->draw(rect, color);
 		}
 	}
 

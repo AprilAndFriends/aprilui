@@ -26,10 +26,10 @@ namespace AprilUI
 	void RotationImageBox::setProperty(chstr name, chstr value)
 	{
 		ImageBox::setProperty(name, value);
-		if (name == "angle")	mAngle = value;
+		if (name == "angle") mAngle = value;
 	}
 
-	void RotationImageBox::OnDraw(float offset_x, float offset_y)
+	void RotationImageBox::OnDraw(gvec2 offset)
 	{
 		if (mImage == NULL)
 		{
@@ -42,7 +42,7 @@ namespace AprilUI
 		}
 		April::Color color;
 		color.a = alpha * 255;
-		mImage->draw(mRect + gvec2(offset_x, offset_y), color, mAngle);
+		mImage->draw(mRect + offset, color, mAngle);
 	}
 
 	bool RotationImageBox::angleEquals(float angle)

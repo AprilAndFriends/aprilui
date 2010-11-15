@@ -10,8 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_OBJECT_H
 #define APRILUI_OBJECT_H
 
-#include <gtypes/Vector2.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -87,13 +87,12 @@ namespace AprilUI
 		virtual bool OnMouseDown(float x, float y, int button);
 		virtual bool OnMouseUp(float x, float y, int button);
 		virtual void OnMouseMove(float x, float y);
-		
 		virtual void OnKeyDown(unsigned int keycode);
 		virtual void OnKeyUp(unsigned int keycode);
 		virtual void OnChar(unsigned int charcode);
 		
 		virtual void update(float k);
-		void draw(float offset_x = 0, float offset_y = 0);
+		void draw(gvec2 offset = gvec2());
 
 		virtual void notifyEvent(chstr name, void* params);
 		
@@ -123,7 +122,7 @@ namespace AprilUI
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
 		
-		virtual void OnDraw(float offset_x, float offset_y) { }
+		virtual void OnDraw(gvec2 offset = gvec2()) { }
 		void setParent(Object* value) { mParent = value; }
 
 		void _moveChildToFront(Object* object);

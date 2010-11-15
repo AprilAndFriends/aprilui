@@ -30,8 +30,8 @@ bool update(float time)
 	April::rendersys->clear();
 	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
 	AprilUI::setCursorPosition(April::rendersys->getCursorPos());
-	dataset->getObject("root")->draw();
 	dataset->update(time);
+	dataset->getObject("root")->draw();
 	return true;
 }
 

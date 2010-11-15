@@ -24,15 +24,15 @@ namespace AprilUI
 		mText = "TextImageButton: " + name;
 	}
 
-	void TextImageButton::OnDraw(float offset_x, float offset_y)
+	void TextImageButton::OnDraw(gvec2 offset)
 	{
-		ImageButton::OnDraw(offset_x, offset_y);
+		ImageButton::OnDraw(offset);
 		float alpha = getDerivedAlpha();
 		if (!isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
 		{
 			alpha /= 2;
 		}
-		LabelBase::_drawLabel(mRect + gvec2(offset_x, offset_y), alpha);
+		LabelBase::_drawLabel(mRect + offset, alpha);
 	}
 
 	void TextImageButton::setTextKey(chstr key)

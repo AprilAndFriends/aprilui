@@ -46,7 +46,7 @@ namespace AprilUI
 		April::Color mPushedTextColor;
 		April::Color mDisabledTextColor;
 		
-		void OnDraw(float offset_x, float offset_y);
+		void OnDraw(gvec2 offset = gvec2());
 		
 	};
 }

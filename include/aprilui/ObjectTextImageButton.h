@@ -28,7 +28,7 @@ namespace AprilUI
 		void setProperty(chstr name, chstr value);
 		
 	protected:
-		void OnDraw(float offset_x, float offset_y);
+		void OnDraw(gvec2 offset = gvec2());
 
 	};
 	

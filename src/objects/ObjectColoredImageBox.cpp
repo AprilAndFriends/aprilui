@@ -24,7 +24,7 @@ namespace AprilUI
 		_setTypeName("ColoredImageBox");
 	}
 
-	void ColoredImageBox::OnDraw(float offset_x, float offset_y)
+	void ColoredImageBox::OnDraw(gvec2 offset)
 	{
 		if (mImage == NULL)
 		{
@@ -37,7 +37,7 @@ namespace AprilUI
 		}
 		April::Color color = mColor;
 		color.a = alpha * 255;
-		mImage->draw(mRect + gvec2(offset_x, offset_y), color);
+		mImage->draw(mRect + offset, color);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 

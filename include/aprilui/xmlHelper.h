@@ -37,8 +37,6 @@ public:
 	float pfloat(const char* property, float defaultValue);
 	hstr pstr(const char* property);
 	hstr pstr(const char* property, chstr defaultValue);
-	unsigned int phex(const char* property);
-	unsigned int phex(const char* property, unsigned int defaultValue);
 	
 	bool pexists(const char* property);
 	

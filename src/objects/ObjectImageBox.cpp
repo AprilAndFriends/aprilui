@@ -61,7 +61,7 @@ namespace AprilUI
 		}
 	}
 
-	void ImageBox::OnDraw(float offset_x, float offset_y)
+	void ImageBox::OnDraw(gvec2 offset)
 	{
 		if (!mImage)
 		{
@@ -74,7 +74,7 @@ namespace AprilUI
 		}
 		April::Color color;
 		color.a = alpha * 255;
-		mImage->draw(mRect + gvec2(offset_x, offset_y), color);
+		mImage->draw(mRect + offset, color);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 

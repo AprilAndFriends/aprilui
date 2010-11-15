@@ -27,7 +27,7 @@ namespace AprilUI
 		void (*getCallback())() { return mCallback; }
 		void setCallback(void (*value)()) { mCallback = value; }
 		
-		void OnDraw(float offset_x = 0.0f, float offset_y = 0.0f);
+		void OnDraw(gvec2 offset = gvec2());
 		
 	protected:
 		void (*mCallback)();

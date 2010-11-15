@@ -25,13 +25,13 @@ namespace AprilUI
 		Object::setProperty(name, value);
 	}
 	
-	void CallbackObject::OnDraw(float offset_x, float offset_y)
+	void CallbackObject::OnDraw(gvec2 offset)
 	{
-		if (mCallback)
+		if (mCallback != NULL)
 		{
 			(*mCallback)();
 		}
-		Object::OnDraw(offset_x, offset_y);
+		Object::OnDraw(offset);
 	}
 	
 }

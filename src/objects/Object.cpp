@@ -113,14 +113,15 @@ namespace AprilUI
 		return alpha;
 	}
 
-	void Object::draw(float offset_x, float offset_y)
+	void Object::draw(gvec2 offset)
 	{
 		if (isVisible())
 		{
-			OnDraw(offset_x, offset_y);
+			OnDraw(offset);
+			gvec2 rect(offset.x + mRect.x, offset.y + mRect.y);
 			foreach (Object*, it, mChildren)
 			{
-				(*it)->draw(offset_x + mRect.x, offset_y + mRect.y);
+				(*it)->draw(rect);
 			}
 		}
 	}
@@ -140,7 +141,7 @@ namespace AprilUI
 		{
 			pos -= p->getPosition();
 		}
-		return isPointInside(pos.x, pos.y);
+		return isPointInside(pos);
 	}
 
 	bool Object::isPointInside(gvec2 position)
