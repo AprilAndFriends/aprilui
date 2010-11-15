@@ -17,12 +17,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace AprilUI
 {
 	TextButton::TextButton(chstr name, grect rect) :
-		Label(name,rect)
+		Label(name, rect)
 	{
-		mText = "TextButton: "+name;
+		mText = "TextButton: " + name;
 		mTypeName = "TextButton";
 		mPushed = false;
-		mBackgroundEnabled = true;
+		mBackground = true;
 		mPushedTextColor.setColor("FF333333");
 		mHoverTextColor.setColor("FF7F7F7F");
 		mDisabledTextColor.setColor("FF7F7F7F");
@@ -35,18 +35,19 @@ namespace AprilUI
 
 	void TextButton::OnDraw(float offset_x, float offset_y)
 	{
+		bool cursorInside = isCursorInside();
 #ifndef _DEBUG
-		if (mBackgroundEnabled)
+		if (mBackground)
 #else
-		if (!AprilUI::isDebugMode() && mBackgroundEnabled)
+		if (!AprilUI::isDebugMode() && mBackground)
 #endif
-			April::rendersys->drawColoredQuad(mRect.x + offset_x, mRect.y + offset_y, mRect.w, mRect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
+			April::rendersys->drawColoredQuad(mRect.x + offset_x, mRect.y + offset_y, mRect.w, mRect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
 		April::Color color = mTextColor;
-		if (isDerivedEnabled())
+		if (!isDerivedEnabled())
 		{
 			mTextColor = mDisabledTextColor;
 		}
-		else if (isCursorInside())
+		else if (cursorInside)
 		{
 			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
 		}
@@ -57,7 +58,7 @@ namespace AprilUI
 	void TextButton::setProperty(chstr name, chstr value)
 	{
 		Label::setProperty(name, value);
-		if		(name == "background")		mBackgroundEnabled = (bool)value;
+		if		(name == "background")		mBackground = (bool)value;
 		else if (name == "hover_color")		setHoverTextColor(value);
 		else if (name == "pushed_color")	setPushedTextColor(value);
 		else if (name == "disabled_color")	setDisabledTextColor(value);

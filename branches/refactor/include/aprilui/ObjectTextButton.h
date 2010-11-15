@@ -41,7 +41,7 @@ namespace AprilUI
 		
 	protected:
 		bool mPushed;
-		bool mBackgroundEnabled;
+		bool mBackground;
 		April::Color mHoverTextColor;
 		April::Color mPushedTextColor;
 		April::Color mDisabledTextColor;

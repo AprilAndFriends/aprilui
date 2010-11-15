@@ -12,6 +12,7 @@
 		<Object type="ColoredQuad" name="coloredQuad" color="7FFF7F" x="32" y="224" w="128" h="64"/>
 		<Object type="EditBox" name="editBox" font="arial" filter="ABCDEMNLSTXYZabcdemnlstxyz +-=()" max_length="10" x="32" y="320" w="256" h="32"/>
 		<Object type="Label" name="label" text="I am a label." x="32" y="384" w="256" h="32"/>
+		<Object type="TextButton" name="textButton" text="I am a button." x="32" y="448" w="256" h="32"/>
 	</Object>
 	
 </DataDefinition>
