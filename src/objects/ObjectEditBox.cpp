@@ -23,7 +23,7 @@ namespace AprilUI
 	EditBox::EditBox(chstr name, grect rect) :
 		Label(name, rect)
 	{
-		mText = "EditBox: " + name;
+		mText = "";
 		mTypeName = "EditBox";
 		mHorzFormatting = Atres::LEFT;
 		mTextFormatting = false;
@@ -133,7 +133,7 @@ namespace AprilUI
 	
 	void EditBox::setText(chstr text)
 	{
-		Label::setText(text.size() > mMaxLength ? text(0, mMaxLength) : text);
+		Label::setText(text);
 		harray<char> chars = harray<char>(mText.c_str(), mText.size());
 		if (mFilter != "")
 		{
@@ -144,6 +144,10 @@ namespace AprilUI
 					mText.replace((*it), "");
 				}
 			}
+		}
+		if (mMaxLength > 0 && mText.size() > mMaxLength)
+		{
+			mText = mText(0, mMaxLength);
 		}
 		setCursorIndex(mCursorIndex);
 	}

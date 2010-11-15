@@ -8,10 +8,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/RenderSystem.h>
-#include <aprilui/AprilUI.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
+#include "AprilUI.h"
 #include "ObjectColoredQuad.h"
 
 namespace AprilUI

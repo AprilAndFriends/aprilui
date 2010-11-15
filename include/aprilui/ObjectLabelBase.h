@@ -13,6 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <april/RenderSystem.h>
 #include <atres/Atres.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -31,10 +32,8 @@ namespace AprilUI
 		hstr getFont() { return mFontName; }
 		void setFont(chstr value) { mFontName = value; }
 		
-		float getDrawOffsetX() { return mDrawOffsetX; }
-		void setDrawOffsetX(float value) { mDrawOffsetX = value; }
-		float getDrawOffsetY() { return mDrawOffsetY; }
-		void setDrawOffsetY(float value) { mDrawOffsetY = value; }
+		gvec2 getDrawOffset() { return mDrawOffset; }
+		void setDrawOffset(gvec2 value) { mDrawOffset = value; }
 		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
 		void setHorzFormatting(Atres::Alignment value) { mHorzFormatting = value; }
 		Atres::Alignment getVertFormatting() { return mVertFormatting; }
@@ -51,8 +50,7 @@ namespace AprilUI
 		hstr mText;
 		hstr mFontName;
 		bool mTextFormatting;
-		float mDrawOffsetY;
-		float mDrawOffsetX;
+		gvec2 mDrawOffset;
 		Atres::Alignment mHorzFormatting;
 		Atres::Alignment mVertFormatting;
 		Atres::Effect mFontEffect;
