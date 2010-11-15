@@ -63,7 +63,7 @@ namespace AprilUI
 
 	void ImageBox::OnDraw(gvec2 offset)
 	{
-		if (!mImage)
+		if (mImage == NULL)
 		{
 			mImage = mDataset->getImage("null");
 		}

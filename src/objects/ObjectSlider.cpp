@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "Dataset.h"
 #include "Image.h"
 #include "ObjectSlider.h"
 
@@ -23,6 +24,11 @@ namespace AprilUI
 		mValue = 0.0f;
 		mPushed = false;
 	}
+	
+	void Slider::setValue(float value)
+	{
+		mValue = hclamp(value, 0.0f, 1.0f);
+	}
 
 	bool Slider::OnMouseDown(float x, float y, int button)
 	{
@@ -33,7 +39,7 @@ namespace AprilUI
 		if (isPointInside(x, y))
 		{
 			mPushed = true;
-			mValue = (x - mRect.x) / mRect.w;
+			setValue((x - mRect.x) / (mRect.w - 4));
 			triggerEvent("Set", x, y, 0);
 			return true;
 		}
@@ -46,7 +52,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (mPushed && isPointInside(x,y))
+		if (mPushed && isPointInside(x, y))
 		{
 			mPushed = false;
 			return true;
@@ -60,24 +66,29 @@ namespace AprilUI
 		Object::OnMouseMove(x, y);
 		if (mPushed)
 		{
-			x = hclamp(x, mRect.x, mRect.x + mRect.h);
-			mValue = (x - mRect.x) / mRect.w;
+			setValue((x - mRect.x) / (mRect.w - 4));
 			triggerEvent("Set", x, y, 0);
 		}
 	}
 
 	void Slider::OnDraw(gvec2 offset)
 	{
-		gvec2 pos(mRect.x + offset.x, mRect.y + offset.y);
+		grect rect = mRect + offset;
+		if (rect.w < 5 || rect.h < 5)
+		{
+			return;
+		}
+		if (mImage == NULL)
+		{
+			mImage = mDataset->getImage("null");
+		}
 		float alpha = getDerivedAlpha();
-		April::rendersys->drawColoredQuad(pos.x + mRect.h / 2, pos.y + mRect.h * 0.375f, mRect.w - mRect.h, mRect.h / 4, 0, 0, 0, alpha);
-		April::rendersys->drawColoredQuad(pos.x + mRect.h / 2 + 1, pos.y + 1 + mRect.h * 0.375f, mRect.w - 2 - mRect.h, mRect.h / 4 - 2, 0.89f, 0.75f, 0.49f, alpha);
-		April::rendersys->drawColoredQuad(pos.x + mRect.h / 2 + 2, pos.y + 2 + mRect.h * 0.375f, mValue * (mRect.w - mRect.h - 4), mRect.h / 4 - 4, 0, 0, 0, alpha);
-		grect rect = mRect / 2;
-		rect.x = pos.x + mRect.h / 4 + mValue * (mRect.w - mRect.h);
-		rect.y = pos.y + mRect.h / 4;
+		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 1, 1, 1, alpha);
+		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
+		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0.3f, 0.3f, 0.3f, alpha);
 		April::Color color;
 		color.a = alpha * 255;
+		rect = grect(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
 		mImage->draw(rect, color);
 	}
 
