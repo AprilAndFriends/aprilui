@@ -46,18 +46,45 @@ namespace AprilUI
 		g_logFunction = fnptr;
 	}
 	
+	void init()
+	{
+	}
+
+	void destroy()
+	{
+		registerLock = true;
+		for (hmap<int, April::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
+		{
+			delete it->second;
+		}
+		gFontTextures.clear();
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			delete it->second;
+		}
+		gDatasets.clear();
+	}
+	
+	// deprecated
 	void setCursorPos(float x, float y)
 	{
 		cursorPosition.set(x, y);
 	}
 	
+	// deprecated
 	gvec2 getCursorPos()
 	{
 		return cursorPosition;
 	}
 
-	void init()
+	void setCursorPosition(gvec2 position)
 	{
+		cursorPosition = position;
+	}
+	
+	gvec2 getCursorPosition()
+	{
+		return cursorPosition;
 	}
 
 	Dataset* getDatasetByName(chstr name)
@@ -136,19 +163,53 @@ namespace AprilUI
 	{
 		return defaultScale;
 	}
-
-	void destroy()
+	
+	void OnMouseDown(float x, float y, int button)
 	{
-		registerLock = true;
-		for (hmap<int, April::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
-		{
-			delete it->second;
-		}
-		gFontTextures.clear();
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			delete it->second;
+			it->second->OnMouseDown(x, y, button);
 		}
-		gDatasets.clear();
 	}
+	
+	void OnMouseUp(float x, float y, int button)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->OnMouseUp(x, y, button);
+		}
+	}
+	
+	void OnMouseMove(float x, float y)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->OnMouseMove(x, y);
+		}
+	}
+	
+	void OnKeyDown(unsigned int keycode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->OnKeyDown(keycode);
+		}
+	}
+	
+	void OnKeyUp(unsigned int keycode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->OnKeyUp(keycode);
+		}
+	}
+	
+	void OnChar(unsigned int charcode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->OnChar(charcode);
+		}
+	}
+	
 }

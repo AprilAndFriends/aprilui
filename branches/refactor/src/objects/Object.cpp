@@ -135,7 +135,7 @@ namespace AprilUI
 
 	bool Object::isCursorInside()
 	{
-		gvec2 pos = getCursorPos();
+		gvec2 pos = getCursorPosition();
 		for (Object* p = mParent; p != NULL; p = p->mParent)
 		{
 			pos -= p->getPosition();

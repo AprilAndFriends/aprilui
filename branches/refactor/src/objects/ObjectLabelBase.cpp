@@ -19,18 +19,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace AprilUI
 {
 	LabelBase::LabelBase(chstr name) :
-		   mTextColor(255,255,255,255)
+		   mTextColor(255, 255, 255, 255)
 	{
-		mHorzFormatting=Atres::CENTER_WRAPPED;
-		mVertFormatting=Atres::CENTER;
-		mFontEffect=Atres::NONE;
-		mDrawOffsetX=0.0f;
-		mDrawOffsetY=0.0f;
-		mTextFormatting=true;
-		mText="LabelBase: "+name;
+		mHorzFormatting = Atres::CENTER_WRAPPED;
+		mVertFormatting = Atres::CENTER;
+		mFontEffect = Atres::NONE;
+		mDrawOffset = gvec2();
+		mTextFormatting = true;
+		mText = "LabelBase: " + name;
 	}
 	
-	void LabelBase::_drawLabel(grect rect,float alpha)
+	void LabelBase::_drawLabel(grect rect, float alpha)
 	{
 #ifdef _DEBUG
 		if (AprilUI::isDebugMode())
@@ -43,25 +42,25 @@ namespace AprilUI
 			return;
 		}
 		
-		hstr text=mText;
+		hstr text = mText;
 		switch (mFontEffect)
 		{
 		case Atres::BORDER:
-			text="[b]"+text;
+			text = "[b]" + text;
 			break;
 		case Atres::SHADOW:
-			text="[s]"+text;
+			text = "[s]" + text;
 			break;
 		}
 		April::Color color(mTextColor);
 		color.a *= alpha;
 		if (mTextFormatting)
 		{
-			Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color,gvec2(-mDrawOffsetX,-mDrawOffsetY));
+			Atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
 		}
 		else
 		{
-			Atres::drawTextUnformatted(mFontName,rect,text,mHorzFormatting,mVertFormatting,color,gvec2(-mDrawOffsetX,-mDrawOffsetY));
+			Atres::drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
 		}
 	}
 
@@ -95,8 +94,8 @@ namespace AprilUI
 			else if (value == "shadow")    setFontEffect(Atres::SHADOW);
 			else if (value == "border")    setFontEffect(Atres::BORDER);
 		}
-		else if (name == "offset_x") setDrawOffsetX(value);
-		else if (name == "offset_y") setDrawOffsetY(value);
+		else if (name == "offset_x") mDrawOffset.x = (float)value;
+		else if (name == "offset_y") mDrawOffset.y = (float)value;
 	}
 
 }

@@ -1,15 +1,17 @@
 <?xml version="1.0" ?>
 <DataDefinition>
-	<Texture filename="texture" dynamic_load="1">
+
+	<Texture filename="texture">
 		<Image name="test" x="0" y="0" w="512" h="512"/>
     </Texture>
 	
-	<CompositeImage name="ctest" w="800" h="600">
-		<ImageRef name="texture/test" x="50" y="50" w="100" h="150"/>
-		<ImageRef name="texture/test" x="50" y="250" w="500" h="50"/>
-	</CompositeImage>
-
 	<Object type="DummyObject" name="root" x="0" y="0" w="800" h="600">
-		<Object type="ImageBox" image="ctest" x="0" y="0" w="800" h="600"/>
+		<Object type="ColoredQuad" name="background" color="AFAFAF" x="0" y="0" w="800" h="600"/>
+		<Object type="ImageBox" name="imageBox" image="texture/test" x="32" y="32" w="128" h="64"/>
+		<Object type="ColoredImageBox" name="coloredImageBox" image="texture/test" color="7F7FFF" x="32" y="128" w="128" h="64"/>
+		<Object type="ColoredQuad" name="coloredQuad" color="7FFF7F" x="32" y="224" w="128" h="64"/>
+		<Object type="EditBox" name="editBox" font="arial" filter="ABCDEMNLSTXYZabcdemnlstxyz +-=()" max_length="10" x="32" y="320" w="256" h="32"/>
+		<Object type="Label" name="label" text="I am a label." x="32" y="384" w="256" h="32"/>
 	</Object>
+	
 </DataDefinition>

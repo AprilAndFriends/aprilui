@@ -583,6 +583,83 @@ namespace AprilUI
 		}
 	}
 	
+	void Dataset::draw()
+	{
+		foreach_m (AprilUI::Object*, it, mObjects)
+		{
+			if (it->second->getParent() == NULL)
+			{
+				it->second->draw();
+			}
+		}
+	}
+	
+	void Dataset::OnMouseDown(float x, float y, int button)
+	{
+		foreach_m (AprilUI::Object*, it, mObjects)
+		{
+			if (it->second->getParent() == NULL)
+			{
+				it->second->OnMouseDown(x, y, button);
+			}
+		}
+	}
+	
+	void Dataset::OnMouseUp(float x, float y, int button)
+	{
+		foreach_m (AprilUI::Object*, it, mObjects)
+		{
+			if (it->second->getParent() == NULL)
+			{
+				it->second->OnMouseUp(x, y, button);
+			}
+		}
+	}
+	
+	void Dataset::OnMouseMove(float x, float y)
+	{
+		foreach_m (AprilUI::Object*, it, mObjects)
+		{
+			if (it->second->getParent() == NULL)
+			{
+				it->second->OnMouseMove(x, y);
+			}
+		}
+	}
+	
+	void Dataset::OnKeyDown(unsigned int keycode)
+	{
+		foreach_m (AprilUI::Object*, it, mObjects)
+		{
+			if (it->second->getParent() == NULL)
+			{
+				it->second->OnKeyDown(keycode);
+			}
+		}
+	}
+	
+	void Dataset::OnKeyUp(unsigned int keycode)
+	{
+		foreach_m (AprilUI::Object*, it, mObjects)
+		{
+			if (it->second->getParent() == NULL)
+			{
+				it->second->OnKeyUp(keycode);
+			}
+		}
+	}
+	
+	void Dataset::OnChar(unsigned int charcode)
+	{
+		foreach_m (AprilUI::Object*, it, mObjects)
+		{
+			if (it->second->getParent() == NULL)
+			{
+				it->second->OnChar(charcode);
+			}
+		}
+	}
+	
 	void Dataset::updateTextures(float k)
 	{
 		foreach_m (April::Texture*, it, mTextures)

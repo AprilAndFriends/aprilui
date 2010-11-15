@@ -25,10 +25,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 AprilUI::Dataset* dataset;
 
-bool render(float time)
+bool update(float time)
 {
 	April::rendersys->clear();
 	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	AprilUI::setCursorPosition(April::rendersys->getCursorPos());
 	dataset->getObject("root")->draw();
 	dataset->update(time);
 	return true;
@@ -83,7 +84,9 @@ int main()
 	try
 	{
 		April::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
-		April::rendersys->getWindow()->setUpdateCallback(&render);
+		April::rendersys->getWindow()->setUpdateCallback(&update);
+		April::rendersys->getWindow()->setMouseCallbacks(&AprilUI::OnMouseDown, &AprilUI::OnMouseUp, &AprilUI::OnMouseMove);
+		April::rendersys->getWindow()->setKeyboardCallbacks(&AprilUI::OnKeyDown, &AprilUI::OnKeyUp, &AprilUI::OnChar);
 		AprilUI::init();
 		Atres::init();
 		Atres::loadFont("../media/arial.font");

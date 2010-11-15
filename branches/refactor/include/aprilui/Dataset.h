@@ -63,12 +63,20 @@ namespace AprilUI
 
 		void updateTextures(float k);
 		virtual void update(float k);
+		void draw();
 		
 		void _destroyTexture(chstr tex);
 		void _destroyImage(chstr img);
 		void _destroyTexture(April::Texture* tex);
 		void _destroyImage(Image* img);
 
+		void OnMouseDown(float x, float y, int button);
+		void OnMouseUp(float x, float y, int button);
+		void OnMouseMove(float x, float y);
+		void OnKeyDown(unsigned int keycode);
+		void OnKeyUp(unsigned int keycode);
+		void OnChar(unsigned int charcode);
+		
 		virtual Object* getObject(chstr name);
 		virtual April::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);

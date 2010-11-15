@@ -33,7 +33,7 @@ namespace AprilUI
 		setText(mDataset->getText(key));
 	}
 
-	void TextButton::OnDraw(float offset_x,float offset_y)
+	void TextButton::OnDraw(float offset_x, float offset_y)
 	{
 #ifndef _DEBUG
 		if (mBackgroundEnabled)

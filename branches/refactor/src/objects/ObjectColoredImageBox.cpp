@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
@@ -25,7 +26,7 @@ namespace AprilUI
 
 	void ColoredImageBox::OnDraw(float offset_x, float offset_y)
 	{
-		if (mImage = NULL)
+		if (mImage == NULL)
 		{
 			mImage = mDataset->getImage("null");
 		}
