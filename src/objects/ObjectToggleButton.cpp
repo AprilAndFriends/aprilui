@@ -54,7 +54,7 @@ namespace AprilUI
 			if (event != NULL)
 			{
 				EventArgs args(this, x, y);
-				e->execute(&args);
+				event->execute(&args);
 			}
 			return true;
 		}
