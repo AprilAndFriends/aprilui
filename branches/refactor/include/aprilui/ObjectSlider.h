@@ -24,7 +24,7 @@ namespace AprilUI
 		Slider(chstr name, grect rect);
 		
 		float getValue() { return mValue; }
-		void setValue(float value) { mValue = value; }
+		void setValue(float value);
 		
 		void setProperty(chstr name, chstr value);
 		bool OnMouseDown(float x, float y, int button);

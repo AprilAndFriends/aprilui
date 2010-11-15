@@ -25,11 +25,9 @@ namespace AprilUI
 
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
-		void untoggle() { mPushed = false; }
 		void toggle() { mPushed = !mPushed; }
 		void turnOn() { mPushed = true; }
 		void turnOff() { mPushed = false; }
-		bool isToggled() { return mPushed; }
 		
 	protected:
 		void OnDraw(gvec2 offset = gvec2());

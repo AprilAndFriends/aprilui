@@ -31,7 +31,7 @@ namespace AprilUI
 		April::Color color;
 		color.a = alpha * 255;
 		grect rect = mRect + offset;
-		if (mPushed && mPushedImage)
+		if (mPushed && mPushedImage != NULL)
 		{
 			mPushedImage->draw(rect, color);
 		}
@@ -50,8 +50,7 @@ namespace AprilUI
 		if (isPointInside(x, y))
 		{
 			mPushed = !mPushed;
-			Event* event;
-			event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
+			Event* event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
 			if (event != NULL)
 			{
 				EventArgs args(this, x, y);
