@@ -26,19 +26,19 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	void _registerDataset(chstr name, Dataset* d);
-	void _unregisterDataset(chstr name, Dataset* d);
+	void _registerDataset(chstr name, Dataset* dataset);
+	void _unregisterDataset(chstr name, Dataset* dataset);
 	
-	NullImage g_null_img;
+	NullImage nullImage;
 	
-	Dataset::Dataset(chstr filename, chstr name_override)
+	Dataset::Dataset(chstr filename, chstr name)
 	{
 		mFocusedObject = NULL;
 		mFilename = normalize_path(filename);
 		int slash = mFilename.rfind('/');
 		int dot = mFilename.rfind('.');
 		mFilenamePrefix = mFilename(0, slash);
-		mName = (name_override == "" ? mFilename(slash + 1, dot - slash - 1) : name_override);
+		mName = (name == "" ? mFilename(slash + 1, dot - slash - 1) : name);
 		mLoaded = false;
 		_registerDataset(mName, this);
 	}
@@ -127,7 +127,7 @@ namespace AprilUI
 		texture->setTextureWrapping(node->pbool("wrap", true));
 		mTextures[textureName] = texture;
 		// extract image definitions
-		if (node->iter_children() == 0) // if there are no images defined, create one that fills the whole area
+		if (node->iter_children() == NULL) // if there are no images defined, create one that fills the whole area
 		{
 			if (mImages.has_key(textureName))
 			{
@@ -138,7 +138,7 @@ namespace AprilUI
 		else
 		{
 			Image* image;
-			for (node = node->iter_children(); node != 0; node=node->next())
+			for (node = node->iter_children(); node != NULL; node = node->next())
 			{
 				if (*node == "Image")
 				{
@@ -198,7 +198,6 @@ namespace AprilUI
 			throw FileNotFoundException(filepath);
 		}
 		mTextures[textureName] = texture;
-	
 	}
 	
 	void Dataset::parseCompositeImage(xml_node* node)
@@ -336,13 +335,13 @@ namespace AprilUI
 	{
 		// parse datadef xml file, error checking first
 		xml_doc doc(getPWD() + "/" + normalize_path(filename));
-		xml_node* cur = doc.root("DataDefinition");
+		xml_node* current = doc.root("DataDefinition");
 		
-		parseExternalXMLNode(cur);
+		parseExternalXMLNode(current);
 		
 		hmap<April::Texture*, hstr> dynamicLinks;
 		hstr links;
-		for (xml_node* p = cur->iter_children(); p != NULL; p = p->next())
+		for (xml_node* p = current->iter_children(); p != NULL; p = p->next())
 		{
 			if      (*p == "Texture")
 			{
@@ -352,7 +351,6 @@ namespace AprilUI
 					links = p->pstr("dynamic_link");
 					dynamicLinks[texture] = links;
 				}
-				
 			}
 			else if (*p == "RAMTexture") parseRAMTexture(p);
 			else if (*p == "CompositeImage") parseCompositeImage(p);
@@ -529,9 +527,8 @@ namespace AprilUI
 		Image* image;
 		if (name == "null")
 		{
-			return &g_null_img;
+			return &nullImage;
 		}
-	
 		
 		if (!mImages.has_key(name) && name.starts_with("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
 		{

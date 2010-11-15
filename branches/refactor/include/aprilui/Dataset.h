@@ -37,7 +37,7 @@ namespace AprilUI
 	public:
 		Object* parseObject(xml_node* node, Object* parent = NULL);
 		
-		Dataset(chstr filename, chstr name_override = "");
+		Dataset(chstr filename, chstr name = "");
 		virtual ~Dataset();
 
 		void load(chstr path = "");

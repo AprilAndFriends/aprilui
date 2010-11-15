@@ -13,12 +13,12 @@ namespace AprilUI
 {
 	CallbackEvent::CallbackEvent(void (*callback)(EventArgs*))
 	{
-		mCallback=callback;
+		mCallback = callback;
 	}
 
 	void CallbackEvent::execute(void* params)
 	{
-		mCallback((EventArgs*) params);
+		mCallback((EventArgs*)params);
 	}
 
 }

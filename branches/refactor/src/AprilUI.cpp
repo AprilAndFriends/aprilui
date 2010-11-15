@@ -20,17 +20,16 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	bool register_lock=0;
-	hmap<int,April::Texture*> g_font_textures;
-	hmap<hstr,Dataset*> g_datasets;
-	float default_scale=1;
-	gvec2 cursor_pos;
+	bool registerLock = false;
+	hmap<int, April::Texture*> gFontTextures;
+	hmap<hstr, Dataset*> gDatasets;
+	float defaultScale = 1.0f;
+	gvec2 cursorPosition;
 #ifdef _DEBUG
-	bool g_debug_mode = false;
+	bool debugMode = false;
 #endif
-	hstr defaultTextsPath="texts";
-	
-	void (*g_logFunction)(chstr)=aprilui_writelog;
+	hstr defaultTextsPath = "texts";
+	void (*g_logFunction)(chstr) = aprilui_writelog;
 	
 	void logMessage(chstr message, chstr prefix)
 	{
@@ -44,17 +43,17 @@ namespace AprilUI
 	
 	void setLogFunction(void (*fnptr)(chstr))
 	{
-		g_logFunction=fnptr;
+		g_logFunction = fnptr;
 	}
 	
-	void setCursorPos(float x,float y)
+	void setCursorPos(float x, float y)
 	{
-		cursor_pos.set(x,y);
+		cursorPosition.set(x, y);
 	}
 	
 	gvec2 getCursorPos()
 	{
-		return cursor_pos;
+		return cursorPosition;
 	}
 
 	void init()
@@ -63,46 +62,58 @@ namespace AprilUI
 
 	Dataset* getDatasetByName(chstr name)
 	{
-		if (!g_datasets.has_key(name))
-			throw GenericException("Dataset '"+name+"' doesn't exist!");
-		return g_datasets[name];
+		if (!gDatasets.has_key(name))
+		{
+			throw GenericException("Dataset '" + name + "' doesn't exist!");
+		}
+		return gDatasets[name];
 	}
 
-	void _registerDataset(chstr name,Dataset* d)
+	void _registerDataset(chstr name, Dataset* dataset)
 	{
-		if (register_lock) return;
-		if (g_datasets.has_key(name))
-			throw GenericException("Unable to register dataset '"+name+"', another dataset with the same name exists!");	
-		g_datasets[name]=d;
+		if (!registerLock)
+		{
+			if (gDatasets.has_key(name))
+			{
+				throw GenericException("Unable to register dataset '" + name + "', another dataset with the same name exists!");
+			}
+			gDatasets[name] = dataset;
+		}
 	}
 	
-	void _unregisterDataset(chstr name,Dataset* d)
+	void _unregisterDataset(chstr name, Dataset* dataset)
 	{
-		if (register_lock) return;
-		g_datasets.remove_key(name);
+		if (!registerLock)
+		{
+			gDatasets.remove_key(name);
+		}
 	}
 	
 	void updateTextures(float time_increase)
 	{
-		foreach_m (Dataset*, it, g_datasets)
+		foreach_m (Dataset*, it, gDatasets)
+		{
 			it->second->updateTextures(time_increase);
+		}
 	}
 	
 	void update(float time_increase)
 	{
-		foreach_m (Dataset*, it, g_datasets)
+		foreach_m (Dataset*, it, gDatasets)
+		{
 			it->second->update(time_increase);
+		}
 	}
 
 #ifdef _DEBUG
 	void setDebugMode(bool value)
 	{
-		g_debug_mode = value;
+		debugMode = value;
 	}
 	
 	bool isDebugMode()
 	{
-		return g_debug_mode;
+		return debugMode;
 	}
 #endif
 
@@ -113,29 +124,31 @@ namespace AprilUI
 	
 	void setDefaultTextsPath(chstr path)
 	{
-		defaultTextsPath=path;
+		defaultTextsPath = path;
 	}
 	
 	void setDefaultScale(float value)
 	{
-		default_scale=value;
+		defaultScale = value;
 	}
 	
 	float getDefaultScale()
 	{
-		return default_scale;
+		return defaultScale;
 	}
 
 	void destroy()
 	{
-		register_lock=1;
-
-		for (hmap<int,April::Texture*>::iterator it=g_font_textures.begin();it!=g_font_textures.end();it++)
+		registerLock = true;
+		for (hmap<int, April::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
+		{
 			delete it->second;
-		g_font_textures.clear();
-		
-		foreach_m (Dataset*, it, g_datasets)
+		}
+		gFontTextures.clear();
+		foreach_m (Dataset*, it, gDatasets)
+		{
 			delete it->second;
-		g_datasets.clear();
+		}
+		gDatasets.clear();
 	}
 }
