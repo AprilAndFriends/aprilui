@@ -81,6 +81,7 @@
       <File Name="include/aprilui/AnimatorScaler.h"/>
       <File Name="include/aprilui/Animator.h"/>
       <File Name="include/aprilui/AnimatorRotationOscillator.h"/>
+      <File Name="include/aprilui/AnimatorScaleOscillator.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">

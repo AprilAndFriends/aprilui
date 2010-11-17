@@ -21,14 +21,20 @@ namespace AprilUI
 	{
 		class AprilUIExport ScaleOscillator : public Animator
 		{
-			float mBaseline,mAmplitude,mSpeed,mTimer;
-			gvec2 mInitialSize;
 		public:
 			ScaleOscillator(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
+			void notifyEvent(chstr eventName, void* params);
+			void setProperty(chstr name, chstr value);
 			void update(float k);
+			
+		protected:
+			float mBaseline;
+			float mAmplitude;
+			float mSpeed;
+			float mTimer;
+			gvec2 mInitialSize;
+			
 		};
 	}
 }
