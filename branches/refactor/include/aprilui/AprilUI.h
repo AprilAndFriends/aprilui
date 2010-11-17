@@ -40,10 +40,11 @@ namespace AprilUI
 	AprilUIFnExport hstr getDefaultTextsPath();
 	AprilUIFnExport void setDefaultTextsPath(chstr path);
 	
-	AprilUIFnExport void setCursorPos(float x, float y) DEPRECATED_ATTRIBUTE;
 	AprilUIFnExport gvec2 getCursorPos() DEPRECATED_ATTRIBUTE;
-	AprilUIFnExport void setCursorPosition(gvec2 position);
+	AprilUIFnExport void setCursorPos(float x, float y) DEPRECATED_ATTRIBUTE;
 	AprilUIFnExport gvec2 getCursorPosition();
+	AprilUIFnExport void setCursorPosition(gvec2 position);
+	AprilUIFnExport void setCursorPosition(float x, float y);
 	
 	AprilUIFnExport void OnMouseDown(float x, float y, int button);
 	AprilUIFnExport void OnMouseUp(float x, float y, int button);

@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 
 #include "Image.h"
 
@@ -25,7 +26,7 @@ namespace AprilUI
 		ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical = false, April::Color color = April::Color());
 		
 		void draw(grect rect, April::Color color);
-		void draw(grect rect, April::Color color, float angle);
+		void draw(grect rect, April::Color color, float angle, gvec2 center);
 
 		float getAlpha();
 		void setAlpha(float alpha);

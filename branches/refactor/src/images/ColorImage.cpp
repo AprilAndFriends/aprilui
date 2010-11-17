@@ -10,12 +10,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <april/RenderSystem.h>
 #include <gtypes/Matrix4.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 
 #include "ColorImage.h"
 #include "Util.h"
 
 namespace AprilUI
 {
+	April::PlainVertex pVertices[4];
+	
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
 		mColor.setColor(name);
@@ -41,16 +44,16 @@ namespace AprilUI
 		}
 	}
 
-	void ColorImage::draw(grect rect, April::Color color, float angle)
+	void ColorImage::draw(grect rect, April::Color color, float angle, gvec2 center)
 	{
-		pVertices[0].x = -rect.w / 2; pVertices[0].y = -rect.h / 2;
-		pVertices[1].x =  rect.w / 2; pVertices[1].y = -rect.h / 2;
-		pVertices[2].x = -rect.w / 2; pVertices[2].y =  rect.h / 2;
-		pVertices[3].x =  rect.w / 2; pVertices[3].y =  rect.h / 2;
+		pVertices[0].x = -center.x;			pVertices[0].y = -center.y;
+		pVertices[1].x = rect.w - center.x;	pVertices[1].y = -center.y;
+		pVertices[2].x = -center.x;			pVertices[2].y = rect.h - center.y;
+		pVertices[3].x = rect.w - center.x;	pVertices[3].y = rect.h - center.y;
 		
 		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
-		April::rendersys->translate(rect.x, rect.y);
+		April::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		April::rendersys->rotate(angle);
 		if (mBlendMode != April::ALPHA_BLEND)
 		{

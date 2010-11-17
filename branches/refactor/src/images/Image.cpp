@@ -10,6 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <math.h>
 
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/util.h>
 
 #include "Exception.h"
@@ -19,7 +21,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace AprilUI
 {
 	April::TexturedVertex tVertices[4];
-	April::PlainVertex pVertices[4];
 	
 	Image::Image(April::Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY)
 	{
@@ -131,7 +132,7 @@ namespace AprilUI
 		}
 	}
 
-	void Image::draw(grect rect, April::Color color, float angle)
+	void Image::draw(grect rect, April::Color color, float angle, gvec2 center)
 	{
 		if (rect.w == -1)
 		{
@@ -142,14 +143,14 @@ namespace AprilUI
 			rect.h = mSource.h;
 		}
 		
-		tVertices[0].x = -rect.w / 2; tVertices[0].y = -rect.h / 2;
-		tVertices[1].x =  rect.w / 2; tVertices[1].y = -rect.h / 2;
-		tVertices[2].x = -rect.w / 2; tVertices[2].y =  rect.h / 2;
-		tVertices[3].x =  rect.w / 2; tVertices[3].y =  rect.h / 2;
+		tVertices[0].x = -center.x;			tVertices[0].y = -center.y;
+		tVertices[1].x = rect.w - center.x;	tVertices[1].y = -center.y;
+		tVertices[2].x = -center.x;			tVertices[2].y = rect.h - center.y;
+		tVertices[3].x = rect.w - center.x;	tVertices[3].y = rect.h - center.y;
 		
 		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
-		April::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
+		April::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		April::rendersys->rotate(angle);
 		April::rendersys->setTexture(mTexture);
 		_updateTexCoords();
@@ -173,9 +174,9 @@ namespace AprilUI
 		April::rendersys->setModelviewMatrix(temp_matrix);
 	}
 
-	void Image::draw(grect rect, float angle)
+	void Image::draw(grect rect, April::Color color, float angle)
 	{
-		draw(rect, April::Color(), angle);
+		draw(rect, color, angle, gvec2(rect.w / 2, rect.h / 2));
 	}
 
 	April::Texture* Image::getTexture()

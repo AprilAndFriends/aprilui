@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/util.h>
 
 #include "CompositeImage.h"
@@ -25,7 +26,7 @@ namespace AprilUI
 	CompositeImage::CompositeImage(chstr name, CompositeImage& base) :
 		Image(0, name, grect(0, 0, base.getSource().w, base.getSource().h))
 	{
-		foreach(ImageRef, it, base.mImages)
+		foreach (ImageRef, it, base.mImages)
 		{
 			addImageRef((*it).image, (*it).rect);
 		}
@@ -43,19 +44,20 @@ namespace AprilUI
 	{
 		float wf = rect.w / mSource.w;
 		float hf = rect.h / mSource.h;
-		foreach(ImageRef, it, mImages)
+		foreach (ImageRef, it, mImages)
 		{
 			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), color);
 		}
 	}
 	
-	void CompositeImage::draw(grect rect, April::Color color, float angle)
+	void CompositeImage::draw(grect rect, April::Color color, float angle, gvec2 center)
 	{
 		float wf = rect.w / mSource.w;
 		float hf = rect.h / mSource.h;
-		foreach(ImageRef, it, mImages)
+		foreach (ImageRef, it, mImages)
 		{
-			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), color, angle);
+			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), color,
+				angle, gvec2(center.x - (*it).rect.x * wf, center.y - (*it).rect.y * hf));
 		}
 	}
 

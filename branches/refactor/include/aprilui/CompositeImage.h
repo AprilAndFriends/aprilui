@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_COMPOSITE_IMAGE_H
 
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 
 #include "Image.h"
@@ -35,7 +36,7 @@ namespace AprilUI
 		void addImageRef(Image* image, grect rect);
 		
 		void draw(grect rect, April::Color color);
-		void draw(grect rect, April::Color color, float angle);
+		void draw(grect rect, April::Color color, float angle, gvec2 center);
 		
 		const harray<ImageRef>& getImageList() { return mImages; }
 		

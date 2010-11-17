@@ -360,7 +360,7 @@ namespace AprilUI
 		for (hmap<April::Texture*, hstr>::iterator it = dynamicLinks.begin(); it != dynamicLinks.end(); it++)
 		{
 			dlst = it->second.split(',');
-			foreach(hstr, it2, dlst)
+			foreach (hstr, it2, dlst)
 			{
 				it->first->addDynamicLink(getTexture(*it2));
 			}
