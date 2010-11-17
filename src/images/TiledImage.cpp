@@ -10,6 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <math.h>
 
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 
 #include "TiledImage.h"
 
@@ -183,7 +185,7 @@ namespace AprilUI
 		}
 	}
 
-	void TiledImage::draw(grect rect, April::Color color, float angle)
+	void TiledImage::draw(grect rect, April::Color color, float angle, gvec2 center)
 	{
 		
 	}

@@ -11,6 +11,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_COLOR_IMAGE_H
 
 #include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 
 #include "Image.h"
 
@@ -24,7 +26,7 @@ namespace AprilUI
 		ColorImage(chstr name);
 		
 		void draw(grect rect, April::Color color);
-		void draw(grect rect, April::Color color, float angle);
+		void draw(grect rect, April::Color color, float angle, gvec2 center);
 		
 	protected:
 		April::Color mColor;

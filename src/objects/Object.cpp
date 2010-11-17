@@ -83,7 +83,7 @@ namespace AprilUI
 
 	void Object::removeAllChildren()
 	{
-		foreach(Object*, it, mChildren)
+		foreach (Object*, it, mChildren)
 		{
 			(*it)->setParent(NULL);
 		}
@@ -276,7 +276,7 @@ namespace AprilUI
 
 	void Object::notifyEvent(chstr name, void* params)
 	{
-		foreach(Object*, it, mChildren)
+		foreach (Object*, it, mChildren)
 		{
 			(*it)->notifyEvent(name, params);
 		}

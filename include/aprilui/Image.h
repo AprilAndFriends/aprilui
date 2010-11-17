@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -29,8 +30,8 @@ namespace AprilUI
 		
 		virtual void draw(grect rect);
 		virtual void draw(grect rect, April::Color color);
+		virtual void draw(grect rect, April::Color color, float angle, gvec2 center);
 		virtual void draw(grect rect, April::Color color, float angle);
-		virtual void draw(grect rect, float angle);
 		
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };

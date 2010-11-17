@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 
 #include "ColoredImage.h"
 
@@ -35,9 +36,9 @@ namespace AprilUI
 		Image::draw(rect, mColor * color);
 	}
 
-	void ColoredImage::draw(grect rect, April::Color color, float angle)
+	void ColoredImage::draw(grect rect, April::Color color, float angle, gvec2 center)
 	{
-		Image::draw(rect, mColor * color, angle);
+		Image::draw(rect, mColor * color, angle, center);
 	}
 
 	void ColoredImage::setColor(float a, float r, float g, float b)

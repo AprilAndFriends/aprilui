@@ -66,13 +66,18 @@ namespace AprilUI
 	}
 	
 	// deprecated
+	gvec2 getCursorPos()
+	{
+		return cursorPosition;
+	}
+
+	// deprecated
 	void setCursorPos(float x, float y)
 	{
 		cursorPosition.set(x, y);
 	}
 	
-	// deprecated
-	gvec2 getCursorPos()
+	gvec2 getCursorPosition()
 	{
 		return cursorPosition;
 	}
@@ -82,11 +87,11 @@ namespace AprilUI
 		cursorPosition = position;
 	}
 	
-	gvec2 getCursorPosition()
+	void setCursorPosition(float x, float y)
 	{
-		return cursorPosition;
+		cursorPosition = gvec2(x, y);
 	}
-
+	
 	Dataset* getDatasetByName(chstr name)
 	{
 		if (!gDatasets.has_key(name))
