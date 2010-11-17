@@ -47,12 +47,12 @@
       <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
-      <File Name="src/Image.cpp"/>
-      <File Name="src/ColoredImage.cpp"/>
-      <File Name="src/ColorImage.cpp"/>
-      <File Name="src/CompositeImage.cpp"/>
-      <File Name="src/NullImage.cpp"/>
-      <File Name="src/TiledImage.cpp"/>
+      <File Name="src/images/Image.cpp"/>
+      <File Name="src/images/ColoredImage.cpp"/>
+      <File Name="src/images/ColorImage.cpp"/>
+      <File Name="src/images/CompositeImage.cpp"/>
+      <File Name="src/images/NullImage.cpp"/>
+      <File Name="src/images/TiledImage.cpp"/>
     </VirtualDirectory>
     <File Name="src/EventArgs.cpp"/>
   </VirtualDirectory>

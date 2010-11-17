@@ -326,27 +326,27 @@
 				Name="Images"
 				>
 				<File
-					RelativePath=".\src\ColoredImage.cpp"
+					RelativePath=".\src\images\ColoredImage.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\ColorImage.cpp"
+					RelativePath=".\src\images\ColorImage.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\CompositeImage.cpp"
+					RelativePath=".\src\images\CompositeImage.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\Image.cpp"
+					RelativePath=".\src\images\Image.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\NullImage.cpp"
+					RelativePath=".\src\images\NullImage.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\TiledImage.cpp"
+					RelativePath=".\src\images\TiledImage.cpp"
 					>
 				</File>
 			</Filter>
