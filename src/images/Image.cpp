@@ -60,13 +60,13 @@ namespace AprilUI
 				tVertices[3].u = (mSource.x + mSource.w) / w; tVertices[3].v = (mSource.y + mSource.h) / h;
 				if (mInvertX)
 				{
-					t = tVertices[0].u; tVertices[0].u = tVertices[1].u; tVertices[1].u = t;
-					t = tVertices[2].u; tVertices[2].u = tVertices[3].u; tVertices[3].u = t;
+					hswap(tVertices[0].u, tVertices[1].u);
+					hswap(tVertices[2].u, tVertices[3].u);
 				}
 				if (mInvertY)
 				{
-					t = tVertices[0].v; tVertices[0].v = tVertices[2].v; tVertices[2].v = t;
-					t = tVertices[1].v; tVertices[1].v = tVertices[3].v; tVertices[3].v = t;
+					hswap(tVertices[0].v, tVertices[2].v);
+					hswap(tVertices[1].v, tVertices[3].v);
 				}
 			}
 			else
@@ -77,13 +77,13 @@ namespace AprilUI
 				tVertices[3].u = (mSource.x) / w;             tVertices[3].v = (mSource.y + mSource.w) / h;
 				if (mInvertY)
 				{
-					t = tVertices[0].u; tVertices[0].u = tVertices[2].u; tVertices[2].u = t;
-					t = tVertices[1].u; tVertices[1].u = tVertices[3].u; tVertices[3].u = t;
+					hswap(tVertices[0].u, tVertices[2].u);
+					hswap(tVertices[1].u, tVertices[3].u);
 				}
 				if (mInvertX)
 				{
-					t = tVertices[0].v; tVertices[0].v = tVertices[1].v; tVertices[1].v = t;
-					t = tVertices[2].v; tVertices[2].v = tVertices[3].v; tVertices[3].v = t;
+					hswap(tVertices[0].v, tVertices[1].v);
+					hswap(tVertices[2].v, tVertices[3].v);
 				}
 			}
 
