@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -16,88 +16,87 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace AprilUI
 {
-	TextButton::TextButton(chstr name,float x,float y,float w,float h) :
-		Label(name,x,y,w,h)
+	TextButton::TextButton(chstr name, grect rect) :
+		Label(name, rect)
 	{
-		mText="TextButton: "+name;
-		mTypeName="TextButton";
-		mPushed=0;
-		mBackgroundEnabled=1;
+		mText = "TextButton: " + name;
+		mTypeName = "TextButton";
+		mPushed = false;
+		mBackground = true;
 		mPushedTextColor.setColor("FF333333");
 		mHoverTextColor.setColor("FF7F7F7F");
+		mDisabledTextColor.setColor("FF7F7F7F");
 	}
 
 	void TextButton::setTextKey(chstr key)
 	{
-		setText(mDataPtr->getText(key));
+		setText(mDataset->getText(key));
 	}
 
-	void TextButton::OnDraw(float offset_x,float offset_y)
+	void TextButton::OnDraw(gvec2 offset)
 	{
-#ifndef _DEBUG
-		if (mBackgroundEnabled)
-#else
-		if (!AprilUI::isDebugMode() && mBackgroundEnabled)
-#endif
-			April::rendersys->drawColoredQuad(mX+offset_x, mY+offset_y, mWidth, mHeight, 0, 0, 0, 0.7f+0.3f*mPushed);
-		April::Color color=mTextColor;
-		if (isCursorInside())
+		bool cursorInside = isCursorInside();
+		if (mBackground)
 		{
-			mTextColor=(mPushed ? mPushedTextColor : mHoverTextColor);
+			grect rect = mRect + offset;
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
 		}
-		Label::OnDraw(offset_x,offset_y);
-		mTextColor=color;
+#ifdef _DEBUG
+		else if (AprilUI::isDebugMode())
+		{
+			grect rect = mRect + offset;
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+		}
+#endif
+		April::Color color = mTextColor;
+		if (!isDerivedEnabled())
+		{
+			mTextColor = mDisabledTextColor;
+		}
+		else if (cursorInside)
+		{
+			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
+		}
+		Label::OnDraw(offset);
+		mTextColor = color;
 	}
 	
-	void TextButton::setHoverTextColor(April::Color color)
+	void TextButton::setProperty(chstr name, chstr value)
 	{
-		mHoverTextColor=color;
+		Label::setProperty(name, value);
+		if		(name == "background")		mBackground = (bool)value;
+		else if (name == "hover_color")		setHoverTextColor(value);
+		else if (name == "pushed_color")	setPushedTextColor(value);
+		else if (name == "disabled_color")	setDisabledTextColor(value);
 	}
 
-	void TextButton::setHoverTextColor(chstr hex)
+	bool TextButton::OnMouseDown(float x, float y, int button)
 	{
-		mHoverTextColor.setColor(hex);
-	}
-
-	void TextButton::setPushedTextColor(April::Color color)
-	{
-		mPushedTextColor=color;
-	}
-
-	void TextButton::setPushedTextColor(chstr hex)
-	{
-		mPushedTextColor.setColor(hex);
-	}
-	
-	void TextButton::setProperty(chstr name,chstr value)
-	{
-		if (name == "background") mBackgroundEnabled=((int) value)!=0;
-		else if (name == "hover_color") setHoverTextColor(value);
-		else if (name == "pushed_color") setPushedTextColor(value);
-		else Label::setProperty(name,value);
-	}
-
-	bool TextButton::OnMouseDown(float x,float y,int button)
-	{
-		if (Object::OnMouseDown(x,y,button)) return true;
+		if (Object::OnMouseDown(x, y, button))
+		{
+			return true;
+		}
 		if (isCursorInside())
 		{
-			mPushed=true;
+			mPushed = true;
 			return true;
 		}
 		return false;
 	}
 
-	bool TextButton::OnMouseUp(float x,float y,int button)
+	bool TextButton::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x,y,button)) return true;
-		if (mPushed && isCursorInside())
+		if (Object::OnMouseUp(x, y, button))
 		{
-			mPushed=false;
-			triggerEvent("Click",x,y,0);
 			return true;
 		}
-		mPushed=false;
+		if (mPushed && isCursorInside())
+		{
+			mPushed = false;
+			triggerEvent("Click", x, y, 0);
+			return true;
+		}
+		mPushed = false;
 		return false;
 	}
 	
