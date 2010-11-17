@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -21,15 +21,25 @@ namespace AprilUI
 	{
 		class AprilUIExport AlphaFader : public Animator
 		{
-			float mInitialSpeed,mInitialAlpha,mSpeed,mAccel,mTimer,mDelay,mDestAlpha;
 		public:
 			AlphaFader(chstr name);
 
-			void notifyEvent(chstr event_name,void* params);
-			void setProperty(chstr name,chstr value);
-			void fade(float dest,float time);
-			void update(float k);
+			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			void fade(float dest, float time);
 			void reset();
+			
+			void update(float k);
+			
+		protected:
+			float mInitialSpeed;
+			float mInitialAlpha;
+			float mSpeed;
+			float mAccel;
+			float mTimer;
+			float mDelay;
+			float mDestAlpha;
+			
 		};
 	}
 }

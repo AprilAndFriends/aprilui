@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #ifndef APRILUI_TOGGLE_BUTTON_H
 #define APRILUI_TOGGLE_BUTTON_H
 
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -17,20 +18,19 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 namespace AprilUI
 {
-	/*******************************************************************************/
 	class AprilUIExport ToggleButton : public ImageButton
 	{
 	public:
-		ToggleButton(chstr name,float x,float y,float w,float h);
+		ToggleButton(chstr name, grect rect);
 
-		void OnDraw(float offset_x,float offset_y);
-		bool OnMouseDown(float x,float y,int button);
-		bool OnMouseUp(float x,float y,int button);
-		void untoggle() { mPushed=0; }
-		void toggle() { mPushed=!mPushed; }
-		void turnOn() { mPushed=1; }
-		void turnOff() { mPushed=0; }
-		bool isToggled() { return mPushed; }
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		void toggle() { mPushed = !mPushed; }
+		void turnOn() { mPushed = true; }
+		void turnOff() { mPushed = false; }
+		
+	protected:
+		void OnDraw(gvec2 offset = gvec2());
 		
 	};
 }
