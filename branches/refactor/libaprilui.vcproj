@@ -250,6 +250,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\animators\AnimatorScaleOscillattor.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\animators\AnimatorScaler.cpp"
 					>
 				</File>
