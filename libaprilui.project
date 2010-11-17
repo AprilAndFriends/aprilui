@@ -41,10 +41,11 @@
       <File Name="src/animators/AnimatorEarthquake.cpp"/>
       <File Name="src/animators/AnimatorFrameAnimation.cpp"/>
       <File Name="src/animators/AnimatorMover.cpp"/>
+      <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
       <File Name="src/animators/AnimatorRotator.cpp"/>
+      <File Name="src/animators/AnimatorScaleOscillator.cpp"/>
       <File Name="src/animators/AnimatorScaler.cpp"/>
       <File Name="src/animators/Animator.cpp"/>
-      <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="src/images/Image.cpp"/>
