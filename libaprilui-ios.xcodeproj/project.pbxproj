@@ -90,6 +90,14 @@
 		7F3AE14012560796009DFEC8 /* ObjectTextImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11912560796009DFEC8 /* ObjectTextImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE14112560796009DFEC8 /* ObjectToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11A12560796009DFEC8 /* ObjectToggleButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE14312560796009DFEC8 /* xmlHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11C12560796009DFEC8 /* xmlHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FBCD23312956CD400D5D159 /* AnimatorMoveOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FBCD23212956CD400D5D159 /* AnimatorMoveOscillator.h */; };
+		7FBCD23512956CF900D5D159 /* AnimatorMoveOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23412956CF900D5D159 /* AnimatorMoveOscillator.cpp */; };
+		7FBCD23D12956D0600D5D159 /* ColoredImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23712956D0600D5D159 /* ColoredImage.cpp */; };
+		7FBCD23E12956D0600D5D159 /* ColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23812956D0600D5D159 /* ColorImage.cpp */; };
+		7FBCD23F12956D0600D5D159 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23912956D0600D5D159 /* CompositeImage.cpp */; };
+		7FBCD24012956D0600D5D159 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23A12956D0600D5D159 /* Image.cpp */; };
+		7FBCD24112956D0600D5D159 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23B12956D0600D5D159 /* NullImage.cpp */; };
+		7FBCD24212956D0600D5D159 /* TiledImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23C12956D0600D5D159 /* TiledImage.cpp */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -177,6 +185,14 @@
 		7F3AE11912560796009DFEC8 /* ObjectTextImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectTextImageButton.h; sourceTree = "<group>"; };
 		7F3AE11A12560796009DFEC8 /* ObjectToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectToggleButton.h; sourceTree = "<group>"; };
 		7F3AE11C12560796009DFEC8 /* xmlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmlHelper.h; sourceTree = "<group>"; };
+		7FBCD23212956CD400D5D159 /* AnimatorMoveOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatorMoveOscillator.h; sourceTree = "<group>"; };
+		7FBCD23412956CF900D5D159 /* AnimatorMoveOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorMoveOscillator.cpp; sourceTree = "<group>"; };
+		7FBCD23712956D0600D5D159 /* ColoredImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColoredImage.cpp; sourceTree = "<group>"; };
+		7FBCD23812956D0600D5D159 /* ColorImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorImage.cpp; sourceTree = "<group>"; };
+		7FBCD23912956D0600D5D159 /* CompositeImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompositeImage.cpp; sourceTree = "<group>"; };
+		7FBCD23A12956D0600D5D159 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
+		7FBCD23B12956D0600D5D159 /* NullImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullImage.cpp; sourceTree = "<group>"; };
+		7FBCD23C12956D0600D5D159 /* TiledImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TiledImage.cpp; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -223,6 +239,7 @@
 		7F3AE0A712560783009DFEC8 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7FBCD23612956D0600D5D159 /* images */,
 				7F24E086129456080024F91E /* EventArgs.cpp */,
 				7F3AE0A912560783009DFEC8 /* animators */,
 				7F3AE0B512560783009DFEC8 /* AprilUI.cpp */,
@@ -241,6 +258,7 @@
 		7F3AE0A912560783009DFEC8 /* animators */ = {
 			isa = PBXGroup;
 			children = (
+				7FBCD23412956CF900D5D159 /* AnimatorMoveOscillator.cpp */,
 				7F24E082129455FD0024F91E /* AnimatorScaleOscillator.cpp */,
 				7F24E083129455FD0024F91E /* AnimatorRotationOscillator.cpp */,
 				7F3AE0AA12560783009DFEC8 /* Animator.cpp */,
@@ -284,6 +302,7 @@
 		7F3AE0F512560796009DFEC8 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				7FBCD23212956CD400D5D159 /* AnimatorMoveOscillator.h */,
 				7F24E072129455EB0024F91E /* TiledImage.h */,
 				7F24E073129455EB0024F91E /* NullImage.h */,
 				7F24E074129455EB0024F91E /* Images.h */,
@@ -333,6 +352,19 @@
 			);
 			name = Includes;
 			path = include/aprilui;
+			sourceTree = "<group>";
+		};
+		7FBCD23612956D0600D5D159 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				7FBCD23712956D0600D5D159 /* ColoredImage.cpp */,
+				7FBCD23812956D0600D5D159 /* ColorImage.cpp */,
+				7FBCD23912956D0600D5D159 /* CompositeImage.cpp */,
+				7FBCD23A12956D0600D5D159 /* Image.cpp */,
+				7FBCD23B12956D0600D5D159 /* NullImage.cpp */,
+				7FBCD23C12956D0600D5D159 /* TiledImage.cpp */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,6 +421,7 @@
 				7F24E07F129455EB0024F91E /* ColoredImage.h in Headers */,
 				7F24E080129455EB0024F91E /* AnimatorScaleOscillator.h in Headers */,
 				7F24E081129455EB0024F91E /* AnimatorRotationOscillator.h in Headers */,
+				7FBCD23312956CD400D5D159 /* AnimatorMoveOscillator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +546,13 @@
 				7F24E084129455FD0024F91E /* AnimatorScaleOscillator.cpp in Sources */,
 				7F24E085129455FD0024F91E /* AnimatorRotationOscillator.cpp in Sources */,
 				7F24E087129456080024F91E /* EventArgs.cpp in Sources */,
+				7FBCD23512956CF900D5D159 /* AnimatorMoveOscillator.cpp in Sources */,
+				7FBCD23D12956D0600D5D159 /* ColoredImage.cpp in Sources */,
+				7FBCD23E12956D0600D5D159 /* ColorImage.cpp in Sources */,
+				7FBCD23F12956D0600D5D159 /* CompositeImage.cpp in Sources */,
+				7FBCD24012956D0600D5D159 /* Image.cpp in Sources */,
+				7FBCD24112956D0600D5D159 /* NullImage.cpp in Sources */,
+				7FBCD24212956D0600D5D159 /* TiledImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
