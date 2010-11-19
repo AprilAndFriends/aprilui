@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
 #include "AnimatorRotator.h"
 #include "ObjectRotationImageBox.h"
@@ -19,18 +20,20 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Animator("Animators::Scaler", name, grect(0, 0, 1, 1))
+		Rotator::Rotator(chstr name) : Animator("Animators::Rotator", name, grect(0, 0, 1, 1))
 		{
 			mAccel = 0.0f;
 			mSpeed = 0.0f;
 			mInitialSpeed = -10000.0f;
 			mInitialAngle = -10000001.0f;
+			mDelay = 0.0f;
 		}
 
 		void Rotator::setProperty(chstr name, chstr value)
 		{
 			if      (name == "speed")	mSpeed = mInitialSpeed = value;
 			else if (name == "accel")	mAccel = value;
+			else if (name == "delay")	mDelay = value;
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)
@@ -52,6 +55,11 @@ namespace AprilUI
 
 		void Rotator::update(float k)
 		{
+            if (mDelay > 0)
+            {
+                mDelay = hmax(0.0f, mDelay - k);
+                return;
+            }
 			RotationImageBox* imageBox = (RotationImageBox*)mParent;
 			float angle = imageBox->getAngle();
 			if (fabs(mAccel) > 0.01f)

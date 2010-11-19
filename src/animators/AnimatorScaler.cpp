@@ -55,9 +55,8 @@ namespace AprilUI
 
 		void Scaler::scale(float dest_w, float dest_h, float time)
 		{
-			mDest.x = dest_w;
-			mDest.y = dest_h;
-			mSpeed = mDest-mParent->getSize();
+			mDest = gvec2(dest_w, dest_h);
+			mSpeed = mDest - mParent->getSize();
 			mSpeed = mSpeed.normalised() * (mSpeed.length() / time);
 			mAccel.set(0, 0);
 		}
