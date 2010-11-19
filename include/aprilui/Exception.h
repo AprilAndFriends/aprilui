@@ -39,12 +39,6 @@ namespace AprilUI
 		  _GenericException(errorText, type, file, line) { } \
 	}
 
-	exception_cls(_KeyException);
-	#define KeyException(msg) _KeyException(msg, "KeyException" ,__FILE__, __LINE__)
-
-	exception_cls(_ScriptException);
-	#define ScriptException(msg) _ScriptException(msg, "ScriptException", __FILE__, __LINE__)
-
 	exception_cls(_ObjectExistsException);
 	#define ObjectExistsException(msg) _ObjectExistsException("Object already exists: " + msg, "ObjectExistsException", __FILE__, __LINE__)
 
@@ -60,9 +54,6 @@ namespace AprilUI
 	exception_cls(_FontNotExistsException);
 	#define FontNotExistsException(msg) _FontNotExistsException("Font doesn't exist: " + msg, "FontNotExistsException", __FILE__, __LINE__)
 
-	exception_cls(_UnknownVariableException);
-	#define UnknownVariableException(msg) _UnknownVariableException(msg + " does not exist", "UnknownVariableException ", __FILE__, __LINE__)
-	
 	//---------------------------------------------------------------------------------------------------------
 
 	class AprilUIExport _ResourceExistsException : public _GenericException
