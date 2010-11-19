@@ -56,7 +56,7 @@ namespace AprilUI
 			mTimer += k;
 			float factor_x = dsin(mTimer * mSpeed.x * 360) * mAmplitude.x + mBaseline.x;
 			float factor_y = dsin(mTimer * mSpeed.y * 360) * mAmplitude.y + mBaseline.y;
-			mParent->setSize(mInitialPosition.x + factor_x, mInitialPosition.y + factor_y);
+			mParent->setPosition(mInitialPosition.x + factor_x, mInitialPosition.y + factor_y);
 		}
 		
 	}
