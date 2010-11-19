@@ -2,12 +2,11 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
@@ -17,44 +16,38 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		AlphaOscillator::AlphaOscillator(chstr name) : Animator("Animators::Oscillator", name, grect(0, 0, 1, 1))
+		AlphaOscillator::AlphaOscillator(chstr name) : Animator("Animators::Oscillator",name,0,0,1,1)
 		{
-			mBaseline = 0.5f;
-			mAmplitude = 0.5f;
-			mSpeed = 360.0f;
-			mInitialAlpha = -10001.0f;
-			mTimer = 0.0f;
+			mBaseline=0.5; mAmplitude=0.5; mSpeed=360;
+			mInitialAlpha=-10001;
+			mTimer=0;
 		}
 
-		void AlphaOscillator::setProperty(chstr name, chstr value)
+		void AlphaOscillator::setProperty(chstr name,chstr value)
 		{
-			if      (name == "base")		mBaseline = value;
-			else if (name == "amplitude")	mAmplitude = value;
-			else if (name == "speed")		mSpeed = value;
+			if      (name == "base") mBaseline=value;
+			else if (name == "amplitude") mAmplitude=value;
+			else if (name == "speed") mSpeed=value;
 		}
 
-		void AlphaOscillator::notifyEvent(chstr name, void* params)
+		void AlphaOscillator::notifyEvent(chstr event_name,void* params)
 		{
-			if (name == "AttachToObject")
+			if (event_name == "AttachToObject")
 			{
-				if (mInitialAlpha < -10000.0f)
-				{
-					mInitialAlpha = mParent->getAlpha();
-				}
+				if (mInitialAlpha < -10000)
+					mInitialAlpha=mParent->getAlpha();
 				else
-				{
 					update(0); // preserve alpha
-				}
+			//	mTimer=0;
 			}
-			Object::notifyEvent(name, params);
+			Object::notifyEvent(event_name,params);
 		}
 
 		void AlphaOscillator::update(float k)
 		{
-			mTimer += k;
-			float alpha = dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
-			mParent->setAlpha(hclamp(alpha, 0.0f, 1.0f));
+			mTimer+=k;
+			float alpha=dsin(mTimer*mSpeed)*mAmplitude+mBaseline;
+			mParent->setAlpha(hclamp(alpha,0.0f,1.0f));
 		}
-		
 	}
 }

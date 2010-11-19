@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -12,8 +12,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <april/RenderSystem.h>
 #include <atres/Atres.h>
-#include <gtypes/Rectangle.h>
-#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -22,42 +20,49 @@ namespace AprilUI
 {
 	class AprilUIExport LabelBase
 	{
-	public:
-		LabelBase(chstr name);
-		
-		hstr getText() { return mText; }
-		virtual void setText(chstr value) { mText = value; }
-		virtual void setTextKey(chstr key) = 0;
-		
-		hstr getFont() { return mFontName; }
-		void setFont(chstr value) { mFontName = value; }
-		
-		gvec2 getDrawOffset() { return mDrawOffset; }
-		void setDrawOffset(gvec2 value) { mDrawOffset = value; }
-		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
-		void setHorzFormatting(Atres::Alignment value) { mHorzFormatting = value; }
-		Atres::Alignment getVertFormatting() { return mVertFormatting; }
-		void setVertFormatting(Atres::Alignment value) { mVertFormatting = value; }
-		Atres::Effect getFontEffect() { return mFontEffect; }
-		void setFontEffect(Atres::Effect value) { mFontEffect = value; }
-		April::Color getTextColor() { return mTextColor; }
-		void setTextColor(April::Color value) { mTextColor = value; }
-		void setTextColor(chstr value) { mTextColor.setColor(value); }
-		
-		virtual void setProperty(chstr name, chstr value);
-		
 	protected:
 		hstr mText;
 		hstr mFontName;
 		bool mTextFormatting;
-		gvec2 mDrawOffset;
+		float mDrawOffsetY;
+		float mDrawOffsetX;
 		Atres::Alignment mHorzFormatting;
 		Atres::Alignment mVertFormatting;
 		Atres::Effect mFontEffect;
 		April::Color mTextColor;
+
+		void _drawLabel(float offset_x,float offset_y,float width,float height,float alpha);
 		
-		void _drawLabel(grect rect, float alpha);
+	public:
+		LabelBase(chstr name);
 		
+		hstr getText() { return mText; }
+		virtual void setText(chstr text) { mText=text; }
+		virtual void setTextKey(chstr key) = 0;
+		
+		hstr getFont() { return mFontName; }
+		void setFont(chstr font) { mFontName=font; }
+		
+		float getDrawOffsetX() { return mDrawOffsetX; }
+		void setDrawOffsetX(float drawOffsetX) { mDrawOffsetX=drawOffsetX; }
+		
+		float getDrawOffsetY() { return mDrawOffsetY; }
+		void setDrawOffsetY(float drawOffsetY) { mDrawOffsetY=drawOffsetY; }
+		
+		void setHorzFormatting(Atres::Alignment f) { mHorzFormatting=f; }
+		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
+		
+		void setFontEffect(Atres::Effect f) { mFontEffect=f; }
+		Atres::Effect getFontEffect() { return mFontEffect; }
+		
+		void setVertFormatting(Atres::Alignment f) { mVertFormatting=f; }
+		Atres::Alignment getVertFormatting() { return mVertFormatting; }
+		
+		virtual void setProperty(chstr name,chstr value);
+
+		void setTextColor(April::Color color) { mTextColor=color; }
+		void setTextColor(chstr hex);
+		April::Color getTextColor() { return mTextColor; }
 	};
 	
 }

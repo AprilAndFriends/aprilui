@@ -2,14 +2,12 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/RenderSystem.h>
-#include <gtypes/Rectangle.h>
-#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
@@ -18,32 +16,29 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ColoredImageBox::ColoredImageBox(chstr name, grect rect) :
-		ImageBox(name, rect)
+	ColoredImageBox::ColoredImageBox(chstr name,float x,float y,float w,float h) :
+		ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("ColoredImageBox");
 	}
 
-	void ColoredImageBox::OnDraw(gvec2 offset)
+	void ColoredImageBox::setColor(chstr color)
 	{
-		if (mImage == NULL)
-		{
-			mImage = mDataset->getImage("null");
-		}
-		float alpha = getDerivedAlpha();
-		if (!isDerivedEnabled())
-		{
-			alpha /= 2;
-		}
-		April::Color color = mColor;
-		color.a = alpha * 255;
-		mImage->draw(mRect + offset, color);
+		mColor.setColor(color);
+	}
+
+	void ColoredImageBox::OnDraw(float offset_x,float offset_y)
+	{
+		if (!mImage) mImage=mDataPtr->getImage("null");
+		float alpha=getDerivedAlpha();
+		if (!getDerivedEnabled()) alpha/=2;
+		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,mColor.r_float(),mColor.g_float(),mColor.b_float(),alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
-	void ColoredImageBox::setProperty(chstr name, chstr value)
+	void ColoredImageBox::setProperty(chstr name,chstr value)
 	{
-		ImageBox::setProperty(name, value);
+		ImageBox::setProperty(name,value);
 		if (name == "color") setColor(value);
 	}
 

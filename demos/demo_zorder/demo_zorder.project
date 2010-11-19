@@ -13,6 +13,12 @@
   <VirtualDirectory Name="data">
     <File Name="../media/demo_zorder.datadef"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
+    <Project Name="libgtypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libaprilui"/>
+  </Dependencies>
   <Dependencies Name="Linux_Debug">
     <Project Name="libhltypes"/>
     <Project Name="libgtypes"/>
@@ -26,27 +32,6 @@
     <Project Name="libaprilui"/>
   </Dependencies>
   <Settings Type="Executable">
-    <GlobalSettings>
-      <Compiler Options="">
-        <IncludePath Value="."/>
-        <IncludePath Value="../../include"/>
-        <IncludePath Value="../../../include"/>
-        <IncludePath Value="../../../hltypes/include"/>
-        <IncludePath Value="../../../gtypes/include"/>
-        <IncludePath Value="../../../april/include"/>
-        <IncludePath Value="../../../atres/include"/>
-      </Compiler>
-      <Linker Options="">
-        <LibraryPath Value="../../lib"/>
-        <LibraryPath Value="../../bin/$(ConfigurationName)"/>
-        <LibraryPath Value="../../../april/bin"/>
-        <LibraryPath Value="../../../atres/bin/$(ConfigurationName)"/>
-        <LibraryPath Value="../../../aprilui/bin/$(ConfigurationName)"/>
-        <LibraryPath Value="../../../hltypes/bin/$(ConfigurationName)"/>
-        <LibraryPath Value="../../../gtypes/bin/$(ConfigurationName)"/>
-      </Linker>
-      <ResourceCompiler Options=""/>
-    </GlobalSettings>
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader=""/>
       <Linker Options="" Required="yes">
@@ -58,19 +43,12 @@
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
-      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild>
-        <Command Enabled="yes">copy ..\..\..\atres\bin\Debug\libatres_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\april\bin\libapril_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\gtypes\bin\Debug\libgtypes_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\hltypes\bin\Debug\libhltypes_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\lib\*.dll ..\..\bin\$(ConfigurationName)</Command>
-      </PostBuild>
+      <PostBuild/>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -97,7 +75,6 @@
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
-      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
@@ -130,19 +107,12 @@
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="../../bin/$(ConfigurationName)" Command="$(IntermediateDirectory)/$(ProjectName)" CommandArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
-      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
       <PreBuild/>
-      <PostBuild>
-        <Command Enabled="yes">copy ..\..\..\atres\bin\Debug\libatres_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\april\bin\libapril_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\gtypes\bin\Debug\libgtypes_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\hltypes\bin\Debug\libhltypes_d.dll ..\..\bin\$(ConfigurationName)</Command>
-        <Command Enabled="yes">copy ..\..\..\lib\*.dll ..\..\bin\$(ConfigurationName)</Command>
-      </PostBuild>
+      <PostBuild/>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
         <CleanCommand/>
@@ -158,19 +128,26 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
+    <GlobalSettings>
+      <Compiler Options="">
+        <IncludePath Value="."/>
+        <IncludePath Value="../../include"/>
+        <IncludePath Value="../../../include"/>
+        <IncludePath Value="../../../hltypes/include"/>
+        <IncludePath Value="../../../gtypes/include"/>
+        <IncludePath Value="../../../april/include"/>
+        <IncludePath Value="../../../atres/include"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="../../lib"/>
+        <LibraryPath Value="../../bin/$(ConfigurationName)"/>
+        <LibraryPath Value="../../../april/bin"/>
+        <LibraryPath Value="../../../atres/bin/$(ConfigurationName)"/>
+        <LibraryPath Value="../../../aprilui/bin/$(ConfigurationName)"/>
+        <LibraryPath Value="../../../hltypes/bin/$(ConfigurationName)"/>
+        <LibraryPath Value="../../../gtypes/bin/$(ConfigurationName)"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="libhltypes"/>
-    <Project Name="libgtypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-    <Project Name="libaprilui"/>
-  </Dependencies>
-  <Dependencies Name="Release_Win32">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-    <Project Name="libaprilui"/>
-  </Dependencies>
 </CodeLite_Project>

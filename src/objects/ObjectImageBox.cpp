@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                                  *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -16,96 +16,74 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ImageBox::ImageBox(chstr name, grect rect) :
-		Object("ImageBox", name, rect)
+	ImageBox::ImageBox(chstr name,float x,float y,float w,float h) :
+		Object("ImageBox",name,x,y,w,h)
 	{
-		mImage = NULL;
+		mImage=0;
 	}
 
 	void ImageBox::setImage(Image* image)
 	{
-		mImage = image;
-		mImageName = (image != NULL ? image->getName() : "null");
-		grect rect = image->getSource();
-		if (mRect.w == -1)
-		{
-			mRect.w = rect.w * getDefaultScale();
-		}
-		if (mRect.h == -1)
-		{
-			mRect.h = rect.h * getDefaultScale();
-		}
+		mImage=image;
+		if (image)
+			mImageName=image->getName();
+		else
+			mImageName="null";
+		if (mWidth == -1) mWidth=image->getSourceW()*getDefaultScale();
+		if (mHeight == -1) mHeight=image->getSourceH()*getDefaultScale();
 	}
 
 	void ImageBox::setImageByName(chstr image)
 	{
-		setImage(mDataset->getImage(image));
-		mImageName = image;
+		setImage(mDataPtr->getImage(image));
+		mImageName=image;
 	}
 	
-	void ImageBox::notifyEvent(chstr name, void* params)
+	void ImageBox::notifyEvent(chstr event_name,void* params)
 	{	
-		if (name == "UpdateImage")
+		if (event_name == "UpdateImage")
 		{
 			setImageByName(mImageName);
 		}
-		Object::notifyEvent(name, params);
+		Object::notifyEvent(event_name,params);
 	}
 	
 	void ImageBox::resizeToFitImage()
 	{
-		if (mImage)
-		{
-			grect rect = mImage->getSource();
-			setSize(rect.w * getDefaultScale(), rect.h * getDefaultScale());
-		}
+		if (mImage) setSize(mImage->getSourceW()*getDefaultScale(), mImage->getSourceH()*getDefaultScale());
 	}
 
-	void ImageBox::OnDraw(gvec2 offset)
+	void ImageBox::OnDraw(float offset_x,float offset_y)
 	{
-		if (mImage == NULL)
-		{
-			mImage = mDataset->getImage("null");
-		}
-		float alpha = getDerivedAlpha();
-		if (!isDerivedEnabled())
-		{
-			alpha /= 2;
-		}
-		April::Color color;
-		color.a = alpha * 255;
-		mImage->draw(mRect + offset, color);
+		if (!mImage) mImage=mDataPtr->getImage("null");
+		float alpha=getDerivedAlpha();
+		if (!getDerivedEnabled()) alpha/=2;
+		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 		//rendersys->setBlendMode(April::ALPHA_BLEND);
 	}
 
-	void ImageBox::setProperty(chstr name, chstr value)
+	void ImageBox::setProperty(chstr name,chstr value)
 	{
-		Object::setProperty(name, value);
-		if (name == "image")	setImageByName(value);
+		Object::setProperty(name,value);
+		if (name == "image") setImageByName(value);
 	}
 
-	bool ImageBox::OnMouseDown(float x, float y, int button)
+	bool ImageBox::OnMouseDown(float x,float y,int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
-		{
-			return true;
-		}
-		if (isPointInside(x, y))
+		if (Object::OnMouseDown(x,y,button)) return true;
+		if (isPointInside(x,y))
 		{
 			return true;
 		}
 		return false;
 	}
 
-	bool ImageBox::OnMouseUp(float x, float y, int button)
+	bool ImageBox::OnMouseUp(float x,float y,int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::OnMouseUp(x,y,button)) return true;
+		if (isPointInside(x,y))
 		{
-			return true;
-		}
-		if (isPointInside(x, y))
-		{
-			triggerEvent("Click", x, y, 0);
+			triggerEvent("Click",x,y,0);
 			return true;
 		}
 		return false;

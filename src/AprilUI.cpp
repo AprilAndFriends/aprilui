@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -20,16 +20,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	bool registerLock = false;
-	hmap<int, April::Texture*> gFontTextures;
-	hmap<hstr, Dataset*> gDatasets;
-	float defaultScale = 1.0f;
-	gvec2 cursorPosition;
+	bool register_lock=0;
+	hmap<int,April::Texture*> g_font_textures;
+	hmap<hstr,Dataset*> g_datasets;
+	float default_scale=1;
+	gvec2 cursor_pos;
 #ifdef _DEBUG
-	bool debugMode = false;
+	bool g_debug_mode = false;
 #endif
-	hstr defaultTextsPath = "texts";
-	void (*g_logFunction)(chstr) = aprilui_writelog;
+	hstr defaultTextsPath="texts";
+	
+	void (*g_logFunction)(chstr)=aprilui_writelog;
 	
 	void logMessage(chstr message, chstr prefix)
 	{
@@ -43,109 +44,65 @@ namespace AprilUI
 	
 	void setLogFunction(void (*fnptr)(chstr))
 	{
-		g_logFunction = fnptr;
+		g_logFunction=fnptr;
 	}
 	
+	void setCursorPos(float x,float y)
+	{
+		cursor_pos.set(x,y);
+	}
+	
+	gvec2 getCursorPos()
+	{
+		return cursor_pos;
+	}
+
 	void init()
 	{
 	}
 
-	void destroy()
-	{
-		registerLock = true;
-		for (hmap<int, April::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
-		{
-			delete it->second;
-		}
-		gFontTextures.clear();
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			delete it->second;
-		}
-		gDatasets.clear();
-	}
-	
-	// deprecated
-	gvec2 getCursorPos()
-	{
-		return cursorPosition;
-	}
-
-	// deprecated
-	void setCursorPos(float x, float y)
-	{
-		cursorPosition.set(x, y);
-	}
-	
-	gvec2 getCursorPosition()
-	{
-		return cursorPosition;
-	}
-
-	void setCursorPosition(gvec2 position)
-	{
-		cursorPosition = position;
-	}
-	
-	void setCursorPosition(float x, float y)
-	{
-		cursorPosition = gvec2(x, y);
-	}
-	
 	Dataset* getDatasetByName(chstr name)
 	{
-		if (!gDatasets.has_key(name))
-		{
-			throw GenericException("Dataset '" + name + "' doesn't exist!");
-		}
-		return gDatasets[name];
+		if (!g_datasets.has_key(name))
+			throw GenericException("Dataset '"+name+"' doesn't exist!");
+		return g_datasets[name];
 	}
 
-	void _registerDataset(chstr name, Dataset* dataset)
+	void _registerDataset(chstr name,Dataset* d)
 	{
-		if (!registerLock)
-		{
-			if (gDatasets.has_key(name))
-			{
-				throw GenericException("Unable to register dataset '" + name + "', another dataset with the same name exists!");
-			}
-			gDatasets[name] = dataset;
-		}
+		if (register_lock) return;
+		if (g_datasets.has_key(name))
+			throw GenericException("Unable to register dataset '"+name+"', another dataset with the same name exists!");	
+		g_datasets[name]=d;
 	}
 	
-	void _unregisterDataset(chstr name, Dataset* dataset)
+	void _unregisterDataset(chstr name,Dataset* d)
 	{
-		if (!registerLock)
-		{
-			gDatasets.remove_key(name);
-		}
+		if (register_lock) return;
+		g_datasets.remove_key(name);
 	}
 	
 	void updateTextures(float time_increase)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
+		foreach_m (Dataset*, it, g_datasets)
 			it->second->updateTextures(time_increase);
-		}
 	}
 	
 	void update(float time_increase)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
+		foreach_m (Dataset*, it, g_datasets)
 			it->second->update(time_increase);
-		}
 	}
 
 #ifdef _DEBUG
 	void setDebugMode(bool value)
 	{
-		debugMode = value;
+		g_debug_mode = value;
 	}
 	
 	bool isDebugMode()
 	{
-		return debugMode;
+		return g_debug_mode;
 	}
 #endif
 
@@ -156,65 +113,29 @@ namespace AprilUI
 	
 	void setDefaultTextsPath(chstr path)
 	{
-		defaultTextsPath = path;
+		defaultTextsPath=path;
 	}
 	
 	void setDefaultScale(float value)
 	{
-		defaultScale = value;
+		default_scale=value;
 	}
 	
 	float getDefaultScale()
 	{
-		return defaultScale;
+		return default_scale;
 	}
-	
-	void OnMouseDown(float x, float y, int button)
+
+	void destroy()
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnMouseDown(x, y, button);
-		}
+		register_lock=1;
+
+		for (hmap<int,April::Texture*>::iterator it=g_font_textures.begin();it!=g_font_textures.end();it++)
+			delete it->second;
+		g_font_textures.clear();
+		
+		foreach_m (Dataset*, it, g_datasets)
+			delete it->second;
+		g_datasets.clear();
 	}
-	
-	void OnMouseUp(float x, float y, int button)
-	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnMouseUp(x, y, button);
-		}
-	}
-	
-	void OnMouseMove(float x, float y)
-	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnMouseMove(x, y);
-		}
-	}
-	
-	void OnKeyDown(unsigned int keycode)
-	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnKeyDown(keycode);
-		}
-	}
-	
-	void OnKeyUp(unsigned int keycode)
-	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnKeyUp(keycode);
-		}
-	}
-	
-	void OnChar(unsigned int charcode)
-	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnChar(charcode);
-		}
-	}
-	
 }

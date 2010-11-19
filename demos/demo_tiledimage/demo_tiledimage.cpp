@@ -2,45 +2,45 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com),                                 *
+                   Ivan Vucica (ivan@vucica.net)
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <stdio.h>
+#include "april/main.h"
+#include "april/RenderSystem.h"
+#include "aprilui/AprilUI.h"
+#include "aprilui/Dataset.h"
+#include "aprilui/Objects.h"
+#include "atres/Atres.h"
+#include <iostream>
 
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
-#include <april/RenderSystem.h>
-#include <april/Window.h>
-#include <aprilui/AprilUI.h>
-#include <aprilui/Dataset.h>
-#include <aprilui/Objects.h>
-#include <aprilui/TiledImage.h>
-#include <atres/Atres.h>
-
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define SCROLL_SPEED_X 50
-#define SCROLL_SPEED_Y 50
-
 AprilUI::Dataset* dataset;
+
+#define SCROLL_SPEED_X 10
+#define SCROLL_SPEED_Y 10
 
 bool render(float time)
 {
-	April::rendersys->clear();
-	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
-	AprilUI::TiledImage* image = (AprilUI::TiledImage*)dataset->getImage("texture/test");
+	
+	rendersys->clear();
+	rendersys->setOrthoProjection(800,600);
+	
+	AprilUI::TiledImage* image = (AprilUI::TiledImage*)dataset->getImage("transparency/test");
 	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
 					 image->getScrollY() - time * SCROLL_SPEED_Y);
+	
 	dataset->getObject("root")->draw();
-	dataset->update(time);
+	dataset->getObject("root")->update(time);
 	return true;
 }
 
-int main()
+int main(int argc, char** argv)
 {
 #ifdef __APPLE__
 	// On MacOSX, the current working directory is not set by
@@ -88,21 +88,23 @@ int main()
 #endif
 	try
 	{
-		April::init("Tiled Image", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_tiledimage");
-		April::rendersys->getWindow()->setUpdateCallback(&render);
+		April::init("OpenGL",800,600,0,"demo_tiledimage");
+		rendersys->registerUpdateCallback(render);
 		AprilUI::init();
-		Atres::init();
-		dataset = new AprilUI::Dataset("../media/demo_tiledimage.datadef");
+
+		dataset=new AprilUI::Dataset("../media/demo_tiledimage.datadef");
 		dataset->load();
-		April::rendersys->getWindow()->enterMainLoop();
+
+		Atres::loadFont("../media/arial.font");
+
+		rendersys->enterMainLoop();
 		delete dataset;
 		AprilUI::destroy();
-		Atres::destroy();
 		April::destroy();
 	}
 	catch (AprilUI::_GenericException e)
 	{
-		printf("%s\n", e.getType().c_str());
+		std::cout << "Exception: " << e.getErrorText() << "\n";
 	}
 	return 0;
 }

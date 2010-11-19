@@ -171,6 +171,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\src\_dirent.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\AprilUI.cpp"
 				>
 			</File>
@@ -183,11 +187,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\EventArgs.cpp"
+				RelativePath=".\src\Exception.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Exception.cpp"
+				RelativePath=".\src\Image.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\TextMap.cpp"
 				>
 			</File>
 			<File
@@ -235,10 +243,6 @@
 				</File>
 				<File
 					RelativePath=".\src\animators\AnimatorFrameAnimation.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorMoveOscillator.cpp"
 					>
 				</File>
 				<File
@@ -330,34 +334,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="Images"
-				>
-				<File
-					RelativePath=".\src\images\ColoredImage.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\images\ColorImage.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\images\CompositeImage.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\images\Image.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\images\NullImage.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\images\TiledImage.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -397,11 +373,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\aprilui\Images.h"
+				RelativePath=".\include\aprilui\Image.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\aprilui\Objects.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\aprilui\TextMap.h"
 				>
 			</File>
 			<File
@@ -441,10 +421,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorFrameAnimation.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorMoveOscillator.h"
 					>
 				</File>
 				<File
@@ -533,34 +509,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectToggleButton.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Images"
-				>
-				<File
-					RelativePath=".\include\aprilui\ColoredImage.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\ColorImage.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\CompositeImage.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\Image.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\NullImage.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\TiledImage.h"
 					>
 				</File>
 			</Filter>

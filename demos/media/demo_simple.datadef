@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <DataDefinition>
-	<Texture filename="texture" dynamic_load="1">
+	<Texture filename="texture.jpg" dynamic_load="1">
 		<Image name="test" x="0" y="0" w="512" h="512"/>
     </Texture>
 	

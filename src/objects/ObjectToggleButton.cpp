@@ -2,13 +2,11 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <gtypes/Rectangle.h>
-#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "Event.h"
@@ -18,61 +16,48 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ToggleButton::ToggleButton(chstr name, grect rect) :
-		ImageButton(name, rect)
+	ToggleButton::ToggleButton(chstr name,float x,float y,float w,float h) :
+		ImageButton(name,x,y,w,h)
 	{
 		_setTypeName("ToggleButton");
-		mPushed = false;
+		mPushed=0;
 	}
 
-	void ToggleButton::OnDraw(gvec2 offset)
+	void ToggleButton::OnDraw(float offset_x,float offset_y)
 	{
-		float alpha = getDerivedAlpha();
-		April::Color color;
-		color.a = alpha * 255;
-		grect rect = mRect + offset;
-		if (mPushed && mPushedImage != NULL)
-		{
-			mPushedImage->draw(rect, color);
-		}
-		else
-		{
-			mImage->draw(rect, color);
-		}
+		float alpha=getDerivedAlpha();
+		if (mPushed) mPushedImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
+		mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,alpha);
 	}
 
-	bool ToggleButton::OnMouseDown(float x, float y, int button)
+	bool ToggleButton::OnMouseDown(float x,float y,int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::OnMouseDown(x,y,button)) return true;
+		if (isPointInside(x,y))
 		{
-			return true;
-		}
-		if (isPointInside(x, y))
-		{
-			mPushed = !mPushed;
-			Event* event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
-			if (event != NULL)
+			mPushed=!mPushed;
+			Event* e;
+			if (mPushed) e=mEvents["Toggle"];
+			else         e=mEvents["Untoggle"];
+			if (e)
 			{
-				EventArgs args(this, x, y);
-				event->execute(&args);
+				EventArgs args(this,x,y);
+				e->execute(&args);
 			}
 			return true;
 		}
 		return false;
 	}
 
-	bool ToggleButton::OnMouseUp(float x, float y, int button)
+	bool ToggleButton::OnMouseUp(float x,float y,int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::OnMouseUp(x,y,button)) return true;
+		if (isPointInside(x,y))
 		{
-			return true;
+			triggerEvent("Click",x,y,0);
+			return 1;
 		}
-		if (isPointInside(x, y))
-		{
-			triggerEvent("Click", x, y, 0);
-			return true;
-		}
-		return false;
+		return 0;
 	}
 	
 }

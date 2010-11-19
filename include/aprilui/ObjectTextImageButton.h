@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -10,7 +10,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_TEXT_IMAGE_BUTTON_H
 #define APRILUI_TEXT_IMAGE_BUTTON_H
 
-#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
@@ -21,15 +20,14 @@ namespace AprilUI
 {
 	class AprilUIExport TextImageButton : public ImageButton, public LabelBase
 	{
+	protected:
+		void OnDraw(float offset_x,float offset_y);
+
 	public:
-		TextImageButton(chstr name, grect rect);
+		TextImageButton(chstr name,float x,float y,float w,float h);
 		
 		void setTextKey(chstr key);
-		void setProperty(chstr name, chstr value);
-		
-	protected:
-		void OnDraw(gvec2 offset = gvec2());
-
+		void setProperty(chstr name,chstr value);
 	};
 	
 }

@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -10,13 +10,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_DATASET_H
 #define APRILUI_DATASET_H
 
-#include <gtypes/Rectangle.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include "Exception.h"
-
 #include "AprilUIExport.h"
+#include "Exception.h"
+#include "TextMap.h"
 
 namespace April
 {
@@ -27,20 +26,43 @@ struct xml_node;
 
 namespace AprilUI
 {
-	#define REGISTER_CALLBACK(data_dict, fn) data_dict->registerCallback(#fn, fn)
+	#define REGISTER_CALLBACK(data_dict,fn) data_dict->registerCallback(#fn,fn)
 
 	class Object;
 	class Image;
 
+
 	class AprilUIExport Dataset
 	{
-	public:
-		Object* parseObject(xml_node* node, Object* parent = NULL);
+	protected:
+		hstr mName;
+		hstr mFilename;
+		hstr mFilenamePrefix;
+		bool mLoaded;
+		Object* mFocusedObject;
+		hmap<hstr,Object*> mObjects;
+		hmap<hstr,April::Texture*> mTextures;
+		hmap<hstr,Image*> mImages;
+		TextMap mTexts;
+
+		hmap<hstr,void (*)()> mCallbacks;
+
+		April::Texture* parseTexture(xml_node* node);
+		void parseRAMTexture(xml_node* node);
+		void parseCompositeImage(xml_node* node);
+		virtual void parseExternalXMLNode(xml_node* node) {};
+		virtual Object* parseExternalObjectClass(xml_node* node,chstr obj_name,float x,float y,float w,float h) { return 0; };
 		
-		Dataset(chstr filename, chstr name = "");
+		Object* recursiveObjectParse(xml_node* node,Object* parent);
+		
+		void readFile(chstr filename);
+	public:
+		Object* parseObject(xml_node* node,Object* parent=0);
+		
+		Dataset(chstr filename,chstr name_override="");
 		virtual ~Dataset();
 
-		void load(chstr path = "");
+		void load(chstr path="");
 		void unload();
 		bool isLoaded() { return mLoaded; }
 		void registerManualObject(Object* o);
@@ -48,67 +70,36 @@ namespace AprilUI
 		void registerManualImage(Image* img);
 		void unregisterManualImage(Image* img);
 
-		void registerCallback(chstr name, void (*callback)());
+		void registerCallback(chstr name,void (*callback)());
 		void triggerCallback(chstr name);
 
-		void setFocusedObject(Object* object) { mFocusedObject = object; }
+		void setFocusedObject(Object* object) { mFocusedObject=object; }
 		Object* getFocusedObject() { return mFocusedObject; }
 		
 		// use these functions only in debug purposes
-		void _setFilename(chstr filename) { mFilename = filename; }
-		void _setFilenamePrefix(chstr prefix) { mFilenamePrefix = prefix; }
+		void _setFilename(chstr filename) { mFilename=filename; }
+		void _setFilenamePrefix(chstr prefix) { mFilenamePrefix=prefix; }
 		hstr _getFilename() { return mFilename; }
 		hstr _getFilenamePrefix() { return mFilenamePrefix; }
-		hmap<hstr, Object*>& getObjects() { return mObjects; }
+		hmap<hstr,Object*>& getObjects() { return mObjects; }
 
 		void updateTextures(float k);
 		virtual void update(float k);
-		void draw();
 		
 		void _destroyTexture(chstr tex);
 		void _destroyImage(chstr img);
 		void _destroyTexture(April::Texture* tex);
 		void _destroyImage(Image* img);
 
-		void OnMouseDown(float x, float y, int button);
-		void OnMouseUp(float x, float y, int button);
-		void OnMouseMove(float x, float y);
-		void OnKeyDown(unsigned int keycode);
-		void OnKeyUp(unsigned int keycode);
-		void OnChar(unsigned int charcode);
-		
 		virtual Object* getObject(chstr name);
 		virtual April::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
 		virtual hstr getText(chstr name);
 		virtual bool textExists(chstr name);
-		hmap<hstr, hstr>& getTexts() { return mTexts; }
+		TextMap& getTextmap() { return mTexts; }
 
-		hstr getName() { return mName; }
 		
-	protected:
-		hstr mName;
-		hstr mFilename;
-		hstr mFilenamePrefix;
-		bool mLoaded;
-		Object* mFocusedObject;
-		hmap<hstr, Object*> mObjects;
-		hmap<hstr, April::Texture*> mTextures;
-		hmap<hstr, Image*> mImages;
-		hmap<hstr, hstr> mTexts;
-
-		hmap<hstr, void (*)()> mCallbacks;
-
-		April::Texture* parseTexture(xml_node* node);
-		void parseRAMTexture(xml_node* node);
-		void parseCompositeImage(xml_node* node);
-		virtual void parseExternalXMLNode(xml_node* node) { }
-		virtual Object* parseExternalObjectClass(xml_node* node, chstr obj_name, grect rect) { return 0; }
-		
-		Object* recursiveObjectParse(xml_node* node, Object* parent);
-		
-		void readFile(chstr filename);
-		void _loadTexts(chstr path);
+		hstr getName();
 		
 	};
 

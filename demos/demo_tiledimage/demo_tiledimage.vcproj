@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="demo_tiledimage"
-	ProjectGUID="{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}"
+	Name="demo_simple"
+	ProjectGUID="{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
 	RootNamespace="demo_simple"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="win32_Debug|Win32"
-			OutputDirectory="..\..\bin\$(ConfigurationName)"
-			IntermediateDirectory="..\..\bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\bin\$(ConfigurationName)"
+			IntermediateDirectory="..\..\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../include;../../../april/include;../../../gtypes/include;../../../hltypes/include;../../../aprilui/include;../../../atres/include"
+				AdditionalIncludeDirectories="../../include;../../../april/include;../../../gtypes/include;../../../hltypes/include;../../../april/include;../../../atres/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libapril_d.lib libatres_d.lib libaprilui_d.lib libgtypes_d.lib libhltypes_d.lib"
+				AdditionalDependencies="OpenGL32.lib glu32.lib glut32.lib libapril_d.lib DevIL.lib libxml2.lib libaprilui_d.lib libatres_d.lib libgtypes_d.lib libhltypes_d.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="../../lib;../../bin/$(ConfigurationName);../../../lib/msvc;../../../atres/bin/$(ConfigurationName);../../../april/bin;../../../gtypes/bin/$(ConfigurationName);../../../hltypes/bin/$(ConfigurationName);../../../aprilui/bin/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../../lib;../../bin/win32_Debug;../../../lib/msvc;../../../atres/bin/win32_Debug;../../../april/bin/win32_Debug;../../../gtypes/bin/win32_Debug;../../../hltypes/bin/win32_Debug"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -89,13 +89,12 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\atres\bin\$(ConfigurationName)\libatres_d.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\april\bin\libapril_d.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\gtypes\bin\$(ConfigurationName)\libgtypes_d.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\hltypes\bin\$(ConfigurationName)\libhltypes_d.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\lib\msvc\*.dll ..\..\bin\$(ConfigurationName)"
 			/>
 		</Configuration>
 		<Configuration
 			Name="win32_Release|Win32"
-			OutputDirectory="..\..\bin\$(ConfigurationName)"
-			IntermediateDirectory="..\..\bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -119,7 +118,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../../include;../../../april/include;../../../gtypes/include;../../../hltypes/include;../../../aprilui/include;../../../atres/include"
+				AdditionalIncludeDirectories="../../include;../../../april/include;../../../gtypes/include;../../../hltypes/include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -138,9 +137,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libapril.lib libatres.lib libaprilui.lib libgtypes.lib libhltypes.lib"
+				AdditionalDependencies="OpenGL32.lib glu32.lib glut32.lib libapril.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../lib;../../bin/$(ConfigurationName);../../../lib/msvc;../../../atres/bin/$(ConfigurationName);../../../april/bin;../../../gtypes/bin/$(ConfigurationName);../../../hltypes/bin/$(ConfigurationName);../../../aprilui/bin/$(ConfigurationName)"
+				AdditionalLibraryDirectories="../../lib;../../Release"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -167,7 +166,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\atres\bin\$(ConfigurationName)\libatres.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\april\bin\libapril.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\gtypes\bin\$(ConfigurationName)\libgtypes.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\hltypes\bin\$(ConfigurationName)\libhltypes.dll ..\..\bin\$(ConfigurationName)&#x0D;&#x0A;copy ..\..\..\lib\msvc\*.dll ..\..\bin\$(ConfigurationName)"
 			/>
 		</Configuration>
 	</Configurations>
@@ -180,7 +178,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\demo_tiledimage.cpp"
+				RelativePath=".\demo_simple.cpp"
 				>
 			</File>
 		</Filter>

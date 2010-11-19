@@ -2,12 +2,11 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com)                                  *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
@@ -16,130 +15,135 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	ImageButton::ImageButton(chstr name, grect rect) :
-		ImageBox(name, rect)
+	ImageButton::ImageButton(chstr name,float x,float y,float w,float h) :
+		ImageBox(name,x,y,w,h)
 	{
 		_setTypeName("ImageButton");
-		mPushed = false;
-		mNormalImage = NULL;
-		mPushedImage = NULL;
-		mHoverImage = NULL;
-		mDisabledImage = NULL;
+		mPushed=0;
+		mNormalImage=mPushedImage=mHoverImage=mDisabledImage=0;
 	}
 
-	void ImageButton::OnDraw(gvec2 offset)
+	void ImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		grect rect = mRect + offset;
-		if (!isDerivedEnabled() && mDisabledImage != NULL)
+		if (!getDerivedEnabled() && mDisabledImage)
 		{
-			mDisabledImage->draw(rect);
+			mDisabledImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,1,1,1,1);
 			return;
 		}
-		if (mPushed && mPushedImage == NULL && isCursorInside())
+		if (mPushed && !mPushedImage && isCursorInside())
 		{
-			April::Color color;
-			color *= 0.7f;
-			color.a = getDerivedAlpha() * 255;
-			mImage->draw(rect, color);
+			float alpha=getDerivedAlpha();
+			mImage->draw(mX+offset_x,mY+offset_y,mWidth,mHeight,0.7f,0.7f,0.7f,alpha);
 			return;
 		}
-		ImageBox::OnDraw(offset);
+		ImageBox::OnDraw(offset_x,offset_y);
 	}
 
 	void ImageButton::update(float k)
 	{
-		mImage = mNormalImage;
-		if (mImage == NULL)
+		mImage=mNormalImage;
+		if (!mImage)
 		{
-			mImage = mDataset->getImage("null");
+			mImage=mDataPtr->getImage("null");
 		}
-		if (!isDerivedEnabled())
+		if (!getDerivedEnabled())
 		{
-			if (mDisabledImage != NULL)
-			{
-				mImage = mDisabledImage;
-			}
+			if (mDisabledImage) mImage=mDisabledImage;
 		}
 		else if (isCursorInside())
 		{
 			if (mPushed)
 			{
-				if (mPushedImage != NULL)
+				if (mPushedImage)
 				{
-					mImage = mPushedImage;
+					mImage=mPushedImage;
 				}
 			}
-			else if (mHoverImage != NULL)
+			else if (mHoverImage)
 			{
-				mImage = mHoverImage;
+				mImage=mHoverImage;
 			}
 		}
 		ImageBox::update(k);
 	}
 
+	void ImageButton::setPushedImage(Image* image)
+	{
+		mPushedImage=image;
+	}
+
+	void ImageButton::setHoverImage(Image* image)
+	{
+		mHoverImage=image;
+	}
+
+	void ImageButton::setDisabledImage(Image* image)
+	{
+		mDisabledImage=image;
+	}
+
 	void ImageButton::setPushedImageByName(chstr image)
 	{
-		setPushedImage(mDataset->getImage(image));
+		setPushedImage(mDataPtr->getImage(image));
 	}
 
 	void ImageButton::setHoverImageByName(chstr image)
 	{
-		setHoverImage(mDataset->getImage(image));
+		setHoverImage(mDataPtr->getImage(image));
 	}
 
 	void ImageButton::setDisabledImageByName(chstr image)
 	{
-		setDisabledImage(mDataset->getImage(image));
+		setDisabledImage(mDataPtr->getImage(image));
 	}
 
 	void ImageButton::setImage(Image* image)
 	{
-		ImageBox::setImage(image);
-		mNormalImage = image;
+		mImage=mNormalImage=image;
 	}
 	
-	bool ImageButton::OnMouseDown(float x, float y, int button)
+	void ImageButton::setImageByName(chstr image)
 	{
-		if (Object::OnMouseDown(x, y, button))
-		{
-			return true;
-		}
+		setImage(mDataPtr->getImage(image));
+		mImageName=image;
+	}
+	
+	bool ImageButton::OnMouseDown(float x,float y,int button)
+	{
+		if (Object::OnMouseDown(x,y,button)) return true;
 		if (isCursorInside())
 		{
-			mPushed = true;
+			mPushed=true;
 			return true;
 		}
 		return false;
 	}
 
-	bool ImageButton::OnMouseUp(float x, float y, int button)
+	bool ImageButton::OnMouseUp(float x,float y,int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
-		{
-			return true;
-		}
+		if (Object::OnMouseUp(x,y,button)) return true;
 		if (mPushed && isCursorInside())
 		{
-			mPushed = false;
-			triggerEvent("Click", x, y, 0);
+			mPushed=false;
+			triggerEvent("Click",x,y,0);
 			return true;
 		}
-		mPushed = false;
+		mPushed=false;
 		return false;
 	}
 
-	void ImageButton::OnMouseMove(float x, float y)
+	void ImageButton::OnMouseMove(float x,float y)
 	{
-		Object::OnMouseMove(x, y);
+		Object::OnMouseMove(x,y);
 	}
 
-	void ImageButton::setProperty(chstr name, chstr value)
+	void ImageButton::setProperty(chstr name,chstr value)
 	{
-		Object::setProperty(name, value);
-		if		(name == "image")			setImage(mDataset->getImage(value));
-		else if (name == "pushed_image")	setPushedImage(mDataset->getImage(value));
-		else if (name == "hover_image")		setHoverImage(mDataset->getImage(value));
-		else if (name == "disabled_image")	setDisabledImage(mDataset->getImage(value));
+		Object::setProperty(name,value);
+		if (name == "image")			setImage(mDataPtr->getImage(value));
+		if (name == "pushed_image")     setPushedImage(mDataPtr->getImage(value));
+		if (name == "hover_image")      setHoverImage(mDataPtr->getImage(value));
+		if (name == "disabled_image")   setDisabledImage(mDataPtr->getImage(value));
 	}
 	
 }

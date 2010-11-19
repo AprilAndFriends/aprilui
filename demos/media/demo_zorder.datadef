@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <DataDefinition>
-	<Texture filename="texture">
+	<Texture filename="texture.jpg">
 		<Image name="center" x="0" y="0" w="512" h="512"/>
     </Texture>
 	<Object type="DummyObject" name="root" x="0" y="0" w="800" h="600">

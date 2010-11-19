@@ -2,7 +2,7 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
@@ -19,47 +19,50 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace AprilUI
 {
 	LabelBase::LabelBase(chstr name) :
-		   mTextColor(255, 255, 255, 255)
+		   mTextColor(255,255,255,255)
 	{
-		mHorzFormatting = Atres::CENTER_WRAPPED;
-		mVertFormatting = Atres::CENTER;
-		mFontEffect = Atres::NONE;
-		mDrawOffset = gvec2();
-		mTextFormatting = true;
-		mText = "LabelBase: " + name;
+		mHorzFormatting=Atres::CENTER_WRAPPED;
+		mVertFormatting=Atres::CENTER;
+		mFontEffect=Atres::NONE;
+		mDrawOffsetX=0.0f;
+		mDrawOffsetY=0.0f;
+		mTextFormatting=true;
+		mText="LabelBase: "+name;
 	}
 	
-	void LabelBase::_drawLabel(grect rect, float alpha)
+	void LabelBase::_drawLabel(float offset_x,float offset_y,float width,float height,float alpha)
 	{
 #ifdef _DEBUG
 		if (AprilUI::isDebugMode())
 		{
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
+			April::rendersys->drawColoredQuad(offset_x, offset_y, width, height, 0, 0, 0, 0.5f);
 		}
 #endif
 		if (mText.size() == 0)
 		{
 			return;
 		}
-		hstr text = mText;
+		
+		hstr text=mText;
 		switch (mFontEffect)
 		{
 		case Atres::BORDER:
-			text = "[b]" + text;
+			text="[b]"+text;
 			break;
 		case Atres::SHADOW:
-			text = "[s]" + text;
+			text="[s]"+text;
 			break;
 		}
 		April::Color color(mTextColor);
-		color.a = (unsigned char)(color.a * alpha);
+		color.a *= alpha;
+		grect rect(offset_x,offset_y,width,height);
 		if (mTextFormatting)
 		{
-			Atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
+			Atres::drawText(mFontName,rect,text,mHorzFormatting,mVertFormatting,color,gvec2(-mDrawOffsetX,-mDrawOffsetY));
 		}
 		else
 		{
-			Atres::drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
+			Atres::drawTextUnformatted(mFontName,rect,text,mHorzFormatting,mVertFormatting,color,gvec2(-mDrawOffsetX,-mDrawOffsetY));
 		}
 	}
 
@@ -93,8 +96,13 @@ namespace AprilUI
 			else if (value == "shadow")    setFontEffect(Atres::SHADOW);
 			else if (value == "border")    setFontEffect(Atres::BORDER);
 		}
-		else if (name == "offset_x") mDrawOffset.x = (float)value;
-		else if (name == "offset_y") mDrawOffset.y = (float)value;
+		else if (name == "offset_x") setDrawOffsetX(value);
+		else if (name == "offset_y") setDrawOffsetY(value);
 	}
 
+	void LabelBase::setTextColor(chstr hex)
+	{
+		mTextColor.setColor(hex);
+	}
+	
 }

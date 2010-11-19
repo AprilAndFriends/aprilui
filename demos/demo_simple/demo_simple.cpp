@@ -2,35 +2,32 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                           *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com),                                 *
+                   Ivan Vucica (ivan@vucica.net)
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <stdio.h>
+#include "april/RenderSystem.h"
+#include "aprilui/AprilUI.h"
+#include "aprilui/Dataset.h"
+#include "aprilui/Objects.h"
+#include "atres/Atres.h"
+#include <iostream>
 
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
-#include <april/RenderSystem.h>
-#include <april/Window.h>
-#include <aprilui/AprilUI.h>
-#include <aprilui/Dataset.h>
-#include <aprilui/Objects.h>
-#include <atres/Atres.h>
-
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
 AprilUI::Dataset* dataset;
 
-bool render(float time)
+bool render(float time_increase)
 {
-	April::rendersys->clear();
-	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	rendersys->clear();
+	rendersys->setOrthoProjection(800,600);
+
 	dataset->getObject("root")->draw();
-	dataset->update(time);
+	dataset->getObject("root")->update(time_increase);
 	return true;
 }
 
@@ -82,22 +79,23 @@ int main()
 #endif
 	try
 	{
-		April::init("Simple", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_simple");
-		April::rendersys->getWindow()->setUpdateCallback(&render);
+		April::init("OpenGL",800,600,0,"demo_simple");
+		rendersys->registerUpdateCallback(render);
 		AprilUI::init();
-		Atres::init();
-		Atres::loadFont("../media/arial.font");
-		dataset = new AprilUI::Dataset("../media/demo_simple.datadef");
+
+		dataset=new AprilUI::Dataset("../media/demo_simple.datadef");
 		dataset->load();
-		April::rendersys->getWindow()->enterMainLoop();
+
+		Atres::loadFont("../media/arial.font");
+
+		rendersys->enterMainLoop();
 		delete dataset;
 		AprilUI::destroy();
-		Atres::destroy();
 		April::destroy();
 	}
 	catch (AprilUI::_GenericException e)
 	{
-		printf("%s\n", e.getType().c_str());
+		std::cout << e.getType() << "\n";
 	}
 	return 0;
 }

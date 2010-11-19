@@ -2,13 +2,11 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <gtypes/Rectangle.h>
-#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
@@ -16,35 +14,32 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	TextImageButton::TextImageButton(chstr name, grect rect) :
+	TextImageButton::TextImageButton(chstr name,float x,float y,float w,float h) :
 		LabelBase(name),
-		ImageButton(name, rect)
+		ImageButton(name,x,y,w,h)
 	{
 		_setTypeName("TextImageButton");
-		mText = "TextImageButton: " + name;
+		mText="TextImageButton: "+name;
 	}
 
-	void TextImageButton::OnDraw(gvec2 offset)
+	void TextImageButton::OnDraw(float offset_x,float offset_y)
 	{
-		ImageButton::OnDraw(offset);
-		float alpha = getDerivedAlpha();
-		if (!isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
-		{
-			alpha /= 2;
-		}
-		LabelBase::_drawLabel(mRect + offset, alpha);
+		ImageButton::OnDraw(offset_x,offset_y);
+		float alpha=getDerivedAlpha();
+		if (!getDerivedEnabled() || !mImage && !mNormalImage && !mPushedImage && mPushed) alpha/=2;
+		LabelBase::_drawLabel(mX+offset_x,mY+offset_y,mWidth,mHeight,alpha);
 	}
 
 	void TextImageButton::setTextKey(chstr key)
 	{
-		setText(mDataset->getText(key));
+		setText(mDataPtr->getText(key));
 	}
 
 	void TextImageButton::setProperty(chstr name,chstr value)
 	{
-		LabelBase::setProperty(name, value);
-		ImageButton::setProperty(name, value);
-		if (name == "textkey")	setTextKey(value);
+		LabelBase::setProperty(name,value);
+		ImageButton::setProperty(name,value);
+		if (name == "textkey") setTextKey(value);
 	}
 	
 }
