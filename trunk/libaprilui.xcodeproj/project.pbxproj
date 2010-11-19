@@ -88,7 +88,9 @@
 		7FCD397712018C7B00608217 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396412018C7B00608217 /* Event.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FCD397812018C7B00608217 /* EventArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396512018C7B00608217 /* EventArgs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FF4F1D012017ACA00F0BBB7 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
-		C9B7FFD21271BE8500F79E1A /* AnimatorRotationOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */; };
+		C9A6A30A1296843000E3A6D3 /* AnimatorScaleOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = C9A6A3091296843000E3A6D3 /* AnimatorScaleOscillator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9A6A30C1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */; };
+		C9B7FFD21271BE8500F79E1A /* AnimatorRotationOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9B7FFD51271BE9500F79E1A /* AnimatorRotationOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +178,8 @@
 		7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CallbackEvent.cpp; path = src/CallbackEvent.cpp; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* aprilui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = aprilui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9A6A3091296843000E3A6D3 /* AnimatorScaleOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorScaleOscillator.h; path = include/aprilui/AnimatorScaleOscillator.h; sourceTree = "<group>"; };
+		C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScaleOscillator.cpp; sourceTree = "<group>"; };
 		C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorRotationOscillator.h; path = include/aprilui/AnimatorRotationOscillator.h; sourceTree = "<group>"; };
 		C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotationOscillator.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -256,6 +260,7 @@
 		7F6D54811201B06200A2BDF6 /* animators */ = {
 			isa = PBXGroup;
 			children = (
+				C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */,
 				C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */,
 				7F33B1FF120FE16F004B5E89 /* Animator.cpp */,
 				7F38C718120967CC002B5134 /* AnimatorAlphaFader.cpp */,
@@ -317,6 +322,7 @@
 		7FC8041211EC71CF00851062 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				C9A6A3091296843000E3A6D3 /* AnimatorScaleOscillator.h */,
 				C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */,
 				7F33B207120FE2D5004B5E89 /* Animator.h */,
 				7FB0C7B0120AE117005EA739 /* Object.h */,
@@ -419,6 +425,7 @@
 				7FB0C7B1120AE117005EA739 /* Object.h in Headers */,
 				7F33B208120FE2D5004B5E89 /* Animator.h in Headers */,
 				C9B7FFD21271BE8500F79E1A /* AnimatorRotationOscillator.h in Headers */,
+				C9A6A30A1296843000E3A6D3 /* AnimatorScaleOscillator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +527,7 @@
 				7FB0C7AF120AE107005EA739 /* Object.cpp in Sources */,
 				7F33B200120FE16F004B5E89 /* Animator.cpp in Sources */,
 				C9B7FFD51271BE9500F79E1A /* AnimatorRotationOscillator.cpp in Sources */,
+				C9A6A30C1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +559,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -560,6 +569,7 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -595,6 +605,40 @@
 			};
 			name = Release;
 		};
+		7FC8A8B11296C772003D3931 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = i386;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = 4.2;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = "App Store";
+		};
+		7FC8A8B21296C772003D3931 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx10.6;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "App Store";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -603,6 +647,7 @@
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
 				1DEB91AF08733DA50010E9CD /* Release */,
+				7FC8A8B21296C772003D3931 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -612,6 +657,7 @@
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
 				1DEB91B308733DA50010E9CD /* Release */,
+				7FC8A8B11296C772003D3931 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
