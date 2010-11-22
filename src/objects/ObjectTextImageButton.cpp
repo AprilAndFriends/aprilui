@@ -12,12 +12,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
+#include "ObjectLabelBase.h"
 #include "ObjectTextImageButton.h"
 
 namespace AprilUI
 {
 	TextImageButton::TextImageButton(chstr name, grect rect) :
-		LabelBase(name),
+		LabelBase(),
 		ImageButton(name, rect)
 	{
 		_setTypeName("TextImageButton");

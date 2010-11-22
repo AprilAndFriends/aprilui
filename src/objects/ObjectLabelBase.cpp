@@ -18,15 +18,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
-	LabelBase::LabelBase(chstr name) :
-		   mTextColor(255, 255, 255, 255)
+	LabelBase::LabelBase() :
+		mTextColor(255, 255, 255, 255)
 	{
 		mHorzFormatting = Atres::CENTER_WRAPPED;
 		mVertFormatting = Atres::CENTER;
 		mFontEffect = Atres::NONE;
 		mDrawOffset = gvec2();
 		mTextFormatting = true;
-		mText = "LabelBase: " + name;
+		mText = "";
 	}
 	
 	void LabelBase::_drawLabel(grect rect, float alpha)

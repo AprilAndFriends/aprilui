@@ -31,6 +31,7 @@
       <File Name="src/objects/ObjectTextImageButton.cpp"/>
       <File Name="src/objects/ObjectToggleButton.cpp"/>
       <File Name="src/objects/Object.cpp"/>
+      <File Name="src/objects/ObjectButtonBase.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="animators">
       <File Name="src/animators/AnimatorAlphaFader.cpp"/>
@@ -40,7 +41,7 @@
       <File Name="src/animators/AnimatorColorAlternator.cpp"/>
       <File Name="src/animators/AnimatorEarthquake.cpp"/>
       <File Name="src/animators/AnimatorFrameAnimation.cpp"/>
-	  <File Name="src/animators/AnimatorMoveOscillator.cpp"/>
+      <File Name="src/animators/AnimatorMoveOscillator.cpp"/>
       <File Name="src/animators/AnimatorMover.cpp"/>
       <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
       <File Name="src/animators/AnimatorRotator.cpp"/>
@@ -77,7 +78,7 @@
       <File Name="include/aprilui/AnimatorColorAlternator.h"/>
       <File Name="include/aprilui/AnimatorEarthquake.h"/>
       <File Name="include/aprilui/AnimatorFrameAnimation.h"/>
-	  <File Name="include/aprilui/AnimatorMoveOscillator.h"/>
+      <File Name="include/aprilui/AnimatorMoveOscillator.h"/>
       <File Name="include/aprilui/AnimatorMover.h"/>
       <File Name="include/aprilui/AnimatorRotator.h"/>
       <File Name="include/aprilui/AnimatorScaler.h"/>
@@ -103,6 +104,7 @@
       <File Name="include/aprilui/ObjectTextImageButton.h"/>
       <File Name="include/aprilui/ObjectToggleButton.h"/>
       <File Name="include/aprilui/Object.h"/>
+      <File Name="include/aprilui/ObjectButtonBase.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="include/aprilui/Image.h"/>
