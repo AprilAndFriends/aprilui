@@ -32,7 +32,7 @@ namespace AprilUI
 		grect rect = mRect + offset;
 		if (!isDerivedEnabled() && mDisabledImage != NULL)
 		{
-			mDisabledImage->draw(rect);
+			mDisabledImage->draw(rect, April::Color(), mAngle);
 			return;
 		}
 		if (mPushed && mPushedImage == NULL && isCursorInside())
@@ -40,7 +40,7 @@ namespace AprilUI
 			April::Color color;
 			color *= 0.7f;
 			color.a = getDerivedAlpha() * 255;
-			mImage->draw(rect, color);
+			mImage->draw(rect, color, mAngle);
 			return;
 		}
 		ImageBox::OnDraw(offset);

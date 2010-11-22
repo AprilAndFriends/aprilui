@@ -14,7 +14,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 
 #include "AnimatorRotator.h"
-#include "ObjectRotationImageBox.h"
+#include "ObjectImageBox.h"
 
 namespace AprilUI
 {
@@ -42,11 +42,11 @@ namespace AprilUI
 			{
 				if (mInitialAngle < -1000000.0f)
 				{
-					mInitialAngle = ((RotationImageBox*)mParent)->getAngle();
+					mInitialAngle = ((ImageBox*)mParent)->getAngle();
 				}
 				else
 				{
-					((RotationImageBox*)mParent)->setAngle(mInitialAngle);
+					((ImageBox*)mParent)->setAngle(mInitialAngle);
 				}
 				mSpeed = mInitialSpeed;
 			}
@@ -60,7 +60,7 @@ namespace AprilUI
                 mDelay = hmax(0.0f, mDelay - k);
                 return;
             }
-			RotationImageBox* imageBox = (RotationImageBox*)mParent;
+			ImageBox* imageBox = (ImageBox*)mParent;
 			float angle = imageBox->getAngle();
 			if (fabs(mAccel) > 0.01f)
 			{

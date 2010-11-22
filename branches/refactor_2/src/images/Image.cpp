@@ -148,7 +148,7 @@ namespace AprilUI
 		tVertices[2].x = -center.x;			tVertices[2].y = rect.h - center.y;
 		tVertices[3].x = rect.w - center.x;	tVertices[3].y = rect.h - center.y;
 		
-		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
+		gmat4 temp_matrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
 		April::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		April::rendersys->rotate(angle);

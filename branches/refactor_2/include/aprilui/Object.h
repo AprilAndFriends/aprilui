@@ -42,6 +42,7 @@ namespace AprilUI
 		void setZOrder(int zorder);
 		
 		bool isCursorInside();
+		bool angleEquals(float angle);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
 		float getX() { return mRect.x; }
@@ -60,6 +61,8 @@ namespace AprilUI
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
 		void setRect(grect value) { mRect = value; }
+		float getAngle() { return mAngle; }
+		virtual void setAngle(float value) { mAngle = value; }
 
 		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
 		void setVisible(bool value) { mVisible = value; }
@@ -105,6 +108,7 @@ namespace AprilUI
 		grect mRect;
 		int mZOrder;
 		float mAlpha;
+		float mAngle;
 		bool mVisible;
 		bool mEnabled;
 		bool mClickthrough;

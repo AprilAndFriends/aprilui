@@ -39,6 +39,7 @@ namespace AprilUI
 		mClickthrough = false;
 		mInheritsAlpha = true;
 		mAlpha = 1.0f;
+		mAngle = 0.0f;
 		mDataset = NULL;
 	}
 
@@ -125,7 +126,7 @@ namespace AprilUI
 			}
 		}
 	}
-
+	
 	void Object::update(float k)
 	{
 		foreach (Object*, it, mChildren)
@@ -317,14 +318,24 @@ namespace AprilUI
 
 	void Object::setProperty(chstr name, chstr value)
 	{
-		if      (name == "visible")        setVisible(value);
-		else if (name == "zorder")         setZOrder(value);
-		else if (name == "enabled")        setEnabled(value);
-		else if (name == "clickthrough")   setClickthrough(value);
-		else if (name == "inherits_alpha") setInheritsAlpha(value);
-		else if (name == "alpha")          setAlpha(value);
+		if      (name == "visible")			setVisible(value);
+		else if (name == "zorder")			setZOrder(value);
+		else if (name == "enabled")			setEnabled(value);
+		else if (name == "clickthrough")	setClickthrough(value);
+		else if (name == "inherits_alpha")	setInheritsAlpha(value);
+		else if (name == "alpha")			setAlpha(value);
+		else if (name == "angle")			setAngle(value);
 	}
 
+	bool Object::angleEquals(float angle)
+	{
+		float s1 = dsin(angle);
+		float s2 = dsin(mAngle);
+		float c1 = dcos(angle);
+		float c2 = dcos(mAngle);
+		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
+	}
+	
 	Object* Object::getChildUnderPoint(float x, float y)
 	{
 		return getChildUnderPoint(gvec2(x, y));
