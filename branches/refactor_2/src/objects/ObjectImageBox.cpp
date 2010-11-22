@@ -90,7 +90,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			return true;
 		}
@@ -103,7 +103,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			triggerEvent("Click", x, y, 0);
 			return true;

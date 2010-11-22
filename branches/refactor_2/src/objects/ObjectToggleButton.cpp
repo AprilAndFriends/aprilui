@@ -47,7 +47,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			mPushed = !mPushed;
 			Event* event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
@@ -67,7 +67,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			triggerEvent("Click", x, y, 0);
 			return true;

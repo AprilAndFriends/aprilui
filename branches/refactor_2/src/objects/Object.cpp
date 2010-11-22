@@ -136,22 +136,12 @@ namespace AprilUI
 
 	bool Object::isCursorInside()
 	{
-		gvec2 pos = getCursorPosition();
+		gvec2 position = getCursorPosition();
 		for (Object* p = mParent; p != NULL; p = p->mParent)
 		{
-			pos -= p->getPosition();
+			position -= p->getPosition();
 		}
-		return isPointInside(pos);
-	}
-
-	bool Object::isPointInside(gvec2 position)
-	{
 		return mRect.isPointInside(position);
-	}
-
-	bool Object::isPointInside(float x, float y)
-	{
-		return mRect.isPointInside(x, y);
 	}
 
 	bool Object::OnMouseDown(float x, float y, int button)
@@ -342,7 +332,7 @@ namespace AprilUI
 	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
-		if (!isVisible() || !isPointInside(pos))
+		if (!isVisible() || !mRect.isPointInside(pos))
 		{
 			return NULL;
 		}

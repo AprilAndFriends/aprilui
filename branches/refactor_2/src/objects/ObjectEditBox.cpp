@@ -163,7 +163,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			mPushed = true;
 			return true;
@@ -177,7 +177,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (mPushed && isPointInside(x, y))
+		if (mPushed && isCursorInside())
 		{
 			setCursorIndexAt(x, y);
 			if (mDataset)

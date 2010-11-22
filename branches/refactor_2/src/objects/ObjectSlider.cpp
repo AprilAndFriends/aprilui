@@ -36,7 +36,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			mPushed = true;
 			setValue((x - mRect.x) / (mRect.w - 4));
@@ -52,7 +52,7 @@ namespace AprilUI
 		{
 			return true;
 		}
-		if (mPushed && isPointInside(x, y))
+		if (mPushed && isCursorInside())
 		{
 			mPushed = false;
 			return true;
