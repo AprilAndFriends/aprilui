@@ -14,11 +14,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "AprilUIExport.h"
-#include "ObjectRotationImageBox.h"
+#include "ObjectImageBox.h"
 
 namespace AprilUI
 {
-	class AprilUIExport RotatableImageBox : public RotationImageBox
+	class AprilUIExport RotatableImageBox : public ImageBox
 	{
 	public:
 		RotatableImageBox(chstr name, grect rect);
