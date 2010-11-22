@@ -23,7 +23,7 @@ namespace AprilUI
 	class AprilUIExport LabelBase
 	{
 	public:
-		LabelBase(chstr name);
+		LabelBase();
 		
 		hstr getText() { return mText; }
 		virtual void setText(chstr value) { mText = value; }

@@ -7,53 +7,46 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <gtypes/Rectangle.h>
-#include <gtypes/Vector2.h>
-#include <hltypes/hstring.h>
-
-#include "Dataset.h"
-#include "ObjectLabel.h"
+#include "AprilUI.h"
+#include "ObjectButtonBase.h"
 
 namespace AprilUI
 {
-	Label::Label(chstr name, grect rect) :
-		LabelBase(),
-		Object("Label", name, rect)
+	ButtonBase::ButtonBase()
 	{
-		mText = "Label: " + name;
+		mPushed = false;
+		mHover = false;
+	}
+	
+	void ButtonBase::update(float k)
+	{
+		mHover = isCursorInside();
 	}
 
-	void Label::OnDraw(gvec2 offset)
+	bool ButtonBase::OnMouseDown(float x, float y, int button)
 	{
-		Object::OnDraw(offset);
-		float alpha = getDerivedAlpha();
-		if (!isDerivedEnabled())
+		if (mHover)
 		{
-			alpha /= 2;
+			mPushed = true;
+			return true;
 		}
-		LabelBase::_drawLabel(mRect + offset, alpha);
+		return false;
 	}
 
-	void Label::notifyEvent(chstr name, void* params)
+	bool ButtonBase::OnMouseUp(float x, float y, int button)
 	{
-		if (name == "UpdateText")
+		if (mPushed && mHover)
 		{
-			setTextKey(mTextKey);
+			mPushed = false;
+			return true;
 		}
-		Object::notifyEvent(name, params);
+		mPushed = false;
+		return false;
 	}
 
-	void Label::setTextKey(chstr key)
+	void ButtonBase::OnMouseMove(float x, float y)
 	{
-		mTextKey = key;
-		setText(mDataset->getText(key));
-	}
-
-	void Label::setProperty(chstr name, chstr value)
-	{
-		LabelBase::setProperty(name, value);
-		Object::setProperty(name, value);
-		if (name == "textkey")	setTextKey(value);
+		mHover = isCursorInside();
 	}
 	
 }

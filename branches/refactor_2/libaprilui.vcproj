@@ -270,6 +270,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\objects\ObjectButtonBase.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\objects\ObjectCallbackObject.cpp"
 					>
 				</File>
@@ -473,6 +477,10 @@
 				>
 				<File
 					RelativePath=".\include\aprilui\Object.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\ObjectButtonBase.h"
 					>
 				</File>
 				<File
