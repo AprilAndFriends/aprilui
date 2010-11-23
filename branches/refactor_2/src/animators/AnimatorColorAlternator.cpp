@@ -25,12 +25,12 @@ namespace AprilUI
 		{
 			mLow.setColor("00000000");
 			mHigh.setColor("FFFFFFFF");
-			mTimer = 0.0f;
 			mSpeed = 2.0f;
 		}
 
 		void ColorAlternator::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if		(name == "low_color")	mLow.setColor(value);
 			else if (name == "high_color")	mHigh.setColor(value);
 			else if (name == "speed")		mSpeed = value;

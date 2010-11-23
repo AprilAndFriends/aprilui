@@ -27,6 +27,7 @@ namespace AprilUI
 
 		void AlphaHover::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "min")		mMin = mOwnerAlpha = value;
 			else if (name == "max")		mMax = value;
 			else if (name == "speed")	mSpeed = value;

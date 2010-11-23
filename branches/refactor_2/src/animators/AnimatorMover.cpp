@@ -24,18 +24,17 @@ namespace AprilUI
 		{
 			mDest.x = -10000.0f;
 			mDest.y = -10000.0f;
-            mDelay = 0.0f;
 		}
 
 		void Mover::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "speed_x")	mSpeed.x = mInitialS.x = value;
 			else if (name == "speed_y")	mSpeed.y = mInitialS.y = value;
 			else if (name == "accel_x")	mAccel.x = value;
 			else if (name == "accel_y")	mAccel.y = value;
 			else if (name == "dest_x")	mDest.x = value;
 			else if (name == "dest_y")	mDest.y = value;
-            else if (name == "delay")	mDelay = value;
 		}
 
 		void Mover::notifyEvent(chstr name, void* params)

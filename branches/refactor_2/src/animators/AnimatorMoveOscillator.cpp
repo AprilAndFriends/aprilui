@@ -28,18 +28,17 @@ namespace AprilUI
 			mSpeed.y = 1.0f;
 			mInitialPosition.x = -10001;
 			mInitialPosition.y = -10001;
-			mTimer = 0.0f;
 		}
 
 		void MoveOscillator::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "base_x") mBaseline.x = value;
 			else if (name == "base_y") mBaseline.y = value;
 			else if (name == "amplitude_x") mAmplitude.x = value;
 			else if (name == "amplitude_y") mAmplitude.y = value;
 			else if (name == "speed_x") mSpeed.x = value;
 			else if (name == "speed_y") mSpeed.y = value;
-			else if (name == "timer") mTimer = value;
 		}
 
 		void MoveOscillator::notifyEvent(chstr eventName, void* params)

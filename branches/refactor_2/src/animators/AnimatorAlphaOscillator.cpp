@@ -23,11 +23,11 @@ namespace AprilUI
 			mAmplitude = 0.5f;
 			mSpeed = 360.0f;
 			mInitialAlpha = -10001.0f;
-			mTimer = 0.0f;
 		}
 
 		void AlphaOscillator::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "base")		mBaseline = value;
 			else if (name == "amplitude")	mAmplitude = value;
 			else if (name == "speed")		mSpeed = value;

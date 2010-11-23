@@ -30,10 +30,8 @@ namespace AprilUI
 			void update(float k);
 			
 		protected:
-			float mDelay;
 			float mDuration;
 			float mFrequency;
-			float mTimer;
 			float mDelayTimer;
 			float mDurationTimer;
 			bool mStartVisibility;
