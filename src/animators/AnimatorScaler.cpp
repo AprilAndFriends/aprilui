@@ -30,18 +30,17 @@ namespace AprilUI
 			mInitialSize.x = 0.0f;
 			mDest.y = -10000.0f;
 			mDest.x = -10000.0f;
-            mDelay = 0.0f;
 		}
 
 		void Scaler::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "speed_w")	mSpeed.x = mInitialS.x = value;
 			else if (name == "speed_h")	mSpeed.y = mInitialS.y = value;
 			else if (name == "accel_w")	mAccel.x = value;
 			else if (name == "accel_h")	mAccel.y = value;
 			else if (name == "dest_w")	mDest.x = value;
 			else if (name == "dest_h")	mDest.y = value;
-            else if (name == "delay")	mDelay = value;
 		}
 
 		void Scaler::notifyEvent(chstr name, void* params)

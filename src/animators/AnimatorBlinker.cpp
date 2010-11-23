@@ -19,9 +19,7 @@ namespace AprilUI
 	{
 		Blinker::Blinker(chstr name) : Animator("Animators::Blinker", name, grect(0, 0, 1, 1))
 		{
-			mDelay = 0.0f;
 			mDuration = 0.0f;
-			mTimer = 0.0f;
 			mDelayTimer = 0.0f;
 			mDurationTimer = 0.0f;
 			mStartVisibility = false;
@@ -31,8 +29,8 @@ namespace AprilUI
 
 		void Blinker::setProperty(chstr name, chstr value)
 		{
-			if      (name == "delay")				mDelay = value;
-			else if (name == "duration")			mDuration = value;
+			Animator::setProperty(name, value);
+			if      (name == "duration")			mDuration = value;
 			else if (name == "freq")				mFrequency = value;
 			else if (name == "start_visibility")	mStartVisibility = (bool)value;
 			else if (name == "end_visibility")		mEndVisibility = (bool)value;

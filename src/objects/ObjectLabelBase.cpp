@@ -51,6 +51,12 @@ namespace AprilUI
 			text = "[s]" + text;
 			break;
 		}
+		/*
+		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
+		April::rendersys->setIdentityTransform();
+		April::rendersys->translate(rect.w / 2, rect.h / 2);
+		April::rendersys->rotate(angle);
+		*/
 		April::Color color(mTextColor);
 		color.a = (unsigned char)(color.a * alpha);
 		if (mTextFormatting)
@@ -61,6 +67,9 @@ namespace AprilUI
 		{
 			Atres::drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
 		}
+		/*
+		April::rendersys->setModelviewMatrix(temp_matrix);
+		*/
 	}
 
 	void LabelBase::setProperty(chstr name,chstr value)

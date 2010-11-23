@@ -25,15 +25,14 @@ namespace AprilUI
 			mSpeed = 1.0f;
 			mInitialSize.x = -10001;
 			mInitialSize.y = -10001;
-			mTimer = 0.0f;
 		}
 
 		void ScaleOscillator::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "base") mBaseline = value;
 			else if (name == "amplitude") mAmplitude = value;
 			else if (name == "speed") mSpeed = value;
-			else if (name == "timer") mTimer = value;
 		}
 
 		void ScaleOscillator::notifyEvent(chstr eventName, void* params)

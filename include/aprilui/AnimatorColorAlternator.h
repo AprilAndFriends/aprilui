@@ -34,7 +34,6 @@ namespace AprilUI
 		protected:
 			April::Color mLow;
 			April::Color mHigh;
-			float mTimer;
 			float mSpeed;
 			
 		};

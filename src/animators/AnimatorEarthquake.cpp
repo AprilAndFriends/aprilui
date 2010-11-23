@@ -30,7 +30,6 @@ namespace AprilUI
 			if (name == "AttachToObject")
 			{
 				mInitial = mParent->getPosition();
-				mTimer = 0.0f;
 				mFreqTimer = 0.0f;
 			}
 			Object::notifyEvent(name, params);
@@ -38,6 +37,7 @@ namespace AprilUI
 		
 		void Earthquake::setProperty(chstr name,chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "intensity")		mIntensity = value;
 			else if (name == "duration")		mDuration = value;
 			else if (name == "const_duration")	mConstDuration = value;

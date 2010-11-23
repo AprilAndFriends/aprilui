@@ -18,10 +18,42 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace AprilUI
 {
+	enum AnimationFunction
+	{
+		Sine,
+		Square,
+		Saw,
+		Triangle,
+		Linear
+	};
+	
 	class AprilUIExport Animator : public Object
 	{
 	public:
 		Animator(chstr type, chstr name, grect rect);
+		
+		AnimationFunction getAnimationFunction() { return mFunction; }
+		void setAnimationFunction(AnimationFunction value) { mFunction = value; }
+		float getTimer() { return mTimer; }
+		void setTimer(float value) { mTimer = value; }
+		float getDelay() { return mDelay; }
+		void setDelay(float value) { mDelay = value; }
+		float getPeriods() { return mPeriods; }
+		void setPeriods(float value) { mPeriods = value; }
+		bool getReset() { return mReset; }
+		void setReset(bool value) { mReset = value; }
+		
+		void setProperty(chstr name, chstr value);
+		
+	protected:
+		AnimationFunction mFunction;
+		bool mTimer;
+		bool mDelay;
+		float mPeriods;
+		bool mReset;
+		
+		void update(float k);
+		float _calculateStep(float dc_offset, float amplitude, float speed);
 		
 	};
 }

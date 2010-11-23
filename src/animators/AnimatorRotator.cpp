@@ -26,14 +26,13 @@ namespace AprilUI
 			mSpeed = 0.0f;
 			mInitialSpeed = -10000.0f;
 			mInitialAngle = -10000001.0f;
-			mDelay = 0.0f;
 		}
 
 		void Rotator::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "speed")	mSpeed = mInitialSpeed = value;
 			else if (name == "accel")	mAccel = value;
-			else if (name == "delay")	mDelay = value;
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)

@@ -24,19 +24,17 @@ namespace AprilUI
 			mStartFrame = 0;
 			mEndFrame = 100;
 			mAnimationTime = 10.0f;
-			mTimer = 0.0f;
 			mLoop = 1;
-            mDelay = 0.0f;
 		}
 
 		void FrameAnimation::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "start_frame") mStartFrame = value;
 			else if (name == "end_frame")   mEndFrame = value;
 			else if (name == "time")        mAnimationTime = value;
 			else if (name == "base_name")   mImageBaseName = value;
 			else if (name == "loop")        mLoop = value;
-            else if (name == "delay")       mDelay = value;
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)

@@ -32,7 +32,6 @@ namespace AprilUI
 			float mBaseline;
 			float mAmplitude;
 			float mSpeed;
-			float mTimer;
 			float mInitialAngle;
 			
 		};

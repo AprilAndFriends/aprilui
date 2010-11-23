@@ -29,6 +29,7 @@ namespace AprilUI
 
 		void RotationOscillator::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if      (name == "base")		mBaseline = value;
 			else if (name == "amplitude")	mAmplitude = value;
 			else if (name == "speed")		mSpeed = value;

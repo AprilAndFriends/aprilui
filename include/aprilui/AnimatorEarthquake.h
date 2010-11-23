@@ -36,7 +36,6 @@ namespace AprilUI
 			float mDuration;
 			float mConstDuration;
 			float mFreq;
-			float mTimer;
 			float mFreqTimer;
 			
 		};

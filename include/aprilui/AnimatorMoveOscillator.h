@@ -29,7 +29,6 @@ namespace AprilUI
 			void update(float k);
 			
 		protected:
-			float mTimer;
 			gvec2 mBaseline;
 			gvec2 mAmplitude;
 			gvec2 mSpeed;
