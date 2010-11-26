@@ -28,6 +28,11 @@ namespace AprilUI
 			
 			void update(float k);
 			
+			float getBaseline() { return mBaseline; }
+			float getAmplitude() { return mAmplitude; }
+			float getSpeed() { return mSpeed; }
+			float getTimer() { return mTimer; }
+			
 		protected:
 			float mBaseline;
 			float mAmplitude;
