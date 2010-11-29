@@ -7,21 +7,29 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#ifndef APRILUI_MOVER_X_H
+#define APRILUI_MOVER_X_H
 
-#include "AnimatorAlphaFader.h"
-#include "AnimatorAlphaHover.h"
-#include "AnimatorAlphaOscillator.h"
-#include "AnimatorBlinker.h"
-#include "AnimatorColorAlternator.h"
-#include "AnimatorEarthquake.h"
-#include "AnimatorFrameAnimation.h"
-#include "AnimatorMoverX.h"
-#include "AnimatorMoverY.h"
-#include "AnimatorRotationOscillator.h"
-#include "AnimatorRotator.h"
-#include "AnimatorScaleOscillator.h"
-#include "AnimatorScaler.h"
+#include <hltypes/hstring.h>
+
+#include "Animator.h"
+
+namespace AprilUI
+{
+	namespace Animators
+	{
+		class AprilUIExport MoverX : public Animator
+		{
+		public:
+			MoverX(chstr name);
+			
+			bool isAnimated();
+			void notifyEvent(chstr name, void* params);
+			
+			void update(float k);
+			
+		};
+	}
+}
 
 #endif

@@ -70,6 +70,7 @@ namespace AprilUI
 		mChildren += object;
 		sortChildren();
 		object->setParent(this);
+		object->notifyEvent("AttachToObject", NULL);
 	}
 	
 	void Object::removeChild(Object* object)
@@ -78,6 +79,7 @@ namespace AprilUI
 		{
 			throw ObjectNotChildException(object->getName(), getName());
 		}
+		object->notifyEvent("DetachFromObject", NULL);
 		mChildren -= object;
 		object->setParent(NULL);
 	}

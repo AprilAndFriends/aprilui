@@ -238,11 +238,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorMoveOscillator.cpp"
+					RelativePath=".\src\animators\AnimatorMoverX.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorMover.cpp"
+					RelativePath=".\src\animators\AnimatorMoverY.cpp"
 					>
 				</File>
 				<File
@@ -444,11 +444,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorMoveOscillator.h"
+					RelativePath=".\include\aprilui\AnimatorMoverX.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorMover.h"
+					RelativePath=".\include\aprilui\AnimatorMoverY.h"
 					>
 				</File>
 				<File

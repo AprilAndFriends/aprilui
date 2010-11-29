@@ -22,59 +22,94 @@ namespace AprilUI
 		mTimer = 0.0f;
 		mDelay = 0.0f;
 		mPeriods = -1.0f;
+		mAmplitude = 0.5f;
+		mSpeed = 1.0f;
+		mDcOffset = 0.0f;
+		mAcceleration = 0.0f;
+		mDiscrete = true;
 		mReset = false;
 	}
 	
 	void Animator::update(float k)
 	{
 		Object::update(k);
+		mDelay -= k;
+		if (mDelay > 0.0f)
+		{
+			return;
+		}
+		if (k > -mDelay)
+		{
+			k += mDelay;
+		}
+		mTimer += k;
+		if (fabs(mAcceleration) > 0.01f)
+		{
+			mSpeed += mAcceleration * k;
+		}
 	}
 	
-	float Animator::_calculateStep(float dcOffset, float amplitude, float speed)
+	float Animator::_calculateValue(float value)
 	{
 		if (mDelay > 0.0f)
 		{
-			return dcOffset;
+			return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
 		}
-		if (mPeriods >= 0.0f && mTimer * speed > mPeriods)
+		float time = mTimer;
+		if (mPeriods >= 0.0f && mTimer * mSpeed > mPeriods)
 		{
 			if (mReset)
 			{
-				return dcOffset;
+				return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
 			}
-			speed = mPeriods / mTimer;
+			return (mDiscrete ? (float)(int)value : value);
 		}
-		float result;
+		float result = 0.0f;
 		switch (mFunction)
 		{
 		case AprilUI::Sine:
-			result = dsin(mTimer * speed * 360) * amplitude;
+			result = dsin(time * mSpeed * 360) * mAmplitude;
 			break;
 		case AprilUI::Square:
-			//(-((int)(mTimer * speed) % 2) * 2 + 1)
-			result = (-((int)(mTimer * speed) % 2) * 2 + 1) * amplitude;
+			result = (fmod(time * mSpeed, 1.0f) < 0.5f ? mAmplitude : -mAmplitude);
 			break;
 		case AprilUI::Saw:
-			result = fmod(mTimer * speed, 1.0f) * amplitude;
+			result = (fmod(time * mSpeed + 0.5f, 1.0f) - 0.5f) * 2 * mAmplitude;
 			break;
 		case AprilUI::Triangle:
-			if ((int)(mTimer * speed) % 2 == 0)
+			result = fmod(time * mSpeed, 1.0f);
+			if (result < 0.25f || result >= 0.75f)
 			{
-				result = fmod(mTimer * speed, 1.0f) * amplitude;
+				result = (fmod(time * mSpeed + 0.5f, 1.0f) - 0.5f) * 4 * mAmplitude;
 			}
 			else
 			{
-				result = (1.0f - fmod(mTimer * speed, 1.0f)) * amplitude;
+				result = -(fmod(time * mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * mAmplitude;
 			}
 			break;
 		case AprilUI::Linear:
-			result = mTimer * speed * amplitude;
+			result = time * mSpeed * mAmplitude;
 			break;
 		case AprilUI::Random:
-			result = hrandf(amplitude);
+			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
 			break;
 		}
-		return (result + dcOffset);
+		return (mDiscrete ? (float)(int)(result + mDcOffset) : (result + mDcOffset));
+	}
+	
+	bool Animator::isAnimated()
+	{
+		if (mDelay > 0.0f)
+		{
+			return false;
+		}
+		/*
+		if (mPeriods >= 0.0f && mTimer * speed > mPeriods)
+		{
+			return false;
+		}
+		*/
+		return true;
 	}
 	
 	void Animator::setProperty(chstr name, chstr value)
@@ -87,9 +122,16 @@ namespace AprilUI
 			else if (value == "square")		setAnimationFunction(AprilUI::Square);
 			else if (value == "triangle")	setAnimationFunction(AprilUI::Triangle);
 			else if (value == "linear")		setAnimationFunction(AprilUI::Linear);
+			else if (value == "random")		setAnimationFunction(AprilUI::Random);
 		}
-		else if (name == "timer")	setTimer(value);
-		else if (name == "delay")	setDelay(value);
+		else if (name == "timer")			setTimer(value);
+		else if (name == "delay")			setDelay(value);
+		else if (name == "periods")			setPeriods(value);
+		else if (name == "amplitude")		setAmplitude(value);
+		else if (name == "speed")			setSpeed(value);
+		else if (name == "dc_offset")		setDcOffset(value);
+		else if (name == "acceleration")	setAcceleration(value);
+		else if (name == "reset")			setReset(value);
 	}
 	
 }
