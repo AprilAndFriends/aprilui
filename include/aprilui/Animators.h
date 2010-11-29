@@ -11,7 +11,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_ANIMATORS_H
 
 #include "AnimatorAlphaChanger.h"
-#include "AnimatorAlphaHover.h"
 #include "AnimatorColorChanger.h"
 #include "AnimatorFrameAnimation.h"
 #include "AnimatorMoverX.h"

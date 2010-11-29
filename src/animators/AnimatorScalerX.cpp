@@ -42,7 +42,7 @@ namespace AprilUI
 				return;
 			}
 			float value = mParent->getWidth();
-			value = _calculateValue(value);
+			value = _calculateValue(k, value);
 			mParent->setWidth(value);
 		}
 		

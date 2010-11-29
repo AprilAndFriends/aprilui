@@ -43,7 +43,7 @@ namespace AprilUI
 				return;
 			}
 			float value = mParent->getAlpha();
-			value = _calculateValue(value);
+			value = _calculateValue(k, value);
 			mParent->setAlpha(value);
 		}
 		

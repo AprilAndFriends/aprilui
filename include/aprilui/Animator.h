@@ -25,6 +25,7 @@ namespace AprilUI
 		Saw,
 		Triangle,
 		Linear,
+		Hover,
 		Random
 	};
 	
@@ -70,7 +71,7 @@ namespace AprilUI
 		bool mReset;
 		
 		void update(float k);
-		float _calculateValue(float value);
+		float _calculateValue(float k, float value);
 		
 	};
 }

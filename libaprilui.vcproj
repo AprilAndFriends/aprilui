@@ -214,10 +214,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorAlphaHover.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\animators\AnimatorColorChanger.cpp"
 					>
 				</File>
@@ -401,10 +397,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorAlphaChanger.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorAlphaHover.h"
 					>
 				</File>
 				<File

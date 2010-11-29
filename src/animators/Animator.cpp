@@ -49,7 +49,7 @@ namespace AprilUI
 		}
 	}
 	
-	float Animator::_calculateValue(float value)
+	float Animator::_calculateValue(float k, float value)
 	{
 		if (mDelay > 0.0f)
 		{
@@ -90,6 +90,16 @@ namespace AprilUI
 		case AprilUI::Linear:
 			result = time * mSpeed * mAmplitude;
 			break;
+		case AprilUI::Hover:
+			if (mParent->isCursorInside())
+			{
+				result = hmin(value - mDcOffset + k * mSpeed, mAmplitude);
+			}
+			else
+			{
+				result = hmax(value - mDcOffset - k * mSpeed, -mAmplitude);
+			}
+			break;
 		case AprilUI::Random:
 			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
 			break;
@@ -99,6 +109,10 @@ namespace AprilUI
 	
 	bool Animator::isAnimated()
 	{
+		if (mFunction == Hover)
+		{
+			return true;
+		}
 		if (mDelay > 0.0f)
 		{
 			return false;
@@ -120,6 +134,7 @@ namespace AprilUI
 			else if (value == "square")		setAnimationFunction(AprilUI::Square);
 			else if (value == "triangle")	setAnimationFunction(AprilUI::Triangle);
 			else if (value == "linear")		setAnimationFunction(AprilUI::Linear);
+			else if (value == "hover")		setAnimationFunction(AprilUI::Hover);
 			else if (value == "random")		setAnimationFunction(AprilUI::Random);
 		}
 		else if (name == "timer")			setTimer(value);

@@ -22,6 +22,7 @@ namespace AprilUI
 		{
 			mFunction = Linear;
 			mPeriods = 1.0f;
+			mDiscrete = false;
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)
@@ -42,7 +43,7 @@ namespace AprilUI
 				return;
 			}
 			float value = mParent->getAngle();
-			value = _calculateValue(value);
+			value = _calculateValue(k, value);
 			mParent->setAngle(value);
 		}
 		

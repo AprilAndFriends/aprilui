@@ -275,7 +275,6 @@ namespace AprilUI
 		else if (*node == "Animator")
 		{
 			/*if*/parse_animator(AlphaChanger);
-			else  parse_animator(AlphaHover);
 			else  parse_animator(ColorChanger);
 			else  parse_animator(FrameAnimation);
 			else  parse_animator(MoverX);
