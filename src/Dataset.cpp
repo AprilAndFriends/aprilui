@@ -497,6 +497,20 @@ namespace AprilUI
 		mImages.remove_key(name);
 	}
 	
+	bool Dataset::isAnimated()
+	{
+		AprilUI::Animator* object;
+		foreach_m (Object*, it, mObjects)
+		{
+			object = dynamic_cast<AprilUI::Animator*>(it->second);
+			if (object != NULL && object->isAnimated())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	Object* Dataset::getObject(chstr name)
 	{
 		if (!mObjects.has_key(name))
