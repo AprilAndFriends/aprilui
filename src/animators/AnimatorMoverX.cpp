@@ -7,39 +7,52 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_MOVER_H
-#define APRILUI_MOVER_H
-
-#include <gtypes/Vector2.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "ObjectCallbackObject.h"
-#include "Animator.h"
+#include "AprilUI.h"
+#include "AnimatorMoverX.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class AprilUIExport Mover : public Animator
+		MoverX::MoverX(chstr name) : Animator("Animators::MoverX", name, grect(0, 0, 1, 1))
 		{
-		public:
-			Mover(chstr name);
-			
-			bool isAnimated();
-			void setProperty(chstr name, chstr value);
-			void notifyEvent(chstr name, void* params);
-			
-			void update(float k);
-			void move(float dest_x, float dest_y, float time);
-            
-		protected:
-			gvec2 mInitialS;
-			gvec2 mAccel;
-			gvec2 mSpeed;
-			gvec2 mDest;
-			
-		};
+			mFunction = Linear;
+			mPeriods = 1.0f;
+		}
+
+		bool MoverX::isAnimated()
+		{
+			if (!Animator::isAnimated())
+			{
+				return false;
+			}
+			return (mParent->getX() != mAmplitude);
+		}
+
+		void MoverX::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject")
+			{
+				mDcOffset = mParent->getX();
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void MoverX::update(float k)
+		{
+			Animator::update(k);
+			if (!this->isAnimated())
+			{
+				return;
+			}
+			float value = mParent->getX();
+			value = _calculateValue(value);
+			mParent->setX(value);
+		}
+		
 	}
 }
-
-#endif

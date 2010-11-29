@@ -41,21 +41,36 @@ namespace AprilUI
 		void setDelay(float value) { mDelay = value; }
 		float getPeriods() { return mPeriods; }
 		void setPeriods(float value) { mPeriods = value; }
+		float getAmplitude() { return mAmplitude; }
+		void setAmplitude(float value) { mAmplitude = value; }
+		float getSpeed() { return mSpeed; }
+		void setSpeed(float value) { mSpeed = value; }
+		float getDcOffset() { return mDcOffset; }
+		void setDcOffset(float value) { mDcOffset = value; }
+		float getAcceleration() { return mAcceleration; }
+		void setAcceleration(float value) { mAcceleration = value; }
+		bool getDiscrete() { return mDiscrete; }
+		void setDiscrete(bool value) { mDiscrete = value; }
 		bool getReset() { return mReset; }
 		void setReset(bool value) { mReset = value; }
-		virtual bool isAnimated() = 0;
+		virtual bool isAnimated();
 		
 		void setProperty(chstr name, chstr value);
 		
 	protected:
 		AnimationFunction mFunction;
-		bool mTimer;
-		bool mDelay;
+		float mTimer;
+		float mDelay;
 		float mPeriods;
+		float mAmplitude;
+		float mSpeed;
+		float mDcOffset;
+		float mAcceleration;
+		bool mDiscrete;
 		bool mReset;
 		
 		void update(float k);
-		float _calculateStep(float dc_offset, float amplitude, float speed);
+		float _calculateValue(float value);
 		
 	};
 }

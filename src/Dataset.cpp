@@ -274,7 +274,8 @@ namespace AprilUI
 		else  parse(RotatableImageBox);
 		else if (*node == "Animator")
 		{
-			/*if*/parse_animator(Mover);
+			/*if*/parse_animator(MoverX);
+			else  parse_animator(MoverY);
 			else  parse_animator(Scaler);
 			else  parse_animator(Rotator);
 			else  parse_animator(RotationOscillator);

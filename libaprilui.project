@@ -40,13 +40,13 @@
       <File Name="src/animators/AnimatorColorAlternator.cpp"/>
       <File Name="src/animators/AnimatorEarthquake.cpp"/>
       <File Name="src/animators/AnimatorFrameAnimation.cpp"/>
-      <File Name="src/animators/AnimatorMoveOscillator.cpp"/>
-      <File Name="src/animators/AnimatorMover.cpp"/>
       <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
       <File Name="src/animators/AnimatorRotator.cpp"/>
       <File Name="src/animators/AnimatorScaler.cpp"/>
       <File Name="src/animators/Animator.cpp"/>
       <File Name="src/animators/AnimatorScaleOscillator.cpp"/>
+      <File Name="src/animators/AnimatorMoverY.cpp"/>
+      <File Name="src/animators/AnimatorMoverX.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="src/images/Image.cpp"/>
@@ -77,13 +77,13 @@
       <File Name="include/aprilui/AnimatorColorAlternator.h"/>
       <File Name="include/aprilui/AnimatorEarthquake.h"/>
       <File Name="include/aprilui/AnimatorFrameAnimation.h"/>
-      <File Name="include/aprilui/AnimatorMoveOscillator.h"/>
-      <File Name="include/aprilui/AnimatorMover.h"/>
       <File Name="include/aprilui/AnimatorRotator.h"/>
       <File Name="include/aprilui/AnimatorScaler.h"/>
       <File Name="include/aprilui/AnimatorRotationOscillator.h"/>
       <File Name="include/aprilui/AnimatorScaleOscillator.h"/>
       <File Name="include/aprilui/Animator.h"/>
+      <File Name="include/aprilui/AnimatorMoverX.h"/>
+      <File Name="include/aprilui/AnimatorMoverY.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">
