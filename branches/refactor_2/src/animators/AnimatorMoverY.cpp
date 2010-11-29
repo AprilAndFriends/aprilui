@@ -21,7 +21,6 @@ namespace AprilUI
 		MoverY::MoverY(chstr name) : Animator("Animators::MoverY", name, grect(0, 0, 1, 1))
 		{
 			mFunction = Linear;
-			mPeriods = 1.0f;
 		}
 
 		void MoverY::notifyEvent(chstr name, void* params)

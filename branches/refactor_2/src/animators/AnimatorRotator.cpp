@@ -21,7 +21,6 @@ namespace AprilUI
 		Rotator::Rotator(chstr name) : Animator("Animators::Rotator", name, grect(0, 0, 1, 1))
 		{
 			mFunction = Linear;
-			mPeriods = 1.0f;
 			mDiscrete = false;
 		}
 
