@@ -35,7 +35,12 @@ namespace AprilUI
 		
 		void ScalerX::update(float k)
 		{
+			bool animated = this->isAnimated();
 			Animator::update(k);
+			if (!this->isAnimated() && animated)
+			{
+				return;
+			}
 			float value = mParent->getWidth();
 			value = _calculateValue(value);
 			mParent->setWidth(value);

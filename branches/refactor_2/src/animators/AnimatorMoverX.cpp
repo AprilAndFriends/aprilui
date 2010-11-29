@@ -35,7 +35,12 @@ namespace AprilUI
 		
 		void MoverX::update(float k)
 		{
+			bool animated = this->isAnimated();
 			Animator::update(k);
+			if (!this->isAnimated() && animated)
+			{
+				return;
+			}
 			float value = mParent->getX();
 			value = _calculateValue(value);
 			mParent->setX(value);
