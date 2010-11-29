@@ -33,6 +33,11 @@ namespace AprilUI
             mDelay = 0.0f;
 		}
 
+		bool Scaler::isAnimated()
+		{
+			return (mParent->getSize() != mDest);
+		}
+
 		void Scaler::setProperty(chstr name, chstr value)
 		{
 			if      (name == "speed_w")	mSpeed.x = mInitialS.x = value;

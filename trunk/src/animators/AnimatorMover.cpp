@@ -27,6 +27,11 @@ namespace AprilUI
             mDelay = 0.0f;
 		}
 
+		bool Mover::isAnimated()
+		{
+			return (mParent->getPosition() != mDest);
+		}
+
 		void Mover::setProperty(chstr name, chstr value)
 		{
 			if      (name == "speed_x")	mSpeed.x = mInitialS.x = value;

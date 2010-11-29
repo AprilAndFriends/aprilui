@@ -31,6 +31,11 @@ namespace AprilUI
 			mTimer = 0.0f;
 		}
 
+		bool MoveOscillator::isAnimated()
+		{
+			return true;
+		}
+
 		void MoveOscillator::setProperty(chstr name, chstr value)
 		{
 			if      (name == "base_x") mBaseline.x = value;
