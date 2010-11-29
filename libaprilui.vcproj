@@ -254,11 +254,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorScaleOscillator.cpp"
+					RelativePath=".\src\animators\AnimatorScalerX.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorScaler.cpp"
+					RelativePath=".\src\animators\AnimatorScalerY.cpp"
 					>
 				</File>
 			</Filter>
@@ -460,11 +460,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorScaleOscillator.h"
+					RelativePath=".\include\aprilui\AnimatorScalerX.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorScaler.h"
+					RelativePath=".\include\aprilui\AnimatorScalerY.h"
 					>
 				</File>
 			</Filter>

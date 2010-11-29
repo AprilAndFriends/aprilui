@@ -23,7 +23,6 @@ namespace AprilUI
 		public:
 			MoverX(chstr name);
 			
-			bool isAnimated();
 			void notifyEvent(chstr name, void* params);
 			
 			void update(float k);

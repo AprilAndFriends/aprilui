@@ -24,15 +24,6 @@ namespace AprilUI
 			mPeriods = 1.0f;
 		}
 
-		bool MoverY::isAnimated()
-		{
-			if (!Animator::isAnimated())
-			{
-				return false;
-			}
-			return (mParent->getY() != mAmplitude);
-		}
-
 		void MoverY::notifyEvent(chstr name, void* params)
 		{
 			if (name == "AttachToObject")
