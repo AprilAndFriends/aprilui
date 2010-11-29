@@ -19,6 +19,7 @@ namespace AprilUI
 		Object(type, name, rect)
 	{
 		mFunction = AprilUI::Sine;
+		mActive = true;
 		mTimer = 0.0f;
 		mDelay = 0.0f;
 		mPeriods = -1.0f;
@@ -33,6 +34,10 @@ namespace AprilUI
 	void Animator::update(float k)
 	{
 		Object::update(k);
+		if (!mActive)
+		{
+			return;
+		}
 		mDelay -= k;
 		if (mDelay > 0.0f)
 		{
@@ -109,6 +114,10 @@ namespace AprilUI
 	
 	bool Animator::isAnimated()
 	{
+		if (!mActive)
+		{
+			return false;
+		}
 		if (mFunction == Hover)
 		{
 			return true;
@@ -137,6 +146,7 @@ namespace AprilUI
 			else if (value == "hover")		setAnimationFunction(AprilUI::Hover);
 			else if (value == "random")		setAnimationFunction(AprilUI::Random);
 		}
+		else if (name == "active")			setActive(value);
 		else if (name == "timer")			setTimer(value);
 		else if (name == "delay")			setDelay(value);
 		else if (name == "periods")			setPeriods(value);
