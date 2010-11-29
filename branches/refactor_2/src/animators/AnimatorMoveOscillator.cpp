@@ -30,6 +30,11 @@ namespace AprilUI
 			mInitialPosition.y = -10001;
 		}
 
+		bool MoveOscillator::isAnimated()
+		{
+			return true;
+		}
+
 		void MoveOscillator::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

@@ -24,7 +24,8 @@ namespace AprilUI
 		Square,
 		Saw,
 		Triangle,
-		Linear
+		Linear,
+		Random
 	};
 	
 	class AprilUIExport Animator : public Object
@@ -42,6 +43,7 @@ namespace AprilUI
 		void setPeriods(float value) { mPeriods = value; }
 		bool getReset() { return mReset; }
 		void setReset(bool value) { mReset = value; }
+		virtual bool isAnimated() = 0;
 		
 		void setProperty(chstr name, chstr value);
 		

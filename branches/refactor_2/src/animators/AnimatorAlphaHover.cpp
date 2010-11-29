@@ -25,6 +25,11 @@ namespace AprilUI
 			mSpeed = 1.0f;
 		}
 
+		bool AlphaHover::isAnimated()
+		{
+			return true;
+		}
+
 		void AlphaHover::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

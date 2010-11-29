@@ -27,6 +27,11 @@ namespace AprilUI
 			mTimer = 0.0f;
 		}
 
+		bool RotationOscillator::isAnimated()
+		{
+			return true;
+		}
+
 		void RotationOscillator::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

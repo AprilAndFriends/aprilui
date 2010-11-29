@@ -32,6 +32,11 @@ namespace AprilUI
 			mDestAlpha = -10000.0f;
 			mInitialAlpha = -10001.0f;
 		}
+		
+		bool AlphaFader::isAnimated()
+		{
+			return (mParent->getAlpha() != mDestAlpha);
+		}
 
 		void AlphaFader::setProperty(chstr name, chstr value)
 		{

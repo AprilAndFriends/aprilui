@@ -27,6 +27,11 @@ namespace AprilUI
 			mInitialSize.y = -10001;
 		}
 
+		bool ScaleOscillator::isAnimated()
+		{
+			return true;
+		}
+
 		void ScaleOscillator::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

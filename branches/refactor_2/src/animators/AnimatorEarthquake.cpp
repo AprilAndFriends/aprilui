@@ -25,6 +25,11 @@ namespace AprilUI
 			mFreq = 10.0f;
 		}
 
+		bool Earthquake::isAnimated()
+		{
+			return (mTimer <= mDuration);
+		}
+
 		void Earthquake::notifyEvent(chstr name, void* params)
 		{
 			if (name == "AttachToObject")
