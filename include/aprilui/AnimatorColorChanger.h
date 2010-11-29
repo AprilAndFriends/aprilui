@@ -7,8 +7,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_COLOR_ALTERNATOR_H
-#define APRILUI_COLOR_ALTERNATOR_H
+#ifndef APRILUI_COLOR_CHANGER_H
+#define APRILUI_COLOR_CHANGER_H
 
 #include <april/RenderSystem.h>
 #include <hltypes/hstring.h>
@@ -20,11 +20,11 @@ namespace AprilUI
 {
 	namespace Animators
 	{
-		// note: only works on ColoredImages
-		class AprilUIExport ColorAlternator : public Animator
+		// note: only works on ColoredImageBoxes
+		class AprilUIExport ColorChanger : public Animator
 		{
 		public:
-			ColorAlternator(chstr name);
+			ColorChanger(chstr name);
 			
 			bool isAnimated();
 			void setSpeed(float value) { mSpeed = value; }

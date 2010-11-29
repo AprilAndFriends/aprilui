@@ -33,20 +33,17 @@
       <File Name="src/objects/ObjectButtonBase.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="animators">
-      <File Name="src/animators/AnimatorAlphaFader.cpp"/>
       <File Name="src/animators/AnimatorAlphaHover.cpp"/>
-      <File Name="src/animators/AnimatorAlphaOscillator.cpp"/>
-      <File Name="src/animators/AnimatorBlinker.cpp"/>
-      <File Name="src/animators/AnimatorColorAlternator.cpp"/>
       <File Name="src/animators/AnimatorEarthquake.cpp"/>
       <File Name="src/animators/AnimatorFrameAnimation.cpp"/>
-      <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
       <File Name="src/animators/AnimatorRotator.cpp"/>
       <File Name="src/animators/Animator.cpp"/>
       <File Name="src/animators/AnimatorMoverY.cpp"/>
       <File Name="src/animators/AnimatorMoverX.cpp"/>
       <File Name="src/animators/AnimatorScalerY.cpp"/>
       <File Name="src/animators/AnimatorScalerX.cpp"/>
+      <File Name="src/animators/AnimatorAlphaChanger.cpp"/>
+      <File Name="src/animators/AnimatorColorChanger.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="src/images/Image.cpp"/>
@@ -70,20 +67,17 @@
     <File Name="include/aprilui/Event.h"/>
     <File Name="include/aprilui/EventArgs.h"/>
     <VirtualDirectory Name="animators">
-      <File Name="include/aprilui/AnimatorAlphaFader.h"/>
       <File Name="include/aprilui/AnimatorAlphaHover.h"/>
-      <File Name="include/aprilui/AnimatorAlphaOscillator.h"/>
-      <File Name="include/aprilui/AnimatorBlinker.h"/>
-      <File Name="include/aprilui/AnimatorColorAlternator.h"/>
       <File Name="include/aprilui/AnimatorEarthquake.h"/>
       <File Name="include/aprilui/AnimatorFrameAnimation.h"/>
       <File Name="include/aprilui/AnimatorRotator.h"/>
-      <File Name="include/aprilui/AnimatorRotationOscillator.h"/>
       <File Name="include/aprilui/Animator.h"/>
       <File Name="include/aprilui/AnimatorMoverX.h"/>
       <File Name="include/aprilui/AnimatorMoverY.h"/>
       <File Name="include/aprilui/AnimatorScalerY.h"/>
       <File Name="include/aprilui/AnimatorScalerX.h"/>
+      <File Name="include/aprilui/AnimatorAlphaChanger.h"/>
+      <File Name="include/aprilui/AnimatorColorChanger.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">

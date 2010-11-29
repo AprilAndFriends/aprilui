@@ -7,14 +7,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <math.h>
-
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "AprilUI.h"
 #include "AnimatorRotator.h"
-#include "ObjectImageBox.h"
 
 namespace AprilUI
 {
@@ -22,56 +20,30 @@ namespace AprilUI
 	{
 		Rotator::Rotator(chstr name) : Animator("Animators::Rotator", name, grect(0, 0, 1, 1))
 		{
-			mAccel = 0.0f;
-			mSpeed = 0.0f;
-			mInitialSpeed = -10000.0f;
-			mInitialAngle = -10000001.0f;
-		}
-
-		bool Rotator::isAnimated()
-		{
-			return true;
-		}
-
-		void Rotator::setProperty(chstr name, chstr value)
-		{
-			Animator::setProperty(name, value);
-			if      (name == "speed")	mSpeed = mInitialSpeed = value;
-			else if (name == "accel")	mAccel = value;
+			mFunction = Linear;
+			mPeriods = 1.0f;
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)
 		{
 			if (name == "AttachToObject")
 			{
-				if (mInitialAngle < -1000000.0f)
-				{
-					mInitialAngle = ((ImageBox*)mParent)->getAngle();
-				}
-				else
-				{
-					((ImageBox*)mParent)->setAngle(mInitialAngle);
-				}
-				mSpeed = mInitialSpeed;
+				mDcOffset = mParent->getAngle();
 			}
 			Object::notifyEvent(name, params);
 		}
-
+		
 		void Rotator::update(float k)
 		{
-            if (mDelay > 0)
-            {
-                mDelay = hmax(0.0f, mDelay - k);
-                return;
-            }
-			ImageBox* imageBox = (ImageBox*)mParent;
-			float angle = imageBox->getAngle();
-			if (fabs(mAccel) > 0.01f)
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
 			{
-				mSpeed += mAccel * k;
+				return;
 			}
-			angle += k * mSpeed;
-			imageBox->setAngle(angle);
+			float value = mParent->getAngle();
+			value = _calculateValue(value);
+			mParent->setAngle(value);
 		}
 		
 	}
