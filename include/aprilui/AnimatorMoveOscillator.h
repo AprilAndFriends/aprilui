@@ -23,7 +23,8 @@ namespace AprilUI
 		{
 		public:
 			MoveOscillator(chstr name);
-
+			
+			bool isAnimated();
 			void notifyEvent(chstr eventName, void* params);
 			void setProperty(chstr name, chstr value);
 			void update(float k);

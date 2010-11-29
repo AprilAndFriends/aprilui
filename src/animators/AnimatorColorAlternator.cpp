@@ -28,6 +28,11 @@ namespace AprilUI
 			mSpeed = 2.0f;
 		}
 
+		bool ColorAlternator::isAnimated()
+		{
+			return true;
+		}
+
 		void ColorAlternator::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

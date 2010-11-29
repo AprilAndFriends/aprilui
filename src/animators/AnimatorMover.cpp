@@ -26,6 +26,11 @@ namespace AprilUI
 			mDest.y = -10000.0f;
 		}
 
+		bool Mover::isAnimated()
+		{
+			return (mParent->getPosition() != mDest);
+		}
+
 		void Mover::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

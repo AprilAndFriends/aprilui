@@ -26,6 +26,7 @@ namespace AprilUI
 		public:
 			ColorAlternator(chstr name);
 			
+			bool isAnimated();
 			void setSpeed(float value) { mSpeed = value; }
 			void setProperty(chstr name, chstr value);
 			

@@ -25,6 +25,11 @@ namespace AprilUI
 			mInitialAlpha = -10001.0f;
 		}
 
+		bool AlphaOscillator::isAnimated()
+		{
+			return true;
+		}
+
 		void AlphaOscillator::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

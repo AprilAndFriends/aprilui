@@ -32,6 +32,11 @@ namespace AprilUI
 			mDest.x = -10000.0f;
 		}
 
+		bool Scaler::isAnimated()
+		{
+			return (mParent->getSize() != mDest);
+		}
+
 		void Scaler::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

@@ -83,6 +83,7 @@
       <File Name="include/aprilui/AnimatorScaler.h"/>
       <File Name="include/aprilui/AnimatorRotationOscillator.h"/>
       <File Name="include/aprilui/AnimatorScaleOscillator.h"/>
+      <File Name="include/aprilui/Animator.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">
@@ -102,7 +103,6 @@
       <File Name="include/aprilui/ObjectToggleButton.h"/>
       <File Name="include/aprilui/Object.h"/>
       <File Name="include/aprilui/ObjectButtonBase.h"/>
-      <File Name="include/aprilui/Animator.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="include/aprilui/Image.h"/>

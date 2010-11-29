@@ -28,6 +28,11 @@ namespace AprilUI
 			mInitialAngle = -10000001.0f;
 		}
 
+		bool Rotator::isAnimated()
+		{
+			return true;
+		}
+
 		void Rotator::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);

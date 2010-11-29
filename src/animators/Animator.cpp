@@ -70,6 +70,9 @@ namespace AprilUI
 		case AprilUI::Linear:
 			result = mTimer * speed * amplitude;
 			break;
+		case AprilUI::Random:
+			result = hrandf(amplitude);
+			break;
 		}
 		return (result + dcOffset);
 	}
