@@ -34,7 +34,6 @@
     </VirtualDirectory>
     <VirtualDirectory Name="animators">
       <File Name="src/animators/AnimatorAlphaHover.cpp"/>
-      <File Name="src/animators/AnimatorEarthquake.cpp"/>
       <File Name="src/animators/AnimatorFrameAnimation.cpp"/>
       <File Name="src/animators/AnimatorRotator.cpp"/>
       <File Name="src/animators/Animator.cpp"/>
@@ -68,7 +67,6 @@
     <File Name="include/aprilui/EventArgs.h"/>
     <VirtualDirectory Name="animators">
       <File Name="include/aprilui/AnimatorAlphaHover.h"/>
-      <File Name="include/aprilui/AnimatorEarthquake.h"/>
       <File Name="include/aprilui/AnimatorFrameAnimation.h"/>
       <File Name="include/aprilui/AnimatorRotator.h"/>
       <File Name="include/aprilui/Animator.h"/>

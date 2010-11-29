@@ -13,7 +13,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "AnimatorAlphaChanger.h"
 #include "AnimatorAlphaHover.h"
 #include "AnimatorColorChanger.h"
-#include "AnimatorEarthquake.h"
 #include "AnimatorFrameAnimation.h"
 #include "AnimatorMoverX.h"
 #include "AnimatorMoverY.h"
