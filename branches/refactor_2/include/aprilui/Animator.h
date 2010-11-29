@@ -36,6 +36,8 @@ namespace AprilUI
 		
 		AnimationFunction getAnimationFunction() { return mFunction; }
 		void setAnimationFunction(AnimationFunction value) { mFunction = value; }
+		bool getActive() { return mActive; }
+		void setActive(bool value) { mActive = value; }
 		float getTimer() { return mTimer; }
 		void setTimer(float value) { mTimer = value; }
 		float getDelay() { return mDelay; }
@@ -60,6 +62,7 @@ namespace AprilUI
 		
 	protected:
 		AnimationFunction mFunction;
+		bool mActive;
 		float mTimer;
 		float mDelay;
 		float mPeriods;
