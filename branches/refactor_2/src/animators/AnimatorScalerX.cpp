@@ -7,28 +7,39 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_MOVER_Y_H
-#define APRILUI_MOVER_Y_H
-
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "Animator.h"
+#include "AprilUI.h"
+#include "AnimatorScalerX.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class AprilUIExport MoverY : public Animator
+		ScalerX::ScalerX(chstr name) : Animator("Animators::ScalerX", name, grect(0, 0, 1, 1))
 		{
-		public:
-			MoverY(chstr name);
-			
-			void notifyEvent(chstr name, void* params);
-			
-			void update(float k);
-			
-		};
+			mFunction = Linear;
+			mPeriods = 1.0f;
+		}
+
+		void ScalerX::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject")
+			{
+				mDcOffset = mParent->getWidth();
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void ScalerX::update(float k)
+		{
+			Animator::update(k);
+			float value = mParent->getWidth();
+			value = _calculateValue(value);
+			mParent->setWidth(value);
+		}
+		
 	}
 }
-
-#endif

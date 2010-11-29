@@ -7,40 +7,39 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_SCALER_H
-#define APRILUI_SCALER_H
-
-#include <gtypes/Vector2.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "ObjectCallbackObject.h"
-#include "Animator.h"
+#include "AprilUI.h"
+#include "AnimatorScalerY.h"
 
 namespace AprilUI
 {
 	namespace Animators
 	{
-		class AprilUIExport Scaler : public Animator
+		ScalerY::ScalerY(chstr name) : Animator("Animators::ScalerY", name, grect(0, 0, 1, 1))
 		{
-		public:
-			Scaler(chstr name);
-			
-			bool isAnimated();
-			void setProperty(chstr name, chstr value);
-			void notifyEvent(chstr name, void* params);
-			
-			void update(float k);
-			void scale(float dest_w, float dest_h, float time);
-            
-		protected:
-			gvec2 mInitialSize;
-			gvec2 mInitialS;
-			gvec2 mAccel;
-			gvec2 mSpeed;
-			gvec2 mDest;
-			
-		};
+			mFunction = Linear;
+			mPeriods = 1.0f;
+		}
+
+		void ScalerY::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject")
+			{
+				mDcOffset = mParent->getHeight();
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void ScalerY::update(float k)
+		{
+			Animator::update(k);
+			float value = mParent->getHeight();
+			value = _calculateValue(value);
+			mParent->setHeight(value);
+		}
+		
 	}
 }
-
-#endif

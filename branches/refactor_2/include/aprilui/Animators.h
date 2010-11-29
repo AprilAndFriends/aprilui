@@ -21,7 +21,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "AnimatorMoverY.h"
 #include "AnimatorRotationOscillator.h"
 #include "AnimatorRotator.h"
-#include "AnimatorScaleOscillator.h"
-#include "AnimatorScaler.h"
+#include "AnimatorScalerX.h"
+#include "AnimatorScalerY.h"
 
 #endif

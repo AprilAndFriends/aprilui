@@ -60,7 +60,7 @@ namespace AprilUI
 		{
 			if (mReset)
 			{
-				return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
+				value = mDcOffset;
 			}
 			return (mDiscrete ? (float)(int)value : value);
 		}
@@ -103,12 +103,10 @@ namespace AprilUI
 		{
 			return false;
 		}
-		/*
-		if (mPeriods >= 0.0f && mTimer * speed > mPeriods)
+		if (mPeriods >= 0.0f && mTimer * mSpeed > mPeriods)
 		{
 			return false;
 		}
-		*/
 		return true;
 	}
 	

@@ -24,15 +24,6 @@ namespace AprilUI
 			mPeriods = 1.0f;
 		}
 
-		bool MoverX::isAnimated()
-		{
-			if (!Animator::isAnimated())
-			{
-				return false;
-			}
-			return (mParent->getX() != mAmplitude);
-		}
-
 		void MoverX::notifyEvent(chstr name, void* params)
 		{
 			if (name == "AttachToObject")
@@ -45,10 +36,6 @@ namespace AprilUI
 		void MoverX::update(float k)
 		{
 			Animator::update(k);
-			if (!this->isAnimated())
-			{
-				return;
-			}
 			float value = mParent->getX();
 			value = _calculateValue(value);
 			mParent->setX(value);

@@ -276,7 +276,8 @@ namespace AprilUI
 		{
 			/*if*/parse_animator(MoverX);
 			else  parse_animator(MoverY);
-			else  parse_animator(Scaler);
+			else  parse_animator(ScalerX);
+			else  parse_animator(ScalerY);
 			else  parse_animator(Rotator);
 			else  parse_animator(RotationOscillator);
 			else  parse_animator(ColorAlternator);
