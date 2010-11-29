@@ -279,12 +279,9 @@ namespace AprilUI
 			else  parse_animator(ScalerX);
 			else  parse_animator(ScalerY);
 			else  parse_animator(Rotator);
-			else  parse_animator(RotationOscillator);
-			else  parse_animator(ColorAlternator);
-			else  parse_animator(AlphaFader);
-			else  parse_animator(AlphaOscillator);
+			else  parse_animator(AlphaChanger);
 			else  parse_animator(AlphaHover);
-			else  parse_animator(Blinker);
+			else  parse_animator(ColorChanger);
 			else  parse_animator(FrameAnimation);
 			else  parse_animator(Earthquake);
 			else object = parseExternalObjectClass(node, objectName, rect);
@@ -299,14 +296,14 @@ namespace AprilUI
 			throw XMLUnknownClassException(className, node);
 		}
 		object->_setDataset(this);
-		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
-		{
-			object->setProperty(prop->name(), prop->value());
-		}
 		mObjects[objectName] = object;
 		if (parent != NULL)
 		{
 			parent->addChild(object);
+		}
+		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
+		{
+			object->setProperty(prop->name(), prop->value());
 		}
 		
 		for (node = node->iter_children(); node != NULL; node = node->next())

@@ -34,8 +34,12 @@
 		<Object type="Label" name="label" text="I am a label." x="32" y="384" w="192" h="32"/>
 		<Object type="TextButton" name="textButton" text="I am a button." x="32" y="448" w="192" h="32"/>
 		<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64"/>
-		<Object angle="20" type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" x="432" y="160" w="128" h="64"/>
-		<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0"/>
+		<Object type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" angle="20" x="432" y="160" w="128" h="64">
+			<Animator type="AlphaChanger" name="test_alpha_changer" function="sine" periods="-1" amplitude="0.5" speed="1.05" dc_offset="0.5"/>
+		</Object>
+		<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0">
+			<Animator type="Rotator" name="test_rotator" amplitude="360" speed="0.5" delay="1.5"/>
+		</Object>
 		<Object angle="20" type="TextImageButton" name="textImageButton" text="Push me" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="332" y="156" w="128" h="64">
 			<Animator type="MoverX" name="test_mover_x" amplitude="100" speed="0.5" delay="1.0"/>
 			<Animator type="MoverY" name="test_mover_y" amplitude="100" speed="0.25"/>

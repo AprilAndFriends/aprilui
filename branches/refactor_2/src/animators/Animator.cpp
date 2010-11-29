@@ -60,9 +60,9 @@ namespace AprilUI
 		{
 			if (mReset)
 			{
-				value = mDcOffset;
+				return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
 			}
-			return (mDiscrete ? (float)(int)value : value);
+			time = mPeriods / mSpeed;
 		}
 		float result = 0.0f;
 		switch (mFunction)

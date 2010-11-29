@@ -210,7 +210,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorAlphaFader.cpp"
+					RelativePath=".\src\animators\AnimatorAlphaChanger.cpp"
 					>
 				</File>
 				<File
@@ -218,15 +218,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorAlphaOscillator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorBlinker.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorColorAlternator.cpp"
+					RelativePath=".\src\animators\AnimatorColorChanger.cpp"
 					>
 				</File>
 				<File
@@ -243,10 +235,6 @@
 				</File>
 				<File
 					RelativePath=".\src\animators\AnimatorMoverY.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorRotationOscillator.cpp"
 					>
 				</File>
 				<File
@@ -416,7 +404,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorAlphaFader.h"
+					RelativePath=".\include\aprilui\AnimatorAlphaChanger.h"
 					>
 				</File>
 				<File
@@ -424,15 +412,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorAlphaOscillator.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorBlinker.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorColorAlternator.h"
+					RelativePath=".\include\aprilui\AnimatorColorChanger.h"
 					>
 				</File>
 				<File
@@ -449,10 +429,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorMoverY.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorRotationOscillator.h"
 					>
 				</File>
 				<File

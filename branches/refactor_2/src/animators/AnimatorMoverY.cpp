@@ -37,7 +37,7 @@ namespace AprilUI
 		{
 			bool animated = this->isAnimated();
 			Animator::update(k);
-			if (!this->isAnimated() && animated)
+			if (!animated)
 			{
 				return;
 			}
