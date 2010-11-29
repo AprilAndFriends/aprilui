@@ -21,7 +21,6 @@ namespace AprilUI
 		ScalerX::ScalerX(chstr name) : Animator("Animators::ScalerX", name, grect(0, 0, 1, 1))
 		{
 			mFunction = Linear;
-			mPeriods = 1.0f;
 		}
 
 		void ScalerX::notifyEvent(chstr name, void* params)

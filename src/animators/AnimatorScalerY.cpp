@@ -21,7 +21,6 @@ namespace AprilUI
 		ScalerY::ScalerY(chstr name) : Animator("Animators::ScalerY", name, grect(0, 0, 1, 1))
 		{
 			mFunction = Linear;
-			mPeriods = 1.0f;
 		}
 
 		void ScalerY::notifyEvent(chstr name, void* params)
