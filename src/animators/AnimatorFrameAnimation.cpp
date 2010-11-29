@@ -29,6 +29,11 @@ namespace AprilUI
             mDelay = 0.0f;
 		}
 
+		bool FrameAnimation::isAnimated()
+		{
+			return (mTimer >= mAnimationTime);
+		}
+
 		void FrameAnimation::setProperty(chstr name, chstr value)
 		{
 			if      (name == "start_frame") mStartFrame = value;

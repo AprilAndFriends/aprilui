@@ -29,6 +29,11 @@ namespace AprilUI
 			mSpeed = 2.0f;
 		}
 
+		bool ColorAlternator::isAnimated()
+		{
+			return true;
+		}
+
 		void ColorAlternator::setProperty(chstr name, chstr value)
 		{
 			if		(name == "low_color")	mLow.setColor(value);

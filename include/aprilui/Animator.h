@@ -23,6 +23,8 @@ namespace AprilUI
 	public:
 		Animator(chstr type, chstr name, grect rect);
 		
+		virtual bool isAnimated() = 0;
+		
 	};
 }
 

@@ -29,6 +29,11 @@ namespace AprilUI
 			mFrequency = 100.0f;
 		}
 
+		bool Blinker::isAnimated()
+		{
+			return true;
+		}
+
 		void Blinker::setProperty(chstr name, chstr value)
 		{
 			if      (name == "delay")				mDelay = value;

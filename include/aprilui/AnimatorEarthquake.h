@@ -24,7 +24,8 @@ namespace AprilUI
 		{
 		public:
 			Earthquake(chstr name);
-
+			
+			bool isAnimated();
 			void setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
 			

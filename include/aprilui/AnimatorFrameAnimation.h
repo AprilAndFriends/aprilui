@@ -24,6 +24,7 @@ namespace AprilUI
 		public:
 			FrameAnimation(chstr name);
 
+			bool isAnimated();
             void setDelay(float value) { mDelay = value; }
 			
 			void setProperty(chstr name, chstr value);

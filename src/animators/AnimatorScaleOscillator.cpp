@@ -28,6 +28,11 @@ namespace AprilUI
 			mTimer = 0.0f;
 		}
 
+		bool ScaleOscillator::isAnimated()
+		{
+			return true;
+		}
+
 		void ScaleOscillator::setProperty(chstr name, chstr value)
 		{
 			if      (name == "base") mBaseline = value;
