@@ -274,16 +274,15 @@ namespace AprilUI
 		else  parse(RotatableImageBox);
 		else if (*node == "Animator")
 		{
-			/*if*/parse_animator(MoverX);
-			else  parse_animator(MoverY);
-			else  parse_animator(ScalerX);
-			else  parse_animator(ScalerY);
-			else  parse_animator(Rotator);
-			else  parse_animator(AlphaChanger);
+			/*if*/parse_animator(AlphaChanger);
 			else  parse_animator(AlphaHover);
 			else  parse_animator(ColorChanger);
 			else  parse_animator(FrameAnimation);
-			else  parse_animator(Earthquake);
+			else  parse_animator(MoverX);
+			else  parse_animator(MoverY);
+			else  parse_animator(Rotator);
+			else  parse_animator(ScalerX);
+			else  parse_animator(ScalerY);
 			else object = parseExternalObjectClass(node, objectName, rect);
 		}
 		else

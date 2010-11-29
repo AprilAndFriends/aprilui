@@ -222,10 +222,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorEarthquake.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\animators\AnimatorFrameAnimation.cpp"
 					>
 				</File>
@@ -413,10 +409,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorColorChanger.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorEarthquake.h"
 					>
 				</File>
 				<File
