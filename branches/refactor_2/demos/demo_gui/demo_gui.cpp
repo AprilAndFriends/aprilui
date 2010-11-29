@@ -25,12 +25,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 AprilUI::Dataset* dataset;
 
-bool update(float time)
+bool update(float k)
 {
 	April::rendersys->clear();
 	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
 	AprilUI::setCursorPosition(April::rendersys->getWindow()->getCursorPos());
-	dataset->update(time);
+	dataset->update(k);
 	dataset->getObject("root")->draw();
 	return true;
 }
