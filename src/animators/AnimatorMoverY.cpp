@@ -35,8 +35,9 @@ namespace AprilUI
 		
 		void MoverY::update(float k)
 		{
+			bool animated = this->isAnimated();
 			Animator::update(k);
-			if (!this->isAnimated())
+			if (!this->isAnimated() && animated)
 			{
 				return;
 			}

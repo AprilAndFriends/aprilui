@@ -35,7 +35,12 @@ namespace AprilUI
 		
 		void ScalerY::update(float k)
 		{
+			bool animated = this->isAnimated();
 			Animator::update(k);
+			if (!this->isAnimated() && animated)
+			{
+				return;
+			}
 			float value = mParent->getHeight();
 			value = _calculateValue(value);
 			mParent->setHeight(value);

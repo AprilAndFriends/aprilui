@@ -67,7 +67,7 @@ namespace AprilUI
 			{
 				int frame = mStartFrame + (int)((mEndFrame - mStartFrame) * mTimer / mAnimationTime);
 				ImageBox* image = dynamic_cast<ImageBox*>(mParent);
-				if (image)
+				if (image != NULL)
 				{
 					image->setImageByName(mImageBaseName + hstr(frame));
 				}
