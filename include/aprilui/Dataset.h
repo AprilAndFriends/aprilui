@@ -50,7 +50,8 @@ namespace AprilUI
 
 		void registerCallback(chstr name, void (*callback)());
 		void triggerCallback(chstr name);
-
+		
+		bool isAnimated();
 		void setFocusedObject(Object* object) { mFocusedObject = object; }
 		Object* getFocusedObject() { return mFocusedObject; }
 		
