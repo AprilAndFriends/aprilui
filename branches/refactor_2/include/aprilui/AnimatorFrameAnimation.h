@@ -12,7 +12,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <hltypes/hstring.h>
 
-#include "ObjectCallbackObject.h"
 #include "Animator.h"
 
 namespace AprilUI
@@ -32,10 +31,11 @@ namespace AprilUI
 			
 		protected:
 			hstr mImageBaseName;
-			int mStartFrame;
-			int mEndFrame;
+			int mFirstFrame;
+			int mLastFrame;
+			float mFrameTime;
 			float mAnimationTime;
-			int mLoop;
+			int mLoops;
 			
 		};
 	}

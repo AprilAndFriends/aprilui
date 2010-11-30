@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "AnimatorFrameAnimation.h"
 #include "AprilUI.h"
-#include "ObjectColoredImageBox.h"
+#include "ObjectImageBox.h"
 
 namespace AprilUI
 {
@@ -21,60 +21,86 @@ namespace AprilUI
 	{
 		FrameAnimation::FrameAnimation(chstr name) : Animator("Animators::FrameAnimation", name, grect(0, 0, 1, 1))
 		{
-			mStartFrame = 0;
-			mEndFrame = 100;
-			mAnimationTime = 10.0f;
-			mLoop = 1;
+			mFirstFrame = 0;
+			mLastFrame = 0;
+			mImageBaseName = "";
+			mAnimationTime = 1.0f;
+			mFrameTime = 0.1f;
+			mLoops = 0;
+			mReset = true;
 		}
 
 		bool FrameAnimation::isAnimated()
 		{
-			return (mTimer >= mAnimationTime);
+			if (!Animator::isAnimated())
+			{
+				return false;
+			}
+			if (mImageBaseName == "")
+			{
+				return false;
+			}
+			if (mLoops > 0 && mTimer >= mAnimationTime * mLoops)
+			{
+				return false;
+			}
+			return true;
 		}
 
 		void FrameAnimation::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);
-			if      (name == "start_frame") mStartFrame = value;
-			else if (name == "end_frame")   mEndFrame = value;
+			if      (name == "first_frame")	mFirstFrame = value;
+			else if (name == "last_frame")	mLastFrame = value;
+			else if (name == "base_name")	mImageBaseName = value;
 			else if (name == "time")        mAnimationTime = value;
-			else if (name == "base_name")   mImageBaseName = value;
-			else if (name == "loop")        mLoop = value;
+			else if (name == "frame_time")	mFrameTime = value;
+			else if (name == "loops")		mLoops = value;
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)
 		{
 			if (name == "AttachToObject")
 			{
-				mTimer = 0.0f;
+				update(0);
 			}
-			Object::notifyEvent(name, params);
+			Animator::notifyEvent(name, params);
 		}
 
 		void FrameAnimation::update(float k)
 		{
-            if (mDelay > 0)
-            {
-                mDelay = hmax(0.0f, mDelay - k);
-                return;
-            }
-			mTimer += k;
-			if (mTimer >= mAnimationTime && mLoop)
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
 			{
-				mTimer -= mAnimationTime;
+				return;
 			}
-			if (mTimer < mAnimationTime)
+			int frame;
+			if (mLoops > 0 && mTimer >= mAnimationTime * mLoops)
 			{
-				int frame = mStartFrame + (int)((mEndFrame - mStartFrame) * mTimer / mAnimationTime);
-				ImageBox* image = dynamic_cast<ImageBox*>(mParent);
-				if (image != NULL)
+				frame = (mReset ? mFirstFrame : mLastFrame);
+			}
+			else
+			{
+				float time = fmod(mTimer, mAnimationTime);
+				int frameCount = mLastFrame - mFirstFrame + 1;
+				if (time >= frameCount * mFrameTime)
 				{
-					image->setImageByName(mImageBaseName + hstr(frame));
+					frame = (mReset ? mFirstFrame : mLastFrame);
 				}
 				else
 				{
-					logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+					frame = (int)(time / mFrameTime);
 				}
+			}
+			ImageBox* image = dynamic_cast<ImageBox*>(mParent);
+			if (image != NULL)
+			{
+				image->setImageByName(mImageBaseName + hstr(frame));
+			}
+			else
+			{
+				logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 			}
 		}
 		
