@@ -187,7 +187,8 @@ namespace AprilUI
 
 	void TiledImage::draw(grect rect, April::Color color, float angle, gvec2 center)
 	{
-		
+		//2DO
+		draw(rect, color);
 	}
 
 

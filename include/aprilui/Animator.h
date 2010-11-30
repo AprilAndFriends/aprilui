@@ -60,6 +60,8 @@ namespace AprilUI
 		
 		void setProperty(chstr name, chstr value);
 		
+		void update(float k);
+		
 	protected:
 		AnimationFunction mFunction;
 		bool mActive;
@@ -73,7 +75,6 @@ namespace AprilUI
 		bool mDiscrete;
 		bool mReset;
 		
-		void update(float k);
 		float _calculateValue(float k, float value);
 		
 	};
