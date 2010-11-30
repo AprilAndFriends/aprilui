@@ -69,6 +69,10 @@ namespace AprilUI
             }
 			RotationImageBox* imageBox = (RotationImageBox*)mParent;
 			float angle = imageBox->getAngle();
+			if (fabs(angle - mDestAngle) < 0.01f)
+			{
+				return;
+			}
 			if (fabs(mAccel) > 0.01f)
 			{
 				mSpeed += mAccel * k;
