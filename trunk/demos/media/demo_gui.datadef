@@ -33,7 +33,9 @@
 		<Object type="EditBox" name="editBox" text="Edit Box" font="arial" filter="ABCDEMNLSTXYZabcdemnlstxyz +-=()" max_length="10" x="32" y="320" w="192" h="32"/>
 		<Object type="Label" name="label" text="I am a label." x="32" y="384" w="192" h="32"/>
 		<Object type="TextButton" name="textButton" text="I am a button." x="32" y="448" w="192" h="32"/>
-		<Object type="RotationImageBox" name="rotationImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64"/>
+		<Object type="RotationImageBox" name="rotationImageBox" image="transparency/test" x="432" y="32" w="128" h="64">
+			<Animator type="Rotator" speed="90" dest_angle="90"/>
+		</Object>
 		<Object type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" x="432" y="160" w="128" h="64"/>
 		<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0"/>
 		<Object type="TextImageButton" name="textImageButton" text="Push me" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="432" y="256" w="128" h="64"/>
