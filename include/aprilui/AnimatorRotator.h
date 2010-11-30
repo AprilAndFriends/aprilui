@@ -36,6 +36,7 @@ namespace AprilUI
 			float mSpeed;
 			float mAccel;
 			float mDelay;
+			float mDestAngle;
 			
 		};
 	}
