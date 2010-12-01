@@ -40,7 +40,7 @@ namespace AprilUI
 			if      (name == "speed")		mSpeed = mInitialSpeed = value;
 			else if (name == "accel")		mAccel = value;
 			else if (name == "delay")		mDelay = value;
-			else if (name == "dest_angle")	mDestAngle = value;
+			else if (name == "dest_angle")	mDestAngle = fmod((float)value, 360.0f);
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)
@@ -71,6 +71,7 @@ namespace AprilUI
 			float angle = imageBox->getAngle();
 			if (fabs(angle - mDestAngle) < 0.01f)
 			{
+				imageBox->setAngle(mDestAngle);
 				return;
 			}
 			if (fabs(mAccel) > 0.01f)
@@ -79,11 +80,14 @@ namespace AprilUI
 			}
 			float oldAngle = angle;
 			angle += k * mSpeed;
-			if (mDestAngle >= 0.0f && sgn(oldAngle - mDestAngle) != sgn(angle - mDestAngle))
+			int circles = floor(angle / 360);
+			if (mDestAngle >= 0.0f &&
+				sgn(oldAngle + 360 * circles - mDestAngle) != sgn(angle + 360 * circles - mDestAngle) ||
+				sgn(oldAngle - 360 * circles - mDestAngle) != sgn(angle - 360 * circles - mDestAngle))
 			{
 				angle = mDestAngle;
 			}
-			imageBox->setAngle(angle);
+			imageBox->setAngle(fmod(angle, 360.0f));
 		}
 		
 	}
