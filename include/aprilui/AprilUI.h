@@ -18,6 +18,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace AprilUI
 {
 	class Dataset;
+	class Image;
 	
 	AprilUIFnExport void init();
 	AprilUIFnExport void destroy();
@@ -45,6 +46,8 @@ namespace AprilUI
 	AprilUIFnExport gvec2 getCursorPosition();
 	AprilUIFnExport void setCursorPosition(gvec2 position);
 	AprilUIFnExport void setCursorPosition(float x, float y);
+	AprilUIFnExport void setCursorImage(Image* image);
+	AprilUIFnExport void drawCursor();
 	
 	AprilUIFnExport void OnMouseDown(float x, float y, int button);
 	AprilUIFnExport void OnMouseUp(float x, float y, int button);
