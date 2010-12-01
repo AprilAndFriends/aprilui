@@ -52,7 +52,6 @@ namespace AprilUI
 			}
 			int w = mTexture->getWidth();
 			int h = mTexture->getHeight();
-			float t;
 			if (!mVertical)
 			{
 				tVertices[0].u = mSource.x / w;               tVertices[0].v = mSource.y / h;

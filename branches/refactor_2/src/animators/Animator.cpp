@@ -73,7 +73,7 @@ namespace AprilUI
 		switch (mFunction)
 		{
 		case AprilUI::Sine:
-			result = dsin(time * mSpeed * 360) * mAmplitude;
+			result = (float)dsin(time * mSpeed * 360) * mAmplitude;
 			break;
 		case AprilUI::Square:
 			result = (fmod(time * mSpeed, 1.0f) < 0.5f ? mAmplitude : -mAmplitude);

@@ -331,10 +331,10 @@ namespace AprilUI
 
 	bool Object::angleEquals(float angle)
 	{
-		float s1 = dsin(angle);
-		float s2 = dsin(mAngle);
-		float c1 = dcos(angle);
-		float c2 = dcos(mAngle);
+		float s1 = (float)dsin(angle);
+		float s2 = (float)dsin(mAngle);
+		float c1 = (float)dcos(angle);
+		float c2 = (float)dcos(mAngle);
 		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
 	}
 	
