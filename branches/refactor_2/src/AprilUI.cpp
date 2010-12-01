@@ -17,12 +17,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "AprilUI.h"
 #include "Dataset.h"
 #include "Exception.h"
+#include "Image.h"
 
 namespace AprilUI
 {
 	bool registerLock = false;
 	hmap<int, April::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
+	AprilUI::Image* gCursor = NULL;
 	float defaultScale = 1.0f;
 	gvec2 cursorPosition;
 #ifdef _DEBUG
@@ -49,7 +51,7 @@ namespace AprilUI
 	void init()
 	{
 	}
-
+	
 	void destroy()
 	{
 		registerLock = true;
@@ -92,6 +94,19 @@ namespace AprilUI
 		cursorPosition = gvec2(x, y);
 	}
 	
+	void setCursorImage(Image* image)
+	{
+		gCursor = image;
+	}
+	
+	void drawCursor()
+	{
+		if (gCursor != NULL)
+		{
+			gCursor->draw(grect(cursorPosition.x, cursorPosition.y, gCursor->getSource().w, gCursor->getSource().h));
+		}
+	}
+
 	Dataset* getDatasetByName(chstr name)
 	{
 		if (!gDatasets.has_key(name))
