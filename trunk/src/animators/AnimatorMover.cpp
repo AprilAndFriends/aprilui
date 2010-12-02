@@ -74,9 +74,13 @@ namespace AprilUI
             }
 			gvec2 old = v;
 			v += mSpeed * k;
-			if (sgn(mDest.x - old.x) != sgn(mDest.x - v.x) || sgn(mDest.y - old.y) != sgn(mDest.y - v.y))
+			if (sgn(mDest.x - old.x) != sgn(mDest.x - v.x))
 			{
-				v = mDest;
+				v.x = mDest.x;
+			}
+			if (sgn(mDest.y - old.y) != sgn(mDest.y - v.y))
+			{
+				v.y = mDest.y;
 			}
 			if (fabs(mAccel.x) > 0.01f || fabs(mAccel.y) > 0.01f)
 			{
