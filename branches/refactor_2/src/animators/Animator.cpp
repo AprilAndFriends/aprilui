@@ -154,6 +154,7 @@ namespace AprilUI
 		else if (name == "speed")			setSpeed(value);
 		else if (name == "dc_offset")		setDcOffset(value);
 		else if (name == "acceleration")	setAcceleration(value);
+		else if (name == "discrete")		setDiscrete(value);
 		else if (name == "reset")			setReset(value);
 	}
 	
