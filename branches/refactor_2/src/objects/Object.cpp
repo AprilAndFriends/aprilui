@@ -45,12 +45,12 @@ namespace AprilUI
 
 	Object::~Object()
 	{
-		foreach_m(Event*, it, mEvents)
+		foreach_m (Event*, it, mEvents)
 		{
 			delete it->second;
 		}
 	}
-
+	
 	bool _objectSortCallback(Object* a, Object* b)
 	{
 		return (a->getZOrder() < b->getZOrder());
@@ -114,6 +114,18 @@ namespace AprilUI
 			alpha *= mParent->getDerivedAlpha();
 		}
 		return alpha;
+	}
+
+	bool Object::isAnimated()
+	{
+		foreach (Object*, it, mChildren)
+		{
+			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isAnimated())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void Object::draw(gvec2 offset)
