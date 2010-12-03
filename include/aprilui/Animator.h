@@ -56,7 +56,7 @@ namespace AprilUI
 		void setDiscrete(bool value) { mDiscrete = value; }
 		bool getReset() { return mReset; }
 		void setReset(bool value) { mReset = value; }
-		virtual bool isAnimated();
+		bool isAnimated();
 		
 		void setProperty(chstr name, chstr value);
 		

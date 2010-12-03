@@ -73,9 +73,10 @@ namespace AprilUI
 		bool isInheritsAlpha() { return mInheritsAlpha; }
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
-		
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
+		
+		virtual bool isAnimated();
 
 		void moveToFront();
 		void moveToBack();
