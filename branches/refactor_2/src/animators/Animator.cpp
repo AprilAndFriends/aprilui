@@ -61,13 +61,14 @@ namespace AprilUI
 			return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
 		}
 		float time = mTimer;
-		if (mPeriods >= 0.0f && mTimer * mSpeed > mPeriods)
+		float speed = fabs(mSpeed);
+		if (mPeriods >= 0.0f && mTimer * speed > mPeriods)
 		{
 			if (mReset)
 			{
 				return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
 			}
-			time = mPeriods / mSpeed;
+			time = mPeriods / speed;
 		}
 		float result = 0.0f;
 		switch (mFunction)
