@@ -27,7 +27,7 @@ namespace AprilUI
 		mSpeed = 1.0f;
 		mDcOffset = 0.0f;
 		mAcceleration = 0.0f;
-		mDiscrete = true;
+		mDiscrete = false;
 		mReset = false;
 	}
 	
