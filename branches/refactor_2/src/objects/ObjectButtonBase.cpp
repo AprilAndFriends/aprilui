@@ -46,7 +46,6 @@ namespace AprilUI
 
 	void ButtonBase::OnMouseMove(float x, float y)
 	{
-		mHover = isCursorInside();
 	}
 	
 }
