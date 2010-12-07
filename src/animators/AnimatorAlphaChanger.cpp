@@ -21,7 +21,6 @@ namespace AprilUI
 		AlphaChanger::AlphaChanger(chstr name) : Animator("Animators::AlphaChanger", name, grect(0, 0, 1, 1))
 		{
 			mFunction = Linear;
-			mDiscrete = false;
 		}
 
 		void AlphaChanger::notifyEvent(chstr name, void* params)
