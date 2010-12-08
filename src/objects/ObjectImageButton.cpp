@@ -32,7 +32,9 @@ namespace AprilUI
 		grect rect = mRect + offset;
 		if (!isDerivedEnabled() && mDisabledImage != NULL)
 		{
-			mDisabledImage->draw(rect, April::Color(), mAngle);
+			April::Color color;
+			color.a = (unsigned char)(getDerivedAlpha() * 255);
+			mDisabledImage->draw(rect, color, mAngle);
 			return;
 		}
 		if (mPushed && mPushedImage == NULL && isCursorInside())
