@@ -198,25 +198,25 @@ namespace AprilUI
 	{
 		switch (keycode)
 		{
-		case AK_LEFT:
+		case April::AK_LEFT:
 			mCtrlMode ? _cursorMoveLeftWord() : setCursorIndex(mCursorIndex - 1);
 			break;
-		case AK_RIGHT:
+		case April::AK_RIGHT:
 			mCtrlMode ? _cursorMoveRightWord() : setCursorIndex(mCursorIndex + 1);
 			break;
-		case AK_BACK:
+		case April::AK_BACK:
 			mCtrlMode ? _deleteLeftWord() : _deleteLeft();
 			break;
-		case AK_DELETE:
+		case April::AK_DELETE:
 			mCtrlMode ? _deleteRightWord() : _deleteRight();
 			break;
-		case AK_HOME:
+		case April::AK_HOME:
 			setCursorIndex(0);
 			break;
-		case AK_END:
+		case April::AK_END:
 			setCursorIndex(mText.size());
 			break;
-		case AK_CONTROL:
+		case April::AK_CONTROL:
 			mCtrlMode = true;
 			break;
 		}
@@ -226,8 +226,8 @@ namespace AprilUI
 	{
 		switch (keycode)
 		{
-		case AK_CONTROL:
-		case AK_MENU:
+		case April::AK_CONTROL:
+		case April::AK_MENU:
 			mCtrlMode = false;
 			break;
 		}
