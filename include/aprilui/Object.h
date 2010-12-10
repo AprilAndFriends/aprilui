@@ -75,6 +75,7 @@ namespace AprilUI
 		bool getVisibilityFlag() { return mVisible; }
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
+		gvec2 getDerivedPosition();
 		
 		virtual bool isAnimated();
 
