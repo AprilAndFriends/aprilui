@@ -376,4 +376,15 @@ namespace AprilUI
 		}
 		return (object != NULL ? object : this);
 	}
+	
+	gvec2 Object::getDerivedPosition()
+	{
+		gvec2 position = gvec2(mRect.x, mRect.y);
+		for (Object* p = mParent; p != NULL; p = p->mParent)
+		{
+			position += p->getPosition();
+		}
+		return position;
+	}
+	
 }
