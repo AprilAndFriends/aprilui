@@ -25,6 +25,8 @@ namespace AprilUI
 
 	bool ButtonBase::OnMouseDown(float x, float y, int button)
 	{
+		mHover = isCursorInside();
+
 		if (mHover)
 		{
 			mPushed = true;
@@ -35,6 +37,8 @@ namespace AprilUI
 
 	bool ButtonBase::OnMouseUp(float x, float y, int button)
 	{
+		mHover = isCursorInside();
+
 		if (mPushed && mHover)
 		{
 			mPushed = false;
@@ -46,6 +50,7 @@ namespace AprilUI
 
 	void ButtonBase::OnMouseMove(float x, float y)
 	{
+		mHover = isCursorInside();
 	}
 	
 }
