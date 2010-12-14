@@ -16,15 +16,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	class Dataset;
 	class Event;
 	class EventArgs;
 	
-	class AprilUIExport Object
+	class apriluiExport Object
 	{
 	public:
 		Object(chstr type, chstr name, grect rect);

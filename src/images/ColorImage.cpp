@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ColorImage.h"
 #include "Util.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	April::PlainVertex pVertices[4];
 	

@@ -14,7 +14,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Image.h"
 #include "ObjectImageButton.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	ImageButton::ImageButton(chstr name, grect rect) :
 		ButtonBase(),

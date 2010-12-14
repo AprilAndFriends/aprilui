@@ -15,9 +15,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-class AprilUIExport xml_prop : public _xmlAttr
+class apriluiExport xml_prop : public _xmlAttr
 {
 public:
 	xml_prop* next();
@@ -26,7 +26,7 @@ public:
 
 };
 
-struct AprilUIExport xml_node : public _xmlNode
+struct apriluiExport xml_node : public _xmlNode
 {
 public:
 	bool pbool(const char* property);
@@ -52,7 +52,7 @@ protected:
 	
 };
 
-class AprilUIExport xml_doc
+class apriluiExport xml_doc
 {
 public:
 	xml_doc(chstr filename);

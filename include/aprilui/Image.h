@@ -15,14 +15,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	extern April::TexturedVertex tVertices[4];
 	extern April::PlainVertex pVertices[4];
 	
-	class AprilUIExport Image
+	class apriluiExport Image
 	{
 	public:
 		Image(April::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);

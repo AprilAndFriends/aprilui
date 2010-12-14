@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 
 #include "Animators.h"
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Images.h"
@@ -24,7 +24,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Util.h"
 #include "xmlHelper.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	void _registerDataset(chstr name, Dataset* dataset);
 	void _unregisterDataset(chstr name, Dataset* dataset);
@@ -368,19 +368,19 @@ namespace AprilUI
 		hstr textsPath = (path != "" ? path : getDefaultTextsPath());
 		hstr base_dir = pathGetBaseDir(mFilename);
 		// texts
-		logMessage("loading texts");
+		aprilui::log("loading texts");
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);
 		_loadTexts(filepath);
 		// audio
 		mLoaded = true;
-		logMessage("loading datadef: " + mFilename);
+		aprilui::log("loading datadef: " + mFilename);
 		readFile(mFilename);
 		this->update(0);
 	}
 	
 	void Dataset::_loadTexts(chstr path)
 	{
-		logMessage("loading texts from '" + path + "'");
+		aprilui::log("loading texts from '" + path + "'");
 		harray<hstr> files = hdir::files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
@@ -496,10 +496,10 @@ namespace AprilUI
 	
 	bool Dataset::isAnimated()
 	{
-		AprilUI::Animator* object;
+		aprilui::Animator* object;
 		foreach_m (Object*, it, mObjects)
 		{
-			object = dynamic_cast<AprilUI::Animator*>(it->second);
+			object = dynamic_cast<aprilui::Animator*>(it->second);
 			if (object != NULL && object->isAnimated())
 			{
 				return true;
@@ -589,7 +589,7 @@ namespace AprilUI
 	
 	void Dataset::draw()
 	{
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
@@ -600,7 +600,7 @@ namespace AprilUI
 	
 	void Dataset::OnMouseDown(float x, float y, int button)
 	{
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
@@ -611,7 +611,7 @@ namespace AprilUI
 	
 	void Dataset::OnMouseUp(float x, float y, int button)
 	{
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
@@ -622,7 +622,7 @@ namespace AprilUI
 	
 	void Dataset::OnMouseMove(float x, float y)
 	{
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
@@ -633,7 +633,7 @@ namespace AprilUI
 	
 	void Dataset::OnKeyDown(unsigned int keycode)
 	{
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
@@ -644,7 +644,7 @@ namespace AprilUI
 	
 	void Dataset::OnKeyUp(unsigned int keycode)
 	{
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
@@ -655,7 +655,7 @@ namespace AprilUI
 	
 	void Dataset::OnChar(unsigned int charcode)
 	{
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
@@ -675,7 +675,7 @@ namespace AprilUI
 	void Dataset::update(float k)
 	{
 		updateTextures(k);
-		foreach_m (AprilUI::Object*, it, mObjects)
+		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{

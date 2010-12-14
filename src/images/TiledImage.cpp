@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "TiledImage.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	TiledImage::TiledImage(April::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
 		Image(texture, name, source, vertical)

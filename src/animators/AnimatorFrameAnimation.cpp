@@ -12,10 +12,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 
 #include "AnimatorFrameAnimation.h"
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "ObjectImageBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
@@ -100,7 +100,7 @@ namespace AprilUI
 			}
 			else
 			{
-				logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+				aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 			}
 		}
 		

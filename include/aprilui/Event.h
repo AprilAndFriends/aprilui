@@ -10,11 +10,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_EVENT_H
 #define APRILUI_EVENT_H
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport Event
+	class apriluiExport Event
 	{
 	public:
 		virtual void execute(void* params) = 0;

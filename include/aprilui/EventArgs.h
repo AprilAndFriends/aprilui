@@ -14,13 +14,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	class Object;
 
-	class AprilUIExport EventArgs
+	class apriluiExport EventArgs
 	{
 	public:
 		Object* object;

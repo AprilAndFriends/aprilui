@@ -10,11 +10,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_BUTTON_BASE_H
 #define APRILUI_BUTTON_BASE_H
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport ButtonBase
+	class apriluiExport ButtonBase
 	{
 	public:
 		ButtonBase();

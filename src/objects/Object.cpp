@@ -23,9 +23,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "EventArgs.h"
 #include "Exception.h"
 #include "ObjectCallbackObject.h"
-#include "AprilUI.h"
+#include "aprilui.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	Object::Object(chstr type, chstr name, grect rect)
 	{
@@ -369,7 +369,7 @@ namespace AprilUI
 		foreach_r (Object*, it, mChildren)
 		{
 			object = (*it)->getChildUnderPoint(pos.x - mRect.x, pos.y - mRect.y);
-			if (object != NULL && dynamic_cast<AprilUI::Animator*>(object) == NULL)
+			if (object != NULL && dynamic_cast<Animator*>(object) == NULL)
 			{
 				break;
 			}

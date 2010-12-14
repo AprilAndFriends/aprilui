@@ -14,11 +14,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
-		class AprilUIExport ScalerY : public Animator
+		class apriluiExport ScalerY : public Animator
 		{
 		public:
 			ScalerY(chstr name);

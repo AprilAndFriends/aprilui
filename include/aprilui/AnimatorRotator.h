@@ -14,11 +14,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
-		class AprilUIExport Rotator : public Animator
+		class apriluiExport Rotator : public Animator
 		{
 		public:
 			Rotator(chstr name);

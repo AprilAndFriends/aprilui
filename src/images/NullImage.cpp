@@ -11,7 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "NullImage.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	NullImage::NullImage() : Image(0, "null", grect())
 	{
