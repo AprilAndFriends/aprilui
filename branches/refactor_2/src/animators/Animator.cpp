@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	Animator::Animator(chstr type, chstr name, grect rect) :
 		Object(type, name, rect)
 	{
-		mFunction = AprilUI::Sine;
+		mFunction = aprilui::Sine;
 		mActive = true;
 		mTimer = 0.0f;
 		mDelay = 0.0f;
@@ -73,16 +73,16 @@ namespace AprilUI
 		float result = 0.0f;
 		switch (mFunction)
 		{
-		case AprilUI::Sine:
+		case aprilui::Sine:
 			result = (float)dsin(time * mSpeed * 360) * mAmplitude;
 			break;
-		case AprilUI::Square:
+		case aprilui::Square:
 			result = (fmod(time * mSpeed, 1.0f) < 0.5f ? mAmplitude : -mAmplitude);
 			break;
-		case AprilUI::Saw:
+		case aprilui::Saw:
 			result = (fmod(time * mSpeed + 0.5f, 1.0f) - 0.5f) * 2 * mAmplitude;
 			break;
-		case AprilUI::Triangle:
+		case aprilui::Triangle:
 			result = fmod(time * mSpeed, 1.0f);
 			if (result < 0.25f || result >= 0.75f)
 			{
@@ -93,10 +93,10 @@ namespace AprilUI
 				result = -(fmod(time * mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * mAmplitude;
 			}
 			break;
-		case AprilUI::Linear:
+		case aprilui::Linear:
 			result = time * mSpeed * mAmplitude;
 			break;
-		case AprilUI::Hover:
+		case aprilui::Hover:
 			if (mParent->isCursorInside())
 			{
 				result = hmin(value - mDcOffset + k * mSpeed, mAmplitude);
@@ -106,7 +106,7 @@ namespace AprilUI
 				result = hmax(value - mDcOffset - k * mSpeed, -mAmplitude);
 			}
 			break;
-		case AprilUI::Random:
+		case aprilui::Random:
 			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
 			break;
 		}
@@ -139,13 +139,13 @@ namespace AprilUI
 		Object::setProperty(name, value);
 		if      (name == "function")
 		{
-			if      (value == "sine")		setAnimationFunction(AprilUI::Sine);
-			else if (value == "saw")		setAnimationFunction(AprilUI::Saw);
-			else if (value == "square")		setAnimationFunction(AprilUI::Square);
-			else if (value == "triangle")	setAnimationFunction(AprilUI::Triangle);
-			else if (value == "linear")		setAnimationFunction(AprilUI::Linear);
-			else if (value == "hover")		setAnimationFunction(AprilUI::Hover);
-			else if (value == "random")		setAnimationFunction(AprilUI::Random);
+			if      (value == "sine")		setAnimationFunction(aprilui::Sine);
+			else if (value == "saw")		setAnimationFunction(aprilui::Saw);
+			else if (value == "square")		setAnimationFunction(aprilui::Square);
+			else if (value == "triangle")	setAnimationFunction(aprilui::Triangle);
+			else if (value == "linear")		setAnimationFunction(aprilui::Linear);
+			else if (value == "hover")		setAnimationFunction(aprilui::Hover);
+			else if (value == "random")		setAnimationFunction(aprilui::Random);
 		}
 		else if (name == "active")			setActive(value);
 		else if (name == "timer")			setTimer(value);

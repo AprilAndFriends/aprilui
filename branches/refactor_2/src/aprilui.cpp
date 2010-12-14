@@ -14,17 +14,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Image.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	bool registerLock = false;
 	hmap<int, April::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
-	AprilUI::Image* gCursor = NULL;
+	Image* gCursor = NULL;
 	float defaultScale = 1.0f;
 	gvec2 cursorPosition;
 #ifdef _DEBUG
@@ -33,7 +33,7 @@ namespace AprilUI
 	hstr defaultTextsPath = "texts";
 	void (*g_logFunction)(chstr) = aprilui_writelog;
 	
-	void logMessage(chstr message, chstr prefix)
+	void log(chstr message, chstr prefix)
 	{
 		g_logFunction(prefix + message);
 	}

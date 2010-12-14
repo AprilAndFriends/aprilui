@@ -16,11 +16,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Image.h"
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport CompositeImage : public Image
+	class apriluiExport CompositeImage : public Image
 	{
 	public:
 		struct ImageRef

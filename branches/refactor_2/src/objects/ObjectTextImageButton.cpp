@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectLabelBase.h"
 #include "ObjectTextImageButton.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	TextImageButton::TextImageButton(chstr name, grect rect) :
 		LabelBase(),

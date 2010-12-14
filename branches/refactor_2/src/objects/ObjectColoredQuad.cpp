@@ -11,10 +11,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "ObjectColoredQuad.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	ColoredQuad::ColoredQuad(chstr name, grect rect) :
 		Object("ColoredQuad", name, rect)
@@ -39,22 +39,22 @@ namespace AprilUI
 		Object::setProperty(name, value);
 		if (name == "r")
 		{
-			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
 			mColor.r = (unsigned char)((float)value * 255);
 		}
 		else if (name == "g")
 		{
-			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
 			mColor.g = (unsigned char)((float)value * 255);
 		}
 		else if (name == "b")
 		{
-			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
 			mColor.b = (unsigned char)((float)value * 255);
 		}
 		else if (name == "a")
 		{
-			AprilUI::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
+			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
 			mColor.a = (unsigned char)((float)value * 255);
 		}
 		else if (name == "color") mColor.setColor(value);

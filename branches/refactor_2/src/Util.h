@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 struct xml_node;
 
-namespace AprilUI
+namespace aprilui
 {
 	hstr pathGetBaseDir(chstr path);
 	hstr generateName(chstr prefix);

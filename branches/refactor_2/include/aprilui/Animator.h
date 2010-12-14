@@ -14,9 +14,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Object.h"
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	enum AnimationFunction
 	{
@@ -29,7 +29,7 @@ namespace AprilUI
 		Random
 	};
 	
-	class AprilUIExport Animator : public Object
+	class apriluiExport Animator : public Object
 	{
 	public:
 		Animator(chstr type, chstr name, grect rect);

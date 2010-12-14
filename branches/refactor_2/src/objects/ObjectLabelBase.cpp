@@ -12,11 +12,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/exception.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Exception.h"
 #include "ObjectLabelBase.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	LabelBase::LabelBase() :
 		mTextColor(255, 255, 255, 255)
@@ -32,7 +32,7 @@ namespace AprilUI
 	void LabelBase::_drawLabel(grect rect, float alpha)
 	{
 #ifdef _DEBUG
-		if (AprilUI::isDebugMode())
+		if (aprilui::isDebugMode())
 		{
 			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
 		}
@@ -78,7 +78,7 @@ namespace AprilUI
 		else if (name == "text") setText(value);
 		else if (name == "wrap_text")
 		{
-			logMessage("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
+			aprilui::log("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
 		}
 		else if (name == "horz_formatting")
 		{

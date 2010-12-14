@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 #include "Object.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport CallbackObject : public Object
+	class apriluiExport CallbackObject : public Object
 	{
 	public:
 		CallbackObject(chstr name, grect rect);

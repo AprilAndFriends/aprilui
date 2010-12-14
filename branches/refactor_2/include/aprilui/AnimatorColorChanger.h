@@ -16,12 +16,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectCallbackObject.h"
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
 		// note: only works on ColoredImageBoxes
-		class AprilUIExport ColorChanger : public Animator
+		class apriluiExport ColorChanger : public Animator
 		{
 		public:
 			ColorChanger(chstr name);

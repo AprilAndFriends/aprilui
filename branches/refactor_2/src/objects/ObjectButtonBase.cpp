@@ -7,10 +7,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "ObjectButtonBase.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	ButtonBase::ButtonBase()
 	{
@@ -26,7 +26,6 @@ namespace AprilUI
 	bool ButtonBase::OnMouseDown(float x, float y, int button)
 	{
 		mHover = isCursorInside();
-
 		if (mHover)
 		{
 			mPushed = true;
@@ -38,7 +37,6 @@ namespace AprilUI
 	bool ButtonBase::OnMouseUp(float x, float y, int button)
 	{
 		mHover = isCursorInside();
-
 		if (mPushed && mHover)
 		{
 			mPushed = false;

@@ -13,13 +13,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 #include "ObjectLabelBase.h"
 #include "Object.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport Label : public Object, public LabelBase
+	class apriluiExport Label : public Object, public LabelBase
 	{
 	public:
 		Label(chstr name, grect rect);

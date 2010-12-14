@@ -14,11 +14,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
-		class AprilUIExport AlphaChanger : public Animator
+		class apriluiExport AlphaChanger : public Animator
 		{
 		public:
 			AlphaChanger(chstr name);

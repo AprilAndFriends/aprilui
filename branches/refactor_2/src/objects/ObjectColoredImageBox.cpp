@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Image.h"
 #include "ObjectColoredImageBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	ColoredImageBox::ColoredImageBox(chstr name, grect rect) :
 		ImageBox(name, rect)

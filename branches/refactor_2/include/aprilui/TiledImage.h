@@ -16,11 +16,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Image.h"
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport TiledImage : public Image
+	class apriluiExport TiledImage : public Image
 	{
 	public:
 		TiledImage(April::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
