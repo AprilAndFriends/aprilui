@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 #include "ObjectImageButton.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport ToggleButton : public ImageButton
+	class apriluiExport ToggleButton : public ImageButton
 	{
 	public:
 		ToggleButton(chstr name, grect rect);

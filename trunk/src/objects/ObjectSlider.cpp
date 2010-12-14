@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Image.h"
 #include "ObjectSlider.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	Slider::Slider(chstr name, grect rect) :
 		ImageBox(name, rect)

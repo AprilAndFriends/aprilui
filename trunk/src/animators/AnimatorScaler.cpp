@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "AnimatorScaler.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{

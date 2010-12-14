@@ -13,13 +13,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 #include "ObjectImageButton.h"
 #include "ObjectLabelBase.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport TextImageButton : public ImageButton, public LabelBase
+	class apriluiExport TextImageButton : public ImageButton, public LabelBase
 	{
 	public:
 		TextImageButton(chstr name, grect rect);

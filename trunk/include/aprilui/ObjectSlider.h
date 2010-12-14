@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 #include "ObjectImageBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport Slider : public ImageBox
+	class apriluiExport Slider : public ImageBox
 	{
 	public:
 		Slider(chstr name, grect rect);

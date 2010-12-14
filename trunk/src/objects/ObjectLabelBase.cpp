@@ -12,11 +12,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/exception.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Exception.h"
 #include "ObjectLabelBase.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	LabelBase::LabelBase(chstr name) :
 		   mTextColor(255, 255, 255, 255)
@@ -32,7 +32,7 @@ namespace AprilUI
 	void LabelBase::_drawLabel(grect rect, float alpha)
 	{
 #ifdef _DEBUG
-		if (AprilUI::isDebugMode())
+		if (aprilui::isDebugMode())
 		{
 			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
 		}

@@ -15,11 +15,11 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
-		class AprilUIExport ScaleOscillator : public Animator
+		class apriluiExport ScaleOscillator : public Animator
 		{
 		public:
 			ScaleOscillator(chstr name);

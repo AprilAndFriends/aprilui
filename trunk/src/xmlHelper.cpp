@@ -21,7 +21,7 @@ const char* xml_node::find_prop(const char* property, bool ignoreError)
 	}
 	if (!ignoreError)
 	{
-		throw AprilUI::XMLPropertyNotExistsException(property, this);
+		throw aprilui::XMLPropertyNotExistsException(property, this);
 	}
 	return 0;
 }
@@ -153,7 +153,7 @@ xml_doc::xml_doc(chstr filename)
 	this->doc = xmlParseFile((filename).c_str());
 	if (this->doc == NULL)
 	{
-		throw AprilUI::GenericException("Unable to parse xml file '" + filename + "', document does not exist or is invalid");
+		throw aprilui::GenericException("Unable to parse xml file '" + filename + "', document does not exist or is invalid");
 	}
 }
 
@@ -169,13 +169,13 @@ xml_node* xml_doc::root(chstr rootElementQuery)
 	{
 		hstr docname = (char*)this->doc->URL;
 		xmlFreeDoc(this->doc);
-		throw AprilUI::GenericException("No root node found in xml file '" + docname + "'");
+		throw aprilui::GenericException("No root node found in xml file '" + docname + "'");
 	}
 	if (rootElementQuery != "" && *root != rootElementQuery.c_str())
 	{
 		hstr docname = (char*)this->doc->URL;
 		xmlFreeDoc(this->doc);
-		throw AprilUI::GenericException("xml root node type is not '" + rootElementQuery + "' in xml file '" + docname + "'");
+		throw aprilui::GenericException("xml root node type is not '" + rootElementQuery + "' in xml file '" + docname + "'");
 	}
 	return root;
 }

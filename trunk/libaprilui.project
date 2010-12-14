@@ -12,7 +12,7 @@
     <File Name="src/Exception.cpp"/>
     <File Name="src/Util.cpp"/>
     <File Name="src/xmlHelper.cpp"/>
-    <File Name="src/AprilUI.cpp"/>
+    <File Name="src/aprilui.cpp"/>
     <File Name="src/CallbackEvent.cpp"/>
     <VirtualDirectory Name="objects">
       <File Name="src/objects/ObjectCallbackObject.cpp"/>
@@ -62,9 +62,9 @@
     <File Name="include/aprilui/Dataset.h"/>
     <File Name="include/aprilui/Exception.h"/>
     <File Name="src/Util.h"/>
-    <File Name="include/aprilui/AprilUI.h"/>
+    <File Name="include/aprilui/aprilui.h"/>
     <File Name="include/aprilui/Animators.h"/>
-    <File Name="include/aprilui/AprilUIExport.h"/>
+    <File Name="include/aprilui/apriluiExport.h"/>
     <File Name="include/aprilui/xmlHelper.h"/>
     <File Name="include/aprilui/CallbackEvent.h"/>
     <File Name="include/aprilui/Event.h"/>

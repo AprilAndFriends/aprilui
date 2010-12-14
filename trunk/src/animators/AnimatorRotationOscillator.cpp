@@ -14,7 +14,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "AnimatorRotationOscillator.h"
 #include "ObjectRotationImageBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{

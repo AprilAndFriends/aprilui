@@ -11,7 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	Animator::Animator(chstr type, chstr name, grect rect) :
 		Object(type, name, rect)

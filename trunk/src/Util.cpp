@@ -18,7 +18,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Util.h"
 #include "Exception.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	hstr pathGetBaseDir(chstr path)
 	{

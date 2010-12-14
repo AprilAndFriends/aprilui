@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "ObjectCallbackObject.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	CallbackObject::CallbackObject(chstr name, grect rect) :
 		Object("CallbackObject", name, rect)

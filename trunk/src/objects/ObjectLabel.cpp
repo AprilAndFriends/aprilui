@@ -14,7 +14,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Dataset.h"
 #include "ObjectLabel.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	Label::Label(chstr name, grect rect) :
 		LabelBase(name),

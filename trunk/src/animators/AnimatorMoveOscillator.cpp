@@ -14,7 +14,7 @@ Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                
 #include "AnimatorMoveOscillator.h"
 #include "Object.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{

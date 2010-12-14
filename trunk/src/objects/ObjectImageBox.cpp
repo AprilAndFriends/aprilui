@@ -9,12 +9,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <hltypes/hstring.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Dataset.h"
 #include "Image.h"
 #include "ObjectColoredImageBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	ImageBox::ImageBox(chstr name, grect rect) :
 		Object("ImageBox", name, rect)

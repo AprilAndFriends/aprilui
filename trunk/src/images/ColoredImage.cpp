@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "ColoredImage.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	ColoredImage::ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical, April::Color color) :
 				  Image(texture, name, source, vertical)

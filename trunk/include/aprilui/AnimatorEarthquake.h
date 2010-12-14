@@ -16,11 +16,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectCallbackObject.h"
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
-		class AprilUIExport Earthquake : public Animator
+		class apriluiExport Earthquake : public Animator
 		{
 		public:
 			Earthquake(chstr name);

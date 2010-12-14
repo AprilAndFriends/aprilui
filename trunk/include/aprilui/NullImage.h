@@ -12,11 +12,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Image.h"
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport NullImage : public Image
+	class apriluiExport NullImage : public Image
 	{
 	public:
 		NullImage();

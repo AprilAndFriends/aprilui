@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Dataset.h"
 #include "Exception.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	_GenericException::_GenericException(chstr errorText, chstr type, const char* file, int line) : 
 					   hltypes::exception("", file, line)

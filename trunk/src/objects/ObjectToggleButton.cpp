@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Image.h"
 #include "ObjectToggleButton.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	ToggleButton::ToggleButton(chstr name, grect rect) :
 		ImageButton(name, rect)

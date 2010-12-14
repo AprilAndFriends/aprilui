@@ -14,11 +14,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Dataset.h"
 #include "Exception.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	bool registerLock = false;
 	hmap<int, April::Texture*> gFontTextures;

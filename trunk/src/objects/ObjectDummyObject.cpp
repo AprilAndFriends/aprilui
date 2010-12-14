@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "ObjectDummyObject.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	/********************************************************************************************************/
 	DummyObject::DummyObject(chstr name, grect rect) :
