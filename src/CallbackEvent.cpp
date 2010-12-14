@@ -9,7 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include "CallbackEvent.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	CallbackEvent::CallbackEvent(void (*callback)(EventArgs*))
 	{

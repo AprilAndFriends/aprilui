@@ -14,11 +14,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 #include <april/Window.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Dataset.h"
 #include "ObjectEditBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	EditBox::EditBox(chstr name, grect rect) :
 		Label(name, rect)
@@ -48,7 +48,7 @@ namespace AprilUI
 	{
 		grect rect = mRect + offset;
 #ifdef _DEBUG
-		if (!AprilUI::isDebugMode())
+		if (!aprilui::isDebugMode())
 #endif
 		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
 		hstr text = mText;

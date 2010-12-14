@@ -18,7 +18,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Image.h"
 #include "Util.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	April::TexturedVertex tVertices[4];
 	

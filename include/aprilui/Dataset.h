@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Exception.h"
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
 namespace April
 {
@@ -25,14 +25,14 @@ namespace April
 
 struct xml_node;
 
-namespace AprilUI
+namespace aprilui
 {
 	#define REGISTER_CALLBACK(data_dict, fn) data_dict->registerCallback(#fn, fn)
 
 	class Object;
 	class Image;
 
-	class AprilUIExport Dataset
+	class apriluiExport Dataset
 	{
 	public:
 		Object* parseObject(xml_node* node, Object* parent = NULL);

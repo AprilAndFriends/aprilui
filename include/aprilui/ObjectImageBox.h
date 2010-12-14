@@ -13,14 +13,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 #include "Object.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	class Image;
 	
-	class AprilUIExport ImageBox : public Object
+	class apriluiExport ImageBox : public Object
 	{
 	public:
 		ImageBox(chstr name, grect rect);

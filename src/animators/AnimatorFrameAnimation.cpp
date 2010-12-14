@@ -12,10 +12,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 
 #include "AnimatorFrameAnimation.h"
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "ObjectColoredImageBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{

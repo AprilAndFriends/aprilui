@@ -15,11 +15,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectCallbackObject.h"
 #include "Animator.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{
-		class AprilUIExport AlphaHover : public Animator
+		class apriluiExport AlphaHover : public Animator
 		{
 		public:
 			AlphaHover(chstr name);

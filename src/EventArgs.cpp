@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "EventArgs.h"
 #include "Object.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	EventArgs::EventArgs(Object* o, float x_pos, float y_pos, chstr extra_string)
 	{

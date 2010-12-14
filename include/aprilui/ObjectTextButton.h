@@ -13,12 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 #include "ObjectLabel.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport TextButton : public Label
+	class apriluiExport TextButton : public Label
 	{
 	public:
 		TextButton(chstr name, grect rect);

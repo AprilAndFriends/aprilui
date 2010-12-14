@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "AnimatorEArthquake.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	namespace Animators
 	{

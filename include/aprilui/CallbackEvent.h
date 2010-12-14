@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Event.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	class EventArgs;
 	

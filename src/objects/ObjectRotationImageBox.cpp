@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Image.h"
 #include "ObjectRotationImageBox.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	RotationImageBox::RotationImageBox(chstr name, grect rect) :
 		ImageBox(name, rect)

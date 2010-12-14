@@ -16,11 +16,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Image.h"
 
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
-namespace AprilUI
+namespace aprilui
 {
-	class AprilUIExport ColoredImage : public Image
+	class apriluiExport ColoredImage : public Image
 	{
 	public:
 		ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical = false, April::Color color = April::Color());

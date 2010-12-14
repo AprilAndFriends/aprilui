@@ -16,7 +16,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "CompositeImage.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	CompositeImage::CompositeImage(chstr name, float w, float h) : Image(0, name, grect(0, 0, w, h))
 	{

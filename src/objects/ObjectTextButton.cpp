@@ -10,11 +10,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <atres/Atres.h>
 #include <hltypes/hstring.h>
 
-#include "AprilUI.h"
+#include "aprilui.h"
 #include "Dataset.h"
 #include "ObjectTextButton.h"
 
-namespace AprilUI
+namespace aprilui
 {
 	TextButton::TextButton(chstr name, grect rect) :
 		Label(name, rect)
@@ -42,7 +42,7 @@ namespace AprilUI
 			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
 		}
 #ifdef _DEBUG
-		else if (AprilUI::isDebugMode())
+		else if (aprilui::isDebugMode())
 		{
 			grect rect = mRect + offset;
 			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
