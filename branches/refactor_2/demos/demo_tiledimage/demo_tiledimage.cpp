@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 #include <april/RenderSystem.h>
 #include <april/Window.h>
-#include <aprilui/AprilUI.h>
+#include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <aprilui/TiledImage.h>
@@ -26,13 +26,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #define SCROLL_SPEED_X 50
 #define SCROLL_SPEED_Y 50
 
-AprilUI::Dataset* dataset;
+aprilui::Dataset* dataset;
 
 bool render(float time)
 {
 	April::rendersys->clear();
 	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
-	AprilUI::TiledImage* image = (AprilUI::TiledImage*)dataset->getImage("texture/test");
+	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/test");
 	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
 					 image->getScrollY() - time * SCROLL_SPEED_Y);
 	dataset->getObject("root")->draw();
@@ -90,17 +90,17 @@ int main()
 	{
 		April::init("Tiled Image", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_tiledimage");
 		April::rendersys->getWindow()->setUpdateCallback(&render);
-		AprilUI::init();
+		aprilui::init();
 		Atres::init();
-		dataset = new AprilUI::Dataset("../media/demo_tiledimage.datadef");
+		dataset = new aprilui::Dataset("../media/demo_tiledimage.datadef");
 		dataset->load();
 		April::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
-		AprilUI::destroy();
+		aprilui::destroy();
 		Atres::destroy();
 		April::destroy();
 	}
-	catch (AprilUI::_GenericException e)
+	catch (aprilui::_GenericException e)
 	{
 		printf("%s\n", e.getType().c_str());
 	}

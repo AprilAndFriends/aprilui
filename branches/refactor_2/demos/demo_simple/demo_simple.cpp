@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 #include <april/RenderSystem.h>
 #include <april/Window.h>
-#include <aprilui/AprilUI.h>
+#include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <atres/Atres.h>
@@ -23,7 +23,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-AprilUI::Dataset* dataset;
+aprilui::Dataset* dataset;
 
 bool render(float time)
 {
@@ -84,18 +84,18 @@ int main()
 	{
 		April::init("Simple", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_simple");
 		April::rendersys->getWindow()->setUpdateCallback(&render);
-		AprilUI::init();
+		aprilui::init();
 		Atres::init();
 		Atres::loadFont("../media/arial.font");
-		dataset = new AprilUI::Dataset("../media/demo_simple.datadef");
+		dataset = new aprilui::Dataset("../media/demo_simple.datadef");
 		dataset->load();
 		April::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
-		AprilUI::destroy();
+		aprilui::destroy();
 		Atres::destroy();
 		April::destroy();
 	}
-	catch (AprilUI::_GenericException e)
+	catch (aprilui::_GenericException e)
 	{
 		printf("%s\n", e.getType().c_str());
 	}
