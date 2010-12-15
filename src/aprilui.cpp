@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <stdio.h>
 
 #include <april/RenderSystem.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
