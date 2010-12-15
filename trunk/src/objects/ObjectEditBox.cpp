@@ -8,7 +8,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/Keys.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
 #include <atres/Font.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
@@ -25,7 +25,7 @@ namespace aprilui
 	{
 		mText = "";
 		mTypeName = "EditBox";
-		mHorzFormatting = Atres::LEFT;
+		mHorzFormatting = atres::LEFT;
 		mTextFormatting = false;
 		mPushed = false;
 		mMaxLength = 0;
@@ -64,7 +64,7 @@ namespace aprilui
 		int count;
 		while (true)
 		{
-			count = Atres::getTextCountUnformatted(mFontName, mText(mOffsetIndex, mText.size() - mOffsetIndex), rect.w);
+			count = atres::getTextCountUnformatted(mFontName, mText(mOffsetIndex, mText.size() - mOffsetIndex), rect.w);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex = mCursorIndex;
@@ -84,8 +84,8 @@ namespace aprilui
 		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
 			rect = mRect + offset;
-			rect.x += Atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
-			float h = Atres::getFontHeight(mFontName);
+			rect.x += atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
+			float h = atres::getFontHeight(mFontName);
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 2;
 			rect.h = h - 4;
@@ -116,7 +116,7 @@ namespace aprilui
 		{
 			text = hstr(mPasswordChar, text.size());
 		}
-		int count = Atres::getTextCountUnformatted(mFontName, text(mOffsetIndex, text.size() - mOffsetIndex), x - mRect.x);
+		int count = atres::getTextCountUnformatted(mFontName, text(mOffsetIndex, text.size() - mOffsetIndex), x - mRect.x);
 		setCursorIndex(mOffsetIndex + count);
 	}
 	
@@ -236,7 +236,7 @@ namespace aprilui
 	void EditBox::OnChar(unsigned int charcode)
 	{
 		char c = (char)charcode;
-		if (Atres::getFont(mFontName)->hasChar(charcode) && (mFilter == "" || mFilter.contains(c)))
+		if (atres::getFont(mFontName)->hasChar(charcode) && (mFilter == "" || mFilter.contains(c)))
 		{
 			_insertText(c);
 		}
