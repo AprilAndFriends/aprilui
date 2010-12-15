@@ -11,7 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_LABEL_BASE_H
 
 #include <april/RenderSystem.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
@@ -34,12 +34,12 @@ namespace aprilui
 		
 		gvec2 getDrawOffset() { return mDrawOffset; }
 		void setDrawOffset(gvec2 value) { mDrawOffset = value; }
-		Atres::Alignment getHorzFormatting() { return mHorzFormatting; }
-		void setHorzFormatting(Atres::Alignment value) { mHorzFormatting = value; }
-		Atres::Alignment getVertFormatting() { return mVertFormatting; }
-		void setVertFormatting(Atres::Alignment value) { mVertFormatting = value; }
-		Atres::Effect getFontEffect() { return mFontEffect; }
-		void setFontEffect(Atres::Effect value) { mFontEffect = value; }
+		atres::Alignment getHorzFormatting() { return mHorzFormatting; }
+		void setHorzFormatting(atres::Alignment value) { mHorzFormatting = value; }
+		atres::Alignment getVertFormatting() { return mVertFormatting; }
+		void setVertFormatting(atres::Alignment value) { mVertFormatting = value; }
+		atres::Effect getFontEffect() { return mFontEffect; }
+		void setFontEffect(atres::Effect value) { mFontEffect = value; }
 		April::Color getTextColor() { return mTextColor; }
 		void setTextColor(April::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.setColor(value); }
@@ -51,9 +51,9 @@ namespace aprilui
 		hstr mFontName;
 		bool mTextFormatting;
 		gvec2 mDrawOffset;
-		Atres::Alignment mHorzFormatting;
-		Atres::Alignment mVertFormatting;
-		Atres::Effect mFontEffect;
+		atres::Alignment mHorzFormatting;
+		atres::Alignment mVertFormatting;
+		atres::Effect mFontEffect;
 		April::Color mTextColor;
 		
 		void _drawLabel(grect rect, float alpha);
