@@ -24,14 +24,6 @@ namespace aprilui
 		{
 			mImageBaseName = "";
 			mFrameCount = 0;
-			/*
-			mFirstFrame = 0;
-			mLastFrame = 0;
-			mAnimationTime = 1.0f;
-			mFrameTime = 0.1f;
-			mLoops = 0;
-			mReset = true;
-			*/
 		}
 
 		bool FrameAnimation::isAnimated()
@@ -56,13 +48,6 @@ namespace aprilui
 			Animator::setProperty(name, value);
 			if		(name == "base_name")	mImageBaseName = value;
 			else if (name == "frame_count")	mFrameCount = value;
-			/*
-			if      (name == "first_frame")	mFirstFrame = value;
-			else if (name == "last_frame")	mLastFrame = value;
-			else if (name == "animation_time") mAnimationTime = value;
-			else if (name == "frame_time")	mFrameTime = value;
-			else if (name == "loops")		mLoops = value;
-			*/
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)
