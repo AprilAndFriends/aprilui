@@ -18,7 +18,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -88,14 +88,14 @@ int main()
 		April::rendersys->getWindow()->setMouseCallbacks(&aprilui::OnMouseDown, &aprilui::OnMouseUp, &aprilui::OnMouseMove);
 		April::rendersys->getWindow()->setKeyboardCallbacks(&aprilui::OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
 		aprilui::init();
-		Atres::init();
-		Atres::loadFont("../media/arial.font");
+		atres::init();
+		atres::loadFont("../media/arial.font");
 		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
 		dataset->load();
 		April::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
 		aprilui::destroy();
-		Atres::destroy();
+		atres::destroy();
 		April::destroy();
 	}
 	catch (aprilui::_GenericException e)
