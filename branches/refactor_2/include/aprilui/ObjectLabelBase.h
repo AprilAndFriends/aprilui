@@ -25,6 +25,7 @@ namespace aprilui
 	public:
 		LabelBase();
 		
+		virtual float getAngle() = 0;
 		hstr getText() { return mText; }
 		virtual void setText(chstr value) { mText = value; }
 		virtual void setTextKey(chstr key) = 0;

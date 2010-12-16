@@ -24,6 +24,7 @@ namespace aprilui
 	public:
 		TextImageButton(chstr name, grect rect);
 		
+		float getAngle();
 		void setTextKey(chstr key);
 		void setProperty(chstr name, chstr value);
 		

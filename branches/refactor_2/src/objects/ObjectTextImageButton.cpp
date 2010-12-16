@@ -35,6 +35,11 @@ namespace aprilui
 		}
 		LabelBase::_drawLabel(mRect + offset, alpha);
 	}
+	
+	float TextImageButton::getAngle()
+	{
+		return Object::getAngle();
+	}
 
 	void TextImageButton::setTextKey(chstr key)
 	{

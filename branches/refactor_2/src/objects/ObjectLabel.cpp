@@ -42,6 +42,11 @@ namespace aprilui
 		}
 		Object::notifyEvent(name, params);
 	}
+	
+	float Label::getAngle()
+	{
+		return Object::getAngle();
+	}
 
 	void Label::setTextKey(chstr key)
 	{

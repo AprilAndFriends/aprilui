@@ -24,7 +24,7 @@ namespace aprilui
 	}
 	
 	CompositeImage::CompositeImage(chstr name, CompositeImage& base) :
-		Image(0, name, grect(0, 0, base.getSource().w, base.getSource().h))
+		Image(0, name, grect(0, 0, base.getSource().getSize()))
 	{
 		foreach (ImageRef, it, base.mImages)
 		{

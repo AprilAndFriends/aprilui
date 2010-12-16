@@ -290,10 +290,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ObjectRotatableImageBox.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\objects\ObjectSlider.cpp"
 					>
 				</File>
@@ -473,10 +469,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectLabelBase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\ObjectRotatableImageBox.h"
 					>
 				</File>
 				<File

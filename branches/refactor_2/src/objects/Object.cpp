@@ -133,10 +133,10 @@ namespace aprilui
 		if (isVisible())
 		{
 			OnDraw(offset);
-			gvec2 rect(offset.x + mRect.x, offset.y + mRect.y);
+			gvec2 position = offset + mRect.getPosition();
 			foreach (Object*, it, mChildren)
 			{
-				(*it)->draw(rect);
+				(*it)->draw(position);
 			}
 		}
 	}
@@ -366,9 +366,10 @@ namespace aprilui
 			return this;
 		}
 		Object* object = NULL;
+		gvec2 position = pos - mRect.getPosition();
 		foreach_r (Object*, it, mChildren)
 		{
-			object = (*it)->getChildUnderPoint(pos.x - mRect.x, pos.y - mRect.y);
+			object = (*it)->getChildUnderPoint(position);
 			if (object != NULL && dynamic_cast<Animator*>(object) == NULL)
 			{
 				break;
@@ -379,7 +380,7 @@ namespace aprilui
 	
 	gvec2 Object::getDerivedPosition()
 	{
-		gvec2 position = gvec2(mRect.x, mRect.y);
+		gvec2 position = mRect.getPosition();
 		for (Object* p = mParent; p != NULL; p = p->mParent)
 		{
 			position += p->getPosition();
