@@ -23,7 +23,6 @@
       <File Name="src/objects/ObjectImageButton.cpp"/>
       <File Name="src/objects/ObjectLabel.cpp"/>
       <File Name="src/objects/ObjectLabelBase.cpp"/>
-      <File Name="src/objects/ObjectRotatableImageBox.cpp"/>
       <File Name="src/objects/ObjectSlider.cpp"/>
       <File Name="src/objects/ObjectTextButton.cpp"/>
       <File Name="src/objects/ObjectTextImageButton.cpp"/>
@@ -84,7 +83,6 @@
       <File Name="include/aprilui/ObjectImageButton.h"/>
       <File Name="include/aprilui/ObjectLabel.h"/>
       <File Name="include/aprilui/ObjectLabelBase.h"/>
-      <File Name="include/aprilui/ObjectRotatableImageBox.h"/>
       <File Name="include/aprilui/ObjectSlider.h"/>
       <File Name="include/aprilui/ObjectTextButton.h"/>
       <File Name="include/aprilui/ObjectTextImageButton.h"/>

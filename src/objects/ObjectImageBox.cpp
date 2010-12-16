@@ -56,8 +56,7 @@ namespace aprilui
 	{
 		if (mImage)
 		{
-			grect rect = mImage->getSource();
-			setSize(rect.w * getDefaultScale(), rect.h * getDefaultScale());
+			setSize(mImage->getSource().getSize() * getDefaultScale());
 		}
 	}
 

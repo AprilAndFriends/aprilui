@@ -49,15 +49,15 @@ namespace aprilui
 		void setX(float value) { mRect.x = value; }
 		float getY() { return mRect.y; }
 		void setY(float value) { mRect.y = value; }
-		gvec2 getPosition() { return gvec2(mRect.x, mRect.y); }
-		void setPosition(gvec2 value) { mRect.x = value.x; mRect.y = value.y; }
+		gvec2 getPosition() { return mRect.getPosition(); }
+		void setPosition(gvec2 value) { mRect.setPosition(value); }
 		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
 		float getWidth() { return mRect.w; }
 		void setWidth(float value) { mRect.w = value; }
 		float getHeight() { return mRect.h; }
 		void setHeight(float value) { mRect.h = value; }
-		gvec2 getSize() { return gvec2(mRect.w, mRect.h); }
-		void setSize(gvec2 value) { mRect.w = value.x; mRect.h = value.y; }
+		gvec2 getSize() { return mRect.getSize(); }
+		void setSize(gvec2 value) { mRect.setSize(value); }
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
 		void setRect(grect value) { mRect = value; }

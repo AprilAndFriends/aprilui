@@ -271,7 +271,6 @@ namespace aprilui
 		else  parse(Label);
 		else  parse(TextButton);
 		else  parse(EditBox);
-		else  parse(RotatableImageBox);
 		else if (*node == "Animator")
 		{
 			/*if*/parse_animator(AlphaChanger);
