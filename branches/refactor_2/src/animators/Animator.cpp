@@ -18,7 +18,7 @@ namespace aprilui
 	Animator::Animator(chstr type, chstr name, grect rect) :
 		Object(type, name, rect)
 	{
-		mFunction = aprilui::Sine;
+		mFunction = aprilui::Linear;
 		mActive = true;
 		mTimer = 0.0f;
 		mDelay = 0.0f;
@@ -73,6 +73,9 @@ namespace aprilui
 		float result = 0.0f;
 		switch (mFunction)
 		{
+		case aprilui::Linear:
+			result = time * mSpeed * mAmplitude;
+			break;
 		case aprilui::Sine:
 			result = (float)dsin(time * mSpeed * 360) * mAmplitude;
 			break;
@@ -92,9 +95,6 @@ namespace aprilui
 			{
 				result = -(fmod(time * mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * mAmplitude;
 			}
-			break;
-		case aprilui::Linear:
-			result = time * mSpeed * mAmplitude;
 			break;
 		case aprilui::Hover:
 			if (mParent->isCursorInside())

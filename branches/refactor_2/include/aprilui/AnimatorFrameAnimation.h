@@ -24,6 +24,10 @@ namespace aprilui
 			FrameAnimation(chstr name);
 
 			bool isAnimated();
+			int getFrameCount() { return mFrameCount; }
+			void setFrameCount(float value) { mFrameCount = value; }
+			hstr getImageBaseName() { return mImageBaseName; }
+			void setImageBaseName(chstr value) { mImageBaseName = value; }
 			void setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
 			
@@ -31,10 +35,12 @@ namespace aprilui
 			
 		protected:
 			hstr mImageBaseName;
+			int mFrameCount;
+			
+			float mAnimationTime;
 			int mFirstFrame;
 			int mLastFrame;
 			float mFrameTime;
-			float mAnimationTime;
 			int mLoops;
 			
 		};

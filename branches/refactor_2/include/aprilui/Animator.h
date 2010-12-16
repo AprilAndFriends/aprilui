@@ -20,11 +20,11 @@ namespace aprilui
 {
 	enum AnimationFunction
 	{
+		Linear,
 		Sine,
 		Square,
 		Saw,
 		Triangle,
-		Linear,
 		Hover,
 		Random
 	};
