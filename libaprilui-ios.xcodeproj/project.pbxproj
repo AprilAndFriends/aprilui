@@ -31,7 +31,6 @@
 		7F3AE0E712560783009DFEC8 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AE0C212560783009DFEC8 /* ObjectImageButton.cpp */; };
 		7F3AE0E812560783009DFEC8 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AE0C312560783009DFEC8 /* ObjectLabel.cpp */; };
 		7F3AE0E912560783009DFEC8 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AE0C412560783009DFEC8 /* ObjectLabelBase.cpp */; };
-		7F3AE0EA12560783009DFEC8 /* ObjectRotatableImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AE0C512560783009DFEC8 /* ObjectRotatableImageBox.cpp */; };
 		7F3AE0EC12560783009DFEC8 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AE0C712560783009DFEC8 /* ObjectSlider.cpp */; };
 		7F3AE0ED12560783009DFEC8 /* ObjectTextButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AE0C812560783009DFEC8 /* ObjectTextButton.cpp */; };
 		7F3AE0EE12560783009DFEC8 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3AE0C912560783009DFEC8 /* ObjectTextImageButton.cpp */; };
@@ -61,7 +60,6 @@
 		7F3AE13812560796009DFEC8 /* ObjectImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11112560796009DFEC8 /* ObjectImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE13912560796009DFEC8 /* ObjectLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11212560796009DFEC8 /* ObjectLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE13A12560796009DFEC8 /* ObjectLabelBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11312560796009DFEC8 /* ObjectLabelBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F3AE13B12560796009DFEC8 /* ObjectRotatableImageBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11412560796009DFEC8 /* ObjectRotatableImageBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE13D12560796009DFEC8 /* Objects.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11612560796009DFEC8 /* Objects.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE13E12560796009DFEC8 /* ObjectSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11712560796009DFEC8 /* ObjectSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE13F12560796009DFEC8 /* ObjectTextButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11812560796009DFEC8 /* ObjectTextButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -116,7 +114,6 @@
 		7F3AE0C212560783009DFEC8 /* ObjectImageButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectImageButton.cpp; sourceTree = "<group>"; };
 		7F3AE0C312560783009DFEC8 /* ObjectLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectLabel.cpp; sourceTree = "<group>"; };
 		7F3AE0C412560783009DFEC8 /* ObjectLabelBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectLabelBase.cpp; sourceTree = "<group>"; };
-		7F3AE0C512560783009DFEC8 /* ObjectRotatableImageBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectRotatableImageBox.cpp; sourceTree = "<group>"; };
 		7F3AE0C712560783009DFEC8 /* ObjectSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectSlider.cpp; sourceTree = "<group>"; };
 		7F3AE0C812560783009DFEC8 /* ObjectTextButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectTextButton.cpp; sourceTree = "<group>"; };
 		7F3AE0C912560783009DFEC8 /* ObjectTextImageButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectTextImageButton.cpp; sourceTree = "<group>"; };
@@ -146,7 +143,6 @@
 		7F3AE11112560796009DFEC8 /* ObjectImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectImageButton.h; sourceTree = "<group>"; };
 		7F3AE11212560796009DFEC8 /* ObjectLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectLabel.h; sourceTree = "<group>"; };
 		7F3AE11312560796009DFEC8 /* ObjectLabelBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectLabelBase.h; sourceTree = "<group>"; };
-		7F3AE11412560796009DFEC8 /* ObjectRotatableImageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectRotatableImageBox.h; sourceTree = "<group>"; };
 		7F3AE11612560796009DFEC8 /* Objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Objects.h; sourceTree = "<group>"; };
 		7F3AE11712560796009DFEC8 /* ObjectSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectSlider.h; sourceTree = "<group>"; };
 		7F3AE11812560796009DFEC8 /* ObjectTextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectTextButton.h; sourceTree = "<group>"; };
@@ -265,7 +261,6 @@
 				7F3AE0C212560783009DFEC8 /* ObjectImageButton.cpp */,
 				7F3AE0C312560783009DFEC8 /* ObjectLabel.cpp */,
 				7F3AE0C412560783009DFEC8 /* ObjectLabelBase.cpp */,
-				7F3AE0C512560783009DFEC8 /* ObjectRotatableImageBox.cpp */,
 				7F3AE0C712560783009DFEC8 /* ObjectSlider.cpp */,
 				7F3AE0C812560783009DFEC8 /* ObjectTextButton.cpp */,
 				7F3AE0C912560783009DFEC8 /* ObjectTextImageButton.cpp */,
@@ -312,7 +307,6 @@
 				7F3AE11112560796009DFEC8 /* ObjectImageButton.h */,
 				7F3AE11212560796009DFEC8 /* ObjectLabel.h */,
 				7F3AE11312560796009DFEC8 /* ObjectLabelBase.h */,
-				7F3AE11412560796009DFEC8 /* ObjectRotatableImageBox.h */,
 				7F3AE11612560796009DFEC8 /* Objects.h */,
 				7F3AE11712560796009DFEC8 /* ObjectSlider.h */,
 				7F3AE11812560796009DFEC8 /* ObjectTextButton.h */,
@@ -367,7 +361,6 @@
 				7F3AE13812560796009DFEC8 /* ObjectImageButton.h in Headers */,
 				7F3AE13912560796009DFEC8 /* ObjectLabel.h in Headers */,
 				7F3AE13A12560796009DFEC8 /* ObjectLabelBase.h in Headers */,
-				7F3AE13B12560796009DFEC8 /* ObjectRotatableImageBox.h in Headers */,
 				7F3AE13D12560796009DFEC8 /* Objects.h in Headers */,
 				7F3AE13E12560796009DFEC8 /* ObjectSlider.h in Headers */,
 				7F3AE13F12560796009DFEC8 /* ObjectTextButton.h in Headers */,
@@ -492,7 +485,6 @@
 				7F3AE0E712560783009DFEC8 /* ObjectImageButton.cpp in Sources */,
 				7F3AE0E812560783009DFEC8 /* ObjectLabel.cpp in Sources */,
 				7F3AE0E912560783009DFEC8 /* ObjectLabelBase.cpp in Sources */,
-				7F3AE0EA12560783009DFEC8 /* ObjectRotatableImageBox.cpp in Sources */,
 				7F3AE0EC12560783009DFEC8 /* ObjectSlider.cpp in Sources */,
 				7F3AE0ED12560783009DFEC8 /* ObjectTextButton.cpp in Sources */,
 				7F3AE0EE12560783009DFEC8 /* ObjectTextImageButton.cpp in Sources */,
