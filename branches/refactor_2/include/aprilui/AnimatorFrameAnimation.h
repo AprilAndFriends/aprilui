@@ -37,12 +37,6 @@ namespace aprilui
 			hstr mImageBaseName;
 			int mFrameCount;
 			
-			float mAnimationTime;
-			int mFirstFrame;
-			int mLastFrame;
-			float mFrameTime;
-			int mLoops;
-			
 		};
 	}
 }
