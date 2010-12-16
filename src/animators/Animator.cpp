@@ -62,13 +62,13 @@ namespace aprilui
 		}
 		float time = mTimer;
 		float speed = fabs(mSpeed);
-		if (mPeriods >= 0.0f && mTimer * speed > mPeriods)
+		if (isExpired())
 		{
 			if (mReset)
 			{
 				return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
 			}
-			time = mPeriods / speed;
+			time = mPeriods / fabs(mSpeed);
 		}
 		float result = 0.0f;
 		switch (mFunction)
@@ -127,11 +127,16 @@ namespace aprilui
 		{
 			return false;
 		}
-		if (mPeriods >= 0.0f && mTimer * mSpeed > mPeriods)
+		if (isExpired())
 		{
 			return false;
 		}
 		return true;
+	}
+	
+	bool Animator::isExpired()
+	{
+		return (mPeriods >= 0.0f && mTimer * fabs(mSpeed) > mPeriods);
 	}
 	
 	void Animator::setProperty(chstr name, chstr value)

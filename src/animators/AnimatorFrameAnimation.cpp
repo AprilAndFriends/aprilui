@@ -23,6 +23,7 @@ namespace aprilui
 		FrameAnimation::FrameAnimation(chstr name) : Animator("Animators::FrameAnimation", name, grect(0, 0, 1, 1))
 		{
 			mImageBaseName = "";
+			mFirstFrame = 0;
 			mFrameCount = 0;
 		}
 
@@ -54,7 +55,10 @@ namespace aprilui
 		{
 			if (name == "AttachToObject")
 			{
-				update(0);
+				float delay = mDelay;
+				mDelay = 0.0f;
+				update(0.0f);
+				mDelay = delay;
 			}
 			Animator::notifyEvent(name, params);
 		}
@@ -73,18 +77,17 @@ namespace aprilui
 				aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 				return;
 			}
-			int frame = 0;
+			int frame = mFirstFrame;
 			Image* image = imageBox->getImage();
 			if (image != NULL)
 			{
 				frame = (int)image->getName().replace(mImageBaseName, "");
 			}
-			frame = hmin((int)_calculateValue(k, frame), mFrameCount - 1);
-			int firstFrame = (int)mDcOffset;
-			int lastFrame = firstFrame + mFrameCount - 1;
-			if (mPeriods >= 0.0f && mTimer * fabs(mSpeed) > mPeriods || frame > lastFrame)
+			frame = (int)_calculateValue(k, frame);
+			int lastFrame = mFirstFrame + mFrameCount - 1;
+			if (isExpired() || frame > lastFrame)
 			{
-				frame = (mReset ? firstFrame : lastFrame);
+				frame = (mReset ? mFirstFrame : lastFrame);
 			}
 			imageBox->setImageByName(mImageBaseName + hstr(frame));
 		}
