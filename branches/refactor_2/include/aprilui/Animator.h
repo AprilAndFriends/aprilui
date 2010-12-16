@@ -57,6 +57,7 @@ namespace aprilui
 		bool getReset() { return mReset; }
 		void setReset(bool value) { mReset = value; }
 		bool isAnimated();
+		bool isExpired();
 		
 		void setProperty(chstr name, chstr value);
 		
