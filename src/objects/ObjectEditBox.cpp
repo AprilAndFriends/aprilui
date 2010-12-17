@@ -50,7 +50,7 @@ namespace aprilui
 #ifdef _DEBUG
 		if (!aprilui::isDebugMode())
 #endif
-		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
+		april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
 		hstr text = mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -89,7 +89,7 @@ namespace aprilui
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 2;
 			rect.h = h - 4;
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
+			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
 				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
 		}
 		mText = text;
@@ -185,7 +185,7 @@ namespace aprilui
 				mDataset->setFocusedObject(this);
 				mBlinkTimer = 0.0f;
 			}
-			April::rendersys->getWindow()->beginKeyboardHandling();
+			april::rendersys->getWindow()->beginKeyboardHandling();
 			mPushed = false;
 			triggerEvent("Click", x, y, 0);
 			return true;
@@ -198,25 +198,25 @@ namespace aprilui
 	{
 		switch (keycode)
 		{
-		case April::AK_LEFT:
+		case april::AK_LEFT:
 			mCtrlMode ? _cursorMoveLeftWord() : setCursorIndex(mCursorIndex - 1);
 			break;
-		case April::AK_RIGHT:
+		case april::AK_RIGHT:
 			mCtrlMode ? _cursorMoveRightWord() : setCursorIndex(mCursorIndex + 1);
 			break;
-		case April::AK_BACK:
+		case april::AK_BACK:
 			mCtrlMode ? _deleteLeftWord() : _deleteLeft();
 			break;
-		case April::AK_DELETE:
+		case april::AK_DELETE:
 			mCtrlMode ? _deleteRightWord() : _deleteRight();
 			break;
-		case April::AK_HOME:
+		case april::AK_HOME:
 			setCursorIndex(0);
 			break;
-		case April::AK_END:
+		case april::AK_END:
 			setCursorIndex(mText.size());
 			break;
-		case April::AK_CONTROL:
+		case april::AK_CONTROL:
 			mCtrlMode = true;
 			break;
 		}
@@ -226,8 +226,8 @@ namespace aprilui
 	{
 		switch (keycode)
 		{
-		case April::AK_CONTROL:
-		case April::AK_MENU:
+		case april::AK_CONTROL:
+		case april::AK_MENU:
 			mCtrlMode = false;
 			break;
 		}

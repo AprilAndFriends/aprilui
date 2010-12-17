@@ -32,7 +32,7 @@ namespace aprilui
 #ifdef _DEBUG
 		if (aprilui::isDebugMode())
 		{
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
+			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
 		}
 #endif
 		if (mText.size() == 0)
@@ -49,7 +49,7 @@ namespace aprilui
 			text = "[s]" + text;
 			break;
 		}
-		April::Color color(mTextColor);
+		april::Color color(mTextColor);
 		color.a = (unsigned char)(color.a * alpha);
 		if (mTextFormatting)
 		{

@@ -23,17 +23,17 @@ namespace aprilui
 	class apriluiExport ColoredImage : public Image
 	{
 	public:
-		ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical = false, April::Color color = April::Color());
+		ColoredImage(april::Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = april::Color::WHITE);
 		
-		void draw(grect rect, April::Color color);
-		void draw(grect rect, April::Color color, float angle, gvec2 center);
+		void draw(grect rect, april::Color color);
+		void draw(grect rect, april::Color color, float angle, gvec2 center);
 
 		float getAlpha();
 		void setAlpha(float alpha);
-		void setColor(April::Color value) { mColor = value; }
+		void setColor(april::Color value) { mColor = value; }
 		
 	protected:
-		April::Color mColor;
+		april::Color mColor;
 		
 	};
 

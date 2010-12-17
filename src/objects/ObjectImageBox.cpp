@@ -71,7 +71,7 @@ namespace aprilui
 		{
 			alpha /= 2;
 		}
-		April::Color color = mColor;
+		april::Color color = mColor;
 		color.a = (unsigned char)(alpha * 255);
 		mImage->draw(mRect + offset, color, mAngle);
 	}
