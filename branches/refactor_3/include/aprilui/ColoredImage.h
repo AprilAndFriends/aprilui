@@ -31,7 +31,6 @@ namespace aprilui
 		float getAlpha();
 		void setAlpha(float alpha);
 		void setColor(April::Color value) { mColor = value; }
-		void setColor(float a, float r, float g, float b);
 		
 	protected:
 		April::Color mColor;

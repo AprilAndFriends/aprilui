@@ -84,8 +84,7 @@ namespace aprilui
 		void setAlpha(float value);
 		April::Color getColor() { return mColor; }
 		void setColor(April::Color value) { mColor = value; }
-		void setColor(chstr value) { mColor.setColor(value); }
-		void setColor(float a, float r, float g, float b) { mColor.setColor(a, r, g, b); }
+		void setColor(chstr value) { mColor.set(value); }
 		gvec2 getDerivedPosition();
 		
 		virtual bool isAnimated();

@@ -27,13 +27,13 @@ namespace aprilui
 		bool isCursorInside();
 		April::Color getHoverTextColor() { return mHoverTextColor; }
 		void setHoverTextColor(April::Color value) { mHoverTextColor = value; }
-		void setHoverTextColor(chstr value) { mHoverTextColor.setColor(value); }
+		void setHoverTextColor(chstr value) { mHoverTextColor.set(value); }
 		April::Color getPushedTextColor() { return mPushedTextColor; }
 		void setPushedTextColor(April::Color value) { mPushedTextColor = value; }
-		void setPushedTextColor(chstr value) { mPushedTextColor.setColor(value); }
+		void setPushedTextColor(chstr value) { mPushedTextColor.set(value); }
 		April::Color getDisabledTextColor() { return mDisabledTextColor; }
 		void setDisabledTextColor(April::Color value) { mDisabledTextColor = value; }
-		void setDisabledTextColor(chstr value) { mDisabledTextColor.setColor(value); }
+		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(value); }
 
 		void setTextKey(chstr key);
 		void setProperty(chstr name, chstr value);

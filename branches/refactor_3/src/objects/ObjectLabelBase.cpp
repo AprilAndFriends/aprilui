@@ -18,13 +18,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	LabelBase::LabelBase() :
-		mTextColor(255, 255, 255, 255)
+	LabelBase::LabelBase()
 	{
 		mHorzFormatting = atres::CENTER_WRAPPED;
 		mVertFormatting = atres::CENTER;
 		mFontEffect = atres::NONE;
-		mDrawOffset = gvec2();
 		mTextFormatting = true;
 		mText = "";
 	}

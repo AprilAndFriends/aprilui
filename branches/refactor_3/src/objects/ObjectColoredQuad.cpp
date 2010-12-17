@@ -52,7 +52,7 @@ namespace aprilui
 			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
 			mColor.a = (unsigned char)((float)value * 255);
 		}
-		else if (name == "color") mColor.setColor(value);
+		else if (name == "color") mColor.set(value);
 	}
 
 	bool ColoredQuad::OnMouseDown(float x, float y, int button)
