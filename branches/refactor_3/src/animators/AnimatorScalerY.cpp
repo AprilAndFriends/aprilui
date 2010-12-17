@@ -26,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject")
 			{
-				mDcOffset = mParent->getHeight();
+				mValue = mDcOffset = mParent->getHeight();
 			}
 			Object::notifyEvent(name, params);
 		}
@@ -39,9 +39,9 @@ namespace aprilui
 			{
 				return;
 			}
-			float value = mParent->getHeight();
-			value = _calculateValue(k, value);
-			mParent->setHeight(value);
+			mValue = mParent->getHeight();
+			mValue = _calculateValue(k);
+			mParent->setHeight(mValue);
 		}
 		
 	}

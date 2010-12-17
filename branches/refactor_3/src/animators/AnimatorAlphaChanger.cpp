@@ -26,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject")
 			{
-				mDcOffset = mParent->getAlpha();
+				mValue = mDcOffset = mParent->getAlpha();
 			}
 			Object::notifyEvent(name, params);
 		}
@@ -40,8 +40,12 @@ namespace aprilui
 				return;
 			}
 			float value = mParent->getAlpha();
-			value = _calculateValue(k, value);
-			mParent->setAlpha(value);
+			//unsigned char value = mParent->getAlpha();
+			mValue = _calculateValue(k);
+			//if (value != (unsigned char)mValue)
+			{
+				mParent->setAlpha(mValue);
+			}
 		}
 		
 	}

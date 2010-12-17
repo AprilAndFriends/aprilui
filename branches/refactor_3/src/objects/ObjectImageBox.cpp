@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "aprilui.h"
 #include "Dataset.h"
 #include "Image.h"
-#include "ObjectColoredImageBox.h"
+#include "ObjectImageBox.h"
 
 namespace aprilui
 {
@@ -71,11 +71,11 @@ namespace aprilui
 		{
 			alpha /= 2;
 		}
-		April::Color color;
+		April::Color color = mColor;
 		color.a = (unsigned char)(alpha * 255);
 		mImage->draw(mRect + offset, color, mAngle);
 	}
-
+	
 	void ImageBox::setProperty(chstr name, chstr value)
 	{
 		Object::setProperty(name, value);

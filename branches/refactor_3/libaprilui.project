@@ -15,7 +15,6 @@
     <File Name="src/CallbackEvent.cpp"/>
     <VirtualDirectory Name="objects">
       <File Name="src/objects/ObjectCallbackObject.cpp"/>
-      <File Name="src/objects/ObjectColoredImageBox.cpp"/>
       <File Name="src/objects/ObjectColoredQuad.cpp"/>
       <File Name="src/objects/ObjectDummyObject.cpp"/>
       <File Name="src/objects/ObjectEditBox.cpp"/>
@@ -39,7 +38,9 @@
       <File Name="src/animators/AnimatorScalerY.cpp"/>
       <File Name="src/animators/AnimatorScalerX.cpp"/>
       <File Name="src/animators/AnimatorAlphaChanger.cpp"/>
-      <File Name="src/animators/AnimatorColorChanger.cpp"/>
+      <File Name="src/animators/AnimatorBlueChanger.cpp"/>
+      <File Name="src/animators/AnimatorGreenChanger.cpp"/>
+      <File Name="src/animators/AnimatorRedChanger.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="src/images/Image.cpp"/>
@@ -70,12 +71,13 @@
       <File Name="include/aprilui/AnimatorScalerY.h"/>
       <File Name="include/aprilui/AnimatorScalerX.h"/>
       <File Name="include/aprilui/AnimatorAlphaChanger.h"/>
-      <File Name="include/aprilui/AnimatorColorChanger.h"/>
+      <File Name="include/aprilui/AnimatorBlueChanger.h"/>
+      <File Name="include/aprilui/AnimatorGreenChanger.h"/>
+      <File Name="include/aprilui/AnimatorRedChanger.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">
       <File Name="include/aprilui/ObjectCallbackObject.h"/>
-      <File Name="include/aprilui/ObjectColoredImageBox.h"/>
       <File Name="include/aprilui/ObjectColoredQuad.h"/>
       <File Name="include/aprilui/ObjectDummyObject.h"/>
       <File Name="include/aprilui/ObjectEditBox.h"/>

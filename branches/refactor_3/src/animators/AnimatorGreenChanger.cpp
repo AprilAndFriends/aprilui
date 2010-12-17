@@ -7,43 +7,45 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
-#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "Dataset.h"
-#include "Image.h"
-#include "ObjectColoredImageBox.h"
+#include "aprilui.h"
+#include "AnimatorGreenChanger.h"
 
 namespace aprilui
 {
-	ColoredImageBox::ColoredImageBox(chstr name, grect rect) :
-		ImageBox(name, rect)
+	namespace Animators
 	{
-		_setTypeName("ColoredImageBox");
-	}
-
-	void ColoredImageBox::OnDraw(gvec2 offset)
-	{
-		if (mImage == NULL)
+		GreenChanger::GreenChanger(chstr name) : Animator("Animators::GreenChanger", name, grect(0, 0, 1, 1))
 		{
-			mImage = mDataset->getImage("null");
 		}
-		float alpha = getDerivedAlpha();
-		if (!isDerivedEnabled())
+
+		void GreenChanger::notifyEvent(chstr name, void* params)
 		{
-			alpha /= 2;
+			if (name == "AttachToObject")
+			{
+				mValue = mDcOffset = mParent->getGreen();
+			}
+			Object::notifyEvent(name, params);
 		}
-		April::Color color = mColor;
-		color.a = (unsigned char)(alpha * 255);
-		mImage->draw(mRect + offset, color, mAngle);
+		
+		void GreenChanger::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			unsigned char value = mParent->getGreen();
+			mValue = _calculateValue(k);
+			if (value != (unsigned char)mValue)
+			{
+				mParent->setGreen(mValue);
+			}
+		}
+		
 	}
-
-	void ColoredImageBox::setProperty(chstr name, chstr value)
-	{
-		ImageBox::setProperty(name, value);
-		if (name == "color") setColor(value);
-	}
-
 }

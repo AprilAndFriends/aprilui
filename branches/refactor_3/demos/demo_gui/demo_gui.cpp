@@ -35,6 +35,16 @@ bool update(float k)
 	return true;
 }
 
+void OnKeyDown(unsigned int keycode)
+{
+	if (keycode == April::AK_RETURN)
+	{
+		dataset->unload();
+		dataset->load();
+	}
+	aprilui::OnKeyDown(keycode);
+}
+
 int main()
 {
 #ifdef __APPLE__
@@ -86,7 +96,7 @@ int main()
 		April::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
 		April::rendersys->getWindow()->setUpdateCallback(&update);
 		April::rendersys->getWindow()->setMouseCallbacks(&aprilui::OnMouseDown, &aprilui::OnMouseUp, &aprilui::OnMouseMove);
-		April::rendersys->getWindow()->setKeyboardCallbacks(&aprilui::OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
+		April::rendersys->getWindow()->setKeyboardCallbacks(&OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
 		aprilui::init();
 		atres::init();
 		atres::loadFont("../media/arial.font");

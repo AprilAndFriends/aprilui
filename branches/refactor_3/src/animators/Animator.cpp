@@ -18,6 +18,7 @@ namespace aprilui
 	Animator::Animator(chstr type, chstr name, grect rect) :
 		Object(type, name, rect)
 	{
+		mValue = 0.0f;
 		mFunction = aprilui::Linear;
 		mActive = true;
 		mTimer = 0.0f;
@@ -54,7 +55,7 @@ namespace aprilui
 		}
 	}
 	
-	float Animator::_calculateValue(float k, float value)
+	float Animator::_calculateValue(float k)
 	{
 		if (mDelay > 0.0f)
 		{
@@ -99,11 +100,11 @@ namespace aprilui
 		case aprilui::Hover:
 			if (mParent->isCursorInside())
 			{
-				result = hmin(value - mDcOffset + k * mSpeed, mAmplitude);
+				result = hmin(mValue - mDcOffset + k * mSpeed, mAmplitude);
 			}
 			else
 			{
-				result = hmax(value - mDcOffset - k * mSpeed, -mAmplitude);
+				result = hmax(mValue - mDcOffset - k * mSpeed, -mAmplitude);
 			}
 			break;
 		case aprilui::Random:
