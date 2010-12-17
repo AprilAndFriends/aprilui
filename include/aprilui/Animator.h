@@ -64,6 +64,7 @@ namespace aprilui
 		void update(float k);
 		
 	protected:
+		float mValue;
 		AnimationFunction mFunction;
 		bool mActive;
 		float mTimer;
@@ -76,7 +77,7 @@ namespace aprilui
 		bool mDiscrete;
 		bool mReset;
 		
-		float _calculateValue(float k, float value);
+		float _calculateValue(float k);
 		
 	};
 }

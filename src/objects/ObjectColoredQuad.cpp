@@ -20,12 +20,7 @@ namespace aprilui
 		Object("ColoredQuad", name, rect)
 	{
 	}
-
-	void ColoredQuad::setColor(float a, float r, float g, float b)
-	{
-		mColor.setColor(a, r, g, b);
-	}
-
+	
 	void ColoredQuad::OnDraw(gvec2 offset)
 	{
 		float alpha = getDerivedAlpha() * mColor.a_float();

@@ -263,7 +263,6 @@ namespace aprilui
 		else  parse(CallbackObject);
 		else  parse(ColoredQuad);
 		else  parse(ImageBox);
-		else  parse(ColoredImageBox);
 		else  parse(ImageButton);
 		else  parse(TextImageButton);
 		else  parse(Slider);
@@ -274,10 +273,12 @@ namespace aprilui
 		else if (*node == "Animator")
 		{
 			/*if*/parse_animator(AlphaChanger);
-			else  parse_animator(ColorChanger);
+			else  parse_animator(BlueChanger);
 			else  parse_animator(FrameAnimation);
+			else  parse_animator(GreenChanger);
 			else  parse_animator(MoverX);
 			else  parse_animator(MoverY);
+			else  parse_animator(RedChanger);
 			else  parse_animator(Rotator);
 			else  parse_animator(ScalerX);
 			else  parse_animator(ScalerY);

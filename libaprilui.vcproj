@@ -214,11 +214,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorColorChanger.cpp"
+					RelativePath=".\src\animators\AnimatorBlueChanger.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\animators\AnimatorFrameAnimation.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\animators\AnimatorGreenChanger.cpp"
 					>
 				</File>
 				<File
@@ -227,6 +231,10 @@
 				</File>
 				<File
 					RelativePath=".\src\animators\AnimatorMoverY.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\animators\AnimatorRedChanger.cpp"
 					>
 				</File>
 				<File
@@ -255,10 +263,6 @@
 				</File>
 				<File
 					RelativePath=".\src\objects\ObjectCallbackObject.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\objects\ObjectColoredImageBox.cpp"
 					>
 				</File>
 				<File
@@ -396,11 +400,15 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorColorChanger.h"
+					RelativePath=".\include\aprilui\AnimatorBlueChanger.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorFrameAnimation.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\AnimatorGreenChanger.h"
 					>
 				</File>
 				<File
@@ -409,6 +417,10 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorMoverY.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\AnimatorRedChanger.h"
 					>
 				</File>
 				<File
@@ -437,10 +449,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectCallbackObject.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\ObjectColoredImageBox.h"
 					>
 				</File>
 				<File

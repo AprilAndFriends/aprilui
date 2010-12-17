@@ -33,12 +33,11 @@ namespace aprilui
 		mName = name;
 		mParent = NULL;
 		mZOrder = 0;
-		mRect=rect;
+		mRect = rect;
 		mVisible = true;
 		mEnabled = true;
 		mClickthrough = false;
 		mInheritsAlpha = true;
-		mAlpha = 1.0f;
 		mAngle = 0.0f;
 		mDataset = NULL;
 	}
@@ -108,6 +107,7 @@ namespace aprilui
 	float Object::getDerivedAlpha()
 	{
 		// recursive function that combines all the alpha from the parents (if any)
+		//2DO
 		float alpha = this->getAlpha();
 		if (mInheritsAlpha && mParent != NULL)
 		{
@@ -299,7 +299,8 @@ namespace aprilui
 	
 	void Object::setAlpha(float alpha)
 	{
-		mAlpha = hclamp(alpha, 0.0f, 1.0f);
+		//2DO
+		mColor.a = (unsigned char)hclamp((int)(alpha * 255), 0, 255);
 	}
 
 	void Object::moveToFront()
@@ -337,7 +338,11 @@ namespace aprilui
 		else if (name == "enabled")			setEnabled(value);
 		else if (name == "clickthrough")	setClickthrough(value);
 		else if (name == "inherits_alpha")	setInheritsAlpha(value);
+		else if (name == "red")				setRed((int)value);
+		else if (name == "green")			setGreen((int)value);
+		else if (name == "blue")			setBlue((int)value);
 		else if (name == "alpha")			setAlpha(value);
+		else if (name == "color")			setColor(value);
 		else if (name == "angle")			setAngle(value);
 	}
 

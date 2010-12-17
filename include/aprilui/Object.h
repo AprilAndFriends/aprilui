@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_OBJECT_H
 #define APRILUI_OBJECT_H
 
+#include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
@@ -64,7 +65,7 @@ namespace aprilui
 		float getAngle() { return mAngle; }
 		virtual void setAngle(float value) { mAngle = value; }
 
-		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
+		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
 		bool isEnabled() { return mEnabled; }
 		void setEnabled(bool value) { mEnabled = value; }
@@ -73,8 +74,18 @@ namespace aprilui
 		bool isInheritsAlpha() { return mInheritsAlpha; }
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
-		float getAlpha() { return mAlpha; }
-		void setAlpha(float alpha);
+		unsigned char getRed() { return mColor.r; }
+		void setRed(unsigned char value) { mColor.r = value; }
+		unsigned char getGreen() { return mColor.g; }
+		void setGreen(unsigned char value) { mColor.g = value; }
+		unsigned char getBlue() { return mColor.b; }
+		void setBlue(unsigned char value) { mColor.b = value; }
+		float getAlpha() { return mColor.a_float(); }
+		void setAlpha(float value);
+		April::Color getColor() { return mColor; }
+		void setColor(April::Color value) { mColor = value; }
+		void setColor(chstr value) { mColor.setColor(value); }
+		void setColor(float a, float r, float g, float b) { mColor.setColor(a, r, g, b); }
 		gvec2 getDerivedPosition();
 		
 		virtual bool isAnimated();
@@ -109,8 +120,8 @@ namespace aprilui
 		hstr mName;
 		grect mRect;
 		int mZOrder;
-		float mAlpha;
 		float mAngle;
+		April::Color mColor;
 		bool mVisible;
 		bool mEnabled;
 		bool mClickthrough;

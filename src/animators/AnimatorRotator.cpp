@@ -26,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject")
 			{
-				mDcOffset = mParent->getAngle();
+				mValue = mDcOffset = mParent->getAngle();
 			}
 			Object::notifyEvent(name, params);
 		}
@@ -39,9 +39,9 @@ namespace aprilui
 			{
 				return;
 			}
-			float value = mParent->getAngle();
-			value = _calculateValue(k, value);
-			mParent->setAngle(value);
+			mValue = mParent->getAngle();
+			mValue = _calculateValue(k);
+			mParent->setAngle(mValue);
 		}
 		
 	}

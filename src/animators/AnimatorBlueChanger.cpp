@@ -7,18 +7,45 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#include <gtypes/Rectangle.h>
+#include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "AnimatorAlphaChanger.h"
+#include "aprilui.h"
 #include "AnimatorBlueChanger.h"
-#include "AnimatorFrameAnimation.h"
-#include "AnimatorGreenChanger.h"
-#include "AnimatorMoverX.h"
-#include "AnimatorMoverY.h"
-#include "AnimatorRedChanger.h"
-#include "AnimatorRotator.h"
-#include "AnimatorScalerX.h"
-#include "AnimatorScalerY.h"
 
-#endif
+namespace aprilui
+{
+	namespace Animators
+	{
+		BlueChanger::BlueChanger(chstr name) : Animator("Animators::BlueChanger", name, grect(0, 0, 1, 1))
+		{
+		}
+
+		void BlueChanger::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject")
+			{
+				mValue = mDcOffset = mParent->getBlue();
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void BlueChanger::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			unsigned char value = mParent->getBlue();
+			mValue = _calculateValue(k);
+			if (value != (unsigned char)mValue)
+			{
+				mParent->setBlue(mValue);
+			}
+		}
+		
+	}
+}
