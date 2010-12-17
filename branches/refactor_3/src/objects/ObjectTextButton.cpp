@@ -23,9 +23,9 @@ namespace aprilui
 		mText = "TextButton: " + name;
 		mTypeName = "TextButton";
 		mBackground = true;
-		mPushedTextColor.set("333333FF");
-		mHoverTextColor.set("7F7F7FFF");
-		mDisabledTextColor.set("7F7F7FFF");
+		mPushedTextColor.set("333333");
+		mHoverTextColor.set("7F7F7F");
+		mDisabledTextColor.set("7F7F7F");
 	}
 
 	void TextButton::setTextKey(chstr key)
