@@ -91,7 +91,7 @@ namespace aprilui
 	
 	void setCursorPosition(float x, float y)
 	{
-		cursorPosition = gvec2(x, y);
+		cursorPosition.set(x, y);
 	}
 	
 	void setCursorImage(Image* image)
