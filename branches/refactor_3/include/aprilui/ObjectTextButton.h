@@ -25,14 +25,14 @@ namespace aprilui
 		TextButton(chstr name, grect rect);
 		
 		bool isCursorInside();
-		April::Color getHoverTextColor() { return mHoverTextColor; }
-		void setHoverTextColor(April::Color value) { mHoverTextColor = value; }
+		april::Color getHoverTextColor() { return mHoverTextColor; }
+		void setHoverTextColor(april::Color value) { mHoverTextColor = value; }
 		void setHoverTextColor(chstr value) { mHoverTextColor.set(value); }
-		April::Color getPushedTextColor() { return mPushedTextColor; }
-		void setPushedTextColor(April::Color value) { mPushedTextColor = value; }
+		april::Color getPushedTextColor() { return mPushedTextColor; }
+		void setPushedTextColor(april::Color value) { mPushedTextColor = value; }
 		void setPushedTextColor(chstr value) { mPushedTextColor.set(value); }
-		April::Color getDisabledTextColor() { return mDisabledTextColor; }
-		void setDisabledTextColor(April::Color value) { mDisabledTextColor = value; }
+		april::Color getDisabledTextColor() { return mDisabledTextColor; }
+		void setDisabledTextColor(april::Color value) { mDisabledTextColor = value; }
 		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(value); }
 
 		void setTextKey(chstr key);
@@ -44,9 +44,9 @@ namespace aprilui
 		
 	protected:
 		bool mBackground;
-		April::Color mHoverTextColor;
-		April::Color mPushedTextColor;
-		April::Color mDisabledTextColor;
+		april::Color mHoverTextColor;
+		april::Color mPushedTextColor;
+		april::Color mDisabledTextColor;
 		
 		void update(float k);
 		void OnDraw(gvec2 offset = gvec2());

@@ -20,9 +20,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	April::TexturedVertex tVertices[4];
+	april::TexturedVertex tVertices[4];
 	
-	Image::Image(April::Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY)
+	Image::Image(april::Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY)
 	{
 		mTexture = texture;
 		mName = name;
@@ -30,7 +30,7 @@ namespace aprilui
 		mImageName = name(index, name.size() - index); // the name without the dataset's name prefix
 		mSource = source;
 
-		mBlendMode = April::ALPHA_BLEND;
+		mBlendMode = april::ALPHA_BLEND;
 		mVertical = vertical;
 		mUnloadedFlag = false;
 		mInvertX = invertX;
@@ -92,10 +92,10 @@ namespace aprilui
 
 	void Image::draw(grect rect)
 	{
-		draw(rect, April::Color::WHITE);
+		draw(rect, april::Color::WHITE);
 	}
 	
-	void Image::draw(grect rect, April::Color color)
+	void Image::draw(grect rect, april::Color color)
 	{
 		if (rect.w == -1)
 		{
@@ -110,28 +110,28 @@ namespace aprilui
 		tVertices[2].x = rect.x;          tVertices[2].y = rect.y + rect.h;
 		tVertices[3].x = rect.x + rect.w; tVertices[3].y = rect.y + rect.h;
 		
-		April::rendersys->setTexture(mTexture);
+		april::rendersys->setTexture(mTexture);
 		_updateTexCoords();
 			
-		if (mBlendMode != April::ALPHA_BLEND)
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			April::rendersys->render(April::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
+			april::rendersys->render(april::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
 		}
 		else
 		{
-			April::rendersys->render(April::TriangleStrip, tVertices, 4);
+			april::rendersys->render(april::TriangleStrip, tVertices, 4);
 		}
-		if (mBlendMode != April::ALPHA_BLEND)
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(April::DEFAULT);
+			april::rendersys->setBlendMode(april::DEFAULT);
 		}
 	}
 
-	void Image::draw(grect rect, April::Color color, float angle, gvec2 center)
+	void Image::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
 		if (rect.w == -1)
 		{
@@ -147,38 +147,38 @@ namespace aprilui
 		tVertices[2].x = -center.x;			tVertices[2].y = rect.h - center.y;
 		tVertices[3].x = rect.w - center.x;	tVertices[3].y = rect.h - center.y;
 		
-		gmat4 originalMatrix = April::rendersys->getModelviewMatrix();
-		April::rendersys->setIdentityTransform();
-		April::rendersys->translate(rect.x + center.x, rect.y + center.y);
-		April::rendersys->rotate(angle);
-		April::rendersys->setTexture(mTexture);
+		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		april::rendersys->setIdentityTransform();
+		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
+		april::rendersys->rotate(angle);
+		april::rendersys->setTexture(mTexture);
 		_updateTexCoords();
 		
-		if (mBlendMode != April::ALPHA_BLEND)
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			April::rendersys->render(April::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
+			april::rendersys->render(april::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
 		}
 		else
 		{
-			April::rendersys->render(April::TriangleStrip, tVertices, 4);
+			april::rendersys->render(april::TriangleStrip, tVertices, 4);
 		}
-		if (mBlendMode != April::ALPHA_BLEND)
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(April::DEFAULT);
+			april::rendersys->setBlendMode(april::DEFAULT);
 		}
-		April::rendersys->setModelviewMatrix(originalMatrix);
+		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
 
-	void Image::draw(grect rect, April::Color color, float angle)
+	void Image::draw(grect rect, april::Color color, float angle)
 	{
 		draw(rect, color, angle, gvec2(rect.w / 2, rect.h / 2));
 	}
 
-	April::Texture* Image::getTexture()
+	april::Texture* Image::getTexture()
 	{
 		return mTexture;
 	}

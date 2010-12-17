@@ -28,8 +28,8 @@ aprilui::Dataset* dataset;
 
 bool render(float time)
 {
-	April::rendersys->clear();
-	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	april::rendersys->clear();
+	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
 	int i = hrand(1, 8);
 	dataset->getObject("obj0" + hstr(i))->setZOrder(hrand(100));
 	dataset->getObject("root")->draw();
@@ -85,17 +85,17 @@ int main()
 #endif
 	try
 	{
-		April::init("Z Order", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_zorder");
-		April::rendersys->getWindow()->setUpdateCallback(&render);
+		april::init("Z Order", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_zorder");
+		april::rendersys->getWindow()->setUpdateCallback(&render);
 		aprilui::init();
 		Atres::init();
 		dataset = new aprilui::Dataset("../media/demo_zorder.datadef");
 		dataset->load();
-		April::rendersys->getWindow()->enterMainLoop();
+		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
 		aprilui::destroy();
 		Atres::destroy();
-		April::destroy();
+		april::destroy();
 	}
 	catch (aprilui::_GenericException e)
 	{

@@ -25,7 +25,7 @@ namespace aprilui
 	{
 		float alpha = getDerivedAlpha() * mColor.a_float();
 		grect rect = mRect + offset;
-		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
+		april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
 			mColor.r_float(), mColor.g_float(), mColor.b_float(), alpha);
 	}
 

@@ -82,8 +82,8 @@ namespace aprilui
 		void setBlue(unsigned char value) { mColor.b = value; }
 		float getAlpha() { return mColor.a_float(); }
 		void setAlpha(float value);
-		April::Color getColor() { return mColor; }
-		void setColor(April::Color value) { mColor = value; }
+		april::Color getColor() { return mColor; }
+		void setColor(april::Color value) { mColor = value; }
 		void setColor(chstr value) { mColor.set(value); }
 		gvec2 getDerivedPosition();
 		
@@ -120,7 +120,7 @@ namespace aprilui
 		grect mRect;
 		int mZOrder;
 		float mAngle;
-		April::Color mColor;
+		april::Color mColor;
 		bool mVisible;
 		bool mEnabled;
 		bool mClickthrough;

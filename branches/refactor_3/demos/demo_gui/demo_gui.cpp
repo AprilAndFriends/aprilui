@@ -27,9 +27,9 @@ aprilui::Dataset* dataset;
 
 bool update(float k)
 {
-	April::rendersys->clear();
-	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
-	aprilui::setCursorPosition(April::rendersys->getWindow()->getCursorPos());
+	april::rendersys->clear();
+	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	aprilui::setCursorPosition(april::rendersys->getWindow()->getCursorPos());
 	dataset->update(k);
 	dataset->getObject("root")->draw();
 	return true;
@@ -37,7 +37,7 @@ bool update(float k)
 
 void OnKeyDown(unsigned int keycode)
 {
-	if (keycode == April::AK_RETURN)
+	if (keycode == april::AK_RETURN)
 	{
 		dataset->unload();
 		dataset->load();
@@ -93,20 +93,20 @@ int main()
 #endif
 	try
 	{
-		April::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
-		April::rendersys->getWindow()->setUpdateCallback(&update);
-		April::rendersys->getWindow()->setMouseCallbacks(&aprilui::OnMouseDown, &aprilui::OnMouseUp, &aprilui::OnMouseMove);
-		April::rendersys->getWindow()->setKeyboardCallbacks(&OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
+		april::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
+		april::rendersys->getWindow()->setUpdateCallback(&update);
+		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::OnMouseDown, &aprilui::OnMouseUp, &aprilui::OnMouseMove);
+		april::rendersys->getWindow()->setKeyboardCallbacks(&OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
 		aprilui::init();
 		atres::init();
 		atres::loadFont("../media/arial.font");
 		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
 		dataset->load();
-		April::rendersys->getWindow()->enterMainLoop();
+		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
 		aprilui::destroy();
 		atres::destroy();
-		April::destroy();
+		april::destroy();
 	}
 	catch (aprilui::_GenericException e)
 	{

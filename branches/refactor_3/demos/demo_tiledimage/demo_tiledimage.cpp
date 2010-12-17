@@ -30,8 +30,8 @@ aprilui::Dataset* dataset;
 
 bool render(float time)
 {
-	April::rendersys->clear();
-	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	april::rendersys->clear();
+	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
 	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/test");
 	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
 					 image->getScrollY() - time * SCROLL_SPEED_Y);
@@ -88,17 +88,17 @@ int main()
 #endif
 	try
 	{
-		April::init("Tiled Image", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_tiledimage");
-		April::rendersys->getWindow()->setUpdateCallback(&render);
+		april::init("Tiled Image", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_tiledimage");
+		april::rendersys->getWindow()->setUpdateCallback(&render);
 		aprilui::init();
 		Atres::init();
 		dataset = new aprilui::Dataset("../media/demo_tiledimage.datadef");
 		dataset->load();
-		April::rendersys->getWindow()->enterMainLoop();
+		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
 		aprilui::destroy();
 		Atres::destroy();
-		April::destroy();
+		april::destroy();
 	}
 	catch (aprilui::_GenericException e)
 	{

@@ -19,38 +19,38 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	extern April::TexturedVertex tVertices[4];
-	extern April::PlainVertex pVertices[4];
+	extern april::TexturedVertex tVertices[4];
+	extern april::PlainVertex pVertices[4];
 	
 	class apriluiExport Image
 	{
 	public:
-		Image(April::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
+		Image(april::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
 		virtual ~Image();
 		
 		virtual void draw(grect rect);
-		virtual void draw(grect rect, April::Color color);
-		virtual void draw(grect rect, April::Color color, float angle, gvec2 center);
-		virtual void draw(grect rect, April::Color color, float angle);
+		virtual void draw(grect rect, april::Color color);
+		virtual void draw(grect rect, april::Color color, float angle, gvec2 center);
+		virtual void draw(grect rect, april::Color color, float angle);
 		
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };
 		bool isYInverted() { return mInvertY; };
 
-		April::Texture* getTexture();
+		april::Texture* getTexture();
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
 		grect getSource() const { return mSource; }
 		
-		April::BlendMode getBlendMode() { return mBlendMode; }
-		void setBlendMode(April::BlendMode mode) { mBlendMode = mode; }
+		april::BlendMode getBlendMode() { return mBlendMode; }
+		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
 		
 	protected:
-		April::Texture* mTexture;
+		april::Texture* mTexture;
 		hstr mName;
 		hstr mImageName;
 		grect mSource;
-		April::BlendMode mBlendMode;
+		april::BlendMode mBlendMode;
 		bool mVertical;
 		bool mUnloadedFlag;
 		bool mInvertX;

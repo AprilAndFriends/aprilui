@@ -25,11 +25,11 @@ namespace aprilui
 	public:
 		ColorImage(chstr name);
 		
-		void draw(grect rect, April::Color color);
-		void draw(grect rect, April::Color color, float angle, gvec2 center);
+		void draw(grect rect, april::Color color);
+		void draw(grect rect, april::Color color, float angle, gvec2 center);
 		
 	protected:
-		April::Color mColor;
+		april::Color mColor;
 		
 	};
 }

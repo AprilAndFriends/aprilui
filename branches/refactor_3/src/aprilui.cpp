@@ -22,7 +22,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	bool registerLock = false;
-	hmap<int, April::Texture*> gFontTextures;
+	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
 	Image* gCursor = NULL;
 	float defaultScale = 1.0f;
@@ -55,7 +55,7 @@ namespace aprilui
 	void destroy()
 	{
 		registerLock = true;
-		for (hmap<int, April::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
+		for (hmap<int, april::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
 		{
 			delete it->second;
 		}
