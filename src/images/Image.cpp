@@ -92,7 +92,7 @@ namespace aprilui
 
 	void Image::draw(grect rect)
 	{
-		draw(rect, April::Color());
+		draw(rect, April::Color::WHITE);
 	}
 	
 	void Image::draw(grect rect, April::Color color)

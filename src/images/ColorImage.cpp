@@ -21,7 +21,7 @@ namespace aprilui
 	
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
-		mColor.setColor(name);
+		mColor.set(name);
 	}
 
 	void ColorImage::draw(grect rect, April::Color color)

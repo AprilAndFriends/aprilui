@@ -41,9 +41,4 @@ namespace aprilui
 		Image::draw(rect, mColor * color, angle, center);
 	}
 
-	void ColoredImage::setColor(float a, float r, float g, float b)
-	{
-		mColor.setColor(a, r, g, b);
-	}
-
 }
