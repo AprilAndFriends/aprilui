@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<DataDefinition>
+	<Texture filename="texture" dynamic_load="1"><!-- without prefix_images, we'd have to use names such as texture/test -->
+		<Image name="test" x="0" y="0" w="512" h="512" tile_w="-512" tile_h="-512"/>
+    </Texture>
+	
+	<Object type="DummyObject" name="root" x="0" y="0" w="800" h="600">
+		<Object type="ImageBox" image="texture/test" x="0" y="0" w="800" h="600"/>
+	</Object>
+	
+</DataDefinition>
