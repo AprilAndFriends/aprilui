@@ -7,34 +7,42 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ROTATION_IMAGE_BOX_H
-#define APRILUI_ROTATION_IMAGE_BOX_H
-
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "apriluiExport.h"
-#include "ObjectImageBox.h"
+#include "aprilui.h"
+#include "AnimatorMoverX.h"
 
 namespace aprilui
 {
-	class apriluiExport RotationImageBox : public ImageBox
+	namespace Animators
 	{
-	public:
-		RotationImageBox(chstr name, grect rect);
+		MoverX::MoverX(chstr name) : Animator("Animators::MoverX", name, grect(0, 0, 1, 1))
+		{
+		}
 
-		float getAngle() { return mAngle; }
-		virtual void setAngle(float value) { mAngle = value; }
-		bool angleEquals(float angle);
-		void setProperty(chstr name, chstr value);
+		void MoverX::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject")
+			{
+				mDcOffset = mParent->getX();
+			}
+			Object::notifyEvent(name, params);
+		}
 		
-	protected:
-		float mAngle;
+		void MoverX::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			float value = mParent->getX();
+			value = _calculateValue(k, value);
+			mParent->setX(value);
+		}
 		
-		void OnDraw(gvec2 offset = gvec2());
-		
-	};
-	
+	}
 }
-
-#endif

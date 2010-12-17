@@ -7,41 +7,32 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_EARTHQUAKE_H
-#define APRILUI_EARTHQUAKE_H
+#ifndef APRILUI_BUTTON_BASE_H
+#define APRILUI_BUTTON_BASE_H
 
-#include <gtypes/Rectangle.h>
-#include <hltypes/hstring.h>
-
-#include "ObjectCallbackObject.h"
-#include "Animator.h"
+#include "apriluiExport.h"
 
 namespace aprilui
 {
-	namespace Animators
+	class apriluiExport ButtonBase
 	{
-		class apriluiExport Earthquake : public Animator
-		{
-		public:
-			Earthquake(chstr name);
-			
-			bool isAnimated();
-			void setProperty(chstr name, chstr value);
-			void notifyEvent(chstr name, void* params);
-			
-			void update(float k);
-			
-		protected:
-			gvec2 mInitial;
-			float mIntensity;
-			float mDuration;
-			float mConstDuration;
-			float mFreq;
-			float mTimer;
-			float mFreqTimer;
-			
-		};
-	}
+	public:
+		ButtonBase();
+		
+		virtual bool isCursorInside() = 0;
+		
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		void OnMouseMove(float x, float y);
+		
+	protected:
+		bool mPushed;
+		bool mHover;
+		
+		virtual void update(float k);
+		
+	};
+	
 }
 
 #endif

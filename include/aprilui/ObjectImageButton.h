@@ -15,15 +15,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "apriluiExport.h"
 #include "Image.h"
+#include "ObjectButtonBase.h"
 #include "ObjectImageBox.h"
 
 namespace aprilui
 {
-	class apriluiExport ImageButton : public ImageBox
+	class apriluiExport ImageButton : public ImageBox, public ButtonBase
 	{
 	public:
 		ImageButton(chstr name, grect rect);
 		
+		bool isCursorInside();
 		Image* getPushedImage() { return mPushedImage; }
 		void setPushedImage(Image* image) { mPushedImage = image; }
 		void setPushedImageByName(chstr image);
@@ -47,7 +49,6 @@ namespace aprilui
 		Image* mHoverImage;
 		Image* mNormalImage;
 		Image* mDisabledImage;
-		bool mPushed;
 		
 		void update(float k);
 		void OnDraw(gvec2 offset = gvec2());

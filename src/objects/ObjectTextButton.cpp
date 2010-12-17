@@ -17,11 +17,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	TextButton::TextButton(chstr name, grect rect) :
+		ButtonBase(),
 		Label(name, rect)
 	{
 		mText = "TextButton: " + name;
 		mTypeName = "TextButton";
-		mPushed = false;
 		mBackground = true;
 		mPushedTextColor.setColor("FF333333");
 		mHoverTextColor.setColor("FF7F7F7F");
@@ -32,20 +32,27 @@ namespace aprilui
 	{
 		setText(mDataset->getText(key));
 	}
+	
+	void TextButton::update(float k)
+	{
+		Object::update(k);
+		ButtonBase::update(k);
+	}
 
 	void TextButton::OnDraw(gvec2 offset)
 	{
-		bool cursorInside = isCursorInside();
 		if (mBackground)
 		{
 			grect rect = mRect + offset;
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+			float alpha = ((mHover && mPushed) ? 1.0f : 0.7f);
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0.0f, 0.0f, 0.0f, alpha);
 		}
 #ifdef _DEBUG
 		else if (aprilui::isDebugMode())
 		{
 			grect rect = mRect + offset;
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+			float alpha = ((mHover && mPushed) ? 1.0f : 0.7f);
+			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0.0f, 0.0f, 0.0f, alpha);
 		}
 #endif
 		April::Color color = mTextColor;
@@ -53,7 +60,7 @@ namespace aprilui
 		{
 			mTextColor = mDisabledTextColor;
 		}
-		else if (cursorInside)
+		else if (mHover)
 		{
 			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
 		}
@@ -69,6 +76,11 @@ namespace aprilui
 		else if (name == "pushed_color")	setPushedTextColor(value);
 		else if (name == "disabled_color")	setDisabledTextColor(value);
 	}
+	
+	bool TextButton::isCursorInside()
+	{
+		return Object::isCursorInside();
+	}
 
 	bool TextButton::OnMouseDown(float x, float y, int button)
 	{
@@ -76,12 +88,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
-		{
-			mPushed = true;
-			return true;
-		}
-		return false;
+		return ButtonBase::OnMouseDown(x, y, button);
 	}
 
 	bool TextButton::OnMouseUp(float x, float y, int button)
@@ -90,14 +97,18 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (mPushed && isCursorInside())
+		bool result = ButtonBase::OnMouseUp(x, y, button);
+		if (result)
 		{
-			mPushed = false;
 			triggerEvent("Click", x, y, 0);
-			return true;
 		}
-		mPushed = false;
-		return false;
+		return result;
 	}
-	
+
+	void TextButton::OnMouseMove(float x, float y)
+	{
+		Object::OnMouseMove(x, y);
+		ButtonBase::OnMouseMove(x, y);
+	}
+
 }

@@ -12,12 +12,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "Dataset.h"
+#include "ObjectLabelBase.h"
 #include "ObjectTextImageButton.h"
 
 namespace aprilui
 {
 	TextImageButton::TextImageButton(chstr name, grect rect) :
-		LabelBase(name),
+		LabelBase(),
 		ImageButton(name, rect)
 	{
 		_setTypeName("TextImageButton");
@@ -33,6 +34,11 @@ namespace aprilui
 			alpha /= 2;
 		}
 		LabelBase::_drawLabel(mRect + offset, alpha);
+	}
+	
+	float TextImageButton::getAngle()
+	{
+		return Object::getAngle();
 	}
 
 	void TextImageButton::setTextKey(chstr key)

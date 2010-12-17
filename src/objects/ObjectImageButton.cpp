@@ -17,10 +17,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	ImageButton::ImageButton(chstr name, grect rect) :
+		ButtonBase(),
 		ImageBox(name, rect)
 	{
 		_setTypeName("ImageButton");
-		mPushed = false;
 		mNormalImage = NULL;
 		mPushedImage = NULL;
 		mHoverImage = NULL;
@@ -32,15 +32,17 @@ namespace aprilui
 		grect rect = mRect + offset;
 		if (!isDerivedEnabled() && mDisabledImage != NULL)
 		{
-			mDisabledImage->draw(rect);
+			April::Color color;
+			color.a = (unsigned char)(getDerivedAlpha() * 255);
+			mDisabledImage->draw(rect, color, mAngle);
 			return;
 		}
 		if (mPushed && mPushedImage == NULL && isCursorInside())
 		{
 			April::Color color;
 			color *= 0.7f;
-			color.a = getDerivedAlpha() * 255;
-			mImage->draw(rect, color);
+			color.a = (unsigned char)(getDerivedAlpha() * 255);
+			mImage->draw(rect, color, mAngle);
 			return;
 		}
 		ImageBox::OnDraw(offset);
@@ -48,6 +50,7 @@ namespace aprilui
 
 	void ImageButton::update(float k)
 	{
+		ButtonBase::update(k);
 		mImage = mNormalImage;
 		if (mImage == NULL)
 		{
@@ -60,7 +63,7 @@ namespace aprilui
 				mImage = mDisabledImage;
 			}
 		}
-		else if (isCursorInside())
+		else if (mHover)
 		{
 			if (mPushed)
 			{
@@ -75,6 +78,11 @@ namespace aprilui
 			}
 		}
 		ImageBox::update(k);
+	}
+	
+	bool ImageButton::isCursorInside()
+	{
+		return Object::isCursorInside();
 	}
 
 	void ImageButton::setPushedImageByName(chstr image)
@@ -104,12 +112,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
-		{
-			mPushed = true;
-			return true;
-		}
-		return false;
+		return ButtonBase::OnMouseDown(x, y, button);
 	}
 
 	bool ImageButton::OnMouseUp(float x, float y, int button)
@@ -118,19 +121,18 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (mPushed && isCursorInside())
+		bool result = ButtonBase::OnMouseUp(x, y, button);
+		if (result)
 		{
-			mPushed = false;
 			triggerEvent("Click", x, y, 0);
-			return true;
 		}
-		mPushed = false;
-		return false;
+		return result;
 	}
 
 	void ImageButton::OnMouseMove(float x, float y)
 	{
 		Object::OnMouseMove(x, y);
+		ButtonBase::OnMouseMove(x, y);
 	}
 
 	void ImageButton::setProperty(chstr name, chstr value)

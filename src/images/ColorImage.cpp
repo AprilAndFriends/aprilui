@@ -51,7 +51,7 @@ namespace aprilui
 		pVertices[2].x = -center.x;			pVertices[2].y = rect.h - center.y;
 		pVertices[3].x = rect.w - center.x;	pVertices[3].y = rect.h - center.y;
 		
-		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
+		gtypes::Matrix4 originalMatrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
 		April::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		April::rendersys->rotate(angle);
@@ -64,7 +64,7 @@ namespace aprilui
 		{
 			April::rendersys->setBlendMode(April::DEFAULT);
 		}
-		April::rendersys->setModelviewMatrix(temp_matrix);
+		April::rendersys->setModelviewMatrix(originalMatrix);
 	}
-
+	
 }

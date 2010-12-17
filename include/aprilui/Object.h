@@ -42,26 +42,27 @@ namespace aprilui
 		void setZOrder(int zorder);
 		
 		bool isCursorInside();
-		virtual bool isPointInside(gvec2 position);
-		virtual bool isPointInside(float x, float y);
+		bool angleEquals(float angle);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
 		float getX() { return mRect.x; }
 		void setX(float value) { mRect.x = value; }
 		float getY() { return mRect.y; }
 		void setY(float value) { mRect.y = value; }
-		gvec2 getPosition() { return gvec2(mRect.x, mRect.y); }
-		void setPosition(gvec2 value) { mRect.x = value.x; mRect.y = value.y; }
+		gvec2 getPosition() { return mRect.getPosition(); }
+		void setPosition(gvec2 value) { mRect.setPosition(value); }
 		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
 		float getWidth() { return mRect.w; }
 		void setWidth(float value) { mRect.w = value; }
 		float getHeight() { return mRect.h; }
 		void setHeight(float value) { mRect.h = value; }
-		gvec2 getSize() { return gvec2(mRect.w, mRect.h); }
-		void setSize(gvec2 value) { mRect.w = value.x; mRect.h = value.y; }
+		gvec2 getSize() { return mRect.getSize(); }
+		void setSize(gvec2 value) { mRect.setSize(value); }
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
 		void setRect(grect value) { mRect = value; }
+		float getAngle() { return mAngle; }
+		virtual void setAngle(float value) { mAngle = value; }
 
 		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
 		void setVisible(bool value) { mVisible = value; }
@@ -72,9 +73,11 @@ namespace aprilui
 		bool isInheritsAlpha() { return mInheritsAlpha; }
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
-		
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
+		gvec2 getDerivedPosition();
+		
+		virtual bool isAnimated();
 
 		void moveToFront();
 		void moveToBack();
@@ -107,6 +110,7 @@ namespace aprilui
 		grect mRect;
 		int mZOrder;
 		float mAlpha;
+		float mAngle;
 		bool mVisible;
 		bool mEnabled;
 		bool mClickthrough;

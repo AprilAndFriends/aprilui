@@ -18,11 +18,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	class Dataset;
+	class Image;
 	
 	apriluiFnExport void init();
 	apriluiFnExport void destroy();
 	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
-	void logMessage(chstr message, chstr prefix = "[aprilui] ");
+	apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
 	void aprilui_writelog(chstr message);
 	
 #ifdef _DEBUG
@@ -45,6 +46,8 @@ namespace aprilui
 	apriluiFnExport gvec2 getCursorPosition();
 	apriluiFnExport void setCursorPosition(gvec2 position);
 	apriluiFnExport void setCursorPosition(float x, float y);
+	apriluiFnExport void setCursorImage(Image* image);
+	apriluiFnExport void drawCursor();
 	
 	apriluiFnExport void OnMouseDown(float x, float y, int button);
 	apriluiFnExport void OnMouseUp(float x, float y, int button);

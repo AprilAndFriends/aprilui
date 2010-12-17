@@ -56,8 +56,7 @@ namespace aprilui
 	{
 		if (mImage)
 		{
-			grect rect = mImage->getSource();
-			setSize(rect.w * getDefaultScale(), rect.h * getDefaultScale());
+			setSize(mImage->getSource().getSize() * getDefaultScale());
 		}
 	}
 
@@ -73,9 +72,8 @@ namespace aprilui
 			alpha /= 2;
 		}
 		April::Color color;
-		color.a = alpha * 255;
-		mImage->draw(mRect + offset, color);
-		//rendersys->setBlendMode(April::ALPHA_BLEND);
+		color.a = (unsigned char)(alpha * 255);
+		mImage->draw(mRect + offset, color, mAngle);
 	}
 
 	void ImageBox::setProperty(chstr name, chstr value)
@@ -90,7 +88,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			return true;
 		}
@@ -103,7 +101,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			triggerEvent("Click", x, y, 0);
 			return true;

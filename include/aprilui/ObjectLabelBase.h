@@ -23,8 +23,9 @@ namespace aprilui
 	class apriluiExport LabelBase
 	{
 	public:
-		LabelBase(chstr name);
+		LabelBase();
 		
+		virtual float getAngle() = 0;
 		hstr getText() { return mText; }
 		virtual void setText(chstr value) { mText = value; }
 		virtual void setTextKey(chstr key) = 0;

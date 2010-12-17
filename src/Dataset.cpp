@@ -271,21 +271,16 @@ namespace aprilui
 		else  parse(Label);
 		else  parse(TextButton);
 		else  parse(EditBox);
-		else  parse(RotationImageBox);
-		else  parse(RotatableImageBox);
 		else if (*node == "Animator")
 		{
-			/*if*/parse_animator(Mover);
-			else  parse_animator(Scaler);
-			else  parse_animator(Rotator);
-			else  parse_animator(RotationOscillator);
-			else  parse_animator(ColorAlternator);
-			else  parse_animator(AlphaFader);
-			else  parse_animator(AlphaOscillator);
-			else  parse_animator(AlphaHover);
-			else  parse_animator(Blinker);
+			/*if*/parse_animator(AlphaChanger);
+			else  parse_animator(ColorChanger);
 			else  parse_animator(FrameAnimation);
-			else  parse_animator(Earthquake);
+			else  parse_animator(MoverX);
+			else  parse_animator(MoverY);
+			else  parse_animator(Rotator);
+			else  parse_animator(ScalerX);
+			else  parse_animator(ScalerY);
 			else object = parseExternalObjectClass(node, objectName, rect);
 		}
 		else
@@ -298,14 +293,14 @@ namespace aprilui
 			throw XMLUnknownClassException(className, node);
 		}
 		object->_setDataset(this);
-		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
-		{
-			object->setProperty(prop->name(), prop->value());
-		}
 		mObjects[objectName] = object;
 		if (parent != NULL)
 		{
 			parent->addChild(object);
+		}
+		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
+		{
+			object->setProperty(prop->name(), prop->value());
 		}
 		
 		for (node = node->iter_children(); node != NULL; node = node->next())
@@ -372,19 +367,19 @@ namespace aprilui
 		hstr textsPath = (path != "" ? path : getDefaultTextsPath());
 		hstr base_dir = pathGetBaseDir(mFilename);
 		// texts
-		logMessage("loading texts");
+		aprilui::log("loading texts");
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);
 		_loadTexts(filepath);
 		// audio
 		mLoaded = true;
-		logMessage("loading datadef: " + mFilename);
+		aprilui::log("loading datadef: " + mFilename);
 		readFile(mFilename);
 		this->update(0);
 	}
 	
 	void Dataset::_loadTexts(chstr path)
 	{
-		logMessage("loading texts from '" + path + "'");
+		aprilui::log("loading texts from '" + path + "'");
 		harray<hstr> files = hdir::files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
@@ -436,17 +431,17 @@ namespace aprilui
 		{
 			throw GenericException("Unable to unload dataset '" + getName() + "', data not loaded!");
 		}
-		foreach_m(Object*, it, mObjects)
+		foreach_m (Object*, it, mObjects)
 		{
 			delete it->second;
 		}
 		mObjects.clear();
-		foreach_m(Image*, it, mImages)
+		foreach_m (Image*, it, mImages)
 		{
 			delete it->second;
 		}
 		mImages.clear();
-		foreach_m(April::Texture*, it, mTextures)
+		foreach_m (April::Texture*, it, mTextures)
 		{
 			delete it->second;
 		}

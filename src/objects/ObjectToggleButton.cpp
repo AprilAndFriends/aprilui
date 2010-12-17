@@ -29,15 +29,15 @@ namespace aprilui
 	{
 		float alpha = getDerivedAlpha();
 		April::Color color;
-		color.a = alpha * 255;
+		color.a = (unsigned char)(alpha * 255);
 		grect rect = mRect + offset;
 		if (mPushed && mPushedImage != NULL)
 		{
-			mPushedImage->draw(rect, color);
+			mPushedImage->draw(rect, color, mAngle);
 		}
 		else
 		{
-			mImage->draw(rect, color);
+			mImage->draw(rect, color, mAngle);
 		}
 	}
 
@@ -47,7 +47,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			mPushed = !mPushed;
 			Event* event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
@@ -67,7 +67,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			triggerEvent("Click", x, y, 0);
 			return true;

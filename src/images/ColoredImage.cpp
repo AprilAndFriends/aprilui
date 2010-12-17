@@ -28,7 +28,7 @@ namespace aprilui
 	
 	void ColoredImage::setAlpha(float alpha)
 	{
-		mColor.a = alpha * 255.0f;
+		mColor.a = (unsigned char)(alpha * 255);
 	}
 	
 	void ColoredImage::draw(grect rect, April::Color color)

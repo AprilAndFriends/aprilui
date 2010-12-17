@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
-#include "AnimatorColorAlternator.h"
+#include "AnimatorColorChanger.h"
 #include "ColoredImage.h"
 #include "Util.h"
 #include "ObjectColoredImageBox.h"
@@ -21,27 +21,27 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ColorAlternator::ColorAlternator(chstr name) : Animator("Animators::ColorAlternator", name, grect(0, 0, 1, 1))
+		ColorChanger::ColorChanger(chstr name) : Animator("Animators::ColorChanger", name, grect(0, 0, 1, 1))
 		{
 			mLow.setColor("00000000");
 			mHigh.setColor("FFFFFFFF");
-			mTimer = 0.0f;
 			mSpeed = 2.0f;
 		}
 
-		bool ColorAlternator::isAnimated()
+		bool ColorChanger::isAnimated()
 		{
 			return true;
 		}
 
-		void ColorAlternator::setProperty(chstr name, chstr value)
+		void ColorChanger::setProperty(chstr name, chstr value)
 		{
+			Animator::setProperty(name, value);
 			if		(name == "low_color")	mLow.setColor(value);
 			else if (name == "high_color")	mHigh.setColor(value);
 			else if (name == "speed")		mSpeed = value;
 		}
 
-		void ColorAlternator::update(float k)
+		void ColorChanger::update(float k)
 		{
 			ColoredImage* image = NULL;
 			ImageBox* parent = dynamic_cast<ImageBox*>(mParent);

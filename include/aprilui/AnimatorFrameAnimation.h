@@ -12,7 +12,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <hltypes/hstring.h>
 
-#include "ObjectCallbackObject.h"
 #include "Animator.h"
 
 namespace aprilui
@@ -25,8 +24,12 @@ namespace aprilui
 			FrameAnimation(chstr name);
 
 			bool isAnimated();
-            void setDelay(float value) { mDelay = value; }
-			
+			hstr getImageBaseName() { return mImageBaseName; }
+			void setImageBaseName(chstr value) { mImageBaseName = value; }
+			int getFirstFrame() { return mFirstFrame; }
+			void setFirstFrame(float value) { mFirstFrame = value; }
+			int getFrameCount() { return mFrameCount; }
+			void setFrameCount(float value) { mFrameCount = value; }
 			void setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
 			
@@ -34,12 +37,8 @@ namespace aprilui
 			
 		protected:
 			hstr mImageBaseName;
-			int mStartFrame;
-			int mEndFrame;
-			float mAnimationTime;
-			float mTimer;
-			int mLoop;
-            float mDelay;
+			int mFirstFrame;
+			int mFrameCount;
 			
 		};
 	}

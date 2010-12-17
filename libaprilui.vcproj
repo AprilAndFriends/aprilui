@@ -210,27 +210,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorAlphaFader.cpp"
+					RelativePath=".\src\animators\AnimatorAlphaChanger.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorAlphaHover.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorAlphaOscillator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorBlinker.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorColorAlternator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorEarthquake.cpp"
+					RelativePath=".\src\animators\AnimatorColorChanger.cpp"
 					>
 				</File>
 				<File
@@ -238,15 +222,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorMoveOscillator.cpp"
+					RelativePath=".\src\animators\AnimatorMoverX.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorMover.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\animators\AnimatorRotationOscillator.cpp"
+					RelativePath=".\src\animators\AnimatorMoverY.cpp"
 					>
 				</File>
 				<File
@@ -254,11 +234,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorScaleOscillator.cpp"
+					RelativePath=".\src\animators\AnimatorScalerX.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\src\animators\AnimatorScaler.cpp"
+					RelativePath=".\src\animators\AnimatorScalerY.cpp"
 					>
 				</File>
 			</Filter>
@@ -267,6 +247,10 @@
 				>
 				<File
 					RelativePath=".\src\objects\Object.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\objects\ObjectButtonBase.cpp"
 					>
 				</File>
 				<File
@@ -303,14 +287,6 @@
 				</File>
 				<File
 					RelativePath=".\src\objects\ObjectLabelBase.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\objects\ObjectRotatableImageBox.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\objects\ObjectRotationImageBox.cpp"
 					>
 				</File>
 				<File
@@ -416,27 +392,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorAlphaFader.h"
+					RelativePath=".\include\aprilui\AnimatorAlphaChanger.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorAlphaHover.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorAlphaOscillator.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorBlinker.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorColorAlternator.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorEarthquake.h"
+					RelativePath=".\include\aprilui\AnimatorColorChanger.h"
 					>
 				</File>
 				<File
@@ -444,15 +404,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorMoveOscillator.h"
+					RelativePath=".\include\aprilui\AnimatorMoverX.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorMover.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\AnimatorRotationOscillator.h"
+					RelativePath=".\include\aprilui\AnimatorMoverY.h"
 					>
 				</File>
 				<File
@@ -460,11 +416,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorScaleOscillator.h"
+					RelativePath=".\include\aprilui\AnimatorScalerX.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\AnimatorScaler.h"
+					RelativePath=".\include\aprilui\AnimatorScalerY.h"
 					>
 				</File>
 			</Filter>
@@ -473,6 +429,10 @@
 				>
 				<File
 					RelativePath=".\include\aprilui\Object.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\ObjectButtonBase.h"
 					>
 				</File>
 				<File
@@ -509,14 +469,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectLabelBase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\ObjectRotatableImageBox.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\ObjectRotationImageBox.h"
 					>
 				</File>
 				<File

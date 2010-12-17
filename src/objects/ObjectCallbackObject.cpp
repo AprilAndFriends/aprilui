@@ -31,7 +31,6 @@ namespace aprilui
 		{
 			(*mCallback)();
 		}
-		Object::OnDraw(offset);
 	}
 	
 }

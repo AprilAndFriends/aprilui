@@ -7,42 +7,42 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ALPHA_FADER_H
-#define APRILUI_ALPHA_FADER_H
-
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "ObjectCallbackObject.h"
-#include "Animator.h"
+#include "aprilui.h"
+#include "AnimatorScalerX.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		class apriluiExport AlphaFader : public Animator
+		ScalerX::ScalerX(chstr name) : Animator("Animators::ScalerX", name, grect(0, 0, 1, 1))
 		{
-		public:
-			AlphaFader(chstr name);
-			
-			bool isAnimated();
-			void setProperty(chstr name, chstr value);
-			void notifyEvent(chstr name, void* params);
-			void fade(float dest, float time);
-			void reset();
-			
-			void update(float k);
-			
-		protected:
-			float mInitialSpeed;
-			float mInitialAlpha;
-			float mSpeed;
-			float mAccel;
-			float mTimer;
-			float mDelay;
-			float mDestAlpha;
-			
-		};
+		}
+
+		void ScalerX::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject")
+			{
+				mDcOffset = mParent->getWidth();
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void ScalerX::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			float value = mParent->getWidth();
+			value = _calculateValue(k, value);
+			mParent->setWidth(value);
+		}
+		
 	}
 }
-
-#endif

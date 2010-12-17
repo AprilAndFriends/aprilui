@@ -52,7 +52,6 @@ namespace aprilui
 			}
 			int w = mTexture->getWidth();
 			int h = mTexture->getHeight();
-			float t;
 			if (!mVertical)
 			{
 				tVertices[0].u = mSource.x / w;               tVertices[0].v = mSource.y / h;
@@ -148,7 +147,7 @@ namespace aprilui
 		tVertices[2].x = -center.x;			tVertices[2].y = rect.h - center.y;
 		tVertices[3].x = rect.w - center.x;	tVertices[3].y = rect.h - center.y;
 		
-		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
+		gmat4 originalMatrix = April::rendersys->getModelviewMatrix();
 		April::rendersys->setIdentityTransform();
 		April::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		April::rendersys->rotate(angle);
@@ -171,7 +170,7 @@ namespace aprilui
 		{
 			April::rendersys->setBlendMode(April::DEFAULT);
 		}
-		April::rendersys->setModelviewMatrix(temp_matrix);
+		April::rendersys->setModelviewMatrix(originalMatrix);
 	}
 
 	void Image::draw(grect rect, April::Color color, float angle)

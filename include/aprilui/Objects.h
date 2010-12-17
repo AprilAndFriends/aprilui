@@ -24,8 +24,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectColoredImageBox.h"
 #include "ObjectImageButton.h"
 #include "ObjectCallbackObject.h"
-#include "ObjectRotatableImageBox.h"
-#include "ObjectRotationImageBox.h"
 #include "ObjectSlider.h"
 #include "ObjectTextButton.h"
 #include "ObjectTextImageButton.h"

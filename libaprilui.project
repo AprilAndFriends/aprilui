@@ -12,7 +12,6 @@
     <File Name="src/Exception.cpp"/>
     <File Name="src/Util.cpp"/>
     <File Name="src/xmlHelper.cpp"/>
-    <File Name="src/aprilui.cpp"/>
     <File Name="src/CallbackEvent.cpp"/>
     <VirtualDirectory Name="objects">
       <File Name="src/objects/ObjectCallbackObject.cpp"/>
@@ -24,29 +23,23 @@
       <File Name="src/objects/ObjectImageButton.cpp"/>
       <File Name="src/objects/ObjectLabel.cpp"/>
       <File Name="src/objects/ObjectLabelBase.cpp"/>
-      <File Name="src/objects/ObjectRotatableImageBox.cpp"/>
-      <File Name="src/objects/ObjectRotationImageBox.cpp"/>
       <File Name="src/objects/ObjectSlider.cpp"/>
       <File Name="src/objects/ObjectTextButton.cpp"/>
       <File Name="src/objects/ObjectTextImageButton.cpp"/>
       <File Name="src/objects/ObjectToggleButton.cpp"/>
       <File Name="src/objects/Object.cpp"/>
+      <File Name="src/objects/ObjectButtonBase.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="animators">
-      <File Name="src/animators/AnimatorAlphaFader.cpp"/>
-      <File Name="src/animators/AnimatorAlphaHover.cpp"/>
-      <File Name="src/animators/AnimatorAlphaOscillator.cpp"/>
-      <File Name="src/animators/AnimatorBlinker.cpp"/>
-      <File Name="src/animators/AnimatorColorAlternator.cpp"/>
-      <File Name="src/animators/AnimatorEarthquake.cpp"/>
       <File Name="src/animators/AnimatorFrameAnimation.cpp"/>
-	  <File Name="src/animators/AnimatorMoveOscillator.cpp"/>
-      <File Name="src/animators/AnimatorMover.cpp"/>
-      <File Name="src/animators/AnimatorRotationOscillator.cpp"/>
       <File Name="src/animators/AnimatorRotator.cpp"/>
-      <File Name="src/animators/AnimatorScaler.cpp"/>
       <File Name="src/animators/Animator.cpp"/>
-      <File Name="src/animators/AnimatorScaleOscillator.cpp"/>
+      <File Name="src/animators/AnimatorMoverY.cpp"/>
+      <File Name="src/animators/AnimatorMoverX.cpp"/>
+      <File Name="src/animators/AnimatorScalerY.cpp"/>
+      <File Name="src/animators/AnimatorScalerX.cpp"/>
+      <File Name="src/animators/AnimatorAlphaChanger.cpp"/>
+      <File Name="src/animators/AnimatorColorChanger.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="src/images/Image.cpp"/>
@@ -57,33 +50,27 @@
       <File Name="src/images/TiledImage.cpp"/>
     </VirtualDirectory>
     <File Name="src/EventArgs.cpp"/>
+    <File Name="src/aprilui.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/aprilui/Dataset.h"/>
     <File Name="include/aprilui/Exception.h"/>
     <File Name="src/Util.h"/>
-    <File Name="include/aprilui/aprilui.h"/>
     <File Name="include/aprilui/Animators.h"/>
-    <File Name="include/aprilui/apriluiExport.h"/>
     <File Name="include/aprilui/xmlHelper.h"/>
     <File Name="include/aprilui/CallbackEvent.h"/>
     <File Name="include/aprilui/Event.h"/>
     <File Name="include/aprilui/EventArgs.h"/>
     <VirtualDirectory Name="animators">
-      <File Name="include/aprilui/AnimatorAlphaFader.h"/>
-      <File Name="include/aprilui/AnimatorAlphaHover.h"/>
-      <File Name="include/aprilui/AnimatorAlphaOscillator.h"/>
-      <File Name="include/aprilui/AnimatorBlinker.h"/>
-      <File Name="include/aprilui/AnimatorColorAlternator.h"/>
-      <File Name="include/aprilui/AnimatorEarthquake.h"/>
       <File Name="include/aprilui/AnimatorFrameAnimation.h"/>
-	  <File Name="include/aprilui/AnimatorMoveOscillator.h"/>
-      <File Name="include/aprilui/AnimatorMover.h"/>
       <File Name="include/aprilui/AnimatorRotator.h"/>
-      <File Name="include/aprilui/AnimatorScaler.h"/>
       <File Name="include/aprilui/Animator.h"/>
-      <File Name="include/aprilui/AnimatorRotationOscillator.h"/>
-      <File Name="include/aprilui/AnimatorScaleOscillator.h"/>
+      <File Name="include/aprilui/AnimatorMoverX.h"/>
+      <File Name="include/aprilui/AnimatorMoverY.h"/>
+      <File Name="include/aprilui/AnimatorScalerY.h"/>
+      <File Name="include/aprilui/AnimatorScalerX.h"/>
+      <File Name="include/aprilui/AnimatorAlphaChanger.h"/>
+      <File Name="include/aprilui/AnimatorColorChanger.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">
@@ -96,13 +83,12 @@
       <File Name="include/aprilui/ObjectImageButton.h"/>
       <File Name="include/aprilui/ObjectLabel.h"/>
       <File Name="include/aprilui/ObjectLabelBase.h"/>
-      <File Name="include/aprilui/ObjectRotatableImageBox.h"/>
-      <File Name="include/aprilui/ObjectRotationImageBox.h"/>
       <File Name="include/aprilui/ObjectSlider.h"/>
       <File Name="include/aprilui/ObjectTextButton.h"/>
       <File Name="include/aprilui/ObjectTextImageButton.h"/>
       <File Name="include/aprilui/ObjectToggleButton.h"/>
       <File Name="include/aprilui/Object.h"/>
+      <File Name="include/aprilui/ObjectButtonBase.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="include/aprilui/Image.h"/>
@@ -113,6 +99,8 @@
       <File Name="include/aprilui/ColorImage.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Images.h"/>
+    <File Name="include/aprilui/aprilui.h"/>
+    <File Name="include/aprilui/apriluiExport.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Release_Win32">
