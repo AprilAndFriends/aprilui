@@ -57,7 +57,7 @@ namespace aprilui
 		atres::Effect mFontEffect;
 		april::Color mTextColor;
 		
-		void _drawLabel(grect rect, float alpha);
+		void _drawLabel(grect rect, unsigned char alpha);
 		
 	};
 	

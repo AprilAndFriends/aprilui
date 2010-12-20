@@ -47,10 +47,20 @@ namespace aprilui
 	void EditBox::OnDraw(gvec2 offset)
 	{
 		grect rect = mRect + offset;
+		april::Color color = april::Color::BLACK;
 #ifdef _DEBUG
 		if (!aprilui::isDebugMode())
+		{
 #endif
-		april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
+			if (!mPushed)
+			{
+				color.a = 191;
+			}
+			color.a = (unsigned char)(getDerivedAlpha() * color.a);
+			april::rendersys->drawColoredQuad(rect, color);
+#ifdef _DEBUG
+		}
+#endif
 		hstr text = mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -89,8 +99,9 @@ namespace aprilui
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 2;
 			rect.h = h - 4;
-			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
-				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
+			color = mTextColor;
+			color.a = (unsigned char)(getDerivedAlpha() * color.a);
+			april::rendersys->drawColoredQuad(rect, color);
 		}
 		mText = text;
 	}
