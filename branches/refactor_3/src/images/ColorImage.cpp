@@ -37,7 +37,7 @@ namespace aprilui
 			april::rendersys->setBlendMode(mBlendMode);
 		}
 		color *= mColor;
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
+		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
 			april::rendersys->setBlendMode(april::DEFAULT);
@@ -59,7 +59,7 @@ namespace aprilui
 		{
 			april::rendersys->setBlendMode(mBlendMode);
 		}
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
+		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
 			april::rendersys->setBlendMode(april::DEFAULT);

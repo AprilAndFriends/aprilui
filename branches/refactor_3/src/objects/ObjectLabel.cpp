@@ -26,7 +26,7 @@ namespace aprilui
 	void Label::OnDraw(gvec2 offset)
 	{
 		Object::OnDraw(offset);
-		float alpha = getDerivedAlpha();
+		unsigned char alpha = (int)(getDerivedAlpha() * 255);
 		if (!isDerivedEnabled())
 		{
 			alpha /= 2;

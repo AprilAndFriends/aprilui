@@ -28,7 +28,7 @@ namespace aprilui
 	void TextImageButton::OnDraw(gvec2 offset)
 	{
 		ImageButton::OnDraw(offset);
-		float alpha = getDerivedAlpha();
+		unsigned char alpha = (int)(getDerivedAlpha() * 255);
 		if (!isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
 		{
 			alpha /= 2;
