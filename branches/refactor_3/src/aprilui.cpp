@@ -31,6 +31,10 @@ namespace aprilui
 	bool debugMode = false;
 #endif
 	hstr defaultTextsPath = "texts";
+	void aprilui_writelog(chstr message)
+	{
+		printf("%s\n", message.c_str());		
+	}
 	void (*g_logFunction)(chstr) = aprilui_writelog;
 	
 	void log(chstr message, chstr prefix)
@@ -38,9 +42,12 @@ namespace aprilui
 		g_logFunction(prefix + message);
 	}
 	
-	void aprilui_writelog(chstr message)
+	void logf(chstr message, ...)
 	{
-		printf("%s\n", message.c_str());		
+		va_list vl;
+		va_start(vl, message);
+		aprilui::log(hvsprintf(message.c_str(), vl));
+		va_end(vl);
 	}
 	
 	void setLogFunction(void (*fnptr)(chstr))
