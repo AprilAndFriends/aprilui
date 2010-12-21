@@ -51,7 +51,7 @@ namespace aprilui
 		pVertices[2].x = -center.x;			pVertices[2].y = rect.h - center.y;
 		pVertices[3].x = rect.w - center.x;	pVertices[3].y = rect.h - center.y;
 		
-		gtypes::Matrix4 originalMatrix = april::rendersys->getModelviewMatrix();
+		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
 		april::rendersys->setIdentityTransform();
 		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		april::rendersys->rotate(angle);
