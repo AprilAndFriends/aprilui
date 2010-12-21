@@ -23,7 +23,7 @@ namespace aprilui
 
 	float ColoredImage::getAlpha()
 	{
-		return mColor.a_float();
+		return mColor.a_f();
 	}
 	
 	void ColoredImage::setAlpha(float alpha)

@@ -80,7 +80,7 @@ namespace aprilui
 		void setGreen(unsigned char value) { mColor.g = value; }
 		unsigned char getBlue() { return mColor.b; }
 		void setBlue(unsigned char value) { mColor.b = value; }
-		float getAlpha() { return mColor.a_float(); }
+		float getAlpha() { return mColor.a_f(); }
 		void setAlpha(float value);
 		april::Color getColor() { return mColor; }
 		void setColor(april::Color value) { mColor = value; }

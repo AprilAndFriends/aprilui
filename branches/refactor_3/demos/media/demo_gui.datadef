@@ -35,12 +35,12 @@
 			<Animator type="MoverX" periods="1" amplitude="100" speed="0.5" delay="1.0"/>
 			<Animator type="MoverY" periods="1" amplitude="100" speed="0.25"/>
 		</Object>
-		<Object type="ColoredQuad" name="coloredQuad" color="7FFF7F" x="32" y="224" w="128" h="64">
+		<Object type="ColoredQuad" name="coloredQuad" color="007FFF" x="32" y="224" w="128" h="64">
 			<Animator type="MoverX" function="random" amplitude="4"/>
 			<Animator type="MoverY" function="random" amplitude="4"/>
 		</Object>
 		<Object type="EditBox" name="editBox" text="Edit Box" font="arial" filter="ABCDEMNLSTXYZabcdemnlstxyz +-=()" max_length="10" x="32" y="320" w="192" h="32"/>
-		<Object type="Label" name="label" text="I am a label." x="32" y="384" w="192" h="32"/>
+		<Object type="Label" name="label" text="I am a label." effect="border" x="32" y="384" w="192" h="32"/>
 		<Object type="TextButton" name="textButton" text="I am a button." x="32" y="448" w="192" h="32"/>
 		<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64">
 			<Animator type="AlphaChanger" function="sine" amplitude="0.25" speed="1.05" dc_offset="0.75"/>
