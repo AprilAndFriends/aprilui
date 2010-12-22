@@ -110,7 +110,7 @@ namespace aprilui
 	{
 		if (gCursor != NULL)
 		{
-			gCursor->draw(grect(cursorPosition, gCursor->getSource().getSize()));
+			gCursor->draw(grect(cursorPosition, gCursor->getSrcRect().getSize()));
 		}
 	}
 

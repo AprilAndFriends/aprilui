@@ -26,7 +26,7 @@ namespace aprilui
 	{
 		mImage = image;
 		mImageName = (image != NULL ? image->getName() : "null");
-		grect rect = image->getSource();
+		grect rect = image->getSrcRect();
 		if (mRect.w == -1)
 		{
 			mRect.w = rect.w * getDefaultScale();
@@ -56,7 +56,7 @@ namespace aprilui
 	{
 		if (mImage)
 		{
-			setSize(mImage->getSource().getSize() * getDefaultScale());
+			setSize(mImage->getSrcRect().getSize() * getDefaultScale());
 		}
 	}
 

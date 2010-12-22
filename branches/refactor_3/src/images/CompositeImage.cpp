@@ -24,7 +24,7 @@ namespace aprilui
 	}
 	
 	CompositeImage::CompositeImage(chstr name, CompositeImage& base) :
-		Image(0, name, grect(0, 0, base.getSource().getSize()))
+		Image(0, name, grect(0, 0, base.getSrcRect().getSize()))
 	{
 		foreach (ImageRef, it, base.mImages)
 		{
@@ -42,8 +42,8 @@ namespace aprilui
 
 	void CompositeImage::draw(grect rect, april::Color color)
 	{
-		float wf = rect.w / mSource.w;
-		float hf = rect.h / mSource.h;
+		float wf = rect.w / mSrcRect.w;
+		float hf = rect.h / mSrcRect.h;
 		grect drawRect;
 		foreach (ImageRef, it, mImages)
 		{
@@ -57,8 +57,8 @@ namespace aprilui
 	
 	void CompositeImage::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
-		float wf = rect.w / mSource.w;
-		float hf = rect.h / mSource.h;
+		float wf = rect.w / mSrcRect.w;
+		float hf = rect.h / mSrcRect.h;
 		grect drawRect;
 		foreach (ImageRef, it, mImages)
 		{

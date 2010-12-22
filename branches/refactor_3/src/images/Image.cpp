@@ -28,7 +28,7 @@ namespace aprilui
 		mName = name;
 		int index = name.find("/") + 1;
 		mImageName = name(index, name.size() - index); // the name without the dataset's name prefix
-		mSource = source;
+		mSrcRect = source;
 
 		mBlendMode = april::ALPHA_BLEND;
 		mVertical = vertical;
@@ -54,10 +54,10 @@ namespace aprilui
 			int h = mTexture->getHeight();
 			if (!mVertical)
 			{
-				tVertices[0].u = mSource.x / w;               tVertices[0].v = mSource.y / h;
-				tVertices[1].u = (mSource.x + mSource.w) / w; tVertices[1].v = mSource.y / h;
-				tVertices[2].u = mSource.x / w;               tVertices[2].v = (mSource.y + mSource.h) / h;
-				tVertices[3].u = (mSource.x + mSource.w) / w; tVertices[3].v = (mSource.y + mSource.h) / h;
+				tVertices[0].u = mSrcRect.x / w;               tVertices[0].v = mSrcRect.y / h;
+				tVertices[1].u = (mSrcRect.x + mSrcRect.w) / w; tVertices[1].v = mSrcRect.y / h;
+				tVertices[2].u = mSrcRect.x / w;               tVertices[2].v = (mSrcRect.y + mSrcRect.h) / h;
+				tVertices[3].u = (mSrcRect.x + mSrcRect.w) / w; tVertices[3].v = (mSrcRect.y + mSrcRect.h) / h;
 				if (mInvertX)
 				{
 					hswap(tVertices[0].u, tVertices[1].u);
@@ -71,10 +71,10 @@ namespace aprilui
 			}
 			else
 			{
-				tVertices[0].u = (mSource.x + mSource.h) / w; tVertices[0].v = mSource.y / h;
-				tVertices[1].u = (mSource.x + mSource.h) / w; tVertices[1].v = (mSource.y + mSource.w) / h;
-				tVertices[2].u = (mSource.x) / w;             tVertices[2].v = mSource.y / h;
-				tVertices[3].u = (mSource.x) / w;             tVertices[3].v = (mSource.y + mSource.w) / h;
+				tVertices[0].u = (mSrcRect.x + mSrcRect.h) / w; tVertices[0].v = mSrcRect.y / h;
+				tVertices[1].u = (mSrcRect.x + mSrcRect.h) / w; tVertices[1].v = (mSrcRect.y + mSrcRect.w) / h;
+				tVertices[2].u = (mSrcRect.x) / w;             tVertices[2].v = mSrcRect.y / h;
+				tVertices[3].u = (mSrcRect.x) / w;             tVertices[3].v = (mSrcRect.y + mSrcRect.w) / h;
 				if (mInvertY)
 				{
 					hswap(tVertices[0].u, tVertices[2].u);
@@ -99,11 +99,11 @@ namespace aprilui
 	{
 		if (rect.w == -1)
 		{
-			rect.w = mSource.w;
+			rect.w = mSrcRect.w;
 		}
 		if (rect.h == -1)
 		{
-			rect.h = mSource.h;
+			rect.h = mSrcRect.h;
 		}
 		tVertices[0].x = rect.x;          tVertices[0].y = rect.y;
 		tVertices[1].x = rect.x + rect.w; tVertices[1].y = rect.y;
@@ -135,11 +135,11 @@ namespace aprilui
 	{
 		if (rect.w == -1)
 		{
-			rect.w = mSource.w;
+			rect.w = mSrcRect.w;
 		}
 		if (rect.h == -1)
 		{
-			rect.h = mSource.h;
+			rect.h = mSrcRect.h;
 		}
 		
 		tVertices[0].x = -center.x;			tVertices[0].y = -center.y;
