@@ -80,8 +80,8 @@ namespace aprilui
 		void setGreen(unsigned char value) { mColor.g = value; }
 		unsigned char getBlue() { return mColor.b; }
 		void setBlue(unsigned char value) { mColor.b = value; }
-		float getAlpha() { return mColor.a_f(); }
-		void setAlpha(float value);
+		unsigned char getAlpha() { return mColor.a; }
+		void setAlpha(unsigned char value);
 		april::Color getColor() { return mColor; }
 		void setColor(april::Color value) { mColor = value; }
 		void setColor(chstr value) { mColor.set(value); }
@@ -132,7 +132,7 @@ namespace aprilui
 		void sortChildren();
 		
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
-		float getDerivedAlpha();
+		unsigned char getDerivedAlpha();
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
 		

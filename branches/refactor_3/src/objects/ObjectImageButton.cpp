@@ -33,15 +33,15 @@ namespace aprilui
 		if (!isDerivedEnabled() && mDisabledImage != NULL)
 		{
 			april::Color color;
-			color.a = (unsigned char)(getDerivedAlpha() * 255);
+			color.a = getDerivedAlpha();
 			mDisabledImage->draw(rect, color, mAngle);
 			return;
 		}
 		if (mPushed && mPushedImage == NULL && isCursorInside())
 		{
 			april::Color color;
-			color *= 0.7f;
-			color.a = (unsigned char)(getDerivedAlpha() * 255);
+			color *= 0.75f;
+			color.a = getDerivedAlpha();
 			mImage->draw(rect, color, mAngle);
 			return;
 		}

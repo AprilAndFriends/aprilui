@@ -66,13 +66,12 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		float alpha = getDerivedAlpha();
+		april::Color color = mColor;
+		color.a = getDerivedAlpha();
 		if (!isDerivedEnabled())
 		{
-			alpha /= 2;
+			color.a /= 2;
 		}
-		april::Color color = mColor;
-		color.a = (unsigned char)(alpha * 255);
 		mImage->draw(mRect + offset, color, mAngle);
 	}
 	

@@ -28,8 +28,8 @@ namespace aprilui
 		void draw(grect rect, april::Color color);
 		void draw(grect rect, april::Color color, float angle, gvec2 center);
 
-		float getAlpha();
-		void setAlpha(float alpha);
+		unsigned char getAlpha();
+		void setAlpha(unsigned char value);
 		void setColor(april::Color value) { mColor = value; }
 		
 	protected:

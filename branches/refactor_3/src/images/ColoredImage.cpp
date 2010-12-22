@@ -21,14 +21,14 @@ namespace aprilui
 		mColor = color;
 	}
 
-	float ColoredImage::getAlpha()
+	unsigned char ColoredImage::getAlpha()
 	{
-		return mColor.a_f();
+		return mColor.a;
 	}
 	
-	void ColoredImage::setAlpha(float alpha)
+	void ColoredImage::setAlpha(unsigned char value)
 	{
-		mColor.a = (unsigned char)(alpha * 255);
+		mColor.a = value;
 	}
 	
 	void ColoredImage::draw(grect rect, april::Color color)
