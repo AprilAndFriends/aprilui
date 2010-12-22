@@ -49,7 +49,7 @@ namespace aprilui
 		april::Texture* mTexture;
 		hstr mName;
 		hstr mImageName;
-		grect mSource;
+		grect mSrcRect;
 		april::BlendMode mBlendMode;
 		bool mVertical;
 		bool mUnloadedFlag;
