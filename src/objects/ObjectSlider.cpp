@@ -82,12 +82,14 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		int alpha = (int)(getDerivedAlpha() * 255);
-		april::rendersys->drawColoredQuad(rect, april::Color(255, 255, 255, alpha));
-		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
-		april::rendersys->drawColoredQuad(rect, april::Color(63, 63, 63, alpha));
-		april::Color color;
+		unsigned char alpha = getDerivedAlpha();
+		april::Color color = april::Color::WHITE;
 		color.a = alpha;
+		april::rendersys->drawColoredQuad(rect, color);
+		april::Color backgroundColor = color / 4;
+		backgroundColor.a = alpha;
+		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
+		april::rendersys->drawColoredQuad(rect, backgroundColor);
 		rect = grect(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
 		mImage->draw(rect, color, mAngle);
 	}

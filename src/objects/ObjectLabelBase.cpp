@@ -50,7 +50,7 @@ namespace aprilui
 			break;
 		}
 		april::Color color(mTextColor);
-		color.a = color.a * alpha / 255;
+		color.a = (unsigned char)(alpha * color.a_f());
 		if (mTextFormatting)
 		{
 			atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, getAngle(), -mDrawOffset);

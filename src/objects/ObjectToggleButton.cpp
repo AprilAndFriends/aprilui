@@ -27,9 +27,8 @@ namespace aprilui
 
 	void ToggleButton::OnDraw(gvec2 offset)
 	{
-		float alpha = getDerivedAlpha();
 		april::Color color;
-		color.a = (unsigned char)(alpha * 255);
+		color.a = getDerivedAlpha();
 		grect rect = mRect + offset;
 		if (mPushed && mPushedImage != NULL)
 		{

@@ -56,7 +56,7 @@ namespace aprilui
 			{
 				color.a = 191;
 			}
-			color.a = (unsigned char)(getDerivedAlpha() * color.a);
+			color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
 			april::rendersys->drawColoredQuad(rect, color);
 #ifdef _DEBUG
 		}
@@ -100,7 +100,7 @@ namespace aprilui
 			rect.w = 2;
 			rect.h = h - 4;
 			color = mTextColor;
-			color.a = (unsigned char)(getDerivedAlpha() * color.a);
+			color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
 			april::rendersys->drawColoredQuad(rect, color);
 		}
 		mText = text;

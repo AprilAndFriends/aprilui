@@ -104,16 +104,15 @@ namespace aprilui
 		}
 	}
 
-	float Object::getDerivedAlpha()
+	unsigned char Object::getDerivedAlpha()
 	{
 		// recursive function that combines all the alpha from the parents (if any)
-		//2DO
-		float alpha = this->getAlpha();
+		float factor = 1.0f;
 		if (mInheritsAlpha && mParent != NULL)
 		{
-			alpha *= mParent->getDerivedAlpha();
+			factor *= mParent->getDerivedAlpha() / 255.0f;
 		}
-		return alpha;
+		return (unsigned char)(this->getAlpha() * factor);
 	}
 
 	bool Object::isAnimated()
@@ -297,10 +296,9 @@ namespace aprilui
 		return (mClickthrough && (mParent == NULL || mParent->isDerivedClickThrough()));
 	}
 	
-	void Object::setAlpha(float alpha)
+	void Object::setAlpha(unsigned char value)
 	{
-		//2DO
-		mColor.a = (unsigned char)hclamp((int)(alpha * 255), 0, 255);
+		mColor.a = value;
 	}
 
 	void Object::moveToFront()
@@ -341,7 +339,7 @@ namespace aprilui
 		else if (name == "red")				setRed((int)value);
 		else if (name == "green")			setGreen((int)value);
 		else if (name == "blue")			setBlue((int)value);
-		else if (name == "alpha")			setAlpha(value);
+		else if (name == "alpha")			setAlpha((int)value);
 		else if (name == "color")			setColor(value);
 		else if (name == "angle")			setAngle(value);
 	}

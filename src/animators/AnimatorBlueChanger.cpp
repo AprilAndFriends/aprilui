@@ -40,7 +40,7 @@ namespace aprilui
 				return;
 			}
 			unsigned char value = mParent->getBlue();
-			mValue = _calculateValue(k);
+			mValue = hclamp(_calculateValue(k), 0.0f, 255.0f);
 			if (value != (unsigned char)mValue)
 			{
 				mParent->setBlue(mValue);

@@ -39,12 +39,11 @@ namespace aprilui
 			{
 				return;
 			}
-			float value = mParent->getAlpha();
-			//unsigned char value = mParent->getAlpha();
-			mValue = _calculateValue(k);
-			//if (value != (unsigned char)mValue)
+			unsigned char value = mParent->getAlpha();
+			mValue = hclamp(_calculateValue(k), 0.0f, 255.0f);
+			if (value != (unsigned char)mValue)
 			{
-				mParent->setAlpha(mValue);
+				mParent->setAlpha((unsigned char)mValue);
 			}
 		}
 		
