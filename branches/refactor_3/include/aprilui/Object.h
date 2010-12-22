@@ -42,7 +42,7 @@ namespace aprilui
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
 		
-		bool isCursorInside();
+		virtual bool isCursorInside();
 		bool angleEquals(float angle);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
