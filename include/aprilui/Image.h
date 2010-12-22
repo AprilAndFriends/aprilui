@@ -40,7 +40,7 @@ namespace aprilui
 		april::Texture* getTexture();
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
-		grect getSource() const { return mSource; }
+		grect getSrcRect() const { return mSrcRect; }
 		
 		april::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
