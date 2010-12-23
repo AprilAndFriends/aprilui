@@ -44,10 +44,10 @@ namespace aprilui
 	
 	void logf(chstr message, ...)
 	{
-		va_list vl;
-		va_start(vl, message);
-		aprilui::log(hvsprintf(message.c_str(), vl));
-		va_end(vl);
+		va_list args;
+		va_start(args, message);
+		aprilui::log(hvsprintf(message.c_str(), args));
+		va_end(args);
 	}
 	
 	void setLogFunction(void (*fnptr)(chstr))
