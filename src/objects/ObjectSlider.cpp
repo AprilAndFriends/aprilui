@@ -86,7 +86,7 @@ namespace aprilui
 		april::Color color = april::Color::WHITE;
 		color.a = alpha;
 		april::rendersys->drawColoredQuad(rect, color);
-		april::Color backgroundColor = color / 4;
+		april::Color backgroundColor = color / 4.0f;
 		backgroundColor.a = alpha;
 		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
 		april::rendersys->drawColoredQuad(rect, backgroundColor);
