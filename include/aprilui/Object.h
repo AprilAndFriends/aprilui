@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_OBJECT_H
 #define APRILUI_OBJECT_H
 
+#include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
@@ -41,29 +42,30 @@ namespace aprilui
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
 		
-		bool isCursorInside();
-		virtual bool isPointInside(gvec2 position);
-		virtual bool isPointInside(float x, float y);
+		virtual bool isCursorInside();
+		bool angleEquals(float angle);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
 		float getX() { return mRect.x; }
 		void setX(float value) { mRect.x = value; }
 		float getY() { return mRect.y; }
 		void setY(float value) { mRect.y = value; }
-		gvec2 getPosition() { return gvec2(mRect.x, mRect.y); }
-		void setPosition(gvec2 value) { mRect.x = value.x; mRect.y = value.y; }
+		gvec2 getPosition() { return mRect.getPosition(); }
+		void setPosition(gvec2 value) { mRect.setPosition(value); }
 		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
 		float getWidth() { return mRect.w; }
 		void setWidth(float value) { mRect.w = value; }
 		float getHeight() { return mRect.h; }
 		void setHeight(float value) { mRect.h = value; }
-		gvec2 getSize() { return gvec2(mRect.w, mRect.h); }
-		void setSize(gvec2 value) { mRect.w = value.x; mRect.h = value.y; }
+		gvec2 getSize() { return mRect.getSize(); }
+		void setSize(gvec2 value) { mRect.setSize(value); }
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
 		void setRect(grect value) { mRect = value; }
+		float getAngle() { return mAngle; }
+		virtual void setAngle(float value) { mAngle = value; }
 
-		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
+		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
 		bool isEnabled() { return mEnabled; }
 		void setEnabled(bool value) { mEnabled = value; }
@@ -72,9 +74,20 @@ namespace aprilui
 		bool isInheritsAlpha() { return mInheritsAlpha; }
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
+		unsigned char getRed() { return mColor.r; }
+		void setRed(unsigned char value) { mColor.r = value; }
+		unsigned char getGreen() { return mColor.g; }
+		void setGreen(unsigned char value) { mColor.g = value; }
+		unsigned char getBlue() { return mColor.b; }
+		void setBlue(unsigned char value) { mColor.b = value; }
+		unsigned char getAlpha() { return mColor.a; }
+		void setAlpha(unsigned char value);
+		april::Color getColor() { return mColor; }
+		void setColor(april::Color value) { mColor = value; }
+		void setColor(chstr value) { mColor.set(value); }
+		gvec2 getDerivedPosition();
 		
-		float getAlpha() { return mAlpha; }
-		void setAlpha(float alpha);
+		virtual bool isAnimated();
 
 		void moveToFront();
 		void moveToBack();
@@ -106,7 +119,8 @@ namespace aprilui
 		hstr mName;
 		grect mRect;
 		int mZOrder;
-		float mAlpha;
+		float mAngle;
+		april::Color mColor;
 		bool mVisible;
 		bool mEnabled;
 		bool mClickthrough;
@@ -118,7 +132,7 @@ namespace aprilui
 		void sortChildren();
 		
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
-		float getDerivedAlpha();
+		unsigned char getDerivedAlpha();
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
 		

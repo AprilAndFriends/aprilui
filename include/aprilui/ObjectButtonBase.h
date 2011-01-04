@@ -7,37 +7,32 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ROTATABLE_IMAGE_BOX_H
-#define APRILUI_ROTATABLE_IMAGE_BOX_H
-
-#include <gtypes/Rectangle.h>
-#include <hltypes/hstring.h>
+#ifndef APRILUI_BUTTON_BASE_H
+#define APRILUI_BUTTON_BASE_H
 
 #include "apriluiExport.h"
-#include "ObjectRotationImageBox.h"
 
 namespace aprilui
 {
-	class apriluiExport RotatableImageBox : public RotationImageBox
+	class apriluiExport ButtonBase
 	{
 	public:
-		RotatableImageBox(chstr name, grect rect);
+		ButtonBase();
 		
-		float getRotationSpeed() { return mRotationSpeed; }
-		void setRotationSpeed(float value) { mRotationSpeed = value; }
-		void setAngle(float value) { mAngle = mDestAngle = value; }
-		float getDestAngle() { return mDestAngle; }
-		void setDestAngle(float value) { mDestAngle = value; }
-		void rotate(float angle) { mDestAngle += angle; }
-		bool isRotating();
-
-		void update(float k);
+		virtual bool isCursorInside() = 0;
+		
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
+		void OnMouseMove(float x, float y);
 		
 	protected:
-		float mDestAngle;
-		float mRotationSpeed;
+		bool mPushed;
+		bool mHover;
+		
+		virtual void update(float k);
 		
 	};
+	
 }
 
 #endif

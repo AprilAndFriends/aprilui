@@ -18,23 +18,21 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	LabelBase::LabelBase(chstr name) :
-		   mTextColor(255, 255, 255, 255)
+	LabelBase::LabelBase()
 	{
 		mHorzFormatting = atres::CENTER_WRAPPED;
 		mVertFormatting = atres::CENTER;
 		mFontEffect = atres::NONE;
-		mDrawOffset = gvec2();
 		mTextFormatting = true;
-		mText = "LabelBase: " + name;
+		mText = "";
 	}
 	
-	void LabelBase::_drawLabel(grect rect, float alpha)
+	void LabelBase::_drawLabel(grect rect, unsigned char alpha)
 	{
 #ifdef _DEBUG
 		if (aprilui::isDebugMode())
 		{
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
+			april::rendersys->drawColoredQuad(rect, april::Color(0, 0, 0, alpha / 2));
 		}
 #endif
 		if (mText.size() == 0)
@@ -51,15 +49,15 @@ namespace aprilui
 			text = "[s]" + text;
 			break;
 		}
-		April::Color color(mTextColor);
-		color.a = (unsigned char)(color.a * alpha);
+		april::Color color(mTextColor);
+		color.a = (unsigned char)(alpha * color.a_f());
 		if (mTextFormatting)
 		{
-			atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, 0.0f, -mDrawOffset);
+			atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, getAngle(), -mDrawOffset);
 		}
 		else
 		{
-			atres::drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, 0.0f, -mDrawOffset);
+			atres::drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, getAngle(), -mDrawOffset);
 		}
 	}
 
@@ -69,7 +67,7 @@ namespace aprilui
 		else if (name == "text") setText(value);
 		else if (name == "wrap_text")
 		{
-			logMessage("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
+			aprilui::log("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
 		}
 		else if (name == "horz_formatting")
 		{

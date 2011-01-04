@@ -36,7 +36,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			mPushed = true;
 			setValue((x - mRect.x) / (mRect.w - 4));
@@ -52,7 +52,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (mPushed && isPointInside(x, y))
+		if (mPushed && isCursorInside())
 		{
 			mPushed = false;
 			return true;
@@ -82,14 +82,16 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		float alpha = getDerivedAlpha();
-		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 1, 1, 1, alpha);
+		unsigned char alpha = getDerivedAlpha();
+		april::Color color = april::Color::WHITE;
+		color.a = alpha;
+		april::rendersys->drawColoredQuad(rect, color);
+		april::Color backgroundColor = color / 4.0f;
+		backgroundColor.a = alpha;
 		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
-		April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0.3f, 0.3f, 0.3f, alpha);
-		April::Color color;
-		color.a = alpha * 255;
+		april::rendersys->drawColoredQuad(rect, backgroundColor);
 		rect = grect(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
-		mImage->draw(rect, color);
+		mImage->draw(rect, color, mAngle);
 	}
 
 	void Slider::setProperty(chstr name, chstr value)

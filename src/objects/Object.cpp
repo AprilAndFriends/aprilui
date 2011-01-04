@@ -33,23 +33,23 @@ namespace aprilui
 		mName = name;
 		mParent = NULL;
 		mZOrder = 0;
-		mRect=rect;
+		mRect = rect;
 		mVisible = true;
 		mEnabled = true;
 		mClickthrough = false;
 		mInheritsAlpha = true;
-		mAlpha = 1.0f;
+		mAngle = 0.0f;
 		mDataset = NULL;
 	}
 
 	Object::~Object()
 	{
-		foreach_m(Event*, it, mEvents)
+		foreach_m (Event*, it, mEvents)
 		{
 			delete it->second;
 		}
 	}
-
+	
 	bool _objectSortCallback(Object* a, Object* b)
 	{
 		return (a->getZOrder() < b->getZOrder());
@@ -69,6 +69,7 @@ namespace aprilui
 		mChildren += object;
 		sortChildren();
 		object->setParent(this);
+		object->notifyEvent("AttachToObject", NULL);
 	}
 	
 	void Object::removeChild(Object* object)
@@ -77,6 +78,7 @@ namespace aprilui
 		{
 			throw ObjectNotChildException(object->getName(), getName());
 		}
+		object->notifyEvent("DetachFromObject", NULL);
 		mChildren -= object;
 		object->setParent(NULL);
 	}
@@ -102,15 +104,27 @@ namespace aprilui
 		}
 	}
 
-	float Object::getDerivedAlpha()
+	unsigned char Object::getDerivedAlpha()
 	{
 		// recursive function that combines all the alpha from the parents (if any)
-		float alpha = this->getAlpha();
+		float factor = 1.0f;
 		if (mInheritsAlpha && mParent != NULL)
 		{
-			alpha *= mParent->getDerivedAlpha();
+			factor *= mParent->getDerivedAlpha() / 255.0f;
 		}
-		return alpha;
+		return (unsigned char)(this->getAlpha() * factor);
+	}
+
+	bool Object::isAnimated()
+	{
+		foreach (Object*, it, mChildren)
+		{
+			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isAnimated())
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void Object::draw(gvec2 offset)
@@ -118,14 +132,14 @@ namespace aprilui
 		if (isVisible())
 		{
 			OnDraw(offset);
-			gvec2 rect(offset.x + mRect.x, offset.y + mRect.y);
+			gvec2 position = offset + mRect.getPosition();
 			foreach (Object*, it, mChildren)
 			{
-				(*it)->draw(rect);
+				(*it)->draw(position);
 			}
 		}
 	}
-
+	
 	void Object::update(float k)
 	{
 		foreach (Object*, it, mChildren)
@@ -136,22 +150,12 @@ namespace aprilui
 
 	bool Object::isCursorInside()
 	{
-		gvec2 pos = getCursorPosition();
+		gvec2 position = getCursorPosition();
 		for (Object* p = mParent; p != NULL; p = p->mParent)
 		{
-			pos -= p->getPosition();
+			position -= p->getPosition();
 		}
-		return isPointInside(pos);
-	}
-
-	bool Object::isPointInside(gvec2 position)
-	{
 		return mRect.isPointInside(position);
-	}
-
-	bool Object::isPointInside(float x, float y)
-	{
-		return mRect.isPointInside(x, y);
 	}
 
 	bool Object::OnMouseDown(float x, float y, int button)
@@ -164,7 +168,7 @@ namespace aprilui
 		{
 			if (mDataset->getFocusedObject() != NULL)
 			{
-				April::rendersys->getWindow()->terminateKeyboardHandling();
+				april::rendersys->getWindow()->terminateKeyboardHandling();
 			}
 			mDataset->setFocusedObject(NULL);
 		}
@@ -292,9 +296,9 @@ namespace aprilui
 		return (mClickthrough && (mParent == NULL || mParent->isDerivedClickThrough()));
 	}
 	
-	void Object::setAlpha(float alpha)
+	void Object::setAlpha(unsigned char value)
 	{
-		mAlpha = hclamp(alpha, 0.0f, 1.0f);
+		mColor.a = value;
 	}
 
 	void Object::moveToFront()
@@ -327,14 +331,28 @@ namespace aprilui
 
 	void Object::setProperty(chstr name, chstr value)
 	{
-		if      (name == "visible")        setVisible(value);
-		else if (name == "zorder")         setZOrder(value);
-		else if (name == "enabled")        setEnabled(value);
-		else if (name == "clickthrough")   setClickthrough(value);
-		else if (name == "inherits_alpha") setInheritsAlpha(value);
-		else if (name == "alpha")          setAlpha(value);
+		if      (name == "visible")			setVisible(value);
+		else if (name == "zorder")			setZOrder(value);
+		else if (name == "enabled")			setEnabled(value);
+		else if (name == "clickthrough")	setClickthrough(value);
+		else if (name == "inherits_alpha")	setInheritsAlpha(value);
+		else if (name == "red")				setRed((int)value);
+		else if (name == "green")			setGreen((int)value);
+		else if (name == "blue")			setBlue((int)value);
+		else if (name == "alpha")			setAlpha((int)value);
+		else if (name == "color")			setColor(value);
+		else if (name == "angle")			setAngle(value);
 	}
 
+	bool Object::angleEquals(float angle)
+	{
+		float s1 = (float)dsin(angle);
+		float s2 = (float)dsin(mAngle);
+		float c1 = (float)dcos(angle);
+		float c2 = (float)dcos(mAngle);
+		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
+	}
+	
 	Object* Object::getChildUnderPoint(float x, float y)
 	{
 		return getChildUnderPoint(gvec2(x, y));
@@ -342,7 +360,7 @@ namespace aprilui
 	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
-		if (!isVisible() || !isPointInside(pos))
+		if (!isVisible() || !mRect.isPointInside(pos))
 		{
 			return NULL;
 		}
@@ -351,14 +369,26 @@ namespace aprilui
 			return this;
 		}
 		Object* object = NULL;
+		gvec2 position = pos - mRect.getPosition();
 		foreach_r (Object*, it, mChildren)
 		{
-			object = (*it)->getChildUnderPoint(pos.x - mRect.x, pos.y - mRect.y);
-			if (object != NULL && dynamic_cast<aprilui::Animator*>(object) == NULL)
+			object = (*it)->getChildUnderPoint(position);
+			if (object != NULL && dynamic_cast<Animator*>(object) == NULL)
 			{
 				break;
 			}
 		}
 		return (object != NULL ? object : this);
 	}
+	
+	gvec2 Object::getDerivedPosition()
+	{
+		gvec2 position = mRect.getPosition();
+		for (Object* p = mParent; p != NULL; p = p->mParent)
+		{
+			position += p->getPosition();
+		}
+		return position;
+	}
+	
 }

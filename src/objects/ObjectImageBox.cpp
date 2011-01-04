@@ -12,7 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "aprilui.h"
 #include "Dataset.h"
 #include "Image.h"
-#include "ObjectColoredImageBox.h"
+#include "ObjectImageBox.h"
 
 namespace aprilui
 {
@@ -26,7 +26,7 @@ namespace aprilui
 	{
 		mImage = image;
 		mImageName = (image != NULL ? image->getName() : "null");
-		grect rect = image->getSource();
+		grect rect = image->getSrcRect();
 		if (mRect.w == -1)
 		{
 			mRect.w = rect.w * getDefaultScale();
@@ -56,8 +56,7 @@ namespace aprilui
 	{
 		if (mImage)
 		{
-			grect rect = mImage->getSource();
-			setSize(rect.w * getDefaultScale(), rect.h * getDefaultScale());
+			setSize(mImage->getSrcRect().getSize() * getDefaultScale());
 		}
 	}
 
@@ -67,17 +66,15 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		float alpha = getDerivedAlpha();
+		april::Color color = mColor;
+		color.a = getDerivedAlpha();
 		if (!isDerivedEnabled())
 		{
-			alpha /= 2;
+			color.a /= 2;
 		}
-		April::Color color;
-		color.a = alpha * 255;
-		mImage->draw(mRect + offset, color);
-		//rendersys->setBlendMode(April::ALPHA_BLEND);
+		mImage->draw(mRect + offset, color, mAngle);
 	}
-
+	
 	void ImageBox::setProperty(chstr name, chstr value)
 	{
 		Object::setProperty(name, value);
@@ -90,7 +87,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			return true;
 		}
@@ -103,7 +100,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isPointInside(x, y))
+		if (isCursorInside())
 		{
 			triggerEvent("Click", x, y, 0);
 			return true;

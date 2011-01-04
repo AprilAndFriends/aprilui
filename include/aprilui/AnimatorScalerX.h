@@ -2,15 +2,14 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes (kreso@cateia.com), Boris Mikic                     *
+Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_SCALE_OSCILLATOR_H
-#define APRILUI_SCALE_OSCILLATOR_H
+#ifndef APRILUI_SCALER_X_H
+#define APRILUI_SCALER_X_H
 
-#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "Animator.h"
@@ -19,22 +18,14 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		class apriluiExport ScaleOscillator : public Animator
+		class apriluiExport ScalerX : public Animator
 		{
 		public:
-			ScaleOscillator(chstr name);
+			ScalerX(chstr name);
 			
-			bool isAnimated();
-			void notifyEvent(chstr eventName, void* params);
-			void setProperty(chstr name, chstr value);
+			void notifyEvent(chstr name, void* params);
+			
 			void update(float k);
-			
-		protected:
-			float mBaseline;
-			float mAmplitude;
-			float mSpeed;
-			float mTimer;
-			gvec2 mInitialSize;
 			
 		};
 	}

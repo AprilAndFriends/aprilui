@@ -15,35 +15,30 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	ColoredImage::ColoredImage(April::Texture* texture, chstr name, grect source, bool vertical, April::Color color) :
+	ColoredImage::ColoredImage(april::Texture* texture, chstr name, grect source, bool vertical, april::Color color) :
 				  Image(texture, name, source, vertical)
 	{
 		mColor = color;
 	}
 
-	float ColoredImage::getAlpha()
+	unsigned char ColoredImage::getAlpha()
 	{
-		return mColor.a_float();
+		return mColor.a;
 	}
 	
-	void ColoredImage::setAlpha(float alpha)
+	void ColoredImage::setAlpha(unsigned char value)
 	{
-		mColor.a = alpha * 255.0f;
+		mColor.a = value;
 	}
 	
-	void ColoredImage::draw(grect rect, April::Color color)
+	void ColoredImage::draw(grect rect, april::Color color)
 	{
 		Image::draw(rect, mColor * color);
 	}
 
-	void ColoredImage::draw(grect rect, April::Color color, float angle, gvec2 center)
+	void ColoredImage::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
 		Image::draw(rect, mColor * color, angle, center);
-	}
-
-	void ColoredImage::setColor(float a, float r, float g, float b)
-	{
-		mColor.setColor(a, r, g, b);
 	}
 
 }

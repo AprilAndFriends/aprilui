@@ -37,6 +37,7 @@
       <Project Name="libaprilui" ConfigName="Debug"/>
       <Project Name="libapril" ConfigName="DirectX_Debug"/>
       <Project Name="demo_zorder" ConfigName="Debug"/>
+      <Project Name="demo_tiledimage" ConfigName="Debug"/>
       <Project Name="demo_simple" ConfigName="Debug"/>
       <Project Name="demo_gui" ConfigName="Debug"/>
     </WorkspaceConfiguration>

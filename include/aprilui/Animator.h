@@ -18,12 +18,66 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	enum AnimationFunction
+	{
+		Linear,
+		Sine,
+		Square,
+		Saw,
+		Triangle,
+		Hover,
+		Random
+	};
+	
 	class apriluiExport Animator : public Object
 	{
 	public:
 		Animator(chstr type, chstr name, grect rect);
 		
-		virtual bool isAnimated() = 0;
+		AnimationFunction getAnimationFunction() { return mFunction; }
+		void setAnimationFunction(AnimationFunction value) { mFunction = value; }
+		bool getActive() { return mActive; }
+		void setActive(bool value) { mActive = value; }
+		float getTimer() { return mTimer; }
+		void setTimer(float value) { mTimer = value; }
+		float getDelay() { return mDelay; }
+		void setDelay(float value) { mDelay = value; }
+		float getPeriods() { return mPeriods; }
+		void setPeriods(float value) { mPeriods = value; }
+		float getAmplitude() { return mAmplitude; }
+		void setAmplitude(float value) { mAmplitude = value; }
+		float getSpeed() { return mSpeed; }
+		void setSpeed(float value) { mSpeed = value; }
+		float getDcOffset() { return mDcOffset; }
+		void setDcOffset(float value) { mDcOffset = value; }
+		float getAcceleration() { return mAcceleration; }
+		void setAcceleration(float value) { mAcceleration = value; }
+		bool getDiscrete() { return mDiscrete; }
+		void setDiscrete(bool value) { mDiscrete = value; }
+		bool getReset() { return mReset; }
+		void setReset(bool value) { mReset = value; }
+		bool isAnimated();
+		bool isExpired();
+		
+		void setProperty(chstr name, chstr value);
+		
+		void update(float k);
+		
+	protected:
+		float mValue;
+		AnimationFunction mFunction;
+		bool mActive;
+		float mTimer;
+		float mDelay;
+		float mPeriods;
+		float mAmplitude;
+		float mSpeed;
+		float mDcOffset;
+		float mAcceleration;
+		bool mDiscrete;
+		bool mReset;
+		
+		float _calculateValue(float k);
 		
 	};
 }

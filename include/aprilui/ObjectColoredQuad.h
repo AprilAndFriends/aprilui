@@ -24,16 +24,12 @@ namespace aprilui
 	public:
 		ColoredQuad(chstr name, grect rect);
 		
-		void setColor(float a, float r, float g, float b);
 		void setProperty(chstr name, chstr value);
 		
 		void OnDraw(gvec2 offset = gvec2());
 
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
-		
-	protected:
-		April::Color mColor;
 		
 	};
 }
