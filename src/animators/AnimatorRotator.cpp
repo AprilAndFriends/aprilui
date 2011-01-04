@@ -20,8 +20,6 @@ namespace aprilui
 	{
 		Rotator::Rotator(chstr name) : Animator("Animators::Rotator", name, grect(0, 0, 1, 1))
 		{
-			mDelay = 0.0f;
-			mDestAngle = -1.0f;
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)
