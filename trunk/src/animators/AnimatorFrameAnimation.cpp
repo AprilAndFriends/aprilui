@@ -13,7 +13,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "AnimatorFrameAnimation.h"
 #include "aprilui.h"
-#include "ObjectColoredImageBox.h"
+#include "Image.h"
+#include "ObjectImageBox.h"
 
 namespace aprilui
 {
@@ -21,63 +22,71 @@ namespace aprilui
 	{
 		FrameAnimation::FrameAnimation(chstr name) : Animator("Animators::FrameAnimation", name, grect(0, 0, 1, 1))
 		{
-			mStartFrame = 0;
-			mEndFrame = 100;
-			mAnimationTime = 10.0f;
-			mTimer = 0.0f;
-			mLoop = 1;
-            mDelay = 0.0f;
+			mImageBaseName = "";
+			mFirstFrame = 0;
+			mFrameCount = 0;
 		}
 
 		bool FrameAnimation::isAnimated()
 		{
-			return (mTimer >= mAnimationTime);
+			if (!Animator::isAnimated())
+			{
+				return false;
+			}
+			if (mImageBaseName == "")
+			{
+				return false;
+			}
+			if (mFrameCount <= 0)
+			{
+				return false;
+			}
+			return true;
 		}
 
 		void FrameAnimation::setProperty(chstr name, chstr value)
 		{
-			if      (name == "start_frame") mStartFrame = value;
-			else if (name == "end_frame")   mEndFrame = value;
-			else if (name == "time")        mAnimationTime = value;
-			else if (name == "base_name")   mImageBaseName = value;
-			else if (name == "loop")        mLoop = value;
-            else if (name == "delay")       mDelay = value;
+			Animator::setProperty(name, value);
+			if		(name == "base_name")	mImageBaseName = value;
+			else if (name == "first_frame")	mFirstFrame = value;
+			else if (name == "frame_count")	mFrameCount = value;
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)
 		{
 			if (name == "AttachToObject")
 			{
-				mTimer = 0.0f;
+				mValue = mFirstFrame;
+				float delay = mDelay;
+				mDelay = 0.0f;
+				update(0.0f);
+				mDelay = delay;
 			}
-			Object::notifyEvent(name, params);
+			Animator::notifyEvent(name, params);
 		}
 
 		void FrameAnimation::update(float k)
 		{
-            if (mDelay > 0)
-            {
-                mDelay = hmax(0.0f, mDelay - k);
-                return;
-            }
-			mTimer += k;
-			if (mTimer >= mAnimationTime && mLoop)
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
 			{
-				mTimer -= mAnimationTime;
+				return;
 			}
-			if (mTimer < mAnimationTime)
+			ImageBox* imageBox = dynamic_cast<ImageBox*>(mParent);
+			if (imageBox == NULL)
 			{
-				int frame = mStartFrame + (int)((mEndFrame - mStartFrame) * mTimer / mAnimationTime);
-				ImageBox* image = dynamic_cast<ImageBox*>(mParent);
-				if (image)
-				{
-					image->setImageByName(mImageBaseName + hstr(frame));
-				}
-				else
-				{
-					logMessage("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
-				}
+				aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+				return;
 			}
+			mValue = _calculateValue(k);
+			int frame = (int)mValue;
+			int lastFrame = mFirstFrame + mFrameCount - 1;
+			if (isExpired() || frame > lastFrame)
+			{
+				frame = (mReset ? mFirstFrame : lastFrame);
+			}
+			imageBox->setImageByName(mImageBaseName + hstr(frame));
 		}
 		
 	}

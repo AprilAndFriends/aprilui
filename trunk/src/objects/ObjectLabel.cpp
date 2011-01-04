@@ -17,15 +17,16 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	Label::Label(chstr name, grect rect) :
-		LabelBase(name),
+		LabelBase(),
 		Object("Label", name, rect)
 	{
+		mText = "Label: " + name;
 	}
 
 	void Label::OnDraw(gvec2 offset)
 	{
 		Object::OnDraw(offset);
-		float alpha = getDerivedAlpha();
+		unsigned char alpha = getDerivedAlpha();
 		if (!isDerivedEnabled())
 		{
 			alpha /= 2;
@@ -40,6 +41,11 @@ namespace aprilui
 			setTextKey(mTextKey);
 		}
 		Object::notifyEvent(name, params);
+	}
+	
+	float Label::getAngle()
+	{
+		return Object::getAngle();
 	}
 
 	void Label::setTextKey(chstr key)

@@ -17,54 +17,54 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	April::PlainVertex pVertices[4];
+	april::PlainVertex pVertices[4];
 	
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
-		mColor.setColor(name);
+		mColor.set(name);
 	}
 
-	void ColorImage::draw(grect rect, April::Color color)
+	void ColorImage::draw(grect rect, april::Color color)
 	{
-		April::PlainVertex v[4];
+		april::PlainVertex v[4];
 		pVertices[0].x = rect.x;          pVertices[0].y = rect.y;
 		pVertices[1].x = rect.x + rect.w; pVertices[1].y = rect.y;
 		pVertices[2].x = rect.x;          pVertices[2].y = rect.y + rect.h;
 		pVertices[3].x = rect.x + rect.w; pVertices[3].y = rect.y + rect.h;
 		
-		if (mBlendMode != April::ALPHA_BLEND)
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
 		color *= mColor;
-		April::rendersys->render(April::TriangleStrip, pVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
-		if (mBlendMode != April::ALPHA_BLEND)
+		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(April::DEFAULT);
+			april::rendersys->setBlendMode(april::DEFAULT);
 		}
 	}
 
-	void ColorImage::draw(grect rect, April::Color color, float angle, gvec2 center)
+	void ColorImage::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
 		pVertices[0].x = -center.x;			pVertices[0].y = -center.y;
 		pVertices[1].x = rect.w - center.x;	pVertices[1].y = -center.y;
 		pVertices[2].x = -center.x;			pVertices[2].y = rect.h - center.y;
 		pVertices[3].x = rect.w - center.x;	pVertices[3].y = rect.h - center.y;
 		
-		gtypes::Matrix4 temp_matrix = April::rendersys->getModelviewMatrix();
-		April::rendersys->setIdentityTransform();
-		April::rendersys->translate(rect.x + center.x, rect.y + center.y);
-		April::rendersys->rotate(angle);
-		if (mBlendMode != April::ALPHA_BLEND)
+		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		april::rendersys->setIdentityTransform();
+		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
+		april::rendersys->rotate(angle);
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
-		April::rendersys->render(April::TriangleStrip, pVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
-		if (mBlendMode != April::ALPHA_BLEND)
+		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
+		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			April::rendersys->setBlendMode(April::DEFAULT);
+			april::rendersys->setBlendMode(april::DEFAULT);
 		}
-		April::rendersys->setModelviewMatrix(temp_matrix);
+		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
-
+	
 }

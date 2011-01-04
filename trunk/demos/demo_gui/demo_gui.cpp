@@ -15,24 +15,34 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 
 #include <april/RenderSystem.h>
 #include <april/Window.h>
-#include <aprilui/AprilUI.h>
+#include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
-AprilUI::Dataset* dataset;
+aprilui::Dataset* dataset;
 
-bool update(float time)
+bool update(float k)
 {
-	April::rendersys->clear();
-	April::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
-	AprilUI::setCursorPosition(April::rendersys->getWindow()->getCursorPos());
-	dataset->update(time);
+	april::rendersys->clear();
+	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	aprilui::setCursorPosition(april::rendersys->getWindow()->getCursorPos());
+	dataset->update(k);
 	dataset->getObject("root")->draw();
 	return true;
+}
+
+void OnKeyDown(unsigned int keycode)
+{
+	if (keycode == april::AK_RETURN)
+	{
+		dataset->unload();
+		dataset->load();
+	}
+	aprilui::OnKeyDown(keycode);
 }
 
 int main()
@@ -83,22 +93,22 @@ int main()
 #endif
 	try
 	{
-		April::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
-		April::rendersys->getWindow()->setUpdateCallback(&update);
-		April::rendersys->getWindow()->setMouseCallbacks(&AprilUI::OnMouseDown, &AprilUI::OnMouseUp, &AprilUI::OnMouseMove);
-		April::rendersys->getWindow()->setKeyboardCallbacks(&AprilUI::OnKeyDown, &AprilUI::OnKeyUp, &AprilUI::OnChar);
-		AprilUI::init();
-		Atres::init();
-		Atres::loadFont("../media/arial.font");
-		dataset = new AprilUI::Dataset("../media/demo_gui.datadef");
+		april::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
+		april::rendersys->getWindow()->setUpdateCallback(&update);
+		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::OnMouseDown, &aprilui::OnMouseUp, &aprilui::OnMouseMove);
+		april::rendersys->getWindow()->setKeyboardCallbacks(&OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
+		aprilui::init();
+		atres::init();
+		atres::loadFont("../media/arial.font");
+		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
 		dataset->load();
-		April::rendersys->getWindow()->enterMainLoop();
+		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
-		AprilUI::destroy();
-		Atres::destroy();
-		April::destroy();
+		aprilui::destroy();
+		atres::destroy();
+		april::destroy();
 	}
-	catch (AprilUI::_GenericException e)
+	catch (aprilui::_GenericException e)
 	{
 		printf("%s\n", e.getType().c_str());
 	}

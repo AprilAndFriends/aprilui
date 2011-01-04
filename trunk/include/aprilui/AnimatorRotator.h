@@ -12,7 +12,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <hltypes/hstring.h>
 
-#include "ObjectCallbackObject.h"
 #include "Animator.h"
 
 namespace aprilui
@@ -24,19 +23,9 @@ namespace aprilui
 		public:
 			Rotator(chstr name);
 			
-			bool isAnimated();
-			void setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
 			
 			void update(float k);
-			
-		protected:
-			float mInitialSpeed;
-			float mInitialAngle;
-			float mSpeed;
-			float mAccel;
-			float mDelay;
-			float mDestAngle;
 			
 		};
 	}

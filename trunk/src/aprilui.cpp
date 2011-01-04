@@ -17,28 +17,37 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "aprilui.h"
 #include "Dataset.h"
 #include "Exception.h"
+#include "Image.h"
 
 namespace aprilui
 {
 	bool registerLock = false;
-	hmap<int, April::Texture*> gFontTextures;
+	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
+	Image* gCursor = NULL;
 	float defaultScale = 1.0f;
 	gvec2 cursorPosition;
 #ifdef _DEBUG
 	bool debugMode = false;
 #endif
 	hstr defaultTextsPath = "texts";
+	void aprilui_writelog(chstr message)
+	{
+		printf("%s\n", message.c_str());		
+	}
 	void (*g_logFunction)(chstr) = aprilui_writelog;
 	
-	void logMessage(chstr message, chstr prefix)
+	void log(chstr message, chstr prefix)
 	{
 		g_logFunction(prefix + message);
 	}
 	
-	void aprilui_writelog(chstr message)
+	void logf(chstr message, ...)
 	{
-		printf("%s\n", message.c_str());		
+		va_list args;
+		va_start(args, message);
+		aprilui::log(hvsprintf(message.c_str(), args));
+		va_end(args);
 	}
 	
 	void setLogFunction(void (*fnptr)(chstr))
@@ -49,11 +58,11 @@ namespace aprilui
 	void init()
 	{
 	}
-
+	
 	void destroy()
 	{
 		registerLock = true;
-		for (hmap<int, April::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
+		for (hmap<int, april::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
 		{
 			delete it->second;
 		}
@@ -89,9 +98,22 @@ namespace aprilui
 	
 	void setCursorPosition(float x, float y)
 	{
-		cursorPosition = gvec2(x, y);
+		cursorPosition.set(x, y);
 	}
 	
+	void setCursorImage(Image* image)
+	{
+		gCursor = image;
+	}
+	
+	void drawCursor()
+	{
+		if (gCursor != NULL)
+		{
+			gCursor->draw(grect(cursorPosition, gCursor->getSrcRect().getSize()));
+		}
+	}
+
 	Dataset* getDatasetByName(chstr name)
 	{
 		if (!gDatasets.has_key(name))

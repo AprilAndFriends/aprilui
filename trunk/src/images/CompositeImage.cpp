@@ -24,7 +24,7 @@ namespace aprilui
 	}
 	
 	CompositeImage::CompositeImage(chstr name, CompositeImage& base) :
-		Image(0, name, grect(0, 0, base.getSource().w, base.getSource().h))
+		Image(0, name, grect(0, 0, base.getSrcRect().getSize()))
 	{
 		foreach (ImageRef, it, base.mImages)
 		{
@@ -37,27 +37,36 @@ namespace aprilui
 		ImageRef reference;
 		reference.image = image;
 		reference.rect = rect;
-		mImages.push_back(reference);
+		mImages += reference;
 	}
 
-	void CompositeImage::draw(grect rect, April::Color color)
+	void CompositeImage::draw(grect rect, april::Color color)
 	{
-		float wf = rect.w / mSource.w;
-		float hf = rect.h / mSource.h;
+		float wf = rect.w / mSrcRect.w;
+		float hf = rect.h / mSrcRect.h;
+		grect drawRect;
 		foreach (ImageRef, it, mImages)
 		{
-			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), color);
+			drawRect.x = rect.x + (*it).rect.x * wf;
+			drawRect.y = rect.y + (*it).rect.y * hf;
+			drawRect.w = (*it).rect.w * wf;
+			drawRect.h = (*it).rect.h * hf;
+			(*it).image->draw(drawRect, color);
 		}
 	}
 	
-	void CompositeImage::draw(grect rect, April::Color color, float angle, gvec2 center)
+	void CompositeImage::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
-		float wf = rect.w / mSource.w;
-		float hf = rect.h / mSource.h;
+		float wf = rect.w / mSrcRect.w;
+		float hf = rect.h / mSrcRect.h;
+		grect drawRect;
 		foreach (ImageRef, it, mImages)
 		{
-			(*it).image->draw(grect(rect.x + (*it).rect.x * wf, rect.y + (*it).rect.y * hf, (*it).rect.w * wf, (*it).rect.h * hf), color,
-				angle, gvec2(center.x - (*it).rect.x * wf, center.y - (*it).rect.y * hf));
+			drawRect.x = rect.x + (*it).rect.x * wf;
+			drawRect.y = rect.y + (*it).rect.y * hf;
+			drawRect.w = (*it).rect.w * wf;
+			drawRect.h = (*it).rect.h * hf;
+			(*it).image->draw(drawRect, color, angle, gvec2(center.x - (*it).rect.x * wf, center.y - (*it).rect.y * hf));
 		}
 	}
 

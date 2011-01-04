@@ -11,54 +11,40 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
-#include "AnimatorAlphaOscillator.h"
+#include "aprilui.h"
+#include "AnimatorAlphaChanger.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		AlphaOscillator::AlphaOscillator(chstr name) : Animator("Animators::Oscillator", name, grect(0, 0, 1, 1))
+		AlphaChanger::AlphaChanger(chstr name) : Animator("Animators::AlphaChanger", name, grect(0, 0, 1, 1))
 		{
-			mBaseline = 0.5f;
-			mAmplitude = 0.5f;
-			mSpeed = 360.0f;
-			mInitialAlpha = -10001.0f;
-			mTimer = 0.0f;
 		}
 
-		bool AlphaOscillator::isAnimated()
-		{
-			return true;
-		}
-
-		void AlphaOscillator::setProperty(chstr name, chstr value)
-		{
-			if      (name == "base")		mBaseline = value;
-			else if (name == "amplitude")	mAmplitude = value;
-			else if (name == "speed")		mSpeed = value;
-		}
-
-		void AlphaOscillator::notifyEvent(chstr name, void* params)
+		void AlphaChanger::notifyEvent(chstr name, void* params)
 		{
 			if (name == "AttachToObject")
 			{
-				if (mInitialAlpha < -10000.0f)
-				{
-					mInitialAlpha = mParent->getAlpha();
-				}
-				else
-				{
-					update(0); // preserve alpha
-				}
+				mValue = mDcOffset = mParent->getAlpha();
 			}
 			Object::notifyEvent(name, params);
 		}
-
-		void AlphaOscillator::update(float k)
+		
+		void AlphaChanger::update(float k)
 		{
-			mTimer += k;
-			float alpha = dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
-			mParent->setAlpha(hclamp(alpha, 0.0f, 1.0f));
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			unsigned char value = mParent->getAlpha();
+			mValue = hclamp(_calculateValue(k), 0.0f, 255.0f);
+			if (value != (unsigned char)mValue)
+			{
+				mParent->setAlpha((unsigned char)mValue);
+			}
 		}
 		
 	}

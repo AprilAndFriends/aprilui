@@ -52,11 +52,11 @@ namespace aprilui
 		_unregisterDataset(mName, this);
 	}
 	
-	void Dataset::_destroyTexture(April::Texture* texture)
+	void Dataset::_destroyTexture(april::Texture* texture)
 	{
 		if (!mTextures.has_key(texture->getFilename()))
 		{
-			throw ResourceNotExistsException(texture->getFilename(), "April::Texture", this);
+			throw ResourceNotExistsException(texture->getFilename(), "april::Texture", this);
 		}
 		mTextures.remove_key(texture->getFilename());
 		delete texture;
@@ -76,9 +76,9 @@ namespace aprilui
 	{
 		if (!mTextures.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "April::Texture", this);
+			throw ResourceNotExistsException(name, "april::Texture", this);
 		}
-		April::Texture* texture = mTextures[name];
+		april::Texture* texture = mTextures[name];
 		mTextures.remove_key(name);
 		delete texture;
 	}
@@ -94,7 +94,7 @@ namespace aprilui
 		delete image;
 	}
 	
-	April::Texture* Dataset::parseTexture(xml_node* node)
+	april::Texture* Dataset::parseTexture(xml_node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
@@ -107,7 +107,7 @@ namespace aprilui
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 		
-		April::Texture* texture = April::rendersys->loadTexture(filepath, dynamicLoad);
+		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
 		if (texture == NULL)
 		{
 			throw FileNotFoundException(filepath);
@@ -115,8 +115,8 @@ namespace aprilui
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
-			if      (filter == "linear")  texture->setTextureFilter(April::Linear);
-			else if (filter == "nearest") texture->setTextureFilter(April::Nearest);
+			if      (filter == "linear")  texture->setTextureFilter(april::Linear);
+			else if (filter == "nearest") texture->setTextureFilter(april::Nearest);
 			else throw hl_exception("texture filter '" + filter + "' not supported");
 		}
 		texture->setTextureWrapping(node->pbool("wrap", true));
@@ -126,7 +126,7 @@ namespace aprilui
 		{
 			if (mImages.has_key(textureName))
 			{
-				throw ResourceExistsException(filename, "April::Texture", this);
+				throw ResourceExistsException(filename, "april::Texture", this);
 			}
 			mImages[textureName] = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
 		}
@@ -154,7 +154,7 @@ namespace aprilui
 					}
 					else if (node->pexists("color"))
 					{
-						April::Color color(node->pstr("color"));
+						april::Color color(node->pstr("color"));
 						image = new ColoredImage(texture, name, rect, vertical, color);
 					}
 					else
@@ -166,7 +166,7 @@ namespace aprilui
 					hstr mode = node->pstr("blend_mode", "default");
 					if (mode == "add")
 					{
-						image->setBlendMode(April::ADD);
+						image->setBlendMode(april::ADD);
 					}
 					mImages[name] = image;
 				}
@@ -186,7 +186,7 @@ namespace aprilui
 			throw ResourceExistsException(filename, "RAMTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		April::Texture* texture = April::rendersys->loadRAMTexture(filepath, dynamicLoad);
+		april::Texture* texture = april::rendersys->loadRAMTexture(filepath, dynamicLoad);
 		if (!texture)
 		{
 			throw FileNotFoundException(filepath);
@@ -263,7 +263,6 @@ namespace aprilui
 		else  parse(CallbackObject);
 		else  parse(ColoredQuad);
 		else  parse(ImageBox);
-		else  parse(ColoredImageBox);
 		else  parse(ImageButton);
 		else  parse(TextImageButton);
 		else  parse(Slider);
@@ -271,21 +270,18 @@ namespace aprilui
 		else  parse(Label);
 		else  parse(TextButton);
 		else  parse(EditBox);
-		else  parse(RotationImageBox);
-		else  parse(RotatableImageBox);
 		else if (*node == "Animator")
 		{
-			/*if*/parse_animator(Mover);
-			else  parse_animator(Scaler);
-			else  parse_animator(Rotator);
-			else  parse_animator(RotationOscillator);
-			else  parse_animator(ColorAlternator);
-			else  parse_animator(AlphaFader);
-			else  parse_animator(AlphaOscillator);
-			else  parse_animator(AlphaHover);
-			else  parse_animator(Blinker);
+			/*if*/parse_animator(AlphaChanger);
+			else  parse_animator(BlueChanger);
 			else  parse_animator(FrameAnimation);
-			else  parse_animator(Earthquake);
+			else  parse_animator(GreenChanger);
+			else  parse_animator(MoverX);
+			else  parse_animator(MoverY);
+			else  parse_animator(RedChanger);
+			else  parse_animator(Rotator);
+			else  parse_animator(ScalerX);
+			else  parse_animator(ScalerY);
 			else object = parseExternalObjectClass(node, objectName, rect);
 		}
 		else
@@ -298,14 +294,14 @@ namespace aprilui
 			throw XMLUnknownClassException(className, node);
 		}
 		object->_setDataset(this);
-		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
-		{
-			object->setProperty(prop->name(), prop->value());
-		}
 		mObjects[objectName] = object;
 		if (parent != NULL)
 		{
 			parent->addChild(object);
+		}
+		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
+		{
+			object->setProperty(prop->name(), prop->value());
 		}
 		
 		for (node = node->iter_children(); node != NULL; node = node->next())
@@ -333,13 +329,13 @@ namespace aprilui
 		
 		parseExternalXMLNode(current);
 		
-		hmap<April::Texture*, hstr> dynamicLinks;
+		hmap<april::Texture*, hstr> dynamicLinks;
 		hstr links;
 		for (xml_node* p = current->iter_children(); p != NULL; p = p->next())
 		{
 			if      (*p == "Texture")
 			{
-				April::Texture* texture = parseTexture(p);
+				april::Texture* texture = parseTexture(p);
 				if (p->pexists("dynamic_link"))
 				{
 					links = p->pstr("dynamic_link");
@@ -357,7 +353,7 @@ namespace aprilui
 		
 		// adjust dynamic texture links
 		harray<hstr> dlst;
-		for (hmap<April::Texture*, hstr>::iterator it = dynamicLinks.begin(); it != dynamicLinks.end(); it++)
+		for (hmap<april::Texture*, hstr>::iterator it = dynamicLinks.begin(); it != dynamicLinks.end(); it++)
 		{
 			dlst = it->second.split(',');
 			foreach (hstr, it2, dlst)
@@ -372,19 +368,19 @@ namespace aprilui
 		hstr textsPath = (path != "" ? path : getDefaultTextsPath());
 		hstr base_dir = pathGetBaseDir(mFilename);
 		// texts
-		logMessage("loading texts");
+		aprilui::log("loading texts");
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);
 		_loadTexts(filepath);
 		// audio
 		mLoaded = true;
-		logMessage("loading datadef: " + mFilename);
+		aprilui::log("loading datadef: " + mFilename);
 		readFile(mFilename);
 		this->update(0);
 	}
 	
 	void Dataset::_loadTexts(chstr path)
 	{
-		logMessage("loading texts from '" + path + "'");
+		aprilui::log("loading texts from '" + path + "'");
 		harray<hstr> files = hdir::files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
@@ -436,17 +432,17 @@ namespace aprilui
 		{
 			throw GenericException("Unable to unload dataset '" + getName() + "', data not loaded!");
 		}
-		foreach_m(Object*, it, mObjects)
+		foreach_m (Object*, it, mObjects)
 		{
 			delete it->second;
 		}
 		mObjects.clear();
-		foreach_m(Image*, it, mImages)
+		foreach_m (Image*, it, mImages)
 		{
 			delete it->second;
 		}
 		mImages.clear();
-		foreach_m(April::Texture*, it, mTextures)
+		foreach_m (april::Texture*, it, mTextures)
 		{
 			delete it->second;
 		}
@@ -521,7 +517,7 @@ namespace aprilui
 		return mObjects[name];
 	}
 	
-	April::Texture* Dataset::getTexture(chstr name)
+	april::Texture* Dataset::getTexture(chstr name)
 	{
 		if (!mTextures.has_key(name))
 		{
@@ -670,7 +666,7 @@ namespace aprilui
 	
 	void Dataset::updateTextures(float k)
 	{
-		foreach_m (April::Texture*, it, mTextures)
+		foreach_m (april::Texture*, it, mTextures)
 		{
 			it->second->update(k);
 		}

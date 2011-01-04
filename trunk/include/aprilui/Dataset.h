@@ -18,7 +18,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "apriluiExport.h"
 
-namespace April
+namespace april
 {
 	class Texture;
 }
@@ -68,7 +68,7 @@ namespace aprilui
 		
 		void _destroyTexture(chstr tex);
 		void _destroyImage(chstr img);
-		void _destroyTexture(April::Texture* tex);
+		void _destroyTexture(april::Texture* tex);
 		void _destroyImage(Image* img);
 
 		void OnMouseDown(float x, float y, int button);
@@ -79,7 +79,7 @@ namespace aprilui
 		void OnChar(unsigned int charcode);
 		
 		virtual Object* getObject(chstr name);
-		virtual April::Texture* getTexture(chstr name);
+		virtual april::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
 		virtual hstr getText(chstr name);
 		virtual bool textExists(chstr name);
@@ -94,13 +94,13 @@ namespace aprilui
 		bool mLoaded;
 		Object* mFocusedObject;
 		hmap<hstr, Object*> mObjects;
-		hmap<hstr, April::Texture*> mTextures;
+		hmap<hstr, april::Texture*> mTextures;
 		hmap<hstr, Image*> mImages;
 		hmap<hstr, hstr> mTexts;
 
 		hmap<hstr, void (*)()> mCallbacks;
 
-		April::Texture* parseTexture(xml_node* node);
+		april::Texture* parseTexture(xml_node* node);
 		void parseRAMTexture(xml_node* node);
 		void parseCompositeImage(xml_node* node);
 		virtual void parseExternalXMLNode(xml_node* node) { }

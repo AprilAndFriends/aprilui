@@ -7,42 +7,45 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ROTATION_OSCILLATOR_H
-#define APRILUI_ROTATION_OSCILLATOR_H
-
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "Animator.h"
+#include "aprilui.h"
+#include "AnimatorRedChanger.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		class apriluiExport RotationOscillator : public Animator
+		RedChanger::RedChanger(chstr name) : Animator("Animators::RedChanger", name, grect(0, 0, 1, 1))
 		{
-		public:
-			RotationOscillator(chstr name);
-			
-			bool isAnimated();
-			void setProperty(chstr name, chstr value);
-			void notifyEvent(chstr name, void* params);
-			
-			void update(float k);
-			
-			float getBaseline() { return mBaseline; }
-			float getAmplitude() { return mAmplitude; }
-			float getSpeed() { return mSpeed; }
-			float getTimer() { return mTimer; }
-			
-		protected:
-			float mBaseline;
-			float mAmplitude;
-			float mSpeed;
-			float mTimer;
-			float mInitialAngle;
-			
-		};
+		}
+
+		void RedChanger::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject")
+			{
+				mValue = mDcOffset = mParent->getRed();
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void RedChanger::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			unsigned char value = mParent->getRed();
+			mValue = hclamp(_calculateValue(k), 0.0f, 255.0f);
+			if (value != (unsigned char)mValue)
+			{
+				mParent->setRed(mValue);
+			}
+		}
+		
 	}
 }
-
-#endif
