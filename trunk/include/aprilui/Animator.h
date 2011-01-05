@@ -61,6 +61,8 @@ namespace aprilui
 		bool isAnimated();
 		bool isExpired();
 		
+		void setTime(float value);
+		
 		void setProperty(chstr name, chstr value);
 		
 		void update(float k);

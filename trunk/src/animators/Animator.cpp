@@ -146,6 +146,11 @@ namespace aprilui
 		return (mPeriods >= 0.0f && mTimer * fabs(mSpeed) > mPeriods);
 	}
 	
+	void Animator::setTime(float value)
+	{
+		mSpeed = 1.0f / value;
+	}
+	
 	void Animator::setProperty(chstr name, chstr value)
 	{
 		Object::setProperty(name, value);
@@ -170,6 +175,8 @@ namespace aprilui
 		else if (name == "discrete")		setDiscrete(value);
 		else if (name == "reset")			setReset(value);
 		else if (name == "inherit_value")	setInheritValue(value);
+		// derived values
+		else if (name == "time")			setTime(value);
 	}
 	
 }
