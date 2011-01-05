@@ -270,7 +270,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ObjectDummyObject.cpp"
+					RelativePath=".\src\objects\ObjectContainer.cpp"
 					>
 				</File>
 				<File
@@ -456,7 +456,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ObjectDummyObject.h"
+					RelativePath=".\include\aprilui\ObjectContainer.h"
 					>
 				</File>
 				<File
