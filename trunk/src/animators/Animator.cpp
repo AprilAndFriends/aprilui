@@ -175,7 +175,7 @@ namespace aprilui
 		else if (name == "offset")			setOffset(value);
 		else if (name == "dc_offset")
 		{
-			aprilui::log("Warning: dc_offset is deprecated - use offset instead");
+			aprilui::log("Warning: dc_offset is deprecated, use offset instead");
 			setOffset(value);
 		}
 		else if (name == "acceleration")	setAcceleration(value);
