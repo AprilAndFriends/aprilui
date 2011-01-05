@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_H
 #define APRILUI_H
 
+#include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
@@ -32,8 +33,10 @@ namespace aprilui
 #endif
 	
 	//! used to determine width and height of objects that don't have w & h params in xml
-	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport float getDefaultScale();
+	apriluiFnExport void setDefaultScale(float value);
+	apriluiFnExport grect getViewport();
+	apriluiFnExport void setViewport(grect value);
 	
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
 	apriluiFnExport void update(float time);
