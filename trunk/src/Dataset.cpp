@@ -259,9 +259,9 @@ namespace aprilui
 	#define parse(cls) if (className == #cls) object = new cls(objectName, rect)
 	#define parse_animator(cls) if (className == #cls) object = new Animators::cls(objectName)
 		
-		/*if*/parse(DummyObject);
-		else  parse(CallbackObject);
+		/*if*/parse(CallbackObject);
 		else  parse(ColoredQuad);
+		else  parse(Container);
 		else  parse(ImageBox);
 		else  parse(ImageButton);
 		else  parse(TextImageButton);
