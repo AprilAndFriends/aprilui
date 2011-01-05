@@ -29,7 +29,6 @@ bool update(float k)
 {
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(screen);
-	aprilui::setCursorPosition(april::rendersys->getWindow()->getCursorPosition());
 	dataset->update(k);
 	dataset->getObject("root")->draw();
 	return true;

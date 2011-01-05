@@ -26,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "InheritValue")
 			{
-				mValue = mDcOffset = mParent->getWidth();
+				mValue = mOffset = mParent->getWidth();
 			}
 			Object::notifyEvent(name, params);
 		}
@@ -40,7 +40,7 @@ namespace aprilui
 				return;
 			}
 			mValue = mParent->getWidth();
-			mValue = _calculateValue(k);
+			mValue = _calculateValue(mTimeSinceLastFrame);
 			mParent->setWidth(mValue);
 		}
 		

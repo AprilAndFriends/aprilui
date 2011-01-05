@@ -26,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "InheritValue")
 			{
-				mValue = mDcOffset = mParent->getX();
+				mValue = mOffset = mParent->getX();
 			}
 			Object::notifyEvent(name, params);
 		}
@@ -40,7 +40,7 @@ namespace aprilui
 				return;
 			}
 			mValue = mParent->getX();
-			mValue = _calculateValue(k);
+			mValue = _calculateValue(mTimeSinceLastFrame);
 			mParent->setX(mValue);
 		}
 		

@@ -47,24 +47,21 @@ namespace aprilui
 		void FrameAnimation::setProperty(chstr name, chstr value)
 		{
 			Animator::setProperty(name, value);
-			if		(name == "base_name")	mImageBaseName = value;
-			else if (name == "first_frame")	mFirstFrame = value;
-			else if (name == "frame_count")	mFrameCount = value;
+			if		(name == "base_name")		mImageBaseName = value;
+			else if (name == "first_frame")		mFirstFrame = value;
+			else if (name == "frame_count")		mFrameCount = value;
+			else if (name == "inherit_value")	aprilui::log("Warning: Animators::FrameAnimation does not support inherit_value");
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)
 		{
-			if      (name == "AttachToObject")
+			if (name == "AttachToObject")
 			{
 				mValue = mFirstFrame;
 				float delay = mDelay;
 				mDelay = 0.0f;
 				update(0.0f);
 				mDelay = delay;
-			}
-			else if (name == "InheritValue")
-			{
-				aprilui::log("Warning: Animator::FrameAnimation does not support inherit_value");
 			}
 			Animator::notifyEvent(name, params);
 		}
@@ -83,7 +80,7 @@ namespace aprilui
 				aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 				return;
 			}
-			mValue = _calculateValue(k);
+			mValue = _calculateValue(mTimeSinceLastFrame);
 			int frame = (int)mValue;
 			int lastFrame = mFirstFrame + mFrameCount - 1;
 			if (isExpired() || frame > lastFrame)
