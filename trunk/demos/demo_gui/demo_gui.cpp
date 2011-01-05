@@ -19,17 +19,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <atres/atres.h>
+#include <gtypes/Vector2.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+gvec2 screen(800, 600);
 
 aprilui::Dataset* dataset;
 
 bool update(float k)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
-	aprilui::setCursorPosition(april::rendersys->getWindow()->getCursorPos());
+	april::rendersys->setOrthoProjection(screen);
+	aprilui::setCursorPosition(april::rendersys->getWindow()->getCursorPosition());
 	dataset->update(k);
 	dataset->getObject("root")->draw();
 	return true;
@@ -93,19 +93,19 @@ int main()
 #endif
 	try
 	{
-		april::init("GUI", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_gui");
+		april::init("GUI", screen.x, screen.y, 0, "demo_gui");
+		atres::init();
+		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&update);
 		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::OnMouseDown, &aprilui::OnMouseUp, &aprilui::OnMouseMove);
 		april::rendersys->getWindow()->setKeyboardCallbacks(&OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
-		aprilui::init();
-		atres::init();
 		atres::loadFont("../media/arial.font");
 		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
 		dataset->load();
 		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
-		aprilui::destroy();
 		atres::destroy();
+		aprilui::destroy();
 		april::destroy();
 	}
 	catch (aprilui::_GenericException e)

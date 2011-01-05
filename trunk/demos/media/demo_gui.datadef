@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <DataDefinition>
 
-	<Texture filename="texture">
+	<Texture filename="../media/texture">
 		<Image name="test" x="0" y="0" w="512" h="512"/>
 		<Image name="test_blue_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7F7FFF7F"/>
 		<Image name="test_orange_add" x="0" y="0" w="512" h="512" blend_mode="add" color="FFBF7FBF"/>
@@ -11,7 +11,7 @@
 		<Image name="test_yellow" x="0" y="0" w="512" h="512" color="FFFF7F"/>
 		<Image name="test_red" x="0" y="0" w="512" h="512" color="FF7F7F"/>
     </Texture>
-	<Texture filename="transparency">
+	<Texture filename="../media/transparency">
 		<Image name="test" x="0" y="0" w="512" h="512"/>
     </Texture>
 	
@@ -25,7 +25,7 @@
 		<ImageRef name="texture/test_orange_add" x="0" y="0" w="512" h="512"/>
 	</CompositeImage>
 	
-	<Object type="DummyObject" name="root" x="0" y="0" w="800" h="600">
+	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
 		<Object type="ColoredQuad" name="background" color="BFBFBF" x="0" y="0" w="800" h="600"/>
 		<Object type="ImageBox" name="imageBox" image="texture/test" x="32" y="32" w="128" h="64">
 			<Animator type="AlphaChanger" function="hover" periods="-1" amplitude="0.25" speed="2.0" dc_offset="0.75"/>
@@ -34,6 +34,7 @@
 		<Object type="ImageBox" name="coloredImageBox" image="texture/test" color="FF7F7F" x="32" y="128" w="128" h="64">
 			<Animator type="MoverX" periods="1" amplitude="100" speed="0.5" delay="1.0"/>
 			<Animator type="MoverY" periods="1" amplitude="100" speed="0.25"/>
+			<Animator type="MoverX" periods="1" amplitude="-50" speed="0.5" delay="3.0" inherit_value="1"/>
 		</Object>
 		<Object type="ColoredQuad" name="coloredQuad" color="007FFF" x="32" y="224" w="128" h="64">
 			<Animator type="MoverX" function="random" amplitude="4"/>
@@ -59,7 +60,7 @@
 			<Animator type="MoverX" function="sine" amplitude="50"/>
 			<Animator type="MoverY" function="sine" amplitude="50" timer="0.25" active="0"/>
 		</Object>
-		<Object type="DummyObject" name="slider_container" x="200" y="200" w="800" h="600">
+		<Object type="Container" name="slider_container" x="200" y="200" w="800" h="600">
 			<Object type="Slider" name="slider" image="texture/test_yellow" x="232" y="280" w="128" h="16">
 				<Animator type="ScalerX" function="sine" amplitude="50"/>
 				<Animator type="ScalerY" function="sine" amplitude="2" timer="0.25"/>
