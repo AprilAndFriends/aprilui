@@ -50,7 +50,10 @@ namespace aprilui
 			if		(name == "base_name")		mImageBaseName = value;
 			else if (name == "first_frame")		mFirstFrame = value;
 			else if (name == "frame_count")		mFrameCount = value;
-			else if (name == "inherit_value")	aprilui::log("Warning: Animators::FrameAnimation does not support inherit_value");
+			else if (name == "inherit_value")
+			{
+				aprilui::log("Warning: Animators::FrameAnimation does not support inherit_value");
+			}
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)

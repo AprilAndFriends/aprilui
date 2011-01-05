@@ -31,27 +31,7 @@ namespace aprilui
 	void ColoredQuad::setProperty(chstr name, chstr value)
 	{
 		Object::setProperty(name, value);
-		if (name == "r")
-		{
-			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.r = (unsigned char)((float)value * 255);
-		}
-		else if (name == "g")
-		{
-			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.g = (unsigned char)((float)value * 255);
-		}
-		else if (name == "b")
-		{
-			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.b = (unsigned char)((float)value * 255);
-		}
-		else if (name == "a")
-		{
-			aprilui::log("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.a = (unsigned char)((float)value * 255);
-		}
-		else if (name == "color") mColor.set(value);
+		if (name == "color") mColor.set(value);
 	}
 
 	bool ColoredQuad::OnMouseDown(float x, float y, int button)

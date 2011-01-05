@@ -44,12 +44,7 @@ namespace aprilui
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr path);
 	
-	apriluiFnExport gvec2 getCursorPos() DEPRECATED_ATTRIBUTE;
 	apriluiFnExport gvec2 getCursorPosition();
-	apriluiFnExport gvec2 convertPosition(gvec2 position);
-	apriluiFnExport void setCursorPos(float x, float y) DEPRECATED_ATTRIBUTE;
-	apriluiFnExport void setCursorPosition(gvec2 position);
-	apriluiFnExport void setCursorPosition(float x, float y);
 	apriluiFnExport void setCursorImage(Image* image);
 	apriluiFnExport void drawCursor();
 	
