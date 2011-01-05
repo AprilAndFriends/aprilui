@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <stdio.h>
 
 #include <april/RenderSystem.h>
+#include <april/Window.h>
 #include <atres/atres.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -26,6 +27,7 @@ namespace aprilui
 	hmap<hstr, Dataset*> gDatasets;
 	Image* gCursor = NULL;
 	float defaultScale = 1.0f;
+	grect viewport;
 	gvec2 cursorPosition;
 #ifdef _DEBUG
 	bool debugMode = false;
@@ -57,6 +59,8 @@ namespace aprilui
 	
 	void init()
 	{
+		viewport.w = april::rendersys->getWindow()->getWidth();
+		viewport.h = april::rendersys->getWindow()->getHeight();
 	}
 	
 	void destroy()
