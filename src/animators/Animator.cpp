@@ -30,6 +30,7 @@ namespace aprilui
 		mAcceleration = 0.0f;
 		mDiscrete = false;
 		mReset = false;
+		mInheritValue = false;
 	}
 	
 	void Animator::update(float k)
@@ -39,12 +40,17 @@ namespace aprilui
 		{
 			return;
 		}
+		bool delayActive = (mDelay > 0.0f);
 		mDelay -= k;
 		if (mDelay > 0.0f)
 		{
 			return;
 		}
-		if (k > -mDelay)
+		if (delayActive && mInheritValue)
+		{
+			notifyEvent("InheritValue", NULL);
+		}
+		if (mDelay != 0.0f && k > -mDelay)
 		{
 			k += mDelay;
 		}
@@ -163,6 +169,7 @@ namespace aprilui
 		else if (name == "acceleration")	setAcceleration(value);
 		else if (name == "discrete")		setDiscrete(value);
 		else if (name == "reset")			setReset(value);
+		else if (name == "inherit_value")	setInheritValue(value);
 	}
 	
 }

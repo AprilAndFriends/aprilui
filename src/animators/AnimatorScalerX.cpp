@@ -24,7 +24,7 @@ namespace aprilui
 
 		void ScalerX::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject")
+			if (name == "AttachToObject" || name == "InheritValue")
 			{
 				mValue = mDcOffset = mParent->getWidth();
 			}

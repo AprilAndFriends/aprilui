@@ -24,7 +24,7 @@ namespace aprilui
 
 		void GreenChanger::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject")
+			if (name == "AttachToObject" || name == "InheritValue")
 			{
 				mValue = mDcOffset = mParent->getGreen();
 			}

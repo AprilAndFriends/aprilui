@@ -54,13 +54,17 @@ namespace aprilui
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject")
+			if      (name == "AttachToObject")
 			{
 				mValue = mFirstFrame;
 				float delay = mDelay;
 				mDelay = 0.0f;
 				update(0.0f);
 				mDelay = delay;
+			}
+			else if (name == "InheritValue")
+			{
+				aprilui::log("Warning: Animator::FrameAnimation does not support inherit_value");
 			}
 			Animator::notifyEvent(name, params);
 		}

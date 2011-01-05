@@ -24,7 +24,11 @@ namespace aprilui
 
 		void MoverY::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject")
+			if      (name == "AttachToObject")
+			{
+				mValue = mDcOffset = mParent->getY();
+			}
+			else if (name == "InheritValue")
 			{
 				mValue = mDcOffset = mParent->getY();
 			}
