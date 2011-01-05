@@ -78,6 +78,16 @@ namespace aprilui
 		gDatasets.clear();
 	}
 	
+	grect getViewport()
+	{
+		return viewport;
+	}
+	
+	void setViewport(grect value)
+	{
+		viewport = value;
+	}
+	
 	// deprecated
 	gvec2 getCursorPos()
 	{
