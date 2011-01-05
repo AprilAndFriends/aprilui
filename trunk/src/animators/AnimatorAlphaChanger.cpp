@@ -26,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "InheritValue")
 			{
-				mValue = mDcOffset = mParent->getAlpha();
+				mValue = mOffset = mParent->getAlpha();
 			}
 			Object::notifyEvent(name, params);
 		}
@@ -39,9 +39,8 @@ namespace aprilui
 			{
 				return;
 			}
-			unsigned char value = mParent->getAlpha();
-			mValue = hclamp(_calculateValue(k), 0.0f, 255.0f);
-			if (value != (unsigned char)mValue)
+			mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
+			if ((unsigned char)mValue != mParent->getAlpha())
 			{
 				mParent->setAlpha((unsigned char)mValue);
 			}

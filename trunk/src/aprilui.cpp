@@ -91,28 +91,38 @@ namespace aprilui
 	// deprecated
 	gvec2 getCursorPos()
 	{
-		return cursorPosition;
+		return getCursorPosition();
 	}
 
 	// deprecated
 	void setCursorPos(float x, float y)
 	{
-		cursorPosition.set(x, y);
+		//cursorPosition.set(x, y);
 	}
 	
 	gvec2 getCursorPosition()
 	{
-		return cursorPosition;
+		return convertPosition(april::rendersys->getWindow()->getCursorPosition());
+	}
+
+	gvec2 convertPosition(gvec2 position)
+	{
+		april::Window* window = april::rendersys->getWindow();
+		//position.x = (float)(int)(position.x * viewport.w / window->getWidth());
+		position.x = (float)(int)(position.x * viewport.w / window->getWidth());
+		//aprilui::log(hsprintf("%4.1f %4.1f %4d", position.x, viewport.w, window->getWidth()));
+		position.y = (float)(int)(position.y * viewport.h / window->getHeight());
+		return position;
 	}
 
 	void setCursorPosition(gvec2 position)
 	{
-		cursorPosition = position;
+		//cursorPosition = position;
 	}
 	
 	void setCursorPosition(float x, float y)
 	{
-		cursorPosition.set(x, y);
+		//cursorPosition.set(x, y);
 	}
 	
 	void setCursorImage(Image* image)
@@ -124,7 +134,8 @@ namespace aprilui
 	{
 		if (gCursor != NULL)
 		{
-			gCursor->draw(grect(cursorPosition, gCursor->getSrcRect().getSize()));
+			//gvec2 cursorPosition = 
+			gCursor->draw(grect(getCursorPosition(), gCursor->getSrcRect().getSize()));
 		}
 	}
 

@@ -12,12 +12,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 
 #include "Animator.h"
+#include "aprilui.h"
 
 namespace aprilui
 {
 	Animator::Animator(chstr type, chstr name, grect rect) :
 		Object(type, name, rect)
 	{
+		mTimeSinceLastFrame = 0.0f;
 		mValue = 0.0f;
 		mFunction = aprilui::Linear;
 		mActive = true;
@@ -26,7 +28,7 @@ namespace aprilui
 		mPeriods = -1.0f;
 		mAmplitude = 0.5f;
 		mSpeed = 1.0f;
-		mDcOffset = 0.0f;
+		mOffset = 0.0f;
 		mAcceleration = 0.0f;
 		mDiscrete = false;
 		mReset = false;
@@ -35,29 +37,29 @@ namespace aprilui
 	
 	void Animator::update(float k)
 	{
-		Object::update(k);
+		mTimeSinceLastFrame = k;
+		Object::update(mTimeSinceLastFrame);
 		if (!mActive)
 		{
 			return;
 		}
-		bool delayActive = (mDelay > 0.0f);
-		mDelay -= k;
 		if (mDelay > 0.0f)
 		{
-			return;
+			mDelay -= mTimeSinceLastFrame;
+			if (mDelay > 0.0f)
+			{
+				return;
+			}
+			if (mInheritValue)
+			{
+				notifyEvent("InheritValue", NULL);
+			}
+			mTimeSinceLastFrame += mDelay;
 		}
-		if (delayActive && mInheritValue)
-		{
-			notifyEvent("InheritValue", NULL);
-		}
-		if (mDelay != 0.0f && k > -mDelay)
-		{
-			k += mDelay;
-		}
-		mTimer += k;
+		mTimer += mTimeSinceLastFrame;
 		if (fabs(mAcceleration) > 0.01f)
 		{
-			mSpeed += mAcceleration * k;
+			mSpeed += mAcceleration * mTimeSinceLastFrame;
 		}
 	}
 	
@@ -65,7 +67,7 @@ namespace aprilui
 	{
 		if (mDelay > 0.0f)
 		{
-			return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
+			return (mDiscrete ? (float)(int)mOffset : mOffset);
 		}
 		float time = mTimer;
 		float speed = fabs(mSpeed);
@@ -73,7 +75,7 @@ namespace aprilui
 		{
 			if (mReset)
 			{
-				return (mDiscrete ? (float)(int)mDcOffset : mDcOffset);
+				return (mDiscrete ? (float)(int)mOffset : mOffset);
 			}
 			time = mPeriods / fabs(mSpeed);
 		}
@@ -106,18 +108,18 @@ namespace aprilui
 		case aprilui::Hover:
 			if (mParent->isCursorInside())
 			{
-				result = hmin(mValue - mDcOffset + k * mSpeed, mAmplitude);
+				result = hmin(mValue - mOffset + k * mSpeed, mAmplitude);
 			}
 			else
 			{
-				result = hmax(mValue - mDcOffset - k * mSpeed, -mAmplitude);
+				result = hmax(mValue - mOffset - k * mSpeed, -mAmplitude);
 			}
 			break;
 		case aprilui::Random:
 			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
 			break;
 		}
-		return (mDiscrete ? (float)(int)(result + mDcOffset) : (result + mDcOffset));
+		return (mDiscrete ? (float)(int)(result + mOffset) : (result + mOffset));
 	}
 	
 	bool Animator::isAnimated()
@@ -170,8 +172,12 @@ namespace aprilui
 		else if (name == "periods")			setPeriods(value);
 		else if (name == "amplitude")		setAmplitude(value);
 		else if (name == "speed")			setSpeed(value);
-		else if (name == "dc_offset")		setDcOffset(value);
-		else if (name == "offset")			setDcOffset(value);
+		else if (name == "offset")			setOffset(value);
+		else if (name == "dc_offset")
+		{
+			aprilui::log("Warning: dc_offset is deprecated - use offset instead");
+			setOffset(value);
+		}
 		else if (name == "acceleration")	setAcceleration(value);
 		else if (name == "discrete")		setDiscrete(value);
 		else if (name == "reset")			setReset(value);

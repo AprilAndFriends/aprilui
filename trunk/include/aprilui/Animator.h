@@ -48,8 +48,8 @@ namespace aprilui
 		void setAmplitude(float value) { mAmplitude = value; }
 		float getSpeed() { return mSpeed; }
 		void setSpeed(float value) { mSpeed = value; }
-		float getDcOffset() { return mDcOffset; }
-		void setDcOffset(float value) { mDcOffset = value; }
+		float getOffset() { return mOffset; }
+		void setOffset(float value) { mOffset = value; }
 		float getAcceleration() { return mAcceleration; }
 		void setAcceleration(float value) { mAcceleration = value; }
 		bool getDiscrete() { return mDiscrete; }
@@ -68,6 +68,7 @@ namespace aprilui
 		void update(float k);
 		
 	protected:
+		float mTimeSinceLastFrame;
 		float mValue;
 		AnimationFunction mFunction;
 		bool mActive;
@@ -76,7 +77,7 @@ namespace aprilui
 		float mPeriods;
 		float mAmplitude;
 		float mSpeed;
-		float mDcOffset;
+		float mOffset;
 		float mAcceleration;
 		bool mDiscrete;
 		bool mReset;

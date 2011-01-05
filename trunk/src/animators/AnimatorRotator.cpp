@@ -26,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "InheritValue")
 			{
-				mValue = mDcOffset = mParent->getAngle();
+				mValue = mOffset = mParent->getAngle();
 			}
 			Object::notifyEvent(name, params);
 		}
@@ -40,7 +40,7 @@ namespace aprilui
 				return;
 			}
 			mValue = mParent->getAngle();
-			mValue = _calculateValue(k);
+			mValue = _calculateValue(mTimeSinceLastFrame);
 			mParent->setAngle(mValue);
 		}
 		
