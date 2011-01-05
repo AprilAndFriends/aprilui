@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "EventArgs.h"
 #include "ObjectCallbackObject.h"
 #include "ObjectColoredQuad.h"
-#include "ObjectDummyObject.h"
+#include "ObjectContainer.h"
 #include "ObjectEditBox.h"
 #include "ObjectImageButton.h"
 #include "ObjectLabel.h"
