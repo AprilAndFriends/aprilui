@@ -14,9 +14,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	/********************************************************************************************************/
 	Container::Container(chstr name, grect rect) :
-		ObjectUi("Container", name, rect)
+		VisualObject("Container", name, rect)
 	{
 	}
 

@@ -28,7 +28,7 @@
       <File Name="src/objects/Object.cpp"/>
       <File Name="src/objects/ObjectButtonBase.cpp"/>
       <File Name="src/objects/ObjectContainer.cpp"/>
-      <File Name="src/objects/ObjectUi.cpp"/>
+      <File Name="src/objects/ObjectVisualObject.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="animators">
       <File Name="src/animators/AnimatorFrameAnimation.cpp"/>
@@ -92,7 +92,7 @@
       <File Name="include/aprilui/Object.h"/>
       <File Name="include/aprilui/ObjectButtonBase.h"/>
       <File Name="include/aprilui/ObjectContainer.h"/>
-      <File Name="include/aprilui/ObjectUi.h"/>
+      <File Name="include/aprilui/ObjectVisualObject.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="include/aprilui/Image.h"/>

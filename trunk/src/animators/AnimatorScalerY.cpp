@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorScalerY.h"
-#include "ObjectUi.h"
+#include "ObjectVisualObject.h"
 
 namespace aprilui
 {
@@ -27,7 +27,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = dynamic_cast<ObjectUi*>(mParent)->getHeight();
+				mValue = mOffset = dynamic_cast<VisualObject*>(mParent)->getHeight();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -44,10 +44,10 @@ namespace aprilui
 			{
 				return;
 			}
-			ObjectUi* parent = dynamic_cast<ObjectUi*>(mParent);
+			VisualObject* parent = dynamic_cast<VisualObject*>(mParent);
 			if (parent == NULL)
 			{
-				aprilui::log("Animator: parent object not a subclass of Objects::ObjectUi!");
+				aprilui::log("Animator: parent object not a subclass of Objects::VisualObject!");
 				return;
 			}
 			mValue = parent->getHeight();

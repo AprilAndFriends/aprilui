@@ -39,11 +39,11 @@ namespace aprilui
 	class Event;
 	class EventArgs;
 	
-	class apriluiExport ObjectUi : public Object
+	class apriluiExport VisualObject : public Object
 	{
 	public:
-		ObjectUi(chstr type, chstr name, grect rect);
-		~ObjectUi();
+		VisualObject(chstr type, chstr name, grect rect);
+		~VisualObject();
 
 		Object* getChildUnderPoint(gvec2 pos);
 

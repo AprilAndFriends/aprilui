@@ -310,7 +310,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\objects\ObjectUi.cpp"
+					RelativePath=".\src\objects\ObjectVisualObject.cpp"
 					>
 				</File>
 			</Filter>
@@ -500,7 +500,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\aprilui\ObjectUi.h"
+					RelativePath=".\include\aprilui\ObjectVisualObject.h"
 					>
 				</File>
 			</Filter>
