@@ -23,11 +23,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Event.h"
 #include "EventArgs.h"
 #include "Exception.h"
-#include "ObjectUi.h"
+#include "ObjectVisualObject.h"
 
 namespace aprilui
 {
-	ObjectUi::ObjectUi(chstr type, chstr name, grect rect) :
+	VisualObject::VisualObject(chstr type, chstr name, grect rect) :
 		Object(type, name)
 	{
 		mRect = rect;
@@ -39,11 +39,11 @@ namespace aprilui
 		mDock = aprilui::TopLeft;
 	}
 
-	ObjectUi::~ObjectUi()
+	VisualObject::~VisualObject()
 	{
 	}
 	
-	void ObjectUi::setZOrder(int value)
+	void VisualObject::setZOrder(int value)
 	{
 		if (mZOrder != value)
 		{
@@ -52,29 +52,29 @@ namespace aprilui
 		}
 	}
 
-	unsigned char ObjectUi::getDerivedAlpha()
+	unsigned char VisualObject::getDerivedAlpha()
 	{
 		// recursive function that combines all the alpha from the parents (if any)
 		float factor = 1.0f;
 		if (mInheritsAlpha && mParent != NULL)
 		{
-			factor *= dynamic_cast<ObjectUi*>(mParent)->getDerivedAlpha() / 255.0f;
+			factor *= dynamic_cast<VisualObject*>(mParent)->getDerivedAlpha() / 255.0f;
 		}
 		return (unsigned char)(this->getAlpha() * factor);
 	}
 
-	void ObjectUi::draw(gvec2 offset)
+	void VisualObject::draw(gvec2 offset)
 	{
 		if (isVisible())
 		{
 			OnDraw(offset);
 			offset += mRect.getPosition();
 			gvec2 position = offset;
-			ObjectUi* child;
+			VisualObject* child;
 			foreach (Object*, it, mChildren)
 			{
 				position = offset;
-				child = dynamic_cast<ObjectUi*>(*it);
+				child = dynamic_cast<VisualObject*>(*it);
 				if (child != NULL)
 				{
 					switch (child->getDock())
@@ -114,7 +114,7 @@ namespace aprilui
 		}
 	}
 	
-	bool ObjectUi::isCursorInside()
+	bool VisualObject::isCursorInside()
 	{
 		gvec2 position = getCursorPosition();
 		for (Object* p = mParent; p != NULL; p = p->getParent())
@@ -124,7 +124,7 @@ namespace aprilui
 		return mRect.isPointInside(position);
 	}
 
-	bool ObjectUi::OnMouseDown(float x, float y, int button)
+	bool VisualObject::OnMouseDown(float x, float y, int button)
 	{
 		if (mClickthrough || !isVisible() || !isDerivedEnabled())
 		{
@@ -133,7 +133,7 @@ namespace aprilui
 		return Object::OnMouseDown(x, y, button);
 	}
 
-	bool ObjectUi::OnMouseUp(float x, float y, int button)
+	bool VisualObject::OnMouseUp(float x, float y, int button)
 	{
 		if (mClickthrough || !isVisible() || !isDerivedEnabled())
 		{
@@ -142,7 +142,7 @@ namespace aprilui
 		return Object::OnMouseUp(x, y, button);
 	}
 
-	void ObjectUi::OnMouseMove(float x, float y)
+	void VisualObject::OnMouseMove(float x, float y)
 	{
 		if (isVisible() && isDerivedEnabled())
 		{
@@ -150,18 +150,18 @@ namespace aprilui
 		}
 	}
 
-	bool ObjectUi::isDerivedClickThrough()
+	bool VisualObject::isDerivedClickThrough()
 	{
-		ObjectUi* parent = dynamic_cast<ObjectUi*>(mParent);
+		VisualObject* parent = dynamic_cast<VisualObject*>(mParent);
 		return (mClickthrough && (parent == NULL || parent->isDerivedClickThrough()));
 	}
 	
-	void ObjectUi::setAlpha(unsigned char value)
+	void VisualObject::setAlpha(unsigned char value)
 	{
 		mColor.a = value;
 	}
 
-	void ObjectUi::setProperty(chstr name, chstr value)
+	void VisualObject::setProperty(chstr name, chstr value)
 	{
 		Object::setProperty(name, value);
 		if      (name == "visible")			setVisible(value);
@@ -188,7 +188,7 @@ namespace aprilui
 		}
 	}
 
-	bool ObjectUi::angleEquals(float angle)
+	bool VisualObject::angleEquals(float angle)
 	{
 		float s1 = (float)dsin(angle);
 		float s2 = (float)dsin(mAngle);
@@ -197,7 +197,7 @@ namespace aprilui
 		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
 	}
 	
-	Object* ObjectUi::getChildUnderPoint(gvec2 pos)
+	Object* VisualObject::getChildUnderPoint(gvec2 pos)
 	{
 		if (!isVisible() || !mRect.isPointInside(pos))
 		{
@@ -207,7 +207,7 @@ namespace aprilui
 		return (object != NULL ? object : this);
 	}
 	
-	gvec2 ObjectUi::getDerivedPosition()
+	gvec2 VisualObject::getDerivedPosition()
 	{
 		gvec2 position = mRect.getPosition();
 		for (Object* p = mParent; p != NULL; p = p->getParent())

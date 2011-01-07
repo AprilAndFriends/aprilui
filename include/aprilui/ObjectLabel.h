@@ -15,11 +15,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "apriluiExport.h"
 #include "ObjectLabelBase.h"
-#include "ObjectUi.h"
+#include "ObjectVisualObject.h"
 
 namespace aprilui
 {
-	class apriluiExport Label : public ObjectUi, public LabelBase
+	class apriluiExport Label : public VisualObject, public LabelBase
 	{
 	public:
 		Label(chstr name, grect rect);
