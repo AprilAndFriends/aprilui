@@ -25,7 +25,7 @@ namespace aprilui
 		mActive = true;
 		mTimer = 0.0f;
 		mDelay = 0.0f;
-		mPeriods = -1.0f;
+		mPeriods = 1.0f;
 		mAmplitude = 0.5f;
 		mSpeed = 1.0f;
 		mOffset = 0.0f;
