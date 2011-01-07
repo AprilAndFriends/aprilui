@@ -32,7 +32,13 @@ namespace aprilui
 #ifdef _DEBUG
 		if (aprilui::isDebugMode())
 		{
-			april::rendersys->drawColoredQuad(rect, april::Color(0, 0, 0, alpha / 2));
+			// TODO - remove after implementing proper global rotation
+			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+			april::rendersys->setIdentityTransform();
+			april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
+			april::rendersys->rotate(getAngle());
+			april::rendersys->drawColoredQuad(grect(-rect.getSize() / 2, rect.getSize()), april::Color(0, 0, 0, alpha / 2));
+			april::rendersys->setModelviewMatrix(originalMatrix);
 		}
 #endif
 		if (mText.size() == 0)

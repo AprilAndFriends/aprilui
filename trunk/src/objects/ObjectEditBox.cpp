@@ -48,19 +48,19 @@ namespace aprilui
 	{
 		grect rect = mRect + offset;
 		april::Color color = april::Color::BLACK;
-#ifdef _DEBUG
-		if (!aprilui::isDebugMode())
+		if (!mPushed)
 		{
-#endif
-			if (!mPushed)
-			{
-				color.a = 191;
-			}
-			color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
-			april::rendersys->drawColoredQuad(rect, color);
-#ifdef _DEBUG
+			color.a = 191;
 		}
-#endif
+		color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
+		// TODO - remove after implementing proper global rotation
+		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		april::rendersys->setIdentityTransform();
+		april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
+		april::rendersys->rotate(getAngle());
+		april::rendersys->drawColoredQuad(grect(-rect.getSize() / 2, rect.getSize()), color);
+		april::rendersys->setModelviewMatrix(originalMatrix);
+		
 		hstr text = mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -94,14 +94,24 @@ namespace aprilui
 		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
 			rect = mRect + offset;
-			rect.x += atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
+			grect caret = rect;
+			caret.x += atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
 			float h = atres::getFontHeight(mFontName);
-			rect.y += (rect.h - h) / 2 + 2;
-			rect.w = 2;
-			rect.h = h - 4;
+			caret.y += (caret.h - h) / 2 + 2;
+			caret.w = 2;
+			caret.h = h - 4;
 			color = mTextColor;
 			color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
-			april::rendersys->drawColoredQuad(rect, color);
+			// TODO - remove after implementing proper global rotation
+			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+			april::rendersys->setIdentityTransform();
+			april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
+			april::rendersys->rotate(getAngle());
+			rect.setPosition(caret.getPosition() - rect.getPosition());
+			rect.setSize(caret.getSize() - rect.getSize());
+			april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
+			april::rendersys->drawColoredQuad(grect(-caret.getSize() / 2, caret.getSize()), color);
+			april::rendersys->setModelviewMatrix(originalMatrix);
 		}
 		mText = text;
 	}
@@ -151,13 +161,14 @@ namespace aprilui
 	{
 		Label::setText(text);
 		harray<char> chars = harray<char>(mText.c_str(), mText.size());
+		chars.remove_duplicates();
 		if (mFilter != "")
 		{
 			foreach (char, it, chars)
 			{
 				if (!mFilter.contains(*it))
 				{
-					mText.replace((*it), "");
+					mText = mText.replace((*it), "");
 				}
 			}
 		}
