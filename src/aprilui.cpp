@@ -14,6 +14,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <atres/atres.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
 #include "aprilui.h"
 #include "Dataset.h"
@@ -26,6 +27,7 @@ namespace aprilui
 	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
 	Image* gCursor = NULL;
+	bool limitCursorToViewport = true;
 	float defaultScale = 1.0f;
 	grect viewport;
 #ifdef _DEBUG
@@ -93,6 +95,11 @@ namespace aprilui
 		gvec2 position = window->getCursorPosition();
 		position.x = (float)(int)(position.x * viewport.w / window->getWidth());
 		position.y = (float)(int)(position.y * viewport.h / window->getHeight());
+		if (limitCursorToViewport)
+		{
+			position.x = hclamp(position.x, 0.0f, viewport.w - 1);
+			position.y = hclamp(position.y, 0.0f, viewport.h - 1);
+		}
 		return position;
 	}
 
@@ -107,6 +114,16 @@ namespace aprilui
 		{
 			gCursor->draw(grect(getCursorPosition(), gCursor->getSrcRect().getSize()));
 		}
+	}
+	
+	bool isLimitCursorToViewport()
+	{
+		return limitCursorToViewport;
+	}
+
+	void setLimitCursorToViewport(bool value)
+	{
+		limitCursorToViewport = value;
 	}
 
 	Dataset* getDatasetByName(chstr name)
