@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "aprilui.h"
 #include "Dataset.h"
 #include "Image.h"
 #include "ObjectSlider.h"
@@ -23,6 +24,16 @@ namespace aprilui
 		_setTypeName("Slider");
 		mValue = 0.0f;
 		mPushed = false;
+	}
+	
+	void Slider::update(float k)
+	{
+		ImageBox::update(k);
+		gvec2 position = aprilui::getCursorPosition() - (getDerivedPosition() - mRect.getPosition());
+		if (mPushed && mRect.isPointInside(position))
+		{
+			setValue((position.x - mRect.x) / (mRect.w - 4));
+		}
 	}
 	
 	void Slider::setValue(float value)

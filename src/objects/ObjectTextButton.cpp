@@ -43,14 +43,15 @@ namespace aprilui
 	{
 		if (mBackground)
 		{
-			april::rendersys->drawColoredQuad(mRect + offset, april::Color(0, 0, 0, ((mHover && mPushed) ? 255 : 191)));
+			grect rect = mRect + offset;
+			// TODO - remove after implementing proper global rotation
+			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+			april::rendersys->setIdentityTransform();
+			april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
+			april::rendersys->rotate(getAngle());
+			april::rendersys->drawColoredQuad(grect(-rect.getSize() / 2, rect.getSize()), april::Color(0, 0, 0, ((mHover && mPushed) ? 255 : 191)));
+			april::rendersys->setModelviewMatrix(originalMatrix);
 		}
-#ifdef _DEBUG
-		else if (aprilui::isDebugMode())
-		{
-			april::rendersys->drawColoredQuad(mRect + offset, april::Color(0, 0, 0, ((mHover && mPushed) ? 255 : 191)));
-		}
-#endif
 		april::Color color = mTextColor;
 		if (!isDerivedEnabled())
 		{

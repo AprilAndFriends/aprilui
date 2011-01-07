@@ -35,6 +35,7 @@ namespace aprilui
 		bool mPushed;
 		float mValue;
 		
+		void update(float k);
 		void OnDraw(gvec2 offset = gvec2());
 		
 	};

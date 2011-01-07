@@ -92,7 +92,7 @@ int main()
 #endif
 	try
 	{
-		april::init("GUI", screen.x, screen.y, 0, "demo_gui");
+		april::init("GUI", screen.x, screen.y, false, "demo_gui");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&update);
@@ -101,6 +101,9 @@ int main()
 		atres::loadFont("../media/arial.font");
 		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
 		dataset->load();
+#ifdef _DEBUG
+		//aprilui::setDebugMode(true);
+#endif
 		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
 		atres::destroy();

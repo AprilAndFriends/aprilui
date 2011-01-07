@@ -103,6 +103,9 @@ namespace aprilui
 				result = -(fmod(time * mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * mAmplitude;
 			}
 			break;
+		case aprilui::Random:
+			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
+			break;
 		case aprilui::Hover:
 			if (mParent->isCursorInside())
 			{
@@ -112,9 +115,6 @@ namespace aprilui
 			{
 				result = hmax(mValue - mOffset - k * mSpeed, -mAmplitude);
 			}
-			break;
-		case aprilui::Random:
-			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
 			break;
 		}
 		return (mDiscrete ? (float)(int)(result + mOffset) : (result + mOffset));
@@ -161,8 +161,8 @@ namespace aprilui
 			else if (value == "square")		setAnimationFunction(aprilui::Square);
 			else if (value == "triangle")	setAnimationFunction(aprilui::Triangle);
 			else if (value == "linear")		setAnimationFunction(aprilui::Linear);
-			else if (value == "hover")		setAnimationFunction(aprilui::Hover);
 			else if (value == "random")		setAnimationFunction(aprilui::Random);
+			else if (value == "hover")		setAnimationFunction(aprilui::Hover);
 		}
 		else if (name == "timer")			setTimer(value);
 		else if (name == "delay")			setDelay(value);
