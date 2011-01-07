@@ -131,10 +131,10 @@ namespace aprilui
 	protected:
 		hstr mTypeName;
 		hstr mName;
+		grect mRect;
 		Object* mParent;
 		harray<Object*> mChildren;
 		hmap<hstr, Event*> mEvents;
-		grect mRect;
 		int mZOrder;
 		bool mEnabled;
 		bool mVisible;
