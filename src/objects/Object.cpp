@@ -31,16 +31,16 @@ namespace aprilui
 	{
 		mTypeName = type;
 		mName = name;
+		mRect = rect;
 		mParent = NULL;
 		mDataset = NULL;
-		mRect = rect;
 		mZOrder = 0;
 		mEnabled = true;
 		mVisible = true;
 		mAngle = 0.0f;
 		mClickthrough = false;
 		mInheritsAlpha = true;
-		mDock = TopLeft;
+		mDock = aprilui::TopLeft;
 	}
 
 	Object::~Object()
@@ -378,15 +378,15 @@ namespace aprilui
 		else if (name == "angle")			setAngle(value);
 		else if (name == "dock")
 		{
-			if      (value == "top_left")		setDock(TopLeft);
-			else if (value == "top_center")		setDock(TopCenter);
-			else if (value == "top_right")		setDock(TopRight);
-			else if (value == "center_left")	setDock(CenterLeft);
-			else if (value == "center_center")	setDock(CenterCenter);
-			else if (value == "center_right")	setDock(CenterRight);
-			else if (value == "bottom_left")	setDock(BottomLeft);
-			else if (value == "bottom_center")	setDock(BottomCenter);
-			else if (value == "bottom_right")	setDock(BottomRight);
+			if      (value == "top_left")		setDock(aprilui::TopLeft);
+			else if (value == "top_center")		setDock(aprilui::TopCenter);
+			else if (value == "top_right")		setDock(aprilui::TopRight);
+			else if (value == "center_left")	setDock(aprilui::CenterLeft);
+			else if (value == "center_center")	setDock(aprilui::CenterCenter);
+			else if (value == "center_right")	setDock(aprilui::CenterRight);
+			else if (value == "bottom_left")	setDock(aprilui::BottomLeft);
+			else if (value == "bottom_center")	setDock(aprilui::BottomCenter);
+			else if (value == "bottom_right")	setDock(aprilui::BottomRight);
 		}
 	}
 
