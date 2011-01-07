@@ -17,7 +17,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	ImageBox::ImageBox(chstr name, grect rect) :
-		Object("ImageBox", name, rect)
+		ObjectUi("ImageBox", name, rect)
 	{
 		mImage = NULL;
 	}
@@ -49,7 +49,7 @@ namespace aprilui
 		{
 			setImageByName(mImageName);
 		}
-		Object::notifyEvent(name, params);
+		ObjectUi::notifyEvent(name, params);
 	}
 	
 	void ImageBox::resizeToFitImage()
@@ -77,13 +77,13 @@ namespace aprilui
 	
 	void ImageBox::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
+		ObjectUi::setProperty(name, value);
 		if (name == "image")	setImageByName(value);
 	}
 
 	bool ImageBox::OnMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (ObjectUi::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -96,7 +96,7 @@ namespace aprilui
 
 	bool ImageBox::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (ObjectUi::OnMouseUp(x, y, button))
 		{
 			return true;
 		}

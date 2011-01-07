@@ -16,13 +16,8 @@ namespace aprilui
 {
 	/********************************************************************************************************/
 	Container::Container(chstr name, grect rect) :
-		Object("Container", name, rect)
+		ObjectUi("Container", name, rect)
 	{
 	}
 
-	void Container::setProperty(chstr name, chstr value)
-	{
-		Object::setProperty(name, value);
-	}
-	
 }

@@ -17,7 +17,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	ColoredQuad::ColoredQuad(chstr name, grect rect) :
-		Object("ColoredQuad", name, rect)
+		ObjectUi("ColoredQuad", name, rect)
 	{
 	}
 	
@@ -37,12 +37,12 @@ namespace aprilui
 
 	void ColoredQuad::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
+		ObjectUi::setProperty(name, value);
 	}
 
 	bool ColoredQuad::OnMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (ObjectUi::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -55,7 +55,7 @@ namespace aprilui
 
 	bool ColoredQuad::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (ObjectUi::OnMouseUp(x, y, button))
 		{
 			return true;
 		}

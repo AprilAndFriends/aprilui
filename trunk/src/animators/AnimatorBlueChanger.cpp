@@ -13,12 +13,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorBlueChanger.h"
+#include "ObjectUi.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		BlueChanger::BlueChanger(chstr name) : Animator("Animators::BlueChanger", name, grect(0, 0, 1, 1))
+		BlueChanger::BlueChanger(chstr name) : Animator("Animators::BlueChanger", name)
 		{
 		}
 
@@ -26,7 +27,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = mParent->getBlue();
+				mValue = mOffset = dynamic_cast<ObjectUi*>(mParent)->getBlue();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -43,10 +44,11 @@ namespace aprilui
 			{
 				return;
 			}
+			ObjectUi* parent = dynamic_cast<ObjectUi*>(mParent);
 			mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
-			if ((unsigned char)mValue != mParent->getBlue())
+			if ((unsigned char)mValue != parent->getBlue())
 			{
-				mParent->setBlue((unsigned char)mValue);
+				parent->setBlue((unsigned char)mValue);
 			}
 		}
 		

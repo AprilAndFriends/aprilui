@@ -38,7 +38,7 @@ namespace aprilui
 	
 	float TextImageButton::getAngle()
 	{
-		return Object::getAngle();
+		return ImageButton::getAngle();
 	}
 
 	void TextImageButton::setTextKey(chstr key)

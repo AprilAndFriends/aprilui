@@ -13,12 +13,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorMoverY.h"
+#include "ObjectUi.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		MoverY::MoverY(chstr name) : Animator("Animators::MoverY", name, grect(0, 0, 1, 1))
+		MoverY::MoverY(chstr name) : Animator("Animators::MoverY", name)
 		{
 		}
 
@@ -26,7 +27,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = mParent->getY();
+				mValue = mOffset = dynamic_cast<ObjectUi*>(mParent)->getY();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -43,9 +44,15 @@ namespace aprilui
 			{
 				return;
 			}
-			mValue = mParent->getY();
+			ObjectUi* parent = dynamic_cast<ObjectUi*>(mParent);
+			if (parent == NULL)
+			{
+				aprilui::log("Animator: parent object not a subclass of Objects::ObjectUi!");
+				return;
+			}
+			mValue = parent->getY();
 			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setY(mValue);
+			parent->setY(mValue);
 		}
 		
 	}

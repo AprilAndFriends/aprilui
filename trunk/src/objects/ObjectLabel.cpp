@@ -18,14 +18,14 @@ namespace aprilui
 {
 	Label::Label(chstr name, grect rect) :
 		LabelBase(),
-		Object("Label", name, rect)
+		ObjectUi("Label", name, rect)
 	{
 		mText = "Label: " + name;
 	}
 
 	void Label::OnDraw(gvec2 offset)
 	{
-		Object::OnDraw(offset);
+		ObjectUi::OnDraw(offset);
 		unsigned char alpha = getDerivedAlpha();
 		if (!isDerivedEnabled())
 		{
@@ -40,12 +40,12 @@ namespace aprilui
 		{
 			setTextKey(mTextKey);
 		}
-		Object::notifyEvent(name, params);
+		ObjectUi::notifyEvent(name, params);
 	}
 	
 	float Label::getAngle()
 	{
-		return Object::getAngle();
+		return ObjectUi::getAngle();
 	}
 
 	void Label::setTextKey(chstr key)
@@ -57,7 +57,7 @@ namespace aprilui
 	void Label::setProperty(chstr name, chstr value)
 	{
 		LabelBase::setProperty(name, value);
-		Object::setProperty(name, value);
+		ObjectUi::setProperty(name, value);
 		if (name == "textkey")	setTextKey(value);
 	}
 	

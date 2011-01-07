@@ -13,12 +13,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorScalerX.h"
+#include "ObjectUi.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		ScalerX::ScalerX(chstr name) : Animator("Animators::ScalerX", name, grect(0, 0, 1, 1))
+		ScalerX::ScalerX(chstr name) : Animator("Animators::ScalerX", name)
 		{
 		}
 
@@ -26,7 +27,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = mParent->getWidth();
+				mValue = mOffset = dynamic_cast<ObjectUi*>(mParent)->getWidth();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -43,9 +44,15 @@ namespace aprilui
 			{
 				return;
 			}
-			mValue = mParent->getWidth();
+			ObjectUi* parent = dynamic_cast<ObjectUi*>(mParent);
+			if (parent == NULL)
+			{
+				aprilui::log("Animator: parent object not a subclass of Objects::ObjectUi!");
+				return;
+			}
+			mValue = parent->getWidth();
 			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setWidth(mValue);
+			parent->setWidth(mValue);
 		}
 		
 	}
