@@ -37,16 +37,18 @@ namespace aprilui
 	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport grect getViewport();
 	apriluiFnExport void setViewport(grect value);
+	apriluiFnExport bool isLimitCursorToViewport();
+	apriluiFnExport void setLimitCursorToViewport(bool value);
+	
+	apriluiFnExport gvec2 getCursorPosition();
+	apriluiFnExport void setCursorImage(Image* image);
+	apriluiFnExport void drawCursor();
 	
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
 	apriluiFnExport void update(float time);
 	apriluiFnExport void updateTextures(float time);
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr path);
-	
-	apriluiFnExport gvec2 getCursorPosition();
-	apriluiFnExport void setCursorImage(Image* image);
-	apriluiFnExport void drawCursor();
 	
 	apriluiFnExport void OnMouseDown(float x, float y, int button);
 	apriluiFnExport void OnMouseUp(float x, float y, int button);
