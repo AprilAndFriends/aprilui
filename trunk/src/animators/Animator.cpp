@@ -22,7 +22,6 @@ namespace aprilui
 		mTimeSinceLastFrame = 0.0f;
 		mValue = 0.0f;
 		mFunction = aprilui::Linear;
-		mActive = true;
 		mTimer = 0.0f;
 		mDelay = 0.0f;
 		mPeriods = 1.0f;
@@ -41,7 +40,7 @@ namespace aprilui
 	{
 		mTimeSinceLastFrame = k;
 		Object::update(mTimeSinceLastFrame);
-		if (!mActive)
+		if (!mEnabled)
 		{
 			return;
 		}
@@ -123,7 +122,7 @@ namespace aprilui
 	
 	bool Animator::isAnimated()
 	{
-		if (!mActive)
+		if (!mEnabled)
 		{
 			return false;
 		}
@@ -165,7 +164,6 @@ namespace aprilui
 			else if (value == "hover")		setAnimationFunction(aprilui::Hover);
 			else if (value == "random")		setAnimationFunction(aprilui::Random);
 		}
-		else if (name == "active")			setActive(value);
 		else if (name == "timer")			setTimer(value);
 		else if (name == "delay")			setDelay(value);
 		else if (name == "periods")			setPeriods(value);

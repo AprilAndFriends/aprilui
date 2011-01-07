@@ -58,7 +58,7 @@
 		</Object>
 		<Object type="ToggleButton" name="toggleButton" image="texture/test_red" pushed_image="texture/test_green" x="432" y="352" w="128" h="64">
 			<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
-			<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" active="0"/>
+			<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
 		</Object>
 		<Object type="Container" name="slider_container" x="200" y="200" w="800" h="600">
 			<Object type="Slider" name="slider" image="texture/test_yellow" x="232" y="280" w="128" h="16">
