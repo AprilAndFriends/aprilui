@@ -21,6 +21,19 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	enum Dock
+	{
+		TopLeft,
+		TopCenter,
+		TopRight,
+		CenterLeft,
+		CenterCenter,
+		CenterRight,
+		BottomLeft,
+		BottomCenter,
+		BottomRight
+	};
+	
 	class Dataset;
 	class Event;
 	class EventArgs;
@@ -69,6 +82,8 @@ namespace aprilui
 		void setVisible(bool value) { mVisible = value; }
 		bool isEnabled() { return mEnabled; }
 		void setEnabled(bool value) { mEnabled = value; }
+		Dock getDock() { return mDock; }
+		void setDock(Dock value) { mDock = value; }
 		bool isClickthrough() { return mClickthrough; }
 		void setClickthrough(bool value) { mClickthrough = value; }
 		bool isInheritsAlpha() { return mInheritsAlpha; }
@@ -114,19 +129,20 @@ namespace aprilui
 		void _setDataset(Dataset* value) { mDataset = value; }
 		
 	protected:
-		Object* mParent;
 		hstr mTypeName;
 		hstr mName;
-		grect mRect;
-		int mZOrder;
-		float mAngle;
-		april::Color mColor;
-		bool mVisible;
-		bool mEnabled;
-		bool mClickthrough;
-		bool mInheritsAlpha;
+		Object* mParent;
 		harray<Object*> mChildren;
 		hmap<hstr, Event*> mEvents;
+		grect mRect;
+		int mZOrder;
+		bool mEnabled;
+		bool mVisible;
+		float mAngle;
+		bool mClickthrough;
+		bool mInheritsAlpha;
+		april::Color mColor;
+		Dock mDock;
 		Dataset* mDataset;
 		
 		void sortChildren();
