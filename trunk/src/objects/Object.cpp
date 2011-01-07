@@ -32,14 +32,15 @@ namespace aprilui
 		mTypeName = type;
 		mName = name;
 		mParent = NULL;
-		mZOrder = 0;
+		mDataset = NULL;
 		mRect = rect;
-		mVisible = true;
+		mZOrder = 0;
 		mEnabled = true;
+		mVisible = true;
+		mAngle = 0.0f;
 		mClickthrough = false;
 		mInheritsAlpha = true;
-		mAngle = 0.0f;
-		mDataset = NULL;
+		mDock = TopLeft;
 	}
 
 	Object::~Object()
@@ -132,9 +133,42 @@ namespace aprilui
 		if (isVisible())
 		{
 			OnDraw(offset);
-			gvec2 position = offset + mRect.getPosition();
+			offset += mRect.getPosition();
+			gvec2 position = offset;
 			foreach (Object*, it, mChildren)
 			{
+				position = offset;
+				switch ((*it)->getDock())
+				{
+				case TopLeft:
+					break;
+				case TopCenter:
+					position.x += (mRect.w - (*it)->getWidth()) / 2;
+					break;
+				case TopRight:
+					position.x += mRect.w - (*it)->getWidth();
+					break;
+				case CenterLeft:
+					position.y += (mRect.h - (*it)->getHeight()) / 2;
+					break;
+				case CenterCenter:
+					position += (mRect.getSize() - (*it)->getSize()) / 2;
+					break;
+				case CenterRight:
+					position.x += mRect.w - (*it)->getWidth();
+					position.y += (mRect.h - (*it)->getHeight()) / 2;
+					break;
+				case BottomLeft:
+					position.y += mRect.h - (*it)->getHeight();
+					break;
+				case BottomCenter:
+					position.x += (mRect.w - (*it)->getWidth()) / 2;
+					position.y += mRect.h - (*it)->getHeight();
+					break;
+				case BottomRight:
+					position += mRect.getSize() - (*it)->getSize();
+					break;
+				}
 				(*it)->draw(position);
 			}
 		}
@@ -342,6 +376,18 @@ namespace aprilui
 		else if (name == "alpha")			setAlpha((int)value);
 		else if (name == "color")			setColor(value);
 		else if (name == "angle")			setAngle(value);
+		else if (name == "dock")
+		{
+			if      (value == "top_left")		setDock(TopLeft);
+			else if (value == "top_center")		setDock(TopCenter);
+			else if (value == "top_right")		setDock(TopRight);
+			else if (value == "center_left")	setDock(CenterLeft);
+			else if (value == "center_center")	setDock(CenterCenter);
+			else if (value == "center_right")	setDock(CenterRight);
+			else if (value == "bottom_left")	setDock(BottomLeft);
+			else if (value == "bottom_center")	setDock(BottomCenter);
+			else if (value == "bottom_right")	setDock(BottomRight);
+		}
 	}
 
 	bool Object::angleEquals(float angle)
