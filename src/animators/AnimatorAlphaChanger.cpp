@@ -13,12 +13,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorAlphaChanger.h"
+#include "ObjectUi.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		AlphaChanger::AlphaChanger(chstr name) : Animator("Animators::AlphaChanger", name, grect(0, 0, 1, 1))
+		AlphaChanger::AlphaChanger(chstr name) : Animator("Animators::AlphaChanger", name)
 		{
 		}
 
@@ -26,7 +27,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = mParent->getAlpha();
+				mValue = mOffset = dynamic_cast<ObjectUi*>(mParent)->getAlpha();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -43,10 +44,11 @@ namespace aprilui
 			{
 				return;
 			}
+			ObjectUi* parent = dynamic_cast<ObjectUi*>(mParent);
 			mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
-			if ((unsigned char)mValue != mParent->getAlpha())
+			if ((unsigned char)mValue != parent->getAlpha())
 			{
-				mParent->setAlpha((unsigned char)mValue);
+				parent->setAlpha((unsigned char)mValue);
 			}
 		}
 		

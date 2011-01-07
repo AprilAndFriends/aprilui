@@ -14,13 +14,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "Object.h"
+#include "ObjectUi.h"
 
 namespace aprilui
 {
 	class Image;
 	
-	class apriluiExport ImageBox : public Object
+	class apriluiExport ImageBox : public ObjectUi
 	{
 	public:
 		ImageBox(chstr name, grect rect);
