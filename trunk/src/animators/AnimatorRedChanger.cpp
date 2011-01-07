@@ -24,9 +24,13 @@ namespace aprilui
 
 		void RedChanger::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject" || name == "InheritValue")
+			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
 				mValue = mOffset = mParent->getRed();
+				if (mUseTarget)
+				{
+					mAmplitude = mTarget - mValue;
+				}
 			}
 			Object::notifyEvent(name, params);
 		}

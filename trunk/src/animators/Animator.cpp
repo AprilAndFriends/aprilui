@@ -33,6 +33,8 @@ namespace aprilui
 		mDiscrete = false;
 		mReset = false;
 		mInheritValue = false;
+		mTarget = 0.0f;
+		mUseTarget = false;
 	}
 	
 	void Animator::update(float k)
@@ -50,10 +52,7 @@ namespace aprilui
 			{
 				return;
 			}
-			if (mInheritValue)
-			{
-				notifyEvent("InheritValue", NULL);
-			}
+			notifyEvent("OnDelayEnd", NULL);
 			mTimeSinceLastFrame += mDelay;
 		}
 		mTimer += mTimeSinceLastFrame;
@@ -183,6 +182,12 @@ namespace aprilui
 		else if (name == "reset")			setReset(value);
 		else if (name == "inherit_value")	setInheritValue(value);
 		// derived values
+		else if (name == "target")
+		{
+			setTarget(value);
+			setUseTarget(true);
+			setInheritValue(true);
+		}
 		else if (name == "time")			setTime(value);
 	}
 	

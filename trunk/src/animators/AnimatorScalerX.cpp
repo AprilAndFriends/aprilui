@@ -24,9 +24,13 @@ namespace aprilui
 
 		void ScalerX::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject" || name == "InheritValue")
+			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
 				mValue = mOffset = mParent->getWidth();
+				if (mUseTarget)
+				{
+					mAmplitude = mTarget - mValue;
+				}
 			}
 			Object::notifyEvent(name, params);
 		}

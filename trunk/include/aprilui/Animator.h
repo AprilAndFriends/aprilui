@@ -58,9 +58,13 @@ namespace aprilui
 		void setReset(bool value) { mReset = value; }
 		bool getInheritValue() { return mInheritValue; }
 		void setInheritValue(bool value) { mInheritValue = value; }
+		float getTarget() { return mTarget; }
+		void setTarget(float value) { mTarget = value; }
+		bool getUseTarget() { return mUseTarget; }
+		void setUseTarget(bool value) { mUseTarget = value; }
+		
 		bool isAnimated();
 		bool isExpired();
-		
 		void setTime(float value);
 		
 		void setProperty(chstr name, chstr value);
@@ -82,6 +86,8 @@ namespace aprilui
 		bool mDiscrete;
 		bool mReset;
 		bool mInheritValue;
+		float mTarget;
+		bool mUseTarget;
 		
 		float _calculateValue(float k);
 		
