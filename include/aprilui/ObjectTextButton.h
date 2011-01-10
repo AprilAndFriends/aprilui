@@ -49,7 +49,7 @@ namespace aprilui
 		april::Color mDisabledTextColor;
 		
 		void update(float k);
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2 offset = gvec2(), gvec2 center = gvec2());
 		
 	};
 }

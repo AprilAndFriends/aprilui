@@ -18,18 +18,18 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/util.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+gvec2 screen(800, 600);
 
 aprilui::Dataset* dataset;
 
 bool render(float time)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	april::rendersys->setOrthoProjection(screen);
 	int i = hrand(1, 8);
 	dataset->getObject("obj0" + hstr(i))->setZOrder(hrand(100));
 	dataset->getObject("root")->draw();
@@ -85,16 +85,16 @@ int main()
 #endif
 	try
 	{
-		april::init("Z Order", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_zorder");
-		april::rendersys->getWindow()->setUpdateCallback(&render);
+		april::init("Z Order", screen.x, screen.y, false, "demo_zorder");
+		atres::init();
 		aprilui::init();
-		Atres::init();
+		april::rendersys->getWindow()->setUpdateCallback(&render);
 		dataset = new aprilui::Dataset("../media/demo_zorder.datadef");
 		dataset->load();
 		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
+		atres::destroy();
 		aprilui::destroy();
-		Atres::destroy();
 		april::destroy();
 	}
 	catch (aprilui::_GenericException e)

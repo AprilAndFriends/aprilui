@@ -33,7 +33,7 @@ namespace aprilui
 		
 	protected:
 		hstr mTextKey;
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2 offset = gvec2(), gvec2 center = gvec2());
 		
 	};
 	

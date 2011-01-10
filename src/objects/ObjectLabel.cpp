@@ -23,9 +23,9 @@ namespace aprilui
 		mText = "Label: " + name;
 	}
 
-	void Label::OnDraw(gvec2 offset)
+	void Label::OnDraw(gvec2 offset, gvec2 center)
 	{
-		Object::OnDraw(offset);
+		Object::OnDraw(offset, center);
 		unsigned char alpha = getDerivedAlpha();
 		if (!isDerivedEnabled())
 		{

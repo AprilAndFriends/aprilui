@@ -27,7 +27,7 @@ namespace aprilui
 		mDisabledImage = NULL;
 	}
 
-	void ImageButton::OnDraw(gvec2 offset)
+	void ImageButton::OnDraw(gvec2 offset, gvec2 center)
 	{
 		grect rect = mRect + offset;
 		if (!isDerivedEnabled() && mDisabledImage != NULL)
@@ -45,7 +45,7 @@ namespace aprilui
 			mImage->draw(rect, color, mAngle);
 			return;
 		}
-		ImageBox::OnDraw(offset);
+		ImageBox::OnDraw(offset, center);
 	}
 
 	void ImageButton::update(float k)

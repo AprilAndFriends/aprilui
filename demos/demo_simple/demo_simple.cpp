@@ -18,17 +18,16 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+gvec2 screen(800, 600);
 
 aprilui::Dataset* dataset;
 
 bool render(float time)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	april::rendersys->setOrthoProjection(screen);
 	dataset->getObject("root")->draw();
 	dataset->update(time);
 	return true;
@@ -82,17 +81,17 @@ int main()
 #endif
 	try
 	{
-		april::init("Simple", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_simple");
-		april::rendersys->getWindow()->setUpdateCallback(&render);
+		april::init("Simple", screen.x, screen.y, false, "demo_simple");
+		atres::init();
 		aprilui::init();
-		Atres::init();
-		Atres::loadFont("../media/arial.font");
+		april::rendersys->getWindow()->setUpdateCallback(&render);
+		atres::loadFont("../media/arial.font");
 		dataset = new aprilui::Dataset("../media/demo_simple.datadef");
 		dataset->load();
 		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
+		atres::destroy();
 		aprilui::destroy();
-		Atres::destroy();
 		april::destroy();
 	}
 	catch (aprilui::_GenericException e)
