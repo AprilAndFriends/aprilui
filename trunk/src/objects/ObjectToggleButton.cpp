@@ -42,7 +42,7 @@ namespace aprilui
 
 	bool ToggleButton::OnMouseDown(float x, float y, int button)
 	{
-		if (ImageButton::OnMouseDown(x, y, button))
+		if (Object::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -62,7 +62,7 @@ namespace aprilui
 
 	bool ToggleButton::OnMouseUp(float x, float y, int button)
 	{
-		if (ImageButton::OnMouseUp(x, y, button))
+		if (Object::OnMouseUp(x, y, button))
 		{
 			return true;
 		}

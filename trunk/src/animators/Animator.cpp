@@ -13,12 +13,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Animator.h"
 #include "aprilui.h"
-#include "ObjectVisualObject.h"
 
 namespace aprilui
 {
-	Animator::Animator(chstr type, chstr name) :
-		Object(type, name)
+	Animator::Animator(chstr type, chstr name, grect rect) :
+		Object(type, name, rect)
 	{
 		mTimeSinceLastFrame = 0.0f;
 		mValue = 0.0f;
@@ -108,7 +107,7 @@ namespace aprilui
 			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
 			break;
 		case aprilui::Hover:
-			if (dynamic_cast<VisualObject*>(mParent)->isCursorInside())
+			if (mParent->isCursorInside())
 			{
 				result = hmin(mValue - mOffset + k * mSpeed, mAmplitude);
 			}

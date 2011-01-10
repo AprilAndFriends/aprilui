@@ -35,7 +35,7 @@ namespace aprilui
 	
 	void TextButton::update(float k)
 	{
-		Label::update(k);
+		Object::update(k);
 		ButtonBase::update(k);
 	}
 
@@ -76,12 +76,12 @@ namespace aprilui
 	
 	bool TextButton::isCursorInside()
 	{
-		return Label::isCursorInside();
+		return Object::isCursorInside();
 	}
 
 	bool TextButton::OnMouseDown(float x, float y, int button)
 	{
-		if (Label::OnMouseDown(x, y, button))
+		if (Object::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -90,7 +90,7 @@ namespace aprilui
 
 	bool TextButton::OnMouseUp(float x, float y, int button)
 	{
-		if (Label::OnMouseUp(x, y, button))
+		if (Object::OnMouseUp(x, y, button))
 		{
 			return true;
 		}
@@ -104,7 +104,7 @@ namespace aprilui
 
 	void TextButton::OnMouseMove(float x, float y)
 	{
-		Label::OnMouseMove(x, y);
+		Object::OnMouseMove(x, y);
 		ButtonBase::OnMouseMove(x, y);
 	}
 

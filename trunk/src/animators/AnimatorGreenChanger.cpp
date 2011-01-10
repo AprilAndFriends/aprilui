@@ -13,13 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorGreenChanger.h"
-#include "ObjectVisualObject.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		GreenChanger::GreenChanger(chstr name) : Animator("Animators::GreenChanger", name)
+		GreenChanger::GreenChanger(chstr name) : Animator("Animators::GreenChanger", name, grect(0, 0, 1, 1))
 		{
 		}
 
@@ -27,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = dynamic_cast<VisualObject*>(mParent)->getGreen();
+				mValue = mOffset = mParent->getGreen();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -44,11 +43,10 @@ namespace aprilui
 			{
 				return;
 			}
-			VisualObject* parent = dynamic_cast<VisualObject*>(mParent);
 			mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
-			if ((unsigned char)mValue != parent->getGreen())
+			if ((unsigned char)mValue != mParent->getGreen())
 			{
-				parent->setGreen((unsigned char)mValue);
+				mParent->setGreen((unsigned char)mValue);
 			}
 		}
 		

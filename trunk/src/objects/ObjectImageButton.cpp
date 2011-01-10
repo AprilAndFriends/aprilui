@@ -82,7 +82,7 @@ namespace aprilui
 	
 	bool ImageButton::isCursorInside()
 	{
-		return ImageBox::isCursorInside();
+		return Object::isCursorInside();
 	}
 
 	void ImageButton::setPushedImageByName(chstr image)
@@ -108,7 +108,7 @@ namespace aprilui
 	
 	bool ImageButton::OnMouseDown(float x, float y, int button)
 	{
-		if (ImageBox::OnMouseDown(x, y, button))
+		if (Object::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -117,7 +117,7 @@ namespace aprilui
 
 	bool ImageButton::OnMouseUp(float x, float y, int button)
 	{
-		if (ImageBox::OnMouseUp(x, y, button))
+		if (Object::OnMouseUp(x, y, button))
 		{
 			return true;
 		}
@@ -131,13 +131,13 @@ namespace aprilui
 
 	void ImageButton::OnMouseMove(float x, float y)
 	{
-		ImageBox::OnMouseMove(x, y);
+		Object::OnMouseMove(x, y);
 		ButtonBase::OnMouseMove(x, y);
 	}
 
 	void ImageButton::setProperty(chstr name, chstr value)
 	{
-		ImageBox::setProperty(name, value);
+		Object::setProperty(name, value);
 		if		(name == "image")			setImage(mDataset->getImage(value));
 		else if (name == "pushed_image")	setPushedImage(mDataset->getImage(value));
 		else if (name == "hover_image")		setHoverImage(mDataset->getImage(value));

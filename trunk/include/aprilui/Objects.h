@@ -25,7 +25,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectSlider.h"
 #include "ObjectTextButton.h"
 #include "ObjectTextImageButton.h"
-#include "ObjectTogglebutton.h"
-#include "ObjectVisualObject.h"
+#include "ObjectToggleButton.h"
 
 #endif
