@@ -25,13 +25,13 @@ namespace aprilui
 
 	void Label::OnDraw(gvec2 offset, gvec2 center)
 	{
-		Object::OnDraw(offset, center);
+		Object::OnDraw();
 		unsigned char alpha = getDerivedAlpha();
 		if (!isDerivedEnabled())
 		{
 			alpha /= 2;
 		}
-		LabelBase::_drawLabel(mRect + offset, alpha);
+		LabelBase::_drawLabel(_getDrawRect(), alpha);
 	}
 
 	void Label::notifyEvent(chstr name, void* params)

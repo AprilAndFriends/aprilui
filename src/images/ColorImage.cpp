@@ -44,27 +44,4 @@ namespace aprilui
 		}
 	}
 
-	void ColorImage::draw(grect rect, april::Color color, float angle, gvec2 center)
-	{
-		pVertices[0].x = -center.x;			pVertices[0].y = -center.y;
-		pVertices[1].x = rect.w - center.x;	pVertices[1].y = -center.y;
-		pVertices[2].x = -center.x;			pVertices[2].y = rect.h - center.y;
-		pVertices[3].x = rect.w - center.x;	pVertices[3].y = rect.h - center.y;
-		
-		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-		april::rendersys->setIdentityTransform();
-		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
-		april::rendersys->rotate(angle);
-		if (mBlendMode != april::ALPHA_BLEND)
-		{
-			april::rendersys->setBlendMode(mBlendMode);
-		}
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
-		if (mBlendMode != april::ALPHA_BLEND)
-		{
-			april::rendersys->setBlendMode(april::DEFAULT);
-		}
-		april::rendersys->setModelviewMatrix(originalMatrix);
-	}
-	
 }

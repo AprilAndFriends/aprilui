@@ -57,6 +57,7 @@ namespace aprilui
 		if (mImage)
 		{
 			setSize(mImage->getSrcRect().getSize() * getDefaultScale());
+			setCenter(getSize() / 2);
 		}
 	}
 
@@ -72,7 +73,8 @@ namespace aprilui
 		{
 			color.a /= 2;
 		}
-		mImage->draw(mRect + offset, color, mAngle);
+		mImage->draw(_getDrawRect(), color);
+		Object::OnDraw();
 	}
 	
 	void ImageBox::setProperty(chstr name, chstr value)

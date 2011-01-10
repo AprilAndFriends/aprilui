@@ -84,7 +84,7 @@ namespace aprilui
 
 	void Slider::OnDraw(gvec2 offset, gvec2 center)
 	{
-		grect rect = mRect + offset;
+		grect rect = _getDrawRect();
 		if (rect.w < 5 || rect.h < 5)
 		{
 			return;
@@ -93,16 +93,15 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		unsigned char alpha = getDerivedAlpha();
 		april::Color color = april::Color::WHITE;
-		color.a = alpha;
+		color.a = getDerivedAlpha();
 		april::rendersys->drawColoredQuad(rect, color);
 		april::Color backgroundColor = color / 4.0f;
-		backgroundColor.a = alpha;
+		backgroundColor.a = color.a;
 		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
 		april::rendersys->drawColoredQuad(rect, backgroundColor);
 		rect = grect(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
-		mImage->draw(rect, color, mAngle);
+		mImage->draw(rect, color);
 	}
 
 	void Slider::setProperty(chstr name, chstr value)

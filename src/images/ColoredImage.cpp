@@ -36,9 +36,4 @@ namespace aprilui
 		Image::draw(rect, mColor * color);
 	}
 
-	void ColoredImage::draw(grect rect, april::Color color, float angle, gvec2 center)
-	{
-		Image::draw(rect, mColor * color, angle, center);
-	}
-
 }

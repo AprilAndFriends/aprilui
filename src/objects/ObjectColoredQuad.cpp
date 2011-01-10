@@ -24,15 +24,11 @@ namespace aprilui
 	void ColoredQuad::OnDraw(gvec2 offset, gvec2 center)
 	{
 		april::Color color = mColor;
-		color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
-		// TODO - remove after implementing proper global rotation
-		grect rect = mRect + offset;
-		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-		april::rendersys->setIdentityTransform();
-		april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
-		april::rendersys->rotate(getAngle());
-		april::rendersys->drawColoredQuad(grect(-rect.getSize() / 2, rect.getSize()), color);
-		april::rendersys->setModelviewMatrix(originalMatrix);
+		if (mInheritsAlpha)
+		{
+			color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
+		}
+		april::rendersys->drawColoredQuad(_getDrawRect(), color);
 	}
 
 	void ColoredQuad::setProperty(chstr name, chstr value)
