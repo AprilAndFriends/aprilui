@@ -39,7 +39,7 @@ namespace aprilui
 		ButtonBase::update(k);
 	}
 
-	void TextButton::OnDraw(gvec2 offset, gvec2 center)
+	void TextButton::OnDraw()
 	{
 		if (mBackground)
 		{

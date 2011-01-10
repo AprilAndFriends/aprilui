@@ -161,7 +161,7 @@ namespace aprilui
 		bool isDerivedClickThrough();
 		grect _getDrawRect();
 		
-		virtual void OnDraw(gvec2 offset = gvec2(), gvec2 center = gvec2()) { }
+		virtual void OnDraw() { }
 		void setParent(Object* value) { mParent = value; }
 
 		void _moveChildToFront(Object* object);

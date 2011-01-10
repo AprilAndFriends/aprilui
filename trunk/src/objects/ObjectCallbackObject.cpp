@@ -25,7 +25,7 @@ namespace aprilui
 		Object::setProperty(name, value);
 	}
 	
-	void CallbackObject::OnDraw(gvec2 offset, gvec2 center)
+	void CallbackObject::OnDraw()
 	{
 		if (mCallback != NULL)
 		{

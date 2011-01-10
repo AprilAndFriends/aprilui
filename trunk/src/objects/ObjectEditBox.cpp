@@ -44,7 +44,7 @@ namespace aprilui
 		mBlinkTimer = (mBlinkTimer - (int)mBlinkTimer);
 	}
 
-	void EditBox::OnDraw(gvec2 offset, gvec2 center)
+	void EditBox::OnDraw()
 	{
 		grect rect = _getDrawRect();
 		april::Color color = april::Color::BLACK;

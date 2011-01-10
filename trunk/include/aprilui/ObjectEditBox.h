@@ -53,7 +53,7 @@ namespace aprilui
 		hstr mFilter;
 		float mBlinkTimer;
 		
-		void OnDraw(gvec2 offset = gvec2(), gvec2 center = gvec2());
+		void OnDraw();
 		
 		void _cursorMoveLeftWord();
 		void _cursorMoveRightWord();

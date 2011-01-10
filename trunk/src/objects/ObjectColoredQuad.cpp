@@ -21,7 +21,7 @@ namespace aprilui
 	{
 	}
 	
-	void ColoredQuad::OnDraw(gvec2 offset, gvec2 center)
+	void ColoredQuad::OnDraw()
 	{
 		april::Color color = mColor;
 		if (mInheritsAlpha)

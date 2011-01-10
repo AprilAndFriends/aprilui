@@ -90,11 +90,6 @@ namespace aprilui
 		}
 	}
 
-	void Image::draw(grect rect)
-	{
-		draw(rect, april::Color::WHITE);
-	}
-	
 	void Image::draw(grect rect, april::Color color)
 	{
 		if (rect.w == -1)
@@ -129,6 +124,28 @@ namespace aprilui
 		{
 			april::rendersys->setBlendMode(april::DEFAULT);
 		}
+	}
+	
+	void Image::draw(grect rect, april::Color color, float angle)
+	{
+		if (angle == 0.0f)
+		{
+			draw(rect, color);
+			return;
+		}
+		if (rect.w == -1)
+		{
+			rect.w = mSrcRect.w;
+		}
+		if (rect.h == -1)
+		{
+			rect.h = mSrcRect.h;
+		}
+		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		april::rendersys->translate(rect.w / 2, rect.h / 2);
+		april::rendersys->rotate(angle);
+		draw(rect - rect.getSize() / 2, color);
+		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
 
 	april::Texture* Image::getTexture()

@@ -82,7 +82,7 @@ namespace aprilui
 		}
 	}
 
-	void Slider::OnDraw(gvec2 offset, gvec2 center)
+	void Slider::OnDraw()
 	{
 		grect rect = _getDrawRect();
 		if (rect.w < 5 || rect.h < 5)
