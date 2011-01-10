@@ -25,7 +25,7 @@ namespace aprilui
 		mText = "TextImageButton: " + name;
 	}
 
-	void TextImageButton::OnDraw(gvec2 offset, gvec2 center)
+	void TextImageButton::OnDraw()
 	{
 		ImageButton::OnDraw();
 		unsigned char alpha = getDerivedAlpha();

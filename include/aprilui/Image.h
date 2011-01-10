@@ -28,8 +28,8 @@ namespace aprilui
 		Image(april::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
 		virtual ~Image();
 		
-		virtual void draw(grect rect);
-		virtual void draw(grect rect, april::Color color);
+		virtual void draw(grect rect, april::Color color = april::Color::WHITE);
+		void draw(grect rect, april::Color color, float angle);
 		
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };

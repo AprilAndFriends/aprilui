@@ -25,7 +25,7 @@ namespace aprilui
 		mPushed = false;
 	}
 
-	void ToggleButton::OnDraw(gvec2 offset, gvec2 center)
+	void ToggleButton::OnDraw()
 	{
 		april::Color color;
 		color.a = getDerivedAlpha();

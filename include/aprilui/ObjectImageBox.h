@@ -41,7 +41,7 @@ namespace aprilui
 		Image* mImage;
 		hstr mImageName;
 		
-		void OnDraw(gvec2 offset = gvec2(), gvec2 center = gvec2());
+		void OnDraw();
 		
 	};
 }
