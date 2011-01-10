@@ -26,7 +26,6 @@ namespace aprilui
 		ColorImage(chstr name);
 		
 		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
 		
 	protected:
 		april::Color mColor;

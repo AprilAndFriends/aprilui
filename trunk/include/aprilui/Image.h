@@ -30,8 +30,6 @@ namespace aprilui
 		
 		virtual void draw(grect rect);
 		virtual void draw(grect rect, april::Color color);
-		virtual void draw(grect rect, april::Color color, float angle, gvec2 center);
-		virtual void draw(grect rect, april::Color color, float angle);
 		
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };

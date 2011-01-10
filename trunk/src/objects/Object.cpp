@@ -32,6 +32,7 @@ namespace aprilui
 		mTypeName = type;
 		mName = name;
 		mRect = rect;
+		mCenter = mRect.getSize() / 2;
 		mParent = NULL;
 		mDataset = NULL;
 		mZOrder = 0;
@@ -127,51 +128,62 @@ namespace aprilui
 		}
 		return false;
 	}
-
+	
 	void Object::draw(gvec2 offset)
 	{
-		if (isVisible())
+		if (!isVisible())
 		{
-			OnDraw(offset);
-			offset += mRect.getPosition();
-			gvec2 position = offset;
-			foreach (Object*, it, mChildren)
-			{
-				position = offset;
-				switch ((*it)->getDock())
-				{
-				case TopLeft:
-					break;
-				case TopCenter:
-					position.x += (mRect.w - (*it)->getWidth()) / 2;
-					break;
-				case TopRight:
-					position.x += mRect.w - (*it)->getWidth();
-					break;
-				case CenterLeft:
-					position.y += (mRect.h - (*it)->getHeight()) / 2;
-					break;
-				case CenterCenter:
-					position += (mRect.getSize() - (*it)->getSize()) / 2;
-					break;
-				case CenterRight:
-					position.x += mRect.w - (*it)->getWidth();
-					position.y += (mRect.h - (*it)->getHeight()) / 2;
-					break;
-				case BottomLeft:
-					position.y += mRect.h - (*it)->getHeight();
-					break;
-				case BottomCenter:
-					position.x += (mRect.w - (*it)->getWidth()) / 2;
-					position.y += mRect.h - (*it)->getHeight();
-					break;
-				case BottomRight:
-					position += mRect.getSize() - (*it)->getSize();
-					break;
-				}
-				(*it)->draw(position);
-			}
+			return;
 		}
+		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		if (mParent == NULL)
+		{
+			april::rendersys->setIdentityTransform();
+		}
+		gvec2 position = mRect.getPosition() + offset + mCenter;
+		april::rendersys->translate(position.x, position.y);
+		if (mAngle != 0.0f)
+		{
+			april::rendersys->rotate(mAngle);
+		}
+		OnDraw();
+		foreach (Object*, it, mChildren)
+		{
+			position = -mCenter;
+			switch ((*it)->getDock())
+			{
+			case TopLeft:
+				break;
+			case TopCenter:
+				position.x += (mRect.w - (*it)->getWidth()) / 2;
+				break;
+			case TopRight:
+				position.x += mRect.w - (*it)->getWidth();
+				break;
+			case CenterLeft:
+				position.y += (mRect.h - (*it)->getHeight()) / 2;
+				break;
+			case CenterCenter:
+				position += (mRect.getSize() - (*it)->getSize()) / 2;
+				break;
+			case CenterRight:
+				position.x += mRect.w - (*it)->getWidth();
+				position.y += (mRect.h - (*it)->getHeight()) / 2;
+				break;
+			case BottomLeft:
+				position.y += mRect.h - (*it)->getHeight();
+				break;
+			case BottomCenter:
+				position.x += (mRect.w - (*it)->getWidth()) / 2;
+				position.y += mRect.h - (*it)->getHeight();
+				break;
+			case BottomRight:
+				position += mRect.getSize() - (*it)->getSize();
+				break;
+			}
+			(*it)->draw(position);
+		}
+		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
 	
 	void Object::update(float k)
@@ -376,6 +388,8 @@ namespace aprilui
 		else if (name == "alpha")			setAlpha((int)value);
 		else if (name == "color")			setColor(value);
 		else if (name == "angle")			setAngle(value);
+		else if (name == "center_x")		setCenterX(value);
+		else if (name == "center_y")		setCenterY(value);
 		else if (name == "dock")
 		{
 			if      (value == "top_left")		setDock(aprilui::TopLeft);
@@ -435,6 +449,11 @@ namespace aprilui
 			position += p->getPosition();
 		}
 		return position;
+	}
+	
+	grect Object::_getDrawRect()
+	{
+		return grect(-mCenter, mRect.getSize());
 	}
 	
 }

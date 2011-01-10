@@ -36,7 +36,6 @@ namespace aprilui
 		void addImageRef(Image* image, grect rect);
 		
 		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
 		
 		const harray<ImageRef>& getImageList() { return mImages; }
 		

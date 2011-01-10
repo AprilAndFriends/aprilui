@@ -55,19 +55,4 @@ namespace aprilui
 		}
 	}
 	
-	void CompositeImage::draw(grect rect, april::Color color, float angle, gvec2 center)
-	{
-		float wf = rect.w / mSrcRect.w;
-		float hf = rect.h / mSrcRect.h;
-		grect drawRect;
-		foreach (ImageRef, it, mImages)
-		{
-			drawRect.x = rect.x + (*it).rect.x * wf;
-			drawRect.y = rect.y + (*it).rect.y * hf;
-			drawRect.w = (*it).rect.w * wf;
-			drawRect.h = (*it).rect.h * hf;
-			(*it).image->draw(drawRect, color, angle, gvec2(center.x - (*it).rect.x * wf, center.y - (*it).rect.y * hf));
-		}
-	}
-
 }

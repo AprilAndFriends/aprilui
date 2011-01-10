@@ -27,13 +27,13 @@ namespace aprilui
 
 	void TextImageButton::OnDraw(gvec2 offset, gvec2 center)
 	{
-		ImageButton::OnDraw(offset, center);
+		ImageButton::OnDraw();
 		unsigned char alpha = getDerivedAlpha();
 		if (!isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
 		{
 			alpha /= 2;
 		}
-		LabelBase::_drawLabel(mRect + offset, alpha);
+		LabelBase::_drawLabel(_getDrawRect(), alpha);
 	}
 	
 	float TextImageButton::getAngle()

@@ -29,14 +29,14 @@ namespace aprilui
 	{
 		april::Color color;
 		color.a = getDerivedAlpha();
-		grect rect = mRect + offset;
+		grect rect = _getDrawRect();
 		if (mPushed && mPushedImage != NULL)
 		{
-			mPushedImage->draw(rect, color, mAngle);
+			mPushedImage->draw(rect, color);
 		}
 		else
 		{
-			mImage->draw(rect, color, mAngle);
+			mImage->draw(rect, color);
 		}
 	}
 

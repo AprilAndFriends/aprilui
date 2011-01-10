@@ -29,12 +29,12 @@ namespace aprilui
 
 	void ImageButton::OnDraw(gvec2 offset, gvec2 center)
 	{
-		grect rect = mRect + offset;
+		grect rect = _getDrawRect();
 		if (!isDerivedEnabled() && mDisabledImage != NULL)
 		{
 			april::Color color;
 			color.a = getDerivedAlpha();
-			mDisabledImage->draw(rect, color, mAngle);
+			mDisabledImage->draw(rect, color);
 			return;
 		}
 		if (mPushed && mPushedImage == NULL && isCursorInside())
@@ -42,10 +42,10 @@ namespace aprilui
 			april::Color color;
 			color *= 0.75f;
 			color.a = getDerivedAlpha();
-			mImage->draw(rect, color, mAngle);
+			mImage->draw(rect, color);
 			return;
 		}
-		ImageBox::OnDraw(offset, center);
+		ImageBox::OnDraw();
 	}
 
 	void ImageButton::update(float k)

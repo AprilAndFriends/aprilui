@@ -43,14 +43,7 @@ namespace aprilui
 	{
 		if (mBackground)
 		{
-			grect rect = mRect + offset;
-			// TODO - remove after implementing proper global rotation
-			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-			april::rendersys->setIdentityTransform();
-			april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
-			april::rendersys->rotate(getAngle());
-			april::rendersys->drawColoredQuad(grect(-rect.getSize() / 2, rect.getSize()), april::Color(0, 0, 0, ((mHover && mPushed) ? 255 : 191)));
-			april::rendersys->setModelviewMatrix(originalMatrix);
+			april::rendersys->drawColoredQuad(_getDrawRect(), april::Color(0, 0, 0, ((mHover && mPushed) ? 255 : 191)));
 		}
 		april::Color color = mTextColor;
 		if (!isDerivedEnabled())
@@ -61,7 +54,7 @@ namespace aprilui
 		{
 			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
 		}
-		Label::OnDraw(offset, center);
+		Label::OnDraw();
 		mTextColor = color;
 	}
 	

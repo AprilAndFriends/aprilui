@@ -26,7 +26,6 @@ namespace aprilui
 		ColoredImage(april::Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = april::Color::WHITE);
 		
 		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
 
 		unsigned char getAlpha();
 		void setAlpha(unsigned char value);

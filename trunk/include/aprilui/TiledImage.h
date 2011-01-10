@@ -38,7 +38,6 @@ namespace aprilui
 		void setScroll(float x, float y);
 		
 		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
 		
 	protected:
 		float mTileW;

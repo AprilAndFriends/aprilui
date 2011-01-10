@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_OBJECT_H
 #define APRILUI_OBJECT_H
 
-#include <april/RenderSystem.h>
+#include <april/Color.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
@@ -75,11 +75,15 @@ namespace aprilui
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
 		void setRect(grect value) { mRect = value; }
+		gvec2 getCenter() { return mCenter; }
+		void setCenter(gvec2 value) { mCenter = value; }
+		float getCenterX() { return mCenter.x; }
+		void setCenterX(float value) { mCenter.x = value; }
+		float getCenterY() { return mCenter.y; }
+		void setCenterY(float value) { mCenter.y = value; }
+		
 		float getAngle() { return mAngle; }
 		virtual void setAngle(float value) { mAngle = value; }
-
-		bool isVisible() { return (mVisible && mColor.a > 0); }
-		void setVisible(bool value) { mVisible = value; }
 		bool isEnabled() { return mEnabled; }
 		void setEnabled(bool value) { mEnabled = value; }
 		Dock getDock() { return mDock; }
@@ -88,7 +92,10 @@ namespace aprilui
 		void setClickthrough(bool value) { mClickthrough = value; }
 		bool isInheritsAlpha() { return mInheritsAlpha; }
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
-		bool getVisibilityFlag() { return mVisible; }
+		april::Color getColor() { return mColor; }
+		void setColor(april::Color value) { mColor = value; }
+		void setColor(chstr value) { mColor.set(value); }
+
 		unsigned char getRed() { return mColor.r; }
 		void setRed(unsigned char value) { mColor.r = value; }
 		unsigned char getGreen() { return mColor.g; }
@@ -97,9 +104,9 @@ namespace aprilui
 		void setBlue(unsigned char value) { mColor.b = value; }
 		unsigned char getAlpha() { return mColor.a; }
 		void setAlpha(unsigned char value);
-		april::Color getColor() { return mColor; }
-		void setColor(april::Color value) { mColor = value; }
-		void setColor(chstr value) { mColor.set(value); }
+		bool isVisible() { return (mVisible && mColor.a > 0); }
+		void setVisible(bool value) { mVisible = value; }
+		bool getVisibilityFlag() { return mVisible; }
 		gvec2 getDerivedPosition();
 		
 		virtual bool isAnimated();
@@ -121,7 +128,7 @@ namespace aprilui
 		
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());
-
+		
 		virtual void notifyEvent(chstr name, void* params);
 		
 		virtual void setProperty(chstr name, chstr value);
@@ -132,6 +139,7 @@ namespace aprilui
 		hstr mTypeName;
 		hstr mName;
 		grect mRect;
+		gvec2 mCenter;
 		Object* mParent;
 		harray<Object*> mChildren;
 		hmap<hstr, Event*> mEvents;
@@ -151,6 +159,7 @@ namespace aprilui
 		unsigned char getDerivedAlpha();
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
+		grect _getDrawRect();
 		
 		virtual void OnDraw(gvec2 offset = gvec2(), gvec2 center = gvec2()) { }
 		void setParent(Object* value) { mParent = value; }

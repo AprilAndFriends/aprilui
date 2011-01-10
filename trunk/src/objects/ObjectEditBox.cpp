@@ -46,21 +46,14 @@ namespace aprilui
 
 	void EditBox::OnDraw(gvec2 offset, gvec2 center)
 	{
-		grect rect = mRect + offset;
+		grect rect = _getDrawRect();
 		april::Color color = april::Color::BLACK;
 		if (!mPushed)
 		{
 			color.a = 191;
 		}
 		color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
-		// TODO - remove after implementing proper global rotation
-		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-		april::rendersys->setIdentityTransform();
-		april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
-		april::rendersys->rotate(getAngle());
-		april::rendersys->drawColoredQuad(grect(-rect.getSize() / 2, rect.getSize()), color);
-		april::rendersys->setModelviewMatrix(originalMatrix);
-		
+		april::rendersys->drawColoredQuad(rect, color);
 		hstr text = mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -89,29 +82,17 @@ namespace aprilui
 			}
 		}
 		mText = mText(mOffsetIndex, mText.size() - mOffsetIndex);
-		offset.x += 2;
-		Label::OnDraw(offset, center);
+		Label::OnDraw();
 		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
-			rect = mRect + offset;
-			grect caret = rect;
-			caret.x += atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
+			rect.x += atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
 			float h = atres::getFontHeight(mFontName);
-			caret.y += (caret.h - h) / 2 + 2;
-			caret.w = 2;
-			caret.h = h - 4;
+			rect.y += (rect.h - h) / 2 + 2;
+			rect.w = 2;
+			rect.h = h - 4;
 			color = mTextColor;
 			color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
-			// TODO - remove after implementing proper global rotation
-			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-			april::rendersys->setIdentityTransform();
-			april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
-			april::rendersys->rotate(getAngle());
-			rect.setPosition(caret.getPosition() - rect.getPosition());
-			rect.setSize(caret.getSize() - rect.getSize());
-			april::rendersys->translate(rect.x + rect.w / 2, rect.y + rect.h / 2);
-			april::rendersys->drawColoredQuad(grect(-caret.getSize() / 2, caret.getSize()), color);
-			april::rendersys->setModelviewMatrix(originalMatrix);
+			april::rendersys->drawColoredQuad(rect, color);
 		}
 		mText = text;
 	}
