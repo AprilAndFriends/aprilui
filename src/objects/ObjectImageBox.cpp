@@ -35,6 +35,7 @@ namespace aprilui
 		{
 			mRect.h = rect.h * getDefaultScale();
 		}
+		mCenter = mRect.getSize() / 2;
 	}
 
 	void ImageBox::setImageByName(chstr image)
