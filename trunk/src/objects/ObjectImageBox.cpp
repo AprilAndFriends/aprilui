@@ -60,7 +60,7 @@ namespace aprilui
 		}
 	}
 
-	void ImageBox::OnDraw(gvec2 offset)
+	void ImageBox::OnDraw(gvec2 offset, gvec2 center)
 	{
 		if (mImage == NULL)
 		{

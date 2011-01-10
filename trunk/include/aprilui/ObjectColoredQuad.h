@@ -26,7 +26,7 @@ namespace aprilui
 		
 		void setProperty(chstr name, chstr value);
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2 offset = gvec2(), gvec2 center = gvec2());
 
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);

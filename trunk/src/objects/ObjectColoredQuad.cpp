@@ -21,7 +21,7 @@ namespace aprilui
 	{
 	}
 	
-	void ColoredQuad::OnDraw(gvec2 offset)
+	void ColoredQuad::OnDraw(gvec2 offset, gvec2 center)
 	{
 		april::Color color = mColor;
 		color.a = (unsigned char)(getDerivedAlpha() * color.a_f());

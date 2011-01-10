@@ -39,7 +39,7 @@ namespace aprilui
 		ButtonBase::update(k);
 	}
 
-	void TextButton::OnDraw(gvec2 offset)
+	void TextButton::OnDraw(gvec2 offset, gvec2 center)
 	{
 		if (mBackground)
 		{
@@ -61,7 +61,7 @@ namespace aprilui
 		{
 			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
 		}
-		Label::OnDraw(offset);
+		Label::OnDraw(offset, center);
 		mTextColor = color;
 	}
 	

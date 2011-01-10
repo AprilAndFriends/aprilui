@@ -19,19 +19,19 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <aprilui/TiledImage.h>
-#include <atres/Atres.h>
+#include <atres/atres.h>
+#include <gtypes/Vector2.h>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
 #define SCROLL_SPEED_X 50
 #define SCROLL_SPEED_Y 50
+gvec2 screen(800, 600);
 
 aprilui::Dataset* dataset;
 
 bool render(float time)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(WINDOW_WIDTH, WINDOW_HEIGHT);
+	april::rendersys->setOrthoProjection(screen);
 	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/test");
 	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
 					 image->getScrollY() - time * SCROLL_SPEED_Y);
@@ -88,16 +88,16 @@ int main()
 #endif
 	try
 	{
-		april::init("Tiled Image", WINDOW_WIDTH, WINDOW_HEIGHT, 0, "demo_tiledimage");
-		april::rendersys->getWindow()->setUpdateCallback(&render);
+		april::init("Tiled Image", screen.x, screen.y, false, "demo_tiledimage");
+		atres::init();
 		aprilui::init();
-		Atres::init();
+		april::rendersys->getWindow()->setUpdateCallback(&render);
 		dataset = new aprilui::Dataset("../media/demo_tiledimage.datadef");
 		dataset->load();
 		april::rendersys->getWindow()->enterMainLoop();
 		delete dataset;
+		atres::destroy();
 		aprilui::destroy();
-		Atres::destroy();
 		april::destroy();
 	}
 	catch (aprilui::_GenericException e)

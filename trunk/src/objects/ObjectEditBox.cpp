@@ -44,7 +44,7 @@ namespace aprilui
 		mBlinkTimer = (mBlinkTimer - (int)mBlinkTimer);
 	}
 
-	void EditBox::OnDraw(gvec2 offset)
+	void EditBox::OnDraw(gvec2 offset, gvec2 center)
 	{
 		grect rect = mRect + offset;
 		april::Color color = april::Color::BLACK;
@@ -90,7 +90,7 @@ namespace aprilui
 		}
 		mText = mText(mOffsetIndex, mText.size() - mOffsetIndex);
 		offset.x += 2;
-		Label::OnDraw(offset);
+		Label::OnDraw(offset, center);
 		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
 			rect = mRect + offset;
