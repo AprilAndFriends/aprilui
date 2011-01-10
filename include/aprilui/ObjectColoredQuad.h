@@ -15,11 +15,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "ObjectVisualObject.h"
+#include "Object.h"
 
 namespace aprilui
 {
-	class ColoredQuad : public VisualObject
+	class ColoredQuad : public Object
 	{
 	public:
 		ColoredQuad(chstr name, grect rect);

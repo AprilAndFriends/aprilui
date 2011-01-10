@@ -13,13 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorRotator.h"
-#include "ObjectVisualObject.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Animator("Animators::Rotator", name)
+		Rotator::Rotator(chstr name) : Animator("Animators::Rotator", name, grect(0, 0, 1, 1))
 		{
 		}
 
@@ -27,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = dynamic_cast<VisualObject*>(mParent)->getAngle();
+				mValue = mOffset = mParent->getAngle();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -44,15 +43,9 @@ namespace aprilui
 			{
 				return;
 			}
-			VisualObject* parent = dynamic_cast<VisualObject*>(mParent);
-			if (parent == NULL)
-			{
-				aprilui::log("Animator: parent object not a subclass of Objects::VisualObject!");
-				return;
-			}
-			mValue = parent->getAngle();
+			mValue = mParent->getAngle();
 			mValue = _calculateValue(mTimeSinceLastFrame);
-			parent->setAngle(mValue);
+			mParent->setAngle(mValue);
 		}
 		
 	}

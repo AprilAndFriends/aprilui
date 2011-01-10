@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	CallbackObject::CallbackObject(chstr name, grect rect) :
-		Object("CallbackObject", name)
+		Object("CallbackObject", name, rect)
 	{
 		mCallback = NULL;
 	}

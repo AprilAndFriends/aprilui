@@ -13,13 +13,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "aprilui.h"
 #include "AnimatorRedChanger.h"
-#include "ObjectVisualObject.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		RedChanger::RedChanger(chstr name) : Animator("Animators::RedChanger", name)
+		RedChanger::RedChanger(chstr name) : Animator("Animators::RedChanger", name, grect(0, 0, 1, 1))
 		{
 		}
 
@@ -27,7 +26,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
 			{
-				mValue = mOffset = dynamic_cast<VisualObject*>(mParent)->getRed();
+				mValue = mOffset = mParent->getRed();
 				if (mUseTarget)
 				{
 					mAmplitude = mTarget - mValue;
@@ -44,11 +43,10 @@ namespace aprilui
 			{
 				return;
 			}
-			VisualObject* parent = dynamic_cast<VisualObject*>(mParent);
 			mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
-			if ((unsigned char)mValue != parent->getRed())
+			if ((unsigned char)mValue != mParent->getRed())
 			{
-				parent->setRed((unsigned char)mValue);
+				mParent->setRed((unsigned char)mValue);
 			}
 		}
 		

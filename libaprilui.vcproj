@@ -309,10 +309,6 @@
 					RelativePath=".\src\objects\ObjectToggleButton.cpp"
 					>
 				</File>
-				<File
-					RelativePath=".\src\objects\ObjectVisualObject.cpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Images"
@@ -497,10 +493,6 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectToggleButton.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\aprilui\ObjectVisualObject.h"
 					>
 				</File>
 			</Filter>

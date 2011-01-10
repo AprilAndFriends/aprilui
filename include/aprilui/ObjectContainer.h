@@ -14,14 +14,16 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "ObjectVisualObject.h"
+#include "Object.h"
 
 namespace aprilui
 {
-	class apriluiExport Container : public VisualObject
+	class apriluiExport Container : public Object
 	{
 	public:
 		Container(chstr name, grect rect);
+		
+		void setProperty(chstr name, chstr value);
 		
 	};
 }

@@ -181,7 +181,7 @@ namespace aprilui
 
 	bool EditBox::OnMouseDown(float x, float y, int button)
 	{
-		if (Label::OnMouseDown(x, y, button))
+		if (Object::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -195,7 +195,7 @@ namespace aprilui
 
 	bool EditBox::OnMouseUp(float x, float y, int button)
 	{
-		if (Label::OnMouseUp(x, y, button))
+		if (Object::OnMouseUp(x, y, button))
 		{
 			return true;
 		}

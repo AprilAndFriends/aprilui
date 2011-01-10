@@ -43,7 +43,7 @@ namespace aprilui
 
 	bool Slider::OnMouseDown(float x, float y, int button)
 	{
-		if (ImageBox::OnMouseDown(x, y, button))
+		if (Object::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -59,7 +59,7 @@ namespace aprilui
 
 	bool Slider::OnMouseUp(float x, float y, int button)
 	{
-		if (ImageBox::OnMouseUp(x, y, button))
+		if (Object::OnMouseUp(x, y, button))
 		{
 			return true;
 		}
@@ -74,7 +74,7 @@ namespace aprilui
 
 	void Slider::OnMouseMove(float x, float y)
 	{
-		ImageBox::OnMouseMove(x, y);
+		Object::OnMouseMove(x, y);
 		if (mPushed)
 		{
 			setValue((x - mRect.x) / (mRect.w - 4));

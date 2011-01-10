@@ -32,7 +32,7 @@ namespace aprilui
 	class apriluiExport Animator : public Object
 	{
 	public:
-		Animator(chstr type, chstr nam);
+		Animator(chstr type, chstr name, grect rect);
 		
 		AnimationFunction getAnimationFunction() { return mFunction; }
 		void setAnimationFunction(AnimationFunction value) { mFunction = value; }
