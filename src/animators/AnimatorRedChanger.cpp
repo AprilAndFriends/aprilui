@@ -18,7 +18,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		RedChanger::RedChanger(chstr name) : Animator("Animators::RedChanger", name, grect(0, 0, 1, 1))
+		RedChanger::RedChanger(chstr name) : Animator("RedChanger", name)
 		{
 		}
 

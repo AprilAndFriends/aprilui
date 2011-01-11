@@ -18,7 +18,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ScalerY::ScalerY(chstr name) : Animator("Animators::ScalerY", name, grect(0, 0, 1, 1))
+		ScalerY::ScalerY(chstr name) : Animator("ScalerY", name)
 		{
 		}
 

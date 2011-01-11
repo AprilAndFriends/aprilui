@@ -18,7 +18,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ScalerX::ScalerX(chstr name) : Animator("Animators::ScalerX", name, grect(0, 0, 1, 1))
+		ScalerX::ScalerX(chstr name) : Animator("ScalerX", name)
 		{
 		}
 

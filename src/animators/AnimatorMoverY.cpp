@@ -18,7 +18,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		MoverY::MoverY(chstr name) : Animator("Animators::MoverY", name, grect(0, 0, 1, 1))
+		MoverY::MoverY(chstr name) : Animator("MoverY", name)
 		{
 		}
 

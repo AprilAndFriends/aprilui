@@ -18,7 +18,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Animator("Animators::Rotator", name, grect(0, 0, 1, 1))
+		Rotator::Rotator(chstr name) : Animator("Rotator", name)
 		{
 		}
 
