@@ -117,6 +117,16 @@ namespace aprilui
 		return (unsigned char)(this->getAlpha() * factor);
 	}
 
+	float Object::getDerivedAngle()
+	{
+		float angle = mAngle;
+		if (mParent != NULL)
+		{
+			angle += mParent->getDerivedAngle();
+		}
+		return angle;
+	}
+
 	bool Object::isAnimated()
 	{
 		foreach (Object*, it, mChildren)
