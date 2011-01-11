@@ -157,6 +157,7 @@ namespace aprilui
 		
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
 		unsigned char getDerivedAlpha();
+		float getDerivedAngle();
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
 		grect _getDrawRect();
