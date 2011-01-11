@@ -83,7 +83,7 @@ namespace aprilui
 		void setCenterY(float value) { mCenter.y = value; }
 		
 		float getAngle() { return mAngle; }
-		virtual void setAngle(float value) { mAngle = value; }
+		void setAngle(float value) { mAngle = value; }
 		bool isEnabled() { return mEnabled; }
 		void setEnabled(bool value) { mEnabled = value; }
 		Dock getDock() { return mDock; }
