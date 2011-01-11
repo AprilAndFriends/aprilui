@@ -141,7 +141,10 @@ namespace aprilui
 			april::rendersys->setIdentityTransform();
 		}
 		gvec2 position = mRect.getPosition() + offset + mCenter;
-		april::rendersys->translate(position.x, position.y);
+		if (position.x != 0.0f || position.y != 0.0f)
+		{
+			april::rendersys->translate(position.x, position.y);
+		}
 		if (mAngle != 0.0f)
 		{
 			april::rendersys->rotate(mAngle);

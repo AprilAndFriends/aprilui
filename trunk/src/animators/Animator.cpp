@@ -107,13 +107,13 @@ namespace aprilui
 			result = hrandf(-mSpeed * mAmplitude, mSpeed * mAmplitude);
 			break;
 		case aprilui::Hover:
-			if (mParent->isCursorInside())
+			if ((mAmplitude >= 0.0f) == mParent->isCursorInside())
 			{
-				result = hmin(mValue - mOffset + k * mSpeed, mAmplitude);
+				result = hmin(mValue - mOffset + k * mSpeed, (float)fabs(mAmplitude));
 			}
 			else
 			{
-				result = hmax(mValue - mOffset - k * mSpeed, -mAmplitude);
+				result = hmax(mValue - mOffset - k * mSpeed, -(float)fabs(mAmplitude));
 			}
 			break;
 		}
