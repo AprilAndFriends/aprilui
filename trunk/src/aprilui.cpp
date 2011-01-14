@@ -27,6 +27,7 @@ namespace aprilui
 	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
 	Image* gCursor = NULL;
+	bool cursorVisible = true;
 	bool limitCursorToViewport = true;
 	float defaultScale = 1.0f;
 	grect viewport;
@@ -108,9 +109,19 @@ namespace aprilui
 		gCursor = image;
 	}
 	
+	void showCursor()
+	{
+		cursorVisible = true;
+	}
+	
+	void hideCursor()
+	{
+		cursorVisible = false;
+	}
+	
 	void drawCursor()
 	{
-		if (gCursor != NULL)
+		if (gCursor != NULL && cursorVisible)
 		{
 			gCursor->draw(grect(getCursorPosition(), gCursor->getSrcRect().getSize()));
 		}

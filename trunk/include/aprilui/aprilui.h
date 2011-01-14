@@ -42,6 +42,8 @@ namespace aprilui
 	
 	apriluiFnExport gvec2 getCursorPosition();
 	apriluiFnExport void setCursorImage(Image* image);
+	apriluiFnExport void showCursor();
+	apriluiFnExport void hideCursor();
 	apriluiFnExport void drawCursor();
 	
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
