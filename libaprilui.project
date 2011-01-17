@@ -117,12 +117,6 @@
     <Project Name="libapril"/>
     <Project Name="libatres"/>
   </Dependencies>
-  <Dependencies Name="Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-  </Dependencies>
   <Settings Type="Dynamic Library">
     <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" Required="yes" PreCompiledHeader="">
@@ -266,4 +260,10 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+  </Dependencies>
 </CodeLite_Project>
