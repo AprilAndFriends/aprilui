@@ -60,7 +60,7 @@ namespace aprilui
 		{
 			if (name == "AttachToObject")
 			{
-				mValue = mFirstFrame;
+				mValue = (float)mFirstFrame;
 				float delay = mDelay;
 				mDelay = 0.0f;
 				update(0.0f);

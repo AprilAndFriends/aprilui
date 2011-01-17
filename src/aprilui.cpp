@@ -61,8 +61,8 @@ namespace aprilui
 	
 	void init()
 	{
-		viewport.w = april::rendersys->getWindow()->getWidth();
-		viewport.h = april::rendersys->getWindow()->getHeight();
+		viewport.w = (float)april::rendersys->getWindow()->getWidth();
+		viewport.h = (float)april::rendersys->getWindow()->getHeight();
 	}
 	
 	void destroy()
