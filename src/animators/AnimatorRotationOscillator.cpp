@@ -38,6 +38,7 @@ namespace aprilui
 			else if (name == "amplitude")	mAmplitude = value;
 			else if (name == "speed")		mSpeed = value;
 			else if (name == "timer")		mTimer = value;
+			else if (name == "delay")		mDelay = value;
 		}
 
 		void RotationOscillator::notifyEvent(chstr name, void* params)
@@ -58,6 +59,11 @@ namespace aprilui
 
 		void RotationOscillator::update(float k)
 		{
+            if (mDelay > 0)
+            {
+                mDelay = hmax(0.0f, mDelay - k);
+                return;
+            }
 			mTimer += k;
 			float angle = dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
 			((RotationImageBox*)mParent)->setAngle(fmod(angle * 360, 360));

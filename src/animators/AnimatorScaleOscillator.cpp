@@ -35,10 +35,11 @@ namespace aprilui
 
 		void ScaleOscillator::setProperty(chstr name, chstr value)
 		{
-			if      (name == "base") mBaseline = value;
-			else if (name == "amplitude") mAmplitude = value;
-			else if (name == "speed") mSpeed = value;
-			else if (name == "timer") mTimer = value;
+			if      (name == "base")		mBaseline = value;
+			else if (name == "amplitude")	mAmplitude = value;
+			else if (name == "speed")		mSpeed = value;
+			else if (name == "timer")		mTimer = value;
+			else if (name == "delay")		mDelay = value;
 		}
 
 		void ScaleOscillator::notifyEvent(chstr eventName, void* params)
@@ -52,6 +53,11 @@ namespace aprilui
 			{
 				mInitialSize = mParent->getSize();
 			}
+            if (mDelay > 0)
+            {
+                mDelay = hmax(0.0f, mDelay - k);
+                return;
+            }
 			mTimer += k;
 			float factor = dsin(mTimer * mSpeed * 360) * mAmplitude + mBaseline;
 			mParent->setSize(mInitialSize.x + factor, mInitialSize.y + factor);

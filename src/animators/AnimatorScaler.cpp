@@ -30,7 +30,6 @@ namespace aprilui
 			mInitialSize.x = 0.0f;
 			mDest.y = -10000.0f;
 			mDest.x = -10000.0f;
-            mDelay = 0.0f;
 		}
 
 		bool Scaler::isAnimated()

@@ -31,7 +31,6 @@ namespace aprilui
 			void update(float k);
 			
 		protected:
-			float mDelay;
 			float mDuration;
 			float mFrequency;
 			float mTimer;

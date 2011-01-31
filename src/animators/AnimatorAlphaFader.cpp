@@ -29,7 +29,6 @@ namespace aprilui
 			mAccel = 0.0f;
 			mSpeed = 0.0f;
 			mInitialSpeed = 0.0f;
-			mDelay = 0.0f;
 			mTimer = 0.0f;
 			mDestAlpha = -10000.0f;
 			mInitialAlpha = -10001.0f;

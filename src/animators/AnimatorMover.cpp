@@ -24,7 +24,6 @@ namespace aprilui
 		{
 			mDest.x = -10000.0f;
 			mDest.y = -10000.0f;
-            mDelay = 0.0f;
 		}
 
 		bool Mover::isAnimated()
