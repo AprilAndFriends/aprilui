@@ -38,7 +38,6 @@ namespace aprilui
 			float mSpeed;
 			float mAccel;
 			float mTimer;
-			float mDelay;
 			float mDestAlpha;
 			
 		};

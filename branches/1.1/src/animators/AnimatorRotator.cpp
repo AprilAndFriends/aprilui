@@ -26,7 +26,6 @@ namespace aprilui
 			mSpeed = 0.0f;
 			mInitialSpeed = -10000.0f;
 			mInitialAngle = -10000001.0f;
-			mDelay = 0.0f;
 			mDestAngle = -1.0f;
 		}
 

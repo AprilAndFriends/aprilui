@@ -25,7 +25,6 @@ namespace aprilui
 			FrameAnimation(chstr name);
 
 			bool isAnimated();
-            void setDelay(float value) { mDelay = value; }
 			
 			void setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
@@ -39,7 +38,6 @@ namespace aprilui
 			float mAnimationTime;
 			float mTimer;
 			int mLoop;
-            float mDelay;
 			
 		};
 	}

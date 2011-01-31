@@ -38,13 +38,14 @@ namespace aprilui
 
 		void MoveOscillator::setProperty(chstr name, chstr value)
 		{
-			if      (name == "base_x") mBaseline.x = value;
-			else if (name == "base_y") mBaseline.y = value;
-			else if (name == "amplitude_x") mAmplitude.x = value;
-			else if (name == "amplitude_y") mAmplitude.y = value;
-			else if (name == "speed_x") mSpeed.x = value;
-			else if (name == "speed_y") mSpeed.y = value;
-			else if (name == "timer") mTimer = value;
+			if      (name == "base_x")		mBaseline.x = value;
+			else if (name == "base_y")		mBaseline.y = value;
+			else if (name == "amplitude_x")	mAmplitude.x = value;
+			else if (name == "amplitude_y")	mAmplitude.y = value;
+			else if (name == "speed_x") 	mSpeed.x = value;
+			else if (name == "speed_y") 	mSpeed.y = value;
+			else if (name == "timer")		mTimer = value;
+			else if (name == "delay")		mDelay = value;
 		}
 
 		void MoveOscillator::notifyEvent(chstr eventName, void* params)
@@ -58,6 +59,11 @@ namespace aprilui
 			{
 				mInitialPosition = mParent->getSize();
 			}
+            if (mDelay > 0)
+            {
+                mDelay = hmax(0.0f, mDelay - k);
+                return;
+            }
 			mTimer += k;
 			float factor_x = dsin(mTimer * mSpeed.x * 360) * mAmplitude.x + mBaseline.x;
 			float factor_y = dsin(mTimer * mSpeed.y * 360) * mAmplitude.y + mBaseline.y;

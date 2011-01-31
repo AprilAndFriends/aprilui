@@ -32,15 +32,12 @@ namespace aprilui
 			void update(float k);
 			void scale(float dest_w, float dest_h, float time);
             
-            void setDelay(float value) { mDelay = value; }
-			
 		protected:
 			gvec2 mInitialSize;
 			gvec2 mInitialS;
 			gvec2 mAccel;
 			gvec2 mSpeed;
 			gvec2 mDest;
-            float mDelay;
 			
 		};
 	}

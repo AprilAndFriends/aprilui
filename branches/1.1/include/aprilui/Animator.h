@@ -25,6 +25,10 @@ namespace aprilui
 		
 		virtual bool isAnimated() = 0;
 		
+		void setDelay(float value) { mDelay = value; }
+		
+	protected:
+		float mDelay;
 	};
 }
 

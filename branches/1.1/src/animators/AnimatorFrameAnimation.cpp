@@ -26,7 +26,6 @@ namespace aprilui
 			mAnimationTime = 10.0f;
 			mTimer = 0.0f;
 			mLoop = 1;
-            mDelay = 0.0f;
 		}
 
 		bool FrameAnimation::isAnimated()

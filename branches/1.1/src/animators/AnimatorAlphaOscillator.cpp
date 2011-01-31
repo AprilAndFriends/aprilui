@@ -36,6 +36,7 @@ namespace aprilui
 			if      (name == "base")		mBaseline = value;
 			else if (name == "amplitude")	mAmplitude = value;
 			else if (name == "speed")		mSpeed = value;
+			else if (name == "delay")		mDelay = value;
 		}
 
 		void AlphaOscillator::notifyEvent(chstr name, void* params)
@@ -56,6 +57,11 @@ namespace aprilui
 
 		void AlphaOscillator::update(float k)
 		{
+            if (mDelay > 0)
+            {
+                mDelay = hmax(0.0f, mDelay - k);
+                return;
+            }
 			mTimer += k;
 			float alpha = dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
 			mParent->setAlpha(hclamp(alpha, 0.0f, 1.0f));

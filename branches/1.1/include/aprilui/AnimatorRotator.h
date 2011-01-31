@@ -35,7 +35,6 @@ namespace aprilui
 			float mInitialAngle;
 			float mSpeed;
 			float mAccel;
-			float mDelay;
 			float mDestAngle;
 			
 		};
