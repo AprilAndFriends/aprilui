@@ -48,9 +48,21 @@ namespace aprilui
 			else if (name == "delay")		mDelay = value;
 		}
 
-		void MoveOscillator::notifyEvent(chstr eventName, void* params)
+		void MoveOscillator::notifyEvent(chstr name, void* params)
 		{
-			Object::notifyEvent(eventName, params);
+			if (name == "AttachToObject")
+			{
+				if (mInitialPosition.x < -10000.0f)
+				{
+					mInitialPosition.x = mParent->getX();
+				}
+				else if (mInitialPosition.y < -10000.0f)
+				{
+					mInitialPosition.y = mParent->getY();
+				}
+				update(0);
+			}
+			Object::notifyEvent(name, params);
 		}
 
 		void MoveOscillator::update(float k)
