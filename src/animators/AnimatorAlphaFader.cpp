@@ -99,7 +99,6 @@ namespace aprilui
 			if (sgn(mDestAlpha - alpha) != sgn(mDestAlpha - prevalpha))
 			{
 				alpha = mDestAlpha;
-				reset();
 			}
 			mParent->setAlpha(hclamp(alpha, 0.0f, 1.0f));
 		}
