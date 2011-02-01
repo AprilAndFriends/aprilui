@@ -276,7 +276,9 @@ namespace aprilui
 		else if (*node == "Animator")
 		{
 			/*if*/parse_animator(Mover);
+			else  parse_animator(MoveOscillator);
 			else  parse_animator(Scaler);
+			else  parse_animator(ScaleOscillator);
 			else  parse_animator(Rotator);
 			else  parse_animator(RotationOscillator);
 			else  parse_animator(ColorAlternator);
