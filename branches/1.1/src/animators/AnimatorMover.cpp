@@ -39,7 +39,7 @@ namespace aprilui
 			else if (name == "accel_y")	mAccel.y = value;
 			else if (name == "dest_x")	mDest.x = value;
 			else if (name == "dest_y")	mDest.y = value;
-            else if (name == "delay")	mDelay = value;
+            else if (name == "delay")	mInitialDelay = mDelay = value;
 		}
 
 		void Mover::notifyEvent(chstr name, void* params)

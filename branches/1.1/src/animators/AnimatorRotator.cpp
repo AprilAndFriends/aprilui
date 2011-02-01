@@ -38,7 +38,7 @@ namespace aprilui
 		{
 			if      (name == "speed")		mSpeed = mInitialSpeed = value;
 			else if (name == "accel")		mAccel = value;
-			else if (name == "delay")		mDelay = value;
+			else if (name == "delay")		mInitialDelay = mDelay = value;
 			else if (name == "dest_angle")	mDestAngle = fmod((float)value, 360.0f);
 		}
 

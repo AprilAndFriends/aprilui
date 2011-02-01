@@ -40,7 +40,7 @@ namespace aprilui
 			else if (name == "time")        mAnimationTime = value;
 			else if (name == "base_name")   mImageBaseName = value;
 			else if (name == "loop")        mLoop = value;
-            else if (name == "delay")       mDelay = value;
+            else if (name == "delay")       mInitialDelay = mDelay = value;
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)

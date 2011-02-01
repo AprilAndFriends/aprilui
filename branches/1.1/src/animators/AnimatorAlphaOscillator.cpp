@@ -36,7 +36,7 @@ namespace aprilui
 			if      (name == "base")		mBaseline = value;
 			else if (name == "amplitude")	mAmplitude = value;
 			else if (name == "speed")		mSpeed = value;
-			else if (name == "delay")		mDelay = value;
+			else if (name == "delay")		mInitialDelay = mDelay = value;
 		}
 
 		void AlphaOscillator::notifyEvent(chstr name, void* params)

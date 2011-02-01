@@ -28,7 +28,9 @@ namespace aprilui
 		void setDelay(float value) { mDelay = value; }
 		
 	protected:
+		float mInitialDelay;
 		float mDelay;
+		
 	};
 }
 

@@ -21,17 +21,22 @@ namespace aprilui
 	{
 		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler", name, grect(0, 0, 1, 1))
 		{
-			reset();
+			mInitialAccel = mAccel = 0.0f;
+			mInitialSpeed = mSpeed = 0.0f;
+			mInitialDestAlpha = mDestAlpha = -10000.0f;
+			mInitialAlpha = -10001.0f;
+			mResetHack = false;
 		}
 		
 		void AlphaFader::reset()
 		{
-			mAccel = 0.0f;
-			mSpeed = 0.0f;
-			mInitialSpeed = 0.0f;
-			mTimer = 0.0f;
-			mDestAlpha = -10000.0f;
-			mInitialAlpha = -10001.0f;
+			if (mResetHack)
+			{
+				mAccel = mInitialAccel;
+				mSpeed = mInitialSpeed;
+				mDelay = mInitialDelay;
+				mDestAlpha = mInitialDestAlpha;
+			}
 		}
 		
 		bool AlphaFader::isAnimated()
@@ -41,10 +46,11 @@ namespace aprilui
 
 		void AlphaFader::setProperty(chstr name, chstr value)
 		{
-			if      (name == "speed")		mSpeed = mInitialSpeed = value;
-			else if (name == "accel")		mAccel = value;
-			else if (name == "delay")		mDelay = value;
-			else if (name == "dest_alpha")	mDestAlpha = value;
+			if      (name == "speed")		mInitialSpeed = mSpeed = value;
+			else if (name == "accel")		mInitialAccel = mAccel = value;
+			else if (name == "delay")		mInitialDelay = mDelay = value;
+			else if (name == "dest_alpha")	mInitialDestAlpha = mDestAlpha = value;
+			else if (name == "reset_hack")	mResetHack = (bool)value;
 		}
 
 		void AlphaFader::notifyEvent(chstr name, void* params)
@@ -59,11 +65,6 @@ namespace aprilui
 				{
 					mParent->setAlpha(mInitialAlpha);
 				}
-				if (mDelay != 0.0f)
-				{
-					mTimer = mDelay;
-				}
-				mSpeed = mInitialSpeed;
 			}
 			Object::notifyEvent(name,params);
 		}
@@ -79,9 +80,9 @@ namespace aprilui
 		
 		void AlphaFader::update(float k)
 		{
-			if (mTimer > 0.0f)
+			if (mDelay > 0.0f)
 			{
-				mTimer-=k;
+				mDelay -= k;
 				return;
 			}
 			float alpha = mParent->getAlpha();
