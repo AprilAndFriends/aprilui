@@ -17,6 +17,7 @@ namespace aprilui
 		Object(type, name, rect)
 	{
 		mDelay = 0.0f;
+		mInitialDelay = 0.0f;
 	}
 	
 }

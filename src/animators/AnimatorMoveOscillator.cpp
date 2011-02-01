@@ -45,7 +45,7 @@ namespace aprilui
 			else if (name == "speed_x") 	mSpeed.x = value;
 			else if (name == "speed_y") 	mSpeed.y = value;
 			else if (name == "timer")		mTimer = value;
-			else if (name == "delay")		mDelay = value;
+			else if (name == "delay")		mInitialDelay = mDelay = value;
 		}
 
 		void MoveOscillator::notifyEvent(chstr name, void* params)

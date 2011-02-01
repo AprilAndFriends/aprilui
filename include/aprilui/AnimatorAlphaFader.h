@@ -33,12 +33,14 @@ namespace aprilui
 			void update(float k);
 			
 		protected:
-			float mInitialSpeed;
 			float mInitialAlpha;
+			float mInitialSpeed;
 			float mSpeed;
+			float mInitialAccel;
 			float mAccel;
-			float mTimer;
+			float mInitialDestAlpha;
 			float mDestAlpha;
+			bool mResetHack;
 			
 		};
 	}

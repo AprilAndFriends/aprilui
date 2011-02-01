@@ -40,6 +40,7 @@ namespace aprilui
 
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
+		virtual void reset() { } // hack
 		
 		bool isCursorInside();
 		virtual bool isPointInside(gvec2 position);

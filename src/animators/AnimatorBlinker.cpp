@@ -35,7 +35,7 @@ namespace aprilui
 
 		void Blinker::setProperty(chstr name, chstr value)
 		{
-			if      (name == "delay")				mDelay = value;
+			if      (name == "delay")				mInitialDelay = mDelay = value;
 			else if (name == "duration")			mDuration = value;
 			else if (name == "freq")				mFrequency = value;
 			else if (name == "start_visibility")	mStartVisibility = (bool)value;

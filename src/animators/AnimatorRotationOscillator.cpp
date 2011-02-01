@@ -38,7 +38,7 @@ namespace aprilui
 			else if (name == "amplitude")	mAmplitude = value;
 			else if (name == "speed")		mSpeed = value;
 			else if (name == "timer")		mTimer = value;
-			else if (name == "delay")		mDelay = value;
+			else if (name == "delay")		mInitialDelay = mDelay = value;
 		}
 
 		void RotationOscillator::notifyEvent(chstr name, void* params)

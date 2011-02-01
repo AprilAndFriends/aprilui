@@ -45,7 +45,7 @@ namespace aprilui
 			else if (name == "accel_h")	mAccel.y = value;
 			else if (name == "dest_w")	mDest.x = value;
 			else if (name == "dest_h")	mDest.y = value;
-            else if (name == "delay")	mDelay = value;
+            else if (name == "delay")	mInitialDelay = mDelay = value;
 		}
 
 		void Scaler::notifyEvent(chstr name, void* params)
