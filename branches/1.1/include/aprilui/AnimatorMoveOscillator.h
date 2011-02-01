@@ -25,7 +25,7 @@ namespace aprilui
 			MoveOscillator(chstr name);
 			
 			bool isAnimated();
-			void notifyEvent(chstr eventName, void* params);
+			void notifyEvent(chstr name, void* params);
 			void setProperty(chstr name, chstr value);
 			void update(float k);
 			
