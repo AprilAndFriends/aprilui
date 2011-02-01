@@ -56,7 +56,7 @@ namespace aprilui
 				{
 					mInitialPosition.x = mParent->getX();
 				}
-				else if (mInitialPosition.y < -10000.0f)
+				if (mInitialPosition.y < -10000.0f)
 				{
 					mInitialPosition.y = mParent->getY();
 				}
@@ -67,10 +67,6 @@ namespace aprilui
 
 		void MoveOscillator::update(float k)
 		{
-			if (mInitialPosition.x < -10000)
-			{
-				mInitialPosition = mParent->getSize();
-			}
             if (mDelay > 0)
             {
                 mDelay = hmax(0.0f, mDelay - k);
