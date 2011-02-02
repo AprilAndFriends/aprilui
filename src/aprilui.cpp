@@ -31,6 +31,7 @@ namespace aprilui
 	bool limitCursorToViewport = true;
 	float defaultScale = 1.0f;
 	grect viewport;
+	grect screenViewport;
 #ifdef _DEBUG
 	bool debugMode = false;
 #endif
@@ -90,12 +91,22 @@ namespace aprilui
 		viewport = value;
 	}
 	
+	grect getScreenViewport()
+	{
+		return screenViewport;
+	}
+	
+	void setScreenViewport(grect value)
+	{
+		screenViewport = value;
+	}
+	
 	gvec2 getCursorPosition()
 	{
 		april::Window* window = april::rendersys->getWindow();
 		gvec2 position = window->getCursorPosition();
-		position.x = (float)(int)(position.x * viewport.w / window->getWidth());
-		position.y = (float)(int)(position.y * viewport.h / window->getHeight());
+		position.x = (float)(int)(position.x * screenViewport.w / window->getWidth()) - viewport.x;
+		position.y = (float)(int)(position.y * screenViewport.h / window->getHeight()) - viewport.y;
 		if (limitCursorToViewport)
 		{
 			position.x = hclamp(position.x, 0.0f, viewport.w - 1);

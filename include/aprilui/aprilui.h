@@ -37,6 +37,8 @@ namespace aprilui
 	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport grect getViewport();
 	apriluiFnExport void setViewport(grect value);
+	apriluiFnExport grect getScreenViewport();
+	apriluiFnExport void setScreenViewport(grect value);
 	apriluiFnExport bool isLimitCursorToViewport();
 	apriluiFnExport void setLimitCursorToViewport(bool value);
 	
