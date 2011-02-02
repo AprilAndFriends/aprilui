@@ -87,6 +87,11 @@ namespace aprilui
 
 		hstr getName() { return mName; }
 		
+		template <class T> T getObject(chstr name)
+		{
+			return dynamic_cast<T>(getObject(name));
+		}
+		
 	protected:
 		hstr mName;
 		hstr mFilename;
