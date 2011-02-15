@@ -26,10 +26,11 @@ namespace aprilui
 	bool registerLock = false;
 	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
+	float defaultScale = 1.0f;
 	Image* gCursor = NULL;
 	bool cursorVisible = true;
-	bool limitCursorToViewport = true;
-	float defaultScale = 1.0f;
+	bool limitCursorToViewport = false;
+	bool limitCursorToScreenViewport = true;
 	grect viewport;
 	grect screenViewport;
 #ifdef _DEBUG
@@ -112,6 +113,11 @@ namespace aprilui
 			position.x = hclamp(position.x, 0.0f, viewport.w - 1);
 			position.y = hclamp(position.y, 0.0f, viewport.h - 1);
 		}
+		else if (limitCursorToScreenViewport)
+		{
+			position.x = hclamp(position.x, -viewport.x, screenViewport.w - viewport.x - 1);
+			position.y = hclamp(position.y, -viewport.y, screenViewport.w - viewport.y - 1);
+		}
 		return position;
 	}
 
@@ -146,6 +152,16 @@ namespace aprilui
 	void setLimitCursorToViewport(bool value)
 	{
 		limitCursorToViewport = value;
+	}
+
+	bool isLimitCursorToScreenViewport()
+	{
+		return limitCursorToScreenViewport;
+	}
+
+	void setLimitCursorToScreenViewport(bool value)
+	{
+		limitCursorToScreenViewport = value;
 	}
 
 	Dataset* getDatasetByName(chstr name)
