@@ -83,15 +83,15 @@
 				<Animator type="MoverY" function="sine" periods="-1" amplitude="-16" timer="0.75"/>
 				<Animator type="Rotator" function="hover" amplitude="22.5" speed="180" offset="22.5"/>
 				
-				<Object type="ColoredQuad" color="FF0000" dock="top_left" x="0" y="0" w="32" h="32"/>
-				<Object type="ColoredQuad" color="00FF00" dock="top_center" x="0" y="0" w="32" h="32"/>
-				<Object type="ColoredQuad" color="0000FF" dock="top_right" x="0" y="0" w="32" h="32"/>
-				<Object type="ColoredQuad" color="FFFF00" dock="center_left" x="0" y="0" w="32" h="32"/>
+				<Object type="ColoredQuad" color="FF0000" dock="top_left" x="2" y="2" w="32" h="32"/>
+				<Object type="ColoredQuad" color="00FF00" dock="top_center" x="0" y="2" w="32" h="32"/>
+				<Object type="ColoredQuad" color="0000FF" dock="top_right" x="-2" y="2" w="32" h="32"/>
+				<Object type="ColoredQuad" color="FFFF00" dock="center_left" x="2" y="0" w="32" h="32"/>
 				<Object type="ColoredQuad" color="FF00FF" dock="center_center" x="0" y="0" w="32" h="32"/>
-				<Object type="ColoredQuad" color="00FFFF" dock="center_right" x="0" y="0" w="32" h="32"/>
-				<Object type="ColoredQuad" color="000000" dock="bottom_left" x="0" y="0" w="32" h="32"/>
-				<Object type="ColoredQuad" color="7F7F7F" dock="bottom_center" x="0" y="0" w="32" h="32"/>
-				<Object type="ColoredQuad" color="FFFFFF" dock="bottom_right" x="0" y="0" w="32" h="32"/>
+				<Object type="ColoredQuad" color="00FFFF" dock="center_right" x="-2" y="0" w="32" h="32"/>
+				<Object type="ColoredQuad" color="000000" dock="bottom_left" x="2" y="-2" w="32" h="32"/>
+				<Object type="ColoredQuad" color="7F7F7F" dock="bottom_center" x="0" y="-2" w="32" h="32"/>
+				<Object type="ColoredQuad" color="FFFFFF" dock="bottom_right" x="-2" y="-2" w="32" h="32"/>
 			</Object>
 		</Object>
 		
