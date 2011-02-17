@@ -132,7 +132,7 @@ xml_prop* xml_node::iter_properties()
 {
 	return (xml_prop*)this->properties;
 }
-/*****************************************************************************/
+/************************************************************************************/
 xml_prop* xml_prop::next()
 {
 	return (xml_prop*)((_xmlAttr*)this)->next;
@@ -147,7 +147,7 @@ hstr xml_prop::value()
 {
 	return hstr((const char*)this->children->content);
 }
-/*****************************************************************************/
+/************************************************************************************/
 xml_doc::xml_doc(chstr filename)
 {
 	this->doc = xmlParseFile((filename).c_str());
