@@ -90,7 +90,7 @@
 		7F3AE14012560796009DFEC8 /* ObjectTextImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11912560796009DFEC8 /* ObjectTextImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE14112560796009DFEC8 /* ObjectToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11A12560796009DFEC8 /* ObjectToggleButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F3AE14312560796009DFEC8 /* xmlHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F3AE11C12560796009DFEC8 /* xmlHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7FBCD23312956CD400D5D159 /* AnimatorMoveOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FBCD23212956CD400D5D159 /* AnimatorMoveOscillator.h */; };
+		7FBCD23312956CD400D5D159 /* AnimatorMoveOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FBCD23212956CD400D5D159 /* AnimatorMoveOscillator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FBCD23512956CF900D5D159 /* AnimatorMoveOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23412956CF900D5D159 /* AnimatorMoveOscillator.cpp */; };
 		7FBCD23D12956D0600D5D159 /* ColoredImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23712956D0600D5D159 /* ColoredImage.cpp */; };
 		7FBCD23E12956D0600D5D159 /* ColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCD23812956D0600D5D159 /* ColorImage.cpp */; };
