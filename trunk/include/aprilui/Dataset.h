@@ -61,6 +61,7 @@ namespace aprilui
 		hstr _getFilename() { return mFilename; }
 		hstr _getFilenamePrefix() { return mFilenamePrefix; }
 		hmap<hstr, Object*>& getObjects() { return mObjects; }
+		hmap<hstr, Image*>& getImages() { return mImages; }
 
 		void updateTextures(float k);
 		virtual void update(float k);

@@ -36,6 +36,19 @@ namespace aprilui
 		mInvertX = invertX;
 		mInvertY = invertY;
 	}
+
+	Image::Image(Image& img,chstr name)
+	{
+		mTexture=img.mTexture;
+		mName=name;
+		mImageName=img.mImageName;
+		mSrcRect=img.mSrcRect;
+		mBlendMode=img.mBlendMode;
+		mVertical = img.mVertical;
+		mUnloadedFlag = img.mUnloadedFlag;
+		mInvertX = img.mInvertX;
+		mInvertY = img.mInvertY;
+	}
 	
 	Image::~Image()
 	{

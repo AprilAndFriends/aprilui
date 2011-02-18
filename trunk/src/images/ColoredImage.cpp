@@ -21,6 +21,11 @@ namespace aprilui
 		mColor = color;
 	}
 
+	ColoredImage::ColoredImage(Image& img,chstr name,april::Color color) : Image(img,name)
+	{
+		mColor=color;
+	}
+
 	unsigned char ColoredImage::getAlpha()
 	{
 		return mColor.a;
