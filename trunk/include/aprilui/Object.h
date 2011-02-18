@@ -52,10 +52,12 @@ namespace aprilui
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
 
+		gvec2 getDockedOffset();
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
 		
 		virtual bool isCursorInside();
+		bool isPointInside(gvec2 position);
 		bool angleEquals(float angle);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
