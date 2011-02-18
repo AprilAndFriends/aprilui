@@ -21,7 +21,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <atres/atres.h>
 #include <gtypes/Vector2.h>
 
-gvec2 screen(800, 600);
+grect screen(0, 0, 800, 600);
 
 aprilui::Dataset* dataset;
 
@@ -92,7 +92,7 @@ int main()
 #endif
 	try
 	{
-		april::init("GUI", screen.x, screen.y, false, "demo_gui");
+		april::init("GUI", screen.w, screen.h, false, "demo_gui");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&update);
