@@ -93,6 +93,46 @@ namespace aprilui
 		}
 		mChildren.clear();
 	}
+	
+	gvec2 Object::getDockedOffset()
+	{
+		gvec2 position;
+		if (mParent != NULL)
+		{
+			switch (getDock())
+			{
+			case TopLeft:
+				break;
+			case TopCenter:
+				position.x = (mParent->getWidth() - mRect.w) / 2;
+				break;
+			case TopRight:
+				position.x = mParent->getWidth() - mRect.w;
+				break;
+			case CenterLeft:
+				position.y = (mParent->getHeight() - mRect.h) / 2;
+				break;
+			case CenterCenter:
+				position = (mParent->getSize() - mRect.getSize()) / 2;
+				break;
+			case CenterRight:
+				position.x = mParent->getWidth() - mRect.w;
+				position.y = (mParent->getHeight() - mRect.h) / 2;
+				break;
+			case BottomLeft:
+				position.y = mParent->getHeight() - mRect.h;
+				break;
+			case BottomCenter:
+				position.x = (mParent->getWidth() - mRect.w) / 2;
+				position.y = mParent->getHeight() - mRect.h;
+				break;
+			case BottomRight:
+				position = mParent->getSize() - mRect.getSize();
+				break;
+			}
+		}
+		return position;
+	}
 
 	void Object::setZOrder(int zorder)
 	{
@@ -162,38 +202,7 @@ namespace aprilui
 		OnDraw();
 		foreach (Object*, it, mChildren)
 		{
-			position = -mCenter;
-			switch ((*it)->getDock())
-			{
-			case TopLeft:
-				break;
-			case TopCenter:
-				position.x += (mRect.w - (*it)->getWidth()) / 2;
-				break;
-			case TopRight:
-				position.x += mRect.w - (*it)->getWidth();
-				break;
-			case CenterLeft:
-				position.y += (mRect.h - (*it)->getHeight()) / 2;
-				break;
-			case CenterCenter:
-				position += (mRect.getSize() - (*it)->getSize()) / 2;
-				break;
-			case CenterRight:
-				position.x += mRect.w - (*it)->getWidth();
-				position.y += (mRect.h - (*it)->getHeight()) / 2;
-				break;
-			case BottomLeft:
-				position.y += mRect.h - (*it)->getHeight();
-				break;
-			case BottomCenter:
-				position.x += (mRect.w - (*it)->getWidth()) / 2;
-				position.y += mRect.h - (*it)->getHeight();
-				break;
-			case BottomRight:
-				position += mRect.getSize() - (*it)->getSize();
-				break;
-			}
+			position = -mCenter + (*it)->getDockedOffset();
 			(*it)->draw(position);
 		}
 		april::rendersys->setModelviewMatrix(originalMatrix);
@@ -214,6 +223,12 @@ namespace aprilui
 		{
 			position -= p->getPosition();
 		}
+		return isPointInside(position);
+	}
+	
+	bool Object::isPointInside(gvec2 position)
+	{
+		position += getDockedOffset();
 		return mRect.isPointInside(position);
 	}
 
