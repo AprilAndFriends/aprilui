@@ -30,7 +30,7 @@ namespace aprilui
 	{
 		ImageBox::update(k);
 		gvec2 position = aprilui::getCursorPosition() - (getDerivedPosition() - mRect.getPosition());
-		if (mPushed && mRect.isPointInside(position))
+		if (mPushed && isPointInside(position))
 		{
 			setValue((position.x - mRect.x) / (mRect.w - 4));
 		}

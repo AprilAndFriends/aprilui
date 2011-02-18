@@ -218,7 +218,7 @@ namespace aprilui
 
 	bool Object::isCursorInside()
 	{
-		gvec2 position = getCursorPosition();
+		gvec2 position = aprilui::getCursorPosition();
 		for (Object* p = mParent; p != NULL; p = p->mParent)
 		{
 			position -= p->getPosition();
@@ -228,7 +228,7 @@ namespace aprilui
 	
 	bool Object::isPointInside(gvec2 position)
 	{
-		position += getDockedOffset();
+		position -= getDockedOffset();
 		return mRect.isPointInside(position);
 	}
 
@@ -448,7 +448,7 @@ namespace aprilui
 	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
-		if (!isVisible() || !mRect.isPointInside(pos))
+		if (!isVisible() || !isPointInside(pos))
 		{
 			return NULL;
 		}
@@ -476,7 +476,7 @@ namespace aprilui
 		{
 			position += p->getPosition();
 		}
-		return position;
+		return position + getDockedOffset();
 	}
 	
 	grect Object::_getDrawRect()
