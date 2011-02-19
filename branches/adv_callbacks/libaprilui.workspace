@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Workspace Name="libaprilui" Database="./libaprilui.tags">
+  <Project Name="libaprilui" Path="libaprilui.project" Active="No"/>
+  <Project Name="demo_simple" Path="demos/demo_simple/demo_simple.project" Active="No"/>
+  <Project Name="demo_zorder" Path="demos/demo_zorder/demo_zorder.project" Active="No"/>
+  <Project Name="libapril" Path="../april/libapril.project" Active="No"/>
+  <Project Name="libgtypes" Path="../gtypes/libgtypes.project" Active="No"/>
+  <Project Name="libhltypes" Path="../hltypes/libhltypes.project" Active="No"/>
+  <Project Name="libatres" Path="../atres/libatres.project" Active="No"/>
+  <Project Name="demo_tiledimage" Path="demos/demo_tiledimage/demo_tiledimage.project" Active="No"/>
+  <Project Name="demo_gui" Path="demos/demo_gui/demo_gui.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Linux_Debug" Selected="no">
+      <Project Name="libhltypes" ConfigName="Linux_Debug"/>
+      <Project Name="libgtypes" ConfigName="Linux_Debug"/>
+      <Project Name="libatres" ConfigName="Linux_Debug"/>
+      <Project Name="libaprilui" ConfigName="Linux_Debug"/>
+      <Project Name="libapril" ConfigName="Linux_Debug"/>
+      <Project Name="demo_zorder" ConfigName="Linux_Debug"/>
+      <Project Name="demo_simple" ConfigName="Linux_Debug"/>
+      <Project Name="demo_gui" ConfigName="Linux_Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release_Win32" Selected="no">
+      <Project Name="libaprilui" ConfigName="Release"/>
+      <Project Name="demo_simple" ConfigName="Release"/>
+      <Project Name="demo_zorder" ConfigName="Release"/>
+      <Project Name="libapril" ConfigName="DirectX_Debug"/>
+      <Project Name="libgtypes" ConfigName="Debug"/>
+      <Project Name="libhltypes" ConfigName="Debug"/>
+      <Project Name="libatres" ConfigName="Release_Win32"/>
+      <Project Name="demo_gui" ConfigName="Release_Win32"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="libhltypes" ConfigName="Debug"/>
+      <Project Name="libgtypes" ConfigName="Debug"/>
+      <Project Name="libatres" ConfigName="Debug"/>
+      <Project Name="libaprilui" ConfigName="Debug"/>
+      <Project Name="libapril" ConfigName="DirectX_Debug"/>
+      <Project Name="demo_zorder" ConfigName="Debug"/>
+      <Project Name="demo_tiledimage" ConfigName="Debug"/>
+      <Project Name="demo_simple" ConfigName="Debug"/>
+      <Project Name="demo_gui" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
