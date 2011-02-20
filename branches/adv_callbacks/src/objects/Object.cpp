@@ -324,23 +324,24 @@ namespace aprilui
 
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
+		registerEvent(name,new CallbackEvent(callback));
+	}
+
+	void Object::registerEvent(chstr name,Event* e)
+	{
 		Event* event = NULL;
 		if (mEvents.has_key(name))
-		{
 			event = mEvents[name];
-		}
-        if (callback == NULL)
-		{
-			mEvents.remove_key(name);
-		}
-        else
-		{
-			mEvents[name] = new CallbackEvent(callback);
-		}
+		else
+			mEvents[name] = e;
+
 		if (event != NULL)
-		{
 			delete event;
-		}
+	}
+
+	void Object::unregisterEvent(chstr name)
+	{
+		mEvents.remove_key(name);
 	}
 
 	void Object::triggerEvent(chstr name, float x, float y, chstr extra)
