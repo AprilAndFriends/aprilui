@@ -59,7 +59,9 @@ namespace aprilui
 		virtual bool isCursorInside();
 		bool isPointInside(gvec2 position);
 		bool angleEquals(float angle);
+		void unregisterEvent(chstr name);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
+		void registerEvent(chstr name,Event* e);
 
 		float getX() { return mRect.x; }
 		void setX(float value) { mRect.x = value; }

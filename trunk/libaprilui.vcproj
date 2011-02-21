@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\MemberCallbackEvent.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Util.cpp"
 				>
 			</File>
@@ -373,11 +377,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\aprilui\EventUtils.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\aprilui\Exception.h"
 				>
 			</File>
 			<File
 				RelativePath=".\include\aprilui\Images.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\aprilui\MemberCallbackEvent.h"
 				>
 			</File>
 			<File
