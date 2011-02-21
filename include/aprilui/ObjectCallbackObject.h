@@ -26,12 +26,16 @@ namespace aprilui
 		
 		void (*getCallback())() { return mCallback; }
 		void setCallback(void (*value)()) { mCallback = value; }
+		void setUpdateCallback(void (*value)(float)) { mUpdateCallback = value; }
 		
 		void OnDraw();
+		void update(float k);
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
 		
 	protected:
 		void (*mCallback)();
-		
+		void (*mUpdateCallback)(float);		
 	};
 }
 
