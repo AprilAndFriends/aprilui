@@ -186,10 +186,6 @@ namespace aprilui
 			return;
 		}
 		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-		if (mParent == NULL)
-		{
-			april::rendersys->setIdentityTransform();
-		}
 		gvec2 position = mRect.getPosition() + offset + mCenter;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
