@@ -52,6 +52,7 @@
     </VirtualDirectory>
     <File Name="src/EventArgs.cpp"/>
     <File Name="src/aprilui.cpp"/>
+    <File Name="src/MemberCallbackEvent.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/aprilui/Dataset.h"/>
@@ -103,6 +104,8 @@
     <File Name="include/aprilui/Images.h"/>
     <File Name="include/aprilui/aprilui.h"/>
     <File Name="include/aprilui/apriluiExport.h"/>
+    <File Name="include/aprilui/EventUtils.h"/>
+    <File Name="include/aprilui/MemberCallbackEvent.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
   <Dependencies Name="Release_Win32">
