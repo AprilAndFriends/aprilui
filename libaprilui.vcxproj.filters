@@ -143,6 +143,9 @@
     <ClCompile Include="src\images\TiledImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
+    <ClCompile Include="src\MemberCallbackEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Util.h">
@@ -273,6 +276,12 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\TiledImage.h">
       <Filter>Header Files\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\EventUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\MemberCallbackEvent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

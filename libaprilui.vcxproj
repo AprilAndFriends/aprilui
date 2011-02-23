@@ -88,6 +88,7 @@
     <ClCompile Include="src\Dataset.cpp" />
     <ClCompile Include="src\EventArgs.cpp" />
     <ClCompile Include="src\Exception.cpp" />
+    <ClCompile Include="src\MemberCallbackEvent.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\xmlHelper.cpp" />
     <ClCompile Include="src\animators\Animator.cpp" />
@@ -123,6 +124,8 @@
     <ClCompile Include="src\images\TiledImage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\aprilui\EventUtils.h" />
+    <ClInclude Include="include\aprilui\MemberCallbackEvent.h" />
     <ClInclude Include="src\Util.h" />
     <ClInclude Include="include\aprilui\Animators.h" />
     <ClInclude Include="include\aprilui\aprilui.h" />
