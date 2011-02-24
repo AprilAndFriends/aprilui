@@ -29,6 +29,7 @@ namespace aprilui
 			void notifyEvent(chstr name, void* params);
 			void fade(float dest, float time);
 			void reset();
+			void setResetHack(bool value) { mResetHack=value; }
 			
 			void update(float k);
 			
