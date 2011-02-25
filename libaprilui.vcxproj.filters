@@ -77,12 +77,6 @@
     <ClCompile Include="src\animators\AnimatorRotator.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorScalerX.cpp">
-      <Filter>Source Files\Animators</Filter>
-    </ClCompile>
-    <ClCompile Include="src\animators\AnimatorScalerY.cpp">
-      <Filter>Source Files\Animators</Filter>
-    </ClCompile>
     <ClCompile Include="src\objects\Object.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -145,6 +139,12 @@
     </ClCompile>
     <ClCompile Include="src\MemberCallbackEvent.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animators\AnimatorResizerX.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animators\AnimatorResizerY.cpp">
+      <Filter>Source Files\Animators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,12 +209,6 @@
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\AnimatorRotator.h">
-      <Filter>Header Files\Animators</Filter>
-    </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorScalerX.h">
-      <Filter>Header Files\Animators</Filter>
-    </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorScalerY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\Object.h">
@@ -282,6 +276,12 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\MemberCallbackEvent.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorResizerX.h">
+      <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorResizerY.h">
+      <Filter>Header Files\Animators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

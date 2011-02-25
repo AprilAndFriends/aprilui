@@ -83,6 +83,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\animators\AnimatorResizerX.cpp" />
+    <ClCompile Include="src\animators\AnimatorResizerY.cpp" />
     <ClCompile Include="src\aprilui.cpp" />
     <ClCompile Include="src\CallbackEvent.cpp" />
     <ClCompile Include="src\Dataset.cpp" />
@@ -100,8 +102,6 @@
     <ClCompile Include="src\animators\AnimatorMoverY.cpp" />
     <ClCompile Include="src\animators\AnimatorRedChanger.cpp" />
     <ClCompile Include="src\animators\AnimatorRotator.cpp" />
-    <ClCompile Include="src\animators\AnimatorScalerX.cpp" />
-    <ClCompile Include="src\animators\AnimatorScalerY.cpp" />
     <ClCompile Include="src\objects\Object.cpp" />
     <ClCompile Include="src\objects\ObjectButtonBase.cpp" />
     <ClCompile Include="src\objects\ObjectCallbackObject.cpp" />
@@ -124,6 +124,8 @@
     <ClCompile Include="src\images\TiledImage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\aprilui\AnimatorResizerX.h" />
+    <ClInclude Include="include\aprilui\AnimatorResizerY.h" />
     <ClInclude Include="include\aprilui\EventUtils.h" />
     <ClInclude Include="include\aprilui\MemberCallbackEvent.h" />
     <ClInclude Include="src\Util.h" />
@@ -147,8 +149,6 @@
     <ClInclude Include="include\aprilui\AnimatorMoverY.h" />
     <ClInclude Include="include\aprilui\AnimatorRedChanger.h" />
     <ClInclude Include="include\aprilui\AnimatorRotator.h" />
-    <ClInclude Include="include\aprilui\AnimatorScalerX.h" />
-    <ClInclude Include="include\aprilui\AnimatorScalerY.h" />
     <ClInclude Include="include\aprilui\Object.h" />
     <ClInclude Include="include\aprilui\ObjectButtonBase.h" />
     <ClInclude Include="include\aprilui\ObjectCallbackObject.h" />

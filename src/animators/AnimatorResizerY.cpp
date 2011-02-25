@@ -7,28 +7,46 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_SCALER_Y_H
-#define APRILUI_SCALER_Y_H
-
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "Animator.h"
+#include "aprilui.h"
+#include "AnimatorResizerY.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		class apriluiExport ScalerY : public Animator
+		ResizerY::ResizerY(chstr name) : Animator("ResizerY", name)
 		{
-		public:
-			ScalerY(chstr name);
-			
-			void notifyEvent(chstr name, void* params);
-			
-			void update(float k);
-			
-		};
+		}
+
+		void ResizerY::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
+			{
+				mValue = mOffset = mParent->getHeight();
+				if (mUseTarget)
+				{
+					mAmplitude = mTarget - mValue;
+				}
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void ResizerY::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			mValue = mParent->getHeight();
+			mValue = _calculateValue(mTimeSinceLastFrame);
+			mParent->setHeight(mValue);
+		}
+		
 	}
 }
-
-#endif

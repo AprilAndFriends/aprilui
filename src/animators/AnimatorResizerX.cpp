@@ -7,28 +7,46 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_SCALER_X_H
-#define APRILUI_SCALER_X_H
-
+#include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "Animator.h"
+#include "aprilui.h"
+#include "AnimatorResizerX.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		class apriluiExport ScalerX : public Animator
+		ResizerX::ResizerX(chstr name) : Animator("ResizerX", name)
 		{
-		public:
-			ScalerX(chstr name);
-			
-			void notifyEvent(chstr name, void* params);
-			
-			void update(float k);
-			
-		};
+		}
+
+		void ResizerX::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
+			{
+				mValue = mOffset = mParent->getWidth();
+				if (mUseTarget)
+				{
+					mAmplitude = mTarget - mValue;
+				}
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void ResizerX::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			mValue = mParent->getWidth();
+			mValue = _calculateValue(mTimeSinceLastFrame);
+			mParent->setWidth(mValue);
+		}
+		
 	}
 }
-
-#endif
