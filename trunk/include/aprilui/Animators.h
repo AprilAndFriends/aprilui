@@ -18,7 +18,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "AnimatorMoverY.h"
 #include "AnimatorRedChanger.h"
 #include "AnimatorRotator.h"
-#include "AnimatorScalerX.h"
-#include "AnimatorScalerY.h"
+#include "AnimatorResizerX.h"
+#include "AnimatorResizerY.h"
 
 #endif

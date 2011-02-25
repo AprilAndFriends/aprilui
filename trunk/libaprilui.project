@@ -35,12 +35,12 @@
       <File Name="src/animators/Animator.cpp"/>
       <File Name="src/animators/AnimatorMoverY.cpp"/>
       <File Name="src/animators/AnimatorMoverX.cpp"/>
-      <File Name="src/animators/AnimatorScalerY.cpp"/>
-      <File Name="src/animators/AnimatorScalerX.cpp"/>
       <File Name="src/animators/AnimatorAlphaChanger.cpp"/>
       <File Name="src/animators/AnimatorBlueChanger.cpp"/>
       <File Name="src/animators/AnimatorGreenChanger.cpp"/>
       <File Name="src/animators/AnimatorRedChanger.cpp"/>
+      <File Name="src/animators/AnimatorResizerX.cpp"/>
+      <File Name="src/animators/AnimatorResizerY.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="src/images/Image.cpp"/>
@@ -69,12 +69,12 @@
       <File Name="include/aprilui/Animator.h"/>
       <File Name="include/aprilui/AnimatorMoverX.h"/>
       <File Name="include/aprilui/AnimatorMoverY.h"/>
-      <File Name="include/aprilui/AnimatorScalerY.h"/>
-      <File Name="include/aprilui/AnimatorScalerX.h"/>
       <File Name="include/aprilui/AnimatorAlphaChanger.h"/>
       <File Name="include/aprilui/AnimatorBlueChanger.h"/>
       <File Name="include/aprilui/AnimatorGreenChanger.h"/>
       <File Name="include/aprilui/AnimatorRedChanger.h"/>
+      <File Name="include/aprilui/AnimatorResizerX.h"/>
+      <File Name="include/aprilui/AnimatorResizerY.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">
