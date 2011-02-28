@@ -7,20 +7,46 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#include <gtypes/Rectangle.h>
+#include <hltypes/hstring.h>
+#include <hltypes/util.h>
 
-#include "AnimatorAlphaChanger.h"
-#include "AnimatorBlueChanger.h"
-#include "AnimatorFrameAnimation.h"
-#include "AnimatorGreenChanger.h"
-#include "AnimatorMoverX.h"
-#include "AnimatorMoverY.h"
-#include "AnimatorRedChanger.h"
-#include "AnimatorRotator.h"
-#include "AnimatorResizerX.h"
-#include "AnimatorResizerY.h"
-#include "AnimatorScalerX.h"
+#include "aprilui.h"
 #include "AnimatorScalerY.h"
 
-#endif
+namespace aprilui
+{
+	namespace Animators
+	{
+		ScalerY::ScalerY(chstr name) : Animator("ScalerY", name)
+		{
+		}
+
+		void ScalerY::notifyEvent(chstr name, void* params)
+		{
+			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
+			{
+				mValue = mOffset = mParent->getScaleY();
+				if (mUseTarget)
+				{
+					mAmplitude = mTarget - mValue;
+				}
+			}
+			Object::notifyEvent(name, params);
+		}
+		
+		void ScalerY::update(float k)
+		{
+			bool animated = this->isAnimated();
+			Animator::update(k);
+			if (!animated)
+			{
+				return;
+			}
+			mValue = mParent->getScaleY();
+			mValue = _calculateValue(mTimeSinceLastFrame);
+			mParent->setScaleY(mValue);
+		}
+		
+	}
+}

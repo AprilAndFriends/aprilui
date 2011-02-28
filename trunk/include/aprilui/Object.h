@@ -41,6 +41,8 @@ namespace aprilui
 	class apriluiExport Object
 	{
 	public:
+		friend class Dataset;
+
 		Object(chstr type, chstr name, grect rect);
 		virtual ~Object();
 
@@ -79,6 +81,12 @@ namespace aprilui
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
 		void setRect(grect value) { mRect = value; }
+		gvec2 getScale() { return mScale; }
+		void setScale(gvec2 value) { mScale = value; }
+		float getScaleX() { return mScale.x; }
+		void setScaleX(float value) { mScale.x = value; }
+		float getScaleY() { return mScale.y; }
+		void setScaleY(float value) { mScale.y = value; }
 		gvec2 getCenter() { return mCenter; }
 		void setCenter(gvec2 value) { mCenter = value; }
 		float getCenterX() { return mCenter.x; }
@@ -111,7 +119,9 @@ namespace aprilui
 		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
 		bool getVisibilityFlag() { return mVisible; }
+		grect getDerivedRect();
 		gvec2 getDerivedPosition();
+		gvec2 getDerivedSize();
 		
 		virtual bool isAnimated();
 
@@ -136,13 +146,12 @@ namespace aprilui
 		virtual void notifyEvent(chstr name, void* params);
 		
 		virtual void setProperty(chstr name, chstr value);
-		// system call, do not use!
-		void _setDataset(Dataset* value) { mDataset = value; }
 		
 	protected:
 		hstr mTypeName;
 		hstr mName;
 		grect mRect;
+		gvec2 mScale;
 		gvec2 mCenter;
 		Object* mParent;
 		harray<Object*> mChildren;
@@ -171,6 +180,9 @@ namespace aprilui
 
 		void _moveChildToFront(Object* object);
 		void _moveChildToBack(Object* object);
+
+		void _setDataset(Dataset* value) { mDataset = value; }
+
 	};
 	
 }

@@ -282,6 +282,8 @@ namespace aprilui
 			else  parse_animator(Rotator);
 			else  parse_animator(ResizerX);
 			else  parse_animator(ResizerY);
+			else  parse_animator(ScalerX);
+			else  parse_animator(ScalerY);
 			else object = parseExternalObjectClass(node, objectName, rect);
 		}
 		else

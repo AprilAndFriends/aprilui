@@ -33,6 +33,7 @@ namespace aprilui
 		mName = name;
 		mRect = rect;
 		mCenter = mRect.getSize() / 2;
+		mScale = gvec2(1.0f, 1.0f);
 		mParent = NULL;
 		mDataset = NULL;
 		mZOrder = 0;
@@ -195,6 +196,10 @@ namespace aprilui
 		{
 			april::rendersys->rotate(mAngle);
 		}
+		if (mScale.x != 1.0f || mScale.y != 1.0f)
+		{
+			april::rendersys->scale(mScale.x, mScale.y, 1.0f);
+		}
 		OnDraw();
 		foreach (Object*, it, mChildren)
 		{
@@ -214,18 +219,12 @@ namespace aprilui
 
 	bool Object::isCursorInside()
 	{
-		gvec2 position = aprilui::getCursorPosition();
-		for (Object* p = mParent; p != NULL; p = p->mParent)
-		{
-			position -= p->getPosition();
-		}
-		return isPointInside(position);
+		return isPointInside(aprilui::getCursorPosition());
 	}
 	
 	bool Object::isPointInside(gvec2 position)
 	{
-		position -= getDockedOffset();
-		return mRect.isPointInside(position);
+		return getDerivedRect().isPointInside(position);
 	}
 
 	bool Object::OnMouseDown(float x, float y, int button)
@@ -413,6 +412,8 @@ namespace aprilui
 		else if (name == "alpha")			setAlpha((int)value);
 		else if (name == "color")			setColor(value);
 		else if (name == "angle")			setAngle(value);
+		else if (name == "scale_x")			setScaleX(value);
+		else if (name == "scale_y")			setScaleY(value);
 		else if (name == "center_x")		setCenterX(value);
 		else if (name == "center_y")		setCenterY(value);
 		else if (name == "dock")
@@ -465,15 +466,27 @@ namespace aprilui
 		}
 		return (object != NULL ? object : this);
 	}
+
+	grect Object::getDerivedRect()
+	{
+		return grect(getDerivedPosition(), getDerivedSize());
+	}
 	
 	gvec2 Object::getDerivedPosition()
 	{
-		gvec2 position = mRect.getPosition();
+		gvec2 position = getPosition();
 		for (Object* p = mParent; p != NULL; p = p->mParent)
 		{
 			position += p->getPosition();
 		}
-		return position + getDockedOffset();
+		position += getDockedOffset();
+		//position += (gvec2(1.0f, 1.0f) - getScale()) * (getCenter() / getScale()) * getSize();
+		return position;
+	}
+	
+	gvec2 Object::getDerivedSize()
+	{
+		return getSize() * getScale();
 	}
 	
 	grect Object::_getDrawRect()

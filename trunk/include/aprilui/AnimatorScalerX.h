@@ -7,20 +7,28 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_ANIMATORS_H
-#define APRILUI_ANIMATORS_H
+#ifndef APRILUI_SCALER_X_H
+#define APRILUI_SCALER_X_H
 
-#include "AnimatorAlphaChanger.h"
-#include "AnimatorBlueChanger.h"
-#include "AnimatorFrameAnimation.h"
-#include "AnimatorGreenChanger.h"
-#include "AnimatorMoverX.h"
-#include "AnimatorMoverY.h"
-#include "AnimatorRedChanger.h"
-#include "AnimatorRotator.h"
-#include "AnimatorResizerX.h"
-#include "AnimatorResizerY.h"
-#include "AnimatorScalerX.h"
-#include "AnimatorScalerY.h"
+#include <hltypes/hstring.h>
+
+#include "Animator.h"
+
+namespace aprilui
+{
+	namespace Animators
+	{
+		class apriluiExport ScalerX : public Animator
+		{
+		public:
+			ScalerX(chstr name);
+			
+			void notifyEvent(chstr name, void* params);
+			
+			void update(float k);
+			
+		};
+	}
+}
 
 #endif

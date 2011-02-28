@@ -85,6 +85,8 @@
   <ItemGroup>
     <ClCompile Include="src\animators\AnimatorResizerX.cpp" />
     <ClCompile Include="src\animators\AnimatorResizerY.cpp" />
+    <ClCompile Include="src\animators\AnimatorScalerX.cpp" />
+    <ClCompile Include="src\animators\AnimatorScalerY.cpp" />
     <ClCompile Include="src\aprilui.cpp" />
     <ClCompile Include="src\CallbackEvent.cpp" />
     <ClCompile Include="src\Dataset.cpp" />
@@ -126,6 +128,8 @@
   <ItemGroup>
     <ClInclude Include="include\aprilui\AnimatorResizerX.h" />
     <ClInclude Include="include\aprilui\AnimatorResizerY.h" />
+    <ClInclude Include="include\aprilui\AnimatorScalerX.h" />
+    <ClInclude Include="include\aprilui\AnimatorScalerY.h" />
     <ClInclude Include="include\aprilui\EventUtils.h" />
     <ClInclude Include="include\aprilui\MemberCallbackEvent.h" />
     <ClInclude Include="src\Util.h" />
