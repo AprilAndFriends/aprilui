@@ -29,7 +29,8 @@ namespace aprilui
 	void Slider::update(float k)
 	{
 		ImageBox::update(k);
-		if (mPushed && isCursorInside())
+		gvec2 position = getCursorPosition();
+		if (mPushed && isPointInside(position))
 		{
 			grect rect = getDerivedRect();
 			setValue((position.x - rect.x) / (rect.w - 4));
