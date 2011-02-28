@@ -479,18 +479,29 @@ namespace aprilui
 	gvec2 Object::getDerivedPosition()
 	{
 		gvec2 position = getPosition();
-		for (Object* p = mParent; p != NULL; p = p->mParent)
-		{
-			position += p->getPosition();
-		}
 		position += getDockedOffset();
-		//position += (gvec2(1.0f, 1.0f) - getScale()) * (getCenter() / getScale()) * getSize();
+		position += (gvec2(1.0f, 1.0f) - mScale) * mRect.getSize() * (mCenter / mRect.getSize());
+		if (mParent != NULL)
+		{
+			position *= mParent->getDerivedScale();
+			position += mParent->getDerivedPosition();
+		}
 		return position;
 	}
 	
 	gvec2 Object::getDerivedSize()
 	{
-		return getSize() * getScale();
+		return mRect.getSize() * getDerivedScale();
+	}
+
+	gvec2 Object::getDerivedScale()
+	{
+		gvec2 scale = mScale;
+		if (mParent != NULL)
+		{
+			scale *= mParent->getDerivedScale();
+		}
+		return scale;
 	}
 	
 	grect Object::_getDrawRect()
