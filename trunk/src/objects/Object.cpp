@@ -455,10 +455,9 @@ namespace aprilui
 			return this;
 		}
 		Object* object = NULL;
-		gvec2 position = pos - mRect.getPosition();
 		foreach_r (Object*, it, mChildren)
 		{
-			object = (*it)->getChildUnderPoint(position);
+			object = (*it)->getChildUnderPoint(pos);
 			if (object != NULL && dynamic_cast<Animator*>(object) == NULL)
 			{
 				break;
