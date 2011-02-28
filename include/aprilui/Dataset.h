@@ -92,7 +92,7 @@ namespace aprilui
 		{
 			return dynamic_cast<T>(getObject(name));
 		}
-		
+
 	protected:
 		hstr mName;
 		hstr mFilename;

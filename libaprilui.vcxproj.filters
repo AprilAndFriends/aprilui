@@ -146,6 +146,12 @@
     <ClCompile Include="src\animators\AnimatorResizerY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
+    <ClCompile Include="src\animators\AnimatorScalerX.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animators\AnimatorScalerY.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Util.h">
@@ -281,6 +287,12 @@
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\AnimatorResizerY.h">
+      <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorScalerX.h">
+      <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorScalerY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
   </ItemGroup>

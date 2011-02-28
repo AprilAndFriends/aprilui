@@ -41,6 +41,8 @@
       <File Name="src/animators/AnimatorRedChanger.cpp"/>
       <File Name="src/animators/AnimatorResizerX.cpp"/>
       <File Name="src/animators/AnimatorResizerY.cpp"/>
+      <File Name="src/animators/AnimatorScalerX.cpp"/>
+      <File Name="src/animators/AnimatorScalerY.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="images">
       <File Name="src/images/Image.cpp"/>
@@ -75,6 +77,8 @@
       <File Name="include/aprilui/AnimatorRedChanger.h"/>
       <File Name="include/aprilui/AnimatorResizerX.h"/>
       <File Name="include/aprilui/AnimatorResizerY.h"/>
+      <File Name="include/aprilui/AnimatorScalerX.h"/>
+      <File Name="include/aprilui/AnimatorScalerY.h"/>
     </VirtualDirectory>
     <File Name="include/aprilui/Objects.h"/>
     <VirtualDirectory Name="objects">
