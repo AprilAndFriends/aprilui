@@ -29,11 +29,10 @@ namespace aprilui
 	void Slider::update(float k)
 	{
 		ImageBox::update(k);
-		//gvec2 position = aprilui::getCursorPosition() - (getDerivedPosition() - mRect.getPosition());
-		gvec2 position = aprilui::getCursorPosition();// - (getDerivedPosition() - mRect.getPosition());
-		if (mPushed && isPointInside(position))
+		if (mPushed && isCursorInside())
 		{
-			setValue((position.x - mRect.x) / (mRect.w - 4));
+			grect rect = getDerivedRect();
+			setValue((position.x - rect.x) / (rect.w - 4));
 		}
 	}
 	
