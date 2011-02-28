@@ -439,11 +439,6 @@ namespace aprilui
 		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
 	}
 	
-	Object* Object::getChildUnderPoint(float x, float y)
-	{
-		return getChildUnderPoint(gvec2(x, y));
-	}
-	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
 		if (!isVisible() || !isPointInside(pos))
@@ -464,6 +459,16 @@ namespace aprilui
 			}
 		}
 		return (object != NULL ? object : this);
+	}
+
+	Object* Object::getChildUnderPoint(float x, float y)
+	{
+		return getChildUnderPoint(gvec2(x, y));
+	}
+	
+	Object* Object::getChildUnderCursor()
+	{
+		return getChildUnderPoint(getCursorPosition());
 	}
 
 	grect Object::getDerivedRect()
