@@ -51,6 +51,7 @@ namespace aprilui
 		harray<Object*>& getChildren() { return mChildren; }
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
+		Object* getChildUnderCursor();
 
 		gvec2 getDockedOffset();
 		int getZOrder() { return mZOrder; }
