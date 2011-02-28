@@ -41,8 +41,6 @@ namespace aprilui
 	class apriluiExport Object
 	{
 	public:
-		friend class Dataset;
-
 		Object(chstr type, chstr name, grect rect);
 		virtual ~Object();
 
@@ -146,6 +144,7 @@ namespace aprilui
 		virtual void notifyEvent(chstr name, void* params);
 		
 		virtual void setProperty(chstr name, chstr value);
+		void _setDataset(Dataset* value) { mDataset = value; }
 		
 	protected:
 		hstr mTypeName;
@@ -180,8 +179,6 @@ namespace aprilui
 
 		void _moveChildToFront(Object* object);
 		void _moveChildToBack(Object* object);
-
-		void _setDataset(Dataset* value) { mDataset = value; }
 
 	};
 	
