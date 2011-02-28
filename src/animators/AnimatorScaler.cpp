@@ -61,7 +61,7 @@ namespace aprilui
 		{
 			mDest = gvec2(dest_w, dest_h);
 			mSpeed = mDest - mParent->getSize();
-			mSpeed = mSpeed.normalised() * (mSpeed.length() / time);
+			mSpeed = mSpeed.normalized() * (mSpeed.length() / time);
 			mAccel.set(0, 0);
 		}
 
