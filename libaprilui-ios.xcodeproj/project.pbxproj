@@ -91,6 +91,10 @@
 		7FD35B831317B098009669CB /* AnimatorResizerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD35B811317B098009669CB /* AnimatorResizerX.cpp */; };
 		7FD35B841317B098009669CB /* AnimatorResizerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD35B821317B098009669CB /* AnimatorResizerY.cpp */; };
 		7FD35B861317B0A8009669CB /* MemberCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD35B851317B0A8009669CB /* MemberCallbackEvent.cpp */; };
+		7FDAF30D131CF189006CBC59 /* AnimatorScalerX.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDAF30B131CF189006CBC59 /* AnimatorScalerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF30E131CF189006CBC59 /* AnimatorScalerY.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDAF30C131CF189006CBC59 /* AnimatorScalerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF312131CF1A4006CBC59 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF310131CF1A4006CBC59 /* AnimatorScalerX.cpp */; };
+		7FDAF313131CF1A4006CBC59 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF311131CF1A4006CBC59 /* AnimatorScalerY.cpp */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -179,6 +183,10 @@
 		7FD35B811317B098009669CB /* AnimatorResizerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerX.cpp; sourceTree = "<group>"; };
 		7FD35B821317B098009669CB /* AnimatorResizerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerY.cpp; sourceTree = "<group>"; };
 		7FD35B851317B0A8009669CB /* MemberCallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MemberCallbackEvent.cpp; sourceTree = "<group>"; };
+		7FDAF30B131CF189006CBC59 /* AnimatorScalerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatorScalerX.h; sourceTree = "<group>"; };
+		7FDAF30C131CF189006CBC59 /* AnimatorScalerY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatorScalerY.h; sourceTree = "<group>"; };
+		7FDAF310131CF1A4006CBC59 /* AnimatorScalerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScalerX.cpp; sourceTree = "<group>"; };
+		7FDAF311131CF1A4006CBC59 /* AnimatorScalerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScalerY.cpp; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -245,6 +253,8 @@
 		7F3AE0A912560783009DFEC8 /* animators */ = {
 			isa = PBXGroup;
 			children = (
+				7FDAF310131CF1A4006CBC59 /* AnimatorScalerX.cpp */,
+				7FDAF311131CF1A4006CBC59 /* AnimatorScalerY.cpp */,
 				7FD35B811317B098009669CB /* AnimatorResizerX.cpp */,
 				7FD35B821317B098009669CB /* AnimatorResizerY.cpp */,
 				7F1B54F812E47FC400E958D8 /* AnimatorBlueChanger.cpp */,
@@ -284,6 +294,8 @@
 		7F3AE0F512560796009DFEC8 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				7FDAF30B131CF189006CBC59 /* AnimatorScalerX.h */,
+				7FDAF30C131CF189006CBC59 /* AnimatorScalerY.h */,
 				7FD35B791317B08C009669CB /* AnimatorResizerX.h */,
 				7FD35B7A1317B08C009669CB /* AnimatorResizerY.h */,
 				7FD35B7B1317B08C009669CB /* EventUtils.h */,
@@ -398,6 +410,8 @@
 				7FD35B7E1317B08C009669CB /* AnimatorResizerY.h in Headers */,
 				7FD35B7F1317B08C009669CB /* EventUtils.h in Headers */,
 				7FD35B801317B08C009669CB /* MemberCallbackEvent.h in Headers */,
+				7FDAF30D131CF189006CBC59 /* AnimatorScalerX.h in Headers */,
+				7FDAF30E131CF189006CBC59 /* AnimatorScalerY.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +539,8 @@
 				7FD35B831317B098009669CB /* AnimatorResizerX.cpp in Sources */,
 				7FD35B841317B098009669CB /* AnimatorResizerY.cpp in Sources */,
 				7FD35B861317B0A8009669CB /* MemberCallbackEvent.cpp in Sources */,
+				7FDAF312131CF1A4006CBC59 /* AnimatorScalerX.cpp in Sources */,
+				7FDAF313131CF1A4006CBC59 /* AnimatorScalerY.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
