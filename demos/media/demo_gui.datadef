@@ -31,9 +31,19 @@
 	</CompositeImage>
 	
 	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
-		<Object type="ColoredQuad" name="background" color="BFBFBF" x="0" y="0" w="800" h="600" angle="0">
+		<Object type="ColoredQuad" name="background" color="BFBFBF" x="0" y="0" w="800" h="600">
 			<Object type="ColoredQuad" color="00FF00" x="64" y="32" w="32" h="32" angle="50">
 				<Object type="ColoredQuad" color="FFFF00" x="64" y="32" w="32" h="32"/>
+			</Object>
+		</Object>
+		<Object type="ColoredQuad" name="multi_scale_hit_test" color="9F0000" x="0" y="0" w="800" h="600" zorder="10000" visible="false">
+			<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
+			<Object type="ColoredQuad" color="9F9000" dock="top_right" x="-32" y="32" w="640" h="480" center_x="640" center_y="480">
+				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
+				<Object type="ColoredQuad" color="009F00" dock="bottom_left" x="32" y="-32" w="480" h="320" center_x="0" center_y="0">
+					<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
+					<Object type="ImageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" dock="center_right" x="32" y="32" w="128" h="64"/>
+				</Object>
 			</Object>
 		</Object>
 		<Object type="Container" x="0" y="0" w="800" h="600">
