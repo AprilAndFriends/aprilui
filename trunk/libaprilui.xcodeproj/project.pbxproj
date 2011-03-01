@@ -88,6 +88,10 @@
 		7FCD397112018C7B00608217 /* CallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD395E12018C7B00608217 /* CallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FCD397712018C7B00608217 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396412018C7B00608217 /* Event.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FCD397812018C7B00608217 /* EventArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396512018C7B00608217 /* EventArgs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */; };
+		7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */; };
 		7FDB989A131BA90C0064B968 /* AnimatorResizerX.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDB989B131BA90C0064B968 /* AnimatorResizerY.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDB989C131BA90C0064B968 /* EventUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9898131BA90C0064B968 /* EventUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -180,12 +184,16 @@
 		7FCD395E12018C7B00608217 /* CallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallbackEvent.h; path = include/aprilui/CallbackEvent.h; sourceTree = "<group>"; };
 		7FCD396412018C7B00608217 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = include/aprilui/Event.h; sourceTree = "<group>"; };
 		7FCD396512018C7B00608217 /* EventArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventArgs.h; path = include/aprilui/EventArgs.h; sourceTree = "<group>"; };
+		7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorScalerX.h; path = include/aprilui/AnimatorScalerX.h; sourceTree = "<group>"; };
+		7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorScalerY.h; path = include/aprilui/AnimatorScalerY.h; sourceTree = "<group>"; };
+		7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScalerX.cpp; sourceTree = "<group>"; };
+		7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScalerY.cpp; sourceTree = "<group>"; };
 		7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorResizerX.h; path = include/aprilui/AnimatorResizerX.h; sourceTree = "<group>"; };
 		7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorResizerY.h; path = include/aprilui/AnimatorResizerY.h; sourceTree = "<group>"; };
 		7FDB9898131BA90C0064B968 /* EventUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventUtils.h; path = include/aprilui/EventUtils.h; sourceTree = "<group>"; };
 		7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberCallbackEvent.h; path = include/aprilui/MemberCallbackEvent.h; sourceTree = "<group>"; };
-		7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatorResizerX.cpp; path = src/animators/AnimatorResizerX.cpp; sourceTree = "<group>"; };
-		7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimatorResizerY.cpp; path = src/animators/AnimatorResizerY.cpp; sourceTree = "<group>"; };
+		7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerX.cpp; sourceTree = "<group>"; };
+		7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerY.cpp; sourceTree = "<group>"; };
 		7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemberCallbackEvent.cpp; path = src/MemberCallbackEvent.cpp; sourceTree = "<group>"; };
 		7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CallbackEvent.cpp; path = src/CallbackEvent.cpp; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -268,6 +276,10 @@
 		7F6D54811201B06200A2BDF6 /* animators */ = {
 			isa = PBXGroup;
 			children = (
+				7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */,
+				7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */,
+				7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */,
+				7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */,
 				7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */,
 				7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */,
 				7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */,
@@ -322,8 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */,
-				7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */,
-				7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */,
 				7F1B524712E4719E00E958D8 /* aprilui.cpp */,
 				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
 				7F7A4A9E129D21A300E0ED12 /* images */,
@@ -341,6 +351,8 @@
 		7FC8041211EC71CF00851062 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */,
+				7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */,
 				7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */,
 				7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */,
 				7FDB9898131BA90C0064B968 /* EventUtils.h */,
@@ -449,6 +461,8 @@
 				7FDB989B131BA90C0064B968 /* AnimatorResizerY.h in Headers */,
 				7FDB989C131BA90C0064B968 /* EventUtils.h in Headers */,
 				7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */,
+				7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */,
+				7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +567,8 @@
 				7FDB98A0131BA9240064B968 /* AnimatorResizerX.cpp in Sources */,
 				7FDB98A1131BA9240064B968 /* AnimatorResizerY.cpp in Sources */,
 				7FDB98A3131BA9320064B968 /* MemberCallbackEvent.cpp in Sources */,
+				7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */,
+				7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
