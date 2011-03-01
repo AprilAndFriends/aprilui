@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
+#include "aprilui.h"
 #include "Dataset.h"
 #include "ObjectLabel.h"
 
@@ -58,7 +59,12 @@ namespace aprilui
 	{
 		LabelBase::setProperty(name, value);
 		Object::setProperty(name, value);
-		if (name == "textkey")	setTextKey(value);
+		if (name == "text_key")	setTextKey(value);
+		else if (name == "textkey")
+		{
+			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
+			setTextKey(value);
+		}
 	}
 	
 }
