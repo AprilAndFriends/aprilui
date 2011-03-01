@@ -84,7 +84,12 @@ namespace aprilui
 			else if (value == "center") setVertFormatting(atres::CENTER);
 			else if (value == "bottom") setVertFormatting(atres::BOTTOM);
 		}
-		else if (name == "color") setTextColor(value);
+		else if (name == "text_color") setTextColor(value);
+		else if (name == "color")
+		{
+			aprilui::log("WARNING! LabelBase instance using color which is conflicted with TextImageButton's color! Use text_color instead!");
+			setTextColor(value);
+		}
 		else if (name == "effect")
 		{
 			if (value == "none")           setFontEffect(atres::NONE);
