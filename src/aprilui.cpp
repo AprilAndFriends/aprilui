@@ -48,14 +48,6 @@ namespace aprilui
 		g_logFunction(prefix + message);
 	}
 	
-	void logf(chstr message, ...)
-	{
-		va_list args;
-		va_start(args, message);
-		aprilui::log(hvsprintf(message.c_str(), args));
-		va_end(args);
-	}
-	
 	void setLogFunction(void (*fnptr)(chstr))
 	{
 		g_logFunction = fnptr;
