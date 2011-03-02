@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
+#include "aprilui.h"
 #include "Dataset.h"
 #include "ObjectLabelBase.h"
 #include "ObjectTextImageButton.h"
