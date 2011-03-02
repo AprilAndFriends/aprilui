@@ -24,8 +24,8 @@ namespace aprilui
 		CallbackObject(chstr name, grect rect);
 		void setProperty(chstr name, chstr value);
 		
-		void (*getCallback())() { return mCallback; }
-		void setCallback(void (*value)()) { mCallback = value; }
+		void (*getDrawCallback())(CallbackObject*) { return mDrawCallback; }
+		void setDrawCallback(void (*value)(CallbackObject*)) { mDrawCallback = value; }
 		void setUpdateCallback(void (*value)(float)) { mUpdateCallback = value; }
 		
 		void OnDraw();
@@ -34,8 +34,9 @@ namespace aprilui
 		bool OnMouseUp(float x, float y, int button);
 		
 	protected:
-		void (*mCallback)();
-		void (*mUpdateCallback)(float);		
+		void (*mDrawCallback)(CallbackObject*);
+		void (*mUpdateCallback)(float);
+
 	};
 }
 

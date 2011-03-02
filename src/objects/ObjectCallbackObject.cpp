@@ -17,7 +17,7 @@ namespace aprilui
 	CallbackObject::CallbackObject(chstr name, grect rect) :
 		Object("CallbackObject", name, rect)
 	{
-		mCallback = NULL;
+		mDrawCallback = NULL;
 		mUpdateCallback = NULL;
 	}
 
@@ -28,9 +28,9 @@ namespace aprilui
 	
 	void CallbackObject::OnDraw()
 	{
-		if (mCallback != NULL)
+		if (mDrawCallback != NULL)
 		{
-			(*mCallback)();
+			(*mDrawCallback)(this);
 		}
 	}
 
