@@ -101,7 +101,7 @@ namespace aprilui
 
 		template <class T> void getObject(chstr name, T& out)
 		{
-			out = dynamic_cast<T>(getObject(name));
+			out = getObject<T>(name);
 		}
 
 	protected:
