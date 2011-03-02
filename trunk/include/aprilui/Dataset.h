@@ -14,6 +14,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
+#include "aprilui.h"
 #include "Exception.h"
 
 #include "apriluiExport.h"
@@ -90,7 +91,17 @@ namespace aprilui
 		
 		template <class T> T getObject(chstr name)
 		{
-			return dynamic_cast<T>(getObject(name));
+			T object = dynamic_cast<T>(getObject(name));
+			if (object == NULL)
+			{
+				aprilui::log("WARNING! Dynamic getObject<T> failed for: " + name);
+			}
+			return object;
+		}
+
+		template <class T> void getObject(chstr name, T& out)
+		{
+			out = dynamic_cast<T>(getObject(name));
 		}
 
 	protected:
