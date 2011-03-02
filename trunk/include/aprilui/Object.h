@@ -114,6 +114,7 @@ namespace aprilui
 		unsigned char getBlue() { return mColor.b; }
 		void setBlue(unsigned char value) { mColor.b = value; }
 		unsigned char getAlpha() { return mColor.a; }
+		unsigned char getDerivedAlpha();
 		void setAlpha(unsigned char value);
 		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
@@ -171,7 +172,6 @@ namespace aprilui
 		void sortChildren();
 		
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
-		unsigned char getDerivedAlpha();
 		float getDerivedAngle();
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
