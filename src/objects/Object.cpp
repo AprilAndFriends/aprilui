@@ -47,6 +47,11 @@ namespace aprilui
 
 	Object::~Object()
 	{
+		if (mParent)
+		{
+			mParent->removeChild(this);
+			mParent=0;
+		}
 		foreach_m (Event*, it, mEvents)
 		{
 			delete it->second;
