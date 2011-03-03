@@ -52,6 +52,25 @@ namespace aprilui
 		_unregisterDataset(mName, this);
 	}
 	
+	void Dataset::destroyObject(chstr obj, bool recursive)
+	{
+		destroyObject(getObject(obj),recursive);
+	}
+	
+	void Dataset::destroyObject(Object* obj, bool recursive)
+	{
+		if (!mObjects.has_key(obj->getName()))
+			throw ResourceNotExistsException(obj->getName(), "Object", this);
+
+		if (recursive)
+		{
+			while (obj->getChildren().size())
+				destroyObject(obj->getChildren()[0], true);
+		}
+		mObjects.remove_key(obj->getName());
+		delete obj;
+	}
+	
 	void Dataset::_destroyTexture(april::Texture* texture)
 	{
 		if (!mTextures.has_key(texture->getFilename()))

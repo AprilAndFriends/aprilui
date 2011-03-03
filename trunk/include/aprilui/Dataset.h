@@ -72,6 +72,9 @@ namespace aprilui
 		void _destroyImage(chstr img);
 		void _destroyTexture(april::Texture* tex);
 		void _destroyImage(Image* img);
+		
+		void destroyObject(chstr obj, bool recursive = true);
+		void destroyObject(Object* obj, bool recursive = true);
 
 		void OnMouseDown(float x, float y, int button);
 		void OnMouseUp(float x, float y, int button);
@@ -93,9 +96,7 @@ namespace aprilui
 		{
 			T object = dynamic_cast<T>(getObject(name));
 			if (object == NULL)
-			{
-				aprilui::log("WARNING! Dynamic getObject<T> failed for: " + name);
-			}
+				aprilui::log("WARNING! Dynamic cast in getObject<T> failed, object: " + name);
 			return object;
 		}
 
