@@ -17,13 +17,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 
 #include "Animator.h"
+#include "aprilui.h"
 #include "CallbackEvent.h"
 #include "Dataset.h"
 #include "Event.h"
 #include "EventArgs.h"
 #include "Exception.h"
 #include "ObjectCallbackObject.h"
-#include "aprilui.h"
+#include "util.h"
 
 namespace aprilui
 {
@@ -187,7 +188,7 @@ namespace aprilui
 	
 	void Object::draw(gvec2 offset)
 	{
-		if (!isVisible() || mScale.x == 0.0f || mScale.y == 0.0f)
+		if (!isVisible() || fabs(mScale.x) < APRILUI_E_TOLERANCE || fabs(mScale.y) < APRILUI_E_TOLERANCE)
 		{
 			return;
 		}
@@ -197,7 +198,7 @@ namespace aprilui
 		{
 			april::rendersys->translate(position.x, position.y);
 		}
-		if (mAngle != 0.0f)
+		if (fabs(mAngle) < APRILUI_E_TOLERANCE)
 		{
 			april::rendersys->rotate(mAngle);
 		}

@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
-struct xml_node;
+#define APRILUI_E_TOLERANCE 0.0001f
 
 namespace aprilui
 {
