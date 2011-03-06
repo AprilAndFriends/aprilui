@@ -47,10 +47,10 @@ namespace aprilui
 
 	Object::~Object()
 	{
-		if (mParent)
+		if (mParent != NULL)
 		{
 			mParent->removeChild(this);
-			mParent=0;
+			mParent = NULL;
 		}
 		foreach_m (Event*, it, mEvents)
 		{
@@ -187,7 +187,7 @@ namespace aprilui
 	
 	void Object::draw(gvec2 offset)
 	{
-		if (!isVisible())
+		if (!isVisible() || mScale.x == 0.0f || mScale.y == 0.0f)
 		{
 			return;
 		}
