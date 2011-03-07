@@ -46,6 +46,8 @@ namespace aprilui
 
 		void addChild(Object* object);
 		void removeChild(Object* object);
+		void attach(Object* object);
+		void detach();
 		Object* getParent() { return mParent; }
 		void removeAllChildren();
 		harray<Object*>& getChildren() { return mChildren; }

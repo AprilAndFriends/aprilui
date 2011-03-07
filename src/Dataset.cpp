@@ -52,23 +52,61 @@ namespace aprilui
 		_unregisterDataset(mName, this);
 	}
 	
-	void Dataset::destroyObject(chstr obj, bool recursive)
+	void Dataset::destroyObject(chstr name, bool recursive)
 	{
-		destroyObject(getObject(obj),recursive);
+		destroyObject(getObject(name), recursive);
 	}
 	
-	void Dataset::destroyObject(Object* obj, bool recursive)
+	void Dataset::destroyObject(Object* object, bool recursive)
 	{
-		if (!mObjects.has_key(obj->getName()))
-			throw ResourceNotExistsException(obj->getName(), "Object", this);
-
+		if (!mObjects.has_key(object->getName()))
+		{
+			throw ResourceNotExistsException(object->getName(), "Object", this);
+		}
 		if (recursive)
 		{
-			while (obj->getChildren().size())
-				destroyObject(obj->getChildren()[0], true);
+			harray<Object*> children = object->getChildren();
+			foreach (Object*, it, children)
+			{
+				destroyObject((*it), true);
+			}
 		}
-		mObjects.remove_key(obj->getName());
-		delete obj;
+		mObjects.remove_key(object->getName());
+		delete object;
+	}
+	
+	void Dataset::destroyAndDetachObject(chstr name, bool recursive)
+	{
+		destroyAndDetachObject(getObject(name), recursive);
+	}
+	
+	void Dataset::destroyAndDetachObject(Object* object, bool recursive)
+	{
+		if (!mObjects.has_key(object->getName()))
+		{
+			throw ResourceNotExistsException(object->getName(), "Object", this);
+		}
+		if (recursive)
+		{
+			harray<Object*> children = object->getChildren();
+			foreach (Object*, it, children)
+			{
+				destroyObject((*it), true);
+			}
+		}
+		else
+		{
+			while (object->getChildren().size() > 0)
+			{
+				object->removeChild(object->getChildren()[0]);
+			}
+		}
+		if (object->getParent() != NULL)
+		{
+			object->detach();
+		}
+		mObjects.remove_key(object->getName());
+		delete object;
 	}
 	
 	void Dataset::_destroyTexture(april::Texture* texture)

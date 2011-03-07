@@ -28,7 +28,7 @@ namespace aprilui
 	}
 
 	_ResourceNotExistsException::_ResourceNotExistsException(chstr object_name, chstr class_name,
-														  Dataset* dict, const char* file, int line) :
+															 Dataset* dict, const char* file, int line) :
 								 _GenericException("", "ResourceNotExistsException", file, line)
 	{
 		msg += class_name + " doesn't exist: " + object_name + " in dataset " + dict->getName();
@@ -41,8 +41,15 @@ namespace aprilui
 		msg += "Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent";
 	}
 
+	_ObjectWithoutParentException::_ObjectWithoutParentException(chstr child,
+																 const char* file, int line) :
+							       _GenericException("", "ObjectWihoutParentException", file, line)
+	{
+		msg += "Cannot detach object '" + child + "', object has no parent";
+	}
+
 	_ObjectNotChildException::_ObjectNotChildException(chstr child, chstr parent,
-														 const char* file, int line) :
+													   const char* file, int line) :
 							  _GenericException("", "ObjectNotChildException", file, line)
 	{
 		msg += "Cannot detach object '" + child + "' from object '" + parent + "', object is not a child";
