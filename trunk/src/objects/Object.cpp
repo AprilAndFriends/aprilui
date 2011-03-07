@@ -365,10 +365,7 @@ namespace aprilui
 
 	void Object::notifyEvent(chstr name, void* params)
 	{
-		foreach (Object*, it, mChildren)
-		{
-			(*it)->notifyEvent(name, params);
-		}
+
 	}
 
 	bool Object::isDerivedEnabled()
