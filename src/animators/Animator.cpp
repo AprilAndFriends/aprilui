@@ -143,7 +143,7 @@ namespace aprilui
 	
 	bool Animator::isExpired()
 	{
-		return (mPeriods >= 0.0f && mTimer * fabs(mSpeed) > mPeriods);
+		return (!mEnabled || mPeriods >= 0.0f && mTimer * fabs(mSpeed) > mPeriods);
 	}
 	
 	void Animator::setTime(float value)
