@@ -73,8 +73,10 @@ namespace aprilui
 		void _destroyTexture(april::Texture* tex);
 		void _destroyImage(Image* img);
 		
-		void destroyObject(chstr obj, bool recursive = true);
-		void destroyObject(Object* obj, bool recursive = true);
+		void destroyObject(chstr name, bool recursive = false);
+		void destroyObject(Object* object, bool recursive = false);
+		void destroyAndDetachObject(chstr name, bool recursive = false);
+		void destroyAndDetachObject(Object* object, bool recursive = false);
 
 		void OnMouseDown(float x, float y, int button);
 		void OnMouseUp(float x, float y, int button);

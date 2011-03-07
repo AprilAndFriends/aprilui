@@ -83,6 +83,16 @@ namespace aprilui
 
 	//---------------------------------------------------------------------------------------------------------
 
+	class apriluiExport _ObjectWithoutParentException : public _GenericException
+	{
+	public:
+		_ObjectWithoutParentException(chstr child, const char* file = "", int line = 0);
+	};
+
+	#define ObjectWithoutParentException(child) _ObjectWithoutParentException(child, __FILE__, __LINE__)
+
+	//---------------------------------------------------------------------------------------------------------
+
 	class apriluiExport _ObjectNotChildException : public _GenericException
 	{
 	public:

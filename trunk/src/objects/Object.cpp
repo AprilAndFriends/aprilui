@@ -48,11 +48,6 @@ namespace aprilui
 
 	Object::~Object()
 	{
-		if (mParent != NULL)
-		{
-			mParent->removeChild(this);
-			mParent = NULL;
-		}
 		foreach_m (Event*, it, mEvents)
 		{
 			delete it->second;
@@ -99,6 +94,20 @@ namespace aprilui
 			(*it)->setParent(NULL);
 		}
 		mChildren.clear();
+	}
+	
+	void Object::attach(Object* object)
+	{
+		object->addChild(this);
+	}
+	
+	void Object::detach()
+	{
+		if (mParent == NULL)
+		{
+			throw ObjectWithoutParentException(getName());
+		}
+		mParent->removeChild(this);
 	}
 	
 	gvec2 Object::getDockedOffset()
