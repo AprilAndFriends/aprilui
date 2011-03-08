@@ -207,7 +207,7 @@ namespace aprilui
 		{
 			april::rendersys->translate(position.x, position.y);
 		}
-		if (fabs(mAngle) >= APRILUI_E_TOLERANCE)
+		if (mAngle != 0.0f)
 		{
 			april::rendersys->rotate(mAngle);
 		}
