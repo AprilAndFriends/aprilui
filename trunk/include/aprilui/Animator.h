@@ -36,6 +36,8 @@ namespace aprilui
 		
 		AnimationFunction getAnimationFunction() { return mFunction; }
 		void setAnimationFunction(AnimationFunction value) { mFunction = value; }
+		float getValue() { return mValue; }
+		void setValue(float value) { mValue = value; }
 		float getTimer() { return mTimer; }
 		void setTimer(float value) { mTimer = value; }
 		float getDelay() { return mDelay; }
@@ -60,6 +62,7 @@ namespace aprilui
 		void setTarget(float value) { mTarget = value; }
 		bool getUseTarget() { return mUseTarget; }
 		void setUseTarget(bool value) { mUseTarget = value; }
+
 		
 		bool isAnimated();
 		bool isExpired();
