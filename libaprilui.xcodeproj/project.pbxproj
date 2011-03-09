@@ -273,7 +273,7 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		7F6D54811201B06200A2BDF6 /* animators */ = {
+		7F6D54811201B06200A2BDF6 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
 				7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */,
@@ -290,11 +290,11 @@
 				7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */,
 				7F38C720120967CC002B5134 /* AnimatorRotator.cpp */,
 			);
-			name = animators;
+			name = Animators;
 			path = src/animators;
 			sourceTree = "<group>";
 		};
-		7F6D548C1201B06200A2BDF6 /* objects */ = {
+		7F6D548C1201B06200A2BDF6 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
 				7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */,
@@ -312,11 +312,11 @@
 				7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */,
 				7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */,
 			);
-			name = objects;
+			name = Objects;
 			path = src/objects;
 			sourceTree = "<group>";
 		};
-		7F7A4A9E129D21A300E0ED12 /* images */ = {
+		7F7A4A9E129D21A300E0ED12 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */,
@@ -326,7 +326,7 @@
 				7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */,
 				7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */,
 			);
-			name = images;
+			name = Images;
 			path = src/images;
 			sourceTree = "<group>";
 		};
@@ -336,9 +336,9 @@
 				7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */,
 				7F1B524712E4719E00E958D8 /* aprilui.cpp */,
 				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
-				7F7A4A9E129D21A300E0ED12 /* images */,
-				7F6D54811201B06200A2BDF6 /* animators */,
-				7F6D548C1201B06200A2BDF6 /* objects */,
+				7F7A4A9E129D21A300E0ED12 /* Images */,
+				7F6D54811201B06200A2BDF6 /* Animators */,
+				7F6D548C1201B06200A2BDF6 /* Objects */,
 				7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */,
 				7FC8042A11EC725B00851062 /* Dataset.cpp */,
 				7FC8042B11EC725B00851062 /* Exception.cpp */,
@@ -351,51 +351,18 @@
 		7FC8041211EC71CF00851062 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
-				7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */,
-				7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */,
-				7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */,
-				7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */,
+				C942B3FF13278C7100C1D1E8 /* Images */,
+				C942B3FE13278C5900C1D1E8 /* Objects */,
+				C942B3F113278C3300C1D1E8 /* Animators */,
 				7FDB9898131BA90C0064B968 /* EventUtils.h */,
 				7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */,
 				7F1B524912E471B800E958D8 /* apriluiExport.h */,
-				7F1B524A12E471B800E958D8 /* AnimatorBlueChanger.h */,
-				7F1B524B12E471B800E958D8 /* AnimatorGreenChanger.h */,
-				7F1B524C12E471B800E958D8 /* AnimatorRedChanger.h */,
 				7F1B524D12E471B800E958D8 /* aprilui.h */,
-				7F1B524E12E471B800E958D8 /* ObjectContainer.h */,
-				7FA3013F12B647E200F71E5E /* AnimatorAlphaChanger.h */,
-				7FA3014112B647E200F71E5E /* AnimatorMoverX.h */,
-				7FA3014212B647E200F71E5E /* AnimatorMoverY.h */,
-				7FA3014512B647E200F71E5E /* ObjectButtonBase.h */,
-				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
-				7F7A4A8F129D217700E0ED12 /* NullImage.h */,
-				7F7A4A90129D217700E0ED12 /* Images.h */,
-				7F7A4A91129D217700E0ED12 /* CompositeImage.h */,
-				7F7A4A92129D217700E0ED12 /* ColorImage.h */,
-				7F7A4A93129D217700E0ED12 /* ColoredImage.h */,
-				7F33B207120FE2D5004B5E89 /* Animator.h */,
-				7FB0C7B0120AE117005EA739 /* Object.h */,
-				7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */,
-				7F38C68D12096793002B5134 /* AnimatorRotator.h */,
-				7F38C68F12096793002B5134 /* ObjectCallbackObject.h */,
-				7F38C69112096793002B5134 /* ObjectColoredQuad.h */,
-				7F38C69312096793002B5134 /* ObjectEditBox.h */,
-				7F38C69412096793002B5134 /* ObjectImageBox.h */,
-				7F38C69512096793002B5134 /* ObjectImageButton.h */,
-				7F38C69612096793002B5134 /* ObjectLabel.h */,
-				7F38C69712096793002B5134 /* ObjectLabelBase.h */,
-				7F38C69B12096793002B5134 /* ObjectSlider.h */,
-				7F38C69C12096793002B5134 /* ObjectTextButton.h */,
-				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
-				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
 				7FCD395E12018C7B00608217 /* CallbackEvent.h */,
 				7FCD396412018C7B00608217 /* Event.h */,
 				7FCD396512018C7B00608217 /* EventArgs.h */,
-				7FC8041511EC721E00851062 /* Animators.h */,
 				7FC8041811EC721E00851062 /* Dataset.h */,
 				7FC8041911EC721E00851062 /* Exception.h */,
-				7FC8041A11EC721E00851062 /* Image.h */,
-				7FC8041B11EC721E00851062 /* Objects.h */,
 				7FC8041D11EC721E00851062 /* xmlHelper.h */,
 			);
 			name = Includes;
@@ -407,6 +374,63 @@
 				7FC8043F11EC727100851062 /* Util.h */,
 			);
 			name = "Private Includes";
+			sourceTree = "<group>";
+		};
+		C942B3F113278C3300C1D1E8 /* Animators */ = {
+			isa = PBXGroup;
+			children = (
+				7F33B207120FE2D5004B5E89 /* Animator.h */,
+				7FA3014212B647E200F71E5E /* AnimatorMoverY.h */,
+				7FA3014112B647E200F71E5E /* AnimatorMoverX.h */,
+				7FC8041511EC721E00851062 /* Animators.h */,
+				7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */,
+				7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */,
+				7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */,
+				7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */,
+				7FA3013F12B647E200F71E5E /* AnimatorAlphaChanger.h */,
+				7F1B524A12E471B800E958D8 /* AnimatorBlueChanger.h */,
+				7F1B524B12E471B800E958D8 /* AnimatorGreenChanger.h */,
+				7F1B524C12E471B800E958D8 /* AnimatorRedChanger.h */,
+				7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */,
+				7F38C68D12096793002B5134 /* AnimatorRotator.h */,
+			);
+			name = Animators;
+			sourceTree = "<group>";
+		};
+		C942B3FE13278C5900C1D1E8 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				7FC8041B11EC721E00851062 /* Objects.h */,
+				7F1B524E12E471B800E958D8 /* ObjectContainer.h */,
+				7FA3014512B647E200F71E5E /* ObjectButtonBase.h */,
+				7FB0C7B0120AE117005EA739 /* Object.h */,
+				7F38C68F12096793002B5134 /* ObjectCallbackObject.h */,
+				7F38C69112096793002B5134 /* ObjectColoredQuad.h */,
+				7F38C69312096793002B5134 /* ObjectEditBox.h */,
+				7F38C69412096793002B5134 /* ObjectImageBox.h */,
+				7F38C69512096793002B5134 /* ObjectImageButton.h */,
+				7F38C69612096793002B5134 /* ObjectLabel.h */,
+				7F38C69712096793002B5134 /* ObjectLabelBase.h */,
+				7F38C69B12096793002B5134 /* ObjectSlider.h */,
+				7F38C69C12096793002B5134 /* ObjectTextButton.h */,
+				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
+				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		C942B3FF13278C7100C1D1E8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7FC8041A11EC721E00851062 /* Image.h */,
+				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
+				7F7A4A8F129D217700E0ED12 /* NullImage.h */,
+				7F7A4A90129D217700E0ED12 /* Images.h */,
+				7F7A4A91129D217700E0ED12 /* CompositeImage.h */,
+				7F7A4A92129D217700E0ED12 /* ColorImage.h */,
+				7F7A4A93129D217700E0ED12 /* ColoredImage.h */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
