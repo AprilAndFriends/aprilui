@@ -47,6 +47,7 @@ namespace aprilui
 			break;
 		case atres::SHADOW:
 			text = "[s]" + text;
+        default:
 			break;
 		}
 		april::Color color(mTextColor);
