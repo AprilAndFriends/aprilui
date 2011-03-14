@@ -68,7 +68,7 @@ namespace aprilui
 			return (mDiscrete ? (float)(int)mOffset : mOffset);
 		}
 		float time = mTimer;
-		float speed = fabs(mSpeed);
+    
 		if (isExpired())
 		{
 			if (mReset)

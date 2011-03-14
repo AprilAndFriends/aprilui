@@ -26,7 +26,6 @@ namespace aprilui
 
 	void ColorImage::draw(grect rect, april::Color color)
 	{
-		april::PlainVertex v[4];
 		pVertices[0].x = rect.x;          pVertices[0].y = rect.y;
 		pVertices[1].x = rect.x + rect.w; pVertices[1].y = rect.y;
 		pVertices[2].x = rect.x;          pVertices[2].y = rect.y + rect.h;

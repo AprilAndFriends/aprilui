@@ -606,9 +606,7 @@ namespace aprilui
 		{
 			int dot = name.find('.');
 			if (dot < 0)
-			{
 				throw ResourceNotExistsException(name, "Image", this);
-			}
 			Dataset* dataset;
 			try
 			{
