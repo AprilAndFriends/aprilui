@@ -403,7 +403,7 @@ namespace aprilui
 			lines = f.read_lines();
 			f.close();
 
-			while (lines.size() > 0 && lines[0][0] < 0) lines[0]=lines[0](1,lines[0].size()-1);
+			while (lines[0].size() > 0 && lines[0][0] < 0) lines[0]=lines[0](1,lines[0].size()-1);
 
 			foreach (hstr, it2, lines)
 			{
