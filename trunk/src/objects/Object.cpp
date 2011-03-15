@@ -341,10 +341,11 @@ namespace aprilui
 	{
 		Event* event = NULL;
 		if (mEvents.has_key(name))
+        {
 			event = mEvents[name];
-		else
-			mEvents[name] = e;
-
+            if (!e) mEvents.remove_key(name);
+        }
+        if (e) mEvents[name] = e;
 		if (event != NULL)
 			delete event;
 	}
