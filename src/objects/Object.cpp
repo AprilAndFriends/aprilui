@@ -24,7 +24,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "EventArgs.h"
 #include "Exception.h"
 #include "ObjectCallbackObject.h"
-#include "util.h"
+#include "Util.h"
 
 namespace aprilui
 {
