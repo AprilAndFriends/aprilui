@@ -109,15 +109,18 @@ namespace aprilui
 		}
 		mParent->removeChild(this);
 	}
-    
-    Object* Object::findChildByName(chstr name)
-    {
-        foreach(Object*, it, mChildren)
-        {
-            if ((*it)->getName() == name) return *it;
-        }
-        return 0;
-    }
+	
+	Object* Object::findChildByName(chstr name)
+	{
+		foreach (Object*, it, mChildren)
+		{
+			if ((*it)->getName() == name)
+			{
+				return (*it);
+			}
+		}
+		return NULL;
+	}
 	
 	gvec2 Object::getDockedOffset()
 	{
