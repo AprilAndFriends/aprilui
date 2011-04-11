@@ -145,6 +145,8 @@ namespace aprilui
 		
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());
+        
+        Object* findChildByName(chstr name);
 		
 		virtual void notifyEvent(chstr name, void* params);
 		
