@@ -37,6 +37,7 @@ namespace aprilui
 		void setDisabledImageByName(chstr image);
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* value);
+        void setImageByName(chstr image);
 		
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);

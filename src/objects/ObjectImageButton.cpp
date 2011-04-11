@@ -65,6 +65,8 @@ namespace aprilui
 		}
 		else if (mHover)
 		{
+            if (mName == "inventory_btn")
+                mName=mName;
 			if (mPushed)
 			{
 				if (mPushedImage != NULL)
@@ -106,6 +108,11 @@ namespace aprilui
 		mNormalImage = image;
 	}
 	
+	void ImageButton::setImageByName(chstr image)
+	{
+		setImage(mDataset->getImage(image));
+	}
+
 	bool ImageButton::OnMouseDown(float x, float y, int button)
 	{
 		if (Object::OnMouseDown(x, y, button))
