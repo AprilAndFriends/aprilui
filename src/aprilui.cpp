@@ -29,6 +29,7 @@ namespace aprilui
 	float defaultScale = 1.0f;
 	Image* gCursor = NULL;
 	bool cursorVisible = true;
+    gvec2 cursorPosition;
 	bool limitCursorToViewport = false;
 	bool limitCursorToScreenViewport = true;
 	grect viewport;
@@ -95,23 +96,32 @@ namespace aprilui
 		screenViewport = value;
 	}
 	
-	gvec2 getCursorPosition()
-	{
+    void updateCursorPosition()
+    {
 		april::Window* window = april::rendersys->getWindow();
-		gvec2 position = window->getCursorPosition();
-		position.x = (float)(int)(position.x * screenViewport.w / window->getWidth()) - viewport.x;
-		position.y = (float)(int)(position.y * screenViewport.h / window->getHeight()) - viewport.y;
+		cursorPosition = window->getCursorPosition();
+		cursorPosition.x = (float)(int)(cursorPosition.x * screenViewport.w / window->getWidth()) - viewport.x;
+		cursorPosition.y = (float)(int)(cursorPosition.y * screenViewport.h / window->getHeight()) - viewport.y;
 		if (limitCursorToViewport)
 		{
-			position.x = hclamp(position.x, 0.0f, viewport.w - 1);
-			position.y = hclamp(position.y, 0.0f, viewport.h - 1);
+			cursorPosition.x = hclamp(cursorPosition.x, 0.0f, viewport.w - 1);
+			cursorPosition.y = hclamp(cursorPosition.y, 0.0f, viewport.h - 1);
 		}
 		else if (limitCursorToScreenViewport)
 		{
-			position.x = hclamp(position.x, -viewport.x, screenViewport.w - viewport.x - 1);
-			position.y = hclamp(position.y, -viewport.y, screenViewport.w - viewport.y - 1);
+			cursorPosition.x = hclamp(cursorPosition.x, -viewport.x, screenViewport.w - viewport.x - 1);
+			cursorPosition.y = hclamp(cursorPosition.y, -viewport.y, screenViewport.w - viewport.y - 1);
 		}
-		return position;
+    }
+    
+    void setCursorPosition(gvec2 position)
+    {
+        cursorPosition = position;
+    }
+    
+	gvec2 getCursorPosition()
+	{
+        return cursorPosition;
 	}
 
 	void setCursorImage(Image* image)
