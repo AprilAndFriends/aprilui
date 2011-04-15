@@ -76,6 +76,7 @@ namespace aprilui
 	{
 		if (Object::OnMouseDown(x, y, button))
 		{
+            triggerEvent("MouseDown", x, y, 0);
 			return true;
 		}
 		return ButtonBase::OnMouseDown(x, y, button);
