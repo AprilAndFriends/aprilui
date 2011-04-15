@@ -16,9 +16,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 // for class member functions being registered from within the class
 #define SET_CLICK_EVENT(dataset,obj_name,member_func) \
 		dataset->getObject(obj_name)->registerEvent("Click",new aprilui::MemberCallbackEvent(member_func,this));
+#define SET_MOUSEDOWN_EVENT(dataset,obj_name,member_func) \
+        dataset->getObject(obj_name)->registerEvent("MouseDown",new aprilui::MemberCallbackEvent(member_func,this));
 // for class member functions being registered from within the class
 #define _SET_CLICK_EVENT(obj,member_func) \
 		obj->registerEvent("Click",new aprilui::MemberCallbackEvent(member_func,this));
+#define _SET_MOUSEDOWN_EVENT(obj,member_func) \
+        obj->registerEvent("MouseDown",new aprilui::MemberCallbackEvent(member_func,this));
 // for free C functions and static class functions
 #define SET_CLICK_EVENT_FUNCTION(dataset,obj_name,free_function) \
 		dataset->getObject(obj_name)->registerEvent("Click",new aprilui::CallbackEvent(free_function));

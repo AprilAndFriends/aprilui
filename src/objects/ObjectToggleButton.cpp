@@ -48,6 +48,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
+            triggerEvent("MouseDown", x, y, 0);
 			mPushed = !mPushed;
 			Event* event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
 			if (event != NULL)
