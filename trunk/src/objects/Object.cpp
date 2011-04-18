@@ -367,11 +367,11 @@ namespace aprilui
 		mEvents.remove_key(name);
 	}
 
-	void Object::triggerEvent(chstr name, float x, float y, chstr extra)
+	void Object::triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
 	{
 		if (mEvents.has_key(name))
 		{
-			EventArgs args(this, x, y, extra);
+			EventArgs args(this, x, y, keycode, extra);
 			mEvents[name]->execute(&args);
 		}
 	}

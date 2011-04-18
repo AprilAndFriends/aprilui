@@ -52,7 +52,7 @@ namespace aprilui
 		{
 			mPushed = true;
 			setValue((x - mRect.x) / (mRect.w - 4));
-			triggerEvent("Set", x, y, 0);
+			triggerEvent("Set", x, y, button);
 			return true;
 		}
 		return false;
@@ -79,7 +79,7 @@ namespace aprilui
 		if (mPushed)
 		{
 			setValue((x - mRect.x) / (mRect.w - 4));
-			triggerEvent("Set", x, y, 0);
+			triggerEvent("Set", x, y);
 		}
 	}
 

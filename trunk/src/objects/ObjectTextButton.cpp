@@ -76,7 +76,7 @@ namespace aprilui
 	{
 		if (Object::OnMouseDown(x, y, button))
 		{
-            triggerEvent("MouseDown", x, y, 0);
+            triggerEvent("MouseDown", x, y, button);
 			return true;
 		}
 		return ButtonBase::OnMouseDown(x, y, button);
@@ -91,7 +91,7 @@ namespace aprilui
 		bool result = ButtonBase::OnMouseUp(x, y, button);
 		if (result)
 		{
-			triggerEvent("Click", x, y, 0);
+			triggerEvent("Click", x, y, button);
 		}
 		return result;
 	}
