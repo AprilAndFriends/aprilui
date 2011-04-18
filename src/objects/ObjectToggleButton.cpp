@@ -48,7 +48,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-            triggerEvent("MouseDown", x, y, 0);
+            triggerEvent("MouseDown", x, y, button);
 			mPushed = !mPushed;
 			Event* event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
 			if (event != NULL)
@@ -69,7 +69,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			triggerEvent("Click", x, y, 0);
+			triggerEvent("Click", x, y, button);
 			return true;
 		}
 		return false;

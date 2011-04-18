@@ -12,12 +12,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	EventArgs::EventArgs(Object* o, float x_pos, float y_pos, chstr extra_string)
+	EventArgs::EventArgs(Object* o, float x_pos, float y_pos, unsigned int keycode, chstr extra_string)
 	{
-		object = o;
-		x = x_pos;
-		y = y_pos;
-		extra = extra_string;
+		this->object = o;
+		this->x = x_pos;
+		this->y = y_pos;
+        this->keycode = keycode;
+		this->extra = extra_string;
 	}
 	
 }

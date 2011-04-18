@@ -57,7 +57,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			triggerEvent("Click", x, y, 0);
+			triggerEvent("Click", x, y, button);
 			return true;
 		}
 		return false;

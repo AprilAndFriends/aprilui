@@ -175,7 +175,7 @@ namespace aprilui
 		
 		void sortChildren();
 		
-		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
+		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
 		float getDerivedAngle();
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
