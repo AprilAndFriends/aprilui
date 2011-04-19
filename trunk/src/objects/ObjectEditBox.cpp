@@ -47,7 +47,7 @@ namespace aprilui
 	void EditBox::OnDraw()
 	{
 		grect rect = _getDrawRect();
-		april::Color color = april::Color::BLACK;
+		april::Color color = APRIL_COLOR_BLACK;
 		if (!mPushed)
 		{
 			color.a = 191;

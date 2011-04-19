@@ -29,7 +29,7 @@ namespace aprilui
 		Image(Image& img,chstr name);
 		virtual ~Image();
 		
-		virtual void draw(grect rect, april::Color color = april::Color::WHITE);
+		virtual void draw(grect rect, april::Color color = APRIL_COLOR_WHITE);
 		void draw(grect rect, april::Color color, float angle);
 		
 		bool isVertical() { return mVertical; };
