@@ -59,8 +59,8 @@ namespace aprilui
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
 		
-		virtual bool isCursorInside();
-		bool isPointInside(gvec2 position);
+		bool isCursorInside();
+		virtual bool isPointInside(gvec2 position);
 		bool angleEquals(float angle);
 		void unregisterEvent(chstr name);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
