@@ -94,7 +94,7 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		april::Color color = april::Color::WHITE;
+		april::Color color = APRIL_COLOR_WHITE;
 		color.a = getDerivedAlpha();
 		april::rendersys->drawColoredQuad(rect, color);
 		april::Color backgroundColor = color / 4.0f;
