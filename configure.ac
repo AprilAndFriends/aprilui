@@ -24,6 +24,9 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_LANG(C++)
 
+# set up pkgconfig
+PKG_PROG_PKG_CONFIG
+
 # initialize automake
 AM_INIT_AUTOMAKE([foreign])
 
@@ -67,8 +70,13 @@ AC_CHECK_HEADERS(gtypes/Rectangle.h, ,[AC_MSG_ERROR("*** gtypes headers not foun
 AC_CHECK_HEADERS(atres/atres.h, ,[AC_MSG_ERROR("*** atres headers not found.")])
 
 # check for libxml2
-PKG_CHECK_MODULES(XML, libxml-2.0 >= 2.4)
-
+PKG_CHECK_MODULES([XML], libxml-2.0 >= 2.4)
+# check for libxml2 alternate!
+#AM_PATH_XML2(2.6.5, , AC_MSG_ERROR([you need libxml2 >= 2.6.5 to compile aprilui!]))
+#LIBS="$LIBS $XML_LIBS"
+#CFLAGS="$CFLAGS $XML_CPPFLAGS -DHAVE_LIBXML2"
+#CXXFLAGS="$CXXFLAGS $XML_CPPFLAGS -DHAVE_LIBXML2"
+#AC_SUBST(XML_CFLAGS)
 
 # end checks; output files
 AC_OUTPUT(Makefile src/Makefile include/aprilui/Makefile src/animators/Makefile src/images/Makefile src/objects/Makefile)
