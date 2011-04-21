@@ -10,6 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_BUTTON_BASE_H
 #define APRILUI_BUTTON_BASE_H
 
+#include <hltypes/hstring.h>
+
 #include "apriluiExport.h"
 
 namespace aprilui
@@ -24,6 +26,8 @@ namespace aprilui
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
 		void OnMouseMove(float x, float y);
+
+		static void setAllowedButtons(harray<unsigned char> buttons);
 		
 	protected:
 		bool mPushed;
