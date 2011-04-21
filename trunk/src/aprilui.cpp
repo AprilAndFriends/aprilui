@@ -9,9 +9,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <stdio.h>
 
+#include <april/Keys.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <atres/atres.h>
+#include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
@@ -20,6 +22,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Dataset.h"
 #include "Exception.h"
 #include "Image.h"
+#include "ObjectButtonBase.h"
 
 namespace aprilui
 {
@@ -59,6 +62,9 @@ namespace aprilui
 		viewport.w = (float)april::rendersys->getWindow()->getWidth();
 		viewport.h = (float)april::rendersys->getWindow()->getHeight();
 		screenViewport = viewport;
+		harray<unsigned char> allowedButtons;
+		allowedButtons += april::AK_LBUTTON;
+		ButtonBase::setAllowedButtons(allowedButtons);
 	}
 	
 	void destroy()

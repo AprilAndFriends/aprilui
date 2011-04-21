@@ -8,11 +8,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <april/Keys.h>
+#include <hltypes/harray.h>
+
 #include "aprilui.h"
 #include "ObjectButtonBase.h"
 
 namespace aprilui
 {
+	static harray<unsigned char> allowedButtons;
+
 	ButtonBase::ButtonBase()
 	{
 		mPushed = false;
@@ -26,7 +30,10 @@ namespace aprilui
 
 	bool ButtonBase::OnMouseDown(float x, float y, int button)
 	{
-        if (button != april::AK_LBUTTON) return 0;
+		if (!allowedButtons.contains(button))
+		{
+			return false;
+		}
 		mHover = isCursorInside();
 		if (mHover)
 		{
@@ -38,7 +45,10 @@ namespace aprilui
 
 	bool ButtonBase::OnMouseUp(float x, float y, int button)
 	{
-        if (button != april::AK_LBUTTON) return 0;
+		if (!allowedButtons.contains(button))
+		{
+			return false;
+		}
 		mHover = isCursorInside();
 		if (mPushed && mHover)
 		{
@@ -52,6 +62,11 @@ namespace aprilui
 	void ButtonBase::OnMouseMove(float x, float y)
 	{
 		mHover = isCursorInside();
+	}
+
+	void ButtonBase::setAllowedButtons(harray<unsigned char> buttons)
+	{
+		allowedButtons = buttons;
 	}
 	
 }
