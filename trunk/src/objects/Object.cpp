@@ -95,6 +95,14 @@ namespace aprilui
 		}
 		mChildren.clear();
 	}
+    
+	void Object::destroyAllChildren()
+	{
+		while (mChildren.size() > 0)
+		{
+			mDataset->destroyAndDetachObject(mChildren[0]);
+		}
+	}
 	
 	void Object::attach(Object* object)
 	{
