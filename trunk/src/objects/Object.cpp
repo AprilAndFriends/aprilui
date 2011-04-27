@@ -95,7 +95,7 @@ namespace aprilui
 		}
 		mChildren.clear();
 	}
-    
+	
 	void Object::destroyAllChildren()
 	{
 		while (mChildren.size() > 0)
