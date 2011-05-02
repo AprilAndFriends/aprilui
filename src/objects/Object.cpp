@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <gtypes/Rectangle.h>
@@ -17,6 +18,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/util.h>
 
 #include "Animator.h"
+#include "AnimatorAlphaChanger.h"
+#include "AnimatorBlueChanger.h"
+#include "AnimatorGreenChanger.h"
+#include "AnimatorMoverX.h"
+#include "AnimatorMoverY.h"
+#include "AnimatorRedChanger.h"
+#include "AnimatorResizerX.h"
+#include "AnimatorResizerY.h"
+#include "AnimatorRotator.h"
+#include "AnimatorScalerX.h"
+#include "AnimatorScalerY.h"
 #include "aprilui.h"
 #include "CallbackEvent.h"
 #include "Dataset.h"
@@ -25,6 +37,33 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Exception.h"
 #include "ObjectCallbackObject.h"
 #include "Util.h"
+
+#define REMOVE_EXISTING_ANIMATORS(name) \
+	int i ## name = 0; \
+	Animators::name* animator ## name; \
+	while (i ## name < mDynamicAnimators.size()) \
+	{ \
+		animator ## name = dynamic_cast<Animators::name*>(mDynamicAnimators[i ## name]); \
+		if (animator ## name != NULL) \
+		{ \
+			delete animator ## name; \
+			mDynamicAnimators.remove_at(i ## name); \
+		} \
+		else \
+		{ \
+			(i ## name)++; \
+		} \
+	}
+
+#define CREATE_DYNAMIC_ANIMATOR(type, name, offset, target, speed, delay, periods) \
+	Animator* name = new Animators::type(generateName("dynamic_animator_")); \
+	mDynamicAnimators += name; \
+	name->setParent(this); \
+	name->setOffset(offset); \
+	name->setAmplitude(target - offset); \
+	name->setSpeed(speed); \
+	name->setDelay(delay); \
+	name->setPeriods(periods);
 
 namespace aprilui
 {
@@ -52,6 +91,12 @@ namespace aprilui
 		{
 			delete it->second;
 		}
+		mEvents.clear();
+		foreach (Animator*, it, mDynamicAnimators)
+		{
+			delete (*it);
+		}
+		mDynamicAnimators.clear();
 	}
 	
 	bool _objectSortCallback(Object* a, Object* b)
@@ -247,6 +292,29 @@ namespace aprilui
 	void Object::update(float k)
 	{
 		foreach (Object*, it, mChildren)
+		{
+			(*it)->update(k);
+		}
+		foreach (Animator*, it, mDynamicAnimators)
+		{
+			(*it)->update(k);
+		}
+		int i = 0;
+		Animator* animator;
+		while (i < mDynamicAnimators.size())
+		{
+			animator = mDynamicAnimators[i];
+			if (animator->isExpired())
+			{
+				delete animator;
+				mDynamicAnimators.remove_at(i);
+			}
+			else
+			{
+				i++;
+			}
+		}
+		foreach (Animator*, it, mDynamicAnimators)
 		{
 			(*it)->update(k);
 		}
@@ -541,5 +609,178 @@ namespace aprilui
 	{
 		return grect(-mCenter, mRect.getSize());
 	}
+
+	void Object::moveX(float x, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(MoverX);
+		moveXQueue(x, speed);
+	}
+
+	void Object::moveY(float y, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(MoverY);
+		moveYQueue(y, speed);
+	}
+
+	void Object::move(float x, float y, float speed)
+	{
+		moveX(x, speed);
+		moveY(y, speed);
+	}
+
+	void Object::scaleX(float x, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(ScalerX);
+		scaleXQueue(x, speed);
+	}
+
+	void Object::scaleY( float y, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(ScalerY);
+		scaleYQueue(y, speed);
+	}
+
+	void Object::scale(float x, float y, float speed)
+	{
+		scaleX(x, speed);
+		scaleY(y, speed);
+	}
+
+	void Object::resizeX(float x, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(ResizerX);
+		resizeXQueue(x, speed);
+	}
+
+	void Object::resizeY(float y, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(ResizerY);
+		resizeYQueue(y, speed);
+	}
+
+	void Object::resize(float x, float y, float speed)
+	{
+		resizeX(x, speed);
+		resizeY(y, speed);
+	}
+
+	void Object::rotate(float angle, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(Rotator);
+		rotateQueue(angle, speed);
+	}
+
+	void Object::fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed)
+	{
+		fadeRed(r, speed);
+		fadeGreen(g, speed);
+		fadeBlue(b, speed);
+		fadeAlpha(a, speed);
+	}
 	
+	void Object::fadeRed(unsigned char r, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(RedChanger);
+		fadeRedQueue(r, speed);
+	}
+
+	void Object::fadeGreen(unsigned char g, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(GreenChanger);
+		fadeGreenQueue(g, speed);
+	}
+
+	void Object::fadeBlue(unsigned char b, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(BlueChanger);
+		fadeBlueQueue(b, speed);
+	}
+
+	void Object::fadeAlpha(unsigned char a, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
+		fadeAlphaQueue(a, speed);
+	}
+
+	void Object::moveXQueue(float x, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(MoverX, animator, mRect.x, x, speed, delay, 1.0f);
+	}
+
+	void Object::moveYQueue(float y, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(MoverY, animator, mRect.y, y, speed, delay, 1.0f);
+	}
+
+	void Object::moveQueue(float x, float y, float speed, float delay)
+	{
+		moveXQueue(x, speed, delay);
+		moveYQueue(y, speed, delay);
+	}
+
+	void Object::scaleXQueue(float x, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, animator, mScale.x, x, speed, delay, 1.0f);
+	}
+
+	void Object::scaleYQueue(float y, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, animator, mScale.y, y, speed, delay, 1.0f);
+	}
+
+	void Object::scaleQueue(float x, float y, float speed, float delay)
+	{
+		scaleXQueue(x, speed, delay);
+		scaleYQueue(y, speed, delay);
+	}
+
+	void Object::resizeXQueue(float x, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(ResizerX, animator, mRect.w, x, speed, delay, 1.0f);
+	}
+
+	void Object::resizeYQueue(float y, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(ResizerY, animator, mRect.h, y, speed, delay, 1.0f);
+	}
+
+	void Object::resizeQueue(float x, float y, float speed, float delay)
+	{
+		resizeXQueue(x, speed, delay);
+		resizeYQueue(y, speed, delay);
+	}
+
+	void Object::rotateQueue(float angle, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(Rotator, animator, mAngle, angle, speed, delay, 1.0f);
+	}
+
+	void Object::fadeRedQueue(unsigned char r, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(RedChanger, animator, (float)mColor.r, (float)r, speed, delay, 1.0f);
+	}
+
+	void Object::fadeGreenQueue(unsigned char g, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(GreenChanger, animator, (float)mColor.g, (float)g, speed, delay, 1.0f);
+	}
+
+	void Object::fadeBlueQueue(unsigned char b, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(BlueChanger, animator, (float)mColor.b, (float)b, speed, delay, 1.0f);
+	}
+
+	void Object::fadeAlphaQueue(unsigned char a, float speed, float delay)
+	{
+		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, animator, (float)mColor.a, (float)a, speed, delay, 1.0f);
+	}
+
+	void Object::fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay)
+	{
+		fadeRedQueue(r, speed);
+		fadeGreenQueue(g, speed);
+		fadeBlueQueue(b, speed);
+		fadeAlphaQueue(a, speed);
+	}
+
 }
