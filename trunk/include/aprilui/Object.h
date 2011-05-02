@@ -34,6 +34,7 @@ namespace aprilui
 		BottomRight
 	};
 	
+	class Animator;
 	class Dataset;
 	class Event;
 	class EventArgs;
@@ -154,6 +155,40 @@ namespace aprilui
 		virtual void setProperty(chstr name, chstr value);
 		Dataset* getDataset() { return mDataset; }
 		void _setDataset(Dataset* value) { mDataset = value; }
+
+		// dynamic animators
+
+		void moveX(float x, float speed);
+		void moveY(float y, float speed);
+		void move(float x, float y, float speed);
+		void scaleX(float x, float speed);
+		void scaleY(float y, float speed);
+		void scale(float x, float y, float speed);
+		void resizeX(float x, float speed);
+		void resizeY(float y, float speed);
+		void resize(float x, float y, float speed);
+		void rotate(float angle, float speed);
+		void fadeRed(unsigned char r, float speed);
+		void fadeGreen(unsigned char g, float speed);
+		void fadeBlue(unsigned char b, float speed);
+		void fadeAlpha(unsigned char a, float speed);
+		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
+		
+		void moveXQueue(float x, float speed, float delay = 0.0f);
+		void moveYQueue(float y, float speed, float delay = 0.0f);
+		void moveQueue(float x, float y, float speed, float delay = 0.0f);
+		void scaleXQueue(float x, float speed, float delay = 0.0f);
+		void scaleYQueue(float y, float speed, float delay = 0.0f);
+		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
+		void resizeXQueue(float x, float speed, float delay = 0.0f);
+		void resizeYQueue(float y, float speed, float delay = 0.0f);
+		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
+		void rotateQueue(float angle, float speed, float delay = 0.0f);
+		void fadeRedQueue(unsigned char r, float speed, float delay = 0.0f);
+		void fadeGreenQueue(unsigned char g, float speed, float delay = 0.0f);
+		void fadeBlueQueue(unsigned char b, float speed, float delay = 0.0f);
+		void fadeAlphaQueue(unsigned char a, float speed, float delay = 0.0f);
+		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		
 	protected:
 		hstr mTypeName;
@@ -163,6 +198,7 @@ namespace aprilui
 		gvec2 mCenter;
 		Object* mParent;
 		harray<Object*> mChildren;
+		harray<Animator*> mDynamicAnimators;
 		hmap<hstr, Event*> mEvents;
 		int mZOrder;
 		bool mEnabled;
