@@ -32,6 +32,7 @@ bool render(float time)
 {
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(screen);
+	aprilui::updateCursorPosition();
 	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/test");
 	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
 					 image->getScrollY() - time * SCROLL_SPEED_Y);

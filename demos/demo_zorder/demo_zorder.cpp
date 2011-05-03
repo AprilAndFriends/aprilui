@@ -30,6 +30,7 @@ bool render(float time)
 {
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(screen);
+	aprilui::updateCursorPosition();
 	int i = hrand(1, 8);
 	dataset->getObject("obj0" + hstr(i))->setZOrder(hrand(100));
 	dataset->getObject("root")->draw();
