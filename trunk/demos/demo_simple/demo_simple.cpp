@@ -28,6 +28,7 @@ bool render(float time)
 {
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(screen);
+	aprilui::updateCursorPosition();
 	dataset->getObject("root")->draw();
 	dataset->update(time);
 	return true;

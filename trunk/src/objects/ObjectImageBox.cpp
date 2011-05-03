@@ -68,8 +68,7 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		april::Color color = mColor;
-		color.a = getDerivedAlpha();
+		april::Color color(mColor, getDerivedAlpha());
 		if (!isDerivedEnabled())
 		{
 			color.a /= 2;

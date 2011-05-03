@@ -51,8 +51,7 @@ namespace aprilui
         default:
 			break;
 		}
-		april::Color color(mTextColor);
-		color.a = (unsigned char)(alpha * color.a_f());
+		april::Color color(mTextColor, (unsigned char)(alpha * mTextColor.a_f()));
 		if (mTextFormatting)
 		{
 			atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
