@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libapril_d.lib libatres_d.lib libxml2.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../atres/bin/win32_Debug;../april/bin"
+				AdditionalLibraryDirectories="../lib/msvc90;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../atres/bin/win32_Debug;../april/bin"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -137,7 +137,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
-				AdditionalLibraryDirectories="../lib/msvc;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../atres/bin/win32_Release;../april/bin"
+				AdditionalLibraryDirectories="../lib/msvc90;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../atres/bin/win32_Release;../april/bin"
 			/>
 			<Tool
 				Name="VCALinkTool"
