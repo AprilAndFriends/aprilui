@@ -250,6 +250,13 @@ namespace aprilui
 
 	bool Object::isAnimated()
 	{
+		foreach (Animator*, it, mDynamicAnimators)
+		{
+			if ((*it)->isAnimated())
+			{
+				return true;
+			}
+		}
 		foreach (Object*, it, mChildren)
 		{
 			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isAnimated())
