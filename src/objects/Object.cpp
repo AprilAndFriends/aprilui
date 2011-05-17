@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/util.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
@@ -334,7 +335,41 @@ namespace aprilui
 	
 	bool Object::isPointInside(gvec2 position)
 	{
-		return getDerivedRect().isPointInside(position);
+		if (mScale.x == 0.0f || mScale.y == 0.0f)
+		{
+			return false;
+		}
+		grect rect = getDerivedRect();
+		if (mAngle == 0.0f)
+		{
+			return rect.isPointInside(position);
+		}
+		gvec2 pos = rect.getPosition();
+		gvec2 points[3] = {pos, gvec2(rect.x + rect.w, rect.y), gvec2(rect.x, rect.y + rect.h)};
+		gvec2 center = mCenter * getDerivedScale();
+		float length;
+		float angle;
+		float sinv;
+		float cosv;
+		gvec2 current;
+		for (int i = 0; i < 3; i++)
+		{
+			current = points[i] - pos - center;
+			if (current.x != 0.0f || current.y != 0.0f)
+			{
+				angle = fmod((float)RAD_TO_DEG(atan2(-current.y, current.x)) + mAngle, 360.0f);
+				length = current.length();
+				sinv = (float)dsin(angle);
+				cosv = (float)dcos(angle);
+				points[i] += gvec2(cosv * length, -sinv * length) - current;
+			}
+		}
+		gvec2 v1 = points[1] - points[0];
+		gvec2 v2 = points[2] - points[0];
+		gvec2 vX = position - points[0];
+		float d1 = vX.dot(v1) / v1.squaredLength();
+		float d2 = vX.dot(v2) / v2.squaredLength();
+		return (is_between(d1, 0.0f, 1.0f) && is_between(d2, 0.0f, 1.0f));
 	}
 
 	bool Object::OnMouseDown(float x, float y, int button)
