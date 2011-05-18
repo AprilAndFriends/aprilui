@@ -634,7 +634,7 @@ namespace aprilui
 	
 	gvec2 Object::getDerivedSize()
 	{
-		return mRect.getSize() * getDerivedScale();
+		return (mRect.getSize() * getDerivedScale());
 	}
 
 	gvec2 Object::getDerivedScale()
