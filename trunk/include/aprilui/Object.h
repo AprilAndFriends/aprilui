@@ -129,6 +129,7 @@ namespace aprilui
 		gvec2 getDerivedScale();
 		
 		virtual bool isAnimated();
+		bool hasDynamicAnimation();
 
 		void moveToFront();
 		void moveToBack();

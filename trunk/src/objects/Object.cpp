@@ -278,6 +278,11 @@ namespace aprilui
 		return false;
 	}
 	
+	bool Object::hasDynamicAnimation()
+	{
+		return (mDynamicAnimators.size() > 0);
+	}
+
 	void Object::draw(gvec2 offset)
 	{
 		if (!isVisible() || fabs(mScale.x) < APRILUI_E_TOLERANCE || fabs(mScale.y) < APRILUI_E_TOLERANCE)
@@ -331,10 +336,6 @@ namespace aprilui
 			{
 				i++;
 			}
-		}
-		foreach (Animator*, it, mDynamicAnimators)
-		{
-			(*it)->update(k);
 		}
 	}
 
