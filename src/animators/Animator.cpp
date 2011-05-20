@@ -68,7 +68,6 @@ namespace aprilui
 			return (mDiscrete ? (float)(int)mOffset : mOffset);
 		}
 		float time = mTimer;
-    
 		if (isExpired())
 		{
 			if (mReset)
