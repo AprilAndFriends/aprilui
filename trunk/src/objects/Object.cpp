@@ -744,24 +744,34 @@ namespace aprilui
 
 	void Object::move(float x, float y, float speed)
 	{
+		REMOVE_EXISTING_ANIMATORS(MoverX);
+		REMOVE_EXISTING_ANIMATORS(MoverY);
 		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed);
 		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed);
 	}
 
 	void Object::scale(float x, float y, float speed)
 	{
+		REMOVE_EXISTING_ANIMATORS(ScalerX);
+		REMOVE_EXISTING_ANIMATORS(ScalerY);
 		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed);
 		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed);
 	}
 
 	void Object::resize(float x, float y, float speed)
 	{
+		REMOVE_EXISTING_ANIMATORS(ResizerX);
+		REMOVE_EXISTING_ANIMATORS(ResizerY);
 		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed);
 		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed);
 	}
 
 	void Object::fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed)
 	{
+		REMOVE_EXISTING_ANIMATORS(RedChanger);
+		REMOVE_EXISTING_ANIMATORS(GreenChanger);
+		REMOVE_EXISTING_ANIMATORS(BlueChanger);
+		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
 		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed);
 		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed);
 		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed);
