@@ -56,15 +56,25 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 		} \
 	}
 
-#define CREATE_DYNAMIC_ANIMATOR(type, offset, target, speed, delay, periods) \
+#define CREATE_DYNAMIC_ANIMATOR(type, offset, target, speed) \
 	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
 	mDynamicAnimators += animator ## type; \
 	animator ## type->setParent(this); \
 	animator ## type->setOffset(offset); \
 	animator ## type->setAmplitude(target - offset); \
 	animator ## type->setSpeed(speed); \
+	animator ## type->setPeriods(1.0f);
+
+#define CREATE_DELAYED_DYNAMIC_ANIMATOR(type, offset, target, speed, delay) \
+	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
+	mDynamicAnimators += animator ## type; \
+	animator ## type->setParent(this); \
+	animator ## type->setTarget(target); \
+	animator ## type->setUseTarget(true); \
+	animator ## type->setInheritValue(true); \
+	animator ## type->setSpeed(speed); \
 	animator ## type->setDelay(delay); \
-	animator ## type->setPeriods(periods); \
+	animator ## type->setPeriods(1.0f);
 
 namespace aprilui
 {
@@ -655,196 +665,196 @@ namespace aprilui
 	Animator* Object::moveX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
-		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed);
 		return animatorMoverX;
 	}
 
 	Animator* Object::moveY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverY);
-		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed);
 		return animatorMoverY;
 	}
 
 	Animator* Object::scaleX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed);
 		return animatorScalerX;
 	}
 
 	Animator* Object::scaleY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed);
 		return animatorScalerY;
 	}
 
 	Animator* Object::resizeX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
-		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed);
 		return animatorResizerX;
 	}
 
 	Animator* Object::resizeY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
-		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed);
 		return animatorResizerY;
 	}
 
 	Animator* Object::rotate(float angle, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(Rotator);
-		CREATE_DYNAMIC_ANIMATOR(Rotator, mAngle, angle, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(Rotator, mAngle, angle, speed);
 		return animatorRotator;
 	}
 
 	Animator* Object::fadeRed(unsigned char r, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
-		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed);
 		return animatorRedChanger;
 	}
 
 	Animator* Object::fadeGreen(unsigned char g, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(GreenChanger);
-		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed);
 		return animatorGreenChanger;
 	}
 
 	Animator* Object::fadeBlue(unsigned char b, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(BlueChanger);
-		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed);
 		return animatorBlueChanger;
 	}
 
 	Animator* Object::fadeAlpha(unsigned char a, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
-		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed);
 		return animatorAlphaChanger;
 	}
 
 	void Object::move(float x, float y, float speed)
 	{
-		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed, 0.0f, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed);
 	}
 
 	void Object::scale(float x, float y, float speed)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed, 0.0f, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed);
 	}
 
 	void Object::resize(float x, float y, float speed)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed, 0.0f, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed);
 	}
 
 	void Object::fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed)
 	{
-		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed, 0.0f, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed, 0.0f, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed, 0.0f, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed, 0.0f, 1.0f);
+		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed);
+		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed);
+		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed);
+		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed);
 	}
 	
 	Animator* Object::moveXQueue(float x, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed, delay);
 		return animatorMoverX;
 	}
 
 	Animator* Object::moveYQueue(float y, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed, delay);
 		return animatorMoverY;
 	}
 
 	Animator* Object::scaleXQueue(float x, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed, delay);
 		return animatorScalerX;
 	}
 
 	Animator* Object::scaleYQueue(float y, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed, delay);
 		return animatorScalerY;
 	}
 
 	Animator* Object::resizeXQueue(float x, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed, delay);
 		return animatorResizerX;
 	}
 
 	Animator* Object::resizeYQueue(float y, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed, delay);
 		return animatorResizerY;
 	}
 
 	Animator* Object::rotateQueue(float angle, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(Rotator, mAngle, angle, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(Rotator, mAngle, angle, speed, delay);
 		return animatorRotator;
 	}
 
 	Animator* Object::fadeRedQueue(unsigned char r, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed, delay);
 		return animatorRedChanger;
 	}
 
 	Animator* Object::fadeGreenQueue(unsigned char g, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed, delay);
 		return animatorGreenChanger;
 	}
 
 	Animator* Object::fadeBlueQueue(unsigned char b, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed, delay);
 		return animatorBlueChanger;
 	}
 
 	Animator* Object::fadeAlphaQueue(unsigned char a, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed, delay);
 		return animatorAlphaChanger;
 	}
 
 	void Object::moveQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed, delay, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, mRect.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed, delay);
 	}
 
 	void Object::scaleQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed, delay, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed, delay);
 	}
 
 	void Object::resizeQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed, delay, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed, delay);
 	}
 
 	void Object::fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay)
 	{
-		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed, delay, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed, delay, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed, delay, 1.0f);
-		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed, delay, 1.0f);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)r, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed, delay);
 	}
 
 	void Object::moveXStop()
