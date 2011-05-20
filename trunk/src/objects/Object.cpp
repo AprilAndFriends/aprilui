@@ -57,23 +57,25 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 	}
 
 #define CREATE_DYNAMIC_ANIMATOR(type, offset, target, speed) \
-	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
-	mDynamicAnimators += animator ## type; \
-	animator ## type->setParent(this); \
-	animator ## type->setOffset(offset); \
-	animator ## type->setAmplitude(target - offset); \
-	animator ## type->setSpeed(speed); \
-	animator ## type->setPeriods(1.0f);
+	CREATE_DELAYED_DYNAMIC_ANIMATOR(type, offset, target, speed, 0.0f);
 
 #define CREATE_DELAYED_DYNAMIC_ANIMATOR(type, offset, target, speed, delay) \
 	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
 	mDynamicAnimators += animator ## type; \
 	animator ## type->setParent(this); \
-	animator ## type->setTarget(target); \
-	animator ## type->setUseTarget(true); \
-	animator ## type->setInheritValue(true); \
+	if (delay == 0.0f) \
+	{ \
+		animator ## type->setOffset(offset); \
+		animator ## type->setAmplitude(target - offset); \
+	} \
+	else \
+	{ \
+		animator ## type->setTarget(target); \
+		animator ## type->setUseTarget(true); \
+		animator ## type->setInheritValue(true); \
+		animator ## type->setDelay(delay); \
+	} \
 	animator ## type->setSpeed(speed); \
-	animator ## type->setDelay(delay); \
 	animator ## type->setPeriods(1.0f);
 
 namespace aprilui
