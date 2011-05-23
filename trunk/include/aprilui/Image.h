@@ -40,7 +40,8 @@ namespace aprilui
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
 		grect getSrcRect() const { return mSrcRect; }
-		
+		void setSrcRect(grect rect) { mSrcRect=rect; }
+        
 		april::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
 		
