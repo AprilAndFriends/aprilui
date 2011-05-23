@@ -98,7 +98,9 @@ namespace aprilui
 		{
 			T object = dynamic_cast<T>(getObject(name));
 			if (object == NULL)
+			{
 				aprilui::log("WARNING! Dynamic cast in getObject<T> failed, object: " + name);
+			}
 			return object;
 		}
 
@@ -122,6 +124,7 @@ namespace aprilui
 
 		april::Texture* parseTexture(xml_node* node);
 		void parseRAMTexture(xml_node* node);
+		void parseTextureGroup(xml_node* node);
 		void parseCompositeImage(xml_node* node);
 		virtual void parseExternalXMLNode(xml_node* node) { }
 		virtual Object* parseExternalObjectClass(xml_node* node, chstr obj_name, grect rect) { return 0; }

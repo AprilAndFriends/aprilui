@@ -277,6 +277,21 @@ namespace aprilui
 		return recursiveObjectParse(node, parent);
 	}
 	
+	void Dataset::parseTextureGroup(xml_node* node)
+	{
+		harray<hstr> names = node->pstr("names").split(",");
+		foreach (hstr, it, names)
+		{
+			foreach (hstr, it2, names)
+			{
+				if ((*it) != (*it2))
+				{
+					getTexture(*it)->addDynamicLink(getTexture(*it2));
+				}
+			}
+		}
+	}
+	
 	Object* Dataset::recursiveObjectParse(xml_node* node, Object* parent)
 	{
 		hstr objectName;
@@ -395,21 +410,27 @@ namespace aprilui
 			if      (*p == "Texture")
 			{
 				april::Texture* texture = parseTexture(p);
+				// TODO - needs to be removed
+				/// {
 				if (p->pexists("dynamic_link"))
 				{
 					links = p->pstr("dynamic_link");
 					dynamicLinks[texture] = links;
 				}
+				/// }
 			}
 			else if (*p == "RAMTexture") parseRAMTexture(p);
 			else if (*p == "CompositeImage") parseCompositeImage(p);
 			else if (*p == "Object") parseObject(p);
+			else if (*p == "TextureGroup") parseTextureGroup(p);
 			else if (p->type != XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
 			{
 				parseExternalXMLNode(p);
 			}
 		}
 		
+		// TODO - needs to be removed
+		/// {
 		// adjust dynamic texture links
 		harray<hstr> dlst;
 		for (hmap<april::Texture*, hstr>::iterator it = dynamicLinks.begin(); it != dynamicLinks.end(); it++)
@@ -420,6 +441,7 @@ namespace aprilui
 				it->first->addDynamicLink(getTexture(*it2));
 			}
 		}
+		/// }
 	}
 	
 	void Dataset::load(chstr path)
