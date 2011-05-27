@@ -17,7 +17,7 @@ namespace aprilui
 {
 	class EventArgs;
 	
-	class MemberCallbackEventBase
+	class apriluiExport MemberCallbackEventBase
 	{
 	public:
 		virtual void execute(void* params)=0;
