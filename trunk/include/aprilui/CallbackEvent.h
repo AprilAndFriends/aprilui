@@ -16,7 +16,7 @@ namespace aprilui
 {
 	class EventArgs;
 	
-	class CallbackEvent : public Event
+	class apriluiExport CallbackEvent : public Event
 	{
 	public:
 		CallbackEvent(void (*callback)(EventArgs*));
