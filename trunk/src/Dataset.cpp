@@ -448,7 +448,6 @@ namespace aprilui
 	{
 		hstr textsPath = (path != "" ? path : getDefaultTextsPath()) + "/" + getLocalization();
 		// texts
-		aprilui::log("loading texts");
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);
 		_loadTexts(filepath);
 		// audio
