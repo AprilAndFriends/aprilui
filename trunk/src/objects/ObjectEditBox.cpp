@@ -35,6 +35,7 @@ namespace aprilui
 		mCtrlMode = false;
 		mFilter = "";
 		mBlinkTimer = 0.0f;
+        mBackground=1;
 	}
 	
 	void EditBox::update(float time)
@@ -47,13 +48,16 @@ namespace aprilui
 	void EditBox::OnDraw()
 	{
 		grect rect = _getDrawRect();
-		april::Color color = APRIL_COLOR_BLACK;
-		if (!mPushed)
-		{
-			color.a = 191;
-		}
-		color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
-		april::rendersys->drawColoredQuad(rect, color);
+        april::Color color = APRIL_COLOR_BLACK;
+        if (mBackground)
+        {
+            if (!mPushed)
+            {
+                color.a = 191;
+            }
+            color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
+            april::rendersys->drawColoredQuad(rect, color);
+        }
 		hstr text = mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -103,6 +107,7 @@ namespace aprilui
 		if      (name == "max_length")    setMaxLength(value);
 		else if (name == "password_char") setPasswordChar(value.c_str()[0]);
 		else if (name == "filter")        setFilter(value);
+        else if (name == "background")    mBackground=value;
 	}
 	
 	void EditBox::setCursorIndex(int cursorIndex)
