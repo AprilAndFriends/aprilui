@@ -41,6 +41,7 @@ namespace aprilui
 	bool debugMode = false;
 #endif
 	hstr defaultTextsPath = "texts";
+	hstr localization = "";
 	void aprilui_writelog(chstr message)
 	{
 		printf("%s\n", message.c_str());		
@@ -238,6 +239,16 @@ namespace aprilui
 	void setDefaultTextsPath(chstr path)
 	{
 		defaultTextsPath = path;
+	}
+	
+	hstr getLocalization()
+	{
+		return localization;
+	}
+	
+	void setLocalization(chstr value)
+	{
+		localization = value;
 	}
 	
 	void setDefaultScale(float value)
