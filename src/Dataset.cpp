@@ -446,8 +446,7 @@ namespace aprilui
 	
 	void Dataset::load(chstr path)
 	{
-		hstr textsPath = (path != "" ? path : getDefaultTextsPath());
-		hstr base_dir = pathGetBaseDir(mFilename);
+		hstr textsPath = (path != "" ? path : getDefaultTextsPath()) + "/" + getLocalization();
 		// texts
 		aprilui::log("loading texts");
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);

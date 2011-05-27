@@ -56,6 +56,8 @@ namespace aprilui
 	apriluiFnExport void updateTextures(float time);
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr path);
+	apriluiFnExport hstr getLocalization();
+	apriluiFnExport void setLocalization(chstr localization);
 	
 	apriluiFnExport void OnMouseDown(float x, float y, int button);
 	apriluiFnExport void OnMouseUp(float x, float y, int button);
