@@ -587,7 +587,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SDKROOT)/usr/include/libxml2",
+					"$(SDK_DIR)/usr/include/libxml2",
 					"$(USER_LIBRARY_DIR)/SDKs/hltypesSDK/$(PLATFORM_NAME).sdk/usr/local/include",
 					"$(USER_LIBRARY_DIR)/SDKs/gtypesSDK/$(PLATFORM_NAME).sdk/usr/local/include",
 					"$(USER_LIBRARY_DIR)/SDKs/aprilSDK/$(PLATFORM_NAME).sdk/usr/local/include",
@@ -612,7 +612,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SDKROOT)/usr/include/libxml2",
+					"$(SDK_DIR)/usr/include/libxml2",
 					"$(USER_LIBRARY_DIR)/SDKs/hltypesSDK/$(PLATFORM_NAME).sdk/usr/local/include",
 					"$(USER_LIBRARY_DIR)/SDKs/gtypesSDK/$(PLATFORM_NAME).sdk/usr/local/include",
 					"$(USER_LIBRARY_DIR)/SDKs/aprilSDK/$(PLATFORM_NAME).sdk/usr/local/include",
