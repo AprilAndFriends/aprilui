@@ -273,7 +273,7 @@ namespace aprilui
 
 	void EditBox::OnChar(unsigned int charcode)
 	{
-		if (atres::getFont(mFontName)->hasChar(charcode) && (mFilterChars.size() > 0 || !mFilterChars.contains(charcode)))
+		if (atres::getFont(mFontName)->hasChar(charcode) && (mFilterChars.size() == 0 || mFilterChars.contains(charcode)))
 		{
 			_insertChar(charcode);
 		}
