@@ -25,7 +25,7 @@ namespace aprilui
 		Label(chstr name, grect rect);
 		
 		float getAngle();
-		chstr getTextXey() { return mTextKey; }
+		chstr getTextKey() { return mTextKey; }
 		void setTextKey(chstr key);
 		
 		void notifyEvent(chstr name, void* params);
