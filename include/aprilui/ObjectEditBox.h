@@ -22,7 +22,6 @@ namespace aprilui
 	{
 	public:
 		EditBox(chstr name, grect rect);
-		~EditBox();
 		
 		int getCursorIndex() { return mCursorIndex; }
 		void setCursorIndex(int cursorIndex);
@@ -51,7 +50,8 @@ namespace aprilui
 		int mMaxLength;
 		char mPasswordChar;
 		bool mCtrlMode;
-        bool mBackground; // TODO: replace with background color and move to LabelBase
+        bool mBackground; // TODO - replace with background color and move to LabelBase
+		bool mSpaceHack; // TODO - remove
 		float mBlinkTimer;
 		hstr mFilter;
 		harray<unsigned int> mUnicodeChars;

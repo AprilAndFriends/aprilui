@@ -38,12 +38,10 @@ namespace aprilui
 		mFilter = "";
 		mBlinkTimer = 0.0f;
         mBackground = true;
+		/// TODO - remove
+		mSpaceHack = false;
 	}
 
-	EditBox::~EditBox()
-	{
-	}
-	
 	void EditBox::update(float time)
 	{
 		Label::update(time);
@@ -53,6 +51,20 @@ namespace aprilui
 
 	void EditBox::OnDraw()
 	{
+		//////////////
+		// TODO - remove this hack, fix it in ATRES
+		if (mSpaceHack)
+		{
+			if (mUnicodeChars.size() > 0 && mUnicodeChars[0] == UNICODE_CHAR_SPACE)
+			{
+				while (mUnicodeChars.size() > 0 && mUnicodeChars[0] == UNICODE_CHAR_SPACE)
+				{
+					mUnicodeChars.remove_at(0);
+				}
+				mText = unicode_to_utf8(mUnicodeChars);
+			}
+		}
+		//////////////
 		grect rect = _getDrawRect();
         april::Color color = APRIL_COLOR_BLACK;
         if (mBackground)
@@ -75,12 +87,20 @@ namespace aprilui
 		{
 			mOffsetIndex = hmax(0, mCursorIndex - 5);
 		}
+		//////////////
+		// TODO - remove this hack, fix it in ATRES
+		while (mOffsetIndex < mUnicodeChars.size() - 1 && mUnicodeChars[mOffsetIndex] == UNICODE_CHAR_SPACE)
+		{
+			mOffsetIndex++;
+		}
+		//////////////
 		rect.w -= 12;
 		int count;
 		while (true)
 		{
 			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
 			count = atres::getTextCountUnformatted(mFontName, mText, rect.w);
+			count = _convertToUnicodeChars(mText(0, count)).size();
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex = mCursorIndex;
@@ -94,11 +114,10 @@ namespace aprilui
 				break;
 			}
 		}
-		mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
 		Label::OnDraw();
-		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
+		if (mDataset != NULL && mDataset->getFocusedObject() == this && mBlinkTimer < 0.5f)
 		{
-			mText = unicode_to_utf8(mUnicodeChars(0, mCursorIndex - mOffsetIndex));
+			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
 			rect.x += atres::getTextWidthUnformatted(mFontName, mText);
 			float h = atres::getFontHeight(mFontName);
 			rect.y += (rect.h - h) / 2 + 2;
@@ -119,6 +138,7 @@ namespace aprilui
 		else if (name == "password_char")	setPasswordChar(value.c_str()[0]);
 		else if (name == "filter")			setFilter(value);
         else if (name == "background")		mBackground = (bool)value;
+		else if (name == "space_hack")		mSpaceHack = (bool)value;
 	}
 	
 	void EditBox::setCursorIndex(int cursorIndex)
@@ -139,7 +159,7 @@ namespace aprilui
 			text = hstr(mPasswordChar, mUnicodeChars.size() - mOffsetIndex);
 		}
 		int count = atres::getTextCountUnformatted(mFontName, text, x - mRect.x);
-		setCursorIndex(mOffsetIndex + count);
+		setCursorIndex(mOffsetIndex + _convertToUnicodeChars(text(0, count)).size());
 	}
 	
 	void EditBox::setMaxLength(int maxLength)
