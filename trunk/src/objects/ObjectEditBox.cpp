@@ -18,6 +18,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Dataset.h"
 #include "ObjectEditBox.h"
 
+#define UNICODE_CHAR_SPACE 0x20
+
 namespace aprilui
 {
 	EditBox::EditBox(chstr name, grect rect) :
@@ -35,7 +37,11 @@ namespace aprilui
 		mCtrlMode = false;
 		mFilter = "";
 		mBlinkTimer = 0.0f;
-        mBackground=1;
+        mBackground = true;
+	}
+
+	EditBox::~EditBox()
+	{
 	}
 	
 	void EditBox::update(float time)
@@ -59,9 +65,11 @@ namespace aprilui
             april::rendersys->drawColoredQuad(rect, color);
         }
 		hstr text = mText;
-		if (mPasswordChar && mText != "")
+		harray<unsigned int> unicodeChars = mUnicodeChars;
+		if (mPasswordChar != '\0' && mText != "")
 		{
-			mText = hstr(mPasswordChar, mText.size());
+			mText = hstr(mPasswordChar, mUnicodeChars.size());
+			mUnicodeChars = _convertToUnicodeChars(mText);
 		}
 		while (mOffsetIndex > 0 && mOffsetIndex >= mCursorIndex)
 		{
@@ -71,7 +79,8 @@ namespace aprilui
 		int count;
 		while (true)
 		{
-			count = atres::getTextCountUnformatted(mFontName, mText(mOffsetIndex, mText.size() - mOffsetIndex), rect.w);
+			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
+			count = atres::getTextCountUnformatted(mFontName, mText, rect.w);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex = mCursorIndex;
@@ -85,11 +94,12 @@ namespace aprilui
 				break;
 			}
 		}
-		mText = mText(mOffsetIndex, mText.size() - mOffsetIndex);
+		mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
 		Label::OnDraw();
 		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
-			rect.x += atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
+			mText = unicode_to_utf8(mUnicodeChars(0, mCursorIndex - mOffsetIndex));
+			rect.x += atres::getTextWidthUnformatted(mFontName, mText);
 			float h = atres::getFontHeight(mFontName);
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 2;
@@ -99,69 +109,69 @@ namespace aprilui
 			april::rendersys->drawColoredQuad(rect, color);
 		}
 		mText = text;
+		mUnicodeChars = unicodeChars;
 	}
 	
 	void EditBox::setProperty(chstr name, chstr value)
 	{
 		Label::setProperty(name, value);
-		if      (name == "max_length")    setMaxLength(value);
-		else if (name == "password_char") setPasswordChar(value.c_str()[0]);
-		else if (name == "filter")        setFilter(value);
-        else if (name == "background")    mBackground=value;
+		if      (name == "max_length")		setMaxLength(value);
+		else if (name == "password_char")	setPasswordChar(value.c_str()[0]);
+		else if (name == "filter")			setFilter(value);
+        else if (name == "background")		mBackground = (bool)value;
 	}
 	
 	void EditBox::setCursorIndex(int cursorIndex)
 	{
-		mCursorIndex = hclamp(cursorIndex, 0, mText.size());
+		mCursorIndex = hclamp(cursorIndex, 0, mUnicodeChars.size());
 		mBlinkTimer = 0.0f;
 	}
 	
-	void EditBox::setCursorIndexAt(float x,float y)
+	void EditBox::setCursorIndexAt(float x, float y)
 	{
-		hstr text = mText;
-		if (mPasswordChar != '\0' && text != "")
+		hstr text;
+		if (mPasswordChar == '\0' || mText == "")
 		{
-			text = hstr(mPasswordChar, text.size());
+			text = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
 		}
-		int count = atres::getTextCountUnformatted(mFontName, text(mOffsetIndex, text.size() - mOffsetIndex), x - mRect.x);
+		else
+		{
+			text = hstr(mPasswordChar, mUnicodeChars.size() - mOffsetIndex);
+		}
+		int count = atres::getTextCountUnformatted(mFontName, text, x - mRect.x);
 		setCursorIndex(mOffsetIndex + count);
 	}
 	
 	void EditBox::setMaxLength(int maxLength)
 	{
 		mMaxLength = maxLength;
-		if (mMaxLength > 0 && mText.size() > mMaxLength)
+		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
 		{
-			mText = mText(0, mMaxLength);
+			mUnicodeChars = mUnicodeChars(0, mMaxLength);
+			mText = unicode_to_utf8(mUnicodeChars);
 			setCursorIndex(mCursorIndex);
 		}
 	}
-	
+
 	void EditBox::setFilter(chstr filter)
 	{
 		mFilter = filter;
+		mFilterChars = _convertToUnicodeChars(mFilter);
 		setText(mText);
 	}
 	
 	void EditBox::setText(chstr text)
 	{
-		Label::setText(text);
-		harray<char> chars = harray<char>(mText.c_str(), mText.size());
-		chars.remove_duplicates();
-		if (mFilter != "")
+		mUnicodeChars = _convertToUnicodeChars(text);
+		if (mUnicodeChars.size() > 0 && mFilterChars.size() > 0)
 		{
-			foreach (char, it, chars)
-			{
-				if (!mFilter.contains(*it))
-				{
-					mText = mText.replace((*it), "");
-				}
-			}
+			mUnicodeChars &= mFilterChars; // intersect, remove from first all that are not in second
 		}
-		if (mMaxLength > 0 && mText.size() > mMaxLength)
+		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
 		{
-			mText = mText(0, mMaxLength);
+			mUnicodeChars = mUnicodeChars(0, mMaxLength);
 		}
+		Label::setText(unicode_to_utf8(mUnicodeChars));
 		setCursorIndex(mCursorIndex);
 	}
 
@@ -201,16 +211,16 @@ namespace aprilui
 		mPushed = false;
 		return false;
 	}
-	
+
 	void EditBox::OnKeyDown(unsigned int keycode)
 	{
 		switch (keycode)
 		{
 		case april::AK_LEFT:
-			mCtrlMode ? _cursorMoveLeftWord() : setCursorIndex(mCursorIndex - 1);
+			mCtrlMode ? _cursorMoveLeftWord() : _cursorMoveLeft();
 			break;
 		case april::AK_RIGHT:
-			mCtrlMode ? _cursorMoveRightWord() : setCursorIndex(mCursorIndex + 1);
+			mCtrlMode ? _cursorMoveRightWord() : _cursorMoveRight();
 			break;
 		case april::AK_BACK:
 			mCtrlMode ? _deleteLeftWord() : _deleteLeft();
@@ -222,7 +232,7 @@ namespace aprilui
 			setCursorIndex(0);
 			break;
 		case april::AK_END:
-			setCursorIndex(mText.size());
+			setCursorIndex(mUnicodeChars.size());
 			break;
 		case april::AK_CONTROL:
 			mCtrlMode = true;
@@ -243,20 +253,38 @@ namespace aprilui
 
 	void EditBox::OnChar(unsigned int charcode)
 	{
-		char c = (char)charcode;
-		if (atres::getFont(mFontName)->hasChar(charcode) && (mFilter == "" || mFilter.contains(c)))
+		if (atres::getFont(mFontName)->hasChar(charcode) && (mFilterChars.size() > 0 || !mFilterChars.contains(charcode)))
 		{
-			_insertText(c);
+			_insertChar(charcode);
 		}
+	}
+
+	harray<unsigned int> EditBox::_convertToUnicodeChars(chstr string)
+	{
+		int length;
+		unsigned int* text = utf8_to_unicode(string, &length);
+		harray<unsigned int> chars = harray<unsigned int>(text, length);
+		delete [] text;
+		return chars;
+	}
+	
+	void EditBox::_cursorMoveLeft()
+	{
+		setCursorIndex(mCursorIndex - 1);
+	}
+	
+	void EditBox::_cursorMoveRight()
+	{
+		setCursorIndex(mCursorIndex + 1);
 	}
 	
 	void EditBox::_cursorMoveLeftWord()
 	{
-		while (mCursorIndex > 0 && mText[mCursorIndex - 1] == ' ')
+		while (mCursorIndex > 0 && mUnicodeChars[mCursorIndex - 1] == UNICODE_CHAR_SPACE)
 		{
 			mCursorIndex--;
 		}
-		while (mCursorIndex > 0 && mText[mCursorIndex - 1] != ' ')
+		while (mCursorIndex > 0 && mUnicodeChars[mCursorIndex - 1] != UNICODE_CHAR_SPACE)
 		{
 			mCursorIndex--;
 		}
@@ -265,11 +293,11 @@ namespace aprilui
 	
 	void EditBox::_cursorMoveRightWord()
 	{
-		while (mCursorIndex < mText.size() && mText[mCursorIndex] != ' ')
+		while (mCursorIndex < mUnicodeChars.size() && mUnicodeChars[mCursorIndex] != UNICODE_CHAR_SPACE)
 		{
 			mCursorIndex++;
 		}
-		while (mCursorIndex < mText.size() && mText[mCursorIndex] == ' ')
+		while (mCursorIndex < mUnicodeChars.size() && mUnicodeChars[mCursorIndex] == UNICODE_CHAR_SPACE)
 		{
 			mCursorIndex++;
 		}
@@ -278,20 +306,21 @@ namespace aprilui
 	
 	void EditBox::_deleteLeft(int count)
 	{
-		if (mCursorIndex != 0)
+		if (mCursorIndex > 0)
 		{
 			count = hmin(count, mCursorIndex);
-			hstr left = (mCursorIndex > count ? mText(0, mCursorIndex - count) : "");
-			hstr right = (mCursorIndex < mText.size() ? mText(mCursorIndex, mText.size() - mCursorIndex) : "");
+			harray<unsigned int> left = (mCursorIndex > count ? mUnicodeChars(0, mCursorIndex - count) : harray<unsigned int>());
+			harray<unsigned int> right = (mCursorIndex < mUnicodeChars.size() ? mUnicodeChars(mCursorIndex, mUnicodeChars.size() - mCursorIndex) : harray<unsigned int>());
 			mCursorIndex -= count;
-			mText = left + right;
+			mUnicodeChars = left + right;
+			mText = unicode_to_utf8(mUnicodeChars);
 			mBlinkTimer = 0.0f;
 		}
 	}
 	
 	void EditBox::_deleteRight(int count)
 	{
-		count = hmin(count, mText.size() - mCursorIndex);
+		count = hmin(count, mUnicodeChars.size() - mCursorIndex);
 		mCursorIndex += count;
 		_deleteLeft(count);
 	}
@@ -299,11 +328,11 @@ namespace aprilui
 	void EditBox::_deleteLeftWord()
 	{
 		int index = mCursorIndex;
-		while (index > 0 && mText[index - 1] == ' ')
+		while (index > 0 && mUnicodeChars[index - 1] == UNICODE_CHAR_SPACE)
 		{
 			index--;
 		}
-		while (index > 0 && mText[index - 1] != ' ')
+		while (index > 0 && mUnicodeChars[index - 1] != UNICODE_CHAR_SPACE)
 		{
 			index--;
 		}
@@ -316,11 +345,11 @@ namespace aprilui
 	void EditBox::_deleteRightWord()
 	{
 		int index = mCursorIndex;
-		while (index < mText.size() && mText[index] != ' ')
+		while (index < mUnicodeChars.size() && mUnicodeChars[index] != UNICODE_CHAR_SPACE)
 		{
 			index++;
 		}
-		while (index < mText.size() && mText[index] == ' ')
+		while (index < mUnicodeChars.size() && mUnicodeChars[index] == UNICODE_CHAR_SPACE)
 		{
 			index++;
 		}
@@ -330,24 +359,18 @@ namespace aprilui
 		}
 	}
 	
-	void EditBox::_insertText(chstr text)
+	void EditBox::_insertChar(unsigned int charcode)
 	{
-		hstr newText = text;
-		if (mMaxLength > 0)
+		if (mMaxLength > 0 && mUnicodeChars.size() >= mMaxLength)
 		{
-			if (mText.size() >= mMaxLength)
-			{
-				return;
-			}
-			if (mText.size() + newText.size() > mMaxLength)
-			{
-				newText = newText(0, mMaxLength - mText.size());
-			}
+			return;
 		}
-		hstr left = (mCursorIndex > 0 ? mText(0,mCursorIndex) : "");
-		hstr right = (mCursorIndex < mText.size() ? mText(mCursorIndex, mText.size() - mCursorIndex) : "");
-		mCursorIndex += newText.size();
-		mText = left + newText + right;
+		harray<unsigned int> left = (mCursorIndex > 0 ? mUnicodeChars(0, mCursorIndex) : harray<unsigned int>());
+		harray<unsigned int> right = (mCursorIndex < mUnicodeChars.size() ?
+			mUnicodeChars(mCursorIndex, mUnicodeChars.size() - mCursorIndex) : harray<unsigned int>());
+		mCursorIndex++;
+		mUnicodeChars = (left + charcode) + right;
+		mText = unicode_to_utf8(mUnicodeChars);
 		mBlinkTimer = 0.0f;
 	}
 	

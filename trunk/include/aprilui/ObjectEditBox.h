@@ -22,6 +22,7 @@ namespace aprilui
 	{
 	public:
 		EditBox(chstr name, grect rect);
+		~EditBox();
 		
 		int getCursorIndex() { return mCursorIndex; }
 		void setCursorIndex(int cursorIndex);
@@ -51,18 +52,24 @@ namespace aprilui
 		char mPasswordChar;
 		bool mCtrlMode;
         bool mBackground; // TODO: replace with background color and move to LabelBase
-		hstr mFilter;
 		float mBlinkTimer;
+		hstr mFilter;
+		harray<unsigned int> mUnicodeChars;
+		harray<unsigned int> mFilterChars;
 		
 		void OnDraw();
 		
+		void _cursorMoveLeft();
+		void _cursorMoveRight();
 		void _cursorMoveLeftWord();
 		void _cursorMoveRightWord();
 		void _deleteLeft(int count = 1);
 		void _deleteRight(int count = 1);
 		void _deleteLeftWord();
 		void _deleteRightWord();
-		void _insertText(chstr text);
+		void _insertChar(unsigned int charcode);
+
+		harray<unsigned int> _convertToUnicodeChars(chstr string);
 		
 	};
 
