@@ -33,8 +33,8 @@ namespace aprilui
 			void update(float k);
 			
 		protected:
-			April::Color mLow;
-			April::Color mHigh;
+			april::Color mLow;
+			april::Color mHigh;
 			float mTimer;
 			float mSpeed;
 			

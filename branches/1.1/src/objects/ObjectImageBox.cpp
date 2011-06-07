@@ -72,10 +72,10 @@ namespace aprilui
 		{
 			alpha /= 2;
 		}
-		April::Color color;
+		april::Color color;
 		color.a = alpha * 255;
 		mImage->draw(mRect + offset, color);
-		//rendersys->setBlendMode(April::ALPHA_BLEND);
+		//rendersys->setBlendMode(april::ALPHA_BLEND);
 	}
 
 	void ImageBox::setProperty(chstr name, chstr value)

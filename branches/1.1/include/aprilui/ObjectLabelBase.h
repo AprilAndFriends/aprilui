@@ -40,8 +40,8 @@ namespace aprilui
 		void setVertFormatting(atres::Alignment value) { mVertFormatting = value; }
 		atres::Effect getFontEffect() { return mFontEffect; }
 		void setFontEffect(atres::Effect value) { mFontEffect = value; }
-		April::Color getTextColor() { return mTextColor; }
-		void setTextColor(April::Color value) { mTextColor = value; }
+		april::Color getTextColor() { return mTextColor; }
+		void setTextColor(april::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.setColor(value); }
 		
 		virtual void setProperty(chstr name, chstr value);
@@ -54,7 +54,7 @@ namespace aprilui
 		atres::Alignment mHorzFormatting;
 		atres::Alignment mVertFormatting;
 		atres::Effect mFontEffect;
-		April::Color mTextColor;
+		april::Color mTextColor;
 		
 		void _drawLabel(grect rect, float alpha);
 		

@@ -40,7 +40,7 @@ namespace aprilui
 		mImages.push_back(reference);
 	}
 
-	void CompositeImage::draw(grect rect, April::Color color)
+	void CompositeImage::draw(grect rect, april::Color color)
 	{
 		float wf = rect.w / mSource.w;
 		float hf = rect.h / mSource.h;
@@ -50,7 +50,7 @@ namespace aprilui
 		}
 	}
 	
-	void CompositeImage::draw(grect rect, April::Color color, float angle, gvec2 center)
+	void CompositeImage::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
 		float wf = rect.w / mSource.w;
 		float hf = rect.h / mSource.h;
