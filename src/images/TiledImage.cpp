@@ -17,7 +17,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	TiledImage::TiledImage(April::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
+	TiledImage::TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
 		Image(texture, name, source, vertical)
 	{
 		mTileW = tileW;
@@ -38,7 +38,7 @@ namespace aprilui
 		mScrollY = y;
 	}
 
-	void TiledImage::draw(grect rect, April::Color color)
+	void TiledImage::draw(grect rect, april::Color color)
 	{
 		float basew = (mTileW > 0 ? rect.w / mTileW : -mTileW);
 		float baseh = (mTileH > 0 ? rect.h / mTileH : -mTileH);
@@ -185,7 +185,7 @@ namespace aprilui
 		}
 	}
 
-	void TiledImage::draw(grect rect, April::Color color, float angle, gvec2 center)
+	void TiledImage::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
 		
 	}

@@ -39,16 +39,16 @@ namespace aprilui
 		if (mBackground)
 		{
 			grect rect = mRect + offset;
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
 		}
 #ifdef _DEBUG
 		else if (aprilui::isDebugMode())
 		{
 			grect rect = mRect + offset;
-			April::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
 		}
 #endif
-		April::Color color = mTextColor;
+		april::Color color = mTextColor;
 		if (!isDerivedEnabled())
 		{
 			mTextColor = mDisabledTextColor;

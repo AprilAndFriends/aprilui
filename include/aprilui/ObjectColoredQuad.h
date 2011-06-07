@@ -33,7 +33,7 @@ namespace aprilui
 		bool OnMouseUp(float x, float y, int button);
 		
 	protected:
-		April::Color mColor;
+		april::Color mColor;
 		
 	};
 }

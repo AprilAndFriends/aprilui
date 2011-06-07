@@ -24,14 +24,14 @@ namespace aprilui
 	public:
 		ColoredImageBox(chstr name, grect rect);
 		
-		April::Color getColor() { return mColor; }
-		void setColor(April::Color value) { mColor = value; }
+		april::Color getColor() { return mColor; }
+		void setColor(april::Color value) { mColor = value; }
 		void setColor(chstr value) { mColor.setColor(value); }
 
 		void setProperty(chstr name, chstr value);
 		
 	protected:
-		April::Color mColor;
+		april::Color mColor;
 		
 		void OnDraw(gvec2 offset = gvec2());
 		
