@@ -150,10 +150,9 @@ namespace aprilui
 		mSpeed = 1.0f / value;
 	}
 	
-	void Animator::setProperty(chstr name, chstr value)
+	bool Animator::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
-		if      (name == "function")
+		if      (name == "function" || name == "func")
 		{
 			if      (value == "sine")		setAnimationFunction(aprilui::Sine);
 			else if (value == "saw")		setAnimationFunction(aprilui::Saw);
@@ -166,7 +165,8 @@ namespace aprilui
 		else if (name == "timer")			setTimer(value);
 		else if (name == "delay")			setDelay(value);
 		else if (name == "periods")			setPeriods(value);
-		else if (name == "amplitude")		setAmplitude(value);
+		else if (name == "amplitude" || name == "amp")
+                                            setAmplitude(value);
 		else if (name == "speed")			setSpeed(value);
 		else if (name == "offset")			setOffset(value);
 		else if (name == "dc_offset")
@@ -186,6 +186,8 @@ namespace aprilui
 			setInheritValue(true);
 		}
 		else if (name == "time")			setTime(value);
+        else return Object::setProperty(name, value);
+        return 1;
 	}
 	
 }

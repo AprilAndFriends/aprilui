@@ -131,13 +131,14 @@ namespace aprilui
 		ButtonBase::OnMouseMove(x, y);
 	}
 
-	void ImageButton::setProperty(chstr name, chstr value)
+	bool ImageButton::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
 		if		(name == "image")			setImage(mDataset->getImage(value));
 		else if (name == "pushed_image")	setPushedImage(mDataset->getImage(value));
 		else if (name == "hover_image")		setHoverImage(mDataset->getImage(value));
 		else if (name == "disabled_image")	setDisabledImage(mDataset->getImage(value));
+        else return Object::setProperty(name, value);
+        return 1;
 	}
 	
 }

@@ -30,7 +30,7 @@ namespace aprilui
 			void setFirstFrame(int value) { mFirstFrame = value; }
 			int getFrameCount() { return mFrameCount; }
 			void setFrameCount(int value) { mFrameCount = value; }
-			void setProperty(chstr name, chstr value);
+			bool setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
 			
 			void update(float k);

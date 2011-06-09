@@ -555,7 +555,7 @@ namespace aprilui
 		mChildren.push_front(object);
 	}
 
-	void Object::setProperty(chstr name, chstr value)
+	bool Object::setProperty(chstr name, chstr value)
 	{
 		if      (name == "visible")			setVisible(value);
 		else if (name == "zorder")			setZOrder(value);
@@ -584,6 +584,8 @@ namespace aprilui
 			else if (value == "bottom_center")	setDock(aprilui::BottomCenter);
 			else if (value == "bottom_right")	setDock(aprilui::BottomRight);
 		}
+        else return 0;
+        return 1;
 	}
 
 	bool Object::angleEquals(float angle)
