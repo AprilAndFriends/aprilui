@@ -23,7 +23,7 @@ namespace aprilui
 	public:
 		Container(chstr name, grect rect);
 		
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		
 	};
 }

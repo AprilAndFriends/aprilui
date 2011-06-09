@@ -62,7 +62,7 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::setProperty(chstr name,chstr value)
+	bool LabelBase::setProperty(chstr name,chstr value)
 	{
 		if (name == "font") setFont(value);
 		else if (name == "text") setText(value);
@@ -99,6 +99,8 @@ namespace aprilui
 		}
 		else if (name == "offset_x") mDrawOffset.x = (float)value;
 		else if (name == "offset_y") mDrawOffset.y = (float)value;
+        else return 0;
+        return 1;
 	}
 
 }

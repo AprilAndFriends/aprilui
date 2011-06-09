@@ -55,16 +55,17 @@ namespace aprilui
 		setText(mDataset->getText(key));
 	}
 
-	void Label::setProperty(chstr name, chstr value)
+	bool Label::setProperty(chstr name, chstr value)
 	{
-		LabelBase::setProperty(name, value);
-		Object::setProperty(name, value);
 		if (name == "text_key")	setTextKey(value);
 		else if (name == "textkey")
 		{
 			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
 			setTextKey(value);
 		}
+        else if (LabelBase::setProperty(name, value)) { }
+        else return Object::setProperty(name, value);
+        return 1;
 	}
 	
 }

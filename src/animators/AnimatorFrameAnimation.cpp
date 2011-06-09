@@ -44,9 +44,8 @@ namespace aprilui
 			return true;
 		}
 
-		void FrameAnimation::setProperty(chstr name, chstr value)
+		bool FrameAnimation::setProperty(chstr name, chstr value)
 		{
-			Animator::setProperty(name, value);
 			if		(name == "base_name")		mImageBaseName = value;
 			else if (name == "first_frame")		mFirstFrame = value;
 			else if (name == "frame_count")		mFrameCount = value;
@@ -54,6 +53,8 @@ namespace aprilui
 			{
 				aprilui::log("Warning: Animators::FrameAnimation does not support inherit_value");
 			}
+            else Animator::setProperty(name, value);
+            return 1;
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)

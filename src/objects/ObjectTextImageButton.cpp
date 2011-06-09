@@ -47,16 +47,17 @@ namespace aprilui
 		setText(mDataset->getText(key));
 	}
 
-	void TextImageButton::setProperty(chstr name,chstr value)
+	bool TextImageButton::setProperty(chstr name,chstr value)
 	{
-		LabelBase::setProperty(name, value);
-		ImageButton::setProperty(name, value);
 		if (name == "text_key")	setTextKey(value);
 		else if (name == "textkey")
 		{
 			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
 			setTextKey(value);
 		}
+        else if (LabelBase::setProperty(name, value)) {}
+        else return ImageButton::setProperty(name, value);
+        return 1;
 	}
 	
 }

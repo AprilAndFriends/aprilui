@@ -103,9 +103,9 @@ namespace aprilui
 		mImage->draw(rect, color);
 	}
 
-	void Slider::setProperty(chstr name, chstr value)
+	bool Slider::setProperty(chstr name, chstr value)
 	{
-		ImageBox::setProperty(name, value);
+		return ImageBox::setProperty(name, value);
 	}
 	
 }

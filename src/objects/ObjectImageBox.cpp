@@ -77,10 +77,11 @@ namespace aprilui
 		Object::OnDraw();
 	}
 	
-	void ImageBox::setProperty(chstr name, chstr value)
+	bool ImageBox::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
-		if (name == "image")	setImageByName(value);
+		if (name == "image") setImageByName(value);
+        else return Object::setProperty(name, value);
+        return 1;
 	}
 
 	bool ImageBox::OnMouseDown(float x, float y, int button)

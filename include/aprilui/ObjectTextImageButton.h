@@ -26,7 +26,7 @@ namespace aprilui
 		
 		float getAngle();
 		void setTextKey(chstr key);
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		
 	protected:
 		void OnDraw();

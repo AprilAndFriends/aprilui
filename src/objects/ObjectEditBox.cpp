@@ -131,14 +131,15 @@ namespace aprilui
 		mUnicodeChars = unicodeChars;
 	}
 	
-	void EditBox::setProperty(chstr name, chstr value)
+	bool EditBox::setProperty(chstr name, chstr value)
 	{
-		Label::setProperty(name, value);
 		if      (name == "max_length")		setMaxLength(value);
 		else if (name == "password_char")	setPasswordChar(value.c_str()[0]);
 		else if (name == "filter")			setFilter(value);
         else if (name == "background")		mBackground = (bool)value;
 		else if (name == "space_hack")		mSpaceHack = (bool)value;
+        else return Label::setProperty(name, value);
+        return 1;
 	}
 	
 	void EditBox::setCursorIndex(int cursorIndex)
