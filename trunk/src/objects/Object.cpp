@@ -145,8 +145,15 @@ namespace aprilui
 		object->setParent(NULL);
 	}
 
-	void Object::removeAllChildren()
+	void Object::removeAllChildren(bool recursive)
 	{
+		if (recursive)
+		{
+			foreach (Object*, it, mChildren)
+			{
+				(*it)->removeAllChildren(recursive);
+			}
+		}
 		foreach (Object*, it, mChildren)
 		{
 			(*it)->setParent(NULL);
