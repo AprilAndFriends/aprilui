@@ -154,11 +154,11 @@ namespace aprilui
 		mChildren.clear();
 	}
 	
-	void Object::destroyAllChildren()
+	void Object::destroyAllChildren(bool recursive)
 	{
 		while (mChildren.size() > 0)
 		{
-			mDataset->destroyAndDetachObject(mChildren[0]);
+			mDataset->destroyAndDetachObject(mChildren[0], recursive);
 		}
 	}
 	

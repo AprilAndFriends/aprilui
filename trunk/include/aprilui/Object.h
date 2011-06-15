@@ -51,7 +51,7 @@ namespace aprilui
 		void detach();
 		Object* getParent() { return mParent; }
 		void removeAllChildren();
-        void destroyAllChildren();
+        void destroyAllChildren(bool recursive = 0);
 		harray<Object*>& getChildren() { return mChildren; }
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
