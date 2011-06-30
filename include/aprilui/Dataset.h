@@ -63,6 +63,11 @@ namespace aprilui
 		hstr _getFilenamePrefix() { return mFilenamePrefix; }
 		hmap<hstr, Object*>& getObjects() { return mObjects; }
 		hmap<hstr, Image*>& getImages() { return mImages; }
+		template <class T>
+		hmap<hstr, T> getObjectsByType()
+		{
+			return mObjects.dyn_cast_value<hstr, T>();
+		}
 
 		void updateTextures(float k);
 		virtual void update(float k);
