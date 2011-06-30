@@ -52,8 +52,8 @@ namespace aprilui
 		void setOffset(float value) { mOffset = value; }
 		float getAcceleration() { return mAcceleration; }
 		void setAcceleration(float value) { mAcceleration = value; }
-		bool getDiscrete() { return mDiscrete; }
-		void setDiscrete(bool value) { mDiscrete = value; }
+		int getDiscreteStep() { return mDiscreteStep; }
+		void setDiscreteStep(int value) { mDiscreteStep = value; }
 		bool getReset() { return mReset; }
 		void setReset(bool value) { mReset = value; }
 		bool getInheritValue() { return mInheritValue; }
@@ -83,7 +83,7 @@ namespace aprilui
 		float mSpeed;
 		float mOffset;
 		float mAcceleration;
-		bool mDiscrete;
+		int mDiscreteStep;
 		bool mReset;
 		bool mInheritValue;
 		float mTarget;

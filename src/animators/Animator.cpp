@@ -29,7 +29,7 @@ namespace aprilui
 		mSpeed = 1.0f;
 		mOffset = 0.0f;
 		mAcceleration = 0.0f;
-		mDiscrete = false;
+		mDiscreteStep = 0;
 		mReset = false;
 		mInheritValue = false;
 		mTarget = 0.0f;
@@ -65,14 +65,14 @@ namespace aprilui
 	{
 		if (mDelay > 0.0f)
 		{
-			return (mDiscrete ? (float)(int)mOffset : mOffset);
+			return (mDiscreteStep != 0 ? (float)((int)(mOffset / mDiscreteStep) * mDiscreteStep) : mOffset);
 		}
 		float time = mTimer;
 		if (isExpired())
 		{
 			if (mReset)
 			{
-				return (mDiscrete ? (float)(int)mOffset : mOffset);
+				return (mDiscreteStep != 0 ? (float)((int)(mOffset / mDiscreteStep) * mDiscreteStep) : mOffset);
 			}
 			time = mPeriods / fabs(mSpeed);
 		}
@@ -116,7 +116,7 @@ namespace aprilui
 			}
 			break;
 		}
-		return (mDiscrete ? (float)(int)(result + mOffset) : (result + mOffset));
+		return (mDiscreteStep != 0 ? (float)((int)((result + mOffset) / mDiscreteStep) * mDiscreteStep) : (result + mOffset));
 	}
 	
 	bool Animator::isAnimated()
@@ -175,7 +175,12 @@ namespace aprilui
 			setOffset(value);
 		}
 		else if (name == "acceleration")	setAcceleration(value);
-		else if (name == "discrete")		setDiscrete(value);
+		else if (name == "discrete")
+		{
+			aprilui::log("Warning: discrete is deprecated, use discrete_step instead");
+			setDiscreteStep((bool)value ? 0 : 1);
+		}
+		else if (name == "discrete_step")	setDiscreteStep(value);
 		else if (name == "reset")			setReset(value);
 		else if (name == "inherit_value")	setInheritValue(value);
 		// derived values
