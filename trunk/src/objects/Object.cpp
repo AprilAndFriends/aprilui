@@ -564,7 +564,11 @@ namespace aprilui
 
 	bool Object::setProperty(chstr name, chstr value)
 	{
-		if      (name == "visible")			setVisible(value);
+        if      (name == "x")			    setX(value);
+        else if (name == "y")			    setY(value);
+        else if (name == "w")			    setWidth(value);
+        else if (name == "h")		        setHeight(value);
+		else if (name == "visible")			setVisible(value);
 		else if (name == "zorder")			setZOrder(value);
 		else if (name == "enabled")			setEnabled(value);
 		else if (name == "clickthrough")	setClickthrough(value);

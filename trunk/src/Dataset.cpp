@@ -373,9 +373,13 @@ namespace aprilui
 		{
 			parent->addChild(object);
 		}
+        hstr name;
+
 		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
 		{
-			object->setProperty(prop->name(), prop->value());
+            name=prop->name();
+            if (name == "x" || name == "y" || name == "w" || name == "h") continue; //todo: ovo treba pametnije rjesit, mozda da dok se citaju parametri gore da se maknu iz liste, da se ne postavljaju dvaput ovdje
+			object->setProperty(name, prop->value());
 		}
 		
 		for (node = node->iter_children(); node != NULL; node = node->next())
