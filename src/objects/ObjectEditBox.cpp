@@ -130,6 +130,16 @@ namespace aprilui
 		mText = text;
 		mUnicodeChars = unicodeChars;
 	}
+    
+    hstr EditBox::getProperty(chstr name, bool* property_exists)
+    {
+        if      (name == "max_length")		return getMaxLength();
+		else if (name == "password_char")	return getPasswordChar();
+		else if (name == "filter")			return getFilter();
+        else if (name == "background")		return mBackground;
+		else if (name == "space_hack")		return mSpaceHack;
+        else return Label::getProperty(name, property_exists);
+    }
 	
 	bool EditBox::setProperty(chstr name, chstr value)
 	{

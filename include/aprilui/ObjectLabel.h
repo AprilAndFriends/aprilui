@@ -24,15 +24,13 @@ namespace aprilui
 	public:
 		Label(chstr name, grect rect);
 		
-		float getAngle();
-		chstr getTextKey() { return mTextKey; }
-		void setTextKey(chstr key);
+        void setTextKey(chstr key);
 		
 		void notifyEvent(chstr name, void* params);
+        hstr getProperty(chstr name, bool* property_exists = 0);
 		bool setProperty(chstr name, chstr value);
 		
 	protected:
-		hstr mTextKey;
 		void OnDraw();
 		
 	};

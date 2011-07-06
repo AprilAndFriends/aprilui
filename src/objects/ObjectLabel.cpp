@@ -43,27 +43,28 @@ namespace aprilui
 		}
 		Object::notifyEvent(name, params);
 	}
-	
-	float Label::getAngle()
-	{
-		return Object::getAngle();
-	}
-
-	void Label::setTextKey(chstr key)
+    
+    void Label::setTextKey(chstr key)
 	{
 		mTextKey = key;
 		setText(mDataset->getText(key));
 	}
+    
+    hstr Label::getProperty(chstr name, bool* property_exists)
+    {
+        bool exists;
+        hstr ret=LabelBase::getProperty(name, &exists);
+        if (!exists) return Object::getProperty(name, property_exists);
+        else
+        {
+            if (property_exists) *property_exists = true;
+            return ret;
+        }
+    }
 
 	bool Label::setProperty(chstr name, chstr value)
 	{
-		if (name == "text_key")	setTextKey(value);
-		else if (name == "textkey")
-		{
-			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
-			setTextKey(value);
-		}
-        else if (LabelBase::setProperty(name, value)) { }
+        if (LabelBase::setProperty(name, value)) { }
         else return Object::setProperty(name, value);
         return 1;
 	}
