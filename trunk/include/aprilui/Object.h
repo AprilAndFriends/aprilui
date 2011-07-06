@@ -153,6 +153,7 @@ namespace aprilui
 		
 		virtual void notifyEvent(chstr name, void* params);
 		
+        virtual hstr getProperty(chstr name, bool* property_exists = 0);
 		virtual bool setProperty(chstr name, chstr value);
 		Dataset* getDataset() { return mDataset; }
 		void _setDataset(Dataset* value) { mDataset = value; }

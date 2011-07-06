@@ -25,7 +25,6 @@ namespace aprilui
 	public:
 		LabelBase();
 		
-		virtual float getAngle() = 0;
 		hstr getText() { return mText; }
 		virtual void setText(chstr value) { mText = value; }
 		virtual void setTextKey(chstr key) = 0;
@@ -45,10 +44,12 @@ namespace aprilui
 		void setTextColor(april::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.set(value); }
 		
-		virtual bool setProperty(chstr name, chstr value);
+		chstr getTextKey() { return mTextKey; }
+        hstr getProperty(chstr name, bool* property_exists = 0);
+		bool setProperty(chstr name, chstr value);
 		
 	protected:
-		hstr mText;
+		hstr mText, mTextKey;
 		hstr mFontName;
 		bool mTextFormatting;
 		gvec2 mDrawOffset;

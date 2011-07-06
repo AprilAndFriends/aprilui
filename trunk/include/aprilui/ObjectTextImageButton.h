@@ -23,11 +23,10 @@ namespace aprilui
 	{
 	public:
 		TextImageButton(chstr name, grect rect);
-		
-		float getAngle();
+
 		void setTextKey(chstr key);
+        hstr getProperty(chstr name, bool* property_exists = 0);
 		bool setProperty(chstr name, chstr value);
-		
 	protected:
 		void OnDraw();
 

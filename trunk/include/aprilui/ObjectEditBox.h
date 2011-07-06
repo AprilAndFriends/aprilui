@@ -35,6 +35,7 @@ namespace aprilui
 		void setText(chstr text);
 		
 		void update(float time);
+        hstr getProperty(chstr name, bool* property_exists = 0);
 		bool setProperty(chstr name, chstr value);
 		
 		bool OnMouseDown(float x, float y, int button);

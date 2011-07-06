@@ -77,6 +77,11 @@ namespace aprilui
 		Object::OnDraw();
 	}
 	
+    hstr ImageBox::getProperty(chstr name, bool* property_exists)
+    {
+        if (name == "image") return getImageName();
+        else return Object::getProperty(name, property_exists);
+    }
 	bool ImageBox::setProperty(chstr name, chstr value)
 	{
 		if (name == "image") setImageByName(value);
