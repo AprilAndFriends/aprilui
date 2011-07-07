@@ -24,9 +24,10 @@ namespace aprilui
 	public:
 		TextImageButton(chstr name, grect rect);
 
-		void setTextKey(chstr key);
-        hstr getProperty(chstr name, bool* property_exists = 0);
+		void setTextKey(chstr value);
+		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
+
 	protected:
 		void OnDraw();
 

@@ -162,13 +162,12 @@ namespace aprilui
 			else if (value == "random")		setAnimationFunction(aprilui::Random);
 			else if (value == "hover")		setAnimationFunction(aprilui::Hover);
 		}
-		else if (name == "timer")			setTimer(value);
-		else if (name == "delay")			setDelay(value);
-		else if (name == "periods")			setPeriods(value);
-		else if (name == "amplitude" || name == "amp")
-                                            setAmplitude(value);
-		else if (name == "speed")			setSpeed(value);
-		else if (name == "offset")			setOffset(value);
+		else if (name == "timer")						setTimer(value);
+		else if (name == "delay")						setDelay(value);
+		else if (name == "periods")						setPeriods(value);
+		else if (name == "amplitude" || name == "amp")	setAmplitude(value);
+		else if (name == "speed")						setSpeed(value);
+		else if (name == "offset")						setOffset(value);
 		else if (name == "dc_offset")
 		{
 			aprilui::log("Warning: dc_offset is deprecated, use offset instead");
@@ -192,7 +191,7 @@ namespace aprilui
 		}
 		else if (name == "time")			setTime(value);
         else return Object::setProperty(name, value);
-        return 1;
+        return true;
 	}
 	
 }

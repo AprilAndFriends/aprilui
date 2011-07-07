@@ -13,6 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "Dataset.h"
 #include "Exception.h"
 #include "ObjectLabelBase.h"
 
@@ -25,8 +26,9 @@ namespace aprilui
 		mFontEffect = atres::NONE;
 		mTextFormatting = true;
 		mText = "";
+		mTextKey = "";
 	}
-	
+
 	void LabelBase::_drawLabel(grect rect, unsigned char alpha)
 	{
 #ifdef _DEBUG
@@ -64,60 +66,61 @@ namespace aprilui
 
     hstr LabelBase::getProperty(chstr name, bool* property_exists)
     {
-        if (property_exists) *property_exists = false;
+        if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
 		if (name == "font") return getFont();
-		else if (name == "text") return getText();
-		else if (name == "wrap_text")
+		if (name == "text") return getText();
+		if (name == "wrap_text")
 		{
 			aprilui::log("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
             return "";
 		}
-		else if (name == "horz_formatting")
+		if (name == "horz_formatting")
 		{
-			if (mHorzFormatting == atres::LEFT)                return "left";
-			else if (mHorzFormatting == atres::RIGHT)          return "right";
-			else if (mHorzFormatting == atres::CENTER)         return "center";
-			else if (mHorzFormatting == atres::LEFT_WRAPPED)   return "left_wrapped";
-			else if (mHorzFormatting == atres::RIGHT_WRAPPED)  return "right_wrapped";
-			else if (mHorzFormatting == atres::CENTER_WRAPPED) return "center_wrapped";
-            else return "";
+			if (mHorzFormatting == atres::LEFT)				return "left";
+			if (mHorzFormatting == atres::RIGHT)			return "right";
+			if (mHorzFormatting == atres::CENTER)			return "center";
+			if (mHorzFormatting == atres::LEFT_WRAPPED)		return "left_wrapped";
+			if (mHorzFormatting == atres::RIGHT_WRAPPED)	return "right_wrapped";
+			if (mHorzFormatting == atres::CENTER_WRAPPED)	return "center_wrapped";
 		}
-		else if (name == "vert_formatting")
+		if (name == "vert_formatting")
 		{
-			if      (mVertFormatting == atres::TOP) return "top";
-			else if (mVertFormatting == atres::CENTER) return "center";
-			else if (mVertFormatting == atres::BOTTOM) return "bottom";
-            else return "";
+			if (mVertFormatting == atres::TOP)		return "top";
+			if (mVertFormatting == atres::CENTER)	return "center";
+			if (mVertFormatting == atres::BOTTOM)	return "bottom";
 		}
-		else if (name == "text_color") return getTextColor().hex();
-		else if (name == "color")
+		if (name == "text_color")	return getTextColor().hex();
+		if (name == "color")
 		{
 			aprilui::log("WARNING! LabelBase instance using color which is conflicted with TextImageButton's color! Use text_color instead!");
 			return getTextColor().hex();
 		}
-		else if (name == "effect")
+		if (name == "effect")
 		{
-			if      (mFontEffect == atres::SHADOW) return "shadow";
-			else if (mFontEffect == atres::BORDER) return "border";
-            else return "none";
+			if (mFontEffect == atres::SHADOW)	return "shadow";
+			if (mFontEffect == atres::BORDER)	return "border";
+            return "none";
 		}
-		else if (name == "offset_x") return mDrawOffset.x;
-        else if (name == "offset_y") return mDrawOffset.y;
-        else
-        {
-            if (property_exists) *property_exists = false;
-            return "";
-        }
+		if (name == "offset_x")	return mDrawOffset.x;
+        if (name == "offset_y")	return mDrawOffset.y;
+		if (property_exists != NULL)
+		{
+			*property_exists = false;
+		}
+        return "";
     }
     
 	bool LabelBase::setProperty(chstr name,chstr value)
 	{
 		if (name == "font") setFont(value);
-		else if (name == "text_key") return getTextKey();
+		else if (name == "text_key") setTextKey(value);
 		else if (name == "textkey")
 		{
 			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
-			return getTextKey();
+			setTextKey(value);
 		}
 		else if (name == "text") setText(value);
 		else if (name == "wrap_text")
@@ -153,8 +156,8 @@ namespace aprilui
 		}
 		else if (name == "offset_x") mDrawOffset.x = (float)value;
 		else if (name == "offset_y") mDrawOffset.y = (float)value;
-        else return 0;
-        return 1;
+        else return false;
+        return true;
 	}
 
 }

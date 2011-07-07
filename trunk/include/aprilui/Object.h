@@ -44,7 +44,7 @@ namespace aprilui
 	public:
 		Object(chstr type, chstr name, grect rect);
 		virtual ~Object();
-
+		
 		void addChild(Object* object);
 		void removeChild(Object* object);
 		void attach(Object* object);
@@ -56,7 +56,7 @@ namespace aprilui
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
-
+		
 		gvec2 getDockedOffset();
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
@@ -67,7 +67,7 @@ namespace aprilui
 		void unregisterEvent(chstr name);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 		void registerEvent(chstr name, Event* e);
-
+		
 		float getX() { return mRect.x; }
 		void setX(float value) { mRect.x = value; }
 		float getY() { return mRect.y; }
@@ -110,7 +110,7 @@ namespace aprilui
 		april::Color getColor() { return mColor; }
 		void setColor(april::Color value) { mColor = value; }
 		void setColor(chstr value) { mColor.set(value); }
-
+		
 		unsigned char getRed() { return mColor.r; }
 		void setRed(unsigned char value) { mColor.r = value; }
 		unsigned char getGreen() { return mColor.g; }
@@ -130,7 +130,7 @@ namespace aprilui
 		
 		virtual bool isAnimated();
 		bool hasDynamicAnimation();
-
+		
 		void moveToFront();
 		void moveToBack();
 		
@@ -148,18 +148,18 @@ namespace aprilui
 		
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());
-        
-        Object* findChildByName(chstr name);
+		
+		Object* findChildByName(chstr name);
 		
 		virtual void notifyEvent(chstr name, void* params);
 		
-        virtual hstr getProperty(chstr name, bool* property_exists = 0);
+		virtual hstr getProperty(chstr name, bool* property_exists = NULL);
 		virtual bool setProperty(chstr name, chstr value);
 		Dataset* getDataset() { return mDataset; }
 		void _setDataset(Dataset* value) { mDataset = value; }
-
+		
 		// dynamic animators
-
+		
 		Animator* moveX(float x, float speed);
 		Animator* moveY(float y, float speed);
 		Animator* scaleX(float x, float speed);
@@ -191,7 +191,7 @@ namespace aprilui
 		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
-
+		
 		void moveXStop();
 		void moveYStop();
 		void scaleXStop();

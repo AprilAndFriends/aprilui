@@ -124,30 +124,34 @@ namespace aprilui
 		}
 		return result;
 	}
-
+	
 	void ImageButton::OnMouseMove(float x, float y)
 	{
 		Object::OnMouseMove(x, y);
 		ButtonBase::OnMouseMove(x, y);
 	}
-    
-    hstr ImageButton::getProperty(chstr name, bool* property_exists)
-    {
-        if		(name == "image")			return getImageName();
-		else if (name == "pushed_image")	return getPushedImage()->getName();
-		else if (name == "hover_image")		return getHoverImage()->getName();
-		else if (name == "disabled_image")	return getDisabledImage()->getName();
-        else return Object::getProperty(name, property_exists);
-    }
+	
+	hstr ImageButton::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+		if (name == "image")			return getImageName();
+		if (name == "pushed_image")		return getPushedImage()->getName();
+		if (name == "hover_image")		return getHoverImage()->getName();
+		if (name == "disabled_image")	return getDisabledImage()->getName();
+		return Object::getProperty(name, property_exists);
+	}
 
 	bool ImageButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "image")			setImageByName(value);
+		if      (name == "image")			setImageByName(value);
 		else if (name == "pushed_image")	setPushedImageByName(value);
 		else if (name == "hover_image")		setHoverImageByName(value);
 		else if (name == "disabled_image")	setDisabledImageByName(value);
         else return Object::setProperty(name, value);
-        return 1;
+        return true;
 	}
 	
 }

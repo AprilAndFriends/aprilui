@@ -133,12 +133,16 @@ namespace aprilui
     
     hstr EditBox::getProperty(chstr name, bool* property_exists)
     {
-        if      (name == "max_length")		return getMaxLength();
-		else if (name == "password_char")	return getPasswordChar();
-		else if (name == "filter")			return getFilter();
-        else if (name == "background")		return mBackground;
-		else if (name == "space_hack")		return mSpaceHack;
-        else return Label::getProperty(name, property_exists);
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+        if (name == "max_length")		return getMaxLength();
+		if (name == "password_char")	return getPasswordChar();
+		if (name == "filter")			return getFilter();
+        if (name == "background")		return mBackground;
+		if (name == "space_hack")		return mSpaceHack;
+        return Label::getProperty(name, property_exists);
     }
 	
 	bool EditBox::setProperty(chstr name, chstr value)
@@ -149,7 +153,7 @@ namespace aprilui
         else if (name == "background")		mBackground = (bool)value;
 		else if (name == "space_hack")		mSpaceHack = (bool)value;
         else return Label::setProperty(name, value);
-        return 1;
+        return true;
 	}
 	
 	void EditBox::setCursorIndex(int cursorIndex)

@@ -57,15 +57,15 @@ namespace aprilui
 		Label::OnDraw();
 		mTextColor = color;
 	}
-    
-    hstr TextButton::getProperty(chstr name, bool* property_exists)
-    {
-        if		(name == "background")		return mBackground;
-		else if (name == "hover_color")		return getHoverTextColor().hex();
-		else if (name == "pushed_color")	return getPushedTextColor().hex();
-		else if (name == "disabled_color")	return getDisabledTextColor().hex();
-        else return Label::getProperty(name, property_exists);
-    }
+	
+	hstr TextButton::getProperty(chstr name, bool* property_exists)
+	{
+		if (name == "background")		return mBackground;
+		if (name == "hover_color")		return getHoverTextColor().hex();
+		if (name == "pushed_color")		return getPushedTextColor().hex();
+		if (name == "disabled_color")	return getDisabledTextColor().hex();
+		return Label::getProperty(name, property_exists);
+	}
 	
 	bool TextButton::setProperty(chstr name, chstr value)
 	{
@@ -73,8 +73,8 @@ namespace aprilui
 		else if (name == "hover_color")		setHoverTextColor(value);
 		else if (name == "pushed_color")	setPushedTextColor(value);
 		else if (name == "disabled_color")	setDisabledTextColor(value);
-        else return Label::setProperty(name, value);
-        return 1;
+		else return Label::setProperty(name, value);
+		return true;
 	}
 	
 	bool TextButton::isCursorInside()
@@ -86,7 +86,7 @@ namespace aprilui
 	{
 		if (Object::OnMouseDown(x, y, button))
 		{
-            triggerEvent("MouseDown", x, y, button);
+			triggerEvent("MouseDown", x, y, button);
 			return true;
 		}
 		return ButtonBase::OnMouseDown(x, y, button);
