@@ -33,7 +33,7 @@ namespace aprilui
 		
 		void resizeToFitImage();
 		
-        hstr getProperty(chstr name, bool* property_exists = 0);
+		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);

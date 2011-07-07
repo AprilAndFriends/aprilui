@@ -24,10 +24,10 @@ namespace aprilui
 	public:
 		Label(chstr name, grect rect);
 		
-        void setTextKey(chstr key);
+		void setTextKey(chstr value);
 		
 		void notifyEvent(chstr name, void* params);
-        hstr getProperty(chstr name, bool* property_exists = 0);
+		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
 	protected:

@@ -20,6 +20,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	class Dataset;
+
 	class apriluiExport LabelBase
 	{
 	public:
@@ -27,7 +29,8 @@ namespace aprilui
 		
 		hstr getText() { return mText; }
 		virtual void setText(chstr value) { mText = value; }
-		virtual void setTextKey(chstr key) = 0;
+		hstr getTextKey() { return mTextKey; }
+		virtual void setTextKey(chstr value) { mTextKey = value; }
 		
 		hstr getFont() { return mFontName; }
 		void setFont(chstr value) { mFontName = value; }
@@ -44,12 +47,12 @@ namespace aprilui
 		void setTextColor(april::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.set(value); }
 		
-		chstr getTextKey() { return mTextKey; }
-        hstr getProperty(chstr name, bool* property_exists = 0);
+		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
 	protected:
-		hstr mText, mTextKey;
+		hstr mText;
+		hstr mTextKey;
 		hstr mFontName;
 		bool mTextFormatting;
 		gvec2 mDrawOffset;

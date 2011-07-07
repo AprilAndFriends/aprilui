@@ -37,22 +37,25 @@ namespace aprilui
 		LabelBase::_drawLabel(_getDrawRect(), alpha);
 	}
     
-    void TextImageButton::setTextKey(chstr key)
+    void TextImageButton::setTextKey(chstr value)
 	{
-		mTextKey = key;
-		setText(mDataset->getText(key));
+		LabelBase::setTextKey(value);
+		setText(mDataset->getText(value));
 	}
 
-    hstr TextImageButton::getProperty(chstr name, bool* property_exists)
-    {
-        bool exists;
-        hstr ret=LabelBase::getProperty(name, &exists);
-        if (!exists) return Object::getProperty(name, property_exists);
-        else
-        {
-            if (property_exists) *property_exists = true;
-            return ret;
-        }
+	hstr TextImageButton::getProperty(chstr name, bool* property_exists)
+	{
+        bool exists = false;
+        hstr result = LabelBase::getProperty(name, &exists);
+        if (!exists)
+		{
+			return Object::getProperty(name, property_exists);
+		}
+        if (property_exists != NULL)
+		{
+			*property_exists = exists;
+		}
+        return result;
     }
     
 	bool TextImageButton::setProperty(chstr name,chstr value)
@@ -65,7 +68,7 @@ namespace aprilui
 		}
         else if (LabelBase::setProperty(name, value)) {}
         else return ImageButton::setProperty(name, value);
-        return 1;
+        return true;
 	}
 	
 }

@@ -487,17 +487,25 @@ namespace aprilui
 		registerEvent(name,new CallbackEvent(callback));
 	}
 
-	void Object::registerEvent(chstr name,Event* e)
+	void Object::registerEvent(chstr name, Event* e)
 	{
 		Event* event = NULL;
 		if (mEvents.has_key(name))
-        {
+		{
 			event = mEvents[name];
-            if (!e) mEvents.remove_key(name);
-        }
-        if (e) mEvents[name] = e;
+			if (e == NULL)
+			{
+				mEvents.remove_key(name);
+			}
+		}
+		if (e != NULL)
+		{
+			mEvents[name] = e;
+		}
 		if (event != NULL)
+		{
 			delete event;
+		}
 	}
 
 	void Object::unregisterEvent(chstr name)
@@ -562,54 +570,56 @@ namespace aprilui
 		mChildren.push_front(object);
 	}
 
-    hstr Object::getProperty(chstr name, bool* property_exists)
-    {
-        if (property_exists) *property_exists = true;
-        if      (name == "x")			    return getX();
-        else if (name == "y")			    return getY();
-        else if (name == "w")			    return getWidth();
-        else if (name == "h")		        return getHeight();
-		else if (name == "visible")			return isVisible();
-		else if (name == "zorder")			return getZOrder();
-		else if (name == "enabled")			return isEnabled();
-		else if (name == "clickthrough")	return isClickthrough();
-		else if (name == "inherits_alpha")	return isInheritsAlpha();
-		else if (name == "red")				return getRed();
-		else if (name == "green")			return getGreen();
-		else if (name == "blue")			return getBlue();
-		else if (name == "alpha")			return getAlpha();
-		else if (name == "color")			return getColor().hex();
-		else if (name == "angle")			return getAngle();
-		else if (name == "scale_x")			return getScaleX();
-		else if (name == "scale_y")         return getScaleY();
-		else if (name == "center_x")		return getCenterX();
-		else if (name == "center_y")		return getCenterY();
-		else if (name == "dock")
+	hstr Object::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
 		{
-            if      (mDock == aprilui::TopLeft)      return "top_left";
-			else if (mDock == aprilui::TopCenter)    return "top_center";
-			else if (mDock == aprilui::TopRight)     return "top_right";
-			else if (mDock == aprilui::CenterLeft)   return "center_left";
-			else if (mDock == aprilui::CenterCenter) return "center_center";
-			else if (mDock == aprilui::CenterRight)  return "center_right";
-			else if (mDock == aprilui::BottomLeft)   return "bottom_left";
-			else if (mDock == aprilui::BottomCenter) return "bottom_center";
-			else if (mDock == aprilui::BottomRight)  return "bottom_right";
-            else return "";
+			*property_exists = true;
 		}
-        else
-        {
-            if (property_exists) *property_exists = false;
-            return "";
-        }
-    }
-    
+		if (name == "x")				return getX();
+		if (name == "y")				return getY();
+		if (name == "w")				return getWidth();
+		if (name == "h")				return getHeight();
+		if (name == "visible")			return isVisible();
+		if (name == "zorder")			return getZOrder();
+		if (name == "enabled")			return isEnabled();
+		if (name == "clickthrough")		return isClickthrough();
+		if (name == "inherits_alpha")	return isInheritsAlpha();
+		if (name == "red")				return getRed();
+		if (name == "green")			return getGreen();
+		if (name == "blue")				return getBlue();
+		if (name == "alpha")			return getAlpha();
+		if (name == "color")			return getColor().hex();
+		if (name == "angle")			return getAngle();
+		if (name == "scale_x")			return getScaleX();
+		if (name == "scale_y")			return getScaleY();
+		if (name == "center_x")			return getCenterX();
+		if (name == "center_y")			return getCenterY();
+		if (name == "dock")
+		{
+			if (mDock == aprilui::TopLeft)		return "top_left";
+			if (mDock == aprilui::TopCenter)	return "top_center";
+			if (mDock == aprilui::TopRight)		return "top_right";
+			if (mDock == aprilui::CenterLeft)	return "center_left";
+			if (mDock == aprilui::CenterCenter)	return "center_center";
+			if (mDock == aprilui::CenterRight)	return "center_right";
+			if (mDock == aprilui::BottomLeft)	return "bottom_left";
+			if (mDock == aprilui::BottomCenter)	return "bottom_center";
+			if (mDock == aprilui::BottomRight)	return "bottom_right";
+		}
+		if (property_exists != NULL)
+		{
+			*property_exists = false;
+		}
+		return "";
+	}
+	
 	bool Object::setProperty(chstr name, chstr value)
 	{
-        if      (name == "x")			    setX(value);
-        else if (name == "y")			    setY(value);
-        else if (name == "w")			    setWidth(value);
-        else if (name == "h")		        setHeight(value);
+		if      (name == "x")				setX(value);
+		else if (name == "y")				setY(value);
+		else if (name == "w")				setWidth(value);
+		else if (name == "h")				setHeight(value);
 		else if (name == "visible")			setVisible(value);
 		else if (name == "zorder")			setZOrder(value);
 		else if (name == "enabled")			setEnabled(value);
@@ -637,8 +647,8 @@ namespace aprilui
 			else if (value == "bottom_center")	setDock(aprilui::BottomCenter);
 			else if (value == "bottom_right")	setDock(aprilui::BottomRight);
 		}
-        else return 0;
-        return 1;
+        else return false;
+        return true;
 	}
 
 	bool Object::angleEquals(float angle)

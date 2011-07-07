@@ -43,30 +43,35 @@ namespace aprilui
 		}
 		Object::notifyEvent(name, params);
 	}
-    
-    void Label::setTextKey(chstr key)
+	
+	void Label::setTextKey(chstr value)
 	{
-		mTextKey = key;
-		setText(mDataset->getText(key));
+		LabelBase::setTextKey(value);
+		setText(mDataset->getText(value));
 	}
-    
-    hstr Label::getProperty(chstr name, bool* property_exists)
-    {
-        bool exists;
-        hstr ret=LabelBase::getProperty(name, &exists);
-        if (!exists) return Object::getProperty(name, property_exists);
-        else
-        {
-            if (property_exists) *property_exists = true;
-            return ret;
-        }
-    }
+	
+	hstr Label::getProperty(chstr name, bool* property_exists)
+	{
+		bool exists = false;
+		hstr result = LabelBase::getProperty(name, &exists);
+		if (!exists)
+		{
+			return Object::getProperty(name, property_exists);
+		}
+		if (property_exists != NULL)
+		{
+			*property_exists = exists;
+		}
+		return result;
+	}
 
 	bool Label::setProperty(chstr name, chstr value)
 	{
-        if (LabelBase::setProperty(name, value)) { }
-        else return Object::setProperty(name, value);
-        return 1;
+		if (LabelBase::setProperty(name, value))
+		{
+			return true;
+		}
+        return Object::setProperty(name, value);
 	}
 	
 }
