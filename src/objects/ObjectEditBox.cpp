@@ -9,7 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <april/Keys.h>
 #include <atres/atres.h>
-#include <atres/Font.h>
+#include <atres/FontResource.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 #include <april/Window.h>
@@ -99,7 +99,7 @@ namespace aprilui
 		while (true)
 		{
 			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
-			count = atres::getTextCountUnformatted(mFontName, mText, rect.w);
+			count = atres::renderer->getTextCountUnformatted(mFontName, mText, rect.w);
 			count = _convertToUnicodeChars(mText(0, count)).size();
 			if (mOffsetIndex > mCursorIndex)
 			{
@@ -118,8 +118,8 @@ namespace aprilui
 		if (mDataset != NULL && mDataset->getFocusedObject() == this && mBlinkTimer < 0.5f)
 		{
 			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
-			rect.x += atres::getTextWidthUnformatted(mFontName, mText);
-			float h = atres::getFontHeight(mFontName);
+			rect.x += atres::renderer->getTextWidthUnformatted(mFontName, mText);
+			float h = atres::renderer->getFontHeight(mFontName);
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 2;
 			rect.h = h - 4;
@@ -173,7 +173,7 @@ namespace aprilui
 		{
 			text = hstr(mPasswordChar, mUnicodeChars.size() - mOffsetIndex);
 		}
-		int count = atres::getTextCountUnformatted(mFontName, text, x - mRect.x);
+		int count = atres::renderer->getTextCountUnformatted(mFontName, text, x - mRect.x);
 		setCursorIndex(mOffsetIndex + _convertToUnicodeChars(text(0, count)).size());
 	}
 	
@@ -288,7 +288,7 @@ namespace aprilui
 
 	void EditBox::OnChar(unsigned int charcode)
 	{
-		if (atres::getFont(mFontName)->hasChar(charcode) && (mFilterChars.size() == 0 || mFilterChars.contains(charcode)))
+		if (atres::renderer->getFontResource(mFontName)->hasChar(charcode) && (mFilterChars.size() == 0 || mFilterChars.contains(charcode)))
 		{
 			_insertChar(charcode);
 		}
