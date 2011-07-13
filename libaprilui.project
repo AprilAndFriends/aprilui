@@ -55,6 +55,7 @@
     <File Name="src/EventArgs.cpp"/>
     <File Name="src/aprilui.cpp"/>
     <File Name="src/MemberCallbackEvent.cpp"/>
+    <File Name="fileproperties.rc"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="include/aprilui/Dataset.h"/>

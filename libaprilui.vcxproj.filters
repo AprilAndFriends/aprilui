@@ -27,6 +27,9 @@
     <Filter Include="Header Files\Images">
       <UniqueIdentifier>{00fea7cb-787c-4712-a9dc-0a77fe75f205}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{10814b74-79f6-4983-8a54-8430ee96ee15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\aprilui.cpp">
@@ -295,5 +298,10 @@
     <ClInclude Include="include\aprilui\AnimatorScalerY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="fileproperties.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
