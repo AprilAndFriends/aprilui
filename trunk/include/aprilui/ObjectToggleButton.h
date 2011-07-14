@@ -23,6 +23,8 @@ namespace aprilui
 	public:
 		ToggleButton(chstr name, grect rect);
 
+		void setPushed(bool value) { mPushed = value; }
+
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
 		void toggle() { mPushed = !mPushed; }
