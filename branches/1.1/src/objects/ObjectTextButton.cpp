@@ -23,9 +23,9 @@ namespace aprilui
 		mTypeName = "TextButton";
 		mPushed = false;
 		mBackground = true;
-		mPushedTextColor.setColor("FF333333");
-		mHoverTextColor.setColor("FF7F7F7F");
-		mDisabledTextColor.setColor("FF7F7F7F");
+		mPushedTextColor.set("333333FF");
+		mHoverTextColor.set("7F7F7FFF");
+		mDisabledTextColor.set("7F7F7FFF");
 	}
 
 	void TextButton::setTextKey(chstr key)
@@ -39,7 +39,10 @@ namespace aprilui
 		if (mBackground)
 		{
 			grect rect = mRect + offset;
-			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+			april::rendersys->drawColoredQuad(rect, april::Color(COLOR_COMP_FOR_NEW_APRIL(0), 
+																 COLOR_COMP_FOR_NEW_APRIL(0),
+																 COLOR_COMP_FOR_NEW_APRIL(0),
+																 COLOR_COMP_FOR_NEW_APRIL(0.7f + 0.3f * (cursorInside && mPushed))));
 		}
 #ifdef _DEBUG
 		else if (aprilui::isDebugMode())

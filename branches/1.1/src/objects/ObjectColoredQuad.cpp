@@ -23,15 +23,18 @@ namespace aprilui
 
 	void ColoredQuad::setColor(float a, float r, float g, float b)
 	{
-		mColor.setColor(a, r, g, b);
+		mColor.set(COLOR_COMP_FOR_NEW_APRIL(r), 
+				   COLOR_COMP_FOR_NEW_APRIL(g), 
+				   COLOR_COMP_FOR_NEW_APRIL(b), 
+				   COLOR_COMP_FOR_NEW_APRIL(a));
 	}
 
 	void ColoredQuad::OnDraw(gvec2 offset)
 	{
-		float alpha = getDerivedAlpha() * mColor.a_float();
+		float alpha = getDerivedAlpha() * mColor.a_f();
 		grect rect = mRect + offset;
-		april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
-			mColor.r_float(), mColor.g_float(), mColor.b_float(), alpha);
+		april::rendersys->drawColoredQuad(rect,
+										  april::Color(mColor.r, mColor.g, mColor.b, COLOR_COMP_FOR_NEW_APRIL(alpha)));
 	}
 
 	void ColoredQuad::setProperty(chstr name, chstr value)
@@ -40,25 +43,25 @@ namespace aprilui
 		if (name == "r")
 		{
 			aprilui::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.r = (unsigned char)((float)value * 255);
+			mColor.r = COLOR_COMP_FOR_NEW_APRIL(float(value));
 		}
 		else if (name == "g")
 		{
 			aprilui::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.g = (unsigned char)((float)value * 255);
+			mColor.g = COLOR_COMP_FOR_NEW_APRIL(float(value));
 		}
 		else if (name == "b")
 		{
 			aprilui::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.b = (unsigned char)((float)value * 255);
+			mColor.b = COLOR_COMP_FOR_NEW_APRIL(float(value));
 		}
 		else if (name == "a")
 		{
 			aprilui::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
-			mColor.a = (unsigned char)((float)value * 255);
+			mColor.a = COLOR_COMP_FOR_NEW_APRIL(float(value));
 		}
-		else if (name == "color") mColor.setColor(value);
-		else if (name == "color") mColor.setColor(value);
+		else if (name == "color") mColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
+		else if (name == "color") mColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
 	}
 
 	bool ColoredQuad::OnMouseDown(float x,float y,int button)

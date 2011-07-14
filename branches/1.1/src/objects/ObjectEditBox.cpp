@@ -9,7 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <april/Keys.h>
 #include <atres/atres.h>
-#include <atres/Font.h>
+#include <atres/FontResource.h>
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 #include <april/Window.h>
@@ -50,7 +50,10 @@ namespace aprilui
 #ifdef _DEBUG
 		if (!aprilui::isDebugMode())
 #endif
-		april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * mPushed);
+		april::rendersys->drawColoredQuad(rect, april::Color(COLOR_COMP_FOR_NEW_APRIL(0), 
+															 COLOR_COMP_FOR_NEW_APRIL(0),
+															 COLOR_COMP_FOR_NEW_APRIL(0),
+															 COLOR_COMP_FOR_NEW_APRIL(0.7f + 0.3f * mPushed)));
 		hstr text = mText;
 		if (mPasswordChar && mText != "")
 		{
@@ -64,7 +67,7 @@ namespace aprilui
 		int count;
 		while (true)
 		{
-			count = atres::getTextCountUnformatted(mFontName, mText(mOffsetIndex, mText.size() - mOffsetIndex), rect.w);
+			count = atres::renderer->getTextCountUnformatted(mFontName, mText(mOffsetIndex, mText.size() - mOffsetIndex), rect.w);
 			if (mOffsetIndex > mCursorIndex)
 			{
 				mOffsetIndex = mCursorIndex;
@@ -84,13 +87,12 @@ namespace aprilui
 		if (mDataset != NULL && this == mDataset->getFocusedObject() && mBlinkTimer < 0.5f)
 		{
 			rect = mRect + offset;
-			rect.x += atres::getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
-			float h = atres::getFontHeight(mFontName);
+			rect.x += atres::renderer->getTextWidthUnformatted(mFontName, mText(0, mCursorIndex - mOffsetIndex));
+			float h = atres::renderer->getFontHeight(mFontName);
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 2;
 			rect.h = h - 4;
-			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h,
-				mTextColor.r_float(), mTextColor.g_float(), mTextColor.b_float(), mTextColor.a_float());
+			april::rendersys->drawColoredQuad(rect, mTextColor);
 		}
 		mText = text;
 	}
@@ -116,7 +118,7 @@ namespace aprilui
 		{
 			text = hstr(mPasswordChar, text.size());
 		}
-		int count = atres::getTextCountUnformatted(mFontName, text(mOffsetIndex, text.size() - mOffsetIndex), x - mRect.x);
+		int count = atres::renderer->getTextCountUnformatted(mFontName, text(mOffsetIndex, text.size() - mOffsetIndex), x - mRect.x);
 		setCursorIndex(mOffsetIndex + count);
 	}
 	
@@ -236,7 +238,7 @@ namespace aprilui
 	void EditBox::OnChar(unsigned int charcode)
 	{
 		char c = (char)charcode;
-		if (atres::getFont(mFontName)->hasChar(charcode) && (mFilter == "" || mFilter.contains(c)))
+		if (atres::renderer->getFontResource(mFontName)->hasChar(charcode) && (mFilter == "" || mFilter.contains(c)))
 		{
 			_insertText(c);
 		}

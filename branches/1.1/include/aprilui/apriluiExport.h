@@ -35,5 +35,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 		#endif
 	#endif
 
+
+	// GLOBAL HACKS:
+	
+	// hex value fixer:
+	//  AARRGGBB => RRGGBBAA
+	#define HEXCOLOR_FIX_FOR_NEW_APRIL(value) \
+		((value.size() == 8) ? (value.substr(2,6) + value.substr(0,2)) : hstr(value))
+
+	// new april does not accept float color components
+	#define COLOR_COMP_FOR_NEW_APRIL(value) \
+		((unsigned char)(value * 255))
+
 #endif
 

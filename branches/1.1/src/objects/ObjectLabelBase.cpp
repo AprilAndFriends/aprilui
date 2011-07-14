@@ -55,11 +55,11 @@ namespace aprilui
 		color.a = (unsigned char)(color.a * alpha);
 		if (mTextFormatting)
 		{
-			atres::drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, 0.0f, -mDrawOffset);
+			atres::renderer->drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
 		}
 		else
 		{
-			atres::drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, 0.0f, -mDrawOffset);
+			atres::renderer->drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
 		}
 	}
 
