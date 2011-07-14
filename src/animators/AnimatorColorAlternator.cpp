@@ -23,8 +23,8 @@ namespace aprilui
 	{
 		ColorAlternator::ColorAlternator(chstr name) : Animator("Animators::ColorAlternator", name, grect(0, 0, 1, 1))
 		{
-			mLow.setColor("00000000");
-			mHigh.setColor("FFFFFFFF");
+			mLow.set("00000000");
+			mHigh.set("FFFFFFFF");
 			mTimer = 0.0f;
 			mSpeed = 2.0f;
 		}
@@ -36,8 +36,8 @@ namespace aprilui
 
 		void ColorAlternator::setProperty(chstr name, chstr value)
 		{
-			if		(name == "low_color")	mLow.setColor(value);
-			else if (name == "high_color")	mHigh.setColor(value);
+			if		(name == "low_color")	mLow.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
+			else if (name == "high_color")	mHigh.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
 			else if (name == "speed")		mSpeed = value;
 		}
 
@@ -52,7 +52,7 @@ namespace aprilui
 			if (image != NULL)
 			{
 				mTimer += k * mSpeed;
-				image->setColor((mHigh - mLow) / 2 * (sin(mTimer) + 1) + mLow);
+				image->setColor(((mHigh - mLow) / 2.f) * float(sin(mTimer) + 1) + mLow);
 			}
 		}
 		

@@ -120,7 +120,7 @@ namespace aprilui
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
+			april::rendersys->render(april::TriangleStrip, tVertices, 4, color);
 		}
 		else
 		{
@@ -161,7 +161,7 @@ namespace aprilui
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::TriangleStrip, tVertices, 4, color.r_float(), color.g_float(), color.b_float(), color.a_float());
+			april::rendersys->render(april::TriangleStrip, tVertices, 4, color);
 		}
 		else
 		{

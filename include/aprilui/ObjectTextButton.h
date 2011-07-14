@@ -25,13 +25,13 @@ namespace aprilui
 		
 		april::Color getHoverTextColor() { return mHoverTextColor; }
 		void setHoverTextColor(april::Color value) { mHoverTextColor = value; }
-		void setHoverTextColor(chstr value) { mHoverTextColor.setColor(value); }
+		void setHoverTextColor(chstr value) { mHoverTextColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value)); }
 		april::Color getPushedTextColor() { return mPushedTextColor; }
 		void setPushedTextColor(april::Color value) { mPushedTextColor = value; }
-		void setPushedTextColor(chstr value) { mPushedTextColor.setColor(value); }
+		void setPushedTextColor(chstr value) { mPushedTextColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value)); }
 		april::Color getDisabledTextColor() { return mDisabledTextColor; }
 		void setDisabledTextColor(april::Color value) { mDisabledTextColor = value; }
-		void setDisabledTextColor(chstr value) { mDisabledTextColor.setColor(value); }
+		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value)); }
 
 		void setTextKey(chstr key);
 		void setProperty(chstr name, chstr value);

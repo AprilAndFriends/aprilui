@@ -42,7 +42,7 @@ namespace aprilui
 		void setFontEffect(atres::Effect value) { mFontEffect = value; }
 		april::Color getTextColor() { return mTextColor; }
 		void setTextColor(april::Color value) { mTextColor = value; }
-		void setTextColor(chstr value) { mTextColor.setColor(value); }
+		void setTextColor(chstr value) { mTextColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value)); }
 		
 		virtual void setProperty(chstr name, chstr value);
 		
