@@ -48,7 +48,7 @@ namespace aprilui
 		else if (aprilui::isDebugMode())
 		{
 			grect rect = mRect + offset;
-			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.7f + 0.3f * (cursorInside && mPushed));
+			april::rendersys->drawColoredQuad(rect, april::Color(0, 0, 0, (int) (178 + 77 * (cursorInside && mPushed))));
 		}
 #endif
 		april::Color color = mTextColor;
