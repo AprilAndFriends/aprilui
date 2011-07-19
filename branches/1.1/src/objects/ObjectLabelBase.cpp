@@ -34,7 +34,7 @@ namespace aprilui
 #ifdef _DEBUG
 		if (aprilui::isDebugMode())
 		{
-			april::rendersys->drawColoredQuad(rect.x, rect.y, rect.w, rect.h, 0, 0, 0, 0.5f * alpha);
+			april::rendersys->drawColoredQuad(rect, april::Color(0, 0, 0, (int) (alpha/2)));
 		}
 #endif
 		if (mText.size() == 0)
