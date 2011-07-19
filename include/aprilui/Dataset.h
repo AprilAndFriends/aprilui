@@ -55,6 +55,7 @@ namespace aprilui
 		bool isAnimated();
 		void setFocusedObject(Object* object) { mFocusedObject = object; }
 		Object* getFocusedObject() { return mFocusedObject; }
+		Object* getRoot() { return mRoot; }
 		
 		// use these functions only in debug purposes
 		void _setFilename(chstr filename) { mFilename = filename; }
@@ -83,8 +84,8 @@ namespace aprilui
 		void destroyAndDetachObject(chstr name, bool recursive = false);
 		void destroyAndDetachObject(Object* object, bool recursive = false);
 
-		void OnMouseDown(float x, float y, int button);
-		void OnMouseUp(float x, float y, int button);
+		bool OnMouseDown(float x, float y, int button);
+		bool OnMouseUp(float x, float y, int button);
 		void OnMouseMove(float x, float y);
 		void OnKeyDown(unsigned int keycode);
 		void OnKeyUp(unsigned int keycode);
@@ -120,6 +121,7 @@ namespace aprilui
 		hstr mFilenamePrefix;
 		bool mLoaded;
 		Object* mFocusedObject;
+		Object* mRoot;
 		hmap<hstr, Object*> mObjects;
 		hmap<hstr, april::Texture*> mTextures;
 		hmap<hstr, Image*> mImages;
