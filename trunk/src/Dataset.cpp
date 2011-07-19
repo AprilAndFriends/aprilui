@@ -34,6 +34,7 @@ namespace aprilui
 	Dataset::Dataset(chstr filename, chstr name)
 	{
 		mFocusedObject = NULL;
+		mRoot = NULL;
 		mFilename = normalize_path(filename);
 		int slash = mFilename.rfind('/');
 		int dot = mFilename.rfind('.');
@@ -369,6 +370,10 @@ namespace aprilui
 		}
 		object->_setDataset(this);
 		mObjects[objectName] = object;
+		if (mRoot == NULL)
+		{
+			mRoot = object;
+		}
 		if (parent != NULL)
 		{
 			parent->addChild(object);
@@ -377,8 +382,11 @@ namespace aprilui
 
 		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
 		{
-            name=prop->name();
-            if (name == "x" || name == "y" || name == "w" || name == "h") continue; //todo: ovo treba pametnije rjesit, mozda da dok se citaju parametri gore da se maknu iz liste, da se ne postavljaju dvaput ovdje
+            name = prop->name();
+            if (name == "x" || name == "y" || name == "w" || name == "h")
+			{
+				continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
+			}
 			object->setProperty(name, prop->value());
 		}
 		
@@ -481,7 +489,7 @@ namespace aprilui
 			f.close();
 
 			// ignore file header. utf-8 encoded text files have 2-3 char markers
-			while (lines[0].size() > 0 && lines[0][0] < 0) lines[0]=lines[0](1,lines[0].size()-1);
+			while (lines[0].size() > 0 && lines[0][0] < 0) lines[0] = lines[0](1, lines[0].size() - 1);
 
 			foreach (hstr, it2, lines)
 			{
@@ -676,79 +684,37 @@ namespace aprilui
 	
 	void Dataset::draw()
 	{
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->draw();
-			}
-		}
+		mRoot->draw();
 	}
 	
-	void Dataset::OnMouseDown(float x, float y, int button)
+	bool Dataset::OnMouseDown(float x, float y, int button)
 	{
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->OnMouseDown(x, y, button);
-			}
-		}
+		return mRoot->OnMouseDown(x, y, button);
 	}
 	
-	void Dataset::OnMouseUp(float x, float y, int button)
+	bool Dataset::OnMouseUp(float x, float y, int button)
 	{
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->OnMouseUp(x, y, button);
-			}
-		}
+		return mRoot->OnMouseUp(x, y, button);
 	}
 	
 	void Dataset::OnMouseMove(float x, float y)
 	{
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->OnMouseMove(x, y);
-			}
-		}
+		mRoot->OnMouseMove(x, y);
 	}
 	
 	void Dataset::OnKeyDown(unsigned int keycode)
 	{
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->OnKeyDown(keycode);
-			}
-		}
+		mRoot->OnKeyDown(keycode);
 	}
 	
 	void Dataset::OnKeyUp(unsigned int keycode)
 	{
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->OnKeyUp(keycode);
-			}
-		}
+		mRoot->OnKeyUp(keycode);
 	}
 	
 	void Dataset::OnChar(unsigned int charcode)
 	{
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->OnChar(charcode);
-			}
-		}
+		mRoot->OnChar(charcode);
 	}
 	
 	void Dataset::updateTextures(float k)
@@ -762,13 +728,7 @@ namespace aprilui
 	void Dataset::update(float k)
 	{
 		updateTextures(k);
-		foreach_m (aprilui::Object*, it, mObjects)
-		{
-			if (it->second->getParent() == NULL)
-			{
-				it->second->update(k);
-			}
-		}
+		mRoot->update(k);
 	}
 	
 }
