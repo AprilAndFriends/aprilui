@@ -46,9 +46,9 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 		
 	protected:
-		Image* mPushedImage;
-		Image* mHoverImage;
 		Image* mNormalImage;
+		Image* mHoverImage;
+		Image* mPushedImage;
 		Image* mDisabledImage;
 		
 		void update(float k);
