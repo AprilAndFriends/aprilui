@@ -684,37 +684,52 @@ namespace aprilui
 	
 	void Dataset::draw()
 	{
-		mRoot->draw();
+		if (mRoot != NULL)
+		{
+			mRoot->draw();
+		}
 	}
 	
 	bool Dataset::OnMouseDown(float x, float y, int button)
 	{
-		return mRoot->OnMouseDown(x, y, button);
+		return (mRoot != NULL && mRoot->OnMouseDown(x, y, button));
 	}
 	
 	bool Dataset::OnMouseUp(float x, float y, int button)
 	{
-		return mRoot->OnMouseUp(x, y, button);
+		return (mRoot != NULL && mRoot->OnMouseUp(x, y, button));
 	}
 	
 	void Dataset::OnMouseMove(float x, float y)
 	{
-		mRoot->OnMouseMove(x, y);
+		if (mRoot != NULL)
+		{
+			mRoot->OnMouseMove(x, y);
+		}
 	}
 	
 	void Dataset::OnKeyDown(unsigned int keycode)
 	{
-		mRoot->OnKeyDown(keycode);
+		if (mRoot != NULL)
+		{
+			mRoot->OnKeyDown(keycode);
+		}
 	}
 	
 	void Dataset::OnKeyUp(unsigned int keycode)
 	{
-		mRoot->OnKeyUp(keycode);
+		if (mRoot != NULL)
+		{
+			mRoot->OnKeyUp(keycode);
+		}
 	}
 	
 	void Dataset::OnChar(unsigned int charcode)
 	{
-		mRoot->OnChar(charcode);
+		if (mRoot != NULL)
+		{
+			mRoot->OnChar(charcode);
+		}
 	}
 	
 	void Dataset::updateTextures(float k)
@@ -728,7 +743,10 @@ namespace aprilui
 	void Dataset::update(float k)
 	{
 		updateTextures(k);
-		mRoot->update(k);
+		if (mRoot != NULL)
+		{
+			mRoot->update(k);
+		}
 	}
 	
 }
