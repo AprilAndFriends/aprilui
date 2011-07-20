@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
+#include "Dataset.h"
 #include "Event.h"
 #include "EventArgs.h"
 #include "Image.h"
@@ -18,60 +19,122 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	// small optimization
+	Image* tempNormalImage;
+	Image* tempHoverImage;
+	Image* tempPushedImage;
+	Image* tempDisabledImage;
+
 	ToggleButton::ToggleButton(chstr name, grect rect) :
 		ImageButton(name, rect)
 	{
 		_setTypeName("ToggleButton");
-		mPushed = false;
+		mToggled = false;
+		mToggledNormalImage = NULL;
+		mToggledHoverImage = NULL;
+		mToggledPushedImage = NULL;
+		mToggledDisabledImage = NULL;
 	}
 
+	void ToggleButton::setToggledNormalImageByName(chstr image)
+	{
+		setToggledNormalImage(mDataset->getImage(image));
+	}
+
+	void ToggleButton::setToggledHoverImageByName(chstr image)
+	{
+		setToggledHoverImage(mDataset->getImage(image));
+	}
+
+	void ToggleButton::setToggledPushedImageByName(chstr image)
+	{
+		setToggledPushedImage(mDataset->getImage(image));
+	}
+
+	void ToggleButton::setToggledDisabledImageByName(chstr image)
+	{
+		setToggledDisabledImage(mDataset->getImage(image));
+	}
+
+	hstr ToggleButton::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+		if (name == "toggled_image")			return getToggledNormalImage()->getName();
+		if (name == "toggled_hover_image")		return getToggledHoverImage()->getName();
+		if (name == "toggled_pushed_image")		return getToggledPushedImage()->getName();
+		if (name == "toggled_disabled_image")	return getToggledDisabledImage()->getName();
+		return ImageButton::getProperty(name, property_exists);
+	}
+
+	bool ToggleButton::setProperty(chstr name, chstr value)
+	{
+		if		(name == "toggled_image")			setToggledNormalImageByName(value);
+		else if (name == "toggled_hover_image")		setToggledHoverImageByName(value);
+		else if (name == "toggled_pushed_image")	setToggledPushedImageByName(value);
+		else if (name == "toggled_disabled_image")	setToggledDisabledImageByName(value);
+        else return ImageButton::setProperty(name, value);
+        return true;
+	}
+	
 	void ToggleButton::OnDraw()
 	{
-		april::Color color(mColor, getDerivedAlpha());
-		grect rect = _getDrawRect();
-		if (mPushed && mPushedImage != NULL)
+		if (mToggled)
 		{
-			mPushedImage->draw(rect, color);
+			tempNormalImage = mNormalImage;
+			tempHoverImage = mHoverImage;
+			tempPushedImage = mPushedImage;
+			tempDisabledImage = mDisabledImage;
+			mNormalImage = mToggledNormalImage;
+			mHoverImage = mToggledHoverImage;
+			mPushedImage = mToggledPushedImage;
+			mDisabledImage = mToggledDisabledImage;
+			ImageButton::OnDraw();
+			mNormalImage = tempNormalImage;
+			mHoverImage = tempHoverImage;
+			mPushedImage = tempPushedImage;
+			mDisabledImage = tempDisabledImage;
 		}
 		else
 		{
-			mImage->draw(rect, color);
+			ImageButton::OnDraw();
 		}
 	}
 
-	bool ToggleButton::OnMouseDown(float x, float y, int button)
+	void ToggleButton::update(float k)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (mToggled)
 		{
-			return true;
+			tempNormalImage = mNormalImage;
+			tempHoverImage = mHoverImage;
+			tempPushedImage = mPushedImage;
+			tempDisabledImage = mDisabledImage;
+			mNormalImage = mToggledNormalImage;
+			mHoverImage = mToggledHoverImage;
+			mPushedImage = mToggledPushedImage;
+			mDisabledImage = mToggledDisabledImage;
+			ImageButton::update(k);
+			mNormalImage = tempNormalImage;
+			mHoverImage = tempHoverImage;
+			mPushedImage = tempPushedImage;
+			mDisabledImage = tempDisabledImage;
 		}
-		if (isCursorInside())
+		else
 		{
-            triggerEvent("MouseDown", x, y, button);
-			mPushed = !mPushed;
-			Event* event = (mPushed ? mEvents["Toggle"] : mEvents["Untoggle"]);
-			if (event != NULL)
-			{
-				EventArgs args(this, x, y);
-				event->execute(&args);
-			}
-			return true;
+			ImageButton::update(k);
 		}
-		return false;
 	}
-
+	
 	bool ToggleButton::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		bool result = ImageButton::OnMouseUp(x, y, button);
+		if (result)
 		{
-			return true;
+			mToggled = !mToggled;
 		}
-		if (isCursorInside())
-		{
-			triggerEvent("Click", x, y, button);
-			return true;
-		}
-		return false;
+		return result;
 	}
 	
 }
