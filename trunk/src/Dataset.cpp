@@ -462,10 +462,9 @@ namespace aprilui
 		// texts
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);
 		_loadTexts(filepath);
-		// audio
-		mLoaded = true;
 		aprilui::log("loading datadef: " + mFilename);
 		readFile(mFilename);
+		mLoaded = true;
 		this->update(0);
 	}
 	
@@ -544,6 +543,7 @@ namespace aprilui
 		mTextures.clear();
 		mCallbacks.clear();
 		mTexts.clear();
+		mRoot = NULL;
 		mLoaded = false;
 	}
 	
