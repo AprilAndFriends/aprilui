@@ -101,23 +101,23 @@ namespace aprilui
 		mNormalImage = image;
 	}
 	
-	bool ImageButton::OnMouseDown(float x, float y, int button)
+	bool ImageButton::onMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::onMouseDown(x, y, button))
 		{
             triggerEvent("MouseDown", x, y, button);
 			return true;
 		}
-		return ButtonBase::OnMouseDown(x, y, button);
+		return ButtonBase::onMouseDown(x, y, button);
 	}
 
-	bool ImageButton::OnMouseUp(float x, float y, int button)
+	bool ImageButton::onMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::onMouseUp(x, y, button))
 		{
 			return true;
 		}
-		bool result = ButtonBase::OnMouseUp(x, y, button);
+		bool result = ButtonBase::onMouseUp(x, y, button);
 		if (result)
 		{
 			triggerEvent("Click", x, y, button);
@@ -125,10 +125,10 @@ namespace aprilui
 		return result;
 	}
 	
-	void ImageButton::OnMouseMove(float x, float y)
+	void ImageButton::onMouseMove(float x, float y)
 	{
-		Object::OnMouseMove(x, y);
-		ButtonBase::OnMouseMove(x, y);
+		Object::onMouseMove(x, y);
+		ButtonBase::onMouseMove(x, y);
 	}
 	
 	hstr ImageButton::getProperty(chstr name, bool* property_exists)

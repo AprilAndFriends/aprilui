@@ -38,11 +38,11 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
-		bool OnMouseDown(float x, float y, int button);
-		bool OnMouseUp(float x, float y, int button);
-		void OnKeyDown(unsigned int keycode);
-		void OnKeyUp(unsigned int keycode);
-		void OnChar(unsigned int charcode);
+		bool onMouseDown(float x, float y, int button);
+		bool onMouseUp(float x, float y, int button);
+		void onKeyDown(unsigned int keycode);
+		void onKeyUp(unsigned int keycode);
+		void onChar(unsigned int charcode);
 		
 	protected:
 		bool mPushed;

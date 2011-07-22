@@ -261,52 +261,82 @@ namespace aprilui
 		return defaultScale;
 	}
 	
+	void onMouseDown(float x, float y, int button)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onMouseDown(x, y, button);
+		}
+	}
+	
+	void onMouseUp(float x, float y, int button)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onMouseUp(x, y, button);
+		}
+	}
+	
+	void onMouseMove(float x, float y)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onMouseMove(x, y);
+		}
+	}
+	
+	void onKeyDown(unsigned int keycode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onKeyDown(keycode);
+		}
+	}
+	
+	void onKeyUp(unsigned int keycode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onKeyUp(keycode);
+		}
+	}
+	
+	void onChar(unsigned int charcode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onChar(charcode);
+		}
+	}
+	
 	void OnMouseDown(float x, float y, int button)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnMouseDown(x, y, button);
-		}
+		onMouseDown(x, y, button);
 	}
-	
+
 	void OnMouseUp(float x, float y, int button)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnMouseUp(x, y, button);
-		}
+		onMouseUp(x, y, button);
 	}
-	
+
 	void OnMouseMove(float x, float y)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnMouseMove(x, y);
-		}
+		onMouseMove(x, y);
 	}
-	
+
 	void OnKeyDown(unsigned int keycode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnKeyDown(keycode);
-		}
+		onKeyDown(keycode);
 	}
-	
+
 	void OnKeyUp(unsigned int keycode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnKeyUp(keycode);
-		}
+		onKeyUp(keycode);
 	}
 	
 	void OnChar(unsigned int charcode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
-		{
-			it->second->OnChar(charcode);
-		}
+		onChar(charcode);
 	}
-	
+
 }

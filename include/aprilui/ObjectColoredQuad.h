@@ -28,8 +28,8 @@ namespace aprilui
 		
 		void OnDraw();
 
-		bool OnMouseDown(float x, float y, int button);
-		bool OnMouseUp(float x, float y, int button);
+		bool onMouseDown(float x, float y, int button);
+		bool onMouseUp(float x, float y, int button);
 		
 	};
 }

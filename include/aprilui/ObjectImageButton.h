@@ -38,9 +38,9 @@ namespace aprilui
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* value);
 		
-		bool OnMouseDown(float x, float y, int button);
-		bool OnMouseUp(float x, float y, int button);
-		void OnMouseMove(float x, float y);
+		bool onMouseDown(float x, float y, int button);
+		bool onMouseUp(float x, float y, int button);
+		void onMouseMove(float x, float y);
 		
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);

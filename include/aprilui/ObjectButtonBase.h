@@ -23,9 +23,9 @@ namespace aprilui
 		
 		virtual bool isCursorInside() = 0;
 		
-		bool OnMouseDown(float x, float y, int button);
-		bool OnMouseUp(float x, float y, int button);
-		void OnMouseMove(float x, float y);
+		bool onMouseDown(float x, float y, int button);
+		bool onMouseUp(float x, float y, int button);
+		void onMouseMove(float x, float y);
 
 		static void setAllowedButtons(harray<unsigned char> buttons);
 		

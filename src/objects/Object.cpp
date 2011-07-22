@@ -392,7 +392,7 @@ namespace aprilui
 		return (is_between(d1, 0.0f, 1.0f) && is_between(d2, 0.0f, 1.0f));
 	}
 
-	bool Object::OnMouseDown(float x, float y, int button)
+	bool Object::onMouseDown(float x, float y, int button)
 	{
 		if (mClickthrough || !isVisible() || !isDerivedEnabled())
 		{
@@ -409,7 +409,7 @@ namespace aprilui
 		foreach_r (Object*, it, mChildren)
 		{
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && !(*it)->isClickthrough() &&
-				(*it)->OnMouseDown(x - mRect.x, y - mRect.y, button))
+				(*it)->onMouseDown(x - mRect.x, y - mRect.y, button))
 			{
 				return true;
 			}
@@ -417,7 +417,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::OnMouseUp(float x, float y, int button)
+	bool Object::onMouseUp(float x, float y, int button)
 	{
 		if (mClickthrough || !isVisible() || !isDerivedEnabled())
 		{
@@ -426,7 +426,7 @@ namespace aprilui
 		foreach_r (Object*, it, mChildren)
 		{
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && !(*it)->isClickthrough() &&
-				(*it)->OnMouseUp(x - mRect.x, y - mRect.y, button))
+				(*it)->onMouseUp(x - mRect.x, y - mRect.y, button))
 			{
 				return true;
 			}
@@ -435,51 +435,81 @@ namespace aprilui
 		return false;
 	}
 
-	void Object::OnMouseMove(float x, float y)
+	void Object::onMouseMove(float x, float y)
 	{
 		foreach_r (Object*, it, mChildren)
 		{
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 			{
-				(*it)->OnMouseMove(x - mRect.x, y - mRect.y);
+				(*it)->onMouseMove(x - mRect.x, y - mRect.y);
 			}
 		}
 	}
 
-	void Object::OnKeyDown(unsigned int keycode)
+	void Object::onKeyDown(unsigned int keycode)
 	{
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->OnKeyDown(keycode);
+				object->onKeyDown(keycode);
 			}
 		}
 	}
 
-	void Object::OnKeyUp(unsigned int keycode)
+	void Object::onKeyUp(unsigned int keycode)
 	{
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->OnKeyUp(keycode);
+				object->onKeyUp(keycode);
 			}
 		}
 	}
 	
-	void Object::OnChar(unsigned int charcode)
+	void Object::onChar(unsigned int charcode)
 	{
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->OnChar(charcode);
+				object->onChar(charcode);
 			}
 		}
+	}
+
+	bool Object::OnMouseDown(float x, float y, int button)
+	{
+		return onMouseDown(x, y, button);
+	}
+
+	bool Object::OnMouseUp(float x, float y, int button)
+	{
+		return onMouseUp(x, y, button);
+	}
+
+	void Object::OnMouseMove(float x, float y)
+	{
+		onMouseMove(x, y);
+	}
+
+	void Object::OnKeyDown(unsigned int keycode)
+	{
+		onKeyDown(keycode);
+	}
+
+	void Object::OnKeyUp(unsigned int keycode)
+	{
+		onKeyUp(keycode);
+	}
+	
+	void Object::OnChar(unsigned int charcode)
+	{
+		onChar(charcode);
 	}
 
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))

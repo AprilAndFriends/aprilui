@@ -36,9 +36,9 @@ namespace aprilui
 		return Object::setProperty(name, value);
 	}
 
-	bool ColoredQuad::OnMouseDown(float x, float y, int button)
+	bool ColoredQuad::onMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::onMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -49,9 +49,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool ColoredQuad::OnMouseUp(float x, float y, int button)
+	bool ColoredQuad::onMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::onMouseUp(x, y, button))
 		{
 			return true;
 		}

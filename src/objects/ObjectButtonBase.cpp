@@ -28,7 +28,7 @@ namespace aprilui
 		mHover = isCursorInside();
 	}
 
-	bool ButtonBase::OnMouseDown(float x, float y, int button)
+	bool ButtonBase::onMouseDown(float x, float y, int button)
 	{
 		if (!allowedButtons.contains(button))
 		{
@@ -43,7 +43,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool ButtonBase::OnMouseUp(float x, float y, int button)
+	bool ButtonBase::onMouseUp(float x, float y, int button)
 	{
 		if (!allowedButtons.contains(button))
 		{
@@ -59,7 +59,7 @@ namespace aprilui
 		return false;
 	}
 
-	void ButtonBase::OnMouseMove(float x, float y)
+	void ButtonBase::onMouseMove(float x, float y)
 	{
 		mHover = isCursorInside();
 	}

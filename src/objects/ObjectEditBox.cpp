@@ -210,9 +210,9 @@ namespace aprilui
 		setCursorIndex(mCursorIndex);
 	}
 
-	bool EditBox::OnMouseDown(float x, float y, int button)
+	bool EditBox::onMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::onMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -224,9 +224,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool EditBox::OnMouseUp(float x, float y, int button)
+	bool EditBox::onMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::onMouseUp(x, y, button))
 		{
 			return true;
 		}
@@ -247,7 +247,7 @@ namespace aprilui
 		return false;
 	}
 
-	void EditBox::OnKeyDown(unsigned int keycode)
+	void EditBox::onKeyDown(unsigned int keycode)
 	{
 		switch (keycode)
 		{
@@ -275,7 +275,7 @@ namespace aprilui
 		}
 	}
 	
-	void EditBox::OnKeyUp(unsigned int keycode)
+	void EditBox::onKeyUp(unsigned int keycode)
 	{
 		switch (keycode)
 		{
@@ -286,7 +286,7 @@ namespace aprilui
 		}
 	}
 
-	void EditBox::OnChar(unsigned int charcode)
+	void EditBox::onChar(unsigned int charcode)
 	{
 		if (atres::renderer->getFontResource(mFontName)->hasChar(charcode) && (mFilterChars.size() == 0 || mFilterChars.contains(charcode)))
 		{
