@@ -139,12 +139,18 @@ namespace aprilui
 		hstr getName() { return mName; }
 		
 		// if a childs event returns true, event is not propagated to parents
-		virtual bool OnMouseDown(float x, float y, int button);
-		virtual bool OnMouseUp(float x, float y, int button);
-		virtual void OnMouseMove(float x, float y);
-		virtual void OnKeyDown(unsigned int keycode);
-		virtual void OnKeyUp(unsigned int keycode);
-		virtual void OnChar(unsigned int charcode);
+		virtual bool onMouseDown(float x, float y, int button);
+		virtual bool onMouseUp(float x, float y, int button);
+		virtual void onMouseMove(float x, float y);
+		virtual void onKeyDown(unsigned int keycode);
+		virtual void onKeyUp(unsigned int keycode);
+		virtual void onChar(unsigned int charcode);
+		bool OnMouseDown(float x, float y, int button) DEPRECATED_ATTRIBUTE;
+		bool OnMouseUp(float x, float y, int button) DEPRECATED_ATTRIBUTE;
+		void OnMouseMove(float x, float y) DEPRECATED_ATTRIBUTE;
+		void OnKeyDown(unsigned int keycode) DEPRECATED_ATTRIBUTE;
+		void OnKeyUp(unsigned int keycode) DEPRECATED_ATTRIBUTE;
+		void OnChar(unsigned int charcode) DEPRECATED_ATTRIBUTE;
 		
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());

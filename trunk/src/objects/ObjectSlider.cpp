@@ -42,9 +42,9 @@ namespace aprilui
 		mValue = hclamp(value, 0.0f, 1.0f);
 	}
 
-	bool Slider::OnMouseDown(float x, float y, int button)
+	bool Slider::onMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::onMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -58,9 +58,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool Slider::OnMouseUp(float x, float y, int button)
+	bool Slider::onMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::onMouseUp(x, y, button))
 		{
 			return true;
 		}
@@ -73,9 +73,9 @@ namespace aprilui
 		return false;
 	}
 
-	void Slider::OnMouseMove(float x, float y)
+	void Slider::onMouseMove(float x, float y)
 	{
-		Object::OnMouseMove(x, y);
+		Object::onMouseMove(x, y);
 		if (mPushed)
 		{
 			setValue((x - mRect.x) / (mRect.w - 4));

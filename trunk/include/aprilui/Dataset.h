@@ -84,12 +84,18 @@ namespace aprilui
 		void destroyAndDetachObject(chstr name, bool recursive = false);
 		void destroyAndDetachObject(Object* object, bool recursive = false);
 
-		bool OnMouseDown(float x, float y, int button);
-		bool OnMouseUp(float x, float y, int button);
-		void OnMouseMove(float x, float y);
-		void OnKeyDown(unsigned int keycode);
-		void OnKeyUp(unsigned int keycode);
-		void OnChar(unsigned int charcode);
+		bool onMouseDown(float x, float y, int button);
+		bool onMouseUp(float x, float y, int button);
+		void onMouseMove(float x, float y);
+		void onKeyDown(unsigned int keycode);
+		void onKeyUp(unsigned int keycode);
+		void onChar(unsigned int charcode);
+		bool OnMouseDown(float x, float y, int button) DEPRECATED_ATTRIBUTE;
+		bool OnMouseUp(float x, float y, int button) DEPRECATED_ATTRIBUTE;
+		void OnMouseMove(float x, float y) DEPRECATED_ATTRIBUTE;
+		void OnKeyDown(unsigned int keycode) DEPRECATED_ATTRIBUTE;
+		void OnKeyUp(unsigned int keycode) DEPRECATED_ATTRIBUTE;
+		void OnChar(unsigned int charcode) DEPRECATED_ATTRIBUTE;
 		
 		virtual Object* getObject(chstr name);
 		virtual april::Texture* getTexture(chstr name);

@@ -94,9 +94,9 @@ namespace aprilui
 		return true;
 	}
 
-	bool ImageBox::OnMouseDown(float x, float y, int button)
+	bool ImageBox::onMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::onMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -108,9 +108,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool ImageBox::OnMouseUp(float x, float y, int button)
+	bool ImageBox::onMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::onMouseUp(x, y, button))
 		{
 			return true;
 		}

@@ -59,12 +59,18 @@ namespace aprilui
 	apriluiFnExport hstr getLocalization();
 	apriluiFnExport void setLocalization(chstr localization);
 	
-	apriluiFnExport void OnMouseDown(float x, float y, int button);
-	apriluiFnExport void OnMouseUp(float x, float y, int button);
-	apriluiFnExport void OnMouseMove(float x, float y);
-	apriluiFnExport void OnKeyDown(unsigned int keycode);
-	apriluiFnExport void OnKeyUp(unsigned int keycode);
-	apriluiFnExport void OnChar(unsigned int charcode);
+	apriluiFnExport void onMouseDown(float x, float y, int button);
+	apriluiFnExport void onMouseUp(float x, float y, int button);
+	apriluiFnExport void onMouseMove(float x, float y);
+	apriluiFnExport void onKeyDown(unsigned int keycode);
+	apriluiFnExport void onKeyUp(unsigned int keycode);
+	apriluiFnExport void onChar(unsigned int charcode);
+	apriluiFnExport void OnMouseDown(float x, float y, int button) DEPRECATED_ATTRIBUTE;
+	apriluiFnExport void OnMouseUp(float x, float y, int button) DEPRECATED_ATTRIBUTE;
+	apriluiFnExport void OnMouseMove(float x, float y) DEPRECATED_ATTRIBUTE;
+	apriluiFnExport void OnKeyDown(unsigned int keycode) DEPRECATED_ATTRIBUTE;
+	apriluiFnExport void OnKeyUp(unsigned int keycode) DEPRECATED_ATTRIBUTE;
+	apriluiFnExport void OnChar(unsigned int charcode) DEPRECATED_ATTRIBUTE;
 	
 }
 

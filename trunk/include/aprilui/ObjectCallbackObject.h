@@ -30,8 +30,8 @@ namespace aprilui
 		
 		void OnDraw();
 		void update(float k);
-		bool OnMouseDown(float x, float y, int button);
-		bool OnMouseUp(float x, float y, int button);
+		bool onMouseDown(float x, float y, int button);
+		bool onMouseUp(float x, float y, int button);
 		
 	protected:
 		void (*mDrawCallback)(CallbackObject*);

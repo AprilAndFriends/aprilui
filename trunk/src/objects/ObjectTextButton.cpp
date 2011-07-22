@@ -82,23 +82,23 @@ namespace aprilui
 		return Object::isCursorInside();
 	}
 
-	bool TextButton::OnMouseDown(float x, float y, int button)
+	bool TextButton::onMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::onMouseDown(x, y, button))
 		{
 			triggerEvent("MouseDown", x, y, button);
 			return true;
 		}
-		return ButtonBase::OnMouseDown(x, y, button);
+		return ButtonBase::onMouseDown(x, y, button);
 	}
 
-	bool TextButton::OnMouseUp(float x, float y, int button)
+	bool TextButton::onMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::onMouseUp(x, y, button))
 		{
 			return true;
 		}
-		bool result = ButtonBase::OnMouseUp(x, y, button);
+		bool result = ButtonBase::onMouseUp(x, y, button);
 		if (result)
 		{
 			triggerEvent("Click", x, y, button);
@@ -106,10 +106,10 @@ namespace aprilui
 		return result;
 	}
 
-	void TextButton::OnMouseMove(float x, float y)
+	void TextButton::onMouseMove(float x, float y)
 	{
-		Object::OnMouseMove(x, y);
-		ButtonBase::OnMouseMove(x, y);
+		Object::onMouseMove(x, y);
+		ButtonBase::onMouseMove(x, y);
 	}
 
 }

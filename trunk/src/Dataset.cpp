@@ -690,48 +690,78 @@ namespace aprilui
 		}
 	}
 	
+	bool Dataset::onMouseDown(float x, float y, int button)
+	{
+		return (mRoot != NULL && mRoot->onMouseDown(x, y, button));
+	}
+	
+	bool Dataset::onMouseUp(float x, float y, int button)
+	{
+		return (mRoot != NULL && mRoot->onMouseUp(x, y, button));
+	}
+	
+	void Dataset::onMouseMove(float x, float y)
+	{
+		if (mRoot != NULL)
+		{
+			mRoot->onMouseMove(x, y);
+		}
+	}
+	
+	void Dataset::onKeyDown(unsigned int keycode)
+	{
+		if (mRoot != NULL)
+		{
+			mRoot->onKeyDown(keycode);
+		}
+	}
+	
+	void Dataset::onKeyUp(unsigned int keycode)
+	{
+		if (mRoot != NULL)
+		{
+			mRoot->onKeyUp(keycode);
+		}
+	}
+	
+	void Dataset::onChar(unsigned int charcode)
+	{
+		if (mRoot != NULL)
+		{
+			mRoot->onChar(charcode);
+		}
+	}
+	
 	bool Dataset::OnMouseDown(float x, float y, int button)
 	{
-		return (mRoot != NULL && mRoot->OnMouseDown(x, y, button));
+		return onMouseDown(x, y, button);
 	}
-	
+
 	bool Dataset::OnMouseUp(float x, float y, int button)
 	{
-		return (mRoot != NULL && mRoot->OnMouseUp(x, y, button));
+		return onMouseUp(x, y, button);
 	}
-	
+
 	void Dataset::OnMouseMove(float x, float y)
 	{
-		if (mRoot != NULL)
-		{
-			mRoot->OnMouseMove(x, y);
-		}
+		onMouseMove(x, y);
 	}
-	
+
 	void Dataset::OnKeyDown(unsigned int keycode)
 	{
-		if (mRoot != NULL)
-		{
-			mRoot->OnKeyDown(keycode);
-		}
+		onKeyDown(keycode);
 	}
-	
+
 	void Dataset::OnKeyUp(unsigned int keycode)
 	{
-		if (mRoot != NULL)
-		{
-			mRoot->OnKeyUp(keycode);
-		}
+		onKeyUp(keycode);
 	}
 	
 	void Dataset::OnChar(unsigned int charcode)
 	{
-		if (mRoot != NULL)
-		{
-			mRoot->OnChar(charcode);
-		}
+		onChar(charcode);
 	}
-	
+
 	void Dataset::updateTextures(float k)
 	{
 		foreach_m (april::Texture*, it, mTextures)

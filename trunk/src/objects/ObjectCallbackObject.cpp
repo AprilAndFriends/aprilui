@@ -43,9 +43,9 @@ namespace aprilui
 		Object::update(k);
 	}
 	
-	bool CallbackObject::OnMouseDown(float x, float y, int button)
+	bool CallbackObject::onMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (Object::onMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -57,9 +57,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool CallbackObject::OnMouseUp(float x, float y, int button)
+	bool CallbackObject::onMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (Object::onMouseUp(x, y, button))
 		{
 			return true;
 		}
