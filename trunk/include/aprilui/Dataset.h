@@ -90,12 +90,12 @@ namespace aprilui
 		void onKeyDown(unsigned int keycode);
 		void onKeyUp(unsigned int keycode);
 		void onChar(unsigned int charcode);
-		bool OnMouseDown(float x, float y, int button) DEPRECATED_ATTRIBUTE;
-		bool OnMouseUp(float x, float y, int button) DEPRECATED_ATTRIBUTE;
-		void OnMouseMove(float x, float y) DEPRECATED_ATTRIBUTE;
-		void OnKeyDown(unsigned int keycode) DEPRECATED_ATTRIBUTE;
-		void OnKeyUp(unsigned int keycode) DEPRECATED_ATTRIBUTE;
-		void OnChar(unsigned int charcode) DEPRECATED_ATTRIBUTE;
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button);
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button);
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y);
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode);
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode);
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode);
 		
 		virtual Object* getObject(chstr name);
 		virtual april::Texture* getTexture(chstr name);
