@@ -159,16 +159,16 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug">
-    <Project Name="libhltypes"/>
+  <Dependencies Name="Release_Win32">
     <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
     <Project Name="libapril"/>
     <Project Name="libatres"/>
     <Project Name="libaprilui"/>
   </Dependencies>
-  <Dependencies Name="Release_Win32">
-    <Project Name="libgtypes"/>
+  <Dependencies Name="Debug">
     <Project Name="libhltypes"/>
+    <Project Name="libgtypes"/>
     <Project Name="libapril"/>
     <Project Name="libatres"/>
     <Project Name="libaprilui"/>

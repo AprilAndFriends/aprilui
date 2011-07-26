@@ -24,7 +24,10 @@ namespace april
 	class Texture;
 }
 
-struct xml_node;
+namespace hlxml
+{
+	struct Node;
+}
 
 namespace aprilui
 {
@@ -36,7 +39,7 @@ namespace aprilui
 	class apriluiExport Dataset
 	{
 	public:
-		Object* parseObject(xml_node* node, Object* parent = NULL);
+		Object* parseObject(hlxml::Node* node, Object* parent = NULL);
 		
 		Dataset(chstr filename, chstr name = "");
 		virtual ~Dataset();
@@ -135,14 +138,14 @@ namespace aprilui
 
 		hmap<hstr, void (*)()> mCallbacks;
 
-		april::Texture* parseTexture(xml_node* node);
-		void parseRAMTexture(xml_node* node);
-		void parseTextureGroup(xml_node* node);
-		void parseCompositeImage(xml_node* node);
-		virtual void parseExternalXMLNode(xml_node* node) { }
-		virtual Object* parseExternalObjectClass(xml_node* node, chstr obj_name, grect rect) { return 0; }
+		april::Texture* parseTexture(hlxml::Node* node);
+		void parseRAMTexture(hlxml::Node* node);
+		void parseTextureGroup(hlxml::Node* node);
+		void parseCompositeImage(hlxml::Node* node);
+		virtual void parseExternalXMLNode(hlxml::Node* node) { }
+		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr obj_name, grect rect) { return 0; }
 		
-		Object* recursiveObjectParse(xml_node* node, Object* parent);
+		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		
 		void readFile(chstr filename);
 		void _loadTexts(chstr path);

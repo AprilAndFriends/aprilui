@@ -25,13 +25,6 @@
     <Project Name="libapril"/>
     <Project Name="libaprilui"/>
   </Dependencies>
-  <Dependencies Name="Debug">
-    <Project Name="libhltypes"/>
-    <Project Name="libgtypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-    <Project Name="libaprilui"/>
-  </Dependencies>
   <Dependencies Name="Release_Win32">
     <Project Name="libgtypes"/>
     <Project Name="libhltypes"/>
@@ -175,4 +168,11 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
+    <Project Name="libgtypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+    <Project Name="libaprilui"/>
+  </Dependencies>
 </CodeLite_Project>

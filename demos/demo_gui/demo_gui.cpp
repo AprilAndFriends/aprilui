@@ -13,12 +13,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
+#include <april/main.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <atres/atres.h>
+#include <atres/FontResourceBitmap.h>
+#include <atres/Renderer.h>
 #include <gtypes/Vector2.h>
 
 grect screen(0, 0, 800, 600);
@@ -35,17 +38,17 @@ bool update(float k)
 	return true;
 }
 
-void OnKeyDown(unsigned int keycode)
+void onKeyDown(unsigned int keycode)
 {
 	if (keycode == april::AK_RETURN)
 	{
 		dataset->unload();
 		dataset->load();
 	}
-	aprilui::OnKeyDown(keycode);
+	aprilui::onKeyDown(keycode);
 }
 
-int main()
+void april_init(const harray<hstr>& args)
 {
 #ifdef __APPLE__
 	// On MacOSX, the current working directory is not set by
@@ -93,19 +96,32 @@ int main()
 #endif
 	try
 	{
-		april::init("GUI", (int)screen.w, (int)screen.h, false, "demo_gui");
+		april::init();
+		april::createRenderSystem("");
+		april::createRenderTarget((int)screen.w, (int)screen.h, false, "demo_gui");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&update);
-		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::OnMouseDown, &aprilui::OnMouseUp, &aprilui::OnMouseMove);
-		april::rendersys->getWindow()->setKeyboardCallbacks(&OnKeyDown, &aprilui::OnKeyUp, &aprilui::OnChar);
-		atres::loadFont("../media/arial.font");
+		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::onMouseDown, &aprilui::onMouseUp, &aprilui::onMouseMove);
+		april::rendersys->getWindow()->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
+		atres::renderer->registerFontResource(new atres::FontResourceBitmap("../media/arial.font"));
 		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
 		dataset->load();
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif
 		april::rendersys->getWindow()->enterMainLoop();
+	}
+	catch (aprilui::_GenericException e)
+	{
+		printf("%s\n", e.getType().c_str());
+	}
+}
+
+void april_destroy()
+{
+	try
+	{
 		delete dataset;
 		atres::destroy();
 		aprilui::destroy();
@@ -115,5 +131,4 @@ int main()
 	{
 		printf("%s\n", e.getType().c_str());
 	}
-	return 0;
 }

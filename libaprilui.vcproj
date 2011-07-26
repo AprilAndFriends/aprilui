@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include"
+				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include"
 				PreprocessorDefinitions="_WIN32;_DEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libapril_d.lib libatres_d.lib libxml2.lib"
+				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libhlxml_d.lib libapril_d.lib libatres_d.lib libxml2.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc90;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../atres/bin/win32_Debug;../april/bin"
+				AdditionalLibraryDirectories="../lib/msvc90;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../hltypes/bin/hlxml/win32_Debug;../atres/bin/win32_Debug;../april/bin"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include"
+				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include"
 				PreprocessorDefinitions="_WIN32;NDEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -136,8 +136,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
-				AdditionalLibraryDirectories="../lib/msvc90;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../atres/bin/win32_Release;../april/bin"
+				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libatres.lib libxml2.lib"
+				AdditionalLibraryDirectories="../lib/msvc90;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../hltypes/bin/hlxml/win32_Release;../atres/bin/win32_Release;../april/bin"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -200,10 +200,6 @@
 			</File>
 			<File
 				RelativePath=".\src\Util.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\xmlHelper.cpp"
 				>
 			</File>
 			<Filter
@@ -402,10 +398,6 @@
 			</File>
 			<File
 				RelativePath=".\include\aprilui\Objects.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\aprilui\xmlHelper.h"
 				>
 			</File>
 			<Filter

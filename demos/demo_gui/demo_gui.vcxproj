@@ -70,6 +70,7 @@
 copy ..\..\..\april\bin\libapril.dll ..\..\bin\$(Configuration)
 copy ..\..\..\gtypes\bin\$(Configuration)\libgtypes.dll ..\..\bin\$(Configuration)
 copy ..\..\..\hltypes\bin\$(Configuration)\libhltypes.dll ..\..\bin\$(Configuration)
+copy ..\..\..\hltypes\bin\hlxml\$(Configuration)\libhlxml.dll ..\..\bin\$(Configuration)
 copy ..\..\..\lib\msvc100\*.dll ..\..\bin\$(Configuration)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -101,6 +102,7 @@ copy ..\..\..\lib\msvc100\*.dll ..\..\bin\$(Configuration)</Command>
 copy ..\..\..\april\bin\libapril.dll ..\..\bin\$(Configuration)
 copy ..\..\..\gtypes\bin\$(Configuration)\libgtypes.dll ..\..\bin\$(Configuration)
 copy ..\..\..\hltypes\bin\$(Configuration)\libhltypes.dll ..\..\bin\$(Configuration)
+copy ..\..\..\hltypes\bin\hlxml\$(Configuration)\libhlxml.dll ..\..\bin\$(Configuration)
 copy ..\..\..\lib\msvc100\*.dll ..\..\bin\$(Configuration)
 </Command>
     </PostBuildEvent>

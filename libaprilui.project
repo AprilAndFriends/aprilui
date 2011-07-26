@@ -11,7 +11,6 @@
     <File Name="src/Dataset.cpp"/>
     <File Name="src/Exception.cpp"/>
     <File Name="src/Util.cpp"/>
-    <File Name="src/xmlHelper.cpp"/>
     <File Name="src/CallbackEvent.cpp"/>
     <VirtualDirectory Name="objects">
       <File Name="src/objects/ObjectCallbackObject.cpp"/>
@@ -62,7 +61,6 @@
     <File Name="include/aprilui/Exception.h"/>
     <File Name="src/Util.h"/>
     <File Name="include/aprilui/Animators.h"/>
-    <File Name="include/aprilui/xmlHelper.h"/>
     <File Name="include/aprilui/CallbackEvent.h"/>
     <File Name="include/aprilui/Event.h"/>
     <File Name="include/aprilui/EventArgs.h"/>
@@ -113,24 +111,6 @@
     <File Name="include/aprilui/MemberCallbackEvent.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
-  <Dependencies Name="Release_Win32">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-  </Dependencies>
-  <Dependencies Name="Linux_Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-  </Dependencies>
-  <Dependencies Name="Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-  </Dependencies>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -144,12 +124,12 @@
         <IncludePath Value="./include/aprilui"/>
         <IncludePath Value="../gtypes/include"/>
         <IncludePath Value="../hltypes/include"/>
+        <IncludePath Value="../hltypes/hlxml/include"/>
         <Preprocessor Value="APRILUI_EXPORTS"/>
       </Compiler>
       <Linker Options="">
         <LibraryPath Value="./lib"/>
         <LibraryPath Value="../lib"/>
-        <Library Value="libxml2"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
@@ -162,11 +142,13 @@
         <LibraryPath Value="./bin/Debug"/>
         <LibraryPath Value="../gtypes/bin/Debug"/>
         <LibraryPath Value="../hltypes/bin/Debug"/>
+        <LibraryPath Value="../hltypes/hlxml/bin/Debug"/>
         <LibraryPath Value="../april/bin"/>
         <LibraryPath Value="../atres/bin/Debug"/>
         <LibraryPath Value="./lib"/>
         <Library Value="libgtypes_d"/>
         <Library Value="libhltypes_d"/>
+        <Library Value="libhlxml_d"/>
         <Library Value="libapril_d"/>
         <Library Value="libatres_d"/>
       </Linker>
@@ -205,9 +187,13 @@
         <LibraryPath Value="../atres/bin/Linux_Debug"/>
         <LibraryPath Value="./lib"/>
         <LibraryPath Value="../gtypes/bin/Linux_Debug"/>
+        <LibraryPath Value="../hltypes/bin/Linux_Debug"/>
+        <LibraryPath Value="../hltypes/bin/hlxml/Linux_Debug"/>
         <Library Value="libapril_d"/>
         <Library Value="libatres_d"/>
         <Library Value="libgtypes_d"/>
+        <Library Value="libhlypes_d"/>
+        <Library Value="libhlxml_d"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/libaprilui_d.so" IntermediateDirectory="./bin/Linux_Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
@@ -241,11 +227,13 @@
         <LibraryPath Value="./bin/Release_Win32"/>
         <LibraryPath Value="../gtypes/bin/Release_Win32"/>
         <LibraryPath Value="../hltypes/bin/Release_Win32"/>
+        <LibraryPath Value="../hltypes/bin/hlxml/Release_Win32"/>
         <LibraryPath Value="../april/bin"/>
         <LibraryPath Value="../atres/bin/Release_Win32"/>
         <LibraryPath Value="./lib"/>
         <Library Value="libgtypes"/>
         <Library Value="libhltypes"/>
+        <Library Value="libhlxml"/>
         <Library Value="libapril"/>
         <Library Value="libatres"/>
       </Linker>
@@ -274,4 +262,25 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+    <Project Name="libhlxml"/>
+  </Dependencies>
+  <Dependencies Name="Linux_Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+    <Project Name="libhlxml"/>
+  </Dependencies>
+  <Dependencies Name="Release_Win32">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+    <Project Name="libhlxml"/>
+  </Dependencies>
 </CodeLite_Project>

@@ -45,7 +45,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;_DEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -57,9 +57,9 @@
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libapril.lib;libatres.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libatres.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../lib/msvc100;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../atres/bin/win32_Debug;../april/bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../lib/msvc100;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../hltypes/bin/hlxml/win32_Debug;../atres/bin/win32_Debug;../april/bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -67,7 +67,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32;NDEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -78,8 +78,8 @@
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libapril.lib;libatres.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../lib/msvc100;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../atres/bin/win32_Release;../april/bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libatres.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../lib/msvc100;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../hltypes/bin/hlxml/win32_Release;../atres/bin/win32_Release;../april/bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -94,7 +94,6 @@
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\MemberCallbackEvent.cpp" />
     <ClCompile Include="src\Util.cpp" />
-    <ClCompile Include="src\xmlHelper.cpp" />
     <ClCompile Include="src\animators\Animator.cpp" />
     <ClCompile Include="src\animators\AnimatorAlphaChanger.cpp" />
     <ClCompile Include="src\animators\AnimatorBlueChanger.cpp" />
@@ -143,7 +142,6 @@
     <ClInclude Include="include\aprilui\Exception.h" />
     <ClInclude Include="include\aprilui\Images.h" />
     <ClInclude Include="include\aprilui\Objects.h" />
-    <ClInclude Include="include\aprilui\xmlHelper.h" />
     <ClInclude Include="include\aprilui\Animator.h" />
     <ClInclude Include="include\aprilui\AnimatorAlphaChanger.h" />
     <ClInclude Include="include\aprilui\AnimatorBlueChanger.h" />

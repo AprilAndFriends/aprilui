@@ -14,6 +14,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
 #include <hltypes/util.h>
+#include <hlxml/Document.h>
+#include <hlxml/Exception.h>
+#include <hlxml/Node.h>
+#include <hlxml/Property.h>
 
 #include "Animators.h"
 #include "aprilui.h"
@@ -22,7 +26,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Images.h"
 #include "Objects.h"
 #include "Util.h"
-#include "xmlHelper.h"
 
 namespace aprilui
 {
@@ -152,7 +155,7 @@ namespace aprilui
 		delete image;
 	}
 	
-	april::Texture* Dataset::parseTexture(xml_node* node)
+	april::Texture* Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
@@ -180,7 +183,7 @@ namespace aprilui
 		texture->setTextureWrapping(node->pbool("wrap", true));
 		mTextures[textureName] = texture;
 		// extract image definitions
-		if (node->iter_children() == NULL) // if there are no images defined, create one that fills the whole area
+		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
 		{
 			if (mImages.has_key(textureName))
 			{
@@ -191,7 +194,7 @@ namespace aprilui
 		else
 		{
 			Image* image;
-			for (node = node->iter_children(); node != NULL; node = node->next())
+			for (node = node->iterChildren(); node != NULL; node = node->next())
 			{
 				if (*node == "Image")
 				{
@@ -233,7 +236,7 @@ namespace aprilui
 		return texture;
 	}
 	
-	void Dataset::parseRAMTexture(xml_node* node)
+	void Dataset::parseRAMTexture(hlxml::Node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
@@ -252,7 +255,7 @@ namespace aprilui
 		mTextures[textureName] = texture;
 	}
 	
-	void Dataset::parseCompositeImage(xml_node* node)
+	void Dataset::parseCompositeImage(hlxml::Node* node)
 	{
 		hstr name = node->pstr("name");
 		hstr refname;
@@ -261,7 +264,7 @@ namespace aprilui
 			throw ResourceExistsException(name, "CompositeImage", this);
 		}
 		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
-		for (node = node->iter_children(); node != NULL; node=node->next())
+		for (node = node->iterChildren(); node != NULL; node = node->next())
 		{
 			if (*node == "ImageRef")
 			{
@@ -273,12 +276,12 @@ namespace aprilui
 		mImages[name] = image;
 	}
 	
-	Object* Dataset::parseObject(xml_node* node, Object* parent)
+	Object* Dataset::parseObject(hlxml::Node* node, Object* parent)
 	{
 		return recursiveObjectParse(node, parent);
 	}
 	
-	void Dataset::parseTextureGroup(xml_node* node)
+	void Dataset::parseTextureGroup(hlxml::Node* node)
 	{
 		harray<hstr> names = node->pstr("names").split(",");
 		foreach (hstr, it, names)
@@ -293,7 +296,7 @@ namespace aprilui
 		}
 	}
 	
-	Object* Dataset::recursiveObjectParse(xml_node* node, Object* parent)
+	Object* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent)
 	{
 		hstr objectName;
 		grect rect(0, 0, 1, 1);
@@ -366,7 +369,7 @@ namespace aprilui
 		
 		if (object == NULL)
 		{
-			throw XMLUnknownClassException(className, node);
+			throw hlxml::XMLUnknownClassException(className, node);
 		}
 		object->_setDataset(this);
 		mObjects[objectName] = object;
@@ -380,7 +383,7 @@ namespace aprilui
 		}
         hstr name;
 
-		for (xml_prop* prop = node->iter_properties(); prop != NULL; prop = prop->next())
+		for (hlxml::Property* prop = node->iterProperties(); prop != NULL; prop = prop->next())
 		{
             name = prop->name();
             if (name == "x" || name == "y" || name == "w" || name == "h")
@@ -390,7 +393,7 @@ namespace aprilui
 			object->setProperty(name, prop->value());
 		}
 		
-		for (node = node->iter_children(); node != NULL; node = node->next())
+		for (node = node->iterChildren(); node != NULL; node = node->next())
 		{
 			if (node->type != XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
 			{
@@ -410,14 +413,14 @@ namespace aprilui
 	void Dataset::readFile(chstr filename)
 	{
 		// parse datadef xml file, error checking first
-		xml_doc doc(getPWD() + "/" + normalize_path(filename));
-		xml_node* current = doc.root("DataDefinition");
+		hlxml::Document doc(getPWD() + "/" + normalize_path(filename));
+		hlxml::Node* current = doc.root("DataDefinition");
 		
 		parseExternalXMLNode(current);
 		
 		hmap<april::Texture*, hstr> dynamicLinks;
 		hstr links;
-		for (xml_node* p = current->iter_children(); p != NULL; p = p->next())
+		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
 		{
 			if      (*p == "Texture")
 			{
