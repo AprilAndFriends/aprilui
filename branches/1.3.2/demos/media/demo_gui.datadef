@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+<DataDefinition>
+
+	<Texture filename="../media/texture">
+		<Image name="test" x="0" y="0" w="512" h="512"/>
+		<Image name="test_blue_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7F7FFF7F"/>
+		<Image name="test_orange_add" x="0" y="0" w="512" h="512" blend_mode="add" color="FFBF7FBF"/>
+		<Image name="test_grey" x="0" y="0" w="512" h="512" color="7F7F7F"/>
+		<Image name="test_green" x="0" y="0" w="512" h="512" color="7FFF7F"/>
+		<Image name="test_blue" x="0" y="0" w="512" h="512" color="7F7FFF"/>
+		<Image name="test_yellow" x="0" y="0" w="512" h="512" color="FFFF7F"/>
+		<Image name="test_red" x="0" y="0" w="512" h="512" color="FF7F7F"/>
+    </Texture>
+	<Texture filename="../media/transparency">
+		<Image name="test" x="0" y="0" w="512" h="512"/>
+    </Texture>
+	
+	<CompositeImage name="texture/test_hover" w="512" h="512">
+		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
+		<ImageRef name="texture/test_blue_add" x="0" y="0" w="512" h="512"/>
+	</CompositeImage>
+	
+	<CompositeImage name="texture/test_hover_2" w="512" h="512">
+		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
+		<ImageRef name="texture/test_orange_add" x="0" y="0" w="512" h="512"/>
+	</CompositeImage>
+	
+	<CompositeImage name="texture/test_hover_3" w="512" h="512">
+		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
+		<ImageRef name="texture/test_orange_add" x="128" y="128" w="384" h="384"/>
+	</CompositeImage>
+	
+	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
+		<Object type="ColoredQuad" name="background" color="BFBFBF" x="0" y="0" w="800" h="600">
+			<Object type="ColoredQuad" color="00FF00" x="64" y="32" w="32" h="32" angle="50">
+				<Object type="ColoredQuad" color="FFFF00" x="64" y="32" w="32" h="32"/>
+			</Object>
+		</Object>
+		<Object type="ColoredQuad" name="multi_scale_hit_test" color="9F0000" x="0" y="0" w="800" h="600" zorder="10000" visible="false">
+			<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
+			<Object type="ColoredQuad" color="9F9000" dock="top_right" x="-32" y="32" w="640" h="480" center_x="640" center_y="480">
+				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
+				<Object type="ColoredQuad" color="009F00" dock="bottom_left" x="32" y="-32" w="480" h="320" center_x="0" center_y="0">
+					<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
+					<Object type="ImageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" dock="center_right" x="32" y="32" w="128" h="64"/>
+				</Object>
+			</Object>
+		</Object>
+		<Object type="Container" x="0" y="0" w="800" h="600">
+			<Object type="ImageBox" name="imageBox" image="texture/test" x="32" y="32" w="128" h="64">
+				<Animator type="Rotator" function="hover" amplitude="10" speed="180" offset="10"/>
+				<Animator type="AlphaChanger" function="hover" amplitude="64" speed="512" offset="191"/>
+			</Object>
+			<Object type="ImageBox" name="coloredImageBox" image="texture/test" color="FF7F7F" x="32" y="128" w="128" h="64">
+				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
+				<Animator type="MoverY" amplitude="100" speed="0.25"/>
+				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="1"/>
+			</Object>
+			<Object type="ColoredQuad" name="coloredQuad" color="007FFF" x="32" y="224" w="128" h="64">
+				<Animator type="MoverX" function="random" periods="-1" amplitude="4"/>
+				<Animator type="MoverY" function="random" periods="-1" amplitude="4"/>
+			</Object>
+			<Object type="ColoredQuad" color="007F00" x="32" y="320" w="192" h="160">
+				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
+				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
+				<Object type="EditBox" angle="-10" name="editBox" text="Edit Box" font="arial" filter="ABCDEMNLSTXYZabcdemnlstxyz +-=()" max_length="10" x="0" y="0" w="192" h="32"/>
+				<Object type="Label" angle="-10" name="label" text="I am a label." effect="border" x="0" y="64" w="192" h="32"/>
+				<Object type="TextButton" angle="-10" name="textButton" text="I am a button." x="0" y="128" w="192" h="32"/>
+			</Object>
+			<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64">
+				<Animator type="AlphaChanger" function="sine" periods="-1" amplitude="64" speed="1.05" offset="191"/>
+			</Object>
+			<Object type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" x="432" y="160" w="128" h="64">
+				<Animator type="ScalerX" function="sine" periods="-1" amplitude="1.0" offset="0.0" speed="0.5"/>
+				<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.1" offset="1.2" timer="0.25"/>
+			</Object>
+			<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0">
+				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="10"/>
+			</Object>
+			<Object type="TextImageButton" name="textImageButton" text="Push me" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="432" y="256" w="128" h="64" angle="20" center_x="-100" center_y="-100">
+				<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191" timer="1.333333"/>
+				<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191" timer="0.6666667"/>
+				<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191"/>
+			</Object>
+			<Object type="ToggleButton" name="toggleButton" image="texture/test_green" pushed_image="texture/test_hover_3" x="432" y="352" w="128" h="64">
+				<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
+				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
+			</Object>
+			<Object type="Container" name="slider_container" x="200" y="200" w="800" h="600">
+				<Object type="Slider" name="slider" image="texture/test_yellow" x="232" y="280" w="128" h="16">
+					<Animator type="ResizerX" function="sine" periods="-1" amplitude="50"/>
+					<Animator type="ResizerY" function="sine" periods="-1" amplitude="2" timer="0.25"/>
+				</Object>
+			</Object>
+			<Object type="Container" x="232" y="16" w="128" h="128">
+				<Object type="ColoredQuad" color="6F6F6F" x="0" y="0" w="128" h="128" dock="center_center" center_x="96" center_y="32">
+					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>
+					<Animator type="ResizerY" function="sine" periods="-1" amplitude="32" timer="0.75"/>
+					<Animator type="Rotator" function="hover" amplitude="22.5" speed="180" offset="22.5"/>
+					
+					<Object type="ColoredQuad" color="FF0000" dock="top_left" x="2" y="2" w="32" h="32"/>
+					<Object type="ColoredQuad" color="00FF00" dock="top_center" x="0" y="2" w="32" h="32"/>
+					<Object type="ColoredQuad" color="0000FF" dock="top_right" x="-2" y="2" w="32" h="32"/>
+					<Object type="ColoredQuad" color="FFFF00" dock="center_left" x="2" y="0" w="32" h="32"/>
+					<Object type="ColoredQuad" color="FF00FF" dock="center_center" x="0" y="0" w="32" h="32"/>
+					<Object type="ColoredQuad" color="00FFFF" dock="center_right" x="-2" y="0" w="32" h="32"/>
+					<Object type="ColoredQuad" color="000000" dock="bottom_left" x="2" y="-2" w="32" h="32"/>
+					<Object type="ColoredQuad" color="7F7F7F" dock="bottom_center" x="0" y="-2" w="32" h="32"/>
+					<Object type="ColoredQuad" color="FFFFFF" dock="bottom_right" x="-2" y="-2" w="32" h="32"/>
+				</Object>
+			</Object>
+		</Object>
+		
+	</Object>
+	
+</DataDefinition>
