@@ -9,6 +9,7 @@
   <Project Name="libatres" Path="../atres/libatres.project" Active="No"/>
   <Project Name="demo_tiledimage" Path="demos/demo_tiledimage/demo_tiledimage.project" Active="No"/>
   <Project Name="demo_gui" Path="demos/demo_gui/demo_gui.project" Active="Yes"/>
+  <Project Name="libhlxml" Path="../hltypes/hlxml/libhlxml.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Linux_Debug" Selected="no">
       <Project Name="libhltypes" ConfigName="Linux_Debug"/>
@@ -19,6 +20,7 @@
       <Project Name="demo_zorder" ConfigName="Linux_Debug"/>
       <Project Name="demo_simple" ConfigName="Linux_Debug"/>
       <Project Name="demo_gui" ConfigName="Linux_Debug"/>
+      <Project Name="libhlxml" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release_Win32" Selected="no">
       <Project Name="libaprilui" ConfigName="Release"/>
@@ -29,6 +31,7 @@
       <Project Name="libhltypes" ConfigName="Debug"/>
       <Project Name="libatres" ConfigName="Release_Win32"/>
       <Project Name="demo_gui" ConfigName="Release_Win32"/>
+      <Project Name="libhlxml" ConfigName="Release_Win32"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="libhltypes" ConfigName="Debug"/>
@@ -40,6 +43,7 @@
       <Project Name="demo_tiledimage" ConfigName="Debug"/>
       <Project Name="demo_simple" ConfigName="Debug"/>
       <Project Name="demo_gui" ConfigName="Debug"/>
+      <Project Name="libhlxml" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

@@ -13,12 +13,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
+#include <april/main.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <atres/atres.h>
+#include <atres/FontResourceBitmap.h>
+#include <atres/Renderer.h>
 
 gvec2 screen(800, 600);
 
@@ -34,7 +37,7 @@ bool render(float time)
 	return true;
 }
 
-int main()
+void april_init(const harray<hstr>& args)
 {
 #ifdef __APPLE__
 	// On MacOSX, the current working directory is not set by
@@ -82,14 +85,26 @@ int main()
 #endif
 	try
 	{
-		april::init("Simple", screen.x, screen.y, false, "demo_simple");
+		april::init();
+		april::createRenderSystem("");
+		april::createRenderTarget((int)screen.x, (int)screen.y, false, "demo_simple");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&render);
-		atres::loadFont("../media/arial.font");
+		atres::renderer->registerFontResource(new atres::FontResourceBitmap("../media/arial.font"));
 		dataset = new aprilui::Dataset("../media/demo_simple.datadef");
 		dataset->load();
-		april::rendersys->getWindow()->enterMainLoop();
+	}
+	catch (aprilui::_GenericException e)
+	{
+		printf("%s\n", e.getType().c_str());
+	}
+}
+
+void april_destroy()
+{
+	try
+	{
 		delete dataset;
 		atres::destroy();
 		aprilui::destroy();
@@ -99,5 +114,4 @@ int main()
 	{
 		printf("%s\n", e.getType().c_str());
 	}
-	return 0;
 }
