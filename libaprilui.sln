@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libaprilui", "libaprilui.vcxproj", "{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}"
 	ProjectSection(ProjectDependencies) = postProject
-		{2D053CDA-686C-4B36-80EB-1DA5F0CEF8F9} = {2D053CDA-686C-4B36-80EB-1DA5F0CEF8F9}
+		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8} = {601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_simple", "demos\demo_simple\demo_simple.vcxproj", "{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
@@ -22,7 +22,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_zorder", "demos\demo_z
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_tiledimage", "demos\demo_tiledimage\demo_tiledimage.vcxproj", "{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhlxml", "..\hltypes\hlxml\libhlxml.vcxproj", "{2D053CDA-686C-4B36-80EB-1DA5F0CEF8F9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhlxml", "..\hltypes\hlxml\libhlxml.vcxproj", "{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E4D373BF-E227-48B9-99E6-84987E8674EC} = {E4D373BF-E227-48B9-99E6-84987E8674EC}
 	EndProjectSection
@@ -66,10 +66,10 @@ Global
 		{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
 		{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
 		{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}.win32_Release|Win32.Build.0 = win32_Release|Win32
-		{2D053CDA-686C-4B36-80EB-1DA5F0CEF8F9}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
-		{2D053CDA-686C-4B36-80EB-1DA5F0CEF8F9}.win32_Debug|Win32.Build.0 = win32_Debug|Win32
-		{2D053CDA-686C-4B36-80EB-1DA5F0CEF8F9}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
-		{2D053CDA-686C-4B36-80EB-1DA5F0CEF8F9}.win32_Release|Win32.Build.0 = win32_Release|Win32
+		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
+		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}.win32_Debug|Win32.Build.0 = win32_Debug|Win32
+		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
+		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}.win32_Release|Win32.Build.0 = win32_Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
