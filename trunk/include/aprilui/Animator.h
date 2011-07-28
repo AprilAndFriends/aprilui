@@ -63,8 +63,8 @@ namespace aprilui
 		bool getUseTarget() { return mUseTarget; }
 		void setUseTarget(bool value) { mUseTarget = value; }
 
-		
 		bool isAnimated();
+		bool isWaitingAnimation();
 		bool isExpired();
 		void setTime(float value);
 		
