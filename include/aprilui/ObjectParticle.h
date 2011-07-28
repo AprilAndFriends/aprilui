@@ -2,30 +2,33 @@
 This source file is part of the APRIL User Interface Library                         *
 For latest info, see http://libaprilui.sourceforge.net/                              *
 **************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
+Copyright (c) 2011 Boris Mikic                                                       *
 *                                                                                    *
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifndef APRILUI_OBJECTS_H
-#define APRILUI_OBJECTS_H
+#ifndef APRILUI_PARTICLE_H
+#define APRILUI_PARTICLE_H
 
-#include "CallbackEvent.h"
-#include "Event.h"
-#include "EventArgs.h"
-#include "ObjectCallbackObject.h"
-#include "ObjectColoredQuad.h"
-#include "ObjectContainer.h"
-#include "ObjectEditBox.h"
-#include "ObjectImageButton.h"
-#include "ObjectLabel.h"
-#include "ObjectLabelBase.h"
-#include "ObjectImageButton.h"
-#include "ObjectCallbackObject.h"
-#include "ObjectSlider.h"
-#include "ObjectTextButton.h"
-#include "ObjectTextImageButton.h"
-#include "ObjectToggleButton.h"
-#include "ObjectParticle.h"
+#include <april/RenderSystem.h>
+#include <gtypes/Rectangle.h>
+#include <hltypes/hstring.h>
+
+#include "apriluiExport.h"
+#include "Object.h"
+
+namespace aprilui
+{
+	class Particle : public Object
+	{
+	public:
+		Particle(chstr name, grect rect);
+		
+		bool setProperty(chstr name, chstr value);
+		
+		void OnDraw();
+		
+	};
+}
 
 #endif
