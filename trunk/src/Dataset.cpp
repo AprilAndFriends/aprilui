@@ -346,6 +346,9 @@ namespace aprilui
 		else  parse(Label);
 		else  parse(TextButton);
 		else  parse(EditBox);
+#ifdef _HAVE_PARTICLE
+		else  parse(Particle);
+#endif
 		else if (*node == "Animator")
 		{
 			/*if*/parse_animator(AlphaChanger);
