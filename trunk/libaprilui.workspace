@@ -34,6 +34,7 @@
       <Project Name="libhlxml" ConfigName="Release_Win32"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="libhlxml" ConfigName="Debug"/>
       <Project Name="libhltypes" ConfigName="Debug"/>
       <Project Name="libgtypes" ConfigName="Debug"/>
       <Project Name="libatres" ConfigName="Debug"/>
@@ -43,7 +44,6 @@
       <Project Name="demo_tiledimage" ConfigName="Debug"/>
       <Project Name="demo_simple" ConfigName="Debug"/>
       <Project Name="demo_gui" ConfigName="Debug"/>
-      <Project Name="libhlxml" ConfigName="Debug"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
