@@ -311,7 +311,7 @@ namespace aprilui
 			else
 			{
 				objectName = generateName(className);
-				xmlSetProp(node, (xmlChar*)"name", (xmlChar*)objectName.c_str());
+				node->setProperty("name", objectName);
 			}
 			rect.x = node->pfloat("x");
 			rect.y = node->pfloat("y");
