@@ -56,6 +56,7 @@ namespace aprilui
 		void triggerCallback(chstr name);
 		
 		bool isAnimated();
+		bool isWaitingAnimation();
 		void setFocusedObject(Object* object) { mFocusedObject = object; }
 		Object* getFocusedObject() { return mFocusedObject; }
 		Object* getRoot() { return mRoot; }

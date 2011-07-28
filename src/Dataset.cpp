@@ -9,6 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
+#include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hfile.h>
@@ -163,7 +164,7 @@ namespace aprilui
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
 		{
-			throw ObjectExistsException(filename);
+			throw ObjectExistsException(textureName, filename);
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", false);
@@ -171,7 +172,7 @@ namespace aprilui
 		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
 		if (texture == NULL)
 		{
-			throw FileNotFoundException(filepath);
+			throw file_not_found(filepath);
 		}
 		if (node->pexists("filter"))
 		{
@@ -250,7 +251,7 @@ namespace aprilui
 		april::Texture* texture = april::rendersys->loadRAMTexture(filepath, dynamicLoad);
 		if (!texture)
 		{
-			throw FileNotFoundException(filepath);
+			throw file_not_found(filepath);
 		}
 		mTextures[textureName] = texture;
 	}
@@ -602,6 +603,20 @@ namespace aprilui
 		{
 			object = dynamic_cast<aprilui::Animator*>(it->second);
 			if (object != NULL && object->isAnimated())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	bool Dataset::isWaitingAnimation()
+	{
+		aprilui::Animator* object;
+		foreach_m (Object*, it, mObjects)
+		{
+			object = dynamic_cast<aprilui::Animator*>(it->second);
+			if (object != NULL && object->isWaitingAnimation())
 			{
 				return true;
 			}

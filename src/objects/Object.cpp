@@ -286,7 +286,26 @@ namespace aprilui
 		}
 		return false;
 	}
-	
+
+	bool Object::isWaitingAnimation()
+	{
+		foreach (Animator*, it, mDynamicAnimators)
+		{
+			if ((*it)->isWaitingAnimation())
+			{
+				return true;
+			}
+		}
+		foreach (Object*, it, mChildren)
+		{
+			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isWaitingAnimation())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	bool Object::hasDynamicAnimation()
 	{
 		return (mDynamicAnimators.size() > 0);

@@ -10,8 +10,9 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_EXCEPTION_H
 #define APRILUI_EXCEPTION_H
 
-#include <hltypes/hstring.h>
 #include <hltypes/exception.h>
+#include <hltypes/hstring.h>
+
 #include "apriluiExport.h"
 
 namespace aprilui
@@ -38,19 +39,16 @@ namespace aprilui
 	}
 
 	exception_cls(_ObjectExistsException);
-	#define ObjectExistsException(msg) _ObjectExistsException("Object already exists: " + msg, "ObjectExistsException", __FILE__, __LINE__)
-
-	exception_cls(_FileNotFoundException);
-	#define FileNotFoundException(msg) _FileNotFoundException("File not found: " + msg, "FileNotFoundException", __FILE__, __LINE__)
+	#define ObjectExistsException(name, filename) _ObjectExistsException("Object already exists: " + name + " in " + filename, "ObjectExistsException", __FILE__, __LINE__)
 
 	exception_cls(_ObjectNotExistsException);
-	#define ObjectNotExistsException(msg) _ObjectNotExistsException("Object doesn't exist: " + msg,"ObjectNotExistsException", __FILE__, __LINE__)
+	#define ObjectNotExistsException(name, filename) _ObjectNotExistsException("Object doesn't exist: " + name + " in " + filename, "ObjectNotExistsException", __FILE__, __LINE__)
 
 	exception_cls(_FontExistsException);
-	#define FontExistsException(msg) _FontExistsException("Unable to add new font, it already exists: " + msg, "FontExistsException", __FILE__, __LINE__)
+	#define FontExistsException(fontname) _FontExistsException("Unable to add new font, it already exists: " + fontname, "FontExistsException", __FILE__, __LINE__)
 
 	exception_cls(_FontNotExistsException);
-	#define FontNotExistsException(msg) _FontNotExistsException("Font doesn't exist: " + msg, "FontNotExistsException", __FILE__, __LINE__)
+	#define FontNotExistsException(fontname) _FontNotExistsException("Font doesn't exist: " + fontname, "FontNotExistsException", __FILE__, __LINE__)
 
 	//---------------------------------------------------------------------------------------------------------
 

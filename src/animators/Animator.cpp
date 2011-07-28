@@ -140,6 +140,23 @@ namespace aprilui
 		return true;
 	}
 	
+	bool Animator::isWaitingAnimation()
+	{
+		if (!mEnabled)
+		{
+			return false;
+		}
+		if (mFunction == Hover)
+		{
+			return true;
+		}
+		if (isExpired())
+		{
+			return false;
+		}
+		return true;
+	}
+	
 	bool Animator::isExpired()
 	{
 		return (!mEnabled || mPeriods >= 0.0f && mTimer * fabs(mSpeed) > mPeriods);
