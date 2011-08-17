@@ -26,7 +26,7 @@ namespace aprilui
 	{
 	public:
 		Image(april::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
-		Image(Image& img,chstr name);
+		Image(Image& img, chstr name);
 		virtual ~Image();
 		
 		virtual void draw(grect rect, april::Color color = APRIL_COLOR_WHITE);
