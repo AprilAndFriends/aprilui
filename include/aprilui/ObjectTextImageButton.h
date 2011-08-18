@@ -24,11 +24,16 @@ namespace aprilui
 	public:
 		TextImageButton(chstr name, grect rect);
 
+		bool getUseDisabledColor() { return mUseDisabledColor; }
+		void setUseDisabledColor(bool value) { mUseDisabledColor = value; }
+
 		void setTextKey(chstr value);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 
 	protected:
+		bool mUseDisabledColor;
+		
 		void OnDraw();
 
 	};

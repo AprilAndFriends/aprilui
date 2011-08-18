@@ -24,13 +24,14 @@ namespace aprilui
 	{
 		_setTypeName("TextImageButton");
 		mText = "TextImageButton: " + name;
+		mUseDisabledColor = true;
 	}
 
 	void TextImageButton::OnDraw()
 	{
 		ImageButton::OnDraw();
 		unsigned char alpha = getDerivedAlpha();
-		if (!isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
+		if (mUseDisabledColor && !isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
 		{
 			alpha /= 2;
 		}
@@ -55,6 +56,7 @@ namespace aprilui
 		{
 			*property_exists = exists;
 		}
+		if (name == "use_disabled_color")	return mUseDisabledColor;
         return result;
     }
     
@@ -66,6 +68,7 @@ namespace aprilui
 			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
 			setTextKey(value);
 		}
+		else if (name == "use_disabled_color")	setUseDisabledColor(value);
         else if (LabelBase::setProperty(name, value)) {}
         else return ImageButton::setProperty(name, value);
         return true;
