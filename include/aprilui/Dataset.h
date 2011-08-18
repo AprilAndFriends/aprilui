@@ -41,7 +41,7 @@ namespace aprilui
 	public:
 		Object* parseObject(hlxml::Node* node, Object* parent = NULL);
 		
-		Dataset(chstr filename, chstr name = "");
+		Dataset(chstr filename, chstr name = "", bool useNameBasePath = false);
 		virtual ~Dataset();
 
 		void load(chstr path = "");
@@ -62,10 +62,10 @@ namespace aprilui
 		Object* getRoot() { return mRoot; }
 		
 		// use these functions only in debug purposes
-		void _setFilename(chstr filename) { mFilename = filename; }
-		void _setFilenamePrefix(chstr prefix) { mFilenamePrefix = prefix; }
 		hstr _getFilename() { return mFilename; }
-		hstr _getFilenamePrefix() { return mFilenamePrefix; }
+		void _setFilename(chstr filename) { mFilename = filename; }
+		hstr _getFilePath() { return mFilePath; }
+		void _setFilePath(chstr prefix) { mFilePath = prefix; }
 		hmap<hstr, Object*>& getObjects() { return mObjects; }
 		hmap<hstr, Image*>& getImages() { return mImages; }
 		template <class T>
@@ -128,7 +128,7 @@ namespace aprilui
 	protected:
 		hstr mName;
 		hstr mFilename;
-		hstr mFilenamePrefix;
+		hstr mFilePath;
 		bool mLoaded;
 		Object* mFocusedObject;
 		Object* mRoot;
