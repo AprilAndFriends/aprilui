@@ -35,15 +35,31 @@ namespace aprilui
 	
 	NullImage nullImage;
 	
-	Dataset::Dataset(chstr filename, chstr name)
+	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath)
 	{
 		mFocusedObject = NULL;
 		mRoot = NULL;
 		mFilename = normalize_path(filename);
 		int slash = mFilename.rfind('/');
 		int dot = mFilename.rfind('.');
-		mFilenamePrefix = mFilename(0, slash);
-		mName = (name == "" ? mFilename(slash + 1, dot - slash - 1) : name);
+		if (name == "")
+		{
+			mFilePath = normalize_path(mFilename(0, slash));
+			mName = (name == "" ? mFilename(slash + 1, dot - slash - 1) : name);
+		}
+		else
+		{
+			hstr extension = mFilename(dot, mFilename.size() - dot);
+			if (mFilename.ends_with(name + extension) && useNameBasePath)
+			{
+				mFilePath = normalize_path(mFilename.replace(name + extension, ""));
+			}
+			else
+			{
+				mFilePath = normalize_path(mFilename(0, slash));
+			}
+			mName = name;
+		}
 		mLoaded = false;
 		_registerDataset(mName, this);
 	}
@@ -159,7 +175,7 @@ namespace aprilui
 	april::Texture* Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
-		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
+		hstr filepath = normalize_path(mFilePath + "/" + filename);
 		int slash = filename.rfind('/') + 1;
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
@@ -240,7 +256,7 @@ namespace aprilui
 	void Dataset::parseRAMTexture(hlxml::Node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
-		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
+		hstr filepath = normalize_path(mFilePath + "/" + filename);
 		int slash = filename.find('/') + 1;
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
@@ -467,7 +483,7 @@ namespace aprilui
 	{
 		hstr textsPath = (path != "" ? path : getDefaultTextsPath()) + "/" + getLocalization();
 		// texts
-		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);
+		hstr filepath = normalize_path(mFilePath + "/" + textsPath);
 		_loadTexts(filepath);
 		aprilui::log("loading datadef: " + mFilename);
 		readFile(mFilename);
