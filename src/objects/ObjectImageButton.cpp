@@ -107,6 +107,7 @@ namespace aprilui
 		if (isCursorInside())
 		{
 			mPushed = true;
+			triggerEvent("MouseDown", x, y, 0);
 			return true;
 		}
 		return false;
