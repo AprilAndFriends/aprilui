@@ -36,6 +36,7 @@ namespace aprilui
 		
 		void update(float time);
 		void setProperty(chstr name, chstr value);
+		grect _getDrawRect();
 		
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
@@ -50,18 +51,26 @@ namespace aprilui
 		int mMaxLength;
 		char mPasswordChar;
 		bool mCtrlMode;
-		hstr mFilter;
+        bool mBackground; // TODO - replace with background color and move to LabelBase
+		bool mSpaceHack; // TODO - remove
 		float mBlinkTimer;
+		hstr mFilter;
+		harray<unsigned int> mUnicodeChars;
+		harray<unsigned int> mFilterChars;
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2 offset);
 		
+		void _cursorMoveLeft();
+		void _cursorMoveRight();
 		void _cursorMoveLeftWord();
 		void _cursorMoveRightWord();
 		void _deleteLeft(int count = 1);
 		void _deleteRight(int count = 1);
 		void _deleteLeftWord();
 		void _deleteRightWord();
-		void _insertText(chstr text);
+		void _insertChar(unsigned int charcode);
+
+		harray<unsigned int> _convertToUnicodeChars(chstr string);
 		
 	};
 
