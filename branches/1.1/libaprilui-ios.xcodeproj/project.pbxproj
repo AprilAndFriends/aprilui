@@ -239,14 +239,14 @@
 		7F3AE0A712560783009DFEC8 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7F3AE0A912560783009DFEC8 /* animators */,
+				7F3AE0BA12560783009DFEC8 /* objects */,
 				7FBCD23612956D0600D5D159 /* images */,
 				7F24E086129456080024F91E /* EventArgs.cpp */,
-				7F3AE0A912560783009DFEC8 /* animators */,
 				7F3AE0B512560783009DFEC8 /* AprilUI.cpp */,
 				7F3AE0B612560783009DFEC8 /* CallbackEvent.cpp */,
 				7F3AE0B712560783009DFEC8 /* Dataset.cpp */,
 				7F3AE0B812560783009DFEC8 /* Exception.cpp */,
-				7F3AE0BA12560783009DFEC8 /* objects */,
 				7F3AE0CC12560783009DFEC8 /* Util.cpp */,
 				7F3AE0CD12560783009DFEC8 /* Util.h */,
 				7F3AE0CE12560783009DFEC8 /* xmlHelper.cpp */,
