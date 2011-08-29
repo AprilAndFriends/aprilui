@@ -36,8 +36,8 @@ namespace aprilui
 
 		void ColorAlternator::setProperty(chstr name, chstr value)
 		{
-			if		(name == "low_color")	mLow.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
-			else if (name == "high_color")	mHigh.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
+			if		(name == "low_color")	mLow.set(value);
+			else if (name == "high_color")	mHigh.set(value);
 			else if (name == "speed")		mSpeed = value;
 		}
 
