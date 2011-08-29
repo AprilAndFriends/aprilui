@@ -21,7 +21,7 @@ namespace aprilui
 	
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
-		mColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(name));
+		mColor.set(name);
 	}
 
 	void ColorImage::draw(grect rect, april::Color color)

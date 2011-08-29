@@ -60,8 +60,8 @@ namespace aprilui
 			aprilui::logMessage("Attribute '" + name + "' is deprecated. Use 'color' instead");
 			mColor.a = COLOR_COMP_FOR_NEW_APRIL(float(value));
 		}
-		else if (name == "color") mColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
-		else if (name == "color") mColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value));
+		else if (name == "color") mColor.set(value);
+		else if (name == "color") mColor.set(value);
 	}
 
 	bool ColoredQuad::OnMouseDown(float x,float y,int button)

@@ -26,7 +26,7 @@ namespace aprilui
 		
 		april::Color getColor() { return mColor; }
 		void setColor(april::Color value) { mColor = value; }
-		void setColor(chstr value) { mColor.set(HEXCOLOR_FIX_FOR_NEW_APRIL(value)); }
+		void setColor(chstr value) { mColor.set(value); }
 
 		void setProperty(chstr name, chstr value);
 		
