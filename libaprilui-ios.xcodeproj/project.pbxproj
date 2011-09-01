@@ -95,7 +95,6 @@
 		7FDAF30E131CF189006CBC59 /* AnimatorScalerY.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDAF30C131CF189006CBC59 /* AnimatorScalerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDAF312131CF1A4006CBC59 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF310131CF1A4006CBC59 /* AnimatorScalerX.cpp */; };
 		7FDAF313131CF1A4006CBC59 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF311131CF1A4006CBC59 /* AnimatorScalerY.cpp */; };
-		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -196,7 +195,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
