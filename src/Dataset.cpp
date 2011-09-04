@@ -107,6 +107,12 @@ namespace aprilui
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 		
+		if (mTexExtOverride && filepath.contains("."))
+		{
+			hstr left,right;
+			filepath.rsplit(".", left, right);
+			filepath = left + "." + mTexExtOverride;
+		}
 		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
 		if (texture == NULL)
 		{
