@@ -87,11 +87,14 @@ namespace aprilui
 
 		hstr getName() { return mName; }
 		
+		void setTextureExtensionOverride(hstr override) { mTexExtOverride = override; }
+		
 	protected:
 		hstr mName;
 		hstr mFilename;
 		hstr mFilenamePrefix;
 		bool mLoaded;
+		hstr mTexExtOverride;
 		Object* mFocusedObject;
 		hmap<hstr, Object*> mObjects;
 		hmap<hstr, april::Texture*> mTextures;
