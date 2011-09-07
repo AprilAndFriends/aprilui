@@ -300,7 +300,7 @@ namespace aprilui
 	
 	void Dataset::parseTextureGroup(hlxml::Node* node)
 	{
-		harray<hstr> names = node->pstr("names").split(",");
+		harray<hstr> names = node->pstr("names").split(",", -1, true);
 		foreach (hstr, it, names)
 		{
 			foreach (hstr, it2, names)
@@ -470,7 +470,7 @@ namespace aprilui
 		harray<hstr> dlst;
 		for (hmap<april::Texture*, hstr>::iterator it = dynamicLinks.begin(); it != dynamicLinks.end(); it++)
 		{
-			dlst = it->second.split(',');
+			dlst = it->second.split(',', -1, true);
 			foreach (hstr, it2, dlst)
 			{
 				it->first->addDynamicLink(getTexture(*it2));
