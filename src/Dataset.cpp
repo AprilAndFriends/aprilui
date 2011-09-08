@@ -401,6 +401,7 @@ namespace aprilui
 		hfile f;
 		foreach (hstr, it, files)
 		{
+			if (!it->ends_with(".loc")) continue;
 			f.open(*it);
 			if (!f.is_open())
 			{
@@ -408,6 +409,8 @@ namespace aprilui
 			}
 			lines = f.read_lines();
 			f.close();
+			
+			if (lines.size() == 0) continue; // empty file
 
 			while (lines[0].size() > 0 && lines[0][0] < 0) lines[0]=lines[0](1,lines[0].size()-1);
 
