@@ -75,6 +75,7 @@ namespace aprilui
 		}
 
 		void updateTextures(float k);
+		void unloadUnusedTextures();
 		virtual void update(float k);
 		void draw();
 		

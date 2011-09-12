@@ -807,6 +807,14 @@ namespace aprilui
 		}
 	}
 	
+	void Dataset::unloadUnusedTextures()
+	{
+		foreach_m(april::Texture*, it, mTextures)
+		{
+			if (it->second->isDynamic() && it->second->getUnusedTime() > 1) it->second->unload();
+		}
+	}
+	
 	void Dataset::update(float k)
 	{
 		updateTextures(k);

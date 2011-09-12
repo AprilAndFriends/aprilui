@@ -54,6 +54,7 @@ namespace aprilui
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
 	apriluiFnExport void update(float time);
 	apriluiFnExport void updateTextures(float time);
+	apriluiFnExport void unloadUnusedTextures();
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr path);
 	apriluiFnExport hstr getLocalization();
