@@ -211,6 +211,14 @@ namespace aprilui
 		}
 	}
 	
+	void unloadUnusedTextures()
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->unloadUnusedTextures();
+		}
+	}
+	
 	void update(float time_increase)
 	{
 		foreach_m (Dataset*, it, gDatasets)
