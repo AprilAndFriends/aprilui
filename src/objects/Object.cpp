@@ -95,7 +95,10 @@ namespace aprilui
 		mAngle = 0.0f;
 		mClickthrough = false;
 		mInheritsAlpha = true;
-		mDock = aprilui::TopLeft;
+		mAnchorLeft = true;
+		mAnchorRight = false;
+		mAnchorTop = true;
+		mAnchorBottom = false;
 	}
 
 	Object::~Object()
@@ -195,46 +198,6 @@ namespace aprilui
 		return NULL;
 	}
 	
-	gvec2 Object::getDockedOffset()
-	{
-		gvec2 position;
-		if (mParent != NULL)
-		{
-			switch (getDock())
-			{
-			case TopLeft:
-				break;
-			case TopCenter:
-				position.x = (mParent->getWidth() - mRect.w) / 2;
-				break;
-			case TopRight:
-				position.x = mParent->getWidth() - mRect.w;
-				break;
-			case CenterLeft:
-				position.y = (mParent->getHeight() - mRect.h) / 2;
-				break;
-			case CenterCenter:
-				position = (mParent->getSize() - mRect.getSize()) / 2;
-				break;
-			case CenterRight:
-				position.x = mParent->getWidth() - mRect.w;
-				position.y = (mParent->getHeight() - mRect.h) / 2;
-				break;
-			case BottomLeft:
-				position.y = mParent->getHeight() - mRect.h;
-				break;
-			case BottomCenter:
-				position.x = (mParent->getWidth() - mRect.w) / 2;
-				position.y = mParent->getHeight() - mRect.h;
-				break;
-			case BottomRight:
-				position = mParent->getSize() - mRect.getSize();
-				break;
-			}
-		}
-		return position;
-	}
-
 	void Object::setZOrder(int zorder)
 	{
 		if (mZOrder != zorder)
@@ -245,6 +208,84 @@ namespace aprilui
 				mParent->sortChildren();
 			}
 		}
+	}
+
+	void Object::_updateChildrenHorizontal(float difference)
+	{
+		foreach (Object*, it, mChildren)
+		{
+			if (!(*it)->isAnchorLeft())
+			{
+				if ((*it)->isAnchorRight())
+				{
+					(*it)->setX((*it)->getX() + difference);
+				}
+				else
+				{
+					(*it)->setX((*it)->getX() + difference / 2);
+				}
+			}
+			else if ((*it)->isAnchorRight())
+			{
+				(*it)->setWidth((*it)->getWidth() + difference);
+			}
+		}
+	}
+
+	void Object::_updateChildrenVertical(float difference)
+	{
+		foreach (Object*, it, mChildren)
+		{
+			if (!(*it)->isAnchorTop())
+			{
+				if ((*it)->isAnchorBottom())
+				{
+					(*it)->setY((*it)->getY() + difference);
+				}
+				else
+				{
+					(*it)->setY((*it)->getY() + difference / 2);
+				}
+			}
+			else if ((*it)->isAnchorBottom())
+			{
+				(*it)->setHeight((*it)->getHeight() + difference);
+			}
+		}
+	}
+
+	void Object::setWidth(float value)
+	{
+		_updateChildrenHorizontal(value - mRect.w);
+		mRect.w = value;
+	}
+
+	void Object::setHeight(float value)
+	{
+		_updateChildrenVertical(value - mRect.h);
+		mRect.h = value;
+	}
+
+	void Object::setSize(gvec2 value)
+	{
+		_updateChildrenHorizontal(value.x - mRect.w);
+		_updateChildrenVertical(value.y - mRect.h);
+		mRect.setSize(value);
+	}
+
+	void Object::setSize(float w, float h)
+	{
+		_updateChildrenHorizontal(w - mRect.w);
+		_updateChildrenVertical(h - mRect.h);
+		mRect.w = w;
+		mRect.h = h;
+	}
+
+	void Object::setRect(grect value)
+	{
+		_updateChildrenHorizontal(value.w - mRect.w);
+		_updateChildrenVertical(value.h - mRect.h);
+		mRect = value;
 	}
 
 	unsigned char Object::getDerivedAlpha()
@@ -334,8 +375,7 @@ namespace aprilui
 		OnDraw();
 		foreach (Object*, it, mChildren)
 		{
-			position = -mCenter + (*it)->getDockedOffset();
-			(*it)->draw(position);
+			(*it)->draw(-mCenter);
 		}
 		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
@@ -644,18 +684,10 @@ namespace aprilui
 		if (name == "scale_y")			return getScaleY();
 		if (name == "center_x")			return getCenterX();
 		if (name == "center_y")			return getCenterY();
-		if (name == "dock")
-		{
-			if (mDock == aprilui::TopLeft)		return "top_left";
-			if (mDock == aprilui::TopCenter)	return "top_center";
-			if (mDock == aprilui::TopRight)		return "top_right";
-			if (mDock == aprilui::CenterLeft)	return "center_left";
-			if (mDock == aprilui::CenterCenter)	return "center_center";
-			if (mDock == aprilui::CenterRight)	return "center_right";
-			if (mDock == aprilui::BottomLeft)	return "bottom_left";
-			if (mDock == aprilui::BottomCenter)	return "bottom_center";
-			if (mDock == aprilui::BottomRight)	return "bottom_right";
-		}
+		if (name == "anchor_left")		return isAnchorLeft();
+		if (name == "anchor_right")		return isAnchorRight();
+		if (name == "anchor_top")		return isAnchorTop();
+		if (name == "anchor_bottom")	return isAnchorBottom();
 		if (property_exists != NULL)
 		{
 			*property_exists = false;
@@ -684,17 +716,17 @@ namespace aprilui
 		else if (name == "scale_y")			setScaleY(value);
 		else if (name == "center_x")		setCenterX(value);
 		else if (name == "center_y")		setCenterY(value);
-		else if (name == "dock")
+		else if (name == "anchor_left")		setAnchorLeft(value);
+		else if (name == "anchor_right")	setAnchorRight(value);
+		else if (name == "anchor_top")		setAnchorTop(value);
+		else if (name == "anchor_bottom")	setAnchorBottom(value);
+		else if (name == "anchors")
 		{
-			if      (value == "top_left")		setDock(aprilui::TopLeft);
-			else if (value == "top_center")		setDock(aprilui::TopCenter);
-			else if (value == "top_right")		setDock(aprilui::TopRight);
-			else if (value == "center_left")	setDock(aprilui::CenterLeft);
-			else if (value == "center_center")	setDock(aprilui::CenterCenter);
-			else if (value == "center_right")	setDock(aprilui::CenterRight);
-			else if (value == "bottom_left")	setDock(aprilui::BottomLeft);
-			else if (value == "bottom_center")	setDock(aprilui::BottomCenter);
-			else if (value == "bottom_right")	setDock(aprilui::BottomRight);
+			harray<hstr> anchors = value.replace(" ", "").lower().split(",", -1, true);
+			setAnchorLeft(anchors.contains("left"));
+			setAnchorRight(anchors.contains("right"));
+			setAnchorTop(anchors.contains("top"));
+			setAnchorBottom(anchors.contains("bottom"));
 		}
         else return false;
         return true;
@@ -749,7 +781,6 @@ namespace aprilui
 	gvec2 Object::getDerivedPosition()
 	{
 		gvec2 position = getPosition();
-		position += getDockedOffset();
 		position += (gvec2(1.0f, 1.0f) - mScale) * mRect.getSize() * (mCenter / mRect.getSize());
 		if (mParent != NULL)
 		{

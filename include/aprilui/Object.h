@@ -21,19 +21,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	enum Dock
-	{
-		TopLeft,
-		TopCenter,
-		TopRight,
-		CenterLeft,
-		CenterCenter,
-		CenterRight,
-		BottomLeft,
-		BottomCenter,
-		BottomRight
-	};
-	
 	class Animator;
 	class Dataset;
 	class Event;
@@ -57,7 +44,6 @@ namespace aprilui
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
 		
-		gvec2 getDockedOffset();
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);
 		
@@ -76,14 +62,14 @@ namespace aprilui
 		void setPosition(gvec2 value) { mRect.setPosition(value); }
 		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
 		float getWidth() { return mRect.w; }
-		void setWidth(float value) { mRect.w = value; }
+		void setWidth(float value);
 		float getHeight() { return mRect.h; }
-		void setHeight(float value) { mRect.h = value; }
+		void setHeight(float value);
 		gvec2 getSize() { return mRect.getSize(); }
-		void setSize(gvec2 value) { mRect.setSize(value); }
-		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
+		void setSize(gvec2 value);
+		void setSize(float w, float h);
 		grect getRect() { return mRect; }
-		void setRect(grect value) { mRect = value; }
+		void setRect(grect value);
 		gvec2 getScale() { return mScale; }
 		void setScale(gvec2 value) { mScale = value; }
 		float getScaleX() { return mScale.x; }
@@ -101,8 +87,14 @@ namespace aprilui
 		void setAngle(float value) { mAngle = value; }
 		bool isEnabled() { return mEnabled; }
 		void setEnabled(bool value) { mEnabled = value; }
-		Dock getDock() { return mDock; }
-		void setDock(Dock value) { mDock = value; }
+		bool isAnchorLeft() { return mAnchorLeft; }
+		void setAnchorLeft(bool value) { mAnchorLeft = value; }
+		bool isAnchorRight() { return mAnchorRight; }
+		void setAnchorRight(bool value) { mAnchorRight = value; }
+		bool isAnchorTop() { return mAnchorTop; }
+		void setAnchorTop(bool value) { mAnchorTop = value; }
+		bool isAnchorBottom() { return mAnchorBottom; }
+		void setAnchorBottom(bool value) { mAnchorBottom = value; }
 		bool isClickthrough() { return mClickthrough; }
 		void setClickthrough(bool value) { mClickthrough = value; }
 		bool isInheritsAlpha() { return mInheritsAlpha; }
@@ -232,10 +224,16 @@ namespace aprilui
 		bool mClickthrough;
 		bool mInheritsAlpha;
 		april::Color mColor;
-		Dock mDock;
+		bool mAnchorLeft;
+		bool mAnchorRight;
+		bool mAnchorTop;
+		bool mAnchorBottom;
 		Dataset* mDataset;
 		
 		void sortChildren();
+
+		void _updateChildrenHorizontal(float difference);
+		void _updateChildrenVertical(float difference);
 		
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
 		float getDerivedAngle();
