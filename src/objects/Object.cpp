@@ -212,6 +212,7 @@ namespace aprilui
 
 	void Object::_updateChildrenHorizontal(float difference)
 	{
+		float width;
 		foreach (Object*, it, mChildren)
 		{
 			if (!(*it)->isAnchorLeft())
@@ -227,13 +228,19 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorRight())
 			{
-				(*it)->setWidth((*it)->getWidth() + difference);
+				width = (*it)->getWidth();
+				(*it)->setWidth(width + difference);
+				if (width != 0.0f)
+				{
+					(*it)->setCenterX((*it)->getCenterX() * (width + difference) / width);
+				}
 			}
 		}
 	}
 
 	void Object::_updateChildrenVertical(float difference)
 	{
+		float height;
 		foreach (Object*, it, mChildren)
 		{
 			if (!(*it)->isAnchorTop())
@@ -249,7 +256,12 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorBottom())
 			{
+				height = (*it)->getHeight();
 				(*it)->setHeight((*it)->getHeight() + difference);
+				if (height != 0.0f)
+				{
+					(*it)->setCenterY((*it)->getCenterY() * (height + difference) / height);
+				}
 			}
 		}
 	}
