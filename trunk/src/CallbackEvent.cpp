@@ -11,9 +11,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	CallbackEvent::CallbackEvent(void (*callback)(EventArgs*))
+	CallbackEvent::CallbackEvent(void (*callback)(EventArgs*)) : Event()
 	{
 		mCallback = callback;
+	}
+
+	CallbackEvent::~CallbackEvent()
+	{
 	}
 
 	void CallbackEvent::execute(void* params)

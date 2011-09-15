@@ -590,22 +590,18 @@ namespace aprilui
 
 	void Object::registerEvent(chstr name, Event* e)
 	{
-		Event* event = NULL;
 		if (mEvents.has_key(name))
 		{
-			event = mEvents[name];
+			Event* oldEvent = mEvents[name];
 			if (e == NULL)
 			{
 				mEvents.remove_key(name);
 			}
+			delete oldEvent;
 		}
 		if (e != NULL)
 		{
 			mEvents[name] = e;
-		}
-		if (event != NULL)
-		{
-			delete event;
 		}
 	}
 
