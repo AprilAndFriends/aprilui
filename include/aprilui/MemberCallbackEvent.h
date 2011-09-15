@@ -20,36 +20,55 @@ namespace aprilui
 	class apriluiExport MemberCallbackEventBase
 	{
 	public:
-		virtual void execute(void* params)=0;
+		MemberCallbackEventBase() { }
+		virtual ~MemberCallbackEventBase() { }
+
+		virtual void execute(void* params) = 0;
+
 	};
 
-	template<typename T>
+	template <typename T>
 	class MemberCallbackEventImpl : public MemberCallbackEventBase
 	{
-		void (T::*mFunction)(EventArgs*);
-		T* mObject;
 	public:
-		MemberCallbackEventImpl(void (T::*func)(EventArgs*), T* obj)
+		MemberCallbackEventImpl(void (T::*function)(EventArgs*), T* object) : MemberCallbackEventBase()
 		{
-			mFunction=func;
-			mObject=obj;
+			mFunction = function;
+			mObject = object;
 		}
+		
+		~MemberCallbackEventImpl()
+		{
+		}
+
 		void execute(void* params)
 		{
-			(mObject->*mFunction)((EventArgs*) params);
+			(mObject->*mFunction)((EventArgs*)params);
 		}
+
+	protected:
+		void (T::*mFunction)(EventArgs*);
+		T* mObject;
+
 	};
 
 	class apriluiExport MemberCallbackEvent : public Event
 	{
-		MemberCallbackEventBase* mCallback;
 	public:
-		template<typename T>
-	    MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) :
-		  mCallback(new MemberCallbackEventImpl<T>(function, obj)) {}
+		template <typename T>
+	    MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
+		{
+			mCallback = new MemberCallbackEventImpl<T>(function, obj);
+		}
+		~MemberCallbackEvent();
 
 		void execute(void* params);
+
+	protected:
+		MemberCallbackEventBase* mCallback;
+
 	};
+
 }
 
 #endif

@@ -20,6 +20,8 @@ namespace aprilui
 	{
 	public:
 		CallbackEvent(void (*callback)(EventArgs*));
+		~CallbackEvent();
+
 		void execute(void* params);
 		
 	protected:

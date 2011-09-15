@@ -11,8 +11,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	MemberCallbackEvent::~MemberCallbackEvent()
+	{
+		delete mCallback;
+	}
+
 	void MemberCallbackEvent::execute(void* params)
 	{
 		mCallback->execute((EventArgs*)params);
 	}
+
 }
