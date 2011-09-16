@@ -25,14 +25,10 @@ namespace aprilui
 	public:
 		TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
 		
-		float getTileW() { return mTileW; }
-		void setTileW(float w) { mTileW = w; }
-		float getTileH() { return mTileH; }
-		void setTileH(float h) { mTileW = h; }
-		float getScrollX() { return mScrollX; }
-		void setScrollX(float x) { mScrollX = x; }
-		float getScrollY() { return mScrollY; }
-		void setScrollY(float y) { mScrollY = y; }
+		gvec2 getTile() { return mTile; }
+		void setTile(gvec2 value) { mTile = value; }
+		gvec2 getScroll() { return mScroll; }
+		void setScroll(gvec2 value) { mScroll = value; }
 		
 		void setTile(float w, float h);
 		void setScroll(float x, float y);
@@ -40,10 +36,10 @@ namespace aprilui
 		void draw(grect rect, april::Color color);
 		
 	protected:
-		float mTileW;
-		float mTileH;
-		float mScrollX;
-		float mScrollY;
+		gvec2 mTile;
+		gvec2 mScroll;
+
+		void _drawTile(grect rect, grect tileRect, april::Color color);
 		
 	};
 	
