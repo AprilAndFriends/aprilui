@@ -20,169 +20,83 @@ namespace aprilui
 	TiledImage::TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
 		Image(texture, name, source, vertical)
 	{
-		mTileW = tileW;
-		mTileH = tileH;
-		mScrollX = 0.0f;
-		mScrollY = 0.0f;
+		mTile.set(tileW, tileH);
 	}
 
 	void TiledImage::setTile(float w, float h)
 	{
-		mTileW = w;
-		mTileH = h;
+		mTile.set(w, h);
 	}
 	
 	void TiledImage::setScroll(float x, float y)
 	{
-		mScrollX = x;
-		mScrollY = y;
+		mScroll.set(x, y);
 	}
 
 	void TiledImage::draw(grect rect, april::Color color)
 	{
-		float basew = (mTileW > 0 ? rect.w / mTileW : -mTileW);
-		float baseh = (mTileH > 0 ? rect.h / mTileH : -mTileH);
-		float ox = fabs(mScrollX);
-		float oy = fabs(mScrollY);
-			  
-		if (mScrollX != 0)
+		float tileW = (mTile.x > 0.0f ? rect.w / mTile.x : -mTile.x);
+		float tileH = (mTile.y > 0.0f ? rect.h / mTile.y : -mTile.y);
+		float scrollX = fmod(mScroll.x, tileW);
+		if (scrollX > 0.0f)
 		{
-			ox = fmod(ox, basew);
-			if (mScrollX < 0)
-			{
-				ox = basew - ox;
-			}
-			rect.x += ox;
-			rect.w -= ox;
+			scrollX -= tileW;
 		}
+		float scrollY = fmod(mScroll.y, tileH);
+		if (scrollY > 0.0f)
+		{
+			scrollY -= tileH;
+		}
+		int countX = (int)ceil((rect.w - scrollX) / tileW);
+		int countY = (int)ceil((rect.h - scrollY) / tileH);
+		for (int j = 0; j < countY; j++)
+		{
+			for (int i = 0; i < countX; i++)
+			{
+				_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color);
+			}
+		}
+	}
 
-		if (mScrollY != 0)
+	void TiledImage::_drawTile(grect rect, grect tileRect, april::Color color)
+	{
+		float difference;
+		float srcDifference;
+		grect src = mSrcRect;
+		if (tileRect.x < rect.x)
 		{
-			oy = fmod(oy, baseh);
-			if (mScrollY < 0)
-			{
-				oy = baseh - oy;
-			}
-			rect.y += oy;
-			rect.h -= oy;
+			difference = rect.x - tileRect.x;
+			srcDifference = src.w * difference / tileRect.w;
+			mSrcRect.x += srcDifference;
+			mSrcRect.w -= srcDifference;
+			tileRect.x += difference;
+			tileRect.w -= difference;
 		}
-		
-		float tilew = rect.w / basew;
-		float tileh = rect.h / baseh;
-		
-		for (int j = 0; j < (int)tileh; j++)
+		if (tileRect.x + tileRect.w > rect.x + rect.w)
 		{
-			for (int i = 0; i < (int)tilew; i++)
-			{
-				Image::draw(grect(rect.x + i * basew, rect.y + j * baseh, basew, baseh), color);
-			}
+			difference = tileRect.x + tileRect.w - (rect.x + rect.w);
+			srcDifference = src.w * difference / tileRect.w;
+			mSrcRect.w -= srcDifference;
+			tileRect.w -= difference;
 		}
-		
-		float osx = mSrcRect.x;
-		float osy = mSrcRect.y;
-		float osw = mSrcRect.w;
-		float osh = mSrcRect.h;
-		// RIGHT
-		if (tilew-(int) tilew > 0)
+		if (tileRect.y < rect.y)
 		{
-			mSrcRect.w = (rect.w - (int)tilew * basew) * osw / basew;
-			float dx = rect.x + (int)tilew * basew;
-			_updateTexCoords();
-			for (int j = 0; j < (int)tileh; j++)
-			{
-				Image::draw(grect(dx, rect.y + j * baseh, (rect.w - (int)tilew * basew), baseh), color);
-			}
-			mSrcRect.w = osw;
+			difference = rect.y - tileRect.y;
+			srcDifference = src.h * difference / tileRect.h;
+			mSrcRect.y += srcDifference;
+			mSrcRect.h -= srcDifference;
+			tileRect.y += difference;
+			tileRect.h -= difference;
 		}
-		// LEFT
-		if (ox > 0)
+		if (tileRect.y + tileRect.h > rect.y + rect.h)
 		{
-			mSrcRect.w = ox / basew * osw;
-			mSrcRect.x = osx + (basew - ox) / basew * osw;
-			_updateTexCoords();
-			for (int j = 0; j < (int)tileh; j++)
-			{
-				Image::draw(grect(rect.x - ox, rect.y + j * baseh, ox, baseh), color);
-			}
-			mSrcRect.x = osx;
-			mSrcRect.w = osw;
+			difference = tileRect.y + tileRect.h - (rect.y + rect.h);
+			srcDifference = src.h * difference / tileRect.h;
+			mSrcRect.h -= srcDifference;
+			tileRect.h -= difference;
 		}
-		// DOWN
-		if (tileh - (int)tileh > 0)
-		{
-			mSrcRect.h = (rect.h - (int)tileh * baseh) * osh / baseh;
-			float dy = rect.y + (int)tileh * baseh;
-			_updateTexCoords();
-			for (int i = 0; i < (int)tilew; i++)
-			{
-				Image::draw(grect(rect.x + i * basew, dy, basew, rect.h - (int)tileh * baseh), color);
-			}
-			mSrcRect.h = osh;
-		}
-		// UP
-		if (oy > 0)
-		{
-			mSrcRect.h = oy / baseh * osh;
-			mSrcRect.y = osy + (baseh - oy) / baseh * osh;
-			_updateTexCoords();
-			for (int i = 0; i < (int)tilew; i++)
-			{
-				Image::draw(grect(rect.x + i * basew, rect.y - oy, basew, oy), color);
-			}
-			mSrcRect.y = osy;
-			mSrcRect.w = osw;
-		}
-		
-		if (ox > 0 && oy > 0)
-		{
-			// UPPER-LEFT CORNER
-			mSrcRect.w = ox / basew * osw;
-			mSrcRect.h = oy / baseh * osh;
-			mSrcRect.x = osx + (basew - ox) / basew * osw;
-			mSrcRect.y = osy + (baseh - oy) / baseh * osh;
-			_updateTexCoords();
-			Image::draw(grect(rect.x - ox, rect.y - oy, ox, oy), color);
-			
-			// UPPER-RIGHT CORNER
-			mSrcRect.w = (rect.w - (int)tilew * basew) * osw / basew;
-			mSrcRect.h = oy / baseh * osh;
-			mSrcRect.x = osx;
-			mSrcRect.y = osy + (baseh - oy) / baseh * osh;
-			_updateTexCoords();
-			Image::draw(grect(rect.x + (int)tilew * basew, rect.y - oy, rect.w - (int)tilew * basew, oy), color);
-			
-			// LOWER-LEFT CORNER
-			mSrcRect.w = ox / basew * osw;
-			mSrcRect.h = (rect.h - (int)tileh * baseh) * osh / baseh;
-			mSrcRect.x = osx + (basew - ox) / basew * osw;
-			mSrcRect.y = osy;
-			_updateTexCoords();
-			Image::draw(grect(rect.x - ox, rect.y + (int)tileh * baseh, ox, rect.h - (int)tileh * baseh), color);
-			
-			mSrcRect.x = osx;
-			mSrcRect.y = osy;
-			mSrcRect.w = osw;
-			mSrcRect.h = osh;
-		}
-		
-		// LOWER-RIGHT CORNER
-		if (tilew - (int)tilew > 0 && tileh - (int)tileh > 0)
-		{
-			mSrcRect.w = rect.w - (int)tilew * basew * osw / basew;
-			mSrcRect.h = rect.h - (int)tileh * baseh * osh / baseh;
-			_updateTexCoords();
-			Image::draw(grect(rect.x + (int)tilew * basew, rect.y + (int)tileh * baseh,
-							  rect.w - (int)tilew * basew, rect.h - (int)tileh * baseh), color);
-		}
-		
-		if (tilew - (int)tilew > 0 || tileh - (int)tileh > 0 || ox > 0 || oy > 0)
-		{
-			mSrcRect.x = osx;
-			mSrcRect.y = osy;
-			mSrcRect.w = osw;
-			mSrcRect.h = osh;
-			_updateTexCoords();
-		}
+		Image::draw(tileRect, color);
+		mSrcRect = src;
 	}
 
 }
