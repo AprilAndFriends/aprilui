@@ -183,6 +183,7 @@ namespace aprilui
 		else if (name == "delay")						setDelay(value);
 		else if (name == "periods")						setPeriods(value);
 		else if (name == "amplitude" || name == "amp")	setAmplitude(value);
+		else if (name == "peak_to_peak")				setAmplitude((float)value / 2.0f);
 		else if (name == "speed")						setSpeed(value);
 		else if (name == "offset")						setOffset(value);
 		else if (name == "dc_offset")
