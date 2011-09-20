@@ -23,6 +23,7 @@ namespace aprilui
 	public:
 		ToggleButton(chstr name, grect rect);
 
+		bool isToggled() { return mToggled; }
 		void setToggled(bool value) { mToggled = value; }
 		Image* getToggledNormalImage() { return mToggledNormalImage; }
 		void setToggledNormalImage(Image* image) { mToggledNormalImage = image; }
