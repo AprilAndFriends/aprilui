@@ -51,6 +51,8 @@ namespace aprilui
 		void unregisterManualObject(Object* o);
 		void registerManualImage(Image* img);
 		void unregisterManualImage(Image* img);
+		void registerManualTexture(april::Texture* tex);
+		void unregisterManualTexture(april::Texture* tex);
 
 		void registerCallback(chstr name, void (*callback)());
 		void triggerCallback(chstr name);
