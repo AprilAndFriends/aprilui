@@ -35,6 +35,7 @@ namespace aprilui
     gvec2 cursorPosition;
 	bool limitCursorToViewport = false;
 	bool limitCursorToScreenViewport = true;
+	bool hoverEffectEnabled = true;
 	grect viewport;
 	grect screenViewport;
 #ifdef _DEBUG
@@ -172,6 +173,16 @@ namespace aprilui
 	void setLimitCursorToScreenViewport(bool value)
 	{
 		limitCursorToScreenViewport = value;
+	}
+
+	bool isHoverEffectEnabled()
+	{
+		return hoverEffectEnabled;
+	}
+
+	void setHoverEffectEnabled(bool value)
+	{
+		hoverEffectEnabled = value;
 	}
 
 	Dataset* getDatasetByName(chstr name)

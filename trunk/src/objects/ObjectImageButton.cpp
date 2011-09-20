@@ -67,7 +67,7 @@ namespace aprilui
 					mImage = mPushedImage;
 				}
 			}
-			else if (mHoverImage != NULL)
+			else if (mHoverImage != NULL && aprilui::isHoverEffectEnabled())
 			{
 				mImage = mHoverImage;
 			}

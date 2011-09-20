@@ -42,6 +42,8 @@ namespace aprilui
 	apriluiFnExport void setLimitCursorToViewport(bool value);
 	apriluiFnExport bool isLimitCursorToScreenViewport();
 	apriluiFnExport void setLimitCursorToScreenViewport(bool value);
+	apriluiFnExport bool isHoverEffectEnabled();
+	apriluiFnExport void setHoverEffectEnabled(bool value);
 	
     apriluiFnExport void updateCursorPosition();
     apriluiFnExport void setCursorPosition(gvec2 position);
