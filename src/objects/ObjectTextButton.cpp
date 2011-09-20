@@ -52,7 +52,14 @@ namespace aprilui
 		}
 		else if (mHover)
 		{
-			mTextColor = (mPushed ? mPushedTextColor : mHoverTextColor);
+			if (mPushed)
+			{
+				mTextColor = mPushedTextColor;
+			}
+			else if (aprilui::isHoverEffectEnabled())
+			{
+				mTextColor = mHoverTextColor;
+			}
 		}
 		Label::OnDraw();
 		mTextColor = color;
