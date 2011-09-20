@@ -612,6 +612,27 @@ namespace aprilui
 		mImages.remove_key(name);
 	}
 	
+	void Dataset::registerManualTexture(april::Texture* tex)
+	{
+		hstr name = tex->getFilename();
+
+		if (mTextures.has_key(name))
+		{
+			throw ResourceExistsException(name, "Texture", this);
+		}
+		mTextures[name] = tex;
+	}
+
+	void Dataset::unregisterManualTexture(april::Texture* tex)
+	{
+		hstr name = tex->getFilename();
+		if (!mTextures.has_key(name))
+		{
+			throw ResourceNotExistsException(name, "Texture", this);
+		}
+		mTextures.remove_key(name);
+	}
+	
 	bool Dataset::isAnimated()
 	{
 		aprilui::Animator* object;
