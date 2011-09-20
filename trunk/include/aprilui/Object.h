@@ -124,8 +124,8 @@ namespace aprilui
 		virtual bool isWaitingAnimation();
 		bool hasDynamicAnimation();
 		
-		void moveToFront();
-		void moveToBack();
+		DEPRECATED_ATTRIBUTE void moveToFront();
+		DEPRECATED_ATTRIBUTE void moveToBack();
 		
 		void _setTypeName(chstr type) { mTypeName = type; }
 		hstr getType() { return mTypeName; }
