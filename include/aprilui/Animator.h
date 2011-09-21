@@ -18,20 +18,21 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	enum AnimationFunction
-	{
-		Linear,
-		Sine,
-		Square,
-		Saw,
-		Triangle,
-		Hover,
-		Random
-	};
-	
 	class apriluiExport Animator : public Object
 	{
 	public:
+		enum AnimationFunction
+		{
+			Linear,
+			Sine,
+			Square,
+			Saw,
+			Triangle,
+			Random,
+			Hover,
+			Custom
+		};
+	
 		Animator(chstr type, chstr name);
 		
 		AnimationFunction getAnimationFunction() { return mFunction; }
@@ -62,6 +63,8 @@ namespace aprilui
 		void setTarget(float value) { mTarget = value; }
 		bool getUseTarget() { return mUseTarget; }
 		void setUseTarget(bool value) { mUseTarget = value; }
+		float (*getCustomFunction())(Animator*, float, float) { return mCustomFunction; }
+		void setCustomFunction(float (*value)(Animator*, float, float)) { mCustomFunction = value; }
 
 		bool isAnimated();
 		bool isWaitingAnimation();
@@ -88,6 +91,7 @@ namespace aprilui
 		bool mInheritValue;
 		float mTarget;
 		bool mUseTarget;
+		float (*mCustomFunction)(Animator*, float, float);
 		
 		float _calculateValue(float k);
 		

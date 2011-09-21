@@ -7,6 +7,7 @@
 		<Image name="test_orange_add" x="0" y="0" w="512" h="512" blend_mode="add" color="FFBF7FBF"/>
 		<Image name="test_grey" x="0" y="0" w="512" h="512" color="7F7F7F"/>
 		<Image name="test_green" x="0" y="0" w="512" h="512" color="7FFF7F"/>
+		<Image name="test_green_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7FFF7FFF"/>
 		<Image name="test_blue" x="0" y="0" w="512" h="512" color="7F7FFF"/>
 		<Image name="test_yellow" x="0" y="0" w="512" h="512" color="FFFF7F"/>
 		<Image name="test_red" x="0" y="0" w="512" h="512" color="FF7F7F"/>
@@ -28,6 +29,11 @@
 	<CompositeImage name="texture/test_hover_3" w="512" h="512">
 		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
 		<ImageRef name="texture/test_orange_add" x="128" y="128" w="384" h="384"/>
+	</CompositeImage>
+	
+	<CompositeImage name="texture/test_hover_4" w="512" h="512">
+		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
+		<ImageRef name="texture/test_green_add" x="0" y="0" w="512" h="512"/>
 	</CompositeImage>
 	
 	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
@@ -109,6 +115,9 @@
 					<Object type="ColoredQuad" color="7F7F7F" anchors="bottom" x="48" y="94" w="32" h="32"/>
 					<Object type="ColoredQuad" color="FFFFFF" anchors="right,bottom" x="94" y="94" w="32" h="32"/>
 				</Object>
+			</Object>
+			<Object type="ImageBox" name="custom_obj" image="texture/test_hover_4" angle="90" x="288" y="500" w="128" h="64">
+				<Animator type="Rotator" name="custom_animator" function="custom" periods="-1" amplitude="45" speed="0.3"/>
 			</Object>
 		</Object>
 		
