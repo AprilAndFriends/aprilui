@@ -16,6 +16,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <april/main.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
+#include <aprilui/Animator.h>
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
@@ -27,6 +28,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 grect screen(0, 0, 800, 600);
 
 aprilui::Dataset* dataset;
+
+float _animatorCustomFunction(aprilui::Animator* animator, float k, float time)
+{
+	float sine = (float)dsin(time * animator->getSpeed() * 360);
+	return (sine * sine * animator->getAmplitude()); // sin(x)^2
+}
 
 bool update(float k)
 {
@@ -107,6 +114,7 @@ void april_init(const harray<hstr>& args)
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap("../media/arial.font"));
 		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
 		dataset->load();
+		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif
