@@ -63,8 +63,8 @@ namespace aprilui
 		void setTarget(float value) { mTarget = value; }
 		bool getUseTarget() { return mUseTarget; }
 		void setUseTarget(bool value) { mUseTarget = value; }
-		float (*getCustomFunction())(Animator*, float, float) { return mCustomFunction; }
-		void setCustomFunction(float (*value)(Animator*, float, float)) { mCustomFunction = value; }
+		float (*getCustomFunction())(Animator*, float) { return mCustomFunction; }
+		void setCustomFunction(float (*value)(Animator*, float)) { mCustomFunction = value; }
 
 		bool isAnimated();
 		bool isWaitingAnimation();
@@ -91,7 +91,7 @@ namespace aprilui
 		bool mInheritValue;
 		float mTarget;
 		bool mUseTarget;
-		float (*mCustomFunction)(Animator*, float, float);
+		float (*mCustomFunction)(Animator*, float);
 		
 		float _calculateValue(float k);
 		

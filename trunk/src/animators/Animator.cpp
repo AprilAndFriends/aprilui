@@ -117,7 +117,7 @@ namespace aprilui
 			}
 			break;
 		case aprilui::Animator::Custom:
-			result = (mCustomFunction != NULL ? mCustomFunction(this, k, time) : mValue);
+			result = (mCustomFunction != NULL ? mCustomFunction(this, time) : mValue);
 			break;
 		}
 		return (mDiscreteStep != 0 ? (float)((int)((result + mOffset) / mDiscreteStep) * mDiscreteStep) : (result + mOffset));

@@ -29,7 +29,7 @@ grect screen(0, 0, 800, 600);
 
 aprilui::Dataset* dataset;
 
-float _animatorCustomFunction(aprilui::Animator* animator, float k, float time)
+float _animatorCustomFunction(aprilui::Animator* animator, float time)
 {
 	float sine = (float)dsin(time * animator->getSpeed() * 360);
 	return (sine * sine * animator->getAmplitude()); // sin(x)^2
