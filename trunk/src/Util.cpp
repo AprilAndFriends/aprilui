@@ -20,13 +20,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	hstr pathGetBaseDir(chstr path)
-	{
-		hstr normalized = normalize_path(path);
-		int index = normalized.rfind('/');
-		return (index < 0 ? "" : normalized(0, index));
-	}
-
 	hstr generateName(chstr prefix)
 	{
 		static hmap<hstr, int> counters;
