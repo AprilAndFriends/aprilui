@@ -98,6 +98,7 @@ namespace aprilui
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
+
 		int slash = filename.rfind('/') + 1;
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
@@ -113,6 +114,14 @@ namespace aprilui
 			filepath.rsplit(".", left, right);
 			filepath = left + "." + mTexExtOverride;
 		}
+		hstr locale = getLocalization();
+		if (locale)
+		{
+			harray<hstr> e = filepath.rsplit("/",1);
+			hstr locpath = e[0] + "/" + locale + "/" + e[1];
+			if (hfile::exists(locpath)) filepath = locpath;
+		}
+
 		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
 		if (texture == NULL)
 		{
@@ -390,8 +399,10 @@ namespace aprilui
 		this->update(0);
 	}
 	
-	void Dataset::_loadTexts(chstr path)
+	void Dataset::_loadTexts(hstr path)
 	{
+		hstr localization = getLocalization();
+		if (localization) path += "/" + localization;
 		logMessage("loading texts from '" + path + "'");
 		harray<hstr> files = hdir::files(path, true);
 		harray<hstr> lines;

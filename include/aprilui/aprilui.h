@@ -39,6 +39,8 @@ namespace aprilui
 	apriluiFnExport void updateTextures(float time);
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr path);
+	apriluiFnExport void setLocalization(chstr localization);
+	apriluiFnExport hstr getLocalization();
 	
 	DEPRECATED_ATTRIBUTE apriluiFnExport gvec2 getCursorPos();
 	DEPRECATED_ATTRIBUTE apriluiFnExport void setCursorPos(float x, float y);
