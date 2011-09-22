@@ -20,6 +20,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	hstr g_locale;
 	bool registerLock = false;
 	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
@@ -157,6 +158,16 @@ namespace aprilui
 	void setDefaultTextsPath(chstr path)
 	{
 		defaultTextsPath = path;
+	}
+	
+	apriluiFnExport void setLocalization(chstr localization)
+	{
+		g_locale = localization;
+	}
+	
+	apriluiFnExport hstr getLocalization()
+	{
+		return g_locale;
 	}
 	
 	void setDefaultScale(float value)

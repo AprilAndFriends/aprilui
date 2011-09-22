@@ -112,7 +112,7 @@ namespace aprilui
 		Object* recursiveObjectParse(xml_node* node, Object* parent);
 		
 		void readFile(chstr filename);
-		void _loadTexts(chstr path);
+		void _loadTexts(hstr path);
 		
 	};
 
