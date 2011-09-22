@@ -35,12 +35,20 @@ namespace aprilui
 			mDisabledImage->draw(rect, april::Color(mColor, getDerivedAlpha()));
 			return;
 		}
-		if (mPushed && mPushedImage == NULL && isCursorInside())
+		bool cursorInside = isCursorInside();
+		if (mPushed && mPushedImage == NULL && cursorInside)
 		{
 			mImage->draw(rect, april::Color(mColor * 0.75f, getDerivedAlpha()));
 			return;
 		}
 		ImageBox::OnDraw();
+		if (mHover && mHoverImage == NULL && cursorInside) // because "somebody" was too lazy to define hover images manually
+		{
+			april::BlendMode blendMode = mImage->getBlendMode();
+			mImage->setBlendMode(april::ADD);
+			mImage->draw(rect, april::Color(mColor, getDerivedAlpha() / 4));
+			mImage->setBlendMode(blendMode);
+		}
 	}
 
 	void ImageButton::update(float k)
