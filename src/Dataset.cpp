@@ -445,7 +445,7 @@ namespace aprilui
 			if      (*p == "Texture")
 			{
 				april::Texture* texture = parseTexture(p);
-				// TODO - needs to be removed
+				// TODO - needs to be removed, kill it with fire
 				/// {
 				if (p->pexists("dynamic_link"))
 				{
@@ -464,7 +464,7 @@ namespace aprilui
 			}
 		}
 		
-		// TODO - needs to be removed
+		// TODO - needs to be removed, kill it with fire
 		/// {
 		// adjust dynamic texture links
 		harray<hstr> dlst;
@@ -510,7 +510,7 @@ namespace aprilui
 			lines = f.read_lines();
 			f.close();
 
-			// ignore file header. utf-8 encoded text files have 2-3 char markers
+			// ignore file header, silly utf-8 encoded text files have 2-3 char markers
 			while (lines[0].size() > 0 && lines[0][0] < 0) lines[0] = lines[0](1, lines[0].size() - 1);
 
 			foreach (hstr, it2, lines)
@@ -687,7 +687,7 @@ namespace aprilui
 			return &nullImage;
 		}
 		
-		if (!mImages.has_key(name) && name.starts_with("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
+		if (!mImages.has_key(name) && name.starts_with("0x")) // create new image with a color. don't overuse this, it's meant to be handy when needed only ;)
 		{
 			image = new ColorImage(name);
 			mImages[name] = image;
