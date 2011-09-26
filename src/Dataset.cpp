@@ -119,7 +119,14 @@ namespace aprilui
 		{
 			harray<hstr> e = filepath.rsplit("/",1);
 			hstr locpath = e[0] + "/" + locale + "/" + e[1];
+			
 			if (hfile::exists(locpath)) filepath = locpath;
+			else
+			{
+				if      (locpath.contains(".pvr")) locpath = locpath.replace(".pvr", ".png");
+				else if (locpath.contains(".png")) locpath = locpath.replace(".png", ".pvr");
+				if (hfile::exists(locpath)) filepath = locpath;
+			}
 		}
 
 		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
