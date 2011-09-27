@@ -751,13 +751,9 @@ namespace aprilui
 	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
-		if (!isVisible() || !isPointInside(pos))
+		if (!isVisible() || isClickthrough())
 		{
 			return NULL;
-		}
-		if (mChildren.size() == 0)
-		{
-			return this;
 		}
 		Object* object = NULL;
 		foreach_r (Object*, it, mChildren)
@@ -768,7 +764,8 @@ namespace aprilui
 				break;
 			}
 		}
-		return (object != NULL ? object : this);
+		if (!object && isPointInside(pos)) return this;
+		else return object;
 	}
 
 	Object* Object::getChildUnderPoint(float x, float y)
