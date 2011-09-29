@@ -31,10 +31,17 @@ namespace aprilui
 
 	void LabelBase::_drawLabel(grect rect, unsigned char alpha)
 	{
+		april::Color color(mTextColor, (unsigned char)(alpha * mTextColor.a_f()));
 #ifdef _DEBUG
 		if (aprilui::isDebugMode())
 		{
-			april::rendersys->drawColoredQuad(rect, april::Color(0, 0, 0, alpha / 2));
+			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, alpha / 2);
+			april::rendersys->drawColoredQuad(grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2), drawColor);
+			drawColor = april::Color(APRIL_COLOR_WHITE, drawColor.a);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, 1), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, 1, rect.h), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y + rect.h - 1, rect.w, 1), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x + rect.w - 1, rect.y, 1, rect.h), drawColor);
 		}
 #endif
 		if (mText.size() == 0)
@@ -53,7 +60,6 @@ namespace aprilui
         default:
 			break;
 		}
-		april::Color color(mTextColor, (unsigned char)(alpha * mTextColor.a_f()));
 		if (mTextFormatting)
 		{
 			atres::renderer->drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);

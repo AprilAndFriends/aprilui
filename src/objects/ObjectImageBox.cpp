@@ -81,7 +81,27 @@ namespace aprilui
 		{
 			color.a /= 2;
 		}
+#ifndef _DEBUG
 		mImage->draw(_getDrawRect(), color);
+#else
+		if (!aprilui::isDebugMode())
+		{
+			mImage->draw(_getDrawRect(), color);
+		}
+		else
+		{
+			grect rect = _getDrawRect();
+			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, 96);
+			april::rendersys->drawColoredQuad(grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2), drawColor);
+			drawColor = april::Color(APRIL_COLOR_WHITE, 96);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, 1), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, 1, rect.h), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y + rect.h - 1, rect.w, 1), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x + rect.w - 1, rect.y, 1, rect.h), drawColor);
+			mImage->draw(rect, color);
+		}
+#endif
+		
 		Object::OnDraw();
 	}
 	
