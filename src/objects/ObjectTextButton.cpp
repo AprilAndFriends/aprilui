@@ -41,10 +41,6 @@ namespace aprilui
 
 	void TextButton::OnDraw()
 	{
-		if (mBackground)
-		{
-			april::rendersys->drawColoredQuad(_getDrawRect(), april::Color(0, 0, 0, ((mHover && mPushed) ? 255 : 191)));
-		}
 		april::Color color = mTextColor;
 		if (!isDerivedEnabled())
 		{
@@ -60,6 +56,17 @@ namespace aprilui
 			{
 				mTextColor = mHoverTextColor;
 			}
+		}
+		if (mBackground)
+		{
+			grect rect = _getDrawRect();
+			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, ((mHover && mPushed) ? 255 : 191));
+            april::rendersys->drawColoredQuad(grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2), drawColor);
+			drawColor = april::Color(mTextColor, drawColor.a);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, 1), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, 1, rect.h), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y + rect.h - 1, rect.w, 1), drawColor);
+			april::rendersys->drawColoredQuad(grect(rect.x + rect.w - 1, rect.y, 1, rect.h), drawColor);
 		}
 		Label::OnDraw();
 		mTextColor = color;
