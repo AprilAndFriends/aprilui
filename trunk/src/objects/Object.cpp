@@ -148,6 +148,18 @@ namespace aprilui
 		object->setParent(NULL);
 	}
 
+	void Object::registerChild(Object* object)
+	{
+		addChild(object);
+		mDataset->registerManualObject(object);
+	}
+	
+	void Object::unregisterChild(Object* object)
+	{
+		removeChild(object);
+		mDataset->unregisterManualObject(object);
+	}
+
 	void Object::removeAllChildren(bool recursive)
 	{
 		if (recursive)
