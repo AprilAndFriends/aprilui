@@ -32,17 +32,17 @@ namespace aprilui
 			if (mRect.w == -1)
 			{
 				mRect.w = rect.w * getDefaultScale();
+				mCenter.x = mRect.w / 2;
 			}
 			if (mRect.h == -1)
 			{
 				mRect.h = rect.h * getDefaultScale();
+				mCenter.y = mRect.h / 2;
 			}
-			mCenter = mRect.getSize() / 2;
 		}
 		else
 		{
 			mImageName = "null";
-			mCenter.set(0.0f, 0.0f);
 		}
 	}
 
@@ -63,10 +63,10 @@ namespace aprilui
 	
 	void ImageBox::resizeToFitImage()
 	{
-		if (mImage)
+		if (mImage != NULL)
 		{
-			setSize(mImage->getSrcRect().getSize() * getDefaultScale());
-			setCenter(getSize() / 2);
+			mRect.setSize(mImage->getSrcRect().getSize() * getDefaultScale());
+			resetCenter();
 		}
 	}
 
@@ -101,7 +101,6 @@ namespace aprilui
 			mImage->draw(rect, color);
 		}
 #endif
-		
 		Object::OnDraw();
 	}
 	
