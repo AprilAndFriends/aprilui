@@ -124,7 +124,7 @@ namespace aprilui
 		{
 			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
 			rect.x += atres::renderer->getTextWidthUnformatted(mFontName, mText);
-			float h = atres::renderer->getFontHeight(mFontName);
+			float h = atres::renderer->getFontLineHeight(mFontName);
 			if (mHorzFormatting == atres::CENTER || mHorzFormatting == atres::CENTER_WRAPPED)
 			{
 				float w = atres::renderer->getTextWidthUnformatted(mFontName, text);
