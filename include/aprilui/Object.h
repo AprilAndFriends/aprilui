@@ -153,6 +153,8 @@ namespace aprilui
 		Object* findChildByName(chstr name);
 		
 		virtual void notifyEvent(chstr name, void* params);
+
+		void resetCenter();
 		
 		virtual hstr getProperty(chstr name, bool* property_exists = NULL);
 		virtual bool setProperty(chstr name, chstr value);

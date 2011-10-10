@@ -636,6 +636,11 @@ namespace aprilui
 
 	}
 
+	void Object::resetCenter()
+	{
+		mCenter = mRect.getSize() / 2;
+	}
+
 	bool Object::isDerivedEnabled()
 	{
 		return (isEnabled() && (mParent == NULL || mParent->isDerivedEnabled()));
