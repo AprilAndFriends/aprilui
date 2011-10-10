@@ -31,7 +31,7 @@ namespace aprilui
 	{
 		ImageButton::OnDraw();
 		unsigned char alpha = getDerivedAlpha();
-		if (mUseDisabledColor && !isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
+		if (mUseDisabledColor && !_isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
 		{
 			alpha /= 2;
 		}

@@ -28,7 +28,7 @@ namespace aprilui
 	{
 		Object::OnDraw();
 		unsigned char alpha = getDerivedAlpha();
-		if (!isDerivedEnabled())
+		if (!_isDerivedEnabled())
 		{
 			alpha /= 2;
 		}

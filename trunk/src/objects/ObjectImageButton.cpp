@@ -30,7 +30,7 @@ namespace aprilui
 	void ImageButton::OnDraw()
 	{
 		grect rect = _getDrawRect();
-		if (!isDerivedEnabled() && mDisabledImage != NULL)
+		if (!_isDerivedEnabled() && mDisabledImage != NULL)
 		{
 			mDisabledImage->draw(rect, april::Color(mColor, getDerivedAlpha()));
 			return;
@@ -59,7 +59,7 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		if (!isDerivedEnabled())
+		if (!_isDerivedEnabled())
 		{
 			if (mDisabledImage != NULL)
 			{
@@ -115,7 +115,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseDown(x, y, button);
 		if (result)
 		{
-            triggerEvent("MouseDown", x, y, button);
+            _triggerEvent("MouseDown", x, y, button);
 		}
 		return result;
 	}
@@ -126,7 +126,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseUp(x, y, button);
 		if (result)
 		{
-			triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", x, y, button);
 		}
 		return result;
 	}

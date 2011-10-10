@@ -42,7 +42,7 @@ namespace aprilui
 	void TextButton::OnDraw()
 	{
 		april::Color color = mTextColor;
-		if (!isDerivedEnabled())
+		if (!_isDerivedEnabled())
 		{
 			mTextColor = mDisabledTextColor;
 		}
@@ -100,7 +100,7 @@ namespace aprilui
 	{
 		if (Object::onMouseDown(x, y, button))
 		{
-			triggerEvent("MouseDown", x, y, button);
+			_triggerEvent("MouseDown", x, y, button);
 			return true;
 		}
 		return ButtonBase::onMouseDown(x, y, button);
@@ -115,7 +115,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseUp(x, y, button);
 		if (result)
 		{
-			triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", x, y, button);
 		}
 		return result;
 	}

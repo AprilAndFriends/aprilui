@@ -74,12 +74,14 @@ namespace aprilui
 		void setRect(grect value);
 		gvec2 getScale() { return mScale; }
 		void setScale(gvec2 value) { mScale = value; }
+		void setScale(float x, float y) { mScale.x = x; mScale.y = y; }
 		float getScaleX() { return mScale.x; }
 		void setScaleX(float value) { mScale.x = value; }
 		float getScaleY() { return mScale.y; }
 		void setScaleY(float value) { mScale.y = value; }
 		gvec2 getCenter() { return mCenter; }
 		void setCenter(gvec2 value) { mCenter = value; }
+		void setCenter(float x, float y) { mCenter.x = x; mCenter.y = y; }
 		float getCenterX() { return mCenter.x; }
 		void setCenterX(float value) { mCenter.x = value; }
 		float getCenterY() { return mCenter.y; }
@@ -234,22 +236,22 @@ namespace aprilui
 		bool mAnchorBottom;
 		Dataset* mDataset;
 		
-		void sortChildren();
+		void _sortChildren();
 
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
 		
-		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
-		float getDerivedAngle();
-		bool isDerivedEnabled();
-		bool isDerivedClickThrough();
+		void _triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
+		float _getDerivedAngle();
+		bool _isDerivedEnabled();
+		bool _isDerivedClickThrough();
 		grect _getDrawRect();
-		
-		virtual void OnDraw() { }
-		void setParent(Object* value) { mParent = value; }
+		void _setParent(Object* value) { mParent = value; }
 
-		void _moveChildToFront(Object* object);
-		void _moveChildToBack(Object* object);
+		DEPRECATED_ATTRIBUTE void _moveChildToFront(Object* object);
+		DEPRECATED_ATTRIBUTE void _moveChildToBack(Object* object);
+
+		virtual void OnDraw() { }
 
 	};
 	

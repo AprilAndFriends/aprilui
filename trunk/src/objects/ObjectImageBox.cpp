@@ -77,7 +77,7 @@ namespace aprilui
 			mImage = mDataset->getImage("null");
 		}
 		april::Color color(mColor, getDerivedAlpha());
-		if (!isDerivedEnabled())
+		if (!_isDerivedEnabled())
 		{
 			color.a /= 2;
 		}
@@ -129,7 +129,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-            triggerEvent("MouseDown", x, y, button);
+            _triggerEvent("MouseDown", x, y, button);
 			return true;
 		}
 		return false;
@@ -143,7 +143,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", x, y, button);
 			return true;
 		}
 		return false;
