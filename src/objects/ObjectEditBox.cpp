@@ -255,7 +255,7 @@ namespace aprilui
 			}
 			april::rendersys->getWindow()->beginKeyboardHandling();
 			mPushed = false;
-			triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", x, y, button);
 			return true;
 		}
 		mPushed = false;

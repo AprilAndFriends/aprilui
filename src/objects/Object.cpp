@@ -62,7 +62,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define CREATE_DELAYED_DYNAMIC_ANIMATOR(type, offset, target, speed, delay) \
 	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
 	mDynamicAnimators += animator ## type; \
-	animator ## type->setParent(this); \
+	animator ## type->_setParent(this); \
 	if (delay == 0.0f) \
 	{ \
 		animator ## type->setOffset(offset); \
@@ -85,7 +85,14 @@ namespace aprilui
 		mTypeName = type;
 		mName = name;
 		mRect = rect;
-		mCenter = mRect.getSize() / 2;
+		if (mRect.w != -1)
+		{
+			mCenter.x = mRect.w / 2;
+		}
+		if (mRect.h != -1)
+		{
+			mCenter.y = mRect.h / 2;
+		}
 		mScale = gvec2(1.0f, 1.0f);
 		mParent = NULL;
 		mDataset = NULL;
@@ -120,7 +127,7 @@ namespace aprilui
 		return (a->getZOrder() < b->getZOrder());
 	}
 
-	void Object::sortChildren()
+	void Object::_sortChildren()
 	{
 		mChildren.sort(_objectSortCallback);
 	}
@@ -132,8 +139,8 @@ namespace aprilui
 			throw ObjectHasParentException(object->getName(), getName());
 		}
 		mChildren += object;
-		sortChildren();
-		object->setParent(this);
+		_sortChildren();
+		object->_setParent(this);
 		object->notifyEvent("AttachToObject", NULL);
 	}
 	
@@ -145,7 +152,7 @@ namespace aprilui
 		}
 		object->notifyEvent("DetachFromObject", NULL);
 		mChildren -= object;
-		object->setParent(NULL);
+		object->_setParent(NULL);
 	}
 
 	void Object::registerChild(Object* object)
@@ -171,7 +178,7 @@ namespace aprilui
 		}
 		foreach (Object*, it, mChildren)
 		{
-			(*it)->setParent(NULL);
+			(*it)->_setParent(NULL);
 		}
 		mChildren.clear();
 	}
@@ -217,7 +224,7 @@ namespace aprilui
 			mZOrder = zorder;
 			if (mParent != NULL)
 			{
-				mParent->sortChildren();
+				mParent->_sortChildren();
 			}
 		}
 	}
@@ -323,12 +330,12 @@ namespace aprilui
 		return (unsigned char)(this->getAlpha() * factor);
 	}
 
-	float Object::getDerivedAngle()
+	float Object::_getDerivedAngle()
 	{
 		float angle = mAngle;
 		if (mParent != NULL)
 		{
-			angle += mParent->getDerivedAngle();
+			angle += mParent->_getDerivedAngle();
 		}
 		return angle;
 	}
@@ -477,7 +484,7 @@ namespace aprilui
 
 	bool Object::onMouseDown(float x, float y, int button)
 	{
-		if (mClickthrough || !isVisible() || !isDerivedEnabled())
+		if (mClickthrough || !isVisible() || !_isDerivedEnabled())
 		{
 			return false;
 		}
@@ -491,7 +498,7 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && !(*it)->isClickthrough() &&
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickthrough() &&
 				(*it)->onMouseDown(x - mRect.x, y - mRect.y, button))
 			{
 				return true;
@@ -502,13 +509,13 @@ namespace aprilui
 
 	bool Object::onMouseUp(float x, float y, int button)
 	{
-		if (mClickthrough || !isVisible() || !isDerivedEnabled())
+		if (mClickthrough || !isVisible() || !_isDerivedEnabled())
 		{
 			return false;
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && !(*it)->isClickthrough() &&
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickthrough() &&
 				(*it)->onMouseUp(x - mRect.x, y - mRect.y, button))
 			{
 				return true;
@@ -522,7 +529,7 @@ namespace aprilui
 	{
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
 			{
 				(*it)->onMouseMove(x - mRect.x, y - mRect.y);
 			}
@@ -622,7 +629,7 @@ namespace aprilui
 		mEvents.remove_key(name);
 	}
 
-	void Object::triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
+	void Object::_triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
 	{
 		if (mEvents.has_key(name))
 		{
@@ -641,14 +648,14 @@ namespace aprilui
 		mCenter = mRect.getSize() / 2;
 	}
 
-	bool Object::isDerivedEnabled()
+	bool Object::_isDerivedEnabled()
 	{
-		return (isEnabled() && (mParent == NULL || mParent->isDerivedEnabled()));
+		return (isEnabled() && (mParent == NULL || mParent->_isDerivedEnabled()));
 	}
 	
-	bool Object::isDerivedClickThrough()
+	bool Object::_isDerivedClickThrough()
 	{
-		return (mClickthrough && (mParent == NULL || mParent->isDerivedClickThrough()));
+		return (mClickthrough && (mParent == NULL || mParent->_isDerivedClickThrough()));
 	}
 	
 	void Object::setAlpha(unsigned char value)
