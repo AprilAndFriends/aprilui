@@ -827,14 +827,11 @@ namespace aprilui
 	gvec2 Object::getDerivedCenter()
 	{
 		gvec2 center = getCenter();
-		//gvec2 center = getCenter();
-		//center += (gvec2(1.0f, 1.0f) - mScale) * mRect.getSize();
 		if (mParent != NULL)
 		{
 			center *= mParent->getDerivedScale();
-			//center += mParent->getDerivedPosition();
 		}
-		return center + getDerivedPosition();
+		return center;
 	}
 	
 	gvec2 Object::getDerivedScale()
