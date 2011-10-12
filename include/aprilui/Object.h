@@ -122,6 +122,7 @@ namespace aprilui
 		grect getDerivedRect();
 		gvec2 getDerivedPosition();
 		gvec2 getDerivedSize();
+		gvec2 getDerivedCenter();
 		gvec2 getDerivedScale();
 		
 		virtual bool isAnimated();
