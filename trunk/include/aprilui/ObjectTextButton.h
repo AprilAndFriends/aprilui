@@ -19,7 +19,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	class apriluiExport TextButton : public ButtonBase, public Label
+	class apriluiExport TextButton : public Label, public ButtonBase
 	{
 	public:
 		TextButton(chstr name, grect rect);
@@ -34,6 +34,8 @@ namespace aprilui
 		april::Color getDisabledTextColor() { return mDisabledTextColor; }
 		void setDisabledTextColor(april::Color value) { mDisabledTextColor = value; }
 		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(value); }
+		Object* getParent();
+		Dataset* getDataset();
 
 		void setTextKey(chstr key);
 		hstr getProperty(chstr name, bool* property_exists = NULL);

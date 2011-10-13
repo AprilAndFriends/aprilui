@@ -238,7 +238,6 @@ namespace aprilui
 		}
 	}
 
-#ifdef _DEBUG
 	void setDebugMode(bool value)
 	{
 		debugMode = value;
@@ -248,7 +247,6 @@ namespace aprilui
 	{
 		return debugMode;
 	}
-#endif
 
 	hstr getDefaultTextsPath()
 	{

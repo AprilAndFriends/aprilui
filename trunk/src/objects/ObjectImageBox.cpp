@@ -81,9 +81,6 @@ namespace aprilui
 		{
 			color.a /= 2;
 		}
-#ifndef _DEBUG
-		mImage->draw(_getDrawRect(), color);
-#else
 		if (!aprilui::isDebugMode())
 		{
 			mImage->draw(_getDrawRect(), color);
@@ -100,7 +97,6 @@ namespace aprilui
 			april::rendersys->drawColoredQuad(grect(rect.x + rect.w - 1, rect.y, 1, rect.h), drawColor);
 			mImage->draw(rect, color);
 		}
-#endif
 		Object::OnDraw();
 	}
 	
