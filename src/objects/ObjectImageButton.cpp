@@ -27,6 +27,16 @@ namespace aprilui
 		mDisabledImage = NULL;
 	}
 
+	Object* ImageButton::getParent()
+	{
+		return ImageBox::getParent();
+	}
+
+	Dataset* ImageButton::getDataset()
+	{
+		return ImageBox::getDataset();
+	}
+
 	void ImageButton::OnDraw()
 	{
 		grect rect = _getDrawRect();

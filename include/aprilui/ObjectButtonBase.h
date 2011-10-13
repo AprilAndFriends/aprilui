@@ -16,12 +16,18 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	class Dataset;
+	class Object;
+
 	class apriluiExport ButtonBase
 	{
 	public:
 		ButtonBase();
+		~ButtonBase();
 		
 		virtual bool isCursorInside() = 0;
+		virtual Object* getParent() = 0;
+		virtual Dataset* getDataset() = 0;
 		
 		bool onMouseDown(float x, float y, int button);
 		bool onMouseUp(float x, float y, int button);
@@ -34,6 +40,7 @@ namespace aprilui
 		bool mHover;
 		
 		virtual void update(float k);
+		bool _checkHover();
 		
 	};
 	

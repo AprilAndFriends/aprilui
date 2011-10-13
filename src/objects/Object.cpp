@@ -129,7 +129,7 @@ namespace aprilui
 
 	void Object::_sortChildren()
 	{
-		mChildren.sort(_objectSortCallback);
+		mChildren.sort(&_objectSortCallback);
 	}
 
 	void Object::addChild(Object* object)
@@ -788,8 +788,7 @@ namespace aprilui
 				break;
 			}
 		}
-		if (!object && isPointInside(pos)) return this;
-		else return object;
+		return (object == NULL && isPointInside(pos) ? this : object);
 	}
 
 	Object* Object::getChildUnderPoint(float x, float y)

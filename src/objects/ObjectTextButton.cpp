@@ -17,15 +17,25 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	TextButton::TextButton(chstr name, grect rect) :
-		ButtonBase(),
-		Label(name, rect)
+		Label(name, rect),
+		ButtonBase()
 	{
 		mText = "TextButton: " + name;
 		mTypeName = "TextButton";
 		mBackground = true;
-		mPushedTextColor.set(51, 51, 51);
-		mHoverTextColor.set(127, 127, 127);
-		mDisabledTextColor.set(127, 127, 127);
+		mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
+		mHoverTextColor = APRIL_COLOR_GREY;
+		mDisabledTextColor = APRIL_COLOR_GREY;
+	}
+
+	Object* TextButton::getParent()
+	{
+		return Label::getParent();
+	}
+
+	Dataset* TextButton::getDataset()
+	{
+		return Label::getDataset();
 	}
 
 	void TextButton::setTextKey(chstr key)
