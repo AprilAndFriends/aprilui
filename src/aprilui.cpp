@@ -38,9 +38,7 @@ namespace aprilui
 	bool hoverEffectEnabled = true;
 	grect viewport;
 	grect screenViewport;
-#ifdef _DEBUG
 	bool debugMode = false;
-#endif
 	hstr defaultTextsPath = "texts";
 	hstr localization = "";
 	void aprilui_writelog(chstr message)
