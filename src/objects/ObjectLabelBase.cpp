@@ -76,11 +76,6 @@ namespace aprilui
 		}
 		if (name == "font") return getFont();
 		if (name == "text") return getText();
-		if (name == "wrap_text")
-		{
-			aprilui::log("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
-            return "";
-		}
 		if (name == "horz_formatting")
 		{
 			if (mHorzFormatting == atres::LEFT)				return "left";
@@ -100,7 +95,7 @@ namespace aprilui
 		if (name == "text_color")	return getTextColor().hex();
 		if (name == "color")
 		{
-			aprilui::log("WARNING! LabelBase instance using color which is conflicted with TextImageButton's color! Use text_color instead!");
+			aprilui::log("WARNING: LabelBase instance using \"color=\" which is conflicted with TextImageButton's color! Use \"text_color=\" instead!");
 			return getTextColor().hex();
 		}
 		if (name == "effect")
@@ -124,14 +119,10 @@ namespace aprilui
 		else if (name == "text_key") setTextKey(value);
 		else if (name == "textkey")
 		{
-			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
+			aprilui::log("WARNING: \"textkey=\" is deprecated. Use \"text_key=\" instead."); // DEPRECATED
 			setTextKey(value);
 		}
 		else if (name == "text") setText(value);
-		else if (name == "wrap_text")
-		{
-			aprilui::log("\"wrap_text=\" is deprecated. Use \"horz_formatting=\" instead.");
-		}
 		else if (name == "horz_formatting")
 		{
 			if (value == "left")				setHorzFormatting(atres::LEFT);
@@ -151,7 +142,7 @@ namespace aprilui
 		else if (name == "text_color") setTextColor(value);
 		else if (name == "color")
 		{
-			aprilui::log("WARNING! LabelBase instance using color which is conflicted with TextImageButton's color! Use text_color instead!");
+			aprilui::log("WARNING: LabelBase instance using \"color=\" which is conflicted with TextImageButton's color! Use \"text_color=\" instead!");
 			setTextColor(value);
 		}
 		else if (name == "effect")

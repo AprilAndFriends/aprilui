@@ -100,7 +100,7 @@ namespace aprilui
 		mEnabled = true;
 		mVisible = true;
 		mAngle = 0.0f;
-		mClickthrough = false;
+		mClickThrough = false;
 		mInheritsAlpha = true;
 		mAnchorLeft = true;
 		mAnchorRight = false;
@@ -484,7 +484,7 @@ namespace aprilui
 
 	bool Object::onMouseDown(float x, float y, int button)
 	{
-		if (mClickthrough || !isVisible() || !_isDerivedEnabled())
+		if (mClickThrough || !isVisible() || !_isDerivedEnabled())
 		{
 			return false;
 		}
@@ -498,7 +498,7 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickthrough() &&
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickThrough() &&
 				(*it)->onMouseDown(x - mRect.x, y - mRect.y, button))
 			{
 				return true;
@@ -509,13 +509,13 @@ namespace aprilui
 
 	bool Object::onMouseUp(float x, float y, int button)
 	{
-		if (mClickthrough || !isVisible() || !_isDerivedEnabled())
+		if (mClickThrough || !isVisible() || !_isDerivedEnabled())
 		{
 			return false;
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickthrough() &&
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickThrough() &&
 				(*it)->onMouseUp(x - mRect.x, y - mRect.y, button))
 			{
 				return true;
@@ -572,36 +572,6 @@ namespace aprilui
 		}
 	}
 
-	bool Object::OnMouseDown(float x, float y, int button)
-	{
-		return onMouseDown(x, y, button);
-	}
-
-	bool Object::OnMouseUp(float x, float y, int button)
-	{
-		return onMouseUp(x, y, button);
-	}
-
-	void Object::OnMouseMove(float x, float y)
-	{
-		onMouseMove(x, y);
-	}
-
-	void Object::OnKeyDown(unsigned int keycode)
-	{
-		onKeyDown(keycode);
-	}
-
-	void Object::OnKeyUp(unsigned int keycode)
-	{
-		onKeyUp(keycode);
-	}
-	
-	void Object::OnChar(unsigned int charcode)
-	{
-		onChar(charcode);
-	}
-
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
 		registerEvent(name,new CallbackEvent(callback));
@@ -655,40 +625,12 @@ namespace aprilui
 	
 	bool Object::_isDerivedClickThrough()
 	{
-		return (mClickthrough && (mParent == NULL || mParent->_isDerivedClickThrough()));
+		return (mClickThrough && (mParent == NULL || mParent->_isDerivedClickThrough()));
 	}
 	
 	void Object::setAlpha(unsigned char value)
 	{
 		mColor.a = value;
-	}
-
-	void Object::moveToFront()
-	{
-		if (mParent != NULL)
-		{
-			mParent->_moveChildToFront(this);
-		}
-	}
-
-	void Object::moveToBack()
-	{
-		if (mParent != NULL)
-		{
-			mParent->_moveChildToBack(this);
-		}
-	}
-
-	void Object::_moveChildToFront(Object* object)
-	{
-		mChildren -= object;
-		mChildren += object;
-	}
-
-	void Object::_moveChildToBack(Object* object)
-	{
-		mChildren -= object;
-		mChildren.push_front(object);
 	}
 
 	hstr Object::getProperty(chstr name, bool* property_exists)
@@ -704,7 +646,7 @@ namespace aprilui
 		if (name == "visible")			return isVisible();
 		if (name == "zorder")			return getZOrder();
 		if (name == "enabled")			return isEnabled();
-		if (name == "clickthrough")		return isClickthrough();
+		if (name == "click_through")	return isClickThrough();
 		if (name == "inherits_alpha")	return isInheritsAlpha();
 		if (name == "red")				return getRed();
 		if (name == "green")			return getGreen();
@@ -736,7 +678,12 @@ namespace aprilui
 		else if (name == "visible")			setVisible(value);
 		else if (name == "zorder")			setZOrder(value);
 		else if (name == "enabled")			setEnabled(value);
-		else if (name == "clickthrough")	setClickthrough(value);
+		else if (name == "click_through")	setClickThrough(value);
+		else if (name == "clickthrough")
+		{
+			aprilui::log("WARNING: \"clickthrough=\" is deprecated. Use \"click_through=\" instead."); // DEPRECATED
+			setClickThrough(value);
+		}
 		else if (name == "inherits_alpha")	setInheritsAlpha(value);
 		else if (name == "red")				setRed((int)value);
 		else if (name == "green")			setGreen((int)value);
@@ -775,7 +722,7 @@ namespace aprilui
 	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
-		if (!isVisible() || isClickthrough())
+		if (!isVisible() || isClickThrough())
 		{
 			return NULL;
 		}

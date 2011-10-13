@@ -65,7 +65,7 @@ namespace aprilui
 		if (name == "text_key")	setTextKey(value);
 		else if (name == "textkey")
 		{
-			aprilui::log("\"textkey=\" is deprecated. Use \"text_key=\" instead.");
+			aprilui::log("WARNING: \"textkey=\" is deprecated. Use \"text_key=\" instead."); // DEPRECATED
 			setTextKey(value);
 		}
 		else if (name == "use_disabled_color")	setUseDisabledColor(value);
