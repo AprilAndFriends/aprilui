@@ -326,34 +326,11 @@ namespace aprilui
 		}
 	}
 	
-	void OnMouseDown(float x, float y, int button)
-	{
-		onMouseDown(x, y, button);
-	}
-
-	void OnMouseUp(float x, float y, int button)
-	{
-		onMouseUp(x, y, button);
-	}
-
-	void OnMouseMove(float x, float y)
-	{
-		onMouseMove(x, y);
-	}
-
-	void OnKeyDown(unsigned int keycode)
-	{
-		onKeyDown(keycode);
-	}
-
-	void OnKeyUp(unsigned int keycode)
-	{
-		onKeyUp(keycode);
-	}
-	
-	void OnChar(unsigned int charcode)
-	{
-		onChar(charcode);
-	}
+	void OnMouseDown(float x, float y, int button) { onMouseDown(x, y, button); } // DEPRECATED
+	void OnMouseUp(float x, float y, int button) { onMouseUp(x, y, button); } // DEPRECATED
+	void OnMouseMove(float x, float y) { onMouseMove(x, y); } // DEPRECATED
+	void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); } // DEPRECATED
+	void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); } // DEPRECATED
+	void OnChar(unsigned int charcode) { onChar(charcode); } // DEPRECATED
 
 }

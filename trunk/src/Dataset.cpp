@@ -790,36 +790,6 @@ namespace aprilui
 		}
 	}
 	
-	bool Dataset::OnMouseDown(float x, float y, int button)
-	{
-		return onMouseDown(x, y, button);
-	}
-
-	bool Dataset::OnMouseUp(float x, float y, int button)
-	{
-		return onMouseUp(x, y, button);
-	}
-
-	void Dataset::OnMouseMove(float x, float y)
-	{
-		onMouseMove(x, y);
-	}
-
-	void Dataset::OnKeyDown(unsigned int keycode)
-	{
-		onKeyDown(keycode);
-	}
-
-	void Dataset::OnKeyUp(unsigned int keycode)
-	{
-		onKeyUp(keycode);
-	}
-	
-	void Dataset::OnChar(unsigned int charcode)
-	{
-		onChar(charcode);
-	}
-
 	void Dataset::updateTextures(float k)
 	{
 		foreach_m (april::Texture*, it, mTextures)

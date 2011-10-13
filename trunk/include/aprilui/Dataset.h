@@ -97,13 +97,13 @@ namespace aprilui
 		void onKeyDown(unsigned int keycode);
 		void onKeyUp(unsigned int keycode);
 		void onChar(unsigned int charcode);
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button);
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button);
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y);
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode);
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode);
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode);
-		
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(x, y, button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(x, y, button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(x, y); }
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
+
 		virtual Object* getObject(chstr name);
 		virtual april::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
@@ -118,7 +118,7 @@ namespace aprilui
 			T object = dynamic_cast<T>(getObject(name));
 			if (object == NULL)
 			{
-				aprilui::log("WARNING! Dynamic cast in getObject<T> failed, object: " + name);
+				aprilui::log("WARNING: Dynamic cast in getObject<T> failed, object: " + name);
 			}
 			return object;
 		}

@@ -99,8 +99,8 @@ namespace aprilui
 		void setAnchorTop(bool value) { mAnchorTop = value; }
 		bool isAnchorBottom() { return mAnchorBottom; }
 		void setAnchorBottom(bool value) { mAnchorBottom = value; }
-		bool isClickthrough() { return mClickthrough; }
-		void setClickthrough(bool value) { mClickthrough = value; }
+		bool isClickThrough() { return mClickThrough; }
+		void setClickThrough(bool value) { mClickThrough = value; }
 		bool isInheritsAlpha() { return mInheritsAlpha; }
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		april::Color getColor() { return mColor; }
@@ -129,9 +129,6 @@ namespace aprilui
 		virtual bool isWaitingAnimation();
 		bool hasDynamicAnimation();
 		
-		DEPRECATED_ATTRIBUTE void moveToFront();
-		DEPRECATED_ATTRIBUTE void moveToBack();
-		
 		void _setTypeName(chstr type) { mTypeName = type; }
 		hstr getType() { return mTypeName; }
 		hstr getName() { return mName; }
@@ -143,13 +140,7 @@ namespace aprilui
 		virtual void onKeyDown(unsigned int keycode);
 		virtual void onKeyUp(unsigned int keycode);
 		virtual void onChar(unsigned int charcode);
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button);
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button);
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y);
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) ;
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode);
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode);
-		
+
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());
 		
@@ -214,6 +205,17 @@ namespace aprilui
 		void resizeStop();
 		void fadeColorStop();
 		
+		DEPRECATED_ATTRIBUTE void moveToFront() { if (mParent != NULL) { mParent->getChildren().remove(this); mParent->getChildren().push_back(this); } }
+		DEPRECATED_ATTRIBUTE void moveToBack() { if (mParent != NULL) { mParent->getChildren().remove(this); mParent->getChildren().push_front(this); } }
+		DEPRECATED_ATTRIBUTE bool isClickthrough() { return mClickThrough; }
+		DEPRECATED_ATTRIBUTE void setClickthrough(bool value) { mClickThrough = value; }
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(x, y, button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(x, y, button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(x, y); }
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
+
 	protected:
 		hstr mTypeName;
 		hstr mName;
@@ -228,7 +230,7 @@ namespace aprilui
 		bool mEnabled;
 		bool mVisible;
 		float mAngle;
-		bool mClickthrough;
+		bool mClickThrough;
 		bool mInheritsAlpha;
 		april::Color mColor;
 		bool mAnchorLeft;
@@ -248,9 +250,6 @@ namespace aprilui
 		bool _isDerivedClickThrough();
 		grect _getDrawRect();
 		void _setParent(Object* value) { mParent = value; }
-
-		DEPRECATED_ATTRIBUTE void _moveChildToFront(Object* object);
-		DEPRECATED_ATTRIBUTE void _moveChildToBack(Object* object);
 
 		virtual void OnDraw() { }
 
