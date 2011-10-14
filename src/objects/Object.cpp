@@ -96,6 +96,7 @@ namespace aprilui
 		mScale = gvec2(1.0f, 1.0f);
 		mParent = NULL;
 		mChildUnderCursor = NULL;
+		mCheckedChildUnderCursor = false;
 		mDataset = NULL;
 		mZOrder = 0;
 		mEnabled = true;
@@ -415,6 +416,7 @@ namespace aprilui
 	void Object::update(float k)
 	{
 		mChildUnderCursor = NULL;
+		mCheckedChildUnderCursor = false;
 		foreach (Object*, it, mChildren)
 		{
 			(*it)->update(k);
@@ -747,9 +749,10 @@ namespace aprilui
 	
 	Object* Object::getChildUnderCursor()
 	{
-		if (mChildUnderCursor == NULL)
+		if (!mCheckedChildUnderCursor)
 		{
 			mChildUnderCursor = getChildUnderPoint(aprilui::getCursorPosition());
+			mCheckedChildUnderCursor = true;
 		}
 		return mChildUnderCursor;
 	}
