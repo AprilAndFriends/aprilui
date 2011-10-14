@@ -154,11 +154,11 @@ namespace aprilui
 		{
 			rect.h = mSrcRect.h;
 		}
-		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		gmat4 originalMatrix = april::rendersys->getModelViewMatrix();
 		april::rendersys->translate(rect.w / 2, rect.h / 2);
 		april::rendersys->rotate(angle);
 		draw(rect - rect.getSize() / 2, color);
-		april::rendersys->setModelviewMatrix(originalMatrix);
+		april::rendersys->setModelViewMatrix(originalMatrix);
 	}
 
 	april::Texture* Image::getTexture()

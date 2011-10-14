@@ -223,6 +223,7 @@ namespace aprilui
 		gvec2 mScale;
 		gvec2 mCenter;
 		Object* mParent;
+		Object* mChildUnderCursor;
 		harray<Object*> mChildren;
 		harray<Animator*> mDynamicAnimators;
 		hmap<hstr, Event*> mEvents;
