@@ -40,7 +40,8 @@ namespace aprilui
 	void ImageButton::OnDraw()
 	{
 		grect rect = _getDrawRect();
-		if (!_isDerivedEnabled() && mDisabledImage != NULL)
+		bool enabled = _isDerivedEnabled();
+		if (!enabled && mDisabledImage != NULL)
 		{
 			mDisabledImage->draw(rect, april::Color(mColor, getDerivedAlpha()));
 			return;
@@ -52,7 +53,7 @@ namespace aprilui
 			return;
 		}
 		ImageBox::OnDraw();
-		if (mHover && mHoverImage == NULL && cursorInside) // because "somebody" was too lazy to define hover images manually
+		if (enabled && mHover && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled()) // because "somebody" was too lazy to define hover images manually
 		{
 			april::BlendMode blendMode = mImage->getBlendMode();
 			mImage->setBlendMode(april::ADD);
