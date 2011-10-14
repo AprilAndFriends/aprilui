@@ -95,6 +95,7 @@ namespace aprilui
 		}
 		mScale = gvec2(1.0f, 1.0f);
 		mParent = NULL;
+		mChildUnderCursor = NULL;
 		mDataset = NULL;
 		mZOrder = 0;
 		mEnabled = true;
@@ -389,7 +390,7 @@ namespace aprilui
 		{
 			return;
 		}
-		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		gmat4 originalMatrix = april::rendersys->getModelViewMatrix();
 		gvec2 position = mRect.getPosition() + offset + mCenter;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
@@ -408,11 +409,12 @@ namespace aprilui
 		{
 			(*it)->draw(-mCenter);
 		}
-		april::rendersys->setModelviewMatrix(originalMatrix);
+		april::rendersys->setModelViewMatrix(originalMatrix);
 	}
 	
 	void Object::update(float k)
 	{
+		mChildUnderCursor = NULL;
 		foreach (Object*, it, mChildren)
 		{
 			(*it)->update(k);
@@ -745,7 +747,11 @@ namespace aprilui
 	
 	Object* Object::getChildUnderCursor()
 	{
-		return getChildUnderPoint(getCursorPosition());
+		if (mChildUnderCursor == NULL)
+		{
+			mChildUnderCursor = getChildUnderPoint(aprilui::getCursorPosition());
+		}
+		return mChildUnderCursor;
 	}
 
 	grect Object::getDerivedRect()

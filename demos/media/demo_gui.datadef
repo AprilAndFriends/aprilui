@@ -76,19 +76,19 @@
 			<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64">
 				<Animator type="AlphaChanger" function="sine" periods="-1" amplitude="64" speed="1.05" offset="191"/>
 			</Object>
-			<Object type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" x="432" y="160" w="128" h="64">
+			<Object type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" x="432" y="160" w="128" h="64" zorder="100">
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="1.0" offset="0.0" speed="0.5"/>
 				<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.1" offset="1.2" timer="0.25"/>
 			</Object>
-			<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0">
+			<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0" zorder="100">
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
-			<Object type="TextImageButton" name="textImageButton" text="Push me" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="432" y="256" w="128" h="64" angle="20" center_x="-100" center_y="-100">
+			<Object type="TextImageButton" name="textImageButton" text="Push me" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="432" y="320" w="128" h="64" angle="20" center_x="-100" center_y="-100" zorder="100">
 				<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191" timer="1.333333"/>
 				<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191" timer="0.6666667"/>
 				<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191"/>
 			</Object>
-			<Object type="ToggleButton" name="toggleButton" image="texture/test_green" toggled_image="texture/test_hover_3" x="432" y="352" w="128" h="64">
+			<Object type="ToggleButton" name="toggleButton" image="texture/test_green" toggled_image="texture/test_hover_3" x="432" y="352" w="128" h="64" zorder="100">
 				<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
 				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
 			</Object>
