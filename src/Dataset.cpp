@@ -415,6 +415,10 @@ namespace aprilui
 		
 		for (node = node->iterChildren(); node != NULL; node = node->next())
 		{
+#ifndef USE_TINYXML
+			if (node->type != XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
+			{
+#endif
 				if (*node == "Property")
 				{
 					object->setProperty(node->pstr("name"), node->pstr("value"));
@@ -423,6 +427,9 @@ namespace aprilui
 				{
 					recursiveObjectParse(node, object);
 				}
+#ifndef USE_TINYXML
+			}
+#endif
 		}
 		return object;
 	}
