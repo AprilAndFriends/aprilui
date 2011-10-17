@@ -1,0 +1,68 @@
+define HAVE_MARMELADE
+define _STATICLIB
+
+includepaths
+{
+	.
+	include
+	include/aprilui
+	src
+}
+
+library
+{
+	".,aprilui"
+}
+
+files
+{
+	(src)
+	Util.h
+	
+	(include/aprilui)
+	Animator.h
+	AnimatorAlphaChanger.h
+	AnimatorBlueChanger.h
+	AnimatorFrameAnimation.h
+	AnimatorGreenChanger.h
+	AnimatorMoverX.h
+	AnimatorMoverY.h
+	AnimatorRedChanger.h
+	AnimatorResizerX.h
+	AnimatorResizerY.h
+	AnimatorRotator.h
+	Animators.h
+	AnimatorScalerX.h
+	AnimatorScalerY.h
+	aprilui.h
+	apriluiExport.h
+	CallbackEvent.h
+	ColoredImage.h
+	ColorImage.h
+	CompositeImage.h
+	Dataset.h
+	Event.h
+	EventArgs.h
+	EventUtils.h
+	Exception.h
+	Image.h
+	Images.h
+	MemberCallbackEvent.h
+	NullImage.h
+	Object.h
+	ObjectButtonBase.h
+	ObjectCallbackObject.h
+	ObjectColoredQuad.h
+	ObjectContainer.h
+	ObjectEditBox.h
+	ObjectImageBox.h
+	ObjectImageButton.h
+	ObjectLabelBase.h
+	ObjectParticle.h
+	Objects.h
+	ObjectSlider.h
+	ObjectTextButton.h
+	ObjectTextImageButton.h
+	ObjectToggleButton.h
+	TiledImage.h
+}

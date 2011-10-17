@@ -415,8 +415,6 @@ namespace aprilui
 		
 		for (node = node->iterChildren(); node != NULL; node = node->next())
 		{
-			if (node->type != XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
-			{
 				if (*node == "Property")
 				{
 					object->setProperty(node->pstr("name"), node->pstr("value"));
@@ -425,7 +423,6 @@ namespace aprilui
 				{
 					recursiveObjectParse(node, object);
 				}
-			}
 		}
 		return object;
 	}
@@ -433,13 +430,21 @@ namespace aprilui
 	void Dataset::readFile(chstr filename)
 	{
 		// parse datadef xml file, error checking first
-		hlxml::Document doc(getPWD() + "/" + normalize_path(filename));
-		hlxml::Node* current = doc.root("DataDefinition");
+		hstr path(getPWD() + "/" + normalize_path(filename));
+#ifdef NO_FS_TREE
+		path = path.ltrim('.');
+		path = path.ltrim('/');
+		path = path.replace("/","___");
 		
+#endif
+		hlxml::Document doc(path);
+		hlxml::Node* current = doc.root("DataDefinition");
+
 		parseExternalXMLNode(current);
 		
 		hmap<april::Texture*, hstr> dynamicLinks;
 		hstr links;
+
 		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
 		{
 			if      (*p == "Texture")
@@ -458,7 +463,7 @@ namespace aprilui
 			else if (*p == "CompositeImage") parseCompositeImage(p);
 			else if (*p == "Object") parseObject(p);
 			else if (*p == "TextureGroup") parseTextureGroup(p);
-			else if (p->type != XML_TEXT_NODE && p->type != XML_COMMENT_NODE)
+			else
 			{
 				parseExternalXMLNode(p);
 			}
@@ -482,8 +487,13 @@ namespace aprilui
 	void Dataset::load(chstr path)
 	{
 		hstr textsPath = (path != "" ? path : getDefaultTextsPath()) + "/" + getLocalization();
-		// texts
 		hstr filepath = normalize_path(mFilePath + "/" + textsPath);
+#ifdef NO_FS_TREE
+		textsPath = textsPath.ltrim('.').ltrim('.').ltrim('/');
+		textsPath = textsPath.replace("/", "___");
+		filepath = filepath.replace("/", "___");
+#endif
+		// texts
 		_loadTexts(filepath);
 		aprilui::log("loading datadef: " + mFilename);
 		readFile(mFilename);
