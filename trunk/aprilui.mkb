@@ -1,0 +1,75 @@
+option lib
+
+options
+{
+	enable-exceptions
+}
+
+packages
+{
+	tinyxml
+}
+
+subprojects
+{	
+	tinyxml
+	aprilui
+	hltypes
+	hltypes/hlxml
+	gtypes
+	april
+	atres
+}
+
+files
+{
+	(src)
+	Util.cpp
+	aprilui.cpp
+	CallbackEvent.cpp
+	Dataset.cpp
+	EventArgs.cpp
+	Exception.cpp
+	MemberCallbackEvent.cpp
+	
+	(src/objects)
+	Object.cpp
+	ObjectButtonBase.cpp
+	ObjectCallbackObject.cpp
+	ObjectColoredQuad.cpp
+	ObjectContainer.cpp
+	ObjectEditBox.cpp
+	ObjectImageBox.cpp
+	ObjectImageButton.cpp
+	ObjectLabel.cpp
+	ObjectLabelBase.cpp
+	ObjectParticle.cpp
+	ObjectSlider.cpp
+	ObjectTextButton.cpp
+	ObjectTextImageButton.cpp
+	ObjectToggleButton.cpp
+	
+	(src/animators)
+	Animator.cpp
+	AnimatorAlphaChanger.cpp
+	AnimatorBlueChanger.cpp
+	AnimatorFrameAnimation.cpp
+	AnimatorGreenChanger.cpp
+	AnimatorRedChanger.cpp
+	AnimatorMoverX.cpp
+	AnimatorMoverY.cpp
+	AnimatorResizerX.cpp
+	AnimatorResizerY.cpp
+	AnimatorRotator.cpp
+	AnimatorScalerX.cpp
+	AnimatorScalerY.cpp
+
+	(src/images)
+	ColoredImage.cpp
+	ColorImage.cpp
+	CompositeImage.cpp
+	Image.cpp
+	NullImage.cpp
+	TiledImage.cpp
+	
+}
