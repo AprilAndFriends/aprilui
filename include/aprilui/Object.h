@@ -45,6 +45,7 @@ namespace aprilui
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
+		void clearChildUnderCursor();
 		
 		int getZOrder() { return mZOrder; }
 		void setZOrder(int zorder);

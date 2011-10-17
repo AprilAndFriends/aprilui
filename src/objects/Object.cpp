@@ -415,8 +415,7 @@ namespace aprilui
 	
 	void Object::update(float k)
 	{
-		mChildUnderCursor = NULL;
-		mCheckedChildUnderCursor = false;
+		if (mCheckedChildUnderCursor) clearChildUnderCursor();
 		foreach (Object*, it, mChildren)
 		{
 			(*it)->update(k);
@@ -755,6 +754,12 @@ namespace aprilui
 			mCheckedChildUnderCursor = true;
 		}
 		return mChildUnderCursor;
+	}
+	
+	void Object::clearChildUnderCursor()
+	{
+		mChildUnderCursor = NULL;
+		mCheckedChildUnderCursor = false;
 	}
 
 	grect Object::getDerivedRect()
