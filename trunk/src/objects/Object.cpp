@@ -391,7 +391,7 @@ namespace aprilui
 		{
 			return;
 		}
-		gmat4 originalMatrix = april::rendersys->getModelViewMatrix();
+		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
 		gvec2 position = mRect.getPosition() + offset + mCenter;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
@@ -410,7 +410,7 @@ namespace aprilui
 		{
 			(*it)->draw(-mCenter);
 		}
-		april::rendersys->setModelViewMatrix(originalMatrix);
+		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
 	
 	void Object::update(float k)
