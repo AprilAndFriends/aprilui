@@ -730,6 +730,7 @@
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = aprilui;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -755,6 +756,7 @@
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = aprilui;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -822,6 +824,7 @@
 				PRODUCT_NAME = aprilui;
 				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "App Store";
@@ -865,6 +868,7 @@
 				PRODUCT_NAME = aprilui;
 				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Debug-LLVM";
@@ -902,6 +906,7 @@
 				PRODUCT_NAME = aprilui;
 				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
+				VALID_ARCHS = "i386 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Release-LLVM";
