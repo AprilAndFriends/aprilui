@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="win32_Debug|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libhlxml_d.lib libapril_d.lib libatres_d.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="$(SolutionDir)bin/lib/msvc90"
+				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libatres.lib"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
+				AdditionalLibraryDirectories="$(SolutionDir)bin"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -87,13 +87,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="win32_Release|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -138,7 +138,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libatres.lib"
-				AdditionalLibraryDirectories="$(SolutionDir)bin/lib/msvc90"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
+				AdditionalLibraryDirectories="$(SolutionDir)bin"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -160,13 +161,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="win32_Particle_Debug|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -209,9 +210,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libhlxml_d.lib libapril_d.lib libaprilparticle_d.lib libatres_d.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="$(SolutionDir)bin/lib/msvc90"
+				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libaprilparticle.lib libatres.lib"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
+				AdditionalLibraryDirectories="$(SolutionDir)bin"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -234,13 +235,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="win32_Particle_Release|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -285,7 +286,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libaprilparticle.lib libatres.lib"
-				AdditionalLibraryDirectories="$(SolutionDir)bin/lib/msvc90"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
+				AdditionalLibraryDirectories="$(SolutionDir)bin"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -307,7 +309,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
