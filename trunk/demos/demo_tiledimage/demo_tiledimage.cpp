@@ -26,8 +26,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic, Ivan Vucica                      
 #include <atres/atres.h>
 #include <gtypes/Vector2.h>
 
-#define SCROLL_SPEED_X 50
-#define SCROLL_SPEED_Y 50
+#define SCROLL_SPEED gvec2(50.0f, -50.0f)
 gvec2 screen(800, 600);
 
 aprilui::Dataset* dataset;
@@ -38,8 +37,7 @@ bool render(float time)
 	april::rendersys->setOrthoProjection(screen);
 	aprilui::updateCursorPosition();
 	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/test");
-	image->setScroll(image->getScrollX() + time * SCROLL_SPEED_X,
-					 image->getScrollY() - time * SCROLL_SPEED_Y);
+	image->setScroll(image->getScroll() + SCROLL_SPEED * time);
 	dataset->getObject("root")->draw();
 	dataset->update(time);
 	return true;
