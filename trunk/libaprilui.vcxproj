@@ -60,14 +60,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Debug|Win32'">bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Debug|Win32'">bin\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">bin\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Release|Win32'">bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">bin\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Release|Win32'">bin\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Debug|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Release|Win32'">$(SolutionDir)bin\lib\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Debug|Win32'">
     <ClCompile>
@@ -85,14 +85,14 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libatres.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Debug|Win32'">
@@ -111,14 +111,14 @@ copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libaprilparticle.lib;libatres.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">
@@ -137,12 +137,13 @@ copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libatres.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Particle_Release|Win32'">
@@ -161,12 +162,13 @@ copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libaprilparticle.lib;libatres.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib\msvc100;$(SolutionDir)bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)bin\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>$(SolutionDir)bin\$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
-copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
