@@ -142,10 +142,13 @@ namespace aprilui
 
 		hmap<hstr, void (*)()> mCallbacks;
 
-		april::Texture* parseTexture(hlxml::Node* node);
+		void parseTexture(hlxml::Node* node);
 		void parseRAMTexture(hlxml::Node* node);
 		void parseTextureGroup(hlxml::Node* node);
 		void parseCompositeImage(hlxml::Node* node);
+		void parseGlobalInclude(chstr path);
+		void parseObjectInclude(chstr path, Object* parent);
+		void parseObjectIncludeFile(chstr filename, Object* parent);
 		virtual void parseExternalXMLNode(hlxml::Node* node) { }
 		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr obj_name, grect rect) { return 0; }
 		

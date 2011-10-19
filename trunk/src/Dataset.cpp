@@ -172,7 +172,7 @@ namespace aprilui
 		delete image;
 	}
 	
-	april::Texture* Dataset::parseTexture(hlxml::Node* node)
+	void Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilePath + "/" + filename);
@@ -250,7 +250,6 @@ namespace aprilui
 				}
 		    }
 		}
-		return texture;
 	}
 	
 	void Dataset::parseRAMTexture(hlxml::Node* node)
@@ -317,7 +316,15 @@ namespace aprilui
 	{
 		hstr objectName;
 		grect rect(0, 0, 1, 1);
-		hstr className = node->pstr("type");
+		hstr className;
+		
+		if (*node == "Include")
+		{
+			parseObjectInclude(mFilePath + "/" + node->pstr("path"), parent);
+			return NULL;
+		}
+
+		className = node->pstr("type");
 		
 		if (*node == "Object")
 		{
@@ -419,14 +426,7 @@ namespace aprilui
 			if (node->type != XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
 			{
 #endif
-				if (*node == "Property")
-				{
-					object->setProperty(node->pstr("name"), node->pstr("value"));
-				}
-				else
-				{
-					recursiveObjectParse(node, object);
-				}
+				recursiveObjectParse(node, object);
 #ifndef USE_TINYXML
 			}
 #endif
@@ -434,63 +434,88 @@ namespace aprilui
 		return object;
 	}
 	
+	void Dataset::parseGlobalInclude(chstr path)
+	{
+		if (!path.contains("*")) readFile(path);
+		else
+		{
+			hstr basedir = get_basedir(path);
+			hstr filename = path(basedir.size() + 1, -1);
+			hstr left,right;
+			filename.split("*", left, right);
+			harray<hstr> contents = hdir::files(basedir);
+			contents.sort();
+			foreach(hstr, it, contents)
+			{
+				if (it->starts_with(left) && it->ends_with(right)) readFile(basedir + "/" + *it);
+			}
+		}
+	}
+	
+	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent)
+	{
+		// parse dataset xml file, error checking first
+		hstr path(getPWD() + "/" + normalize_path(filename));
+
+		log("parsing object include file " + path);
+		hlxml::Document doc(path);
+		hlxml::Node* current = doc.root();
+		
+		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
+		{
+			if (*p == "Object" || *p == "Animator")
+				recursiveObjectParse(p, parent);
+		}
+	}
+	
+	void Dataset::parseObjectInclude(chstr path, Object* parent)
+	{
+		if (!path.contains("*")) parseObjectIncludeFile(path, parent);
+		else
+		{
+			hstr basedir = get_basedir(path);
+			hstr filename = path(basedir.size() + 1, -1);
+			hstr left,right;
+			filename.split("*", left, right);
+			harray<hstr> contents = hdir::files(basedir);
+			contents.sort();
+			foreach(hstr, it, contents)
+			{
+				if (it->starts_with(left) && it->ends_with(right)) parseObjectIncludeFile(basedir + "/" + *it, parent);
+			}
+		}
+	}
+	
 	void Dataset::readFile(chstr filename)
 	{
-		// parse datadef xml file, error checking first
+		// parse dataset xml file, error checking first
 		hstr path(getPWD() + "/" + normalize_path(filename));
 #ifdef NO_FS_TREE
 		path = path.ltrim('.');
 		path = path.ltrim('/');
 		path = path.replace("/","___");
-		
 #endif
+		log("parsing dataset file " + filename);
 		hlxml::Document doc(path);
-		hlxml::Node* current = doc.root("DataDefinition");
+		hlxml::Node* current = doc.root();
 
 		parseExternalXMLNode(current);
-		
-		hmap<april::Texture*, hstr> dynamicLinks;
-		hstr links;
 
 		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
 		{
-			if      (*p == "Texture")
-			{
-				april::Texture* texture = parseTexture(p);
-				// TODO - needs to be removed, kill it with fire
-				/// {
-				if (p->pexists("dynamic_link"))
-				{
-					links = p->pstr("dynamic_link");
-					dynamicLinks[texture] = links;
-				}
-				/// }
-			}
-			else if (*p == "RAMTexture") parseRAMTexture(p);
+			if      (*p == "Texture")        parseTexture(p);
+			else if (*p == "RAMTexture")     parseRAMTexture(p);
 			else if (*p == "CompositeImage") parseCompositeImage(p);
-			else if (*p == "Object") parseObject(p);
-			else if (*p == "TextureGroup") parseTextureGroup(p);
+			else if (*p == "Object")         parseObject(p);
+			else if (*p == "Include")        parseGlobalInclude(get_basedir(path) + "/" + p->pstr("path"));
+			else if (*p == "TextureGroup")   parseTextureGroup(p);
 			else
 			{
 				parseExternalXMLNode(p);
 			}
 		}
-		
-		// TODO - needs to be removed, kill it with fire
-		/// {
-		// adjust dynamic texture links
-		harray<hstr> dlst;
-		for (hmap<april::Texture*, hstr>::iterator it = dynamicLinks.begin(); it != dynamicLinks.end(); it++)
-		{
-			dlst = it->second.split(',', -1, true);
-			foreach (hstr, it2, dlst)
-			{
-				it->first->addDynamicLink(getTexture(*it2));
-			}
-		}
-		/// }
 	}
-	
+
 	void Dataset::load(chstr path)
 	{
 		hstr textsPath = (path != "" ? path : getDefaultTextsPath()) + "/" + getLocalization();
@@ -502,7 +527,6 @@ namespace aprilui
 #endif
 		// texts
 		_loadTexts(filepath);
-		aprilui::log("loading datadef: " + mFilename);
 		readFile(mFilename);
 		mLoaded = true;
 		this->update(0);
