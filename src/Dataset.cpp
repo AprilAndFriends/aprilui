@@ -119,7 +119,7 @@ namespace aprilui
 		{
 			while (object->getChildren().size() > 0)
 			{
-				object->removeChild(object->getChildren()[0]);
+				object->removeChild(object->getChildren().first());
 			}
 		}
 		if (object->getParent() != NULL)
@@ -552,7 +552,10 @@ namespace aprilui
 			f.close();
 
 			// ignore file header, silly utf-8 encoded text files have 2-3 char markers
-			while (lines[0].size() > 0 && lines[0][0] < 0) lines[0] = lines[0](1, lines[0].size() - 1);
+			while (lines.first().size() > 0 && lines.first()[0] < 0)
+			{
+				lines[0] = lines[0](1, lines[0].size() - 1);
+			}
 
 			foreach (hstr, it2, lines)
 			{
