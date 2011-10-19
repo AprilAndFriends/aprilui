@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="win32_Debug|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libgtypes_d.lib libhltypes_d.lib libapril_d.lib libatres_d.lib libxml2.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../lib/msvc;../gtypes/bin/win32_Debug;../hltypes/bin/win32_Debug;../atres/bin/win32_Debug;../april/bin"
+				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
+				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -87,12 +87,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="win32_Release|Win32"
-			OutputDirectory="bin\$(ConfigurationName)"
-			IntermediateDirectory="bin\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -137,7 +138,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
-				AdditionalLibraryDirectories="../lib/msvc;../gtypes/bin/win32_Release;../hltypes/bin/win32_Release;../atres/bin/win32_Release;../april/bin"
+				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
+				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -159,6 +161,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
