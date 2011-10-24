@@ -105,14 +105,6 @@ namespace aprilui
 
 	void Image::draw(grect rect, april::Color color)
 	{
-		if (rect.w == -1)
-		{
-			rect.w = mSrcRect.w;
-		}
-		if (rect.h == -1)
-		{
-			rect.h = mSrcRect.h;
-		}
 		tVertices[0].x = rect.x;          tVertices[0].y = rect.y;
 		tVertices[1].x = rect.x + rect.w; tVertices[1].y = rect.y;
 		tVertices[2].x = rect.x;          tVertices[2].y = rect.y + rect.h;
@@ -145,14 +137,6 @@ namespace aprilui
 		{
 			draw(rect, color);
 			return;
-		}
-		if (rect.w == -1)
-		{
-			rect.w = mSrcRect.w;
-		}
-		if (rect.h == -1)
-		{
-			rect.h = mSrcRect.h;
 		}
 		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
 		april::rendersys->translate(rect.w / 2, rect.h / 2);
