@@ -94,7 +94,7 @@ namespace aprilui
 			break;
 		case aprilui::Animator::Triangle:
 			result = fmod(time * mSpeed, 1.0f);
-			if (result < 0.25f || result >= 0.75f)
+			if (!is_in_range(result, 0.25f, 0.75f))
 			{
 				result = (fmod(time * mSpeed + 0.5f, 1.0f) - 0.5f) * 4 * mAmplitude;
 			}
