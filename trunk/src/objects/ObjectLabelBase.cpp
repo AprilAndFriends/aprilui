@@ -93,11 +93,6 @@ namespace aprilui
 			if (mVertFormatting == atres::BOTTOM)	return "bottom";
 		}
 		if (name == "text_color")	return getTextColor().hex();
-		if (name == "color")
-		{
-			aprilui::log("WARNING: LabelBase instance using \"color=\" which is conflicted with TextImageButton's color! Use \"text_color=\" instead!");
-			return getTextColor().hex();
-		}
 		if (name == "effect")
 		{
 			if (mFontEffect == atres::SHADOW)	return "shadow";
@@ -142,8 +137,7 @@ namespace aprilui
 		else if (name == "text_color") setTextColor(value);
 		else if (name == "color")
 		{
-			aprilui::log("WARNING: LabelBase instance using \"color=\" which is conflicted with TextImageButton's color! Use \"text_color=\" instead!");
-			setTextColor(value);
+			throw hl_exception("LabelBase instance using \"color=\" which is conflicted with TextImageButton's color and cannot be used! Maybe you meant \"text_color=\"?");
 		}
 		else if (name == "effect")
 		{
