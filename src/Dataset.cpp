@@ -40,26 +40,10 @@ namespace aprilui
 		mFocusedObject = NULL;
 		mRoot = NULL;
 		mFilename = normalize_path(filename);
+		mFilePath = _makeFilePath(mFilename, name, useNameBasePath);
 		int slash = mFilename.rfind('/');
 		int dot = mFilename.rfind('.');
-		if (name == "")
-		{
-			mFilePath = normalize_path(mFilename(0, slash));
-			mName = (name == "" ? mFilename(slash + 1, dot - slash - 1) : name);
-		}
-		else
-		{
-			hstr extension = mFilename(dot, mFilename.size() - dot);
-			if (mFilename.ends_with(name + extension) && useNameBasePath)
-			{
-				mFilePath = normalize_path(mFilename.replace(name + extension, ""));
-			}
-			else
-			{
-				mFilePath = normalize_path(mFilename(0, slash));
-			}
-			mName = name;
-		}
+		mName = (name == "" ? mFilename(slash + 1, dot - slash - 1) : name);
 		mLoaded = false;
 		_registerDataset(mName, this);
 	}
@@ -71,6 +55,25 @@ namespace aprilui
 			unload();
 		}
 		_unregisterDataset(mName, this);
+	}
+
+	hstr Dataset::_makeFilePath(chstr filename, chstr name, bool useNameBasePath)
+	{
+		int slash = filename.rfind('/');
+		int dot = filename.rfind('.');
+		if (name == "")
+		{
+			return normalize_path(filename(0, slash));
+		}
+		if (useNameBasePath)
+		{
+			hstr extension = filename(dot, filename.size() - dot);
+			if (filename.ends_with(name + extension))
+			{
+				return normalize_path(filename.replace(name + extension, ""));
+			}
+		}
+		return normalize_path(filename(0, slash));
 	}
 	
 	void Dataset::destroyObject(chstr name, bool recursive)
@@ -422,40 +425,45 @@ namespace aprilui
 		
 		for (node = node->iterChildren(); node != NULL; node = node->next())
 		{
-#ifndef USE_TINYXML
 			if (node->type != XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
 			{
-#endif
 				recursiveObjectParse(node, object);
-#ifndef USE_TINYXML
 			}
-#endif
 		}
 		return object;
 	}
 	
 	void Dataset::parseGlobalInclude(chstr path)
 	{
-		if (!path.contains("*")) readFile(path);
-		else
+		hstr originalFilePath = mFilePath;
+		mFilePath = _makeFilePath(path);
+		if (!path.contains("*"))
 		{
-			hstr basedir = get_basedir(path);
-			hstr filename = path(basedir.size() + 1, -1);
-			hstr left,right;
-			filename.split("*", left, right);
-			harray<hstr> contents = hdir::files(basedir);
-			contents.sort();
-			foreach(hstr, it, contents)
+			readFile(path);
+			mFilePath = originalFilePath;
+			return;
+		}
+		hstr basedir = get_basedir(path);
+		hstr filename = path(basedir.size() + 1, -1);
+		hstr left;
+		hstr right;
+		filename.split("*", left, right);
+		harray<hstr> contents = hdir::files(basedir).sorted();
+		foreach (hstr, it, contents)
+		{
+			if (it->starts_with(left) && it->ends_with(right))
 			{
-				if (it->starts_with(left) && it->ends_with(right)) readFile(basedir + "/" + *it);
+				readFile(basedir + "/" + *it);
 			}
 		}
+		mFilePath = originalFilePath;
+		return;
 	}
 	
 	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent)
 	{
 		// parse dataset xml file, error checking first
-		hstr path(getPWD() + "/" + normalize_path(filename));
+		hstr path = getPWD() + "/" + normalize_path(filename);
 
 		log("parsing object include file " + path);
 		hlxml::Document doc(path);
@@ -464,24 +472,30 @@ namespace aprilui
 		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
 		{
 			if (*p == "Object" || *p == "Animator")
+			{
 				recursiveObjectParse(p, parent);
+			}
 		}
 	}
 	
 	void Dataset::parseObjectInclude(chstr path, Object* parent)
 	{
-		if (!path.contains("*")) parseObjectIncludeFile(path, parent);
-		else
+		if (!path.contains("*"))
 		{
-			hstr basedir = get_basedir(path);
-			hstr filename = path(basedir.size() + 1, -1);
-			hstr left,right;
-			filename.split("*", left, right);
-			harray<hstr> contents = hdir::files(basedir);
-			contents.sort();
-			foreach(hstr, it, contents)
+			parseObjectIncludeFile(path, parent);
+			return;
+		}
+		hstr basedir = get_basedir(path);
+		hstr filename = path(basedir.size() + 1, -1);
+		hstr left;
+		hstr right;
+		filename.split("*", left, right);
+		harray<hstr> contents = hdir::files(basedir).sorted();
+		foreach (hstr, it, contents)
+		{
+			if ((*it).starts_with(left) && (*it).ends_with(right))
 			{
-				if (it->starts_with(left) && it->ends_with(right)) parseObjectIncludeFile(basedir + "/" + *it, parent);
+				parseObjectIncludeFile(basedir + "/" + (*it), parent);
 			}
 		}
 	}

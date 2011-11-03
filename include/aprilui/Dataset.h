@@ -156,6 +156,7 @@ namespace aprilui
 		
 		void readFile(chstr filename);
 		void _loadTexts(chstr path);
+		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
 		
 	};
 
