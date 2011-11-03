@@ -503,13 +503,13 @@ namespace aprilui
 	void Dataset::readFile(chstr filename)
 	{
 		// parse dataset xml file, error checking first
-		hstr path(getPWD() + "/" + normalize_path(filename));
+		hstr path = getPWD() + "/" + normalize_path(filename);
 #ifdef NO_FS_TREE
 		path = path.ltrim('.');
 		path = path.ltrim('/');
 		path = path.replace("/","___");
 #endif
-		log("parsing dataset file " + filename);
+		log("parsing dataset file " + normalize_path(filename));
 		hlxml::Document doc(path);
 		hlxml::Node* current = doc.root();
 
