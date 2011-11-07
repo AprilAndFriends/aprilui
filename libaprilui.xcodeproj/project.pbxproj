@@ -730,7 +730,7 @@
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = aprilui;
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = "i386 ppc";
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -756,7 +756,7 @@
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = aprilui;
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = "i386 ppc";
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -809,7 +809,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -817,6 +817,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
@@ -824,7 +825,7 @@
 				PRODUCT_NAME = aprilui;
 				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = "i386 ppc";
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "App Store";
@@ -868,7 +869,7 @@
 				PRODUCT_NAME = aprilui;
 				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = "i386 ppc";
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Debug-LLVM";
@@ -906,7 +907,7 @@
 				PRODUCT_NAME = aprilui;
 				SDKROOT = macosx10.6;
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = "i386 ppc";
+				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Release-LLVM";
