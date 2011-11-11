@@ -27,7 +27,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	bool registerLock = false;
-	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
 	float defaultScale = 1.0f;
 	Image* gCursor = NULL;
@@ -40,6 +39,9 @@ namespace aprilui
 	grect screenViewport;
 	bool debugMode = false;
 	hstr defaultTextsPath = "texts";
+#ifdef _HAVE_PARTICLE
+	hstr defaultParticlesPath = "particles";
+#endif
 	hstr localization = "";
 	void aprilui_writelog(chstr message)
 	{
@@ -70,11 +72,6 @@ namespace aprilui
 	void destroy()
 	{
 		registerLock = true;
-		for (hmap<int, april::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
-		{
-			delete it->second;
-		}
-		gFontTextures.clear();
 		foreach_m (Dataset*, it, gDatasets)
 		{
 			delete it->second;
@@ -256,6 +253,18 @@ namespace aprilui
 		defaultTextsPath = path;
 	}
 	
+#ifdef _HAVE_PARTICLE
+	hstr getDefaultParticlesPath()
+	{
+		return defaultParticlesPath;
+	}
+	
+	void setDefaultParticlesPath(chstr path)
+	{
+		defaultParticlesPath = path;
+	}
+#endif
+
 	hstr getLocalization()
 	{
 		return localization;

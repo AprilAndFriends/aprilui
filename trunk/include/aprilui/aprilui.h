@@ -57,6 +57,10 @@ namespace aprilui
 	apriluiFnExport void unloadUnusedTextures();
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr path);
+#ifdef _HAVE_PARTICLE
+	apriluiFnExport hstr getDefaultParticlesPath();
+	apriluiFnExport void setDefaultParticlesPath(chstr path);
+#endif
 	apriluiFnExport hstr getLocalization();
 	apriluiFnExport void setLocalization(chstr localization);
 	
