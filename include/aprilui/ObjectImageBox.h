@@ -29,8 +29,8 @@ namespace aprilui
 		virtual void setImage(Image* value);
 		hstr getImageName() { return mImageName; }
 		void setImageByName(chstr name);
+
 		void notifyEvent(chstr name, void* params);
-		
 		void resizeToFitImage();
 		
 		hstr getProperty(chstr name, bool* property_exists = NULL);
