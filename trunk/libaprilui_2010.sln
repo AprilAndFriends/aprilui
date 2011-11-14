@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libaprilui", "libaprilui.vcxproj", "{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}"
 	ProjectSection(ProjectDependencies) = postProject
+		{AEE6186A-6335-4EC4-9356-BE34B6BED1D8} = {AEE6186A-6335-4EC4-9356-BE34B6BED1D8}
 		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8} = {601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}
 	EndProjectSection
 EndProject
@@ -30,6 +31,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_particle", "demos\demo_particle\demo_particle.vcxproj", "{111EAE9A-B087-4A6D-A9FA-6301DD2B85BD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libaprilparticle", "..\aprilparticle\libaprilparticle.vcxproj", "{AEE6186A-6335-4EC4-9356-BE34B6BED1D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9C043B29-DB40-48D5-97D8-1BC44128E3BA} = {9C043B29-DB40-48D5-97D8-1BC44128E3BA}
+		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8} = {601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
