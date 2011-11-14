@@ -97,6 +97,7 @@ namespace aprilui
 	april::Texture* Dataset::parseTexture(xml_node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
+		if (filename.starts_with("$")) filename = expandMacro(filename);
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
 
 		int slash = filename.rfind('/') + 1;

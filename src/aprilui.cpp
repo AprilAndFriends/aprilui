@@ -26,6 +26,7 @@ namespace aprilui
 	hmap<hstr, Dataset*> gDatasets;
 	float defaultScale = 1.0f;
 	gvec2 cursorPosition;
+	hstr (*g_macroCallback)(chstr) = 0;
 #ifdef _DEBUG
 	bool debugMode = false;
 #endif
@@ -228,4 +229,14 @@ namespace aprilui
 		}
 	}
 	
+	apriluiFnExport void setMacroCallback(hstr (*callback)(chstr))
+	{
+		g_macroCallback = callback;
+	}
+	
+	apriluiFnExport hstr expandMacro(chstr macro)
+	{
+		if (g_macroCallback == NULL) throw hl_exception("aprilui macro callback not set, trying to expand macro '" + macro + "'");
+		return g_macroCallback(macro);
+	}
 }
