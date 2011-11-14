@@ -54,7 +54,10 @@ namespace aprilui
 	apriluiFnExport void OnKeyDown(unsigned int keycode);
 	apriluiFnExport void OnKeyUp(unsigned int keycode);
 	apriluiFnExport void OnChar(unsigned int charcode);
-	
+		
+	apriluiFnExport void setMacroCallback(hstr (*callback)(chstr));
+	apriluiFnExport hstr expandMacro(chstr macro);
+
 }
 
 #endif

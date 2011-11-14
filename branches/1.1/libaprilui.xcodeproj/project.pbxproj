@@ -77,14 +77,12 @@
 		7FB0C7AF120AE107005EA739 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB0C7AE120AE107005EA739 /* Object.cpp */; };
 		7FB0C7B1120AE117005EA739 /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FB0C7B0120AE117005EA739 /* Object.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8041E11EC721E00851062 /* Animators.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041511EC721E00851062 /* Animators.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7FC8041F11EC721E00851062 /* AprilUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041611EC721E00851062 /* AprilUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042011EC721E00851062 /* AprilUIExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041711EC721E00851062 /* AprilUIExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042111EC721E00851062 /* Dataset.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041811EC721E00851062 /* Dataset.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042211EC721E00851062 /* Exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041911EC721E00851062 /* Exception.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042311EC721E00851062 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041A11EC721E00851062 /* Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042411EC721E00851062 /* Objects.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041B11EC721E00851062 /* Objects.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042611EC721E00851062 /* xmlHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041D11EC721E00851062 /* xmlHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7FC8043211EC725B00851062 /* AprilUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042811EC725B00851062 /* AprilUI.cpp */; };
 		7FC8043411EC725B00851062 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
 		7FC8043511EC725B00851062 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
 		7FC8043911EC725B00851062 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042F11EC725B00851062 /* Util.cpp */; };
@@ -103,6 +101,8 @@
 		C9A6A30C1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */; };
 		C9B7FFD21271BE8500F79E1A /* AnimatorRotationOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9B7FFD51271BE9500F79E1A /* AnimatorRotationOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */; };
+		D12AFF5E147087780061E9E5 /* aprilui.h in Headers */ = {isa = PBXBuildFile; fileRef = D1459F6B146EF30100D61731 /* aprilui.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1459F6D146EF30F00D61731 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1459F6C146EF30F00D61731 /* aprilui.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,14 +176,12 @@
 		7FB0C7AE120AE107005EA739 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
 		7FB0C7B0120AE117005EA739 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Object.h; path = include/aprilui/Object.h; sourceTree = "<group>"; };
 		7FC8041511EC721E00851062 /* Animators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animators.h; path = include/aprilui/Animators.h; sourceTree = "<group>"; };
-		7FC8041611EC721E00851062 /* AprilUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AprilUI.h; path = include/aprilui/AprilUI.h; sourceTree = "<group>"; };
 		7FC8041711EC721E00851062 /* AprilUIExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AprilUIExport.h; path = include/aprilui/AprilUIExport.h; sourceTree = "<group>"; };
 		7FC8041811EC721E00851062 /* Dataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dataset.h; path = include/aprilui/Dataset.h; sourceTree = "<group>"; };
 		7FC8041911EC721E00851062 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = include/aprilui/Exception.h; sourceTree = "<group>"; };
 		7FC8041A11EC721E00851062 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = include/aprilui/Image.h; sourceTree = "<group>"; };
 		7FC8041B11EC721E00851062 /* Objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Objects.h; path = include/aprilui/Objects.h; sourceTree = "<group>"; };
 		7FC8041D11EC721E00851062 /* xmlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlHelper.h; path = include/aprilui/xmlHelper.h; sourceTree = "<group>"; };
-		7FC8042811EC725B00851062 /* AprilUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AprilUI.cpp; path = src/AprilUI.cpp; sourceTree = "<group>"; };
 		7FC8042A11EC725B00851062 /* Dataset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Dataset.cpp; path = src/Dataset.cpp; sourceTree = "<group>"; };
 		7FC8042B11EC725B00851062 /* Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Exception.cpp; path = src/Exception.cpp; sourceTree = "<group>"; };
 		7FC8042F11EC725B00851062 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = src/Util.cpp; sourceTree = "<group>"; };
@@ -204,6 +202,8 @@
 		C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScaleOscillator.cpp; sourceTree = "<group>"; };
 		C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorRotationOscillator.h; path = include/aprilui/AnimatorRotationOscillator.h; sourceTree = "<group>"; };
 		C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotationOscillator.cpp; sourceTree = "<group>"; };
+		D1459F6B146EF30100D61731 /* aprilui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aprilui.h; path = include/aprilui/aprilui.h; sourceTree = "<group>"; };
+		D1459F6C146EF30F00D61731 /* aprilui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aprilui.cpp; path = src/aprilui.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -347,7 +347,7 @@
 				7F6D54811201B06200A2BDF6 /* animators */,
 				7F6D548C1201B06200A2BDF6 /* objects */,
 				7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */,
-				7FC8042811EC725B00851062 /* AprilUI.cpp */,
+				D1459F6C146EF30F00D61731 /* aprilui.cpp */,
 				7FC8042A11EC725B00851062 /* Dataset.cpp */,
 				7FC8042B11EC725B00851062 /* Exception.cpp */,
 				7FC8042F11EC725B00851062 /* Util.cpp */,
@@ -392,6 +392,7 @@
 				7F38C69912096793002B5134 /* ObjectRotatableImageBox.h */,
 				7F38C69A12096793002B5134 /* ObjectRotationImageBox.h */,
 				7F38C69B12096793002B5134 /* ObjectSlider.h */,
+				D1459F6B146EF30100D61731 /* aprilui.h */,
 				7F38C69C12096793002B5134 /* ObjectTextButton.h */,
 				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
 				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
@@ -399,7 +400,6 @@
 				7FCD396412018C7B00608217 /* Event.h */,
 				7FCD396512018C7B00608217 /* EventArgs.h */,
 				7FC8041511EC721E00851062 /* Animators.h */,
-				7FC8041611EC721E00851062 /* AprilUI.h */,
 				7FC8041711EC721E00851062 /* AprilUIExport.h */,
 				7FC8041811EC721E00851062 /* Dataset.h */,
 				7FC8041911EC721E00851062 /* Exception.h */,
@@ -426,7 +426,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FC8041E11EC721E00851062 /* Animators.h in Headers */,
-				7FC8041F11EC721E00851062 /* AprilUI.h in Headers */,
 				7FC8042011EC721E00851062 /* AprilUIExport.h in Headers */,
 				7FC8042111EC721E00851062 /* Dataset.h in Headers */,
 				7FC8042211EC721E00851062 /* Exception.h in Headers */,
@@ -469,6 +468,7 @@
 				7F7A4A95129D217700E0ED12 /* TiledImage.h in Headers */,
 				7F7A4A96129D217700E0ED12 /* NullImage.h in Headers */,
 				7F7A4A97129D217700E0ED12 /* Images.h in Headers */,
+				D12AFF5E147087780061E9E5 /* aprilui.h in Headers */,
 				7F7A4A98129D217700E0ED12 /* CompositeImage.h in Headers */,
 				7F7A4A99129D217700E0ED12 /* ColorImage.h in Headers */,
 				7F7A4A9A129D217700E0ED12 /* ColoredImage.h in Headers */,
@@ -538,7 +538,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FC8043211EC725B00851062 /* AprilUI.cpp in Sources */,
 				7FC8043411EC725B00851062 /* Dataset.cpp in Sources */,
 				7FC8043511EC725B00851062 /* Exception.cpp in Sources */,
 				7FC8043911EC725B00851062 /* Util.cpp in Sources */,
@@ -581,6 +580,7 @@
 				7F7A4AA9129D21A300E0ED12 /* NullImage.cpp in Sources */,
 				7F7A4AAA129D21A300E0ED12 /* TiledImage.cpp in Sources */,
 				7F7A4AAC129D21BD00E0ED12 /* EventArgs.cpp in Sources */,
+				D1459F6D146EF30F00D61731 /* aprilui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
