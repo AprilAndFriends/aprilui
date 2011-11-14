@@ -3,16 +3,17 @@
 	
 	<Properties name="glow"/>
 	
-	<Emitter type="Box" dimensions="100,5,0" blend_mode="add" emission_rate="200" limit="500" life="1" speed="0.01;0.03" scale="0.25">
-		<Affector type="LinearForce" direction="0,-100,0" force="0.5"/>
-		<Affector type="Attractor" position="0,-10,0" force="-5000"/>
-		<Affector type="Attractor" position="-60,40,0" force="500"/>
-		<Affector type="Attractor" position="60,40,0" force="500"/>
+	<Emitter type="Box" dimensions="100,5,0" blend_mode="add" emission_rate="200" limit="500" life="1" speed="0.1;0.3" scale="0.25">
+		<Affector type="LinearForce" direction="0,-100,0" force="2"/>
+		<Affector type="Attractor" position="0,-10,0" radius="200" force="-250"/>
+		<Affector type="Attractor" position="0,20,0" radius="25" force="-100"/>
+		<Affector type="Attractor" position="-100,40,0" radius="200" force="150"/>
+		<Affector type="Attractor" position="100,40,0" radius="200" force="150"/>
 		<Affector type="ColorMultiChanger" color_timings="0:FFFFFFFF,0.5:FFFFFFFF,0.75:3FFF00FF,1.0:00FF0000"/>
-		<Texture name="glow" filename="glow"/>
+		<Texture name="red" filename="red"/>
 	</Emitter>
-	<Emitter type="Sphere" dimensions="50,50,0" blend_mode="add" emission_rate="200" limit="500" life="1" speed="0.001" scale="0.25">
-		<Affector type="Attractor" force="-200"/>
+	<Emitter type="Sphere" dimensions="25,25,0" blend_mode="add" emission_rate="200" limit="500" life="1" speed="0.001" scale="0.25">
+		<Affector type="Attractor" radius="50" force="-25"/>
 		<Affector type="ColorMultiChanger" color_timings="0:FFFFFFFF,0.5:FFFFFFFF,0.75:0000FFFF,1.0:0000FF00"/>
 		<Texture name="blue" filename="blue"/>
 	</Emitter>
