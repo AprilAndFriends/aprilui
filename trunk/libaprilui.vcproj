@@ -408,6 +408,14 @@
 					RelativePath=".\src\animators\AnimatorScalerY.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\src\animators\AnimatorTiledScrollerX.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\animators\AnimatorTiledScrollerY.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Objects"
@@ -608,6 +616,14 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\AnimatorScalerY.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\AnimatorTiledScrollerX.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\AnimatorTiledScrollerY.h"
 					>
 				</File>
 			</Filter>

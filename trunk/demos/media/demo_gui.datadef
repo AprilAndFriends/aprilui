@@ -11,6 +11,8 @@
 		<Image name="test_blue" x="0" y="0" w="512" h="512" color="7F7FFF"/>
 		<Image name="test_yellow" x="0" y="0" w="512" h="512" color="FFFF7F"/>
 		<Image name="test_red" x="0" y="0" w="512" h="512" color="FF7F7F"/>
+		<Image name="test_tile1" x="0" y="0" w="512" h="512" tile_w="-128" tile_h="-128"/>
+		<Image name="test_tile2" x="0" y="0" w="512" h="512" tile_w="2" tile_h="2"/>
     </Texture>
 	<Texture filename="../media/transparency">
 		<Image name="test" x="0" y="0" w="512" h="512"/>
@@ -37,9 +39,15 @@
 	</CompositeImage>
 	
 	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
-		<Object type="ColoredQuad" name="background" color="BFBFBF" x="0" y="0" w="800" h="600">
+		<Object type="ImageBox" name="background" image="texture/test_tile1" x="0" y="0" w="800" h="600">
+			<Animator type="TiledScrollerX" periods="-1" amplitude="64"/>
+			<Animator type="TiledScrollerY" periods="-1" amplitude="-32"/>
 			<Object type="ColoredQuad" color="00FF00" x="64" y="32" w="32" h="32" angle="50">
 				<Object type="ColoredQuad" color="FFFF00" x="64" y="32" w="32" h="32"/>
+			</Object>
+			<Object type="ImageBox" name="background2" image="texture/test_tile2" color="FFFF00" x="600" y="450" w="200" h="150">
+				<Animator type="TiledScrollerX" periods="-1" amplitude="-64"/>
+				<Animator type="TiledScrollerY" periods="-1" amplitude="32"/>
 			</Object>
 		</Object>
 		<Object type="ColoredQuad" name="multi_scale_hit_test" color="9F0000" x="0" y="0" w="800" h="600" zorder="10000" visible="false">
