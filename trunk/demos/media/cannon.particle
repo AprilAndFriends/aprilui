@@ -3,28 +3,33 @@
 	
 	<Properties name="cannon"/>
 	
-	<Emitter type="Point" position="50,-50,0" blend_mode="add" emission_rate="20" limit="40" life="1" speed="5" scale="0.25">
+	<Emitter type="Point" position="30,-30,0" blend_mode="add" emission_rate="20" limit="40" life="0.75" speed="4" scale="0.25">
 		<Affector type="LinearForce" direction="0,50,0"/>
 		<Affector reference="grav field"/>
+		<Affector reference="revolutor"/>
 		<Texture reference="green"/>
 	</Emitter>
-	<Emitter type="Point" position="-50,50,0" blend_mode="add" emission_rate="20" limit="40" life="1" speed="5" scale="0.25">
+	<Emitter type="Point" position="-30,30,0" blend_mode="add" emission_rate="20" limit="40" life="0.75" speed="4" scale="0.25">
 		<Affector type="LinearForce" direction="0,-50,0"/>
 		<Affector reference="grav field"/>
+		<Affector reference="revolutor"/>
 		<Texture reference="green"/>
 	</Emitter>
-	<Emitter type="Point" position="-50,-50,0" blend_mode="add" emission_rate="20" limit="40" life="1" speed="5" scale="0.25">
+	<Emitter type="Point" position="-30,-30,0" blend_mode="add" emission_rate="20" limit="40" life="0.75" speed="4" scale="0.25">
 		<Affector type="LinearForce" direction="50,0,0"/>
 		<Affector reference="grav field"/>
+		<Affector reference="revolutor"/>
 		<Texture reference="green"/>
 	</Emitter>
-	<Emitter type="Point" position="50,50,0" blend_mode="add" emission_rate="20" limit="40" life="1" speed="5" scale="0.25">
+	<Emitter type="Point" position="30,30,0" blend_mode="add" emission_rate="20" limit="40" life="0.75" speed="4" scale="0.25">
 		<Affector type="LinearForce" direction="-50,0,0"/>
 		<Affector reference="grav field"/>
+		<Affector reference="revolutor"/>
 		<Texture reference="green"/>
 	</Emitter>
 	
-	<Affector name="grav field" type="Attractor" radius="100" force="400"/>
+	<Affector name="grav field" type="Attractor" radius="100" force="200"/>
+	<Affector name="revolutor" type="Revolutor" axis="0,0,-1" radius="100" evolution_speed="1"/>
 	<Texture name="green" filename="green"/>
 	
 </ParticleSystem>
