@@ -7,7 +7,7 @@ Copyright (c) 2011 Boris Mikic                                                  
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifdef HAVE_PARTICLE
+#ifndef NO_PARTICLE
 #ifndef APRILUI_PARTICLE_H
 #define APRILUI_PARTICLE_H
 
@@ -25,7 +25,7 @@ namespace aprilparticle
 
 namespace aprilui
 {
-	class Particle : public Object
+	class apriluiExport Particle : public Object
 	{
 	public:
 		Particle(chstr name, grect rect);
