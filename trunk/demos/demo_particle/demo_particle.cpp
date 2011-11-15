@@ -34,7 +34,7 @@ bool update(float k)
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(screen);
 	aprilui::updateCursorPosition();
-#ifdef _HAVE_PARTICLE
+#ifndef NO_PARTICLE
 	dataset->update(k);
 	dataset->getObject("root")->draw();
 #endif
@@ -43,7 +43,7 @@ bool update(float k)
 
 void onKeyDown(unsigned int keycode)
 {
-#ifdef _HAVE_PARTICLE
+#ifndef NO_PARTICLE
 	if (keycode == april::AK_RETURN)
 	{
 		dataset->unload();
