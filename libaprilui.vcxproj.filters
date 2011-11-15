@@ -155,6 +155,12 @@
     <ClCompile Include="src\objects\ObjectParticle.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\animators\AnimatorTiledScrollerX.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animators\AnimatorTiledScrollerY.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Util.h">
@@ -297,6 +303,12 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\ObjectParticle.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorTiledScrollerX.h">
+      <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorTiledScrollerY.h">
+      <Filter>Header Files\Animators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

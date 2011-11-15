@@ -122,7 +122,7 @@ void april_init(const harray<hstr>& args)
 	}
 	catch (aprilui::_GenericException e)
 	{
-		printf("%s\n", e.getType().c_str());
+		printf("%s\n", e.getErrorText().c_str());
 	}
 }
 
@@ -137,6 +137,6 @@ void april_destroy()
 	}
 	catch (aprilui::_GenericException e)
 	{
-		printf("%s\n", e.getType().c_str());
+		printf("%s\n", e.getErrorText().c_str());
 	}
 }

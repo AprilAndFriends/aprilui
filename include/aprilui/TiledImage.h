@@ -27,8 +27,16 @@ namespace aprilui
 		
 		gvec2 getTile() { return mTile; }
 		void setTile(gvec2 value) { mTile = value; }
+		float getTileW() { return mTile.x; }
+		void setTileW(float value) { mTile.x = value; }
+		float getTileH() { return mTile.y; }
+		void setTileH(float value) { mTile.y = value; }
 		gvec2 getScroll() { return mScroll; }
 		void setScroll(gvec2 value) { mScroll = value; }
+		float getScrollX() { return mScroll.x; }
+		void setScrollX(float value) { mScroll.x = value; }
+		float getScrollY() { return mScroll.y; }
+		void setScrollY(float value) { mScroll.y = value; }
 		
 		void setTile(float w, float h);
 		void setScroll(float x, float y);
