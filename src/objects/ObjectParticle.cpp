@@ -7,7 +7,7 @@ Copyright (c) 2011 Boris Mikic                                                  
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#ifdef _HAVE_PARTICLE
+#ifdef HAVE_PARTICLE
 #include <april/RenderSystem.h>
 #include <aprilparticle/System.h>
 #include <gtypes/Rectangle.h>
@@ -50,6 +50,7 @@ namespace aprilui
 			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
 			mSystem->draw2D();
 			april::rendersys->setModelviewMatrix(originalMatrix);
+			april::rendersys->setBlendMode(april::DEFAULT);
 		}
 		Object::OnDraw();
 	}
