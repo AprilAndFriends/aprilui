@@ -39,9 +39,7 @@ namespace aprilui
 	grect screenViewport;
 	bool debugMode = false;
 	hstr defaultTextsPath = "texts";
-#ifdef _HAVE_PARTICLE
 	hstr defaultParticlesPath = "particles";
-#endif
 	hstr localization = "";
 	void aprilui_writelog(chstr message)
 	{
@@ -253,7 +251,6 @@ namespace aprilui
 		defaultTextsPath = path;
 	}
 	
-#ifdef _HAVE_PARTICLE
 	hstr getDefaultParticlesPath()
 	{
 		return defaultParticlesPath;
@@ -263,7 +260,6 @@ namespace aprilui
 	{
 		defaultParticlesPath = path;
 	}
-#endif
 
 	hstr getLocalization()
 	{
