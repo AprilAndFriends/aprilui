@@ -5,7 +5,7 @@
 	
 	<Emitter type="Box" position="0,0,0" dimensions="200,10,0" blend_mode="add" emission_rate="500" limit="1000" life="2" speed="0.5;1" size="0.05,0.5">
 		<Affector type="LinearForce" direction="0,100,0" force="5"/>
-		<Texture name="rain" filename="rain_drop"/>
+		<Texture filename="rain_drop"/>
 	</Emitter>
 	
 </ParticleSystem>

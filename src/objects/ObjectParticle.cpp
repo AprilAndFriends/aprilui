@@ -9,8 +9,10 @@ Copyright (c) 2011 Boris Mikic                                                  
 \************************************************************************************/
 #ifndef NO_PARTICLE
 #include <april/RenderSystem.h>
+#include <aprilparticle/Emitter.h>
 #include <aprilparticle/System.h>
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <gtypes/Vector3.h>
 #include <hltypes/hstring.h>
 
@@ -38,6 +40,7 @@ namespace aprilui
 	{
 		if (mSystem != NULL)
 		{
+			mSystem->setEnabled(this->_isDerivedEnabled());
 			mSystem->update(k);
 		}
 		Object::update(k);
@@ -48,6 +51,7 @@ namespace aprilui
 		if (mSystem != NULL)
 		{
 			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+			mSystem->setVisible(this->isVisible());
 			mSystem->draw2D();
 			april::rendersys->setModelviewMatrix(originalMatrix);
 			april::rendersys->setBlendMode(april::DEFAULT);
@@ -61,13 +65,7 @@ namespace aprilui
 		{
 			if (mFilename != "")
 			{
-				if (mSystem != NULL)
-				{
-					delete mSystem;
-				}
-				hstr filepath = normalize_path(mDataset->_getFilePath() + "/" + aprilui::getDefaultParticlesPath() + "/" + mFilename);
-				mSystem = new aprilparticle::System(filepath);
-				mSystem->load();
+				this->_loadParticleSystem();
 			}
 			else if (mSystem != NULL)
 			{
@@ -76,6 +74,41 @@ namespace aprilui
 			}
 		}
 		Object::notifyEvent(name, params);
+	}
+
+	void Particle::_loadParticleSystem()
+	{
+		if (mSystem != NULL)
+		{
+			delete mSystem;
+		}
+		hstr filepath = normalize_path(mDataset->_getFilePath() + "/" + aprilui::getDefaultParticlesPath() + "/" + mFilename);
+		mSystem = new aprilparticle::System(filepath);
+		mSystem->load();
+		if (mRect.w > 0.0f || mRect.h > 0.0f)
+		{
+			harray<aprilparticle::Emitter*> emitters = mSystem->getEmitters();
+			if (emitters.size() > 0)
+			{
+				gvec2 rescale(1.0f, 1.0f);
+				gvec3 dimensions = emitters.first()->getDimensions();
+				if (mRect.w > 0.0f)
+				{
+					rescale.x = (dimensions.x > 0.0f ? mRect.w / dimensions.x : mRect.w);
+				}
+				if (mRect.h > 0.0f)
+				{
+					rescale.y = (dimensions.y > 0.0f ? mRect.h / dimensions.y : mRect.h);
+				}
+				foreach (aprilparticle::Emitter*, it, emitters)
+				{
+					dimensions = (*it)->getDimensions();
+					dimensions.x = (dimensions.x > 0.0f ? dimensions.x * rescale.x : rescale.x);
+					dimensions.y = (dimensions.y > 0.0f ? dimensions.y * rescale.y : rescale.y);
+					(*it)->setDimensions(dimensions);
+				}
+			}
+		}
 	}
 	
 	hstr Particle::getProperty(chstr name, bool* property_exists)
