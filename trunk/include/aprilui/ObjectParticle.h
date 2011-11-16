@@ -33,6 +33,7 @@ namespace aprilui
 
 		hstr getFilename() { return mFilename; }
 		void setFilename(chstr value) { mFilename = value; }
+		aprilparticle::System* getSystem() { return mSystem; }
 		
 		void notifyEvent(chstr name, void* params);
 
@@ -45,6 +46,8 @@ namespace aprilui
 	protected:
 		hstr mFilename;
 		aprilparticle::System* mSystem;
+
+		void _loadParticleSystem();
 
 	};
 }
