@@ -41,6 +41,7 @@ namespace aprilui
 	hstr defaultTextsPath = "texts";
 #ifndef NO_PARTICLE
 	hstr defaultParticlesPath = "particles";
+	bool particlesEnabled = true;
 #endif
 	hstr localization = "";
 	void aprilui_writelog(chstr message)
@@ -79,6 +80,26 @@ namespace aprilui
 		gDatasets.clear();
 	}
 	
+	void setDebugMode(bool value)
+	{
+		debugMode = value;
+	}
+	
+	bool isDebugMode()
+	{
+		return debugMode;
+	}
+
+	void setDefaultScale(float value)
+	{
+		defaultScale = value;
+	}
+	
+	float getDefaultScale()
+	{
+		return defaultScale;
+	}
+	
 	grect getViewport()
 	{
 		return viewport;
@@ -97,6 +118,83 @@ namespace aprilui
 	void setScreenViewport(grect value)
 	{
 		screenViewport = value;
+	}
+
+	bool isLimitCursorToViewport()
+	{
+		return limitCursorToViewport;
+	}
+
+	void setLimitCursorToViewport(bool value)
+	{
+		limitCursorToViewport = value;
+	}
+
+	bool isLimitCursorToScreenViewport()
+	{
+		return limitCursorToScreenViewport;
+	}
+
+	void setLimitCursorToScreenViewport(bool value)
+	{
+		limitCursorToScreenViewport = value;
+	}
+
+	bool isHoverEffectEnabled()
+	{
+		return hoverEffectEnabled;
+	}
+
+	void setHoverEffectEnabled(bool value)
+	{
+		hoverEffectEnabled = value;
+	}
+
+	hstr getDefaultTextsPath()
+	{
+		return defaultTextsPath;
+	}
+	
+	void setDefaultTextsPath(chstr value)
+	{
+		defaultTextsPath = value;
+	}
+	
+#ifndef NO_PARTICLE
+	hstr getDefaultParticlesPath()
+	{
+		return defaultParticlesPath;
+	}
+	
+	void setDefaultParticlesPath(chstr value)
+	{
+		defaultParticlesPath = value;
+	}
+
+	bool isParticlesEnabled()
+	{
+		return particlesEnabled;
+	}
+	
+	void setParticlesEnabled(bool value)
+	{
+		particlesEnabled = value;
+	}
+#endif
+
+	hstr getLocalization()
+	{
+		return localization;
+	}
+	
+	void setLocalization(chstr value)
+	{
+		localization = value;
+	}
+
+	hmap<hstr, Dataset*> getDatasets()
+	{
+		return gDatasets;
 	}
 	
     void updateCursorPosition()
@@ -150,36 +248,6 @@ namespace aprilui
 		}
 	}
 	
-	bool isLimitCursorToViewport()
-	{
-		return limitCursorToViewport;
-	}
-
-	void setLimitCursorToViewport(bool value)
-	{
-		limitCursorToViewport = value;
-	}
-
-	bool isLimitCursorToScreenViewport()
-	{
-		return limitCursorToScreenViewport;
-	}
-
-	void setLimitCursorToScreenViewport(bool value)
-	{
-		limitCursorToScreenViewport = value;
-	}
-
-	bool isHoverEffectEnabled()
-	{
-		return hoverEffectEnabled;
-	}
-
-	void setHoverEffectEnabled(bool value)
-	{
-		hoverEffectEnabled = value;
-	}
-
 	Dataset* getDatasetByName(chstr name)
 	{
 		if (!gDatasets.has_key(name))
@@ -233,58 +301,6 @@ namespace aprilui
 		}
 	}
 
-	void setDebugMode(bool value)
-	{
-		debugMode = value;
-	}
-	
-	bool isDebugMode()
-	{
-		return debugMode;
-	}
-
-	hstr getDefaultTextsPath()
-	{
-		return defaultTextsPath;
-	}
-	
-	void setDefaultTextsPath(chstr path)
-	{
-		defaultTextsPath = path;
-	}
-	
-#ifndef NO_PARTICLE
-	hstr getDefaultParticlesPath()
-	{
-		return defaultParticlesPath;
-	}
-	
-	void setDefaultParticlesPath(chstr path)
-	{
-		defaultParticlesPath = path;
-	}
-#endif
-
-	hstr getLocalization()
-	{
-		return localization;
-	}
-	
-	void setLocalization(chstr value)
-	{
-		localization = value;
-	}
-	
-	void setDefaultScale(float value)
-	{
-		defaultScale = value;
-	}
-	
-	float getDefaultScale()
-	{
-		return defaultScale;
-	}
-	
 	void onMouseDown(float x, float y, int button)
 	{
 		foreach_m (Dataset*, it, gDatasets)

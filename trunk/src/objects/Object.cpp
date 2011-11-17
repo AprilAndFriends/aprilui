@@ -894,6 +894,14 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed);
 	}
 
+	void Object::move(gvec2 position, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(MoverX);
+		REMOVE_EXISTING_ANIMATORS(MoverY);
+		CREATE_DYNAMIC_ANIMATOR(MoverX, mRect.x, position.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverY, mRect.y, position.y, speed);
+	}
+
 	void Object::scale(float x, float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
@@ -902,12 +910,28 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed);
 	}
 
+	void Object::scale(gvec2 scale, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(ScalerX);
+		REMOVE_EXISTING_ANIMATORS(ScalerY);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, mScale.x, scale.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, mScale.y, scale.y, speed);
+	}
+
 	void Object::resize(float x, float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
 		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed);
 		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed);
+	}
+
+	void Object::resize(gvec2 size, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(ResizerX);
+		REMOVE_EXISTING_ANIMATORS(ResizerY);
+		CREATE_DYNAMIC_ANIMATOR(ResizerX, mRect.w, size.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerY, mRect.h, size.y, speed);
 	}
 
 	void Object::fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed)
@@ -920,6 +944,18 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)g, speed);
 		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)b, speed);
 		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed);
+	}
+	
+	void Object::fadeColor(april::Color color, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(RedChanger);
+		REMOVE_EXISTING_ANIMATORS(GreenChanger);
+		REMOVE_EXISTING_ANIMATORS(BlueChanger);
+		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
+		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)color.r, speed);
+		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)color.g, speed);
+		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)color.b, speed);
+		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)color.a, speed);
 	}
 	
 	Animator* Object::moveXQueue(float x, float speed, float delay)
@@ -994,16 +1030,34 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, mRect.y, y, speed, delay);
 	}
 
+	void Object::moveQueue(gvec2 position, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, mRect.x, position.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, mRect.y, position.y, speed, delay);
+	}
+
 	void Object::scaleQueue(float x, float y, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, mScale.x, x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, mScale.y, y, speed, delay);
 	}
 
+	void Object::scaleQueue(gvec2 scale, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, mScale.x, scale.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, mScale.y, scale.y, speed, delay);
+	}
+
 	void Object::resizeQueue(float x, float y, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, mRect.w, x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, mRect.h, y, speed, delay);
+	}
+
+	void Object::resizeQueue(gvec2 size, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, mRect.w, size.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, mRect.h, size.y, speed, delay);
 	}
 
 	void Object::fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay)
@@ -1014,6 +1068,14 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)a, speed, delay);
 	}
 
+	void Object::fadeColorQueue(april::Color color, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)mColor.r, (float)color.r, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)mColor.g, (float)color.g, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)mColor.b, (float)color.b, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)mColor.a, (float)color.a, speed, delay);
+	}
+	
 	void Object::moveXStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
