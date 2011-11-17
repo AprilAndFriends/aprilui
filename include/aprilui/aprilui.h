@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -26,10 +27,9 @@ namespace aprilui
 	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
 	apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
 	
-	apriluiFnExport void setDebugMode(bool value);
 	apriluiFnExport bool isDebugMode();
+	apriluiFnExport void setDebugMode(bool value);
 	
-	//! used to determine width and height of objects that don't have w & h params in xml
 	apriluiFnExport float getDefaultScale();
 	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport grect getViewport();
@@ -42,6 +42,17 @@ namespace aprilui
 	apriluiFnExport void setLimitCursorToScreenViewport(bool value);
 	apriluiFnExport bool isHoverEffectEnabled();
 	apriluiFnExport void setHoverEffectEnabled(bool value);
+	apriluiFnExport hstr getDefaultTextsPath();
+	apriluiFnExport void setDefaultTextsPath(chstr value);
+#ifndef NO_PARTICLE
+	apriluiFnExport hstr getDefaultParticlesPath();
+	apriluiFnExport void setDefaultParticlesPath(chstr value);
+	apriluiFnExport bool isParticlesEnabled();
+	apriluiFnExport void setParticlesEnabled(bool value);
+#endif
+	apriluiFnExport hstr getLocalization();
+	apriluiFnExport void setLocalization(chstr localization);
+	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
 	
     apriluiFnExport void updateCursorPosition();
     apriluiFnExport void setCursorPosition(gvec2 position);
@@ -55,14 +66,6 @@ namespace aprilui
 	apriluiFnExport void update(float time);
 	apriluiFnExport void updateTextures(float time);
 	apriluiFnExport void unloadUnusedTextures();
-	apriluiFnExport hstr getDefaultTextsPath();
-	apriluiFnExport void setDefaultTextsPath(chstr path);
-#ifndef NO_PARTICLE
-	apriluiFnExport hstr getDefaultParticlesPath();
-	apriluiFnExport void setDefaultParticlesPath(chstr path);
-#endif
-	apriluiFnExport hstr getLocalization();
-	apriluiFnExport void setLocalization(chstr localization);
 	
 	apriluiFnExport void onMouseDown(float x, float y, int button);
 	apriluiFnExport void onMouseUp(float x, float y, int button);

@@ -25,6 +25,8 @@ namespace aprilui
 	Particle::Particle(chstr name, grect rect) :
 		Object("Particle", name, rect)
 	{
+		mGlobalSpace = false;
+		mInitialPosition = getPosition();
 		mSystem = NULL;
 	}
 	
@@ -36,11 +38,16 @@ namespace aprilui
 		}
 	}
 
+	bool Particle::isRunning()
+	{
+		return (mSystem != NULL && mSystem->isRunning());
+	}
+
 	void Particle::update(float k)
 	{
 		if (mSystem != NULL)
 		{
-			mSystem->setEnabled(this->_isDerivedEnabled());
+			mSystem->setEnabled(_isDerivedEnabled());
 			mSystem->update(k);
 		}
 		Object::update(k);
@@ -51,8 +58,17 @@ namespace aprilui
 		if (mSystem != NULL)
 		{
 			gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-			mSystem->setVisible(this->isVisible());
-			mSystem->draw2D();
+			mSystem->setVisible(isVisible());
+			if (!mGlobalSpace)
+			{
+				mSystem->draw(gvec2(), april::Color(mColor, getDerivedAlpha()));
+			}
+			else
+			{
+				gvec2 position = mInitialPosition - getPosition();
+				mSystem->setPosition(mSystemPosition.x - position.x, mSystemPosition.y - position.y, mSystemPosition.z);
+				mSystem->draw(position, april::Color(mColor, getDerivedAlpha()));
+			}
 			april::rendersys->setModelviewMatrix(originalMatrix);
 			april::rendersys->setBlendMode(april::DEFAULT);
 		}
@@ -61,11 +77,11 @@ namespace aprilui
 
 	void Particle::notifyEvent(chstr name, void* params)
 	{	
-		if (name == "FilenameLoaded")
+		if (name == "SettingsChanged")
 		{
-			if (mFilename != "")
+			if (mFilename != "" && aprilui::isParticlesEnabled())
 			{
-				this->_loadParticleSystem();
+				_loadParticleSystem();
 			}
 			else if (mSystem != NULL)
 			{
@@ -80,11 +96,12 @@ namespace aprilui
 	{
 		if (mSystem != NULL)
 		{
-			delete mSystem;
+			return;
 		}
 		hstr filepath = normalize_path(mDataset->_getFilePath() + "/" + aprilui::getDefaultParticlesPath() + "/" + mFilename);
 		mSystem = new aprilparticle::System(filepath);
 		mSystem->load();
+		mSystemPosition = mSystem->getPosition();
 		if (mRect.w > 0.0f || mRect.h > 0.0f)
 		{
 			harray<aprilparticle::Emitter*> emitters = mSystem->getEmitters();
@@ -110,6 +127,22 @@ namespace aprilui
 			}
 		}
 	}
+
+	void Particle::finish()
+	{
+		if (mSystem != NULL)
+		{
+			mSystem->finish();
+		}
+	}
+	
+	void Particle::resetSystem()
+	{
+		if (mSystem != NULL)
+		{
+			mSystem->reset();
+		}
+	}
 	
 	hstr Particle::getProperty(chstr name, bool* property_exists)
 	{
@@ -117,17 +150,19 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "filename")	return getFilename();
+		if (name == "filename")		return getFilename();
+		if (name == "global_space")	return isGlobalSpace();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool Particle::setProperty(chstr name, chstr value)
 	{
-		if (name == "filename")
+		if		(name == "filename")
 		{
 			setFilename(value);
-			notifyEvent("FilenameLoaded", NULL);
+			notifyEvent("SettingsChanged", NULL);
 		}
+		else if	(name == "global_space")	setGlobalSpace(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}

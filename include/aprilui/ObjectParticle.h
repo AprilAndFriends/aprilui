@@ -33,7 +33,10 @@ namespace aprilui
 
 		hstr getFilename() { return mFilename; }
 		void setFilename(chstr value) { mFilename = value; }
+		bool isGlobalSpace() { return mGlobalSpace; }
+		void setGlobalSpace(bool value) { mGlobalSpace = value; }
 		aprilparticle::System* getSystem() { return mSystem; }
+		bool isRunning();
 		
 		void notifyEvent(chstr name, void* params);
 
@@ -41,10 +44,15 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 		
 		void update(float k);
+		void finish();
+		void resetSystem();
 		void OnDraw();
 		
 	protected:
 		hstr mFilename;
+		bool mGlobalSpace;
+		gvec2 mInitialPosition;
+		gvec3 mSystemPosition;
 		aprilparticle::System* mSystem;
 
 		void _loadParticleSystem();

@@ -170,9 +170,13 @@ namespace aprilui
 		Animator* fadeBlue(unsigned char b, float speed);
 		Animator* fadeAlpha(unsigned char a, float speed);
 		void move(float x, float y, float speed);
+		void move(gvec2 position, float speed);
 		void scale(float x, float y, float speed);
+		void scale(gvec2 scale, float speed);
 		void resize(float x, float y, float speed);
+		void resize(gvec2 size, float speed);
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
+		void fadeColor(april::Color color, float speed);
 		
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
@@ -186,9 +190,13 @@ namespace aprilui
 		Animator* fadeBlueQueue(unsigned char b, float speed, float delay = 0.0f);
 		Animator* fadeAlphaQueue(unsigned char a, float speed, float delay = 0.0f);
 		void moveQueue(float x, float y, float speed, float delay = 0.0f);
+		void moveQueue(gvec2 position, float speed, float delay = 0.0f);
 		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
+		void scaleQueue(gvec2 scale, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
+		void resizeQueue(gvec2 size, float speed, float delay = 0.0f);
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
+		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
 		
 		void moveXStop();
 		void moveYStop();
