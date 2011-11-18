@@ -43,8 +43,10 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
+		void load(chstr filename);
 		void update(float k);
-		void finish();
+		void finishSystem();
+		void stopSystem();
 		void resetSystem();
 		void OnDraw();
 		
