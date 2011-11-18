@@ -32,15 +32,19 @@ namespace aprilui
 	
 	Particle::~Particle()
 	{
-		if (mSystem != NULL)
-		{
-			delete mSystem;
-		}
+		stopSystem();
 	}
 
 	bool Particle::isRunning()
 	{
 		return (mSystem != NULL && mSystem->isRunning());
+	}
+
+	void Particle::load(chstr filename)
+	{
+		mFilename = filename;
+		stopSystem();
+		_loadParticleSystem();
 	}
 
 	void Particle::update(float k)
@@ -83,10 +87,9 @@ namespace aprilui
 			{
 				_loadParticleSystem();
 			}
-			else if (mSystem != NULL)
+			else
 			{
-				delete mSystem;
-				mSystem = NULL;
+				stopSystem();
 			}
 		}
 		Object::notifyEvent(name, params);
@@ -128,11 +131,20 @@ namespace aprilui
 		}
 	}
 
-	void Particle::finish()
+	void Particle::finishSystem()
 	{
 		if (mSystem != NULL)
 		{
 			mSystem->finish();
+		}
+	}
+
+	void Particle::stopSystem()
+	{
+		if (mSystem != NULL)
+		{
+			delete mSystem;
+			mSystem = NULL;
 		}
 	}
 	
