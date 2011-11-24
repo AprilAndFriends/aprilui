@@ -141,6 +141,10 @@
 		D1522EA1140F6A6B0012F290 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
 		D1522EA2140F6A6B0012F290 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042F11EC725B00851062 /* Util.cpp */; };
 		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
+		D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
+		D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
+		D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */; };
+		D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -240,6 +244,10 @@
 		D129D452140E6C7700CC5073 /* ObjectParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectParticle.h; path = include/aprilui/ObjectParticle.h; sourceTree = "<group>"; };
 		D1522E69140F6A040012F290 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1981D35140F913B0057C3AF /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
+		D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorTiledScrollerX.cpp; sourceTree = "<group>"; };
+		D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorTiledScrollerY.cpp; sourceTree = "<group>"; };
+		D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorTiledScrollerX.h; path = include/aprilui/AnimatorTiledScrollerX.h; sourceTree = "<group>"; };
+		D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorTiledScrollerY.h; path = include/aprilui/AnimatorTiledScrollerY.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +325,8 @@
 		7F6D54811201B06200A2BDF6 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
+				D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */,
+				D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */,
 				7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */,
 				7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */,
 				7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */,
@@ -412,6 +422,8 @@
 		C942B3F113278C3300C1D1E8 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
+				D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */,
+				D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */,
 				7F33B207120FE2D5004B5E89 /* Animator.h */,
 				7FA3014212B647E200F71E5E /* AnimatorMoverY.h */,
 				7FA3014112B647E200F71E5E /* AnimatorMoverX.h */,
@@ -521,6 +533,8 @@
 				7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */,
 				7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */,
 				7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */,
+				D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */,
+				D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,6 +669,8 @@
 				7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */,
 				7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */,
 				D129D451140E6C6500CC5073 /* ObjectParticle.cpp in Sources */,
+				D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */,
+				D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,7 +739,10 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NO_PARTICLE,
+					_DEBUG,
+				);
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
@@ -750,6 +769,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = NO_PARTICLE;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
@@ -817,6 +837,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = NO_PARTICLE;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -860,7 +881,10 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NO_PARTICLE,
+					_DEBUG,
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -899,6 +923,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = NO_PARTICLE;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -924,6 +949,7 @@
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					NO_PARTICLE,
 					"DEBUG=1",
 					_DEBUG,
 					"$(inherited)",
@@ -959,6 +985,7 @@
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					NO_PARTICLE,
 					"DEBUG=1",
 					_DEBUG,
 					"$(inherited)",
@@ -992,6 +1019,7 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = NO_PARTICLE;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
@@ -1021,6 +1049,7 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = NO_PARTICLE;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
@@ -1050,6 +1079,7 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = NO_PARTICLE;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
