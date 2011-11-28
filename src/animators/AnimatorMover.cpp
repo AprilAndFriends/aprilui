@@ -54,13 +54,16 @@ namespace aprilui
 		void Mover::move(float dest_x, float dest_y, float time)
 		{
 			mDest = gvec2(dest_x, dest_y);
-			mSpeed = mDest - mParent->getPosition();
+			mStart = mParent->getPosition();
+			mSpeed = mDest - mStart;
 			mSpeed = mSpeed.normalized() * (mSpeed.length() / time);
 			mAccel.set(0, 0);
+			mT.set(0, 0);
 		}
 
 		void Mover::update(float k)
 		{
+			if (mSpeed.x == 0 && mSpeed.y == 0) return;
 			gvec2 v = mParent->getPosition();
 			if (v.x == mDest.x && v.y == mDest.y)
 			{
@@ -71,17 +74,20 @@ namespace aprilui
                 mDelay = hmax(0.0f, mDelay - k);
                 return;
             }
-			gvec2 old = v;
-			v += mSpeed * k;
-			if (sgn(mDest.x - old.x) != sgn(mDest.x - v.x) || sgn(mDest.y - old.y) != sgn(mDest.y - v.y))
-			{
-				v.x = mDest.x;
-				v.y = mDest.y;
-			}
+
 			if (fabs(mAccel.x) > 0.01f || fabs(mAccel.y) > 0.01f)
 			{
 				mSpeed += mAccel * k;
 			}
+			gvec2 vec = mDest - mStart;
+			float speedx = fabs(mSpeed.x / vec.x);
+			float speedy = fabs(mSpeed.y / vec.y);
+			mT.x += k * speedx;
+			mT.y += k * speedy;
+			if (mT.x < 1.0f && mT.y < 1.0f)
+				v = mStart + gvec2(vec.x*mT.x, vec.y*mT.y);
+			else
+				v = mDest;
 			mParent->setPosition(v);
 		}
 		

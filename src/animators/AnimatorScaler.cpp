@@ -30,6 +30,7 @@ namespace aprilui
 			mInitialSize.x = 0.0f;
 			mDest.y = -10000.0f;
 			mDest.x = -10000.0f;
+			mT.set(0,0);
 		}
 
 		bool Scaler::isAnimated()
@@ -60,13 +61,16 @@ namespace aprilui
 		void Scaler::scale(float dest_w, float dest_h, float time)
 		{
 			mDest = gvec2(dest_w, dest_h);
-			mSpeed = mDest - mParent->getSize();
+			mStart = mParent->getSize();
+			mSpeed = mDest - mStart;
 			mSpeed = mSpeed.normalized() * (mSpeed.length() / time);
 			mAccel.set(0, 0);
+			mT.set(0,0);
 		}
 
 		void Scaler::update(float k)
 		{
+			if (mSpeed.x == 0 && mSpeed.y == 0) return;
 			gvec2 v = mParent->getSize();
 			if (v.x == mDest.x && v.y == mDest.y)
 			{
@@ -77,18 +81,21 @@ namespace aprilui
                 mDelay = hmax(0.0f, mDelay - k);
                 return;
             }
-			gvec2 old = v;
 			if (fabs(mAccel.y) > 0.01f || fabs(mAccel.x) > 0.01f)
 			{
 				mSpeed += mAccel * k;
 			}
-			v += mSpeed * k;
-			if (sgn(mDest.x - old.x) != sgn(mDest.x - v.x) || sgn(mDest.y - old.y) != sgn(mDest.y - v.y))
-			{
+			
+			gvec2 vec = mDest - mStart;
+			float speedx = fabs(mSpeed.x / vec.x);
+			float speedy = fabs(mSpeed.y / vec.y);
+			mT.x += k * speedx;
+			mT.y += k * speedy;
+			if (mT.x < 1.0f && mT.y < 1.0f)
+				v = mStart + gvec2(vec.x*mT.x, vec.y*mT.y);
+			else
 				v = mDest;
-			}
 			mParent->setSize(v);
 		}
-		
 	}
 }
