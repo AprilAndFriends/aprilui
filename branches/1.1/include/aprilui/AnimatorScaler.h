@@ -37,8 +37,8 @@ namespace aprilui
 			gvec2 mInitialS;
 			gvec2 mAccel;
 			gvec2 mSpeed;
-			gvec2 mDest;
-			
+			gvec2 mDest,mStart;
+			gvec2 mT;
 		};
 	}
 }
