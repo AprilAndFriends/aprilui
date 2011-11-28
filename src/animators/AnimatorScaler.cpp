@@ -87,8 +87,8 @@ namespace aprilui
 			}
 			
 			gvec2 vec = mDest - mStart;
-			float speedx = fabs(mSpeed.x / vec.x);
-			float speedy = fabs(mSpeed.y / vec.y);
+			float speedx = vec.x == 0 ? 0 : fabs(mSpeed.x / vec.x);
+			float speedy = vec.y == 0 ? 0 : fabs(mSpeed.y / vec.y);
 			mT.x += k * speedx;
 			mT.y += k * speedy;
 			if (mT.x < 1.0f && mT.y < 1.0f)
