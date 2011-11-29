@@ -24,6 +24,7 @@ namespace aprilui
 		{
 			mDest.x = -10000.0f;
 			mDest.y = -10000.0f;
+			mStart.set(-10000.0f,-10000.0f);
 		}
 
 		bool Mover::isAnimated()
@@ -79,6 +80,11 @@ namespace aprilui
 			{
 				mSpeed += mAccel * k;
 			}
+
+			if (mStart.x == -10000.0f)
+				mStart = mParent->getPosition();
+			if (mDest.x == -10000.0f)
+				mDest = mStart + mSpeed * 100000;
 			gvec2 vec = mDest - mStart;
 			float speedx = vec.x == 0 ? 0 : fabs(mSpeed.x / vec.x);
 			float speedy = vec.y == 0 ? 0 : fabs(mSpeed.y / vec.y);
