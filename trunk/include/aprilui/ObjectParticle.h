@@ -37,6 +37,7 @@ namespace aprilui
 		void setGlobalSpace(bool value) { mGlobalSpace = value; }
 		aprilparticle::System* getSystem() { return mSystem; }
 		bool isRunning();
+		bool isExpired();
 		
 		void notifyEvent(chstr name, void* params);
 
