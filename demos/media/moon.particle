@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ParticleSystem name="moon">
-	
-	<Emitter type="Point" dimensions="16,16,0" blend_mode="add" emission_rate="5" limit="5" life="1">
-		<Affector type="ColorChanger" start_color="FF3F00" end_color="FF3F00"/>
-		<Texture filename="moon"/>
-	</Emitter>
-	
-</ParticleSystem>

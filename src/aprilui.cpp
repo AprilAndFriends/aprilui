@@ -44,10 +44,6 @@ namespace aprilui
 	grect screenViewport;
 	bool debugMode = false;
 	hstr defaultTextsPath = "texts";
-#ifndef NO_PARTICLE
-	hstr defaultParticlesPath = "particles";
-	bool particlesEnabled = true;
-#endif
 	hstr localization = "";
 	void aprilui_writelog(chstr message)
 	{
@@ -85,9 +81,6 @@ namespace aprilui
 		APRILUI_REGISTER_OBJECT_TYPE(TextButton);
 		APRILUI_REGISTER_OBJECT_TYPE(TextImageButton);
 		APRILUI_REGISTER_OBJECT_TYPE(ToggleButton);
-#ifndef NO_PARTICLE
-		APRILUI_REGISTER_OBJECT_TYPE(Particle);
-#endif
 
 		REGISTER_ANIMATOR_TYPE(AlphaChanger);
 		REGISTER_ANIMATOR_TYPE(BlueChanger);
@@ -195,28 +188,6 @@ namespace aprilui
 		defaultTextsPath = value;
 	}
 	
-#ifndef NO_PARTICLE
-	hstr getDefaultParticlesPath()
-	{
-		return defaultParticlesPath;
-	}
-	
-	void setDefaultParticlesPath(chstr value)
-	{
-		defaultParticlesPath = value;
-	}
-
-	bool isParticlesEnabled()
-	{
-		return particlesEnabled;
-	}
-	
-	void setParticlesEnabled(bool value)
-	{
-		particlesEnabled = value;
-	}
-#endif
-
 	hstr getLocalization()
 	{
 		return localization;

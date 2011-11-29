@@ -4,7 +4,7 @@
 	Version="9,00"
 	Name="demo_gui"
 	ProjectGUID="{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}"
-	RootNamespace="demo_zorder"
+	RootNamespace="demo_gui"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>

@@ -113,27 +113,6 @@
     <File Name="include/aprilui/MemberCallbackEvent.h"/>
   </VirtualDirectory>
   <Dependencies Name="Release"/>
-  <Dependencies Name="Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-    <Project Name="libhlxml"/>
-  </Dependencies>
-  <Dependencies Name="Linux_Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-    <Project Name="libhlxml"/>
-  </Dependencies>
-  <Dependencies Name="Release_Win32">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-    <Project Name="libhlxml"/>
-  </Dependencies>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -378,4 +357,27 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+    <Project Name="libhlxml"/>
+  </Dependencies>
+  <Dependencies Name="Debug_Particle"/>
+  <Dependencies Name="Linux_Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+    <Project Name="libhlxml"/>
+  </Dependencies>
+  <Dependencies Name="Release_Particle_Win32"/>
+  <Dependencies Name="Release_Win32">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+    <Project Name="libhlxml"/>
+  </Dependencies>
 </CodeLite_Project>
