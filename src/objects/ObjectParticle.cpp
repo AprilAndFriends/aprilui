@@ -40,6 +40,11 @@ namespace aprilui
 		return (mSystem != NULL && mSystem->isRunning());
 	}
 
+	bool Particle::isExpired()
+	{
+		return (mSystem != NULL && mSystem->isExpired());
+	}
+
 	void Particle::load(chstr filename)
 	{
 		mFilename = filename;

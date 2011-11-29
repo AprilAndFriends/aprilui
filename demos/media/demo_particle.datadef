@@ -1,46 +1,12 @@
 <?xml version="1.0" ?>
 <DataDefinition>
 
-	<Texture filename="../media/texture">
-		<Image name="test" x="0" y="0" w="512" h="512"/>
-		<Image name="test_blue_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7F7FFF7F"/>
-		<Image name="test_orange_add" x="0" y="0" w="512" h="512" blend_mode="add" color="FFBF7FBF"/>
-		<Image name="test_grey" x="0" y="0" w="512" h="512" color="7F7F7F"/>
-		<Image name="test_green" x="0" y="0" w="512" h="512" color="7FFF7F"/>
-		<Image name="test_green_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7FFF7FFF"/>
-		<Image name="test_blue" x="0" y="0" w="512" h="512" color="7F7FFF"/>
-		<Image name="test_yellow" x="0" y="0" w="512" h="512" color="FFFF7F"/>
-		<Image name="test_red" x="0" y="0" w="512" h="512" color="FF7F7F"/>
-    </Texture>
-	<Texture filename="../media/transparency">
-		<Image name="test" x="0" y="0" w="512" h="512"/>
-    </Texture>
-	
-	<CompositeImage name="texture/test_hover" w="512" h="512">
-		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_blue_add" x="0" y="0" w="512" h="512"/>
-	</CompositeImage>
-	
-	<CompositeImage name="texture/test_hover_2" w="512" h="512">
-		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_orange_add" x="0" y="0" w="512" h="512"/>
-	</CompositeImage>
-	
-	<CompositeImage name="texture/test_hover_3" w="512" h="512">
-		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_orange_add" x="128" y="128" w="384" h="384"/>
-	</CompositeImage>
-	
-	<CompositeImage name="texture/test_hover_4" w="512" h="512">
-		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_green_add" x="0" y="0" w="512" h="512"/>
-	</CompositeImage>
-	
 	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
 		<Object type="ColoredQuad" name="background" color="000000" x="0" y="0" w="800" h="600"/>
 		<Object type="Particle" name="rain" filename="rain.particle" x="100" y="100"/>
 		<Object type="Particle" name="glow" filename="glow.particle" x="350" y="297.5" w="100" h="5"/>
 		<Object type="Particle" name="cannon" filename="cannon.particle" x="600" y="450"/>
+		<Object type="Particle" name="moon" filename="moon.particle" x="100" y="500"/>
 		
 	</Object>
 	
