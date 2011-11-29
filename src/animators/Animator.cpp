@@ -16,8 +16,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	Animator::Animator(chstr type, chstr name) :
-		Object("Animators::" + type, name, grect(0, 0, 1, 1))
+	Animator::Animator(chstr name) :
+		Object(name, grect(0, 0, 1, 1))
 	{
 		mTimeSinceLastFrame = 0.0f;
 		mValue = 0.0f;

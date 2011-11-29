@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ResizerX::ResizerX(chstr name) : Animator("ResizerX", name)
+		ResizerX::ResizerX(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* ResizerX::createInstance(chstr name)
+		{
+			return new ResizerX(name);
 		}
 
 		void ResizerX::notifyEvent(chstr name, void* params)

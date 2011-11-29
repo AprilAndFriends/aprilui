@@ -23,7 +23,7 @@ Copyright (c) 2011 Boris Mikic                                                  
 namespace aprilui
 {
 	Particle::Particle(chstr name, grect rect) :
-		Object("Particle", name, rect)
+		Object(name, rect)
 	{
 		mGlobalSpace = false;
 		mInitialPosition = getPosition();
@@ -33,6 +33,11 @@ namespace aprilui
 	Particle::~Particle()
 	{
 		stopSystem();
+	}
+
+	Object* Particle::createInstance(chstr name, grect rect)
+	{
+		return new Particle(name, rect);
 	}
 
 	bool Particle::isRunning()

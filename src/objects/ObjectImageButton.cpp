@@ -20,11 +20,20 @@ namespace aprilui
 		ButtonBase(),
 		ImageBox(name, rect)
 	{
-		_setTypeName("ImageButton");
 		mNormalImage = NULL;
 		mPushedImage = NULL;
 		mHoverImage = NULL;
 		mDisabledImage = NULL;
+	}
+
+	Object* ImageButton::createInstance(chstr name, grect rect)
+	{
+		return new ImageButton(name, rect);
+	}
+
+	hstr ImageButton::getName()
+	{
+		return ImageBox::getName();
 	}
 
 	Object* ImageButton::getParent()

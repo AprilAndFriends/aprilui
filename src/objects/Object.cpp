@@ -80,9 +80,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	Object::Object(chstr type, chstr name, grect rect)
+	Object::Object(chstr name, grect rect)
 	{
-		mTypeName = type;
 		mName = name;
 		mRect = rect;
 		if (mRect.w != -1)

@@ -26,7 +26,6 @@ namespace aprilui
 		Label(name, rect)
 	{
 		mText = "";
-		mTypeName = "EditBox";
 		mHorzFormatting = atres::LEFT;
 		mTextFormatting = false;
 		mPushed = false;
@@ -40,6 +39,11 @@ namespace aprilui
         mBackground = true;
 		/// TODO - remove
 		mSpaceHack = false;
+	}
+
+	Object* EditBox::createInstance(chstr name, grect rect)
+	{
+		return new EditBox(name, rect);
 	}
 
 	void EditBox::update(float time)

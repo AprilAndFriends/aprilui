@@ -22,8 +22,7 @@ namespace aprilui
 	{
 	public:
 		Container(chstr name, grect rect);
-		
-		bool setProperty(chstr name, chstr value);
+		static Object* createInstance(chstr name, grect rect);
 		
 	};
 }

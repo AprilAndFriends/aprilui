@@ -17,10 +17,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "apriluiExport.h"
 
+#define APRILUI_REGISTER_OBJECT_TYPE(name) aprilui::registerObjectFactory(#name, &name::createInstance)
+#define APRILUI_REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(#name, &name::createInstance)
+
 namespace aprilui
 {
+	class Animator;
 	class Dataset;
 	class Image;
+	class Object;
 	
 	apriluiFnExport void init();
 	apriluiFnExport void destroy();
@@ -53,6 +58,9 @@ namespace aprilui
 	apriluiFnExport hstr getLocalization();
 	apriluiFnExport void setLocalization(chstr localization);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
+
+	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect));
+	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));
 	
     apriluiFnExport void updateCursorPosition();
     apriluiFnExport void setCursorPosition(gvec2 position);

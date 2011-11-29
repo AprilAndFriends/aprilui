@@ -20,8 +20,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		TiledScrollerX::TiledScrollerX(chstr name) : Animator("TiledScrollerX", name)
+		TiledScrollerX::TiledScrollerX(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* TiledScrollerX::createInstance(chstr name)
+		{
+			return new TiledScrollerX(name);
 		}
 
 		void TiledScrollerX::notifyEvent(chstr name, void* params)

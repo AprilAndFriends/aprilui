@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Animator("Rotator", name)
+		Rotator::Rotator(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* Rotator::createInstance(chstr name)
+		{
+			return new Rotator(name);
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)

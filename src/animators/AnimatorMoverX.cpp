@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		MoverX::MoverX(chstr name) : Animator("MoverX", name)
+		MoverX::MoverX(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* MoverX::createInstance(chstr name)
+		{
+			return new MoverX(name);
 		}
 
 		void MoverX::notifyEvent(chstr name, void* params)

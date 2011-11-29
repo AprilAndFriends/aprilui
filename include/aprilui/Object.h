@@ -29,7 +29,7 @@ namespace aprilui
 	class apriluiExport Object
 	{
 	public:
-		Object(chstr type, chstr name, grect rect);
+		Object(chstr name, grect rect);
 		virtual ~Object();
 		
 		void addChild(Object* object);
@@ -47,9 +47,7 @@ namespace aprilui
 		Object* getChildUnderCursor();
 		void clearChildUnderCursor();
 		
-		int getZOrder() { return mZOrder; }
-		void setZOrder(int zorder);
-		
+		hstr getName() { return mName; }
 		bool isCursorInside();
 		virtual bool isPointInside(gvec2 position);
 		bool angleEquals(float angle);
@@ -73,6 +71,10 @@ namespace aprilui
 		void setSize(float w, float h);
 		grect getRect() { return mRect; }
 		void setRect(grect value);
+
+		int getZOrder() { return mZOrder; }
+		void setZOrder(int zorder);
+		
 		gvec2 getScale() { return mScale; }
 		void setScale(gvec2 value) { mScale = value; }
 		void setScale(float x, float y) { mScale.x = x; mScale.y = y; }
@@ -80,6 +82,7 @@ namespace aprilui
 		void setScaleX(float value) { mScale.x = value; }
 		float getScaleY() { return mScale.y; }
 		void setScaleY(float value) { mScale.y = value; }
+
 		gvec2 getCenter() { return mCenter; }
 		void setCenter(gvec2 value) { mCenter = value; }
 		void setCenter(float x, float y) { mCenter.x = x; mCenter.y = y; }
@@ -88,10 +91,10 @@ namespace aprilui
 		float getCenterY() { return mCenter.y; }
 		void setCenterY(float value) { mCenter.y = value; }
 		
-		float getAngle() { return mAngle; }
-		void setAngle(float value) { mAngle = value; }
 		bool isEnabled() { return mEnabled; }
 		void setEnabled(bool value) { mEnabled = value; }
+		float getAngle() { return mAngle; }
+		void setAngle(float value) { mAngle = value; }
 		bool isAnchorLeft() { return mAnchorLeft; }
 		void setAnchorLeft(bool value) { mAnchorLeft = value; }
 		bool isAnchorRight() { return mAnchorRight; }
@@ -120,19 +123,15 @@ namespace aprilui
 		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
 		bool getVisibilityFlag() { return mVisible; }
+
 		grect getDerivedRect();
 		gvec2 getDerivedPosition();
 		gvec2 getDerivedSize();
 		gvec2 getDerivedCenter();
 		gvec2 getDerivedScale();
-		
 		virtual bool isAnimated();
 		virtual bool isWaitingAnimation();
 		bool hasDynamicAnimation();
-		
-		void _setTypeName(chstr type) { mTypeName = type; }
-		hstr getType() { return mTypeName; }
-		hstr getName() { return mName; }
 		
 		// if a childs event returns true, event is not propagated to parents
 		virtual bool onMouseDown(float x, float y, int button);
@@ -226,7 +225,6 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
 
 	protected:
-		hstr mTypeName;
 		hstr mName;
 		grect mRect;
 		gvec2 mScale;

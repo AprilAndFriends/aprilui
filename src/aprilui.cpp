@@ -18,16 +18,21 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 #include <hltypes/util.h>
 
+#include "Animators.h"
 #include "aprilui.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Image.h"
-#include "ObjectButtonBase.h"
+#include "Objects.h"
+
+#define REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(#name, &Animators::name::createInstance)
 
 namespace aprilui
 {
 	bool registerLock = false;
 	hmap<hstr, Dataset*> gDatasets;
+	hmap<hstr, Object* (*)(chstr, grect)> gObjectFactories;
+	hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
 	float defaultScale = 1.0f;
 	Image* gCursor = NULL;
 	bool cursorVisible = true;
@@ -68,6 +73,36 @@ namespace aprilui
 		harray<unsigned char> allowedButtons;
 		allowedButtons += april::AK_LBUTTON;
 		ButtonBase::setAllowedButtons(allowedButtons);
+
+		APRILUI_REGISTER_OBJECT_TYPE(CallbackObject);
+		APRILUI_REGISTER_OBJECT_TYPE(ColoredQuad);
+		APRILUI_REGISTER_OBJECT_TYPE(Container);
+		APRILUI_REGISTER_OBJECT_TYPE(EditBox);
+		APRILUI_REGISTER_OBJECT_TYPE(ImageBox);
+		APRILUI_REGISTER_OBJECT_TYPE(ImageButton);
+		APRILUI_REGISTER_OBJECT_TYPE(Label);
+		APRILUI_REGISTER_OBJECT_TYPE(Slider);
+		APRILUI_REGISTER_OBJECT_TYPE(TextButton);
+		APRILUI_REGISTER_OBJECT_TYPE(TextImageButton);
+		APRILUI_REGISTER_OBJECT_TYPE(ToggleButton);
+#ifndef NO_PARTICLE
+		APRILUI_REGISTER_OBJECT_TYPE(Particle);
+#endif
+
+		REGISTER_ANIMATOR_TYPE(AlphaChanger);
+		REGISTER_ANIMATOR_TYPE(BlueChanger);
+		REGISTER_ANIMATOR_TYPE(FrameAnimation);
+		REGISTER_ANIMATOR_TYPE(GreenChanger);
+		REGISTER_ANIMATOR_TYPE(MoverX);
+		REGISTER_ANIMATOR_TYPE(MoverY);
+		REGISTER_ANIMATOR_TYPE(RedChanger);
+		REGISTER_ANIMATOR_TYPE(ResizerX);
+		REGISTER_ANIMATOR_TYPE(ResizerY);
+		REGISTER_ANIMATOR_TYPE(Rotator);
+		REGISTER_ANIMATOR_TYPE(ScalerX);
+		REGISTER_ANIMATOR_TYPE(ScalerY);
+		REGISTER_ANIMATOR_TYPE(TiledScrollerX);
+		REGISTER_ANIMATOR_TYPE(TiledScrollerY);
 	}
 	
 	void destroy()
@@ -196,7 +231,43 @@ namespace aprilui
 	{
 		return gDatasets;
 	}
-	
+
+	void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect))
+	{
+		if (gObjectFactories.has_key(typeName))
+		{
+			throw ObjectFactoryExistsException(typeName);
+		}
+		gObjectFactories[typeName] = factory;
+	}
+
+	void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr))
+	{
+		if (gAnimatorFactories.has_key(typeName))
+		{
+			throw AnimatorFactoryExistsException(typeName);
+		}
+		gAnimatorFactories[typeName] = factory;
+	}
+
+	Object* _createObject(chstr typeName, chstr name, grect rect)
+	{
+		if (gObjectFactories.has_key(typeName))
+		{
+			return (*gObjectFactories[typeName])(name, rect);
+		}
+		return NULL;
+	}
+
+	Animator* _createAnimator(chstr typeName, chstr name)
+	{
+		if (gAnimatorFactories.has_key(typeName))
+		{
+			return (*gAnimatorFactories[typeName])(name);
+		}
+		return NULL;
+	}
+
     void updateCursorPosition()
     {
 		april::Window* window = april::rendersys->getWindow();

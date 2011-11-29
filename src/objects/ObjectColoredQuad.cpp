@@ -17,10 +17,15 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	ColoredQuad::ColoredQuad(chstr name, grect rect) :
-		Object("ColoredQuad", name, rect)
+		Object(name, rect)
 	{
 	}
 	
+	Object* ColoredQuad::createInstance(chstr name, grect rect)
+	{
+		return new ColoredQuad(name, rect);
+	}
+
 	void ColoredQuad::OnDraw()
 	{
 		april::Color color = mColor;

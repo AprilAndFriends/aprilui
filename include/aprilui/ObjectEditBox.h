@@ -22,6 +22,7 @@ namespace aprilui
 	{
 	public:
 		EditBox(chstr name, grect rect);
+		static Object* createInstance(chstr name, grect rect);
 		
 		int getCursorIndex() { return mCursorIndex; }
 		void setCursorIndex(int cursorIndex);

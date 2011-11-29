@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ScalerY::ScalerY(chstr name) : Animator("ScalerY", name)
+		ScalerY::ScalerY(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* ScalerY::createInstance(chstr name)
+		{
+			return new ScalerY(name);
 		}
 
 		void ScalerY::notifyEvent(chstr name, void* params)

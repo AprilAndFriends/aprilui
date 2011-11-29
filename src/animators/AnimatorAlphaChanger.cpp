@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		AlphaChanger::AlphaChanger(chstr name) : Animator("AlphaChanger", name)
+		AlphaChanger::AlphaChanger(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* AlphaChanger::createInstance(chstr name)
+		{
+			return new AlphaChanger(name);
 		}
 
 		void AlphaChanger::notifyEvent(chstr name, void* params)

@@ -23,8 +23,9 @@ namespace aprilui
 	{
 	public:
 		ButtonBase();
-		~ButtonBase();
+		virtual ~ButtonBase();
 		
+		virtual hstr getName() = 0;
 		virtual bool isCursorInside() = 0;
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;

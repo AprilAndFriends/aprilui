@@ -17,9 +17,14 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	ImageBox::ImageBox(chstr name, grect rect) :
-		Object("ImageBox", name, rect)
+		Object(name, rect)
 	{
 		mImage = NULL;
+	}
+
+	Object* ImageBox::createInstance(chstr name, grect rect)
+	{
+		return new ImageBox(name, rect);
 	}
 
 	void ImageBox::setImage(Image* image)
