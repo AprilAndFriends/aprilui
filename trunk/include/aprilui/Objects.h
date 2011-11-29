@@ -26,6 +26,5 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectTextButton.h"
 #include "ObjectTextImageButton.h"
 #include "ObjectToggleButton.h"
-#include "ObjectParticle.h"
 
 #endif

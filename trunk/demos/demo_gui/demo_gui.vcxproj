@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}</ProjectGuid>
-    <RootNamespace>demo_zorder</RootNamespace>
+    <RootNamespace>demo_gui</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
