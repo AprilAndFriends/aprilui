@@ -30,6 +30,7 @@ namespace aprilui
 			mInitialSize.x = 0.0f;
 			mDest.y = -10000.0f;
 			mDest.x = -10000.0f;
+			mStart.set(-10000.0f, -10000.0f);
 			mT.set(0,0);
 		}
 
@@ -85,7 +86,10 @@ namespace aprilui
 			{
 				mSpeed += mAccel * k;
 			}
-			
+			if (mStart.x == -10000.0f)
+				mStart = mParent->getSize();
+			if (mDest.x == -10000.0f)
+				mDest = mStart + mSpeed * 100000;		
 			gvec2 vec = mDest - mStart;
 			float speedx = vec.x == 0 ? 0 : fabs(mSpeed.x / vec.x);
 			float speedy = vec.y == 0 ? 0 : fabs(mSpeed.y / vec.y);
