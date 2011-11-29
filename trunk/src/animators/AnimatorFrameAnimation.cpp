@@ -20,11 +20,16 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		FrameAnimation::FrameAnimation(chstr name) : Animator("FrameAnimation", name)
+		FrameAnimation::FrameAnimation(chstr name) : Animator(name)
 		{
 			mImageBaseName = "";
 			mFirstFrame = 0;
 			mFrameCount = 0;
+		}
+
+		Animator* FrameAnimation::createInstance(chstr name)
+		{
+			return new FrameAnimation(name);
 		}
 
 		bool FrameAnimation::isAnimated()

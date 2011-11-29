@@ -29,6 +29,10 @@ namespace aprilui
 		mTextKey = "";
 	}
 
+	LabelBase::~LabelBase()
+	{
+	}
+
 	void LabelBase::_drawLabel(grect rect, unsigned char alpha)
 	{
 		april::Color color(mTextColor, (unsigned char)(alpha * mTextColor.a_f()));

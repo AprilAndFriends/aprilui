@@ -19,9 +19,19 @@ namespace aprilui
 {
 	Label::Label(chstr name, grect rect) :
 		LabelBase(),
-		Object("Label", name, rect)
+		Object(name, rect)
 	{
 		mText = "Label: " + name;
+	}
+
+	Object* Label::createInstance(chstr name, grect rect)
+	{
+		return new Label(name, rect);
+	}
+
+	hstr Label::getName()
+	{
+		return Object::getName();
 	}
 
 	void Label::OnDraw()

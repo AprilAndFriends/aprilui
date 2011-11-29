@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			FrameAnimation(chstr name);
+			static Animator* createInstance(chstr name);
 
 			bool isAnimated();
 			hstr getImageBaseName() { return mImageBaseName; }

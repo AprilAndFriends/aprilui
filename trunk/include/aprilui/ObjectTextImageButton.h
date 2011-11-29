@@ -23,7 +23,9 @@ namespace aprilui
 	{
 	public:
 		TextImageButton(chstr name, grect rect);
+		static Object* createInstance(chstr name, grect rect);
 
+		hstr getName();
 		bool getUseDisabledColor() { return mUseDisabledColor; }
 		void setUseDisabledColor(bool value) { mUseDisabledColor = value; }
 

@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		RedChanger::RedChanger(chstr name) : Animator("RedChanger", name)
+		RedChanger::RedChanger(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* RedChanger::createInstance(chstr name)
+		{
+			return new RedChanger(name);
 		}
 
 		void RedChanger::notifyEvent(chstr name, void* params)

@@ -32,6 +32,8 @@ namespace aprilui
 {
 	void _registerDataset(chstr name, Dataset* dataset);
 	void _unregisterDataset(chstr name, Dataset* dataset);
+	Object* _createObject(chstr type, chstr name, grect rect);
+	Animator* _createAnimator(chstr type, chstr name);
 	
 	NullImage nullImage;
 	
@@ -357,48 +359,21 @@ namespace aprilui
 		{
 			throw ResourceExistsException(objectName, "Object", this);
 		}
-		Object* object;
-		
-	#define parse(cls) if (className == #cls) object = new cls(objectName, rect)
-	#define parse_animator(cls) if (className == #cls) object = new Animators::cls(objectName)
-		
-		/*if*/parse(CallbackObject);
-		else  parse(ColoredQuad);
-		else  parse(Container);
-		else  parse(ImageBox);
-		else  parse(ImageButton);
-		else  parse(TextImageButton);
-		else  parse(Slider);
-		else  parse(ToggleButton);
-		else  parse(Label);
-		else  parse(TextButton);
-		else  parse(EditBox);
-#ifndef NO_PARTICLE
-		else  parse(Particle);
-#endif
+
+		Object* object = NULL;
+		if (*node == "Object")
+		{
+			object = aprilui::_createObject(className, objectName, rect);
+		}
 		else if (*node == "Animator")
 		{
-			/*if*/parse_animator(AlphaChanger);
-			else  parse_animator(BlueChanger);
-			else  parse_animator(FrameAnimation);
-			else  parse_animator(GreenChanger);
-			else  parse_animator(MoverX);
-			else  parse_animator(MoverY);
-			else  parse_animator(RedChanger);
-			else  parse_animator(Rotator);
-			else  parse_animator(ResizerX);
-			else  parse_animator(ResizerY);
-			else  parse_animator(ScalerX);
-			else  parse_animator(ScalerY);
-			else  parse_animator(TiledScrollerX);
-			else  parse_animator(TiledScrollerY);
-			else object = parseExternalObjectClass(node, objectName, rect);
+			object = aprilui::_createAnimator(className, objectName);
 		}
-		else
+		if (object == NULL)
 		{
 			object = parseExternalObjectClass(node, objectName, rect);
 		}
-		
+
 		if (object == NULL)
 		{
 			throw hlxml::XMLUnknownClassException(className, node);
@@ -415,7 +390,7 @@ namespace aprilui
 		}
         hstr name;
 
-		for (hlxml::Property* prop = node->iterProperties(); prop != NULL; prop = prop->next())
+		foreach_xmlproperty (prop, node)
 		{
             name = prop->name();
             if (name == "x" || name == "y" || name == "w" || name == "h")

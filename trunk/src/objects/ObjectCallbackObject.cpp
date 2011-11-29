@@ -15,17 +15,17 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	CallbackObject::CallbackObject(chstr name, grect rect) :
-		Object("CallbackObject", name, rect)
+		Object(name, rect)
 	{
 		mDrawCallback = NULL;
 		mUpdateCallback = NULL;
 	}
 
-	bool CallbackObject::setProperty(chstr name, chstr value)
+	Object* CallbackObject::createInstance(chstr name, grect rect)
 	{
-		return Object::setProperty(name, value);
+		return new CallbackObject(name, rect);
 	}
-	
+
 	void CallbackObject::OnDraw()
 	{
 		if (mDrawCallback != NULL)

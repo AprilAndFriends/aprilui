@@ -33,7 +33,7 @@ namespace aprilui
 			Custom
 		};
 	
-		Animator(chstr type, chstr name);
+		Animator(chstr name);
 		
 		AnimationFunction getAnimationFunction() { return mFunction; }
 		void setAnimationFunction(AnimationFunction value) { mFunction = value; }

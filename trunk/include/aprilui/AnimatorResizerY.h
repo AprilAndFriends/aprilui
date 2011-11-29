@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			ResizerY(chstr name);
+			static Animator* createInstance(chstr name);
 			
 			void notifyEvent(chstr name, void* params);
 			

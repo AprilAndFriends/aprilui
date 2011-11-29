@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		MoverY::MoverY(chstr name) : Animator("MoverY", name)
+		MoverY::MoverY(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* MoverY::createInstance(chstr name)
+		{
+			return new MoverY(name);
 		}
 
 		void MoverY::notifyEvent(chstr name, void* params)

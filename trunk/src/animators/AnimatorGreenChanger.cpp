@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		GreenChanger::GreenChanger(chstr name) : Animator("GreenChanger", name)
+		GreenChanger::GreenChanger(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* GreenChanger::createInstance(chstr name)
+		{
+			return new GreenChanger(name);
 		}
 
 		void GreenChanger::notifyEvent(chstr name, void* params)

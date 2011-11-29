@@ -18,8 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		BlueChanger::BlueChanger(chstr name) : Animator("BlueChanger", name)
+		BlueChanger::BlueChanger(chstr name) : Animator(name)
 		{
+		}
+
+		Animator* BlueChanger::createInstance(chstr name)
+		{
+			return new BlueChanger(name);
 		}
 
 		void BlueChanger::notifyEvent(chstr name, void* params)

@@ -30,6 +30,7 @@ namespace aprilui
 	public:
 		Particle(chstr name, grect rect);
 		~Particle();
+		static Object* createInstance(chstr name, grect rect);
 
 		hstr getFilename() { return mFilename; }
 		void setFilename(chstr value) { mFilename = value; }

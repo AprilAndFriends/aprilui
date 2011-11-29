@@ -21,11 +21,15 @@ namespace aprilui
 	Slider::Slider(chstr name, grect rect) :
 		ImageBox(name, rect)
 	{
-		_setTypeName("Slider");
 		mValue = 0.0f;
 		mPushed = false;
 	}
 	
+	Object* Slider::createInstance(chstr name, grect rect)
+	{
+		return new Slider(name, rect);
+	}
+
 	void Slider::update(float k)
 	{
 		ImageBox::update(k);

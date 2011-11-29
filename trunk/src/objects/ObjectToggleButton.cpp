@@ -28,12 +28,16 @@ namespace aprilui
 	ToggleButton::ToggleButton(chstr name, grect rect) :
 		ImageButton(name, rect)
 	{
-		_setTypeName("ToggleButton");
 		mToggled = false;
 		mToggledNormalImage = NULL;
 		mToggledHoverImage = NULL;
 		mToggledPushedImage = NULL;
 		mToggledDisabledImage = NULL;
+	}
+
+	Object* ToggleButton::createInstance(chstr name, grect rect)
+	{
+		return new ToggleButton(name, rect);
 	}
 
 	void ToggleButton::setToggledNormalImageByName(chstr image)

@@ -54,4 +54,18 @@ namespace aprilui
 		msg += "Cannot detach object '" + child + "' from object '" + parent + "', object is not a child";
 	}
 
+	_ObjectFactoryExistsException::_ObjectFactoryExistsException(chstr name,
+																 const char* file, int line) :
+							  _GenericException("", "ObjectFactoryExistsException", file, line)
+	{
+		msg += "Object factory named '" + name + "' already exists";
+	}
+
+	_AnimatorFactoryExistsException::_AnimatorFactoryExistsException(chstr name,
+																	 const char* file, int line) :
+							  _GenericException("", "AnimatorFactoryExistsException", file, line)
+	{
+		msg += "Animator factory named '" + name + "' already exists";
+	}
+
 }

@@ -23,7 +23,9 @@ namespace aprilui
 	{
 	public:
 		TextButton(chstr name, grect rect);
+		static Object* createInstance(chstr name, grect rect);
 		
+		hstr getName();
 		bool isCursorInside();
 		april::Color getHoverTextColor() { return mHoverTextColor; }
 		void setHoverTextColor(april::Color value) { mHoverTextColor = value; }

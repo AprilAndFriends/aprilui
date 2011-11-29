@@ -15,13 +15,13 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	Container::Container(chstr name, grect rect) :
-		Object("Container", name, rect)
+		Object(name, rect)
 	{
 	}
 
-	bool Container::setProperty(chstr name, chstr value)
+	Object* Container::createInstance(chstr name, grect rect)
 	{
-		return Object::setProperty(name, value);
+		return new Container(name, rect);
 	}
-	
+
 }

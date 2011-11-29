@@ -22,9 +22,18 @@ namespace aprilui
 		LabelBase(),
 		ImageButton(name, rect)
 	{
-		_setTypeName("TextImageButton");
 		mText = "TextImageButton: " + name;
 		mUseDisabledColor = true;
+	}
+
+	Object* TextImageButton::createInstance(chstr name, grect rect)
+	{
+		return new TextImageButton(name, rect);
+	}
+
+	hstr TextImageButton::getName()
+	{
+		return ImageButton::getName();
 	}
 
 	void TextImageButton::OnDraw()

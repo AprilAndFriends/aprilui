@@ -97,6 +97,26 @@ namespace aprilui
 
 	#define ObjectNotChildException(child, parent) _ObjectNotChildException(child, parent, __FILE__, __LINE__)
 
+	//---------------------------------------------------------------------------------------------------------
+
+	class apriluiExport _ObjectFactoryExistsException : public _GenericException
+	{
+	public:
+		_ObjectFactoryExistsException(chstr name, const char* file = "", int line = 0);
+	};
+
+	#define ObjectFactoryExistsException(name) _ObjectFactoryExistsException(name, __FILE__, __LINE__)
+
+	//---------------------------------------------------------------------------------------------------------
+
+	class apriluiExport _AnimatorFactoryExistsException : public _GenericException
+	{
+	public:
+		_AnimatorFactoryExistsException(chstr name, const char* file = "", int line = 0);
+	};
+
+	#define AnimatorFactoryExistsException(name) _AnimatorFactoryExistsException(name, __FILE__, __LINE__)
+
 }
 
 #endif

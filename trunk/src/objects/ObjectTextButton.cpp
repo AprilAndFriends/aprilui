@@ -21,11 +21,20 @@ namespace aprilui
 		ButtonBase()
 	{
 		mText = "TextButton: " + name;
-		mTypeName = "TextButton";
 		mBackground = true;
 		mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
 		mHoverTextColor = APRIL_COLOR_GREY;
 		mDisabledTextColor = APRIL_COLOR_GREY;
+	}
+
+	Object* TextButton::createInstance(chstr name, grect rect)
+	{
+		return new TextButton(name, rect);
+	}
+
+	hstr TextButton::getName()
+	{
+		return Label::getName();
 	}
 
 	Object* TextButton::getParent()

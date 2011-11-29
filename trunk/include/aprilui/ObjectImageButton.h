@@ -24,7 +24,9 @@ namespace aprilui
 	{
 	public:
 		ImageButton(chstr name, grect rect);
+		static Object* createInstance(chstr name, grect rect);
 		
+		hstr getName();
 		bool isCursorInside();
 		Image* getPushedImage() { return mPushedImage; }
 		void setPushedImage(Image* image) { mPushedImage = image; }
