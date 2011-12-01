@@ -97,29 +97,6 @@ namespace aprilui
 				destroyObject((*it), true);
 			}
 		}
-		mObjects.remove_key(object->getName());
-		delete object;
-	}
-	
-	void Dataset::destroyAndDetachObject(chstr name, bool recursive)
-	{
-		destroyAndDetachObject(getObject(name), recursive);
-	}
-	
-	void Dataset::destroyAndDetachObject(Object* object, bool recursive)
-	{
-		if (!mObjects.has_key(object->getName()))
-		{
-			throw ResourceNotExistsException(object->getName(), "Object", this);
-		}
-		if (recursive)
-		{
-			harray<Object*> children = object->getChildren();
-			foreach (Object*, it, children)
-			{
-				destroyObject((*it), true);
-			}
-		}
 		else
 		{
 			while (object->getChildren().size() > 0)
