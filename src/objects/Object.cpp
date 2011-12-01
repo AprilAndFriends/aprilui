@@ -188,7 +188,7 @@ namespace aprilui
 	{
 		while (mChildren.size() > 0)
 		{
-			mDataset->destroyAndDetachObject(mChildren[0], recursive);
+			mDataset->destroyObject(mChildren[0], recursive);
 		}
 	}
 	

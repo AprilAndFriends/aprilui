@@ -88,8 +88,8 @@ namespace aprilui
 		
 		void destroyObject(chstr name, bool recursive = false);
 		void destroyObject(Object* object, bool recursive = false);
-		void destroyAndDetachObject(chstr name, bool recursive = false);
-		void destroyAndDetachObject(Object* object, bool recursive = false);
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { destroyObject(name, recursive); }
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { destroyObject(object, recursive); }
 
 		bool onMouseDown(float x, float y, int button);
 		bool onMouseUp(float x, float y, int button);
