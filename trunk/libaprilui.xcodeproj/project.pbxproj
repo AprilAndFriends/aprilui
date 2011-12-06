@@ -140,8 +140,8 @@
 		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
 		D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
 		D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
-		D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */; };
-		D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */; };
+		D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -522,11 +522,11 @@
 				7FDB989A131BA90C0064B968 /* AnimatorResizerX.h in Headers */,
 				7FDB989B131BA90C0064B968 /* AnimatorResizerY.h in Headers */,
 				7FDB989C131BA90C0064B968 /* EventUtils.h in Headers */,
+				D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */,
+				D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */,
 				7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */,
 				7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */,
 				7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */,
-				D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */,
-				D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,10 +544,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libaprilui" */;
 			buildPhases = (
-				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF520486A6940098B216 /* Resources */,
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
+				8DC2EF500486A6940098B216 /* Headers */,
 			);
 			buildRules = (
 			);
