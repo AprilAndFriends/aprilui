@@ -55,6 +55,8 @@ namespace aprilui
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect));
 	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));
+	apriluiFnExport Object* createObject(chstr type, chstr name, grect rect);
+	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	
     apriluiFnExport void updateCursorPosition();
     apriluiFnExport void setCursorPosition(gvec2 position);

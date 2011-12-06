@@ -32,8 +32,6 @@ namespace aprilui
 {
 	void _registerDataset(chstr name, Dataset* dataset);
 	void _unregisterDataset(chstr name, Dataset* dataset);
-	Object* _createObject(chstr type, chstr name, grect rect);
-	Animator* _createAnimator(chstr type, chstr name);
 	
 	NullImage nullImage;
 	
@@ -340,11 +338,11 @@ namespace aprilui
 		Object* object = NULL;
 		if (*node == "Object")
 		{
-			object = aprilui::_createObject(className, objectName, rect);
+			object = aprilui::createObject(className, objectName, rect);
 		}
 		else if (*node == "Animator")
 		{
-			object = aprilui::_createAnimator(className, objectName);
+			object = aprilui::createAnimator(className, objectName);
 		}
 		if (object == NULL)
 		{

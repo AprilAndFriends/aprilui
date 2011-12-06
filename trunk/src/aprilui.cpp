@@ -221,7 +221,7 @@ namespace aprilui
 		gAnimatorFactories[typeName] = factory;
 	}
 
-	Object* _createObject(chstr typeName, chstr name, grect rect)
+	Object* createObject(chstr typeName, chstr name, grect rect)
 	{
 		if (gObjectFactories.has_key(typeName))
 		{
@@ -230,7 +230,7 @@ namespace aprilui
 		return NULL;
 	}
 
-	Animator* _createAnimator(chstr typeName, chstr name)
+	Animator* createAnimator(chstr typeName, chstr name)
 	{
 		if (gAnimatorFactories.has_key(typeName))
 		{
