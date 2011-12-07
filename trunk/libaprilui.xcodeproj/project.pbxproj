@@ -137,6 +137,8 @@
 		D1522EA0140F6A6B0012F290 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
 		D1522EA1140F6A6B0012F290 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
 		D1522EA2140F6A6B0012F290 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042F11EC725B00851062 /* Util.cpp */; };
+		D1688913149026EB004FD97F /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
+		D1688914149026EB004FD97F /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
 		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
 		D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
 		D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
@@ -669,6 +671,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1688913149026EB004FD97F /* AnimatorTiledScrollerX.cpp in Sources */,
+				D1688914149026EB004FD97F /* AnimatorTiledScrollerY.cpp in Sources */,
 				D1522E7A140F6A6B0012F290 /* MemberCallbackEvent.cpp in Sources */,
 				D1522E7B140F6A6B0012F290 /* aprilui.cpp in Sources */,
 				D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */,
@@ -730,6 +734,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
@@ -757,6 +762,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
@@ -869,7 +875,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
@@ -908,7 +914,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
