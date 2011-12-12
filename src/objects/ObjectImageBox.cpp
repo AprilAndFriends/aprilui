@@ -81,7 +81,7 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		april::Color color(mColor, getDerivedAlpha());
+		april::Color color = _getDrawColor();
 		if (!_isDerivedEnabled())
 		{
 			color.a /= 2;
@@ -93,13 +93,13 @@ namespace aprilui
 		else
 		{
 			grect rect = _getDrawRect();
-			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, 96);
-			april::rendersys->drawColoredQuad(grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2), drawColor);
-			drawColor = april::Color(APRIL_COLOR_WHITE, 96);
-			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, 1), drawColor);
-			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, 1, rect.h), drawColor);
-			april::rendersys->drawColoredQuad(grect(rect.x, rect.y + rect.h - 1, rect.w, 1), drawColor);
-			april::rendersys->drawColoredQuad(grect(rect.x + rect.w - 1, rect.y, 1, rect.h), drawColor);
+			april::Color backColor = april::Color(APRIL_COLOR_BLACK, 96);
+			april::rendersys->drawColoredQuad(grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2), backColor);
+			backColor = april::Color(APRIL_COLOR_WHITE, 96);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, 1), backColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, 1, rect.h), backColor);
+			april::rendersys->drawColoredQuad(grect(rect.x, rect.y + rect.h - 1, rect.w, 1), backColor);
+			april::rendersys->drawColoredQuad(grect(rect.x + rect.w - 1, rect.y, 1, rect.h), backColor);
 			mImage->draw(rect, color);
 		}
 		Object::OnDraw();

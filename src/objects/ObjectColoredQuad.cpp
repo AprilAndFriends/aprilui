@@ -28,12 +28,7 @@ namespace aprilui
 
 	void ColoredQuad::OnDraw()
 	{
-		april::Color color = mColor;
-		if (mInheritsAlpha)
-		{
-			color.a = (unsigned char)(getDerivedAlpha() * color.a_f());
-		}
-		april::rendersys->drawColoredQuad(_getDrawRect(), color);
+		april::rendersys->drawColoredQuad(_getDrawRect(), _getDrawColor());
 	}
 
 	bool ColoredQuad::setProperty(chstr name, chstr value)

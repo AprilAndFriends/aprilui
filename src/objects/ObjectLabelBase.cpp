@@ -7,6 +7,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <april/Color.h>
+#include <april/RenderSystem.h>
 #include <atres/atres.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
@@ -33,12 +35,12 @@ namespace aprilui
 	{
 	}
 
-	void LabelBase::_drawLabel(grect rect, unsigned char alpha)
+	void LabelBase::_drawLabel(grect rect, april::Color color)
 	{
-		april::Color color(mTextColor, (unsigned char)(alpha * mTextColor.a_f()));
+		color *= mTextColor;
 		if (aprilui::isDebugMode())
 		{
-			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, alpha / 2);
+			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, color.a / 2);
 			april::rendersys->drawColoredQuad(grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2), drawColor);
 			drawColor = april::Color(APRIL_COLOR_WHITE, drawColor.a);
 			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, 1), drawColor);

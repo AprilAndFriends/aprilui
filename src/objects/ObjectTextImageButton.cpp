@@ -39,12 +39,12 @@ namespace aprilui
 	void TextImageButton::OnDraw()
 	{
 		ImageButton::OnDraw();
-		unsigned char alpha = getDerivedAlpha();
+		april::Color color = _getDrawColor();
 		if (mUseDisabledColor && !_isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
 		{
-			alpha /= 2;
+			color.a /= 2;
 		}
-		LabelBase::_drawLabel(_getDrawRect(), alpha);
+		LabelBase::_drawLabel(_getDrawRect(), color);
 	}
     
     void TextImageButton::setTextKey(chstr value)

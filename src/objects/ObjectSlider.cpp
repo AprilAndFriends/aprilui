@@ -98,11 +98,11 @@ namespace aprilui
 		{
 			mImage = mDataset->getImage("null");
 		}
-		april::Color color(APRIL_COLOR_WHITE, getDerivedAlpha());
-		april::rendersys->drawColoredQuad(rect, color);
-		april::Color backgroundColor(color / 4.0f, color.a);
+		april::Color color = _getDrawColor();
+		april::rendersys->drawColoredQuad(rect, april::Color(APRIL_COLOR_WHITE, color.a));
+		april::Color backColor(color / 4.0f, color.a);
 		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
-		april::rendersys->drawColoredQuad(rect, backgroundColor);
+		april::rendersys->drawColoredQuad(rect, backColor);
 		rect = grect(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
 		mImage->draw(rect, color);
 	}

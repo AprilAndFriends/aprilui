@@ -258,6 +258,7 @@ namespace aprilui
 		bool _isDerivedEnabled();
 		bool _isDerivedClickThrough();
 		grect _getDrawRect();
+		april::Color _getDrawColor();
 		void _setParent(Object* value) { mParent = value; }
 
 		virtual void OnDraw() { }

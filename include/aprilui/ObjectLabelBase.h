@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_LABEL_BASE_H
 #define APRILUI_LABEL_BASE_H
 
+#include <april/Color.h>
 #include <april/RenderSystem.h>
 #include <atres/atres.h>
 #include <gtypes/Rectangle.h>
@@ -63,7 +64,7 @@ namespace aprilui
 		atres::Effect mFontEffect;
 		april::Color mTextColor;
 		
-		void _drawLabel(grect rect, unsigned char alpha);
+		void _drawLabel(grect rect, april::Color color);
 		
 	};
 	

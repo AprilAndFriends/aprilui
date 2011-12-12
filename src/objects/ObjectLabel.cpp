@@ -37,12 +37,12 @@ namespace aprilui
 	void Label::OnDraw()
 	{
 		Object::OnDraw();
-		unsigned char alpha = getDerivedAlpha();
+		april::Color color = _getDrawColor();
 		if (!_isDerivedEnabled())
 		{
-			alpha /= 2;
+			color.a /= 2;
 		}
-		LabelBase::_drawLabel(_getDrawRect(), alpha);
+		LabelBase::_drawLabel(_getDrawRect(), color);
 	}
 
 	void Label::notifyEvent(chstr name, void* params)

@@ -808,6 +808,16 @@ namespace aprilui
 		return grect(-mCenter, mRect.getSize());
 	}
 
+	april::Color Object::_getDrawColor()
+	{
+		april::Color color = mColor;
+		if (mInheritsAlpha)
+		{
+			color.a = getDerivedAlpha();
+		}
+		return color;
+	}
+
 	Animator* Object::moveX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
