@@ -62,7 +62,7 @@ namespace aprilui
 			return;
 		}
 		ImageBox::OnDraw();
-		if (enabled && mHover && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled()) // because "somebody" was too lazy to define hover images manually
+		if (enabled && mHovered && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled()) // because "somebody" was too lazy to define hover images manually
 		{
 			april::BlendMode blendMode = mImage->getBlendMode();
 			mImage->setBlendMode(april::ADD);
@@ -86,7 +86,7 @@ namespace aprilui
 				mImage = mDisabledImage;
 			}
 		}
-		else if (mHover)
+		else if (mHovered)
 		{
 			if (mPushed)
 			{

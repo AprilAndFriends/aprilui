@@ -24,7 +24,8 @@ namespace aprilui
 	public:
 		ButtonBase();
 		virtual ~ButtonBase();
-		
+
+		bool isHovered() { return mHovered; }
 		virtual hstr getName() = 0;
 		virtual bool isCursorInside() = 0;
 		virtual Object* getParent() = 0;
@@ -38,7 +39,7 @@ namespace aprilui
 		
 	protected:
 		bool mPushed;
-		bool mHover;
+		bool mHovered;
 		
 		virtual void update(float k);
 		bool _checkHover();

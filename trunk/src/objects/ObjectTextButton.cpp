@@ -65,7 +65,7 @@ namespace aprilui
 		{
 			mTextColor = mDisabledTextColor;
 		}
-		else if (mHover)
+		else if (mHovered)
 		{
 			if (mPushed)
 			{
@@ -79,7 +79,7 @@ namespace aprilui
 		if (mBackground)
 		{
 			grect rect = _getDrawRect();
-			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, ((mHover && mPushed) ? 255 : 191));
+			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, ((mHovered && mPushed) ? 255 : 191));
             april::rendersys->drawColoredQuad(grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2), drawColor);
 			drawColor = april::Color(mTextColor, drawColor.a);
 			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, 1), drawColor);
