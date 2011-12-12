@@ -22,7 +22,7 @@ namespace aprilui
 	ButtonBase::ButtonBase()
 	{
 		mPushed = false;
-		mHover = false;
+		mHovered = false;
 	}
 	
 	ButtonBase::~ButtonBase()
@@ -31,7 +31,7 @@ namespace aprilui
 	
 	void ButtonBase::update(float k)
 	{
-		mHover = _checkHover();
+		mHovered = _checkHover();
 	}
 
 	bool ButtonBase::_checkHover()
@@ -64,8 +64,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		mHover = _checkHover();
-		if (mHover)
+		mHovered = _checkHover();
+		if (mHovered)
 		{
 			mPushed = true;
 			return true;
@@ -79,8 +79,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		mHover = _checkHover();
-		if (mPushed && mHover)
+		mHovered = _checkHover();
+		if (mPushed && mHovered)
 		{
 			mPushed = false;
 			return true;
@@ -91,7 +91,7 @@ namespace aprilui
 
 	void ButtonBase::onMouseMove(float x, float y)
 	{
-		mHover = _checkHover();
+		mHovered = _checkHover();
 	}
 
 	void ButtonBase::setAllowedButtons(harray<unsigned char> buttons)
