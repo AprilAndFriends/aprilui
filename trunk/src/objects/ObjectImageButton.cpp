@@ -52,13 +52,13 @@ namespace aprilui
 		bool enabled = _isDerivedEnabled();
 		if (!enabled && mDisabledImage != NULL)
 		{
-			mDisabledImage->draw(rect, april::Color(mColor, getDerivedAlpha()));
+			mDisabledImage->draw(rect, _getDrawColor());
 			return;
 		}
 		bool cursorInside = isCursorInside();
 		if (mPushed && mPushedImage == NULL && cursorInside)
 		{
-			mImage->draw(rect, april::Color(mColor * 0.75f, getDerivedAlpha()));
+			mImage->draw(rect, april::Color(_getDrawColor() * 0.75f, getDerivedAlpha()));
 			return;
 		}
 		ImageBox::OnDraw();
@@ -66,7 +66,7 @@ namespace aprilui
 		{
 			april::BlendMode blendMode = mImage->getBlendMode();
 			mImage->setBlendMode(april::ADD);
-			mImage->draw(rect, april::Color(mColor, getDerivedAlpha() / 4));
+			mImage->draw(rect, april::Color(_getDrawColor(), getDerivedAlpha() / 4));
 			mImage->setBlendMode(blendMode);
 		}
 	}
