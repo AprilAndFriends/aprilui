@@ -128,6 +128,11 @@ namespace aprilui
 		return (a->getZOrder() < b->getZOrder());
 	}
 
+	hstr Object::getFullName()
+	{
+		return ((mDataset != NULL ? mDataset->getName() + "." : "") + mName);
+	}
+
 	void Object::_sortChildren()
 	{
 		mChildren.sort(&_objectSortCallback);
