@@ -48,6 +48,7 @@ namespace aprilui
 		void clearChildUnderCursor();
 		
 		hstr getName() { return mName; }
+		hstr getFullName();
 		bool isCursorInside();
 		virtual bool isPointInside(gvec2 position);
 		bool angleEquals(float angle);
