@@ -173,13 +173,13 @@ namespace aprilui
 		mDataset->unregisterManualObject(object);
 	}
 
-	void Object::removeAllChildren(bool recursive)
+	void Object::removeChildren(bool recursive)
 	{
 		if (recursive)
 		{
 			foreach (Object*, it, mChildren)
 			{
-				(*it)->removeAllChildren(recursive);
+				(*it)->removeChildren(recursive);
 			}
 		}
 		foreach (Object*, it, mChildren)
@@ -189,7 +189,7 @@ namespace aprilui
 		mChildren.clear();
 	}
 	
-	void Object::destroyAllChildren(bool recursive)
+	void Object::destroyChildren(bool recursive)
 	{
 		while (mChildren.size() > 0)
 		{

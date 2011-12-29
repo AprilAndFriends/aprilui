@@ -39,8 +39,10 @@ namespace aprilui
 		void attach(Object* object);
 		void detach();
 		Object* getParent() { return mParent; }
-		void removeAllChildren(bool recursive = false);
-        void destroyAllChildren(bool recursive = false);
+		void removeChildren(bool recursive = false);
+        void destroyChildren(bool recursive = false);
+		DEPRECATED_ATTRIBUTE void removeAllChildren(bool recursive = false) { this->removeChildren(recursive); }
+		DEPRECATED_ATTRIBUTE void destroyAllChildren(bool recursive = false) { this->destroyChildren(recursive); }
 		harray<Object*>& getChildren() { return mChildren; }
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);

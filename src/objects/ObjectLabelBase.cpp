@@ -38,7 +38,7 @@ namespace aprilui
 	void LabelBase::_drawLabel(grect rect, april::Color color)
 	{
 		color *= mTextColor;
-		if (aprilui::isDebugMode())
+		if (aprilui::isDebugEnabled())
 		{
 			april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w , rect.h), april::Color(APRIL_COLOR_BLACK, color.a / 2));
 			april::rendersys->drawQuad(grect(rect.x, rect.y, rect.w , rect.h), april::Color(APRIL_COLOR_WHITE, color.a / 2));

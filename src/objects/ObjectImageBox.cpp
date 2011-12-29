@@ -86,7 +86,7 @@ namespace aprilui
 		{
 			color.a /= 2;
 		}
-		if (!aprilui::isDebugMode())
+		if (!aprilui::isDebugEnabled())
 		{
 			mImage->draw(_getDrawRect(), color);
 		}
