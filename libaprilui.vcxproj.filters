@@ -160,9 +160,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Util.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\aprilui\Animators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -303,6 +300,9 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\AnimatorTiledScrollerY.h">
       <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

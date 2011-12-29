@@ -1,12 +1,13 @@
-/************************************************************************************\
-This source file is part of the APRIL User Interface Library                         *
-For latest info, see http://libaprilui.sourceforge.net/                              *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @author  Kresimir Spes
+/// @author  Boris Mikic
+/// @version 1.4
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
@@ -415,7 +416,7 @@ namespace aprilui
 	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent)
 	{
 		// parse dataset xml file, error checking first
-		hstr path = getPWD() + "/" + normalize_path(filename);
+		hstr path = normalize_path(filename);
 
 		log("parsing object include file " + path);
 		hlxml::Document doc(path);
@@ -455,7 +456,7 @@ namespace aprilui
 	void Dataset::readFile(chstr filename)
 	{
 		// parse dataset xml file, error checking first
-		hstr path = getPWD() + "/" + normalize_path(filename);
+		hstr path = normalize_path(filename);
 #ifdef NO_FS_TREE
 		path = path.ltrim('.');
 		path = path.ltrim('/');

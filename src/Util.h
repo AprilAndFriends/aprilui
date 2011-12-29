@@ -1,12 +1,16 @@
-/************************************************************************************\
-This source file is part of the APRIL User Interface Library                         *
-For latest info, see http://libaprilui.sourceforge.net/                              *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @author  Boris Mikic
+/// @version 1.4
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+/// 
+/// @section DESCRIPTION
+/// 
+/// Defines utility functions used internally.
+
 #ifndef APRILUI_UTIL_H
 #define APRILUI_UTIL_H
 
@@ -18,7 +22,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	hstr generateName(chstr prefix);
-	hstr getPWD();
 	
 }
 #endif
