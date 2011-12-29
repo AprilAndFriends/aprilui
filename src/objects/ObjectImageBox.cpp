@@ -22,6 +22,10 @@ namespace aprilui
 		mImage = NULL;
 	}
 
+	ImageBox::~ImageBox()
+	{
+	}
+
 	Object* ImageBox::createInstance(chstr name, grect rect)
 	{
 		return new ImageBox(name, rect);

@@ -27,6 +27,10 @@ namespace aprilui
 			mFrameCount = 0;
 		}
 
+		FrameAnimation::~FrameAnimation()
+		{
+		}
+
 		Animator* FrameAnimation::createInstance(chstr name)
 		{
 			return new FrameAnimation(name);

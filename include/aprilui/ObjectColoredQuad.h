@@ -23,6 +23,7 @@ namespace aprilui
 	{
 	public:
 		ColoredQuad(chstr name, grect rect);
+		~ColoredQuad();
 		static Object* createInstance(chstr name, grect rect);
 		
 		bool setProperty(chstr name, chstr value);

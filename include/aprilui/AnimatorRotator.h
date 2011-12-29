@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			Rotator(chstr name);
+			~Rotator();
 			static Animator* createInstance(chstr name);
 			
 			void notifyEvent(chstr name, void* params);

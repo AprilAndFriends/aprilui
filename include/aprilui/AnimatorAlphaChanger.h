@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			AlphaChanger(chstr name);
+			~AlphaChanger();
 			static Animator* createInstance(chstr name);
 			
 			void notifyEvent(chstr name, void* params);

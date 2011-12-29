@@ -22,6 +22,10 @@ namespace aprilui
 		{
 		}
 
+		BlueChanger::~BlueChanger()
+		{
+		}
+
 		Animator* BlueChanger::createInstance(chstr name)
 		{
 			return new BlueChanger(name);

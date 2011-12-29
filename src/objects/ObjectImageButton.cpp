@@ -26,6 +26,10 @@ namespace aprilui
 		mDisabledImage = NULL;
 	}
 
+	ImageButton::~ImageButton()
+	{
+	}
+
 	Object* ImageButton::createInstance(chstr name, grect rect)
 	{
 		return new ImageButton(name, rect);

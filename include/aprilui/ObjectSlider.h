@@ -22,6 +22,7 @@ namespace aprilui
 	{
 	public:
 		Slider(chstr name, grect rect);
+		~Slider();
 		static Object* createInstance(chstr name, grect rect);
 		
 		float getValue() { return mValue; }

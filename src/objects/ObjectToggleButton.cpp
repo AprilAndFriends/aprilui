@@ -35,6 +35,10 @@ namespace aprilui
 		mToggledDisabledImage = NULL;
 	}
 
+	ToggleButton::~ToggleButton()
+	{
+	}
+
 	Object* ToggleButton::createInstance(chstr name, grect rect)
 	{
 		return new ToggleButton(name, rect);

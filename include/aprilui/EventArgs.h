@@ -30,6 +30,8 @@ namespace aprilui
 		hstr extra;
 		
 		EventArgs(Object* o, float x_pos = 0.0f, float y_pos = 0.0f, unsigned int keycode = 0, chstr extra_string = "");
+		~EventArgs();
+
 	};
 
 }

@@ -24,6 +24,7 @@ namespace aprilui
 	{
 	public:
 		TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
+		~TiledImage();
 		
 		gvec2 getTile() { return mTile; }
 		void setTile(gvec2 value) { mTile = value; }

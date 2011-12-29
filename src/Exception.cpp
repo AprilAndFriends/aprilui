@@ -18,6 +18,7 @@ namespace aprilui
 	{
 		msg += errorText;
 	}
+	_GenericException::~_GenericException() { }
 
 	_ResourceExistsException::_ResourceExistsException(chstr object_name, chstr class_name,
 													   Dataset* dict, const char* file, int line) :
@@ -25,6 +26,7 @@ namespace aprilui
 	{
 		msg += class_name + " already exists: " + object_name + " in dataset " + dict->getName();
 	}
+	_ResourceExistsException::~_ResourceExistsException() { }
 
 	_ResourceNotExistsException::_ResourceNotExistsException(chstr object_name, chstr class_name,
 															 Dataset* dict, const char* file, int line) :
@@ -32,6 +34,7 @@ namespace aprilui
 	{
 		msg += class_name + " doesn't exist: " + object_name + " in dataset " + dict->getName();
 	}
+	_ResourceNotExistsException::~_ResourceNotExistsException() { }
 
 	_ObjectHasParentException::_ObjectHasParentException(chstr child, chstr parent,
 														 const char* file, int line) :
@@ -39,6 +42,7 @@ namespace aprilui
 	{
 		msg += "Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent";
 	}
+	_ObjectHasParentException::~_ObjectHasParentException() { }
 
 	_ObjectWithoutParentException::_ObjectWithoutParentException(chstr child,
 																 const char* file, int line) :
@@ -46,6 +50,7 @@ namespace aprilui
 	{
 		msg += "Cannot detach object '" + child + "', object has no parent";
 	}
+	_ObjectWithoutParentException::~_ObjectWithoutParentException() { }
 
 	_ObjectNotChildException::_ObjectNotChildException(chstr child, chstr parent,
 													   const char* file, int line) :
@@ -53,6 +58,7 @@ namespace aprilui
 	{
 		msg += "Cannot detach object '" + child + "' from object '" + parent + "', object is not a child";
 	}
+	_ObjectNotChildException::~_ObjectNotChildException() { }
 
 	_ObjectFactoryExistsException::_ObjectFactoryExistsException(chstr name,
 																 const char* file, int line) :
@@ -60,6 +66,7 @@ namespace aprilui
 	{
 		msg += "Object factory named '" + name + "' already exists";
 	}
+	_ObjectFactoryExistsException::~_ObjectFactoryExistsException() { }
 
 	_AnimatorFactoryExistsException::_AnimatorFactoryExistsException(chstr name,
 																	 const char* file, int line) :
@@ -67,5 +74,6 @@ namespace aprilui
 	{
 		msg += "Animator factory named '" + name + "' already exists";
 	}
+	_AnimatorFactoryExistsException::~_AnimatorFactoryExistsException() { }
 
 }

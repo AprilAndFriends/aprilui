@@ -24,6 +24,7 @@ namespace aprilui
 	{
 	public:
 		ColorImage(chstr name);
+		~ColorImage();
 		
 		void draw(grect rect, april::Color color);
 		

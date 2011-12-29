@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			TiledScrollerY(chstr name);
+			~TiledScrollerY();
 			static Animator* createInstance(chstr name);
 			
 			void notifyEvent(chstr name, void* params);

@@ -24,6 +24,7 @@ namespace aprilui
 	{
 	public:
 		ImageBox(chstr name, grect rect);
+		~ImageBox();
 		static Object* createInstance(chstr name, grect rect);
 		
 		virtual Image* getImage() { return mImage; };

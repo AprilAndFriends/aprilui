@@ -22,6 +22,10 @@ namespace aprilui
 		{
 		}
 
+		ScalerY::~ScalerY()
+		{
+		}
+
 		Animator* ScalerY::createInstance(chstr name)
 		{
 			return new ScalerY(name);

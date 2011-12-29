@@ -21,6 +21,10 @@ namespace aprilui
 		mUpdateCallback = NULL;
 	}
 
+	CallbackObject::~CallbackObject()
+	{
+	}
+
 	Object* CallbackObject::createInstance(chstr name, grect rect)
 	{
 		return new CallbackObject(name, rect);

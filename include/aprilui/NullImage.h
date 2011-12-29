@@ -20,6 +20,7 @@ namespace aprilui
 	{
 	public:
 		NullImage();
+		~NullImage();
 		
 		void draw(grect rect, april::Color color) { }
 		

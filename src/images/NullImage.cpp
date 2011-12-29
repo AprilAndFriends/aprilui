@@ -17,4 +17,8 @@ namespace aprilui
 	{
 	}
 	
+	NullImage::~NullImage()
+	{
+	}
+
 }

@@ -24,6 +24,10 @@ namespace aprilui
 		mText = "Label: " + name;
 	}
 
+	Label::~Label()
+	{
+	}
+
 	Object* Label::createInstance(chstr name, grect rect)
 	{
 		return new Label(name, rect);

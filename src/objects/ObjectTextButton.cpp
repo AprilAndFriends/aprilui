@@ -27,6 +27,10 @@ namespace aprilui
 		mDisabledTextColor = APRIL_COLOR_GREY;
 	}
 
+	TextButton::~TextButton()
+	{
+	}
+
 	Object* TextButton::createInstance(chstr name, grect rect)
 	{
 		return new TextButton(name, rect);

@@ -22,6 +22,10 @@ namespace aprilui
 		{
 		}
 
+		Rotator::~Rotator()
+		{
+		}
+
 		Animator* Rotator::createInstance(chstr name)
 		{
 			return new Rotator(name);

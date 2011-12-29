@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			BlueChanger(chstr name);
+			~BlueChanger();
 			static Animator* createInstance(chstr name);
 			
 			void notifyEvent(chstr name, void* params);

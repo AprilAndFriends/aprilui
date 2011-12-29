@@ -32,6 +32,10 @@ namespace aprilui
 		}
 	}
 	
+	CompositeImage::~CompositeImage()
+	{
+	}
+
 	void CompositeImage::addImageRef(Image* image, grect rect)
 	{
 		ImageRef reference;

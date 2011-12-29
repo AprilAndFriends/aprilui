@@ -23,6 +23,10 @@ namespace aprilui
 		mTile.set(tileW, tileH);
 	}
 
+	TiledImage::~TiledImage()
+	{
+	}
+
 	void TiledImage::setTile(float w, float h)
 	{
 		mTile.set(w, h);

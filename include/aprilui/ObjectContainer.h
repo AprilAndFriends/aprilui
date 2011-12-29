@@ -22,6 +22,7 @@ namespace aprilui
 	{
 	public:
 		Container(chstr name, grect rect);
+		~Container();
 		static Object* createInstance(chstr name, grect rect);
 		
 	};

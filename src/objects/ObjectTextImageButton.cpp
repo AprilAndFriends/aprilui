@@ -26,6 +26,10 @@ namespace aprilui
 		mUseDisabledColor = true;
 	}
 
+	TextImageButton::~TextImageButton()
+	{
+	}
+
 	Object* TextImageButton::createInstance(chstr name, grect rect)
 	{
 		return new TextImageButton(name, rect);

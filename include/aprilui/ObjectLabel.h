@@ -23,6 +23,7 @@ namespace aprilui
 	{
 	public:
 		Label(chstr name, grect rect);
+		~Label();
 		static Object* createInstance(chstr name, grect rect);
 		
 		hstr getName();

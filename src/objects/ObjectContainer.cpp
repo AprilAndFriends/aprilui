@@ -19,6 +19,10 @@ namespace aprilui
 	{
 	}
 
+	Container::~Container()
+	{
+	}
+
 	Object* Container::createInstance(chstr name, grect rect)
 	{
 		return new Container(name, rect);
