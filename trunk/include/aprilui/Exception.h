@@ -22,11 +22,15 @@ namespace aprilui
 	class apriluiExport _GenericException : public hltypes::exception
 	{
 	public:
-		hstr mType;
-		
 		_GenericException(chstr errorText, chstr type = "", const char* file = "", int line = 0);
+		~_GenericException();
+
 		hstr getType(){ return mType; }
 		hstr getErrorText() { return msg; }
+
+	protected:
+		hstr mType;
+		
 	};
 
 	#define GenericException(msg) _GenericException(msg, "GenericException", __FILE__, __LINE__)
@@ -36,6 +40,7 @@ namespace aprilui
 	public: \
 		name(chstr errorText, chstr type = "", const char* file = "", int line = 0) : \
 		  _GenericException(errorText, type, file, line) { } \
+		~name() { } \
 	}
 
 	exception_cls(_ObjectExistsException);
@@ -56,12 +61,14 @@ namespace aprilui
 	{
 	public:
 		_ResourceExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
+		~_ResourceExistsException();
 	};
 	
 	class apriluiExport _ResourceNotExistsException : public _GenericException
 	{
 	public:
 		_ResourceNotExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
+		~_ResourceNotExistsException();
 	};
 	
 	#define ResourceExistsException(name, cls, data) _ResourceExistsException(name, cls, data, __FILE__, __LINE__)
@@ -73,6 +80,7 @@ namespace aprilui
 	{
 	public:
 		_ObjectHasParentException(chstr child, chstr parent, const char* file = "", int line = 0);
+		~_ObjectHasParentException();
 	};
 
 	#define ObjectHasParentException(child, parent) _ObjectHasParentException(child, parent, __FILE__, __LINE__)
@@ -83,6 +91,7 @@ namespace aprilui
 	{
 	public:
 		_ObjectWithoutParentException(chstr child, const char* file = "", int line = 0);
+		~_ObjectWithoutParentException();
 	};
 
 	#define ObjectWithoutParentException(child) _ObjectWithoutParentException(child, __FILE__, __LINE__)
@@ -93,6 +102,7 @@ namespace aprilui
 	{
 	public:
 		_ObjectNotChildException(chstr child, chstr parent, const char* file = "", int line = 0);
+		~_ObjectNotChildException();
 	};
 
 	#define ObjectNotChildException(child, parent) _ObjectNotChildException(child, parent, __FILE__, __LINE__)
@@ -103,6 +113,7 @@ namespace aprilui
 	{
 	public:
 		_ObjectFactoryExistsException(chstr name, const char* file = "", int line = 0);
+		~_ObjectFactoryExistsException();
 	};
 
 	#define ObjectFactoryExistsException(name) _ObjectFactoryExistsException(name, __FILE__, __LINE__)
@@ -113,6 +124,7 @@ namespace aprilui
 	{
 	public:
 		_AnimatorFactoryExistsException(chstr name, const char* file = "", int line = 0);
+		~_AnimatorFactoryExistsException();
 	};
 
 	#define AnimatorFactoryExistsException(name) _AnimatorFactoryExistsException(name, __FILE__, __LINE__)

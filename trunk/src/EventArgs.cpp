@@ -20,5 +20,9 @@ namespace aprilui
         this->keycode = keycode;
 		this->extra = extra_string;
 	}
+
+	EventArgs::~EventArgs()
+	{
+	}
 	
 }

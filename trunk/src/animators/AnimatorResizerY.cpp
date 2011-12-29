@@ -22,6 +22,10 @@ namespace aprilui
 		{
 		}
 
+		ResizerY::~ResizerY()
+		{
+		}
+
 		Animator* ResizerY::createInstance(chstr name)
 		{
 			return new ResizerY(name);

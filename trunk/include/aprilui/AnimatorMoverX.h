@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			MoverX(chstr name);
+			~MoverX();
 			static Animator* createInstance(chstr name);
 			
 			void notifyEvent(chstr name, void* params);

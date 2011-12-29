@@ -23,6 +23,7 @@ namespace aprilui
 	{
 	public:
 		TextImageButton(chstr name, grect rect);
+		~TextImageButton();
 		static Object* createInstance(chstr name, grect rect);
 
 		hstr getName();

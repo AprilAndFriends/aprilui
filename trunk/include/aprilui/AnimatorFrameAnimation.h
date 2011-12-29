@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			FrameAnimation(chstr name);
+			~FrameAnimation();
 			static Animator* createInstance(chstr name);
 
 			bool isAnimated();

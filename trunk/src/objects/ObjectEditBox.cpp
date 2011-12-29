@@ -41,6 +41,10 @@ namespace aprilui
 		mSpaceHack = false;
 	}
 
+	EditBox::~EditBox()
+	{
+	}
+
 	Object* EditBox::createInstance(chstr name, grect rect)
 	{
 		return new EditBox(name, rect);

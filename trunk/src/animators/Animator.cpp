@@ -37,6 +37,10 @@ namespace aprilui
 		mCustomFunction = NULL;
 	}
 	
+	Animator::~Animator()
+	{
+	}
+
 	void Animator::update(float k)
 	{
 		mTimeSinceLastFrame = k;

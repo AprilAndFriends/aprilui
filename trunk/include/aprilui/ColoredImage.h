@@ -25,7 +25,8 @@ namespace aprilui
 	public:
 		ColoredImage(april::Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = APRIL_COLOR_WHITE);
 		/// @brief Takes an Image instance and creates a Colored Image 
-		ColoredImage(Image& img,chstr name,april::Color color);
+		ColoredImage(Image& img, chstr name, april::Color color);
+		~ColoredImage();
 		
 		void draw(grect rect, april::Color color);
 

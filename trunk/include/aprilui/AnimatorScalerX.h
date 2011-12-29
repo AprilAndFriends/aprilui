@@ -22,6 +22,7 @@ namespace aprilui
 		{
 		public:
 			ScalerX(chstr name);
+			~ScalerX();
 			static Animator* createInstance(chstr name);
 			
 			void notifyEvent(chstr name, void* params);

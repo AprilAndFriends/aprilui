@@ -22,6 +22,10 @@ namespace aprilui
 		{
 		}
 
+		MoverX::~MoverX()
+		{
+		}
+
 		Animator* MoverX::createInstance(chstr name)
 		{
 			return new MoverX(name);

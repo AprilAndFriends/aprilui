@@ -22,6 +22,7 @@ namespace aprilui
 	{
 	public:
 		ToggleButton(chstr name, grect rect);
+		~ToggleButton();
 		static Object* createInstance(chstr name, grect rect);
 
 		bool isToggled() { return mToggled; }

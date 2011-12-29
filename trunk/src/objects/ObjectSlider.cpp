@@ -25,6 +25,10 @@ namespace aprilui
 		mPushed = false;
 	}
 	
+	Slider::~Slider()
+	{
+	}
+
 	Object* Slider::createInstance(chstr name, grect rect)
 	{
 		return new Slider(name, rect);
