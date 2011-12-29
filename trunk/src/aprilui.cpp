@@ -42,7 +42,7 @@ namespace aprilui
 	bool hoverEffectEnabled = true;
 	grect viewport;
 	grect screenViewport;
-	bool debugMode = false;
+	bool debugEnabled = false;
 	hstr defaultTextsPath = "texts";
 	hstr localization = "";
 	void aprilui_writelog(chstr message)
@@ -108,24 +108,24 @@ namespace aprilui
 		gDatasets.clear();
 	}
 	
-	void setDebugMode(bool value)
+	bool isDebugEnabled()
 	{
-		debugMode = value;
-	}
-	
-	bool isDebugMode()
-	{
-		return debugMode;
+		return debugEnabled;
 	}
 
-	void setDefaultScale(float value)
+	void setDebugEnabled(bool value)
 	{
-		defaultScale = value;
+		debugEnabled = value;
 	}
 	
 	float getDefaultScale()
 	{
 		return defaultScale;
+	}
+	
+	void setDefaultScale(float value)
+	{
+		defaultScale = value;
 	}
 	
 	grect getViewport()
@@ -391,6 +391,8 @@ namespace aprilui
 		}
 	}
 	
+	bool isDebugMode() { return isDebugEnabled(); } // DEPRECATED
+	void setDebugMode(bool value) { setDebugEnabled(value); } // DEPRECATED
 	void OnMouseDown(float x, float y, int button) { onMouseDown(x, y, button); } // DEPRECATED
 	void OnMouseUp(float x, float y, int button) { onMouseUp(x, y, button); } // DEPRECATED
 	void OnMouseMove(float x, float y) { onMouseMove(x, y); } // DEPRECATED

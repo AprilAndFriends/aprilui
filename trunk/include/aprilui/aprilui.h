@@ -32,8 +32,8 @@ namespace aprilui
 	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
 	apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
 	
-	apriluiFnExport bool isDebugMode();
-	apriluiFnExport void setDebugMode(bool value);
+	apriluiFnExport bool isDebugEnabled();
+	apriluiFnExport void setDebugEnabled(bool value);
 	
 	apriluiFnExport float getDefaultScale();
 	apriluiFnExport void setDefaultScale(float value);
@@ -59,8 +59,8 @@ namespace aprilui
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	
     apriluiFnExport void updateCursorPosition();
-    apriluiFnExport void setCursorPosition(gvec2 position);
 	apriluiFnExport gvec2 getCursorPosition();
+    apriluiFnExport void setCursorPosition(gvec2 position);
 	apriluiFnExport void setCursorImage(Image* image);
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
@@ -77,6 +77,9 @@ namespace aprilui
 	apriluiFnExport void onKeyDown(unsigned int keycode);
 	apriluiFnExport void onKeyUp(unsigned int keycode);
 	apriluiFnExport void onChar(unsigned int charcode);
+
+	DEPRECATED_ATTRIBUTE apriluiFnExport bool isDebugMode();
+	DEPRECATED_ATTRIBUTE apriluiFnExport void setDebugMode(bool value);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseDown(float x, float y, int button);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseUp(float x, float y, int button);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseMove(float x, float y);
