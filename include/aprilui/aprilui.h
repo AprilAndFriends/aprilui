@@ -63,6 +63,7 @@ namespace aprilui
 	apriluiFnExport Object* createObject(chstr type, chstr name, grect rect);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	
+	apriluiFnExport gvec2 transformWindowPoint(gvec2 pt);
     apriluiFnExport void updateCursorPosition();
 	apriluiFnExport gvec2 getCursorPosition();
     apriluiFnExport void setCursorPosition(gvec2 position);
