@@ -240,22 +240,28 @@ namespace aprilui
 		return NULL;
 	}
 
-    void updateCursorPosition()
-    {
+	gvec2 transformWindowPoint(gvec2 pt)
+	{
 		april::Window* window = april::rendersys->getWindow();
-		cursorPosition = window->getCursorPosition();
-		cursorPosition.x = (float)(int)(cursorPosition.x * screenViewport.w / window->getWidth()) - viewport.x;
-		cursorPosition.y = (float)(int)(cursorPosition.y * screenViewport.h / window->getHeight()) - viewport.y;
+		pt.x = (float)(int)(pt.x * screenViewport.w / window->getWidth()) - viewport.x;
+		pt.y = (float)(int)(pt.y * screenViewport.h / window->getHeight()) - viewport.y;
 		if (limitCursorToViewport)
 		{
-			cursorPosition.x = hclamp(cursorPosition.x, 0.0f, viewport.w - 1);
-			cursorPosition.y = hclamp(cursorPosition.y, 0.0f, viewport.h - 1);
+			pt.x = hclamp(pt.x, 0.0f, viewport.w - 1);
+			pt.y = hclamp(pt.y, 0.0f, viewport.h - 1);
 		}
 		else if (limitCursorToScreenViewport)
 		{
-			cursorPosition.x = hclamp(cursorPosition.x, -viewport.x, screenViewport.w - viewport.x - 1);
-			cursorPosition.y = hclamp(cursorPosition.y, -viewport.y, screenViewport.w - viewport.y - 1);
+			pt.x = hclamp(pt.x, -viewport.x, screenViewport.w - viewport.x - 1);
+			pt.y = hclamp(pt.y, -viewport.y, screenViewport.w - viewport.y - 1);
 		}
+		return pt;
+	}
+	
+    void updateCursorPosition()
+    {
+		cursorPosition = april::rendersys->getWindow()->getCursorPosition();
+		cursorPosition = transformWindowPoint(cursorPosition);
     }
     
     void setCursorPosition(gvec2 position)
