@@ -166,6 +166,15 @@ namespace aprilui
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 		
+		hstr localization = getLocalization();
+		if (localization != "")
+		{
+			hstr base, file, locpath;
+			filepath.rsplit("/", base, file);
+			locpath = base + "/" + localization + "/" + file;
+			if (hfile::exists(locpath)) filepath = locpath;
+		}
+		
 		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
 		if (texture == NULL)
 		{
