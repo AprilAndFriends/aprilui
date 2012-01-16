@@ -31,8 +31,6 @@ namespace aprilui
 		~ColoredQuad();
 		static Object* createInstance(chstr name, grect rect);
 		
-		bool setProperty(chstr name, chstr value);
-		
 		void OnDraw();
 
 		bool onMouseDown(float x, float y, int button);

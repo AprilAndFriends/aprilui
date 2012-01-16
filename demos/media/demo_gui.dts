@@ -1,42 +1,8 @@
 <?xml version="1.0" ?>
-<DataDefinition>
-
-	<Texture filename="../media/texture">
-		<Image name="test" x="0" y="0" w="512" h="512"/>
-		<Image name="test_blue_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7F7FFF7F"/>
-		<Image name="test_orange_add" x="0" y="0" w="512" h="512" blend_mode="add" color="FFBF7FBF"/>
-		<Image name="test_grey" x="0" y="0" w="512" h="512" color="7F7F7F"/>
-		<Image name="test_green" x="0" y="0" w="512" h="512" color="7FFF7F"/>
-		<Image name="test_green_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7FFF7FFF"/>
-		<Image name="test_blue" x="0" y="0" w="512" h="512" color="7F7FFF"/>
-		<Image name="test_yellow" x="0" y="0" w="512" h="512" color="FFFF7F"/>
-		<Image name="test_red" x="0" y="0" w="512" h="512" color="FF7F7F"/>
-		<Image name="test_tile1" x="0" y="0" w="512" h="512" tile_w="-128" tile_h="-128"/>
-		<Image name="test_tile2" x="0" y="0" w="512" h="512" tile_w="2" tile_h="2"/>
-    </Texture>
-	<Texture filename="../media/transparency">
-		<Image name="test" x="0" y="0" w="512" h="512"/>
-    </Texture>
+<Dataset>
 	
-	<CompositeImage name="texture/test_hover" w="512" h="512">
-		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_blue_add" x="0" y="0" w="512" h="512"/>
-	</CompositeImage>
-	
-	<CompositeImage name="texture/test_hover_2" w="512" h="512">
-		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_orange_add" x="0" y="0" w="512" h="512"/>
-	</CompositeImage>
-	
-	<CompositeImage name="texture/test_hover_3" w="512" h="512">
-		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_orange_add" x="128" y="128" w="384" h="384"/>
-	</CompositeImage>
-	
-	<CompositeImage name="texture/test_hover_4" w="512" h="512">
-		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_green_add" x="0" y="0" w="512" h="512"/>
-	</CompositeImage>
+	<Include path="texture_gui.tex"/>
+	<Include path="transparency.tex"/>
 	
 	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
 		<Object type="ImageBox" name="background" image="texture/test_tile1" x="0" y="0" w="800" h="600">
@@ -79,7 +45,7 @@
 				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
 				<Object type="EditBox" angle="-10" name="editBox" text="Edit Box" font="arial" filter="ABCDEMNLSTXYZabcdemnlstxyz +-=()" max_length="10" x="0" y="0" w="192" h="32"/>
 				<Object type="Label" angle="-10" name="label" text="I am a label." effect="border" x="0" y="64" w="192" h="32"/>
-				<Object type="TextButton" angle="-10" name="textButton" text="I am a button." x="0" y="128" w="192" h="32"/>
+				<Object type="TextButton" angle="-10" name="textButton" text="I am a button." hover_color="BFBFBF" pushed_color="7F7F7F" x="0" y="128" w="192" h="32"/>
 			</Object>
 			<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64">
 				<Animator type="AlphaChanger" function="sine" periods="-1" amplitude="64" speed="1.05" offset="191"/>
@@ -92,13 +58,15 @@
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
 			<Object type="TextImageButton" name="textImageButton" text="Push me" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="432" y="320" w="128" h="64" angle="20" center_x="-100" center_y="-100" zorder="100">
-				<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191" timer="1.333333"/>
-				<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191" timer="0.6666667"/>
-				<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="0.5" offset="191"/>
+				<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="1" offset="191" timer="1.333333"/>
+				<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="1.2" offset="191" timer="0.6666667"/>
+				<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="1.4" offset="191"/>
 			</Object>
-			<Object type="ToggleButton" name="toggleButton" image="texture/test_green" toggled_image="texture/test_hover_3" x="432" y="352" w="128" h="64" zorder="100">
-				<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
-				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
+			<Object type="Container" name="scroll_container" x="400" y="352" w="160" h="64">
+				<Object type="ToggleButton" name="toggleButton" image="texture/test_green" toggled_image="texture/test_hover_3" x="32" y="0" w="128" h="64" zorder="100">
+					<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
+					<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
+				</Object>
 			</Object>
 			<Object type="Container" name="slider_container" x="200" y="200" w="800" h="600">
 				<Object type="Slider" name="slider" image="texture/test_yellow" x="232" y="280" w="128" h="16">
@@ -131,4 +99,4 @@
 		
 	</Object>
 	
-</DataDefinition>
+</Dataset>

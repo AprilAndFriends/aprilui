@@ -85,9 +85,9 @@ namespace aprilui
 		{
 			grect rect = _getDrawRect();
 			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, ((mHovered && mPushed) ? 255 : 191));
-            april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, rect.h), drawColor);
+            april::rendersys->drawColoredQuad(rect, drawColor);
 			drawColor = april::Color(mTextColor, drawColor.a);
-            april::rendersys->drawQuad(grect(rect.x, rect.y, rect.w, rect.h), drawColor);
+            april::rendersys->drawQuad(rect, drawColor);
 		}
 		Label::OnDraw();
 		mTextColor = color;

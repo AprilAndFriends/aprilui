@@ -419,7 +419,10 @@ namespace aprilui
 	
 	void Object::update(float k)
 	{
-		if (mCheckedChildUnderCursor) clearChildUnderCursor();
+		if (mCheckedChildUnderCursor)
+		{
+			clearChildUnderCursor();
+		}
 		foreach (Object*, it, mChildren)
 		{
 			(*it)->update(k);

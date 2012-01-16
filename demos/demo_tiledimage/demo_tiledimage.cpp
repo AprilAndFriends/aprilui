@@ -36,8 +36,8 @@ bool render(float time)
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(screen);
 	aprilui::updateCursorPosition();
-	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/test");
-	image->setScroll(image->getScroll() + SCROLL_SPEED * time);
+	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
+	image->setScroll(image->getScroll() + SCROLL_SPEED * time); // manual scrolling
 	dataset->getObject("root")->draw();
 	dataset->update(time);
 	return true;
@@ -97,7 +97,7 @@ void april_init(const harray<hstr>& args)
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&render);
-		dataset = new aprilui::Dataset("../media/demo_tiledimage.datadef");
+		dataset = new aprilui::Dataset("../media/demo_tiledimage.dts");
 		dataset->load();
 	}
 	catch (aprilui::_GenericException e)
