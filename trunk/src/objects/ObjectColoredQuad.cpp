@@ -36,11 +36,6 @@ namespace aprilui
 		april::rendersys->drawColoredQuad(_getDrawRect(), _getDrawColor());
 	}
 
-	bool ColoredQuad::setProperty(chstr name, chstr value)
-	{
-		return Object::setProperty(name, value);
-	}
-
 	bool ColoredQuad::onMouseDown(float x, float y, int button)
 	{
 		if (Object::onMouseDown(x, y, button))

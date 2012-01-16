@@ -47,10 +47,16 @@ bool update(float k)
 
 void onKeyDown(unsigned int keycode)
 {
-	if (keycode == april::AK_RETURN)
+	switch (keycode)
 	{
+	case april::AK_RETURN:
 		dataset->unload();
 		dataset->load();
+		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
+		break;
+	case april::AK_D:
+		aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
+		break;
 	}
 	aprilui::onKeyDown(keycode);
 }
@@ -112,7 +118,7 @@ void april_init(const harray<hstr>& args)
 		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::onMouseDown, &aprilui::onMouseUp, &aprilui::onMouseMove);
 		april::rendersys->getWindow()->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap("../media/arial.font"));
-		dataset = new aprilui::Dataset("../media/demo_gui.datadef");
+		dataset = new aprilui::Dataset("../media/demo_gui.dts");
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 #ifdef _DEBUG

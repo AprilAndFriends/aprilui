@@ -95,7 +95,7 @@ void april_init(const harray<hstr>& args)
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&render);
-		dataset = new aprilui::Dataset("../media/demo_zorder.datadef");
+		dataset = new aprilui::Dataset("../media/demo_zorder.dts");
 		dataset->load();
 	}
 	catch (aprilui::_GenericException e)

@@ -92,7 +92,7 @@ void april_init(const harray<hstr>& args)
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&render);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap("../media/arial.font"));
-		dataset = new aprilui::Dataset("../media/demo_simple.datadef");
+		dataset = new aprilui::Dataset("../media/demo_simple.dts");
 		dataset->load();
 	}
 	catch (aprilui::_GenericException e)
