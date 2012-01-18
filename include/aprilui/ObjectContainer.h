@@ -1,7 +1,6 @@
 /// @file
-/// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.5
 /// 
 /// @section LICENSE
 /// 
@@ -12,10 +11,11 @@
 /// 
 /// Defines a generic object container.
 
-#ifndef APRILUI_DUMMY_OBJECT_H
-#define APRILUI_DUMMY_OBJECT_H
+#ifndef APRILUI_CONTAINER_H
+#define APRILUI_CONTAINER_H
 
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -23,16 +23,16 @@
 
 namespace aprilui
 {
+	class ScrollArea;
+	class ScrollBarH;
+	class ScrollBarV;
+
 	class apriluiExport Container : public Object
 	{
 	public:
-		enum apriluiExport ScrollMode
-		{
-			Disabled = 0,
-			Invisible,
-			ActiveOnly,
-			Always
-		};
+		friend class ScrollArea;
+		friend class ScrollBarH;
+		friend class ScrollBarV;
 
 		Container(chstr name, grect rect);
 		~Container();
@@ -40,21 +40,24 @@ namespace aprilui
 
 		bool getClipping() { return mClipping; }
 		void setClipping(bool value) { mClipping = value; }
-		ScrollMode getScrollMode() { return mScrollMode; }
-		void setScrollMode(ScrollMode value) { mScrollMode = value; }
 		
-		void update(float k);
 		void OnDraw();
 
 		hstr getProperty(chstr name, bool* property_exists);
 		bool setProperty(chstr name, chstr value);
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		void onMouseMove(float x, float y);
 
 	protected:
 		bool mClipping;
-		ScrollMode mScrollMode;
+		ScrollArea* mScrollArea;
+		ScrollBarH* mScrollBarH;
+		ScrollBarV* mScrollBarV;
+
+		ScrollArea* _getScrollArea() { return mScrollArea; }
+		void _setScrollArea(ScrollArea* value) { mScrollArea = value; }
+		ScrollBarH* _getScrollBarH() { return mScrollBarH; }
+		void _setScrollBarH(ScrollBarH* value) { mScrollBarH = value; }
+		ScrollBarV* _getScrollBarV() { return mScrollBarV; }
+		void _setScrollBarV(ScrollBarV* value) { mScrollBarV = value; }
 
 	};
 }

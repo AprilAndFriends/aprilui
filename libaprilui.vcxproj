@@ -106,6 +106,10 @@
     <ClCompile Include="src\EventArgs.cpp" />
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\MemberCallbackEvent.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollArea.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollBar.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollBarH.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollBarV.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\animators\Animator.cpp" />
     <ClCompile Include="src\animators\AnimatorAlphaChanger.cpp" />
@@ -146,6 +150,10 @@
     <ClInclude Include="include\aprilui\AnimatorTiledScrollerY.h" />
     <ClInclude Include="include\aprilui\EventUtils.h" />
     <ClInclude Include="include\aprilui\MemberCallbackEvent.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollArea.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollBar.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollBarH.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollBarV.h" />
     <ClInclude Include="src\Util.h" />
     <ClInclude Include="include\aprilui\Animators.h" />
     <ClInclude Include="include\aprilui\aprilui.h" />

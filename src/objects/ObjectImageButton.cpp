@@ -136,7 +136,10 @@ namespace aprilui
 	
 	bool ImageButton::onMouseDown(float x, float y, int button)
 	{
-		if (Object::onMouseDown(x, y, button)) return true;
+		if (Object::onMouseDown(x, y, button))
+		{
+			return true;
+		}
 		bool result = ButtonBase::onMouseDown(x, y, button);
 		if (result)
 		{
@@ -147,7 +150,10 @@ namespace aprilui
 
 	bool ImageButton::onMouseUp(float x, float y, int button)
 	{
-		if (Object::onMouseUp(x, y, button)) return true;
+		if (Object::onMouseUp(x, y, button))
+		{
+			return true;
+		}
 		bool result = ButtonBase::onMouseUp(x, y, button);
 		if (result)
 		{

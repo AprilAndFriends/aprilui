@@ -56,7 +56,8 @@ namespace aprilui
 		{
 			return isCursorInside();
 		}
-		return (root->getChildUnderCursor() == dynamic_cast<Object*>(this));
+		Object* child = root->getChildUnderCursor();
+		return (child != NULL && child == dynamic_cast<Object*>(this));
 	}
 
 	bool ButtonBase::onMouseDown(float x, float y, int button)

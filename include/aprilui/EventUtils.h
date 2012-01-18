@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.5
 /// 
 /// @section LICENSE
 /// 
@@ -33,5 +33,10 @@
 	dataset->getObject(obj_name)->registerEvent("Click", new aprilui::CallbackEvent(free_function));
 #define SET_MOUSEDOWN_EVENT_FUNCTION(dataset, obj_name, free_function) \
 	dataset->getObject(obj_name)->registerEvent("MouseDown", new aprilui::CallbackEvent(free_function));
+// for free C functions and static class functions
+#define _SET_CLICK_EVENT_FUNCTION(obj, free_function) \
+	obj->registerEvent("Click", new aprilui::CallbackEvent(free_function));
+#define _SET_MOUSEDOWN_EVENT_FUNCTION(obj, free_function) \
+	obj->registerEvent("MouseDown", new aprilui::CallbackEvent(free_function));
 
 #endif
