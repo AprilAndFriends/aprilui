@@ -309,6 +309,22 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\objects\ObjectScrollArea.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\objects\ObjectScrollBar.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\objects\ObjectScrollBarH.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\objects\ObjectScrollBarV.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\objects\ObjectSlider.cpp"
 					>
 				</File>
@@ -516,6 +532,22 @@
 				</File>
 				<File
 					RelativePath=".\include\aprilui\ObjectLabelBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\ObjectScrollArea.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\ObjectScrollBar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\ObjectScrollBarH.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\aprilui\ObjectScrollBarV.h"
 					>
 				</File>
 				<File

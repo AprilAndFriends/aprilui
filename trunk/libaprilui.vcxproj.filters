@@ -158,6 +158,18 @@
     <ClCompile Include="src\animators\AnimatorTiledScrollerY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollArea.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollBar.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollBarH.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollBarV.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\aprilui\Animators.h">
@@ -303,6 +315,18 @@
     </ClInclude>
     <ClInclude Include="src\Util.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollArea.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollBar.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollBarH.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollBarV.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
