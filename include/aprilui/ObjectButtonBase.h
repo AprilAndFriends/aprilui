@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.5
 /// 
 /// @section LICENSE
 /// 
@@ -31,6 +31,7 @@ namespace aprilui
 		virtual ~ButtonBase();
 
 		bool isHovered() { return mHovered; }
+		bool isPushed() { return mPushed; }
 		virtual hstr getName() = 0;
 		virtual bool isCursorInside() = 0;
 		virtual Object* getParent() = 0;
@@ -43,8 +44,8 @@ namespace aprilui
 		static void setAllowedButtons(harray<unsigned char> buttons);
 		
 	protected:
-		bool mPushed;
 		bool mHovered;
+		bool mPushed;
 		
 		virtual void update(float k);
 		bool _checkHover();

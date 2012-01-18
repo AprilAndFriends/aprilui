@@ -46,32 +46,36 @@ namespace aprilui
 
 	void ScrollBarV::_addScrollValue(float value)
 	{
-		if (mButtonBar != NULL)
+		if (mButtonBar == NULL)
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
-			if (parent != NULL)
-			{
-				ScrollArea* area = parent->_getScrollArea();
-				if (area != NULL)
-				{
-					area->setY(hclamp(area->getY() - value, parent->getHeight() - area->getHeight(), 0.0f));
-					_updateBar();
-				}
-			}
+			return;
 		}
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return;
+		}
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return;
+		}
+		area->setY(hclamp(area->getY() - value, parent->getHeight() - area->getHeight(), 0.0f));
+		_updateBar();
 	}
 
 	float ScrollBarV::_calcScrollJump(float x, float y)
 	{
-		if (mButtonBar != NULL)
+		if (mButtonBar == NULL)
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
-			if (parent != NULL)
-			{
-				return (y + mButtonBegin->getY() < mButtonBar->getY() ? -parent->getHeight() : parent->getHeight());
-			}
+			return 0.0f;
 		}
-		return 0.0f;
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return 0.0f;
+		}
+		return (y + mButtonBegin->getY() < mButtonBar->getY() ? -parent->getHeight() : parent->getHeight());
 	}
 
 	void ScrollBarV::notifyEvent(chstr name, void* params)
@@ -118,32 +122,55 @@ namespace aprilui
 		mButtonBar->setAnchorRight(false);
 	}
 
+	void ScrollBarV::_moveScrollBar(float x, float y)
+	{
+		if (mButtonBar == NULL)
+		{
+			return;
+		}
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return;
+		}
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return;
+		}
+		float h = parent->getHeight();
+		area->setY(hclamp((float)(int)(-y * h / mButtonBar->getHeight()), h - area->getHeight(), 0.0f));
+		_updateBar();
+	}
+
 	void ScrollBarV::_updateBar()
 	{
-		if (mButtonBar != NULL)
+		if (mButtonBar == NULL)
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
-			if (parent != NULL)
-			{
-				ScrollArea* area = parent->_getScrollArea();
-				if (area != NULL)
-				{
-					float range = getHeight() - mButtonBegin->getHeight() - mButtonEnd->getHeight();
-					float factor = area->getWidth();
-					float ratio = (factor - parent->getHeight()) / factor;
-					float size = hclamp((1 - ratio) * range, 8.0f, range);
-					if (ratio > 0)
-					{
-						mButtonBar->setHeight(size);
-						mButtonBar->setY(mButtonBegin->getHeight() - area->getY() / (ratio * factor) * (ratio * range));
-					}
-					else
-					{
-						mButtonBar->setHeight(range);
-						mButtonBar->setY(mButtonBegin->getHeight());
-					}
-				}
-			}
+			return;
+		}
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return;
+		}
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return;
+		}
+		float range = getHeight() - mButtonBegin->getHeight() - mButtonEnd->getHeight();
+		float factor = area->getWidth();
+		float ratio = (factor - parent->getHeight()) / factor;
+		if (ratio > 0.0f)
+		{
+			mButtonBar->setHeight(hclamp((1 - ratio) * range, 8.0f, range));
+			mButtonBar->setY((float)(int)(mButtonBegin->getHeight() - area->getY() / factor * range));
+		}
+		else
+		{
+			mButtonBar->setHeight(range);
+			mButtonBar->setY(mButtonBegin->getHeight());
 		}
 	}
 

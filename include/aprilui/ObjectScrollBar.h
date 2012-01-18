@@ -15,6 +15,7 @@
 #define APRILUI_SCROLL_BAR_H
 
 #include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -40,6 +41,8 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists);
 		bool setProperty(chstr name, chstr value);
 
+		void onMouseMove(float x, float y);
+
 		static float ScrollDistance;
 
 	protected:
@@ -63,12 +66,17 @@ namespace aprilui
 		virtual void _addScrollValue(float value) = 0;
 		virtual float _calcScrollJump(float x, float y) = 0;
 		virtual void _updateChildren() = 0;
+		virtual void _moveScrollBar(float x, float y) = 0;
 		virtual void _updateBar() = 0;
 
-		static void _callbackScrollBegin(EventArgs* args);
-		static void _callbackScrollEnd(EventArgs* args);
-		static void _callbackScrollBack(EventArgs* args);
-		static void _callbackScrollBar(EventArgs* args);
+		static void _clickScrollBegin(EventArgs* args);
+		static void _clickScrollEnd(EventArgs* args);
+		static void _clickScrollBack(EventArgs* args);
+		static void _mouseDownScrollBar(EventArgs* args);
+
+	private:
+		bool _mScrolling;
+		gvec2 _mClickPosition;
 
 	};
 }
