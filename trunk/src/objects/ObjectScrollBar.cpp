@@ -31,6 +31,7 @@ namespace aprilui
 		mButtonEnd = NULL;
 		mButtonBack = NULL;
 		mButtonBar = NULL;
+		_mClickPosition.set(0.0f, 0.0f);
 	}
 
 	ScrollBar::~ScrollBar()
@@ -68,16 +69,16 @@ namespace aprilui
 				{
 					mButtonBegin = new ImageButton(generateName("aprilui::ScrollSkinButtonBegin"), grect(0.0f, 0.0f, -1.0f, -1.0f));
 					registerChild(mButtonBegin);
-					_SET_CLICK_EVENT_FUNCTION(mButtonBegin, _callbackScrollBegin);
+					_SET_CLICK_EVENT_FUNCTION(mButtonBegin, _clickScrollBegin);
 					mButtonEnd = new ImageButton(generateName("aprilui::ScrollSkinButtonEnd"), grect(0.0f, 0.0f, -1.0f, -1.0f));
 					registerChild(mButtonEnd);
-					_SET_CLICK_EVENT_FUNCTION(mButtonEnd, _callbackScrollEnd);
+					_SET_CLICK_EVENT_FUNCTION(mButtonEnd, _clickScrollEnd);
 					mButtonBack = new ImageButton(generateName("aprilui::ScrollSkinButtonBack"), grect(0.0f, 0.0f, -1.0f, -1.0f));
 					registerChild(mButtonBack);
-					_SET_CLICK_EVENT_FUNCTION(mButtonBack, _callbackScrollBack);
+					_SET_CLICK_EVENT_FUNCTION(mButtonBack, _clickScrollBack);
 					mButtonBar = new ImageButton(generateName("aprilui::ScrollSkinButtonBar"), grect(0.0f, 0.0f, -1.0f, -1.0f));
 					registerChild(mButtonBar);
-					_SET_MOUSEDOWN_EVENT_FUNCTION(mButtonBar, _callbackScrollBar);
+					_SET_MOUSEDOWN_EVENT_FUNCTION(mButtonBar, _mouseDownScrollBar);
 				}
 				mButtonBegin->setImageByName(mSkinName + "/" + _getSkinNameBeginNormal());
 				mButtonBegin->setHoverImageByName(mSkinName + "/" + _getSkinNameBeginHover());
@@ -133,27 +134,37 @@ namespace aprilui
 		return true;
 	}
 
-	void ScrollBar::_callbackScrollBegin(EventArgs* args)
+	void ScrollBar::onMouseMove(float x, float y)
+	{
+		Object::onMouseMove(x, y);
+		if (mButtonBar != NULL && mButtonBar->isPushed())
+		{
+			_moveScrollBar(x - _mClickPosition.x, y - _mClickPosition.y);
+		}
+	}
+
+	void ScrollBar::_clickScrollBegin(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
 		scrollBar->_addScrollValue(-ScrollBar::ScrollDistance);
 	}
 
-	void ScrollBar::_callbackScrollEnd(EventArgs* args)
+	void ScrollBar::_clickScrollEnd(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
 		scrollBar->_addScrollValue(ScrollBar::ScrollDistance);
 	}
 
-	void ScrollBar::_callbackScrollBack(EventArgs* args)
+	void ScrollBar::_clickScrollBack(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
 		scrollBar->_addScrollValue(scrollBar->_calcScrollJump(args->x, args->y));
 	}
 
-	void ScrollBar::_callbackScrollBar(EventArgs* args)
+	void ScrollBar::_mouseDownScrollBar(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
+		scrollBar->_mClickPosition = gvec2(args->x, args->y) - scrollBar->mButtonBar->getPosition() + scrollBar->mButtonBegin->getSize();
 	}
 
 }

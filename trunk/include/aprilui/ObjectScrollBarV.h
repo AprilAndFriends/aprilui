@@ -57,6 +57,7 @@ namespace aprilui
 		void _addScrollValue(float value);
 		float _calcScrollJump(float x, float y);
 		void _updateChildren();
+		void _moveScrollBar(float x, float y);
 		void _updateBar();
 
 	};
