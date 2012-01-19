@@ -820,7 +820,7 @@ namespace aprilui
 	
 	void Dataset::unloadUnusedTextures()
 	{
-		foreach_m(april::Texture*, it, mTextures)
+		foreach_m (april::Texture*, it, mTextures)
 		{
 			if (it->second->isDynamic() && it->second->getUnusedTime() > 1) it->second->unload();
 		}
@@ -832,6 +832,10 @@ namespace aprilui
 		if (mRoot != NULL)
 		{
 			mRoot->update(k);
+		}
+		foreach_m (aprilui::Object*, it, mObjects)
+		{
+			it->second->clearChildUnderCursor();
 		}
 	}
 	
