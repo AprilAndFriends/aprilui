@@ -13,16 +13,18 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "Dataset.h"
 #include "ObjectContainer.h"
 #include "ObjectScrollArea.h"
 
 namespace aprilui
 {
 	ScrollArea::ScrollArea(chstr name, grect rect) :
-		Object(name, rect)
+		Object(name, rect),
+		ButtonBase()
 	{
 		mClip = true;
-		mAllowTouch = false;
+		mAllowDrag = false;
 	}
 
 	ScrollArea::~ScrollArea()
@@ -34,16 +36,35 @@ namespace aprilui
 		return new ScrollArea(name, rect);
 	}
 
+	hstr ScrollArea::getName()
+	{
+		return Object::getName();
+	}
+
+	bool ScrollArea::isCursorInside()
+	{
+		return Object::isCursorInside();
+	}
+
+	Object* ScrollArea::getParent()
+	{
+		return Object::getParent();
+	}
+
+	Dataset* ScrollArea::getDataset()
+	{
+		return Object::getDataset();
+	}
+
 	void ScrollArea::update(float k)
 	{
 		Object::update(k);
+		if (mAllowDrag)
+		{
+			ButtonBase::update(k);
+		}
 	}
-
-	void ScrollArea::OnDraw()
-	{
-		Object::OnDraw();
-	}
-
+	
 	void ScrollArea::notifyEvent(chstr name, void* params)
 	{
 		Object::notifyEvent(name, params);
@@ -71,29 +92,41 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "allow_touch")	return isAllowTouch();
+		if (name == "allow_drag")	return isAllowDrag();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ScrollArea::setProperty(chstr name, chstr value)
 	{
-		if (name == "allow_touch")	setAllowTouch(value);
+		if (name == "allow_drag")	setAllowDrag(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
 
 	bool ScrollArea::onMouseDown(float x, float y, int button)
 	{
+		if (mAllowDrag)
+		{
+			return ButtonBase::onMouseDown(x, y, button);
+		}
 		return Object::onMouseDown(x, y, button);
 	}
 
 	bool ScrollArea::onMouseUp(float x, float y, int button)
 	{
+		if (mAllowDrag)
+		{
+			return ButtonBase::onMouseUp(x, y, button);
+		}
 		return Object::onMouseUp(x, y, button);
 	}
 	
 	void ScrollArea::onMouseMove(float x, float y)
 	{
+		if (mAllowDrag)
+		{
+			ButtonBase::onMouseMove(x, y);
+		}
 		Object::onMouseMove(x, y);
 	}
 	

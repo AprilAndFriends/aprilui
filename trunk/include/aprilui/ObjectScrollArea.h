@@ -20,21 +20,25 @@
 
 #include "apriluiExport.h"
 #include "Object.h"
+#include "ObjectButtonBase.h"
 
 namespace aprilui
 {
-	class apriluiExport ScrollArea : public Object
+	class apriluiExport ScrollArea : public Object, public ButtonBase
 	{
 	public:
 		ScrollArea(chstr name, grect rect);
 		~ScrollArea();
 		static Object* createInstance(chstr name, grect rect);
 
-		bool isAllowTouch() { return mAllowTouch; }
-		void setAllowTouch(bool value) { mAllowTouch = value; }
+		bool isAllowDrag() { return mAllowDrag; }
+		void setAllowDrag(bool value) { mAllowDrag = value; }
+		hstr getName();
+		bool isCursorInside();
+		Object* getParent();
+		Dataset* getDataset();
 
 		void update(float k);
-		void OnDraw();
 
 		void notifyEvent(chstr name, void* params);
 		
@@ -46,7 +50,7 @@ namespace aprilui
 		void onMouseMove(float x, float y);
 
 	protected:
-		bool mAllowTouch;
+		bool mAllowDrag;
 
 	private:
 		gvec2 _mLastPosition;
