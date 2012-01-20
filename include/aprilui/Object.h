@@ -131,6 +131,8 @@ namespace aprilui
 		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
 		bool getVisibilityFlag() { return mVisible; }
+		bool getClip() { return mClip; }
+		void setClip(bool value) { mClip = value; }
 
 		grect getDerivedRect();
 		gvec2 getDerivedPosition();
@@ -255,6 +257,7 @@ namespace aprilui
 		bool mAnchorTop;
 		bool mAnchorBottom;
 		Dataset* mDataset;
+		bool mClip;
 		
 		void _sortChildren();
 

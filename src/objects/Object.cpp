@@ -107,6 +107,7 @@ namespace aprilui
 		mAnchorRight = false;
 		mAnchorTop = true;
 		mAnchorBottom = false;
+		mClip = false;
 	}
 
 	Object::~Object()
@@ -396,6 +397,17 @@ namespace aprilui
 			return;
 		}
 		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
+		grect viewport;
+		grect orthoProjection;
+		bool clipped = (mClip && mParent != NULL);
+		if (clipped)
+		{
+			orthoProjection = april::rendersys->getOrthoProjection();
+			viewport = april::rendersys->getViewport();
+			grect rect = mParent->getDerivedRect();
+			april::rendersys->setOrthoProjection(grect(-rect.getPosition(), rect.getSize()));
+			april::rendersys->setViewport(rect + orthoProjection.getPosition());
+		}
 		gvec2 position = mRect.getPosition() + offset + mCenter;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
@@ -413,6 +425,11 @@ namespace aprilui
 		foreach (Object*, it, mChildren)
 		{
 			(*it)->draw(-mCenter);
+		}
+		if (clipped)
+		{
+			april::rendersys->setOrthoProjection(orthoProjection);
+			april::rendersys->setViewport(viewport);
 		}
 		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
@@ -672,6 +689,7 @@ namespace aprilui
 		if (name == "anchor_right")		return isAnchorRight();
 		if (name == "anchor_top")		return isAnchorTop();
 		if (name == "anchor_bottom")	return isAnchorBottom();
+		if (name == "clip")				return getClip();
 		if (property_exists != NULL)
 		{
 			*property_exists = false;
@@ -681,7 +699,7 @@ namespace aprilui
 	
 	bool Object::setProperty(chstr name, chstr value)
 	{
-		if      (name == "x")				setX(value);
+		if (name == "x")					setX(value);
 		else if (name == "y")				setY(value);
 		else if (name == "w")				setWidth(value);
 		else if (name == "h")				setHeight(value);
@@ -717,6 +735,7 @@ namespace aprilui
 			setAnchorTop(anchors.contains("top"));
 			setAnchorBottom(anchors.contains("bottom"));
 		}
+		else if (name == "clip")			setClip(value);
         else return false;
         return true;
 	}

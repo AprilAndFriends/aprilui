@@ -21,7 +21,7 @@ namespace aprilui
 	ScrollArea::ScrollArea(chstr name, grect rect) :
 		Object(name, rect)
 	{
-		mScrollMode = Invisible;
+		mClip = true;
 	}
 
 	ScrollArea::~ScrollArea()
@@ -40,10 +40,7 @@ namespace aprilui
 
 	void ScrollArea::OnDraw()
 	{
-		if (aprilui::isDebugEnabled())
-		{
-			april::rendersys->drawColoredQuad(_getDrawRect(), april::Color(APRIL_COLOR_WHITE, 128));
-		}
+		Object::OnDraw();
 	}
 
 	void ScrollArea::notifyEvent(chstr name, void* params)
@@ -65,33 +62,6 @@ namespace aprilui
 				parent->_setScrollArea(NULL);
 			}
 		}
-	}
-
-	hstr ScrollArea::getProperty(chstr name, bool* property_exists)
-	{
-		if (property_exists != NULL)
-		{
-			*property_exists = true;
-		}
-		if (name == "scroll_mode")
-		{
-			if (mScrollMode == Invisible)	return "invisible";
-			if (mScrollMode == ActiveOnly)	return "active_only";
-			if (mScrollMode == Always)		return "always";
-		}
-		return Object::getProperty(name, property_exists);
-	}
-
-	bool ScrollArea::setProperty(chstr name, chstr value)
-	{
-		if (name == "scroll_mode")
-		{
-			if (value == "invisible")	setScrollMode(Invisible);
-			if (value == "active_only")	setScrollMode(ActiveOnly);
-			if (value == "always")		setScrollMode(Always);
-		}
-		else return Object::setProperty(name, value);
-		return true;
 	}
 
 	bool ScrollArea::onMouseDown(float x, float y, int button)

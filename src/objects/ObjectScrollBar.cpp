@@ -27,6 +27,7 @@ namespace aprilui
 	ScrollBar::ScrollBar(chstr name, grect rect) :
 		Object(name, rect)
 	{
+		mScrollMode = Invisible;
 		mButtonBegin = NULL;
 		mButtonEnd = NULL;
 		mButtonBack = NULL;
@@ -124,12 +125,24 @@ namespace aprilui
 			*property_exists = true;
 		}
 		if (name == "skin")	return getSkinName();
+		if (name == "scroll_mode")
+		{
+			if (mScrollMode == Invisible)	return "invisible";
+			if (mScrollMode == ActiveOnly)	return "active_only";
+			if (mScrollMode == Always)		return "always";
+		}
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)
 	{
 		if (name == "skin")	setSkinName(value);
+		else if (name == "scroll_mode")
+		{
+			if (value == "invisible")	setScrollMode(Invisible);
+			if (value == "active_only")	setScrollMode(ActiveOnly);
+			if (value == "always")		setScrollMode(Always);
+		}
 		else return Object::setProperty(name, value);
 		return true;
 	}

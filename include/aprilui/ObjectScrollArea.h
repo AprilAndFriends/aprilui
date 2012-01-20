@@ -26,34 +26,18 @@ namespace aprilui
 	class apriluiExport ScrollArea : public Object
 	{
 	public:
-		enum apriluiExport ScrollMode
-		{
-			Invisible = 0,
-			ActiveOnly,
-			Always
-		};
-
 		ScrollArea(chstr name, grect rect);
 		~ScrollArea();
 		static Object* createInstance(chstr name, grect rect);
 
-		ScrollMode getScrollMode() { return mScrollMode; }
-		void setScrollMode(ScrollMode value) { mScrollMode = value; }
-		
 		void update(float k);
 		void OnDraw();
 
 		void notifyEvent(chstr name, void* params);
 		
-		hstr getProperty(chstr name, bool* property_exists);
-		bool setProperty(chstr name, chstr value);
-
 		bool onMouseDown(float x, float y, int button);
 		bool onMouseUp(float x, float y, int button);
 		void onMouseMove(float x, float y);
-
-	protected:
-		ScrollMode mScrollMode;
 
 	private:
 		gvec2 _mLastPosition;
