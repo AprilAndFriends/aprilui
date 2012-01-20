@@ -31,7 +31,7 @@ namespace april
 
 namespace hlxml
 {
-	struct Node;
+	class Node;
 }
 
 namespace aprilui
