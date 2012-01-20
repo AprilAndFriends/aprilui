@@ -38,16 +38,7 @@ namespace aprilui
 		~Container();
 		static Object* createInstance(chstr name, grect rect);
 
-		bool getClipping() { return mClipping; }
-		void setClipping(bool value) { mClipping = value; }
-		
-		void OnDraw();
-
-		hstr getProperty(chstr name, bool* property_exists);
-		bool setProperty(chstr name, chstr value);
-
 	protected:
-		bool mClipping;
 		ScrollArea* mScrollArea;
 		ScrollBarH* mScrollBarH;
 		ScrollBarV* mScrollBarV;

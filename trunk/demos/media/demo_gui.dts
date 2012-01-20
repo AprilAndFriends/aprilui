@@ -70,7 +70,9 @@
 			<Object type="Container" name="scrolltest_container" x="640" y="32" w="64" h="64">
 				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256">
 					<Object type="ToggleButton" name="toggleButton_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" x="0" y="0" w="256" h="128" zorder="100"/>
-					<Object type="ToggleButton" name="toggleButton_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" x="0" y="128" w="256" h="128" zorder="100"/>
+					<Object type="ToggleButton" name="toggleButton_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" x="0" y="128" w="256" h="128" zorder="100">
+					<Animator type="Rotator" periods="-1" speed="30"/>
+					</Object>
 				</Object>
 				<Object type="ScrollBarV" name="scroll_v" skin="scroll_skin" x="64" y="0" w="16" h="64"/>
 				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" x="0" y="64" w="64" h="16"/>
