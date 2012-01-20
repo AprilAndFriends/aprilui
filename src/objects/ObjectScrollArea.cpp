@@ -22,6 +22,7 @@ namespace aprilui
 		Object(name, rect)
 	{
 		mClip = true;
+		mAllowTouch = false;
 	}
 
 	ScrollArea::~ScrollArea()
@@ -62,6 +63,23 @@ namespace aprilui
 				parent->_setScrollArea(NULL);
 			}
 		}
+	}
+
+	hstr ScrollArea::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+		if (name == "allow_touch")	return getAllowTouch();
+		return Object::getProperty(name, property_exists);
+	}
+
+	bool ScrollArea::setProperty(chstr name, chstr value)
+	{
+		if (name == "allow_touch")	setAllowTouch(value);
+		else return Object::setProperty(name, value);
+		return true;
 	}
 
 	bool ScrollArea::onMouseDown(float x, float y, int button)
