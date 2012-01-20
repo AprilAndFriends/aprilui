@@ -385,9 +385,11 @@ namespace aprilui
 			object->setProperty(name, prop->value());
 		}
 		
+		hlxml::Node::Type type;
 		for (node = node->iterChildren(); node != NULL; node = node->next())
 		{
-			if (node->type != XML_TEXT_NODE && node->type != XML_COMMENT_NODE)
+			type = node->getType();
+			if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
 			{
 				recursiveObjectParse(node, object);
 			}
@@ -428,8 +430,8 @@ namespace aprilui
 		hstr path = normalize_path(filename);
 
 		log("parsing object include file " + path);
-		hlxml::Document doc(path);
-		hlxml::Node* current = doc.root();
+		hlxml::Document* doc = hlxml::open(path);
+		hlxml::Node* current = doc->root();
 		
 		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
 		{
@@ -438,6 +440,7 @@ namespace aprilui
 				recursiveObjectParse(p, parent);
 			}
 		}
+		hlxml::close(doc);
 	}
 	
 	void Dataset::parseObjectInclude(chstr path, Object* parent)
@@ -472,8 +475,8 @@ namespace aprilui
 		path = path.replace("/","___");
 #endif
 		log("parsing dataset file " + normalize_path(filename));
-		hlxml::Document doc(path);
-		hlxml::Node* current = doc.root();
+		hlxml::Document* doc = hlxml::open(path);
+		hlxml::Node* current = doc->root();
 
 		parseExternalXMLNode(current);
 
@@ -490,6 +493,7 @@ namespace aprilui
 				parseExternalXMLNode(p);
 			}
 		}
+		hlxml::close(doc);
 	}
 
 	void Dataset::load(chstr path)
