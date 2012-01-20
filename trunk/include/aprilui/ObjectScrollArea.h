@@ -9,7 +9,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a generic object container.
+/// Defines a scrollable area.
 
 #ifndef APRILUI_SCROLL_AREA_H
 #define APRILUI_SCROLL_AREA_H
@@ -30,14 +30,23 @@ namespace aprilui
 		~ScrollArea();
 		static Object* createInstance(chstr name, grect rect);
 
+		bool getAllowTouch() { return mAllowTouch; }
+		void setAllowTouch(bool value) { mAllowTouch = value; }
+
 		void update(float k);
 		void OnDraw();
 
 		void notifyEvent(chstr name, void* params);
 		
+		hstr getProperty(chstr name, bool* property_exists);
+		bool setProperty(chstr name, chstr value);
+
 		bool onMouseDown(float x, float y, int button);
 		bool onMouseUp(float x, float y, int button);
 		void onMouseMove(float x, float y);
+
+	protected:
+		bool mAllowTouch;
 
 	private:
 		gvec2 _mLastPosition;
