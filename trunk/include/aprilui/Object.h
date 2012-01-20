@@ -131,7 +131,7 @@ namespace aprilui
 		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
 		bool getVisibilityFlag() { return mVisible; }
-		bool getClip() { return mClip; }
+		bool isClip() { return mClip; }
 		void setClip(bool value) { mClip = value; }
 
 		grect getDerivedRect();
