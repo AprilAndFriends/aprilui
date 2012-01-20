@@ -22,8 +22,8 @@ namespace aprilui
 
 	ButtonBase::ButtonBase()
 	{
-		mPushed = false;
 		mHovered = false;
+		mPushed = false;
 	}
 	
 	ButtonBase::~ButtonBase()

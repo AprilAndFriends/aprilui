@@ -48,7 +48,7 @@ namespace aprilui
 		bool mPushed;
 		
 		virtual void update(float k);
-		bool _checkHover();
+		virtual bool _checkHover();
 		
 	};
 	
