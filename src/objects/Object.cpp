@@ -476,6 +476,20 @@ namespace aprilui
 		{
 			return false;
 		}
+		if (mParent != NULL)
+		{
+			Object* obj = this;
+			Object* parent = mParent;
+			while (parent != NULL)
+			{
+				if (obj->isClip() && !parent->getDerivedRect().isPointInside(position))
+				{
+					return false;
+				}
+				obj = parent;
+				parent = obj->getParent();
+			}
+		}
 		grect rect = getDerivedRect();
 		if (mAngle == 0.0f)
 		{
@@ -689,7 +703,7 @@ namespace aprilui
 		if (name == "anchor_right")		return isAnchorRight();
 		if (name == "anchor_top")		return isAnchorTop();
 		if (name == "anchor_bottom")	return isAnchorBottom();
-		if (name == "clip")				return getClip();
+		if (name == "clip")				return isClip();
 		if (property_exists != NULL)
 		{
 			*property_exists = false;

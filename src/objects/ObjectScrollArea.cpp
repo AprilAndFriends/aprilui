@@ -71,7 +71,7 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "allow_touch")	return getAllowTouch();
+		if (name == "allow_touch")	return isAllowTouch();
 		return Object::getProperty(name, property_exists);
 	}
 

@@ -30,7 +30,7 @@ namespace aprilui
 		~ScrollArea();
 		static Object* createInstance(chstr name, grect rect);
 
-		bool getAllowTouch() { return mAllowTouch; }
+		bool isAllowTouch() { return mAllowTouch; }
 		void setAllowTouch(bool value) { mAllowTouch = value; }
 
 		void update(float k);
