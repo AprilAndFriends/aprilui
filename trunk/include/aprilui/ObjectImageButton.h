@@ -51,6 +51,7 @@ namespace aprilui
 		bool onMouseDown(float x, float y, int button);
 		bool onMouseUp(float x, float y, int button);
 		void onMouseMove(float x, float y);
+		void cancelMouseDown();
 		
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);

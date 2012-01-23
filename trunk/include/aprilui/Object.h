@@ -150,6 +150,7 @@ namespace aprilui
 		virtual void onKeyDown(unsigned int keycode);
 		virtual void onKeyUp(unsigned int keycode);
 		virtual void onChar(unsigned int charcode);
+		virtual void cancelMouseDown();
 
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());

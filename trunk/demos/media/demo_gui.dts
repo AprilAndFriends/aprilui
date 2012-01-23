@@ -68,7 +68,7 @@
 				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
 			</Object>
 			<Object type="Container" name="scrolltest_container" x="640" y="32" w="64" h="64">
-				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="0">
+				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="1">
 					<Object type="ToggleButton" name="toggleButton_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" x="0" y="0" w="256" h="128" zorder="100"/>
 					<Object type="ToggleButton" name="toggleButton_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" x="0" y="128" w="256" h="128" zorder="100">
 						<Animator type="Rotator" periods="-1" speed="30"/>

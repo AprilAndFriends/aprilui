@@ -33,6 +33,8 @@ namespace aprilui
 
 		bool isAllowDrag() { return mAllowDrag; }
 		void setAllowDrag(bool value) { mAllowDrag = value; }
+		float getDragThreshold() { return mDragThreshold; }
+		void setDragThreshold(float value) { mDragThreshold = value; }
 		hstr getName();
 		bool isCursorInside();
 		Object* getParent();
@@ -49,11 +51,17 @@ namespace aprilui
 		bool onMouseUp(float x, float y, int button);
 		void onMouseMove(float x, float y);
 
+		static float DragThreshold;
+
 	protected:
 		bool mAllowDrag;
+		float mDragThreshold;
+
+		virtual bool _checkHover();
 
 	private:
-		gvec2 _mLastPosition;
+		gvec2 _mClickPosition;
+		bool _mDragging;
 
 	};
 }

@@ -167,6 +167,12 @@ namespace aprilui
 		Object::onMouseMove(x, y);
 		ButtonBase::onMouseMove(x, y);
 	}
+
+	void ImageButton::cancelMouseDown()
+	{
+		Object::cancelMouseDown();
+		ButtonBase::cancelMouseDown();
+	}
 	
 	hstr ImageButton::getProperty(chstr name, bool* property_exists)
 	{

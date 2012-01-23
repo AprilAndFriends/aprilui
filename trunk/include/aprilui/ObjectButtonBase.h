@@ -37,9 +37,10 @@ namespace aprilui
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
 		
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		void onMouseMove(float x, float y);
+		virtual bool onMouseDown(float x, float y, int button);
+		virtual bool onMouseUp(float x, float y, int button);
+		virtual void onMouseMove(float x, float y);
+		virtual void cancelMouseDown();
 
 		static void setAllowedButtons(harray<unsigned char> buttons);
 		

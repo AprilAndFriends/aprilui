@@ -50,6 +50,7 @@ namespace aprilui
 		void onKeyDown(unsigned int keycode);
 		void onKeyUp(unsigned int keycode);
 		void onChar(unsigned int charcode);
+		void cancelMouseDown();
 		
 	protected:
 		bool mPushed;
