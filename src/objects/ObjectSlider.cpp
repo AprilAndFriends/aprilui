@@ -92,6 +92,12 @@ namespace aprilui
 		}
 	}
 
+	void Slider::cancelMouseDown()
+	{
+		mPushed = false;
+		Object::cancelMouseDown();
+	}
+
 	void Slider::OnDraw()
 	{
 		grect rect = _getDrawRect();

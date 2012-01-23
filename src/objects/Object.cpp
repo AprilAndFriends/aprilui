@@ -613,6 +613,14 @@ namespace aprilui
 		}
 	}
 
+	void Object::cancelMouseDown()
+	{
+		foreach (Object*, it, mChildren)
+		{
+			(*it)->cancelMouseDown();
+		}
+	}
+
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
 		registerEvent(name,new CallbackEvent(callback));

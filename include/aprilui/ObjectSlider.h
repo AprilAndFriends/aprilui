@@ -37,6 +37,7 @@ namespace aprilui
 		bool onMouseDown(float x, float y, int button);
 		bool onMouseUp(float x, float y, int button);
 		void onMouseMove(float x, float y);
+		void cancelMouseDown();
 		
 	protected:
 		bool mPushed;

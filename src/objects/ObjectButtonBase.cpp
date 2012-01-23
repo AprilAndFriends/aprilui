@@ -96,6 +96,12 @@ namespace aprilui
 		mHovered = _checkHover();
 	}
 
+	void ButtonBase::cancelMouseDown()
+	{
+		mPushed = false;
+		mHovered = _checkHover();
+	}
+
 	void ButtonBase::setAllowedButtons(harray<unsigned char> buttons)
 	{
 		allowedButtons = buttons;

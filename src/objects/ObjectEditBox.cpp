@@ -313,6 +313,12 @@ namespace aprilui
 		}
 	}
 
+	void EditBox::cancelMouseDown()
+	{
+		mPushed = false;
+		Object::cancelMouseDown();
+	}
+
 	harray<unsigned int> EditBox::_convertToUnicodeChars(chstr string)
 	{
 		int length;

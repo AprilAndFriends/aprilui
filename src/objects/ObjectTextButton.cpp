@@ -121,10 +121,14 @@ namespace aprilui
 	{
 		if (Object::onMouseDown(x, y, button))
 		{
-			_triggerEvent("MouseDown", x, y, button);
 			return true;
 		}
-		return ButtonBase::onMouseDown(x, y, button);
+		bool result = ButtonBase::onMouseDown(x, y, button);
+		if (result)
+		{
+			_triggerEvent("MouseDown", x, y, button);
+		}
+		return result;
 	}
 
 	bool TextButton::onMouseUp(float x, float y, int button)
@@ -145,6 +149,12 @@ namespace aprilui
 	{
 		Object::onMouseMove(x, y);
 		ButtonBase::onMouseMove(x, y);
+	}
+
+	void TextButton::cancelMouseDown()
+	{
+		Object::cancelMouseDown();
+		ButtonBase::cancelMouseDown();
 	}
 
 }
