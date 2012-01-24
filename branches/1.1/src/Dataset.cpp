@@ -12,8 +12,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hfile.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
-#include <hltypes/util.h>
 
 #include "Animators.h"
 #include "aprilui.h"

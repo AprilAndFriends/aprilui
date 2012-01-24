@@ -10,8 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <april/Keys.h>
 #include <atres/atres.h>
 #include <atres/FontResource.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 #include <april/Window.h>
 
 #include "aprilui.h"

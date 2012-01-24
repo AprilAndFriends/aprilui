@@ -10,8 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <math.h>
 
 #include <gtypes/Rectangle.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
 #include "AnimatorAlphaFader.h"
 
