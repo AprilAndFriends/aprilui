@@ -19,7 +19,7 @@
 
 namespace aprilui
 {
-	static float DragThreshold = 16.0f;
+	float ScrollArea::DragThreshold = 16.0f;
 
 	ScrollArea::ScrollArea(chstr name, grect rect) :
 		Object(name, rect),
