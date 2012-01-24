@@ -17,9 +17,9 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="win32_Debug|Win32"
-			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -63,8 +63,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
-				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
-				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin\$(PlatformName)"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -91,9 +91,9 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="win32_Release|Win32"
-			OutputDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)bin\lib\$(ProjectName)\$(ConfigurationName)"
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -138,8 +138,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
-				OutputFile="$(SolutionDir)bin\$(ProjectName).dll"
-				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin\$(PlatformName)"
 			/>
 			<Tool
 				Name="VCALinkTool"
