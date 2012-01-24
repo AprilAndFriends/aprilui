@@ -14,8 +14,8 @@
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
 #include <hltypes/hfile.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
-#include <hltypes/util.h>
 #include <hlxml/Document.h>
 #include <hlxml/Exception.h>
 #include <hlxml/Node.h>

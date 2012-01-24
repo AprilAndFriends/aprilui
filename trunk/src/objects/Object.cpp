@@ -14,9 +14,9 @@
 #include <gtypes/gtypesUtil.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
 #include "Animator.h"
 #include "AnimatorAlphaChanger.h"

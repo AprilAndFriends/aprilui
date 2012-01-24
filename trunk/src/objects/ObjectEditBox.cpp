@@ -11,8 +11,8 @@
 #include <april/Keys.h>
 #include <atres/atres.h>
 #include <atres/FontResource.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 #include <april/Window.h>
 
 #include "aprilui.h"

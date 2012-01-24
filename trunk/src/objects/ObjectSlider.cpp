@@ -9,8 +9,8 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <gtypes/Rectangle.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
-#include <hltypes/util.h>
 
 #include "aprilui.h"
 #include "Dataset.h"

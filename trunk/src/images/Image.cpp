@@ -13,7 +13,7 @@
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
-#include <hltypes/util.h>
+#include <hltypes/hltypesUtil.h>
 
 #include "Exception.h"
 #include "Image.h"
