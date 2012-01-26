@@ -49,6 +49,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void removeAllChildren(bool recursive = false) { this->removeChildren(recursive); }
 		DEPRECATED_ATTRIBUTE void destroyAllChildren(bool recursive = false) { this->destroyChildren(recursive); }
 		harray<Object*>& getChildren() { return mChildren; }
+		Object* getChildByName(chstr name, bool recursive = false);
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
