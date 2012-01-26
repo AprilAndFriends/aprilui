@@ -25,7 +25,7 @@
 #include <atres/FontResourceBitmap.h>
 #include <atres/Renderer.h>
 #include <gtypes/Vector2.h>
-#include <hltypes/util.h>
+#include <hltypes/hltypesUtil.h>
 
 gvec2 screen(800, 600);
 
