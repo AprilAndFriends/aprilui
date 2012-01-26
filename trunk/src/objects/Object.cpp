@@ -770,6 +770,31 @@ namespace aprilui
 		float c2 = (float)dcos(mAngle);
 		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
 	}
+
+	Object* Object::getChildByName(chstr name, bool recursive)
+	{
+		foreach (Object*, it, mChildren)
+		{
+			if ((*it)->getName() == name)
+			{
+				return (*it);
+			}
+		}
+		if (recursive)
+		{
+			Object* object;
+			foreach (Object*, it, mChildren)
+			{
+				object = (*it)->getChildByName(name, recursive);
+				if (object != NULL)
+				{
+					return object;
+				}
+			}
+		}
+		return NULL;
+	}
+
 	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
