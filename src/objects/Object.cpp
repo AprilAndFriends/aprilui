@@ -405,8 +405,9 @@ namespace aprilui
 			orthoProjection = april::rendersys->getOrthoProjection();
 			viewport = april::rendersys->getViewport();
 			grect rect = mParent->getDerivedRect();
+			gvec2 ratio = orthoProjection.getSize() / viewport.getSize();
 			april::rendersys->setOrthoProjection(grect(-rect.getPosition(), rect.getSize()));
-			april::rendersys->setViewport(rect + orthoProjection.getPosition());
+			april::rendersys->setViewport(grect((rect.getPosition() + orthoProjection.getPosition()) / ratio, rect.getSize() / ratio));
 		}
 		gvec2 position = mRect.getPosition() + offset + mCenter;
 		if (position.x != 0.0f || position.y != 0.0f)

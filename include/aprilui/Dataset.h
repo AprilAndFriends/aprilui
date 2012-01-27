@@ -120,7 +120,7 @@ namespace aprilui
 		
 		template <class T> T getObject(chstr name)
 		{
-			T object = dynamic_cast<T>(getObject(name));
+			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
 			{
 				aprilui::log("WARNING: Dynamic cast in getObject<T> failed, object: " + name);
@@ -130,7 +130,7 @@ namespace aprilui
 
 		template <class T> void getObject(chstr name, T& out)
 		{
-			out = getObject<T>(name);
+			out = this->getObject<T>(name);
 		}
 
 	protected:
