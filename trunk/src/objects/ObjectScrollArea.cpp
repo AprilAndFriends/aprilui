@@ -68,6 +68,43 @@ namespace aprilui
 		return (!mPushed && mDragInertia > 0.0f && (_mAcceleration.x != 0.0f || _mAcceleration.y != 0.0f));
 	}
 
+	gvec2 ScrollArea::getScrollOffset()
+	{
+		return -getPosition();
+	}
+
+	void ScrollArea::setScrollOffset(gvec2 value)
+	{
+		setScrollOffsetX(value.x);
+		setScrollOffsetY(value.y);
+	}
+
+	void ScrollArea::setScrollOffset(float x, float y)
+	{
+		setScrollOffsetX(x);
+		setScrollOffsetY(y);
+	}
+
+	float ScrollArea::getScrollOffsetX()
+	{
+		return -getX();
+	}
+
+	void ScrollArea::setScrollOffsetX(float value)
+	{
+		setX(mParent != NULL ? hclamp(-value, mParent->getWidth() - getWidth(), 0.0f) : -value);
+	}
+
+	float ScrollArea::getScrollOffsetY()
+	{
+		return -getY();
+	}
+
+	void ScrollArea::setScrollOffsetY(float value)
+	{
+		setY(mParent != NULL ? hclamp(-value, mParent->getHeight() - getHeight(), 0.0f) : -value);
+	}
+
 	void ScrollArea::update(float k)
 	{
 		Object::update(k);
@@ -75,20 +112,27 @@ namespace aprilui
 		{
 			ButtonBase::update(k);
 			gvec2 position = aprilui::getCursorPosition();
-			if (mPushed && !mDragging && (fabs(_mClickPosition.x - position.x) >= mDragThreshold || fabs(_mClickPosition.y - position.y) >= mDragThreshold))
+			if (mPushed)
 			{
-				mDragging = true;
-				_mClickPosition -= getPosition();
-				_mLastPosition = position;
-				foreach (Object*, it, mChildren)
+				if (!mDragging && (_mAcceleration.x != 0.0f || _mAcceleration.y != 0.0f ||
+					fabs(_mClickPosition.x - position.x) >= mDragThreshold || fabs(_mClickPosition.y - position.y) >= mDragThreshold))
 				{
-					(*it)->cancelMouseDown();
+					mDragging = true;
+					_mClickPosition -= getPosition();
+					_mLastPosition = position;
+					foreach (Object*, it, mChildren)
+					{
+						(*it)->cancelMouseDown();
+					}
+				}
+				else
+				{
+					_mAcceleration.set(0.0f, 0.0f);
 				}
 			}
 			if (mDragging)
 			{
-				setX(hclamp(position.x - _mClickPosition.x, mParent->getWidth() - getWidth(), 0.0f));
-				setY(hclamp(position.y - _mClickPosition.y, mParent->getHeight() - getHeight(), 0.0f));
+				setScrollOffset(_mClickPosition - position);
 				_mAcceleration = (position - _mLastPosition) / k;
 				_mLastPosition = position;
 			}
@@ -98,11 +142,9 @@ namespace aprilui
 				float newLength = length - k * 1000 * mDragInertia;
 				if (fabs(newLength) < fabs(length) && sgn(newLength) == sgn(length))
 				{
-					float x = getX();
-					float y = getY();
-					setX(hclamp((float)(int)(x + _mAcceleration.x * k), mParent->getWidth() - getWidth(), 0.0f));
-					setY(hclamp((float)(int)(y + _mAcceleration.y * k), mParent->getHeight() - getHeight(), 0.0f));
-					if (getX() != x || getY() != y)
+					gvec2 offset = getScrollOffset();
+					setScrollOffset((float)(int)(offset.x - _mAcceleration.x * k), (float)(int)(offset.y - _mAcceleration.y * k));
+					if (getScrollOffset() != offset)
 					{
 						_mAcceleration *= newLength / length;
 					}
