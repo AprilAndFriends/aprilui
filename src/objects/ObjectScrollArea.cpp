@@ -79,7 +79,7 @@ namespace aprilui
 			{
 				mDragging = true;
 				_mClickPosition -= getPosition();
-				_mLastPosition = _mClickPosition;
+				_mLastPosition = position;
 				foreach (Object*, it, mChildren)
 				{
 					(*it)->cancelMouseDown();
