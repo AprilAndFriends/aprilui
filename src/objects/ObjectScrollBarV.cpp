@@ -98,6 +98,8 @@ namespace aprilui
 						rect.y += (float)(int)(-area->getY() / factor * range);
 						rect.h = hclamp((1 - ratio) * range, 8.0f, range);
 					}
+					april::rendersys->drawQuad(rect, april::Color(APRIL_COLOR_WHITE, 128));
+					rect.set(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
 					april::rendersys->drawColoredQuad(rect, april::Color(APRIL_COLOR_BLACK, 128));
 				}
 			}
