@@ -35,10 +35,14 @@ namespace aprilui
 		void setAllowDrag(bool value) { mAllowDrag = value; }
 		float getDragThreshold() { return mDragThreshold; }
 		void setDragThreshold(float value) { mDragThreshold = value; }
+		float getDragInertia() { return mDragInertia; }
+		void setDragInertia(float value) { mDragInertia = value; }
+		bool isDragging() { return mDragging; }
 		hstr getName();
 		bool isCursorInside();
 		Object* getParent();
 		Dataset* getDataset();
+		bool isScrolling();
 
 		void update(float k);
 
@@ -52,16 +56,20 @@ namespace aprilui
 		void onMouseMove(float x, float y);
 
 		static float DragThreshold;
+		static float DragInertia;
 
 	protected:
 		bool mAllowDrag;
 		float mDragThreshold;
+		float mDragInertia;
+		bool mDragging;
 
 		virtual bool _checkHover();
 
 	private:
 		gvec2 _mClickPosition;
-		bool _mDragging;
+		gvec2 _mLastPosition;
+		gvec2 _mAcceleration;
 
 	};
 }

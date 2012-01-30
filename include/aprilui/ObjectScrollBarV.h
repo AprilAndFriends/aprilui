@@ -29,6 +29,8 @@ namespace aprilui
 		~ScrollBarV();
 		static Object* createInstance(chstr name, grect rect);
 
+		void OnDraw();
+
 		void notifyEvent(chstr name, void* params);
 
 		static hstr SkinNameUpNormal;
