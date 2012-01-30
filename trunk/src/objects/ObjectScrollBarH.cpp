@@ -78,6 +78,32 @@ namespace aprilui
 		return (x + mButtonBegin->getX() < mButtonBar->getX() ? -parent->getWidth() : parent->getWidth());
 	}
 
+	void ScrollBarH::OnDraw()
+	{
+		ScrollBar::OnDraw();
+		if (mSkinName == "")
+		{
+			Container* parent = dynamic_cast<Container*>(mParent);
+			if (parent != NULL)
+			{
+				ScrollArea* area = parent->_getScrollArea();
+				if (area != NULL && (area->isDragging() || area->isScrolling()))
+				{
+					float range = getWidth();
+					float factor = area->getWidth();
+					float ratio = (factor - parent->getWidth()) / factor;
+					grect rect = _getDrawRect();
+					if (ratio > 0.0f)
+					{
+						rect.x += (float)(int)(-area->getX() / factor * range);
+						rect.w = hclamp((1 - ratio) * range, 8.0f, range);
+					}
+					april::rendersys->drawColoredQuad(rect, april::Color(APRIL_COLOR_BLACK, 128));
+				}
+			}
+		}
+	}
+
 	void ScrollBarH::notifyEvent(chstr name, void* params)
 	{
 		ScrollBar::notifyEvent(name, params);

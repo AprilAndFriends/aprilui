@@ -20,6 +20,7 @@
 namespace aprilui
 {
 	float ScrollArea::DragThreshold = 16.0f;
+	float ScrollArea::DragInertia = 0.0f;
 
 	ScrollArea::ScrollArea(chstr name, grect rect) :
 		Object(name, rect),
@@ -28,7 +29,8 @@ namespace aprilui
 		mClip = true;
 		mAllowDrag = false;
 		mDragThreshold = DragThreshold;
-		_mDragging = false;
+		mDragInertia = DragInertia;
+		mDragging = false;
 	}
 
 	ScrollArea::~ScrollArea()
@@ -61,6 +63,11 @@ namespace aprilui
 		return Object::getDataset();
 	}
 
+	bool ScrollArea::isScrolling()
+	{
+		return (!mPushed && mDragInertia > 0.0f && (_mAcceleration.x != 0.0f || _mAcceleration.y != 0.0f));
+	}
+
 	void ScrollArea::update(float k)
 	{
 		Object::update(k);
@@ -68,26 +75,53 @@ namespace aprilui
 		{
 			ButtonBase::update(k);
 			gvec2 position = aprilui::getCursorPosition();
-			if (mPushed && !_mDragging && (fabs(_mClickPosition.x - position.x) >= mDragThreshold || fabs(_mClickPosition.y - position.y) >= mDragThreshold))
+			if (mPushed && !mDragging && (fabs(_mClickPosition.x - position.x) >= mDragThreshold || fabs(_mClickPosition.y - position.y) >= mDragThreshold))
 			{
-				_mDragging = true;
+				mDragging = true;
 				_mClickPosition -= getPosition();
+				_mLastPosition = _mClickPosition;
 				foreach (Object*, it, mChildren)
 				{
 					(*it)->cancelMouseDown();
 				}
 			}
-			if (_mDragging)
+			if (mDragging)
 			{
 				setX(hclamp(position.x - _mClickPosition.x, mParent->getWidth() - getWidth(), 0.0f));
 				setY(hclamp(position.y - _mClickPosition.y, mParent->getHeight() - getHeight(), 0.0f));
+				_mAcceleration = (position - _mLastPosition) / k;
+				_mLastPosition = position;
+			}
+			else if (isScrolling())
+			{
+				float length = _mAcceleration.length();
+				float newLength = length - k * 1000 * mDragInertia;
+				if (fabs(newLength) < fabs(length) && sgn(newLength) == sgn(length))
+				{
+					float x = getX();
+					float y = getY();
+					setX(hclamp((float)(int)(x + _mAcceleration.x * k), mParent->getWidth() - getWidth(), 0.0f));
+					setY(hclamp((float)(int)(y + _mAcceleration.y * k), mParent->getHeight() - getHeight(), 0.0f));
+					if (getX() != x || getY() != y)
+					{
+						_mAcceleration *= newLength / length;
+					}
+					else
+					{
+						_mAcceleration.set(0.0f, 0.0f);
+					}
+				}
+				else
+				{
+					_mAcceleration.set(0.0f, 0.0f);
+				}
 			}
 		}
 	}
 
 	bool ScrollArea::_checkHover()
 	{
-		return (!_mDragging ? ButtonBase::_checkHover() : isCursorInside());
+		return (!mDragging ? ButtonBase::_checkHover() : isCursorInside());
 	}
 
 	void ScrollArea::notifyEvent(chstr name, void* params)
@@ -119,6 +153,7 @@ namespace aprilui
 		}
 		if (name == "allow_drag")		return isAllowDrag();
 		if (name == "drag_threshold")	return getDragThreshold();
+		if (name == "drag_inertia")		return getDragInertia();
 		return Object::getProperty(name, property_exists);
 	}
 
@@ -126,6 +161,7 @@ namespace aprilui
 	{
 		if (name == "allow_drag")			setAllowDrag(value);
 		else if (name == "drag_threshold")	setDragThreshold(value);
+		else if (name == "drag_inertia")	setDragInertia(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
@@ -134,9 +170,9 @@ namespace aprilui
 	{
 		if (mAllowDrag)
 		{
-			_mDragging = true;
+			mDragging = true;
 			bool result = ButtonBase::onMouseDown(x, y, button);
-			_mDragging = false;
+			mDragging = false;
 			if (result)
 			{
 				_mClickPosition = aprilui::getCursorPosition();
@@ -149,7 +185,7 @@ namespace aprilui
 	{
 		if (mAllowDrag)
 		{
-			_mDragging = false;
+			mDragging = false;
 			if (ButtonBase::onMouseUp(x, y, button))
 			{
 				return true;
