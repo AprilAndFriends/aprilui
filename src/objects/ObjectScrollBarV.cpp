@@ -60,7 +60,7 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setY(hclamp(area->getY() - value, parent->getHeight() - area->getHeight(), 0.0f));
+		area->setScrollOffsetY(area->getScrollOffsetY() + value);
 		_updateBar();
 	}
 
@@ -166,8 +166,7 @@ namespace aprilui
 		{
 			return;
 		}
-		float h = parent->getHeight();
-		area->setY(hclamp((float)(int)(-y * h / mButtonBar->getHeight()), h - area->getHeight(), 0.0f));
+		area->setScrollOffsetY((float)(int)(y * parent->getHeight() / mButtonBar->getHeight()));
 		_updateBar();
 	}
 

@@ -43,6 +43,13 @@ namespace aprilui
 		Object* getParent();
 		Dataset* getDataset();
 		bool isScrolling();
+		gvec2 getScrollOffset();
+		void setScrollOffset(gvec2 value);
+		void setScrollOffset(float x, float y);
+		float getScrollOffsetX();
+		void setScrollOffsetX(float value);
+		float getScrollOffsetY();
+		void setScrollOffsetY(float value);
 
 		void update(float k);
 
