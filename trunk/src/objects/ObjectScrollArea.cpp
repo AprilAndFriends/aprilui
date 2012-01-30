@@ -20,7 +20,7 @@
 namespace aprilui
 {
 	float ScrollArea::DragThreshold = 16.0f;
-	float ScrollArea::DragInertia = 0.0f;
+	float ScrollArea::DragInertia = 1.0f;
 
 	ScrollArea::ScrollArea(chstr name, grect rect) :
 		Object(name, rect),
