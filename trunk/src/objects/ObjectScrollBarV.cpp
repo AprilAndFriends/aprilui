@@ -60,7 +60,21 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setScrollOffsetY(area->getScrollOffsetY() + value);
+		float inertia = area->getInertia();
+		if (inertia <= 0.0f)
+		{
+			area->setScrollOffsetY(area->getScrollOffsetY() + value);
+		}
+		else
+		{
+			if (area->_mDragSpeed.y != 0.0f)
+			{
+				// s0 = v0 ^ 2 / (2 * a)
+				value -= sgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
+			}
+			// v = sqrt(2 * a * s)
+			area->_mDragSpeed.y = -sgn(value) * sqrt(2 * inertia * fabs(value));
+		}
 		_updateBar();
 	}
 
