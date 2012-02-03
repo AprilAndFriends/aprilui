@@ -27,16 +27,19 @@ namespace aprilui
 	class apriluiExport ScrollArea : public Object, public ButtonBase
 	{
 	public:
+		friend class ScrollBarH;
+		friend class ScrollBarV;
+
 		ScrollArea(chstr name, grect rect);
 		~ScrollArea();
 		static Object* createInstance(chstr name, grect rect);
 
 		bool isAllowDrag() { return mAllowDrag; }
 		void setAllowDrag(bool value) { mAllowDrag = value; }
+		float getInertia() { return mInertia; }
+		void setInertia(float value) { mInertia = value; }
 		float getDragThreshold() { return mDragThreshold; }
 		void setDragThreshold(float value) { mDragThreshold = value; }
-		float getDragInertia() { return mDragInertia; }
-		void setDragInertia(float value) { mDragInertia = value; }
 		float getDragMaxSpeed() { return mDragMaxSpeed; }
 		void setDragMaxSpeed(float value) { mDragMaxSpeed = value; }
 		bool isDragging() { return mDragging; }
@@ -64,14 +67,14 @@ namespace aprilui
 		bool onMouseUp(float x, float y, int button);
 		void onMouseMove(float x, float y);
 
+		static float Inertia;
 		static float DragThreshold;
-		static float DragInertia;
 		static float DragMaxSpeed;
 
 	protected:
 		bool mAllowDrag;
+		float mInertia;
 		float mDragThreshold;
-		float mDragInertia;
 		float mDragMaxSpeed;
 		bool mDragging;
 

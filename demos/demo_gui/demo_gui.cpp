@@ -59,14 +59,14 @@ void onKeyDown(unsigned int keycode)
 		break;
 	case april::AK_N:
 		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
-		if (object->getWidth() > 32)
+		if (object->getHeight() > 128)
 		{
-			object->setWidth(object->getWidth() - 32);
+			object->setHeight(object->getHeight() - 128);
 		}
 		break;
 	case april::AK_M:
 		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
-		object->setWidth(object->getWidth() + 32);
+		object->setHeight(object->getHeight() + 128);
 		break;
 	case april::AK_D:
 		aprilui::setDebugEnabled(!aprilui::isDebugEnabled());

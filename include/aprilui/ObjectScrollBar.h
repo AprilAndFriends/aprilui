@@ -28,20 +28,11 @@ namespace aprilui
 	class apriluiExport ScrollBar : public Object
 	{
 	public:
-		enum apriluiExport ScrollMode
-		{
-			Invisible = 0,
-			ActiveOnly,
-			Always
-		};
-
 		ScrollBar(chstr name, grect rect);
 		~ScrollBar();
 
 		hstr getSkinName() { return mSkinName; }
 		void setSkinName(chstr value);
-		ScrollMode getScrollMode() { return mScrollMode; }
-		void setScrollMode(ScrollMode value) { mScrollMode = value; }
 
 		void update(float k);
 
@@ -58,7 +49,6 @@ namespace aprilui
 
 	protected:
 		hstr mSkinName;
-		ScrollMode mScrollMode;
 		ImageButton* mButtonBegin;
 		ImageButton* mButtonEnd;
 		ImageButton* mButtonBack;
