@@ -94,7 +94,7 @@ namespace aprilui
 
 	void ScrollArea::setScrollOffsetX(float value)
 	{
-		setX(mParent != NULL ? hclamp(-value, mParent->getWidth() - getWidth(), 0.0f) : -value);
+		setX(mParent != NULL ? hclamp(-value, hmin(mParent->getWidth() - getWidth(), 0.0f), 0.0f) : -value);
 	}
 
 	float ScrollArea::getScrollOffsetY()
@@ -104,7 +104,7 @@ namespace aprilui
 
 	void ScrollArea::setScrollOffsetY(float value)
 	{
-		setY(mParent != NULL ? hclamp(-value, mParent->getHeight() - getHeight(), 0.0f) : -value);
+		setY(mParent != NULL ? hclamp(-value, hmin(mParent->getHeight() - getHeight(), 0.0f), 0.0f) : -value);
 	}
 
 	void ScrollArea::update(float k)
@@ -194,6 +194,10 @@ namespace aprilui
 			{
 				parent->_setScrollArea(NULL);
 			}
+		}
+		else if (name == "Resized")
+		{
+			setScrollOffset(getScrollOffset());
 		}
 	}
 

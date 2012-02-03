@@ -52,6 +52,8 @@ namespace aprilui
 
 		void onMouseMove(float x, float y);
 
+		virtual void addScrollValue(float value) = 0;
+
 		static float ScrollDistance;
 
 	protected:
@@ -73,7 +75,6 @@ namespace aprilui
 		virtual hstr _getSkinNameBarHover() = 0;
 		virtual hstr _getSkinNameBarPushed() = 0;
 
-		virtual void _addScrollValue(float value) = 0;
 		virtual float _calcScrollJump(float x, float y) = 0;
 		virtual void _updateChildren() = 0;
 		virtual void _moveScrollBar(float x, float y) = 0;

@@ -44,7 +44,7 @@ namespace aprilui
 		return new ScrollBarV(name, rect);
 	}
 
-	void ScrollBarV::_addScrollValue(float value)
+	void ScrollBarV::addScrollValue(float value)
 	{
 		if (mButtonBar == NULL)
 		{
@@ -187,7 +187,7 @@ namespace aprilui
 			return;
 		}
 		float range = getHeight() - mButtonBegin->getHeight() - mButtonEnd->getHeight();
-		float factor = area->getWidth();
+		float factor = area->getHeight();
 		float ratio = (factor - parent->getHeight()) / factor;
 		if (ratio > 0.0f)
 		{

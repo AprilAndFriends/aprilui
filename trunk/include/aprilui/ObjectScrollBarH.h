@@ -33,6 +33,8 @@ namespace aprilui
 
 		void notifyEvent(chstr name, void* params);
 
+		void addScrollValue(float value);
+
 		static hstr SkinNameLeftNormal;
 		static hstr SkinNameLeftHover;
 		static hstr SkinNameLeftPushed;
@@ -56,7 +58,6 @@ namespace aprilui
 		hstr _getSkinNameBarHover() { return SkinNameBarHHover; }
 		hstr _getSkinNameBarPushed() { return SkinNameBarHPushed; }
 
-		void _addScrollValue(float value);
 		float _calcScrollJump(float x, float y);
 		void _updateChildren();
 		void _moveScrollBar(float x, float y);
