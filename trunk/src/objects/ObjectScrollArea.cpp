@@ -21,6 +21,7 @@ namespace aprilui
 {
 	float ScrollArea::DragThreshold = 16.0f;
 	float ScrollArea::DragInertia = 2.0f;
+	float ScrollArea::DragMaxSpeed = 0.0f;
 
 	ScrollArea::ScrollArea(chstr name, grect rect) :
 		Object(name, rect),
@@ -30,6 +31,7 @@ namespace aprilui
 		mAllowDrag = false;
 		mDragThreshold = DragThreshold;
 		mDragInertia = DragInertia;
+		mDragMaxSpeed = DragMaxSpeed;
 		mDragging = false;
 	}
 
@@ -65,7 +67,7 @@ namespace aprilui
 
 	bool ScrollArea::isScrolling()
 	{
-		return (!mPushed && mDragInertia > 0.0f && (_mAcceleration.x != 0.0f || _mAcceleration.y != 0.0f));
+		return (!mPushed && mDragInertia > 0.0f && (_mDragSpeed.x != 0.0f || _mDragSpeed.y != 0.0f));
 	}
 
 	gvec2 ScrollArea::getScrollOffset()
@@ -114,7 +116,7 @@ namespace aprilui
 			gvec2 position = aprilui::getCursorPosition();
 			if (mPushed)
 			{
-				if (!mDragging && (_mAcceleration.x != 0.0f || _mAcceleration.y != 0.0f ||
+				if (!mDragging && (_mDragSpeed.x != 0.0f || _mDragSpeed.y != 0.0f ||
 					fabs(_mClickPosition.x - position.x) >= mDragThreshold || fabs(_mClickPosition.y - position.y) >= mDragThreshold))
 				{
 					mDragging = true;
@@ -127,35 +129,43 @@ namespace aprilui
 				}
 				else
 				{
-					_mAcceleration.set(0.0f, 0.0f);
+					_mDragSpeed.set(0.0f, 0.0f);
 				}
 			}
 			if (mDragging)
 			{
 				setScrollOffset(_mClickPosition - position);
-				_mAcceleration = (position - _mLastPosition) / k;
+				_mDragSpeed = (position - _mLastPosition) / k;
+				if (mDragMaxSpeed > 0.0f)
+				{
+					float length = _mDragSpeed.length();
+					if (length > 0.0f && length > mDragMaxSpeed)
+					{
+						_mDragSpeed *= mDragMaxSpeed / length;
+					}
+				}
 				_mLastPosition = position;
 			}
 			else if (isScrolling())
 			{
-				float length = _mAcceleration.length();
+				float length = _mDragSpeed.length();
 				float newLength = length - k * 1000 * mDragInertia;
 				if (fabs(newLength) < fabs(length) && sgn(newLength) == sgn(length))
 				{
 					gvec2 offset = getScrollOffset();
-					setScrollOffset((float)(int)(offset.x - _mAcceleration.x * k), (float)(int)(offset.y - _mAcceleration.y * k));
+					setScrollOffset((float)(int)(offset.x - _mDragSpeed.x * k), (float)(int)(offset.y - _mDragSpeed.y * k));
 					if (getScrollOffset() != offset)
 					{
-						_mAcceleration *= newLength / length;
+						_mDragSpeed *= newLength / length;
 					}
 					else
 					{
-						_mAcceleration.set(0.0f, 0.0f);
+						_mDragSpeed.set(0.0f, 0.0f);
 					}
 				}
 				else
 				{
-					_mAcceleration.set(0.0f, 0.0f);
+					_mDragSpeed.set(0.0f, 0.0f);
 				}
 			}
 		}
@@ -196,6 +206,7 @@ namespace aprilui
 		if (name == "allow_drag")		return isAllowDrag();
 		if (name == "drag_threshold")	return getDragThreshold();
 		if (name == "drag_inertia")		return getDragInertia();
+		if (name == "drag_max_speed")	return getDragMaxSpeed();
 		return Object::getProperty(name, property_exists);
 	}
 
@@ -204,6 +215,7 @@ namespace aprilui
 		if (name == "allow_drag")			setAllowDrag(value);
 		else if (name == "drag_threshold")	setDragThreshold(value);
 		else if (name == "drag_inertia")	setDragInertia(value);
+		else if (name == "drag_max_speed")	setDragMaxSpeed(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
