@@ -49,12 +49,24 @@ bool update(float k)
 
 void onKeyDown(unsigned int keycode)
 {
+	aprilui::Object* object;
 	switch (keycode)
 	{
 	case april::AK_RETURN:
 		dataset->unload();
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
+		break;
+	case april::AK_N:
+		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
+		if (object->getWidth() > 32)
+		{
+			object->setWidth(object->getWidth() - 32);
+		}
+		break;
+	case april::AK_M:
+		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
+		object->setWidth(object->getWidth() + 32);
 		break;
 	case april::AK_D:
 		aprilui::setDebugEnabled(!aprilui::isDebugEnabled());

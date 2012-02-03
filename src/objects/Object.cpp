@@ -296,12 +296,14 @@ namespace aprilui
 	{
 		_updateChildrenHorizontal(value - mRect.w);
 		mRect.w = value;
+		notifyEvent("Resized", NULL);
 	}
 
 	void Object::setHeight(float value)
 	{
 		_updateChildrenVertical(value - mRect.h);
 		mRect.h = value;
+		notifyEvent("Resized", NULL);
 	}
 
 	void Object::setSize(gvec2 value)
@@ -309,6 +311,7 @@ namespace aprilui
 		_updateChildrenHorizontal(value.x - mRect.w);
 		_updateChildrenVertical(value.y - mRect.h);
 		mRect.setSize(value);
+		notifyEvent("Resized", NULL);
 	}
 
 	void Object::setSize(float w, float h)
@@ -317,6 +320,7 @@ namespace aprilui
 		_updateChildrenVertical(h - mRect.h);
 		mRect.w = w;
 		mRect.h = h;
+		notifyEvent("Resized", NULL);
 	}
 
 	void Object::setRect(grect value)
@@ -324,6 +328,7 @@ namespace aprilui
 		_updateChildrenHorizontal(value.w - mRect.w);
 		_updateChildrenVertical(value.h - mRect.h);
 		mRect = value;
+		notifyEvent("Resized", NULL);
 	}
 
 	unsigned char Object::getDerivedAlpha()

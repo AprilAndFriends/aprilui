@@ -159,19 +159,19 @@ namespace aprilui
 	void ScrollBar::_clickScrollBegin(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->_addScrollValue(-ScrollBar::ScrollDistance);
+		scrollBar->addScrollValue(-ScrollBar::ScrollDistance);
 	}
 
 	void ScrollBar::_clickScrollEnd(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->_addScrollValue(ScrollBar::ScrollDistance);
+		scrollBar->addScrollValue(ScrollBar::ScrollDistance);
 	}
 
 	void ScrollBar::_clickScrollBack(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->_addScrollValue(scrollBar->_calcScrollJump(args->x, args->y));
+		scrollBar->addScrollValue(scrollBar->_calcScrollJump(args->x, args->y));
 	}
 
 	void ScrollBar::_mouseDownScrollBar(EventArgs* args)

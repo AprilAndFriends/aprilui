@@ -44,7 +44,7 @@ namespace aprilui
 		return new ScrollBarH(name, rect);
 	}
 
-	void ScrollBarH::_addScrollValue(float value)
+	void ScrollBarH::addScrollValue(float value)
 	{
 		if (mButtonBar == NULL)
 		{
