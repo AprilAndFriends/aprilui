@@ -46,10 +46,6 @@ namespace aprilui
 
 	void ScrollBarV::addScrollValue(float value)
 	{
-		if (mButtonBar == NULL)
-		{
-			return;
-		}
 		Container* parent = dynamic_cast<Container*>(mParent);
 		if (parent == NULL)
 		{
