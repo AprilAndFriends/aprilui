@@ -17,8 +17,12 @@
 #include "EventUtils.h"
 #include "ObjectContainer.h"
 #include "ObjectImageButton.h"
+#include "ObjectScrollArea.h"
 #include "ObjectScrollBar.h"
 #include "Util.h"
+
+#define RETAIN_TIME 1.0f
+#define FADE_OUT_TIME 0.25f
 
 namespace aprilui
 {
@@ -32,6 +36,7 @@ namespace aprilui
 		mButtonBack = NULL;
 		mButtonBar = NULL;
 		_mClickPosition.set(0.0f, 0.0f);
+		_mRetainTime = 0.0f;
 	}
 
 	ScrollBar::~ScrollBar()
@@ -48,6 +53,47 @@ namespace aprilui
 	{
 		Object::update(k);
 		_updateBar();
+		if (mSkinName == "")
+		{
+			Container* parent = dynamic_cast<Container*>(mParent);
+			if (parent != NULL)
+			{
+				ScrollArea* area = parent->_getScrollArea();
+				if (area != NULL && _mRetainTime > 0.0f)
+				{
+					_mRetainTime -= k;
+				}
+			}
+		}
+	}
+
+	void ScrollBar::OnDraw()
+	{
+		Object::OnDraw();
+		if (mSkinName == "")
+		{
+			Container* parent = dynamic_cast<Container*>(mParent);
+			if (parent != NULL)
+			{
+				ScrollArea* area = parent->_getScrollArea();
+				if (area != NULL)
+				{
+					if (area->isDragging() || area->isScrolling())
+					{
+						_mRetainTime = RETAIN_TIME;
+					}
+					if (_mRetainTime > 0.0f)
+					{
+						april::Color color = _getDrawColor();
+						if (_mRetainTime < FADE_OUT_TIME)
+						{
+							color.a = (unsigned char)hclamp(color.a * _mRetainTime / FADE_OUT_TIME, 0.0f, 255.0f);
+						}
+						april::rendersys->drawColoredQuad(_getBarDrawRect(), color);
+					}
+				}
+			}
+		}
 	}
 
 	void ScrollBar::notifyEvent(chstr name, void* params)
@@ -123,13 +169,13 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "skin")				return getSkinName();
+		if (name == "skin")	return getSkinName();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)
 	{
-		if (name == "skin")					setSkinName(value);
+		if (name == "skin")	setSkinName(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}

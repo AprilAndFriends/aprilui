@@ -44,9 +44,33 @@ namespace aprilui
 		return new ScrollBarH(name, rect);
 	}
 
+	grect ScrollBarH::_getBarDrawRect()
+	{
+		grect result = _getDrawRect();
+		if (mSkinName == "")
+		{
+			Container* parent = dynamic_cast<Container*>(mParent);
+			if (parent != NULL)
+			{
+				ScrollArea* area = parent->_getScrollArea();
+				if (area != NULL)
+				{
+					float range = getWidth();
+					float factor = area->getWidth();
+					float ratio = (factor - parent->getWidth()) / factor;
+					if (ratio > 0.0f)
+					{
+						result.x += (float)(int)(-area->getX() / factor * range);
+						result.w = hclamp((1 - ratio) * range, 8.0f, range);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
 	void ScrollBarH::addScrollValue(float value)
 	{
-
 		Container* parent = dynamic_cast<Container*>(mParent);
 		if (parent == NULL)
 		{
@@ -87,34 +111,6 @@ namespace aprilui
 			return 0.0f;
 		}
 		return (x + mButtonBegin->getX() < mButtonBar->getX() ? -parent->getWidth() : parent->getWidth());
-	}
-
-	void ScrollBarH::OnDraw()
-	{
-		ScrollBar::OnDraw();
-		if (mSkinName == "")
-		{
-			Container* parent = dynamic_cast<Container*>(mParent);
-			if (parent != NULL)
-			{
-				ScrollArea* area = parent->_getScrollArea();
-				if (area != NULL && (area->isDragging() || area->isScrolling()))
-				{
-					float range = getWidth();
-					float factor = area->getWidth();
-					float ratio = (factor - parent->getWidth()) / factor;
-					grect rect = _getDrawRect();
-					if (ratio > 0.0f)
-					{
-						rect.x += (float)(int)(-area->getX() / factor * range);
-						rect.w = hclamp((1 - ratio) * range, 8.0f, range);
-					}
-					april::rendersys->drawQuad(rect, april::Color(APRIL_COLOR_WHITE, 128));
-					rect.set(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
-					april::rendersys->drawColoredQuad(rect, april::Color(APRIL_COLOR_BLACK, 128));
-				}
-			}
-		}
 	}
 
 	void ScrollBarH::notifyEvent(chstr name, void* params)
