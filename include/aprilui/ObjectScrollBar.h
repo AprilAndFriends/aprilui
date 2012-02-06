@@ -35,6 +35,7 @@ namespace aprilui
 		void setSkinName(chstr value);
 
 		void update(float k);
+		void OnDraw();
 
 		void notifyEvent(chstr name, void* params);
 
@@ -53,6 +54,7 @@ namespace aprilui
 		ImageButton* mButtonEnd;
 		ImageButton* mButtonBack;
 		ImageButton* mButtonBar;
+		float _mRetainTime;
 
 		virtual hstr _getSkinNameBeginNormal() = 0;
 		virtual hstr _getSkinNameBeginHover() = 0;
@@ -64,6 +66,8 @@ namespace aprilui
 		virtual hstr _getSkinNameBarNormal() = 0;
 		virtual hstr _getSkinNameBarHover() = 0;
 		virtual hstr _getSkinNameBarPushed() = 0;
+
+		virtual grect _getBarDrawRect() = 0;
 
 		virtual float _calcScrollJump(float x, float y) = 0;
 		virtual void _updateChildren() = 0;

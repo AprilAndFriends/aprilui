@@ -29,8 +29,6 @@ namespace aprilui
 		~ScrollBarV();
 		static Object* createInstance(chstr name, grect rect);
 
-		void OnDraw();
-
 		void notifyEvent(chstr name, void* params);
 
 		void addScrollValue(float value);
@@ -57,6 +55,8 @@ namespace aprilui
 		hstr _getSkinNameBarNormal() { return SkinNameBarVNormal; }
 		hstr _getSkinNameBarHover() { return SkinNameBarVHover; }
 		hstr _getSkinNameBarPushed() { return SkinNameBarVPushed; }
+
+		grect _getBarDrawRect();
 
 		float _calcScrollJump(float x, float y);
 		void _updateChildren();

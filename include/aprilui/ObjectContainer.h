@@ -31,6 +31,7 @@ namespace aprilui
 	{
 	public:
 		friend class ScrollArea;
+		friend class ScrollBar;
 		friend class ScrollBarH;
 		friend class ScrollBarV;
 
