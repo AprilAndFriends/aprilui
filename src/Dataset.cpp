@@ -13,9 +13,9 @@
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
-#include <hltypes/hfile.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hresource.h>
 #include <hlxml/Document.h>
 #include <hlxml/Exception.h>
 #include <hlxml/Node.h>
@@ -172,7 +172,10 @@ namespace aprilui
 			hstr base, file, locpath;
 			filepath.rsplit("/", base, file);
 			locpath = base + "/" + localization + "/" + file;
-			if (hfile::exists(locpath)) filepath = locpath;
+			if (hresource::exists(locpath))
+			{
+				filepath = locpath;
+			}
 		}
 		
 		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
@@ -520,7 +523,7 @@ namespace aprilui
 		harray<hstr> values;
 		bool keyMode = true;
 		hstr key;
-		hfile f;
+		hresource f;
 		foreach (hstr, it, files)
 		{
 			f.open(*it);
