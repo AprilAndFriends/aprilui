@@ -31,13 +31,13 @@
 #include "AnimatorScalerX.h"
 #include "AnimatorScalerY.h"
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "CallbackEvent.h"
 #include "Dataset.h"
 #include "Event.h"
 #include "EventArgs.h"
 #include "Exception.h"
 #include "ObjectCallbackObject.h"
-#include "Util.h"
 
 #define REMOVE_EXISTING_ANIMATORS(name) \
 	int i ## name = 0; \

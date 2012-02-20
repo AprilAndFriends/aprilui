@@ -23,11 +23,11 @@
 
 #include "Animators.h"
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Images.h"
 #include "Objects.h"
-#include "Util.h"
 
 namespace aprilui
 {

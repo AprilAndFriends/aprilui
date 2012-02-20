@@ -14,7 +14,6 @@
 #ifndef APRILUI_UTIL_H
 #define APRILUI_UTIL_H
 
-#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
 #define APRILUI_E_TOLERANCE 0.0001f
