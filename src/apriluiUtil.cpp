@@ -11,7 +11,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include "Util.h"
+#include "apriluiUtil.h"
 
 namespace aprilui
 {

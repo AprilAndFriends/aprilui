@@ -15,9 +15,9 @@
 #include <gtypes/Vector2.h>
 #include <hltypes/hltypesUtil.h>
 
+#include "apriluiUtil.h"
 #include "Exception.h"
 #include "Image.h"
-#include "Util.h"
 
 namespace aprilui
 {

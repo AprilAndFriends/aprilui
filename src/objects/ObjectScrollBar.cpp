@@ -13,13 +13,13 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "EventArgs.h"
 #include "EventUtils.h"
 #include "ObjectContainer.h"
 #include "ObjectImageButton.h"
 #include "ObjectScrollArea.h"
 #include "ObjectScrollBar.h"
-#include "Util.h"
 
 #define RETAIN_TIME 1.0f
 #define FADE_OUT_TIME 0.25f

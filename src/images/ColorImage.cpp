@@ -13,8 +13,8 @@
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 
+#include "apriluiUtil.h"
 #include "ColorImage.h"
-#include "Util.h"
 
 namespace aprilui
 {
