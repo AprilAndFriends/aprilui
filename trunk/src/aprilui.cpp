@@ -9,6 +9,9 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <stdio.h>
+#ifdef _ANDROID
+#include <android/log.h>
+#endif
 
 #include <april/Keys.h>
 #include <april/RenderSystem.h>
@@ -48,7 +51,11 @@ namespace aprilui
 	hstr localization = "";
 	void aprilui_writelog(chstr message)
 	{
-		printf("%s\n", message.c_str());		
+#ifndef _ANDROID
+		printf("%s\n", message.c_str());
+#else
+		__android_log_print(ANDROID_LOG_INFO, "april", "%s", message.c_str());
+#endif
 	}
 	void (*g_logFunction)(chstr) = aprilui_writelog;
 	
