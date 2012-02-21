@@ -2,12 +2,19 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.5
+/// @version 1.51
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
+#ifdef _ANDROID
+#define APRIL_ANDROID_PACKAGE_NAME "com/example/aprilui/demoTiledImage"
+#define RESOURCE_PATH "./"
+#else
+#define RESOURCE_PATH "../media/"
+#endif
 
 #include <stdio.h>
 
@@ -29,14 +36,19 @@
 #include <gtypes/Vector2.h>
 
 #define SCROLL_SPEED gvec2(50.0f, -50.0f)
-gvec2 screen(800, 600);
+grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
+#ifndef _ANDROID
+grect viewport = drawRect;
+#else
+grect viewport(0.0f, 0.0f, 480.0f, 320.0f);
+#endif
 
 aprilui::Dataset* dataset;
 
 bool render(float time)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(screen);
+	april::rendersys->setOrthoProjection(drawRect);
 	aprilui::updateCursorPosition();
 	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
 	image->setScroll(image->getScroll() + SCROLL_SPEED * time); // manual scrolling
@@ -95,11 +107,11 @@ void april_init(const harray<hstr>& args)
 	{
 		april::init();
 		april::createRenderSystem("");
-		april::createRenderTarget((int)screen.x, (int)screen.y, false, "demo_tileimage");
+		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_tileimage");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&render);
-		dataset = new aprilui::Dataset("../media/demo_tiledimage.dts");
+		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tiledimage.dts");
 		dataset->load();
 	}
 	catch (aprilui::_GenericException e)

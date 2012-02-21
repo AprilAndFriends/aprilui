@@ -2,12 +2,19 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.5
+/// @version 1.51
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
+#ifdef _ANDROID
+#define APRIL_ANDROID_PACKAGE_NAME "com/example/aprilui/demoSimple"
+#define RESOURCE_PATH "./"
+#else
+#define RESOURCE_PATH "../media/"
+#endif
 
 #include <stdio.h>
 
@@ -25,14 +32,19 @@
 #include <atres/FontResourceBitmap.h>
 #include <atres/Renderer.h>
 
-gvec2 screen(800, 600);
+grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
+#ifndef _ANDROID
+grect viewport = drawRect;
+#else
+grect viewport(0.0f, 0.0f, 480.0f, 320.0f);
+#endif
 
 aprilui::Dataset* dataset;
 
 bool render(float time)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(screen);
+	april::rendersys->setOrthoProjection(drawRect);
 	aprilui::updateCursorPosition();
 	dataset->getObject("root")->draw();
 	dataset->update(time);
@@ -89,12 +101,12 @@ void april_init(const harray<hstr>& args)
 	{
 		april::init();
 		april::createRenderSystem("");
-		april::createRenderTarget((int)screen.x, (int)screen.y, false, "demo_simple");
+		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_simple");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&render);
-		atres::renderer->registerFontResource(new atres::FontResourceBitmap("../media/arial.font"));
-		dataset = new aprilui::Dataset("../media/demo_simple.dts");
+		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
+		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_simple.dts");
 		dataset->load();
 	}
 	catch (aprilui::_GenericException e)

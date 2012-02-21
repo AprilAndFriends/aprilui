@@ -2,12 +2,19 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.5
+/// @version 1.51
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
+#ifdef _ANDROID
+#define APRIL_ANDROID_PACKAGE_NAME "com/example/aprilui/demoGui"
+#define RESOURCE_PATH "./"
+#else
+#define RESOURCE_PATH "../media/"
+#endif
 
 #include <stdio.h>
 
@@ -27,7 +34,12 @@
 #include <atres/Renderer.h>
 #include <gtypes/Vector2.h>
 
-grect screen(0, 0, 800, 600);
+grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
+#ifndef _ANDROID
+grect viewport = drawRect;
+#else
+grect viewport(0.0f, 0.0f, 480.0f, 320.0f);
+#endif
 
 aprilui::Dataset* dataset;
 
@@ -40,7 +52,7 @@ float _animatorCustomFunction(aprilui::Animator* animator, float time)
 bool update(float k)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(screen);
+	april::rendersys->setOrthoProjection(drawRect);
 	aprilui::updateCursorPosition();
 	dataset->update(k);
 	dataset->getObject("root")->draw();
@@ -125,14 +137,14 @@ void april_init(const harray<hstr>& args)
 	{
 		april::init();
 		april::createRenderSystem("");
-		april::createRenderTarget((int)screen.w, (int)screen.h, false, "demo_gui");
+		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_gui");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&update);
 		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::onMouseDown, &aprilui::onMouseUp, &aprilui::onMouseMove);
 		april::rendersys->getWindow()->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
-		atres::renderer->registerFontResource(new atres::FontResourceBitmap("../media/arial.font"));
-		dataset = new aprilui::Dataset("../media/demo_gui.dts");
+		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
+		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 #ifdef _DEBUG
