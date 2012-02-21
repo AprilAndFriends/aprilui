@@ -60,21 +60,16 @@ namespace aprilui
 
 	hstr Dataset::_makeFilePath(chstr filename, chstr name, bool useNameBasePath)
 	{
-		int slash = filename.rfind('/');
 		int dot = filename.rfind('.');
-		if (name == "")
+		if (name != "" && useNameBasePath)
 		{
-			return normalize_path(filename(0, slash));
-		}
-		if (useNameBasePath)
-		{
-			hstr extension = filename(dot, filename.size() - dot);
+			hstr extension = filename.rsplit(".", -1, false).pop_first();// filename(dot, filename.size() - dot);
 			if (filename.ends_with(name + extension))
 			{
-				return normalize_path(filename.replace(name + extension, ""));
+				return normalize_path(get_basedir(filename.replace(name + extension, "")));
 			}
 		}
-		return normalize_path(filename(0, slash));
+		return normalize_path(get_basedir(filename));
 	}
 	
 	void Dataset::destroyObject(chstr name, bool recursive)
@@ -410,17 +405,17 @@ namespace aprilui
 			mFilePath = originalFilePath;
 			return;
 		}
-		hstr basedir = get_basedir(path);
-		hstr filename = path(basedir.size() + 1, -1);
+		//hstr basedir = mFilePath;//get_basedir(path);
+		hstr filename = path(mFilePath.size() + 1, -1);
 		hstr left;
 		hstr right;
 		filename.split("*", left, right);
-		harray<hstr> contents = hdir::files(basedir).sorted();
+		harray<hstr> contents = hdir::resource_files(mFilePath).sorted();
 		foreach (hstr, it, contents)
 		{
 			if (it->starts_with(left) && it->ends_with(right))
 			{
-				readFile(basedir + "/" + *it);
+				readFile(mFilePath + "/" + (*it));
 			}
 		}
 		mFilePath = originalFilePath;
@@ -458,7 +453,7 @@ namespace aprilui
 		hstr left;
 		hstr right;
 		filename.split("*", left, right);
-		harray<hstr> contents = hdir::files(basedir).sorted();
+		harray<hstr> contents = hdir::resource_files(basedir).sorted();
 		foreach (hstr, it, contents)
 		{
 			if ((*it).starts_with(left) && (*it).ends_with(right))
@@ -472,12 +467,7 @@ namespace aprilui
 	{
 		// parse dataset xml file, error checking first
 		hstr path = normalize_path(filename);
-#ifdef NO_FS_TREE
-		path = path.ltrim('.');
-		path = path.ltrim('/');
-		path = path.replace("/","___");
-#endif
-		log("parsing dataset file " + normalize_path(filename));
+		aprilui::log("parsing dataset file '" + path + "'");
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
 
@@ -499,26 +489,19 @@ namespace aprilui
 		hlxml::close(doc);
 	}
 
-	void Dataset::load(chstr path)
+	void Dataset::load()
 	{
-		hstr textsPath = (path != "" ? path : getDefaultTextsPath()) + "/" + getLocalization();
-		hstr filepath = normalize_path(mFilePath + "/" + textsPath);
-#ifdef NO_FS_TREE
-		textsPath = textsPath.ltrim('.').ltrim('.').ltrim('/');
-		textsPath = textsPath.replace("/", "___");
-		filepath = filepath.replace("/", "___");
-#endif
-		// texts
+		hstr filepath = normalize_path(mFilePath + "/" + getDefaultTextsPath() + "/" + getLocalization());
 		_loadTexts(filepath);
 		readFile(mFilename);
 		mLoaded = true;
-		this->update(0);
+		update(0.0f);
 	}
 	
 	void Dataset::_loadTexts(chstr path)
 	{
 		aprilui::log("loading texts from '" + path + "'");
-		harray<hstr> files = hdir::files(path, true);
+		harray<hstr> files = hdir::resource_files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
 		bool keyMode = true;
@@ -526,6 +509,7 @@ namespace aprilui
 		hresource f;
 		foreach (hstr, it, files)
 		{
+			aprilui::log("OPENING RESOURCE " + *it);
 			f.open(*it);
 			if (!f.is_open())
 			{
