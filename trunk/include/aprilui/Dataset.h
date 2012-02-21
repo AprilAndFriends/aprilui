@@ -49,7 +49,7 @@ namespace aprilui
 		Dataset(chstr filename, chstr name = "", bool useNameBasePath = false);
 		virtual ~Dataset();
 
-		void load(chstr path = "");
+		void load();
 		void unload();
 		bool isLoaded() { return mLoaded; }
 		void registerManualObject(Object* o);
