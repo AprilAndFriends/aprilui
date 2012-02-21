@@ -36,6 +36,10 @@ namespace aprilui
 	}
 	_ResourceNotExistsException::~_ResourceNotExistsException() { }
 
+	_InvalidObjectTypeCast::_InvalidObjectTypeCast(chstr err_text, const char* file, int line) : _GenericException(err_text, "InvalidObjectTypeCast", file, line) { }
+	
+	_InvalidObjectTypeCast::~_InvalidObjectTypeCast() { }
+	
 	_ObjectHasParentException::_ObjectHasParentException(chstr child, chstr parent,
 														 const char* file, int line) :
 							   _GenericException("", "ObjectHasParentException", file, line)

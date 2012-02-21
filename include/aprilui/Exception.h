@@ -75,9 +75,17 @@ namespace aprilui
 		_ResourceNotExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
 		~_ResourceNotExistsException();
 	};
+
+	class apriluiExport _InvalidObjectTypeCast : public _GenericException
+	{
+	public:
+		_InvalidObjectTypeCast(chstr err_text, const char* file = "", int line = 0);
+		~_InvalidObjectTypeCast();
+	};
 	
 	#define ResourceExistsException(name, cls, data) _ResourceExistsException(name, cls, data, __FILE__, __LINE__)
 	#define ResourceNotExistsException(name, cls, data) _ResourceNotExistsException(name, cls, data, __FILE__, __LINE__)
+	#define InvalidObjectTypeCast(err_text) _InvalidObjectTypeCast(err_text, __FILE__, __LINE__)
 
 	//---------------------------------------------------------------------------------------------------------
 
