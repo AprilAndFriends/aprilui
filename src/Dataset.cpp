@@ -60,10 +60,9 @@ namespace aprilui
 
 	hstr Dataset::_makeFilePath(chstr filename, chstr name, bool useNameBasePath)
 	{
-		int dot = filename.rfind('.');
 		if (name != "" && useNameBasePath)
 		{
-			hstr extension = filename.rsplit(".", -1, false).pop_first();// filename(dot, filename.size() - dot);
+			hstr extension = filename.rsplit(".", -1, false).pop_first();
 			if (filename.ends_with(name + extension))
 			{
 				return normalize_path(get_basedir(filename.replace(name + extension, "")));

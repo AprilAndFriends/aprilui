@@ -49,12 +49,13 @@ namespace aprilui
 	bool debugEnabled = false;
 	hstr defaultTextsPath = "texts";
 	hstr localization = "";
+
 	void aprilui_writelog(chstr message)
 	{
 #ifndef _ANDROID
 		printf("%s\n", message.c_str());
 #else
-		__android_log_print(ANDROID_LOG_INFO, "april", "%s", message.c_str());
+		__android_log_print(ANDROID_LOG_INFO, "aprilui", "%s", message.c_str());
 #endif
 	}
 	void (*g_logFunction)(chstr) = aprilui_writelog;
