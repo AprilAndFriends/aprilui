@@ -2,12 +2,19 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.5
+/// @version 1.51
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
+
+#ifdef _ANDROID
+#define APRIL_ANDROID_PACKAGE_NAME "com/example/aprilui/demoZOrder"
+#define RESOURCE_PATH "./"
+#else
+#define RESOURCE_PATH "../media/"
+#endif
 
 #include <stdio.h>
 
@@ -27,19 +34,23 @@
 #include <gtypes/Vector2.h>
 #include <hltypes/hltypesUtil.h>
 
-gvec2 screen(800, 600);
+grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
+#ifndef _ANDROID
+grect viewport = drawRect;
+#else
+grect viewport(0.0f, 0.0f, 480.0f, 320.0f);
+#endif
 
 aprilui::Dataset* dataset;
 
-bool render(float time)
+bool render(float k)
 {
 	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(screen);
+	april::rendersys->setOrthoProjection(drawRect);
 	aprilui::updateCursorPosition();
-	int i = hrand(1, 8);
-	dataset->getObject("obj0" + hstr(i))->setZOrder(hrand(100));
+	dataset->getObject("obj0" + hstr(hrand(1, 8)))->setZOrder(hrand(100));
 	dataset->getObject("root")->draw();
-	dataset->update(time);
+	dataset->update(k);
 	return true;
 }
 
@@ -93,11 +104,11 @@ void april_init(const harray<hstr>& args)
 	{
 		april::init();
 		april::createRenderSystem("");
-		april::createRenderTarget((int)screen.x, (int)screen.y, false, "demo_zorder");
+		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_zorder");
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&render);
-		dataset = new aprilui::Dataset("../media/demo_zorder.dts");
+		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_zorder.dts");
 		dataset->load();
 	}
 	catch (aprilui::_GenericException e)
