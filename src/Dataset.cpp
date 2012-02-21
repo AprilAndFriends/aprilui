@@ -509,7 +509,6 @@ namespace aprilui
 		hresource f;
 		foreach (hstr, it, files)
 		{
-			aprilui::log("OPENING RESOURCE " + *it);
 			f.open(*it);
 			if (!f.is_open())
 			{
