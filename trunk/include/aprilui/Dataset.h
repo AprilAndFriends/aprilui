@@ -109,28 +109,45 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
 		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
 
-		virtual Object* getObject(chstr name);
 		virtual april::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
 		virtual hstr getText(chstr name);
-		virtual bool textExists(chstr name);
+		DEPRECATED_ATTRIBUTE bool textExists(chstr name);
+		virtual bool hasTextKey(chstr name);
 		hmap<hstr, hstr>& getTexts() { return mTexts; }
 
 		hstr getName() { return mName; }
-		
+
+		virtual Object* getObject(chstr name);
+		bool hasObject(chstr name);
+		Object* tryGetObject(chstr name);
+
 		template <class T> T getObject(chstr name)
 		{
 			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
-			{
-				aprilui::log("WARNING: Dynamic cast in getObject<T> failed, object: " + name);
-			}
+				throw _InvalidObjectTypeCast("Object '" + name + "' found in dataset '" + getName() + "'but dynamic cast failed.");
 			return object;
 		}
 
 		template <class T> void getObject(chstr name, T& out)
 		{
 			out = this->getObject<T>(name);
+		}
+		
+		template <class T> T tryGetObject(chstr name)
+		{
+			T object = dynamic_cast<T>(this->tryGetObject(name));
+			if (object == NULL)
+			{
+				aprilui::log("WARNING: Dynamic cast in getObject<T> failed, object: " + name);
+			}
+			return object;
+		}
+		
+		template <class T> void tryGetObject(chstr name, T& out)
+		{
+			out = this->tryGetObject<T>(name);
 		}
 
 	protected:

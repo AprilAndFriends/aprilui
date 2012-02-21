@@ -697,6 +697,25 @@ namespace aprilui
 		return mObjects[name];
 	}
 	
+	bool Dataset::hasObject(chstr name)
+	{
+		return tryGetObject(name) != NULL;
+	}
+	
+	Object* Dataset::tryGetObject(chstr name)
+	{
+		aprilui::Object* obj;
+		try
+		{
+			obj = getObject(name);
+		}
+		catch (_ResourceNotExistsException)
+		{
+			return NULL;
+		}
+		return obj;
+	}
+	
 	april::Texture* Dataset::getTexture(chstr name)
 	{
 		if (!mTextures.has_key(name))
@@ -750,6 +769,11 @@ namespace aprilui
 	}
 	
 	bool Dataset::textExists(chstr name)
+	{
+		return hasTextKey(name);
+	}
+	
+	bool Dataset::hasTextKey(chstr name)
 	{
 		return mTexts.has_key(name);
 	}
