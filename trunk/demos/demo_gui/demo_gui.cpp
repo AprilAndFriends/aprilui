@@ -58,6 +58,29 @@ bool update(float k)
 	return true;
 }
 
+void onMouseDown(float x, float y, int button)
+{
+	aprilui::updateCursorPosition();
+	gvec2 position = aprilui::getCursorPosition();
+	aprilui::log(hsprintf("MOUSE DOWN: %f %f %f %f", x, y, position.x, position.y, button));
+	aprilui::onMouseDown(position.x, position.y, button);
+}
+
+void onMouseUp(float x, float y, int button)
+{
+	aprilui::updateCursorPosition();
+	gvec2 position = aprilui::getCursorPosition();
+	aprilui::log(hsprintf("MOUSE UP: %f %f %f %f", x, y, position.x, position.y, button));
+	aprilui::onMouseUp(position.x, position.y, button);
+}
+
+void onMouseMove(float x, float y)
+{
+	aprilui::updateCursorPosition();
+	gvec2 position = aprilui::getCursorPosition();
+	aprilui::onMouseMove(position.x, position.y);
+}
+
 void onKeyDown(unsigned int keycode)
 {
 	aprilui::Object* object;
@@ -140,9 +163,11 @@ void april_init(const harray<hstr>& args)
 		atres::init();
 		aprilui::init();
 		april::rendersys->getWindow()->setUpdateCallback(&update);
-		april::rendersys->getWindow()->setMouseCallbacks(&aprilui::onMouseDown, &aprilui::onMouseUp, &aprilui::onMouseMove);
+		april::rendersys->getWindow()->setMouseCallbacks(&onMouseDown, &onMouseUp, &onMouseMove);
 		april::rendersys->getWindow()->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
+		aprilui::setViewport(viewport);
+		aprilui::setScreenViewport(drawRect);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
