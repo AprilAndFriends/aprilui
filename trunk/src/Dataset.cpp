@@ -42,9 +42,11 @@ namespace aprilui
 		mRoot = NULL;
 		mFilename = normalize_path(filename);
 		mFilePath = _makeFilePath(mFilename, name, useNameBasePath);
-		int slash = mFilename.rfind('/');
-		int dot = mFilename.rfind('.');
-		mName = (name == "" ? mFilename(slash + 1, dot - slash - 1) : name);
+		mName = name;
+		if (mName == "")
+		{
+			mName = mFilename.rsplit(".", 1, false).pop_first().rsplit("/", 1, false).pop_last();
+		}
 		mLoaded = false;
 		_registerDataset(mName, this);
 	}
@@ -62,10 +64,10 @@ namespace aprilui
 	{
 		if (name != "" && useNameBasePath)
 		{
-			hstr extension = filename.rsplit(".", -1, false).pop_first();
+			hstr extension = "." + filename.rsplit(".", -1, false).pop_last();
 			if (filename.ends_with(name + extension))
 			{
-				return normalize_path(get_basedir(filename.replace(name + extension, "")));
+				return normalize_path(filename.replace(name + extension, ""));
 			}
 		}
 		return normalize_path(get_basedir(filename));
