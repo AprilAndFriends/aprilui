@@ -517,13 +517,22 @@ namespace aprilui
 			}
 			lines = f.read_lines();
 			f.close();
-
-			// ignore file header, silly utf-8 encoded text files have 2-3 char markers
-			while (lines.first().size() > 0 && lines.first()[0] < 0)
+			if (lines.size() == 0)
 			{
-				lines[0] = lines[0](1, lines[0].size() - 1);
+				continue;
 			}
-
+			// ignore file header, silly utf-8 encoded text files have 2-3 char markers
+			hstr firstLine = lines.first();
+			if (firstLine.size() > 0)
+			{
+				int i = 0;
+				while (i < firstLine.size() && !is_between((int)firstLine[i], 0, 127))
+				{
+					i++;
+				}
+				lines[0] = (i < firstLine.size() ? firstLine(i, firstLine.size() - i) : "");
+			}
+			// now parse the entries
 			foreach (hstr, it2, lines)
 			{
 				if (keyMode)
