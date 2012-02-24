@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.51
 /// 
 /// @section LICENSE
 /// 
@@ -9,6 +9,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <april/RenderSystem.h>
+#include <april/Window.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
@@ -55,6 +56,10 @@ namespace aprilui
 	{
 		if (isLoaded())
 		{
+			if (mFocusedObject != NULL)
+			{
+				april::rendersys->getWindow()->terminateKeyboardHandling();
+			}
 			unload();
 		}
 		_unregisterDataset(mName, this);
