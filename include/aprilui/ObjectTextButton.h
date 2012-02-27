@@ -45,7 +45,6 @@ namespace aprilui
 		Object* getParent();
 		Dataset* getDataset();
 
-		void setTextKey(chstr key);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		

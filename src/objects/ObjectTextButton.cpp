@@ -52,11 +52,6 @@ namespace aprilui
 		return Label::getDataset();
 	}
 
-	void TextButton::setTextKey(chstr key)
-	{
-		setText(mDataset->getText(key));
-	}
-	
 	void TextButton::update(float k)
 	{
 		Object::update(k);
@@ -85,9 +80,9 @@ namespace aprilui
 		{
 			grect rect = _getDrawRect();
 			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, ((mHovered && mPushed) ? 255 : 191));
-            april::rendersys->drawColoredQuad(rect, drawColor);
+			april::rendersys->drawColoredQuad(rect, drawColor);
 			drawColor = april::Color(mTextColor, drawColor.a);
-            april::rendersys->drawQuad(rect, drawColor);
+			april::rendersys->drawQuad(rect, drawColor);
 		}
 		Label::OnDraw();
 		mTextColor = color;
