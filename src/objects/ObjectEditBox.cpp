@@ -252,12 +252,12 @@ namespace aprilui
 		if (mPushed && isCursorInside())
 		{
 			setCursorIndexAt(x, y);
-			if (mDataset)
+			if (mDataset != NULL)
 			{
 				mDataset->setFocusedObject(this);
 				mBlinkTimer = 0.0f;
+				april::rendersys->getWindow()->beginKeyboardHandling();
 			}
-			april::rendersys->getWindow()->beginKeyboardHandling();
 			mPushed = false;
 			_triggerEvent("Click", x, y, button);
 			return true;
@@ -270,18 +270,21 @@ namespace aprilui
 	{
 		switch (keycode)
 		{
+#ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_LEFT:
 			mCtrlMode ? _cursorMoveLeftWord() : _cursorMoveLeft();
 			break;
 		case april::AK_RIGHT:
 			mCtrlMode ? _cursorMoveRightWord() : _cursorMoveRight();
 			break;
+#endif
 		case april::AK_BACK:
 			mCtrlMode ? _deleteLeftWord() : _deleteLeft();
 			break;
 		case april::AK_DELETE:
 			mCtrlMode ? _deleteRightWord() : _deleteRight();
 			break;
+#ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_HOME:
 			setCursorIndex(0);
 			break;
@@ -291,6 +294,7 @@ namespace aprilui
 		case april::AK_CONTROL:
 			mCtrlMode = true;
 			break;
+#endif
 		}
 	}
 	
