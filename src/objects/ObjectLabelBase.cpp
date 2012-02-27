@@ -113,14 +113,14 @@ namespace aprilui
     
 	bool LabelBase::setProperty(chstr name,chstr value)
 	{
-		if (name == "font") setFont(value);
-		else if (name == "text_key") setTextKey(value);
+		if (name == "font")				setFont(value);
+		else if (name == "text_key")	setTextKey(value);
 		else if (name == "textkey")
 		{
 			aprilui::log("WARNING: \"textkey=\" is deprecated. Use \"text_key=\" instead."); // DEPRECATED
 			setTextKey(value);
 		}
-		else if (name == "text") setText(value);
+		else if (name == "text")		setText(value);
 		else if (name == "horz_formatting")
 		{
 			if (value == "left")				setHorzFormatting(atres::LEFT);
@@ -137,7 +137,7 @@ namespace aprilui
 			else if (value == "center")	setVertFormatting(atres::CENTER);
 			else if (value == "bottom")	setVertFormatting(atres::BOTTOM);
 		}
-		else if (name == "text_color") setTextColor(value);
+		else if (name == "text_color")	setTextColor(value);
 		else if (name == "color")
 		{
 			throw hl_exception("LabelBase instance using \"color=\" which is conflicted with TextImageButton's color and cannot be used! Maybe you meant \"text_color=\"?");
@@ -148,8 +148,8 @@ namespace aprilui
 			else if (value == "shadow")	setFontEffect(atres::SHADOW);
 			else if (value == "border")	setFontEffect(atres::BORDER);
 		}
-		else if (name == "offset_x") mDrawOffset.x = (float)value;
-		else if (name == "offset_y") mDrawOffset.y = (float)value;
+		else if (name == "offset_x")	mDrawOffset.x = (float)value;
+		else if (name == "offset_y")	mDrawOffset.y = (float)value;
         else return false;
         return true;
 	}
