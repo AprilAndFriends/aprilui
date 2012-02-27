@@ -76,8 +76,9 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "font") return getFont();
-		if (name == "text") return getText();
+		if (name == "font")		return getFont();
+		if (name == "text")		return getText();
+		if (name == "text_key")	return getTextKey();
 		if (name == "horz_formatting")
 		{
 			if (mHorzFormatting == atres::LEFT)				return "left";
