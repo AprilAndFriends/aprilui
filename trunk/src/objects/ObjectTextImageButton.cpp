@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.5
 /// 
 /// @section LICENSE
 /// 
@@ -64,7 +64,7 @@ namespace aprilui
         hstr result = LabelBase::getProperty(name, &exists);
         if (!exists)
 		{
-			return Object::getProperty(name, property_exists);
+			return ImageButton::getProperty(name, property_exists);
 		}
         if (property_exists != NULL)
 		{
@@ -76,13 +76,7 @@ namespace aprilui
     
 	bool TextImageButton::setProperty(chstr name,chstr value)
 	{
-		if (name == "text_key")	setTextKey(value);
-		else if (name == "textkey")
-		{
-			aprilui::log("WARNING: \"textkey=\" is deprecated. Use \"text_key=\" instead."); // DEPRECATED
-			setTextKey(value);
-		}
-		else if (name == "use_disabled_color")	setUseDisabledColor(value);
+		if (name == "use_disabled_color")	setUseDisabledColor(value);
         else if (LabelBase::setProperty(name, value)) {}
         else return ImageButton::setProperty(name, value);
         return true;
