@@ -72,6 +72,15 @@ namespace aprilui
 	
 	void init()
 	{
+		registerLock = false;
+		defaultScale = 1.0f;
+		cursorVisible = true;
+		limitCursorToViewport = false;
+		limitCursorToScreenViewport = true;
+		hoverEffectEnabled = true;
+		debugEnabled = false;
+		defaultTextsPath = "texts";
+		localization = "";
 		viewport.w = (float)april::rendersys->getWindow()->getWidth();
 		viewport.h = (float)april::rendersys->getWindow()->getHeight();
 		screenViewport = viewport;
@@ -118,6 +127,9 @@ namespace aprilui
 			delete it->second;
 		}
 		gDatasets.clear();
+		gObjectFactories.clear();
+		gAnimatorFactories.clear();
+		gCursor = NULL;
 	}
 	
 	bool isDebugEnabled()
