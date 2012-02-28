@@ -294,6 +294,12 @@ namespace aprilui
 		case april::AK_CONTROL:
 			mCtrlMode = true;
 			break;
+#else
+		case april::AK_RETURN:
+			mDataset->setFocusedObject(NULL);
+			mBlinkTimer = 0.0f;
+			april::rendersys->getWindow()->terminateKeyboardHandling();
+			break;
 #endif
 		}
 	}
