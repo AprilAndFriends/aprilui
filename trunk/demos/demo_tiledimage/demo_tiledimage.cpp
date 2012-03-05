@@ -21,6 +21,8 @@
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
+#include <april/april.h>
+#include <april/april.h>
 #include <april/main.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
@@ -124,8 +126,8 @@ void april_destroy()
 	try
 	{
 		delete dataset;
-		atres::destroy();
 		aprilui::destroy();
+		atres::destroy();
 		april::destroy();
 	}
 	catch (aprilui::_GenericException e)
