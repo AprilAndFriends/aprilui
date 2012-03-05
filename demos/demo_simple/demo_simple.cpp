@@ -21,6 +21,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
+#include <april/april.h>
 #include <april/main.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
