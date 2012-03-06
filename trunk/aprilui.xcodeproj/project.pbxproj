@@ -567,9 +567,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8DC2EF4F0486A6940098B216 /* libaprilui */ = {
+		8DC2EF4F0486A6940098B216 /* aprilui */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libaprilui" */;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "aprilui" */;
 			buildPhases = (
 				8DC2EF520486A6940098B216 /* Resources */,
 				8DC2EF540486A6940098B216 /* Sources */,
@@ -580,15 +580,15 @@
 			);
 			dependencies = (
 			);
-			name = libaprilui;
+			name = aprilui;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = libaprilui;
 			productReference = 8DC2EF5B0486A6940098B216 /* aprilui.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D1522E68140F6A040012F290 /* libaprilui-ios */ = {
+		D1522E68140F6A040012F290 /* aprilui (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D1522E78140F6A050012F290 /* Build configuration list for PBXNativeTarget "libaprilui-ios" */;
+			buildConfigurationList = D1522E78140F6A050012F290 /* Build configuration list for PBXNativeTarget "aprilui (iOS)" */;
 			buildPhases = (
 				D1522E65140F6A040012F290 /* Sources */,
 				D1522E66140F6A040012F290 /* Frameworks */,
@@ -597,7 +597,7 @@
 			);
 			dependencies = (
 			);
-			name = "libaprilui-ios";
+			name = "aprilui (iOS)";
 			productName = "libaprilui-ios";
 			productReference = D1522E69140F6A040012F290 /* libaprilui.a */;
 			productType = "com.apple.product-type.library.static";
@@ -625,8 +625,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DC2EF4F0486A6940098B216 /* libaprilui */,
-				D1522E68140F6A040012F290 /* libaprilui-ios */,
+				8DC2EF4F0486A6940098B216 /* aprilui */,
+				D1522E68140F6A040012F290 /* aprilui (iOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -1162,7 +1162,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libaprilui" */ = {
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "aprilui" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
@@ -1186,7 +1186,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D1522E78140F6A050012F290 /* Build configuration list for PBXNativeTarget "libaprilui-ios" */ = {
+		D1522E78140F6A050012F290 /* Build configuration list for PBXNativeTarget "aprilui (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1522E73140F6A050012F290 /* Debug */,
