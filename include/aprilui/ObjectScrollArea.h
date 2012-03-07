@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -9,7 +9,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a scrollable area.
+/// Defines a special container that can be scrolled.
 
 #ifndef APRILUI_SCROLL_AREA_H
 #define APRILUI_SCROLL_AREA_H
@@ -27,6 +27,7 @@ namespace aprilui
 	class apriluiExport ScrollArea : public Object, public ButtonBase
 	{
 	public:
+		friend class ScrollBar;
 		friend class ScrollBarH;
 		friend class ScrollBarV;
 
@@ -87,7 +88,7 @@ namespace aprilui
 		gvec2 _mLastPosition;
 		gvec2 _mLastScrollOffset;
 		gvec2 _mDragSpeed;
-		float _mDragTimer;
+		gvec2 _mDragTimer;
 
 	};
 }

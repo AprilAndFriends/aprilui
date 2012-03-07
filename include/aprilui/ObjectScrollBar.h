@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -63,6 +63,8 @@ namespace aprilui
 		ImageButton* mButtonBar;
 		float _mRetainTime;
 
+		void _initAreaDragging();
+
 		virtual hstr _getSkinNameBeginNormal() = 0;
 		virtual hstr _getSkinNameBeginHover() = 0;
 		virtual hstr _getSkinNameBeginPushed() = 0;
@@ -86,6 +88,7 @@ namespace aprilui
 		static void _clickScrollEnd(EventArgs* args);
 		static void _clickScrollBack(EventArgs* args);
 		static void _mouseDownScrollBar(EventArgs* args);
+		static void _clickScrollBar(EventArgs* args);
 
 	private:
 		bool _mScrolling;

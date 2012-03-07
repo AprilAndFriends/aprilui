@@ -61,7 +61,7 @@ namespace aprilui
 			mTimeSinceLastFrame += mDelay;
 		}
 		mTimer += mTimeSinceLastFrame;
-		if (fabs(mAcceleration) > 0.01f)
+		if (!heqf(mAcceleration, 0.0f, HL_E_TOLERANCE))
 		{
 			mSpeed += mAcceleration * mTimeSinceLastFrame;
 		}
@@ -80,7 +80,7 @@ namespace aprilui
 			{
 				return (mDiscreteStep != 0 ? (float)((int)(mOffset / mDiscreteStep) * mDiscreteStep) : mOffset);
 			}
-			time = mPeriods / fabs(mSpeed);
+			time = mPeriods / habs(mSpeed);
 		}
 		float result = 0.0f;
 		switch (mFunction)
@@ -114,11 +114,11 @@ namespace aprilui
 		case aprilui::Animator::Hover:
 			if ((mAmplitude >= 0.0f) == mParent->isCursorInside())
 			{
-				result = hmin(mValue - mOffset + k * mSpeed, (float)fabs(mAmplitude));
+				result = hmin(mValue - mOffset + k * mSpeed, (float)habs(mAmplitude));
 			}
 			else
 			{
-				result = hmax(mValue - mOffset - k * mSpeed, -(float)fabs(mAmplitude));
+				result = hmax(mValue - mOffset - k * mSpeed, -(float)habs(mAmplitude));
 			}
 			break;
 		case aprilui::Animator::Custom:
@@ -168,7 +168,7 @@ namespace aprilui
 	
 	bool Animator::isExpired()
 	{
-		return (!mEnabled || mPeriods >= 0.0f && mTimer * fabs(mSpeed) > mPeriods);
+		return (!mEnabled || mPeriods >= 0.0f && mTimer * habs(mSpeed) > mPeriods);
 	}
 	
 	void Animator::setTime(float value)

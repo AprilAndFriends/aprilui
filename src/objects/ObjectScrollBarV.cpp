@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -88,25 +88,17 @@ namespace aprilui
 		}
 		else
 		{
-			if (!area->isScrolling())
+			_initAreaDragging();
+			if (area->_mDragSpeed.y != 0.0f)
 			{
-				area->_mDragTimer = 0.0f;
-			}
-			if (area->_mDragSpeed.x == 0.0f)
-			{
-				area->_mLastScrollOffset.x = area->getScrollOffsetX();
-			}
-			if (area->_mDragSpeed.y == 0.0f)
-			{
+				float time = habs(area->_mDragSpeed.y / inertia);
+				float distance = area->_mDragSpeed.y * area->_mDragTimer.y - sgn(area->_mDragSpeed.y) * inertia * area->_mDragTimer.y * area->_mDragTimer.y * 0.5f;
+				value -= hroundf(sgn(area->_mDragSpeed.y) * inertia * time * time * 0.5f - distance);
 				area->_mLastScrollOffset.y = area->getScrollOffsetY();
+				area->_mDragTimer.y = 0.0f;
 			}
-			else
-			{
-				// s0 = v0 ^ 2 / (2 * a)
-				value -= sgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
-			}
-			// v = sqrt(2 * a * s)
-			area->_mDragSpeed.y = -sgn(value) * sqrt(2 * inertia * fabs(value));
+			area->_mDragSpeed.y = -sgn(value) * sqrt(2 * inertia * habs(value));
+			_adjustDragSpeed();
 		}
 		_updateBar();
 	}
@@ -122,7 +114,21 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		return (y + mButtonBegin->getY() < mButtonBar->getY() ? -parent->getHeight() : parent->getHeight());
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return 0.0f;
+		}
+		float result = sgn(y + mButtonBegin->getY() - mButtonBar->getY()) * parent->getHeight();
+		if (result < 0.0f)
+		{
+			result = hmax(result, -area->getScrollOffsetY());
+		}
+		else
+		{
+			result = hmin(result, area->getHeight() - parent->getHeight() - area->getScrollOffsetY());
+		}
+		return result;
 	}
 
 	void ScrollBarV::notifyEvent(chstr name, void* params)
@@ -222,7 +228,6 @@ namespace aprilui
 
 	void ScrollBarV::_adjustDragSpeed()
 	{
-		return;
 		if (mGridSize <= 0.0f)
 		{
 			return;
@@ -237,56 +242,38 @@ namespace aprilui
 		{
 			return;
 		}
-
-		float s = 0.0f;
 		float inertia = area->getInertia();
-		if (area->_mDragSpeed.y != 0.0f && inertia > 0.0f)
+		if (inertia <= 0.0f)
+		{
+			return;
+		}
+		float s = 0.0f;
+		if (area->_mDragSpeed.y != 0.0f)
 		{
 			// s0 = v0 ^ 2 / (2 * a)
-			s = sgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
+			s = -sgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
 		}
-		float s0 = s;
-		float oy = area->getScrollOffsetY();
-		float difference = sgn(oy) * (hroundf(oy / mGridSize) * mGridSize - oy);
-		float offset = (s - hroundf(s / mGridSize) * mGridSize);
-		s = s - offset - difference;
-		//s = ;
-		//s = target - oy;
-		//s += ;
-		//s = hroundf(s / mGridSize) * mGridSize;
-		// v = sqrt(2 * a * s)
-		area->_mDragSpeed.y = sgn(s) * sqrt(2 * inertia * fabs(s));
-
-		//aprilui::log(hsprintf("%5.2f %5.2f - %5.2f - %5.2f %5.2f   %6.2f", s0, s, offset, oy, difference, area->_mDragSpeed.y));
-		//return value;
-
-
-		/*
-			float gridSize = scrollBarV->getGridSize();
-			if (gridSize > 0.0f)
-			{
-
-			}
-		float length = _mDragSpeed.length();
-		float newLength = length - k * mInertia;
-		if (fabs(newLength) < fabs(length) && sgn(newLength) == sgn(length))
+		float difference = area->_mLastScrollOffset.y - hroundf(area->_mLastScrollOffset.y / mGridSize) * mGridSize;
+		float offset = hroundf(s / mGridSize) * mGridSize - s;
+		if (parent->getHeight() > mGridSize)
 		{
-			gvec2 oldSpeed = _mDragSpeed;
-			_mDragSpeed *= newLength / length;
-			gvec2 averageSpeed = (oldSpeed + _mDragSpeed) * 0.5f;
-			gvec2 offset = getScrollOffset();
-			setScrollOffset(offset - averageSpeed * k);
-			if (getScrollOffset() == offset)
-			{
-				_mDragSpeed.set(0.0f, 0.0f);
-			}
+			s = hroundf(s + offset - difference);
+		}
+		// these are grid snapping cases when grid size exceeds parent size
+		else if (habs(difference) == 0.0f) // using habs because it can be -0.0f!
+		{
+			s = sgn(s) * mGridSize;
+		}
+		else if (habs(s) < habs(difference) || sgn(s) != sgn(difference))
+		{
+			s = -difference;
 		}
 		else
 		{
-			_mDragSpeed.set(0.0f, 0.0f);
+			s = sgn(s) * hmodf(-habs(difference), mGridSize);
 		}
-		*/
-		//return value;
+		// v = sqrt(2 * a * s)
+		area->_mDragSpeed.y = -sgn(s) * sqrt(2 * inertia * habs(s));
 	}
 
 }

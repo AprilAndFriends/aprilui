@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -88,25 +88,17 @@ namespace aprilui
 		}
 		else
 		{
-			if (!area->isScrolling())
+			_initAreaDragging();
+			if (area->_mDragSpeed.x != 0.0f)
 			{
-				area->_mDragTimer = 0.0f;
-			}
-			if (area->_mDragSpeed.y == 0.0f)
-			{
-				area->_mLastScrollOffset.y = area->getScrollOffsetY();
-			}
-			if (area->_mDragSpeed.x == 0.0f)
-			{
+				float time = habs(area->_mDragSpeed.x / inertia);
+				float distance = area->_mDragSpeed.x * area->_mDragTimer.x - sgn(area->_mDragSpeed.x) * inertia * area->_mDragTimer.x * area->_mDragTimer.x * 0.5f;
+				value -= hroundf(sgn(area->_mDragSpeed.x) * inertia * time * time * 0.5f - distance);
 				area->_mLastScrollOffset.x = area->getScrollOffsetX();
+				area->_mDragTimer.x = 0.0f;
 			}
-			else
-			{
-				// s0 = v0 ^ 2 / (2 * a)
-				value -= sgn(area->_mDragSpeed.x) * area->_mDragSpeed.x * area->_mDragSpeed.x * 0.5f / inertia;
-			}
-			// v = sqrt(2 * a * s)
-			area->_mDragSpeed.x = -sgn(value) * sqrt(2 * inertia * fabs(value));
+			area->_mDragSpeed.x = -sgn(value) * sqrt(2 * inertia * habs(value));
+			_adjustDragSpeed();
 		}
 		_updateBar();
 	}
@@ -122,7 +114,21 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		return (x + mButtonBegin->getX() < mButtonBar->getX() ? -parent->getWidth() : parent->getWidth());
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return 0.0f;
+		}
+		float result = sgn(x + mButtonBegin->getX() - mButtonBar->getX()) * parent->getWidth();
+		if (result < 0.0f)
+		{
+			result = hmax(result, -area->getScrollOffsetX());
+		}
+		else
+		{
+			result = hmin(result, area->getWidth() - parent->getWidth() - area->getScrollOffsetX());
+		}
+		return result;
 	}
 
 	void ScrollBarH::notifyEvent(chstr name, void* params)
@@ -222,6 +228,52 @@ namespace aprilui
 
 	void ScrollBarH::_adjustDragSpeed()
 	{
+		if (mGridSize <= 0.0f)
+		{
+			return;
+		}
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return;
+		}
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return;
+		}
+		float inertia = area->getInertia();
+		if (inertia <= 0.0f)
+		{
+			return;
+		}
+		float s = 0.0f;
+		if (area->_mDragSpeed.x != 0.0f)
+		{
+			// s0 = v0 ^ 2 / (2 * a)
+			s = -sgn(area->_mDragSpeed.x) * area->_mDragSpeed.x * area->_mDragSpeed.x * 0.5f / inertia;
+		}
+		float difference = area->_mLastScrollOffset.x - hroundf(area->_mLastScrollOffset.x / mGridSize) * mGridSize;
+		float offset = hroundf(s / mGridSize) * mGridSize - s;
+		if (parent->getWidth() > mGridSize)
+		{
+			s = hroundf(s + offset - difference);
+		}
+		// these are grid snapping cases when grid size exceeds parent size
+		else if (habs(difference) == 0.0f) // using habs because it can be -0.0f!
+		{
+			s = sgn(s) * mGridSize;
+		}
+		else if (habs(s) < habs(difference) || sgn(s) != sgn(difference))
+		{
+			s = -difference;
+		}
+		else
+		{
+			s = sgn(s) * hmodf(-habs(difference), mGridSize);
+		}
+		// v = sqrt(2 * a * s)
+		area->_mDragSpeed.x = -sgn(s) * sqrt(2 * inertia * habs(s));
 	}
 
 }

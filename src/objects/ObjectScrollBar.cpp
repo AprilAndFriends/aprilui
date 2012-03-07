@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -69,6 +69,28 @@ namespace aprilui
 		}
 	}
 
+	void ScrollBar::_initAreaDragging()
+	{
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent != NULL)
+		{
+			ScrollArea* area = parent->_getScrollArea();
+			if (area != NULL)
+			{
+				if (area->_mDragSpeed.x == 0.0f)
+				{
+					area->_mLastScrollOffset.x = area->getScrollOffsetX();
+					area->_mDragTimer.x = 0.0f;
+				}
+				if (area->_mDragSpeed.y == 0.0f)
+				{
+					area->_mLastScrollOffset.y = area->getScrollOffsetY();
+					area->_mDragTimer.y = 0.0f;
+				}
+			}
+		}
+	}
+
 	void ScrollBar::OnDraw()
 	{
 		Object::OnDraw();
@@ -127,6 +149,7 @@ namespace aprilui
 					mButtonBar = new ImageButton(generateName("aprilui::ScrollSkinButtonBar"), grect(0.0f, 0.0f, -1.0f, -1.0f));
 					registerChild(mButtonBar);
 					_SET_MOUSEDOWN_EVENT_FUNCTION(mButtonBar, _mouseDownScrollBar);
+					_SET_CLICK_EVENT_FUNCTION(mButtonBar, _clickScrollBar);
 				}
 				mButtonBegin->setImageByName(mSkinName + "/" + _getSkinNameBeginNormal());
 				mButtonBegin->setHoverImageByName(mSkinName + "/" + _getSkinNameBeginHover());
@@ -215,6 +238,13 @@ namespace aprilui
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
 		scrollBar->_mClickPosition = gvec2(args->x, args->y) - scrollBar->mButtonBar->getPosition() + scrollBar->mButtonBegin->getSize();
+	}
+
+	void ScrollBar::_clickScrollBar(EventArgs* args)
+	{
+		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
+		scrollBar->_initAreaDragging();
+		scrollBar->_adjustDragSpeed();
 	}
 
 }
