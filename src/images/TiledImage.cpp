@@ -53,9 +53,10 @@ namespace aprilui
 		}
 		int countX = (int)ceil((rect.w - scrollX) / tileW);
 		int countY = (int)ceil((rect.h - scrollY) / tileH);
-		for (int j = 0; j < countY; j++)
+		int i;
+		for_iter (j, 0, countY)
 		{
-			for (int i = 0; i < countX; i++)
+			for_iterx (i, 0, countX)
 			{
 				_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color);
 			}
