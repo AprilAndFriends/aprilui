@@ -242,7 +242,7 @@ namespace aprilui
 					}
 					mImages[name] = image;
 				}
-		    }
+			}
 		}
 	}
 	
@@ -377,12 +377,12 @@ namespace aprilui
 		{
 			parent->addChild(object);
 		}
-        hstr name;
+		hstr name;
 
 		foreach_xmlproperty (prop, node)
 		{
-            name = prop->name();
-            if (name == "x" || name == "y" || name == "w" || name == "h")
+			name = prop->name();
+			if (name == "x" || name == "y" || name == "w" || name == "h")
 			{
 				continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
 			}
