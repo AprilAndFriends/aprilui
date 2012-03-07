@@ -63,7 +63,6 @@ void onMouseDown(float x, float y, int button)
 {
 	aprilui::updateCursorPosition();
 	gvec2 position = aprilui::getCursorPosition();
-	aprilui::log(hsprintf("MOUSE DOWN: %f %f %f %f", x, y, position.x, position.y, button));
 	aprilui::onMouseDown(position.x, position.y, button);
 }
 
@@ -71,7 +70,6 @@ void onMouseUp(float x, float y, int button)
 {
 	aprilui::updateCursorPosition();
 	gvec2 position = aprilui::getCursorPosition();
-	aprilui::log(hsprintf("MOUSE UP: %f %f %f %f", x, y, position.x, position.y, button));
 	aprilui::onMouseUp(position.x, position.y, button);
 }
 
@@ -126,23 +124,26 @@ void april_init(const harray<hstr>& args)
 		CFStringRef path = CFURLCopyFileSystemPath(url, kCFURLPOSIXPathStyle);
 		
 		// let's hope chdir() will be happy with utf8 encoding
-		const char* cpath=CFStringGetCStringPtr(path, kCFStringEncodingUTF8);
-		char* cpath_alloc=0;
-		if(!cpath)
+		const char* cpath = CFStringGetCStringPtr(path, kCFStringEncodingUTF8);
+		char* cpath_alloc = NULL;
+		if (cpath == NULL)
 		{
 			// CFStringGetCStringPtr is allowed to return NULL. bummer.
 			// we need to use CFStringGetCString instead.
-			cpath_alloc = (char*)malloc(CFStringGetLength(path)+1);
-			CFStringGetCString(path, cpath_alloc, CFStringGetLength(path)+1, kCFStringEncodingUTF8);
+			cpath_alloc = (char*)malloc(CFStringGetLength(path) + 1);
+			CFStringGetCString(path, cpath_alloc, CFStringGetLength(path) + 1, kCFStringEncodingUTF8);
 		}
-		else {
+		else
+		{
 			// even though it didn't return NULL, we still want to slice off bundle name.
 			cpath_alloc = (char*)malloc(CFStringGetLength(path)+1);
 			strcpy(cpath_alloc, cpath);
 		}
 		// just in case / is appended to .app path for some reason
-		if(cpath_alloc[CFStringGetLength(path)-1]=='/')
-			cpath_alloc[CFStringGetLength(path)-1] = 0;
+		if (cpath_alloc[CFStringGetLength(path) - 1] == '/')
+		{
+			cpath_alloc[CFStringGetLength(path) - 1] = 0;
+		}
 		
 		// replace pre-.app / with a null character, thus
 		// cutting off .app's name and getting parent of .app.

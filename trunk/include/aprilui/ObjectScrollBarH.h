@@ -62,6 +62,7 @@ namespace aprilui
 		void _updateChildren();
 		void _moveScrollBar(float x, float y);
 		void _updateBar();
+		void _adjustDragSpeed();
 
 	};
 }

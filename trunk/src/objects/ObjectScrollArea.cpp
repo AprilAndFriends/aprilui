@@ -16,6 +16,9 @@
 #include "Dataset.h"
 #include "ObjectContainer.h"
 #include "ObjectScrollArea.h"
+#include "ObjectScrollBar.h"
+#include "ObjectScrollBarH.h"
+#include "ObjectScrollBarV.h"
 
 namespace aprilui
 {
@@ -33,6 +36,7 @@ namespace aprilui
 		mDragThreshold = DragThreshold;
 		mDragMaxSpeed = DragMaxSpeed;
 		mDragging = false;
+		_mDragTimer = 0.0f;
 	}
 
 	ScrollArea::~ScrollArea()
@@ -66,7 +70,7 @@ namespace aprilui
 
 	bool ScrollArea::isScrolling()
 	{
-		return (!mPushed && mInertia > 0.0f && (_mDragSpeed.x != 0.0f || _mDragSpeed.y != 0.0f));
+		return (!mPushed && (_mDragSpeed.x != 0.0f || _mDragSpeed.y != 0.0f));
 	}
 
 	gvec2 ScrollArea::getScrollOffset()
@@ -106,6 +110,12 @@ namespace aprilui
 		setY(mParent != NULL ? hclamp(-value, hmin(mParent->getHeight() - getHeight(), 0.0f), 0.0f) : -value);
 	}
 
+	void ScrollArea::_snapScrollOffset()
+	{
+		gvec2 offset = getScrollOffset();
+		setScrollOffset(hroundf(offset.x), hroundf(offset.y));
+	}
+
 	void ScrollArea::update(float k)
 	{
 		Object::update(k);
@@ -129,6 +139,7 @@ namespace aprilui
 				else
 				{
 					_mDragSpeed.set(0.0f, 0.0f);
+					_snapScrollOffset();
 				}
 			}
 			if (mDragging)
@@ -144,28 +155,45 @@ namespace aprilui
 					}
 				}
 				_mLastPosition = position;
+				_mLastScrollOffset = getScrollOffset();
+				_mDragTimer = 0.0f;
 			}
 		}
-		if (!mDragging && isScrolling())
+		if (!mDragging && mInertia > 0.0f && isScrolling())
 		{
-			float length = _mDragSpeed.length();
-			float newLength = length - k * mInertia;
-			if (fabs(newLength) < fabs(length) && sgn(newLength) == sgn(length))
+			_mDragTimer += k;
+			gvec2 inertiaTime(fabs(_mDragSpeed.x) / mInertia, fabs(_mDragSpeed.y) / mInertia);
+			gvec2 distance;
+			if (_mDragSpeed.x != 0.0f)
 			{
-				gvec2 oldSpeed = _mDragSpeed;
-				_mDragSpeed *= newLength / length;
-				gvec2 averageSpeed = (oldSpeed + _mDragSpeed) * 0.5f;
-				gvec2 offset = getScrollOffset();
-				setScrollOffset(offset - averageSpeed * k);
-				if (getScrollOffset() == offset)
+				if (_mDragTimer < inertiaTime.x)
 				{
-					_mDragSpeed.set(0.0f, 0.0f);
+					distance.x = _mDragSpeed.x * _mDragTimer - sgn(_mDragSpeed.x) * mInertia * (_mDragTimer * _mDragTimer * 0.5f);
+				}
+				else
+				{
+					_mLastScrollOffset.x -= sgn(_mDragSpeed.x) * (mInertia * (inertiaTime.x * inertiaTime.x * 0.5f));
+					_mDragSpeed.x = 0.0f;
 				}
 			}
-			else
+			if (_mDragSpeed.y != 0.0f)
 			{
-				_mDragSpeed.set(0.0f, 0.0f);
+				if (_mDragTimer < inertiaTime.y)
+				{
+					distance.y = _mDragSpeed.y * _mDragTimer - sgn(_mDragSpeed.y) * mInertia * (_mDragTimer * _mDragTimer * 0.5f);
+				}
+				else
+				{
+					_mLastScrollOffset.y -= sgn(_mDragSpeed.y) * (mInertia * (inertiaTime.y * inertiaTime.y * 0.5f));
+					_mDragSpeed.y = 0.0f;
+				}
 			}
+			setScrollOffset(_mLastScrollOffset - distance);
+			_snapScrollOffset();
+		}
+		else
+		{
+			_mDragTimer = 0.0f;
 		}
 	}
 
@@ -242,6 +270,8 @@ namespace aprilui
 		if (mAllowDrag)
 		{
 			mDragging = false;
+			//_mLastScrollOffset = getScrollOffset();
+			//_adjustDragSpeed();
 			if (ButtonBase::onMouseUp(x, y, button))
 			{
 				return true;
@@ -257,6 +287,25 @@ namespace aprilui
 			ButtonBase::onMouseMove(x, y);
 		}
 		Object::onMouseMove(x, y);
+	}
+
+	void ScrollArea::_adjustDragSpeed()
+	{
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return;
+		}
+		ScrollBar* scrollBarH = parent->_getScrollBarH();
+		if (scrollBarH != NULL)
+		{
+			scrollBarH->_adjustDragSpeed();
+		}
+		ScrollBar* scrollBarV = parent->_getScrollBarV();
+		if (scrollBarV != NULL)
+		{
+			scrollBarV->_adjustDragSpeed();
+		}
 	}
 	
 }

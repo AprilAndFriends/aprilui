@@ -24,15 +24,20 @@
 namespace aprilui
 {
 	class ImageButton;
+	class ScrollArea;
 
 	class apriluiExport ScrollBar : public Object
 	{
 	public:
+		friend class ScrollArea;
+
 		ScrollBar(chstr name, grect rect);
 		~ScrollBar();
 
 		hstr getSkinName() { return mSkinName; }
 		void setSkinName(chstr value);
+		float getGridSize() { return mGridSize; }
+		void setGridSize(float value) { mGridSize = value; }
 
 		void update(float k);
 		void OnDraw();
@@ -47,9 +52,11 @@ namespace aprilui
 		virtual void addScrollValue(float value) = 0;
 
 		static float ScrollDistance;
+		static float GridSize;
 
 	protected:
 		hstr mSkinName;
+		float mGridSize;
 		ImageButton* mButtonBegin;
 		ImageButton* mButtonEnd;
 		ImageButton* mButtonBack;
@@ -73,6 +80,7 @@ namespace aprilui
 		virtual void _updateChildren() = 0;
 		virtual void _moveScrollBar(float x, float y) = 0;
 		virtual void _updateBar() = 0;
+		virtual void _adjustDragSpeed() = 0;
 
 		static void _clickScrollBegin(EventArgs* args);
 		static void _clickScrollEnd(EventArgs* args);
