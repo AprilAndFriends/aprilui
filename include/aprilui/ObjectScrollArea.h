@@ -79,11 +79,15 @@ namespace aprilui
 		bool mDragging;
 
 		virtual bool _checkHover();
+		void _adjustDragSpeed();
+		void _snapScrollOffset();
 
 	private:
 		gvec2 _mClickPosition;
 		gvec2 _mLastPosition;
+		gvec2 _mLastScrollOffset;
 		gvec2 _mDragSpeed;
+		float _mDragTimer;
 
 	};
 }

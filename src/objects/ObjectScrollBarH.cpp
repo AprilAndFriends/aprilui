@@ -88,7 +88,19 @@ namespace aprilui
 		}
 		else
 		{
-			if (area->_mDragSpeed.x != 0.0f)
+			if (!area->isScrolling())
+			{
+				area->_mDragTimer = 0.0f;
+			}
+			if (area->_mDragSpeed.y == 0.0f)
+			{
+				area->_mLastScrollOffset.y = area->getScrollOffsetY();
+			}
+			if (area->_mDragSpeed.x == 0.0f)
+			{
+				area->_mLastScrollOffset.x = area->getScrollOffsetX();
+			}
+			else
 			{
 				// s0 = v0 ^ 2 / (2 * a)
 				value -= sgn(area->_mDragSpeed.x) * area->_mDragSpeed.x * area->_mDragSpeed.x * 0.5f / inertia;
@@ -173,7 +185,7 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setScrollOffsetX((float)(int)(x * parent->getWidth() / mButtonBar->getWidth()));
+		area->setScrollOffsetX(hroundf(x * parent->getWidth() / mButtonBar->getWidth()));
 		_updateBar();
 	}
 
@@ -199,13 +211,17 @@ namespace aprilui
 		if (ratio > 0.0f)
 		{
 			mButtonBar->setWidth(hclamp((1 - ratio) * range, 8.0f, range));
-			mButtonBar->setX((float)(int)(mButtonBegin->getWidth() - area->getX() / factor * range));
+			mButtonBar->setX(hroundf(mButtonBegin->getWidth() - area->getX() / factor * range));
 		}
 		else
 		{
 			mButtonBar->setWidth(range);
 			mButtonBar->setX(mButtonBegin->getWidth());
 		}
+	}
+
+	void ScrollBarH::_adjustDragSpeed()
+	{
 	}
 
 }

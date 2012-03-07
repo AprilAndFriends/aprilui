@@ -88,7 +88,19 @@ namespace aprilui
 		}
 		else
 		{
-			if (area->_mDragSpeed.y != 0.0f)
+			if (!area->isScrolling())
+			{
+				area->_mDragTimer = 0.0f;
+			}
+			if (area->_mDragSpeed.x == 0.0f)
+			{
+				area->_mLastScrollOffset.x = area->getScrollOffsetX();
+			}
+			if (area->_mDragSpeed.y == 0.0f)
+			{
+				area->_mLastScrollOffset.y = area->getScrollOffsetY();
+			}
+			else
 			{
 				// s0 = v0 ^ 2 / (2 * a)
 				value -= sgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
@@ -173,7 +185,7 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setScrollOffsetY((float)(int)(y * parent->getHeight() / mButtonBar->getHeight()));
+		area->setScrollOffsetY(hroundf(y * parent->getHeight() / mButtonBar->getHeight()));
 		_updateBar();
 	}
 
@@ -199,13 +211,82 @@ namespace aprilui
 		if (ratio > 0.0f)
 		{
 			mButtonBar->setHeight(hclamp((1 - ratio) * range, 8.0f, range));
-			mButtonBar->setY((float)(int)(mButtonBegin->getHeight() - area->getY() / factor * range));
+			mButtonBar->setY(hroundf(mButtonBegin->getHeight() - area->getY() / factor * range));
 		}
 		else
 		{
 			mButtonBar->setHeight(range);
 			mButtonBar->setY(mButtonBegin->getHeight());
 		}
+	}
+
+	void ScrollBarV::_adjustDragSpeed()
+	{
+		return;
+		if (mGridSize <= 0.0f)
+		{
+			return;
+		}
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return;
+		}
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return;
+		}
+
+		float s = 0.0f;
+		float inertia = area->getInertia();
+		if (area->_mDragSpeed.y != 0.0f && inertia > 0.0f)
+		{
+			// s0 = v0 ^ 2 / (2 * a)
+			s = sgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
+		}
+		float s0 = s;
+		float oy = area->getScrollOffsetY();
+		float difference = sgn(oy) * (hroundf(oy / mGridSize) * mGridSize - oy);
+		float offset = (s - hroundf(s / mGridSize) * mGridSize);
+		s = s - offset - difference;
+		//s = ;
+		//s = target - oy;
+		//s += ;
+		//s = hroundf(s / mGridSize) * mGridSize;
+		// v = sqrt(2 * a * s)
+		area->_mDragSpeed.y = sgn(s) * sqrt(2 * inertia * fabs(s));
+
+		//aprilui::log(hsprintf("%5.2f %5.2f - %5.2f - %5.2f %5.2f   %6.2f", s0, s, offset, oy, difference, area->_mDragSpeed.y));
+		//return value;
+
+
+		/*
+			float gridSize = scrollBarV->getGridSize();
+			if (gridSize > 0.0f)
+			{
+
+			}
+		float length = _mDragSpeed.length();
+		float newLength = length - k * mInertia;
+		if (fabs(newLength) < fabs(length) && sgn(newLength) == sgn(length))
+		{
+			gvec2 oldSpeed = _mDragSpeed;
+			_mDragSpeed *= newLength / length;
+			gvec2 averageSpeed = (oldSpeed + _mDragSpeed) * 0.5f;
+			gvec2 offset = getScrollOffset();
+			setScrollOffset(offset - averageSpeed * k);
+			if (getScrollOffset() == offset)
+			{
+				_mDragSpeed.set(0.0f, 0.0f);
+			}
+		}
+		else
+		{
+			_mDragSpeed.set(0.0f, 0.0f);
+		}
+		*/
+		//return value;
 	}
 
 }

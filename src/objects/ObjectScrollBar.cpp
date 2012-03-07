@@ -27,10 +27,12 @@
 namespace aprilui
 {
 	float ScrollBar::ScrollDistance = 32.0f;
+	float ScrollBar::GridSize = 0.0f;
 
 	ScrollBar::ScrollBar(chstr name, grect rect) :
 		Object(name, rect)
 	{
+		mGridSize = GridSize;
 		mButtonBegin = NULL;
 		mButtonEnd = NULL;
 		mButtonBack = NULL;
@@ -169,13 +171,15 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "skin")	return getSkinName();
+		if (name == "skin")			return getSkinName();
+		if (name == "grid_size")	return getGridSize();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)
 	{
-		if (name == "skin")	setSkinName(value);
+		if		(name == "skin")		setSkinName(value);
+		else if	(name == "grid_size")	setGridSize(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
