@@ -397,7 +397,7 @@ namespace aprilui
 
 	void Object::draw(gvec2 offset)
 	{
-		if (!isVisible() || fabs(mScale.x) < APRILUI_E_TOLERANCE || fabs(mScale.y) < APRILUI_E_TOLERANCE)
+		if (!isVisible() || heqf(mScale.x, 0.0f, APRILUI_E_TOLERANCE) || heqf(mScale.y, 0.0f, APRILUI_E_TOLERANCE))
 		{
 			return;
 		}
@@ -771,10 +771,10 @@ namespace aprilui
 	bool Object::angleEquals(float angle)
 	{
 		float s1 = (float)dsin(angle);
-		float s2 = (float)dsin(mAngle);
 		float c1 = (float)dcos(angle);
+		float s2 = (float)dsin(mAngle);
 		float c2 = (float)dcos(mAngle);
-		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
+		return (heqf(s1, s2, HL_E_TOLERANCE) && heqf(c1, c2, HL_E_TOLERANCE));
 	}
 
 	Object* Object::getChildByName(chstr name, bool recursive)
