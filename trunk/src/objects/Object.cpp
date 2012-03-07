@@ -509,12 +509,12 @@ namespace aprilui
 		float sinv;
 		float cosv;
 		gvec2 current;
-		for (int i = 0; i < 3; i++)
+		for_iter (i, 0, 3)
 		{
 			current = points[i] - pos - center;
 			if (current.x != 0.0f || current.y != 0.0f)
 			{
-				angle = fmod((float)RAD_TO_DEG(atan2(-current.y, current.x)) + mAngle, 360.0f);
+				angle = hmodf((float)RAD_TO_DEG(atan2(-current.y, current.x)) + mAngle, 360.0f);
 				length = current.length();
 				sinv = (float)dsin(angle);
 				cosv = (float)dcos(angle);
@@ -774,7 +774,7 @@ namespace aprilui
 		float c1 = (float)dcos(angle);
 		float s2 = (float)dsin(mAngle);
 		float c2 = (float)dcos(mAngle);
-		return (heqf(s1, s2, HL_E_TOLERANCE) && heqf(c1, c2, HL_E_TOLERANCE));
+		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
 	}
 
 	Object* Object::getChildByName(chstr name, bool recursive)

@@ -61,7 +61,7 @@ namespace aprilui
 			mTimeSinceLastFrame += mDelay;
 		}
 		mTimer += mTimeSinceLastFrame;
-		if (!heqf(mAcceleration, 0.0f, HL_E_TOLERANCE))
+		if (!heqf(mAcceleration, 0.0f, (float)HL_E_TOLERANCE))
 		{
 			mSpeed += mAcceleration * mTimeSinceLastFrame;
 		}

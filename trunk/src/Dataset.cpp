@@ -205,37 +205,37 @@ namespace aprilui
 		else
 		{
 			Image* image;
-			for (node = node->iterChildren(); node != NULL; node = node->next())
+			foreach_xmlnode (child, node)
 			{
-				if (*node == "Image")
+				if (*child == "Image")
 				{
-					hstr name = (prefixImages ? textureName + "/" + node->pstr("name") : node->pstr("name"));
+					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (mImages.has_key(name))
 					{
 						throw ResourceExistsException(name, "Image", this);
 					}
-					grect rect(node->pfloat("x"), node->pfloat("y"), node->pfloat("w"), node->pfloat("h"));
+					grect rect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h"));
 					
-					bool vertical = node->pbool("vertical", false);
-					float tile_w = node->pfloat("tile_w", 1.0f);
-					float tile_h = node->pfloat("tile_h", 1.0f);
+					bool vertical = child->pbool("vertical", false);
+					float tile_w = child->pfloat("tile_w", 1.0f);
+					float tile_h = child->pfloat("tile_h", 1.0f);
 					
 					if (tile_w != 1.0f || tile_h != 1.0f)
 					{
 						image = new TiledImage(texture, name, rect, vertical, tile_w, tile_h);
 					}
-					else if (node->pexists("color"))
+					else if (child->pexists("color"))
 					{
-						april::Color color(node->pstr("color"));
+						april::Color color(child->pstr("color"));
 						image = new ColoredImage(texture, name, rect, vertical, color);
 					}
 					else
 					{
-						bool invertX = node->pbool("invertx", false);
-						bool invertY = node->pbool("inverty", false);
+						bool invertX = child->pbool("invertx", false);
+						bool invertY = child->pbool("inverty", false);
 						image = new Image(texture, name, rect, vertical, invertX, invertY);    
 					}
-					hstr mode = node->pstr("blend_mode", "default");
+					hstr mode = child->pstr("blend_mode", "default");
 					if (mode == "add")
 					{
 						image->setBlendMode(april::ADD);
@@ -274,13 +274,13 @@ namespace aprilui
 			throw ResourceExistsException(name, "CompositeImage", this);
 		}
 		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
-		for (node = node->iterChildren(); node != NULL; node = node->next())
+		foreach_xmlnode (child, node)
 		{
-			if (*node == "ImageRef")
+			if (*child == "ImageRef")
 			{
-				refname = node->pstr("name");
+				refname = child->pstr("name");
 				image->addImageRef(getImage(refname),
-					grect(node->pfloat("x"), node->pfloat("y"), node->pfloat("w"), node->pfloat("h")));
+					grect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h")));
 			}
 		}
 		mImages[name] = image;
@@ -390,12 +390,12 @@ namespace aprilui
 		}
 		
 		hlxml::Node::Type type;
-		for (node = node->iterChildren(); node != NULL; node = node->next())
+		foreach_xmlnode (child, node)
 		{
-			type = node->getType();
+			type = child->getType();
 			if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
 			{
-				recursiveObjectParse(node, object);
+				recursiveObjectParse(child, object);
 			}
 		}
 		return object;
@@ -437,7 +437,7 @@ namespace aprilui
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
 		
-		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
+		foreach_xmlnode (p, current)
 		{
 			if (*p == "Object" || *p == "Animator")
 			{
@@ -479,7 +479,7 @@ namespace aprilui
 
 		parseExternalXMLNode(current);
 
-		for (hlxml::Node* p = current->iterChildren(); p != NULL; p = p->next())
+		foreach_xmlnode (p, current)
 		{
 			if      (*p == "Texture")        parseTexture(p);
 			else if (*p == "RAMTexture")     parseRAMTexture(p);
