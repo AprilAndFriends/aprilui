@@ -36,7 +36,7 @@ namespace aprilui
 		
 		virtual hstr getName() = 0;
 		hstr getText() { return mText; }
-		virtual void setText(chstr value) { mText = value; }
+		virtual void setText(chstr value);
 		hstr getTextKey() { return mTextKey; }
 		virtual void setTextKey(chstr value) { mTextKey = value; }
 		

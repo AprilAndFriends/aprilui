@@ -153,5 +153,10 @@ namespace aprilui
         else return false;
         return true;
 	}
-
+	
+	void LabelBase::setText(chstr value)
+	{
+		mText = value;
+		mTextKey = "";
+	}
 }
