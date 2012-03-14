@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -15,13 +15,14 @@
 #ifndef APRILUI_COLOR_IMAGE_H
 #define APRILUI_COLOR_IMAGE_H
 
+#include <april/Color.h>
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
-
-#include "Image.h"
+#include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Image.h"
 
 namespace aprilui
 {
@@ -29,8 +30,15 @@ namespace aprilui
 	{
 	public:
 		ColorImage(chstr name);
+		ColorImage(chstr name, grect rect);
+		ColorImage(chstr name, grect rect, chstr color);
+		ColorImage(chstr name, grect rect, april::Color color);
 		~ColorImage();
 		
+		april::Color getColor() { return mColor; }
+		void setColor(april::Color value) { mColor = value; }
+		void setColor(chstr value) { mColor.set(value); }
+
 		void draw(grect rect, april::Color color);
 		
 	protected:
