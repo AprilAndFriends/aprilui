@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -38,6 +38,8 @@ namespace aprilui
 		Container(chstr name, grect rect);
 		~Container();
 		static Object* createInstance(chstr name, grect rect);
+		
+		void OnDraw();
 
 	protected:
 		ScrollArea* mScrollArea;
