@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -23,6 +23,21 @@ namespace aprilui
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
 		mColor.set(name);
+	}
+
+	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
+	{
+		mColor.set(name);
+	}
+
+	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
+	{
+		mColor.set(color);
+	}
+
+	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
+	{
+		mColor = color;
 	}
 
 	ColorImage::~ColorImage()
