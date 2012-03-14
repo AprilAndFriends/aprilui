@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.52
 /// 
 /// @section LICENSE
 /// 
@@ -13,6 +13,7 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
+#include "aprilui.h"
 #include "ObjectContainer.h"
 
 namespace aprilui
@@ -32,6 +33,20 @@ namespace aprilui
 	Object* Container::createInstance(chstr name, grect rect)
 	{
 		return new Container(name, rect);
+	}
+
+	void Container::OnDraw()
+	{
+		if (!aprilui::isDebugEnabled())
+		{
+			Object::OnDraw();
+		}
+		else
+		{
+			grect rect = _getDrawRect();
+			april::rendersys->drawColoredQuad(rect, april::Color(APRIL_COLOR_RED, 64));
+			april::rendersys->drawQuad(rect, april::Color(APRIL_COLOR_YELLOW, 64));
+		}
 	}
 
 }
