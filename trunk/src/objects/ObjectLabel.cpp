@@ -61,8 +61,9 @@ namespace aprilui
 	
 	void Label::setTextKey(chstr value)
 	{
+		hstr key = value; // in case value points to mTextKey..
 		setText(mDataset->getText(value));
-		LabelBase::setTextKey(value);
+		LabelBase::setTextKey(key);
 	}
 	
 	hstr Label::getProperty(chstr name, bool* property_exists)
