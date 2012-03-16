@@ -81,8 +81,8 @@ namespace aprilui
 			angle += k * mSpeed;
 			int circles = floor(angle / 360);
 			if (mDestAngle >= 0.0f &&
-				sgn(oldAngle + 360 * circles - mDestAngle) != sgn(angle + 360 * circles - mDestAngle) ||
-				sgn(oldAngle - 360 * circles - mDestAngle) != sgn(angle - 360 * circles - mDestAngle))
+				hsgn(oldAngle + 360 * circles - mDestAngle) != hsgn(angle + 360 * circles - mDestAngle) ||
+				hsgn(oldAngle - 360 * circles - mDestAngle) != hsgn(angle - 360 * circles - mDestAngle))
 			{
 				angle = mDestAngle;
 			}

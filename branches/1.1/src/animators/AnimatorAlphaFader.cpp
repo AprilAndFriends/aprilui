@@ -73,7 +73,7 @@ namespace aprilui
 		{
 			mDestAlpha = dest;
 			float diff = mDestAlpha - mParent->getAlpha();
-			mSpeed = sgn(diff) * fabs(diff) / time;
+			mSpeed = hsgn(diff) * fabs(diff) / time;
 			mAccel = 0.0f;
 			mDelay = 0.0f;
 		}
@@ -96,7 +96,7 @@ namespace aprilui
 				mSpeed += mAccel * k;
 			}
 			alpha += k * mSpeed;
-			if (sgn(mDestAlpha - alpha) != sgn(mDestAlpha - prevalpha))
+			if (hsgn(mDestAlpha - alpha) != hsgn(mDestAlpha - prevalpha))
 			{
 				alpha = mDestAlpha;
 			}
