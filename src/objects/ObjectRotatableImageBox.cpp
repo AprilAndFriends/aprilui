@@ -28,7 +28,7 @@ namespace aprilui
 		Object::update(k);
 		if (fabs(mDestAngle - mAngle) > 0.01f)
 		{
-			mAngle += sgn(mDestAngle - mAngle) * hmin(k * mRotationSpeed, (float)fabs(mDestAngle - mAngle));
+			mAngle += hsgn(mDestAngle - mAngle) * hmin(k * mRotationSpeed, (float)fabs(mDestAngle - mAngle));
 			if (fabs(mDestAngle - mAngle) < 0.01f)
 			{
 				mAngle = mDestAngle;
