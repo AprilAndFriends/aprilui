@@ -92,12 +92,12 @@ namespace aprilui
 			if (area->_mDragSpeed.y != 0.0f)
 			{
 				float time = habs(area->_mDragSpeed.y / inertia);
-				float distance = area->_mDragSpeed.y * area->_mDragTimer.y - sgn(area->_mDragSpeed.y) * inertia * area->_mDragTimer.y * area->_mDragTimer.y * 0.5f;
-				value -= hroundf(sgn(area->_mDragSpeed.y) * inertia * time * time * 0.5f - distance);
+				float distance = area->_mDragSpeed.y * area->_mDragTimer.y - hsgn(area->_mDragSpeed.y) * inertia * area->_mDragTimer.y * area->_mDragTimer.y * 0.5f;
+				value -= hroundf(hsgn(area->_mDragSpeed.y) * inertia * time * time * 0.5f - distance);
 				area->_mLastScrollOffset.y = area->getScrollOffsetY();
 				area->_mDragTimer.y = 0.0f;
 			}
-			area->_mDragSpeed.y = -sgn(value) * sqrt(2 * inertia * habs(value));
+			area->_mDragSpeed.y = -hsgn(value) * sqrt(2 * inertia * habs(value));
 			_adjustDragSpeed();
 		}
 		_updateBar();
@@ -119,7 +119,7 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		float result = sgn(y + mButtonBegin->getY() - mButtonBar->getY()) * parent->getHeight();
+		float result = hsgn(y + mButtonBegin->getY() - mButtonBar->getY()) * parent->getHeight();
 		if (result < 0.0f)
 		{
 			result = hmax(result, -area->getScrollOffsetY());
@@ -251,7 +251,7 @@ namespace aprilui
 		if (area->_mDragSpeed.y != 0.0f)
 		{
 			// s0 = v0 ^ 2 / (2 * a)
-			s = -sgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
+			s = -hsgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
 		}
 		float difference = area->_mLastScrollOffset.y - hroundf(area->_mLastScrollOffset.y / mGridSize) * mGridSize;
 		float offset = hroundf(s / mGridSize) * mGridSize - s;
@@ -262,18 +262,18 @@ namespace aprilui
 		// these are grid snapping cases when grid size exceeds parent size
 		else if (habs(difference) == 0.0f) // using habs because it can be -0.0f!
 		{
-			s = sgn(s) * mGridSize;
+			s = hsgn(s) * mGridSize;
 		}
-		else if (habs(s) < habs(difference) || sgn(s) != sgn(difference))
+		else if (habs(s) < habs(difference) || hsgn(s) != hsgn(difference))
 		{
 			s = -difference;
 		}
 		else
 		{
-			s = sgn(s) * hmodf(-habs(difference), mGridSize);
+			s = hsgn(s) * hmodf(-habs(difference), mGridSize);
 		}
 		// v = sqrt(2 * a * s)
-		area->_mDragSpeed.y = -sgn(s) * sqrt(2 * inertia * habs(s));
+		area->_mDragSpeed.y = -hsgn(s) * sqrt(2 * inertia * habs(s));
 	}
 
 }
