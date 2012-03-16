@@ -168,11 +168,11 @@ namespace aprilui
 			{
 				if (_mDragTimer.x < inertiaTime.x)
 				{
-					distance.x = _mDragSpeed.x * _mDragTimer.x - sgn(_mDragSpeed.x) * mInertia * (_mDragTimer.x * _mDragTimer.x * 0.5f);
+					distance.x = _mDragSpeed.x * _mDragTimer.x - hsgn(_mDragSpeed.x) * mInertia * (_mDragTimer.x * _mDragTimer.x * 0.5f);
 				}
 				else
 				{
-					_mLastScrollOffset.x -= sgn(_mDragSpeed.x) * (mInertia * (inertiaTime.x * inertiaTime.x * 0.5f));
+					_mLastScrollOffset.x -= hsgn(_mDragSpeed.x) * (mInertia * (inertiaTime.x * inertiaTime.x * 0.5f));
 					_mDragSpeed.x = 0.0f;
 					_mDragTimer.x = 0.0f;
 				}
@@ -181,11 +181,11 @@ namespace aprilui
 			{
 				if (_mDragTimer.y < inertiaTime.y)
 				{
-					distance.y = _mDragSpeed.y * _mDragTimer.y - sgn(_mDragSpeed.y) * mInertia * (_mDragTimer.y * _mDragTimer.y * 0.5f);
+					distance.y = _mDragSpeed.y * _mDragTimer.y - hsgn(_mDragSpeed.y) * mInertia * (_mDragTimer.y * _mDragTimer.y * 0.5f);
 				}
 				else
 				{
-					_mLastScrollOffset.y -= sgn(_mDragSpeed.y) * (mInertia * (inertiaTime.y * inertiaTime.y * 0.5f));
+					_mLastScrollOffset.y -= hsgn(_mDragSpeed.y) * (mInertia * (inertiaTime.y * inertiaTime.y * 0.5f));
 					_mDragSpeed.y = 0.0f;
 					_mDragTimer.y = 0.0f;
 				}
