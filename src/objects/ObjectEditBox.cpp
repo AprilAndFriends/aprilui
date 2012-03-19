@@ -294,16 +294,10 @@ namespace aprilui
 		case april::AK_CONTROL:
 			mCtrlMode = true;
 			break;
-		case april::AK_RETURN:
-				_triggerEvent("Submit", 0, 0, april::AK_RETURN);
-			break;
-#else
-		case april::AK_RETURN:
-			mDataset->setFocusedObject(NULL);
-			mBlinkTimer = 0.0f;
-			april::rendersys->getWindow()->terminateKeyboardHandling();
-			break;
 #endif
+		case april::AK_RETURN:
+			_triggerEvent("Submit", 0.0f, 0.0f, april::AK_RETURN);
+			break;
 		}
 	}
 	
