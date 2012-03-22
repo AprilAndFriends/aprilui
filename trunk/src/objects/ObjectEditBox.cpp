@@ -256,7 +256,7 @@ namespace aprilui
 			{
 				mDataset->setFocusedObject(this);
 				mBlinkTimer = 0.0f;
-				april::rendersys->getWindow()->beginKeyboardHandling();
+				april::window->beginKeyboardHandling();
 			}
 			mPushed = false;
 			_triggerEvent("Click", x, y, button);
