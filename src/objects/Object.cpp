@@ -539,7 +539,7 @@ namespace aprilui
 		{
 			if (mDataset->getFocusedObject() != NULL)
 			{
-				april::rendersys->getWindow()->terminateKeyboardHandling();
+				april::window->terminateKeyboardHandling();
 			}
 			mDataset->setFocusedObject(NULL);
 		}

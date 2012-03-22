@@ -58,7 +58,7 @@ namespace aprilui
 		{
 			if (mFocusedObject != NULL)
 			{
-				april::rendersys->getWindow()->terminateKeyboardHandling();
+				april::window->terminateKeyboardHandling();
 			}
 			unload();
 		}

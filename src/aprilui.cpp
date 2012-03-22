@@ -81,8 +81,8 @@ namespace aprilui
 		debugEnabled = false;
 		defaultTextsPath = "texts";
 		localization = "";
-		viewport.w = (float)april::rendersys->getWindow()->getWidth();
-		viewport.h = (float)april::rendersys->getWindow()->getHeight();
+		viewport.w = (float)april::window->getWidth();
+		viewport.h = (float)april::window->getHeight();
 		screenViewport = viewport;
 		harray<unsigned char> allowedButtons;
 		allowedButtons += april::AK_LBUTTON;
@@ -265,9 +265,8 @@ namespace aprilui
 
 	gvec2 transformWindowPoint(gvec2 pt)
 	{
-		april::Window* window = april::rendersys->getWindow();
-		pt.x = (float)(int)(pt.x * screenViewport.w / window->getWidth()) - viewport.x;
-		pt.y = (float)(int)(pt.y * screenViewport.h / window->getHeight()) - viewport.y;
+		pt.x = (float)(int)(pt.x * screenViewport.w / april::window->getWidth()) - viewport.x;
+		pt.y = (float)(int)(pt.y * screenViewport.h / april::window->getHeight()) - viewport.y;
 		if (limitCursorToViewport)
 		{
 			pt.x = hclamp(pt.x, 0.0f, viewport.w - 1);
@@ -283,7 +282,7 @@ namespace aprilui
 	
     void updateCursorPosition()
     {
-		cursorPosition = april::rendersys->getWindow()->getCursorPosition();
+		cursorPosition = april::window->getCursorPosition();
 		cursorPosition = transformWindowPoint(cursorPosition);
     }
     
