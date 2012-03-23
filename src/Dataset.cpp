@@ -159,8 +159,7 @@ namespace aprilui
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilePath + "/" + filename);
-		int slash = filename.rfind('/') + 1;
-		hstr textureName = filename(slash, filename.rfind('.') - slash);
+		hstr textureName = get_basename(filename);
 		if (mTextures.has_key(textureName))
 		{
 			throw ObjectExistsException(textureName, filename);
@@ -171,9 +170,7 @@ namespace aprilui
 		hstr localization = getLocalization();
 		if (localization != "")
 		{
-			hstr base, file, locpath;
-			filepath.rsplit("/", base, file);
-			locpath = base + "/" + localization + "/" + file;
+			hstr locpath = get_basedir(filepath) + "/" + localization + "/" + get_basename(filepath);
 			if (hresource::exists(locpath))
 			{
 				filepath = locpath;
