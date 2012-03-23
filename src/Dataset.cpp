@@ -198,7 +198,7 @@ namespace aprilui
 		return texture;
 	}
 	
-	void Dataset::parseRAMTexture(xml_node* node)
+	void Dataset::parseRamTexture(xml_node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
@@ -206,10 +206,10 @@ namespace aprilui
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
 		{
-			throw ResourceExistsException(filename, "RAMTexture", this);
+			throw ResourceExistsException(filename, "RamTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		april::Texture* texture = april::rendersys->loadRAMTexture(filepath, dynamicLoad);
+		april::Texture* texture = april::rendersys->loadRamTexture(filepath, dynamicLoad);
 		if (!texture)
 		{
 			throw FileNotFoundException(filepath);
@@ -371,7 +371,7 @@ namespace aprilui
 					dynamicLinks[texture] = links;
 				}
 			}
-			else if (*p == "RAMTexture") parseRAMTexture(p);
+			else if (*p == "RamTexture") parseRamTexture(p);
 			else if (*p == "CompositeImage") parseCompositeImage(p);
 			else if (*p == "Object") parseObject(p);
 			else if (p->type != XML_TEXT_NODE && p->type != XML_COMMENT_NODE)

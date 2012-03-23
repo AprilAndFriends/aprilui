@@ -104,7 +104,7 @@ namespace aprilui
 		hmap<hstr, void (*)()> mCallbacks;
 
 		april::Texture* parseTexture(xml_node* node);
-		void parseRAMTexture(xml_node* node);
+		void parseRamTexture(xml_node* node);
 		void parseCompositeImage(xml_node* node);
 		virtual void parseExternalXMLNode(xml_node* node) { }
 		virtual Object* parseExternalObjectClass(xml_node* node, chstr obj_name, grect rect) { return 0; }
