@@ -257,7 +257,7 @@ namespace aprilui
 			throw ResourceExistsException(filename, "RAMTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		april::Texture* texture = april::rendersys->loadRAMTexture(filepath, dynamicLoad);
+		april::Texture* texture = april::rendersys->loadRamTexture(filepath, dynamicLoad);
 		if (!texture)
 		{
 			throw file_not_found(filepath);
