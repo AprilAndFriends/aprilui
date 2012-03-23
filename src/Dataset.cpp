@@ -10,6 +10,7 @@
 
 #include <april/RenderSystem.h>
 #include <april/Window.h>
+#include <april/RamTexture.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
@@ -187,11 +188,14 @@ namespace aprilui
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
-			if      (filter == "linear")  texture->setTextureFilter(april::Linear);
-			else if (filter == "nearest") texture->setTextureFilter(april::Nearest);
+			if      (filter == "linear")  texture->setFilter(april::Texture::FILTER_LINEAR);
+			else if (filter == "nearest") texture->setFilter(april::Texture::FILTER_NEAREST);
 			else throw hl_exception("texture filter '" + filter + "' not supported");
 		}
-		texture->setTextureWrapping(node->pbool("wrap", true));
+		if (node->pbool("wrap", true))
+		{
+			texture->setAddressMode(april::Texture::ADDRESS_WRAP);
+		}
 		mTextures[textureName] = texture;
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
@@ -246,7 +250,7 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::parseRAMTexture(hlxml::Node* node)
+	void Dataset::parseRamTexture(hlxml::Node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilePath + "/" + filename);
@@ -254,10 +258,10 @@ namespace aprilui
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
 		{
-			throw ResourceExistsException(filename, "RAMTexture", this);
+			throw ResourceExistsException(filename, "RamTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		april::Texture* texture = april::rendersys->loadRAMTexture(filepath, dynamicLoad);
+		april::Texture* texture = april::rendersys->loadRamTexture(filepath, dynamicLoad);
 		if (!texture)
 		{
 			throw file_not_found(filepath);
@@ -482,7 +486,7 @@ namespace aprilui
 		foreach_xmlnode (p, current)
 		{
 			if      (*p == "Texture")        parseTexture(p);
-			else if (*p == "RAMTexture")     parseRAMTexture(p);
+			else if (*p == "RamTexture")     parseRamTexture(p);
 			else if (*p == "CompositeImage") parseCompositeImage(p);
 			else if (*p == "Object")         parseObject(p);
 			else if (*p == "Include")        parseGlobalInclude(get_basedir(path) + "/" + p->pstr("path"));
