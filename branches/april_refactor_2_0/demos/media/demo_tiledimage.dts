@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<Dataset>
+
+	<Include path="texture.tex"/>
+	
+	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
+		<Object type="ImageBox" image="texture/tiled" x="32" y="32" w="736" h="536"/>
+	</Object>
+	
+</Dataset>
