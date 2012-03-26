@@ -44,8 +44,8 @@ namespace aprilui
 		else
 		{
 			grect rect = _getDrawRect();
-			april::rendersys->drawColoredQuad(rect, april::Color(APRIL_COLOR_RED, 64));
-			april::rendersys->drawQuad(rect, april::Color(APRIL_COLOR_YELLOW, 64));
+			april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_RED, 64));
+			april::rendersys->drawRect(rect, april::Color(APRIL_COLOR_YELLOW, 64));
 		}
 	}
 

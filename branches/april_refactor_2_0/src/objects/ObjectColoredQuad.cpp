@@ -33,7 +33,7 @@ namespace aprilui
 
 	void ColoredQuad::OnDraw()
 	{
-		april::rendersys->drawColoredQuad(_getDrawRect(), _getDrawColor());
+		april::rendersys->drawFilledRect(_getDrawRect(), _getDrawColor());
 	}
 
 	bool ColoredQuad::onMouseDown(float x, float y, int button)
