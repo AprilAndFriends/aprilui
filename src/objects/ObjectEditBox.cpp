@@ -83,9 +83,9 @@ namespace aprilui
                 color.a = 191;
             }
             color.a = getDerivedAlpha();
-            april::rendersys->drawColoredQuad(grect(rect.x, rect.y, rect.w, rect.h), color);
+            april::rendersys->drawFilledRect(grect(rect.x, rect.y, rect.w, rect.h), color);
 			color = april::Color(mTextColor, color.a);
-            april::rendersys->drawQuad(grect(rect.x, rect.y, rect.w, rect.h), color);
+            april::rendersys->drawRect(grect(rect.x, rect.y, rect.w, rect.h), color);
         }
 		hstr text = mText;
 		harray<unsigned int> unicodeChars = mUnicodeChars;
@@ -144,7 +144,7 @@ namespace aprilui
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 2;
 			rect.h = h - 4;
-			april::rendersys->drawColoredQuad(rect, _getDrawColor() * mTextColor);
+			april::rendersys->drawFilledRect(rect, _getDrawColor() * mTextColor);
 		}
 		mText = text;
 		mUnicodeChars = unicodeChars;
