@@ -114,7 +114,7 @@ namespace aprilui
 		april::rendersys->setTexture(mTexture);
 		_updateTexCoords();
 			
-		april::rendersys->setBlendMode(mBlendMode);
+		april::rendersys->setTextureBlendMode(mBlendMode);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
 			april::rendersys->render(april::TriangleStrip, tVertices, 4, color);
@@ -123,7 +123,7 @@ namespace aprilui
 		{
 			april::rendersys->render(april::TriangleStrip, tVertices, 4);
 		}
-		april::rendersys->setBlendMode(april::DEFAULT);
+		april::rendersys->setTextureBlendMode(april::DEFAULT);
 	}
 	
 	void Image::draw(grect rect, april::Color color, float angle)

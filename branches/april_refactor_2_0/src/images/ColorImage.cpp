@@ -53,13 +53,12 @@ namespace aprilui
 		
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			april::rendersys->setBlendMode(mBlendMode);
+			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
-		color *= mColor;
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
+		april::rendersys->render(april::TriangleStrip, pVertices, 4, color * mColor);
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			april::rendersys->setBlendMode(april::DEFAULT);
+			april::rendersys->setTextureBlendMode(april::DEFAULT);
 		}
 	}
 
