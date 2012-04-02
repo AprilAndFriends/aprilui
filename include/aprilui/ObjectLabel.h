@@ -33,7 +33,9 @@ namespace aprilui
 		
 		hstr getName();
 		void setTextKey(chstr value);
-		
+		bool onMouseDown(float x, float y, int button);
+		bool onMouseUp(float x, float y, int button);
+
 		void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);

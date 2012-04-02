@@ -66,6 +66,34 @@ namespace aprilui
 		LabelBase::setTextKey(key);
 	}
 	
+	bool Label::onMouseDown(float x, float y, int button)
+	{
+		if (Object::onMouseDown(x, y, button))
+		{
+			return true;
+		}
+		if (isCursorInside())
+		{
+            _triggerEvent("MouseDown", x, y, button);
+			return true;
+		}
+		return false;
+	}
+	
+	bool Label::onMouseUp(float x, float y, int button)
+	{
+		if (Object::onMouseUp(x, y, button))
+		{
+			return true;
+		}
+		if (isCursorInside())
+		{
+			_triggerEvent("Click", x, y, button);
+			return true;
+		}
+		return false;
+	}
+	
 	hstr Label::getProperty(chstr name, bool* property_exists)
 	{
 		bool exists = false;
