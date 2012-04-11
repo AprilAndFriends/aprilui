@@ -10,6 +10,7 @@
 
 #include <april/RenderSystem.h>
 #include <april/Window.h>
+#include <april/april.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
@@ -176,6 +177,20 @@ namespace aprilui
 			if (hresource::exists(locpath))
 			{
 				filepath = locpath;
+			}
+			else
+			{
+				hstr name;
+				harray<hstr> extensions = april::getTextureExtensions();
+				foreach (hstr, it, extensions)
+				{
+					name = locpath + (*it);
+					if (hresource::exists(name))
+					{
+						filepath = locpath;
+						break;
+					}
+				}
 			}
 		}
 		
