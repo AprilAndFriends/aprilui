@@ -840,6 +840,34 @@ namespace aprilui
 		mChildUnderCursor = NULL;
 		mCheckedChildUnderCursor = false;
 	}
+	
+	bool Object::isChild(Object* obj)
+	{
+		if (obj == NULL) return false;
+		return (obj->getParent() == this);
+	}
+	
+	bool Object::isDescendant(Object* obj)
+	{
+		if (obj == NULL) return false;
+		return obj->isAncestor(this);
+	}
+	
+	bool Object::isParent(Object* obj)
+	{
+		if (obj == NULL) return false;
+		return mParent == obj;
+	}
+	
+	bool Object::isAncestor(Object* obj)
+	{
+		if (obj == NULL) return false;
+		for (Object* o = this->getParent(); o != NULL; o = o->getParent())
+		{
+			if (o == obj) return true;
+		}
+		return false;
+	}
 
 	grect Object::getDerivedRect()
 	{
