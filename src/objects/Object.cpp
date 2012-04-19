@@ -331,23 +331,23 @@ namespace aprilui
 		notifyEvent("Resized", NULL);
 	}
 
-	unsigned char Object::getDerivedAlpha()
+	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot)
 	{
 		// recursive function that combines all the alpha from the parents (if any)
 		float factor = 1.0f;
-		if (mInheritsAlpha && mParent != NULL)
+		if (mInheritsAlpha && mParent != overrideRoot)
 		{
-			factor *= mParent->getDerivedAlpha() / 255.0f;
+			factor *= mParent->getDerivedAlpha(overrideRoot) / 255.0f;
 		}
 		return (unsigned char)(this->getAlpha() * factor);
 	}
 
-	float Object::_getDerivedAngle()
+	float Object::_getDerivedAngle(aprilui::Object* overrideRoot)
 	{
 		float angle = mAngle;
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			angle += mParent->_getDerivedAngle();
+			angle += mParent->_getDerivedAngle(overrideRoot);
 		}
 		return angle;
 	}
@@ -869,44 +869,44 @@ namespace aprilui
 		return false;
 	}
 
-	grect Object::getDerivedRect()
+	grect Object::getDerivedRect(aprilui::Object* overrideRoot)
 	{
-		return grect(getDerivedPosition(), getDerivedSize());
+		return grect(getDerivedPosition(overrideRoot), getDerivedSize(overrideRoot));
 	}
 	
-	gvec2 Object::getDerivedPosition()
+	gvec2 Object::getDerivedPosition(aprilui::Object* overrideRoot)
 	{
 		gvec2 position = getPosition();
 		position += (gvec2(1.0f, 1.0f) - mScale) * mRect.getSize() * (mCenter / mRect.getSize());
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			position *= mParent->getDerivedScale();
-			position += mParent->getDerivedPosition();
+			position *= mParent->getDerivedScale(overrideRoot);
+			position += mParent->getDerivedPosition(overrideRoot);
 		}
 		return position;
 	}
 	
-	gvec2 Object::getDerivedSize()
+	gvec2 Object::getDerivedSize(aprilui::Object* overrideRoot)
 	{
-		return (mRect.getSize() * getDerivedScale());
+		return (mRect.getSize() * getDerivedScale(overrideRoot));
 	}
 
-	gvec2 Object::getDerivedCenter()
+	gvec2 Object::getDerivedCenter(aprilui::Object* overrideRoot)
 	{
 		gvec2 center = getCenter();
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			center *= mParent->getDerivedScale();
+			center *= mParent->getDerivedScale(overrideRoot);
 		}
 		return center;
 	}
 	
-	gvec2 Object::getDerivedScale()
+	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
 	{
 		gvec2 scale = mScale;
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			scale *= mParent->getDerivedScale();
+			scale *= mParent->getDerivedScale(overrideRoot);
 		}
 		return scale;
 	}

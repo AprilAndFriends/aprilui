@@ -134,7 +134,7 @@ namespace aprilui
 		unsigned char getBlue() { return mColor.b; }
 		void setBlue(unsigned char value) { mColor.b = value; }
 		unsigned char getAlpha() { return mColor.a; }
-		unsigned char getDerivedAlpha();
+		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 		void setAlpha(unsigned char value);
 		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
@@ -142,11 +142,11 @@ namespace aprilui
 		bool isClip() { return mClip; }
 		void setClip(bool value) { mClip = value; }
 
-		grect getDerivedRect();
-		gvec2 getDerivedPosition();
-		gvec2 getDerivedSize();
-		gvec2 getDerivedCenter();
-		gvec2 getDerivedScale();
+		grect getDerivedRect(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
 		virtual bool isAnimated();
 		virtual bool isWaitingAnimation();
 		bool hasDynamicAnimation();
@@ -274,7 +274,7 @@ namespace aprilui
 		void _updateChildrenVertical(float difference);
 		
 		void _triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
-		float _getDerivedAngle();
+		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool _isDerivedEnabled();
 		bool _isDerivedClickThrough();
 		grect _getDrawRect();
