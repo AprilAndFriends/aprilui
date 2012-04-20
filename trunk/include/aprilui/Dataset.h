@@ -119,6 +119,7 @@ namespace aprilui
 		hstr getName() { return mName; }
 
 		virtual Object* getObject(chstr name);
+		bool hasImage(chstr name);
 		bool hasObject(chstr name);
 		Object* tryGetObject(chstr name);
 
