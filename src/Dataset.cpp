@@ -715,6 +715,11 @@ namespace aprilui
 		return tryGetObject(name) != NULL;
 	}
 	
+	bool Dataset::hasImage(chstr name)
+	{
+		return mImages.has_key(name);
+	}
+	
 	Object* Dataset::tryGetObject(chstr name)
 	{
 		aprilui::Object* obj;
