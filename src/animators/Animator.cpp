@@ -67,6 +67,18 @@ namespace aprilui
 		}
 	}
 	
+	bool Animator::_checkUpdate(float k)
+	{
+		float delay = mDelay;
+		bool animated = this->isAnimated();
+		Animator::update(k);
+		if (!animated && !this->isAnimated() && !(delay > 0.0f && mDelay <= 0.0f))
+		{
+			return false;
+		}
+		return true;
+	}
+	
 	float Animator::_calculateValue(float k)
 	{
 		if (mDelay > 0.0f)

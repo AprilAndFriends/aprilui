@@ -46,15 +46,12 @@ namespace aprilui
 		
 		void Rotator::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				mValue = mParent->getAngle();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				mParent->setAngle(mValue);
 			}
-			mValue = mParent->getAngle();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setAngle(mValue);
 		}
 		
 	}
