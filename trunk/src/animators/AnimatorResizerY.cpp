@@ -46,15 +46,12 @@ namespace aprilui
 		
 		void ResizerY::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				mValue = mParent->getHeight();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				mParent->setHeight(mValue);
 			}
-			mValue = mParent->getHeight();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setHeight(mValue);
 		}
 		
 	}

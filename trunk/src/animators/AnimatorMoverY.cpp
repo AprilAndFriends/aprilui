@@ -46,15 +46,12 @@ namespace aprilui
 		
 		void MoverY::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				mValue = mParent->getY();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				mParent->setY(mValue);
 			}
-			mValue = mParent->getY();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setY(mValue);
 		}
 		
 	}

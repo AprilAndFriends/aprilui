@@ -100,7 +100,7 @@ namespace aprilui
 		float (*mCustomFunction)(Animator*, float);
 		
 		float _calculateValue(float k);
-		
+		bool _checkUpdate(float k);		
 	};
 }
 

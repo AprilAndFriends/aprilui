@@ -46,15 +46,12 @@ namespace aprilui
 		
 		void ScalerY::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				mValue = mParent->getScaleY();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				mParent->setScaleY(mValue);
 			}
-			mValue = mParent->getScaleY();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setScaleY(mValue);
 		}
 		
 	}

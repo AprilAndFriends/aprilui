@@ -82,26 +82,23 @@ namespace aprilui
 
 		void FrameAnimation::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				ImageBox* imageBox = dynamic_cast<ImageBox*>(mParent);
+				if (imageBox == NULL)
+				{
+					aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+					return;
+				}
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				int frame = (int)mValue;
+				int lastFrame = mFirstFrame + mFrameCount - 1;
+				if (isExpired() || frame > lastFrame)
+				{
+					frame = (mReset ? mFirstFrame : lastFrame);
+				}
+				imageBox->setImageByName(mImageBaseName + hstr(frame));
 			}
-			ImageBox* imageBox = dynamic_cast<ImageBox*>(mParent);
-			if (imageBox == NULL)
-			{
-				aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
-				return;
-			}
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			int frame = (int)mValue;
-			int lastFrame = mFirstFrame + mFrameCount - 1;
-			if (isExpired() || frame > lastFrame)
-			{
-				frame = (mReset ? mFirstFrame : lastFrame);
-			}
-			imageBox->setImageByName(mImageBaseName + hstr(frame));
 		}
 		
 	}
