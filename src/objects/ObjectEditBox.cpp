@@ -142,9 +142,9 @@ namespace aprilui
 				rect.x += mRect.w - w;
 			}
 			rect.y += (rect.h - h) / 2 + 2;
-			rect.w = 2;
+			rect.w = 1;
 			rect.h = h - 4;
-			april::rendersys->drawColoredQuad(rect, _getDrawColor() * mTextColor);
+			april::rendersys->drawQuad(rect, _getDrawColor() * mTextColor);
 		}
 		mText = text;
 		mUnicodeChars = unicodeChars;
