@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="libaprilui"
 	ProjectGUID="{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}"
 	RootNamespace="hltypes"
@@ -140,6 +140,8 @@
 				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libatres.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -178,6 +180,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\apriluiUtil.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\CallbackEvent.cpp"
 				>
 			</File>
@@ -195,10 +201,6 @@
 			</File>
 			<File
 				RelativePath=".\src\MemberCallbackEvent.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\apriluiUtil.cpp"
 				>
 			</File>
 			<Filter
@@ -388,6 +390,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\apriluiUtil.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\aprilui\CallbackEvent.h"
 				>
 			</File>
@@ -421,10 +427,6 @@
 			</File>
 			<File
 				RelativePath=".\include\aprilui\Objects.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\apriluiUtil.h"
 				>
 			</File>
 			<Filter
