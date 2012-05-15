@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -59,6 +59,7 @@ namespace aprilui
 		grect _getBarDrawRect();
 
 		float _calcScrollJump(float x, float y);
+		float _calcScrollMove(float x, float y);
 		void _updateChildren();
 		void _moveScrollBar(float x, float y);
 		void _updateBar();

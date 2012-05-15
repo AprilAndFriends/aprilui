@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.51
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -107,7 +107,7 @@ void april_init(const harray<hstr>& args)
 		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_zorder");
 		atres::init();
 		aprilui::init();
-		april::rendersys->getWindow()->setUpdateCallback(&render);
+		april::window->setUpdateCallback(&render);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_zorder.dts");
 		dataset->load();
 	}

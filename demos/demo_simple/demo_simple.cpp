@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.51
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -104,7 +104,7 @@ void april_init(const harray<hstr>& args)
 		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_simple");
 		atres::init();
 		aprilui::init();
-		april::rendersys->getWindow()->setUpdateCallback(&render);
+		april::window->setUpdateCallback(&render);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_simple.dts");
 		dataset->load();

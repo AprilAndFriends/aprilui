@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.51
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -108,6 +108,10 @@ namespace aprilui
 		if (object->getParent() != NULL)
 		{
 			object->detach();
+		}
+		if (mFocusedObject == object)
+		{
+			mFocusedObject = NULL;
 		}
 		mObjects.remove_key(object->getName());
 		delete object;
@@ -832,6 +836,14 @@ namespace aprilui
 		if (mRoot != NULL)
 		{
 			mRoot->onMouseMove(x, y);
+		}
+	}
+	
+	void Dataset::onMouseScroll(float x, float y)
+	{
+		if (mRoot != NULL)
+		{
+			mRoot->onMouseScroll(x, y);
 		}
 	}
 	

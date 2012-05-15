@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -155,6 +155,7 @@ namespace aprilui
 		virtual bool onMouseDown(float x, float y, int button);
 		virtual bool onMouseUp(float x, float y, int button);
 		virtual void onMouseMove(float x, float y);
+		virtual void onMouseScroll(float x, float y);
 		virtual void onKeyDown(unsigned int keycode);
 		virtual void onKeyUp(unsigned int keycode);
 		virtual void onChar(unsigned int charcode);
