@@ -147,7 +147,7 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		return (x * ScrollBar::ScrollDistance);
+		return hroundf(x * ScrollBar::ScrollDistance); // hround prevents partial pixels when getting weird X values
 	}
 
 	void ScrollBarH::notifyEvent(chstr name, void* params)
