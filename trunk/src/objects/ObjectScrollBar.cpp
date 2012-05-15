@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -214,6 +214,16 @@ namespace aprilui
 		{
 			_moveScrollBar(x - _mClickPosition.x, y - _mClickPosition.y);
 		}
+	}
+
+	void ScrollBar::onMouseScroll(float x, float y)
+	{
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent != NULL && (parent->isCursorInside() || isCursorInside()))
+		{
+			addScrollValue(_calcScrollMove(x, y));
+		}
+		Object::onMouseScroll(x, y);
 	}
 
 	void ScrollBar::_clickScrollBegin(EventArgs* args)

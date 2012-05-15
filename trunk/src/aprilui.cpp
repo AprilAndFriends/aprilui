@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -393,6 +393,14 @@ namespace aprilui
 		foreach_m (Dataset*, it, gDatasets)
 		{
 			it->second->onMouseMove(x, y);
+		}
+	}
+	
+	void onMouseScroll(float x, float y)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onMouseScroll(x, y);
 		}
 	}
 	

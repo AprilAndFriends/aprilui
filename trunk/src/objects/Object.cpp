@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -579,6 +579,17 @@ namespace aprilui
 			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
 			{
 				(*it)->onMouseMove(x - mRect.x, y - mRect.y);
+			}
+		}
+	}
+
+	void Object::onMouseScroll(float x, float y)
+	{
+		foreach_r (Object*, it, mChildren)
+		{
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
+			{
+				(*it)->onMouseScroll(x, y);
 			}
 		}
 	}

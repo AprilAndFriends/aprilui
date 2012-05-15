@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -129,6 +129,25 @@ namespace aprilui
 			result = hmin(result, area->getHeight() - parent->getHeight() - area->getScrollOffsetY());
 		}
 		return result;
+	}
+
+	float ScrollBarV::_calcScrollMove(float x, float y)
+	{
+		if (mButtonBar == NULL)
+		{
+			return 0.0f;
+		}
+		Container* parent = dynamic_cast<Container*>(mParent);
+		if (parent == NULL)
+		{
+			return 0.0f;
+		}
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return 0.0f;
+		}
+		return (y * ScrollBar::ScrollDistance);
 	}
 
 	void ScrollBarV::notifyEvent(chstr name, void* params)

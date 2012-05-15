@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -48,6 +48,7 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 		void onMouseMove(float x, float y);
+		void onMouseScroll(float x, float y);
 
 		virtual void addScrollValue(float value) = 0;
 
@@ -79,6 +80,7 @@ namespace aprilui
 		virtual grect _getBarDrawRect() = 0;
 
 		virtual float _calcScrollJump(float x, float y) = 0;
+		virtual float _calcScrollMove(float x, float y) = 0;
 		virtual void _updateChildren() = 0;
 		virtual void _moveScrollBar(float x, float y) = 0;
 		virtual void _updateBar() = 0;

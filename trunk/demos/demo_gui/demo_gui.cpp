@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.51
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -78,6 +78,12 @@ void onMouseMove(float x, float y)
 	aprilui::updateCursorPosition();
 	gvec2 position = aprilui::getCursorPosition();
 	aprilui::onMouseMove(position.x, position.y);
+}
+
+void onMouseScroll(float x, float y)
+{
+	aprilui::updateCursorPosition();
+	aprilui::onMouseScroll(x, y);
 }
 
 void onKeyDown(unsigned int keycode)
@@ -164,9 +170,9 @@ void april_init(const harray<hstr>& args)
 		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_gui");
 		atres::init();
 		aprilui::init();
-		april::rendersys->getWindow()->setUpdateCallback(&update);
-		april::rendersys->getWindow()->setMouseCallbacks(&onMouseDown, &onMouseUp, &onMouseMove);
-		april::rendersys->getWindow()->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
+		april::window->setUpdateCallback(&update);
+		april::window->setMouseCallbacks(&onMouseDown, &onMouseUp, &onMouseMove, &onMouseScroll);
+		april::window->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setViewport(viewport);
 		aprilui::setScreenViewport(drawRect);
@@ -176,7 +182,6 @@ void april_init(const harray<hstr>& args)
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif
-		april::rendersys->getWindow()->enterMainLoop();
 	}
 	catch (aprilui::_GenericException e)
 	{

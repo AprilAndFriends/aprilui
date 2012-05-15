@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.6
 /// 
 /// @section LICENSE
 /// 
@@ -80,6 +80,7 @@ namespace aprilui
 	apriluiFnExport void onMouseDown(float x, float y, int button);
 	apriluiFnExport void onMouseUp(float x, float y, int button);
 	apriluiFnExport void onMouseMove(float x, float y);
+	apriluiFnExport void onMouseScroll(float x, float y);
 	apriluiFnExport void onKeyDown(unsigned int keycode);
 	apriluiFnExport void onKeyUp(unsigned int keycode);
 	apriluiFnExport void onChar(unsigned int charcode);
