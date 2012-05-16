@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.61
 /// 
 /// @section LICENSE
 /// 
@@ -212,7 +212,8 @@ namespace aprilui
 		Object::onMouseMove(x, y);
 		if (mButtonBar != NULL && mButtonBar->isPushed())
 		{
-			_moveScrollBar(x - _mClickPosition.x, y - _mClickPosition.y);
+			gvec2 position = getCursorPosition() / getDerivedScale() - _mClickPosition;
+			_moveScrollBar(position.x, position.y);
 		}
 	}
 
@@ -241,13 +242,15 @@ namespace aprilui
 	void ScrollBar::_clickScrollBack(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->addScrollValue(scrollBar->_calcScrollJump(args->x, args->y));
+		gvec2 position = (getCursorPosition() - scrollBar->getDerivedPosition()) / scrollBar->getDerivedScale();
+		scrollBar->addScrollValue(scrollBar->_calcScrollJump(position.x, position.y));
 	}
 
 	void ScrollBar::_mouseDownScrollBar(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->_mClickPosition = gvec2(args->x, args->y) - scrollBar->mButtonBar->getPosition() + scrollBar->mButtonBegin->getSize();
+		scrollBar->_mClickPosition = getCursorPosition() / scrollBar->getDerivedScale() -
+			scrollBar->mButtonBar->getPosition() + scrollBar->mButtonBegin->getSize();
 	}
 
 	void ScrollBar::_clickScrollBar(EventArgs* args)
