@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.61
 /// 
 /// @section LICENSE
 /// 
@@ -43,6 +43,8 @@ namespace aprilui
 		void setDragThreshold(float value) { mDragThreshold = value; }
 		float getDragMaxSpeed() { return mDragMaxSpeed; }
 		void setDragMaxSpeed(float value) { mDragMaxSpeed = value; }
+		bool isSwapScrollWheels() { return mSwapScrollWheels; }
+		void setSwapScrollWheels(bool value) { mSwapScrollWheels = value; }
 		bool isDragging() { return mDragging; }
 		hstr getName();
 		bool isCursorInside();
@@ -77,6 +79,7 @@ namespace aprilui
 		float mInertia;
 		float mDragThreshold;
 		float mDragMaxSpeed;
+		bool mSwapScrollWheels;
 		bool mDragging;
 
 		virtual bool _checkHover();

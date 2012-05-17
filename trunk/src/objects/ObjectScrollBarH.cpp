@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.61
 /// 
 /// @section LICENSE
 /// 
@@ -133,20 +133,6 @@ namespace aprilui
 
 	float ScrollBarH::_calcScrollMove(float x, float y)
 	{
-		if (mButtonBar == NULL)
-		{
-			return 0.0f;
-		}
-		Container* parent = dynamic_cast<Container*>(mParent);
-		if (parent == NULL)
-		{
-			return 0.0f;
-		}
-		ScrollArea* area = parent->_getScrollArea();
-		if (area == NULL)
-		{
-			return 0.0f;
-		}
 		return hroundf(x * ScrollBar::ScrollDistance); // hround prevents partial pixels when getting weird X values
 	}
 

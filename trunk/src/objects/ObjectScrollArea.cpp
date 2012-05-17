@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.61
 /// 
 /// @section LICENSE
 /// 
@@ -35,6 +35,7 @@ namespace aprilui
 		mInertia = Inertia;
 		mDragThreshold = DragThreshold;
 		mDragMaxSpeed = DragMaxSpeed;
+		mSwapScrollWheels = false;
 		mDragging = false;
 	}
 
@@ -235,19 +236,21 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "allow_drag")		return isAllowDrag();
-		if (name == "inertia")			return getInertia();
-		if (name == "drag_threshold")	return getDragThreshold();
-		if (name == "drag_max_speed")	return getDragMaxSpeed();
+		if (name == "allow_drag")			return isAllowDrag();
+		if (name == "inertia")				return getInertia();
+		if (name == "drag_threshold")		return getDragThreshold();
+		if (name == "drag_max_speed")		return getDragMaxSpeed();
+		if (name == "swap_scroll_wheels")	return isSwapScrollWheels();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ScrollArea::setProperty(chstr name, chstr value)
 	{
-		if (name == "allow_drag")			setAllowDrag(value);
-		else if (name == "inertia")			setInertia(value);
-		else if (name == "drag_threshold")	setDragThreshold(value);
-		else if (name == "drag_max_speed")	setDragMaxSpeed(value);
+		if (name == "allow_drag")				setAllowDrag(value);
+		else if (name == "inertia")				setInertia(value);
+		else if (name == "drag_threshold")		setDragThreshold(value);
+		else if (name == "drag_max_speed")		setDragMaxSpeed(value);
+		else if (name == "swap_scroll_wheels")	setSwapScrollWheels(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}

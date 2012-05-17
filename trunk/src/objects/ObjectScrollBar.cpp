@@ -222,6 +222,11 @@ namespace aprilui
 		Container* parent = dynamic_cast<Container*>(mParent);
 		if (parent != NULL && (parent->isCursorInside() || isCursorInside()))
 		{
+			ScrollArea* area = parent->_getScrollArea();
+			if (area != NULL && area->isSwapScrollWheels())
+			{
+				hswap(x, y);
+			}
 			addScrollValue(_calcScrollMove(x, y));
 		}
 		Object::onMouseScroll(x, y);
