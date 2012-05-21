@@ -38,7 +38,8 @@ namespace aprilui
 		void update(float k);
 		bool onMouseDown(float x, float y, int button);
 		bool onMouseUp(float x, float y, int button);
-		
+		void onMouseMove(float x, float y);
+		void onMouseScroll(float x, float y);
 	protected:
 		void (*mDrawCallback)(CallbackObject*);
 		void (*mUpdateCallback)(float);

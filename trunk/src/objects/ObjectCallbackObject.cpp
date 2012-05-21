@@ -75,4 +75,16 @@ namespace aprilui
 		}
 		return false;
 	}
+	
+	void CallbackObject::onMouseMove(float x, float y)
+	{
+		Object::onMouseMove(x, y);
+		if (isCursorInside()) _triggerEvent("MouseMove", x, y);
+	}
+	
+	void CallbackObject::onMouseScroll(float x, float y)
+	{
+		Object::onMouseScroll(x, y);
+		if (isCursorInside()) _triggerEvent("MouseScroll", x, y);	
+	}
 }
