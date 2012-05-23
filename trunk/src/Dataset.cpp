@@ -430,21 +430,16 @@ namespace aprilui
 			mFilePath = originalFilePath;
 			return;
 		}
-		//hstr basedir = mFilePath;//get_basedir(path);
-		hstr filename = path(mFilePath.size() + 1, -1);
-		hstr left;
-		hstr right;
-		filename.split("*", left, right);
-		harray<hstr> contents = hdir::resource_files(mFilePath).sorted();
+		hstr extension = get_basename(path).replace("*", "");
+		harray<hstr> contents = hdir::resource_files(mFilePath, true).sorted();
 		foreach (hstr, it, contents)
 		{
-			if (it->starts_with(left) && it->ends_with(right))
+			if ((*it).ends_with(extension))
 			{
-				readFile(mFilePath + "/" + (*it));
+				readFile((*it));
 			}
 		}
 		mFilePath = originalFilePath;
-		return;
 	}
 	
 	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent)
