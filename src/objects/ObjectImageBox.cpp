@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -123,29 +123,29 @@ namespace aprilui
 		return true;
 	}
 
-	bool ImageBox::onMouseDown(float x, float y, int button)
+	bool ImageBox::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(x, y, button))
+		if (Object::onMouseDown(button))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
-            _triggerEvent("MouseDown", x, y, button);
+            _triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
 	}
 
-	bool ImageBox::onMouseUp(float x, float y, int button)
+	bool ImageBox::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(x, y, button))
+		if (Object::onMouseUp(button))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
-			_triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", button);
 			return true;
 		}
 		return false;

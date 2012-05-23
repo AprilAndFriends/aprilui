@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -33,8 +33,8 @@ namespace aprilui
 		
 		void OnDraw();
 
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
 		
 	};
 }

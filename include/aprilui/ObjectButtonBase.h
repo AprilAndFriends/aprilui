@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -37,9 +37,9 @@ namespace aprilui
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
 		
-		virtual bool onMouseDown(float x, float y, int button);
-		virtual bool onMouseUp(float x, float y, int button);
-		virtual void onMouseMove(float x, float y);
+		virtual bool onMouseDown(int button);
+		virtual bool onMouseUp(int button);
+		virtual void onMouseMove();
 		virtual void cancelMouseDown();
 
 		static void setAllowedButtons(harray<unsigned char> buttons);

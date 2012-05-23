@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -51,25 +51,26 @@ namespace aprilui
 		mValue = hclamp(value, 0.0f, 1.0f);
 	}
 
-	bool Slider::onMouseDown(float x, float y, int button)
+	bool Slider::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(x, y, button))
+		if (Object::onMouseDown(button))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
 			mPushed = true;
-			setValue((x - mRect.x) / (mRect.w - 4));
-			_triggerEvent("Set", x, y, button);
+			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
+			setValue(position.x / (mRect.w - 4));
+			_triggerEvent("Set", button);
 			return true;
 		}
 		return false;
 	}
 
-	bool Slider::onMouseUp(float x, float y, int button)
+	bool Slider::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(x, y, button))
+		if (Object::onMouseUp(button))
 		{
 			return true;
 		}
@@ -82,13 +83,14 @@ namespace aprilui
 		return false;
 	}
 
-	void Slider::onMouseMove(float x, float y)
+	void Slider::onMouseMove()
 	{
-		Object::onMouseMove(x, y);
+		Object::onMouseMove();
 		if (mPushed)
 		{
-			setValue((x - mRect.x) / (mRect.w - 4));
-			_triggerEvent("Set", x, y);
+			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
+			setValue(position.x / (mRect.w - 4));
+			_triggerEvent("Set");
 		}
 	}
 

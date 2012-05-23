@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.61
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -255,42 +255,42 @@ namespace aprilui
 		return true;
 	}
 
-	bool ScrollArea::onMouseDown(float x, float y, int button)
+	bool ScrollArea::onMouseDown(int button)
 	{
 		if (mAllowDrag)
 		{
 			mDragging = true;
-			bool result = ButtonBase::onMouseDown(x, y, button);
+			bool result = ButtonBase::onMouseDown(button);
 			mDragging = false;
 			if (result)
 			{
 				_mClickPosition = aprilui::getCursorPosition();
 			}
 		}
-		return Object::onMouseDown(x, y, button);
+		return Object::onMouseDown(button);
 	}
 
-	bool ScrollArea::onMouseUp(float x, float y, int button)
+	bool ScrollArea::onMouseUp(int button)
 	{
 		if (mAllowDrag)
 		{
 			mDragging = false;
 			_adjustDragSpeed();
-			if (ButtonBase::onMouseUp(x, y, button))
+			if (ButtonBase::onMouseUp(button))
 			{
 				return true;
 			}
 		}
-		return Object::onMouseUp(x, y, button);
+		return Object::onMouseUp(button);
 	}
 	
-	void ScrollArea::onMouseMove(float x, float y)
+	void ScrollArea::onMouseMove()
 	{
 		if (mAllowDrag)
 		{
-			ButtonBase::onMouseMove(x, y);
+			ButtonBase::onMouseMove();
 		}
-		Object::onMouseMove(x, y);
+		Object::onMouseMove();
 	}
 
 	void ScrollArea::_adjustDragSpeed()
