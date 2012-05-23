@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.62
 /// 
 /// @section LICENSE
 /// 
@@ -192,7 +192,7 @@ namespace aprilui
 		{
 			text = hstr(mPasswordChar, mUnicodeChars.size() - mOffsetIndex);
 		}
-		int count = atres::renderer->getTextCountUnformatted(mFontName, text, x - mRect.x);
+		int count = atres::renderer->getTextCountUnformatted(mFontName, text, x);
 		setCursorIndex(mOffsetIndex + _convertToUnicodeChars(text(0, count)).size());
 	}
 	
@@ -251,7 +251,8 @@ namespace aprilui
 		}
 		if (mPushed && isCursorInside())
 		{
-			setCursorIndexAt(x, y);
+			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
+			setCursorIndexAt(position.x, position.y);
 			if (mDataset != NULL)
 			{
 				mDataset->setFocusedObject(this);
