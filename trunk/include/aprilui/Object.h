@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -152,9 +152,9 @@ namespace aprilui
 		bool hasDynamicAnimation();
 		
 		// if a childs event returns true, event is not propagated to parents
-		virtual bool onMouseDown(float x, float y, int button);
-		virtual bool onMouseUp(float x, float y, int button);
-		virtual void onMouseMove(float x, float y);
+		virtual bool onMouseDown(int button);
+		virtual bool onMouseUp(int button);
+		virtual void onMouseMove();
 		virtual void onMouseScroll(float x, float y);
 		virtual void onKeyDown(unsigned int keycode);
 		virtual void onKeyUp(unsigned int keycode);
@@ -237,12 +237,15 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void moveToBack() { if (mParent != NULL) { mParent->getChildren().remove(this); mParent->getChildren().push_front(this); } }
 		DEPRECATED_ATTRIBUTE bool isClickthrough() { return mClickThrough; }
 		DEPRECATED_ATTRIBUTE void setClickthrough(bool value) { mClickThrough = value; }
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(x, y, button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(x, y, button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(x, y); }
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(); }
 		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
 		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
 		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
 	protected:
 		hstr mName;
@@ -274,7 +277,10 @@ namespace aprilui
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
 		
-		void _triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
+		// TODO - this needs to be seriously refactored
+		void _triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
+		// TODO - this needs to be seriously refactored
+		void _triggerEvent(chstr name, float x, float y, unsigned int keycode = 0, chstr extra = "");
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool _isDerivedEnabled();
 		bool _isDerivedClickThrough();

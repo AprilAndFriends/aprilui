@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -36,10 +36,11 @@ namespace aprilui
 		
 		void OnDraw();
 		void update(float k);
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		void onMouseMove(float x, float y);
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
+		void onMouseMove();
 		void onMouseScroll(float x, float y);
+
 	protected:
 		void (*mDrawCallback)(CallbackObject*);
 		void (*mUpdateCallback)(float);

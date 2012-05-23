@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -529,7 +529,7 @@ namespace aprilui
 		return (is_between(d1, 0.0f, 1.0f) && is_between(d2, 0.0f, 1.0f));
 	}
 
-	bool Object::onMouseDown(float x, float y, int button)
+	bool Object::onMouseDown(int button)
 	{
 		if (mClickThrough || !isVisible() || !_isDerivedEnabled())
 		{
@@ -545,8 +545,8 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickThrough() &&
-				(*it)->onMouseDown(x - mRect.x, y - mRect.y, button))
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() &&
+				!(*it)->isClickThrough() && (*it)->onMouseDown(button))
 			{
 				return true;
 			}
@@ -554,7 +554,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onMouseUp(float x, float y, int button)
+	bool Object::onMouseUp(int button)
 	{
 		if (mClickThrough || !isVisible() || !_isDerivedEnabled())
 		{
@@ -562,8 +562,8 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickThrough() &&
-				(*it)->onMouseUp(x - mRect.x, y - mRect.y, button))
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() &&
+				!(*it)->isClickThrough() && (*it)->onMouseUp(button))
 			{
 				return true;
 			}
@@ -572,13 +572,13 @@ namespace aprilui
 		return false;
 	}
 
-	void Object::onMouseMove(float x, float y)
+	void Object::onMouseMove()
 	{
 		foreach_r (Object*, it, mChildren)
 		{
 			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
 			{
-				(*it)->onMouseMove(x - mRect.x, y - mRect.y);
+				(*it)->onMouseMove();
 			}
 		}
 	}
@@ -665,6 +665,18 @@ namespace aprilui
 		mEvents.remove_key(name);
 	}
 
+	// TODO - this needs to be seriously refactored
+	void Object::_triggerEvent(chstr name, unsigned int keycode, chstr extra)
+	{
+		if (mEvents.has_key(name))
+		{
+			gvec2 cursorPosition = getCursorPosition();
+			EventArgs args(this, cursorPosition.x, cursorPosition.y, keycode, extra);
+			mEvents[name]->execute(&args);
+		}
+	}
+
+	// TODO - this needs to be seriously refactored
 	void Object::_triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
 	{
 		if (mEvents.has_key(name))

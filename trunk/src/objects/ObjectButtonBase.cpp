@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -60,7 +60,7 @@ namespace aprilui
 		return (child != NULL && child == dynamic_cast<Object*>(this));
 	}
 
-	bool ButtonBase::onMouseDown(float x, float y, int button)
+	bool ButtonBase::onMouseDown(int button)
 	{
 		if (!allowedButtons.contains(button))
 		{
@@ -75,7 +75,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool ButtonBase::onMouseUp(float x, float y, int button)
+	bool ButtonBase::onMouseUp(int button)
 	{
 		if (!allowedButtons.contains(button))
 		{
@@ -91,7 +91,7 @@ namespace aprilui
 		return false;
 	}
 
-	void ButtonBase::onMouseMove(float x, float y)
+	void ButtonBase::onMouseMove()
 	{
 		mHovered = _checkHover();
 	}

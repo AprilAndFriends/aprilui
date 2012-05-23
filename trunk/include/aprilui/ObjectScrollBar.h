@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -47,7 +47,7 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists);
 		bool setProperty(chstr name, chstr value);
 
-		void onMouseMove(float x, float y);
+		void onMouseMove();
 		void onMouseScroll(float x, float y);
 
 		virtual void addScrollValue(float value) = 0;

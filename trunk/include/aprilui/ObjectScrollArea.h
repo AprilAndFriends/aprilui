@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.61
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -66,9 +66,9 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists);
 		bool setProperty(chstr name, chstr value);
 
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		void onMouseMove(float x, float y);
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
+		void onMouseMove();
 
 		static float Inertia;
 		static float DragThreshold;

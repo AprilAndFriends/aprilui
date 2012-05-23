@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.61
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -207,9 +207,9 @@ namespace aprilui
 		return true;
 	}
 
-	void ScrollBar::onMouseMove(float x, float y)
+	void ScrollBar::onMouseMove()
 	{
-		Object::onMouseMove(x, y);
+		Object::onMouseMove();
 		if (mButtonBar != NULL && mButtonBar->isPushed())
 		{
 			gvec2 position = getCursorPosition() / getDerivedScale() - _mClickPosition;

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -33,8 +33,9 @@ namespace aprilui
 		
 		hstr getName();
 		void setTextKey(chstr value);
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
+
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
 
 		void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* property_exists = NULL);

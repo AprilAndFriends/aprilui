@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -134,38 +134,38 @@ namespace aprilui
 		mNormalImage = image;
 	}
 	
-	bool ImageButton::onMouseDown(float x, float y, int button)
+	bool ImageButton::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(x, y, button))
+		if (Object::onMouseDown(button))
 		{
 			return true;
 		}
-		bool result = ButtonBase::onMouseDown(x, y, button);
+		bool result = ButtonBase::onMouseDown(button);
 		if (result)
 		{
-            _triggerEvent("MouseDown", x, y, button);
+            _triggerEvent("MouseDown", button);
 		}
 		return result;
 	}
 
-	bool ImageButton::onMouseUp(float x, float y, int button)
+	bool ImageButton::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(x, y, button))
+		if (Object::onMouseUp(button))
 		{
 			return true;
 		}
-		bool result = ButtonBase::onMouseUp(x, y, button);
+		bool result = ButtonBase::onMouseUp(button);
 		if (result)
 		{
-			_triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", button);
 		}
 		return result;
 	}
 	
-	void ImageButton::onMouseMove(float x, float y)
+	void ImageButton::onMouseMove()
 	{
-		Object::onMouseMove(x, y);
-		ButtonBase::onMouseMove(x, y);
+		Object::onMouseMove();
+		ButtonBase::onMouseMove();
 	}
 
 	void ImageButton::cancelMouseDown()

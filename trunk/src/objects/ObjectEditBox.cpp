@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.62
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -229,9 +229,9 @@ namespace aprilui
 		setCursorIndex(mCursorIndex);
 	}
 
-	bool EditBox::onMouseDown(float x, float y, int button)
+	bool EditBox::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(x, y, button))
+		if (Object::onMouseDown(button))
 		{
 			return true;
 		}
@@ -243,9 +243,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool EditBox::onMouseUp(float x, float y, int button)
+	bool EditBox::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(x, y, button))
+		if (Object::onMouseUp(button))
 		{
 			return true;
 		}
@@ -260,7 +260,7 @@ namespace aprilui
 				april::window->beginKeyboardHandling();
 			}
 			mPushed = false;
-			_triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", button);
 			return true;
 		}
 		mPushed = false;
@@ -297,7 +297,7 @@ namespace aprilui
 			break;
 #endif
 		case april::AK_RETURN:
-			_triggerEvent("Submit", 0.0f, 0.0f, april::AK_RETURN);
+			_triggerEvent("Submit", april::AK_RETURN);
 			break;
 		}
 	}

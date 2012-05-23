@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -77,9 +77,9 @@ namespace aprilui
 	apriluiFnExport void updateTextures(float time);
 	apriluiFnExport void unloadUnusedTextures();
 	
-	apriluiFnExport void onMouseDown(float x, float y, int button);
-	apriluiFnExport void onMouseUp(float x, float y, int button);
-	apriluiFnExport void onMouseMove(float x, float y);
+	apriluiFnExport void onMouseDown(int button);
+	apriluiFnExport void onMouseUp(int button);
+	apriluiFnExport void onMouseMove();
 	apriluiFnExport void onMouseScroll(float x, float y);
 	apriluiFnExport void onKeyDown(unsigned int keycode);
 	apriluiFnExport void onKeyUp(unsigned int keycode);
@@ -93,6 +93,9 @@ namespace aprilui
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyDown(unsigned int keycode);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyUp(unsigned int keycode);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnChar(unsigned int charcode);
+	DEPRECATED_ATTRIBUTE apriluiFnExport void onMouseDown(float x, float y, int button);
+	DEPRECATED_ATTRIBUTE apriluiFnExport void onMouseUp(float x, float y, int button);
+	DEPRECATED_ATTRIBUTE apriluiFnExport void onMouseMove(float x, float y);
 	
 }
 

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -816,21 +816,21 @@ namespace aprilui
 		}
 	}
 	
-	bool Dataset::onMouseDown(float x, float y, int button)
+	bool Dataset::onMouseDown(int button)
 	{
-		return (mRoot != NULL && mRoot->onMouseDown(x, y, button));
+		return (mRoot != NULL && mRoot->onMouseDown(button));
 	}
 	
-	bool Dataset::onMouseUp(float x, float y, int button)
+	bool Dataset::onMouseUp(int button)
 	{
-		return (mRoot != NULL && mRoot->onMouseUp(x, y, button));
+		return (mRoot != NULL && mRoot->onMouseUp(button));
 	}
 	
-	void Dataset::onMouseMove(float x, float y)
+	void Dataset::onMouseMove()
 	{
 		if (mRoot != NULL)
 		{
-			mRoot->onMouseMove(x, y);
+			mRoot->onMouseMove();
 		}
 	}
 	

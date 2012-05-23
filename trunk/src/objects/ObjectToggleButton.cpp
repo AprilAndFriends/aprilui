@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -135,9 +135,9 @@ namespace aprilui
 		}
 	}
 	
-	bool ToggleButton::onMouseUp(float x, float y, int button)
+	bool ToggleButton::onMouseUp(int button)
 	{
-		bool result = ImageButton::onMouseUp(x, y, button);
+		bool result = ImageButton::onMouseUp(button);
 		if (result)
 		{
 			mToggled = !mToggled;

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -66,29 +66,30 @@ namespace aprilui
 		LabelBase::setTextKey(key);
 	}
 	
-	bool Label::onMouseDown(float x, float y, int button)
+	bool Label::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(x, y, button))
+		if (Object::onMouseDown(button))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
-            _triggerEvent("MouseDown", x, y, button);
+            _triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
 	}
 	
-	bool Label::onMouseUp(float x, float y, int button)
+	bool Label::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(x, y, button))
+		if (Object::onMouseUp(button))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
-			_triggerEvent("Click", x, y, button);
+			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
+			_triggerEvent("Click", button);
 			return true;
 		}
 		return false;
