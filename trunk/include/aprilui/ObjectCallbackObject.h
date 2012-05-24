@@ -41,6 +41,10 @@ namespace aprilui
 		void onMouseMove();
 		void onMouseScroll(float x, float y);
 
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+
 	protected:
 		void (*mDrawCallback)(CallbackObject*);
 		void (*mUpdateCallback)(float);

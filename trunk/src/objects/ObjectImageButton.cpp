@@ -134,6 +134,29 @@ namespace aprilui
 		mNormalImage = image;
 	}
 	
+	hstr ImageButton::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+		if (name == "image")			return getImageName();
+		if (name == "pushed_image")		return getPushedImage()->getName();
+		if (name == "hover_image")		return getHoverImage()->getName();
+		if (name == "disabled_image")	return getDisabledImage()->getName();
+		return Object::getProperty(name, property_exists);
+	}
+
+	bool ImageButton::setProperty(chstr name, chstr value)
+	{
+		if      (name == "image")			setImageByName(value);
+		else if (name == "pushed_image")	setPushedImageByName(value);
+		else if (name == "hover_image")		setHoverImageByName(value);
+		else if (name == "disabled_image")	setDisabledImageByName(value);
+        else return Object::setProperty(name, value);
+        return true;
+	}
+	
 	bool ImageButton::onMouseDown(int button)
 	{
 		if (Object::onMouseDown(button))
@@ -172,29 +195,6 @@ namespace aprilui
 	{
 		Object::cancelMouseDown();
 		ButtonBase::cancelMouseDown();
-	}
-	
-	hstr ImageButton::getProperty(chstr name, bool* property_exists)
-	{
-		if (property_exists != NULL)
-		{
-			*property_exists = true;
-		}
-		if (name == "image")			return getImageName();
-		if (name == "pushed_image")		return getPushedImage()->getName();
-		if (name == "hover_image")		return getHoverImage()->getName();
-		if (name == "disabled_image")	return getDisabledImage()->getName();
-		return Object::getProperty(name, property_exists);
-	}
-
-	bool ImageButton::setProperty(chstr name, chstr value)
-	{
-		if      (name == "image")			setImageByName(value);
-		else if (name == "pushed_image")	setPushedImageByName(value);
-		else if (name == "hover_image")		setHoverImageByName(value);
-		else if (name == "disabled_image")	setDisabledImageByName(value);
-        else return Object::setProperty(name, value);
-        return true;
 	}
 	
 }

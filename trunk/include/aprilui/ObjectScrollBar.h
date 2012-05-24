@@ -55,6 +55,8 @@ namespace aprilui
 		static float ScrollDistance;
 		static float GridSize;
 
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+
 	protected:
 		hstr mSkinName;
 		float mGridSize;
