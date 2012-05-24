@@ -243,10 +243,10 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
 		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
 		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
-
+		DEPRECATED_ATTRIBUTE virtual bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE virtual bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE virtual void onMouseMove(float x, float y) { onMouseMove(); }
+		
 	protected:
 		hstr mName;
 		grect mRect;
