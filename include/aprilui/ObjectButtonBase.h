@@ -42,9 +42,9 @@ namespace aprilui
 		virtual void onMouseMove();
 		virtual void cancelMouseDown();
 
-		DEPRECATED_ATTRIBUTE virtual bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE virtual bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE virtual void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
 		static void setAllowedButtons(harray<unsigned char> buttons);
 		
