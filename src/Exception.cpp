@@ -7,7 +7,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
-#include <xmlHelper.h>
+#include "xmlHelper.h"
 
 #include "Dataset.h"
 #include "Exception.h"

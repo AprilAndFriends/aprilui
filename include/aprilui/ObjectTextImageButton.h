@@ -25,7 +25,7 @@ namespace aprilui
 		TextImageButton(chstr name, grect rect);
 		
 		void setTextKey(chstr key);
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		
 	protected:
 		void OnDraw(gvec2 offset = gvec2());

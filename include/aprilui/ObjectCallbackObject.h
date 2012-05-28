@@ -22,7 +22,7 @@ namespace aprilui
 	{
 	public:
 		CallbackObject(chstr name, grect rect);
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		
 		void (*getCallback())() { return mCallback; }
 		void setCallback(void (*value)()) { mCallback = value; }

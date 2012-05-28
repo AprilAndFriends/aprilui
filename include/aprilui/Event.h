@@ -18,7 +18,7 @@ namespace aprilui
 	{
 	public:
 		virtual void execute(void* params) = 0;
-		
+		virtual ~Event() {};
 	};
 
 }

@@ -39,7 +39,7 @@ namespace aprilui
 			return (mParent->getSize() != mDest);
 		}
 
-		void Scaler::setProperty(chstr name, chstr value)
+		bool Scaler::setProperty(chstr name, chstr value)
 		{
 			if      (name == "speed_w")	mSpeed.x = mInitialS.x = value;
 			else if (name == "speed_h")	mSpeed.y = mInitialS.y = value;
@@ -48,6 +48,7 @@ namespace aprilui
 			else if (name == "dest_w")	mDest.x = value;
 			else if (name == "dest_h")	mDest.y = value;
             else if (name == "delay")	mInitialDelay = mDelay = value;
+			return 1;
 		}
 
 		void Scaler::notifyEvent(chstr name, void* params)

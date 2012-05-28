@@ -30,11 +30,12 @@ namespace aprilui
 			return true;
 		}
 
-		void AlphaHover::setProperty(chstr name, chstr value)
+		bool AlphaHover::setProperty(chstr name, chstr value)
 		{
 			if      (name == "min")		mMin = mOwnerAlpha = value;
 			else if (name == "max")		mMax = value;
 			else if (name == "speed")	mSpeed = value;
+			return 1;
 		}	
 
 		void AlphaHover::notifyEvent(chstr name, void* params)

@@ -88,10 +88,6 @@
 		7FC8043911EC725B00851062 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042F11EC725B00851062 /* Util.cpp */; };
 		7FC8043A11EC725B00851062 /* xmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8043011EC725B00851062 /* xmlHelper.cpp */; };
 		7FC8044211EC727100851062 /* Util.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8043F11EC727100851062 /* Util.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		7FC8045E11EC739000851062 /* april.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8045D11EC739000851062 /* april.framework */; };
-		7FC8046011EC739900851062 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8045F11EC739900851062 /* gtypes.framework */; };
-		7FC8046211EC739900851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8046111EC739900851062 /* hltypes.framework */; };
-		7FC8046411EC73B000851062 /* atres.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8046311EC73B000851062 /* atres.framework */; };
 		7FC8049511EC76F100851062 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8049411EC76F100851062 /* libxml2.dylib */; };
 		7FCD397112018C7B00608217 /* CallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD395E12018C7B00608217 /* CallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FCD397712018C7B00608217 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396412018C7B00608217 /* Event.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,6 +99,53 @@
 		C9B7FFD51271BE9500F79E1A /* AnimatorRotationOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */; };
 		D12AFF5E147087780061E9E5 /* aprilui.h in Headers */ = {isa = PBXBuildFile; fileRef = D1459F6B146EF30100D61731 /* aprilui.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1459F6D146EF30F00D61731 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1459F6C146EF30F00D61731 /* aprilui.cpp */; };
+		D18D342F1573BF1E00B30E42 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
+		D18D34301573BF1E00B30E42 /* ColoredImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */; };
+		D18D34311573BF1E00B30E42 /* ColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */; };
+		D18D34321573BF1E00B30E42 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
+		D18D34331573BF1E00B30E42 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA2129D21A300E0ED12 /* Image.cpp */; };
+		D18D34341573BF1E00B30E42 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */; };
+		D18D34351573BF1E00B30E42 /* TiledImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */; };
+		D18D34361573BF1E00B30E42 /* AnimatorMoveOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4A9C129D218E00E0ED12 /* AnimatorMoveOscillator.cpp */; };
+		D18D34371573BF1E00B30E42 /* AnimatorScaleOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */; };
+		D18D34381573BF1E00B30E42 /* AnimatorRotationOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */; };
+		D18D34391573BF1E00B30E42 /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F33B1FF120FE16F004B5E89 /* Animator.cpp */; };
+		D18D343A1573BF1E00B30E42 /* AnimatorAlphaFader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C718120967CC002B5134 /* AnimatorAlphaFader.cpp */; };
+		D18D343B1573BF1E00B30E42 /* AnimatorAlphaHover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C719120967CC002B5134 /* AnimatorAlphaHover.cpp */; };
+		D18D343C1573BF1E00B30E42 /* AnimatorAlphaOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71A120967CC002B5134 /* AnimatorAlphaOscillator.cpp */; };
+		D18D343D1573BF1E00B30E42 /* AnimatorBlinker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71B120967CC002B5134 /* AnimatorBlinker.cpp */; };
+		D18D343E1573BF1E00B30E42 /* AnimatorColorAlternator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71C120967CC002B5134 /* AnimatorColorAlternator.cpp */; };
+		D18D343F1573BF1E00B30E42 /* AnimatorEarthquake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71D120967CC002B5134 /* AnimatorEarthquake.cpp */; };
+		D18D34401573BF1E00B30E42 /* AnimatorFrameAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */; };
+		D18D34411573BF1E00B30E42 /* AnimatorMover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71F120967CC002B5134 /* AnimatorMover.cpp */; };
+		D18D34421573BF1E00B30E42 /* AnimatorRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C720120967CC002B5134 /* AnimatorRotator.cpp */; };
+		D18D34431573BF1E00B30E42 /* AnimatorScaler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C721120967CC002B5134 /* AnimatorScaler.cpp */; };
+		D18D34441573BF1E00B30E42 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB0C7AE120AE107005EA739 /* Object.cpp */; };
+		D18D34451573BF1E00B30E42 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
+		D18D34461573BF1E00B30E42 /* ObjectColoredImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BA120967B9002B5134 /* ObjectColoredImageBox.cpp */; };
+		D18D34471573BF1E00B30E42 /* ObjectColoredQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */; };
+		D18D34481573BF1E00B30E42 /* ObjectDummyObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BC120967B9002B5134 /* ObjectDummyObject.cpp */; };
+		D18D34491573BF1E00B30E42 /* ObjectEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */; };
+		D18D344A1573BF1E00B30E42 /* ObjectImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */; };
+		D18D344B1573BF1E00B30E42 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
+		D18D344C1573BF1E00B30E42 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */; };
+		D18D344D1573BF1E00B30E42 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */; };
+		D18D344E1573BF1E00B30E42 /* ObjectRotatableImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C3120967B9002B5134 /* ObjectRotatableImageBox.cpp */; };
+		D18D344F1573BF1E00B30E42 /* ObjectRotationImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C4120967B9002B5134 /* ObjectRotationImageBox.cpp */; };
+		D18D34501573BF1E00B30E42 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */; };
+		D18D34511573BF1E00B30E42 /* ObjectTextButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C6120967B9002B5134 /* ObjectTextButton.cpp */; };
+		D18D34521573BF1E00B30E42 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */; };
+		D18D34531573BF1E00B30E42 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
+		D18D34541573BF1E00B30E42 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
+		D18D34551573BF1E00B30E42 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1459F6C146EF30F00D61731 /* aprilui.cpp */; };
+		D18D34561573BF1E00B30E42 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
+		D18D34571573BF1E00B30E42 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
+		D18D34581573BF1E00B30E42 /* Util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042F11EC725B00851062 /* Util.cpp */; };
+		D18D34591573BF1E00B30E42 /* xmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8043011EC725B00851062 /* xmlHelper.cpp */; };
+		D18ED0BC15736750005AD969 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18ED0BB15736750005AD969 /* hltypes.framework */; };
+		D18ED0BE15736758005AD969 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18ED0BD15736758005AD969 /* gtypes.framework */; };
+		D18ED0C01573675D005AD969 /* april.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18ED0BF1573675D005AD969 /* april.framework */; };
+		D18ED0C215736763005AD969 /* atres.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18ED0C115736763005AD969 /* atres.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -187,10 +230,6 @@
 		7FC8042F11EC725B00851062 /* Util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Util.cpp; path = src/Util.cpp; sourceTree = "<group>"; };
 		7FC8043011EC725B00851062 /* xmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlHelper.cpp; path = src/xmlHelper.cpp; sourceTree = "<group>"; };
 		7FC8043F11EC727100851062 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Util.h; path = src/Util.h; sourceTree = "<group>"; };
-		7FC8045D11EC739000851062 /* april.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = april.framework; path = Library/Frameworks/april.framework; sourceTree = SDKROOT; };
-		7FC8045F11EC739900851062 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = Library/Frameworks/gtypes.framework; sourceTree = SDKROOT; };
-		7FC8046111EC739900851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
-		7FC8046311EC73B000851062 /* atres.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = atres.framework; path = Library/Frameworks/atres.framework; sourceTree = SDKROOT; };
 		7FC8049411EC76F100851062 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		7FCD395E12018C7B00608217 /* CallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallbackEvent.h; path = include/aprilui/CallbackEvent.h; sourceTree = "<group>"; };
 		7FCD396412018C7B00608217 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = include/aprilui/Event.h; sourceTree = "<group>"; };
@@ -204,6 +243,11 @@
 		C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotationOscillator.cpp; sourceTree = "<group>"; };
 		D1459F6B146EF30100D61731 /* aprilui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aprilui.h; path = include/aprilui/aprilui.h; sourceTree = "<group>"; };
 		D1459F6C146EF30F00D61731 /* aprilui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aprilui.cpp; path = src/aprilui.cpp; sourceTree = "<group>"; };
+		D18ECFC815736468005AD969 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D18ED0BB15736750005AD969 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/hltypes.framework"; sourceTree = "<group>"; };
+		D18ED0BD15736758005AD969 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/gtypes.framework"; sourceTree = "<group>"; };
+		D18ED0BF1573675D005AD969 /* april.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = april.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/april.framework"; sourceTree = "<group>"; };
+		D18ED0C115736763005AD969 /* atres.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = atres.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/atres.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,11 +255,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FC8045E11EC739000851062 /* april.framework in Frameworks */,
-				7FC8046011EC739900851062 /* gtypes.framework in Frameworks */,
-				7FC8046211EC739900851062 /* hltypes.framework in Frameworks */,
-				7FC8046411EC73B000851062 /* atres.framework in Frameworks */,
+				D18ED0C215736763005AD969 /* atres.framework in Frameworks */,
+				D18ED0C01573675D005AD969 /* april.framework in Frameworks */,
+				D18ED0BE15736758005AD969 /* gtypes.framework in Frameworks */,
+				D18ED0BC15736750005AD969 /* hltypes.framework in Frameworks */,
 				7FC8049511EC76F100851062 /* libxml2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D18ECFC515736468005AD969 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* aprilui.framework */,
+				D18ECFC815736468005AD969 /* libaprilui.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,24 +285,13 @@
 		0867D691FE84028FC02AAC07 /* libaprilui */ = {
 			isa = PBXGroup;
 			children = (
-				7FC8043C11EC726100851062 /* Private Includes */,
-				7FC8041211EC71CF00851062 /* Includes */,
-				7FC8041111EC71CC00851062 /* Sources */,
+				7FC8041211EC71CF00851062 /* include */,
+				7FC8041111EC71CC00851062 /* src */,
 				089C1665FE841158C02AAC07 /* Resources */,
-				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				D18ECFC915736468005AD969 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				7FC8049411EC76F100851062 /* libxml2.dylib */,
 			);
 			name = libaprilui;
-			sourceTree = "<group>";
-		};
-		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
-				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
-			);
-			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
 		};
 		089C1665FE841158C02AAC07 /* Resources */ = {
@@ -259,24 +300,6 @@
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7FC8045D11EC739000851062 /* april.framework */,
-				7FC8045F11EC739900851062 /* gtypes.framework */,
-				7FC8046111EC739900851062 /* hltypes.framework */,
-				7FC8046311EC73B000851062 /* atres.framework */,
-			);
-			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		7F6D54811201B06200A2BDF6 /* animators */ = {
@@ -339,7 +362,7 @@
 			path = src/images;
 			sourceTree = "<group>";
 		};
-		7FC8041111EC71CC00851062 /* Sources */ = {
+		7FC8041111EC71CC00851062 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
@@ -353,12 +376,13 @@
 				7FC8042F11EC725B00851062 /* Util.cpp */,
 				7FC8043011EC725B00851062 /* xmlHelper.cpp */,
 			);
-			name = Sources;
+			name = src;
 			sourceTree = "<group>";
 		};
-		7FC8041211EC71CF00851062 /* Includes */ = {
+		7FC8041211EC71CF00851062 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				7FC8043F11EC727100851062 /* Util.h */,
 				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
 				7F7A4A8F129D217700E0ED12 /* NullImage.h */,
 				7F7A4A90129D217700E0ED12 /* Images.h */,
@@ -407,15 +431,27 @@
 				7FC8041B11EC721E00851062 /* Objects.h */,
 				7FC8041D11EC721E00851062 /* xmlHelper.h */,
 			);
-			name = Includes;
+			name = include;
 			sourceTree = "<group>";
 		};
-		7FC8043C11EC726100851062 /* Private Includes */ = {
+		D18ECFC915736468005AD969 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7FC8043F11EC727100851062 /* Util.h */,
+				D18ED0C31573676D005AD969 /* mac */,
 			);
-			name = "Private Includes";
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D18ED0C31573676D005AD969 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				7FC8049411EC76F100851062 /* libxml2.dylib */,
+				D18ED0C115736763005AD969 /* atres.framework */,
+				D18ED0BF1573675D005AD969 /* april.framework */,
+				D18ED0BD15736758005AD969 /* gtypes.framework */,
+				D18ED0BB15736750005AD969 /* hltypes.framework */,
+			);
+			name = mac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,12 +512,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D18ECFC615736468005AD969 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8DC2EF4F0486A6940098B216 /* libaprilui */ = {
+		8DC2EF4F0486A6940098B216 /* aprilui */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libaprilui" */;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "aprilui" */;
 			buildPhases = (
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF520486A6940098B216 /* Resources */,
@@ -492,18 +535,35 @@
 			);
 			dependencies = (
 			);
-			name = libaprilui;
+			name = aprilui;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = libaprilui;
 			productReference = 8DC2EF5B0486A6940098B216 /* aprilui.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		D18ECFC715736468005AD969 /* aprilui (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D18ECFD215736468005AD969 /* Build configuration list for PBXNativeTarget "aprilui (iOS)" */;
+			buildPhases = (
+				D18ECFC415736468005AD969 /* Sources */,
+				D18ECFC515736468005AD969 /* Frameworks */,
+				D18ECFC615736468005AD969 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "aprilui (iOS)";
+			productName = "aprilui-ios";
+			productReference = D18ECFC815736468005AD969 /* libaprilui.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libaprilui" */;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -518,7 +578,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DC2EF4F0486A6940098B216 /* libaprilui */,
+				8DC2EF4F0486A6940098B216 /* aprilui */,
+				D18ECFC715736468005AD969 /* aprilui (iOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -584,6 +645,56 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D18ECFC415736468005AD969 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D18D342F1573BF1E00B30E42 /* EventArgs.cpp in Sources */,
+				D18D34301573BF1E00B30E42 /* ColoredImage.cpp in Sources */,
+				D18D34311573BF1E00B30E42 /* ColorImage.cpp in Sources */,
+				D18D34321573BF1E00B30E42 /* CompositeImage.cpp in Sources */,
+				D18D34331573BF1E00B30E42 /* Image.cpp in Sources */,
+				D18D34341573BF1E00B30E42 /* NullImage.cpp in Sources */,
+				D18D34351573BF1E00B30E42 /* TiledImage.cpp in Sources */,
+				D18D34361573BF1E00B30E42 /* AnimatorMoveOscillator.cpp in Sources */,
+				D18D34371573BF1E00B30E42 /* AnimatorScaleOscillator.cpp in Sources */,
+				D18D34381573BF1E00B30E42 /* AnimatorRotationOscillator.cpp in Sources */,
+				D18D34391573BF1E00B30E42 /* Animator.cpp in Sources */,
+				D18D343A1573BF1E00B30E42 /* AnimatorAlphaFader.cpp in Sources */,
+				D18D343B1573BF1E00B30E42 /* AnimatorAlphaHover.cpp in Sources */,
+				D18D343C1573BF1E00B30E42 /* AnimatorAlphaOscillator.cpp in Sources */,
+				D18D343D1573BF1E00B30E42 /* AnimatorBlinker.cpp in Sources */,
+				D18D343E1573BF1E00B30E42 /* AnimatorColorAlternator.cpp in Sources */,
+				D18D343F1573BF1E00B30E42 /* AnimatorEarthquake.cpp in Sources */,
+				D18D34401573BF1E00B30E42 /* AnimatorFrameAnimation.cpp in Sources */,
+				D18D34411573BF1E00B30E42 /* AnimatorMover.cpp in Sources */,
+				D18D34421573BF1E00B30E42 /* AnimatorRotator.cpp in Sources */,
+				D18D34431573BF1E00B30E42 /* AnimatorScaler.cpp in Sources */,
+				D18D34441573BF1E00B30E42 /* Object.cpp in Sources */,
+				D18D34451573BF1E00B30E42 /* ObjectCallbackObject.cpp in Sources */,
+				D18D34461573BF1E00B30E42 /* ObjectColoredImageBox.cpp in Sources */,
+				D18D34471573BF1E00B30E42 /* ObjectColoredQuad.cpp in Sources */,
+				D18D34481573BF1E00B30E42 /* ObjectDummyObject.cpp in Sources */,
+				D18D34491573BF1E00B30E42 /* ObjectEditBox.cpp in Sources */,
+				D18D344A1573BF1E00B30E42 /* ObjectImageBox.cpp in Sources */,
+				D18D344B1573BF1E00B30E42 /* ObjectImageButton.cpp in Sources */,
+				D18D344C1573BF1E00B30E42 /* ObjectLabel.cpp in Sources */,
+				D18D344D1573BF1E00B30E42 /* ObjectLabelBase.cpp in Sources */,
+				D18D344E1573BF1E00B30E42 /* ObjectRotatableImageBox.cpp in Sources */,
+				D18D344F1573BF1E00B30E42 /* ObjectRotationImageBox.cpp in Sources */,
+				D18D34501573BF1E00B30E42 /* ObjectSlider.cpp in Sources */,
+				D18D34511573BF1E00B30E42 /* ObjectTextButton.cpp in Sources */,
+				D18D34521573BF1E00B30E42 /* ObjectTextImageButton.cpp in Sources */,
+				D18D34531573BF1E00B30E42 /* ObjectToggleButton.cpp in Sources */,
+				D18D34541573BF1E00B30E42 /* CallbackEvent.cpp in Sources */,
+				D18D34551573BF1E00B30E42 /* aprilui.cpp in Sources */,
+				D18D34561573BF1E00B30E42 /* Dataset.cpp in Sources */,
+				D18D34571573BF1E00B30E42 /* Exception.cpp in Sources */,
+				D18D34581573BF1E00B30E42 /* Util.cpp in Sources */,
+				D18D34591573BF1E00B30E42 /* xmlHelper.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -591,6 +702,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -602,10 +714,11 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				GCC_VERSION = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
@@ -616,10 +729,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					i386,
-					ppc,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -627,10 +737,11 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
-				GCC_VERSION = 4.0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
@@ -643,10 +754,17 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
@@ -658,10 +776,17 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.4;
 			};
@@ -672,10 +797,17 @@
 			buildSettings = {
 				ARCHS = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
@@ -693,11 +825,11 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = aprilui;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = framework;
@@ -710,10 +842,17 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -724,6 +863,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -735,10 +875,11 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
-				GCC_VERSION = "";
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
@@ -750,10 +891,17 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 			};
@@ -763,6 +911,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -770,20 +919,126 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
-				GCC_VERSION = "";
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "Release-LLVM";
 		};
+		D18ECFD315736468005AD969 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/aprilui_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D18ECFD415736468005AD969 /* Debug-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/aprilui_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = "Debug-LLVM";
+		};
+		D18ECFD515736468005AD969 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/aprilui_ios.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D18ECFD615736468005AD969 /* Release-LLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/aprilui_ios.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release-LLVM";
+		};
+		D18ECFD715736468005AD969 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/aprilui_ios.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "libaprilui" */ = {
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "aprilui" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AE08733DA50010E9CD /* Debug */,
@@ -795,7 +1050,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "libaprilui" */ = {
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
@@ -803,6 +1058,18 @@
 				1DEB91B308733DA50010E9CD /* Release */,
 				C9448A4D13D59A63003910ED /* Release-LLVM */,
 				7FC8A8B11296C772003D3931 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D18ECFD215736468005AD969 /* Build configuration list for PBXNativeTarget "aprilui (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D18ECFD315736468005AD969 /* Debug */,
+				D18ECFD415736468005AD969 /* Debug-LLVM */,
+				D18ECFD515736468005AD969 /* Release */,
+				D18ECFD615736468005AD969 /* Release-LLVM */,
+				D18ECFD715736468005AD969 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

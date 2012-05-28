@@ -28,7 +28,7 @@ namespace aprilui
 			
 			bool isAnimated();
 			void setSpeed(float value) { mSpeed = value; }
-			void setProperty(chstr name, chstr value);
+			bool setProperty(chstr name, chstr value);
 			
 			void update(float k);
 			

@@ -50,6 +50,8 @@ namespace aprilui
 		case atres::SHADOW:
 			text = "[s]" + text;
 			break;
+		default:
+			break;
 		}
 		april::Color color(mTextColor);
 		color.a = (unsigned char)(color.a * alpha);
@@ -63,7 +65,7 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::setProperty(chstr name,chstr value)
+	bool LabelBase::setProperty(chstr name,chstr value)
 	{
 		if (name == "font") setFont(value);
 		else if (name == "text") setText(value);
@@ -95,6 +97,7 @@ namespace aprilui
 		}
 		else if (name == "offset_x") mDrawOffset.x = (float)value;
 		else if (name == "offset_y") mDrawOffset.y = (float)value;
+		return 1;
 	}
 
 }

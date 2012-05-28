@@ -25,7 +25,7 @@ namespace aprilui
 			AlphaOscillator(chstr name);
 			
 			bool isAnimated();
-			void setProperty(chstr name, chstr value);
+			bool setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
 			
 			void update(float k);

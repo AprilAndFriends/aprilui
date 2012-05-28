@@ -41,12 +41,13 @@ namespace aprilui
 			Object::notifyEvent(name, params);
 		}
 		
-		void Earthquake::setProperty(chstr name,chstr value)
+		bool Earthquake::setProperty(chstr name,chstr value)
 		{
 			if      (name == "intensity")		mIntensity = value;
 			else if (name == "duration")		mDuration = value;
 			else if (name == "const_duration")	mConstDuration = value;
 			else if (name == "freq")			mFreq = value;
+			return 1;
 		}
 		
 		void Earthquake::update(float k)

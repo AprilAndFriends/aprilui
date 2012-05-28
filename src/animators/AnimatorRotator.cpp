@@ -34,12 +34,13 @@ namespace aprilui
 			return true;
 		}
 
-		void Rotator::setProperty(chstr name, chstr value)
+		bool Rotator::setProperty(chstr name, chstr value)
 		{
 			if      (name == "speed")		mSpeed = mInitialSpeed = value;
 			else if (name == "accel")		mAccel = value;
 			else if (name == "delay")		mInitialDelay = mDelay = value;
 			else if (name == "dest_angle")	mDestAngle = fmod((float)value, 360.0f);
+			return 1;
 		}
 
 		void Rotator::notifyEvent(chstr name, void* params)
@@ -80,9 +81,8 @@ namespace aprilui
 			float oldAngle = angle;
 			angle += k * mSpeed;
 			int circles = floor(angle / 360);
-			if (mDestAngle >= 0.0f &&
-				hsgn(oldAngle + 360 * circles - mDestAngle) != hsgn(angle + 360 * circles - mDestAngle) ||
-				hsgn(oldAngle - 360 * circles - mDestAngle) != hsgn(angle - 360 * circles - mDestAngle))
+			if ((mDestAngle >= 0.0f && hsgn(oldAngle + 360 * circles - mDestAngle) != hsgn(angle + 360 * circles - mDestAngle)) ||
+				(hsgn(oldAngle - 360 * circles - mDestAngle) != hsgn(angle - 360 * circles - mDestAngle)))
 			{
 				angle = mDestAngle;
 			}

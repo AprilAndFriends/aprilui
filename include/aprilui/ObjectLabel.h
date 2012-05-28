@@ -28,7 +28,7 @@ namespace aprilui
 		void setTextKey(chstr key);
 		
 		void notifyEvent(chstr name, void* params);
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		
 	protected:
 		hstr mTextKey;

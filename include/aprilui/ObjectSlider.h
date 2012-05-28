@@ -26,7 +26,7 @@ namespace aprilui
 		float getValue() { return mValue; }
 		void setValue(float value);
 		
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
 		void OnMouseMove(float x, float y);

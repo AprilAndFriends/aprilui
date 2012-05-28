@@ -32,7 +32,7 @@ namespace aprilui
 			return (mParent->getPosition() != mDest);
 		}
 
-		void Mover::setProperty(chstr name, chstr value)
+		bool Mover::setProperty(chstr name, chstr value)
 		{
 			if      (name == "speed_x")	mSpeed.x = mInitialS.x = value;
 			else if (name == "speed_y")	mSpeed.y = mInitialS.y = value;
@@ -41,6 +41,7 @@ namespace aprilui
 			else if (name == "dest_x")	mDest.x = value;
 			else if (name == "dest_y")	mDest.y = value;
             else if (name == "delay")	mInitialDelay = mDelay = value;
+			return 1;
 		}
 
 		void Mover::notifyEvent(chstr name, void* params)
