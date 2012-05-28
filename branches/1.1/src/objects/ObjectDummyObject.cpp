@@ -20,9 +20,9 @@ namespace aprilui
 	{
 	}
 
-	void DummyObject::setProperty(chstr name, chstr value)
+	bool DummyObject::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
+		return Object::setProperty(name, value);
 	}
 	
 }

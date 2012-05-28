@@ -23,10 +23,11 @@ namespace aprilui
 		mAngle = 0.0f;
 	}
 
-	void RotationImageBox::setProperty(chstr name, chstr value)
+	bool RotationImageBox::setProperty(chstr name, chstr value)
 	{
 		ImageBox::setProperty(name, value);
 		if (name == "angle") mAngle = value;
+		return 1;
 	}
 
 	void RotationImageBox::OnDraw(gvec2 offset)

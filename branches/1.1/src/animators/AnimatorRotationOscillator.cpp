@@ -32,13 +32,14 @@ namespace aprilui
 			return true;
 		}
 
-		void RotationOscillator::setProperty(chstr name, chstr value)
+		bool RotationOscillator::setProperty(chstr name, chstr value)
 		{
 			if      (name == "base")		mBaseline = value;
 			else if (name == "amplitude")	mAmplitude = value;
 			else if (name == "speed")		mSpeed = value;
 			else if (name == "timer")		mTimer = value;
 			else if (name == "delay")		mInitialDelay = mDelay = value;
+			return 1;
 		}
 
 		void RotationOscillator::notifyEvent(chstr name, void* params)

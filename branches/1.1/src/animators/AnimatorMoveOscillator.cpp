@@ -36,7 +36,7 @@ namespace aprilui
 			return true;
 		}
 
-		void MoveOscillator::setProperty(chstr name, chstr value)
+		bool MoveOscillator::setProperty(chstr name, chstr value)
 		{
 			if      (name == "base_x")		mBaseline.x = value;
 			else if (name == "base_y")		mBaseline.y = value;
@@ -46,6 +46,7 @@ namespace aprilui
 			else if (name == "speed_y") 	mSpeed.y = value;
 			else if (name == "timer")		mTimer = value;
 			else if (name == "delay")		mInitialDelay = mDelay = value;
+			return 1;
 		}
 
 		void MoveOscillator::notifyEvent(chstr name, void* params)

@@ -26,7 +26,7 @@ namespace aprilui
 		float getAngle() { return mAngle; }
 		virtual void setAngle(float value) { mAngle = value; }
 		bool angleEquals(float angle);
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		
 	protected:
 		float mAngle;

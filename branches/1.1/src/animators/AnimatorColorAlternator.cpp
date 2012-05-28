@@ -34,11 +34,12 @@ namespace aprilui
 			return true;
 		}
 
-		void ColorAlternator::setProperty(chstr name, chstr value)
+		bool ColorAlternator::setProperty(chstr name, chstr value)
 		{
 			if		(name == "low_color")	mLow.set(value);
 			else if (name == "high_color")	mHigh.set(value);
 			else if (name == "speed")		mSpeed = value;
+			return 1;
 		}
 
 		void ColorAlternator::update(float k)

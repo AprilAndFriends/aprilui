@@ -26,7 +26,7 @@ namespace aprilui
 			
 			bool isAnimated();
 			void notifyEvent(chstr eventName, void* params);
-			void setProperty(chstr name, chstr value);
+			bool setProperty(chstr name, chstr value);
 			void update(float k);
 			
 		protected:

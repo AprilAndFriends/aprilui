@@ -65,13 +65,14 @@ namespace aprilui
 		mTextColor = color;
 	}
 	
-	void TextButton::setProperty(chstr name, chstr value)
+	bool TextButton::setProperty(chstr name, chstr value)
 	{
 		Label::setProperty(name, value);
 		if		(name == "background")		mBackground = (bool)value;
 		else if (name == "hover_color")		setHoverTextColor(value);
 		else if (name == "pushed_color")	setPushedTextColor(value);
 		else if (name == "disabled_color")	setDisabledTextColor(value);
+		return 1;
 	}
 
 	bool TextButton::OnMouseDown(float x, float y, int button)

@@ -48,11 +48,12 @@ namespace aprilui
 		setText(mDataset->getText(key));
 	}
 
-	void Label::setProperty(chstr name, chstr value)
+	bool Label::setProperty(chstr name, chstr value)
 	{
 		LabelBase::setProperty(name, value);
 		Object::setProperty(name, value);
 		if (name == "textkey")	setTextKey(value);
+		return 1;
 	}
 	
 }

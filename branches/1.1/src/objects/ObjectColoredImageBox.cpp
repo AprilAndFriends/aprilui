@@ -41,10 +41,11 @@ namespace aprilui
 		//rendersys->setBlendMode(april::ALPHA_BLEND);
 	}
 
-	void ColoredImageBox::setProperty(chstr name, chstr value)
+	bool ColoredImageBox::setProperty(chstr name, chstr value)
 	{
 		ImageBox::setProperty(name, value);
 		if (name == "color") setColor(value);
+		return 1;
 	}
 
 }

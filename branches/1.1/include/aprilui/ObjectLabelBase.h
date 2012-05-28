@@ -44,7 +44,7 @@ namespace aprilui
 		void setTextColor(april::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.set(value); }
 		
-		virtual void setProperty(chstr name, chstr value);
+		virtual bool setProperty(chstr name, chstr value);
 		
 	protected:
 		hstr mText;

@@ -33,13 +33,14 @@ namespace aprilui
 			return true;
 		}
 
-		void Blinker::setProperty(chstr name, chstr value)
+		bool Blinker::setProperty(chstr name, chstr value)
 		{
 			if      (name == "delay")				mInitialDelay = mDelay = value;
 			else if (name == "duration")			mDuration = value;
 			else if (name == "freq")				mFrequency = value;
 			else if (name == "start_visibility")	mStartVisibility = (bool)value;
 			else if (name == "end_visibility")		mEndVisibility = (bool)value;
+			return 1;
 		}
 
 		void Blinker::notifyEvent(chstr name, void* params)

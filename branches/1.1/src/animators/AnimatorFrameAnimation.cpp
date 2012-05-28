@@ -33,7 +33,7 @@ namespace aprilui
 			return (mTimer >= mAnimationTime);
 		}
 
-		void FrameAnimation::setProperty(chstr name, chstr value)
+		bool FrameAnimation::setProperty(chstr name, chstr value)
 		{
 			if      (name == "start_frame") mStartFrame = value;
 			else if (name == "end_frame")   mEndFrame = value;
@@ -41,6 +41,7 @@ namespace aprilui
 			else if (name == "base_name")   mImageBaseName = value;
 			else if (name == "loop")        mLoop = value;
             else if (name == "delay")       mInitialDelay = mDelay = value;
+			return 1;
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)

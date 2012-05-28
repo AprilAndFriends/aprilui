@@ -28,7 +28,7 @@ namespace aprilui
 		void setColor(april::Color value) { mColor = value; }
 		void setColor(chstr value) { mColor.set(value); }
 
-		void setProperty(chstr name, chstr value);
+		bool setProperty(chstr name, chstr value);
 		
 	protected:
 		april::Color mColor;

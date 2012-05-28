@@ -164,7 +164,7 @@ namespace aprilui
 		{
 			if (mDataset->getFocusedObject() != NULL)
 			{
-				april::rendersys->getWindow()->terminateKeyboardHandling();
+				april::window->terminateKeyboardHandling();
 			}
 			mDataset->setFocusedObject(NULL);
 		}
@@ -325,7 +325,7 @@ namespace aprilui
 		mChildren.push_front(object);
 	}
 
-	void Object::setProperty(chstr name, chstr value)
+	bool Object::setProperty(chstr name, chstr value)
 	{
 		if      (name == "visible")        setVisible(value);
 		else if (name == "zorder")         setZOrder(value);
@@ -333,6 +333,7 @@ namespace aprilui
 		else if (name == "clickthrough")   setClickthrough(value);
 		else if (name == "inherits_alpha") setInheritsAlpha(value);
 		else if (name == "alpha")          setAlpha(value);
+		return 1;
 	}
 
 	Object* Object::getChildUnderPoint(float x, float y)

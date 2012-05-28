@@ -37,7 +37,7 @@ namespace aprilui
 										  april::Color(mColor.r, mColor.g, mColor.b, COLOR_COMP_FOR_NEW_APRIL(alpha)));
 	}
 
-	void ColoredQuad::setProperty(chstr name, chstr value)
+	bool ColoredQuad::setProperty(chstr name, chstr value)
 	{
 		Object::setProperty(name, value);
 		if (name == "r")
@@ -62,6 +62,7 @@ namespace aprilui
 		}
 		else if (name == "color") mColor.set(value);
 		else if (name == "color") mColor.set(value);
+		return 1;
 	}
 
 	bool ColoredQuad::OnMouseDown(float x,float y,int button)

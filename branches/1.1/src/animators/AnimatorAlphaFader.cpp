@@ -44,13 +44,14 @@ namespace aprilui
 			return (mParent->getAlpha() != mDestAlpha);
 		}
 
-		void AlphaFader::setProperty(chstr name, chstr value)
+		bool AlphaFader::setProperty(chstr name, chstr value)
 		{
 			if      (name == "speed")		mInitialSpeed = mSpeed = value;
 			else if (name == "accel")		mInitialAccel = mAccel = value;
 			else if (name == "delay")		mInitialDelay = mDelay = value;
 			else if (name == "dest_alpha")	mInitialDestAlpha = mDestAlpha = value;
 			else if (name == "reset_hack")	mResetHack = (bool)value;
+			return 1;
 		}
 
 		void AlphaFader::notifyEvent(chstr name, void* params)

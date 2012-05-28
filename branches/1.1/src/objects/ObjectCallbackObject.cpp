@@ -20,9 +20,9 @@ namespace aprilui
 		mCallback = NULL;
 	}
 
-	void CallbackObject::setProperty(chstr name, chstr value)
+	bool CallbackObject::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
+		return Object::setProperty(name, value);
 	}
 	
 	void CallbackObject::OnDraw(gvec2 offset)

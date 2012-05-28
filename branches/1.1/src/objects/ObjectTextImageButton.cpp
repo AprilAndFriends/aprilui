@@ -28,7 +28,7 @@ namespace aprilui
 	{
 		ImageButton::OnDraw(offset);
 		float alpha = getDerivedAlpha();
-		if (!isDerivedEnabled() || mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed)
+		if (!isDerivedEnabled() || (mImage == NULL && mNormalImage == NULL && mPushedImage == NULL && mPushed))
 		{
 			alpha /= 2;
 		}
@@ -40,11 +40,12 @@ namespace aprilui
 		setText(mDataset->getText(key));
 	}
 
-	void TextImageButton::setProperty(chstr name,chstr value)
+	bool TextImageButton::setProperty(chstr name,chstr value)
 	{
 		LabelBase::setProperty(name, value);
 		ImageButton::setProperty(name, value);
 		if (name == "textkey")	setTextKey(value);
+		return 1;
 	}
 	
 }

@@ -136,7 +136,7 @@ namespace aprilui
 		mUnicodeChars = unicodeChars;
 	}
     
-	void EditBox::setProperty(chstr name, chstr value)
+	bool EditBox::setProperty(chstr name, chstr value)
 	{
 		if      (name == "max_length")		setMaxLength(value);
 		else if (name == "password_char")	setPasswordChar(value.c_str()[0]);
@@ -144,6 +144,7 @@ namespace aprilui
         else if (name == "background")		mBackground = (bool)value;
 		else if (name == "space_hack")		mSpaceHack = (bool)value;
 		else Label::setProperty(name, value);
+		return 1;
 	}
 	
 	void EditBox::setCursorIndex(int cursorIndex)
@@ -228,7 +229,7 @@ namespace aprilui
 				mDataset->setFocusedObject(this);
 				mBlinkTimer = 0.0f;
 			}
-			april::rendersys->getWindow()->beginKeyboardHandling();
+			april::window->beginKeyboardHandling();
 			mPushed = false;
 			triggerEvent("Click", x, y, button);
 			return true;
