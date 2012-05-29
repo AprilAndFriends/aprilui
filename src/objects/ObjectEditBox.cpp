@@ -119,7 +119,7 @@ namespace aprilui
 				break;
 			}
 		}
-		Label::OnDraw();
+		Label::OnDraw(gvec2(0,0));
 		if (mDataset != NULL && mDataset->getFocusedObject() == this && mBlinkTimer < 0.5f)
 		{
 			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));

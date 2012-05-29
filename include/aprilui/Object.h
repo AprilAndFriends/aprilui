@@ -27,6 +27,7 @@ namespace aprilui
 	class apriluiExport Object
 	{
 	public:
+		Object(chstr name, grect rect);
 		Object(chstr type, chstr name, grect rect);
 		virtual ~Object();
 
@@ -74,11 +75,18 @@ namespace aprilui
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
 		
+		void setScale(gvec2 scale);
+		void setCenter(gvec2 scale) {}
+		
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
 
 		void moveToFront();
 		void moveToBack();
+		
+		grect getDerivedRect(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
 		
 		void _setTypeName(chstr type) { mTypeName = type; }
 		hstr getType() { return mTypeName; }
@@ -91,6 +99,10 @@ namespace aprilui
 		virtual void OnKeyDown(unsigned int keycode);
 		virtual void OnKeyUp(unsigned int keycode);
 		virtual void OnChar(unsigned int charcode);
+
+		bool onMouseDown(int button) { return 0; } // aprilui legacy compatibility
+		bool onMouseUp(int button) { return 0; }
+
 		
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());
@@ -102,6 +114,8 @@ namespace aprilui
 		void _setDataset(Dataset* value) { mDataset = value; }
 		Dataset* getDataset() { return mDataset; }
 		
+		void _triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = ""); // adaptation for xpromo_wrapper
+
 	protected:
 		Object* mParent;
 		hstr mTypeName;
