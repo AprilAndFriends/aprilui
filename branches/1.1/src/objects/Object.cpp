@@ -41,6 +41,21 @@ namespace aprilui
 		mAlpha = 1.0f;
 		mDataset = NULL;
 	}
+	
+	Object::Object(chstr name, grect rect)
+	{
+		mTypeName = "undefined";
+		mName = name;
+		mParent = NULL;
+		mZOrder = 0;
+		mRect=rect;
+		mVisible = true;
+		mEnabled = true;
+		mClickthrough = false;
+		mInheritsAlpha = true;
+		mAlpha = 1.0f;
+		mDataset = NULL;
+	}
 
 	Object::~Object()
 	{
@@ -243,6 +258,33 @@ namespace aprilui
 			}
 		}
 	}
+	
+	void Object::setScale(gvec2 scale)
+	{
+		mRect.w *= scale.x;
+		mRect.h *= scale.y;
+	}
+	
+	grect Object::getDerivedRect(aprilui::Object* overrideRoot)
+	{
+		return mRect;
+	}
+	
+	gvec2 Object::getDerivedPosition(aprilui::Object* overrideRoot)
+	{
+		gvec2 position = getPosition();
+		position += mRect.getSize() * gvec2(0.5f, 0.5f);
+		if (mParent != overrideRoot)
+		{
+			position += mParent->getDerivedPosition(overrideRoot);
+		}
+		return position;
+	}
+	
+	gvec2 Object::getDerivedSize(aprilui::Object* overrideRoot)
+	{
+		return mRect.getSize();
+	}
 
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
@@ -263,6 +305,11 @@ namespace aprilui
 		{
 			delete event;
 		}
+	}
+	
+	void Object::_triggerEvent(chstr name, float x, float y, chstr extra)
+	{
+		triggerEvent(name, x, y, extra);
 	}
 
 	void Object::triggerEvent(chstr name, float x, float y, chstr extra)
