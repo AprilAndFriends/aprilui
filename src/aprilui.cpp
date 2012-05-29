@@ -72,6 +72,7 @@ namespace aprilui
 	
 	void init()
 	{
+		aprilui::log("destroying aprilui");
 		registerLock = false;
 		defaultScale = 1.0f;
 		cursorVisible = true;
@@ -121,6 +122,7 @@ namespace aprilui
 	
 	void destroy()
 	{
+		aprilui::log("destroying aprilui");
 		registerLock = true;
 		foreach_m (Dataset*, it, gDatasets)
 		{
