@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.71
 /// 
 /// @section LICENSE
 /// 
@@ -131,7 +131,9 @@ namespace aprilui
 		{
 			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
+			{
 				throw _InvalidObjectTypeCast("Object '" + name + "' found in dataset '" + getName() + "'but dynamic cast failed.");
+			}
 			return object;
 		}
 
