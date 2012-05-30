@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.71
 /// 
 /// @section LICENSE
 /// 
@@ -721,8 +721,7 @@ namespace aprilui
 	
 	Object* Dataset::tryGetObject(chstr name)
 	{
-		if (mObjects.has_key(name)) return mObjects[name];
-		else return NULL;
+		return mObjects.try_get_by_key(name, NULL);
 	}
 	
 	april::Texture* Dataset::getTexture(chstr name)
@@ -796,7 +795,7 @@ namespace aprilui
 	{
 		if (mCallbacks.has_key(name))
 		{
-			mCallbacks[name]();
+			(*mCallbacks[name])();
 		}
 	}
 	
