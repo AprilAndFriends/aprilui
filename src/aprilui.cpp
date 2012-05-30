@@ -72,7 +72,7 @@ namespace aprilui
 	
 	void init()
 	{
-		aprilui::log("destroying aprilui");
+		aprilui::log("initializing aprilui");
 		registerLock = false;
 		defaultScale = 1.0f;
 		cursorVisible = true;
