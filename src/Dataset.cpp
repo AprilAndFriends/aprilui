@@ -721,16 +721,8 @@ namespace aprilui
 	
 	Object* Dataset::tryGetObject(chstr name)
 	{
-		aprilui::Object* obj;
-		try
-		{
-			obj = getObject(name);
-		}
-		catch (_ResourceNotExistsException)
-		{
-			return NULL;
-		}
-		return obj;
+		if (mObjects.has_key(name)) return mObjects[name];
+		else return NULL;
 	}
 	
 	april::Texture* Dataset::getTexture(chstr name)
