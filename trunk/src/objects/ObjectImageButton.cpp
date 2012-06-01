@@ -61,13 +61,17 @@ namespace aprilui
 			return;
 		}
 		bool cursorInside = isCursorInside();
+		
+		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
+		// so why bother providing a pushed image when this can work. also it covers situations where people forget to set a pushed image
 		if (mPushed && mPushedImage == NULL && cursorInside)
 		{
 			mImage->draw(rect, april::Color(_getDrawColor() * 0.75f, getDerivedAlpha()));
 			return;
 		}
 		ImageBox::OnDraw();
-		if (enabled && mHovered && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled()) // because "somebody" was too lazy to define hover images manually
+		// the same thing for a hover image fallback solution
+		if (enabled && mHovered && !mPushed && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled())
 		{
 			april::BlendMode blendMode = mImage->getBlendMode();
 			mImage->setBlendMode(april::ADD);
