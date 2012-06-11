@@ -8,9 +8,12 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <april/april.h>
+#include <april/RamTexture.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <april/april.h>
+#include <april/RamTexture.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
@@ -163,8 +166,7 @@ namespace aprilui
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilePath + "/" + filename);
-		int slash = filename.rfind('/') + 1;
-		hstr textureName = filename(slash, filename.rfind('.') - slash);
+		hstr textureName = get_basename(filename);
 		if (mTextures.has_key(textureName))
 		{
 			throw ObjectExistsException(textureName, filename);
@@ -175,9 +177,7 @@ namespace aprilui
 		hstr localization = getLocalization();
 		if (localization != "")
 		{
-			hstr base, file, locpath;
-			filepath.rsplit("/", base, file);
-			locpath = base + "/" + localization + "/" + file;
+			hstr locpath = get_basedir(filepath) + "/" + localization + "/" + get_basename(filepath);
 			if (hresource::exists(locpath))
 			{
 				filepath = locpath;
@@ -206,11 +206,14 @@ namespace aprilui
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
-			if      (filter == "linear")  texture->setTextureFilter(april::Linear);
-			else if (filter == "nearest") texture->setTextureFilter(april::Nearest);
+			if      (filter == "linear")  texture->setFilter(april::Texture::FILTER_LINEAR);
+			else if (filter == "nearest") texture->setFilter(april::Texture::FILTER_NEAREST);
 			else throw hl_exception("texture filter '" + filter + "' not supported");
 		}
-		texture->setTextureWrapping(node->pbool("wrap", true));
+		if (node->pbool("wrap", true))
+		{
+			texture->setAddressMode(april::Texture::ADDRESS_WRAP);
+		}
 		mTextures[textureName] = texture;
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
@@ -265,7 +268,7 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::parseRAMTexture(hlxml::Node* node)
+	void Dataset::parseRamTexture(hlxml::Node* node)
 	{
 		hstr filename = normalize_path(node->pstr("filename"));
 		hstr filepath = normalize_path(mFilePath + "/" + filename);
@@ -273,7 +276,7 @@ namespace aprilui
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
 		{
-			throw ResourceExistsException(filename, "RAMTexture", this);
+			throw ResourceExistsException(filename, "RamTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 		april::Texture* texture = april::rendersys->loadRamTexture(filepath, dynamicLoad);
@@ -496,7 +499,7 @@ namespace aprilui
 		foreach_xmlnode (p, current)
 		{
 			if      (*p == "Texture")        parseTexture(p);
-			else if (*p == "RAMTexture")     parseRAMTexture(p);
+			else if (*p == "RamTexture")     parseRamTexture(p);
 			else if (*p == "CompositeImage") parseCompositeImage(p);
 			else if (*p == "Object")         parseObject(p);
 			else if (*p == "Include")        parseGlobalInclude(get_basedir(path) + "/" + p->pstr("path"));
