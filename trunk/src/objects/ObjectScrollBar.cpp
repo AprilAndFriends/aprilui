@@ -113,7 +113,7 @@ namespace aprilui
 						{
 							color.a = (unsigned char)hclamp(color.a * _mRetainTime / FADE_OUT_TIME, 0.0f, 255.0f);
 						}
-						april::rendersys->drawColoredQuad(_getBarDrawRect(), color);
+						april::rendersys->drawFilledRect(_getBarDrawRect(), color);
 					}
 				}
 			}

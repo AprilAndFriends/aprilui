@@ -51,16 +51,9 @@ namespace aprilui
 		pVertices[2].x = rect.x;          pVertices[2].y = rect.y + rect.h;
 		pVertices[3].x = rect.x + rect.w; pVertices[3].y = rect.y + rect.h;
 		
-		if (mBlendMode != april::ALPHA_BLEND)
-		{
-			april::rendersys->setBlendMode(mBlendMode);
-		}
-		color *= mColor;
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
-		if (mBlendMode != april::ALPHA_BLEND)
-		{
-			april::rendersys->setBlendMode(april::DEFAULT);
-		}
+		april::rendersys->setTextureBlendMode(mBlendMode);
+		april::rendersys->render(april::TriangleStrip, pVertices, 4, color * mColor);
+		april::rendersys->setTextureBlendMode(april::DEFAULT);
 	}
 
 }

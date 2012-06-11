@@ -172,7 +172,7 @@ namespace aprilui
 		hmap<hstr, void (*)()> mCallbacks;
 
 		void parseTexture(hlxml::Node* node);
-		void parseRAMTexture(hlxml::Node* node);
+		void parseRamTexture(hlxml::Node* node);
 		void parseTextureGroup(hlxml::Node* node);
 		void parseCompositeImage(hlxml::Node* node);
 		void parseGlobalInclude(chstr path);
