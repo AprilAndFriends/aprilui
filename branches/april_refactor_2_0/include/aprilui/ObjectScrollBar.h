@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -47,12 +47,15 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists);
 		bool setProperty(chstr name, chstr value);
 
-		void onMouseMove(float x, float y);
+		void onMouseMove();
+		void onMouseScroll(float x, float y);
 
 		virtual void addScrollValue(float value) = 0;
 
 		static float ScrollDistance;
 		static float GridSize;
+
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
 	protected:
 		hstr mSkinName;
@@ -79,6 +82,7 @@ namespace aprilui
 		virtual grect _getBarDrawRect() = 0;
 
 		virtual float _calcScrollJump(float x, float y) = 0;
+		virtual float _calcScrollMove(float x, float y) = 0;
 		virtual void _updateChildren() = 0;
 		virtual void _moveScrollBar(float x, float y) = 0;
 		virtual void _updateBar() = 0;

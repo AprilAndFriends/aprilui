@@ -46,15 +46,12 @@ namespace aprilui
 		
 		void ResizerX::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				mValue = mParent->getWidth();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				mParent->setWidth(mValue);
 			}
-			mValue = mParent->getWidth();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setWidth(mValue);
 		}
 		
 	}

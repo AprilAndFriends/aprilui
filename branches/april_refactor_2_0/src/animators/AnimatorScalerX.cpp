@@ -46,15 +46,12 @@ namespace aprilui
 		
 		void ScalerX::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				mValue = mParent->getScaleX();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				mParent->setScaleX(mValue);
 			}
-			mValue = mParent->getScaleX();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setScaleX(mValue);
 		}
 		
 	}

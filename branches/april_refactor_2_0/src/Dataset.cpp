@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.6
+/// @version 1.71
 /// 
 /// @section LICENSE
 /// 
@@ -10,6 +10,7 @@
 
 #include <april/RenderSystem.h>
 #include <april/Window.h>
+#include <april/april.h>
 #include <april/RamTexture.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
@@ -109,6 +110,10 @@ namespace aprilui
 		{
 			object->detach();
 		}
+		if (mFocusedObject == object)
+		{
+			mFocusedObject = NULL;
+		}
 		mObjects.remove_key(object->getName());
 		delete object;
 	}
@@ -174,6 +179,20 @@ namespace aprilui
 			if (hresource::exists(locpath))
 			{
 				filepath = locpath;
+			}
+			else
+			{
+				hstr name;
+				harray<hstr> extensions = april::getTextureExtensions();
+				foreach (hstr, it, extensions)
+				{
+					name = locpath + (*it);
+					if (hresource::exists(name))
+					{
+						filepath = locpath;
+						break;
+					}
+				}
 			}
 		}
 		
@@ -412,21 +431,16 @@ namespace aprilui
 			mFilePath = originalFilePath;
 			return;
 		}
-		//hstr basedir = mFilePath;//get_basedir(path);
-		hstr filename = path(mFilePath.size() + 1, -1);
-		hstr left;
-		hstr right;
-		filename.split("*", left, right);
-		harray<hstr> contents = hdir::resource_files(mFilePath).sorted();
+		hstr extension = get_basename(path).replace("*", "");
+		harray<hstr> contents = hdir::resource_files(mFilePath, true).sorted();
 		foreach (hstr, it, contents)
 		{
-			if (it->starts_with(left) && it->ends_with(right))
+			if ((*it).ends_with(extension))
 			{
-				readFile(mFilePath + "/" + (*it));
+				readFile((*it));
 			}
 		}
 		mFilePath = originalFilePath;
-		return;
 	}
 	
 	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent)
@@ -701,18 +715,14 @@ namespace aprilui
 		return tryGetObject(name) != NULL;
 	}
 	
+	bool Dataset::hasImage(chstr name)
+	{
+		return mImages.has_key(name);
+	}
+	
 	Object* Dataset::tryGetObject(chstr name)
 	{
-		aprilui::Object* obj;
-		try
-		{
-			obj = getObject(name);
-		}
-		catch (_ResourceNotExistsException)
-		{
-			return NULL;
-		}
-		return obj;
+		return mObjects.try_get_by_key(name, NULL);
 	}
 	
 	april::Texture* Dataset::getTexture(chstr name)
@@ -786,7 +796,7 @@ namespace aprilui
 	{
 		if (mCallbacks.has_key(name))
 		{
-			mCallbacks[name]();
+			(*mCallbacks[name])();
 		}
 	}
 	
@@ -798,21 +808,29 @@ namespace aprilui
 		}
 	}
 	
-	bool Dataset::onMouseDown(float x, float y, int button)
+	bool Dataset::onMouseDown(int button)
 	{
-		return (mRoot != NULL && mRoot->onMouseDown(x, y, button));
+		return (mRoot != NULL && mRoot->onMouseDown(button));
 	}
 	
-	bool Dataset::onMouseUp(float x, float y, int button)
+	bool Dataset::onMouseUp(int button)
 	{
-		return (mRoot != NULL && mRoot->onMouseUp(x, y, button));
+		return (mRoot != NULL && mRoot->onMouseUp(button));
 	}
 	
-	void Dataset::onMouseMove(float x, float y)
+	void Dataset::onMouseMove()
 	{
 		if (mRoot != NULL)
 		{
-			mRoot->onMouseMove(x, y);
+			mRoot->onMouseMove();
+		}
+	}
+	
+	void Dataset::onMouseScroll(float x, float y)
+	{
+		if (mRoot != NULL)
+		{
+			mRoot->onMouseScroll(x, y);
 		}
 	}
 	

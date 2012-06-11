@@ -46,16 +46,13 @@ namespace aprilui
 		
 		void AlphaChanger::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
-			}
-			mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
-			if ((unsigned char)mValue != mParent->getAlpha())
-			{
-				mParent->setAlpha((unsigned char)mValue);
+				mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
+				if ((unsigned char)mValue != mParent->getAlpha())
+				{
+					mParent->setAlpha((unsigned char)mValue);
+				}
 			}
 		}
 		

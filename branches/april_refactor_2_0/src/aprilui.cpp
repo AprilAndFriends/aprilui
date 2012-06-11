@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -72,6 +72,7 @@ namespace aprilui
 	
 	void init()
 	{
+		aprilui::log("initializing aprilui");
 		registerLock = false;
 		defaultScale = 1.0f;
 		cursorVisible = true;
@@ -121,6 +122,7 @@ namespace aprilui
 	
 	void destroy()
 	{
+		aprilui::log("destroying aprilui");
 		registerLock = true;
 		foreach_m (Dataset*, it, gDatasets)
 		{
@@ -372,27 +374,35 @@ namespace aprilui
 		}
 	}
 
-	void onMouseDown(float x, float y, int button)
+	void onMouseDown(int button)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onMouseDown(x, y, button);
+			it->second->onMouseDown(button);
 		}
 	}
 	
-	void onMouseUp(float x, float y, int button)
+	void onMouseUp(int button)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onMouseUp(x, y, button);
+			it->second->onMouseUp(button);
 		}
 	}
 	
-	void onMouseMove(float x, float y)
+	void onMouseMove()
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onMouseMove(x, y);
+			it->second->onMouseMove();
+		}
+	}
+	
+	void onMouseScroll(float x, float y)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onMouseScroll(x, y);
 		}
 	}
 	
@@ -422,11 +432,14 @@ namespace aprilui
 	
 	bool isDebugMode() { return isDebugEnabled(); } // DEPRECATED
 	void setDebugMode(bool value) { setDebugEnabled(value); } // DEPRECATED
-	void OnMouseDown(float x, float y, int button) { onMouseDown(x, y, button); } // DEPRECATED
-	void OnMouseUp(float x, float y, int button) { onMouseUp(x, y, button); } // DEPRECATED
-	void OnMouseMove(float x, float y) { onMouseMove(x, y); } // DEPRECATED
+	void OnMouseDown(float x, float y, int button) { onMouseDown(button); } // DEPRECATED
+	void OnMouseUp(float x, float y, int button) { onMouseUp(button); } // DEPRECATED
+	void OnMouseMove(float x, float y) { onMouseMove(); } // DEPRECATED
 	void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); } // DEPRECATED
 	void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); } // DEPRECATED
 	void OnChar(unsigned int charcode) { onChar(charcode); } // DEPRECATED
+	void onMouseDown(float x, float y, int button) { onMouseDown(button); } // DEPRECATED
+	void onMouseUp(float x, float y, int button) { onMouseUp(button); } // DEPRECATED
+	void onMouseMove(float x, float y) { onMouseMove(); } // DEPRECATED
 
 }

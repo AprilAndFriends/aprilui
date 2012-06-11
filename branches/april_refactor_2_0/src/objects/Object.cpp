@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -331,23 +331,23 @@ namespace aprilui
 		notifyEvent("Resized", NULL);
 	}
 
-	unsigned char Object::getDerivedAlpha()
+	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot)
 	{
 		// recursive function that combines all the alpha from the parents (if any)
 		float factor = 1.0f;
-		if (mInheritsAlpha && mParent != NULL)
+		if (mInheritsAlpha && mParent != overrideRoot)
 		{
-			factor *= mParent->getDerivedAlpha() / 255.0f;
+			factor *= mParent->getDerivedAlpha(overrideRoot) / 255.0f;
 		}
 		return (unsigned char)(this->getAlpha() * factor);
 	}
 
-	float Object::_getDerivedAngle()
+	float Object::_getDerivedAngle(aprilui::Object* overrideRoot)
 	{
 		float angle = mAngle;
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			angle += mParent->_getDerivedAngle();
+			angle += mParent->_getDerivedAngle(overrideRoot);
 		}
 		return angle;
 	}
@@ -529,7 +529,7 @@ namespace aprilui
 		return (is_between(d1, 0.0f, 1.0f) && is_between(d2, 0.0f, 1.0f));
 	}
 
-	bool Object::onMouseDown(float x, float y, int button)
+	bool Object::onMouseDown(int button)
 	{
 		if (mClickThrough || !isVisible() || !_isDerivedEnabled())
 		{
@@ -545,8 +545,8 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickThrough() &&
-				(*it)->onMouseDown(x - mRect.x, y - mRect.y, button))
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() &&
+				!(*it)->isClickThrough() && (*it)->onMouseDown(button))
 			{
 				return true;
 			}
@@ -554,7 +554,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onMouseUp(float x, float y, int button)
+	bool Object::onMouseUp(int button)
 	{
 		if (mClickThrough || !isVisible() || !_isDerivedEnabled())
 		{
@@ -562,8 +562,8 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() && !(*it)->isClickThrough() &&
-				(*it)->onMouseUp(x - mRect.x, y - mRect.y, button))
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() &&
+				!(*it)->isClickThrough() && (*it)->onMouseUp(button))
 			{
 				return true;
 			}
@@ -572,13 +572,24 @@ namespace aprilui
 		return false;
 	}
 
-	void Object::onMouseMove(float x, float y)
+	void Object::onMouseMove()
 	{
 		foreach_r (Object*, it, mChildren)
 		{
 			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
 			{
-				(*it)->onMouseMove(x - mRect.x, y - mRect.y);
+				(*it)->onMouseMove();
+			}
+		}
+	}
+
+	void Object::onMouseScroll(float x, float y)
+	{
+		foreach_r (Object*, it, mChildren)
+		{
+			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
+			{
+				(*it)->onMouseScroll(x, y);
 			}
 		}
 	}
@@ -654,6 +665,18 @@ namespace aprilui
 		mEvents.remove_key(name);
 	}
 
+	// TODO - this needs to be seriously refactored
+	void Object::_triggerEvent(chstr name, unsigned int keycode, chstr extra)
+	{
+		if (mEvents.has_key(name))
+		{
+			gvec2 cursorPosition = getCursorPosition();
+			EventArgs args(this, cursorPosition.x, cursorPosition.y, keycode, extra);
+			mEvents[name]->execute(&args);
+		}
+	}
+
+	// TODO - this needs to be seriously refactored
 	void Object::_triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
 	{
 		if (mEvents.has_key(name))
@@ -840,45 +863,73 @@ namespace aprilui
 		mChildUnderCursor = NULL;
 		mCheckedChildUnderCursor = false;
 	}
-
-	grect Object::getDerivedRect()
+	
+	bool Object::isChild(Object* obj)
 	{
-		return grect(getDerivedPosition(), getDerivedSize());
+		if (obj == NULL) return false;
+		return (obj->getParent() == this);
 	}
 	
-	gvec2 Object::getDerivedPosition()
+	bool Object::isDescendant(Object* obj)
+	{
+		if (obj == NULL) return false;
+		return obj->isAncestor(this);
+	}
+	
+	bool Object::isParent(Object* obj)
+	{
+		if (obj == NULL) return false;
+		return mParent == obj;
+	}
+	
+	bool Object::isAncestor(Object* obj)
+	{
+		if (obj == NULL) return false;
+		for (Object* o = this->getParent(); o != NULL; o = o->getParent())
+		{
+			if (o == obj) return true;
+		}
+		return false;
+	}
+
+	grect Object::getDerivedRect(aprilui::Object* overrideRoot)
+	{
+		return grect(getDerivedPosition(overrideRoot), getDerivedSize(overrideRoot));
+	}
+	
+	gvec2 Object::getDerivedPosition(aprilui::Object* overrideRoot)
 	{
 		gvec2 position = getPosition();
 		position += (gvec2(1.0f, 1.0f) - mScale) * mRect.getSize() * (mCenter / mRect.getSize());
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			position *= mParent->getDerivedScale();
-			position += mParent->getDerivedPosition();
+			position *= mParent->getDerivedScale(overrideRoot);
+			position += mParent->getDerivedPosition(overrideRoot);
 		}
 		return position;
 	}
 	
-	gvec2 Object::getDerivedSize()
+	gvec2 Object::getDerivedSize(aprilui::Object* overrideRoot)
 	{
-		return (mRect.getSize() * getDerivedScale());
+		return (mRect.getSize() * getDerivedScale(overrideRoot));
 	}
 
-	gvec2 Object::getDerivedCenter()
+	gvec2 Object::getDerivedCenter(aprilui::Object* overrideRoot)
 	{
 		gvec2 center = getCenter();
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			center *= mParent->getDerivedScale();
+			center *= mParent->getDerivedScale(overrideRoot);
 		}
 		return center;
 	}
 	
-	gvec2 Object::getDerivedScale()
+	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
 	{
 		gvec2 scale = mScale;
-		if (mParent != NULL)
+		if (mParent != overrideRoot)
 		{
-			scale *= mParent->getDerivedScale();
+			scale *= mParent->getDerivedScale(overrideRoot);
 		}
 		return scale;
 	}

@@ -46,15 +46,12 @@ namespace aprilui
 		
 		void MoverX::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				mValue = mParent->getX();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				mParent->setX(mValue);
 			}
-			mValue = mParent->getX();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			mParent->setX(mValue);
 		}
 		
 	}

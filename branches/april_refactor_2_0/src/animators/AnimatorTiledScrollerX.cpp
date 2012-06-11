@@ -48,27 +48,24 @@ namespace aprilui
 		
 		void TiledScrollerX::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
+				ImageBox* imageBox = dynamic_cast<ImageBox*>(mParent);
+				if (imageBox == NULL)
+				{
+					aprilui::log("Animators::TiledScrollerX: parent object not a subclass of Objects::ImageBox!");
+					return;
+				}
+				TiledImage* image = dynamic_cast<TiledImage*>(imageBox->getImage());
+				if (image == NULL)
+				{
+					aprilui::log("Animators::TiledScrollerX: image in object not a subclass of Animators::TiledImage!");
+					return;
+				}
+				mValue = image->getScrollX();
+				mValue = _calculateValue(mTimeSinceLastFrame);
+				image->setScrollX(mValue);
 			}
-			ImageBox* imageBox = dynamic_cast<ImageBox*>(mParent);
-			if (imageBox == NULL)
-			{
-				aprilui::log("Animators::TiledScrollerX: parent object not a subclass of Objects::ImageBox!");
-				return;
-			}
-			TiledImage* image = dynamic_cast<TiledImage*>(imageBox->getImage());
-			if (image == NULL)
-			{
-				aprilui::log("Animators::TiledScrollerX: image in object not a subclass of Animators::TiledImage!");
-				return;
-			}
-			mValue = image->getScrollX();
-			mValue = _calculateValue(mTimeSinceLastFrame);
-			image->setScrollX(mValue);
 		}
 		
 	}

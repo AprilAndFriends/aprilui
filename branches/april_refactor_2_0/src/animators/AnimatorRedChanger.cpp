@@ -46,16 +46,13 @@ namespace aprilui
 		
 		void RedChanger::update(float k)
 		{
-			bool animated = this->isAnimated();
-			Animator::update(k);
-			if (!animated)
+			if (this->_checkUpdate(k))
 			{
-				return;
-			}
-			mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
-			if ((unsigned char)mValue != mParent->getRed())
-			{
-				mParent->setRed((unsigned char)mValue);
+				mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
+				if ((unsigned char)mValue != mParent->getRed())
+				{
+					mParent->setRed((unsigned char)mValue);
+				}
 			}
 		}
 		
