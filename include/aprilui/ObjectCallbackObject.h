@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -36,9 +36,15 @@ namespace aprilui
 		
 		void OnDraw();
 		void update(float k);
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
+		void onMouseMove();
+		void onMouseScroll(float x, float y);
+
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+
 	protected:
 		void (*mDrawCallback)(CallbackObject*);
 		void (*mUpdateCallback)(float);

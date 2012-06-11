@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.71
 /// 
 /// @section LICENSE
 /// 
@@ -96,18 +96,22 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { destroyObject(name, recursive); }
 		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { destroyObject(object, recursive); }
 
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		void onMouseMove(float x, float y);
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
+		void onMouseMove();
+		void onMouseScroll(float x, float y);
 		void onKeyDown(unsigned int keycode);
 		void onKeyUp(unsigned int keycode);
 		void onChar(unsigned int charcode);
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(x, y, button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(x, y, button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(x, y); }
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(); }
 		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
 		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
 		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
 		virtual april::Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
@@ -119,6 +123,7 @@ namespace aprilui
 		hstr getName() { return mName; }
 
 		virtual Object* getObject(chstr name);
+		bool hasImage(chstr name);
 		bool hasObject(chstr name);
 		Object* tryGetObject(chstr name);
 
@@ -126,7 +131,9 @@ namespace aprilui
 		{
 			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
+			{
 				throw _InvalidObjectTypeCast("Object '" + name + "' found in dataset '" + getName() + "'but dynamic cast failed.");
+			}
 			return object;
 		}
 

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -64,29 +64,6 @@ namespace aprilui
 		setToggledDisabledImage(mDataset->getImage(image));
 	}
 
-	hstr ToggleButton::getProperty(chstr name, bool* property_exists)
-	{
-		if (property_exists != NULL)
-		{
-			*property_exists = true;
-		}
-		if (name == "toggled_image")			return getToggledNormalImage()->getName();
-		if (name == "toggled_hover_image")		return getToggledHoverImage()->getName();
-		if (name == "toggled_pushed_image")		return getToggledPushedImage()->getName();
-		if (name == "toggled_disabled_image")	return getToggledDisabledImage()->getName();
-		return ImageButton::getProperty(name, property_exists);
-	}
-
-	bool ToggleButton::setProperty(chstr name, chstr value)
-	{
-		if		(name == "toggled_image")			setToggledNormalImageByName(value);
-		else if (name == "toggled_hover_image")		setToggledHoverImageByName(value);
-		else if (name == "toggled_pushed_image")	setToggledPushedImageByName(value);
-		else if (name == "toggled_disabled_image")	setToggledDisabledImageByName(value);
-        else return ImageButton::setProperty(name, value);
-        return true;
-	}
-	
 	void ToggleButton::OnDraw()
 	{
 		if (mToggled)
@@ -135,9 +112,32 @@ namespace aprilui
 		}
 	}
 	
-	bool ToggleButton::onMouseUp(float x, float y, int button)
+	hstr ToggleButton::getProperty(chstr name, bool* property_exists)
 	{
-		bool result = ImageButton::onMouseUp(x, y, button);
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+		if (name == "toggled_image")			return getToggledNormalImage()->getName();
+		if (name == "toggled_hover_image")		return getToggledHoverImage()->getName();
+		if (name == "toggled_pushed_image")		return getToggledPushedImage()->getName();
+		if (name == "toggled_disabled_image")	return getToggledDisabledImage()->getName();
+		return ImageButton::getProperty(name, property_exists);
+	}
+
+	bool ToggleButton::setProperty(chstr name, chstr value)
+	{
+		if		(name == "toggled_image")			setToggledNormalImageByName(value);
+		else if (name == "toggled_hover_image")		setToggledHoverImageByName(value);
+		else if (name == "toggled_pushed_image")	setToggledPushedImageByName(value);
+		else if (name == "toggled_disabled_image")	setToggledDisabledImageByName(value);
+        else return ImageButton::setProperty(name, value);
+        return true;
+	}
+	
+	bool ToggleButton::onMouseUp(int button)
+	{
+		bool result = ImageButton::onMouseUp(button);
 		if (result)
 		{
 			mToggled = !mToggled;

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -43,6 +43,8 @@ namespace aprilui
 		void setDragThreshold(float value) { mDragThreshold = value; }
 		float getDragMaxSpeed() { return mDragMaxSpeed; }
 		void setDragMaxSpeed(float value) { mDragMaxSpeed = value; }
+		bool isSwapScrollWheels() { return mSwapScrollWheels; }
+		void setSwapScrollWheels(bool value) { mSwapScrollWheels = value; }
 		bool isDragging() { return mDragging; }
 		hstr getName();
 		bool isCursorInside();
@@ -64,19 +66,24 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists);
 		bool setProperty(chstr name, chstr value);
 
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		void onMouseMove(float x, float y);
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
+		void onMouseMove();
 
 		static float Inertia;
 		static float DragThreshold;
 		static float DragMaxSpeed;
+
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
 	protected:
 		bool mAllowDrag;
 		float mInertia;
 		float mDragThreshold;
 		float mDragMaxSpeed;
+		bool mSwapScrollWheels;
 		bool mDragging;
 
 		virtual bool _checkHover();

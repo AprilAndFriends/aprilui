@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -48,13 +48,17 @@ namespace aprilui
 		Object* getParent();
 		Dataset* getDataset();
 		
-		bool onMouseDown(float x, float y, int button);
-		bool onMouseUp(float x, float y, int button);
-		void onMouseMove(float x, float y);
-		void cancelMouseDown();
-		
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
+
+		bool onMouseDown(int button);
+		bool onMouseUp(int button);
+		void onMouseMove();
+		void cancelMouseDown();
+		
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 		
 	protected:
 		Image* mNormalImage;

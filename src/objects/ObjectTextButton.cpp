@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -112,38 +112,38 @@ namespace aprilui
 		return Object::isCursorInside();
 	}
 
-	bool TextButton::onMouseDown(float x, float y, int button)
+	bool TextButton::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(x, y, button))
+		if (Object::onMouseDown(button))
 		{
 			return true;
 		}
-		bool result = ButtonBase::onMouseDown(x, y, button);
+		bool result = ButtonBase::onMouseDown(button);
 		if (result)
 		{
-			_triggerEvent("MouseDown", x, y, button);
+			_triggerEvent("MouseDown", button);
 		}
 		return result;
 	}
 
-	bool TextButton::onMouseUp(float x, float y, int button)
+	bool TextButton::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(x, y, button))
+		if (Object::onMouseUp(button))
 		{
 			return true;
 		}
-		bool result = ButtonBase::onMouseUp(x, y, button);
+		bool result = ButtonBase::onMouseUp(button);
 		if (result)
 		{
-			_triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", button);
 		}
 		return result;
 	}
 
-	void TextButton::onMouseMove(float x, float y)
+	void TextButton::onMouseMove()
 	{
-		Object::onMouseMove(x, y);
-		ButtonBase::onMouseMove(x, y);
+		Object::onMouseMove();
+		ButtonBase::onMouseMove();
 	}
 
 	void TextButton::cancelMouseDown()

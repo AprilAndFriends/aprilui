@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -64,6 +64,35 @@ namespace aprilui
 		hstr key = value; // in case value points to mTextKey..
 		setText(mDataset->getText(value));
 		LabelBase::setTextKey(key);
+	}
+	
+	bool Label::onMouseDown(int button)
+	{
+		if (Object::onMouseDown(button))
+		{
+			return true;
+		}
+		if (isCursorInside())
+		{
+            _triggerEvent("MouseDown", button);
+			return true;
+		}
+		return false;
+	}
+	
+	bool Label::onMouseUp(int button)
+	{
+		if (Object::onMouseUp(button))
+		{
+			return true;
+		}
+		if (isCursorInside())
+		{
+			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
+			_triggerEvent("Click", button);
+			return true;
+		}
+		return false;
 	}
 	
 	hstr Label::getProperty(chstr name, bool* property_exists)

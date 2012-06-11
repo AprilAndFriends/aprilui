@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -48,11 +48,13 @@ namespace aprilui
 		void turnOn() { mToggled = true; }
 		void turnOff() { mToggled = false; }
 		
-		bool onMouseUp(float x, float y, int button);
-
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 
+		bool onMouseUp(int button);
+
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		
 	protected:
 		bool mToggled;
 		Image* mToggledNormalImage;

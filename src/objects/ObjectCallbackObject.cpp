@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -48,31 +48,49 @@ namespace aprilui
 		Object::update(k);
 	}
 	
-	bool CallbackObject::onMouseDown(float x, float y, int button)
+	bool CallbackObject::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(x, y, button))
+		if (Object::onMouseDown(button))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
-			_triggerEvent("MouseDown", x, y, button);
+			_triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
 	}
 
-	bool CallbackObject::onMouseUp(float x, float y, int button)
+	bool CallbackObject::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(x, y, button))
+		if (Object::onMouseUp(button))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
-			_triggerEvent("Click", x, y, button);
+			_triggerEvent("Click", button);
 			return true;
 		}
 		return false;
+	}
+	
+	void CallbackObject::onMouseMove()
+	{
+		Object::onMouseMove();
+		if (isCursorInside())
+		{
+			_triggerEvent("MouseMove");
+		}
+	}
+	
+	void CallbackObject::onMouseScroll(float x, float y)
+	{
+		Object::onMouseScroll(x, y);
+		if (isCursorInside())
+		{
+			_triggerEvent("MouseScroll", x, y);
+		}
 	}
 }

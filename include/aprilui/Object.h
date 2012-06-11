@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -54,7 +54,14 @@ namespace aprilui
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
 		void clearChildUnderCursor();
-		
+		//! returns whether or not a given object is a direct child of this object
+		bool isChild(Object* obj);
+		//! returns whether or not a given object is a descendant of this object (child or child of a child etc recursively)
+		bool isDescendant(Object* obj);
+		//! returns whether or not a given object is a direct parent of this object
+		bool isParent(Object* obj);
+		//! returns whether or not a given object is an ancestor of a this object
+		bool isAncestor(Object* obj);
 		hstr getName() { return mName; }
 		hstr getFullName();
 		bool isCursorInside();
@@ -127,7 +134,7 @@ namespace aprilui
 		unsigned char getBlue() { return mColor.b; }
 		void setBlue(unsigned char value) { mColor.b = value; }
 		unsigned char getAlpha() { return mColor.a; }
-		unsigned char getDerivedAlpha();
+		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 		void setAlpha(unsigned char value);
 		bool isVisible() { return (mVisible && mColor.a > 0); }
 		void setVisible(bool value) { mVisible = value; }
@@ -135,19 +142,20 @@ namespace aprilui
 		bool isClip() { return mClip; }
 		void setClip(bool value) { mClip = value; }
 
-		grect getDerivedRect();
-		gvec2 getDerivedPosition();
-		gvec2 getDerivedSize();
-		gvec2 getDerivedCenter();
-		gvec2 getDerivedScale();
+		grect getDerivedRect(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
 		virtual bool isAnimated();
 		virtual bool isWaitingAnimation();
 		bool hasDynamicAnimation();
 		
 		// if a childs event returns true, event is not propagated to parents
-		virtual bool onMouseDown(float x, float y, int button);
-		virtual bool onMouseUp(float x, float y, int button);
-		virtual void onMouseMove(float x, float y);
+		virtual bool onMouseDown(int button);
+		virtual bool onMouseUp(int button);
+		virtual void onMouseMove();
+		virtual void onMouseScroll(float x, float y);
 		virtual void onKeyDown(unsigned int keycode);
 		virtual void onKeyUp(unsigned int keycode);
 		virtual void onChar(unsigned int charcode);
@@ -229,13 +237,16 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void moveToBack() { if (mParent != NULL) { mParent->getChildren().remove(this); mParent->getChildren().push_front(this); } }
 		DEPRECATED_ATTRIBUTE bool isClickthrough() { return mClickThrough; }
 		DEPRECATED_ATTRIBUTE void setClickthrough(bool value) { mClickThrough = value; }
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(x, y, button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(x, y, button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(x, y); }
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(); }
 		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
 		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
 		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
-
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		
 	protected:
 		hstr mName;
 		grect mRect;
@@ -266,8 +277,11 @@ namespace aprilui
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
 		
-		void _triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
-		float _getDerivedAngle();
+		// TODO - this needs to be seriously refactored
+		void _triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
+		// TODO - this needs to be seriously refactored
+		void _triggerEvent(chstr name, float x, float y, unsigned int keycode = 0, chstr extra = "");
+		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool _isDerivedEnabled();
 		bool _isDerivedClickThrough();
 		grect _getDrawRect();

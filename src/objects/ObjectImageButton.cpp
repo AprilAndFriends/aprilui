@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.7
 /// 
 /// @section LICENSE
 /// 
@@ -61,13 +61,17 @@ namespace aprilui
 			return;
 		}
 		bool cursorInside = isCursorInside();
+		
+		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
+		// so why bother providing a pushed image when this can work. also it covers situations where people forget to set a pushed image
 		if (mPushed && mPushedImage == NULL && cursorInside)
 		{
 			mImage->draw(rect, april::Color(_getDrawColor() * 0.75f, getDerivedAlpha()));
 			return;
 		}
 		ImageBox::OnDraw();
-		if (enabled && mHovered && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled()) // because "somebody" was too lazy to define hover images manually
+		// the same thing for a hover image fallback solution
+		if (enabled && mHovered && !mPushed && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled())
 		{
 			april::BlendMode blendMode = mImage->getBlendMode();
 			mImage->setBlendMode(april::ADD);
@@ -134,46 +138,6 @@ namespace aprilui
 		mNormalImage = image;
 	}
 	
-	bool ImageButton::onMouseDown(float x, float y, int button)
-	{
-		if (Object::onMouseDown(x, y, button))
-		{
-			return true;
-		}
-		bool result = ButtonBase::onMouseDown(x, y, button);
-		if (result)
-		{
-            _triggerEvent("MouseDown", x, y, button);
-		}
-		return result;
-	}
-
-	bool ImageButton::onMouseUp(float x, float y, int button)
-	{
-		if (Object::onMouseUp(x, y, button))
-		{
-			return true;
-		}
-		bool result = ButtonBase::onMouseUp(x, y, button);
-		if (result)
-		{
-			_triggerEvent("Click", x, y, button);
-		}
-		return result;
-	}
-	
-	void ImageButton::onMouseMove(float x, float y)
-	{
-		Object::onMouseMove(x, y);
-		ButtonBase::onMouseMove(x, y);
-	}
-
-	void ImageButton::cancelMouseDown()
-	{
-		Object::cancelMouseDown();
-		ButtonBase::cancelMouseDown();
-	}
-	
 	hstr ImageButton::getProperty(chstr name, bool* property_exists)
 	{
 		if (property_exists != NULL)
@@ -195,6 +159,46 @@ namespace aprilui
 		else if (name == "disabled_image")	setDisabledImageByName(value);
         else return Object::setProperty(name, value);
         return true;
+	}
+	
+	bool ImageButton::onMouseDown(int button)
+	{
+		if (Object::onMouseDown(button))
+		{
+			return true;
+		}
+		bool result = ButtonBase::onMouseDown(button);
+		if (result)
+		{
+            _triggerEvent("MouseDown", button);
+		}
+		return result;
+	}
+
+	bool ImageButton::onMouseUp(int button)
+	{
+		if (Object::onMouseUp(button))
+		{
+			return true;
+		}
+		bool result = ButtonBase::onMouseUp(button);
+		if (result)
+		{
+			_triggerEvent("Click", button);
+		}
+		return result;
+	}
+	
+	void ImageButton::onMouseMove()
+	{
+		Object::onMouseMove();
+		ButtonBase::onMouseMove();
+	}
+
+	void ImageButton::cancelMouseDown()
+	{
+		Object::cancelMouseDown();
+		ButtonBase::cancelMouseDown();
 	}
 	
 }

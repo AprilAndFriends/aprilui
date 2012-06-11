@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.61
 /// 
 /// @section LICENSE
 /// 
@@ -129,6 +129,11 @@ namespace aprilui
 			result = hmin(result, area->getWidth() - parent->getWidth() - area->getScrollOffsetX());
 		}
 		return result;
+	}
+
+	float ScrollBarH::_calcScrollMove(float x, float y)
+	{
+		return hroundf(x * ScrollBar::ScrollDistance); // hround prevents partial pixels when getting weird X values
 	}
 
 	void ScrollBarH::notifyEvent(chstr name, void* params)
