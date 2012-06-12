@@ -566,7 +566,7 @@ namespace aprilui
 					}
 					else
 					{
-						key = (*it2);
+						key = (*it2).split("#").first().trim(' ');
 					}
 				}
 				else if ((*it2) == "}")
