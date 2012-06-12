@@ -64,7 +64,7 @@ namespace aprilui
                 return;
             }
 			mTimer += k;
-			float alpha = dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
+			float alpha = (float)dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
 			mParent->setAlpha(hclamp(alpha, 0.0f, 1.0f));
 		}
 		

@@ -33,7 +33,7 @@ namespace aprilui
 	{
 		float alpha = getDerivedAlpha() * mColor.a_f();
 		grect rect = mRect + offset;
-		april::rendersys->drawColoredQuad(rect,
+		april::rendersys->drawFilledRect(rect,
 										  april::Color(mColor.r, mColor.g, mColor.b, COLOR_COMP_FOR_NEW_APRIL(alpha)));
 	}
 

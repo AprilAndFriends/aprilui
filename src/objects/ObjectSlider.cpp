@@ -83,14 +83,14 @@ namespace aprilui
 			mImage = mDataset->getImage("null");
 		}
 		float alpha = getDerivedAlpha();
-		april::rendersys->drawColoredQuad(rect, april::Color(APRIL_COLOR_WHITE, COLOR_COMP_FOR_NEW_APRIL(alpha)));
+		april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_WHITE, COLOR_COMP_FOR_NEW_APRIL(alpha)));
 		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
-		april::rendersys->drawColoredQuad(rect, april::Color(COLOR_COMP_FOR_NEW_APRIL(0.3f), 
+		april::rendersys->drawFilledRect(rect, april::Color(COLOR_COMP_FOR_NEW_APRIL(0.3f), 
 															 COLOR_COMP_FOR_NEW_APRIL(0.3f),
 															 COLOR_COMP_FOR_NEW_APRIL(0.3f),
 															 COLOR_COMP_FOR_NEW_APRIL(alpha)));
 		april::Color color;
-		color.a = alpha * 255;
+		color.a = (unsigned char)(alpha * 255);
 		rect = grect(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
 		mImage->draw(rect, color);
 	}

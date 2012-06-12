@@ -66,7 +66,7 @@ namespace aprilui
                 return;
             }
 			mTimer += k;
-			float angle = dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
+			float angle = (float)dsin(mTimer * mSpeed) * mAmplitude + mBaseline;
 			((RotationImageBox*)mParent)->setAngle(fmod(angle * 360, 360));
 		}
 		

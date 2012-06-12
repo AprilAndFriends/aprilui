@@ -66,7 +66,7 @@ namespace aprilui
 				if (mTimer < 0)
 				{
 					mParent->setVisible(!mParent->isVisible());
-					mTimer = hrand(1.0f) / mFrequency;
+					mTimer = hrandf(1.0f) / mFrequency;
 				}
 				mDuration -= k;
 				if (mDuration < 0)
