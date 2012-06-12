@@ -7,6 +7,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * This program is free software; you can redistribute it and/or modify it under      *
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
+#include <april/RamTexture.h>
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
@@ -138,11 +139,11 @@ namespace aprilui
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
-			if      (filter == "linear")  texture->setTextureFilter(april::Linear);
-			else if (filter == "nearest") texture->setTextureFilter(april::Nearest);
+			if      (filter == "linear")  texture->setFilter(april::Texture::FILTER_LINEAR);
+			else if (filter == "nearest") texture->setFilter(april::Texture::FILTER_NEAREST);
 			else throw hl_exception("texture filter '" + filter + "' not supported");
 		}
-		texture->setTextureWrapping(node->pbool("wrap", true));
+		texture->setAddressMode(node->pbool("wrap", true) ? april::Texture::ADDRESS_WRAP : april::Texture::ADDRESS_CLAMP);
 		mTextures[textureName] = texture;
 		// extract image definitions
 		if (node->iter_children() == NULL) // if there are no images defined, create one that fills the whole area

@@ -79,7 +79,7 @@ namespace aprilui
                 color.a = 128;
             }
             else color.a = 192;
-            april::rendersys->drawColoredQuad(rect, color);
+            april::rendersys->drawFilledRect(rect, color);
         }
 		hstr text = mText;
 		harray<unsigned int> unicodeChars = mUnicodeChars;
@@ -130,7 +130,7 @@ namespace aprilui
 			rect.h = h - 4;
 			color = mTextColor;
 			color.a = (unsigned char)(getDerivedAlpha() * 255 * color.a_f());
-			april::rendersys->drawColoredQuad(rect, color);
+			april::rendersys->drawFilledRect(rect, color);
 		}
 		mText = text;
 		mUnicodeChars = unicodeChars;

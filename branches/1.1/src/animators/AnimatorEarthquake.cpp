@@ -66,7 +66,7 @@ namespace aprilui
 			else if (mFreqTimer > 1.0f / mFreq)
 			{
 				mFreqTimer -= 1.0f / mFreq;
-				mParent->setPosition(mInitial + gvec2(hrand(intensity), hrand(intensity)));
+				mParent->setPosition(mInitial + gvec2((float)hrand((int)intensity), (float)hrand((int)intensity)));
 			}
 		}
 		

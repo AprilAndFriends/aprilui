@@ -115,7 +115,7 @@ namespace aprilui
 			
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			april::rendersys->setBlendMode(mBlendMode);
+			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
@@ -127,7 +127,7 @@ namespace aprilui
 		}
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			april::rendersys->setBlendMode(april::DEFAULT);
+			april::rendersys->setTextureBlendMode(april::DEFAULT);
 		}
 	}
 
@@ -156,7 +156,7 @@ namespace aprilui
 		
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			april::rendersys->setBlendMode(mBlendMode);
+			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
@@ -168,7 +168,7 @@ namespace aprilui
 		}
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
-			april::rendersys->setBlendMode(april::DEFAULT);
+			april::rendersys->setTextureBlendMode(april::DEFAULT);
 		}
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}

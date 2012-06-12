@@ -39,7 +39,7 @@ namespace aprilui
 		{
 			april::Color color;
 			color *= 0.7f;
-			color.a = getDerivedAlpha() * 255;
+			color.a = (unsigned char)(getDerivedAlpha() * 255);
 			mImage->draw(rect, color);
 			return;
 		}

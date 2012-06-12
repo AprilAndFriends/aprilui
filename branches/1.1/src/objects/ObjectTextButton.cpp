@@ -40,7 +40,7 @@ namespace aprilui
 		{
 			grect rect = mRect + offset;
 			float a=0.5f + /* 0.25f * cursorInside + */ 0.25f * mPushed;
-			april::rendersys->drawColoredQuad(rect, april::Color(COLOR_COMP_FOR_NEW_APRIL(0), 
+			april::rendersys->drawFilledRect(rect, april::Color(COLOR_COMP_FOR_NEW_APRIL(0), 
 																 COLOR_COMP_FOR_NEW_APRIL(0),
 																 COLOR_COMP_FOR_NEW_APRIL(0),
 																 COLOR_COMP_FOR_NEW_APRIL(a)));
@@ -49,7 +49,7 @@ namespace aprilui
 		else if (aprilui::isDebugMode())
 		{
 			grect rect = mRect + offset;
-			april::rendersys->drawColoredQuad(rect, april::Color(0, 0, 0, (int) (178 + 77 * (cursorInside && mPushed))));
+			april::rendersys->drawFilledRect(rect, april::Color(0, 0, 0, (int) (178 + 77 * (cursorInside && mPushed))));
 		}
 #endif
 		april::Color color = mTextColor;

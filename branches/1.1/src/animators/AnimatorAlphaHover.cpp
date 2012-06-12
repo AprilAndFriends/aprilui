@@ -49,7 +49,7 @@ namespace aprilui
 
 		void AlphaHover::update(float k)
 		{
-			float direction = (mParent->isCursorInside() ? 1 : -1);
+			int direction = (mParent->isCursorInside() ? 1 : -1);
 			mOwnerAlpha += mSpeed * k * direction;
 			mOwnerAlpha = hclamp(mOwnerAlpha, mMin, mMax);
 			mParent->setAlpha(mOwnerAlpha);
