@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.72
 /// 
 /// @section LICENSE
 /// 
@@ -74,7 +74,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-            _triggerEvent("MouseDown", button);
+			_triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
@@ -116,7 +116,7 @@ namespace aprilui
 		{
 			return true;
 		}
-        return Object::setProperty(name, value);
+		return Object::setProperty(name, value);
 	}
 	
 }

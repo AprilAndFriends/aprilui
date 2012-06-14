@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.72
 /// 
 /// @section LICENSE
 /// 
@@ -22,10 +22,11 @@ namespace aprilui
 		ButtonBase()
 	{
 		mText = "TextButton: " + name;
-		mBackground = true;
+		mUseBackground = true;
 		mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
 		mHoverTextColor = APRIL_COLOR_GREY;
 		mDisabledTextColor = APRIL_COLOR_GREY;
+		aprilui::log("WARNING: \"TextButton\" is deprecated, use \"TextImageButton\" without images instead"); // DEPRECATED
 	}
 
 	TextButton::~TextButton()
@@ -76,7 +77,7 @@ namespace aprilui
 				mTextColor = mHoverTextColor;
 			}
 		}
-		if (mBackground)
+		if (mUseBackground)
 		{
 			grect rect = _getDrawRect();
 			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, ((mHovered && mPushed) ? 255 : 191));
@@ -90,19 +91,59 @@ namespace aprilui
 	
 	hstr TextButton::getProperty(chstr name, bool* property_exists)
 	{
-		if (name == "background")		return mBackground;
-		if (name == "hover_color")		return getHoverTextColor().hex();
-		if (name == "pushed_color")		return getPushedTextColor().hex();
-		if (name == "disabled_color")	return getDisabledTextColor().hex();
+		if (name == "use_background")		return isUseBackground();
+		if (name == "hover_text_color")		return getHoverTextColor().hex();
+		if (name == "pushed_text_color")	return getPushedTextColor().hex();
+		if (name == "disabled_text_color")	return getDisabledTextColor().hex();
+		if (name == "background")
+		{
+			aprilui::log("WARNING: \"background\" is deprecated, use \"use_background\" instead"); // DEPRECATED
+			return isUseBackground();
+		}
+		if (name == "hover_color")
+		{
+			aprilui::log("WARNING: \"hover_color\" is deprecated, use \"hover_text_color\" instead"); // DEPRECATED
+			return getHoverTextColor().hex();
+		}
+		if (name == "pushed_color")
+		{
+			aprilui::log("WARNING: \"pushed_color\" is deprecated, use \"pushed_text_color\" instead"); // DEPRECATED
+			return getPushedTextColor().hex();
+		}
+		if (name == "disabled_color")
+		{
+			aprilui::log("WARNING: \"disabled_color\" is deprecated, use \"disabled_text_color\" instead"); // DEPRECATED
+			return getDisabledTextColor().hex();
+		}
 		return Label::getProperty(name, property_exists);
 	}
 	
 	bool TextButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "background")		mBackground = (bool)value;
-		else if (name == "hover_color")		setHoverTextColor(value);
-		else if (name == "pushed_color")	setPushedTextColor(value);
-		else if (name == "disabled_color")	setDisabledTextColor(value);
+		if		(name == "use_background")		setUseBackground(value);
+		else if (name == "hover_text_color")	setHoverTextColor(value);
+		else if (name == "pushed_text_color")	setPushedTextColor(value);
+		else if (name == "disabled_text_color")	setDisabledTextColor(value);
+		else if (name == "background")
+		{
+			aprilui::log("WARNING: \"background=\" is deprecated, use \"use_background=\" instead"); // DEPRECATED
+			setUseBackground(value);
+		}
+		else if (name == "hover_color")
+		{
+			aprilui::log("WARNING: \"hover_color=\" is deprecated, use \"hover_text_color=\" instead"); // DEPRECATED
+			setHoverTextColor(value);
+		}
+		else if (name == "pushed_color")
+		{
+			aprilui::log("WARNING: \"pushed_color=\" is deprecated, use \"pushed_text_color=\" instead"); // DEPRECATED
+			setPushedTextColor(value);
+		}
+		else if (name == "disabled_color")
+		{
+			aprilui::log("WARNING: \"disabled_color=\" is deprecated, use \"disabled_text_color=\" instead"); // DEPRECATED
+			setDisabledTextColor(value);
+		}
 		else return Label::setProperty(name, value);
 		return true;
 	}

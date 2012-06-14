@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.72
 /// 
 /// @section LICENSE
 /// 
@@ -32,17 +32,34 @@ namespace aprilui
 		static Object* createInstance(chstr name, grect rect);
 
 		hstr getName();
-		bool getUseDisabledColor() { return mUseDisabledColor; }
-		void setUseDisabledColor(bool value) { mUseDisabledColor = value; }
+		bool isUseBackground() { return mUseBackground; }
+		void setUseBackground(bool value) { mUseBackground = value; }
+		april::Color getHoverTextColor() { return mHoverTextColor; }
+		void setHoverTextColor(april::Color value) { mHoverTextColor = value; _mUseHoverTextColor = true; }
+		void setHoverTextColor(chstr value) { mHoverTextColor.set(value); _mUseHoverTextColor = true; }
+		april::Color getPushedTextColor() { return mPushedTextColor; }
+		void setPushedTextColor(april::Color value) { mPushedTextColor = value; _mUsePushedTextColor = true; }
+		void setPushedTextColor(chstr value) { mPushedTextColor.set(value); _mUsePushedTextColor = true; }
+		april::Color getDisabledTextColor() { return mDisabledTextColor; }
+		void setDisabledTextColor(april::Color value) { mDisabledTextColor = value; _mUseDisabledTextColor = true; }
+		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(value); _mUseDisabledTextColor = true; }
 
 		void setTextKey(chstr value);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		bool mUseDisabledColor;
+		bool mUseBackground;
+		april::Color mHoverTextColor;
+		april::Color mPushedTextColor;
+		april::Color mDisabledTextColor;
 		
 		void OnDraw();
+
+	private:
+		bool _mUseHoverTextColor;
+		bool _mUsePushedTextColor;
+		bool _mUseDisabledTextColor;
 
 	};
 	

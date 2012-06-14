@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.72
 /// 
 /// @section LICENSE
 /// 
@@ -33,6 +33,8 @@ namespace aprilui
 		
 		hstr getName();
 		bool isCursorInside();
+		bool isUseBackground() { return mUseBackground; }
+		void setUseBackground(bool value) { mUseBackground = value; }
 		april::Color getHoverTextColor() { return mHoverTextColor; }
 		void setHoverTextColor(april::Color value) { mHoverTextColor = value; }
 		void setHoverTextColor(chstr value) { mHoverTextColor.set(value); }
@@ -58,7 +60,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
 	protected:
-		bool mBackground;
+		bool mUseBackground;
 		april::Color mHoverTextColor;
 		april::Color mPushedTextColor;
 		april::Color mDisabledTextColor;
@@ -67,6 +69,7 @@ namespace aprilui
 		void OnDraw();
 		
 	};
+
 }
 
 #endif
