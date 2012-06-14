@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.72
 /// 
 /// @section LICENSE
 /// 
@@ -57,7 +57,7 @@ namespace aprilui
 		case atres::SHADOW:
 			text = "[s]" + text;
 			break;
-        default:
+		default:
 			break;
 		}
 		if (mTextFormatting)
@@ -70,9 +70,9 @@ namespace aprilui
 		}
 	}
 
-    hstr LabelBase::getProperty(chstr name, bool* property_exists)
-    {
-        if (property_exists != NULL)
+	hstr LabelBase::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
 		{
 			*property_exists = true;
 		}
@@ -100,17 +100,17 @@ namespace aprilui
 		{
 			if (mFontEffect == atres::SHADOW)	return "shadow";
 			if (mFontEffect == atres::BORDER)	return "border";
-            return "none";
+			return "none";
 		}
 		if (name == "offset_x")	return mDrawOffset.x;
-        if (name == "offset_y")	return mDrawOffset.y;
+		if (name == "offset_y")	return mDrawOffset.y;
 		if (property_exists != NULL)
 		{
 			*property_exists = false;
 		}
-        return "";
-    }
-    
+		return "";
+	}
+	
 	bool LabelBase::setProperty(chstr name,chstr value)
 	{
 		if (name == "font")				setFont(value);
@@ -150,8 +150,8 @@ namespace aprilui
 		}
 		else if (name == "offset_x")	mDrawOffset.x = (float)value;
 		else if (name == "offset_y")	mDrawOffset.y = (float)value;
-        else return false;
-        return true;
+		else return false;
+		return true;
 	}
 	
 	void LabelBase::setText(chstr value)
