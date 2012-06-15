@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.6
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -106,11 +106,12 @@ void april_init(const harray<hstr>& args)
 #endif
 	try
 	{
-		april::init();
-		april::createRenderSystem("");
-		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_tileimage");
+		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
+		april::createRenderSystem();
+		april::createWindow((int)viewport.w, (int)viewport.h, false, "demo_tileimage");
 		atres::init();
 		aprilui::init();
+		aprilui::setLocalization("en");
 		april::window->setUpdateCallback(&render);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tiledimage.dts");
 		dataset->load();

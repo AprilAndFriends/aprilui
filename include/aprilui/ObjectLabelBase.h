@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.5
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -20,6 +20,7 @@
 #include <atres/atres.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -69,7 +70,17 @@ namespace aprilui
 		atres::Effect mFontEffect;
 		april::Color mTextColor;
 		
+		virtual hstr _getTextEntry(chstr key) = 0;
+		virtual bool _hasTextKey(chstr key) = 0;
+
 		void _drawLabel(grect rect, april::Color color);
+		hstr _parseTextKey(chstr key);
+		bool _processArgs(chstr argString, harray<hstr>& args);
+		bool _preprocessFormat(chstr format, harray<hstr> args, hstr& preprocessedFormat, harray<hstr>& preprocessedArgs);
+		bool _processFormat(chstr format, harray<hstr> args, hstr& result);
+		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
+		bool _getFormatIndexes(chstr format, harray<int>& indexes);
+		harray<hstr> _getTextEntries(harray<hstr> keys);
 		
 	};
 	

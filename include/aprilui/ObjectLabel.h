@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -45,6 +45,9 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
 
 	protected:
+		hstr _getTextEntry(chstr key);
+		bool _hasTextKey(chstr key);
+
 		void OnDraw();
 		
 	};

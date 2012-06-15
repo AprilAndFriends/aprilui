@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.72
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -45,6 +45,16 @@ namespace aprilui
 	hstr TextImageButton::getName()
 	{
 		return ImageButton::getName();
+	}
+
+	hstr TextImageButton::_getTextEntry(chstr key)
+	{
+		return mDataset->getText(key);
+	}
+
+	bool TextImageButton::_hasTextKey(chstr key)
+	{
+		return mDataset->hasTextKey(key);
 	}
 
 	void TextImageButton::OnDraw()
@@ -91,8 +101,9 @@ namespace aprilui
 	
 	void TextImageButton::setTextKey(chstr value)
 	{
-		LabelBase::setTextKey(value);
-		setText(mDataset->getText(value));
+		hstr key = value; // in case value points to mTextKey.
+		setText(_parseTextKey(value));
+		LabelBase::setTextKey(key);
 	}
 
 	hstr TextImageButton::getProperty(chstr name, bool* property_exists)

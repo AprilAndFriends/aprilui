@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.72
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -39,6 +39,16 @@ namespace aprilui
 		return Object::getName();
 	}
 
+	hstr Label::_getTextEntry(chstr key)
+	{
+		return mDataset->getText(key);
+	}
+
+	bool Label::_hasTextKey(chstr key)
+	{
+		return mDataset->hasTextKey(key);
+	}
+
 	void Label::OnDraw()
 	{
 		Object::OnDraw();
@@ -61,8 +71,8 @@ namespace aprilui
 	
 	void Label::setTextKey(chstr value)
 	{
-		hstr key = value; // in case value points to mTextKey..
-		setText(mDataset->getText(value));
+		hstr key = value; // in case value points to mTextKey.
+		setText(_parseTextKey(value));
 		LabelBase::setTextKey(key);
 	}
 	

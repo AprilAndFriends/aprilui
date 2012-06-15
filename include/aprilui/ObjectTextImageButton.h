@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.72
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -54,6 +54,9 @@ namespace aprilui
 		april::Color mPushedTextColor;
 		april::Color mDisabledTextColor;
 		
+		hstr _getTextEntry(chstr key);
+		bool _hasTextKey(chstr key);
+
 		void OnDraw();
 
 	private:

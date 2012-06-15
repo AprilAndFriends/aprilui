@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.6
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -57,33 +57,6 @@ bool update(float k)
 	dataset->update(k);
 	dataset->getObject("root")->draw();
 	return true;
-}
-
-void onMouseDown(float x, float y, int button)
-{
-	aprilui::updateCursorPosition();
-	gvec2 position = aprilui::getCursorPosition();
-	aprilui::onMouseDown(position.x, position.y, button);
-}
-
-void onMouseUp(float x, float y, int button)
-{
-	aprilui::updateCursorPosition();
-	gvec2 position = aprilui::getCursorPosition();
-	aprilui::onMouseUp(position.x, position.y, button);
-}
-
-void onMouseMove(float x, float y)
-{
-	aprilui::updateCursorPosition();
-	gvec2 position = aprilui::getCursorPosition();
-	aprilui::onMouseMove(position.x, position.y);
-}
-
-void onMouseScroll(float x, float y)
-{
-	aprilui::updateCursorPosition();
-	aprilui::onMouseScroll(x, y);
 }
 
 void onKeyDown(unsigned int keycode)
@@ -165,15 +138,16 @@ void april_init(const harray<hstr>& args)
 #endif
 	try
 	{
-		april::init();
-		april::createRenderSystem("");
-		april::createRenderTarget((int)viewport.w, (int)viewport.h, false, "demo_gui");
+		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
+		april::createRenderSystem();
+		april::createWindow((int)viewport.w, (int)viewport.h, false, "demo_gui");
 		atres::init();
 		aprilui::init();
 		april::window->setUpdateCallback(&update);
-		april::window->setMouseCallbacks(&onMouseDown, &onMouseUp, &onMouseMove, &onMouseScroll);
+		april::window->setMouseCallbacks(&aprilui::onMouseDown, &aprilui::onMouseUp, &aprilui::onMouseMove, &aprilui::onMouseScroll);
 		april::window->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
+		aprilui::setLocalization("en");
 		aprilui::setViewport(viewport);
 		aprilui::setScreenViewport(drawRect);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
