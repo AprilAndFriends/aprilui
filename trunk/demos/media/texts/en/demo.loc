@@ -1,0 +1,14 @@
+﻿PUSH_ME_KEY
+{
+Push me
+}
+
+FORMATTED_KEY
+{
+Using formatting with %%s (test %%%%) like "%s".
+}
+
+NORMAL_KEY
+{
+100%.
+}

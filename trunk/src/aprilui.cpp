@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -376,6 +376,7 @@ namespace aprilui
 
 	void onMouseDown(int button)
 	{
+		aprilui::updateCursorPosition();
 		foreach_m (Dataset*, it, gDatasets)
 		{
 			it->second->onMouseDown(button);
@@ -384,6 +385,7 @@ namespace aprilui
 	
 	void onMouseUp(int button)
 	{
+		aprilui::updateCursorPosition();
 		foreach_m (Dataset*, it, gDatasets)
 		{
 			it->second->onMouseUp(button);
@@ -392,6 +394,7 @@ namespace aprilui
 	
 	void onMouseMove()
 	{
+		aprilui::updateCursorPosition();
 		foreach_m (Dataset*, it, gDatasets)
 		{
 			it->second->onMouseMove();
@@ -438,8 +441,5 @@ namespace aprilui
 	void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); } // DEPRECATED
 	void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); } // DEPRECATED
 	void OnChar(unsigned int charcode) { onChar(charcode); } // DEPRECATED
-	void onMouseDown(float x, float y, int button) { onMouseDown(button); } // DEPRECATED
-	void onMouseUp(float x, float y, int button) { onMouseUp(button); } // DEPRECATED
-	void onMouseMove(float x, float y) { onMouseMove(); } // DEPRECATED
 
 }

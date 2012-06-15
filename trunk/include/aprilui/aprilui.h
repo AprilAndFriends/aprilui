@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.75
 /// 
 /// @section LICENSE
 /// 
@@ -64,9 +64,9 @@ namespace aprilui
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	
 	apriluiFnExport gvec2 transformWindowPoint(gvec2 pt);
-    apriluiFnExport void updateCursorPosition();
+	apriluiFnExport void updateCursorPosition();
 	apriluiFnExport gvec2 getCursorPosition();
-    apriluiFnExport void setCursorPosition(gvec2 position);
+	apriluiFnExport void setCursorPosition(gvec2 position);
 	apriluiFnExport void setCursorImage(Image* image);
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
@@ -93,9 +93,6 @@ namespace aprilui
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyDown(unsigned int keycode);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyUp(unsigned int keycode);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnChar(unsigned int charcode);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void onMouseDown(float x, float y, int button);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void onMouseUp(float x, float y, int button);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void onMouseMove(float x, float y);
 	
 }
 
