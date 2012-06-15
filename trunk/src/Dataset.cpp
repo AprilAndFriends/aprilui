@@ -9,11 +9,9 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <april/april.h>
-#include <april/RamTexture.h>
 #include <april/RenderSystem.h>
+#include <april/Texture.h>
 #include <april/Window.h>
-#include <april/april.h>
-#include <april/RamTexture.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
@@ -120,11 +118,11 @@ namespace aprilui
 		delete object;
 	}
 	
-	void Dataset::_destroyTexture(april::Texture* texture)
+	void Dataset::_destroyTexture(Texture* texture)
 	{
 		if (!mTextures.has_key(texture->getFilename()))
 		{
-			throw ResourceNotExistsException(texture->getFilename(), "april::Texture", this);
+			throw ResourceNotExistsException(texture->getFilename(), "Texture", this);
 		}
 		mTextures.remove_key(texture->getFilename());
 		delete texture;
@@ -144,9 +142,9 @@ namespace aprilui
 	{
 		if (!mTextures.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "april::Texture", this);
+			throw ResourceNotExistsException(name, "Texture", this);
 		}
-		april::Texture* texture = mTextures[name];
+		Texture* texture = mTextures[name];
 		mTextures.remove_key(name);
 		delete texture;
 	}
@@ -198,11 +196,12 @@ namespace aprilui
 			}
 		}
 		
-		april::Texture* texture = april::rendersys->loadTexture(filepath, dynamicLoad);
-		if (texture == NULL)
+		april::Texture* aprilTexture = april::rendersys->loadTexture(filepath, dynamicLoad);
+		if (aprilTexture == NULL)
 		{
 			throw file_not_found(filepath);
 		}
+		Texture* texture = new Texture(aprilTexture);
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
@@ -214,13 +213,17 @@ namespace aprilui
 		{
 			texture->setAddressMode(april::Texture::ADDRESS_WRAP);
 		}
+		else
+		{
+			texture->setAddressMode(april::Texture::ADDRESS_CLAMP);
+		}
 		mTextures[textureName] = texture;
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
 		{
 			if (mImages.has_key(textureName))
 			{
-				throw ResourceExistsException(filename, "april::Texture", this);
+				throw ResourceExistsException(filename, "Texture", this);
 			}
 			mImages[textureName] = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
 		}
@@ -279,12 +282,12 @@ namespace aprilui
 			throw ResourceExistsException(filename, "RamTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		april::Texture* texture = april::rendersys->loadRamTexture(filepath, dynamicLoad);
-		if (!texture)
+		april::Texture* aprilTexture = april::rendersys->loadRamTexture(filepath, dynamicLoad);
+		if (!aprilTexture)
 		{
 			throw file_not_found(filepath);
 		}
-		mTextures[textureName] = texture;
+		mTextures[textureName] = new Texture(aprilTexture);
 	}
 	
 	void Dataset::parseCompositeImage(hlxml::Node* node)
@@ -601,7 +604,7 @@ namespace aprilui
 			delete it->second;
 		}
 		mImages.clear();
-		foreach_m (april::Texture*, it, mTextures)
+		foreach_m (Texture*, it, mTextures)
 		{
 			delete it->second;
 		}
@@ -654,20 +657,19 @@ namespace aprilui
 		mImages.remove_key(name);
 	}
 	
-	void Dataset::registerManualTexture(april::Texture* tex)
+	void Dataset::registerManualTexture(Texture* texture)
 	{
-		hstr name = tex->getFilename();
-
+		hstr name = texture->getFilename();
 		if (mTextures.has_key(name))
 		{
 			throw ResourceExistsException(name, "Texture", this);
 		}
-		mTextures[name] = tex;
+		mTextures[name] = texture;
 	}
 
-	void Dataset::unregisterManualTexture(april::Texture* tex)
+	void Dataset::unregisterManualTexture(Texture* texture)
 	{
-		hstr name = tex->getFilename();
+		hstr name = texture->getFilename();
 		if (!mTextures.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Texture", this);
@@ -727,7 +729,7 @@ namespace aprilui
 		return mObjects.try_get_by_key(name, NULL);
 	}
 	
-	april::Texture* Dataset::getTexture(chstr name)
+	Texture* Dataset::getTexture(chstr name)
 	{
 		if (!mTextures.has_key(name))
 		{
@@ -862,7 +864,7 @@ namespace aprilui
 	
 	void Dataset::updateTextures(float k)
 	{
-		foreach_m (april::Texture*, it, mTextures)
+		foreach_m (Texture*, it, mTextures)
 		{
 			it->second->update(k);
 		}
@@ -870,9 +872,12 @@ namespace aprilui
 	
 	void Dataset::unloadUnusedTextures()
 	{
-		foreach_m (april::Texture*, it, mTextures)
+		foreach_m (Texture*, it, mTextures)
 		{
-			if (it->second->isDynamic() && it->second->getUnusedTime() > 1) it->second->unload();
+			if (it->second->isDynamic() && it->second->getUnusedTime() > 1.0f)
+			{
+				it->second->unload();
+			}
 		}
 	}
 	

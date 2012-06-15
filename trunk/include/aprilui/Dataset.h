@@ -24,11 +24,6 @@
 
 #include "apriluiExport.h"
 
-namespace april
-{
-	class Texture;
-}
-
 namespace hlxml
 {
 	class Node;
@@ -36,10 +31,11 @@ namespace hlxml
 
 namespace aprilui
 {
-	#define REGISTER_CALLBACK(data_dict, fn) data_dict->registerCallback(#fn, fn)
+	#define REGISTER_CALLBACK(dataDict, fn) dataDict->registerCallback(#fn, fn)
 
 	class Object;
 	class Image;
+	class Texture;
 
 	class apriluiExport Dataset
 	{
@@ -56,8 +52,8 @@ namespace aprilui
 		void unregisterManualObject(Object* o);
 		void registerManualImage(Image* img);
 		void unregisterManualImage(Image* img);
-		void registerManualTexture(april::Texture* tex);
-		void unregisterManualTexture(april::Texture* tex);
+		void registerManualTexture(Texture* tex);
+		void unregisterManualTexture(Texture* tex);
 
 		void registerCallback(chstr name, void (*callback)());
 		void triggerCallback(chstr name);
@@ -88,7 +84,7 @@ namespace aprilui
 		
 		void _destroyTexture(chstr tex);
 		void _destroyImage(chstr img);
-		void _destroyTexture(april::Texture* tex);
+		void _destroyTexture(Texture* tex);
 		void _destroyImage(Image* img);
 		
 		void destroyObject(chstr name, bool recursive = false);
@@ -113,7 +109,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
-		virtual april::Texture* getTexture(chstr name);
+		virtual Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
 		virtual hstr getText(chstr name);
 		DEPRECATED_ATTRIBUTE bool textExists(chstr name);
@@ -165,7 +161,7 @@ namespace aprilui
 		Object* mFocusedObject;
 		Object* mRoot;
 		hmap<hstr, Object*> mObjects;
-		hmap<hstr, april::Texture*> mTextures;
+		hmap<hstr, Texture*> mTextures;
 		hmap<hstr, Image*> mImages;
 		hmap<hstr, hstr> mTexts;
 

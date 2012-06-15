@@ -13,30 +13,33 @@
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 
+#include "aprilui.h"
 #include "apriluiUtil.h"
 #include "ColorImage.h"
 
 namespace aprilui
 {
-	april::PlainVertex pVertices[4];
-	
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
+		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
 		mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
 	{
+		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
 		mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
 	{
+		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
 		mColor.set(color);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
 	{
+		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
 		mColor = color;
 	}
 
@@ -46,13 +49,13 @@ namespace aprilui
 
 	void ColorImage::draw(grect rect, april::Color color)
 	{
-		pVertices[0].x = rect.x;          pVertices[0].y = rect.y;
-		pVertices[1].x = rect.x + rect.w; pVertices[1].y = rect.y;
-		pVertices[2].x = rect.x;          pVertices[2].y = rect.y + rect.h;
-		pVertices[3].x = rect.x + rect.w; pVertices[3].y = rect.y + rect.h;
+		_pVertices[0].x = rect.x;          _pVertices[0].y = rect.y;
+		_pVertices[1].x = rect.x + rect.w; _pVertices[1].y = rect.y;
+		_pVertices[2].x = rect.x;          _pVertices[2].y = rect.y + rect.h;
+		_pVertices[3].x = rect.x + rect.w; _pVertices[3].y = rect.y + rect.h;
 		
 		april::rendersys->setTextureBlendMode(mBlendMode);
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color * mColor);
+		april::rendersys->render(april::TriangleStrip, _pVertices, 4, color * mColor);
 		april::rendersys->setTextureBlendMode(april::DEFAULT);
 	}
 

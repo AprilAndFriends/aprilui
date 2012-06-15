@@ -21,12 +21,12 @@ namespace aprilui
 		Label(name, rect),
 		ButtonBase()
 	{
+		aprilui::log("WARNING: \"TextButton\" is deprecated, use \"TextImageButton\" without images instead"); // DEPRECATED
 		mText = "TextButton: " + name;
 		mUseBackground = true;
 		mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
 		mHoverTextColor = APRIL_COLOR_GREY;
 		mDisabledTextColor = APRIL_COLOR_GREY;
-		aprilui::log("WARNING: \"TextButton\" is deprecated, use \"TextImageButton\" without images instead"); // DEPRECATED
 	}
 
 	TextButton::~TextButton()
