@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.71
+/// @version 1.8
 /// 
 /// @section LICENSE
 /// 
@@ -39,7 +39,7 @@ namespace aprilui
 	
 	NullImage nullImage;
 	
-	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath)
+	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath) : EventReceiver()
 	{
 		mFocusedObject = NULL;
 		mRoot = NULL;
@@ -201,7 +201,7 @@ namespace aprilui
 		{
 			throw file_not_found(filepath);
 		}
-		Texture* texture = new Texture(aprilTexture);
+		Texture* texture = new Texture(filepath, aprilTexture);
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
@@ -287,7 +287,7 @@ namespace aprilui
 		{
 			throw file_not_found(filepath);
 		}
-		mTextures[textureName] = new Texture(aprilTexture);
+		mTextures[textureName] = new Texture(filepath, aprilTexture);
 	}
 	
 	void Dataset::parseCompositeImage(hlxml::Node* node)
@@ -776,14 +776,9 @@ namespace aprilui
 		return image;
 	}
 	
-	hstr Dataset::getText(chstr name)
+	hstr Dataset::getTextEntry(chstr name)
 	{
 		return mTexts[name];
-	}
-	
-	bool Dataset::textExists(chstr name)
-	{
-		return hasTextKey(name);
 	}
 	
 	bool Dataset::hasTextKey(chstr name)
@@ -891,6 +886,20 @@ namespace aprilui
 		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			it->second->clearChildUnderCursor();
+		}
+	}
+
+	void Dataset::notifyEvent(chstr name, void* params)
+	{
+		if (name == "onLocalizationChanged")
+		{
+			mTexts.clear();
+			hstr filepath = normalize_path(mFilePath + "/" + getDefaultTextsPath() + "/" + getLocalization());
+			_loadTexts(filepath);
+		}
+		foreach_m (aprilui::Object*, it, mObjects)
+		{
+			it->second->notifyEvent(name, params);
 		}
 	}
 	

@@ -48,6 +48,8 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 
+		void notifyEvent(chstr name, void* params);
+
 	protected:
 		bool mUseBackground;
 		april::Color mHoverTextColor;

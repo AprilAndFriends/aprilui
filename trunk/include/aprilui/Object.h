@@ -23,6 +23,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "EventReceiver.h"
 
 namespace aprilui
 {
@@ -31,11 +32,11 @@ namespace aprilui
 	class Event;
 	class EventArgs;
 	
-	class apriluiExport Object
+	class apriluiExport Object : public EventReceiver
 	{
 	public:
 		Object(chstr name, grect rect);
-		virtual ~Object();
+		~Object();
 		
 		void addChild(Object* object);
 		void removeChild(Object* object);
@@ -166,8 +167,6 @@ namespace aprilui
 		
 		Object* findChildByName(chstr name);
 		
-		virtual void notifyEvent(chstr name, void* params);
-
 		void resetCenter();
 		
 		virtual hstr getProperty(chstr name, bool* property_exists = NULL);

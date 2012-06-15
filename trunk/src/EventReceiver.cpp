@@ -19,4 +19,9 @@ namespace aprilui
 	{
 	}
 	
+	void EventReceiver::notifyEvent(chstr name, void* params)
+	{
+
+	}
+
 }

@@ -26,7 +26,7 @@ namespace aprilui
 	class apriluiExport Texture : public EventReceiver
 	{
 	public:
-		Texture(april::Texture* texture);
+		Texture(chstr filename, april::Texture* texture);
 		~Texture();
 
 		hstr getFilename() { return mFilename; }
@@ -45,13 +45,14 @@ namespace aprilui
 
 		void load();
 		void unload();
+		void reload(chstr filename);
 		
 		void addDynamicLink(Texture* link);
 		void removeDynamicLink(Texture* link);
 
 	protected:
-		april::Texture* mTexture;
 		hstr mFilename;
+		april::Texture* mTexture;
 		gvec2 mScale;
 		float mUnusedTime;
 		bool mDynamic;

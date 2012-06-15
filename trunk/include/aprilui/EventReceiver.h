@@ -14,6 +14,8 @@
 #ifndef APRILUI_EVENT_RECEIVER_H
 #define APRILUI_EVENT_RECEIVER_H
 
+#include <hltypes/hstring.h>
+
 #include "apriluiExport.h"
 
 namespace aprilui
@@ -24,6 +26,8 @@ namespace aprilui
 	public:
 		EventReceiver();
 		virtual ~EventReceiver();
+
+		virtual void notifyEvent(chstr name, void* params);
 		
 	};
 

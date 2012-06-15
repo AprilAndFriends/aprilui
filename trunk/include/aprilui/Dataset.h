@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.71
+/// @version 1.8
 /// 
 /// @section LICENSE
 /// 
@@ -20,9 +20,9 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
-#include "Exception.h"
-
 #include "apriluiExport.h"
+#include "EventReceiver.h"
+#include "Exception.h"
 
 namespace hlxml
 {
@@ -37,13 +37,13 @@ namespace aprilui
 	class Image;
 	class Texture;
 
-	class apriluiExport Dataset
+	class apriluiExport Dataset : public EventReceiver
 	{
 	public:
 		Object* parseObject(hlxml::Node* node, Object* parent = NULL);
 		
 		Dataset(chstr filename, chstr name = "", bool useNameBasePath = false);
-		virtual ~Dataset();
+		~Dataset();
 
 		void load();
 		void unload();
@@ -89,8 +89,6 @@ namespace aprilui
 		
 		void destroyObject(chstr name, bool recursive = false);
 		void destroyObject(Object* object, bool recursive = false);
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { destroyObject(name, recursive); }
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { destroyObject(object, recursive); }
 
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
@@ -99,21 +97,11 @@ namespace aprilui
 		void onKeyDown(unsigned int keycode);
 		void onKeyUp(unsigned int keycode);
 		void onChar(unsigned int charcode);
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(); }
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 
 		virtual Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
-		virtual hstr getText(chstr name);
-		DEPRECATED_ATTRIBUTE bool textExists(chstr name);
-		virtual bool hasTextKey(chstr name);
+		virtual hstr getTextEntry(chstr key);
+		virtual bool hasTextKey(chstr key);
 		hmap<hstr, hstr>& getTexts() { return mTexts; }
 
 		hstr getName() { return mName; }
@@ -152,6 +140,22 @@ namespace aprilui
 		{
 			out = this->tryGetObject<T>(name);
 		}
+
+		void notifyEvent(chstr name, void* params);
+
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { destroyObject(name, recursive); }
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { destroyObject(object, recursive); }
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool textExists(chstr key) { return hasTextKey(key); }
+		DEPRECATED_ATTRIBUTE hstr getText(chstr key) { return getTextEntry(key); }
 
 	protected:
 		hstr mName;
