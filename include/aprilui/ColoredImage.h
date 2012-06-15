@@ -15,7 +15,6 @@
 #ifndef APRILUI_COLORED_IMAGE_H
 #define APRILUI_COLORED_IMAGE_H
 
-#include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 
@@ -25,10 +24,13 @@
 
 namespace aprilui
 {
+	class Texture;
+
 	class apriluiExport ColoredImage : public Image
 	{
 	public:
-		ColoredImage(april::Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = APRIL_COLOR_WHITE);
+		ColoredImage(Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = APRIL_COLOR_WHITE);
+		// TODO - has to be refactored
 		/// @brief Takes an Image instance and creates a Colored Image 
 		ColoredImage(Image& img, chstr name, april::Color color);
 		~ColoredImage();

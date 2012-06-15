@@ -27,7 +27,7 @@ namespace aprilui
 	class apriluiExport TiledImage : public Image
 	{
 	public:
-		TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
+		TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
 		~TiledImage();
 		
 		gvec2 getTile() { return mTile; }

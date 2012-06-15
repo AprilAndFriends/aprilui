@@ -15,53 +15,58 @@
 #ifndef APRILUI_IMAGE_H
 #define APRILUI_IMAGE_H
 
-#include <april/RenderSystem.h>
+#include <april/aprilUtil.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Texture.h"
+
+namespace april
+{
+	class Texture;
+}
 
 namespace aprilui
 {
-	extern april::TexturedVertex tVertices[4];
-	extern april::PlainVertex pVertices[4];
-	
 	class apriluiExport Image
 	{
 	public:
-		Image(april::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
+		Image(Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
 		Image(Image& img, chstr name);
 		virtual ~Image();
 		
 		virtual void draw(grect rect, april::Color color = APRIL_COLOR_WHITE);
 		void draw(grect rect, april::Color color, float angle);
 		
-		bool isVertical() { return mVertical; };
-		bool isXInverted() { return mInvertX; };
-		bool isYInverted() { return mInvertY; };
-
-		april::Texture* getTexture();
+		Texture* getTexture() const { return mTexture; }
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
 		grect getSrcRect() const { return mSrcRect; }
-		void setSrcRect(grect rect) { mSrcRect=rect; }
+		void setSrcRect(grect value) { mSrcRect = value; }
+		bool isVertical() { return mVertical; };
+		bool isXInverted() { return mInvertX; };
+		bool isYInverted() { return mInvertY; };
         
 		april::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
 		
 	protected:
-		april::Texture* mTexture;
+		Texture* mTexture;
 		hstr mName;
 		hstr mImageName;
 		grect mSrcRect;
 		april::BlendMode mBlendMode;
 		bool mVertical;
-		bool mUnloadedFlag;
 		bool mInvertX;
 		bool mInvertY;
-		
-		void _updateTexCoords();
+		bool mTextureCoordinatesLoaded;
+
+		void _tryLoadTexCoords();
+
+	private:
+		april::TexturedVertex _tVertexes[4];
 		
 	};
 

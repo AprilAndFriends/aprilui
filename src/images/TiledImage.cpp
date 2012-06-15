@@ -13,11 +13,12 @@
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 
+#include "Texture.h"
 #include "TiledImage.h"
 
 namespace aprilui
 {
-	TiledImage::TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
+	TiledImage::TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
 		Image(texture, name, source, vertical)
 	{
 		mTile.set(tileW, tileH);
@@ -100,6 +101,7 @@ namespace aprilui
 			mSrcRect.h -= srcDifference;
 			tileRect.h -= difference;
 		}
+		mTextureCoordinatesLoaded = false; // srcRect has been changed
 		Image::draw(tileRect, color);
 		mSrcRect = src;
 	}
