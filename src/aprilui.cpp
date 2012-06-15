@@ -222,6 +222,10 @@ namespace aprilui
 	void setLocalization(chstr value)
 	{
 		localization = value;
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->notifyEvent("onLocalizationChanged", NULL);
+		}
 	}
 
 	hmap<hstr, Dataset*> getDatasets()

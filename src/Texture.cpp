@@ -14,8 +14,9 @@
 namespace aprilui
 {
 	// TODO - refactor april to support a "TextureInterface" class or something like that
-	Texture::Texture(april::Texture* texture) : EventReceiver()
+	Texture::Texture(chstr filename, april::Texture* texture) : EventReceiver()
 	{
+		mFilename = filename;
 		mTexture = texture;
 		mFilter = texture->getFilter();
 		mAddressMode = texture->getAddressMode();
@@ -102,12 +103,20 @@ namespace aprilui
 
 	void Texture::unload()
 	{
-		mUnusedTime = 0.0f;
-		mTexture->load();
-		foreach (Texture*, it, mDynamicLinks)
+		mTexture->unload();
+	}
+
+	void Texture::reload(chstr filename)
+	{
+		if (mTexture != NULL)
 		{
-			(*it)->load();
+			delete mTexture;
 		}
+		mUnusedTime = 0.0f;
+		mFilename = filename;
+		mTexture = april::rendersys->loadTexture(filename, mDynamic);
+		mTexture->setFilter(mFilter);
+		mTexture->setAddressMode(mAddressMode);
 	}
 
 	void Texture::addDynamicLink(Texture* link)

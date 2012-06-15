@@ -69,6 +69,13 @@ void onKeyDown(unsigned int keycode)
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 		break;
+	case april::AK_BACK:
+		{
+			aprilui::Texture* texture = dataset->getTexture("texture");
+			texture->reload(texture->getFilename().starts_with("../media/texture") ? "../media/transparency" : "../media/texture");
+		}
+		aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
+		break;
 	case april::AK_N:
 		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
 		if (object->getHeight() > 128)

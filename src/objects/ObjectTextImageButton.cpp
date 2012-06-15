@@ -49,7 +49,7 @@ namespace aprilui
 
 	hstr TextImageButton::_getTextEntry(chstr key)
 	{
-		return mDataset->getText(key);
+		return mDataset->getTextEntry(key);
 	}
 
 	bool TextImageButton::_hasTextKey(chstr key)
@@ -97,6 +97,18 @@ namespace aprilui
 		}
 		LabelBase::_drawLabel(rect, drawColor);
 		mTextColor = color;
+	}
+	
+	void TextImageButton::notifyEvent(chstr name, void* params)
+	{
+		if (name == "onLocalizationChanged")
+		{
+			if (mTextKey != "")
+			{
+				setTextKey(mTextKey);
+			}
+		}
+		ImageButton::notifyEvent(name, params);
 	}
 	
 	void TextImageButton::setTextKey(chstr value)

@@ -55,7 +55,8 @@ namespace aprilui
 		int countX = (int)ceil((rect.w - scrollX) / tileW);
 		int countY = (int)ceil((rect.h - scrollY) / tileH);
 		int i;
-		for_iter (j, 0, countY)
+		int j;
+		for_iterx (j, 0, countY)
 		{
 			for_iterx (i, 0, countX)
 			{

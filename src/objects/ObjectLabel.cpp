@@ -41,7 +41,7 @@ namespace aprilui
 
 	hstr Label::_getTextEntry(chstr key)
 	{
-		return mDataset->getText(key);
+		return mDataset->getTextEntry(key);
 	}
 
 	bool Label::_hasTextKey(chstr key)
@@ -62,9 +62,12 @@ namespace aprilui
 
 	void Label::notifyEvent(chstr name, void* params)
 	{
-		if (name == "UpdateText")
+		if (name == "onLocalizationChanged")
 		{
-			setTextKey(mTextKey);
+			if (mTextKey != "")
+			{
+				setTextKey(mTextKey);
+			}
 		}
 		Object::notifyEvent(name, params);
 	}
@@ -72,6 +75,7 @@ namespace aprilui
 	void Label::setTextKey(chstr value)
 	{
 		hstr key = value; // in case value points to mTextKey.
+		// TODO - should be refactored so setText does not "destroy" Textkey
 		setText(_parseTextKey(value));
 		LabelBase::setTextKey(key);
 	}

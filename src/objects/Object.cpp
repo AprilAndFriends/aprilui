@@ -80,7 +80,7 @@
 
 namespace aprilui
 {
-	Object::Object(chstr name, grect rect)
+	Object::Object(chstr name, grect rect) : EventReceiver()
 	{
 		mName = name;
 		mRect = rect;
@@ -684,11 +684,6 @@ namespace aprilui
 			EventArgs args(this, x, y, keycode, extra);
 			mEvents[name]->execute(&args);
 		}
-	}
-
-	void Object::notifyEvent(chstr name, void* params)
-	{
-
 	}
 
 	void Object::resetCenter()
