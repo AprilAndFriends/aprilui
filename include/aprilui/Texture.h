@@ -19,16 +19,16 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "EventReceiver.h"
 
 namespace aprilui
 {
-	class apriluiExport Texture : public EventReceiver
+	class apriluiExport Texture
 	{
 	public:
 		Texture(chstr filename, april::Texture* texture);
 		~Texture();
 
+		hstr getOriginalFilename() { return mOriginalFilename; }
 		hstr getFilename() { return mFilename; }
 		gvec2 getScale() { return mScale; }
 		float getUnusedTime() { return mUnusedTime; }
@@ -51,6 +51,7 @@ namespace aprilui
 		void removeDynamicLink(Texture* link);
 
 	protected:
+		hstr mOriginalFilename;
 		hstr mFilename;
 		april::Texture* mTexture;
 		gvec2 mScale;

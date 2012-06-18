@@ -34,19 +34,9 @@ namespace aprilui
 		return new Label(name, rect);
 	}
 
-	hstr Label::getName()
+	Dataset* Label::getDataset()
 	{
-		return Object::getName();
-	}
-
-	hstr Label::_getTextEntry(chstr key)
-	{
-		return mDataset->getTextEntry(key);
-	}
-
-	bool Label::_hasTextKey(chstr key)
-	{
-		return mDataset->hasTextKey(key);
+		return Object::getDataset();
 	}
 
 	void Label::OnDraw()
@@ -70,14 +60,6 @@ namespace aprilui
 			}
 		}
 		Object::notifyEvent(name, params);
-	}
-	
-	void Label::setTextKey(chstr value)
-	{
-		hstr key = value; // in case value points to mTextKey.
-		// TODO - should be refactored so setText does not "destroy" Textkey
-		setText(_parseTextKey(value));
-		LabelBase::setTextKey(key);
 	}
 	
 	bool Label::onMouseDown(int button)

@@ -100,9 +100,11 @@ namespace aprilui
 
 		virtual Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
-		virtual hstr getTextEntry(chstr key);
-		virtual bool hasTextKey(chstr key);
-		hmap<hstr, hstr>& getTexts() { return mTexts; }
+		virtual hstr getTextEntry(chstr textKey);
+		virtual bool hasTextKey(chstr textKey);
+		virtual hstr getText(chstr compositeTextKey);
+		hmap<hstr, hstr>& getTextEntries() { return mTexts; }
+		harray<hstr> getTextEntries(harray<hstr> keys);
 
 		hstr getName() { return mName; }
 
@@ -155,7 +157,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 		DEPRECATED_ATTRIBUTE bool textExists(chstr key) { return hasTextKey(key); }
-		DEPRECATED_ATTRIBUTE hstr getText(chstr key) { return getTextEntry(key); }
+		DEPRECATED_ATTRIBUTE hmap<hstr, hstr>& getTexts() { return getTextEntries(); }
 
 	protected:
 		hstr mName;
@@ -186,6 +188,15 @@ namespace aprilui
 		void readFile(chstr filename);
 		void _loadTexts(chstr path);
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
+		hstr _makeLocalizedTextureName(chstr filename);
+
+		hstr _parseCompositeTextKey(chstr key);
+		bool _processCompositeTextKeyArgs(chstr argString, harray<hstr>& args);
+		bool _preprocessCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& preprocessedFormat, harray<hstr>& preprocessedArgs);
+		bool _processCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& result);
+		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
+		bool _getCompositeTextKeyFormatIndexes(chstr format, harray<int>& indexes);
+
 		
 	};
 

@@ -35,11 +35,11 @@ namespace aprilui
 		LabelBase();
 		virtual ~LabelBase();
 		
-		virtual hstr getName() = 0;
+		virtual Dataset* getDataset() = 0;
 		hstr getText() { return mText; }
-		virtual void setText(chstr value);
+		void setText(chstr value);
 		hstr getTextKey() { return mTextKey; }
-		virtual void setTextKey(chstr value) { mTextKey = value; }
+		void setTextKey(chstr value);
 		
 		hstr getFont() { return mFontName; }
 		void setFont(chstr value) { mFontName = value; }
@@ -56,6 +56,7 @@ namespace aprilui
 		void setTextColor(april::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.set(value); }
 		
+		virtual void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
@@ -70,17 +71,7 @@ namespace aprilui
 		atres::Effect mFontEffect;
 		april::Color mTextColor;
 		
-		virtual hstr _getTextEntry(chstr key) = 0;
-		virtual bool _hasTextKey(chstr key) = 0;
-
 		void _drawLabel(grect rect, april::Color color);
-		hstr _parseTextKey(chstr key);
-		bool _processArgs(chstr argString, harray<hstr>& args);
-		bool _preprocessFormat(chstr format, harray<hstr> args, hstr& preprocessedFormat, harray<hstr>& preprocessedArgs);
-		bool _processFormat(chstr format, harray<hstr> args, hstr& result);
-		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
-		bool _getFormatIndexes(chstr format, harray<int>& indexes);
-		harray<hstr> _getTextEntries(harray<hstr> keys);
 		
 	};
 	

@@ -31,7 +31,7 @@ namespace aprilui
 		~TextImageButton();
 		static Object* createInstance(chstr name, grect rect);
 
-		hstr getName();
+		Dataset* getDataset();
 		bool isUseBackground() { return mUseBackground; }
 		void setUseBackground(bool value) { mUseBackground = value; }
 		april::Color getHoverTextColor() { return mHoverTextColor; }
@@ -44,11 +44,9 @@ namespace aprilui
 		void setDisabledTextColor(april::Color value) { mDisabledTextColor = value; _mUseDisabledTextColor = true; }
 		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(value); _mUseDisabledTextColor = true; }
 
-		void setTextKey(chstr value);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
-		bool setProperty(chstr name, chstr value);
-
 		void notifyEvent(chstr name, void* params);
+		bool setProperty(chstr name, chstr value);
 
 	protected:
 		bool mUseBackground;
@@ -56,9 +54,6 @@ namespace aprilui
 		april::Color mPushedTextColor;
 		april::Color mDisabledTextColor;
 		
-		hstr _getTextEntry(chstr key);
-		bool _hasTextKey(chstr key);
-
 		void OnDraw();
 
 	private:
