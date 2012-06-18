@@ -96,6 +96,10 @@ namespace aprilui
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyUp(unsigned int keycode);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnChar(unsigned int charcode);
 	
+	// TODO - hack, has to be removed completely
+	apriluiFnExport bool getForcedDynamicLoading();
+	apriluiFnExport void setForcedDynamicLoading(bool value);
+
 }
 
 #endif
