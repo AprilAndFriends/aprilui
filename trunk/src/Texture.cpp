@@ -9,13 +9,15 @@
 
 #include <april/RenderSystem.h>
 
+#include "aprilui.h"
 #include "Texture.h"
 
 namespace aprilui
 {
 	// TODO - refactor april to support a "TextureInterface" class or something like that
-	Texture::Texture(chstr filename, april::Texture* texture) : EventReceiver()
+	Texture::Texture(chstr filename, april::Texture* texture)
 	{
+		mOriginalFilename = filename;
 		mFilename = filename;
 		mTexture = texture;
 		mFilter = texture->getFilter();
@@ -79,7 +81,7 @@ namespace aprilui
 		if (mDynamic && mTexture->isLoaded())
 		{
 			// TODO - change to aprilui variable
-			float maxTime = april::rendersys->getTextureIdleUnloadTime();
+			float maxTime = aprilui::getTextureIdleUnloadTime();
 			if (maxTime > 0.0f)
 			{
 				mUnusedTime += k;
@@ -108,15 +110,22 @@ namespace aprilui
 
 	void Texture::reload(chstr filename)
 	{
-		if (mTexture != NULL)
+		if (mFilename != filename)
 		{
-			delete mTexture;
+			if (mTexture != NULL)
+			{
+				delete mTexture;
+			}
+			mUnusedTime = 0.0f;
+			mFilename = filename;
+			mTexture = april::rendersys->loadTexture(mFilename, mDynamic);
+			if (mTexture == NULL)
+			{
+				throw file_not_found(mFilename);
+			}
+			mTexture->setFilter(mFilter);
+			mTexture->setAddressMode(mAddressMode);
 		}
-		mUnusedTime = 0.0f;
-		mFilename = filename;
-		mTexture = april::rendersys->loadTexture(filename, mDynamic);
-		mTexture->setFilter(mFilter);
-		mTexture->setAddressMode(mAddressMode);
 	}
 
 	void Texture::addDynamicLink(Texture* link)

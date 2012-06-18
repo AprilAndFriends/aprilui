@@ -42,19 +42,9 @@ namespace aprilui
 		return new TextImageButton(name, rect);
 	}
 
-	hstr TextImageButton::getName()
+	Dataset* TextImageButton::getDataset()
 	{
-		return ImageButton::getName();
-	}
-
-	hstr TextImageButton::_getTextEntry(chstr key)
-	{
-		return mDataset->getTextEntry(key);
-	}
-
-	bool TextImageButton::_hasTextKey(chstr key)
-	{
-		return mDataset->hasTextKey(key);
+		return ImageButton::getDataset();
 	}
 
 	void TextImageButton::OnDraw()
@@ -101,23 +91,10 @@ namespace aprilui
 	
 	void TextImageButton::notifyEvent(chstr name, void* params)
 	{
-		if (name == "onLocalizationChanged")
-		{
-			if (mTextKey != "")
-			{
-				setTextKey(mTextKey);
-			}
-		}
 		ImageButton::notifyEvent(name, params);
+		LabelBase::notifyEvent(name, params);
 	}
 	
-	void TextImageButton::setTextKey(chstr value)
-	{
-		hstr key = value; // in case value points to mTextKey.
-		setText(_parseTextKey(value));
-		LabelBase::setTextKey(key);
-	}
-
 	hstr TextImageButton::getProperty(chstr name, bool* property_exists)
 	{
 		bool exists = false;

@@ -56,6 +56,8 @@ namespace aprilui
 	apriluiFnExport void setDefaultTextsPath(chstr value);
 	apriluiFnExport hstr getLocalization();
 	apriluiFnExport void setLocalization(chstr localization);
+	apriluiFnExport float getTextureIdleUnloadTime();
+	apriluiFnExport void setTextureIdleUnloadTime(float value);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect));

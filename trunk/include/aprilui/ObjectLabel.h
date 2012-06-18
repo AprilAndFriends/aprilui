@@ -31,8 +31,7 @@ namespace aprilui
 		~Label();
 		static Object* createInstance(chstr name, grect rect);
 		
-		hstr getName();
-		void setTextKey(chstr value);
+		Dataset* getDataset();
 
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
@@ -45,9 +44,6 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
 
 	protected:
-		hstr _getTextEntry(chstr key);
-		bool _hasTextKey(chstr key);
-
 		void OnDraw();
 		
 	};

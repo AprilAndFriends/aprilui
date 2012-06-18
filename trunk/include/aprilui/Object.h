@@ -171,7 +171,7 @@ namespace aprilui
 		
 		virtual hstr getProperty(chstr name, bool* property_exists = NULL);
 		virtual bool setProperty(chstr name, chstr value);
-		Dataset* getDataset() { return mDataset; }
+		virtual Dataset* getDataset() { return mDataset; }
 		void _setDataset(Dataset* value) { mDataset = value; }
 		
 		// dynamic animators

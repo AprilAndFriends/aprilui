@@ -49,6 +49,7 @@ namespace aprilui
 	bool debugEnabled = false;
 	hstr defaultTextsPath = "texts";
 	hstr localization = "";
+	float textureIdleUnloadTime = 0.0f;
 
 	void aprilui_writelog(chstr message)
 	{
@@ -82,6 +83,7 @@ namespace aprilui
 		debugEnabled = false;
 		defaultTextsPath = "texts";
 		localization = "";
+		textureIdleUnloadTime = 0.0f;
 		viewport.w = (float)april::window->getWidth();
 		viewport.h = (float)april::window->getHeight();
 		screenViewport = viewport;
@@ -226,6 +228,16 @@ namespace aprilui
 		{
 			it->second->notifyEvent("onLocalizationChanged", NULL);
 		}
+	}
+
+	float getTextureIdleUnloadTime()
+	{
+		return textureIdleUnloadTime;
+	}
+
+	void setTextureIdleUnloadTime(float value)
+	{
+		textureIdleUnloadTime = value;
 	}
 
 	hmap<hstr, Dataset*> getDatasets()

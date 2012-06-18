@@ -69,6 +69,13 @@ namespace aprilui
 		{
 			setImageByName(mImageName);
 		}
+		if (name == "onLocalizationChanged")
+		{
+			if (mImageName != "")
+			{
+				setImageByName(mImageName);
+			}
+		}
 		Object::notifyEvent(name, params);
 	}
 	

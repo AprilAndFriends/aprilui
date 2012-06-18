@@ -159,6 +159,21 @@ namespace aprilui
 		mImages.remove_key(name);
 		delete image;
 	}
+
+	hstr Dataset::_makeLocalizedTextureName(chstr filename)
+	{
+		hstr localization = getLocalization();
+		if (localization != "")
+		{
+			hstr locpath = get_basedir(filename) + "/" + localization + "/" + get_basename(filename);
+			locpath = april::rendersys->findTextureFilename(locpath);
+			if (locpath != "")
+			{
+				return locpath;
+			}
+		}
+		return filename;
+	}
 	
 	void Dataset::parseTexture(hlxml::Node* node)
 	{
@@ -171,31 +186,8 @@ namespace aprilui
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		
-		hstr localization = getLocalization();
-		if (localization != "")
-		{
-			hstr locpath = get_basedir(filepath) + "/" + localization + "/" + get_basename(filepath);
-			if (hresource::exists(locpath))
-			{
-				filepath = locpath;
-			}
-			else
-			{
-				hstr name;
-				harray<hstr> extensions = april::getTextureExtensions();
-				foreach (hstr, it, extensions)
-				{
-					name = locpath + (*it);
-					if (hresource::exists(name))
-					{
-						filepath = locpath;
-						break;
-					}
-				}
-			}
-		}
-		
+
+		filepath = _makeLocalizedTextureName(filepath);
 		april::Texture* aprilTexture = april::rendersys->loadTexture(filepath, dynamicLoad);
 		if (aprilTexture == NULL)
 		{
@@ -776,16 +768,26 @@ namespace aprilui
 		return image;
 	}
 	
-	hstr Dataset::getTextEntry(chstr name)
+	hstr Dataset::getTextEntry(chstr textKey)
 	{
-		return mTexts[name];
+		return mTexts[textKey];
 	}
 	
-	bool Dataset::hasTextKey(chstr name)
+	bool Dataset::hasTextKey(chstr textKey)
 	{
-		return mTexts.has_key(name);
+		return mTexts.has_key(textKey);
 	}
 	
+	hstr Dataset::getText(chstr compositeTextKey)
+	{
+		return _parseCompositeTextKey(compositeTextKey);
+	}
+	
+	harray<hstr> Dataset::getTextEntries(harray<hstr> keys)
+	{
+		return mTexts.values(keys & mTexts.keys());
+	}
+
 	void Dataset::registerCallback(chstr name, void (*callback)())
 	{
 		mCallbacks[name] = callback;
@@ -896,6 +898,10 @@ namespace aprilui
 			mTexts.clear();
 			hstr filepath = normalize_path(mFilePath + "/" + getDefaultTextsPath() + "/" + getLocalization());
 			_loadTexts(filepath);
+			foreach_m (aprilui::Texture*, it, mTextures)
+			{
+				it->second->reload(_makeLocalizedTextureName(it->second->getOriginalFilename()));
+			}
 		}
 		foreach_m (aprilui::Object*, it, mObjects)
 		{
@@ -903,4 +909,204 @@ namespace aprilui
 		}
 	}
 	
+	hstr Dataset::_parseCompositeTextKey(chstr key)
+	{
+		if (!key.starts_with("{"))
+		{
+			if (!mTexts.has_key(key))
+			{
+				aprilui::log(hsprintf("WARNING! Text key '%s' does not exist", key.c_str()));
+			}
+			return mTexts[key];
+		}
+		int index = key.find_first_of('}');
+		if (index < 0)
+		{
+			aprilui::log(hsprintf("WARNING! Error while trying to parse formatted key '%s'.", key.c_str()));
+			return key;
+		}
+		harray<hstr> args;
+		hstr format = key(1, index - 1);
+		hstr argString = key(index + 1, key.size() - index - 1).trim(' ');
+		if (!_processCompositeTextKeyArgs(argString, args))
+		{
+			aprilui::log(hsprintf("- while processing args: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			return key;
+		}
+		hstr preprocessedFormat;
+		harray<hstr> preprocessedArgs;
+		if (!_preprocessCompositeTextKeyFormat(format, args, preprocessedFormat, preprocessedArgs))
+		{
+			aprilui::log(hsprintf("- while preprocessing format: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			return key;
+		}
+		hstr result;
+		if (!_processCompositeTextKeyFormat(preprocessedFormat, preprocessedArgs, result))
+		{
+			aprilui::log(hsprintf("- while processing format: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			return key;
+		}
+		return result;
+	}
+
+
+	bool Dataset::_processCompositeTextKeyArgs(chstr argString, harray<hstr>& args)
+	{
+		args.clear();
+		// splittings args
+		hstr string = argString;
+		harray<hstr> keys;
+		int openIndex;
+		int closeIndex;
+		while (string.size() > 0)
+		{
+			openIndex = string.find_first_of('{');
+			closeIndex = string.find_first_of('}');
+			if (openIndex < 0 && closeIndex < 0)
+			{
+				args += getTextEntries(string.split(" ", -1, true));
+				break;
+			}
+			if (openIndex < 0 || closeIndex < 0)
+			{
+				aprilui::log("WARNING! '{' without '}' or '}' without '{'");
+				return false;
+			}
+			if (closeIndex < openIndex)
+			{
+				aprilui::log("WARNING! '}' before '{'");
+				return false;
+			}
+			// getting all args before the {
+			args += getTextEntries(string(0, openIndex).split(" ", -1, true));
+			// getting args inside of {}
+			args += string(openIndex + 1, closeIndex - openIndex - 1);
+			// rest of the args
+			string = string(closeIndex + 1, string.size() - closeIndex - 1);
+		}
+		return true;
+	}
+
+	bool Dataset::_preprocessCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& preprocessedFormat, harray<hstr>& preprocessedArgs)
+	{
+		preprocessedFormat = "";
+		preprocessedArgs.clear();
+		// preprocessing of format string and args
+		hstr string = format;
+		int index;
+		hstr arg;
+		harray<int> indexes;
+		while (string.size() > 0)
+		{
+			index = string.find_first_of('%');
+			if (index < 0)
+			{
+				preprocessedFormat += string;
+				break;
+			}
+			if (index >= string.size() - 1)
+			{
+				aprilui::log("WARNING! Last character is '%'");
+				return false;
+			}
+			if (string[index + 1] == '%') // escaped "%", continue processing
+			{
+				preprocessedFormat += string(0, index + 2);
+				string = string(index + 2, string.size() - index - 2);
+				continue;
+			}
+			if (string[index + 1] == 's') // %s, not processing that now
+			{
+				if (args.size() == 0)
+				{
+					aprilui::log("WARNING! Not enough args");
+					return false;
+				}
+				preprocessedFormat += string(0, index + 2);
+				string = string(index + 2, string.size() - index - 2);
+				preprocessedArgs += args.pop_first();
+				continue;
+			}
+			if (string[index + 1] == 'f')
+			{
+				if (args.size() == 0)
+				{
+					aprilui::log("WARNING! Not enough args");
+					return false;
+				}
+				preprocessedFormat += string(0, index) + args.pop_first();
+				string = string(index + 2, string.size() - index - 2);
+			}
+		}
+		preprocessedArgs += args; // remaining args
+		return true;
+	}
+
+	bool Dataset::_processCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& result)
+	{
+		result = "";
+		// preprocessing of format string and args
+		hstr string = format;
+		harray<int> indexes;
+		if (!_getCompositeTextKeyFormatIndexes(format, indexes))
+		{
+			return false;
+		}
+		if (args.size() < indexes.size())
+		{
+			aprilui::log("WARNING! Not enough args");
+			return false;
+		}
+		if (indexes.size() > args.size())
+		{
+			aprilui::log("WARNING! Too many args");
+			return false;
+		}
+		foreach (int, it, indexes)
+		{
+			result += string(0, (*it));
+			result += args.pop_first();
+			string = string((*it) + 2, string.size() - (*it) - 2);
+		}
+		result = result.replace("%%", "%");
+		return true;
+	}
+
+	bool Dataset::_getCompositeTextKeyFormatIndexes(chstr format, harray<int>& indexes)
+	{
+		indexes.clear();
+		// finding formatting indexes
+		hstr string = format;
+		int index;
+		int currentIndex = 0;
+		while (string.size() > 0)
+		{
+			index = string.find_first_of('%');
+			if (index < 0)
+			{
+				break;
+			}
+			if (index >= string.size() - 1)
+			{
+				aprilui::log("WARNING! Last character is '%'");
+				return false;
+			}
+			if (string[index + 1] == '%') // escaped "%", use just one "%".
+			{
+				string = string(index + 2, string.size() - index - 2);
+				currentIndex += index + 2;
+				continue;
+			}
+			if (string[index + 1] != 's')
+			{
+				aprilui::log(hsprintf("WARNING! Unsupported formatting '%%%c'", string[index + 1]));
+				return false;
+			}
+			indexes += currentIndex + index;
+			string = string(index + 2, string.size() - index - 2);
+			currentIndex = 0;
+		}
+		return true;
+	}
+
 }
