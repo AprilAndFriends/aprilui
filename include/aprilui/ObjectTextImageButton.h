@@ -24,7 +24,9 @@ namespace aprilui
 	public:
 		TextImageButton(chstr name, grect rect);
 		
-		void setTextKey(chstr key);
+		Dataset* getDataset();
+
+		void notifyEvent(chstr name, void* params);
 		bool setProperty(chstr name, chstr value);
 		
 	protected:

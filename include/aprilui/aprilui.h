@@ -22,6 +22,7 @@ namespace aprilui
 	apriluiFnExport void init();
 	apriluiFnExport void destroy();
 	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
+	void log(chstr message, chstr prefix = "[aprilui] ");
 	void logMessage(chstr message, chstr prefix = "[aprilui] ");
 	void aprilui_writelog(chstr message);
 	
@@ -39,8 +40,10 @@ namespace aprilui
 	apriluiFnExport void updateTextures(float time);
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr path);
-	apriluiFnExport void setLocalization(chstr localization);
 	apriluiFnExport hstr getLocalization();
+	apriluiFnExport void setLocalization(chstr localization);
+	apriluiFnExport float getTextureIdleUnloadTime();
+	apriluiFnExport void setTextureIdleUnloadTime(float value);
 	
 	DEPRECATED_ATTRIBUTE apriluiFnExport gvec2 getCursorPos();
 	DEPRECATED_ATTRIBUTE apriluiFnExport void setCursorPos(float x, float y);
@@ -57,6 +60,10 @@ namespace aprilui
 		
 	apriluiFnExport void setMacroCallback(hstr (*callback)(chstr));
 	apriluiFnExport hstr expandMacro(chstr macro);
+
+	// TODO - hack, has to be removed completely
+	apriluiFnExport bool getForcedDynamicLoading();
+	apriluiFnExport void setForcedDynamicLoading(bool value);
 
 }
 

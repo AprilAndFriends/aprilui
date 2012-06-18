@@ -24,8 +24,7 @@ namespace aprilui
 	public:
 		Label(chstr name, grect rect);
 		
-		chstr getTextXey() { return mTextKey; }
-		void setTextKey(chstr key);
+		Dataset* getDataset();
 		
 		void notifyEvent(chstr name, void* params);
 		bool setProperty(chstr name, chstr value);

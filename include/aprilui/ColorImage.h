@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_COLOR_IMAGE_H
 #define APRILUI_COLOR_IMAGE_H
 
+#include <april/aprilUtil.h>
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
@@ -31,6 +32,10 @@ namespace aprilui
 	protected:
 		april::Color mColor;
 		
+	private:
+		april::PlainVertex _pVertices[4];
+		
 	};
+
 }
 #endif

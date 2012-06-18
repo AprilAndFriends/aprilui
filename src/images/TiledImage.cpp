@@ -17,7 +17,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	TiledImage::TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
+	TiledImage::TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
 		Image(texture, name, source, vertical)
 	{
 		mTileW = tileW;
@@ -87,7 +87,7 @@ namespace aprilui
 		{
 			mSource.w = (rect.w - (int)tilew * basew) * osw / basew;
 			float dx = rect.x + (int)tilew * basew;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			for (int j = 0; j < (int)tileh; j++)
 			{
 				Image::draw(grect(dx, rect.y + j * baseh, (rect.w - (int)tilew * basew), baseh), color);
@@ -99,7 +99,7 @@ namespace aprilui
 		{
 			mSource.w = ox / basew * osw;
 			mSource.x = osx + (basew - ox) / basew * osw;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			for (int j = 0; j < (int)tileh; j++)
 			{
 				Image::draw(grect(rect.x - ox, rect.y + j * baseh, ox, baseh), color);
@@ -112,7 +112,7 @@ namespace aprilui
 		{
 			mSource.h = (rect.h - (int)tileh * baseh) * osh / baseh;
 			float dy = rect.y + (int)tileh * baseh;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			for (int i = 0; i < (int)tilew; i++)
 			{
 				Image::draw(grect(rect.x + i * basew, dy, basew, rect.h - (int)tileh * baseh), color);
@@ -124,7 +124,7 @@ namespace aprilui
 		{
 			mSource.h = oy / baseh * osh;
 			mSource.y = osy + (baseh - oy) / baseh * osh;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			for (int i = 0; i < (int)tilew; i++)
 			{
 				Image::draw(grect(rect.x + i * basew, rect.y - oy, basew, oy), color);
@@ -140,7 +140,7 @@ namespace aprilui
 			mSource.h = oy / baseh * osh;
 			mSource.x = osx + (basew - ox) / basew * osw;
 			mSource.y = osy + (baseh - oy) / baseh * osh;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			Image::draw(grect(rect.x - ox, rect.y - oy, ox, oy), color);
 			
 			// UPPER-RIGHT CORNER
@@ -148,7 +148,7 @@ namespace aprilui
 			mSource.h = oy / baseh * osh;
 			mSource.x = osx;
 			mSource.y = osy + (baseh - oy) / baseh * osh;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			Image::draw(grect(rect.x + (int)tilew * basew, rect.y - oy, rect.w - (int)tilew * basew, oy), color);
 			
 			// LOWER-LEFT CORNER
@@ -156,7 +156,7 @@ namespace aprilui
 			mSource.h = (rect.h - (int)tileh * baseh) * osh / baseh;
 			mSource.x = osx + (basew - ox) / basew * osw;
 			mSource.y = osy;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			Image::draw(grect(rect.x - ox, rect.y + (int)tileh * baseh, ox, rect.h - (int)tileh * baseh), color);
 			
 			mSource.x = osx;
@@ -170,7 +170,7 @@ namespace aprilui
 		{
 			mSource.w = rect.w - (int)tilew * basew * osw / basew;
 			mSource.h = rect.h - (int)tileh * baseh * osh / baseh;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 			Image::draw(grect(rect.x + (int)tilew * basew, rect.y + (int)tileh * baseh,
 							  rect.w - (int)tilew * basew, rect.h - (int)tileh * baseh), color);
 		}
@@ -181,7 +181,7 @@ namespace aprilui
 			mSource.y = osy;
 			mSource.w = osw;
 			mSource.h = osh;
-			_updateTexCoords();
+			_tryLoadTexCoords();
 		}
 	}
 

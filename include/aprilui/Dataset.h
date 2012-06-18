@@ -14,31 +14,27 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include "Exception.h"
-
 #include "apriluiExport.h"
-
-namespace april
-{
-	class Texture;
-}
+#include "EventReceiver.h"
+#include "Exception.h"
 
 struct xml_node;
 
 namespace aprilui
 {
-	#define REGISTER_CALLBACK(data_dict, fn) data_dict->registerCallback(#fn, fn)
+	#define REGISTER_CALLBACK(dataDict, fn) dataDict->registerCallback(#fn, fn)
 
 	class Object;
 	class Image;
+	class Texture;
 
-	class apriluiExport Dataset
+	class apriluiExport Dataset : public EventReceiver
 	{
 	public:
 		Object* parseObject(xml_node* node, Object* parent = NULL);
 		
 		Dataset(chstr filename, chstr name = "");
-		virtual ~Dataset();
+		~Dataset();
 
 		void load(chstr path = "");
 		void unload();
@@ -46,7 +42,7 @@ namespace aprilui
 		void registerManualObject(Object* o);
 		void unregisterManualObject(Object* o);
 		void registerManualImage(Image* img);
-		void registerManualTexture(april::Texture* tex);
+		void registerManualTexture(Texture* tex);
 		void unregisterManualImage(Image* img);
 
 		void registerCallback(chstr name, void (*callback)());
@@ -69,7 +65,7 @@ namespace aprilui
 		
 		void _destroyTexture(chstr tex);
 		void _destroyImage(chstr img);
-		void _destroyTexture(april::Texture* tex);
+		void _destroyTexture(Texture* tex);
 		void _destroyImage(Image* img);
 
 		void OnMouseDown(float x, float y, int button);
@@ -80,16 +76,21 @@ namespace aprilui
 		void OnChar(unsigned int charcode);
 		
 		virtual Object* getObject(chstr name);
-		virtual april::Texture* getTexture(chstr name);
+		virtual Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
-		virtual hstr getText(chstr name);
+		virtual hstr getTextEntry(chstr textKey);
+		virtual hstr getText(chstr compositeTextKey);
 		virtual bool textExists(chstr name);
 		hmap<hstr, hstr>& getTexts() { return mTexts; }
+		harray<hstr> getTextEntries(harray<hstr> keys);
 
 		hstr getName() { return mName; }
 		
 		void setTextureExtensionOverride(hstr override) { mTexExtOverride = override; }
+
+		void notifyEvent(chstr name, void* params);
 		
+
 	protected:
 		hstr mName;
 		hstr mFilename;
@@ -98,13 +99,13 @@ namespace aprilui
 		hstr mTexExtOverride;
 		Object* mFocusedObject;
 		hmap<hstr, Object*> mObjects;
-		hmap<hstr, april::Texture*> mTextures;
+		hmap<hstr, Texture*> mTextures;
 		hmap<hstr, Image*> mImages;
 		hmap<hstr, hstr> mTexts;
 
 		hmap<hstr, void (*)()> mCallbacks;
 
-		april::Texture* parseTexture(xml_node* node);
+		Texture* parseTexture(xml_node* node);
 		void parseRamTexture(xml_node* node);
 		void parseCompositeImage(xml_node* node);
 		virtual void parseExternalXMLNode(xml_node* node) { }
@@ -115,6 +116,16 @@ namespace aprilui
 		void readFile(chstr filename);
 		void _loadTexts(hstr path);
 		
+		hstr _makeFilePath(chstr filename, chstr name, bool useNameBasePath);
+		hstr _makeLocalizedTextureName(chstr filename);
+
+		hstr _parseCompositeTextKey(chstr key);
+		bool _processCompositeTextKeyArgs(chstr argString, harray<hstr>& args);
+		bool _preprocessCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& preprocessedFormat, harray<hstr>& preprocessedArgs);
+		bool _processCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& result);
+		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
+		bool _getCompositeTextKeyFormatIndexes(chstr format, harray<int>& indexes);
+
 	};
 
 }

@@ -20,7 +20,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	hstr g_locale;
 	bool registerLock = false;
 	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
@@ -32,10 +31,18 @@ namespace aprilui
 #endif
 	hstr defaultTextsPath = "texts";
 	void (*g_logFunction)(chstr) = aprilui_writelog;
+	hstr g_locale;
+	float textureIdleUnloadTime = 0.0f;
+	// TODO - hack, has to be removed
+	bool forcedDynamicLoading = false;
 	
-	void logMessage(chstr message, chstr prefix)
+	void log(chstr message, chstr prefix)
 	{
 		g_logFunction(prefix + message);
+	}
+	void logMessage(chstr message, chstr prefix)
+	{
+		log(message, prefix);
 	}
 	
 	void aprilui_writelog(chstr message)
@@ -161,16 +168,30 @@ namespace aprilui
 		defaultTextsPath = path;
 	}
 	
-	apriluiFnExport void setLocalization(chstr localization)
-	{
-		g_locale = localization;
-	}
-	
-	apriluiFnExport hstr getLocalization()
+	hstr getLocalization()
 	{
 		return g_locale;
 	}
 	
+	void setLocalization(chstr localization)
+	{
+		g_locale = localization;
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->notifyEvent("onLocalizationChanged", NULL);
+		}
+	}
+	
+	float getTextureIdleUnloadTime()
+	{
+		return textureIdleUnloadTime;
+	}
+
+	void setTextureIdleUnloadTime(float value)
+	{
+		textureIdleUnloadTime = value;
+	}
+
 	void setDefaultScale(float value)
 	{
 		defaultScale = value;
@@ -239,4 +260,9 @@ namespace aprilui
 		if (g_macroCallback == NULL) throw hl_exception("aprilui macro callback not set, trying to expand macro '" + macro + "'");
 		return g_macroCallback(macro);
 	}
+
+	// TODO - hack, has to be removed
+	bool getForcedDynamicLoading() { return forcedDynamicLoading; }
+	void setForcedDynamicLoading(bool value) { forcedDynamicLoading = value; }
+
 }

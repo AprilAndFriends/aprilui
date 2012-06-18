@@ -10,7 +10,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_IMAGE_H
 #define APRILUI_IMAGE_H
 
-#include <april/RenderSystem.h>
+#include <april/aprilUtil.h>
+#include <april/Color.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
@@ -19,13 +20,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	extern april::TexturedVertex tVertices[4];
-	extern april::PlainVertex pVertices[4];
-	
+	class Texture;
+
 	class apriluiExport Image
 	{
 	public:
-		Image(april::Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
+		Image(Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
 		virtual ~Image();
 		
 		virtual void draw(grect rect);
@@ -37,7 +37,8 @@ namespace aprilui
 		bool isXInverted() { return mInvertX; };
 		bool isYInverted() { return mInvertY; };
 
-		april::Texture* getTexture();
+		Texture* getTexture() { return mTexture; }
+	
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
 		const grect& getSource() const { return mSource; }
@@ -46,17 +47,20 @@ namespace aprilui
 		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
 		
 	protected:
-		april::Texture* mTexture;
+		Texture* mTexture;
 		hstr mName;
 		hstr mImageName;
 		grect mSource;
 		april::BlendMode mBlendMode;
 		bool mVertical;
-		bool mUnloadedFlag;
 		bool mInvertX;
 		bool mInvertY;
-		
-		void _updateTexCoords();
+		bool mTextureCoordinatesLoaded;
+
+		void _tryLoadTexCoords();
+
+	private:
+		april::TexturedVertex _tVertexes[4];
 		
 	};
 

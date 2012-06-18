@@ -17,8 +17,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	april::PlainVertex pVertices[4];
-	
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
 		mColor.set(name);
@@ -26,17 +24,17 @@ namespace aprilui
 
 	void ColorImage::draw(grect rect, april::Color color)
 	{
-		pVertices[0].x = rect.x;          pVertices[0].y = rect.y;
-		pVertices[1].x = rect.x + rect.w; pVertices[1].y = rect.y;
-		pVertices[2].x = rect.x;          pVertices[2].y = rect.y + rect.h;
-		pVertices[3].x = rect.x + rect.w; pVertices[3].y = rect.y + rect.h;
+		_pVertices[0].x = rect.x;          _pVertices[0].y = rect.y;
+		_pVertices[1].x = rect.x + rect.w; _pVertices[1].y = rect.y;
+		_pVertices[2].x = rect.x;          _pVertices[2].y = rect.y + rect.h;
+		_pVertices[3].x = rect.x + rect.w; _pVertices[3].y = rect.y + rect.h;
 		
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
 			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
 		color *= mColor;
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
+		april::rendersys->render(april::TriangleStrip, _pVertices, 4, color);
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
 			april::rendersys->setTextureBlendMode(april::DEFAULT);
@@ -45,10 +43,10 @@ namespace aprilui
 
 	void ColorImage::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
-		pVertices[0].x = -center.x;			pVertices[0].y = -center.y;
-		pVertices[1].x = rect.w - center.x;	pVertices[1].y = -center.y;
-		pVertices[2].x = -center.x;			pVertices[2].y = rect.h - center.y;
-		pVertices[3].x = rect.w - center.x;	pVertices[3].y = rect.h - center.y;
+		_pVertices[0].x = -center.x;			_pVertices[0].y = -center.y;
+		_pVertices[1].x = rect.w - center.x;	_pVertices[1].y = -center.y;
+		_pVertices[2].x = -center.x;			_pVertices[2].y = rect.h - center.y;
+		_pVertices[3].x = rect.w - center.x;	_pVertices[3].y = rect.h - center.y;
 		
 		gtypes::Matrix4 temp_matrix = april::rendersys->getModelviewMatrix();
 		april::rendersys->setIdentityTransform();
@@ -58,7 +56,7 @@ namespace aprilui
 		{
 			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
-		april::rendersys->render(april::TriangleStrip, pVertices, 4, color);
+		april::rendersys->render(april::TriangleStrip, _pVertices, 4, color);
 		if (mBlendMode != april::ALPHA_BLEND)
 		{
 			april::rendersys->setTextureBlendMode(april::DEFAULT);

@@ -12,10 +12,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Vector2.h>
 
 #include "ColoredImage.h"
+#include "Texture.h"
 
 namespace aprilui
 {
-	ColoredImage::ColoredImage(april::Texture* texture, chstr name, grect source, bool vertical, april::Color color) :
+	ColoredImage::ColoredImage(Texture* texture, chstr name, grect source, bool vertical, april::Color color) :
 				  Image(texture, name, source, vertical)
 	{
 		mColor = color;

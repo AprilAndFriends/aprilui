@@ -22,6 +22,11 @@ namespace aprilui
 	{
 	}
 
+	Dataset* Label::getDataset()
+	{
+		return Object::getDataset();
+	}
+
 	void Label::OnDraw(gvec2 offset)
 	{
 		Object::OnDraw(offset);
@@ -39,13 +44,14 @@ namespace aprilui
 		{
 			setTextKey(mTextKey);
 		}
+		if (name == "onLocalizationChanged")
+		{
+			if (mTextKey != "")
+			{
+				setTextKey(mTextKey);
+			}
+		}
 		Object::notifyEvent(name, params);
-	}
-
-	void Label::setTextKey(chstr key)
-	{
-		mTextKey = key;
-		setText(mDataset->getText(key));
 	}
 
 	bool Label::setProperty(chstr name, chstr value)
