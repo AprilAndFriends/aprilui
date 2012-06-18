@@ -101,7 +101,7 @@ namespace aprilui
 		virtual Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
 		virtual hstr getTextEntry(chstr textKey);
-		virtual bool hasTextKey(chstr textKey);
+		virtual bool hasTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
 		hmap<hstr, hstr>& getTextEntries() { return mTexts; }
 		harray<hstr> getTextEntries(harray<hstr> keys);
@@ -156,7 +156,8 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
-		DEPRECATED_ATTRIBUTE bool textExists(chstr key) { return hasTextKey(key); }
+		DEPRECATED_ATTRIBUTE bool textExists(chstr key) { return hasTextEntry(key); }
+		DEPRECATED_ATTRIBUTE bool hasTextKey(chstr key) { return hasTextEntry(key); }
 		DEPRECATED_ATTRIBUTE hmap<hstr, hstr>& getTexts() { return getTextEntries(); }
 
 	protected:

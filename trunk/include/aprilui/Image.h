@@ -21,15 +21,11 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "Texture.h"
-
-namespace april
-{
-	class Texture;
-}
 
 namespace aprilui
 {
+	class Texture;
+	
 	class apriluiExport Image
 	{
 	public:
