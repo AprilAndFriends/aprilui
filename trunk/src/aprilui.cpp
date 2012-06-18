@@ -50,6 +50,8 @@ namespace aprilui
 	hstr defaultTextsPath = "texts";
 	hstr localization = "";
 	float textureIdleUnloadTime = 0.0f;
+	// TODO - hack, has to be removed
+	bool forcedDynamicLoading = false;
 
 	void aprilui_writelog(chstr message)
 	{
@@ -457,5 +459,9 @@ namespace aprilui
 	void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); } // DEPRECATED
 	void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); } // DEPRECATED
 	void OnChar(unsigned int charcode) { onChar(charcode); } // DEPRECATED
+
+	// TODO - hack, has to be removed
+	bool getForcedDynamicLoading() { return forcedDynamicLoading; }
+	void setForcedDynamicLoading(bool value) { forcedDynamicLoading = value; }
 
 }

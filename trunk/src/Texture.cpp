@@ -7,6 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <april/RamTexture.h>
 #include <april/RenderSystem.h>
 
 #include "aprilui.h"
@@ -112,13 +113,23 @@ namespace aprilui
 	{
 		if (mFilename != filename)
 		{
+			// TODO - remove when RamTexture was removed
+			bool isRamTexture = false;
 			if (mTexture != NULL)
 			{
+				isRamTexture = (dynamic_cast<april::RamTexture*>(mTexture) != NULL);
 				delete mTexture;
 			}
 			mUnusedTime = 0.0f;
 			mFilename = filename;
-			mTexture = april::rendersys->loadTexture(mFilename, mDynamic);
+			if (!isRamTexture)
+			{
+				mTexture = april::rendersys->loadTexture(mFilename, aprilui::getForcedDynamicLoading() || mDynamic);
+			}
+			else
+			{
+				mTexture = april::rendersys->loadRamTexture(mFilename, aprilui::getForcedDynamicLoading() || mDynamic);
+			}
 			if (mTexture == NULL)
 			{
 				throw file_not_found(mFilename);
