@@ -190,11 +190,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\EventReceiver.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Exception.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\src\Util.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Texture.cpp"
 				>
 			</File>
 			<File
@@ -396,6 +404,9 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\aprilui\EventReceiver.h"
+				>
+			</File>
 				RelativePath=".\include\aprilui\Exception.h"
 				>
 			</File>
@@ -409,6 +420,10 @@
 			</File>
 			<File
 				RelativePath=".\include\aprilui\xmlHelper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\aprilui\Texture.h"
 				>
 			</File>
 			<Filter

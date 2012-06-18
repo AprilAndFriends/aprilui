@@ -23,7 +23,7 @@ namespace aprilui
 	class apriluiExport TiledImage : public Image
 	{
 	public:
-		TiledImage(april::Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
+		TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
 		
 		float getTileW() { return mTileW; }
 		void setTileW(float w) { mTileW = w; }

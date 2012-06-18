@@ -10,9 +10,11 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <atres/atres.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "Dataset.h"
 #include "Exception.h"
 #include "ObjectLabelBase.h"
 
@@ -98,6 +100,29 @@ namespace aprilui
 		else if (name == "offset_x") mDrawOffset.x = (float)value;
 		else if (name == "offset_y") mDrawOffset.y = (float)value;
 		return 1;
+	}
+
+	void LabelBase::notifyEvent(chstr name, void* params)
+	{
+		if (name == "onLocalizationChanged")
+		{
+			if (mTextKey != "")
+			{
+				setTextKey(mTextKey);
+			}
+		}
+	}
+	
+	void LabelBase::setText(chstr value)
+	{
+		mText = value;
+		mTextKey = "";
+	}
+
+	void LabelBase::setTextKey(chstr value)
+	{
+		mText = getDataset()->getText(value);
+		mTextKey = value;
 	}
 
 }

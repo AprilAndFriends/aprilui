@@ -27,7 +27,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
-	Object::Object(chstr type, chstr name, grect rect)
+	Object::Object(chstr type, chstr name, grect rect) : EventReceiver()
 	{
 		mTypeName = type;
 		mName = name;
@@ -323,9 +323,12 @@ namespace aprilui
 
 	void Object::notifyEvent(chstr name, void* params)
 	{
-		foreach (Object*, it, mChildren)
+		if (name != "onLocalizationChanged") // because this is handled somewhere else in a smarter way
 		{
-			(*it)->notifyEvent(name, params);
+			foreach (Object*, it, mChildren)
+			{
+				(*it)->notifyEvent(name, params);
+			}
 		}
 	}
 

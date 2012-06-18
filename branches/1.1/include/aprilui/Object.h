@@ -17,6 +17,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "EventReceiver.h"
 
 namespace aprilui
 {
@@ -24,12 +25,12 @@ namespace aprilui
 	class Event;
 	class EventArgs;
 	
-	class apriluiExport Object
+	class apriluiExport Object : public EventReceiver
 	{
 	public:
 		Object(chstr name, grect rect);
 		Object(chstr type, chstr name, grect rect);
-		virtual ~Object();
+		~Object();
 
 		void addChild(Object* object);
 		void removeChild(Object* object);
@@ -103,16 +104,15 @@ namespace aprilui
 		bool onMouseDown(int button) { return 0; } // aprilui legacy compatibility
 		bool onMouseUp(int button) { return 0; }
 
+		void notifyEvent(chstr name, void* params);
 		
 		virtual void update(float k);
 		void draw(gvec2 offset = gvec2());
 
-		virtual void notifyEvent(chstr name, void* params);
-		
 		virtual bool setProperty(chstr name, chstr value);
 		// system call, do not use!
 		void _setDataset(Dataset* value) { mDataset = value; }
-		Dataset* getDataset() { return mDataset; }
+		virtual Dataset* getDataset() { return mDataset; }
 		
 		void _triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = ""); // adaptation for xpromo_wrapper
 

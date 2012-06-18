@@ -24,6 +24,11 @@ namespace aprilui
 		mText = "TextImageButton: " + name;
 	}
 
+	Dataset* TextImageButton::getDataset()
+	{
+		return ImageButton::getDataset();
+	}
+
 	void TextImageButton::OnDraw(gvec2 offset)
 	{
 		ImageButton::OnDraw(offset);
@@ -35,11 +40,12 @@ namespace aprilui
 		LabelBase::_drawLabel(mRect + offset, alpha);
 	}
 
-	void TextImageButton::setTextKey(chstr key)
+	void TextImageButton::notifyEvent(chstr name, void* params)
 	{
-		setText(mDataset->getText(key));
+		ImageButton::notifyEvent(name, params);
+		LabelBase::notifyEvent(name, params);
 	}
-
+	
 	bool TextImageButton::setProperty(chstr name,chstr value)
 	{
 		LabelBase::setProperty(name, value);

@@ -20,10 +20,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	class Texture;
+
 	class apriluiExport ColoredImage : public Image
 	{
 	public:
-		ColoredImage(april::Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = april::Color());
+		ColoredImage(Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = april::Color());
 		
 		void draw(grect rect, april::Color color);
 		void draw(grect rect, april::Color color, float angle, gvec2 center);

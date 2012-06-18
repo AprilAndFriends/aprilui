@@ -158,6 +158,12 @@
     <ClCompile Include="src\images\TiledImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
+    <ClCompile Include="src\EventReceiver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Util.h">
@@ -303,6 +309,12 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\TiledImage.h">
       <Filter>Header Files\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\EventReceiver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\Texture.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

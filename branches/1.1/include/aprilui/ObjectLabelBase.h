@@ -14,6 +14,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <atres/atres.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -25,9 +26,11 @@ namespace aprilui
 	public:
 		LabelBase(chstr name);
 		
+		virtual Dataset* getDataset() = 0;
 		hstr getText() { return mText; }
-		virtual void setText(chstr value) { mText = value; }
-		virtual void setTextKey(chstr key) = 0;
+		void setText(chstr value);
+		hstr getTextKey() { return mTextKey; }
+		void setTextKey(chstr value);
 		
 		hstr getFont() { return mFontName; }
 		void setFont(chstr value) { mFontName = value; }
@@ -44,10 +47,12 @@ namespace aprilui
 		void setTextColor(april::Color value) { mTextColor = value; }
 		void setTextColor(chstr value) { mTextColor.set(value); }
 		
+		virtual void notifyEvent(chstr name, void* params);
 		virtual bool setProperty(chstr name, chstr value);
 		
 	protected:
 		hstr mText;
+		hstr mTextKey;
 		hstr mFontName;
 		bool mTextFormatting;
 		gvec2 mDrawOffset;
