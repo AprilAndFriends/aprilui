@@ -29,6 +29,7 @@
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
+#include <aprilui/Texture.h>
 #include <atres/atres.h>
 #include <atres/FontResourceBitmap.h>
 #include <atres/Renderer.h>
@@ -70,11 +71,11 @@ void onKeyDown(unsigned int keycode)
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 		break;
 	case april::AK_BACK:
+		aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 		{
 			aprilui::Texture* texture = dataset->getTexture("texture");
-			texture->reload(texture->getFilename().starts_with("../media/texture") ? "../media/transparency" : "../media/texture");
+			texture->reload(aprilui::getLocalization() == "en" ? "../media/texture" : "../media/transparency");
 		}
-		aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 		break;
 	case april::AK_N:
 		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
