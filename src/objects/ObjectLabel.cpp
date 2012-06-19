@@ -58,7 +58,8 @@ namespace aprilui
 	{
 		LabelBase::setProperty(name, value);
 		Object::setProperty(name, value);
-		if (name == "textkey")	setTextKey(value);
+		if (name == "textkey")
+			setTextKey(value);
 		return 1;
 	}
 	
