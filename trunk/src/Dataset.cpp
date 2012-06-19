@@ -31,6 +31,7 @@
 #include "Exception.h"
 #include "Images.h"
 #include "Objects.h"
+#include "Texture.h"
 
 namespace aprilui
 {
@@ -773,7 +774,7 @@ namespace aprilui
 		return mTexts[textKey];
 	}
 	
-	bool Dataset::hasTextKey(chstr textKey)
+	bool Dataset::hasTextEntry(chstr textKey)
 	{
 		return mTexts.has_key(textKey);
 	}
