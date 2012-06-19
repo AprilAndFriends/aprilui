@@ -92,7 +92,8 @@ namespace aprilui
 		void setTextureExtensionOverride(hstr override) { mTexExtOverride = override; }
 
 		void notifyEvent(chstr name, void* params);
-		
+		void reloadTexts();
+		void reloadTextures();
 
 	protected:
 		hstr mName;

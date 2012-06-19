@@ -178,10 +178,16 @@ namespace aprilui
 		g_locale = localization;
 		foreach_m (Dataset*, it, gDatasets)
 		{
+			it->second->reloadTexts();
+			it->second->reloadTextures();
+		}
+		// finished localization change, now call the appropriate event
+		foreach_m (Dataset*, it, gDatasets)
+		{
 			it->second->notifyEvent("onLocalizationChanged", NULL);
 		}
 	}
-	
+
 	float getTextureIdleUnloadTime()
 	{
 		return textureIdleUnloadTime;

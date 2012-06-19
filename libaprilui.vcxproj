@@ -117,7 +117,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GccExceptionHandling>true</GccExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PreprocessorDefinitions>_ANDROID;APRILUI_EXPORTS;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -125,7 +125,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GccExceptionHandling>true</GccExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PreprocessorDefinitions>_ANDROID;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
