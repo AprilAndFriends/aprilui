@@ -198,7 +198,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Util.cpp"
+				RelativePath=".\src\apriluiUtil.cpp"
 				>
 			</File>
 			<File
@@ -206,7 +206,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Util.h"
+				RelativePath=".\src\apriluiUtil.h"
 				>
 			</File>
 			<File

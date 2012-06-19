@@ -44,7 +44,7 @@
     <ClCompile Include="src\Exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Util.cpp">
+    <ClCompile Include="src\apriluiUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\xmlHelper.cpp">
@@ -166,7 +166,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Util.h">
+    <ClInclude Include="src\apriluiUtil.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\Animators.h">

@@ -14,10 +14,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Vector2.h>
 #include <hltypes/hltypesUtil.h>
 
+#include "apriluiUtil.h"
 #include "Exception.h"
 #include "Image.h"
 #include "Texture.h"
-#include "Util.h"
 
 namespace aprilui
 {
