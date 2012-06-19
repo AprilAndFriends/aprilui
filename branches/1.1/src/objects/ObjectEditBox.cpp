@@ -242,18 +242,21 @@ namespace aprilui
 	{
 		switch (keycode)
 		{
+#ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_LEFT:
 			mCtrlMode ? _cursorMoveLeftWord() : _cursorMoveLeft();
 			break;
 		case april::AK_RIGHT:
 			mCtrlMode ? _cursorMoveRightWord() : _cursorMoveRight();
 			break;
+#endif
 		case april::AK_BACK:
 			mCtrlMode ? _deleteLeftWord() : _deleteLeft();
 			break;
 		case april::AK_DELETE:
 			mCtrlMode ? _deleteRightWord() : _deleteRight();
 			break;
+#ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_HOME:
 			setCursorIndex(0);
 			break;
@@ -262,6 +265,10 @@ namespace aprilui
 			break;
 		case april::AK_CONTROL:
 			mCtrlMode = true;
+			break;
+#endif
+		case april::AK_RETURN:
+			_triggerEvent("Submit", april::AK_RETURN);
 			break;
 		}
 	}

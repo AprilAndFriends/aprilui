@@ -22,6 +22,21 @@ namespace aprilui
 		mColor.set(name);
 	}
 
+	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
+	{
+		mColor.set(name);
+	}
+
+	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
+	{
+		mColor.set(color);
+	}
+
+	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
+	{
+		mColor = color;
+	}
+
 	void ColorImage::draw(grect rect, april::Color color)
 	{
 		_pVertices[0].x = rect.x;          _pVertices[0].y = rect.y;

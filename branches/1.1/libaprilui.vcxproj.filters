@@ -47,9 +47,6 @@
     <ClCompile Include="src\apriluiUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\xmlHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\animators\Animator.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
@@ -197,9 +194,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\Objects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\aprilui\xmlHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\Animator.h">

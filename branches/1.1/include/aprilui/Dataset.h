@@ -18,7 +18,10 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "EventReceiver.h"
 #include "Exception.h"
 
-struct xml_node;
+namespace hlxml
+{
+	class Node;
+}
 
 namespace aprilui
 {
@@ -31,7 +34,7 @@ namespace aprilui
 	class apriluiExport Dataset : public EventReceiver
 	{
 	public:
-		Object* parseObject(xml_node* node, Object* parent = NULL);
+		Object* parseObject(hlxml::Node* node, Object* parent = NULL);
 		
 		Dataset(chstr filename, chstr name = "");
 		~Dataset();
@@ -105,13 +108,13 @@ namespace aprilui
 
 		hmap<hstr, void (*)()> mCallbacks;
 
-		Texture* parseTexture(xml_node* node);
-		void parseRamTexture(xml_node* node);
-		void parseCompositeImage(xml_node* node);
-		virtual void parseExternalXMLNode(xml_node* node) { }
-		virtual Object* parseExternalObjectClass(xml_node* node, chstr obj_name, grect rect) { return 0; }
+		Texture* parseTexture(hlxml::Node* node);
+		void parseRamTexture(hlxml::Node* node);
+		void parseCompositeImage(hlxml::Node* node);
+		virtual void parseExternalXMLNode(hlxml::Node* node) { }
+		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr obj_name, grect rect) { return 0; }
 		
-		Object* recursiveObjectParse(xml_node* node, Object* parent);
+		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		
 		void readFile(chstr filename);
 		void _loadTexts(hstr path);
