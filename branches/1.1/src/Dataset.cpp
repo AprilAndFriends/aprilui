@@ -151,11 +151,11 @@ namespace aprilui
 			filepath = left + "." + mTexExtOverride;
 		}
 
-		filepath = _makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->loadTexture(filepath, aprilui::getForcedDynamicLoading() || dynamicLoad);
+		hstr locpath = _makeLocalizedTextureName(filepath);
+		april::Texture* aprilTexture = april::rendersys->loadTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
 		if (aprilTexture == NULL)
 		{
-			throw FileNotFoundException(filepath);
+			throw FileNotFoundException(locpath);
 		}
 		Texture* texture = new Texture(filepath, aprilTexture);
 		if (node->pexists("filter"))
@@ -232,10 +232,11 @@ namespace aprilui
 			throw ResourceExistsException(filename, "RamTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		april::Texture* aprilTexture = april::rendersys->loadRamTexture(filepath, aprilui::getForcedDynamicLoading() || dynamicLoad);
-		if (!aprilTexture)
+		hstr locpath = _makeLocalizedTextureName(filepath);
+		april::Texture* aprilTexture = april::rendersys->loadRamTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
+		if (aprilTexture == NULL)
 		{
-			throw file_not_found(filepath);
+			throw file_not_found(locpath);
 		}
 		mTextures[textureName] = new Texture(filepath, aprilTexture);
 	}
@@ -653,7 +654,7 @@ namespace aprilui
 	
 	hstr Dataset::getTextEntry(chstr textKey)
 	{
-		return mTexts[textKey];
+		return mTexts.try_get_by_key(textKey, "");
 	}
 	
 	hstr Dataset::getText(chstr compositeTextKey)
@@ -783,19 +784,24 @@ namespace aprilui
 	
 	void Dataset::notifyEvent(chstr name, void* params)
 	{
-		if (name == "onLocalizationChanged")
-		{
-			mTexts.clear();
-			hstr filepath = normalize_path(mFilenamePrefix + "/" + getDefaultTextsPath() + "/" + getLocalization());
-			_loadTexts(filepath);
-			foreach_m (aprilui::Texture*, it, mTextures)
-			{
-				it->second->reload(_makeLocalizedTextureName(it->second->getOriginalFilename()));
-			}
-		}
 		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			it->second->notifyEvent(name, params);
+		}
+	}
+	
+	void Dataset::reloadTexts()
+	{
+		mTexts.clear();
+		hstr filepath = normalize_path(mFilenamePrefix + "/" + getDefaultTextsPath() + "/" + getLocalization());
+		_loadTexts(filepath);
+	}
+	
+	void Dataset::reloadTextures()
+	{
+		foreach_m (aprilui::Texture*, it, mTextures)
+		{
+			it->second->reload(_makeLocalizedTextureName(it->second->getOriginalFilename()));
 		}
 	}
 	
@@ -803,11 +809,11 @@ namespace aprilui
 	{
 		if (!key.starts_with("{"))
 		{
-			if (!mTexts.has_key(key))
+			if (!textExists(key))
 			{
 				aprilui::log(hsprintf("WARNING! Text key '%s' does not exist", key.c_str()));
 			}
-			return mTexts[key];
+			return getTextEntry(key);
 		}
 		int index = key.find_first_of('}');
 		if (index < 0)
