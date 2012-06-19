@@ -16,6 +16,7 @@
 #define APRILUI_IMAGE_H
 
 #include <april/aprilUtil.h>
+#include <april/Color.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
