@@ -188,11 +188,11 @@ namespace aprilui
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 
-		filepath = _makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->loadTexture(filepath, aprilui::getForcedDynamicLoading() || dynamicLoad);
+		hstr locpath = _makeLocalizedTextureName(filepath);
+		april::Texture* aprilTexture = april::rendersys->loadTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
 		if (aprilTexture == NULL)
 		{
-			throw file_not_found(filepath);
+			throw file_not_found(locpath);
 		}
 		Texture* texture = new Texture(filepath, aprilTexture);
 		if (node->pexists("filter"))
@@ -275,10 +275,11 @@ namespace aprilui
 			throw ResourceExistsException(filename, "RamTexture", this);
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
-		april::Texture* aprilTexture = april::rendersys->loadRamTexture(filepath, aprilui::getForcedDynamicLoading() || dynamicLoad);
+		hstr locpath = _makeLocalizedTextureName(filepath);
+		april::Texture* aprilTexture = april::rendersys->loadRamTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
 		if (!aprilTexture)
 		{
-			throw file_not_found(filepath);
+			throw file_not_found(locpath);
 		}
 		mTextures[textureName] = new Texture(filepath, aprilTexture);
 	}
