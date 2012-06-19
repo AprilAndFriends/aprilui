@@ -13,8 +13,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
-struct xml_node;
-
 namespace aprilui
 {
 	hstr pathGetBaseDir(chstr path);

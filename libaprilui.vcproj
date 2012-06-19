@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include"
+				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include"
 				PreprocessorDefinitions="_WIN32;_DEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
+				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libatres.lib libxml2.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin\$(PlatformName)"
 				GenerateDebugInformation="true"
@@ -117,7 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../atres/include;../april/include;../include"
+				AdditionalIncludeDirectories="src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include"
 				PreprocessorDefinitions="_WIN32;NDEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libgtypes.lib libhltypes.lib libapril.lib libatres.lib libxml2.lib"
+				AdditionalDependencies="libgtypes.lib libhltypes.lib libhlxml.lib libapril.lib libatres.lib libxml2.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				AdditionalLibraryDirectories="..\lib\msvc90;$(SolutionDir)bin\$(PlatformName)"
 			/>
@@ -178,6 +178,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\apriluiUtil.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\apriluiUtil.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\CallbackEvent.cpp"
 				>
 			</File>
@@ -198,19 +206,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\apriluiUtil.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Texture.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\apriluiUtil.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\xmlHelper.cpp"
 				>
 			</File>
 			<Filter
@@ -407,6 +403,7 @@
 				RelativePath=".\include\aprilui\EventReceiver.h"
 				>
 			</File>
+			<File
 				RelativePath=".\include\aprilui\Exception.h"
 				>
 			</File>
@@ -416,10 +413,6 @@
 			</File>
 			<File
 				RelativePath=".\include\aprilui\Objects.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\aprilui\xmlHelper.h"
 				>
 			</File>
 			<File
@@ -582,6 +575,14 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			>
+			<File
+				RelativePath=".\fileproperties.rc"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

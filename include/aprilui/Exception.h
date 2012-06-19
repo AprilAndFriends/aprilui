@@ -14,8 +14,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/exception.h>
 #include "apriluiExport.h"
 
-struct xml_node;
-
 namespace aprilui
 {
 	class Dataset;
@@ -90,18 +88,6 @@ namespace aprilui
 	};
 
 	#define ObjectNotChildException(child, parent) _ObjectNotChildException(child, parent, __FILE__, __LINE__)
-
-	//---------------------------------------------------------------------------------------------------------
-
-	class apriluiExport _XMLException : public _GenericException
-	{
-	public:
-		_XMLException(chstr err_msg, xml_node* node, chstr type, const char* file, int line);
-	};
-
-	#define XMLException(msg, node) _XMLException(msg, node, type, __FILE__, __LINE__)
-	#define XMLPropertyNotExistsException(msg, node) _XMLException(hstr("XML property doesn't exist: ") + msg, node, "XMLException", __FILE__, __LINE__)
-	#define XMLUnknownClassException(msg, node) _XMLException(hstr("Unknown class detected in XML file: ") + msg, node, "XMLUnknownClassException", __FILE__, __LINE__)
 
 }
 
