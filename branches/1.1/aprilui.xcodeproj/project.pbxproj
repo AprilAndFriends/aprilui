@@ -82,11 +82,8 @@
 		7FC8042211EC721E00851062 /* Exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041911EC721E00851062 /* Exception.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042311EC721E00851062 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041A11EC721E00851062 /* Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8042411EC721E00851062 /* Objects.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041B11EC721E00851062 /* Objects.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7FC8042611EC721E00851062 /* xmlHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041D11EC721E00851062 /* xmlHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FC8043411EC725B00851062 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
 		7FC8043511EC725B00851062 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
-		7FC8043A11EC725B00851062 /* xmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8043011EC725B00851062 /* xmlHelper.cpp */; };
-		7FC8049511EC76F100851062 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8049411EC76F100851062 /* libxml2.dylib */; };
 		7FCD397112018C7B00608217 /* CallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD395E12018C7B00608217 /* CallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FCD397712018C7B00608217 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396412018C7B00608217 /* Event.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FCD397812018C7B00608217 /* EventArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396512018C7B00608217 /* EventArgs.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -97,6 +94,7 @@
 		C9B7FFD51271BE9500F79E1A /* AnimatorRotationOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */; };
 		D12AFF5E147087780061E9E5 /* aprilui.h in Headers */ = {isa = PBXBuildFile; fileRef = D1459F6B146EF30100D61731 /* aprilui.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1459F6D146EF30F00D61731 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1459F6C146EF30F00D61731 /* aprilui.cpp */; };
+		D14D912315909D3400A7155A /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14D912215909D3400A7155A /* hlxml.framework */; };
 		D18D342F1573BF1E00B30E42 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
 		D18D34301573BF1E00B30E42 /* ColoredImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */; };
 		D18D34311573BF1E00B30E42 /* ColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */; };
@@ -138,7 +136,6 @@
 		D18D34551573BF1E00B30E42 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1459F6C146EF30F00D61731 /* aprilui.cpp */; };
 		D18D34561573BF1E00B30E42 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
 		D18D34571573BF1E00B30E42 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
-		D18D34591573BF1E00B30E42 /* xmlHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8043011EC725B00851062 /* xmlHelper.cpp */; };
 		D18ED0BC15736750005AD969 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18ED0BB15736750005AD969 /* hltypes.framework */; };
 		D18ED0BE15736758005AD969 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18ED0BD15736758005AD969 /* gtypes.framework */; };
 		D18ED0C01573675D005AD969 /* april.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18ED0BF1573675D005AD969 /* april.framework */; };
@@ -231,11 +228,8 @@
 		7FC8041911EC721E00851062 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = include/aprilui/Exception.h; sourceTree = "<group>"; };
 		7FC8041A11EC721E00851062 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = include/aprilui/Image.h; sourceTree = "<group>"; };
 		7FC8041B11EC721E00851062 /* Objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Objects.h; path = include/aprilui/Objects.h; sourceTree = "<group>"; };
-		7FC8041D11EC721E00851062 /* xmlHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlHelper.h; path = include/aprilui/xmlHelper.h; sourceTree = "<group>"; };
 		7FC8042A11EC725B00851062 /* Dataset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Dataset.cpp; path = src/Dataset.cpp; sourceTree = "<group>"; };
 		7FC8042B11EC725B00851062 /* Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Exception.cpp; path = src/Exception.cpp; sourceTree = "<group>"; };
-		7FC8043011EC725B00851062 /* xmlHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xmlHelper.cpp; path = src/xmlHelper.cpp; sourceTree = "<group>"; };
-		7FC8049411EC76F100851062 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		7FCD395E12018C7B00608217 /* CallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallbackEvent.h; path = include/aprilui/CallbackEvent.h; sourceTree = "<group>"; };
 		7FCD396412018C7B00608217 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = include/aprilui/Event.h; sourceTree = "<group>"; };
 		7FCD396512018C7B00608217 /* EventArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventArgs.h; path = include/aprilui/EventArgs.h; sourceTree = "<group>"; };
@@ -248,6 +242,7 @@
 		C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotationOscillator.cpp; sourceTree = "<group>"; };
 		D1459F6B146EF30100D61731 /* aprilui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aprilui.h; path = include/aprilui/aprilui.h; sourceTree = "<group>"; };
 		D1459F6C146EF30F00D61731 /* aprilui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aprilui.cpp; path = src/aprilui.cpp; sourceTree = "<group>"; };
+		D14D912215909D3400A7155A /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
 		D18ECFC815736468005AD969 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D18ED0BB15736750005AD969 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/hltypes.framework"; sourceTree = "<group>"; };
 		D18ED0BD15736758005AD969 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/gtypes.framework"; sourceTree = "<group>"; };
@@ -266,11 +261,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D14D912315909D3400A7155A /* hlxml.framework in Frameworks */,
 				D18ED0C215736763005AD969 /* atres.framework in Frameworks */,
 				D18ED0C01573675D005AD969 /* april.framework in Frameworks */,
 				D18ED0BE15736758005AD969 /* gtypes.framework in Frameworks */,
 				D18ED0BC15736750005AD969 /* hltypes.framework in Frameworks */,
-				7FC8049511EC76F100851062 /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,7 +377,6 @@
 				D1459F6C146EF30F00D61731 /* aprilui.cpp */,
 				7FC8042A11EC725B00851062 /* Dataset.cpp */,
 				7FC8042B11EC725B00851062 /* Exception.cpp */,
-				7FC8043011EC725B00851062 /* xmlHelper.cpp */,
 				D1958AC515905FEE009AB880 /* apriluiUtil.cpp */,
 				D1958AC615905FEE009AB880 /* apriluiUtil.h */,
 				D1958AC715905FEE009AB880 /* EventReceiver.cpp */,
@@ -444,7 +438,6 @@
 				7FC8041911EC721E00851062 /* Exception.h */,
 				7FC8041A11EC721E00851062 /* Image.h */,
 				7FC8041B11EC721E00851062 /* Objects.h */,
-				7FC8041D11EC721E00851062 /* xmlHelper.h */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -460,7 +453,7 @@
 		D18ED0C31573676D005AD969 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				7FC8049411EC76F100851062 /* libxml2.dylib */,
+				D14D912215909D3400A7155A /* hlxml.framework */,
 				D18ED0C115736763005AD969 /* atres.framework */,
 				D18ED0BF1573675D005AD969 /* april.framework */,
 				D18ED0BD15736758005AD969 /* gtypes.framework */,
@@ -482,7 +475,6 @@
 				7FC8042211EC721E00851062 /* Exception.h in Headers */,
 				7FC8042311EC721E00851062 /* Image.h in Headers */,
 				7FC8042411EC721E00851062 /* Objects.h in Headers */,
-				7FC8042611EC721E00851062 /* xmlHelper.h in Headers */,
 				7FCD397112018C7B00608217 /* CallbackEvent.h in Headers */,
 				7FCD397712018C7B00608217 /* Event.h in Headers */,
 				7FCD397812018C7B00608217 /* EventArgs.h in Headers */,
@@ -622,7 +614,6 @@
 			files = (
 				7FC8043411EC725B00851062 /* Dataset.cpp in Sources */,
 				7FC8043511EC725B00851062 /* Exception.cpp in Sources */,
-				7FC8043A11EC725B00851062 /* xmlHelper.cpp in Sources */,
 				7FF4F1D012017ACA00F0BBB7 /* CallbackEvent.cpp in Sources */,
 				7F38C6C9120967B9002B5134 /* ObjectCallbackObject.cpp in Sources */,
 				7F38C6CA120967B9002B5134 /* ObjectColoredImageBox.cpp in Sources */,
@@ -713,7 +704,6 @@
 				D18D34551573BF1E00B30E42 /* aprilui.cpp in Sources */,
 				D18D34561573BF1E00B30E42 /* Dataset.cpp in Sources */,
 				D18D34571573BF1E00B30E42 /* Exception.cpp in Sources */,
-				D18D34591573BF1E00B30E42 /* xmlHelper.cpp in Sources */,
 				D1958ACA15905FEE009AB880 /* apriluiUtil.cpp in Sources */,
 				D1958ACE15905FEE009AB880 /* EventReceiver.cpp in Sources */,
 				D1958AD015905FEE009AB880 /* Texture.cpp in Sources */,
@@ -782,8 +772,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/../atres/include",
 					"${SRCROOT}/../april/include",
@@ -803,8 +793,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/../atres/include",
 					"${SRCROOT}/../april/include",
@@ -823,8 +813,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/../atres/include",
 					"${SRCROOT}/../april/include",
@@ -867,8 +857,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/../atres/include",
 					"${SRCROOT}/../april/include",
@@ -914,8 +904,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
 					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/../atres/include",
 					"${SRCROOT}/../april/include",

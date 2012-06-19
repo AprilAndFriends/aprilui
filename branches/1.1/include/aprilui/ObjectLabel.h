@@ -30,7 +30,6 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 		
 	protected:
-		hstr mTextKey;
 		void OnDraw(gvec2 offset = gvec2());
 		
 	};

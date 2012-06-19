@@ -121,6 +121,8 @@ namespace aprilui
 
 	void LabelBase::setTextKey(chstr value)
 	{
+		if (value == "")
+			mTextKey = "";
 		mText = getDataset()->getText(value);
 		mTextKey = value;
 	}
