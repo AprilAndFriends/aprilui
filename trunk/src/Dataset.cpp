@@ -895,19 +895,24 @@ namespace aprilui
 
 	void Dataset::notifyEvent(chstr name, void* params)
 	{
-		if (name == "onLocalizationChanged")
-		{
-			mTexts.clear();
-			hstr filepath = normalize_path(mFilePath + "/" + getDefaultTextsPath() + "/" + getLocalization());
-			_loadTexts(filepath);
-			foreach_m (aprilui::Texture*, it, mTextures)
-			{
-				it->second->reload(_makeLocalizedTextureName(it->second->getOriginalFilename()));
-			}
-		}
 		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			it->second->notifyEvent(name, params);
+		}
+	}
+	
+	void Dataset::reloadTexts()
+	{
+		mTexts.clear();
+		hstr filepath = normalize_path(mFilePath + "/" + getDefaultTextsPath() + "/" + getLocalization());
+		_loadTexts(filepath);
+	}
+	
+	void Dataset::reloadTextures()
+	{
+		foreach_m (aprilui::Texture*, it, mTextures)
+		{
+			it->second->reload(_makeLocalizedTextureName(it->second->getOriginalFilename()));
 		}
 	}
 	

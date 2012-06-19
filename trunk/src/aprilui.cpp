@@ -228,6 +228,12 @@ namespace aprilui
 		localization = value;
 		foreach_m (Dataset*, it, gDatasets)
 		{
+			it->second->reloadTexts();
+			it->second->reloadTextures();
+		}
+		// finished localization change, now call the appropriate event
+		foreach_m (Dataset*, it, gDatasets)
+		{
 			it->second->notifyEvent("onLocalizationChanged", NULL);
 		}
 	}
