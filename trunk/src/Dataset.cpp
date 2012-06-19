@@ -771,7 +771,7 @@ namespace aprilui
 	
 	hstr Dataset::getTextEntry(chstr textKey)
 	{
-		return mTexts[textKey];
+		return mTexts.try_get_by_key(textKey, "");
 	}
 	
 	bool Dataset::hasTextEntry(chstr textKey)
@@ -918,7 +918,7 @@ namespace aprilui
 			{
 				aprilui::log(hsprintf("WARNING! Text key '%s' does not exist", key.c_str()));
 			}
-			return mTexts[key];
+			return getTextEntry(key);
 		}
 		int index = key.find_first_of('}');
 		if (index < 0)
