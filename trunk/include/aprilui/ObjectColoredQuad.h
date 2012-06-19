@@ -24,7 +24,7 @@
 
 namespace aprilui
 {
-	class ColoredQuad : public Object
+	class apriluiExport ColoredQuad : public Object
 	{
 	public:
 		ColoredQuad(chstr name, grect rect);
