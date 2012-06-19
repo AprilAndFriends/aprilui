@@ -15,7 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 
-#include "Util.h"
+#include "apriluiUtil.h"
 #include "Exception.h"
 
 namespace aprilui

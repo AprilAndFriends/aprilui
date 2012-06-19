@@ -18,12 +18,12 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include "Animators.h"
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Images.h"
 #include "Objects.h"
 #include "Texture.h"
-#include "Util.h"
 #include "xmlHelper.h"
 
 namespace aprilui

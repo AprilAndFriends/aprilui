@@ -12,8 +12,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 
+#include "apriluiUtil.h"
 #include "ColorImage.h"
-#include "Util.h"
 
 namespace aprilui
 {

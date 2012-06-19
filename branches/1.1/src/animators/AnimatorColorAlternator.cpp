@@ -13,8 +13,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hstring.h>
 
 #include "AnimatorColorAlternator.h"
+#include "apriluiUtil.h"
 #include "ColoredImage.h"
-#include "Util.h"
 #include "ObjectColoredImageBox.h"
 
 namespace aprilui
