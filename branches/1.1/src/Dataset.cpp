@@ -449,7 +449,10 @@ namespace aprilui
 	void Dataset::_loadTexts(hstr path)
 	{
 		hstr localization = getLocalization();
-		if (localization) path += "/" + localization;
+		if (localization != "")
+		{
+			path += "/" + localization;
+		}
 		logMessage("loading texts from '" + path + "'");
 		harray<hstr> files = hdir::files(path, true);
 		harray<hstr> lines;
@@ -793,7 +796,12 @@ namespace aprilui
 	void Dataset::reloadTexts()
 	{
 		mTexts.clear();
-		hstr filepath = normalize_path(mFilenamePrefix + "/" + getDefaultTextsPath() + "/" + getLocalization());
+		hstr filepath = mFilenamePrefix;
+		hstr textsPath = getDefaultTextsPath();
+		if (textsPath != "")
+		{
+			filepath += "/" + textsPath;
+		}
 		_loadTexts(filepath);
 	}
 	
