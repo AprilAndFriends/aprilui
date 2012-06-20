@@ -42,6 +42,7 @@ namespace aprilui
 		void setAddressMode(april::Texture::AddressMode value);
 
 		void update(float k);
+		void resetUnusedTime();
 
 		void load();
 		void unload();
