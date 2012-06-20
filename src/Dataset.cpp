@@ -1046,8 +1046,19 @@ namespace aprilui
 					aprilui::log("WARNING! Not enough args");
 					return false;
 				}
-				preprocessedFormat += string(0, index) + args.pop_first();
+				hstr arg = args.pop_first();
+				preprocessedFormat += string(0, index) + arg;
 				string = string(index + 2, string.size() - index - 2);
+				if (!_getCompositeTextKeyFormatIndexes(arg, indexes))
+				{
+					return false;
+				}
+				if (indexes.size() > args.size())
+				{
+					aprilui::log("WARNING! Not enough args");
+					return false;
+				}
+				preprocessedArgs += args.pop_first(indexes.size());
 			}
 		}
 		preprocessedArgs += args; // remaining args
@@ -1080,6 +1091,7 @@ namespace aprilui
 			result += args.pop_first();
 			string = string((*it) + 2, string.size() - (*it) - 2);
 		}
+		result += string;
 		result = result.replace("%%", "%");
 		return true;
 	}
