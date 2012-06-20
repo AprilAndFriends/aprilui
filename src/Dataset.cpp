@@ -787,7 +787,12 @@ namespace aprilui
 	
 	harray<hstr> Dataset::getTextEntries(harray<hstr> keys)
 	{
-		return mTexts.values(keys & mTexts.keys());
+		harray<hstr> output;
+		foreach (hstr, it, keys)
+		{
+			output += getTextEntry(*it);
+		}
+		return output;
 	}
 
 	void Dataset::registerCallback(chstr name, void (*callback)())
