@@ -94,13 +94,19 @@ namespace aprilui
 		}
 	}
 
+	void Texture::resetUnusedTime()
+	{
+		mUnusedTime = 0.0f;
+	}
+
 	void Texture::load()
 	{
 		mUnusedTime = 0.0f;
 		mTexture->load();
 		foreach (Texture*, it, mDynamicLinks)
 		{
-			(*it)->load();
+			(*it)->resetUnusedTime();
+			(*it)->getRenderTexture()->load();
 		}
 	}
 

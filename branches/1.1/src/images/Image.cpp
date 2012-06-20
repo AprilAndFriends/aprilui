@@ -104,6 +104,7 @@ namespace aprilui
 		_tVertexes[2].x = rect.x;          _tVertexes[2].y = rect.y + rect.h;
 		_tVertexes[3].x = rect.x + rect.w; _tVertexes[3].y = rect.y + rect.h;
 		
+		mTexture->load();
 		april::rendersys->setTexture(mTexture->getRenderTexture());
 		_tryLoadTexCoords();
 			
@@ -145,6 +146,8 @@ namespace aprilui
 		april::rendersys->setIdentityTransform();
 		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		april::rendersys->rotate(angle);
+
+		mTexture->load();
 		april::rendersys->setTexture(mTexture->getRenderTexture());
 		_tryLoadTexCoords();
 		
