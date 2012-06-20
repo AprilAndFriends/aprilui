@@ -104,6 +104,7 @@ namespace aprilui
 		_tVertexes[2].x = rect.left();	_tVertexes[2].y = rect.bottom();
 		_tVertexes[3].x = rect.right();	_tVertexes[3].y = rect.bottom();
 		
+		mTexture->load();
 		april::rendersys->setTexture(mTexture->getRenderTexture());
 		_tryLoadTexCoords();
 			
