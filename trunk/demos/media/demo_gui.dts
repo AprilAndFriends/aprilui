@@ -105,7 +105,7 @@
 				<Animator type="Rotator" name="custom_animator" function="custom" periods="-1" amplitude="45" speed="0.3"/>
 			</Object>
 			<Object type="ColoredQuad" color="0000007F" x="0" y="504" w="600" h="96"/>
-			<Object type="Label" text_key="{%s %f %s}   {9001:}FORMATTED_KEY PUSH_ME_KEY   {1}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="504" w="600" h="32"/>
+			<Object type="Label" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="504" w="600" h="32"/>
 			<Object type="Label" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" x="0" y="536" w="600" h="32"/>
 			<Object type="Label" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="568" w="600" h="32"/>
 		</Object>
