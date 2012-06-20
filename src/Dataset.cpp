@@ -15,6 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hltypes/hfile.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hresource.h>
 #include <hlxml/Exception.h>
 #include <hlxml/Document.h>
 #include <hlxml/Node.h>
@@ -454,12 +455,12 @@ namespace aprilui
 			path += "/" + localization;
 		}
 		logMessage("loading texts from '" + path + "'");
-		harray<hstr> files = hdir::files(path, true);
+		harray<hstr> files = hdir::resource_files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
 		bool keyMode = true;
 		hstr key;
-		hfile f;
+		hresource f;
 		foreach (hstr, it, files)
 		{
 			if (!it->ends_with(".loc")) continue;
@@ -943,8 +944,19 @@ namespace aprilui
 					aprilui::log("WARNING! Not enough args");
 					return false;
 				}
-				preprocessedFormat += string(0, index) + args.pop_first();
+				hstr arg = args.pop_first();
+				preprocessedFormat += string(0, index) + arg;
 				string = string(index + 2, string.size() - index - 2);
+				if (!_getCompositeTextKeyFormatIndexes(arg, indexes))
+				{
+					return false;
+				}
+				if (indexes.size() > args.size())
+				{
+					aprilui::log("WARNING! Not enough args");
+					return false;
+				}
+				preprocessedArgs += args.pop_first(indexes.size());
 			}
 		}
 		preprocessedArgs += args; // remaining args
@@ -977,6 +989,7 @@ namespace aprilui
 			result += args.pop_first();
 			string = string((*it) + 2, string.size() - (*it) - 2);
 		}
+		result += string;
 		result = result.replace("%%", "%");
 		return true;
 	}
