@@ -83,13 +83,10 @@ namespace aprilui
 		{
 			// TODO - change to aprilui variable
 			float maxTime = aprilui::getTextureIdleUnloadTime();
-			if (maxTime > 0.0f)
+			mUnusedTime += k;
+			if (maxTime > 0.0f && mUnusedTime > maxTime)
 			{
-				mUnusedTime += k;
-				if (mUnusedTime > maxTime)
-				{
-					mTexture->unload();
-				}
+				mTexture->unload();
 			}
 		}
 	}
