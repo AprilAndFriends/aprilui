@@ -62,6 +62,12 @@ namespace aprilui
 		return false;
 	}
 
+	void CallbackObject::cancelMouseDown()
+	{
+		Object::cancelMouseDown();
+		_triggerEvent("CancelMouseDown");
+	}
+
 	bool CallbackObject::onMouseUp(int button)
 	{
 		if (Object::onMouseUp(button))
