@@ -53,6 +53,12 @@ namespace aprilui
 	{
 	}
 	
+	void Image::setSrcRect(grect value)
+	{
+		mSrcRect = value;
+		mTextureCoordinatesLoaded = false;
+	}
+	
 	void Image::_tryLoadTexCoords()
 	{
 		if (!mTextureCoordinatesLoaded && mTexture != NULL && mTexture->getWidth() > 0 && mTexture->getHeight() > 0)
@@ -62,36 +68,36 @@ namespace aprilui
 			float h = (float)mTexture->getHeight();
 			if (!mVertical)
 			{
-				_tVertexes[0].u = mSrcRect.x / w;					_tVertexes[0].v = mSrcRect.y / h;
-				_tVertexes[1].u = (mSrcRect.x + mSrcRect.w) / w;	_tVertexes[1].v = mSrcRect.y / h;
-				_tVertexes[2].u = mSrcRect.x / w;					_tVertexes[2].v = (mSrcRect.y + mSrcRect.h) / h;
-				_tVertexes[3].u = (mSrcRect.x + mSrcRect.w) / w;	_tVertexes[3].v = (mSrcRect.y + mSrcRect.h) / h;
+				_tVertices[0].u = mSrcRect.x / w;					_tVertices[0].v = mSrcRect.y / h;
+				_tVertices[1].u = (mSrcRect.x + mSrcRect.w) / w;	_tVertices[1].v = mSrcRect.y / h;
+				_tVertices[2].u = mSrcRect.x / w;					_tVertices[2].v = (mSrcRect.y + mSrcRect.h) / h;
+				_tVertices[3].u = (mSrcRect.x + mSrcRect.w) / w;	_tVertices[3].v = (mSrcRect.y + mSrcRect.h) / h;
 				if (mInvertX)
 				{
-					hswap(_tVertexes[0].u, _tVertexes[1].u);
-					hswap(_tVertexes[2].u, _tVertexes[3].u);
+					hswap(_tVertices[0].u, _tVertices[1].u);
+					hswap(_tVertices[2].u, _tVertices[3].u);
 				}
 				if (mInvertY)
 				{
-					hswap(_tVertexes[0].v, _tVertexes[2].v);
-					hswap(_tVertexes[1].v, _tVertexes[3].v);
+					hswap(_tVertices[0].v, _tVertices[2].v);
+					hswap(_tVertices[1].v, _tVertices[3].v);
 				}
 			}
 			else
 			{
-				_tVertexes[0].u = (mSrcRect.x + mSrcRect.h) / w;	_tVertexes[0].v = mSrcRect.y / h;
-				_tVertexes[1].u = (mSrcRect.x + mSrcRect.h) / w;	_tVertexes[1].v = (mSrcRect.y + mSrcRect.w) / h;
-				_tVertexes[2].u = mSrcRect.x / w;					_tVertexes[2].v = mSrcRect.y / h;
-				_tVertexes[3].u = mSrcRect.x / w;					_tVertexes[3].v = (mSrcRect.y + mSrcRect.w) / h;
+				_tVertices[0].u = (mSrcRect.x + mSrcRect.h) / w;	_tVertices[0].v = mSrcRect.y / h;
+				_tVertices[1].u = (mSrcRect.x + mSrcRect.h) / w;	_tVertices[1].v = (mSrcRect.y + mSrcRect.w) / h;
+				_tVertices[2].u = mSrcRect.x / w;					_tVertices[2].v = mSrcRect.y / h;
+				_tVertices[3].u = mSrcRect.x / w;					_tVertices[3].v = (mSrcRect.y + mSrcRect.w) / h;
 				if (mInvertY)
 				{
-					hswap(_tVertexes[0].u, _tVertexes[2].u);
-					hswap(_tVertexes[1].u, _tVertexes[3].u);
+					hswap(_tVertices[0].u, _tVertices[2].u);
+					hswap(_tVertices[1].u, _tVertices[3].u);
 				}
 				if (mInvertX)
 				{
-					hswap(_tVertexes[0].v, _tVertexes[1].v);
-					hswap(_tVertexes[2].v, _tVertexes[3].v);
+					hswap(_tVertices[0].v, _tVertices[1].v);
+					hswap(_tVertices[2].v, _tVertices[3].v);
 				}
 			}
 		}
@@ -99,10 +105,10 @@ namespace aprilui
 
 	void Image::draw(grect rect, april::Color color)
 	{
-		_tVertexes[0].x = rect.left();	_tVertexes[0].y = rect.top();
-		_tVertexes[1].x = rect.right();	_tVertexes[1].y = rect.top();
-		_tVertexes[2].x = rect.left();	_tVertexes[2].y = rect.bottom();
-		_tVertexes[3].x = rect.right();	_tVertexes[3].y = rect.bottom();
+		_tVertices[0].x = _tVertices[2].x = rect.left();
+		_tVertices[0].y = _tVertices[1].y = rect.top();
+		_tVertices[1].x = _tVertices[3].x = rect.right();
+		_tVertices[2].y = _tVertices[3].y = rect.bottom();
 		
 		mTexture->load();
 		april::rendersys->setTexture(mTexture->getRenderTexture());
@@ -111,11 +117,11 @@ namespace aprilui
 		april::rendersys->setTextureBlendMode(mBlendMode);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::TriangleStrip, _tVertexes, 4, color);
+			april::rendersys->render(april::TriangleStrip, _tVertices, 4, color);
 		}
 		else
 		{
-			april::rendersys->render(april::TriangleStrip, _tVertexes, 4);
+			april::rendersys->render(april::TriangleStrip, _tVertices, 4);
 		}
 		april::rendersys->setTextureBlendMode(april::DEFAULT);
 	}

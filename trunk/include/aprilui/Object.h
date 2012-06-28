@@ -246,6 +246,10 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
 		
+		// TODO - this needs to be seriously refactored
+		void triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
+		// TODO - this needs to be seriously refactored
+		void triggerEvent(chstr name, float x, float y, unsigned int keycode = 0, chstr extra = "");
 	protected:
 		hstr mName;
 		grect mRect;
@@ -276,10 +280,6 @@ namespace aprilui
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
 		
-		// TODO - this needs to be seriously refactored
-		void _triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
-		// TODO - this needs to be seriously refactored
-		void _triggerEvent(chstr name, float x, float y, unsigned int keycode = 0, chstr extra = "");
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool _isDerivedEnabled();
 		bool _isDerivedClickThrough();

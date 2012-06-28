@@ -63,7 +63,7 @@ namespace aprilui
 			mPushed = true;
 			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
 			setValue(position.x / (mRect.w - 4));
-			_triggerEvent("Set", button);
+			triggerEvent("Set", button);
 			return true;
 		}
 		return false;
@@ -91,7 +91,7 @@ namespace aprilui
 		{
 			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
 			setValue(position.x / (mRect.w - 4));
-			_triggerEvent("Set");
+			triggerEvent("Set");
 		}
 	}
 

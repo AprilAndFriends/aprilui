@@ -56,7 +56,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			_triggerEvent("MouseDown", button);
+			triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
@@ -65,7 +65,7 @@ namespace aprilui
 	void CallbackObject::cancelMouseDown()
 	{
 		Object::cancelMouseDown();
-		_triggerEvent("CancelMouseDown");
+		triggerEvent("CancelMouseDown");
 	}
 
 	bool CallbackObject::onMouseUp(int button)
@@ -76,7 +76,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			_triggerEvent("Click", button);
+			triggerEvent("Click", button);
 			return true;
 		}
 		return false;
@@ -87,7 +87,7 @@ namespace aprilui
 		Object::onMouseMove();
 		if (isCursorInside())
 		{
-			_triggerEvent("MouseMove");
+			triggerEvent("MouseMove");
 		}
 	}
 	
@@ -96,7 +96,7 @@ namespace aprilui
 		Object::onMouseScroll(x, y);
 		if (isCursorInside())
 		{
-			_triggerEvent("MouseScroll", x, y);
+			triggerEvent("MouseScroll", x, y);
 		}
 	}
 }
