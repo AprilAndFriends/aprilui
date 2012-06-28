@@ -260,7 +260,7 @@ namespace aprilui
 				april::window->beginKeyboardHandling();
 			}
 			mPushed = false;
-			_triggerEvent("Click", button);
+			triggerEvent("Click", button);
 			return true;
 		}
 		mPushed = false;
@@ -297,7 +297,7 @@ namespace aprilui
 			break;
 #endif
 		case april::AK_RETURN:
-			_triggerEvent("Submit", april::AK_RETURN);
+			triggerEvent("Submit", april::AK_RETURN);
 			break;
 		}
 	}

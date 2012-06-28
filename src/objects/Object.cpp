@@ -666,7 +666,7 @@ namespace aprilui
 	}
 
 	// TODO - this needs to be seriously refactored
-	void Object::_triggerEvent(chstr name, unsigned int keycode, chstr extra)
+	void Object::triggerEvent(chstr name, unsigned int keycode, chstr extra)
 	{
 		if (mEvents.has_key(name))
 		{
@@ -677,7 +677,7 @@ namespace aprilui
 	}
 
 	// TODO - this needs to be seriously refactored
-	void Object::_triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
+	void Object::triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
 	{
 		if (mEvents.has_key(name))
 		{

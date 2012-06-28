@@ -41,7 +41,7 @@ namespace aprilui
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
 		grect getSrcRect() const { return mSrcRect; }
-		void setSrcRect(grect value) { mSrcRect = value; }
+		void setSrcRect(grect value);
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };
 		bool isYInverted() { return mInvertY; };
@@ -63,7 +63,7 @@ namespace aprilui
 		void _tryLoadTexCoords();
 
 	private:
-		april::TexturedVertex _tVertexes[4];
+		april::TexturedVertex _tVertices[4];
 		
 	};
 

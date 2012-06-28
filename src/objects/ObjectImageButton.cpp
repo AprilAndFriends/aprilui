@@ -170,7 +170,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseDown(button);
 		if (result)
 		{
-            _triggerEvent("MouseDown", button);
+            triggerEvent("MouseDown", button);
 		}
 		return result;
 	}
@@ -184,7 +184,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseUp(button);
 		if (result)
 		{
-			_triggerEvent("Click", button);
+			triggerEvent("Click", button);
 		}
 		return result;
 	}

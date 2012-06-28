@@ -70,7 +70,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			_triggerEvent("MouseDown", button);
+			triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
@@ -85,7 +85,7 @@ namespace aprilui
 		if (isCursorInside())
 		{
 			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
-			_triggerEvent("Click", button);
+			triggerEvent("Click", button);
 			return true;
 		}
 		return false;
