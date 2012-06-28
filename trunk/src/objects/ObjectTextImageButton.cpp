@@ -109,7 +109,7 @@ namespace aprilui
 		}
 		if (name == "use_disabled_color")
 		{
-			aprilui::log("WARNING: \"use_disabled_color\" is deprecated, use \"disabled_text_color\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'use_disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
 			return _mUseDisabledTextColor;
 		}
 		if (name == "hover_text_color")		return getHoverTextColor().hex();
@@ -122,7 +122,7 @@ namespace aprilui
 	{
 		if (name == "use_disabled_color")
 		{
-			aprilui::log("WARNING: \"use_disabled_color=\" is deprecated, use \"disabled_text_color=\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'use_disabled_color=' is deprecated, use 'disabled_text_color=' instead!"); // DEPRECATED
 			_mUseDisabledTextColor = !value;
 			setDisabledTextColor(mTextColor);
 		}

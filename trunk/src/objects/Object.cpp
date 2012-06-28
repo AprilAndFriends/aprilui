@@ -755,7 +755,7 @@ namespace aprilui
 		else if (name == "click_through")	setClickThrough(value);
 		else if (name == "clickthrough")
 		{
-			aprilui::log("WARNING: \"clickthrough=\" is deprecated. Use \"click_through=\" instead."); // DEPRECATED
+			aprilui::log("WARNING: 'clickthrough=' is deprecated. Use 'click_through=' instead!"); // DEPRECATED
 			setClickThrough(value);
 		}
 		else if (name == "inherits_alpha")	setInheritsAlpha(value);

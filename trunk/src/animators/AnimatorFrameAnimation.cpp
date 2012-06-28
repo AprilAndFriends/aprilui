@@ -61,7 +61,7 @@ namespace aprilui
 			else if (name == "frame_count")		mFrameCount = value;
 			else if (name == "inherit_value")
 			{
-				aprilui::log("Warning: Animators::FrameAnimation does not support inherit_value");
+				aprilui::log("WARNING: Animators::FrameAnimation does not support 'inherit_value'!");
 			}
             else Animator::setProperty(name, value);
             return 1;

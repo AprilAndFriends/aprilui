@@ -927,14 +927,14 @@ namespace aprilui
 		{
 			if (!mTexts.has_key(key))
 			{
-				aprilui::log(hsprintf("WARNING! Text key '%s' does not exist", key.c_str()));
+				aprilui::log(hsprintf("WARNING: Text key '%s' does not exist!", key.c_str()));
 			}
 			return getTextEntry(key);
 		}
 		int index = key.find_first_of('}');
 		if (index < 0)
 		{
-			aprilui::log(hsprintf("WARNING! Error while trying to parse formatted key '%s'.", key.c_str()));
+			aprilui::log(hsprintf("WARNING: Error while trying to parse formatted key '%s'.", key.c_str()));
 			return key;
 		}
 		harray<hstr> args;
@@ -981,12 +981,12 @@ namespace aprilui
 			}
 			if (openIndex < 0 || closeIndex < 0)
 			{
-				aprilui::log("WARNING! '{' without '}' or '}' without '{'");
+				aprilui::log("WARNING: '{' without '}' or '}' without '{'");
 				return false;
 			}
 			if (closeIndex < openIndex)
 			{
-				aprilui::log("WARNING! '}' before '{'");
+				aprilui::log("WARNING: '}' before '{'");
 				return false;
 			}
 			// getting all args before the {
@@ -1018,7 +1018,7 @@ namespace aprilui
 			}
 			if (index >= string.size() - 1)
 			{
-				aprilui::log("WARNING! Last character is '%'");
+				aprilui::log("WARNING: Last character is '%'");
 				return false;
 			}
 			if (string[index + 1] == '%') // escaped "%", continue processing
@@ -1031,7 +1031,7 @@ namespace aprilui
 			{
 				if (args.size() == 0)
 				{
-					aprilui::log("WARNING! Not enough args");
+					aprilui::log("WARNING: Not enough args");
 					return false;
 				}
 				preprocessedFormat += string(0, index + 2);
@@ -1043,7 +1043,7 @@ namespace aprilui
 			{
 				if (args.size() == 0)
 				{
-					aprilui::log("WARNING! Not enough args");
+					aprilui::log("WARNING: Not enough args");
 					return false;
 				}
 				hstr arg = args.pop_first();
@@ -1055,7 +1055,7 @@ namespace aprilui
 				}
 				if (indexes.size() > args.size())
 				{
-					aprilui::log("WARNING! Not enough args");
+					aprilui::log("WARNING: Not enough args");
 					return false;
 				}
 				preprocessedArgs += args.pop_first(indexes.size());
@@ -1077,12 +1077,12 @@ namespace aprilui
 		}
 		if (args.size() < indexes.size())
 		{
-			aprilui::log("WARNING! Not enough args");
+			aprilui::log("WARNING: Not enough args");
 			return false;
 		}
 		if (indexes.size() > args.size())
 		{
-			aprilui::log("WARNING! Too many args");
+			aprilui::log("WARNING: Too many args");
 			return false;
 		}
 		foreach (int, it, indexes)
@@ -1112,7 +1112,7 @@ namespace aprilui
 			}
 			if (index >= string.size() - 1)
 			{
-				aprilui::log("WARNING! Last character is '%'");
+				aprilui::log("WARNING: Last character is '%'");
 				return false;
 			}
 			if (string[index + 1] == '%') // escaped "%", use just one "%".
@@ -1123,7 +1123,7 @@ namespace aprilui
 			}
 			if (string[index + 1] != 's')
 			{
-				aprilui::log(hsprintf("WARNING! Unsupported formatting '%%%c'", string[index + 1]));
+				aprilui::log(hsprintf("WARNING: Unsupported formatting '%%%c'", string[index + 1]));
 				return false;
 			}
 			indexes += currentIndex + index;
