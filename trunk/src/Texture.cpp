@@ -15,11 +15,11 @@
 
 namespace aprilui
 {
-	// TODO - refactor april to support a "TextureInterface" class or something like that
+	// TODO - maybe refactor april to support a "TextureInterface" class or something like that
 	Texture::Texture(chstr filename, april::Texture* texture)
 	{
 		mOriginalFilename = filename;
-		mFilename = filename;
+		mFilename = texture->getFilename();
 		mTexture = texture;
 		mFilter = texture->getFilter();
 		mAddressMode = texture->getAddressMode();
