@@ -21,7 +21,7 @@ namespace aprilui
 		Label(name, rect),
 		ButtonBase()
 	{
-		aprilui::log("WARNING: \"TextButton\" is deprecated, use \"TextImageButton\" without images instead"); // DEPRECATED
+		aprilui::log("WARNING: 'TextButton' is deprecated, use 'TextImageButton' without images instead!"); // DEPRECATED
 		mText = "TextButton: " + name;
 		mUseBackground = true;
 		mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
@@ -97,22 +97,22 @@ namespace aprilui
 		if (name == "disabled_text_color")	return getDisabledTextColor().hex();
 		if (name == "background")
 		{
-			aprilui::log("WARNING: \"background\" is deprecated, use \"use_background\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
 			return isUseBackground();
 		}
 		if (name == "hover_color")
 		{
-			aprilui::log("WARNING: \"hover_color\" is deprecated, use \"hover_text_color\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'hover_color' is deprecated, use 'hover_text_color' instead!"); // DEPRECATED
 			return getHoverTextColor().hex();
 		}
 		if (name == "pushed_color")
 		{
-			aprilui::log("WARNING: \"pushed_color\" is deprecated, use \"pushed_text_color\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'pushed_color' is deprecated, use 'pushed_text_color' instead!"); // DEPRECATED
 			return getPushedTextColor().hex();
 		}
 		if (name == "disabled_color")
 		{
-			aprilui::log("WARNING: \"disabled_color\" is deprecated, use \"disabled_text_color\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
 			return getDisabledTextColor().hex();
 		}
 		return Label::getProperty(name, property_exists);
@@ -126,22 +126,22 @@ namespace aprilui
 		else if (name == "disabled_text_color")	setDisabledTextColor(value);
 		else if (name == "background")
 		{
-			aprilui::log("WARNING: \"background=\" is deprecated, use \"use_background=\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
 			setUseBackground(value);
 		}
 		else if (name == "hover_color")
 		{
-			aprilui::log("WARNING: \"hover_color=\" is deprecated, use \"hover_text_color=\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'hover_color=' is deprecated, use 'hover_text_color=' instead!"); // DEPRECATED
 			setHoverTextColor(value);
 		}
 		else if (name == "pushed_color")
 		{
-			aprilui::log("WARNING: \"pushed_color=\" is deprecated, use \"pushed_text_color=\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'pushed_color=' is deprecated, use 'pushed_text_color=' instead!"); // DEPRECATED
 			setPushedTextColor(value);
 		}
 		else if (name == "disabled_color")
 		{
-			aprilui::log("WARNING: \"disabled_color=\" is deprecated, use \"disabled_text_color=\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'disabled_color=' is deprecated, use 'disabled_text_color=' instead!"); // DEPRECATED
 			setDisabledTextColor(value);
 		}
 		else return Label::setProperty(name, value);

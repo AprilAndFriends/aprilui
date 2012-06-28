@@ -118,7 +118,7 @@ namespace aprilui
 		else if (name == "text_key")	setTextKey(value);
 		else if (name == "textkey")
 		{
-			aprilui::log("WARNING: \"textkey=\" is deprecated. Use \"text_key=\" instead."); // DEPRECATED
+			aprilui::log("WARNING: 'textkey=' is deprecated. Use 'text_key=' instead."); // DEPRECATED
 			setTextKey(value);
 		}
 		else if (name == "text")		setText(value);
@@ -141,7 +141,7 @@ namespace aprilui
 		else if (name == "text_color")	setTextColor(value);
 		else if (name == "color")
 		{
-			throw hl_exception("LabelBase instance using \"color=\" which is conflicted with TextImageButton's color and cannot be used! Maybe you meant \"text_color=\"?");
+			throw hl_exception("LabelBase instance using 'color=' which is conflicted with TextImageButton's color and cannot be used! Maybe you meant 'text_color='?");
 		}
 		else if (name == "effect")
 		{

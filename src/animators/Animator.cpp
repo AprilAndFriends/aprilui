@@ -210,13 +210,13 @@ namespace aprilui
 		else if (name == "offset")						setOffset(value);
 		else if (name == "dc_offset")
 		{
-			aprilui::log("WARNING: \"dc_offset=\" is deprecated, use \"offset=\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
 			setOffset(value);
 		}
 		else if (name == "acceleration")	setAcceleration(value);
 		else if (name == "discrete")
 		{
-			aprilui::log("WARNING: \"discrete=\" is deprecated, use \"discrete_step=\" instead"); // DEPRECATED
+			aprilui::log("WARNING: 'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
 			setDiscreteStep((bool)value ? 0 : 1);
 		}
 		else if (name == "discrete_step")	setDiscreteStep(value);

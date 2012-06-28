@@ -128,7 +128,7 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(mParent);
 			if (parent == NULL)
 			{
-				aprilui::log("Warning! ScrollBar '" + mName + "' not attached to object of class Container!");
+				aprilui::log(hsprintf("WARNING: ScrollBar '%s' not attached to object of class Container!", mName.c_str()));
 			}
 		}
 		else if (name == "SkinChange")

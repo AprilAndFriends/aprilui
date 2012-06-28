@@ -21,25 +21,25 @@ namespace aprilui
 {
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
-		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
+		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
 	{
-		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
+		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
 	{
-		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
+		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		mColor.set(color);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
 	{
-		aprilui::log("WARNING! \"ColorImage\" is deprecated, use \"ColoredQuad\" instead"); // DEPRECATED
+		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		mColor = color;
 	}
 
