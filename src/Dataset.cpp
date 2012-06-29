@@ -687,11 +687,9 @@ namespace aprilui
 	
 	bool Dataset::isWaitingAnimation()
 	{
-		aprilui::Animator* object;
 		foreach_m (Object*, it, mObjects)
 		{
-			object = dynamic_cast<aprilui::Animator*>(it->second);
-			if (object != NULL && object->isWaitingAnimation())
+			if (it->second->isWaitingAnimation())
 			{
 				return true;
 			}
