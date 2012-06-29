@@ -108,6 +108,7 @@ namespace aprilui
 		mAnchorTop = true;
 		mAnchorBottom = false;
 		mClip = false;
+		mUseDisabledAlpha = true;
 	}
 
 	Object::~Object()
@@ -712,30 +713,31 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "x")				return getX();
-		if (name == "y")				return getY();
-		if (name == "w")				return getWidth();
-		if (name == "h")				return getHeight();
-		if (name == "visible")			return isVisible();
-		if (name == "zorder")			return getZOrder();
-		if (name == "enabled")			return isEnabled();
-		if (name == "click_through")	return isClickThrough();
-		if (name == "inherits_alpha")	return isInheritsAlpha();
-		if (name == "red")				return getRed();
-		if (name == "green")			return getGreen();
-		if (name == "blue")				return getBlue();
-		if (name == "alpha")			return getAlpha();
-		if (name == "color")			return getColor().hex();
-		if (name == "angle")			return getAngle();
-		if (name == "scale_x")			return getScaleX();
-		if (name == "scale_y")			return getScaleY();
-		if (name == "center_x")			return getCenterX();
-		if (name == "center_y")			return getCenterY();
-		if (name == "anchor_left")		return isAnchorLeft();
-		if (name == "anchor_right")		return isAnchorRight();
-		if (name == "anchor_top")		return isAnchorTop();
-		if (name == "anchor_bottom")	return isAnchorBottom();
-		if (name == "clip")				return isClip();
+		if (name == "x")					return getX();
+		if (name == "y")					return getY();
+		if (name == "w")					return getWidth();
+		if (name == "h")					return getHeight();
+		if (name == "visible")				return isVisible();
+		if (name == "zorder")				return getZOrder();
+		if (name == "enabled")				return isEnabled();
+		if (name == "click_through")		return isClickThrough();
+		if (name == "inherits_alpha")		return isInheritsAlpha();
+		if (name == "red")					return getRed();
+		if (name == "green")				return getGreen();
+		if (name == "blue")					return getBlue();
+		if (name == "alpha")				return getAlpha();
+		if (name == "color")				return getColor().hex();
+		if (name == "angle")				return getAngle();
+		if (name == "scale_x")				return getScaleX();
+		if (name == "scale_y")				return getScaleY();
+		if (name == "center_x")				return getCenterX();
+		if (name == "center_y")				return getCenterY();
+		if (name == "anchor_left")			return isAnchorLeft();
+		if (name == "anchor_right")			return isAnchorRight();
+		if (name == "anchor_top")			return isAnchorTop();
+		if (name == "anchor_bottom")		return isAnchorBottom();
+		if (name == "clip")					return isClip();
+		if (name == "use_disabled_alpha")	return isUseDisabledAlpha();
 		if (property_exists != NULL)
 		{
 			*property_exists = false;
@@ -758,21 +760,21 @@ namespace aprilui
 			aprilui::log("WARNING: 'clickthrough=' is deprecated. Use 'click_through=' instead!"); // DEPRECATED
 			setClickThrough(value);
 		}
-		else if (name == "inherits_alpha")	setInheritsAlpha(value);
-		else if (name == "red")				setRed((int)value);
-		else if (name == "green")			setGreen((int)value);
-		else if (name == "blue")			setBlue((int)value);
-		else if (name == "alpha")			setAlpha((int)value);
-		else if (name == "color")			setColor(value);
-		else if (name == "angle")			setAngle(value);
-		else if (name == "scale_x")			setScaleX(value);
-		else if (name == "scale_y")			setScaleY(value);
-		else if (name == "center_x")		setCenterX(value);
-		else if (name == "center_y")		setCenterY(value);
-		else if (name == "anchor_left")		setAnchorLeft(value);
-		else if (name == "anchor_right")	setAnchorRight(value);
-		else if (name == "anchor_top")		setAnchorTop(value);
-		else if (name == "anchor_bottom")	setAnchorBottom(value);
+		else if (name == "inherits_alpha")		setInheritsAlpha(value);
+		else if (name == "red")					setRed((int)value);
+		else if (name == "green")				setGreen((int)value);
+		else if (name == "blue")				setBlue((int)value);
+		else if (name == "alpha")				setAlpha((int)value);
+		else if (name == "color")				setColor(value);
+		else if (name == "angle")				setAngle(value);
+		else if (name == "scale_x")				setScaleX(value);
+		else if (name == "scale_y")				setScaleY(value);
+		else if (name == "center_x")			setCenterX(value);
+		else if (name == "center_y")			setCenterY(value);
+		else if (name == "anchor_left")			setAnchorLeft(value);
+		else if (name == "anchor_right")		setAnchorRight(value);
+		else if (name == "anchor_top")			setAnchorTop(value);
+		else if (name == "anchor_bottom")		setAnchorBottom(value);
 		else if (name == "anchors")
 		{
 			harray<hstr> anchors = value.replace(" ", "").lower().split(",", -1, true);
@@ -781,7 +783,8 @@ namespace aprilui
 			setAnchorTop(anchors.contains("top"));
 			setAnchorBottom(anchors.contains("bottom"));
 		}
-		else if (name == "clip")			setClip(value);
+		else if (name == "clip")				setClip(value);
+		else if (name == "use_disabled_alpha")	setUseDisabledAlpha(value);
         else return false;
         return true;
 	}
@@ -942,6 +945,11 @@ namespace aprilui
 			color.a = getDerivedAlpha();
 		}
 		return color;
+	}
+
+	float Object::_getDisabledAlphaFactor()
+	{
+		return (mUseDisabledAlpha && !_isDerivedEnabled() ? 0.5f : 1.0f);
 	}
 
 	Animator* Object::moveX(float x, float speed)

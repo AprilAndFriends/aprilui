@@ -142,6 +142,8 @@ namespace aprilui
 		bool getVisibilityFlag() { return mVisible; }
 		bool isClip() { return mClip; }
 		void setClip(bool value) { mClip = value; }
+		bool isUseDisabledAlpha() { return mUseDisabledAlpha; }
+		void setUseDisabledAlpha(bool value) { mUseDisabledAlpha = value; }
 
 		grect getDerivedRect(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
@@ -274,6 +276,7 @@ namespace aprilui
 		bool mAnchorBottom;
 		Dataset* mDataset;
 		bool mClip;
+		bool mUseDisabledAlpha;
 		
 		void _sortChildren();
 
@@ -285,6 +288,7 @@ namespace aprilui
 		bool _isDerivedClickThrough();
 		grect _getDrawRect();
 		april::Color _getDrawColor();
+		float _getDisabledAlphaFactor();
 		void _setParent(Object* value) { mParent = value; }
 
 		virtual void OnDraw() { }

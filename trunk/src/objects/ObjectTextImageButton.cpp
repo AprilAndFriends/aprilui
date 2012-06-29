@@ -60,7 +60,7 @@ namespace aprilui
 			}
 			else
 			{
-				drawColor.a /= 2;
+				drawColor.a = (unsigned char)(drawColor.a * _getDisabledAlphaFactor());
 			}
 		}
 		else if (mHovered)
