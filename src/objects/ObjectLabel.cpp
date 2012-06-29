@@ -43,10 +43,7 @@ namespace aprilui
 	{
 		Object::OnDraw();
 		april::Color color = _getDrawColor();
-		if (!_isDerivedEnabled())
-		{
-			color.a /= 2;
-		}
+		color.a = (unsigned char)(color.a * _getDisabledAlphaFactor());
 		LabelBase::_drawLabel(_getDrawRect(), color);
 	}
 

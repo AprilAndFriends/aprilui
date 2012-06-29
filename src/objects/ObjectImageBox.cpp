@@ -88,10 +88,7 @@ namespace aprilui
 			mImage = mDataset->getImage("null");
 		}
 		april::Color color = _getDrawColor();
-		if (!_isDerivedEnabled())
-		{
-			color.a /= 2;
-		}
+		color.a = (unsigned char)(color.a * _getDisabledAlphaFactor());
 		if (!aprilui::isDebugEnabled())
 		{
 			mImage->draw(_getDrawRect(), color);
