@@ -18,7 +18,7 @@ namespace aprilui
 		this->object = o;
 		this->x = x_pos;
 		this->y = y_pos;
-        this->keycode = keycode;
+		this->keycode = keycode;
 		this->extra = extra_string;
 	}
 

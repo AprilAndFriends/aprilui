@@ -68,7 +68,7 @@ namespace aprilui
 		int mMaxLength;
 		char mPasswordChar;
 		bool mCtrlMode;
-        bool mUseBackground; // TODO - replace with background color and move to LabelBase
+		bool mUseBackground; // TODO - replace with background color and move to LabelBase
 		bool mSpaceHack; // TODO - remove
 		float mBlinkTimer;
 		hstr mFilter;

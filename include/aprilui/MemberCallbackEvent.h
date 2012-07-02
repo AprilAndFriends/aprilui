@@ -61,7 +61,7 @@ namespace aprilui
 	{
 	public:
 		template <typename T>
-	    MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
+		MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
 		{
 			mCallback = new MemberCallbackEventImpl<T>(function, obj);
 		}

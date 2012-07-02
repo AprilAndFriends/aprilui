@@ -46,7 +46,7 @@ namespace aprilui
 		void detach();
 		Object* getParent() { return mParent; }
 		void removeChildren(bool recursive = false);
-        void destroyChildren(bool recursive = false);
+		void destroyChildren(bool recursive = false);
 		DEPRECATED_ATTRIBUTE void removeAllChildren(bool recursive = false) { this->removeChildren(recursive); }
 		DEPRECATED_ATTRIBUTE void destroyAllChildren(bool recursive = false) { this->destroyChildren(recursive); }
 		harray<Object*>& getChildren() { return mChildren; }

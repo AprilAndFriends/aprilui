@@ -49,9 +49,9 @@ namespace aprilui
 
 	void ColorImage::draw(grect rect, april::Color color)
 	{
-		_pVertices[0].x = rect.x;          _pVertices[0].y = rect.y;
+		_pVertices[0].x = rect.x;		  _pVertices[0].y = rect.y;
 		_pVertices[1].x = rect.x + rect.w; _pVertices[1].y = rect.y;
-		_pVertices[2].x = rect.x;          _pVertices[2].y = rect.y + rect.h;
+		_pVertices[2].x = rect.x;		  _pVertices[2].y = rect.y + rect.h;
 		_pVertices[3].x = rect.x + rect.w; _pVertices[3].y = rect.y + rect.h;
 		
 		april::rendersys->setTextureBlendMode(mBlendMode);

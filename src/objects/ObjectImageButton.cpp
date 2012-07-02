@@ -153,12 +153,12 @@ namespace aprilui
 
 	bool ImageButton::setProperty(chstr name, chstr value)
 	{
-		if      (name == "image")			setImageByName(value);
-		else if (name == "pushed_image")	setPushedImageByName(value);
-		else if (name == "hover_image")		setHoverImageByName(value);
-		else if (name == "disabled_image")	setDisabledImageByName(value);
-        else return Object::setProperty(name, value);
-        return true;
+		if		(name == "image")			setImageByName(value);
+		else if	(name == "pushed_image")	setPushedImageByName(value);
+		else if	(name == "hover_image")		setHoverImageByName(value);
+		else if	(name == "disabled_image")	setDisabledImageByName(value);
+		else return Object::setProperty(name, value);
+		return true;
 	}
 	
 	bool ImageButton::onMouseDown(int button)
@@ -170,7 +170,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseDown(button);
 		if (result)
 		{
-            triggerEvent("MouseDown", button);
+			triggerEvent("MouseDown", button);
 		}
 		return result;
 	}
