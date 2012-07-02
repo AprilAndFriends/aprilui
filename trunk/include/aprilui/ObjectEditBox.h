@@ -39,6 +39,10 @@ namespace aprilui
 		void setPasswordChar(char value) { mPasswordChar = value; }
 		hstr getFilter() { return mFilter; }
 		void setFilter(chstr filter);
+		bool isUseBackground() { return mUseBackground; }
+		void setUseBackground(bool value) { mUseBackground = value; }
+		hstr getEmptyText() { return mEmptyText; }
+		void setEmptyText(chstr value) { mEmptyText = value; }
 		void setText(chstr text);
 		
 		void update(float time);
@@ -57,17 +61,19 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
 		
 	protected:
+		hstr mEmptyText;
 		bool mPushed;
 		int mCursorIndex;
 		int mOffsetIndex;
 		int mMaxLength;
 		char mPasswordChar;
 		bool mCtrlMode;
-        bool mBackground; // TODO - replace with background color and move to LabelBase
+        bool mUseBackground; // TODO - replace with background color and move to LabelBase
 		bool mSpaceHack; // TODO - remove
 		float mBlinkTimer;
 		hstr mFilter;
 		harray<unsigned int> mUnicodeChars;
+		harray<unsigned int> mEmptyUnicodeChars;
 		harray<unsigned int> mFilterChars;
 		
 		void OnDraw();

@@ -33,6 +33,7 @@ namespace aprilui
 		Object(name, rect)
 	{
 		mGridSize = GridSize;
+		mUseFading = true;
 		mButtonBegin = NULL;
 		mButtonEnd = NULL;
 		mButtonBack = NULL;
@@ -106,10 +107,10 @@ namespace aprilui
 					{
 						_mRetainTime = RETAIN_TIME;
 					}
-					if (_mRetainTime > 0.0f)
+					if (!mUseFading || _mRetainTime > 0.0f)
 					{
 						april::Color color = _getDrawColor();
-						if (_mRetainTime < FADE_OUT_TIME)
+						if (mUseFading && _mRetainTime < FADE_OUT_TIME)
 						{
 							color.a = (unsigned char)hclamp(color.a * _mRetainTime / FADE_OUT_TIME, 0.0f, 255.0f);
 						}
@@ -196,6 +197,7 @@ namespace aprilui
 		}
 		if (name == "skin")			return getSkinName();
 		if (name == "grid_size")	return getGridSize();
+		if (name == "use_fading")	return isUseFading();
 		return Object::getProperty(name, property_exists);
 	}
 
@@ -203,6 +205,7 @@ namespace aprilui
 	{
 		if		(name == "skin")		setSkinName(value);
 		else if	(name == "grid_size")	setGridSize(value);
+		else if	(name == "use_fading")	setUseFading(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}

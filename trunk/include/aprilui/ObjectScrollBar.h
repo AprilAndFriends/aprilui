@@ -38,6 +38,8 @@ namespace aprilui
 		void setSkinName(chstr value);
 		float getGridSize() { return mGridSize; }
 		void setGridSize(float value) { mGridSize = value; }
+		bool isUseFading() { return mUseFading; }
+		void setUseFading(bool value) { mUseFading = value; }
 
 		void update(float k);
 		void OnDraw();
@@ -60,6 +62,7 @@ namespace aprilui
 	protected:
 		hstr mSkinName;
 		float mGridSize;
+		bool mUseFading;
 		ImageButton* mButtonBegin;
 		ImageButton* mButtonEnd;
 		ImageButton* mButtonBack;
