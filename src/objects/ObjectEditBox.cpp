@@ -27,6 +27,7 @@ namespace aprilui
 		Label(name, rect)
 	{
 		mText = "";
+		mEmptyText = "";
 		mHorzFormatting = atres::LEFT;
 		mTextFormatting = false;
 		mPushed = false;
@@ -37,7 +38,7 @@ namespace aprilui
 		mCtrlMode = false;
 		mFilter = "";
 		mBlinkTimer = 0.0f;
-        mBackground = true;
+		mUseBackground = true;
 		/// TODO - remove
 		mSpaceHack = false;
 	}
@@ -72,21 +73,29 @@ namespace aprilui
 				}
 				mText = unicode_to_utf8(mUnicodeChars);
 			}
+			if (mEmptyUnicodeChars.size() > 0 && mEmptyUnicodeChars[0] == UNICODE_CHAR_SPACE)
+			{
+				while (mEmptyUnicodeChars.size() > 0 && mEmptyUnicodeChars[0] == UNICODE_CHAR_SPACE)
+				{
+					mEmptyUnicodeChars.remove_at(0);
+				}
+				mEmptyText = unicode_to_utf8(mEmptyUnicodeChars);
+			}
 		}
 		//////////////
 		grect rect = _getDrawRect();
-        april::Color color = APRIL_COLOR_BLACK;
-        if (mBackground)
-        {
-            if (!mPushed)
-            {
-                color.a = 191;
-            }
-            color.a = getDerivedAlpha();
-            april::rendersys->drawFilledRect(grect(rect.x, rect.y, rect.w, rect.h), color);
+		april::Color color = APRIL_COLOR_BLACK;
+		if (mUseBackground)
+		{
+			if (!mPushed)
+			{
+				color.a = 191;
+			}
+			color.a = getDerivedAlpha();
+			april::rendersys->drawFilledRect(grect(rect.x, rect.y, rect.w, rect.h), color);
 			color = april::Color(mTextColor, color.a);
-            april::rendersys->drawRect(grect(rect.x, rect.y, rect.w, rect.h), color);
-        }
+			april::rendersys->drawRect(grect(rect.x, rect.y, rect.w, rect.h), color);
+		}
 		hstr text = mText;
 		harray<unsigned int> unicodeChars = mUnicodeChars;
 		if (mPasswordChar != '\0' && mText != "")
@@ -125,7 +134,13 @@ namespace aprilui
 				break;
 			}
 		}
+		hstr renderText = mText;
+		if (renderText == "" && mDataset != NULL && mDataset->getFocusedObject() != this)
+		{
+			mText = mEmptyText;
+		}
 		Label::OnDraw();
+		mText = renderText;
 		if (mDataset != NULL && mDataset->getFocusedObject() == this && mBlinkTimer < 0.5f)
 		{
 			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
@@ -149,30 +164,42 @@ namespace aprilui
 		mText = text;
 		mUnicodeChars = unicodeChars;
 	}
-    
-    hstr EditBox::getProperty(chstr name, bool* property_exists)
-    {
+	
+	hstr EditBox::getProperty(chstr name, bool* property_exists)
+	{
 		if (property_exists != NULL)
 		{
 			*property_exists = true;
 		}
-        if (name == "max_length")		return getMaxLength();
+		if (name == "max_length")		return getMaxLength();
 		if (name == "password_char")	return getPasswordChar();
 		if (name == "filter")			return getFilter();
-        if (name == "background")		return mBackground;
+		if (name == "use_background")	return isUseBackground();
+		if (name == "empty_text")		return getEmptyText();
 		if (name == "space_hack")		return mSpaceHack;
-        return Label::getProperty(name, property_exists);
-    }
+		if (name == "background")
+		{
+			aprilui::log("WARNING: 'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
+			return isUseBackground();
+		}
+		 return Label::getProperty(name, property_exists);
+	}
 	
 	bool EditBox::setProperty(chstr name, chstr value)
 	{
-		if      (name == "max_length")		setMaxLength(value);
-		else if (name == "password_char")	setPasswordChar(value.c_str()[0]);
-		else if (name == "filter")			setFilter(value);
-        else if (name == "background")		mBackground = (bool)value;
-		else if (name == "space_hack")		mSpaceHack = (bool)value;
-        else return Label::setProperty(name, value);
-        return true;
+		if		(name == "max_length")		setMaxLength(value);
+		else if	(name == "password_char")	setPasswordChar(value.c_str()[0]);
+		else if	(name == "filter")			setFilter(value);
+		else if	(name == "empty_text")		setEmptyText(value);
+		else if	(name == "use_background")	setUseBackground(value);
+		else if	(name == "space_hack")		mSpaceHack = (bool)value;
+		else if	(name == "background")
+		{
+			aprilui::log("WARNING: 'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
+			setUseBackground(value);
+		}
+		else return Label::setProperty(name, value);
+		return true;
 	}
 	
 	void EditBox::setCursorIndex(int cursorIndex)
