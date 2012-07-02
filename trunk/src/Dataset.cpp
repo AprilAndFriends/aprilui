@@ -198,7 +198,7 @@ namespace aprilui
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
-			if      (filter == "linear")  texture->setFilter(april::Texture::FILTER_LINEAR);
+			if	  (filter == "linear")  texture->setFilter(april::Texture::FILTER_LINEAR);
 			else if (filter == "nearest") texture->setFilter(april::Texture::FILTER_NEAREST);
 			else throw hl_exception("texture filter '" + filter + "' not supported");
 		}
@@ -251,7 +251,7 @@ namespace aprilui
 					{
 						bool invertX = child->pbool("invertx", false);
 						bool invertY = child->pbool("inverty", false);
-						image = new Image(texture, name, rect, vertical, invertX, invertY);    
+						image = new Image(texture, name, rect, vertical, invertX, invertY);	
 					}
 					hstr mode = child->pstr("blend_mode", "default");
 					if (mode == "add")
@@ -495,12 +495,12 @@ namespace aprilui
 
 		foreach_xmlnode (p, current)
 		{
-			if      (*p == "Texture")        parseTexture(p);
-			else if (*p == "RamTexture")     parseRamTexture(p);
-			else if (*p == "CompositeImage") parseCompositeImage(p);
-			else if (*p == "Object")         parseObject(p);
-			else if (*p == "Include")        parseGlobalInclude(get_basedir(path) + "/" + p->pstr("path"));
-			else if (*p == "TextureGroup")   parseTextureGroup(p);
+			if		(*p == "Texture")			parseTexture(p);
+			else if	(*p == "RamTexture")		parseRamTexture(p);
+			else if	(*p == "CompositeImage")	parseCompositeImage(p);
+			else if	(*p == "Object")			parseObject(p);
+			else if	(*p == "Include")			parseGlobalInclude(get_basedir(path) + "/" + p->pstr("path"));
+			else if	(*p == "TextureGroup")		parseTextureGroup(p);
 			else
 			{
 				parseExternalXMLNode(p);

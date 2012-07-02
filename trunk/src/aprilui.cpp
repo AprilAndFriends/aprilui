@@ -40,7 +40,7 @@ namespace aprilui
 	float defaultScale = 1.0f;
 	Image* gCursor = NULL;
 	bool cursorVisible = true;
-    gvec2 cursorPosition;
+	gvec2 cursorPosition;
 	bool limitCursorToViewport = false;
 	bool limitCursorToScreenViewport = true;
 	bool hoverEffectEnabled = true;
@@ -306,20 +306,20 @@ namespace aprilui
 		return pt;
 	}
 	
-    void updateCursorPosition()
-    {
+	void updateCursorPosition()
+	{
 		cursorPosition = april::window->getCursorPosition();
 		cursorPosition = transformWindowPoint(cursorPosition);
-    }
-    
-    void setCursorPosition(gvec2 position)
-    {
-        cursorPosition = position;
-    }
-    
+	}
+	
+	void setCursorPosition(gvec2 position)
+	{
+		cursorPosition = position;
+	}
+	
 	gvec2 getCursorPosition()
 	{
-        return cursorPosition;
+		return cursorPosition;
 	}
 
 	void setCursorImage(Image* image)

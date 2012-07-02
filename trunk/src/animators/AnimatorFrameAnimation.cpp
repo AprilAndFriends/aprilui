@@ -63,8 +63,8 @@ namespace aprilui
 			{
 				aprilui::log("WARNING: Animators::FrameAnimation does not support 'inherit_value'!");
 			}
-            else Animator::setProperty(name, value);
-            return 1;
+			else Animator::setProperty(name, value);
+			return 1;
 		}
 
 		void FrameAnimation::notifyEvent(chstr name, void* params)

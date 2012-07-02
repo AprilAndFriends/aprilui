@@ -50,7 +50,7 @@ namespace aprilui
 
 	_ObjectWithoutParentException::_ObjectWithoutParentException(chstr child,
 																 const char* file, int line) :
-							       _GenericException("", "ObjectWihoutParentException", file, line)
+								   _GenericException("", "ObjectWihoutParentException", file, line)
 	{
 		msg += "Cannot detach object '" + child + "', object has no parent";
 	}

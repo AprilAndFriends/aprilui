@@ -45,7 +45,7 @@ namespace aprilui
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };
 		bool isYInverted() { return mInvertY; };
-        
+		
 		april::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
 		

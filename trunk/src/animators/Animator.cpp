@@ -190,48 +190,48 @@ namespace aprilui
 	
 	bool Animator::setProperty(chstr name, chstr value)
 	{
-		if      (name == "function" || name == "func")
+		if		(name == "function" || name == "func")
 		{
-			if      (value == "sine")		setAnimationFunction(aprilui::Animator::Sine);
-			else if (value == "saw")		setAnimationFunction(aprilui::Animator::Saw);
-			else if (value == "square")		setAnimationFunction(aprilui::Animator::Square);
-			else if (value == "triangle")	setAnimationFunction(aprilui::Animator::Triangle);
-			else if (value == "linear")		setAnimationFunction(aprilui::Animator::Linear);
-			else if (value == "random")		setAnimationFunction(aprilui::Animator::Random);
-			else if (value == "hover")		setAnimationFunction(aprilui::Animator::Hover);
-			else if (value == "custom")		setAnimationFunction(aprilui::Animator::Custom);
+			if		(value == "sine")		setAnimationFunction(aprilui::Animator::Sine);
+			else if	(value == "saw")		setAnimationFunction(aprilui::Animator::Saw);
+			else if	(value == "square")		setAnimationFunction(aprilui::Animator::Square);
+			else if	(value == "triangle")	setAnimationFunction(aprilui::Animator::Triangle);
+			else if	(value == "linear")		setAnimationFunction(aprilui::Animator::Linear);
+			else if	(value == "random")		setAnimationFunction(aprilui::Animator::Random);
+			else if	(value == "hover")		setAnimationFunction(aprilui::Animator::Hover);
+			else if	(value == "custom")		setAnimationFunction(aprilui::Animator::Custom);
 		}
-		else if (name == "timer")						setTimer(value);
-		else if (name == "delay")						setDelay(value);
-		else if (name == "periods")						setPeriods(value);
-		else if (name == "amplitude" || name == "amp")	setAmplitude(value);
-		else if (name == "peak_to_peak")				setAmplitude((float)value / 2.0f);
-		else if (name == "speed")						setSpeed(value);
-		else if (name == "offset")						setOffset(value);
-		else if (name == "dc_offset")
+		else if	(name == "timer")						setTimer(value);
+		else if	(name == "delay")						setDelay(value);
+		else if	(name == "periods")						setPeriods(value);
+		else if	(name == "amplitude" || name == "amp")	setAmplitude(value);
+		else if	(name == "peak_to_peak")				setAmplitude((float)value / 2.0f);
+		else if	(name == "speed")						setSpeed(value);
+		else if	(name == "offset")						setOffset(value);
+		else if	(name == "dc_offset")
 		{
 			aprilui::log("WARNING: 'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
 			setOffset(value);
 		}
-		else if (name == "acceleration")	setAcceleration(value);
-		else if (name == "discrete")
+		else if	(name == "acceleration")	setAcceleration(value);
+		else if	(name == "discrete")
 		{
 			aprilui::log("WARNING: 'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
 			setDiscreteStep((bool)value ? 0 : 1);
 		}
-		else if (name == "discrete_step")	setDiscreteStep(value);
-		else if (name == "reset")			setReset(value);
-		else if (name == "inherit_value")	setInheritValue(value);
+		else if	(name == "discrete_step")	setDiscreteStep(value);
+		else if	(name == "reset")			setReset(value);
+		else if	(name == "inherit_value")	setInheritValue(value);
 		// derived values
-		else if (name == "target")
+		else if	(name == "target")
 		{
 			setTarget(value);
 			setUseTarget(true);
 			setInheritValue(true);
 		}
-		else if (name == "time")			setTime(value);
-        else return Object::setProperty(name, value);
-        return true;
+		else if	(name == "time")			setTime(value);
+		else return Object::setProperty(name, value);
+		return true;
 	}
 	
 }

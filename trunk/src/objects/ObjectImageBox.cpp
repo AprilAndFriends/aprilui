@@ -129,7 +129,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-            triggerEvent("MouseDown", button);
+			triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;

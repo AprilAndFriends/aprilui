@@ -747,35 +747,35 @@ namespace aprilui
 	
 	bool Object::setProperty(chstr name, chstr value)
 	{
-		if (name == "x")					setX(value);
-		else if (name == "y")				setY(value);
-		else if (name == "w")				setWidth(value);
-		else if (name == "h")				setHeight(value);
-		else if (name == "visible")			setVisible(value);
-		else if (name == "zorder")			setZOrder(value);
-		else if (name == "enabled")			setEnabled(value);
-		else if (name == "click_through")	setClickThrough(value);
-		else if (name == "clickthrough")
+		if		(name == "x")					setX(value);
+		else if	(name == "y")				setY(value);
+		else if	(name == "w")				setWidth(value);
+		else if	(name == "h")				setHeight(value);
+		else if	(name == "visible")			setVisible(value);
+		else if	(name == "zorder")			setZOrder(value);
+		else if	(name == "enabled")			setEnabled(value);
+		else if	(name == "click_through")	setClickThrough(value);
+		else if	(name == "clickthrough")
 		{
 			aprilui::log("WARNING: 'clickthrough=' is deprecated. Use 'click_through=' instead!"); // DEPRECATED
 			setClickThrough(value);
 		}
-		else if (name == "inherits_alpha")		setInheritsAlpha(value);
-		else if (name == "red")					setRed((int)value);
-		else if (name == "green")				setGreen((int)value);
-		else if (name == "blue")				setBlue((int)value);
-		else if (name == "alpha")				setAlpha((int)value);
-		else if (name == "color")				setColor(value);
-		else if (name == "angle")				setAngle(value);
-		else if (name == "scale_x")				setScaleX(value);
-		else if (name == "scale_y")				setScaleY(value);
-		else if (name == "center_x")			setCenterX(value);
-		else if (name == "center_y")			setCenterY(value);
-		else if (name == "anchor_left")			setAnchorLeft(value);
-		else if (name == "anchor_right")		setAnchorRight(value);
-		else if (name == "anchor_top")			setAnchorTop(value);
-		else if (name == "anchor_bottom")		setAnchorBottom(value);
-		else if (name == "anchors")
+		else if	(name == "inherits_alpha")		setInheritsAlpha(value);
+		else if	(name == "red")					setRed((int)value);
+		else if	(name == "green")				setGreen((int)value);
+		else if	(name == "blue")				setBlue((int)value);
+		else if	(name == "alpha")				setAlpha((int)value);
+		else if	(name == "color")				setColor(value);
+		else if	(name == "angle")				setAngle(value);
+		else if	(name == "scale_x")				setScaleX(value);
+		else if	(name == "scale_y")				setScaleY(value);
+		else if	(name == "center_x")			setCenterX(value);
+		else if	(name == "center_y")			setCenterY(value);
+		else if	(name == "anchor_left")			setAnchorLeft(value);
+		else if	(name == "anchor_right")		setAnchorRight(value);
+		else if	(name == "anchor_top")			setAnchorTop(value);
+		else if	(name == "anchor_bottom")		setAnchorBottom(value);
+		else if	(name == "anchors")
 		{
 			harray<hstr> anchors = value.replace(" ", "").lower().split(",", -1, true);
 			setAnchorLeft(anchors.contains("left"));
@@ -783,10 +783,10 @@ namespace aprilui
 			setAnchorTop(anchors.contains("top"));
 			setAnchorBottom(anchors.contains("bottom"));
 		}
-		else if (name == "clip")				setClip(value);
-		else if (name == "use_disabled_alpha")	setUseDisabledAlpha(value);
-        else return false;
-        return true;
+		else if	(name == "clip")				setClip(value);
+		else if	(name == "use_disabled_alpha")	setUseDisabledAlpha(value);
+		else return false;
+		return true;
 	}
 
 	bool Object::angleEquals(float angle)

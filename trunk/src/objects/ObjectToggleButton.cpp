@@ -128,11 +128,11 @@ namespace aprilui
 	bool ToggleButton::setProperty(chstr name, chstr value)
 	{
 		if		(name == "toggled_image")			setToggledNormalImageByName(value);
-		else if (name == "toggled_hover_image")		setToggledHoverImageByName(value);
-		else if (name == "toggled_pushed_image")	setToggledPushedImageByName(value);
-		else if (name == "toggled_disabled_image")	setToggledDisabledImageByName(value);
-        else return ImageButton::setProperty(name, value);
-        return true;
+		else if	(name == "toggled_hover_image")		setToggledHoverImageByName(value);
+		else if	(name == "toggled_pushed_image")	setToggledPushedImageByName(value);
+		else if	(name == "toggled_disabled_image")	setToggledDisabledImageByName(value);
+		else return ImageButton::setProperty(name, value);
+		return true;
 	}
 	
 	bool ToggleButton::onMouseUp(int button)
