@@ -511,11 +511,16 @@ namespace aprilui
 
 	void Dataset::load()
 	{
-		hstr filepath = normalize_path(mFilePath + "/" + getDefaultTextsPath() + "/" + getLocalization());
+		hstr filepath = normalize_path(mFilePath + "/" + _getCurrentTextsPath() + "/" + getLocalization());
 		_loadTexts(filepath);
 		readFile(mFilename);
 		mLoaded = true;
 		update(0.0f);
+	}
+
+	hstr Dataset::_getCurrentTextsPath()
+	{
+		return (mTextsPath != "" ? mTextsPath : getDefaultTextsPath());
 	}
 	
 	void Dataset::_loadTexts(chstr path)
@@ -907,7 +912,7 @@ namespace aprilui
 	void Dataset::reloadTexts()
 	{
 		mTexts.clear();
-		hstr filepath = normalize_path(mFilePath + "/" + getDefaultTextsPath() + "/" + getLocalization());
+		hstr filepath = normalize_path(mFilePath + "/" + _getCurrentTextsPath() + "/" + getLocalization());
 		_loadTexts(filepath);
 	}
 	
