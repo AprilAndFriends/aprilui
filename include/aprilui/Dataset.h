@@ -63,6 +63,8 @@ namespace aprilui
 		void setFocusedObject(Object* object) { mFocusedObject = object; }
 		Object* getFocusedObject() { return mFocusedObject; }
 		Object* getRoot() { return mRoot; }
+		hstr getTextsPath() { return mTextsPath; }
+		void setTextsPath(chstr value) { mTextsPath = value; }
 		
 		// use these functions only in debug purposes
 		hstr _getFilename() { return mFilename; }
@@ -166,6 +168,7 @@ namespace aprilui
 		hstr mName;
 		hstr mFilename;
 		hstr mFilePath;
+		hstr mTextsPath;
 		bool mLoaded;
 		Object* mFocusedObject;
 		Object* mRoot;
@@ -189,6 +192,7 @@ namespace aprilui
 		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		
 		void readFile(chstr filename);
+		hstr _getCurrentTextsPath();
 		void _loadTexts(chstr path);
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
 		hstr _makeLocalizedTextureName(chstr filename);
