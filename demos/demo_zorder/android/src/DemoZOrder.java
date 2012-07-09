@@ -1,6 +1,6 @@
-package com.example.aprilui.demoZOrder;
+package com.example.aprilui.android.demoZOrder;
 
-public class DemoZOrder extends net.sourceforge.april.AprilActivity
+public class DemoZOrder extends net.sourceforge.april.android.Activity
 {
 	static
 	{

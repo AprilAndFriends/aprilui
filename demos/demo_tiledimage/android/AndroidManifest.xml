@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-		package="com.example.aprilui.demoTiledImage"
+		package="com.example.aprilui.android.demoTiledImage"
 		android:versionCode="160"
 		android:versionName="1.6.0">
 	
