@@ -1,6 +1,6 @@
-package com.example.aprilui.demoTiledImage;
+package com.example.aprilui.android.demoTiledImage;
 
-public class DemoTiledImage extends net.sourceforge.april.AprilActivity
+public class DemoTiledImage extends net.sourceforge.april.android.Activity
 {
 	static
 	{

@@ -1,6 +1,6 @@
-package com.example.aprilui.demoGui;
+package com.example.aprilui.android.demoGui;
 
-public class DemoGui extends net.sourceforge.april.AprilActivity
+public class DemoGui extends net.sourceforge.april.android.Activity
 {
 	static
 	{
