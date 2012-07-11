@@ -169,6 +169,49 @@ namespace aprilui
 		return mRect.isPointInside(x, y);
 	}
 
+	bool Object::onMouseDown(int button)
+	{
+		return OnMouseDown(0, 0, button);
+	}
+	
+	bool Object::onMouseUp(int button)
+	{
+		return OnMouseUp(0, 0, button);
+	}
+	
+	void Object::onMouseMove()
+	{
+		OnMouseMove(0, 0);
+	}
+	
+	void Object::onKeyDown(unsigned int keycode)
+	{
+		OnKeyDown(keycode);
+	}
+	
+	void Object::onKeyUp(unsigned int keycode)
+	{
+		OnKeyUp(keycode);
+	}
+	
+	void Object::onChar(unsigned int charcode)
+	{
+		OnChar(charcode);
+	}
+	
+	void Object::registerChild(Object* object)
+	{
+		addChild(object);
+		mDataset->registerManualObject(object);
+	}
+	
+	void Object::unregisterChild(Object* object)
+	{
+		removeChild(object);
+		mDataset->unregisterManualObject(object);
+	}
+
+	
 	bool Object::OnMouseDown(float x, float y, int button)
 	{
 		if (mClickthrough || !isVisible() || !isDerivedEnabled())
@@ -264,7 +307,13 @@ namespace aprilui
 		mRect.w *= scale.x;
 		mRect.h *= scale.y;
 	}
-	
+
+	void Object::setScale(float x, float y)
+	{
+		mRect.w *= x;
+		mRect.h *= y;
+	}
+
 	grect Object::getDerivedRect(aprilui::Object* overrideRoot)
 	{
 		return mRect;
@@ -305,11 +354,6 @@ namespace aprilui
 		{
 			delete event;
 		}
-	}
-	
-	void Object::_triggerEvent(chstr name, float x, float y, chstr extra)
-	{
-		triggerEvent(name, x, y, extra);
 	}
 
 	void Object::triggerEvent(chstr name, float x, float y, chstr extra)

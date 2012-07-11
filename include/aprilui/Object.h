@@ -77,7 +77,9 @@ namespace aprilui
 		bool getVisibilityFlag() { return mVisible; }
 		
 		void setScale(gvec2 scale);
+		void setScale(float x, float y);
 		void setCenter(gvec2 scale) {}
+		void setCenter(float x, float y) {}
 		
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
@@ -101,8 +103,15 @@ namespace aprilui
 		virtual void OnKeyUp(unsigned int keycode);
 		virtual void OnChar(unsigned int charcode);
 
-		bool onMouseDown(int button) { return 0; } // aprilui legacy compatibility
-		bool onMouseUp(int button) { return 0; }
+		bool onMouseDown(int button); // aprilui legacy compatibility
+		bool onMouseUp(int button);
+		void onMouseMove();
+		void onKeyDown(unsigned int keycode);
+		void onKeyUp(unsigned int keycode);
+		void onChar(unsigned int charcode);
+		void registerChild(Object* object);
+		
+		void unregisterChild(Object* object);
 
 		void notifyEvent(chstr name, void* params);
 		
@@ -113,8 +122,7 @@ namespace aprilui
 		// system call, do not use!
 		void _setDataset(Dataset* value) { mDataset = value; }
 		virtual Dataset* getDataset() { return mDataset; }
-		
-		void _triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = ""); // adaptation for xpromo_wrapper
+		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
 
 	protected:
 		Object* mParent;
@@ -133,7 +141,6 @@ namespace aprilui
 		
 		void sortChildren();
 		
-		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
 		float getDerivedAlpha();
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();

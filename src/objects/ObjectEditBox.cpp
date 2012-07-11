@@ -268,7 +268,7 @@ namespace aprilui
 			break;
 #endif
 		case april::AK_RETURN:
-			_triggerEvent("Submit", april::AK_RETURN);
+			triggerEvent("Submit", april::AK_RETURN);
 			break;
 		}
 	}
