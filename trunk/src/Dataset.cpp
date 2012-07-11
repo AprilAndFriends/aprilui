@@ -923,6 +923,15 @@ namespace aprilui
 			it->second->reload(_makeLocalizedTextureName(it->second->getOriginalFilename()));
 		}
 	}
+
+	void Dataset::removeFocus()
+	{
+		if (mFocusedObject != NULL)
+		{
+			april::window->terminateKeyboardHandling();
+		}
+		mFocusedObject = NULL;
+	}
 	
 	hstr Dataset::_parseCompositeTextKey(chstr key)
 	{

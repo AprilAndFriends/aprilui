@@ -31,19 +31,21 @@ namespace aprilui
 		static Object* createInstance(chstr name, grect rect);
 		
 		int getCursorIndex() { return mCursorIndex; }
-		void setCursorIndex(int cursorIndex);
+		void setCursorIndex(int value);
 		void setCursorIndexAt(float x, float y);
 		int getMaxLength() { return mMaxLength; }
-		void setMaxLength(int maxLength);
+		void setMaxLength(int value);
 		char getPasswordChar() { return mPasswordChar; }
 		void setPasswordChar(char value) { mPasswordChar = value; }
 		hstr getFilter() { return mFilter; }
-		void setFilter(chstr filter);
+		void setFilter(chstr value);
 		bool isUseBackground() { return mUseBackground; }
 		void setUseBackground(bool value) { mUseBackground = value; }
 		hstr getEmptyText() { return mEmptyText; }
 		void setEmptyText(chstr value) { mEmptyText = value; }
-		void setText(chstr text);
+		void setText(chstr value);
+		bool isFocused();
+		void setFocused(bool value);
 		
 		void update(float time);
 
