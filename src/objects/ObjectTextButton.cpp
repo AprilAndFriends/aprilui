@@ -28,11 +28,6 @@ namespace aprilui
 		mDisabledTextColor.set(0x7F,0x7F,0x7F);
 	}
 
-	void TextButton::setTextKey(chstr key)
-	{
-		setText(mDataset->getText(key));
-	}
-
 	void TextButton::OnDraw(gvec2 offset)
 	{
 		bool cursorInside = isCursorInside();
