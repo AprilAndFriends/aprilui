@@ -52,6 +52,83 @@ namespace aprilui
 		return new EditBox(name, rect);
 	}
 
+	void EditBox::setCursorIndex(int value)
+	{
+		mCursorIndex = hclamp(value, 0, mUnicodeChars.size());
+		mBlinkTimer = 0.0f;
+	}
+	
+	void EditBox::setCursorIndexAt(float x, float y)
+	{
+		hstr text;
+		if (mPasswordChar == '\0' || mText == "")
+		{
+			text = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
+		}
+		else
+		{
+			text = hstr(mPasswordChar, mUnicodeChars.size() - mOffsetIndex);
+		}
+		int count = atres::renderer->getTextCountUnformatted(mFontName, text, x);
+		setCursorIndex(mOffsetIndex + _convertToUnicodeChars(text(0, count)).size());
+	}
+	
+	void EditBox::setMaxLength(int value)
+	{
+		mMaxLength = value;
+		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
+		{
+			mUnicodeChars = mUnicodeChars(0, mMaxLength);
+			mText = unicode_to_utf8(mUnicodeChars);
+			setCursorIndex(mCursorIndex);
+		}
+	}
+
+	void EditBox::setFilter(chstr value)
+	{
+		mFilter = value;
+		mFilterChars = _convertToUnicodeChars(mFilter);
+		setText(mText);
+	}
+	
+	void EditBox::setText(chstr value)
+	{
+		mUnicodeChars = _convertToUnicodeChars(value);
+		if (mUnicodeChars.size() > 0 && mFilterChars.size() > 0)
+		{
+			mUnicodeChars &= mFilterChars; // intersect, remove from first all that are not in second
+		}
+		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
+		{
+			mUnicodeChars = mUnicodeChars(0, mMaxLength);
+		}
+		Label::setText(unicode_to_utf8(mUnicodeChars));
+		setCursorIndex(mCursorIndex);
+	}
+
+	bool EditBox::isFocused()
+	{
+		return (mDataset != NULL && mDataset->getFocusedObject() == this);
+	}
+
+	void EditBox::setFocused(bool value)
+	{
+		if (mDataset != NULL)
+		{
+			if (value)
+			{
+				mDataset->setFocusedObject(this);
+				mBlinkTimer = 0.0f;
+				april::window->beginKeyboardHandling();
+			}
+			else if (mDataset->getFocusedObject() == this)
+			{
+				april::window->terminateKeyboardHandling();
+				mDataset->setFocusedObject(NULL);
+			}
+		}
+	}
+
 	void EditBox::update(float time)
 	{
 		Label::update(time);
@@ -202,60 +279,6 @@ namespace aprilui
 		return true;
 	}
 	
-	void EditBox::setCursorIndex(int cursorIndex)
-	{
-		mCursorIndex = hclamp(cursorIndex, 0, mUnicodeChars.size());
-		mBlinkTimer = 0.0f;
-	}
-	
-	void EditBox::setCursorIndexAt(float x, float y)
-	{
-		hstr text;
-		if (mPasswordChar == '\0' || mText == "")
-		{
-			text = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
-		}
-		else
-		{
-			text = hstr(mPasswordChar, mUnicodeChars.size() - mOffsetIndex);
-		}
-		int count = atres::renderer->getTextCountUnformatted(mFontName, text, x);
-		setCursorIndex(mOffsetIndex + _convertToUnicodeChars(text(0, count)).size());
-	}
-	
-	void EditBox::setMaxLength(int maxLength)
-	{
-		mMaxLength = maxLength;
-		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
-		{
-			mUnicodeChars = mUnicodeChars(0, mMaxLength);
-			mText = unicode_to_utf8(mUnicodeChars);
-			setCursorIndex(mCursorIndex);
-		}
-	}
-
-	void EditBox::setFilter(chstr filter)
-	{
-		mFilter = filter;
-		mFilterChars = _convertToUnicodeChars(mFilter);
-		setText(mText);
-	}
-	
-	void EditBox::setText(chstr text)
-	{
-		mUnicodeChars = _convertToUnicodeChars(text);
-		if (mUnicodeChars.size() > 0 && mFilterChars.size() > 0)
-		{
-			mUnicodeChars &= mFilterChars; // intersect, remove from first all that are not in second
-		}
-		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
-		{
-			mUnicodeChars = mUnicodeChars(0, mMaxLength);
-		}
-		Label::setText(unicode_to_utf8(mUnicodeChars));
-		setCursorIndex(mCursorIndex);
-	}
-
 	bool EditBox::onMouseDown(int button)
 	{
 		if (Object::onMouseDown(button))
@@ -280,12 +303,7 @@ namespace aprilui
 		{
 			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
 			setCursorIndexAt(position.x, position.y);
-			if (mDataset != NULL)
-			{
-				mDataset->setFocusedObject(this);
-				mBlinkTimer = 0.0f;
-				april::window->beginKeyboardHandling();
-			}
+			setFocused(true);
 			mPushed = false;
 			triggerEvent("Click", button);
 			return true;

@@ -148,6 +148,7 @@ namespace aprilui
 		void notifyEvent(chstr name, void* params);
 		void reloadTexts();
 		void reloadTextures();
+		void removeFocus();
 
 		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { destroyObject(name, recursive); }
 		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { destroyObject(object, recursive); }

@@ -538,11 +538,7 @@ namespace aprilui
 		}
 		if (mDataset != NULL)
 		{
-			if (mDataset->getFocusedObject() != NULL)
-			{
-				april::window->terminateKeyboardHandling();
-			}
-			mDataset->setFocusedObject(NULL);
+			mDataset->removeFocus();
 		}
 		foreach_r (Object*, it, mChildren)
 		{
