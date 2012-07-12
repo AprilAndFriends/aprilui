@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.75
+/// @version 1.81
 /// 
 /// @section LICENSE
 /// 
@@ -37,7 +37,7 @@ namespace aprilui
 		
 		virtual Dataset* getDataset() = 0;
 		hstr getText() { return mText; }
-		void setText(chstr value);
+		virtual void setText(chstr value);
 		hstr getTextKey() { return mTextKey; }
 		void setTextKey(chstr value);
 		

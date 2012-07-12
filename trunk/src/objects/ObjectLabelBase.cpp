@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.75
+/// @version 1.81
 /// 
 /// @section LICENSE
 /// 
@@ -174,8 +174,9 @@ namespace aprilui
 
 	void LabelBase::setTextKey(chstr value)
 	{
-		mText = getDataset()->getText(value);
-		mTextKey = value;
+		hstr textKey = value; // because value is a chstr which could reference mTextKey
+		setText(getDataset()->getText(textKey));
+		mTextKey = textKey;
 	}
 
 }
