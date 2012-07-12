@@ -937,7 +937,7 @@ namespace aprilui
 	{
 		if (!key.starts_with("{"))
 		{
-			if (!mTexts.has_key(key))
+			if (!hasTextEntry(key))
 			{
 				aprilui::log(hsprintf("WARNING: Text key '%s' does not exist!", key.c_str()));
 			}
