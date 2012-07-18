@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.82
 /// 
 /// @section LICENSE
 /// 
@@ -15,7 +15,6 @@
 
 namespace aprilui
 {
-	// TODO - maybe refactor april to support a "TextureInterface" class or something like that
 	Texture::Texture(chstr filename, april::Texture* texture)
 	{
 		mOriginalFilename = filename;
@@ -106,6 +105,7 @@ namespace aprilui
 			(*it)->getRenderTexture()->load();
 		}
 	}
+
 	void Texture::unload()
 	{
 		mTexture->unload();

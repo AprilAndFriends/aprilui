@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.82
 /// 
 /// @section LICENSE
 /// 
@@ -193,10 +193,10 @@ namespace aprilui
 		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		
 		void readFile(chstr filename);
-		hstr _getCurrentTextsPath();
 		void _loadTexts(chstr path);
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
 		hstr _makeLocalizedTextureName(chstr filename);
+		hstr _makeTextsPath();
 
 		hstr _parseCompositeTextKey(chstr key);
 		bool _processCompositeTextKeyArgs(chstr argString, harray<hstr>& args);

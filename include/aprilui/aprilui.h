@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.75
+/// @version 1.82
 /// 
 /// @section LICENSE
 /// 
@@ -54,8 +54,10 @@ namespace aprilui
 	apriluiFnExport void setHoverEffectEnabled(bool value);
 	apriluiFnExport hstr getDefaultTextsPath();
 	apriluiFnExport void setDefaultTextsPath(chstr value);
+	apriluiFnExport hstr getDefaultLocalization();
+	apriluiFnExport void setDefaultLocalization(chstr value);
 	apriluiFnExport hstr getLocalization();
-	apriluiFnExport void setLocalization(chstr localization);
+	apriluiFnExport void setLocalization(chstr value);
 	apriluiFnExport float getTextureIdleUnloadTime();
 	apriluiFnExport void setTextureIdleUnloadTime(float value);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
