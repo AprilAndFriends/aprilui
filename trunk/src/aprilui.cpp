@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.75
+/// @version 1.82
 /// 
 /// @section LICENSE
 /// 
@@ -48,6 +48,7 @@ namespace aprilui
 	grect screenViewport;
 	bool debugEnabled = false;
 	hstr defaultTextsPath = "texts";
+	hstr defaultLocalization = "";
 	hstr localization = "";
 	float textureIdleUnloadTime = 0.0f;
 	// TODO - hack, has to be removed
@@ -218,6 +219,16 @@ namespace aprilui
 		defaultTextsPath = value;
 	}
 	
+	hstr getDefaultLocalization()
+	{
+		return defaultLocalization;
+	}
+	
+	void setDefaultLocalization(chstr value)
+	{
+		defaultLocalization = value;
+	}
+
 	hstr getLocalization()
 	{
 		return localization;

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.82
 /// 
 /// @section LICENSE
 /// 
@@ -511,16 +511,21 @@ namespace aprilui
 
 	void Dataset::load()
 	{
-		hstr filepath = normalize_path(mFilePath + "/" + _getCurrentTextsPath() + "/" + getLocalization());
-		_loadTexts(filepath);
+		_loadTexts(_makeTextsPath());
 		readFile(mFilename);
 		mLoaded = true;
 		update(0.0f);
 	}
 
-	hstr Dataset::_getCurrentTextsPath()
+	hstr Dataset::_makeTextsPath()
 	{
-		return (mTextsPath != "" ? mTextsPath : getDefaultTextsPath());
+		hstr filepathPrefix = mFilePath + "/" + (mTextsPath != "" ? mTextsPath : getDefaultTextsPath()) + "/";
+		hstr filepath = normalize_path(filepathPrefix + getLocalization());
+		if (!hdir::resource_exists(filepath))
+		{
+			filepath = normalize_path(filepathPrefix + getDefaultLocalization());
+		}
+		return filepath;
 	}
 	
 	void Dataset::_loadTexts(chstr path)
@@ -912,8 +917,7 @@ namespace aprilui
 	void Dataset::reloadTexts()
 	{
 		mTexts.clear();
-		hstr filepath = normalize_path(mFilePath + "/" + _getCurrentTextsPath() + "/" + getLocalization());
-		_loadTexts(filepath);
+		_loadTexts(_makeTextsPath());
 	}
 	
 	void Dataset::reloadTextures()
