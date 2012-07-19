@@ -112,6 +112,7 @@ namespace aprilui
 			aprilui::log("WARNING: 'use_disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
 			return _mUseDisabledTextColor;
 		}
+		if (name == "use_background")		return isUseBackground();
 		if (name == "hover_text_color")		return getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return getDisabledTextColor().hex();
@@ -126,6 +127,7 @@ namespace aprilui
 			_mUseDisabledTextColor = !value;
 			setDisabledTextColor(mTextColor);
 		}
+		else if (name == "use_background")		setUseBackground(value);
 		else if (name == "hover_text_color")	setHoverTextColor(value);
 		else if (name == "pushed_text_color")	setPushedTextColor(value);
 		else if (name == "disabled_text_color")	setDisabledTextColor(value);
