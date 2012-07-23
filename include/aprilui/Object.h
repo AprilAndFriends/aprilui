@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.9
 /// 
 /// @section LICENSE
 /// 
@@ -44,12 +44,12 @@ namespace aprilui
 		void unregisterChild(Object* object);
 		void attach(Object* object);
 		void detach();
-		Object* getParent() { return mParent; }
+		Object* getParent() { return this->mParent; }
 		void removeChildren(bool recursive = false);
 		void destroyChildren(bool recursive = false);
 		DEPRECATED_ATTRIBUTE void removeAllChildren(bool recursive = false) { this->removeChildren(recursive); }
 		DEPRECATED_ATTRIBUTE void destroyAllChildren(bool recursive = false) { this->destroyChildren(recursive); }
-		harray<Object*>& getChildren() { return mChildren; }
+		harray<Object*>& getChildren() { return this->mChildren; }
 		Object* getChildByName(chstr name, bool recursive = false);
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
@@ -63,7 +63,7 @@ namespace aprilui
 		bool isParent(Object* obj);
 		//! returns whether or not a given object is an ancestor of a this object
 		bool isAncestor(Object* obj);
-		hstr getName() { return mName; }
+		hstr getName() { return this->mName; }
 		hstr getFullName();
 		bool isCursorInside();
 		virtual bool isPointInside(gvec2 position);
@@ -72,80 +72,88 @@ namespace aprilui
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 		void registerEvent(chstr name, Event* e);
 		
-		float getX() { return mRect.x; }
-		void setX(float value) { mRect.x = value; }
-		float getY() { return mRect.y; }
-		void setY(float value) { mRect.y = value; }
-		gvec2 getPosition() { return mRect.getPosition(); }
-		void setPosition(gvec2 value) { mRect.setPosition(value); }
-		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
-		float getWidth() { return mRect.w; }
+		float getX() { return this->mRect.x; }
+		void setX(float value) { this->mRect.x = value; }
+		float getY() { return this->mRect.y; }
+		void setY(float value) { this->mRect.y = value; }
+		gvec2 getPosition() { return this->mRect.getPosition(); }
+		void setPosition(gvec2 value) { this->mRect.setPosition(value); }
+		void setPosition(float x, float y) { this->mRect.setPosition(x, y); }
+		float getWidth() { return this->mRect.w; }
 		void setWidth(float value);
-		float getHeight() { return mRect.h; }
+		float getHeight() { return this->mRect.h; }
 		void setHeight(float value);
-		gvec2 getSize() { return mRect.getSize(); }
+		gvec2 getSize() { return this->mRect.getSize(); }
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
-		grect getRect() { return mRect; }
+		grect getRect() { return this->mRect; }
 		void setRect(grect value);
 
-		int getZOrder() { return mZOrder; }
+		int getZOrder() { return this->mZOrder; }
 		void setZOrder(int zorder);
 		
-		gvec2 getScale() { return mScale; }
-		void setScale(gvec2 value) { mScale = value; }
-		void setScale(float x, float y) { mScale.x = x; mScale.y = y; }
-		float getScaleX() { return mScale.x; }
-		void setScaleX(float value) { mScale.x = value; }
-		float getScaleY() { return mScale.y; }
-		void setScaleY(float value) { mScale.y = value; }
+		gvec2 getScale() { return this->mScale; }
+		void setScale(gvec2 value) { this->mScale = value; }
+		void setScale(float x, float y) { this->mScale.set(x, y); }
+		float getScaleX() { return this->mScale.x; }
+		void setScaleX(float value) { this->mScale.x = value; }
+		float getScaleY() { return this->mScale.y; }
+		void setScaleY(float value) { this->mScale.y = value; }
 
-		gvec2 getCenter() { return mCenter; }
-		void setCenter(gvec2 value) { mCenter = value; }
-		void setCenter(float x, float y) { mCenter.x = x; mCenter.y = y; }
-		float getCenterX() { return mCenter.x; }
-		void setCenterX(float value) { mCenter.x = value; }
-		float getCenterY() { return mCenter.y; }
-		void setCenterY(float value) { mCenter.y = value; }
+		gvec2 getCenter() { return this->mCenter; }
+		void setCenter(gvec2 value) { this->mCenter = value; }
+		void setCenter(float x, float y) { this->mCenter.set(x, y); }
+		float getCenterX() { return this->mCenter.x; }
+		void setCenterX(float value) { this->mCenter.x = value; }
+		float getCenterY() { return this->mCenter.y; }
+		void setCenterY(float value) { this->mCenter.y = value; }
 		
-		bool isEnabled() { return mEnabled; }
-		void setEnabled(bool value) { mEnabled = value; }
-		float getAngle() { return mAngle; }
-		void setAngle(float value) { mAngle = value; }
-		bool isAnchorLeft() { return mAnchorLeft; }
-		void setAnchorLeft(bool value) { mAnchorLeft = value; }
-		bool isAnchorRight() { return mAnchorRight; }
-		void setAnchorRight(bool value) { mAnchorRight = value; }
-		bool isAnchorTop() { return mAnchorTop; }
-		void setAnchorTop(bool value) { mAnchorTop = value; }
-		bool isAnchorBottom() { return mAnchorBottom; }
-		void setAnchorBottom(bool value) { mAnchorBottom = value; }
-		bool isClickThrough() { return mClickThrough; }
-		void setClickThrough(bool value) { mClickThrough = value; }
-		bool isInheritsAlpha() { return mInheritsAlpha; }
-		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
-		april::Color getColor() { return mColor; }
-		void setColor(april::Color value) { mColor = value; }
-		void setColor(chstr value) { mColor.set(value); }
+		bool isEnabled() { return this->mEnabled; }
+		void setEnabled(bool value) { this->mEnabled = value; }
+		float getAngle() { return this->mAngle; }
+		void setAngle(float value) { this->mAngle = value; }
+		bool isAnchorLeft() { return this->mAnchorLeft; }
+		void setAnchorLeft(bool value) { this->mAnchorLeft = value; }
+		bool isAnchorRight() { return this->mAnchorRight; }
+		void setAnchorRight(bool value) { this->mAnchorRight = value; }
+		bool isAnchorTop() { return this->mAnchorTop; }
+		void setAnchorTop(bool value) { this->mAnchorTop = value; }
+		bool isAnchorBottom() { return this->mAnchorBottom; }
+		void setAnchorBottom(bool value) { this->mAnchorBottom = value; }
+		bool isClickThrough() { return this->mClickThrough; }
+		void setClickThrough(bool value) { this->mClickThrough = value; }
+		bool isInheritsAlpha() { return this->mInheritsAlpha; }
+		void setInheritsAlpha(bool value) { this->mInheritsAlpha = value; }
+		april::Color getColor() { return this->mColor; }
+		void setColor(april::Color value) { this->mColor = value; }
+		void setColor(chstr value) { this->mColor.set(value); }
 		
-		unsigned char getRed() { return mColor.r; }
-		void setRed(unsigned char value) { mColor.r = value; }
-		unsigned char getGreen() { return mColor.g; }
-		void setGreen(unsigned char value) { mColor.g = value; }
-		unsigned char getBlue() { return mColor.b; }
-		void setBlue(unsigned char value) { mColor.b = value; }
-		unsigned char getAlpha() { return mColor.a; }
+		unsigned char getRed() { return this->mColor.r; }
+		void setRed(unsigned char value) { this->mColor.r = value; }
+		unsigned char getGreen() { return this->mColor.g; }
+		void setGreen(unsigned char value) { this->mColor.g = value; }
+		unsigned char getBlue() { return this->mColor.b; }
+		void setBlue(unsigned char value) { this->mColor.b = value; }
+		unsigned char getAlpha() { return this->mColor.a; }
 		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 		void setAlpha(unsigned char value);
-		bool isVisible() { return (mVisible && mColor.a > 0); }
-		void setVisible(bool value) { mVisible = value; }
-		bool getVisibilityFlag() { return mVisible; }
-		bool isClip() { return mClip; }
-		void setClip(bool value) { mClip = value; }
-		bool isUseDisabledAlpha() { return mUseDisabledAlpha; }
-		void setUseDisabledAlpha(bool value) { mUseDisabledAlpha = value; }
+		bool isVisible() { return (this->mVisible && this->mColor.a > 0); }
+		void setVisible(bool value) { this->mVisible = value; }
+		bool getVisibilityFlag() { return this->mVisible; }
+		bool isClip() { return this->mClip; }
+		void setClip(bool value) { this->mClip = value; }
+		bool isUseDisabledAlpha() { return this->mUseDisabledAlpha; }
+		void setUseDisabledAlpha(bool value) { this->mUseDisabledAlpha = value; }
+		
+		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
+		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
 
-		grect getDerivedRect(aprilui::Object* overrideRoot = NULL);
+		harray<gvec2> getDerivedPoints(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedPoint(gvec2 point, aprilui::Object* overrideRoot = NULL);
+		grect getBoundingRect(aprilui::Object* overrideRoot = NULL);
+		/// @note The points are ordered as top-left, top-right, bottom-left, bottom-right within the local space.
+		harray<gvec2> getDerivedCorners(aprilui::Object* overrideRoot = NULL);
+
 		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL);
@@ -234,19 +242,20 @@ namespace aprilui
 		void resizeStop();
 		void fadeColorStop();
 		
-		DEPRECATED_ATTRIBUTE void moveToFront() { if (mParent != NULL) { mParent->getChildren().remove(this); mParent->getChildren().push_back(this); } }
-		DEPRECATED_ATTRIBUTE void moveToBack() { if (mParent != NULL) { mParent->getChildren().remove(this); mParent->getChildren().push_front(this); } }
-		DEPRECATED_ATTRIBUTE bool isClickthrough() { return mClickThrough; }
-		DEPRECATED_ATTRIBUTE void setClickthrough(bool value) { mClickThrough = value; }
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(); }
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE void moveToFront() { if (this->mParent != NULL) { this->mParent->getChildren().remove(this); this->mParent->getChildren().push_back(this); } }
+		DEPRECATED_ATTRIBUTE void moveToBack() { if (this->mParent != NULL) { this->mParent->getChildren().remove(this); this->mParent->getChildren().push_front(this); } }
+		DEPRECATED_ATTRIBUTE bool isClickthrough() { return this->mClickThrough; }
+		DEPRECATED_ATTRIBUTE void setClickthrough(bool value) { this->mClickThrough = value; }
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { this->onMouseMove(); }
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { this->onKeyDown(keycode); }
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { this->onKeyUp(keycode); }
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { this->onChar(charcode); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
+		DEPRECATED_ATTRIBUTE grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return this->getBoundingRect(overrideRoot); }
 		
 		// TODO - this needs to be seriously refactored
 		void triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
@@ -289,7 +298,7 @@ namespace aprilui
 		grect _getDrawRect();
 		april::Color _getDrawColor();
 		float _getDisabledAlphaFactor();
-		void _setParent(Object* value) { mParent = value; }
+		void _setParent(Object* value) { this->mParent = value; }
 
 		virtual void OnDraw() { }
 

@@ -58,10 +58,12 @@
 			<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0" zorder="100">
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
-			<Object type="TextImageButton" name="textImageButton" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="432" y="320" w="128" h="64" angle="20" center_x="-100" center_y="-100" zorder="100">
-				<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="1" offset="191" timer="1.333333"/>
-				<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="1.2" offset="191" timer="0.6666667"/>
-				<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="1.4" offset="191"/>
+			<Object type="Container" name="multi_rotation" x="432" y="272" w="64" h="64" zorder="100" angle="10">
+				<Object type="TextImageButton" name="textImageButton" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="50" y="20" w="128" h="64" angle="10" center_x="-100" center_y="-100">
+					<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="1" offset="191" timer="1.333333"/>
+					<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="1.2" offset="191" timer="0.6666667"/>
+					<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="1.4" offset="191"/>
+				</Object>
 			</Object>
 			<Object type="ToggleButton" name="toggleButton" image="texture/test_green" toggled_image="texture/test_hover_3" x="432" y="352" w="128" h="64" zorder="100">
 				<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
@@ -84,7 +86,7 @@
 				</Object>
 			</Object>
 			<Object type="Container" x="232" y="16" w="128" h="128">
-				<Object type="ColoredQuad" color="6F6F6F" x="0" y="0" w="128" h="128" anchors="" center_x="96" center_y="32">
+				<Object type="ColoredQuad" name="crazy_quad" color="6F6F6F" x="0" y="0" w="128" h="128" anchors="" center_x="96" center_y="32">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>
 					<Animator type="ResizerY" function="sine" periods="-1" amplitude="32" timer="0.75"/>
 					<Animator type="Rotator" function="hover" amplitude="22.5" speed="180" offset="22.5"/>
@@ -105,9 +107,9 @@
 				<Animator type="Rotator" name="custom_animator" function="custom" periods="-1" amplitude="45" speed="0.3"/>
 			</Object>
 			<Object type="ColoredQuad" color="0000007F" x="0" y="504" w="600" h="96"/>
-			<Object type="Label" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="504" w="600" h="32"/>
-			<Object type="Label" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" x="0" y="536" w="600" h="32"/>
-			<Object type="Label" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="568" w="600" h="32"/>
+			<Object type="Label" name="label_format_0" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="504" w="600" h="32"/>
+			<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" x="0" y="536" w="600" h="32"/>
+			<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="568" w="600" h="32"/>
 		</Object>
 		
 	</Object>
