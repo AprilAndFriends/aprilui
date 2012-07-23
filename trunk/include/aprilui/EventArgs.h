@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -34,7 +34,7 @@ namespace aprilui
 		unsigned int keycode;
 		hstr extra;
 		
-		EventArgs(Object* o, float x_pos = 0.0f, float y_pos = 0.0f, unsigned int keycode = 0, chstr extra_string = "");
+		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
 		~EventArgs();
 
 	};

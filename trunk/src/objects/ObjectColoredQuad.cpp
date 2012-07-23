@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -33,7 +33,7 @@ namespace aprilui
 
 	void ColoredQuad::OnDraw()
 	{
-		april::rendersys->drawFilledRect(_getDrawRect(), _getDrawColor());
+		april::rendersys->drawFilledRect(this->_getDrawRect(), this->_getDrawColor());
 	}
 
 	bool ColoredQuad::onMouseDown(int button)
@@ -42,9 +42,9 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			triggerEvent("MouseDown", button);
+			this->triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
@@ -56,9 +56,9 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			triggerEvent("Click", button);
+			this->triggerEvent("Click", button);
 			return true;
 		}
 		return false;

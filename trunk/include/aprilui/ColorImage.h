@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -36,9 +36,9 @@ namespace aprilui
 		ColorImage(chstr name, grect rect, april::Color color);
 		~ColorImage();
 		
-		april::Color getColor() { return mColor; }
-		void setColor(april::Color value) { mColor = value; }
-		void setColor(chstr value) { mColor.set(value); }
+		april::Color getColor() { return this->mColor; }
+		void setColor(april::Color value) { this->mColor = value; }
+		void setColor(chstr value) { this->mColor.set(value); }
 
 		void draw(grect rect, april::Color color);
 		

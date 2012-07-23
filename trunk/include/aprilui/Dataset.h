@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.82
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -47,7 +47,7 @@ namespace aprilui
 
 		void load();
 		void unload();
-		bool isLoaded() { return mLoaded; }
+		bool isLoaded() { return this->mLoaded; }
 		void registerManualObject(Object* o);
 		void unregisterManualObject(Object* o);
 		void registerManualImage(Image* img);
@@ -60,19 +60,19 @@ namespace aprilui
 		
 		bool isAnimated();
 		bool isWaitingAnimation();
-		void setFocusedObject(Object* object) { mFocusedObject = object; }
-		Object* getFocusedObject() { return mFocusedObject; }
-		Object* getRoot() { return mRoot; }
-		hstr getTextsPath() { return mTextsPath; }
-		void setTextsPath(chstr value) { mTextsPath = value; }
+		void setFocusedObject(Object* object) { this->mFocusedObject = object; }
+		Object* getFocusedObject() { return this->mFocusedObject; }
+		Object* getRoot() { return this->mRoot; }
+		hstr getTextsPath() { return this->mTextsPath; }
+		void setTextsPath(chstr value) { this->mTextsPath = value; }
 		
 		// use these functions only in debug purposes
-		hstr _getFilename() { return mFilename; }
-		void _setFilename(chstr filename) { mFilename = filename; }
-		hstr _getFilePath() { return mFilePath; }
-		void _setFilePath(chstr prefix) { mFilePath = prefix; }
-		hmap<hstr, Object*>& getObjects() { return mObjects; }
-		hmap<hstr, Image*>& getImages() { return mImages; }
+		hstr _getFilename() { return this->mFilename; }
+		void _setFilename(chstr filename) { this->mFilename = filename; }
+		hstr _getFilePath() { return this->mFilePath; }
+		void _setFilePath(chstr prefix) { this->mFilePath = prefix; }
+		hmap<hstr, Object*>& getObjects() { return this->mObjects; }
+		hmap<hstr, Image*>& getImages() { return this->mImages; }
 		template <class T>
 		hmap<hstr, T> getObjectsByType()
 		{
@@ -108,7 +108,7 @@ namespace aprilui
 		hmap<hstr, hstr>& getTextEntries() { return mTexts; }
 		harray<hstr> getTextEntries(harray<hstr> keys);
 
-		hstr getName() { return mName; }
+		hstr getName() { return this->mName; }
 
 		virtual Object* getObject(chstr name);
 		bool hasImage(chstr name);
@@ -120,7 +120,7 @@ namespace aprilui
 			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
 			{
-				throw _InvalidObjectTypeCast(hsprintf("Object '%s' found in dataset '%s' but dynamic cast failed.", name.c_str(), getName().c_str()));
+				throw _InvalidObjectTypeCast(hsprintf("Object '%s' found in dataset '%s' but dynamic cast failed.", name.c_str(), this->getName().c_str()));
 			}
 			return object;
 		}
@@ -150,20 +150,20 @@ namespace aprilui
 		void reloadTextures();
 		void removeFocus();
 
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { destroyObject(name, recursive); }
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { destroyObject(object, recursive); }
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { onMouseMove(); }
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); }
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); }
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { onChar(charcode); }
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
-		DEPRECATED_ATTRIBUTE bool textExists(chstr key) { return hasTextEntry(key); }
-		DEPRECATED_ATTRIBUTE bool hasTextKey(chstr key) { return hasTextEntry(key); }
-		DEPRECATED_ATTRIBUTE hmap<hstr, hstr>& getTexts() { return getTextEntries(); }
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { this->destroyObject(name, recursive); }
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { this->destroyObject(object, recursive); }
+		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { this->onMouseMove(); }
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { this->onKeyDown(keycode); }
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { this->onKeyUp(keycode); }
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { this->onChar(charcode); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool textExists(chstr key) { return this->hasTextEntry(key); }
+		DEPRECATED_ATTRIBUTE bool hasTextKey(chstr key) { return this->hasTextEntry(key); }
+		DEPRECATED_ATTRIBUTE hmap<hstr, hstr>& getTexts() { return this->getTextEntries(); }
 
 	protected:
 		hstr mName;
@@ -188,7 +188,7 @@ namespace aprilui
 		void parseObjectInclude(chstr path, Object* parent);
 		void parseObjectIncludeFile(chstr filename, Object* parent);
 		virtual void parseExternalXMLNode(hlxml::Node* node) { }
-		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr obj_name, grect rect) { return 0; }
+		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
 		
 		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -179,7 +179,7 @@ namespace aprilui
 	{
 		if (recursive)
 		{
-			foreach (Object*, it,this-> mChildren)
+			foreach (Object*, it, this->mChildren)
 			{
 				(*it)->removeChildren(recursive);
 			}
@@ -336,7 +336,7 @@ namespace aprilui
 	{
 		// recursive function that combines all the alpha from the parents (if any)
 		float factor = 1.0f;
-		if (this->mInheritsAlpha && this->mParent != overrideRoot)
+		if (this->mInheritsAlpha && this->mParent != NULL && this->mParent != overrideRoot)
 		{
 			factor *= this->mParent->getDerivedAlpha(overrideRoot) / 255.0f;
 		}
@@ -396,7 +396,7 @@ namespace aprilui
 		return (this->mDynamicAnimators.size() > 0);
 	}
 
-	void Object::draw(gvec2 offset)
+	void Object::draw()
 	{
 		if (!this->isVisible() || heqf(this->mScale.x, 0.0f, APRILUI_E_TOLERANCE) || heqf(this->mScale.y, 0.0f, APRILUI_E_TOLERANCE))
 		{
@@ -416,7 +416,7 @@ namespace aprilui
 			april::rendersys->setOrthoProjection(grect(-rect.getPosition(), rect.getSize()));
 			april::rendersys->setViewport(grect((rect.getPosition() + orthoProjection.getPosition()) / ratio, rect.getSize() / ratio));
 		}
-		gvec2 position = this->mRect.getPosition() + offset + this->mCenter;
+		gvec2 position = this->mRect.getPosition() + this->mCenter;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
 			april::rendersys->translate(position.x, position.y);
@@ -430,9 +430,13 @@ namespace aprilui
 			april::rendersys->scale(this->mScale.x, this->mScale.y, 1.0f);
 		}
 		OnDraw();
+		if (this->mCenter.x != 0.0f || this->mCenter.y != 0.0f)
+		{
+			april::rendersys->translate(-this->mCenter.x, -this->mCenter.y);
+		}
 		foreach (Object*, it, mChildren)
 		{
-			(*it)->draw(-this->mCenter);
+			(*it)->draw();
 		}
 		if (clipped)
 		{
@@ -480,7 +484,7 @@ namespace aprilui
 	
 	bool Object::isPointInside(gvec2 position)
 	{
-		if (this->mScale.x == 0.0f || this->mScale.y == 0.0f)
+		if (heqf(this->mScale.x, 0.0f, APRILUI_E_TOLERANCE) || heqf(this->mScale.y, 0.0f, APRILUI_E_TOLERANCE))
 		{
 			return false;
 		}
@@ -666,7 +670,7 @@ namespace aprilui
 	
 	bool Object::_isDerivedClickThrough()
 	{
-		return (this->mClickThrough && (this->mParent == NULL || this->mParent->_isDerivedClickThrough()));
+		return (this->isClickThrough() && (this->mParent == NULL || this->mParent->_isDerivedClickThrough()));
 	}
 	
 	void Object::setAlpha(unsigned char value)
@@ -831,7 +835,7 @@ namespace aprilui
 	
 	bool Object::isChild(Object* obj)
 	{
-		return (obj != NULL && obj->getParent() == this);
+		return (obj != NULL && obj->isParent(this));
 	}
 	
 	bool Object::isDescendant(Object* obj)

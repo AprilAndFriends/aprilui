@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 			static Animator* createInstance(chstr name);
 
 			bool isAnimated();
-			hstr getImageBaseName() { return mImageBaseName; }
-			void setImageBaseName(chstr value) { mImageBaseName = value; }
-			int getFirstFrame() { return mFirstFrame; }
-			void setFirstFrame(int value) { mFirstFrame = value; }
-			int getFrameCount() { return mFrameCount; }
-			void setFrameCount(int value) { mFrameCount = value; }
+			hstr getImageBaseName() { return this->mImageBaseName; }
+			void setImageBaseName(chstr value) { this->mImageBaseName = value; }
+			int getFirstFrame() { return this->mFirstFrame; }
+			void setFirstFrame(int value) { this->mFirstFrame = value; }
+			int getFrameCount() { return this->mFrameCount; }
+			void setFrameCount(int value) { this->mFrameCount = value; }
 			bool setProperty(chstr name, chstr value);
 			void notifyEvent(chstr name, void* params);
 			

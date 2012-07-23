@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -18,8 +18,8 @@ namespace aprilui
 	CallbackObject::CallbackObject(chstr name, grect rect) :
 		Object(name, rect)
 	{
-		mDrawCallback = NULL;
-		mUpdateCallback = NULL;
+		this->mDrawCallback = NULL;
+		this->mUpdateCallback = NULL;
 	}
 
 	CallbackObject::~CallbackObject()
@@ -33,17 +33,17 @@ namespace aprilui
 
 	void CallbackObject::OnDraw()
 	{
-		if (mDrawCallback != NULL)
+		if (this->mDrawCallback != NULL)
 		{
-			(*mDrawCallback)(this);
+			(*this->mDrawCallback)(this);
 		}
 	}
 
 	void CallbackObject::update(float k)
 	{
-		if (mUpdateCallback != NULL)
+		if (this->mUpdateCallback != NULL)
 		{
-			(*mUpdateCallback)(k);
+			(*this->mUpdateCallback)(k);
 		}
 		Object::update(k);
 	}
@@ -54,9 +54,9 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			triggerEvent("MouseDown", button);
+			this->triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
@@ -65,7 +65,7 @@ namespace aprilui
 	void CallbackObject::cancelMouseDown()
 	{
 		Object::cancelMouseDown();
-		triggerEvent("CancelMouseDown");
+		this->triggerEvent("CancelMouseDown");
 	}
 
 	bool CallbackObject::onMouseUp(int button)
@@ -74,9 +74,9 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			triggerEvent("Click", button);
+			this->triggerEvent("Click", button);
 			return true;
 		}
 		return false;
@@ -85,18 +85,18 @@ namespace aprilui
 	void CallbackObject::onMouseMove()
 	{
 		Object::onMouseMove();
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			triggerEvent("MouseMove");
+			this->triggerEvent("MouseMove");
 		}
 	}
 	
 	void CallbackObject::onMouseScroll(float x, float y)
 	{
 		Object::onMouseScroll(x, y);
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			triggerEvent("MouseScroll", x, y);
+			this->triggerEvent("MouseScroll", x, y);
 		}
 	}
 }

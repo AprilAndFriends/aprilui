@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -35,17 +35,17 @@ namespace aprilui
 		~ScrollArea();
 		static Object* createInstance(chstr name, grect rect);
 
-		bool isAllowDrag() { return mAllowDrag; }
-		void setAllowDrag(bool value) { mAllowDrag = value; }
-		float getInertia() { return mInertia; }
-		void setInertia(float value) { mInertia = value; }
-		float getDragThreshold() { return mDragThreshold; }
-		void setDragThreshold(float value) { mDragThreshold = value; }
-		float getDragMaxSpeed() { return mDragMaxSpeed; }
-		void setDragMaxSpeed(float value) { mDragMaxSpeed = value; }
-		bool isSwapScrollWheels() { return mSwapScrollWheels; }
-		void setSwapScrollWheels(bool value) { mSwapScrollWheels = value; }
-		bool isDragging() { return mDragging; }
+		bool isAllowDrag() { return this->mAllowDrag; }
+		void setAllowDrag(bool value) { this->mAllowDrag = value; }
+		float getInertia() { return this->mInertia; }
+		void setInertia(float value) { this->mInertia = value; }
+		float getDragThreshold() { return this->mDragThreshold; }
+		void setDragThreshold(float value) { this->mDragThreshold = value; }
+		float getDragMaxSpeed() { return this->mDragMaxSpeed; }
+		void setDragMaxSpeed(float value) { this->mDragMaxSpeed = value; }
+		bool isSwapScrollWheels() { return this->mSwapScrollWheels; }
+		void setSwapScrollWheels(bool value) { this->mSwapScrollWheels = value; }
+		bool isDragging() { return this->mDragging; }
 		hstr getName();
 		bool isCursorInside();
 		Object* getParent();
@@ -74,9 +74,9 @@ namespace aprilui
 		static float DragThreshold;
 		static float DragMaxSpeed;
 
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 
 	protected:
 		bool mAllowDrag;

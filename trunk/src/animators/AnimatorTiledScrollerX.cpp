@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -35,12 +35,12 @@ namespace aprilui
 
 		void TiledScrollerX::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
+			if (name == "AttachToObject" || name == "OnDelayEnd" && this->mInheritValue)
 			{
-				mValue = mOffset = mParent->getY();
-				if (mUseTarget)
+				this->mValue = this->mOffset = this->mParent->getY();
+				if (this->mUseTarget)
 				{
-					mAmplitude = mTarget - mValue;
+					this->mAmplitude = this->mTarget - this->mValue;
 				}
 			}
 			Object::notifyEvent(name, params);
@@ -50,7 +50,7 @@ namespace aprilui
 		{
 			if (this->_checkUpdate(k))
 			{
-				ImageBox* imageBox = dynamic_cast<ImageBox*>(mParent);
+				ImageBox* imageBox = dynamic_cast<ImageBox*>(this->mParent);
 				if (imageBox == NULL)
 				{
 					aprilui::log("Animators::TiledScrollerX: parent object not a subclass of Objects::ImageBox!");
@@ -62,9 +62,9 @@ namespace aprilui
 					aprilui::log("Animators::TiledScrollerX: image in object not a subclass of Animators::TiledImage!");
 					return;
 				}
-				mValue = image->getScrollX();
-				mValue = _calculateValue(mTimeSinceLastFrame);
-				image->setScrollX(mValue);
+				this->mValue = image->getScrollX();
+				this->mValue = this->_calculateValue(this->mTimeSinceLastFrame);
+				image->setScrollX(this->mValue);
 			}
 		}
 		

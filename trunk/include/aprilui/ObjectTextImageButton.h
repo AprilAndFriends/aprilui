@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.75
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -32,17 +32,17 @@ namespace aprilui
 		static Object* createInstance(chstr name, grect rect);
 
 		Dataset* getDataset();
-		bool isUseBackground() { return mUseBackground; }
-		void setUseBackground(bool value) { mUseBackground = value; }
-		april::Color getHoverTextColor() { return mHoverTextColor; }
-		void setHoverTextColor(april::Color value) { mHoverTextColor = value; _mUseHoverTextColor = true; }
-		void setHoverTextColor(chstr value) { mHoverTextColor.set(value); _mUseHoverTextColor = true; }
-		april::Color getPushedTextColor() { return mPushedTextColor; }
-		void setPushedTextColor(april::Color value) { mPushedTextColor = value; _mUsePushedTextColor = true; }
-		void setPushedTextColor(chstr value) { mPushedTextColor.set(value); _mUsePushedTextColor = true; }
-		april::Color getDisabledTextColor() { return mDisabledTextColor; }
-		void setDisabledTextColor(april::Color value) { mDisabledTextColor = value; _mUseDisabledTextColor = true; }
-		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(value); _mUseDisabledTextColor = true; }
+		bool isUseBackground() { return this->mUseBackground; }
+		void setUseBackground(bool value) { this->mUseBackground = value; }
+		april::Color getHoverTextColor() { return this->mHoverTextColor; }
+		void setHoverTextColor(april::Color value) { this->mHoverTextColor = value; this->_mUseHoverTextColor = true; }
+		void setHoverTextColor(chstr value) { this->mHoverTextColor.set(value); this->_mUseHoverTextColor = true; }
+		april::Color getPushedTextColor() { return this->mPushedTextColor; }
+		void setPushedTextColor(april::Color value) { this->mPushedTextColor = value; this->_mUsePushedTextColor = true; }
+		void setPushedTextColor(chstr value) { this->mPushedTextColor.set(value); this->_mUsePushedTextColor = true; }
+		april::Color getDisabledTextColor() { return this->mDisabledTextColor; }
+		void setDisabledTextColor(april::Color value) { this->mDisabledTextColor = value; this->_mUseDisabledTextColor = true; }
+		void setDisabledTextColor(chstr value) { this->mDisabledTextColor.set(value); this->_mUseDisabledTextColor = true; }
 
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		void notifyEvent(chstr name, void* params);

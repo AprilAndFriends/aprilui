@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -32,9 +32,9 @@ namespace aprilui
 		~ImageBox();
 		static Object* createInstance(chstr name, grect rect);
 		
-		virtual Image* getImage() { return mImage; };
+		virtual Image* getImage() { return this->mImage; };
 		virtual void setImage(Image* value);
-		hstr getImageName() { return mImageName; }
+		hstr getImageName() { return this->mImageName; }
 		void setImageByName(chstr name);
 
 		void notifyEvent(chstr name, void* params);
@@ -46,8 +46,8 @@ namespace aprilui
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
 		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		
 	protected:
 		Image* mImage;

@@ -173,7 +173,7 @@ namespace aprilui
 		virtual void cancelMouseDown();
 
 		virtual void update(float k);
-		void draw(gvec2 offset = gvec2());
+		void draw();
 		
 		Object* findChildByName(chstr name);
 		

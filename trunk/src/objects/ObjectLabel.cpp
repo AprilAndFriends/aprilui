@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.75
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -22,7 +22,7 @@ namespace aprilui
 		LabelBase(),
 		Object(name, rect)
 	{
-		mText = "Label: " + name;
+		this->mText = "Label: " + name;
 	}
 
 	Label::~Label()
@@ -42,18 +42,18 @@ namespace aprilui
 	void Label::OnDraw()
 	{
 		Object::OnDraw();
-		april::Color color = _getDrawColor();
-		color.a = (unsigned char)(color.a * _getDisabledAlphaFactor());
-		LabelBase::_drawLabel(_getDrawRect(), color);
+		april::Color color = this->_getDrawColor();
+		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
+		LabelBase::_drawLabel(this->_getDrawRect(), color);
 	}
 
 	void Label::notifyEvent(chstr name, void* params)
 	{
 		if (name == "onLocalizationChanged")
 		{
-			if (mTextKey != "")
+			if (this->mTextKey != "")
 			{
-				setTextKey(mTextKey);
+				this->setTextKey(this->mTextKey);
 			}
 		}
 		Object::notifyEvent(name, params);
@@ -67,7 +67,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			triggerEvent("MouseDown", button);
+			this->triggerEvent("MouseDown", button);
 			return true;
 		}
 		return false;
@@ -79,10 +79,10 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
 			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
-			triggerEvent("Click", button);
+			this->triggerEvent("Click", button);
 			return true;
 		}
 		return false;

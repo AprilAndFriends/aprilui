@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -22,25 +22,25 @@ namespace aprilui
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
 		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		mColor.set(name);
+		this->mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
 	{
 		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		mColor.set(name);
+		this->mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
 	{
 		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		mColor.set(color);
+		this->mColor.set(color);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
 	{
 		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		mColor = color;
+		this->mColor = color;
 	}
 
 	ColorImage::~ColorImage()
@@ -49,13 +49,13 @@ namespace aprilui
 
 	void ColorImage::draw(grect rect, april::Color color)
 	{
-		_pVertices[0].x = rect.x;		  _pVertices[0].y = rect.y;
-		_pVertices[1].x = rect.x + rect.w; _pVertices[1].y = rect.y;
-		_pVertices[2].x = rect.x;		  _pVertices[2].y = rect.y + rect.h;
-		_pVertices[3].x = rect.x + rect.w; _pVertices[3].y = rect.y + rect.h;
+		this->_pVertices[0].x = this->_pVertices[2].x = rect.left();
+		this->_pVertices[0].y = this->_pVertices[1].y = rect.top();
+		this->_pVertices[1].x = this->_pVertices[3].x = rect.right();
+		this->_pVertices[2].y = this->_pVertices[3].y = rect.bottom();
 		
-		april::rendersys->setTextureBlendMode(mBlendMode);
-		april::rendersys->render(april::TriangleStrip, _pVertices, 4, color * mColor);
+		april::rendersys->setTextureBlendMode(this->mBlendMode);
+		april::rendersys->render(april::TriangleStrip, this->_pVertices, 4, this->mColor * color);
 		april::rendersys->setTextureBlendMode(april::DEFAULT);
 	}
 

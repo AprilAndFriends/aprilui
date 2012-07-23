@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -14,7 +14,7 @@ namespace aprilui
 {
 	CallbackEvent::CallbackEvent(void (*callback)(EventArgs*)) : Event()
 	{
-		mCallback = callback;
+		this->mCallback = callback;
 	}
 
 	CallbackEvent::~CallbackEvent()
@@ -23,7 +23,7 @@ namespace aprilui
 
 	void CallbackEvent::execute(void* params)
 	{
-		mCallback((EventArgs*)params);
+		(*this->mCallback)((EventArgs*)params);
 	}
 
 }

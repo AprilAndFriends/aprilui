@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -9,17 +9,16 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include "EventArgs.h"
-#include "Object.h"
 
 namespace aprilui
 {
-	EventArgs::EventArgs(Object* o, float x_pos, float y_pos, unsigned int keycode, chstr extra_string)
+	EventArgs::EventArgs(Object* object, float x, float y, unsigned int keycode, chstr extra)
 	{
-		this->object = o;
-		this->x = x_pos;
-		this->y = y_pos;
+		this->object = object;
+		this->x = x;
+		this->y = y;
 		this->keycode = keycode;
-		this->extra = extra_string;
+		this->extra = extra;
 	}
 
 	EventArgs::~EventArgs()

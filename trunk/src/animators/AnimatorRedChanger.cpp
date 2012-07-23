@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -33,12 +33,12 @@ namespace aprilui
 
 		void RedChanger::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
+			if (name == "AttachToObject" || name == "OnDelayEnd" && this->mInheritValue)
 			{
-				mValue = mOffset = mParent->getRed();
-				if (mUseTarget)
+				this->mValue = this->mOffset = this->mParent->getRed();
+				if (this->mUseTarget)
 				{
-					mAmplitude = mTarget - mValue;
+					this->mAmplitude = this->mTarget - this->mValue;
 				}
 			}
 			Object::notifyEvent(name, params);
@@ -48,10 +48,10 @@ namespace aprilui
 		{
 			if (this->_checkUpdate(k))
 			{
-				mValue = hclamp(_calculateValue(mTimeSinceLastFrame), 0.0f, 255.0f);
-				if ((unsigned char)mValue != mParent->getRed())
+				this->mValue = hclamp(this->_calculateValue(this->mTimeSinceLastFrame), 0.0f, 255.0f);
+				if ((unsigned char)this->mValue != this->mParent->getRed())
 				{
-					mParent->setRed((unsigned char)mValue);
+					this->mParent->setRed((unsigned char)this->mValue);
 				}
 			}
 		}

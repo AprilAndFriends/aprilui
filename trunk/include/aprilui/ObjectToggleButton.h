@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -29,19 +29,19 @@ namespace aprilui
 		~ToggleButton();
 		static Object* createInstance(chstr name, grect rect);
 
-		bool isToggled() { return mToggled; }
-		void setToggled(bool value) { mToggled = value; }
-		Image* getToggledNormalImage() { return mToggledNormalImage; }
-		void setToggledNormalImage(Image* image) { mToggledNormalImage = image; }
+		bool isToggled() { return this->mToggled; }
+		void setToggled(bool value) { this->mToggled = value; }
+		Image* getToggledNormalImage() { return this->mToggledNormalImage; }
+		void setToggledNormalImage(Image* image) { this->mToggledNormalImage = image; }
 		void setToggledNormalImageByName(chstr image);
-		Image* getToggledHoverImage() { return mToggledHoverImage; }
-		void setToggledHoverImage(Image* image) { mToggledHoverImage = image; }
+		Image* getToggledHoverImage() { return this->mToggledHoverImage; }
+		void setToggledHoverImage(Image* image) { this->mToggledHoverImage = image; }
 		void setToggledHoverImageByName(chstr image);
-		Image* getToggledPushedImage() { return mToggledPushedImage; }
-		void setToggledPushedImage(Image* image) { mToggledPushedImage = image; }
+		Image* getToggledPushedImage() { return this->mToggledPushedImage; }
+		void setToggledPushedImage(Image* image) { this->mToggledPushedImage = image; }
 		void setToggledPushedImageByName(chstr image);
-		Image* getToggledDisabledImage() { return mToggledDisabledImage; }
-		void setToggledDisabledImage(Image* image) { mToggledDisabledImage = image; }
+		Image* getToggledDisabledImage() { return this->mToggledDisabledImage; }
+		void setToggledDisabledImage(Image* image) { this->mToggledDisabledImage = image; }
 		void setToggledDisabledImageByName(chstr image);
 
 		void toggle() { mToggled = !mToggled; }
@@ -53,7 +53,7 @@ namespace aprilui
 
 		bool onMouseUp(int button);
 
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		
 	protected:
 		bool mToggled;

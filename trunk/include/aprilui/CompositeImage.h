@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -43,7 +43,7 @@ namespace aprilui
 		
 		void draw(grect rect, april::Color color);
 		
-		const harray<ImageRef>& getImageList() { return mImages; }
+		const harray<ImageRef>& getImageList() { return this->mImages; }
 		
 	protected:
 		harray<ImageRef> mImages;

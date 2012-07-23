@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -22,8 +22,8 @@ namespace aprilui
 
 	ButtonBase::ButtonBase()
 	{
-		mHovered = false;
-		mPushed = false;
+		this->mHovered = false;
+		this->mPushed = false;
 	}
 	
 	ButtonBase::~ButtonBase()
@@ -32,7 +32,7 @@ namespace aprilui
 	
 	void ButtonBase::update(float k)
 	{
-		mHovered = _checkHover();
+		this->mHovered = this->_checkHover();
 	}
 
 	bool ButtonBase::_checkHover()
@@ -54,7 +54,7 @@ namespace aprilui
 		}
 		if (root == NULL)
 		{
-			return isCursorInside();
+			return this->isCursorInside();
 		}
 		Object* child = root->getChildUnderCursor();
 		return (child != NULL && child == dynamic_cast<Object*>(this));
@@ -66,10 +66,10 @@ namespace aprilui
 		{
 			return false;
 		}
-		mHovered = _checkHover();
-		if (mHovered)
+		this->mHovered = this->_checkHover();
+		if (this->mHovered)
 		{
-			mPushed = true;
+			this->mPushed = true;
 			return true;
 		}
 		return false;
@@ -81,25 +81,25 @@ namespace aprilui
 		{
 			return false;
 		}
-		mHovered = _checkHover();
-		if (mPushed && mHovered)
+		this->mHovered = this->_checkHover();
+		if (this->mPushed && this->mHovered)
 		{
-			mPushed = false;
+			this->mPushed = false;
 			return true;
 		}
-		mPushed = false;
+		this->mPushed = false;
 		return false;
 	}
 
 	void ButtonBase::onMouseMove()
 	{
-		mHovered = _checkHover();
+		this->mHovered = this->_checkHover();
 	}
 
 	void ButtonBase::cancelMouseDown()
 	{
-		mPushed = false;
-		mHovered = _checkHover();
+		this->mPushed = false;
+		this->mHovered = this->_checkHover();
 	}
 
 	void ButtonBase::setAllowedButtons(harray<unsigned char> buttons)

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -33,12 +33,12 @@ namespace aprilui
 
 		void ResizerY::notifyEvent(chstr name, void* params)
 		{
-			if (name == "AttachToObject" || name == "OnDelayEnd" && mInheritValue)
+			if (name == "AttachToObject" || name == "OnDelayEnd" && this->mInheritValue)
 			{
-				mValue = mOffset = mParent->getHeight();
-				if (mUseTarget)
+				this->mValue = this->mOffset = this->mParent->getHeight();
+				if (this->mUseTarget)
 				{
-					mAmplitude = mTarget - mValue;
+					this->mAmplitude = this->mTarget - this->mValue;
 				}
 			}
 			Object::notifyEvent(name, params);
@@ -48,9 +48,9 @@ namespace aprilui
 		{
 			if (this->_checkUpdate(k))
 			{
-				mValue = mParent->getHeight();
-				mValue = _calculateValue(mTimeSinceLastFrame);
-				mParent->setHeight(mValue);
+				this->mValue = this->mParent->getHeight();
+				this->mValue = this->_calculateValue(this->mTimeSinceLastFrame);
+				this->mParent->setHeight(this->mValue);
 			}
 		}
 		

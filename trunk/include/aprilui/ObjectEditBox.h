@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -30,19 +30,19 @@ namespace aprilui
 		~EditBox();
 		static Object* createInstance(chstr name, grect rect);
 		
-		int getCursorIndex() { return mCursorIndex; }
+		int getCursorIndex() { return this->mCursorIndex; }
 		void setCursorIndex(int value);
 		void setCursorIndexAt(float x, float y);
-		int getMaxLength() { return mMaxLength; }
+		int getMaxLength() { return this->mMaxLength; }
 		void setMaxLength(int value);
-		char getPasswordChar() { return mPasswordChar; }
-		void setPasswordChar(char value) { mPasswordChar = value; }
-		hstr getFilter() { return mFilter; }
+		char getPasswordChar() { return this->mPasswordChar; }
+		void setPasswordChar(char value) { this->mPasswordChar = value; }
+		hstr getFilter() { return this->mFilter; }
 		void setFilter(chstr value);
-		bool isUseBackground() { return mUseBackground; }
-		void setUseBackground(bool value) { mUseBackground = value; }
-		hstr getEmptyText() { return mEmptyText; }
-		void setEmptyText(chstr value) { mEmptyText = value; }
+		bool isUseBackground() { return this->mUseBackground; }
+		void setUseBackground(bool value) { this->mUseBackground = value; }
+		hstr getEmptyText() { return this->mEmptyText; }
+		void setEmptyText(chstr value) { this->mEmptyText = value; }
 		void setText(chstr value);
 		bool isFocused();
 		void setFocused(bool value);
@@ -59,8 +59,8 @@ namespace aprilui
 		void onChar(unsigned int charcode);
 		void cancelMouseDown();
 		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		
 	protected:
 		hstr mEmptyText;

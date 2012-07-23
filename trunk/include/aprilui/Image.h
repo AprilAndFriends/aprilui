@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -37,17 +37,17 @@ namespace aprilui
 		virtual void draw(grect rect, april::Color color = APRIL_COLOR_WHITE);
 		void draw(grect rect, april::Color color, float angle);
 		
-		Texture* getTexture() const { return mTexture; }
-		hstr getName() const { return mName; }
-		hstr getImageName() const { return mImageName; }
-		grect getSrcRect() const { return mSrcRect; }
+		Texture* getTexture() const { return this->mTexture; }
+		hstr getName() const { return this->mName; }
+		hstr getImageName() const { return this->mImageName; }
+		grect getSrcRect() const { return this->mSrcRect; }
 		void setSrcRect(grect value);
-		bool isVertical() { return mVertical; };
-		bool isXInverted() { return mInvertX; };
-		bool isYInverted() { return mInvertY; };
+		bool isVertical() { return this->mVertical; };
+		bool isXInverted() { return this->mInvertX; };
+		bool isYInverted() { return this->mInvertY; };
 		
-		april::BlendMode getBlendMode() { return mBlendMode; }
-		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
+		april::BlendMode getBlendMode() { return this->mBlendMode; }
+		void setBlendMode(april::BlendMode mode) { this->mBlendMode = mode; }
 		
 	protected:
 		Texture* mTexture;

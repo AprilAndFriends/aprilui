@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.82
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -17,23 +17,23 @@ namespace aprilui
 {
 	Texture::Texture(chstr filename, april::Texture* texture)
 	{
-		mOriginalFilename = filename;
-		mFilename = texture->getFilename();
-		mTexture = texture;
-		mFilter = texture->getFilter();
-		mAddressMode = texture->getAddressMode();
-		mScale.set(1.0f, 1.0f);
-		mUnusedTime = 0.0f;
-		mDynamic = !texture->isLoaded();
+		this->mOriginalFilename = filename;
+		this->mFilename = texture->getFilename();
+		this->mTexture = texture;
+		this->mFilter = texture->getFilter();
+		this->mAddressMode = texture->getAddressMode();
+		this->mScale.set(1.0f, 1.0f);
+		this->mUnusedTime = 0.0f;
+		this->mDynamic = !texture->isLoaded();
 	}
 
 	Texture::~Texture()
 	{
-		if (mTexture != NULL)
+		if (this->mTexture != NULL)
 		{
-			delete mTexture;
+			delete this->mTexture;
 		}
-		foreach (Texture*, it, mDynamicLinks)
+		foreach (Texture*, it, this->mDynamicLinks)
 		{
 			(*it)->removeDynamicLink(this);
 		}
@@ -41,65 +41,65 @@ namespace aprilui
 
 	april::Texture* Texture::getRenderTexture()
 	{
-		mUnusedTime = 0.0f;
-		foreach (Texture*, it, mDynamicLinks)
+		this->mUnusedTime = 0.0f;
+		foreach (Texture*, it, this->mDynamicLinks)
 		{
 			(*it)->mUnusedTime = 0.0f;
 		}
-		return mTexture;
+		return this->mTexture;
 	}
 
 	int Texture::getWidth()
 	{
-		return (int)(mTexture->getWidth() * mScale.x);
+		return (int)(this->mTexture->getWidth() * this->mScale.x);
 	}
 
 	int Texture::getHeight()
 	{
-		return (int)(mTexture->getHeight() * mScale.y);
+		return (int)(this->mTexture->getHeight() * this->mScale.y);
 	}
 
 	void Texture::setFilter(april::Texture::Filter value)
 	{
-		mFilter = value;
-		mTexture->setFilter(value);
+		this->mFilter = value;
+		this->mTexture->setFilter(value);
 	}
 
 	void Texture::setAddressMode(april::Texture::AddressMode value)
 	{
-		mAddressMode = value;
-		mTexture->setAddressMode(value);
+		this->mAddressMode = value;
+		this->mTexture->setAddressMode(value);
 	}
 
 	bool Texture::isValid()
 	{
-		return (mTexture != NULL);
+		return (this->mTexture != NULL);
 	}
 	
 	void Texture::update(float k)
 	{
-		if (mDynamic && mTexture->isLoaded())
+		if (this->mDynamic && this->mTexture->isLoaded())
 		{
 			// TODO - change to aprilui variable
 			float maxTime = aprilui::getTextureIdleUnloadTime();
 			mUnusedTime += k;
 			if (maxTime > 0.0f && mUnusedTime > maxTime)
 			{
-				mTexture->unload();
+				this->mTexture->unload();
 			}
 		}
 	}
 
 	void Texture::resetUnusedTime()
 	{
-		mUnusedTime = 0.0f;
+		this->mUnusedTime = 0.0f;
 	}
 
 	void Texture::load()
 	{
-		mUnusedTime = 0.0f;
-		mTexture->load();
-		foreach (Texture*, it, mDynamicLinks)
+		this->mUnusedTime = 0.0f;
+		this->mTexture->load();
+		foreach (Texture*, it, this->mDynamicLinks)
 		{
 			(*it)->resetUnusedTime();
 			(*it)->getRenderTexture()->load();
@@ -108,53 +108,53 @@ namespace aprilui
 
 	void Texture::unload()
 	{
-		mTexture->unload();
+		this->mTexture->unload();
 	}
 
 	void Texture::reload(chstr filename)
 	{
-		if (mFilename != filename)
+		if (this->mFilename != filename)
 		{
 			// TODO - remove when RamTexture was removed
 			bool isRamTexture = false;
-			if (mTexture != NULL)
+			if (this->mTexture != NULL)
 			{
-				isRamTexture = (dynamic_cast<april::RamTexture*>(mTexture) != NULL);
-				delete mTexture;
+				isRamTexture = (dynamic_cast<april::RamTexture*>(this->mTexture) != NULL);
+				delete this->mTexture;
 			}
-			mUnusedTime = 0.0f;
-			mFilename = filename;
+			this->mUnusedTime = 0.0f;
+			this->mFilename = filename;
 			if (!isRamTexture)
 			{
-				mTexture = april::rendersys->loadTexture(mFilename, aprilui::getForcedDynamicLoading() || mDynamic);
+				this->mTexture = april::rendersys->loadTexture(this->mFilename, this->mDynamic || aprilui::getForcedDynamicLoading());
 			}
 			else
 			{
-				mTexture = april::rendersys->loadRamTexture(mFilename, aprilui::getForcedDynamicLoading() || mDynamic);
+				this->mTexture = april::rendersys->loadRamTexture(this->mFilename, this->mDynamic || aprilui::getForcedDynamicLoading());
 			}
-			if (mTexture == NULL)
+			if (this->mTexture == NULL)
 			{
-				throw file_not_found(mFilename);
+				throw file_not_found(this->mFilename);
 			}
-			mTexture->setFilter(mFilter);
-			mTexture->setAddressMode(mAddressMode);
+			this->mTexture->setFilter(this->mFilter);
+			this->mTexture->setAddressMode(this->mAddressMode);
 		}
 	}
 
 	void Texture::addDynamicLink(Texture* link)
 	{
-		if (!mDynamicLinks.contains(link))
+		if (!this->mDynamicLinks.contains(link))
 		{
-			mDynamicLinks += link;
+			this->mDynamicLinks += link;
 			link->addDynamicLink(this);
 		}
 	}
 	
 	void Texture::removeDynamicLink(Texture* link)
 	{
-		if (mDynamicLinks.contains(link))
+		if (this->mDynamicLinks.contains(link))
 		{
-			mDynamicLinks -= link;
+			this->mDynamicLinks -= link;
 		}
 	}
 	

@@ -21,7 +21,7 @@ namespace aprilui
 	TiledImage::TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
 		Image(texture, name, source, vertical)
 	{
-		mTile.set(tileW, tileH);
+		this->mTile.set(tileW, tileH);
 	}
 
 	TiledImage::~TiledImage()
@@ -30,28 +30,20 @@ namespace aprilui
 
 	void TiledImage::setTile(float w, float h)
 	{
-		mTile.set(w, h);
+		this->mTile.set(w, h);
 	}
 	
 	void TiledImage::setScroll(float x, float y)
 	{
-		mScroll.set(x, y);
+		this->mScroll.set(x, y);
 	}
 
 	void TiledImage::draw(grect rect, april::Color color)
 	{
-		float tileW = (mTile.x > 0.0f ? rect.w / mTile.x : -mTile.x);
-		float tileH = (mTile.y > 0.0f ? rect.h / mTile.y : -mTile.y);
-		float scrollX = fmod(mScroll.x, tileW);
-		if (scrollX > 0.0f)
-		{
-			scrollX -= tileW;
-		}
-		float scrollY = fmod(mScroll.y, tileH);
-		if (scrollY > 0.0f)
-		{
-			scrollY -= tileH;
-		}
+		float tileW = (this->mTile.x > 0.0f ? rect.w / this->mTile.x : -this->mTile.x);
+		float tileH = (this->mTile.y > 0.0f ? rect.h / this->mTile.y : -this->mTile.y);
+		float scrollX = hmodf(this->mScroll.x, tileW) - tileW;
+		float scrollY = hmodf(this->mScroll.y, tileH) - tileH;
 		int countX = (int)ceil((rect.w - scrollX) / tileW);
 		int countY = (int)ceil((rect.h - scrollY) / tileH);
 		int i;
@@ -60,7 +52,7 @@ namespace aprilui
 		{
 			for_iterx (i, 0, countX)
 			{
-				_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color);
+				this->_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color);
 			}
 		}
 	}
@@ -69,13 +61,13 @@ namespace aprilui
 	{
 		float difference;
 		float srcDifference;
-		grect src = mSrcRect;
+		grect src = this->mSrcRect;
 		if (tileRect.x < rect.x)
 		{
 			difference = rect.x - tileRect.x;
 			srcDifference = src.w * difference / tileRect.w;
-			mSrcRect.x += srcDifference;
-			mSrcRect.w -= srcDifference;
+			this->mSrcRect.x += srcDifference;
+			this->mSrcRect.w -= srcDifference;
 			tileRect.x += difference;
 			tileRect.w -= difference;
 		}
@@ -83,15 +75,15 @@ namespace aprilui
 		{
 			difference = tileRect.x + tileRect.w - (rect.x + rect.w);
 			srcDifference = src.w * difference / tileRect.w;
-			mSrcRect.w -= srcDifference;
+			this->mSrcRect.w -= srcDifference;
 			tileRect.w -= difference;
 		}
 		if (tileRect.y < rect.y)
 		{
 			difference = rect.y - tileRect.y;
 			srcDifference = src.h * difference / tileRect.h;
-			mSrcRect.y += srcDifference;
-			mSrcRect.h -= srcDifference;
+			this->mSrcRect.y += srcDifference;
+			this->mSrcRect.h -= srcDifference;
 			tileRect.y += difference;
 			tileRect.h -= difference;
 		}
@@ -99,12 +91,12 @@ namespace aprilui
 		{
 			difference = tileRect.y + tileRect.h - (rect.y + rect.h);
 			srcDifference = src.h * difference / tileRect.h;
-			mSrcRect.h -= srcDifference;
+			this->mSrcRect.h -= srcDifference;
 			tileRect.h -= difference;
 		}
-		mTextureCoordinatesLoaded = false; // srcRect has been changed
+		this->mTextureCoordinatesLoaded = false; // srcRect has been changed
 		Image::draw(tileRect, color);
-		mSrcRect = src;
+		this->mSrcRect = src;
 	}
 
 }
