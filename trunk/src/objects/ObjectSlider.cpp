@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.9
 /// 
 /// @section LICENSE
 /// 
@@ -42,7 +42,7 @@ namespace aprilui
 		gvec2 position = getCursorPosition();
 		if (mPushed && isPointInside(position))
 		{
-			grect rect = getDerivedRect();
+			grect rect = getBoundingRect();
 			setValue((position.x - rect.x) / (rect.w - 4));
 		}
 	}
