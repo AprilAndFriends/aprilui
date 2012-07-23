@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.72
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -33,17 +33,17 @@ namespace aprilui
 		
 		hstr getName();
 		bool isCursorInside();
-		bool isUseBackground() { return mUseBackground; }
-		void setUseBackground(bool value) { mUseBackground = value; }
-		april::Color getHoverTextColor() { return mHoverTextColor; }
-		void setHoverTextColor(april::Color value) { mHoverTextColor = value; }
-		void setHoverTextColor(chstr value) { mHoverTextColor.set(value); }
-		april::Color getPushedTextColor() { return mPushedTextColor; }
-		void setPushedTextColor(april::Color value) { mPushedTextColor = value; }
-		void setPushedTextColor(chstr value) { mPushedTextColor.set(value); }
-		april::Color getDisabledTextColor() { return mDisabledTextColor; }
-		void setDisabledTextColor(april::Color value) { mDisabledTextColor = value; }
-		void setDisabledTextColor(chstr value) { mDisabledTextColor.set(value); }
+		bool isUseBackground() { return this->mUseBackground; }
+		void setUseBackground(bool value) { this->mUseBackground = value; }
+		april::Color getHoverTextColor() { return this->mHoverTextColor; }
+		void setHoverTextColor(april::Color value) { this->mHoverTextColor = value; }
+		void setHoverTextColor(chstr value) { this->mHoverTextColor.set(value); }
+		april::Color getPushedTextColor() { return this->mPushedTextColor; }
+		void setPushedTextColor(april::Color value) { this->mPushedTextColor = value; }
+		void setPushedTextColor(chstr value) { this->mPushedTextColor.set(value); }
+		april::Color getDisabledTextColor() { return this->mDisabledTextColor; }
+		void setDisabledTextColor(april::Color value) { this->mDisabledTextColor = value; }
+		void setDisabledTextColor(chstr value) { this->mDisabledTextColor.set(value); }
 		Object* getParent();
 		Dataset* getDataset();
 
@@ -55,9 +55,9 @@ namespace aprilui
 		void onMouseMove();
 		void cancelMouseDown();
 		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 
 	protected:
 		bool mUseBackground;

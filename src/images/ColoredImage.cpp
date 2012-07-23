@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -20,12 +20,12 @@ namespace aprilui
 	ColoredImage::ColoredImage(Texture* texture, chstr name, grect source, bool vertical, april::Color color) :
 				  Image(texture, name, source, vertical)
 	{
-		mColor = color;
+		this->mColor = color;
 	}
 
 	ColoredImage::ColoredImage(Image& img, chstr name, april::Color color) : Image(img, name)
 	{
-		mColor = color;
+		this->mColor = color;
 	}
 
 	ColoredImage::~ColoredImage()
@@ -34,17 +34,17 @@ namespace aprilui
 
 	unsigned char ColoredImage::getAlpha()
 	{
-		return mColor.a;
+		return this->mColor.a;
 	}
 	
 	void ColoredImage::setAlpha(unsigned char value)
 	{
-		mColor.a = value;
+		this->mColor.a = value;
 	}
 	
 	void ColoredImage::draw(grect rect, april::Color color)
 	{
-		Image::draw(rect, mColor * color);
+		Image::draw(rect, this->mColor * color);
 	}
 
 }

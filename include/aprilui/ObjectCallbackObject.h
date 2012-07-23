@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -30,9 +30,9 @@ namespace aprilui
 		~CallbackObject();
 		static Object* createInstance(chstr name, grect rect);
 
-		void (*getDrawCallback())(CallbackObject*) { return mDrawCallback; }
-		void setDrawCallback(void (*value)(CallbackObject*)) { mDrawCallback = value; }
-		void setUpdateCallback(void (*value)(float)) { mUpdateCallback = value; }
+		void (*getDrawCallback())(CallbackObject*) { return this->mDrawCallback; }
+		void setDrawCallback(void (*value)(CallbackObject*)) { this->mDrawCallback = value; }
+		void setUpdateCallback(void (*value)(float)) { this->mUpdateCallback = value; }
 		
 		void OnDraw();
 		void update(float k);
@@ -42,9 +42,9 @@ namespace aprilui
 		void onMouseScroll(float x, float y);
 		void cancelMouseDown();
 
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 
 	protected:
 		void (*mDrawCallback)(CallbackObject*);

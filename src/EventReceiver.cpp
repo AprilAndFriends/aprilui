@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -21,7 +21,6 @@ namespace aprilui
 	
 	void EventReceiver::notifyEvent(chstr name, void* params)
 	{
-
 	}
 
 }

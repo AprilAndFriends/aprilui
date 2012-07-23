@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -30,13 +30,13 @@ namespace aprilui
 		Object(name, rect),
 		ButtonBase()
 	{
-		mClip = true;
-		mAllowDrag = false;
-		mInertia = Inertia;
-		mDragThreshold = DragThreshold;
-		mDragMaxSpeed = DragMaxSpeed;
-		mSwapScrollWheels = false;
-		mDragging = false;
+		this->mClip = true;
+		this->mAllowDrag = false;
+		this->mInertia = Inertia;
+		this->mDragThreshold = DragThreshold;
+		this->mDragMaxSpeed = DragMaxSpeed;
+		this->mSwapScrollWheels = false;
+		this->mDragging = false;
 	}
 
 	ScrollArea::~ScrollArea()
@@ -70,139 +70,139 @@ namespace aprilui
 
 	bool ScrollArea::isScrolling()
 	{
-		return (!mPushed && (_mDragSpeed.x != 0.0f || _mDragSpeed.y != 0.0f));
+		return (!this->mPushed && (this->_mDragSpeed.x != 0.0f || this->_mDragSpeed.y != 0.0f));
 	}
 
 	gvec2 ScrollArea::getScrollOffset()
 	{
-		return -getPosition();
+		return -this->getPosition();
 	}
 
 	void ScrollArea::setScrollOffset(gvec2 value)
 	{
-		setScrollOffsetX(value.x);
-		setScrollOffsetY(value.y);
+		this->setScrollOffsetX(value.x);
+		this->setScrollOffsetY(value.y);
 	}
 
 	void ScrollArea::setScrollOffset(float x, float y)
 	{
-		setScrollOffsetX(x);
-		setScrollOffsetY(y);
+		this->setScrollOffsetX(x);
+		this->setScrollOffsetY(y);
 	}
 
 	float ScrollArea::getScrollOffsetX()
 	{
-		return -getX();
+		return -this->getX();
 	}
 
 	void ScrollArea::setScrollOffsetX(float value)
 	{
-		setX(mParent != NULL ? hclamp(-value, hmin(mParent->getWidth() - getWidth(), 0.0f), 0.0f) : -value);
+		this->setX(this->mParent != NULL ? hclamp(-value, hmin(this->mParent->getWidth() - this->getWidth(), 0.0f), 0.0f) : -value);
 	}
 
 	float ScrollArea::getScrollOffsetY()
 	{
-		return -getY();
+		return -this->getY();
 	}
 
 	void ScrollArea::setScrollOffsetY(float value)
 	{
-		setY(mParent != NULL ? hclamp(-value, hmin(mParent->getHeight() - getHeight(), 0.0f), 0.0f) : -value);
+		this->setY(this->mParent != NULL ? hclamp(-value, hmin(this->mParent->getHeight() - this->getHeight(), 0.0f), 0.0f) : -value);
 	}
 
 	void ScrollArea::_snapScrollOffset()
 	{
-		gvec2 offset = getScrollOffset();
-		setScrollOffset(hroundf(offset.x), hroundf(offset.y));
+		gvec2 offset = this->getScrollOffset();
+		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
 	}
 
 	void ScrollArea::update(float k)
 	{
 		Object::update(k);
-		if (mAllowDrag && mParent != NULL)
+		if (this->mAllowDrag && this->mParent != NULL)
 		{
 			ButtonBase::update(k);
 			gvec2 position = aprilui::getCursorPosition();
-			if (mPushed)
+			if (this->mPushed)
 			{
-				if (!mDragging && (_mDragSpeed.x != 0.0f || _mDragSpeed.y != 0.0f ||
-					!heqf(_mClickPosition.x, position.x, mDragThreshold) || !heqf(_mClickPosition.y, position.y, mDragThreshold)))
+				if (!this->mDragging && (this->_mDragSpeed.x != 0.0f || this->_mDragSpeed.y != 0.0f ||
+					!heqf(this->_mClickPosition.x, position.x, this->mDragThreshold) || !heqf(this->_mClickPosition.y, position.y, this->mDragThreshold)))
 				{
-					mDragging = true;
-					_mClickPosition -= getPosition();
-					_mLastPosition = position;
-					foreach (Object*, it, mChildren)
+					this->mDragging = true;
+					this->_mClickPosition -= this->getPosition();
+					this->_mLastPosition = position;
+					foreach (Object*, it, this->mChildren)
 					{
 						(*it)->cancelMouseDown();
 					}
 				}
 				else
 				{
-					_mDragSpeed.set(0.0f, 0.0f);
-					_snapScrollOffset();
+					this->_mDragSpeed.set(0.0f, 0.0f);
+					this->_snapScrollOffset();
 				}
 			}
-			if (mDragging)
+			if (this->mDragging)
 			{
-				setScrollOffset(_mClickPosition - position);
-				_mDragSpeed = (position - _mLastPosition) / k;
-				if (mDragMaxSpeed > 0.0f)
+				this->setScrollOffset(this->_mClickPosition - position);
+				this->_mDragSpeed = (position - this->_mLastPosition) / k;
+				if (this->mDragMaxSpeed > 0.0f)
 				{
-					float length = _mDragSpeed.length();
-					if (length > 0.0f && length > mDragMaxSpeed)
+					float length = this->_mDragSpeed.length();
+					if (length > 0.0f && length > this->mDragMaxSpeed)
 					{
-						_mDragSpeed *= mDragMaxSpeed / length;
+						this->_mDragSpeed *= this->mDragMaxSpeed / length;
 					}
 				}
-				_mLastPosition = position;
-				_mLastScrollOffset = getScrollOffset();
-				_mDragTimer.set(0.0f, 0.0f);
+				this->_mLastPosition = position;
+				this->_mLastScrollOffset = this->getScrollOffset();
+				this->_mDragTimer.set(0.0f, 0.0f);
 			}
 		}
-		if (!mDragging && mInertia > 0.0f && isScrolling())
+		if (!this->mDragging && this->mInertia > 0.0f && this->isScrolling())
 		{
-			_mDragTimer.x += k;
-			_mDragTimer.y += k;
-			gvec2 inertiaTime(habs(_mDragSpeed.x) / mInertia, habs(_mDragSpeed.y) / mInertia);
+			this->_mDragTimer.x += k;
+			this->_mDragTimer.y += k;
+			gvec2 inertiaTime(habs(this->_mDragSpeed.x) / this->mInertia, habs(this->_mDragSpeed.y) / this->mInertia);
 			gvec2 distance;
-			if (_mDragSpeed.x != 0.0f)
+			if (this->_mDragSpeed.x != 0.0f)
 			{
-				if (_mDragTimer.x < inertiaTime.x)
+				if (this->_mDragTimer.x < inertiaTime.x)
 				{
-					distance.x = _mDragSpeed.x * _mDragTimer.x - hsgn(_mDragSpeed.x) * mInertia * (_mDragTimer.x * _mDragTimer.x * 0.5f);
+					distance.x = this->_mDragSpeed.x * this->_mDragTimer.x - hsgn(this->_mDragSpeed.x) * this->mInertia * (this->_mDragTimer.x * this->_mDragTimer.x * 0.5f);
 				}
 				else
 				{
-					_mLastScrollOffset.x -= hsgn(_mDragSpeed.x) * (mInertia * (inertiaTime.x * inertiaTime.x * 0.5f));
-					_mDragSpeed.x = 0.0f;
-					_mDragTimer.x = 0.0f;
+					this->_mLastScrollOffset.x -= hsgn(this->_mDragSpeed.x) * (this->mInertia * (inertiaTime.x * inertiaTime.x * 0.5f));
+					this->_mDragSpeed.x = 0.0f;
+					this->_mDragTimer.x = 0.0f;
 				}
 			}
-			if (_mDragSpeed.y != 0.0f)
+			if (this->_mDragSpeed.y != 0.0f)
 			{
-				if (_mDragTimer.y < inertiaTime.y)
+				if (this->_mDragTimer.y < inertiaTime.y)
 				{
-					distance.y = _mDragSpeed.y * _mDragTimer.y - hsgn(_mDragSpeed.y) * mInertia * (_mDragTimer.y * _mDragTimer.y * 0.5f);
+					distance.y = this->_mDragSpeed.y * this->_mDragTimer.y - hsgn(this->_mDragSpeed.y) * this->mInertia * (this->_mDragTimer.y * this->_mDragTimer.y * 0.5f);
 				}
 				else
 				{
-					_mLastScrollOffset.y -= hsgn(_mDragSpeed.y) * (mInertia * (inertiaTime.y * inertiaTime.y * 0.5f));
-					_mDragSpeed.y = 0.0f;
-					_mDragTimer.y = 0.0f;
+					this->_mLastScrollOffset.y -= hsgn(this->_mDragSpeed.y) * (this->mInertia * (inertiaTime.y * inertiaTime.y * 0.5f));
+					this->_mDragSpeed.y = 0.0f;
+					this->_mDragTimer.y = 0.0f;
 				}
 			}
-			setScrollOffset(_mLastScrollOffset - distance);
-			_snapScrollOffset();
+			this->setScrollOffset(this->_mLastScrollOffset - distance);
+			this->_snapScrollOffset();
 		}
 		else
 		{
-			_mDragTimer.set(0.0f, 0.0f);
+			this->_mDragTimer.set(0.0f, 0.0f);
 		}
 	}
 
 	bool ScrollArea::_checkHover()
 	{
-		return (!mDragging ? ButtonBase::_checkHover() : isCursorInside());
+		return (!this->mDragging ? ButtonBase::_checkHover() : this->isCursorInside());
 	}
 
 	void ScrollArea::notifyEvent(chstr name, void* params)
@@ -210,7 +210,7 @@ namespace aprilui
 		Object::notifyEvent(name, params);
 		if (name == "AttachToObject")
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
+			Container* parent = dynamic_cast<Container*>(this->mParent);
 			if (parent != NULL)
 			{
 				parent->_setScrollArea(this);
@@ -218,7 +218,7 @@ namespace aprilui
 		}
 		else if (name == "DetachFromObject")
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
+			Container* parent = dynamic_cast<Container*>(this->mParent);
 			if (parent != NULL)
 			{
 				parent->_setScrollArea(NULL);
@@ -226,7 +226,7 @@ namespace aprilui
 		}
 		else if (name == "Resized")
 		{
-			setScrollOffset(getScrollOffset());
+			this->setScrollOffset(this->getScrollOffset());
 		}
 	}
 
@@ -236,35 +236,35 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "allow_drag")			return isAllowDrag();
-		if (name == "inertia")				return getInertia();
-		if (name == "drag_threshold")		return getDragThreshold();
-		if (name == "drag_max_speed")		return getDragMaxSpeed();
-		if (name == "swap_scroll_wheels")	return isSwapScrollWheels();
+		if (name == "allow_drag")			return this->isAllowDrag();
+		if (name == "inertia")				return this->getInertia();
+		if (name == "drag_threshold")		return this->getDragThreshold();
+		if (name == "drag_max_speed")		return this->getDragMaxSpeed();
+		if (name == "swap_scroll_wheels")	return this->isSwapScrollWheels();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ScrollArea::setProperty(chstr name, chstr value)
 	{
-		if (name == "allow_drag")				setAllowDrag(value);
-		else if (name == "inertia")				setInertia(value);
-		else if (name == "drag_threshold")		setDragThreshold(value);
-		else if (name == "drag_max_speed")		setDragMaxSpeed(value);
-		else if (name == "swap_scroll_wheels")	setSwapScrollWheels(value);
+		if (name == "allow_drag")				this->setAllowDrag(value);
+		else if (name == "inertia")				this->setInertia(value);
+		else if (name == "drag_threshold")		this->setDragThreshold(value);
+		else if (name == "drag_max_speed")		this->setDragMaxSpeed(value);
+		else if (name == "swap_scroll_wheels")	this->setSwapScrollWheels(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
 
 	bool ScrollArea::onMouseDown(int button)
 	{
-		if (mAllowDrag)
+		if (this->mAllowDrag)
 		{
-			mDragging = true;
+			this->mDragging = true;
 			bool result = ButtonBase::onMouseDown(button);
-			mDragging = false;
+			this->mDragging = false;
 			if (result)
 			{
-				_mClickPosition = aprilui::getCursorPosition();
+				this->_mClickPosition = aprilui::getCursorPosition();
 			}
 		}
 		return Object::onMouseDown(button);
@@ -272,10 +272,10 @@ namespace aprilui
 
 	bool ScrollArea::onMouseUp(int button)
 	{
-		if (mAllowDrag)
+		if (this->mAllowDrag)
 		{
-			mDragging = false;
-			_adjustDragSpeed();
+			this->mDragging = false;
+			this->_adjustDragSpeed();
 			if (ButtonBase::onMouseUp(button))
 			{
 				return true;
@@ -286,7 +286,7 @@ namespace aprilui
 	
 	void ScrollArea::onMouseMove()
 	{
-		if (mAllowDrag)
+		if (this->mAllowDrag)
 		{
 			ButtonBase::onMouseMove();
 		}
@@ -295,9 +295,9 @@ namespace aprilui
 
 	void ScrollArea::_adjustDragSpeed()
 	{
-		_mLastScrollOffset = getScrollOffset();
-		_mDragTimer.set(0.0f, 0.0f);
-		Container* parent = dynamic_cast<Container*>(mParent);
+		this->_mLastScrollOffset = this->getScrollOffset();
+		this->_mDragTimer.set(0.0f, 0.0f);
+		Container* parent = dynamic_cast<Container*>(this->mParent);
 		if (parent == NULL)
 		{
 			return;

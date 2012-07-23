@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -21,10 +21,10 @@ namespace aprilui
 		ButtonBase(),
 		ImageBox(name, rect)
 	{
-		mNormalImage = NULL;
-		mPushedImage = NULL;
-		mHoverImage = NULL;
-		mDisabledImage = NULL;
+		this->mNormalImage = NULL;
+		this->mPushedImage = NULL;
+		this->mHoverImage = NULL;
+		this->mDisabledImage = NULL;
 	}
 
 	ImageButton::~ImageButton()
@@ -53,60 +53,60 @@ namespace aprilui
 
 	void ImageButton::OnDraw()
 	{
-		grect rect = _getDrawRect();
-		bool enabled = _isDerivedEnabled();
-		if (!enabled && mDisabledImage != NULL)
+		grect rect = this->_getDrawRect();
+		bool enabled = this->_isDerivedEnabled();
+		if (!enabled && this->mDisabledImage != NULL)
 		{
-			mDisabledImage->draw(rect, _getDrawColor());
+			this->mDisabledImage->draw(rect, this->_getDrawColor());
 			return;
 		}
-		bool cursorInside = isCursorInside();
+		bool cursorInside = this->isCursorInside();
 		
 		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
 		// so why bother providing a pushed image when this can work. also it covers situations where people forget to set a pushed image
-		if (mPushed && mPushedImage == NULL && cursorInside)
+		if (this->mPushed && this->mPushedImage == NULL && cursorInside)
 		{
-			mImage->draw(rect, april::Color(_getDrawColor() * 0.75f, getDerivedAlpha()));
+			this->mImage->draw(rect, april::Color(this->_getDrawColor() * 0.75f, this->getDerivedAlpha()));
 			return;
 		}
 		ImageBox::OnDraw();
 		// the same thing for a hover image fallback solution
-		if (enabled && mHovered && !mPushed && mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled())
+		if (enabled && this->mHovered && !this->mPushed && this->mHoverImage == NULL && cursorInside && aprilui::isHoverEffectEnabled())
 		{
-			april::BlendMode blendMode = mImage->getBlendMode();
-			mImage->setBlendMode(april::ADD);
-			mImage->draw(rect, april::Color(_getDrawColor(), getDerivedAlpha() / 4));
-			mImage->setBlendMode(blendMode);
+			april::BlendMode blendMode = this->mImage->getBlendMode();
+			this->mImage->setBlendMode(april::ADD);
+			this->mImage->draw(rect, april::Color(this->_getDrawColor(), this->getDerivedAlpha() / 4));
+			this->mImage->setBlendMode(blendMode);
 		}
 	}
 
 	void ImageButton::update(float k)
 	{
 		ButtonBase::update(k);
-		mImage = mNormalImage;
-		if (mImage == NULL)
+		this->mImage = this->mNormalImage;
+		if (this->mImage == NULL)
 		{
-			mImage = mDataset->getImage("null");
+			this->mImage = this->mDataset->getImage("null");
 		}
-		if (!_isDerivedEnabled())
+		if (!this->_isDerivedEnabled())
 		{
-			if (mDisabledImage != NULL)
+			if (this->mDisabledImage != NULL)
 			{
-				mImage = mDisabledImage;
+				this->mImage = this->mDisabledImage;
 			}
 		}
-		else if (mHovered)
+		else if (this->mHovered)
 		{
-			if (mPushed)
+			if (this->mPushed)
 			{
-				if (mPushedImage != NULL)
+				if (this->mPushedImage != NULL)
 				{
-					mImage = mPushedImage;
+					this->mImage = this->mPushedImage;
 				}
 			}
-			else if (mHoverImage != NULL && aprilui::isHoverEffectEnabled())
+			else if (this->mHoverImage != NULL && aprilui::isHoverEffectEnabled())
 			{
-				mImage = mHoverImage;
+				this->mImage = this->mHoverImage;
 			}
 		}
 		ImageBox::update(k);
@@ -119,23 +119,23 @@ namespace aprilui
 
 	void ImageButton::setPushedImageByName(chstr image)
 	{
-		setPushedImage(mDataset->getImage(image));
+		this->setPushedImage(this->mDataset->getImage(image));
 	}
 
 	void ImageButton::setHoverImageByName(chstr image)
 	{
-		setHoverImage(mDataset->getImage(image));
+		this->setHoverImage(this->mDataset->getImage(image));
 	}
 
 	void ImageButton::setDisabledImageByName(chstr image)
 	{
-		setDisabledImage(mDataset->getImage(image));
+		this->setDisabledImage(this->mDataset->getImage(image));
 	}
 
 	void ImageButton::setImage(Image* image)
 	{
 		ImageBox::setImage(image);
-		mNormalImage = image;
+		this->mNormalImage = image;
 	}
 	
 	hstr ImageButton::getProperty(chstr name, bool* property_exists)
@@ -144,19 +144,19 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "image")			return getImageName();
-		if (name == "pushed_image")		return getPushedImage()->getName();
-		if (name == "hover_image")		return getHoverImage()->getName();
-		if (name == "disabled_image")	return getDisabledImage()->getName();
+		if (name == "image")			return this->getImageName();
+		if (name == "pushed_image")		return this->getPushedImage()->getName();
+		if (name == "hover_image")		return this->getHoverImage()->getName();
+		if (name == "disabled_image")	return this->getDisabledImage()->getName();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ImageButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "image")			setImageByName(value);
-		else if	(name == "pushed_image")	setPushedImageByName(value);
-		else if	(name == "hover_image")		setHoverImageByName(value);
-		else if	(name == "disabled_image")	setDisabledImageByName(value);
+		if		(name == "image")			this->setImageByName(value);
+		else if	(name == "pushed_image")	this->setPushedImageByName(value);
+		else if	(name == "hover_image")		this->setHoverImageByName(value);
+		else if	(name == "disabled_image")	this->setDisabledImageByName(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
@@ -170,7 +170,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseDown(button);
 		if (result)
 		{
-			triggerEvent("MouseDown", button);
+			this->triggerEvent("MouseDown", button);
 		}
 		return result;
 	}
@@ -184,7 +184,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseUp(button);
 		if (result)
 		{
-			triggerEvent("Click", button);
+			this->triggerEvent("Click", button);
 		}
 		return result;
 	}

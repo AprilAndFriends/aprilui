@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -34,16 +34,16 @@ namespace aprilui
 		
 		hstr getName();
 		bool isCursorInside();
-		Image* getPushedImage() { return mPushedImage; }
-		void setPushedImage(Image* image) { mPushedImage = image; }
+		Image* getPushedImage() { return this->mPushedImage; }
+		void setPushedImage(Image* image) { this->mPushedImage = image; }
 		void setPushedImageByName(chstr image);
-		Image* getHoverImage() { return mHoverImage; }
-		void setHoverImage(Image* image) { mHoverImage = image; }
+		Image* getHoverImage() { return this->mHoverImage; }
+		void setHoverImage(Image* image) { this->mHoverImage = image; }
 		void setHoverImageByName(chstr image);
-		Image* getDisabledImage() { return mDisabledImage; }
-		void setDisabledImage(Image* image) { mDisabledImage = image; }
+		Image* getDisabledImage() { return this->mDisabledImage; }
+		void setDisabledImage(Image* image) { this->mDisabledImage = image; }
 		void setDisabledImageByName(chstr image);
-		Image* getImage() { return mNormalImage; };
+		Image* getImage() { return this->mNormalImage; };
 		void setImage(Image* value);
 		Object* getParent();
 		Dataset* getDataset();
@@ -56,9 +56,9 @@ namespace aprilui
 		void onMouseMove();
 		void cancelMouseDown();
 		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 		
 	protected:
 		Image* mNormalImage;

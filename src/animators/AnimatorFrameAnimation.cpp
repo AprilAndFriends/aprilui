@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -23,9 +23,9 @@ namespace aprilui
 	{
 		FrameAnimation::FrameAnimation(chstr name) : Animator(name)
 		{
-			mImageBaseName = "";
-			mFirstFrame = 0;
-			mFrameCount = 0;
+			this->mImageBaseName = "";
+			this->mFirstFrame = 0;
+			this->mFrameCount = 0;
 		}
 
 		FrameAnimation::~FrameAnimation()
@@ -43,11 +43,11 @@ namespace aprilui
 			{
 				return false;
 			}
-			if (mImageBaseName == "")
+			if (this->mImageBaseName == "")
 			{
 				return false;
 			}
-			if (mFrameCount <= 0)
+			if (this->mFrameCount <= 0)
 			{
 				return false;
 			}
@@ -56,9 +56,9 @@ namespace aprilui
 
 		bool FrameAnimation::setProperty(chstr name, chstr value)
 		{
-			if		(name == "base_name")		mImageBaseName = value;
-			else if (name == "first_frame")		mFirstFrame = value;
-			else if (name == "frame_count")		mFrameCount = value;
+			if		(name == "base_name")		this->mImageBaseName = value;
+			else if (name == "first_frame")		this->mFirstFrame = value;
+			else if (name == "frame_count")		this->mFrameCount = value;
 			else if (name == "inherit_value")
 			{
 				aprilui::log("WARNING: Animators::FrameAnimation does not support 'inherit_value'!");
@@ -71,11 +71,11 @@ namespace aprilui
 		{
 			if (name == "AttachToObject")
 			{
-				mValue = (float)mFirstFrame;
-				float delay = mDelay;
-				mDelay = 0.0f;
-				update(0.0f);
-				mDelay = delay;
+				this->mValue = (float)this->mFirstFrame;
+				float delay = this->mDelay;
+				this->mDelay = 0.0f;
+				this->update(0.0f);
+				this->mDelay = delay;
 			}
 			Animator::notifyEvent(name, params);
 		}
@@ -84,20 +84,20 @@ namespace aprilui
 		{
 			if (this->_checkUpdate(k))
 			{
-				ImageBox* imageBox = dynamic_cast<ImageBox*>(mParent);
+				ImageBox* imageBox = dynamic_cast<ImageBox*>(this->mParent);
 				if (imageBox == NULL)
 				{
 					aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 					return;
 				}
-				mValue = _calculateValue(mTimeSinceLastFrame);
-				int frame = (int)mValue;
-				int lastFrame = mFirstFrame + mFrameCount - 1;
+				this->mValue = this->_calculateValue(this->mTimeSinceLastFrame);
+				int frame = (int)this->mValue;
+				int lastFrame = this->mFirstFrame + this->mFrameCount - 1;
 				if (isExpired() || frame > lastFrame)
 				{
-					frame = (mReset ? mFirstFrame : lastFrame);
+					frame = (this->mReset ? this->mFirstFrame : lastFrame);
 				}
-				imageBox->setImageByName(mImageBaseName + hstr(frame));
+				imageBox->setImageByName(this->mImageBaseName + hstr(frame));
 			}
 		}
 		

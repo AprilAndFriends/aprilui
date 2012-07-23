@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -16,27 +16,27 @@ namespace aprilui
 	_GenericException::_GenericException(chstr errorText, chstr type, const char* file, int line) : 
 					   hltypes::exception("", file, line)
 	{
-		msg += errorText;
+		this->msg += errorText;
 	}
 	_GenericException::~_GenericException() { }
 
-	_ResourceExistsException::_ResourceExistsException(chstr object_name, chstr class_name,
+	_ResourceExistsException::_ResourceExistsException(chstr objectName, chstr className,
 													   Dataset* dict, const char* file, int line) :
 							  _GenericException("", "ResourceExistsException", file, line)
 	{
-		msg += class_name + " already exists: " + object_name + " in dataset " + dict->getName();
+		this->msg += className + " already exists: " + objectName + " in dataset " + dict->getName();
 	}
 	_ResourceExistsException::~_ResourceExistsException() { }
 
-	_ResourceNotExistsException::_ResourceNotExistsException(chstr object_name, chstr class_name,
+	_ResourceNotExistsException::_ResourceNotExistsException(chstr objectName, chstr className,
 															 Dataset* dict, const char* file, int line) :
 								 _GenericException("", "ResourceNotExistsException", file, line)
 	{
-		msg += class_name + " doesn't exist: " + object_name + " in dataset " + dict->getName();
+		this->msg += className + " doesn't exist: " + objectName + " in dataset " + dict->getName();
 	}
 	_ResourceNotExistsException::~_ResourceNotExistsException() { }
 
-	_InvalidObjectTypeCast::_InvalidObjectTypeCast(chstr err_text, const char* file, int line) : _GenericException(err_text, "InvalidObjectTypeCast", file, line) { }
+	_InvalidObjectTypeCast::_InvalidObjectTypeCast(chstr errorText, const char* file, int line) : _GenericException(errorText, "InvalidObjectTypeCast", file, line) { }
 	
 	_InvalidObjectTypeCast::~_InvalidObjectTypeCast() { }
 	
@@ -44,7 +44,7 @@ namespace aprilui
 														 const char* file, int line) :
 							   _GenericException("", "ObjectHasParentException", file, line)
 	{
-		msg += "Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent";
+		this->msg += "Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent";
 	}
 	_ObjectHasParentException::~_ObjectHasParentException() { }
 
@@ -52,7 +52,7 @@ namespace aprilui
 																 const char* file, int line) :
 								   _GenericException("", "ObjectWihoutParentException", file, line)
 	{
-		msg += "Cannot detach object '" + child + "', object has no parent";
+		this->msg += "Cannot detach object '" + child + "', object has no parent";
 	}
 	_ObjectWithoutParentException::~_ObjectWithoutParentException() { }
 
@@ -60,7 +60,7 @@ namespace aprilui
 													   const char* file, int line) :
 							  _GenericException("", "ObjectNotChildException", file, line)
 	{
-		msg += "Cannot detach object '" + child + "' from object '" + parent + "', object is not a child";
+		this->msg += "Cannot detach object '" + child + "' from object '" + parent + "', object is not a child";
 	}
 	_ObjectNotChildException::~_ObjectNotChildException() { }
 
@@ -68,7 +68,7 @@ namespace aprilui
 																 const char* file, int line) :
 							  _GenericException("", "ObjectFactoryExistsException", file, line)
 	{
-		msg += "Object factory named '" + name + "' already exists";
+		this->msg += "Object factory named '" + name + "' already exists";
 	}
 	_ObjectFactoryExistsException::~_ObjectFactoryExistsException() { }
 
@@ -76,7 +76,7 @@ namespace aprilui
 																	 const char* file, int line) :
 							  _GenericException("", "AnimatorFactoryExistsException", file, line)
 	{
-		msg += "Animator factory named '" + name + "' already exists";
+		this->msg += "Animator factory named '" + name + "' already exists";
 	}
 	_AnimatorFactoryExistsException::~_AnimatorFactoryExistsException() { }
 

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -28,11 +28,11 @@ namespace aprilui
 		Texture(chstr filename, april::Texture* texture);
 		~Texture();
 
-		hstr getOriginalFilename() { return mOriginalFilename; }
-		hstr getFilename() { return mFilename; }
-		gvec2 getScale() { return mScale; }
-		float getUnusedTime() { return mUnusedTime; }
-		bool isDynamic() { return mDynamic; }
+		hstr getOriginalFilename() { return this->mOriginalFilename; }
+		hstr getFilename() { return this->mFilename; }
+		gvec2 getScale() { return this->mScale; }
+		float getUnusedTime() { return this->mUnusedTime; }
+		bool isDynamic() { return this->mDynamic; }
 
 		april::Texture* getRenderTexture();
 		int getWidth();

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -32,14 +32,14 @@ namespace aprilui
 	ScrollBar::ScrollBar(chstr name, grect rect) :
 		Object(name, rect)
 	{
-		mGridSize = GridSize;
-		mUseFading = true;
-		mButtonBegin = NULL;
-		mButtonEnd = NULL;
-		mButtonBack = NULL;
-		mButtonBar = NULL;
-		_mClickPosition.set(0.0f, 0.0f);
-		_mRetainTime = 0.0f;
+		this->mGridSize = GridSize;
+		this->mUseFading = true;
+		this->mButtonBegin = NULL;
+		this->mButtonEnd = NULL;
+		this->mButtonBack = NULL;
+		this->mButtonBar = NULL;
+		this->_mClickPosition.set(0.0f, 0.0f);
+		this->_mRetainTime = 0.0f;
 	}
 
 	ScrollBar::~ScrollBar()
@@ -48,23 +48,23 @@ namespace aprilui
 
 	void ScrollBar::setSkinName(chstr value)
 	{
-		mSkinName = value;
-		notifyEvent("SkinChange", NULL);
+		this->mSkinName = value;
+		this->notifyEvent("SkinChange", NULL);
 	}
 
 	void ScrollBar::update(float k)
 	{
 		Object::update(k);
-		_updateBar();
-		if (mSkinName == "")
+		this->_updateBar();
+		if (this->mSkinName == "")
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
+			Container* parent = dynamic_cast<Container*>(this->mParent);
 			if (parent != NULL)
 			{
 				ScrollArea* area = parent->_getScrollArea();
-				if (area != NULL && _mRetainTime > 0.0f)
+				if (area != NULL && this->_mRetainTime > 0.0f)
 				{
-					_mRetainTime -= k;
+					this->_mRetainTime -= k;
 				}
 			}
 		}
@@ -72,7 +72,7 @@ namespace aprilui
 
 	void ScrollBar::_initAreaDragging()
 	{
-		Container* parent = dynamic_cast<Container*>(mParent);
+		Container* parent = dynamic_cast<Container*>(this->mParent);
 		if (parent != NULL)
 		{
 			ScrollArea* area = parent->_getScrollArea();
@@ -95,9 +95,9 @@ namespace aprilui
 	void ScrollBar::OnDraw()
 	{
 		Object::OnDraw();
-		if (mSkinName == "")
+		if (this->mSkinName == "")
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
+			Container* parent = dynamic_cast<Container*>(this->mParent);
 			if (parent != NULL)
 			{
 				ScrollArea* area = parent->_getScrollArea();
@@ -105,16 +105,16 @@ namespace aprilui
 				{
 					if (area->isDragging() || area->isScrolling())
 					{
-						_mRetainTime = RETAIN_TIME;
+						this->_mRetainTime = RETAIN_TIME;
 					}
-					if (!mUseFading || _mRetainTime > 0.0f)
+					if (!this->mUseFading || this->_mRetainTime > 0.0f)
 					{
-						april::Color color = _getDrawColor();
-						if (mUseFading && _mRetainTime < FADE_OUT_TIME)
+						april::Color color = this->_getDrawColor();
+						if (this->mUseFading && this->_mRetainTime < FADE_OUT_TIME)
 						{
-							color.a = (unsigned char)hclamp(color.a * _mRetainTime / FADE_OUT_TIME, 0.0f, 255.0f);
+							color.a = (unsigned char)hclamp(color.a * this->_mRetainTime / FADE_OUT_TIME, 0.0f, 255.0f);
 						}
-						april::rendersys->drawFilledRect(_getBarDrawRect(), color);
+						april::rendersys->drawFilledRect(this->_getBarDrawRect(), color);
 					}
 				}
 			}
@@ -126,65 +126,65 @@ namespace aprilui
 		Object::notifyEvent(name, params);
 		if (name == "AttachToObject")
 		{
-			Container* parent = dynamic_cast<Container*>(mParent);
+			Container* parent = dynamic_cast<Container*>(this->mParent);
 			if (parent == NULL)
 			{
-				aprilui::log(hsprintf("WARNING: ScrollBar '%s' not attached to object of class Container!", mName.c_str()));
+				aprilui::log(hsprintf("WARNING: ScrollBar '%s' not attached to object of class Container!", this->mName.c_str()));
 			}
 		}
 		else if (name == "SkinChange")
 		{
-			if (mSkinName != "")
+			if (this->mSkinName != "")
 			{
-				if (mButtonBegin == NULL)
+				if (this->mButtonBegin == NULL)
 				{
-					mButtonBegin = new ImageButton(generateName("aprilui::ScrollSkinButtonBegin"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					registerChild(mButtonBegin);
-					_SET_CLICK_EVENT_FUNCTION(mButtonBegin, _clickScrollBegin);
-					mButtonEnd = new ImageButton(generateName("aprilui::ScrollSkinButtonEnd"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					registerChild(mButtonEnd);
-					_SET_CLICK_EVENT_FUNCTION(mButtonEnd, _clickScrollEnd);
-					mButtonBack = new ImageButton(generateName("aprilui::ScrollSkinButtonBack"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					registerChild(mButtonBack);
-					_SET_CLICK_EVENT_FUNCTION(mButtonBack, _clickScrollBack);
-					mButtonBar = new ImageButton(generateName("aprilui::ScrollSkinButtonBar"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					registerChild(mButtonBar);
-					_SET_MOUSEDOWN_EVENT_FUNCTION(mButtonBar, _mouseDownScrollBar);
-					_SET_CLICK_EVENT_FUNCTION(mButtonBar, _clickScrollBar);
+					this->mButtonBegin = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBegin"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->mButtonBegin);
+					_SET_CLICK_EVENT_FUNCTION(this->mButtonBegin, _clickScrollBegin);
+					this->mButtonEnd = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonEnd"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->mButtonEnd);
+					_SET_CLICK_EVENT_FUNCTION(this->mButtonEnd, _clickScrollEnd);
+					this->mButtonBack = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBack"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->mButtonBack);
+					_SET_CLICK_EVENT_FUNCTION(this->mButtonBack, _clickScrollBack);
+					this->mButtonBar = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBar"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->mButtonBar);
+					_SET_MOUSEDOWN_EVENT_FUNCTION(this->mButtonBar, _mouseDownScrollBar);
+					_SET_CLICK_EVENT_FUNCTION(this->mButtonBar, _clickScrollBar);
 				}
-				mButtonBegin->setImageByName(mSkinName + "/" + _getSkinNameBeginNormal());
-				mButtonBegin->setHoverImageByName(mSkinName + "/" + _getSkinNameBeginHover());
-				mButtonBegin->setPushedImageByName(mSkinName + "/" + _getSkinNameBeginPushed());
-				mButtonBegin->resizeToFitImage();
-				mButtonEnd->setImageByName(mSkinName + "/" + _getSkinNameEndNormal());
-				mButtonEnd->setHoverImageByName(mSkinName + "/" + _getSkinNameEndHover());
-				mButtonEnd->setPushedImageByName(mSkinName + "/" + _getSkinNameEndPushed());
-				mButtonEnd->resizeToFitImage();
-				mButtonBack->setImageByName(mSkinName + "/" + _getSkinNameBackground());
-				mButtonBack->setHoverImageByName(mSkinName + "/" + _getSkinNameBackground());
-				mButtonBack->setPushedImageByName(mSkinName + "/" + _getSkinNameBackground());
-				mButtonBack->resizeToFitImage();
-				mButtonBar->setImageByName(mSkinName + "/" + _getSkinNameBarNormal());
-				mButtonBar->setHoverImageByName(mSkinName + "/" + _getSkinNameBarHover());
-				mButtonBar->setPushedImageByName(mSkinName + "/" + _getSkinNameBarPushed());
-				mButtonBar->resizeToFitImage();
-				_updateChildren();
-				_updateBar();
+				this->mButtonBegin->setImageByName(this->mSkinName + "/" + this->_getSkinNameBeginNormal());
+				this->mButtonBegin->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBeginHover());
+				this->mButtonBegin->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBeginPushed());
+				this->mButtonBegin->resizeToFitImage();
+				this->mButtonEnd->setImageByName(this->mSkinName + "/" + this->_getSkinNameEndNormal());
+				this->mButtonEnd->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameEndHover());
+				this->mButtonEnd->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameEndPushed());
+				this->mButtonEnd->resizeToFitImage();
+				this->mButtonBack->setImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
+				this->mButtonBack->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
+				this->mButtonBack->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
+				this->mButtonBack->resizeToFitImage();
+				this->mButtonBar->setImageByName(this->mSkinName + "/" + this->_getSkinNameBarNormal());
+				this->mButtonBar->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBarHover());
+				this->mButtonBar->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBarPushed());
+				this->mButtonBar->resizeToFitImage();
+				this->_updateChildren();
+				this->_updateBar();
 			}
 			else if (mButtonBegin != NULL)
 			{
-				unregisterChild(mButtonBegin);
-				delete mButtonBegin;
-				mButtonBegin = NULL;
-				unregisterChild(mButtonEnd);
-				delete mButtonEnd;
-				mButtonEnd = NULL;
-				unregisterChild(mButtonBack);
-				delete mButtonBack;
-				mButtonBack = NULL;
-				unregisterChild(mButtonBar);
-				delete mButtonBar;
-				mButtonBar = NULL;
+				this->unregisterChild(this->mButtonBegin);
+				delete this->mButtonBegin;
+				this->mButtonBegin = NULL;
+				this->unregisterChild(this->mButtonEnd);
+				delete this->mButtonEnd;
+				this->mButtonEnd = NULL;
+				this->unregisterChild(this->mButtonBack);
+				delete this->mButtonBack;
+				this->mButtonBack = NULL;
+				this->unregisterChild(this->mButtonBar);
+				delete this->mButtonBar;
+				this->mButtonBar = NULL;
 			}
 		}
 	}
@@ -195,17 +195,17 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "skin")			return getSkinName();
-		if (name == "grid_size")	return getGridSize();
-		if (name == "use_fading")	return isUseFading();
+		if (name == "skin")			return this->getSkinName();
+		if (name == "grid_size")	return this->getGridSize();
+		if (name == "use_fading")	return this->isUseFading();
 		return Object::getProperty(name, property_exists);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)
 	{
-		if		(name == "skin")		setSkinName(value);
-		else if	(name == "grid_size")	setGridSize(value);
-		else if	(name == "use_fading")	setUseFading(value);
+		if		(name == "skin")		this->setSkinName(value);
+		else if	(name == "grid_size")	this->setGridSize(value);
+		else if	(name == "use_fading")	this->setUseFading(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
@@ -213,24 +213,24 @@ namespace aprilui
 	void ScrollBar::onMouseMove()
 	{
 		Object::onMouseMove();
-		if (mButtonBar != NULL && mButtonBar->isPushed())
+		if (this->mButtonBar != NULL && this->mButtonBar->isPushed())
 		{
-			gvec2 position = getCursorPosition() / getDerivedScale() - _mClickPosition;
-			_moveScrollBar(position.x, position.y);
+			gvec2 position = aprilui::getCursorPosition() / this->getDerivedScale() - this->_mClickPosition;
+			this->_moveScrollBar(position.x, position.y);
 		}
 	}
 
 	void ScrollBar::onMouseScroll(float x, float y)
 	{
-		Container* parent = dynamic_cast<Container*>(mParent);
-		if (parent != NULL && (parent->isCursorInside() || isCursorInside()))
+		Container* parent = dynamic_cast<Container*>(this->mParent);
+		if (parent != NULL && (parent->isCursorInside() || this->isCursorInside()))
 		{
 			ScrollArea* area = parent->_getScrollArea();
 			if (area != NULL && area->isSwapScrollWheels())
 			{
 				hswap(x, y);
 			}
-			addScrollValue(_calcScrollMove(x, y));
+			this->addScrollValue(this->_calcScrollMove(x, y));
 		}
 		Object::onMouseScroll(x, y);
 	}
@@ -250,14 +250,14 @@ namespace aprilui
 	void ScrollBar::_clickScrollBack(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		gvec2 position = (getCursorPosition() - scrollBar->getDerivedPosition()) / scrollBar->getDerivedScale();
+		gvec2 position = (aprilui::getCursorPosition() - scrollBar->getDerivedPosition()) / scrollBar->getDerivedScale();
 		scrollBar->addScrollValue(scrollBar->_calcScrollJump(position.x, position.y));
 	}
 
 	void ScrollBar::_mouseDownScrollBar(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->_mClickPosition = getCursorPosition() / scrollBar->getDerivedScale() -
+		scrollBar->_mClickPosition = aprilui::getCursorPosition() / scrollBar->getDerivedScale() -
 			scrollBar->mButtonBar->getPosition() + scrollBar->mButtonBegin->getSize();
 	}
 

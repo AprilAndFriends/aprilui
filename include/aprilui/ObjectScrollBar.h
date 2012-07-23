@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -34,12 +34,12 @@ namespace aprilui
 		ScrollBar(chstr name, grect rect);
 		~ScrollBar();
 
-		hstr getSkinName() { return mSkinName; }
+		hstr getSkinName() { return this->mSkinName; }
 		void setSkinName(chstr value);
-		float getGridSize() { return mGridSize; }
-		void setGridSize(float value) { mGridSize = value; }
-		bool isUseFading() { return mUseFading; }
-		void setUseFading(bool value) { mUseFading = value; }
+		float getGridSize() { return this->mGridSize; }
+		void setGridSize(float value) { this->mGridSize = value; }
+		bool isUseFading() { return this->mUseFading; }
+		void setUseFading(bool value) { this->mUseFading = value; }
 
 		void update(float k);
 		void OnDraw();
@@ -57,7 +57,7 @@ namespace aprilui
 		static float ScrollDistance;
 		static float GridSize;
 
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 
 	protected:
 		hstr mSkinName;

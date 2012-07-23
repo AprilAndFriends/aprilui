@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.81
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -36,25 +36,25 @@ namespace aprilui
 		virtual ~LabelBase();
 		
 		virtual Dataset* getDataset() = 0;
-		hstr getText() { return mText; }
+		hstr getText() { return this->mText; }
 		virtual void setText(chstr value);
-		hstr getTextKey() { return mTextKey; }
+		hstr getTextKey() { return this->mTextKey; }
 		void setTextKey(chstr value);
 		
-		hstr getFont() { return mFontName; }
-		void setFont(chstr value) { mFontName = value; }
+		hstr getFont() { return this->mFontName; }
+		void setFont(chstr value) { this->mFontName = value; }
 		
-		gvec2 getDrawOffset() { return mDrawOffset; }
-		void setDrawOffset(gvec2 value) { mDrawOffset = value; }
-		atres::Alignment getHorzFormatting() { return mHorzFormatting; }
-		void setHorzFormatting(atres::Alignment value) { mHorzFormatting = value; }
-		atres::Alignment getVertFormatting() { return mVertFormatting; }
-		void setVertFormatting(atres::Alignment value) { mVertFormatting = value; }
-		atres::Effect getFontEffect() { return mFontEffect; }
-		void setFontEffect(atres::Effect value) { mFontEffect = value; }
-		april::Color getTextColor() { return mTextColor; }
-		void setTextColor(april::Color value) { mTextColor = value; }
-		void setTextColor(chstr value) { mTextColor.set(value); }
+		gvec2 getDrawOffset() { return this->mDrawOffset; }
+		void setDrawOffset(gvec2 value) { this->mDrawOffset = value; }
+		atres::Alignment getHorzFormatting() { return this->mHorzFormatting; }
+		void setHorzFormatting(atres::Alignment value) { this->mHorzFormatting = value; }
+		atres::Alignment getVertFormatting() { return this->mVertFormatting; }
+		void setVertFormatting(atres::Alignment value) { this->mVertFormatting = value; }
+		atres::Effect getFontEffect() { return this->mFontEffect; }
+		void setFontEffect(atres::Effect value) { this->mFontEffect = value; }
+		april::Color getTextColor() { return this->mTextColor; }
+		void setTextColor(april::Color value) { this->mTextColor = value; }
+		void setTextColor(chstr value) { this->mTextColor.set(value); }
 		
 		virtual void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* property_exists = NULL);

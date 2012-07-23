@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.9
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -23,8 +23,8 @@ namespace aprilui
 	Slider::Slider(chstr name, grect rect) :
 		ImageBox(name, rect)
 	{
-		mValue = 0.0f;
-		mPushed = false;
+		this->mValue = 0.0f;
+		this->mPushed = false;
 	}
 	
 	Slider::~Slider()
@@ -39,17 +39,17 @@ namespace aprilui
 	void Slider::update(float k)
 	{
 		ImageBox::update(k);
-		gvec2 position = getCursorPosition();
-		if (mPushed && isPointInside(position))
+		gvec2 position = aprilui::getCursorPosition();
+		if (this->mPushed && this->isPointInside(position))
 		{
-			grect rect = getBoundingRect();
-			setValue((position.x - rect.x) / (rect.w - 4));
+			grect rect = this->getBoundingRect();
+			this->setValue((position.x - rect.x) / (rect.w - 4));
 		}
 	}
 	
 	void Slider::setValue(float value)
 	{
-		mValue = hclamp(value, 0.0f, 1.0f);
+		this->mValue = hclamp(value, 0.0f, 1.0f);
 	}
 
 	bool Slider::onMouseDown(int button)
@@ -58,12 +58,12 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			mPushed = true;
-			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
-			setValue(position.x / (mRect.w - 4));
-			triggerEvent("Set", button);
+			this->mPushed = true;
+			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
+			this->setValue(position.x / (this->mRect.w - 4));
+			this->triggerEvent("Set", button);
 			return true;
 		}
 		return false;
@@ -75,50 +75,50 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (mPushed && isCursorInside())
+		if (this->mPushed && this->isCursorInside())
 		{
-			mPushed = false;
+			this->mPushed = false;
 			return true;
 		}
-		mPushed = false;
+		this->mPushed = false;
 		return false;
 	}
 
 	void Slider::onMouseMove()
 	{
 		Object::onMouseMove();
-		if (mPushed)
+		if (this->mPushed)
 		{
-			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
-			setValue(position.x / (mRect.w - 4));
-			triggerEvent("Set");
+			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
+			this->setValue(position.x / (this->mRect.w - 4));
+			this->triggerEvent("Set");
 		}
 	}
 
 	void Slider::cancelMouseDown()
 	{
-		mPushed = false;
+		this->mPushed = false;
 		Object::cancelMouseDown();
 	}
 
 	void Slider::OnDraw()
 	{
-		grect rect = _getDrawRect();
+		grect rect = this->_getDrawRect();
 		if (rect.w < 5 || rect.h < 5)
 		{
 			return;
 		}
-		if (mImage == NULL)
+		if (this->mImage == NULL)
 		{
-			mImage = mDataset->getImage("null");
+			this->mImage = this->mDataset->getImage("null");
 		}
-		april::Color color = _getDrawColor();
+		april::Color color = this->_getDrawColor();
 		april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_WHITE, color.a));
 		april::Color backColor(color / 4.0f, color.a);
-		rect = grect(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
+		rect.set(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
 		april::rendersys->drawFilledRect(rect, backColor);
-		rect = grect(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
-		mImage->draw(rect, color);
+		rect.set(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
+		this->mImage->draw(rect, color);
 	}
 
 	bool Slider::setProperty(chstr name, chstr value)

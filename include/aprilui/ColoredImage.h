@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -39,7 +39,7 @@ namespace aprilui
 
 		unsigned char getAlpha();
 		void setAlpha(unsigned char value);
-		void setColor(april::Color value) { mColor = value; }
+		void setColor(april::Color value) { this->mColor = value; }
 		
 	protected:
 		april::Color mColor;

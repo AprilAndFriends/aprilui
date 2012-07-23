@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -29,7 +29,7 @@ namespace aprilui
 	{
 		foreach (ImageRef, it, base.mImages)
 		{
-			addImageRef((*it).image, (*it).rect);
+			this->addImageRef((*it).image, (*it).rect);
 		}
 	}
 	
@@ -42,20 +42,16 @@ namespace aprilui
 		ImageRef reference;
 		reference.image = image;
 		reference.rect = rect;
-		mImages += reference;
+		this->mImages += reference;
 	}
 
 	void CompositeImage::draw(grect rect, april::Color color)
 	{
-		float wf = rect.w / mSrcRect.w;
-		float hf = rect.h / mSrcRect.h;
+		gvec2 sf = rect.getSize() / this->mSrcRect.getSize();
 		grect drawRect;
-		foreach (ImageRef, it, mImages)
+		foreach (ImageRef, it, this->mImages)
 		{
-			drawRect.x = rect.x + (*it).rect.x * wf;
-			drawRect.y = rect.y + (*it).rect.y * hf;
-			drawRect.w = (*it).rect.w * wf;
-			drawRect.h = (*it).rect.h * hf;
+			drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
 			(*it).image->draw(drawRect, color);
 		}
 	}

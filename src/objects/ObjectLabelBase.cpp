@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.81
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -25,12 +25,12 @@ namespace aprilui
 {
 	LabelBase::LabelBase()
 	{
-		mHorzFormatting = atres::CENTER_WRAPPED;
-		mVertFormatting = atres::CENTER;
-		mFontEffect = atres::NONE;
-		mTextFormatting = true;
-		mText = "";
-		mTextKey = "";
+		this->mHorzFormatting = atres::CENTER_WRAPPED;
+		this->mVertFormatting = atres::CENTER;
+		this->mFontEffect = atres::NONE;
+		this->mTextFormatting = true;
+		this->mText = "";
+		this->mTextKey = "";
 	}
 
 	LabelBase::~LabelBase()
@@ -39,18 +39,19 @@ namespace aprilui
 
 	void LabelBase::_drawLabel(grect rect, april::Color color)
 	{
-		color *= mTextColor;
+		color *= this->mTextColor;
 		if (aprilui::isDebugEnabled())
 		{
-			april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_BLACK, color.a / 2));
-			april::rendersys->drawRect(rect, april::Color(APRIL_COLOR_WHITE, color.a / 2));
+			unsigned char alpha = color.a / 2;
+			april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_BLACK, alpha));
+			april::rendersys->drawRect(rect, april::Color(APRIL_COLOR_WHITE, alpha));
 		}
-		if (mText.size() == 0)
+		if (this->mText.size() == 0)
 		{
 			return;
 		}
-		hstr text = mText;
-		switch (mFontEffect)
+		hstr text = this->mText;
+		switch (this->mFontEffect)
 		{
 		case atres::BORDER:
 			text = "[b]" + text;
@@ -61,13 +62,13 @@ namespace aprilui
 		default:
 			break;
 		}
-		if (mTextFormatting)
+		if (this->mTextFormatting)
 		{
-			atres::renderer->drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
+			atres::renderer->drawText(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mDrawOffset);
 		}
 		else
 		{
-			atres::renderer->drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
+			atres::renderer->drawTextUnformatted(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mDrawOffset);
 		}
 	}
 
@@ -77,34 +78,34 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "font")		return getFont();
-		if (name == "text")		return getText();
-		if (name == "text_key")	return getTextKey();
+		if (name == "font")			return this->getFont();
+		if (name == "text")			return this->getText();
+		if (name == "text_key")		return this->getTextKey();
 		if (name == "horz_formatting")
 		{
-			if (mHorzFormatting == atres::LEFT)				return "left";
-			if (mHorzFormatting == atres::RIGHT)			return "right";
-			if (mHorzFormatting == atres::CENTER)			return "center";
-			if (mHorzFormatting == atres::LEFT_WRAPPED)		return "left_wrapped";
-			if (mHorzFormatting == atres::RIGHT_WRAPPED)	return "right_wrapped";
-			if (mHorzFormatting == atres::CENTER_WRAPPED)	return "center_wrapped";
-			if (mHorzFormatting == atres::JUSTIFIED)		return "justified";
+			if (this->mHorzFormatting == atres::LEFT)			return "left";
+			if (this->mHorzFormatting == atres::RIGHT)			return "right";
+			if (this->mHorzFormatting == atres::CENTER)			return "center";
+			if (this->mHorzFormatting == atres::LEFT_WRAPPED)	return "left_wrapped";
+			if (this->mHorzFormatting == atres::RIGHT_WRAPPED)	return "right_wrapped";
+			if (this->mHorzFormatting == atres::CENTER_WRAPPED)	return "center_wrapped";
+			if (this->mHorzFormatting == atres::JUSTIFIED)		return "justified";
 		}
 		if (name == "vert_formatting")
 		{
-			if (mVertFormatting == atres::TOP)		return "top";
-			if (mVertFormatting == atres::CENTER)	return "center";
-			if (mVertFormatting == atres::BOTTOM)	return "bottom";
+			if (this->mVertFormatting == atres::TOP)		return "top";
+			if (this->mVertFormatting == atres::CENTER)	return "center";
+			if (this->mVertFormatting == atres::BOTTOM)	return "bottom";
 		}
-		if (name == "text_color")	return getTextColor().hex();
+		if (name == "text_color")	return this->getTextColor().hex();
 		if (name == "effect")
 		{
-			if (mFontEffect == atres::SHADOW)	return "shadow";
-			if (mFontEffect == atres::BORDER)	return "border";
-			return "none";
+			if (this->mFontEffect == atres::SHADOW)	return "shadow";
+			if (this->mFontEffect == atres::BORDER)	return "border";
+			if (this->mFontEffect == atres::NONE)	return "none";
 		}
-		if (name == "offset_x")	return mDrawOffset.x;
-		if (name == "offset_y")	return mDrawOffset.y;
+		if (name == "offset_x")		return this->mDrawOffset.x;
+		if (name == "offset_y")		return this->mDrawOffset.y;
 		if (property_exists != NULL)
 		{
 			*property_exists = false;
@@ -114,43 +115,43 @@ namespace aprilui
 	
 	bool LabelBase::setProperty(chstr name,chstr value)
 	{
-		if (name == "font")				setFont(value);
-		else if (name == "text_key")	setTextKey(value);
+		if (name == "font")				this->setFont(value);
+		else if (name == "text_key")	this->setTextKey(value);
 		else if (name == "textkey")
 		{
 			aprilui::log("WARNING: 'textkey=' is deprecated. Use 'text_key=' instead."); // DEPRECATED
-			setTextKey(value);
+			this->setTextKey(value);
 		}
-		else if (name == "text")		setText(value);
+		else if (name == "text")		this->setText(value);
 		else if (name == "horz_formatting")
 		{
-			if (value == "left")				setHorzFormatting(atres::LEFT);
-			else if (value == "right")			setHorzFormatting(atres::RIGHT);
-			else if (value == "center")			setHorzFormatting(atres::CENTER);
-			else if (value == "left_wrapped")	setHorzFormatting(atres::LEFT_WRAPPED);
-			else if (value == "right_wrapped")	setHorzFormatting(atres::RIGHT_WRAPPED);
-			else if (value == "center_wrapped")	setHorzFormatting(atres::CENTER_WRAPPED);
-			else if (value == "justified")		setHorzFormatting(atres::JUSTIFIED);
+			if (value == "left")				this->setHorzFormatting(atres::LEFT);
+			else if (value == "right")			this->setHorzFormatting(atres::RIGHT);
+			else if (value == "center")			this->setHorzFormatting(atres::CENTER);
+			else if (value == "left_wrapped")	this->setHorzFormatting(atres::LEFT_WRAPPED);
+			else if (value == "right_wrapped")	this->setHorzFormatting(atres::RIGHT_WRAPPED);
+			else if (value == "center_wrapped")	this->setHorzFormatting(atres::CENTER_WRAPPED);
+			else if (value == "justified")		this->setHorzFormatting(atres::JUSTIFIED);
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")			setVertFormatting(atres::TOP);
-			else if (value == "center")	setVertFormatting(atres::CENTER);
-			else if (value == "bottom")	setVertFormatting(atres::BOTTOM);
+			if (value == "top")			this->setVertFormatting(atres::TOP);
+			else if (value == "center")	this->setVertFormatting(atres::CENTER);
+			else if (value == "bottom")	this->setVertFormatting(atres::BOTTOM);
 		}
-		else if (name == "text_color")	setTextColor(value);
+		else if (name == "text_color")	this->setTextColor(value);
 		else if (name == "color")
 		{
 			throw hl_exception("LabelBase instance using 'color=' which is conflicted with TextImageButton's color and cannot be used! Maybe you meant 'text_color='?");
 		}
 		else if (name == "effect")
 		{
-			if (value == "none")		setFontEffect(atres::NONE);
-			else if (value == "shadow")	setFontEffect(atres::SHADOW);
-			else if (value == "border")	setFontEffect(atres::BORDER);
+			if (value == "none")		this->setFontEffect(atres::NONE);
+			else if (value == "shadow")	this->setFontEffect(atres::SHADOW);
+			else if (value == "border")	this->setFontEffect(atres::BORDER);
 		}
-		else if (name == "offset_x")	mDrawOffset.x = (float)value;
-		else if (name == "offset_y")	mDrawOffset.y = (float)value;
+		else if (name == "offset_x")	this->mDrawOffset.x = (float)value;
+		else if (name == "offset_y")	this->mDrawOffset.y = (float)value;
 		else return false;
 		return true;
 	}
@@ -159,24 +160,24 @@ namespace aprilui
 	{
 		if (name == "onLocalizationChanged")
 		{
-			if (mTextKey != "")
+			if (this->mTextKey != "")
 			{
-				setTextKey(mTextKey);
+				this->setTextKey(this->mTextKey);
 			}
 		}
 	}
 	
 	void LabelBase::setText(chstr value)
 	{
-		mText = value;
-		mTextKey = "";
+		this->mText = value;
+		this->mTextKey = "";
 	}
 
 	void LabelBase::setTextKey(chstr value)
 	{
 		hstr textKey = value; // because value is a chstr which could reference mTextKey
-		setText(getDataset()->getText(textKey));
-		mTextKey = textKey;
+		this->setText(this->getDataset()->getText(textKey));
+		this->mTextKey = textKey;
 	}
 
 }

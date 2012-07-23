@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -30,8 +30,8 @@ namespace aprilui
 		_GenericException(chstr errorText, chstr type = "", const char* file = "", int line = 0);
 		~_GenericException();
 
-		hstr getType(){ return mType; }
-		hstr getErrorText() { return msg; }
+		hstr getType(){ return this->mType; }
+		hstr getErrorText() { return this->msg; }
 
 	protected:
 		hstr mType;
@@ -65,27 +65,27 @@ namespace aprilui
 	class apriluiExport _ResourceExistsException : public _GenericException
 	{
 	public:
-		_ResourceExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
+		_ResourceExistsException(chstr objectName, chstr className, Dataset* dict, const char* file = "", int line = 0);
 		~_ResourceExistsException();
 	};
 	
 	class apriluiExport _ResourceNotExistsException : public _GenericException
 	{
 	public:
-		_ResourceNotExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
+		_ResourceNotExistsException(chstr objectName, chstr className, Dataset* dict, const char* file = "", int line = 0);
 		~_ResourceNotExistsException();
 	};
 
 	class apriluiExport _InvalidObjectTypeCast : public _GenericException
 	{
 	public:
-		_InvalidObjectTypeCast(chstr err_text, const char* file = "", int line = 0);
+		_InvalidObjectTypeCast(chstr errorText, const char* file = "", int line = 0);
 		~_InvalidObjectTypeCast();
 	};
 	
 	#define ResourceExistsException(name, cls, data) _ResourceExistsException(name, cls, data, __FILE__, __LINE__)
 	#define ResourceNotExistsException(name, cls, data) _ResourceNotExistsException(name, cls, data, __FILE__, __LINE__)
-	#define InvalidObjectTypeCast(err_text) _InvalidObjectTypeCast(err_text, __FILE__, __LINE__)
+	#define InvalidObjectTypeCast(errorText) _InvalidObjectTypeCast(errorText, __FILE__, __LINE__)
 
 	//---------------------------------------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -14,12 +14,12 @@ namespace aprilui
 {
 	MemberCallbackEvent::~MemberCallbackEvent()
 	{
-		delete mCallback;
+		delete this->mCallback;
 	}
 
 	void MemberCallbackEvent::execute(void* params)
 	{
-		mCallback->execute((EventArgs*)params);
+		this->mCallback->execute((EventArgs*)params);
 	}
 
 }

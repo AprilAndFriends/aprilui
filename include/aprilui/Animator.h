@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -41,36 +41,36 @@ namespace aprilui
 		Animator(chstr name);
 		~Animator();
 		
-		AnimationFunction getAnimationFunction() { return mFunction; }
-		void setAnimationFunction(AnimationFunction value) { mFunction = value; }
-		float getValue() { return mValue; }
-		void setValue(float value) { mValue = value; }
-		float getTimer() { return mTimer; }
-		void setTimer(float value) { mTimer = value; }
-		float getDelay() { return mDelay; }
-		void setDelay(float value) { mDelay = value; }
-		float getPeriods() { return mPeriods; }
-		void setPeriods(float value) { mPeriods = value; }
-		float getAmplitude() { return mAmplitude; }
-		void setAmplitude(float value) { mAmplitude = value; }
-		float getSpeed() { return mSpeed; }
-		void setSpeed(float value) { mSpeed = value; }
-		float getOffset() { return mOffset; }
-		void setOffset(float value) { mOffset = value; }
-		float getAcceleration() { return mAcceleration; }
-		void setAcceleration(float value) { mAcceleration = value; }
-		int getDiscreteStep() { return mDiscreteStep; }
-		void setDiscreteStep(int value) { mDiscreteStep = value; }
-		bool getReset() { return mReset; }
-		void setReset(bool value) { mReset = value; }
-		bool getInheritValue() { return mInheritValue; }
-		void setInheritValue(bool value) { mInheritValue = value; }
-		float getTarget() { return mTarget; }
-		void setTarget(float value) { mTarget = value; }
-		bool getUseTarget() { return mUseTarget; }
-		void setUseTarget(bool value) { mUseTarget = value; }
-		float (*getCustomFunction())(Animator*, float) { return mCustomFunction; }
-		void setCustomFunction(float (*value)(Animator*, float)) { mCustomFunction = value; }
+		AnimationFunction getAnimationFunction() { return this->mFunction; }
+		void setAnimationFunction(AnimationFunction value) { this->mFunction = value; }
+		float getValue() { return this->mValue; }
+		void setValue(float value) { this->mValue = value; }
+		float getTimer() { return this->mTimer; }
+		void setTimer(float value) { this->mTimer = value; }
+		float getDelay() { return this->mDelay; }
+		void setDelay(float value) { this->mDelay = value; }
+		float getPeriods() { return this->mPeriods; }
+		void setPeriods(float value) { this->mPeriods = value; }
+		float getAmplitude() { return this->mAmplitude; }
+		void setAmplitude(float value) { this->mAmplitude = value; }
+		float getSpeed() { return this->mSpeed; }
+		void setSpeed(float value) { this->mSpeed = value; }
+		float getOffset() { return this->mOffset; }
+		void setOffset(float value) { this->mOffset = value; }
+		float getAcceleration() { return this->mAcceleration; }
+		void setAcceleration(float value) { this->mAcceleration = value; }
+		int getDiscreteStep() { return this->mDiscreteStep; }
+		void setDiscreteStep(int value) { this->mDiscreteStep = value; }
+		bool getReset() { return this->mReset; }
+		void setReset(bool value) { this->mReset = value; }
+		bool getInheritValue() { return this->mInheritValue; }
+		void setInheritValue(bool value) { this->mInheritValue = value; }
+		float getTarget() { return this->mTarget; }
+		void setTarget(float value) { this->mTarget = value; }
+		bool getUseTarget() { return this->mUseTarget; }
+		void setUseTarget(bool value) { this->mUseTarget = value; }
+		float (*getCustomFunction())(Animator*, float) { return this->mCustomFunction; }
+		void setCustomFunction(float (*value)(Animator*, float)) { this->mCustomFunction = value; }
 
 		bool isAnimated();
 		bool isWaitingAnimation();
@@ -101,7 +101,9 @@ namespace aprilui
 		
 		float _calculateValue(float k);
 		bool _checkUpdate(float k);		
+
 	};
+
 }
 
 #endif

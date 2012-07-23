@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.81
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -26,21 +26,21 @@ namespace aprilui
 	EditBox::EditBox(chstr name, grect rect) :
 		Label(name, rect)
 	{
-		mText = "";
-		mEmptyText = "";
-		mHorzFormatting = atres::LEFT;
-		mTextFormatting = false;
-		mPushed = false;
-		mMaxLength = 0;
-		mPasswordChar = '\0';
-		mCursorIndex = 0;
-		mOffsetIndex = 0;
-		mCtrlMode = false;
-		mFilter = "";
-		mBlinkTimer = 0.0f;
-		mUseBackground = true;
+		this->mText = "";
+		this->mEmptyText = "";
+		this->mHorzFormatting = atres::LEFT;
+		this->mTextFormatting = false;
+		this->mPushed = false;
+		this->mMaxLength = 0;
+		this->mPasswordChar = '\0';
+		this->mCursorIndex = 0;
+		this->mOffsetIndex = 0;
+		this->mCtrlMode = false;
+		this->mFilter = "";
+		this->mBlinkTimer = 0.0f;
+		this->mUseBackground = true;
 		/// TODO - remove
-		mSpaceHack = false;
+		this->mSpaceHack = false;
 	}
 
 	EditBox::~EditBox()
@@ -54,77 +54,77 @@ namespace aprilui
 
 	void EditBox::setCursorIndex(int value)
 	{
-		mCursorIndex = hclamp(value, 0, mUnicodeChars.size());
-		mBlinkTimer = 0.0f;
+		this->mCursorIndex = hclamp(value, 0, this->mUnicodeChars.size());
+		this->mBlinkTimer = 0.0f;
 	}
 	
 	void EditBox::setCursorIndexAt(float x, float y)
 	{
 		hstr text;
-		if (mPasswordChar == '\0' || mText == "")
+		if (this->mPasswordChar == '\0' || this->mText == "")
 		{
-			text = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
+			text = unicode_to_utf8(this->mUnicodeChars(this->mOffsetIndex, this->mUnicodeChars.size() - this->mOffsetIndex));
 		}
 		else
 		{
-			text = hstr(mPasswordChar, mUnicodeChars.size() - mOffsetIndex);
+			text = hstr(this->mPasswordChar, this->mUnicodeChars.size() - this->mOffsetIndex);
 		}
-		int count = atres::renderer->getTextCountUnformatted(mFontName, text, x);
-		setCursorIndex(mOffsetIndex + _convertToUnicodeChars(text(0, count)).size());
+		int count = atres::renderer->getTextCountUnformatted(this->mFontName, text, x);
+		this->setCursorIndex(this->mOffsetIndex + this->_convertToUnicodeChars(text(0, count)).size());
 	}
 	
 	void EditBox::setMaxLength(int value)
 	{
-		mMaxLength = value;
-		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
+		this->mMaxLength = value;
+		if (this->mMaxLength > 0 && this->mUnicodeChars.size() > this->mMaxLength)
 		{
-			mUnicodeChars = mUnicodeChars(0, mMaxLength);
-			mText = unicode_to_utf8(mUnicodeChars);
-			setCursorIndex(mCursorIndex);
+			this->mUnicodeChars = this->mUnicodeChars(0, this->mMaxLength);
+			this->mText = unicode_to_utf8(this->mUnicodeChars);
+			this->setCursorIndex(this->mCursorIndex);
 		}
 	}
 
 	void EditBox::setFilter(chstr value)
 	{
-		mFilter = value;
-		mFilterChars = _convertToUnicodeChars(mFilter);
-		setText(mText);
+		this->mFilter = value;
+		this->mFilterChars = this->_convertToUnicodeChars(this->mFilter);
+		this->setText(this->mText);
 	}
 	
 	void EditBox::setText(chstr value)
 	{
-		mUnicodeChars = _convertToUnicodeChars(value);
-		if (mUnicodeChars.size() > 0 && mFilterChars.size() > 0)
+		this->mUnicodeChars = this->_convertToUnicodeChars(value);
+		if (this->mUnicodeChars.size() > 0 && this->mFilterChars.size() > 0)
 		{
-			mUnicodeChars &= mFilterChars; // intersect, remove from first all that are not in second
+			this->mUnicodeChars &= this->mFilterChars; // intersect, remove from first all that are not in second
 		}
-		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
+		if (this->mMaxLength > 0 && this->mUnicodeChars.size() > this->mMaxLength)
 		{
-			mUnicodeChars = mUnicodeChars(0, mMaxLength);
+			this->mUnicodeChars = this->mUnicodeChars(0, this->mMaxLength);
 		}
-		Label::setText(unicode_to_utf8(mUnicodeChars));
-		setCursorIndex(mCursorIndex);
+		Label::setText(unicode_to_utf8(this->mUnicodeChars));
+		this->setCursorIndex(this->mCursorIndex);
 	}
 
 	bool EditBox::isFocused()
 	{
-		return (mDataset != NULL && mDataset->getFocusedObject() == this);
+		return (this->mDataset != NULL && this->mDataset->getFocusedObject() == this);
 	}
 
 	void EditBox::setFocused(bool value)
 	{
-		if (mDataset != NULL)
+		if (this->mDataset != NULL)
 		{
 			if (value)
 			{
-				mDataset->setFocusedObject(this);
-				mBlinkTimer = 0.0f;
+				this->mDataset->setFocusedObject(this);
+				this->mBlinkTimer = 0.0f;
 				april::window->beginKeyboardHandling();
 			}
-			else if (mDataset->getFocusedObject() == this)
+			else if (this->mDataset->getFocusedObject() == this)
 			{
 				april::window->terminateKeyboardHandling();
-				mDataset->setFocusedObject(NULL);
+				this->mDataset->setFocusedObject(NULL);
 			}
 		}
 	}
@@ -132,114 +132,114 @@ namespace aprilui
 	void EditBox::update(float time)
 	{
 		Label::update(time);
-		mBlinkTimer += time * 2;
-		mBlinkTimer = (mBlinkTimer - (int)mBlinkTimer);
+		this->mBlinkTimer += time * 2;
+		this->mBlinkTimer = (this->mBlinkTimer - (int)this->mBlinkTimer);
 	}
 
 	void EditBox::OnDraw()
 	{
 		//////////////
 		// TODO - remove this hack, fix it in ATRES
-		if (mSpaceHack)
+		if (this->mSpaceHack)
 		{
-			if (mUnicodeChars.size() > 0 && mUnicodeChars[0] == UNICODE_CHAR_SPACE)
+			if (this->mUnicodeChars.size() > 0 && this->mUnicodeChars[0] == UNICODE_CHAR_SPACE)
 			{
-				while (mUnicodeChars.size() > 0 && mUnicodeChars[0] == UNICODE_CHAR_SPACE)
+				while (this->mUnicodeChars.size() > 0 && this->mUnicodeChars[0] == UNICODE_CHAR_SPACE)
 				{
-					mUnicodeChars.remove_at(0);
+					this->mUnicodeChars.remove_at(0);
 				}
-				mText = unicode_to_utf8(mUnicodeChars);
+				this->mText = unicode_to_utf8(this->mUnicodeChars);
 			}
-			if (mEmptyUnicodeChars.size() > 0 && mEmptyUnicodeChars[0] == UNICODE_CHAR_SPACE)
+			if (this->mEmptyUnicodeChars.size() > 0 && this->mEmptyUnicodeChars[0] == UNICODE_CHAR_SPACE)
 			{
-				while (mEmptyUnicodeChars.size() > 0 && mEmptyUnicodeChars[0] == UNICODE_CHAR_SPACE)
+				while (this->mEmptyUnicodeChars.size() > 0 && this->mEmptyUnicodeChars[0] == UNICODE_CHAR_SPACE)
 				{
-					mEmptyUnicodeChars.remove_at(0);
+					this->mEmptyUnicodeChars.remove_at(0);
 				}
-				mEmptyText = unicode_to_utf8(mEmptyUnicodeChars);
+				this->mEmptyText = unicode_to_utf8(this->mEmptyUnicodeChars);
 			}
 		}
 		//////////////
-		grect rect = _getDrawRect();
+		grect rect = this->_getDrawRect();
 		april::Color color = APRIL_COLOR_BLACK;
-		if (mUseBackground)
+		if (this->mUseBackground)
 		{
-			if (!mPushed)
+			if (!this->mPushed)
 			{
 				color.a = 191;
 			}
-			color.a = getDerivedAlpha();
-			april::rendersys->drawFilledRect(grect(rect.x, rect.y, rect.w, rect.h), color);
-			color = april::Color(mTextColor, color.a);
-			april::rendersys->drawRect(grect(rect.x, rect.y, rect.w, rect.h), color);
+			color.a = this->getDerivedAlpha();
+			april::rendersys->drawFilledRect(rect, color);
+			color = april::Color(this->mTextColor, color.a);
+			april::rendersys->drawRect(rect, color);
 		}
-		hstr text = mText;
-		harray<unsigned int> unicodeChars = mUnicodeChars;
-		if (mPasswordChar != '\0' && mText != "")
+		hstr text = this->mText;
+		harray<unsigned int> unicodeChars = this->mUnicodeChars;
+		if (this->mPasswordChar != '\0' && this->mText != "")
 		{
-			mText = hstr(mPasswordChar, mUnicodeChars.size());
-			mUnicodeChars = _convertToUnicodeChars(mText);
+			this->mText = hstr(this->mPasswordChar, this->mUnicodeChars.size());
+			this->mUnicodeChars = this->_convertToUnicodeChars(this->mText);
 		}
-		while (mOffsetIndex > 0 && mOffsetIndex >= mCursorIndex)
+		while (this->mOffsetIndex > 0 && this->mOffsetIndex >= this->mCursorIndex)
 		{
-			mOffsetIndex = hmax(0, mCursorIndex - 5);
+			this->mOffsetIndex = hmax(0, this->mCursorIndex - 5);
 		}
 		//////////////
 		// TODO - remove this hack, fix it in ATRES
-		while (mOffsetIndex < mUnicodeChars.size() - 1 && mUnicodeChars[mOffsetIndex] == UNICODE_CHAR_SPACE)
+		while (this->mOffsetIndex < this->mUnicodeChars.size() - 1 && this->mUnicodeChars[this->mOffsetIndex] == UNICODE_CHAR_SPACE)
 		{
-			mOffsetIndex++;
+			this->mOffsetIndex++;
 		}
 		//////////////
 		rect.w -= 12;
 		int count;
 		while (true)
 		{
-			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
-			count = atres::renderer->getTextCountUnformatted(mFontName, mText, rect.w);
-			count = _convertToUnicodeChars(mText(0, count)).size();
-			if (mOffsetIndex > mCursorIndex)
+			this->mText = unicode_to_utf8(this->mUnicodeChars(this->mOffsetIndex, this->mUnicodeChars.size() - this->mOffsetIndex));
+			count = atres::renderer->getTextCountUnformatted(this->mFontName, this->mText, rect.w);
+			count = this->_convertToUnicodeChars(this->mText(0, count)).size();
+			if (this->mOffsetIndex > this->mCursorIndex)
 			{
-				mOffsetIndex = mCursorIndex;
+				this->mOffsetIndex = this->mCursorIndex;
 			}
-			else if (mOffsetIndex < mCursorIndex - count)
+			else if (this->mOffsetIndex < this->mCursorIndex - count)
 			{
-				mOffsetIndex = mCursorIndex - count;
+				this->mOffsetIndex = this->mCursorIndex - count;
 			}
 			else
 			{
 				break;
 			}
 		}
-		hstr renderText = mText;
-		if (renderText == "" && mDataset != NULL && mDataset->getFocusedObject() != this)
+		hstr renderText = this->mText;
+		if (renderText == "" && this->mDataset != NULL && this->mDataset->getFocusedObject() != this)
 		{
-			mText = mEmptyText;
+			this->mText = this->mEmptyText;
 		}
 		Label::OnDraw();
-		mText = renderText;
-		if (mDataset != NULL && mDataset->getFocusedObject() == this && mBlinkTimer < 0.5f)
+		this->mText = renderText;
+		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 		{
-			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
-			rect.x += atres::renderer->getTextWidthUnformatted(mFontName, mText);
-			float h = atres::renderer->getFontLineHeight(mFontName);
-			if (mHorzFormatting == atres::CENTER || mHorzFormatting == atres::CENTER_WRAPPED)
+			this->mText = unicode_to_utf8(this->mUnicodeChars(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex));
+			rect.x += atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
+			float h = atres::renderer->getFontLineHeight(this->mFontName);
+			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
 			{
-				float w = atres::renderer->getTextWidthUnformatted(mFontName, text);
-				rect.x += (mRect.w - w) / 2;
+				float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
+				rect.x += (this->mRect.w - w) / 2;
 			}
-			else if (mHorzFormatting == atres::RIGHT || mHorzFormatting == atres::RIGHT_WRAPPED)
+			else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
 			{
-				float w = atres::renderer->getTextWidthUnformatted(mFontName, text);
-				rect.x += mRect.w - w;
+				float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
+				rect.x += this->mRect.w - w;
 			}
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 1;
 			rect.h = h - 4;
-			april::rendersys->drawRect(rect, _getDrawColor() * mTextColor);
+			april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);
 		}
-		mText = text;
-		mUnicodeChars = unicodeChars;
+		this->mText = text;
+		this->mUnicodeChars = unicodeChars;
 	}
 	
 	hstr EditBox::getProperty(chstr name, bool* property_exists)
@@ -248,32 +248,32 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "max_length")		return getMaxLength();
-		if (name == "password_char")	return getPasswordChar();
-		if (name == "filter")			return getFilter();
-		if (name == "use_background")	return isUseBackground();
-		if (name == "empty_text")		return getEmptyText();
-		if (name == "space_hack")		return mSpaceHack;
+		if (name == "max_length")		return this->getMaxLength();
+		if (name == "password_char")	return this->getPasswordChar();
+		if (name == "filter")			return this->getFilter();
+		if (name == "use_background")	return this->isUseBackground();
+		if (name == "empty_text")		return this->getEmptyText();
+		if (name == "space_hack")		return this->mSpaceHack;
 		if (name == "background")
 		{
 			aprilui::log("WARNING: 'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
-			return isUseBackground();
+			return this->isUseBackground();
 		}
 		 return Label::getProperty(name, property_exists);
 	}
 	
 	bool EditBox::setProperty(chstr name, chstr value)
 	{
-		if		(name == "max_length")		setMaxLength(value);
-		else if	(name == "password_char")	setPasswordChar(value.c_str()[0]);
-		else if	(name == "filter")			setFilter(value);
-		else if	(name == "empty_text")		setEmptyText(value);
-		else if	(name == "use_background")	setUseBackground(value);
-		else if	(name == "space_hack")		mSpaceHack = (bool)value;
+		if		(name == "max_length")		this->setMaxLength(value);
+		else if	(name == "password_char")	this->setPasswordChar(value.c_str()[0]);
+		else if	(name == "filter")			this->setFilter(value);
+		else if	(name == "empty_text")		this->setEmptyText(value);
+		else if	(name == "use_background")	this->setUseBackground(value);
+		else if	(name == "space_hack")		this->mSpaceHack = (bool)value;
 		else if	(name == "background")
 		{
 			aprilui::log("WARNING: 'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
-			setUseBackground(value);
+			this->setUseBackground(value);
 		}
 		else return Label::setProperty(name, value);
 		return true;
@@ -285,9 +285,9 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (isCursorInside())
+		if (this->isCursorInside())
 		{
-			mPushed = true;
+			this->mPushed = true;
 			return true;
 		}
 		return false;
@@ -299,16 +299,16 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (mPushed && isCursorInside())
+		if (this->mPushed && this->isCursorInside())
 		{
-			gvec2 position = (getCursorPosition() - getDerivedPosition()) / getDerivedScale();
-			setCursorIndexAt(position.x, position.y);
-			setFocused(true);
-			mPushed = false;
-			triggerEvent("Click", button);
+			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
+			this->setCursorIndexAt(position.x, position.y);
+			this->setFocused(true);
+			this->mPushed = false;
+			this->triggerEvent("Click", button);
 			return true;
 		}
-		mPushed = false;
+		this->mPushed = false;
 		return false;
 	}
 
@@ -318,31 +318,31 @@ namespace aprilui
 		{
 #ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_LEFT:
-			mCtrlMode ? _cursorMoveLeftWord() : _cursorMoveLeft();
+			this->mCtrlMode ? this->_cursorMoveLeftWord() : this->_cursorMoveLeft();
 			break;
 		case april::AK_RIGHT:
-			mCtrlMode ? _cursorMoveRightWord() : _cursorMoveRight();
+			this->mCtrlMode ? this->_cursorMoveRightWord() : this->_cursorMoveRight();
 			break;
 #endif
 		case april::AK_BACK:
-			mCtrlMode ? _deleteLeftWord() : _deleteLeft();
+			this->mCtrlMode ? this->_deleteLeftWord() : this->_deleteLeft();
 			break;
 		case april::AK_DELETE:
-			mCtrlMode ? _deleteRightWord() : _deleteRight();
+			this->mCtrlMode ? this->_deleteRightWord() : this->_deleteRight();
 			break;
 #ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_HOME:
-			setCursorIndex(0);
+			this->setCursorIndex(0);
 			break;
 		case april::AK_END:
-			setCursorIndex(mUnicodeChars.size());
+			this->setCursorIndex(this->mUnicodeChars.size());
 			break;
 		case april::AK_CONTROL:
-			mCtrlMode = true;
+			this->mCtrlMode = true;
 			break;
 #endif
 		case april::AK_RETURN:
-			triggerEvent("Submit", april::AK_RETURN);
+			this->triggerEvent("Submit", april::AK_RETURN);
 			break;
 		}
 	}
@@ -353,22 +353,22 @@ namespace aprilui
 		{
 		case april::AK_CONTROL:
 		case april::AK_MENU:
-			mCtrlMode = false;
+			this->mCtrlMode = false;
 			break;
 		}
 	}
 
 	void EditBox::onChar(unsigned int charcode)
 	{
-		if (atres::renderer->getFontResource(mFontName)->hasChar(charcode) && (mFilterChars.size() == 0 || mFilterChars.contains(charcode)))
+		if (atres::renderer->getFontResource(this->mFontName)->hasChar(charcode) && (this->mFilterChars.size() == 0 || this->mFilterChars.contains(charcode)))
 		{
-			_insertChar(charcode);
+			this->_insertChar(charcode);
 		}
 	}
 
 	void EditBox::cancelMouseDown()
 	{
-		mPushed = false;
+		this->mPushed = false;
 		Object::cancelMouseDown();
 	}
 
@@ -383,108 +383,123 @@ namespace aprilui
 	
 	void EditBox::_cursorMoveLeft()
 	{
-		setCursorIndex(mCursorIndex - 1);
+		this->setCursorIndex(this->mCursorIndex - 1);
 	}
 	
 	void EditBox::_cursorMoveRight()
 	{
-		setCursorIndex(mCursorIndex + 1);
+		this->setCursorIndex(this->mCursorIndex + 1);
 	}
 	
 	void EditBox::_cursorMoveLeftWord()
 	{
-		while (mCursorIndex > 0 && mUnicodeChars[mCursorIndex - 1] == UNICODE_CHAR_SPACE)
+		while (this->mCursorIndex > 0 && this->mUnicodeChars[mCursorIndex - 1] == UNICODE_CHAR_SPACE)
 		{
-			mCursorIndex--;
+			this->mCursorIndex--;
 		}
-		while (mCursorIndex > 0 && mUnicodeChars[mCursorIndex - 1] != UNICODE_CHAR_SPACE)
+		while (this->mCursorIndex > 0 && this->mUnicodeChars[mCursorIndex - 1] != UNICODE_CHAR_SPACE)
 		{
-			mCursorIndex--;
+			this->mCursorIndex--;
 		}
-		mBlinkTimer = 0.0f;
+		this->mBlinkTimer = 0.0f;
 	}
 	
 	void EditBox::_cursorMoveRightWord()
 	{
-		while (mCursorIndex < mUnicodeChars.size() && mUnicodeChars[mCursorIndex] != UNICODE_CHAR_SPACE)
+		while (this->mCursorIndex < this->mUnicodeChars.size() && this->mUnicodeChars[mCursorIndex] != UNICODE_CHAR_SPACE)
 		{
-			mCursorIndex++;
+			this->mCursorIndex++;
 		}
-		while (mCursorIndex < mUnicodeChars.size() && mUnicodeChars[mCursorIndex] == UNICODE_CHAR_SPACE)
+		while (this->mCursorIndex < this->mUnicodeChars.size() && this->mUnicodeChars[mCursorIndex] == UNICODE_CHAR_SPACE)
 		{
-			mCursorIndex++;
+			this->mCursorIndex++;
 		}
-		mBlinkTimer = 0.0f;
+		this->mBlinkTimer = 0.0f;
 	}
 	
 	void EditBox::_deleteLeft(int count)
 	{
-		if (mCursorIndex > 0)
+		if (this->mCursorIndex > 0)
 		{
-			count = hmin(count, mCursorIndex);
-			harray<unsigned int> left = (mCursorIndex > count ? mUnicodeChars(0, mCursorIndex - count) : harray<unsigned int>());
-			harray<unsigned int> right = (mCursorIndex < mUnicodeChars.size() ? mUnicodeChars(mCursorIndex, mUnicodeChars.size() - mCursorIndex) : harray<unsigned int>());
-			mCursorIndex -= count;
-			mUnicodeChars = left + right;
-			mText = unicode_to_utf8(mUnicodeChars);
-			mBlinkTimer = 0.0f;
+			count = hmin(count, this->mCursorIndex);
+			harray<unsigned int> left;
+			if (this->mCursorIndex > count)
+			{
+				left = this->mUnicodeChars(0, this->mCursorIndex - count);
+			}
+			harray<unsigned int> right;
+			if (this->mCursorIndex < this->mUnicodeChars.size())
+			{
+				right = this->mUnicodeChars(this->mCursorIndex, this->mUnicodeChars.size() - this->mCursorIndex);
+			}
+			this->mCursorIndex -= count;
+			this->mUnicodeChars = left + right;
+			this->mText = unicode_to_utf8(this->mUnicodeChars);
+			this->mBlinkTimer = 0.0f;
 		}
 	}
 	
 	void EditBox::_deleteRight(int count)
 	{
-		count = hmin(count, mUnicodeChars.size() - mCursorIndex);
-		mCursorIndex += count;
-		_deleteLeft(count);
+		count = hmin(count, this->mUnicodeChars.size() - this->mCursorIndex);
+		this->mCursorIndex += count;
+		this->_deleteLeft(count);
 	}
 	
 	void EditBox::_deleteLeftWord()
 	{
-		int index = mCursorIndex;
-		while (index > 0 && mUnicodeChars[index - 1] == UNICODE_CHAR_SPACE)
+		int index = this->mCursorIndex;
+		while (index > 0 && this->mUnicodeChars[index - 1] == UNICODE_CHAR_SPACE)
 		{
 			index--;
 		}
-		while (index > 0 && mUnicodeChars[index - 1] != UNICODE_CHAR_SPACE)
+		while (index > 0 && this->mUnicodeChars[index - 1] != UNICODE_CHAR_SPACE)
 		{
 			index--;
 		}
-		if (mCursorIndex > index)
+		if (this->mCursorIndex > index)
 		{
-			_deleteLeft(mCursorIndex - index);
+			this->_deleteLeft(this->mCursorIndex - index);
 		}
 	}
 	
 	void EditBox::_deleteRightWord()
 	{
-		int index = mCursorIndex;
-		while (index < mUnicodeChars.size() && mUnicodeChars[index] != UNICODE_CHAR_SPACE)
+		int index = this->mCursorIndex;
+		while (index < this->mUnicodeChars.size() && this->mUnicodeChars[index] != UNICODE_CHAR_SPACE)
 		{
 			index++;
 		}
-		while (index < mUnicodeChars.size() && mUnicodeChars[index] == UNICODE_CHAR_SPACE)
+		while (index < this->mUnicodeChars.size() && this->mUnicodeChars[index] == UNICODE_CHAR_SPACE)
 		{
 			index++;
 		}
-		if (index > mCursorIndex)
+		if (index > this->mCursorIndex)
 		{
-			_deleteRight(index - mCursorIndex);
+			this->_deleteRight(index - this->mCursorIndex);
 		}
 	}
 	
 	void EditBox::_insertChar(unsigned int charcode)
 	{
-		if (mMaxLength > 0 && mUnicodeChars.size() >= mMaxLength)
+		if (this->mMaxLength > 0 && this->mUnicodeChars.size() >= this->mMaxLength)
 		{
 			return;
 		}
-		harray<unsigned int> left = (mCursorIndex > 0 ? mUnicodeChars(0, mCursorIndex) : harray<unsigned int>());
-		harray<unsigned int> right = (mCursorIndex < mUnicodeChars.size() ?
-			mUnicodeChars(mCursorIndex, mUnicodeChars.size() - mCursorIndex) : harray<unsigned int>());
-		mCursorIndex++;
-		mUnicodeChars = (left + charcode) + right;
-		mText = unicode_to_utf8(mUnicodeChars);
-		mBlinkTimer = 0.0f;
+		harray<unsigned int> left;
+		if (this->mCursorIndex > 0)
+		{
+			left = this->mUnicodeChars(0, this->mCursorIndex);
+		}
+		harray<unsigned int> right;
+		if (this->mCursorIndex < this->mUnicodeChars.size())
+		{
+			right = this->mUnicodeChars(this->mCursorIndex, this->mUnicodeChars.size() - this->mCursorIndex);
+		}
+		this->mCursorIndex++;
+		this->mUnicodeChars = (left + charcode) + right;
+		this->mText = unicode_to_utf8(this->mUnicodeChars);
+		this->mBlinkTimer = 0.0f;
 	}
 	
 

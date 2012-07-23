@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.52
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -21,9 +21,9 @@ namespace aprilui
 	Container::Container(chstr name, grect rect) :
 		Object(name, rect)
 	{
-		mScrollArea = NULL;
-		mScrollBarH = NULL;
-		mScrollBarV = NULL;
+		this->mScrollArea = NULL;
+		this->mScrollBarH = NULL;
+		this->mScrollBarV = NULL;
 	}
 
 	Container::~Container()
@@ -43,7 +43,7 @@ namespace aprilui
 		}
 		else
 		{
-			grect rect = _getDrawRect();
+			grect rect = this->_getDrawRect();
 			april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_RED, 64));
 			april::rendersys->drawRect(rect, april::Color(APRIL_COLOR_YELLOW, 64));
 		}

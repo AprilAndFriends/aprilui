@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.7
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -30,8 +30,8 @@ namespace aprilui
 		ButtonBase();
 		virtual ~ButtonBase();
 
-		bool isHovered() { return mHovered; }
-		bool isPushed() { return mPushed; }
+		bool isHovered() { return this->mHovered; }
+		bool isPushed() { return this->mPushed; }
 		virtual hstr getName() = 0;
 		virtual bool isCursorInside() = 0;
 		virtual Object* getParent() = 0;
@@ -42,9 +42,9 @@ namespace aprilui
 		virtual void onMouseMove();
 		virtual void cancelMouseDown();
 
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { onMouseMove(); }
+		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
+		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
+		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 
 		static void setAllowedButtons(harray<unsigned char> buttons);
 		

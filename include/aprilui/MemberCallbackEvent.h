@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 1.91
 /// 
 /// @section LICENSE
 /// 
@@ -38,8 +38,8 @@ namespace aprilui
 	public:
 		MemberCallbackEventImpl(void (T::*function)(EventArgs*), T* object) : MemberCallbackEventBase()
 		{
-			mFunction = function;
-			mObject = object;
+			this->mFunction = function;
+			this->mObject = object;
 		}
 		
 		~MemberCallbackEventImpl()
@@ -63,7 +63,7 @@ namespace aprilui
 		template <typename T>
 		MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
 		{
-			mCallback = new MemberCallbackEventImpl<T>(function, obj);
+			this->mCallback = new MemberCallbackEventImpl<T>(function, obj);
 		}
 		~MemberCallbackEvent();
 
