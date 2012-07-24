@@ -184,6 +184,52 @@ namespace aprilui
 		this->mSpeed = 1.0f / value;
 	}
 	
+	hstr Animator::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+		if		(name == "function" || name == "func")
+		{
+			if		(mFunction == aprilui::Animator::Sine)     return "sine";
+			else if	(mFunction == aprilui::Animator::Saw)      return "saw";
+			else if	(mFunction == aprilui::Animator::Square)   return "square";
+			else if	(mFunction == aprilui::Animator::Triangle) return "triangle";
+			else if	(mFunction == aprilui::Animator::Linear)   return "linear";
+			else if	(mFunction == aprilui::Animator::Random)   return "random";
+			else if	(mFunction == aprilui::Animator::Hover)    return "hover";
+			else                                               return "custom";
+		}
+		else if	(name == "timer")						return this->getTimer();
+		else if	(name == "delay")						return this->getDelay();
+		else if	(name == "periods")						return this->getPeriods();
+		else if	(name == "amplitude" || name == "amp")	return this->getAmplitude();
+		else if	(name == "peak_to_peak")				return this->getAmplitude();
+		else if	(name == "speed")						return this->getSpeed();
+		else if	(name == "offset")						return this->getOffset();
+		else if	(name == "dc_offset")
+		{
+			aprilui::log("WARNING: 'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
+			return this->getOffset();
+		}
+		else if	(name == "acceleration")	this->getAcceleration();
+		else if	(name == "discrete")
+		{
+			aprilui::log("WARNING: 'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
+			return this->getDiscreteStep();
+		}
+		else if	(name == "discrete_step")	return this->getDiscreteStep();
+		else if	(name == "reset")			return this->getReset();
+		else if	(name == "inherit_value")	return this->getInheritValue();
+		// derived values
+		else if	(name == "target")
+		{
+			return this->getTarget();
+		}
+		return Object::getProperty(name, property_exists);
+	}
+	
 	bool Animator::setProperty(chstr name, chstr value)
 	{
 		if		(name == "function" || name == "func")
