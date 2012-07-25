@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_H
 #define APRILUI_H
 
+#include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
@@ -50,6 +51,8 @@ namespace aprilui
 	apriluiFnExport gvec2 getCursorPosition();
 	apriluiFnExport void setCursorPosition(gvec2 position);
 	apriluiFnExport void setCursorPosition(float x, float y);
+	apriluiFnExport grect getViewport();
+	apriluiFnExport void setViewport(grect value);
 	
 	apriluiFnExport void OnMouseDown(float x, float y, int button);
 	apriluiFnExport void OnMouseUp(float x, float y, int button);

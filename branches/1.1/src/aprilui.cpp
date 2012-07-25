@@ -33,6 +33,7 @@ namespace aprilui
 	void (*g_logFunction)(chstr) = aprilui_writelog;
 	hstr g_locale;
 	float textureIdleUnloadTime = 0.0f;
+	grect viewport(0.0f, 0.0f, 1024.0f, 768.0f);
 	// TODO - hack, has to be removed
 	bool forcedDynamicLoading = false;
 	
@@ -101,6 +102,16 @@ namespace aprilui
 		cursorPosition = gvec2(x, y);
 	}
 	
+	grect getViewport()
+	{
+		return viewport;
+	}
+
+	void setViewport(grect value)
+	{
+		viewport = value;
+	}
+
 	Dataset* getDatasetByName(chstr name)
 	{
 		if (!gDatasets.has_key(name))

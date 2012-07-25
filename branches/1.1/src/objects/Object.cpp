@@ -314,7 +314,7 @@ namespace aprilui
 		mRect.h *= y;
 	}
 
-	grect Object::getDerivedRect(aprilui::Object* overrideRoot)
+	grect Object::getBoundingRect(aprilui::Object* overrideRoot)
 	{
 		return mRect;
 	}

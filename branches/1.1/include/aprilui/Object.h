@@ -87,7 +87,8 @@ namespace aprilui
 		void moveToFront();
 		void moveToBack();
 		
-		grect getDerivedRect(aprilui::Object* overrideRoot = NULL);
+		grect getBoundingRect(aprilui::Object* overrideRoot = NULL);
+		grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return getBoundingRect(overrideRoot); }
 		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
 		
