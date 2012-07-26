@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.91
+/// @version 1.92
 /// 
 /// @section LICENSE
 /// 
@@ -112,6 +112,7 @@ namespace aprilui
 		this->mAnchorRight = false;
 		this->mAnchorTop = true;
 		this->mAnchorBottom = false;
+		this->mRetainAnchorAspect = false;
 		this->mClip = false;
 		this->mUseDisabledAlpha = true;
 	}
@@ -240,8 +241,13 @@ namespace aprilui
 	void Object::_updateChildrenHorizontal(float difference)
 	{
 		float width;
+		float height;
+		float differenceAlt;
 		foreach (Object*, it, this->mChildren)
 		{
+			width = (*it)->getWidth();
+			height = (*it)->getHeight();
+			differenceAlt = difference * height / width;
 			if (!(*it)->isAnchorLeft())
 			{
 				if ((*it)->isAnchorRight())
@@ -255,11 +261,26 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorRight())
 			{
-				width = (*it)->getWidth();
 				(*it)->setWidth(width + difference);
 				if (width != 0.0f)
 				{
 					(*it)->setCenterX((*it)->getCenterX() * (width + difference) / width);
+				}
+				if ((*it)->isRetainAnchorAspect())
+				{
+					(*it)->setHeight(height + differenceAlt);
+					if ((*it)->isAnchorTop() == (*it)->isAnchorBottom())
+					{
+						(*it)->setY((*it)->getY() - differenceAlt / 2);
+					}
+					else if ((*it)->isAnchorBottom())
+					{
+						(*it)->setY((*it)->getY() - differenceAlt);
+					}
+					if (height != 0.0f)
+					{
+						(*it)->setCenterY((*it)->getCenterY() * (height + differenceAlt) / height);
+					}
 				}
 			}
 		}
@@ -267,9 +288,14 @@ namespace aprilui
 
 	void Object::_updateChildrenVertical(float difference)
 	{
+		float width;
 		float height;
+		float differenceAlt;
 		foreach (Object*, it, this->mChildren)
 		{
+			width = (*it)->getWidth();
+			height = (*it)->getHeight();
+			differenceAlt = difference * width / height;
 			if (!(*it)->isAnchorTop())
 			{
 				if ((*it)->isAnchorBottom())
@@ -283,11 +309,26 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorBottom())
 			{
-				height = (*it)->getHeight();
-				(*it)->setHeight((*it)->getHeight() + difference);
+				(*it)->setHeight(height + difference);
 				if (height != 0.0f)
 				{
 					(*it)->setCenterY((*it)->getCenterY() * (height + difference) / height);
+				}
+				if ((*it)->isRetainAnchorAspect())
+				{
+					(*it)->setWidth(width + differenceAlt);
+					if ((*it)->isAnchorLeft() == (*it)->isAnchorRight())
+					{
+						(*it)->setX((*it)->getX() - differenceAlt / 2);
+					}
+					else if ((*it)->isAnchorRight())
+					{
+						(*it)->setX((*it)->getX() - differenceAlt);
+					}
+					if (width != 0.0f)
+					{
+						(*it)->setCenterX((*it)->getCenterX() * (width + differenceAlt) / width);
+					}
 				}
 			}
 		}
@@ -707,6 +748,7 @@ namespace aprilui
 		if (name == "anchor_right")			return this->isAnchorRight();
 		if (name == "anchor_top")			return this->isAnchorTop();
 		if (name == "anchor_bottom")		return this->isAnchorBottom();
+		if (name == "retain_anchor_aspect")	return this->isRetainAnchorAspect();
 		if (name == "clip")					return this->isClip();
 		if (name == "use_disabled_alpha")	return this->isUseDisabledAlpha();
 		if (property_exists != NULL)
@@ -718,34 +760,35 @@ namespace aprilui
 	
 	bool Object::setProperty(chstr name, chstr value)
 	{
-		if		(name == "x")				this->setX(value);
-		else if	(name == "y")				this->setY(value);
-		else if	(name == "w")				this->setWidth(value);
-		else if	(name == "h")				this->setHeight(value);
-		else if	(name == "visible")			this->setVisible(value);
-		else if	(name == "zorder")			this->setZOrder(value);
-		else if	(name == "enabled")			this->setEnabled(value);
-		else if	(name == "click_through")	this->setClickThrough(value);
+		if		(name == "x")						this->setX(value);
+		else if	(name == "y")						this->setY(value);
+		else if	(name == "w")						this->setWidth(value);
+		else if	(name == "h")						this->setHeight(value);
+		else if	(name == "visible")					this->setVisible(value);
+		else if	(name == "zorder")					this->setZOrder(value);
+		else if	(name == "enabled")					this->setEnabled(value);
+		else if	(name == "click_through")			this->setClickThrough(value);
 		else if	(name == "clickthrough")
 		{
 			aprilui::log("WARNING: 'clickthrough=' is deprecated. Use 'click_through=' instead!"); // DEPRECATED
 			this->setClickThrough(value);
 		}
-		else if	(name == "inherits_alpha")		this->setInheritsAlpha(value);
-		else if	(name == "red")					this->setRed((int)value);
-		else if	(name == "green")				this->setGreen((int)value);
-		else if	(name == "blue")				this->setBlue((int)value);
-		else if	(name == "alpha")				this->setAlpha((int)value);
-		else if	(name == "color")				this->setColor(value);
-		else if	(name == "angle")				this->setAngle(value);
-		else if	(name == "scale_x")				this->setScaleX(value);
-		else if	(name == "scale_y")				this->setScaleY(value);
-		else if	(name == "center_x")			this->setCenterX(value);
-		else if	(name == "center_y")			this->setCenterY(value);
-		else if	(name == "anchor_left")			this->setAnchorLeft(value);
-		else if	(name == "anchor_right")		this->setAnchorRight(value);
-		else if	(name == "anchor_top")			this->setAnchorTop(value);
-		else if	(name == "anchor_bottom")		this->setAnchorBottom(value);
+		else if	(name == "inherits_alpha")			this->setInheritsAlpha(value);
+		else if	(name == "red")						this->setRed((int)value);
+		else if	(name == "green")					this->setGreen((int)value);
+		else if	(name == "blue")					this->setBlue((int)value);
+		else if	(name == "alpha")					this->setAlpha((int)value);
+		else if	(name == "color")					this->setColor(value);
+		else if	(name == "angle")					this->setAngle(value);
+		else if	(name == "scale_x")					this->setScaleX(value);
+		else if	(name == "scale_y")					this->setScaleY(value);
+		else if	(name == "center_x")				this->setCenterX(value);
+		else if	(name == "center_y")				this->setCenterY(value);
+		else if	(name == "anchor_left")				this->setAnchorLeft(value);
+		else if	(name == "anchor_right")			this->setAnchorRight(value);
+		else if	(name == "anchor_top")				this->setAnchorTop(value);
+		else if	(name == "anchor_bottom")			this->setAnchorBottom(value);
+		else if	(name == "retain_anchor_aspect")	this->setRetainAnchorAspect(value);
 		else if	(name == "anchors")
 		{
 			harray<hstr> anchors = value.replace(" ", "").lower().split(",", -1, true);
@@ -754,8 +797,8 @@ namespace aprilui
 			this->setAnchorTop(anchors.contains("top"));
 			this->setAnchorBottom(anchors.contains("bottom"));
 		}
-		else if	(name == "clip")				this->setClip(value);
-		else if	(name == "use_disabled_alpha")	this->setUseDisabledAlpha(value);
+		else if	(name == "clip")					this->setClip(value);
+		else if	(name == "use_disabled_alpha")		this->setUseDisabledAlpha(value);
 		else return false;
 		return true;
 	}

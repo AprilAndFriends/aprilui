@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.9
+/// @version 1.92
 /// 
 /// @section LICENSE
 /// 
@@ -121,6 +121,8 @@ namespace aprilui
 		void setAnchorTop(bool value) { this->mAnchorTop = value; }
 		bool isAnchorBottom() { return this->mAnchorBottom; }
 		void setAnchorBottom(bool value) { this->mAnchorBottom = value; }
+		bool isRetainAnchorAspect() { return this->mRetainAnchorAspect; }
+		void setRetainAnchorAspect(bool value) { this->mRetainAnchorAspect = value; }
 		bool isClickThrough() { return this->mClickThrough; }
 		void setClickThrough(bool value) { this->mClickThrough = value; }
 		bool isInheritsAlpha() { return this->mInheritsAlpha; }
@@ -284,6 +286,7 @@ namespace aprilui
 		bool mAnchorRight;
 		bool mAnchorTop;
 		bool mAnchorBottom;
+		bool mRetainAnchorAspect;
 		Dataset* mDataset;
 		bool mClip;
 		bool mUseDisabledAlpha;
