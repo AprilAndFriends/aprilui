@@ -129,7 +129,7 @@ namespace aprilui
 					!heqf(this->_mClickPosition.x, position.x, this->mDragThreshold) || !heqf(this->_mClickPosition.y, position.y, this->mDragThreshold)))
 				{
 					this->mDragging = true;
-					this->_mClickPosition -= this->getPosition();
+					this->_mClickPosition -= this->getDerivedPosition();
 					this->_mLastPosition = position;
 					foreach (Object*, it, this->mChildren)
 					{
@@ -144,7 +144,7 @@ namespace aprilui
 			}
 			if (this->mDragging)
 			{
-				this->setScrollOffset(this->_mClickPosition - position);
+				this->setScrollOffset((this->_mClickPosition - position) / this->getDerivedScale());
 				this->_mDragSpeed = (position - this->_mLastPosition) / k;
 				if (this->mDragMaxSpeed > 0.0f)
 				{
