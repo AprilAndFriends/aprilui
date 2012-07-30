@@ -907,6 +907,18 @@ namespace aprilui
 		return false;
 	}
 
+	harray<Object*> Object::getAncestors()
+	{
+		harray<Object*> result;
+		Object* parent = this->mParent;
+		while (parent != NULL)
+		{
+			result += parent;
+			parent = parent->getParent();
+		}
+		return result;
+	}
+
 	harray<gvec2> Object::transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot)
 	{
 		harray<Object*> sequence;
