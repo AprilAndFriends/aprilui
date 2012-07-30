@@ -56,14 +56,15 @@ namespace aprilui
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
 		void clearChildUnderCursor();
-		//! returns whether or not a given object is a direct child of this object
+		/// @returns Whether or not a given object is a direct child of this object
 		bool isChild(Object* obj);
-		//! returns whether or not a given object is a descendant of this object (child or child of a child etc recursively)
+		/// @returns whether or not a given object is a descendant of this object (child or child of a child etc recursively)
 		bool isDescendant(Object* obj);
-		//! returns whether or not a given object is a direct parent of this object
+		/// @returns whether or not a given object is a direct parent of this object
 		bool isParent(Object* obj);
-		//! returns whether or not a given object is an ancestor of a this object
+		/// @returns whether or not a given object is an ancestor of a this object
 		bool isAncestor(Object* obj);
+		harray<Object*> getAncestors();
 		hstr getName() { return this->mName; }
 		hstr getFullName();
 		bool isCursorInside();
