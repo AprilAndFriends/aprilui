@@ -242,7 +242,7 @@
 		C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotationOscillator.cpp; sourceTree = "<group>"; };
 		D1459F6B146EF30100D61731 /* aprilui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aprilui.h; path = include/aprilui/aprilui.h; sourceTree = "<group>"; };
 		D1459F6C146EF30F00D61731 /* aprilui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aprilui.cpp; path = src/aprilui.cpp; sourceTree = "<group>"; };
-		D14D912215909D3400A7155A /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
+		D14D912215909D3400A7155A /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
 		D18ECFC815736468005AD969 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D18ED0BB15736750005AD969 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/hltypes.framework"; sourceTree = "<group>"; };
 		D18ED0BD15736758005AD969 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = "../__build__/brawe/Build/Products/Debug-LLVM/gtypes.framework"; sourceTree = "<group>"; };
@@ -574,7 +574,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -718,6 +718,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -744,6 +745,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -829,6 +831,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -874,6 +877,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
@@ -920,6 +924,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
