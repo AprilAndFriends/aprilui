@@ -76,6 +76,8 @@ namespace aprilui
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
 		
+		// TODO
+		gvec2 getScale() { return mScale; }
 		void setScale(gvec2 scale);
 		void setScale(float x, float y);
 		void setCenter(gvec2 scale) {}
@@ -130,6 +132,7 @@ namespace aprilui
 		hstr mTypeName;
 		hstr mName;
 		grect mRect;
+		gvec2 mScale;
 		int mZOrder;
 		float mAlpha;
 		bool mVisible;
