@@ -304,12 +304,14 @@ namespace aprilui
 	
 	void Object::setScale(gvec2 scale)
 	{
+		mScale = scale;
 		mRect.w *= scale.x;
 		mRect.h *= scale.y;
 	}
 
 	void Object::setScale(float x, float y)
 	{
+		mScale.set(x, y);
 		mRect.w *= x;
 		mRect.h *= y;
 	}
