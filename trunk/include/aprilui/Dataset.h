@@ -63,6 +63,7 @@ namespace aprilui
 		void setFocusedObject(Object* object) { this->mFocusedObject = object; }
 		Object* getFocusedObject() { return this->mFocusedObject; }
 		Object* getRoot() { return this->mRoot; }
+		void setRoot(Object* obj) { this->mRoot = obj; }
 		hstr getTextsPath() { return this->mTextsPath; }
 		void setTextsPath(chstr value) { this->mTextsPath = value; }
 		
