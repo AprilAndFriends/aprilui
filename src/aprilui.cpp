@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.82
+/// @version 1.93
 /// 
 /// @section LICENSE
 /// 
@@ -13,6 +13,7 @@
 #include <android/log.h>
 #endif
 
+#include <april/april.h>
 #include <april/Keys.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
@@ -53,6 +54,7 @@ namespace aprilui
 	float textureIdleUnloadTime = 0.0f;
 	// TODO - hack, has to be removed
 	bool forcedDynamicLoading = false;
+	hmap<hstr, float> extensionScales;
 
 	void aprilui_writelog(chstr message)
 	{
@@ -74,7 +76,7 @@ namespace aprilui
 		g_logFunction = fnptr;
 	}
 	
-	void init()
+	void init(bool hdEnabled)
 	{
 		aprilui::log("initializing aprilui");
 		registerLock = false;
@@ -123,6 +125,21 @@ namespace aprilui
 		REGISTER_ANIMATOR_TYPE(ScalerY);
 		REGISTER_ANIMATOR_TYPE(TiledScrollerX);
 		REGISTER_ANIMATOR_TYPE(TiledScrollerY);
+
+		if (hdEnabled)
+		{
+			harray<hstr> extensions = april::getTextureExtensions();
+			harray<hstr> newExtensions;
+			harray<float> newScales;
+			foreach (hstr, it, extensions)
+			{
+				newExtensions += ".hd" + (*it);
+				newScales += 0.5f;
+				newExtensions += (*it);
+				newScales += 1.0f;
+			}
+			setTextureExtensionScales(newExtensions, newScales);
+		}
 	}
 	
 	void destroy()
@@ -385,11 +402,19 @@ namespace aprilui
 		}
 	}
 	
-	void updateTextures(float time_increase)
+	void update(float k)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->updateTextures(time_increase);
+			it->second->update(k);
+		}
+	}
+
+	void updateTextures(float k)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->updateTextures(k);
 		}
 	}
 	
@@ -401,14 +426,52 @@ namespace aprilui
 		}
 	}
 	
-	void update(float time_increase)
+	void addTextureExtensionScale(chstr extension, float scale)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		extensionScales[extension] = scale;
+		if (!april::getTextureExtensions().contains(extension))
 		{
-			it->second->update(time_increase);
+			april::addTextureExtension(extension);
 		}
 	}
 
+	harray<hstr> getTextureExtensions()
+	{
+		return april::getTextureExtensions();
+	}
+	
+	float getTextureExtensionScale(chstr extension)
+	{
+		return (extensionScales.has_key(extension) ? extensionScales[extension] : 1.0f);
+	}
+	
+	float findTextureExtensionScale(chstr filename)
+	{
+		harray<hstr> extensions = april::getTextureExtensions();
+		foreach (hstr, it, extensions)
+		{
+			if (filename.ends_with(*it))
+			{
+				return getTextureExtensionScale(*it);
+			}
+		}
+		return 1.0f;
+	}
+	
+	void setTextureExtensionScales(harray<hstr> extensions, harray<float> scales)
+	{
+		while (extensions.size() > scales.size())
+		{
+			scales += 1.0f;
+		}
+		extensionScales.clear();
+		for_iter (i, 0, extensions.size())
+		{
+			extensionScales[extensions[i]] = scales[i];
+		}
+		april::setTextureExtensions(extensions);
+	}
+	
 	void onMouseDown(int button)
 	{
 		aprilui::updateCursorPosition();

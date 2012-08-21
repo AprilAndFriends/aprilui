@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.91
+/// @version 1.93
 /// 
 /// @section LICENSE
 /// 
@@ -22,7 +22,8 @@ namespace aprilui
 		this->mTexture = texture;
 		this->mFilter = texture->getFilter();
 		this->mAddressMode = texture->getAddressMode();
-		this->mScale.set(1.0f, 1.0f);
+		float scale = aprilui::findTextureExtensionScale(this->mFilename);
+		this->mScale.set(scale, scale);
 		this->mUnusedTime = 0.0f;
 		this->mDynamic = !texture->isLoaded();
 	}
@@ -138,6 +139,8 @@ namespace aprilui
 			}
 			this->mTexture->setFilter(this->mFilter);
 			this->mTexture->setAddressMode(this->mAddressMode);
+			float scale = aprilui::findTextureExtensionScale(this->mFilename);
+			this->mScale.set(scale, scale);
 		}
 	}
 
