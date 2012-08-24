@@ -93,6 +93,7 @@ namespace aprilui
 	private:
 		gvec2 _mClickPosition;
 		gvec2 _mLastPosition;
+		gvec2 _mClickScrollOffset;
 		gvec2 _mLastScrollOffset;
 		gvec2 _mDragSpeed;
 		gvec2 _mDragTimer;
