@@ -93,6 +93,7 @@ namespace aprilui
 		grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return getBoundingRect(overrideRoot); }
 		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
 		
 		void _setTypeName(chstr type) { mTypeName = type; }
 		hstr getType() { return mTypeName; }

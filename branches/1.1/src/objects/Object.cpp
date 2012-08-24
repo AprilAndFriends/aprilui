@@ -336,6 +336,11 @@ namespace aprilui
 	{
 		return mRect.getSize();
 	}
+	
+	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
+	{
+		return gvec2(1, 1);
+	}
 
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
