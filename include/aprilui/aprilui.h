@@ -36,7 +36,7 @@ namespace aprilui
 	/// @param[in] hdEnabled The HD-enabled parameter.
 	/// @note HD-enabled textures are textures with .hd.EXT extensions with twice the size of the original texture.
 	/// Ideally "april::getSystemInfo().max_texture.size > 1024" should be passed on as hdEnabled parameter if you are using HD textures that have any dimension higher than 1024 px.
-	apriluiFnExport void init(bool hdEnabled = true);
+	apriluiFnExport void init(bool hdEnabled = false);
 	apriluiFnExport void destroy();
 	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
 	apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
