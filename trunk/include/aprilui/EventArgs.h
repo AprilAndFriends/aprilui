@@ -15,10 +15,7 @@
 #ifndef APRILUI_EVENT_ARGS_H
 #define APRILUI_EVENT_ARGS_H
 
-#include <stdio.h>
-
 #include <hltypes/hstring.h>
-
 #include "apriluiExport.h"
 
 namespace aprilui
