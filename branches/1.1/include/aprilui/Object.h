@@ -128,6 +128,8 @@ namespace aprilui
 		virtual Dataset* getDataset() { return mDataset; }
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
 
+		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
+
 	protected:
 		Object* mParent;
 		hstr mTypeName;

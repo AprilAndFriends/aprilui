@@ -40,9 +40,10 @@ namespace aprilui
 		mInheritsAlpha = true;
 		mAlpha = 1.0f;
 		mDataset = NULL;
+		mScale.set(1.0f, 1.0f);
 	}
 	
-	Object::Object(chstr name, grect rect)
+	Object::Object(chstr name, grect rect) : EventReceiver()
 	{
 		mTypeName = "undefined";
 		mName = name;
@@ -55,6 +56,7 @@ namespace aprilui
 		mInheritsAlpha = true;
 		mAlpha = 1.0f;
 		mDataset = NULL;
+		mScale.set(1.0f, 1.0f);
 	}
 
 	Object::~Object()
@@ -210,7 +212,6 @@ namespace aprilui
 		removeChild(object);
 		mDataset->unregisterManualObject(object);
 	}
-
 	
 	bool Object::OnMouseDown(float x, float y, int button)
 	{
@@ -304,14 +305,14 @@ namespace aprilui
 	
 	void Object::setScale(gvec2 scale)
 	{
-		mScale = scale;
+		mScale *= scale;
 		mRect.w *= scale.x;
 		mRect.h *= scale.y;
 	}
 
 	void Object::setScale(float x, float y)
 	{
-		mScale.set(x, y);
+		mScale *= gvec2(x, y);
 		mRect.w *= x;
 		mRect.h *= y;
 	}
@@ -339,7 +340,7 @@ namespace aprilui
 	
 	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
 	{
-		return gvec2(1, 1);
+		return gvec2(1.0f, 1.0f);
 	}
 
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
@@ -462,5 +463,22 @@ namespace aprilui
 			}
 		}
 		return (object != NULL ? object : this);
+	}
+
+	gvec2 Object::transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot)
+	{
+		harray<Object*> sequence;
+		Object* current = this;
+		while (current != NULL)
+		{
+			sequence += current;
+			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
+		}
+		sequence.reverse();
+		foreach (Object*, it, sequence)
+		{
+			point -= (*it)->getPosition();
+		}
+		return point;
 	}
 }
