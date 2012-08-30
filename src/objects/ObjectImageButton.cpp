@@ -100,7 +100,7 @@ namespace aprilui
 	
 	bool ImageButton::OnMouseDown(float x, float y, int button)
 	{
-		if (Object::OnMouseDown(x, y, button))
+		if (ImageBox::OnMouseDown(x, y, button))
 		{
 			return true;
 		}
@@ -115,7 +115,7 @@ namespace aprilui
 
 	bool ImageButton::OnMouseUp(float x, float y, int button)
 	{
-		if (Object::OnMouseUp(x, y, button))
+		if (ImageBox::OnMouseUp(x, y, button))
 		{
 			return true;
 		}
@@ -131,14 +131,13 @@ namespace aprilui
 
 	void ImageButton::OnMouseMove(float x, float y)
 	{
-		Object::OnMouseMove(x, y);
+		ImageBox::OnMouseMove(x, y);
 	}
 
 	bool ImageButton::setProperty(chstr name, chstr value)
 	{
-		Object::setProperty(name, value);
-		if		(name == "image")			setImage(mDataset->getImage(value));
-		else if (name == "pushed_image")	setPushedImage(mDataset->getImage(value));
+		ImageBox::setProperty(name, value);
+		if		(name == "pushed_image")	setPushedImage(mDataset->getImage(value));
 		else if (name == "hover_image")		setHoverImage(mDataset->getImage(value));
 		else if (name == "disabled_image")	setDisabledImage(mDataset->getImage(value));
 		return 1;
