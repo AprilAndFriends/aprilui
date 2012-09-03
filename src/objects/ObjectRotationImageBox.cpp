@@ -43,7 +43,7 @@ namespace aprilui
 		}
 		april::Color color;
 		color.a = (unsigned char)(alpha * 255);
-		mImage->draw(mRect + offset, color, mAngle);
+		mImage->draw(_getDrawRect() + offset, color, mAngle);
 	}
 
 	bool RotationImageBox::angleEquals(float angle)

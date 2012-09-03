@@ -30,7 +30,7 @@ namespace aprilui
 		float alpha = getDerivedAlpha();
 		april::Color color;
 		color.a = (unsigned char)(alpha * 255);
-		grect rect = mRect + offset;
+		grect rect = _getDrawRect() + offset;
 		if (mPushed && mPushedImage != NULL)
 		{
 			mPushedImage->draw(rect, color);
