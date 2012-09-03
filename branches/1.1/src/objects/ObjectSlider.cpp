@@ -74,7 +74,7 @@ namespace aprilui
 
 	void Slider::OnDraw(gvec2 offset)
 	{
-		grect rect = mRect + offset;
+		grect rect = _getDrawRect() + offset;
 		if (rect.w < 5 || rect.h < 5)
 		{
 			return;

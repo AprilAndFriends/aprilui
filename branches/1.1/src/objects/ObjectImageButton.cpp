@@ -29,7 +29,7 @@ namespace aprilui
 
 	void ImageButton::OnDraw(gvec2 offset)
 	{
-		grect rect = mRect + offset;
+		grect rect = _getDrawRect() + offset;
 		if (!isDerivedEnabled() && mDisabledImage != NULL)
 		{
 			mDisabledImage->draw(rect);

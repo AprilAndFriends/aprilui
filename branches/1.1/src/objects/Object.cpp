@@ -41,6 +41,7 @@ namespace aprilui
 		mAlpha = 1.0f;
 		mDataset = NULL;
 		mScale.set(1.0f, 1.0f);
+		mUseScale = false;
 	}
 	
 	Object::Object(chstr name, grect rect) : EventReceiver()
@@ -57,6 +58,7 @@ namespace aprilui
 		mAlpha = 1.0f;
 		mDataset = NULL;
 		mScale.set(1.0f, 1.0f);
+		mUseScale = false;
 	}
 
 	Object::~Object()
@@ -303,20 +305,6 @@ namespace aprilui
 		}
 	}
 	
-	void Object::setScale(gvec2 scale)
-	{
-		mScale *= scale;
-		mRect.w *= scale.x;
-		mRect.h *= scale.y;
-	}
-
-	void Object::setScale(float x, float y)
-	{
-		mScale *= gvec2(x, y);
-		mRect.w *= x;
-		mRect.h *= y;
-	}
-
 	grect Object::getBoundingRect(aprilui::Object* overrideRoot)
 	{
 		return mRect;
@@ -341,6 +329,11 @@ namespace aprilui
 	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
 	{
 		return gvec2(1.0f, 1.0f);
+	}
+
+	grect Object::_getDrawRect()
+	{
+		return (!mUseScale ? mRect : (mRect - mRect.getSize() * 0.5f));
 	}
 
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
@@ -475,10 +468,22 @@ namespace aprilui
 			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
 		}
 		sequence.reverse();
+		gvec2 center;
 		foreach (Object*, it, sequence)
 		{
-			point -= (*it)->getPosition();
+			if ((*it)->isUseScale())
+			{
+				center = (*it)->getSize() * 0.5f;
+				point -= center + (*it)->getPosition();
+				point /= (*it)->getScale();
+				point += center;
+			}
+			else
+			{
+				point -= (*it)->getPosition();
+			}
 		}
 		return point;
 	}
+
 }

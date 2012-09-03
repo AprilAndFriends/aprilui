@@ -36,7 +36,6 @@ namespace aprilui
 		
 		void update(float time);
 		bool setProperty(chstr name, chstr value);
-		grect _getDrawRect();
 		
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);

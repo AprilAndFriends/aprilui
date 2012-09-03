@@ -49,11 +49,6 @@ namespace aprilui
 		mBlinkTimer = (mBlinkTimer - (int)mBlinkTimer);
 	}
 
-	grect EditBox::_getDrawRect()
-	{
-		return mRect;
-	}
-	
 	void EditBox::OnDraw(gvec2 offset)
 	{
 		//////////////

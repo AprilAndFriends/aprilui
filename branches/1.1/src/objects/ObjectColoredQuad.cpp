@@ -32,9 +32,7 @@ namespace aprilui
 	void ColoredQuad::OnDraw(gvec2 offset)
 	{
 		float alpha = getDerivedAlpha() * mColor.a_f();
-		grect rect = mRect + offset;
-		april::rendersys->drawFilledRect(rect,
-										  april::Color(mColor.r, mColor.g, mColor.b, COLOR_COMP_FOR_NEW_APRIL(alpha)));
+		april::rendersys->drawFilledRect(_getDrawRect() + offset, april::Color(mColor, COLOR_COMP_FOR_NEW_APRIL(alpha)));
 	}
 
 	bool ColoredQuad::setProperty(chstr name, chstr value)

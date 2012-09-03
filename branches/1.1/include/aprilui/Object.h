@@ -76,12 +76,13 @@ namespace aprilui
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
 		
-		// TODO
 		gvec2 getScale() { return mScale; }
-		void setScale(gvec2 scale);
-		void setScale(float x, float y);
-		void setCenter(gvec2 scale) {}
-		void setCenter(float x, float y) {}
+		void setScale(gvec2 value) { mScale = value; }
+		void setScale(float x, float y) { mScale.set(x, y); }
+		bool isUseScale() { return mUseScale; }
+		void setUseScale(bool value) { mUseScale = value; }
+		void setCenter(gvec2 value) { }
+		void setCenter(float x, float y) { }
 		
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
@@ -136,6 +137,7 @@ namespace aprilui
 		hstr mName;
 		grect mRect;
 		gvec2 mScale;
+		bool mUseScale;
 		int mZOrder;
 		float mAlpha;
 		bool mVisible;
@@ -147,6 +149,7 @@ namespace aprilui
 		Dataset* mDataset;
 		
 		void sortChildren();
+		grect _getDrawRect();
 		
 		float getDerivedAlpha();
 		bool isDerivedEnabled();

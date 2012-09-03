@@ -37,7 +37,7 @@ namespace aprilui
 		{
 			alpha /= 2;
 		}
-		LabelBase::_drawLabel(mRect + offset, alpha);
+		LabelBase::_drawLabel(_getDrawRect() + offset, alpha);
 	}
 
 	void TextImageButton::notifyEvent(chstr name, void* params)

@@ -74,7 +74,7 @@ namespace aprilui
 		}
 		april::Color color;
 		color.a = (unsigned char)(alpha * 255);
-		mImage->draw(mRect + offset, color);
+		mImage->draw(_getDrawRect() + offset, color);
 		//rendersys->setTextureBlendMode(april::ALPHA_BLEND);
 	}
 
