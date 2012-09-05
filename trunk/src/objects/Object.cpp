@@ -751,6 +751,8 @@ namespace aprilui
 		if (name == "retain_anchor_aspect")	return this->isRetainAnchorAspect();
 		if (name == "clip")					return this->isClip();
 		if (name == "use_disabled_alpha")	return this->isUseDisabledAlpha();
+		if (name == "name")                 return this->getName();
+		if (name == "full_name")	        return this->getFullName();
 		if (property_exists != NULL)
 		{
 			*property_exists = false;
