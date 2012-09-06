@@ -35,12 +35,17 @@ namespace aprilui
 		hstr getName();
 		bool isCursorInside();
 		Image* getPushedImage() { return this->mPushedImage; }
+		hstr getPushedImageName();
 		void setPushedImage(Image* image) { this->mPushedImage = image; }
 		void setPushedImageByName(chstr image);
+
 		Image* getHoverImage() { return this->mHoverImage; }
+		hstr getHoverImageName();
 		void setHoverImage(Image* image) { this->mHoverImage = image; }
 		void setHoverImageByName(chstr image);
+
 		Image* getDisabledImage() { return this->mDisabledImage; }
+		hstr getDisabledImageName();
 		void setDisabledImage(Image* image) { this->mDisabledImage = image; }
 		void setDisabledImageByName(chstr image);
 		Image* getImage() { return this->mNormalImage; };
@@ -69,6 +74,7 @@ namespace aprilui
 		void update(float k);
 		void OnDraw();
 		
+		hstr _getImageName(Image* image);
 	};
 }
 

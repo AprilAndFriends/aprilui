@@ -38,7 +38,8 @@ namespace aprilui
 		this->mImage = image;
 		if (image != NULL)
 		{
-			this->mImageName = image->getName();
+			Dataset* dataset = image->getDataset();
+			this->mImageName = dataset == mDataset ? image->getName() : image->getFullName();
 			grect rect = image->getSrcRect();
 			if (this->mRect.w == -1)
 			{

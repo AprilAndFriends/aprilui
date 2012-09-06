@@ -25,6 +25,7 @@
 
 namespace aprilui
 {
+	class Dataset;
 	class Texture;
 	
 	class apriluiExport Image
@@ -39,7 +40,7 @@ namespace aprilui
 		
 		Texture* getTexture() const { return this->mTexture; }
 		hstr getName() const { return this->mName; }
-		hstr getImageName() const { return this->mImageName; }
+		hstr getFullName() const;
 		grect getSrcRect() const { return this->mSrcRect; }
 		void setSrcRect(grect value);
 		bool isVertical() { return this->mVertical; };
@@ -49,7 +50,10 @@ namespace aprilui
 		april::BlendMode getBlendMode() { return this->mBlendMode; }
 		void setBlendMode(april::BlendMode mode) { this->mBlendMode = mode; }
 		
+		Dataset* getDataset() { return this->mDataset; }
+		void _setDataset(Dataset* dataset) { this->mDataset = dataset; }
 	protected:
+		Dataset* mDataset;
 		Texture* mTexture;
 		hstr mName;
 		hstr mImageName;
