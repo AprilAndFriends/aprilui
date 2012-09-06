@@ -124,19 +124,19 @@ namespace aprilui
 				delete this->mTexture;
 			}
 			this->mUnusedTime = 0.0f;
-			this->mFilename = filename;
 			if (!isRamTexture)
 			{
-				this->mTexture = april::rendersys->loadTexture(this->mFilename, this->mDynamic || aprilui::getForcedDynamicLoading());
+				this->mTexture = april::rendersys->loadTexture(filename, this->mDynamic || aprilui::getForcedDynamicLoading());
 			}
 			else
 			{
-				this->mTexture = april::rendersys->loadRamTexture(this->mFilename, this->mDynamic || aprilui::getForcedDynamicLoading());
+				this->mTexture = april::rendersys->loadRamTexture(filename, this->mDynamic || aprilui::getForcedDynamicLoading());
 			}
 			if (this->mTexture == NULL)
 			{
-				throw file_not_found(this->mFilename);
+				throw file_not_found(filename);
 			}
+			this->mFilename = this->mTexture->getFilename();
 			this->mTexture->setFilter(this->mFilter);
 			this->mTexture->setAddressMode(this->mAddressMode);
 			float scale = aprilui::findTextureExtensionScale(this->mFilename);
