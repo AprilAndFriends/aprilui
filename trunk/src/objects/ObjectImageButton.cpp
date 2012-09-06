@@ -116,6 +116,27 @@ namespace aprilui
 	{
 		return Object::isCursorInside();
 	}
+	
+	hstr ImageButton::_getImageName(Image* image)
+	{
+		Dataset* dataset = image->getDataset();
+		return dataset == this->mDataset ? image->getName() : image->getFullName();
+	}
+
+	hstr ImageButton::getPushedImageName()
+	{
+		return this->_getImageName(this->mPushedImage);
+	}
+	
+	hstr ImageButton::getHoverImageName()
+	{
+		return this->_getImageName(this->mHoverImage);
+	}
+	
+	hstr ImageButton::getDisabledImageName()
+	{
+		return this->_getImageName(this->mDisabledImage);
+	}
 
 	void ImageButton::setPushedImageByName(chstr image)
 	{
@@ -145,9 +166,9 @@ namespace aprilui
 			*property_exists = true;
 		}
 		if (name == "image")			return this->getImageName();
-		if (name == "pushed_image")		return this->getPushedImage()->getName();
-		if (name == "hover_image")		return this->getHoverImage()->getName();
-		if (name == "disabled_image")	return this->getDisabledImage()->getName();
+		if (name == "pushed_image")		return this->getPushedImageName();
+		if (name == "hover_image")		return this->getHoverImageName();
+		if (name == "disabled_image")	return this->getDisabledImageName();
 		return Object::getProperty(name, property_exists);
 	}
 

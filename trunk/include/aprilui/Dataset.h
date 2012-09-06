@@ -36,6 +36,7 @@ namespace aprilui
 	class Object;
 	class Image;
 	class Texture;
+	class NullImage;
 
 	class apriluiExport Dataset : public EventReceiver
 	{
@@ -178,6 +179,7 @@ namespace aprilui
 		hmap<hstr, Texture*> mTextures;
 		hmap<hstr, Image*> mImages;
 		hmap<hstr, hstr> mTexts;
+		NullImage* mNullImage;
 
 		hmap<hstr, void (*)()> mCallbacks;
 

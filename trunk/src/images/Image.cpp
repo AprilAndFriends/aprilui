@@ -16,6 +16,7 @@
 #include <hltypes/hltypesUtil.h>
 
 #include "apriluiUtil.h"
+#include "Dataset.h"
 #include "Exception.h"
 #include "Image.h"
 #include "Texture.h"
@@ -26,21 +27,19 @@ namespace aprilui
 	{
 		this->mTexture = texture;
 		this->mName = name;
-		int index = name.find("/") + 1;
-		this->mImageName = name(index, name.size() - index); // the name without the dataset's name prefix
 		this->mSrcRect = source;
 		this->mBlendMode = april::ALPHA_BLEND;
 		this->mVertical = vertical;
 		this->mInvertX = invertX;
 		this->mInvertY = invertY;
 		this->mTextureCoordinatesLoaded = false;
+		this->mDataset = NULL;
 	}
 
 	Image::Image(Image& img, chstr name)
 	{
 		this->mTexture = img.mTexture;
 		this->mName = name;
-		this->mImageName = img.mImageName;
 		this->mSrcRect = img.mSrcRect;
 		this->mBlendMode = img.mBlendMode;
 		this->mVertical = img.mVertical;
@@ -51,6 +50,11 @@ namespace aprilui
 	
 	Image::~Image()
 	{
+	}
+	
+	hstr Image::getFullName() const
+	{
+		return mDataset->getName() + "." + mName;
 	}
 	
 	void Image::setSrcRect(grect value)

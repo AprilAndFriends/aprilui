@@ -38,8 +38,6 @@ namespace aprilui
 	void _registerDataset(chstr name, Dataset* dataset);
 	void _unregisterDataset(chstr name, Dataset* dataset);
 	
-	NullImage nullImage;
-	
 	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath) : EventReceiver()
 	{
 		this->mFocusedObject = NULL;
@@ -47,6 +45,7 @@ namespace aprilui
 		this->mFilename = normalize_path(filename);
 		this->mFilePath = this->_makeFilePath(this->mFilename, name, useNameBasePath);
 		this->mName = name;
+		this->mNullImage = NULL;
 		if (this->mName == "")
 		{
 			this->mName = this->mFilename.rsplit(".", 1, false).pop_first().rsplit("/", 1, false).pop_last();
@@ -57,6 +56,7 @@ namespace aprilui
 	
 	Dataset::~Dataset()
 	{
+		if (this->mNullImage != NULL) delete this->mNullImage;
 		if (this->isLoaded())
 		{
 			if (this->mFocusedObject != NULL)
@@ -218,7 +218,9 @@ namespace aprilui
 			{
 				throw ResourceExistsException(filename, "Texture", this);
 			}
-			this->mImages[textureName] = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
+			Image* img = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
+			this->mImages[textureName] = img;
+			img->_setDataset(this);
 		}
 		else
 		{
@@ -259,6 +261,7 @@ namespace aprilui
 						image->setBlendMode(april::ADD);
 					}
 					this->mImages[name] = image;
+					image->_setDataset(this);
 				}
 			}
 		}
@@ -302,6 +305,7 @@ namespace aprilui
 			}
 		}
 		this->mImages[name] = image;
+		image->_setDataset(this);
 	}
 	
 	Object* Dataset::parseObject(hlxml::Node* node, Object* parent)
@@ -649,6 +653,7 @@ namespace aprilui
 			throw ResourceExistsException(name, "Image", this);
 		}
 		this->mImages[name] = image;
+		image->_setDataset(this);
 	}
 	
 	void Dataset::unregisterManualImage(Image* image)
@@ -659,6 +664,7 @@ namespace aprilui
 			throw ResourceNotExistsException(name, "Image", this);
 		}
 		this->mImages.remove_key(name);
+		image->_setDataset(NULL);
 	}
 	
 	void Dataset::registerManualTexture(Texture* texture)
@@ -745,13 +751,19 @@ namespace aprilui
 		Image* image;
 		if (name == "null")
 		{
-			return &nullImage;
+			if (!this->mNullImage)
+			{
+				this->mNullImage = new NullImage();
+				this->mNullImage->_setDataset(this);
+			}
+			return this->mNullImage;
 		}
 		
 		if (!this->mImages.has_key(name) && name.starts_with("0x")) // create new image with a color. don't overuse this, it's meant to be handy when needed only ;)
 		{
 			image = new ColorImage(name);
 			this->mImages[name] = image;
+			image->_setDataset(this);
 		}
 		else
 		{
