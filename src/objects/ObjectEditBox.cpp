@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.91
+/// @version 1.94
 /// 
 /// @section LICENSE
 /// 
@@ -28,6 +28,7 @@ namespace aprilui
 	{
 		this->mText = "";
 		this->mEmptyText = "";
+		this->mEmptyTextKey = "";
 		this->mHorzFormatting = atres::LEFT;
 		this->mTextFormatting = false;
 		this->mPushed = false;
@@ -104,6 +105,19 @@ namespace aprilui
 		}
 		Label::setText(unicode_to_utf8(this->mUnicodeChars));
 		this->setCursorIndex(this->mCursorIndex);
+	}
+
+	void EditBox::setEmptyText(chstr value)
+	{
+		this->mEmptyText = value;
+		this->mEmptyTextKey = "";
+	}
+
+	void EditBox::setEmptyTextKey(chstr value)
+	{
+		hstr emptyTextKey = value; // because value is a chstr which could reference mTextKey
+		this->setEmptyText(this->getDataset()->getText(emptyTextKey));
+		this->mEmptyTextKey = emptyTextKey;
 	}
 
 	bool EditBox::isFocused()
@@ -242,41 +256,16 @@ namespace aprilui
 		this->mUnicodeChars = unicodeChars;
 	}
 	
-	hstr EditBox::getProperty(chstr name, bool* property_exists)
+	void EditBox::notifyEvent(chstr name, void* params)
 	{
-		if (property_exists != NULL)
+		if (name == "onLocalizationChanged")
 		{
-			*property_exists = true;
+			if (this->mEmptyTextKey != "")
+			{
+				this->setEmptyTextKey(this->mEmptyTextKey);
+			}
 		}
-		if (name == "max_length")		return this->getMaxLength();
-		if (name == "password_char")	return this->getPasswordChar();
-		if (name == "filter")			return this->getFilter();
-		if (name == "use_background")	return this->isUseBackground();
-		if (name == "empty_text")		return this->getEmptyText();
-		if (name == "space_hack")		return this->mSpaceHack;
-		if (name == "background")
-		{
-			aprilui::log("WARNING: 'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
-			return this->isUseBackground();
-		}
-		 return Label::getProperty(name, property_exists);
-	}
-	
-	bool EditBox::setProperty(chstr name, chstr value)
-	{
-		if		(name == "max_length")		this->setMaxLength(value);
-		else if	(name == "password_char")	this->setPasswordChar(value.c_str()[0]);
-		else if	(name == "filter")			this->setFilter(value);
-		else if	(name == "empty_text")		this->setEmptyText(value);
-		else if	(name == "use_background")	this->setUseBackground(value);
-		else if	(name == "space_hack")		this->mSpaceHack = (bool)value;
-		else if	(name == "background")
-		{
-			aprilui::log("WARNING: 'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
-			this->setUseBackground(value);
-		}
-		else return Label::setProperty(name, value);
-		return true;
+		Label::notifyEvent(name, params);
 	}
 	
 	bool EditBox::onMouseDown(int button)
@@ -372,6 +361,45 @@ namespace aprilui
 		Object::cancelMouseDown();
 	}
 
+	hstr EditBox::getProperty(chstr name, bool* property_exists)
+	{
+		if (property_exists != NULL)
+		{
+			*property_exists = true;
+		}
+		if (name == "max_length")		return this->getMaxLength();
+		if (name == "password_char")	return this->getPasswordChar();
+		if (name == "filter")			return this->getFilter();
+		if (name == "use_background")	return this->isUseBackground();
+		if (name == "empty_text")		return this->getEmptyText();
+		if (name == "empty_text_key")	return this->getEmptyTextKey();
+		if (name == "space_hack")		return this->mSpaceHack;
+		if (name == "background")
+		{
+			aprilui::log("WARNING: 'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
+			return this->isUseBackground();
+		}
+		 return Label::getProperty(name, property_exists);
+	}
+	
+	bool EditBox::setProperty(chstr name, chstr value)
+	{
+		if		(name == "max_length")		this->setMaxLength(value);
+		else if	(name == "password_char")	this->setPasswordChar(value.c_str()[0]);
+		else if	(name == "filter")			this->setFilter(value);
+		else if	(name == "empty_text")		this->setEmptyText(value);
+		else if	(name == "empty_text_key")	this->setEmptyTextKey(value);
+		else if	(name == "use_background")	this->setUseBackground(value);
+		else if	(name == "space_hack")		this->mSpaceHack = (bool)value;
+		else if	(name == "background")
+		{
+			aprilui::log("WARNING: 'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
+			this->setUseBackground(value);
+		}
+		else return Label::setProperty(name, value);
+		return true;
+	}
+	
 	harray<unsigned int> EditBox::_convertToUnicodeChars(chstr string)
 	{
 		int length;

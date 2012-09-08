@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.91
+/// @version 1.94
 /// 
 /// @section LICENSE
 /// 
@@ -42,16 +42,16 @@ namespace aprilui
 		bool isUseBackground() { return this->mUseBackground; }
 		void setUseBackground(bool value) { this->mUseBackground = value; }
 		hstr getEmptyText() { return this->mEmptyText; }
-		void setEmptyText(chstr value) { this->mEmptyText = value; }
+		void setEmptyText(chstr value);
+		hstr getEmptyTextKey() { return this->mEmptyTextKey; }
+		void setEmptyTextKey(chstr value);
 		void setText(chstr value);
 		bool isFocused();
 		void setFocused(bool value);
 		
 		void update(float time);
 
-		hstr getProperty(chstr name, bool* property_exists = NULL);
-		bool setProperty(chstr name, chstr value);
-		
+		void notifyEvent(chstr name, void* params);
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
 		void onKeyDown(unsigned int keycode);
@@ -59,11 +59,15 @@ namespace aprilui
 		void onChar(unsigned int charcode);
 		void cancelMouseDown();
 		
+		hstr getProperty(chstr name, bool* property_exists = NULL);
+		bool setProperty(chstr name, chstr value);
+		
 		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		
 	protected:
 		hstr mEmptyText;
+		hstr mEmptyTextKey;
 		bool mPushed;
 		int mCursorIndex;
 		int mOffsetIndex;
