@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -16,6 +16,8 @@
 
 #include "AnimatorAlphaChanger.h"
 #include "AnimatorBlueChanger.h"
+#include "AnimatorCenterMoverX.h"
+#include "AnimatorCenterMoverY.h"
 #include "AnimatorFrameAnimation.h"
 #include "AnimatorGreenChanger.h"
 #include "AnimatorMoverX.h"

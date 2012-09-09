@@ -9,10 +9,10 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines an animator that can resize objects horizontally.
+/// Defines an animator that can move object centers vertically.
 
-#ifndef APRILUI_RESIZER_X_H
-#define APRILUI_RESIZER_X_H
+#ifndef APRILUI_CENTER_MOVER_Y_H
+#define APRILUI_CENTER_MOVER_Y_H
 
 #include <hltypes/hstring.h>
 
@@ -22,15 +22,15 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		class apriluiExport ResizerX : public Animator
+		class apriluiExport CenterMoverY : public Animator
 		{
 		public:
-			ResizerX(chstr name);
-			~ResizerX();
+			CenterMoverY(chstr name);
+			~CenterMoverY();
 			static Animator* createInstance(chstr name);
 			
 			void update(float k);
-			
+
 		protected:
 			float _getObjectValue();
 			void _setObjectValue(float value);

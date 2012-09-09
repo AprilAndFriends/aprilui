@@ -9,36 +9,36 @@
 
 #include <hltypes/hstring.h>
 
-#include "AnimatorScalerX.h"
+#include "AnimatorCenterMoverX.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		ScalerX::ScalerX(chstr name) : Animator(name)
+		CenterMoverX::CenterMoverX(chstr name) : Animator(name)
 		{
 		}
 
-		ScalerX::~ScalerX()
+		CenterMoverX::~CenterMoverX()
 		{
 		}
 
-		Animator* ScalerX::createInstance(chstr name)
+		Animator* CenterMoverX::createInstance(chstr name)
 		{
-			return new ScalerX(name);
+			return new CenterMoverX(name);
 		}
 
-		float ScalerX::_getObjectValue()
+		float CenterMoverX::_getObjectValue()
 		{
-			return this->mParent->getScaleX();
+			return this->mParent->getCenterX();
 		}
 
-		void ScalerX::_setObjectValue(float value)
+		void CenterMoverX::_setObjectValue(float value)
 		{
-			this->mParent->setScaleX(value);
+			this->mParent->setCenterX(value);
 		}
 
-		void ScalerX::update(float k)
+		void CenterMoverX::update(float k)
 		{
 			this->_valueUpdateSimple(k);
 		}

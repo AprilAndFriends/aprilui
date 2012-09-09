@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.4
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -29,9 +29,11 @@ namespace aprilui
 			~AlphaChanger();
 			static Animator* createInstance(chstr name);
 			
-			void notifyEvent(chstr name, void* params);
-			
 			void update(float k);
+
+		protected:
+			float _getObjectValue();
+			void _setObjectValue(float value);
 			
 		};
 	}

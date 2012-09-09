@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 1.91
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -274,6 +274,41 @@ namespace aprilui
 		else if	(name == "time")			this->setTime(value);
 		else return Object::setProperty(name, value);
 		return true;
+	}
+	
+	void Animator::notifyEvent(chstr name, void* params)
+	{
+		if (name == "AttachToObject" || name == "OnDelayEnd" && this->mInheritValue)
+		{
+			this->mValue = this->mOffset = this->_getObjectValue();
+			if (this->mUseTarget)
+			{
+				this->mAmplitude = this->mTarget - this->mValue;
+			}
+		}
+		Object::notifyEvent(name, params);
+	}
+		
+	void Animator::_valueUpdateSimple(float k)
+	{
+		if (this->_checkUpdate(k))
+		{
+			this->mValue = this->_getObjectValue(); // required because this->_calculateValue may use mValue
+			this->mValue = this->_calculateValue(this->mTimeSinceLastFrame);
+			this->_setObjectValue(this->mValue);
+		}
+	}
+	
+	void Animator::_valueUpdateUChar(float k)
+	{
+		if (this->_checkUpdate(k))
+		{
+			this->mValue = hclamp(this->_calculateValue(this->mTimeSinceLastFrame), 0.0f, 255.0f);
+			if ((unsigned char)this->mValue != (unsigned char)this->_getObjectValue())
+			{
+				this->_setObjectValue(this->mValue);
+			}
+		}
 	}
 	
 }

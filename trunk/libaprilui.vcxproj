@@ -181,6 +181,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\animators\AnimatorCenterMoverX.cpp" />
+    <ClCompile Include="src\animators\AnimatorCenterMoverY.cpp" />
     <ClCompile Include="src\animators\AnimatorResizerX.cpp" />
     <ClCompile Include="src\animators\AnimatorResizerY.cpp" />
     <ClCompile Include="src\animators\AnimatorScalerX.cpp" />
@@ -231,6 +233,8 @@
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\aprilui\AnimatorCenterMoverX.h" />
+    <ClInclude Include="include\aprilui\AnimatorCenterMoverY.h" />
     <ClInclude Include="include\aprilui\AnimatorResizerX.h" />
     <ClInclude Include="include\aprilui\AnimatorResizerY.h" />
     <ClInclude Include="include\aprilui\AnimatorScalerX.h" />

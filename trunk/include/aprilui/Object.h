@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.92
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -197,6 +197,8 @@ namespace aprilui
 		Animator* resizeX(float x, float speed);
 		Animator* resizeY(float y, float speed);
 		Animator* rotate(float angle, float speed);
+		Animator* moveCenterX(float x, float speed);
+		Animator* moveCenterY(float y, float speed);
 		Animator* fadeRed(unsigned char r, float speed);
 		Animator* fadeGreen(unsigned char g, float speed);
 		Animator* fadeBlue(unsigned char b, float speed);
@@ -207,11 +209,15 @@ namespace aprilui
 		void scale(gvec2 scale, float speed);
 		void resize(float x, float y, float speed);
 		void resize(gvec2 size, float speed);
+		void moveCenter(float x, float y, float speed);
+		void moveCenter(gvec2 center, float speed);
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
 		void fadeColor(april::Color color, float speed);
 		
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
+		Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f);
+		Animator* moveCenterYQueue(float y, float speed, float delay = 0.0f);
 		Animator* scaleXQueue(float x, float speed, float delay = 0.0f);
 		Animator* scaleYQueue(float y, float speed, float delay = 0.0f);
 		Animator* resizeXQueue(float x, float speed, float delay = 0.0f);
@@ -227,6 +233,8 @@ namespace aprilui
 		void scaleQueue(gvec2 scale, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
 		void resizeQueue(gvec2 size, float speed, float delay = 0.0f);
+		void moveCenterQueue(float x, float y, float speed, float delay = 0.0f);
+		void moveCenterQueue(gvec2 center, float speed, float delay = 0.0f);
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
 		
@@ -237,6 +245,8 @@ namespace aprilui
 		void resizeXStop();
 		void resizeYStop();
 		void rotateStop();
+		void moveCenterXStop();
+		void moveCenterYStop();
 		void fadeRedStop();
 		void fadeGreenStop();
 		void fadeBlueStop();
@@ -244,6 +254,7 @@ namespace aprilui
 		void moveStop();
 		void scaleStop();
 		void resizeStop();
+		void moveCenterStop();
 		void fadeColorStop();
 		
 		DEPRECATED_ATTRIBUTE void moveToFront() { if (this->mParent != NULL) { this->mParent->getChildren().remove(this); this->mParent->getChildren().push_back(this); } }
