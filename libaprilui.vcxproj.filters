@@ -176,6 +176,12 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\animators\AnimatorCenterMoverX.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animators\AnimatorCenterMoverY.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\aprilui\Animators.h">
@@ -339,6 +345,12 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\Texture.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorCenterMoverX.h">
+      <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\AnimatorCenterMoverY.h">
+      <Filter>Header Files\Animators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.91
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -37,6 +37,7 @@ namespace aprilui
 			int getFrameCount() { return this->mFrameCount; }
 			void setFrameCount(int value) { this->mFrameCount = value; }
 			bool setProperty(chstr name, chstr value);
+
 			void notifyEvent(chstr name, void* params);
 			
 			void update(float k);
@@ -46,6 +47,9 @@ namespace aprilui
 			int mFirstFrame;
 			int mFrameCount;
 			
+			float _getObjectValue() { return 0.0f; }
+			void _setObjectValue(float value) { }
+
 		};
 	}
 }

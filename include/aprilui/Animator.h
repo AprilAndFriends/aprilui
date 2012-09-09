@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 1.91
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -79,6 +79,8 @@ namespace aprilui
 		
 		hstr getProperty(chstr name, bool* property_exists);
 		bool setProperty(chstr name, chstr value);
+
+		void notifyEvent(chstr name, void* params);
 		
 		void update(float k);
 		
@@ -101,7 +103,13 @@ namespace aprilui
 		float (*mCustomFunction)(Animator*, float);
 		
 		float _calculateValue(float k);
-		bool _checkUpdate(float k);		
+		bool _checkUpdate(float k);
+
+		void _valueUpdateSimple(float k);
+		void _valueUpdateUChar(float k);
+
+		virtual float _getObjectValue() = 0;
+		virtual void _setObjectValue(float value) = 0;
 
 	};
 

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 1.92
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -18,18 +18,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
-#include "Animator.h"
-#include "AnimatorAlphaChanger.h"
-#include "AnimatorBlueChanger.h"
-#include "AnimatorGreenChanger.h"
-#include "AnimatorMoverX.h"
-#include "AnimatorMoverY.h"
-#include "AnimatorRedChanger.h"
-#include "AnimatorResizerX.h"
-#include "AnimatorResizerY.h"
-#include "AnimatorRotator.h"
-#include "AnimatorScalerX.h"
-#include "AnimatorScalerY.h"
+#include "Animators.h"
 #include "aprilui.h"
 #include "apriluiUtil.h"
 #include "CallbackEvent.h"
@@ -1137,6 +1126,20 @@ namespace aprilui
 		return animatorRotator;
 	}
 
+	Animator* Object::moveCenterX(float x, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed);
+		return animatorCenterMoverX;
+	}
+
+	Animator* Object::moveCenterY(float y, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed);
+		return animatorCenterMoverY;
+	}
+
 	Animator* Object::fadeRed(unsigned char r, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
@@ -1213,6 +1216,22 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, size.y, speed);
 	}
 
+	void Object::moveCenter(float x, float y, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
+		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed);
+	}
+
+	void Object::moveCenter(gvec2 center, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
+		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, center.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, center.y, speed);
+	}
+
 	void Object::fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
@@ -1279,6 +1298,18 @@ namespace aprilui
 		return animatorRotator;
 	}
 
+	Animator* Object::moveCenterXQueue(float x, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed, delay);
+		return animatorCenterMoverX;
+	}
+
+	Animator* Object::moveCenterYQueue(float y, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed, delay);
+		return animatorCenterMoverY;
+	}
+
 	Animator* Object::fadeRedQueue(unsigned char r, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)r, speed, delay);
@@ -1339,6 +1370,18 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, size.y, speed, delay);
 	}
 
+	void Object::moveCenterQueue(float x, float y, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed, delay);
+	}
+
+	void Object::moveCenterQueue(gvec2 center, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, center.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, center.y, speed, delay);
+	}
+
 	void Object::fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)r, speed, delay);
@@ -1390,6 +1433,16 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(Rotator);
 	}
 
+	void Object::moveCenterXStop()
+	{
+		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
+	}
+
+	void Object::moveCenterYStop()
+	{
+		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
+	}
+
 	void Object::fadeRedStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
@@ -1426,6 +1479,12 @@ namespace aprilui
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
+	}
+
+	void Object::moveCenterStop()
+	{
+		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
+		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
 	}
 
 	void Object::fadeColorStop()
