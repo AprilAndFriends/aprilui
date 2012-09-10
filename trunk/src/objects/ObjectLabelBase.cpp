@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.01
 /// 
 /// @section LICENSE
 /// 
@@ -25,12 +25,17 @@ namespace aprilui
 {
 	LabelBase::LabelBase()
 	{
+		this->mText = "";
+		this->mTextKey = "";
+		this->mFontName = "";
+		this->mTextFormatting = true;
+		this->mTextColor = APRIL_COLOR_WHITE;
+		this->mDrawOffset.set(0.0f, 0.0f);
 		this->mHorzFormatting = atres::CENTER_WRAPPED;
 		this->mVertFormatting = atres::CENTER;
 		this->mFontEffect = atres::NONE;
-		this->mTextFormatting = true;
-		this->mText = "";
-		this->mTextKey = "";
+		this->mUseFontEffectColor = false;
+		this->mFontEffectColor = APRIL_COLOR_BLACK;
 	}
 
 	LabelBase::~LabelBase()
@@ -51,13 +56,18 @@ namespace aprilui
 			return;
 		}
 		hstr text = this->mText;
+		hstr colorCode = "";
+		if (this->mUseFontEffectColor)
+		{
+			colorCode += ":" + this->mFontEffectColor.hex();
+		}
 		switch (this->mFontEffect)
 		{
 		case atres::BORDER:
-			text = "[b]" + text;
+			text = "[b" + colorCode + "]" + text;
 			break;
 		case atres::SHADOW:
-			text = "[s]" + text;
+			text = "[s" + colorCode + "]" + text;
 			break;
 		default:
 			break;
@@ -100,9 +110,15 @@ namespace aprilui
 		if (name == "text_color")	return this->getTextColor().hex();
 		if (name == "effect")
 		{
-			if (this->mFontEffect == atres::SHADOW)	return "shadow";
-			if (this->mFontEffect == atres::BORDER)	return "border";
-			if (this->mFontEffect == atres::NONE)	return "none";
+			hstr effect = "";
+			if (this->mFontEffect == atres::SHADOW)	effect = "shadow";
+			if (this->mFontEffect == atres::BORDER)	effect = "border";
+			if (this->mFontEffect == atres::NONE)	effect = "none";
+			if (this->mUseFontEffectColor)
+			{
+				effect += ":" + this->mFontEffectColor.hex();
+			}
+			return effect;
 		}
 		if (name == "offset_x")		return this->mDrawOffset.x;
 		if (name == "offset_y")		return this->mDrawOffset.y;
@@ -146,9 +162,19 @@ namespace aprilui
 		}
 		else if (name == "effect")
 		{
-			if (value == "none")		this->setFontEffect(atres::NONE);
-			else if (value == "shadow")	this->setFontEffect(atres::SHADOW);
-			else if (value == "border")	this->setFontEffect(atres::BORDER);
+			harray<hstr> values = value.split(":", -1, true);
+			if (values.size() > 0)
+			{
+				if (values[0] == "none")		this->setFontEffect(atres::NONE);
+				else if (values[0] == "shadow")	this->setFontEffect(atres::SHADOW);
+				else if (values[0] == "border")	this->setFontEffect(atres::BORDER);
+				this->setUseFontEffectColor(false);
+				if (values.size() > 1 && values[1].is_hex() && (values[1].size() == 6 || values[1].size() == 8))
+				{
+					this->setUseFontEffectColor(true);
+					this->setFontEffectColor(values[1]);
+				}
+			}
 		}
 		else if (name == "offset_x")	this->mDrawOffset.x = (float)value;
 		else if (name == "offset_y")	this->mDrawOffset.y = (float)value;

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.01
 /// 
 /// @section LICENSE
 /// 
@@ -44,6 +44,9 @@ namespace aprilui
 		hstr getFont() { return this->mFontName; }
 		void setFont(chstr value) { this->mFontName = value; }
 		
+		april::Color getTextColor() { return this->mTextColor; }
+		void setTextColor(april::Color value) { this->mTextColor = value; }
+		void setTextColor(chstr value) { this->mTextColor.set(value); }
 		gvec2 getDrawOffset() { return this->mDrawOffset; }
 		void setDrawOffset(gvec2 value) { this->mDrawOffset = value; }
 		atres::Alignment getHorzFormatting() { return this->mHorzFormatting; }
@@ -52,9 +55,11 @@ namespace aprilui
 		void setVertFormatting(atres::Alignment value) { this->mVertFormatting = value; }
 		atres::Effect getFontEffect() { return this->mFontEffect; }
 		void setFontEffect(atres::Effect value) { this->mFontEffect = value; }
-		april::Color getTextColor() { return this->mTextColor; }
-		void setTextColor(april::Color value) { this->mTextColor = value; }
-		void setTextColor(chstr value) { this->mTextColor.set(value); }
+		bool isUseFontEffectColor() { return this->mUseFontEffectColor; }
+		void setUseFontEffectColor(bool value) { this->mUseFontEffectColor = value; }
+		april::Color getFontEffectColor() { return this->mFontEffectColor; }
+		void setFontEffectColor(april::Color value) { this->mFontEffectColor = value; }
+		void setFontEffectColor(chstr value) { this->mFontEffectColor.set(value); }
 		
 		virtual void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
@@ -65,11 +70,13 @@ namespace aprilui
 		hstr mTextKey;
 		hstr mFontName;
 		bool mTextFormatting;
+		april::Color mTextColor;
 		gvec2 mDrawOffset;
 		atres::Alignment mHorzFormatting;
 		atres::Alignment mVertFormatting;
 		atres::Effect mFontEffect;
-		april::Color mTextColor;
+		bool mUseFontEffectColor;
+		april::Color mFontEffectColor;
 		
 		void _drawLabel(grect rect, april::Color color);
 		
