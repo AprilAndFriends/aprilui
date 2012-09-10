@@ -158,6 +158,12 @@
 		D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9912158BE54D00C058CE /* EventReceiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D16E9915158BE54D00C058CE /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9913158BE54D00C058CE /* Texture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
+		D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
+		D1C2083415FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
+		D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */; };
+		D1C2083615FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */; };
+		D1C2083A15FDC57000AB5DCA /* AnimatorCenterMoverX.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1C2083B15FDC57000AB5DCA /* AnimatorCenterMoverY.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
 		D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
 		D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -271,6 +277,10 @@
 		D16E9912158BE54D00C058CE /* EventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventReceiver.h; path = include/aprilui/EventReceiver.h; sourceTree = "<group>"; };
 		D16E9913158BE54D00C058CE /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = include/aprilui/Texture.h; sourceTree = "<group>"; };
 		D1981D35140F913B0057C3AF /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
+		D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverX.cpp; sourceTree = "<group>"; };
+		D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverY.cpp; sourceTree = "<group>"; };
+		D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorCenterMoverX.h; path = include/aprilui/AnimatorCenterMoverX.h; sourceTree = "<group>"; };
+		D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorCenterMoverY.h; path = include/aprilui/AnimatorCenterMoverY.h; sourceTree = "<group>"; };
 		D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorTiledScrollerX.cpp; sourceTree = "<group>"; };
 		D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorTiledScrollerY.cpp; sourceTree = "<group>"; };
 		D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorTiledScrollerX.h; path = include/aprilui/AnimatorTiledScrollerX.h; sourceTree = "<group>"; };
@@ -354,6 +364,8 @@
 			children = (
 				D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */,
 				D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */,
+				D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */,
+				D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */,
 				7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */,
 				7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */,
 				7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */,
@@ -459,6 +471,8 @@
 				D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */,
 				D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */,
 				7F33B207120FE2D5004B5E89 /* Animator.h */,
+				D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */,
+				D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */,
 				7FA3014212B647E200F71E5E /* AnimatorMoverY.h */,
 				7FA3014112B647E200F71E5E /* AnimatorMoverX.h */,
 				7FC8041511EC721E00851062 /* Animators.h */,
@@ -574,6 +588,8 @@
 				7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */,
 				7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */,
 				7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */,
+				D1C2083A15FDC57000AB5DCA /* AnimatorCenterMoverX.h in Headers */,
+				D1C2083B15FDC57000AB5DCA /* AnimatorCenterMoverY.h in Headers */,
 				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
 				D16E9915158BE54D00C058CE /* Texture.h in Headers */,
 				C93D4A7614F288D30097AB06 /* apriluiUtil.h in Headers */,
@@ -710,6 +726,8 @@
 				C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */,
 				D16E990D158BE53800C058CE /* EventReceiver.cpp in Sources */,
 				D16E990F158BE53800C058CE /* Texture.cpp in Sources */,
+				D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */,
+				D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +783,8 @@
 				C93D4A7514F288D30097AB06 /* apriluiUtil.cpp in Sources */,
 				D16E990E158BE53800C058CE /* EventReceiver.cpp in Sources */,
 				D16E9910158BE53800C058CE /* Texture.cpp in Sources */,
+				D1C2083415FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */,
+				D1C2083615FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
