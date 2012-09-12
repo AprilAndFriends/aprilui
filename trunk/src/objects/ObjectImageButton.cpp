@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.05
 /// 
 /// @section LICENSE
 /// 
@@ -25,6 +25,10 @@ namespace aprilui
 		this->mPushedImage = NULL;
 		this->mHoverImage = NULL;
 		this->mDisabledImage = NULL;
+		this->mNormalImageName = "";
+		this->mHoverImageName = "";
+		this->mPushedImageName = "";
+		this->mDisabledImageName = "";
 	}
 
 	ImageButton::~ImageButton()
@@ -117,46 +121,74 @@ namespace aprilui
 		return Object::isCursorInside();
 	}
 	
-	hstr ImageButton::_getImageName(Image* image)
+	void ImageButton::setPushedImage(Image* image)
 	{
-		Dataset* dataset = image->getDataset();
-		return dataset == this->mDataset ? image->getName() : image->getFullName();
+		this->mPushedImage = image;
+		this->mPushedImageName = (image != NULL ? image->getFullName() : "null");
 	}
 
-	hstr ImageButton::getPushedImageName()
+	void ImageButton::setPushedImageByName(chstr name)
 	{
-		return this->_getImageName(this->mPushedImage);
+		this->setPushedImage(this->mDataset->getImage(name));
+	}
+
+	void ImageButton::setHoverImage(Image* image)
+	{
+		this->mHoverImage = image;
+		this->mHoverImageName = (image != NULL ? image->getFullName() : "null");
+	}
+
+	void ImageButton::setHoverImageByName(chstr name)
+	{
+		this->setHoverImage(this->mDataset->getImage(name));
+	}
+
+	void ImageButton::setDisabledImage(Image* image)
+	{
+		this->mDisabledImage = image;
+		this->mDisabledImageName = (image != NULL ? image->getFullName() : "null");
+	}
+
+	void ImageButton::setDisabledImageByName(chstr name)
+	{
+		this->setDisabledImage(this->mDataset->getImage(name));
+	}
+
+	bool ImageButton::trySetPushedImageByName(chstr name)
+	{
+		if (this->mPushedImageName != name)
+		{
+			this->setPushedImageByName(name);
+			return true;
+		}
+		return false;
 	}
 	
-	hstr ImageButton::getHoverImageName()
+	bool ImageButton::trySetHoverImageByName(chstr name)
 	{
-		return this->_getImageName(this->mHoverImage);
+		if (this->mHoverImageName != name)
+		{
+			this->setHoverImageByName(name);
+			return true;
+		}
+		return false;
 	}
 	
-	hstr ImageButton::getDisabledImageName()
+	bool ImageButton::trySetDisabledImageByName(chstr name)
 	{
-		return this->_getImageName(this->mDisabledImage);
+		if (this->mDisabledImageName != name)
+		{
+			this->setDisabledImageByName(name);
+			return true;
+		}
+		return false;
 	}
-
-	void ImageButton::setPushedImageByName(chstr image)
-	{
-		this->setPushedImage(this->mDataset->getImage(image));
-	}
-
-	void ImageButton::setHoverImageByName(chstr image)
-	{
-		this->setHoverImage(this->mDataset->getImage(image));
-	}
-
-	void ImageButton::setDisabledImageByName(chstr image)
-	{
-		this->setDisabledImage(this->mDataset->getImage(image));
-	}
-
+	
 	void ImageButton::setImage(Image* image)
 	{
 		ImageBox::setImage(image);
-		this->mNormalImage = image;
+		this->mNormalImage = this->mImage;
+		this->mNormalImageName = this->mImageName;
 	}
 	
 	hstr ImageButton::getProperty(chstr name, bool* property_exists)

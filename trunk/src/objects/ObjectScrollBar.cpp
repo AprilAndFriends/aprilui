@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.05
 /// 
 /// @section LICENSE
 /// 
@@ -152,21 +152,21 @@ namespace aprilui
 					_SET_MOUSEDOWN_EVENT_FUNCTION(this->mButtonBar, _mouseDownScrollBar);
 					_SET_CLICK_EVENT_FUNCTION(this->mButtonBar, _clickScrollBar);
 				}
-				this->mButtonBegin->setImageByName(this->mSkinName + "/" + this->_getSkinNameBeginNormal());
-				this->mButtonBegin->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBeginHover());
-				this->mButtonBegin->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBeginPushed());
+				this->mButtonBegin->trySetImageByName(this->mSkinName + "/" + this->_getSkinNameBeginNormal());
+				this->mButtonBegin->trySetHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBeginHover());
+				this->mButtonBegin->trySetPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBeginPushed());
 				this->mButtonBegin->resizeToFitImage();
-				this->mButtonEnd->setImageByName(this->mSkinName + "/" + this->_getSkinNameEndNormal());
-				this->mButtonEnd->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameEndHover());
-				this->mButtonEnd->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameEndPushed());
+				this->mButtonEnd->trySetImageByName(this->mSkinName + "/" + this->_getSkinNameEndNormal());
+				this->mButtonEnd->trySetHoverImageByName(this->mSkinName + "/" + this->_getSkinNameEndHover());
+				this->mButtonEnd->trySetPushedImageByName(this->mSkinName + "/" + this->_getSkinNameEndPushed());
 				this->mButtonEnd->resizeToFitImage();
-				this->mButtonBack->setImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
-				this->mButtonBack->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
-				this->mButtonBack->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
+				this->mButtonBack->trySetImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
+				this->mButtonBack->trySetHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
+				this->mButtonBack->trySetPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBackground());
 				this->mButtonBack->resizeToFitImage();
-				this->mButtonBar->setImageByName(this->mSkinName + "/" + this->_getSkinNameBarNormal());
-				this->mButtonBar->setHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBarHover());
-				this->mButtonBar->setPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBarPushed());
+				this->mButtonBar->trySetImageByName(this->mSkinName + "/" + this->_getSkinNameBarNormal());
+				this->mButtonBar->trySetHoverImageByName(this->mSkinName + "/" + this->_getSkinNameBarHover());
+				this->mButtonBar->trySetPushedImageByName(this->mSkinName + "/" + this->_getSkinNameBarPushed());
 				this->mButtonBar->resizeToFitImage();
 				this->_updateChildren();
 				this->_updateBar();
