@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.05
 /// 
 /// @section LICENSE
 /// 
@@ -38,8 +38,6 @@ namespace aprilui
 		this->mImage = image;
 		if (image != NULL)
 		{
-			Dataset* dataset = image->getDataset();
-			this->mImageName = dataset == mDataset ? image->getName() : image->getFullName();
 			grect rect = image->getSrcRect();
 			if (this->mRect.w == -1)
 			{
@@ -51,6 +49,7 @@ namespace aprilui
 				this->mRect.h = rect.h * aprilui::getDefaultScale();
 				this->mCenter.y = this->mRect.h / 2;
 			}
+			this->mImageName = image->getFullName();
 		}
 		else
 		{
@@ -58,10 +57,19 @@ namespace aprilui
 		}
 	}
 
-	void ImageBox::setImageByName(chstr image)
+	void ImageBox::setImageByName(chstr name)
 	{
-		this->setImage(this->mDataset->getImage(image));
-		this->mImageName = image;
+		this->setImage(this->mDataset->getImage(name));
+	}
+
+	bool ImageBox::trySetImageByName(chstr name)
+	{
+		if (this->mImageName != name)
+		{
+			this->setImageByName(name);
+			return true;
+		}
+		return false;
 	}
 	
 	void ImageBox::notifyEvent(chstr name, void* params)

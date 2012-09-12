@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.05
 /// 
 /// @section LICENSE
 /// 
@@ -34,25 +34,32 @@ namespace aprilui
 		
 		hstr getName();
 		bool isCursorInside();
-		Image* getPushedImage() { return this->mPushedImage; }
-		hstr getPushedImageName();
-		void setPushedImage(Image* image) { this->mPushedImage = image; }
-		void setPushedImageByName(chstr image);
-
+		
 		Image* getHoverImage() { return this->mHoverImage; }
-		hstr getHoverImageName();
-		void setHoverImage(Image* image) { this->mHoverImage = image; }
+		void setHoverImage(Image* image);
+		hstr getHoverImageName() { return this->mHoverImageName; }
 		void setHoverImageByName(chstr image);
-
+		Image* getPushedImage() { return this->mPushedImage; }
+		void setPushedImage(Image* image);
+		hstr getPushedImageName() { return this->mPushedImageName; }
+		void setPushedImageByName(chstr image);
 		Image* getDisabledImage() { return this->mDisabledImage; }
-		hstr getDisabledImageName();
-		void setDisabledImage(Image* image) { this->mDisabledImage = image; }
+		void setDisabledImage(Image* image);
+		hstr getDisabledImageName() { return this->mDisabledImageName; }
 		void setDisabledImageByName(chstr image);
+
 		Image* getImage() { return this->mNormalImage; };
 		void setImage(Image* value);
 		Object* getParent();
 		Dataset* getDataset();
 		
+		/// @brief Optimized version.
+		bool trySetHoverImageByName(chstr name);
+		/// @brief Optimized version.
+		bool trySetPushedImageByName(chstr name);
+		/// @brief Optimized version.
+		bool trySetDisabledImageByName(chstr name);
+
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 
@@ -70,11 +77,14 @@ namespace aprilui
 		Image* mHoverImage;
 		Image* mPushedImage;
 		Image* mDisabledImage;
+		hstr mNormalImageName;
+		hstr mHoverImageName;
+		hstr mPushedImageName;
+		hstr mDisabledImageName;
 		
 		void update(float k);
 		void OnDraw();
 		
-		hstr _getImageName(Image* image);
 	};
 }
 

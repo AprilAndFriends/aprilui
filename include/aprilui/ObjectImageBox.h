@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.05
 /// 
 /// @section LICENSE
 /// 
@@ -36,6 +36,8 @@ namespace aprilui
 		virtual void setImage(Image* value);
 		hstr getImageName() { return this->mImageName; }
 		void setImageByName(chstr name);
+		/// @brief Optimized version.
+		bool trySetImageByName(chstr name);
 
 		void notifyEvent(chstr name, void* params);
 		void resizeToFitImage();
