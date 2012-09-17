@@ -65,7 +65,6 @@ namespace aprilui
 			return;
 		}
 		bool cursorInside = this->isCursorInside();
-		
 		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
 		// so why bother providing a pushed image when this can work. also it covers situations where people forget to set a pushed image
 		if (this->mPushed && this->mPushedImage == NULL && cursorInside)
