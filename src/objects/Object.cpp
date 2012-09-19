@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.06
 /// 
 /// @section LICENSE
 /// 
@@ -787,6 +787,15 @@ namespace aprilui
 			this->setAnchorRight(anchors.contains("right"));
 			this->setAnchorTop(anchors.contains("top"));
 			this->setAnchorBottom(anchors.contains("bottom"));
+			anchors.remove_all("left");
+			anchors.remove_all("right");
+			anchors.remove_all("top");
+			anchors.remove_all("bottom");
+			if (anchors.size() > 0)
+			{
+				aprilui::log("WARNING: 'anchors=' does not support values '" + anchors.join(",") + "'.");
+				return false;
+			}
 		}
 		else if	(name == "clip")					this->setClip(value);
 		else if	(name == "use_disabled_alpha")		this->setUseDisabledAlpha(value);
