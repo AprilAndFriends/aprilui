@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.01
+/// @version 2.06
 /// 
 /// @section LICENSE
 /// 
@@ -103,7 +103,7 @@ namespace aprilui
 		}
 		if (name == "vert_formatting")
 		{
-			if (this->mVertFormatting == atres::TOP)		return "top";
+			if (this->mVertFormatting == atres::TOP)	return "top";
 			if (this->mVertFormatting == atres::CENTER)	return "center";
 			if (this->mVertFormatting == atres::BOTTOM)	return "bottom";
 		}
@@ -129,7 +129,7 @@ namespace aprilui
 		return "";
 	}
 	
-	bool LabelBase::setProperty(chstr name,chstr value)
+	bool LabelBase::setProperty(chstr name, chstr value)
 	{
 		if (name == "font")				this->setFont(value);
 		else if (name == "text_key")	this->setTextKey(value);
@@ -148,12 +148,22 @@ namespace aprilui
 			else if (value == "right_wrapped")	this->setHorzFormatting(atres::RIGHT_WRAPPED);
 			else if (value == "center_wrapped")	this->setHorzFormatting(atres::CENTER_WRAPPED);
 			else if (value == "justified")		this->setHorzFormatting(atres::JUSTIFIED);
+			else
+			{
+				aprilui::log("WARNING: 'horz_formatting=' does not support value '" + value + "'.");
+				return false;
+			}
 		}
 		else if (name == "vert_formatting")
 		{
 			if (value == "top")			this->setVertFormatting(atres::TOP);
 			else if (value == "center")	this->setVertFormatting(atres::CENTER);
 			else if (value == "bottom")	this->setVertFormatting(atres::BOTTOM);
+			else
+			{
+				aprilui::log("WARNING: 'vert_formatting=' does not support value '" + value + "'.");
+				return false;
+			}
 		}
 		else if (name == "text_color")	this->setTextColor(value);
 		else if (name == "color")
@@ -162,17 +172,31 @@ namespace aprilui
 		}
 		else if (name == "effect")
 		{
+			this->setFontEffect(atres::NONE);
+			this->setUseFontEffectColor(false);
 			harray<hstr> values = value.split(":", -1, true);
 			if (values.size() > 0)
 			{
 				if (values[0] == "none")		this->setFontEffect(atres::NONE);
 				else if (values[0] == "shadow")	this->setFontEffect(atres::SHADOW);
 				else if (values[0] == "border")	this->setFontEffect(atres::BORDER);
-				this->setUseFontEffectColor(false);
-				if (values.size() > 1 && values[1].is_hex() && (values[1].size() == 6 || values[1].size() == 8))
+				else
 				{
-					this->setUseFontEffectColor(true);
-					this->setFontEffectColor(values[1]);
+					aprilui::log("WARNING: 'effect=' does not support value '" + values[0] + "'.");
+					return false;
+				}
+				if (values.size() > 1)
+				{
+					if (values[1].is_hex() && (values[1].size() == 6 || values[1].size() == 8))
+					{
+						this->setUseFontEffectColor(true);
+						this->setFontEffectColor(values[1]);
+					}
+					else
+					{
+						aprilui::log("WARNING: 'effect=' is using invalid color modifier '" + values[1] + "'.");
+						return false;
+					}
 				}
 			}
 		}
