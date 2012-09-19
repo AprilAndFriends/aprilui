@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -43,10 +43,8 @@ namespace aprilui
 	bool cursorVisible = true;
 	gvec2 cursorPosition;
 	bool limitCursorToViewport = false;
-	bool limitCursorToScreenViewport = true;
 	bool hoverEffectEnabled = true;
 	grect viewport;
-	grect screenViewport;
 	bool debugEnabled = false;
 	hstr defaultTextsPath = "texts";
 	hstr defaultLocalization = "";
@@ -82,16 +80,13 @@ namespace aprilui
 		registerLock = false;
 		defaultScale = 1.0f;
 		cursorVisible = true;
-		limitCursorToViewport = false;
-		limitCursorToScreenViewport = true;
+		limitCursorToViewport = true;
 		hoverEffectEnabled = true;
 		debugEnabled = false;
 		defaultTextsPath = "texts";
 		localization = "";
 		textureIdleUnloadTime = 0.0f;
-		viewport.w = (float)april::window->getWidth();
-		viewport.h = (float)april::window->getHeight();
-		screenViewport = viewport;
+		viewport.setSize((float)april::window->getWidth(), (float)april::window->getHeight());
 		harray<unsigned char> allowedButtons;
 		allowedButtons += april::AK_LBUTTON;
 		ButtonBase::setAllowedButtons(allowedButtons);
@@ -186,16 +181,6 @@ namespace aprilui
 		viewport = value;
 	}
 	
-	grect getScreenViewport()
-	{
-		return screenViewport;
-	}
-	
-	void setScreenViewport(grect value)
-	{
-		screenViewport = value;
-	}
-
 	bool isLimitCursorToViewport()
 	{
 		return limitCursorToViewport;
@@ -204,16 +189,6 @@ namespace aprilui
 	void setLimitCursorToViewport(bool value)
 	{
 		limitCursorToViewport = value;
-	}
-
-	bool isLimitCursorToScreenViewport()
-	{
-		return limitCursorToScreenViewport;
-	}
-
-	void setLimitCursorToScreenViewport(bool value)
-	{
-		limitCursorToScreenViewport = value;
 	}
 
 	bool isHoverEffectEnabled()
@@ -317,27 +292,21 @@ namespace aprilui
 		return NULL;
 	}
 
-	gvec2 transformWindowPoint(gvec2 pt)
+	gvec2 transformWindowPoint(gvec2 point)
 	{
-		pt.x = (float)(int)(pt.x * screenViewport.w / april::window->getWidth()) - viewport.x;
-		pt.y = (float)(int)(pt.y * screenViewport.h / april::window->getHeight()) - viewport.y;
+		point.x = (float)(int)(point.x * viewport.w / april::window->getWidth()) - viewport.x;
+		point.y = (float)(int)(point.y * viewport.h / april::window->getHeight()) - viewport.y;
 		if (limitCursorToViewport)
 		{
-			pt.x = hclamp(pt.x, 0.0f, viewport.w - 1);
-			pt.y = hclamp(pt.y, 0.0f, viewport.h - 1);
+			point.x = hclamp(point.x, 0.0f, viewport.w - 1);
+			point.y = hclamp(point.y, 0.0f, viewport.h - 1);
 		}
-		else if (limitCursorToScreenViewport)
-		{
-			pt.x = hclamp(pt.x, -viewport.x, screenViewport.w - viewport.x - 1);
-			pt.y = hclamp(pt.y, -viewport.y, screenViewport.w - viewport.y - 1);
-		}
-		return pt;
+		return point;
 	}
 	
 	void updateCursorPosition()
 	{
-		cursorPosition = april::window->getCursorPosition();
-		cursorPosition = transformWindowPoint(cursorPosition);
+		cursorPosition = transformWindowPoint(april::window->getCursorPosition());
 	}
 	
 	void setCursorPosition(gvec2 position)
