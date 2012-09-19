@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -48,12 +48,8 @@ namespace aprilui
 	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport grect getViewport();
 	apriluiFnExport void setViewport(grect value);
-	apriluiFnExport grect getScreenViewport();
-	apriluiFnExport void setScreenViewport(grect value);
 	apriluiFnExport bool isLimitCursorToViewport();
 	apriluiFnExport void setLimitCursorToViewport(bool value);
-	apriluiFnExport bool isLimitCursorToScreenViewport();
-	apriluiFnExport void setLimitCursorToScreenViewport(bool value);
 	apriluiFnExport bool isHoverEffectEnabled();
 	apriluiFnExport void setHoverEffectEnabled(bool value);
 	apriluiFnExport hstr getDefaultTextsPath();
