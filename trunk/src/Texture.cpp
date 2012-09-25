@@ -81,12 +81,12 @@ namespace aprilui
 	{
 		if (this->mDynamic && this->mTexture->isLoaded())
 		{
-			// TODO - change to aprilui variable
 			float maxTime = aprilui::getTextureIdleUnloadTime();
-			mUnusedTime += k;
+			this->mUnusedTime += k;
 			if (maxTime > 0.0f && mUnusedTime > maxTime)
 			{
 				this->mTexture->unload();
+				this->mUnusedTime = 0.0f; // safe guard if texture is reloaded externally at some point
 			}
 		}
 	}
