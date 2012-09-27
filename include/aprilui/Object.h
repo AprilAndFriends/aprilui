@@ -95,6 +95,7 @@ namespace aprilui
 		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
+		hstr getProperty(chstr prop, bool* prop_exists); // new-april compatibility
 		
 		void _setTypeName(chstr type) { mTypeName = type; }
 		hstr getType() { return mTypeName; }

@@ -305,6 +305,12 @@ namespace aprilui
 		}
 	}
 	
+	hstr Object::getProperty(chstr prop, bool* prop_exists) // new-april compatibility
+	{
+		if (prop_exists) *prop_exists = true;
+		return "";
+	}
+	
 	grect Object::getBoundingRect(aprilui::Object* overrideRoot)
 	{
 		return mRect;
