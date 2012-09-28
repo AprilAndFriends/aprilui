@@ -79,6 +79,7 @@ namespace aprilui
 	apriluiFnExport void reloadTextures();
 
 	apriluiFnExport bool setTextureExtensionPrefixes(harray<hstr> prefixes, harray<float> scales);
+	apriluiFnExport void setTextureExtensionScales(harray<hstr> extensions, harray<float> scales);
 	apriluiFnExport float getTextureExtensionScale(chstr extension);
 	apriluiFnExport float findTextureExtensionScale(chstr filename);
 	
