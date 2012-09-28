@@ -50,7 +50,6 @@ namespace aprilui
 	hstr defaultLocalization = "";
 	hstr localization = "";
 	float textureIdleUnloadTime = 0.0f;
-	harray<hstr> extensionPrefixes;
 	hmap<hstr, float> extensionScales;
 	// TODO - hack, has to be removed
 	bool forcedDynamicLoading = false;
@@ -401,13 +400,9 @@ namespace aprilui
 		harray<hstr> defaultExtensions = currentExtensions;
 		foreach (hstr, it, currentExtensions)
 		{
-			foreach (hstr, it2, extensionPrefixes)
+			if ((*it).count('.') > 1) // if extension is using a prefix
 			{
-				if ((*it).starts_with(*it2))
-				{
-					defaultExtensions.remove(*it);
-					break;
-				}
+				defaultExtensions.remove(*it);
 			}
 		}
 		// adding new extensions and scales
@@ -428,15 +423,28 @@ namespace aprilui
 		{
 			newExtensionScales[newExtensions[i]] = newScales[i];
 		}
-		// if extension scales have not changed and prefix priority has not changed
-		if (newExtensionScales == extensionScales || prefixes == extensionPrefixes)
+		// if extension scales have not changed
+		if (extensionScales != newExtensionScales)
 		{
-			return false;
+			extensionScales = newExtensionScales;
+			april::setTextureExtensions(newExtensions);
+			return true;
 		}
-		extensionScales = newExtensionScales;
-		extensionPrefixes = prefixes;
-		april::setTextureExtensions(newExtensions);
-		return true;
+		return false;
+	}
+	
+	void setTextureExtensionScales(harray<hstr> extensions, harray<float> scales)
+	{
+		while (extensions.size() > scales.size())
+		{
+			scales += 1.0f;
+		}
+		extensionScales.clear();
+		for_iter (i, 0, extensions.size())
+		{
+			extensionScales[extensions[i]] = scales[i];
+		}
+		april::setTextureExtensions(extensions);
 	}
 	
 	float getTextureExtensionScale(chstr extension)
