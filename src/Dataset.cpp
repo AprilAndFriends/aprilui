@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -894,17 +894,6 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::unloadUnusedTextures()
-	{
-		foreach_m (Texture*, it, this->mTextures)
-		{
-			if (it->second->isDynamic() && it->second->getUnusedTime() > 1.0f)
-			{
-				it->second->unload();
-			}
-		}
-	}
-	
 	void Dataset::update(float k)
 	{
 		this->updateTextures(k);
@@ -923,6 +912,17 @@ namespace aprilui
 		foreach_m (aprilui::Object*, it, this->mObjects)
 		{
 			it->second->notifyEvent(name, params);
+		}
+	}
+	
+	void Dataset::unloadUnusedTextures()
+	{
+		foreach_m (Texture*, it, this->mTextures)
+		{
+			if (it->second->isDynamic() && it->second->getUnusedTime() > 1.0f)
+			{
+				it->second->unload();
+			}
 		}
 	}
 	

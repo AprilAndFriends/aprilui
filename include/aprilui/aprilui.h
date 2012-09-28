@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -32,11 +32,7 @@ namespace aprilui
 	class Image;
 	class Object;
 	
-	/// @brief Initializes AprilUI.
-	/// @param[in] hdEnabled The HD-enabled parameter.
-	/// @note HD-enabled textures are textures with .hd.EXT extensions with twice the size of the original texture.
-	/// Ideally "april::getSystemInfo().max_texture.size > 1024" should be passed on as hdEnabled parameter if you are using HD textures that have any dimension higher than 1024 px.
-	apriluiFnExport void init(bool hdEnabled = false);
+	apriluiFnExport void init();
 	apriluiFnExport void destroy();
 	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
 	apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
@@ -80,11 +76,11 @@ namespace aprilui
 	apriluiFnExport void update(float k);
 	apriluiFnExport void updateTextures(float k);
 	apriluiFnExport void unloadUnusedTextures();
-	apriluiFnExport void addTextureExtensionScale(chstr extension, float scale);
-	apriluiFnExport float getTextureExtensionScale(chstr extensions);
+	apriluiFnExport void reloadTextures();
+
+	apriluiFnExport bool setTextureExtensionPrefixes(harray<hstr> prefixes, harray<float> scales);
+	apriluiFnExport float getTextureExtensionScale(chstr extension);
 	apriluiFnExport float findTextureExtensionScale(chstr filename);
-	apriluiFnExport harray<hstr> getTextureExtensions();
-	apriluiFnExport void setTextureExtensionScales(harray<hstr> extensions, harray<float> scales);
 	
 	apriluiFnExport void onMouseDown(int button);
 	apriluiFnExport void onMouseUp(int button);
