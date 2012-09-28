@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -50,9 +50,10 @@ namespace aprilui
 	hstr defaultLocalization = "";
 	hstr localization = "";
 	float textureIdleUnloadTime = 0.0f;
+	harray<hstr> extensionPrefixes;
+	hmap<hstr, float> extensionScales;
 	// TODO - hack, has to be removed
 	bool forcedDynamicLoading = false;
-	hmap<hstr, float> extensionScales;
 
 	void aprilui_writelog(chstr message)
 	{
@@ -74,7 +75,7 @@ namespace aprilui
 		g_logFunction = fnptr;
 	}
 	
-	void init(bool hdEnabled)
+	void init()
 	{
 		aprilui::log("initializing aprilui");
 		registerLock = false;
@@ -120,21 +121,6 @@ namespace aprilui
 		REGISTER_ANIMATOR_TYPE(ScalerY);
 		REGISTER_ANIMATOR_TYPE(TiledScrollerX);
 		REGISTER_ANIMATOR_TYPE(TiledScrollerY);
-
-		if (hdEnabled)
-		{
-			harray<hstr> extensions = april::getTextureExtensions();
-			harray<hstr> newExtensions;
-			harray<float> newScales;
-			foreach (hstr, it, extensions)
-			{
-				newExtensions += ".hd" + (*it);
-				newScales += 0.5f;
-				newExtensions += (*it);
-				newScales += 1.0f;
-			}
-			setTextureExtensionScales(newExtensions, newScales);
-		}
 	}
 	
 	void destroy()
@@ -155,7 +141,7 @@ namespace aprilui
 	{
 		return debugEnabled;
 	}
-
+	
 	void setDebugEnabled(bool value)
 	{
 		debugEnabled = value;
@@ -185,22 +171,22 @@ namespace aprilui
 	{
 		return limitCursorToViewport;
 	}
-
+	
 	void setLimitCursorToViewport(bool value)
 	{
 		limitCursorToViewport = value;
 	}
-
+	
 	bool isHoverEffectEnabled()
 	{
 		return hoverEffectEnabled;
 	}
-
+	
 	void setHoverEffectEnabled(bool value)
 	{
 		hoverEffectEnabled = value;
 	}
-
+	
 	hstr getDefaultTextsPath()
 	{
 		return defaultTextsPath;
@@ -220,7 +206,7 @@ namespace aprilui
 	{
 		defaultLocalization = value;
 	}
-
+	
 	hstr getLocalization()
 	{
 		return localization;
@@ -240,22 +226,22 @@ namespace aprilui
 			it->second->notifyEvent("onLocalizationChanged", NULL);
 		}
 	}
-
+	
 	float getTextureIdleUnloadTime()
 	{
 		return textureIdleUnloadTime;
 	}
-
+	
 	void setTextureIdleUnloadTime(float value)
 	{
 		textureIdleUnloadTime = value;
 	}
-
+	
 	hmap<hstr, Dataset*> getDatasets()
 	{
 		return gDatasets;
 	}
-
+	
 	void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect))
 	{
 		if (gObjectFactories.has_key(typeName))
@@ -264,7 +250,7 @@ namespace aprilui
 		}
 		gObjectFactories[typeName] = factory;
 	}
-
+	
 	void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr))
 	{
 		if (gAnimatorFactories.has_key(typeName))
@@ -273,7 +259,7 @@ namespace aprilui
 		}
 		gAnimatorFactories[typeName] = factory;
 	}
-
+	
 	Object* createObject(chstr typeName, chstr name, grect rect)
 	{
 		if (gObjectFactories.has_key(typeName))
@@ -282,7 +268,7 @@ namespace aprilui
 		}
 		return NULL;
 	}
-
+	
 	Animator* createAnimator(chstr typeName, chstr name)
 	{
 		if (gAnimatorFactories.has_key(typeName))
@@ -291,7 +277,7 @@ namespace aprilui
 		}
 		return NULL;
 	}
-
+	
 	gvec2 transformWindowPoint(gvec2 point)
 	{
 		point.x = (float)(int)(point.x * viewport.w / april::window->getWidth()) - viewport.x;
@@ -318,7 +304,7 @@ namespace aprilui
 	{
 		return cursorPosition;
 	}
-
+	
 	void setCursorImage(Image* image)
 	{
 		gCursor = image;
@@ -350,7 +336,7 @@ namespace aprilui
 		}
 		return gDatasets[name];
 	}
-
+	
 	void _registerDataset(chstr name, Dataset* dataset)
 	{
 		if (!registerLock)
@@ -378,7 +364,7 @@ namespace aprilui
 			it->second->update(k);
 		}
 	}
-
+	
 	void updateTextures(float k)
 	{
 		foreach_m (Dataset*, it, gDatasets)
@@ -395,18 +381,62 @@ namespace aprilui
 		}
 	}
 	
-	void addTextureExtensionScale(chstr extension, float scale)
+	void reloadTextures()
 	{
-		extensionScales[extension] = scale;
-		if (!april::getTextureExtensions().contains(extension))
+		foreach_m (Dataset*, it, gDatasets)
 		{
-			april::addTextureExtension(extension);
+			it->second->reloadTextures();
 		}
 	}
-
-	harray<hstr> getTextureExtensions()
+	
+	bool setTextureExtensionPrefixes(harray<hstr> prefixes, harray<float> scales)
 	{
-		return april::getTextureExtensions();
+		if (prefixes.size() != scales.size())
+		{
+			aprilui::log("WARNING! 'setTextureExtensionPrefixes()' called with unmatching 'prefixes' and 'scales' sizes");
+			return false;
+		}
+		harray<hstr> currentExtensions = april::getTextureExtensions();
+		// removing all non-default extensions
+		harray<hstr> defaultExtensions = currentExtensions;
+		foreach (hstr, it, currentExtensions)
+		{
+			foreach (hstr, it2, extensionPrefixes)
+			{
+				if ((*it).starts_with(*it2))
+				{
+					defaultExtensions.remove(*it);
+					break;
+				}
+			}
+		}
+		// adding new extensions and scales
+		harray<hstr> newExtensions;
+		harray<float> newScales;
+		foreach (hstr, it, defaultExtensions)
+		{
+			for_iter (i, 0, prefixes.size())
+			{
+				newExtensions += prefixes[i] + (*it);
+				newScales += scales[i];
+			}
+			newExtensions += (*it);
+			newScales += 1.0f;
+		}
+		hmap<hstr, float> newExtensionScales;
+		for_iter (i, 0, newExtensions.size())
+		{
+			newExtensionScales[newExtensions[i]] = newScales[i];
+		}
+		// if extension scales have not changed and prefix priority has not changed
+		if (newExtensionScales == extensionScales || prefixes == extensionPrefixes)
+		{
+			return false;
+		}
+		extensionScales = newExtensionScales;
+		extensionPrefixes = prefixes;
+		april::setTextureExtensions(newExtensions);
+		return true;
 	}
 	
 	float getTextureExtensionScale(chstr extension)
@@ -425,20 +455,6 @@ namespace aprilui
 			}
 		}
 		return 1.0f;
-	}
-	
-	void setTextureExtensionScales(harray<hstr> extensions, harray<float> scales)
-	{
-		while (extensions.size() > scales.size())
-		{
-			scales += 1.0f;
-		}
-		extensionScales.clear();
-		for_iter (i, 0, extensions.size())
-		{
-			extensionScales[extensions[i]] = scales[i];
-		}
-		april::setTextureExtensions(extensions);
 	}
 	
 	void onMouseDown(int button)
@@ -508,9 +524,9 @@ namespace aprilui
 	void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); } // DEPRECATED
 	void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); } // DEPRECATED
 	void OnChar(unsigned int charcode) { onChar(charcode); } // DEPRECATED
-
+	
 	// TODO - hack, has to be removed
 	bool getForcedDynamicLoading() { return forcedDynamicLoading; }
 	void setForcedDynamicLoading(bool value) { forcedDynamicLoading = value; }
-
+	
 }
