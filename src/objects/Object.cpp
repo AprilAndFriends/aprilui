@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.06
+/// @version 2.21
 /// 
 /// @section LICENSE
 /// 
@@ -668,24 +668,28 @@ namespace aprilui
 	}
 
 	// TODO - this needs to be seriously refactored
-	void Object::triggerEvent(chstr name, unsigned int keycode, chstr extra)
+	bool Object::triggerEvent(chstr name, unsigned int keycode, chstr extra)
 	{
 		if (this->mEvents.has_key(name))
 		{
 			gvec2 cursorPosition = aprilui::getCursorPosition();
 			EventArgs args(this, cursorPosition.x, cursorPosition.y, keycode, extra);
 			this->mEvents[name]->execute(&args);
+			return true;
 		}
+		return false;
 	}
 
 	// TODO - this needs to be seriously refactored
-	void Object::triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
+	bool Object::triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
 	{
 		if (this->mEvents.has_key(name))
 		{
 			EventArgs args(this, x, y, keycode, extra);
 			this->mEvents[name]->execute(&args);
+			return true;
 		}
+		return false;
 	}
 
 	void Object::resetCenter()

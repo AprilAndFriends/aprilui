@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.21
 /// 
 /// @section LICENSE
 /// 
@@ -273,9 +273,9 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return this->getBoundingRect(overrideRoot); }
 		
 		// TODO - this needs to be seriously refactored
-		void triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
+		bool triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
 		// TODO - this needs to be seriously refactored
-		void triggerEvent(chstr name, float x, float y, unsigned int keycode = 0, chstr extra = "");
+		bool triggerEvent(chstr name, float x, float y, unsigned int keycode = 0, chstr extra = "");
 	protected:
 		hstr mName;
 		grect mRect;
