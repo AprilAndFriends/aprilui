@@ -596,38 +596,38 @@ namespace aprilui
 		}
 	}
 
-	void Object::onKeyDown(unsigned int keycode)
+	void Object::onKeyDown(unsigned int keyCode)
 	{
 		if (this->mDataset != NULL)
 		{
 			Object* object = this->mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->onKeyDown(keycode);
+				object->onKeyDown(keyCode);
 			}
 		}
 	}
 
-	void Object::onKeyUp(unsigned int keycode)
+	void Object::onKeyUp(unsigned int keyCode)
 	{
 		if (this->mDataset != NULL)
 		{
 			Object* object = this->mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->onKeyUp(keycode);
+				object->onKeyUp(keyCode);
 			}
 		}
 	}
 	
-	void Object::onChar(unsigned int charcode)
+	void Object::onChar(unsigned int charCode)
 	{
 		if (this->mDataset != NULL)
 		{
 			Object* object = this->mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->onChar(charcode);
+				object->onChar(charCode);
 			}
 		}
 	}
@@ -668,12 +668,12 @@ namespace aprilui
 	}
 
 	// TODO - this needs to be seriously refactored
-	bool Object::triggerEvent(chstr name, unsigned int keycode, chstr extra)
+	bool Object::triggerEvent(chstr name, unsigned int keyCode, chstr extra)
 	{
 		if (this->mEvents.has_key(name))
 		{
 			gvec2 cursorPosition = aprilui::getCursorPosition();
-			EventArgs args(this, cursorPosition.x, cursorPosition.y, keycode, extra);
+			EventArgs args(this, cursorPosition.x, cursorPosition.y, keyCode, extra);
 			this->mEvents[name]->execute(&args);
 			return true;
 		}
@@ -681,11 +681,11 @@ namespace aprilui
 	}
 
 	// TODO - this needs to be seriously refactored
-	bool Object::triggerEvent(chstr name, float x, float y, unsigned int keycode, chstr extra)
+	bool Object::triggerEvent(chstr name, float x, float y, unsigned int keyCode, chstr extra)
 	{
 		if (this->mEvents.has_key(name))
 		{
-			EventArgs args(this, x, y, keycode, extra);
+			EventArgs args(this, x, y, keyCode, extra);
 			this->mEvents[name]->execute(&args);
 			return true;
 		}

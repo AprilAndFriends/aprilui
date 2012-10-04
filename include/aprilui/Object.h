@@ -171,9 +171,9 @@ namespace aprilui
 		virtual bool onMouseUp(int button);
 		virtual void onMouseMove();
 		virtual void onMouseScroll(float x, float y);
-		virtual void onKeyDown(unsigned int keycode);
-		virtual void onKeyUp(unsigned int keycode);
-		virtual void onChar(unsigned int charcode);
+		virtual void onKeyDown(unsigned int keyCode);
+		virtual void onKeyUp(unsigned int keyCode);
+		virtual void onChar(unsigned int charCode);
 		virtual void cancelMouseDown();
 
 		virtual void update(float k);
@@ -264,18 +264,18 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
 		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { this->onMouseMove(); }
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { this->onKeyDown(keycode); }
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { this->onKeyUp(keycode); }
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { this->onChar(charcode); }
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keyCode) { this->onKeyDown(keyCode); }
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keyCode) { this->onKeyUp(keyCode); }
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charCode) { this->onChar(charCode); }
 		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 		DEPRECATED_ATTRIBUTE grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return this->getBoundingRect(overrideRoot); }
 		
 		// TODO - this needs to be seriously refactored
-		bool triggerEvent(chstr name, unsigned int keycode = 0, chstr extra = "");
+		bool triggerEvent(chstr name, unsigned int keyCode = 0, chstr extra = "");
 		// TODO - this needs to be seriously refactored
-		bool triggerEvent(chstr name, float x, float y, unsigned int keycode = 0, chstr extra = "");
+		bool triggerEvent(chstr name, float x, float y, unsigned int keyCode = 0, chstr extra = "");
 	protected:
 		hstr mName;
 		grect mRect;

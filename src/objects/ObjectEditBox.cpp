@@ -301,9 +301,9 @@ namespace aprilui
 		return false;
 	}
 
-	void EditBox::onKeyDown(unsigned int keycode)
+	void EditBox::onKeyDown(unsigned int keyCode)
 	{
-		switch (keycode)
+		switch (keyCode)
 		{
 #ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_LEFT:
@@ -336,9 +336,9 @@ namespace aprilui
 		}
 	}
 	
-	void EditBox::onKeyUp(unsigned int keycode)
+	void EditBox::onKeyUp(unsigned int keyCode)
 	{
-		switch (keycode)
+		switch (keyCode)
 		{
 		case april::AK_CONTROL:
 		case april::AK_MENU:
@@ -347,11 +347,11 @@ namespace aprilui
 		}
 	}
 
-	void EditBox::onChar(unsigned int charcode)
+	void EditBox::onChar(unsigned int charCode)
 	{
-		if (atres::renderer->getFontResource(this->mFontName)->hasChar(charcode) && (this->mFilterChars.size() == 0 || this->mFilterChars.contains(charcode)))
+		if (atres::renderer->getFontResource(this->mFontName)->hasChar(charCode) && (this->mFilterChars.size() == 0 || this->mFilterChars.contains(charCode)))
 		{
-			this->_insertChar(charcode);
+			this->_insertChar(charCode);
 		}
 	}
 
@@ -508,7 +508,7 @@ namespace aprilui
 		}
 	}
 	
-	void EditBox::_insertChar(unsigned int charcode)
+	void EditBox::_insertChar(unsigned int charCode)
 	{
 		if (this->mMaxLength > 0 && this->mUnicodeChars.size() >= this->mMaxLength)
 		{
@@ -525,7 +525,7 @@ namespace aprilui
 			right = this->mUnicodeChars(this->mCursorIndex, this->mUnicodeChars.size() - this->mCursorIndex);
 		}
 		this->mCursorIndex++;
-		this->mUnicodeChars = (left + charcode) + right;
+		this->mUnicodeChars = (left + charCode) + right;
 		this->mText = unicode_to_utf8(this->mUnicodeChars);
 		this->mBlinkTimer = 0.0f;
 	}

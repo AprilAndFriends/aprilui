@@ -98,9 +98,9 @@ namespace aprilui
 		bool onMouseUp(int button);
 		void onMouseMove();
 		void onMouseScroll(float x, float y);
-		void onKeyDown(unsigned int keycode);
-		void onKeyUp(unsigned int keycode);
-		void onChar(unsigned int charcode);
+		void onKeyDown(unsigned int keyCode);
+		void onKeyUp(unsigned int keyCode);
+		void onChar(unsigned int charCode);
 
 		virtual Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
@@ -157,9 +157,9 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
 		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { this->onMouseMove(); }
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keycode) { this->onKeyDown(keycode); }
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keycode) { this->onKeyUp(keycode); }
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charcode) { this->onChar(charcode); }
+		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keyCode) { this->onKeyDown(keyCode); }
+		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keyCode) { this->onKeyUp(keyCode); }
+		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charCode) { this->onChar(charCode); }
 		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
 		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }

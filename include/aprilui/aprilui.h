@@ -87,18 +87,18 @@ namespace aprilui
 	apriluiFnExport void onMouseUp(int button);
 	apriluiFnExport void onMouseMove();
 	apriluiFnExport void onMouseScroll(float x, float y);
-	apriluiFnExport void onKeyDown(unsigned int keycode);
-	apriluiFnExport void onKeyUp(unsigned int keycode);
-	apriluiFnExport void onChar(unsigned int charcode);
+	apriluiFnExport void onKeyDown(unsigned int keyCode);
+	apriluiFnExport void onKeyUp(unsigned int keyCode);
+	apriluiFnExport void onChar(unsigned int charCode);
 
 	DEPRECATED_ATTRIBUTE apriluiFnExport bool isDebugMode();
 	DEPRECATED_ATTRIBUTE apriluiFnExport void setDebugMode(bool value);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseDown(float x, float y, int button);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseUp(float x, float y, int button);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseMove(float x, float y);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyDown(unsigned int keycode);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyUp(unsigned int keycode);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnChar(unsigned int charcode);
+	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyDown(unsigned int keyCode);
+	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyUp(unsigned int keyCode);
+	DEPRECATED_ATTRIBUTE apriluiFnExport void OnChar(unsigned int charCode);
 	
 	// TODO - hack, has to be removed completely
 	apriluiFnExport bool getForcedDynamicLoading();
