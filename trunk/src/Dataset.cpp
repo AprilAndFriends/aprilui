@@ -862,27 +862,27 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::onKeyDown(unsigned int keycode)
+	void Dataset::onKeyDown(unsigned int keyCode)
 	{
 		if (this->mRoot != NULL)
 		{
-			this->mRoot->onKeyDown(keycode);
+			this->mRoot->onKeyDown(keyCode);
 		}
 	}
 	
-	void Dataset::onKeyUp(unsigned int keycode)
+	void Dataset::onKeyUp(unsigned int keyCode)
 	{
 		if (this->mRoot != NULL)
 		{
-			this->mRoot->onKeyUp(keycode);
+			this->mRoot->onKeyUp(keyCode);
 		}
 	}
 	
-	void Dataset::onChar(unsigned int charcode)
+	void Dataset::onChar(unsigned int charCode)
 	{
 		if (this->mRoot != NULL)
 		{
-			this->mRoot->onChar(charcode);
+			this->mRoot->onChar(charCode);
 		}
 	}
 	

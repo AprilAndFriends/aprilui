@@ -28,10 +28,10 @@ namespace aprilui
 		Object* object;
 		float x;
 		float y;
-		unsigned int keycode;
+		unsigned int keyCode;
 		hstr extra;
 		
-		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, unsigned int keycode = 0, chstr extra = "");
+		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, unsigned int keyCode = 0, chstr extra = "");
 		~EventArgs();
 
 	};

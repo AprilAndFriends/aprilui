@@ -500,27 +500,27 @@ namespace aprilui
 		}
 	}
 	
-	void onKeyDown(unsigned int keycode)
+	void onKeyDown(unsigned int keyCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onKeyDown(keycode);
+			it->second->onKeyDown(keyCode);
 		}
 	}
 	
-	void onKeyUp(unsigned int keycode)
+	void onKeyUp(unsigned int keyCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onKeyUp(keycode);
+			it->second->onKeyUp(keyCode);
 		}
 	}
 	
-	void onChar(unsigned int charcode)
+	void onChar(unsigned int charCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onChar(charcode);
+			it->second->onChar(charCode);
 		}
 	}
 	
@@ -529,9 +529,9 @@ namespace aprilui
 	void OnMouseDown(float x, float y, int button) { onMouseDown(button); } // DEPRECATED
 	void OnMouseUp(float x, float y, int button) { onMouseUp(button); } // DEPRECATED
 	void OnMouseMove(float x, float y) { onMouseMove(); } // DEPRECATED
-	void OnKeyDown(unsigned int keycode) { onKeyDown(keycode); } // DEPRECATED
-	void OnKeyUp(unsigned int keycode) { onKeyUp(keycode); } // DEPRECATED
-	void OnChar(unsigned int charcode) { onChar(charcode); } // DEPRECATED
+	void OnKeyDown(unsigned int keyCode) { onKeyDown(keyCode); } // DEPRECATED
+	void OnKeyUp(unsigned int keyCode) { onKeyUp(keyCode); } // DEPRECATED
+	void OnChar(unsigned int charCode) { onChar(charCode); } // DEPRECATED
 	
 	// TODO - hack, has to be removed
 	bool getForcedDynamicLoading() { return forcedDynamicLoading; }

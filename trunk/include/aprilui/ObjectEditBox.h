@@ -54,9 +54,9 @@ namespace aprilui
 		void notifyEvent(chstr name, void* params);
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
-		void onKeyDown(unsigned int keycode);
-		void onKeyUp(unsigned int keycode);
-		void onChar(unsigned int charcode);
+		void onKeyDown(unsigned int keyCode);
+		void onKeyUp(unsigned int keyCode);
+		void onChar(unsigned int charCode);
 		void cancelMouseDown();
 		
 		hstr getProperty(chstr name, bool* property_exists = NULL);
@@ -92,7 +92,7 @@ namespace aprilui
 		void _deleteRight(int count = 1);
 		void _deleteLeftWord();
 		void _deleteRightWord();
-		void _insertChar(unsigned int charcode);
+		void _insertChar(unsigned int charCode);
 
 		harray<unsigned int> _convertToUnicodeChars(chstr string);
 		
