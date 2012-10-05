@@ -737,35 +737,35 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::OnKeyDown(unsigned int keycode)
+	void Dataset::OnKeyDown(unsigned int keyCode)
 	{
 		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
-				it->second->OnKeyDown(keycode);
+				it->second->OnKeyDown(keyCode);
 			}
 		}
 	}
 	
-	void Dataset::OnKeyUp(unsigned int keycode)
+	void Dataset::OnKeyUp(unsigned int keyCode)
 	{
 		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
-				it->second->OnKeyUp(keycode);
+				it->second->OnKeyUp(keyCode);
 			}
 		}
 	}
 	
-	void Dataset::OnChar(unsigned int charcode)
+	void Dataset::OnChar(unsigned int charCode)
 	{
 		foreach_m (aprilui::Object*, it, mObjects)
 		{
 			if (it->second->getParent() == NULL)
 			{
-				it->second->OnChar(charcode);
+				it->second->OnChar(charCode);
 			}
 		}
 	}

@@ -188,19 +188,19 @@ namespace aprilui
 		OnMouseMove(0, 0);
 	}
 	
-	void Object::onKeyDown(unsigned int keycode)
+	void Object::onKeyDown(unsigned int keyCode)
 	{
-		OnKeyDown(keycode);
+		OnKeyDown(keyCode);
 	}
 	
-	void Object::onKeyUp(unsigned int keycode)
+	void Object::onKeyUp(unsigned int keyCode)
 	{
-		OnKeyUp(keycode);
+		OnKeyUp(keyCode);
 	}
 	
-	void Object::onChar(unsigned int charcode)
+	void Object::onChar(unsigned int charCode)
 	{
-		OnChar(charcode);
+		OnChar(charCode);
 	}
 	
 	void Object::registerChild(Object* object)
@@ -269,38 +269,38 @@ namespace aprilui
 		}
 	}
 
-	void Object::OnKeyDown(unsigned int keycode)
+	void Object::OnKeyDown(unsigned int keyCode)
 	{
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->OnKeyDown(keycode);
+				object->OnKeyDown(keyCode);
 			}
 		}
 	}
 
-	void Object::OnKeyUp(unsigned int keycode)
+	void Object::OnKeyUp(unsigned int keyCode)
 	{
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->OnKeyUp(keycode);
+				object->OnKeyUp(keyCode);
 			}
 		}
 	}
 	
-	void Object::OnChar(unsigned int charcode)
+	void Object::OnChar(unsigned int charCode)
 	{
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
 			if (object != NULL)
 			{
-				object->OnChar(charcode);
+				object->OnChar(charCode);
 			}
 		}
 	}

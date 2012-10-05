@@ -39,9 +39,9 @@ namespace aprilui
 		
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
-		void OnKeyDown(unsigned int keycode);
-		void OnKeyUp(unsigned int keycode);
-		void OnChar(unsigned int charcode);
+		void OnKeyDown(unsigned int keyCode);
+		void OnKeyUp(unsigned int keyCode);
+		void OnChar(unsigned int charCode);
 		
 	protected:
 		bool mPushed;
@@ -67,7 +67,7 @@ namespace aprilui
 		void _deleteRight(int count = 1);
 		void _deleteLeftWord();
 		void _deleteRightWord();
-		void _insertChar(unsigned int charcode);
+		void _insertChar(unsigned int charCode);
 
 		harray<unsigned int> _convertToUnicodeChars(chstr string);
 		

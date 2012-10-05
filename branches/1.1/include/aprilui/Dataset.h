@@ -74,9 +74,9 @@ namespace aprilui
 		void OnMouseDown(float x, float y, int button);
 		void OnMouseUp(float x, float y, int button);
 		void OnMouseMove(float x, float y);
-		void OnKeyDown(unsigned int keycode);
-		void OnKeyUp(unsigned int keycode);
-		void OnChar(unsigned int charcode);
+		void OnKeyDown(unsigned int keyCode);
+		void OnKeyUp(unsigned int keyCode);
+		void OnChar(unsigned int charCode);
 		
 		virtual Object* getObject(chstr name);
 		virtual Texture* getTexture(chstr name);
