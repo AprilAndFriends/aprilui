@@ -49,6 +49,7 @@ namespace aprilui
 	hstr defaultTextsPath = "texts";
 	hstr defaultLocalization = "";
 	hstr localization = "";
+	harray<hstr> supportedLocalizations;
 	float textureIdleUnloadTime = 0.0f;
 	hmap<hstr, float> extensionScales;
 	// TODO - hack, has to be removed
@@ -213,17 +214,41 @@ namespace aprilui
 	
 	void setLocalization(chstr value)
 	{
-		localization = value;
-		foreach_m (Dataset*, it, gDatasets)
+		hstr previousLocalization = localization;
+		if (supportedLocalizations.size() > 0 && !supportedLocalizations.contains(value) &&
+			value != defaultLocalization)
 		{
-			it->second->reloadTexts();
-			it->second->reloadTextures();
+			aprilui::log(hsprintf("WARNING: localization '%s' not supported, defaulting back to '%s'",
+				value.c_str(), defaultLocalization.c_str()));
+			localization = defaultLocalization;
 		}
-		// finished localization change, now call the appropriate event
-		foreach_m (Dataset*, it, gDatasets)
+		else
 		{
-			it->second->notifyEvent("onLocalizationChanged", NULL);
+			localization = value;
 		}
+		if (previousLocalization != localization)
+		{
+			foreach_m (Dataset*, it, gDatasets)
+			{
+				it->second->reloadTexts();
+				it->second->reloadTextures();
+			}
+			// finished localization change, now call the appropriate event
+			foreach_m (Dataset*, it, gDatasets)
+			{
+				it->second->notifyEvent("onLocalizationChanged", NULL);
+			}
+		}
+	}
+
+	harray<hstr> getSupportedLocalizations()
+	{
+		return supportedLocalizations;
+	}
+	
+	void setSupportedLocalizations(harray<hstr> value)
+	{
+		supportedLocalizations = value;
 	}
 	
 	float getTextureIdleUnloadTime()
