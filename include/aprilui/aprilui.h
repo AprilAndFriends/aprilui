@@ -57,9 +57,9 @@ namespace aprilui
 	apriluiFnExport void OnMouseDown(float x, float y, int button);
 	apriluiFnExport void OnMouseUp(float x, float y, int button);
 	apriluiFnExport void OnMouseMove(float x, float y);
-	apriluiFnExport void OnKeyDown(unsigned int keycode);
-	apriluiFnExport void OnKeyUp(unsigned int keycode);
-	apriluiFnExport void OnChar(unsigned int charcode);
+	apriluiFnExport void OnKeyDown(unsigned int keyCode);
+	apriluiFnExport void OnKeyUp(unsigned int keyCode);
+	apriluiFnExport void OnChar(unsigned int charCode);
 		
 	apriluiFnExport void setMacroCallback(hstr (*callback)(chstr));
 	apriluiFnExport hstr expandMacro(chstr macro);

@@ -243,27 +243,27 @@ namespace aprilui
 		}
 	}
 	
-	void OnKeyDown(unsigned int keycode)
+	void OnKeyDown(unsigned int keyCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->OnKeyDown(keycode);
+			it->second->OnKeyDown(keyCode);
 		}
 	}
 	
-	void OnKeyUp(unsigned int keycode)
+	void OnKeyUp(unsigned int keyCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->OnKeyUp(keycode);
+			it->second->OnKeyUp(keyCode);
 		}
 	}
 	
-	void OnChar(unsigned int charcode)
+	void OnChar(unsigned int charCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->OnChar(charcode);
+			it->second->OnChar(charCode);
 		}
 	}
 	

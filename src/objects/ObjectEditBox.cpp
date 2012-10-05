@@ -233,9 +233,9 @@ namespace aprilui
 		return false;
 	}
 
-	void EditBox::OnKeyDown(unsigned int keycode)
+	void EditBox::OnKeyDown(unsigned int keyCode)
 	{
-		switch (keycode)
+		switch (keyCode)
 		{
 #ifndef _ANDROID // these keys aren't really available on Android
 		case april::AK_LEFT:
@@ -268,9 +268,9 @@ namespace aprilui
 		}
 	}
 	
-	void EditBox::OnKeyUp(unsigned int keycode)
+	void EditBox::OnKeyUp(unsigned int keyCode)
 	{
-		switch (keycode)
+		switch (keyCode)
 		{
 		case april::AK_CONTROL:
 		case april::AK_MENU:
@@ -279,21 +279,18 @@ namespace aprilui
 		}
 	}
 
-	void EditBox::OnChar(unsigned int charcode)
+	void EditBox::OnChar(unsigned int charCode)
 	{
-		if (atres::renderer->getFontResource(mFontName)->hasChar(charcode) && (mFilterChars.size() == 0 || mFilterChars.contains(charcode)))
+		if (atres::renderer->getFontResource(mFontName)->hasChar(charCode) && (mFilterChars.size() == 0 || mFilterChars.contains(charCode)))
 		{
-			_insertChar(charcode);
+			_insertChar(charCode);
 		}
 	}
 
 	harray<unsigned int> EditBox::_convertToUnicodeChars(chstr string)
 	{
-		int length;
-		unsigned int* text = utf8_to_unicode(string, &length);
-		harray<unsigned int> chars = harray<unsigned int>(text, length);
-		delete [] text;
-		return chars;
+		std::basic_string<unsigned int> text = utf8_to_unicode(string);
+		return harray<unsigned int>(text.c_str(), text.size());
 	}
 	
 	void EditBox::_cursorMoveLeft()
@@ -387,9 +384,9 @@ namespace aprilui
 		}
 	}
 	
-	void EditBox::_insertChar(unsigned int charcode)
+	void EditBox::_insertChar(unsigned int charCode)
 	{
-		if (charcode == 127) return; //backspace
+		if (charCode == 127) return; //backspace
 		if (mMaxLength > 0 && mUnicodeChars.size() >= mMaxLength)
 		{
 			return;
@@ -398,7 +395,7 @@ namespace aprilui
 		harray<unsigned int> right = (mCursorIndex < mUnicodeChars.size() ?
 			mUnicodeChars(mCursorIndex, mUnicodeChars.size() - mCursorIndex) : harray<unsigned int>());
 		mCursorIndex++;
-		mUnicodeChars = (left + charcode) + right;
+		mUnicodeChars = (left + charCode) + right;
 		mText = unicode_to_utf8(mUnicodeChars);
 		mBlinkTimer = 0.0f;
 	}

@@ -105,16 +105,16 @@ namespace aprilui
 		virtual bool OnMouseDown(float x, float y, int button);
 		virtual bool OnMouseUp(float x, float y, int button);
 		virtual void OnMouseMove(float x, float y);
-		virtual void OnKeyDown(unsigned int keycode);
-		virtual void OnKeyUp(unsigned int keycode);
-		virtual void OnChar(unsigned int charcode);
+		virtual void OnKeyDown(unsigned int keyCode);
+		virtual void OnKeyUp(unsigned int keyCode);
+		virtual void OnChar(unsigned int charCode);
 
 		bool onMouseDown(int button); // aprilui legacy compatibility
 		bool onMouseUp(int button);
 		void onMouseMove();
-		void onKeyDown(unsigned int keycode);
-		void onKeyUp(unsigned int keycode);
-		void onChar(unsigned int charcode);
+		void onKeyDown(unsigned int keyCode);
+		void onKeyUp(unsigned int keyCode);
+		void onChar(unsigned int charCode);
 		void registerChild(Object* object);
 		
 		void unregisterChild(Object* object);
