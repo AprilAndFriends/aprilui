@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.21
+/// @version 2.22
 /// 
 /// @section LICENSE
 /// 
@@ -162,6 +162,8 @@ namespace aprilui
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
+		bool isDerivedEnabled();
+		bool isDerivedVisible();
 		virtual bool isAnimated();
 		virtual bool isWaitingAnimation();
 		bool hasDynamicAnimation();
@@ -309,7 +311,6 @@ namespace aprilui
 		void _updateChildrenVertical(float difference);
 		
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
-		bool _isDerivedEnabled();
 		bool _isDerivedClickThrough();
 		grect _getDrawRect();
 		april::Color _getDrawColor();

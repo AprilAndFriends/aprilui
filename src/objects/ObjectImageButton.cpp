@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.05
+/// @version 2.22
 /// 
 /// @section LICENSE
 /// 
@@ -58,7 +58,7 @@ namespace aprilui
 	void ImageButton::OnDraw()
 	{
 		grect rect = this->_getDrawRect();
-		bool enabled = this->_isDerivedEnabled();
+		bool enabled = this->isDerivedEnabled();
 		if (!enabled && this->mDisabledImage != NULL)
 		{
 			this->mDisabledImage->draw(rect, this->_getDrawColor());
@@ -91,7 +91,7 @@ namespace aprilui
 		{
 			this->mImage = this->mDataset->getImage("null");
 		}
-		if (!this->_isDerivedEnabled())
+		if (!this->isDerivedEnabled())
 		{
 			if (this->mDisabledImage != NULL)
 			{
