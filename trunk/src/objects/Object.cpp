@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.21
+/// @version 2.22
 /// 
 /// @section LICENSE
 /// 
@@ -537,7 +537,7 @@ namespace aprilui
 
 	bool Object::onMouseDown(int button)
 	{
-		if (this->mClickThrough || !this->isVisible() || !this->_isDerivedEnabled())
+		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
@@ -547,7 +547,7 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() &&
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() &&
 				!(*it)->isClickThrough() && (*it)->onMouseDown(button))
 			{
 				return true;
@@ -558,13 +558,13 @@ namespace aprilui
 
 	bool Object::onMouseUp(int button)
 	{
-		if (this->mClickThrough || !this->isVisible() || !this->_isDerivedEnabled())
+		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled() &&
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() &&
 				!(*it)->isClickThrough() && (*it)->onMouseUp(button))
 			{
 				return true;
@@ -578,7 +578,7 @@ namespace aprilui
 	{
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 			{
 				(*it)->onMouseMove();
 			}
@@ -589,7 +589,7 @@ namespace aprilui
 	{
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->_isDerivedEnabled())
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
 			{
 				(*it)->onMouseScroll(x, y);
 			}
@@ -697,9 +697,14 @@ namespace aprilui
 		this->mCenter = this->mRect.getSize() / 2;
 	}
 
-	bool Object::_isDerivedEnabled()
+	bool Object::isDerivedEnabled()
 	{
-		return (this->isEnabled() && (this->mParent == NULL || this->mParent->_isDerivedEnabled()));
+		return (this->isEnabled() && (this->mParent == NULL || this->mParent->isDerivedEnabled()));
+	}
+	
+	bool Object::isDerivedVisible()
+	{
+		return (this->isVisible() && (this->mParent == NULL || this->mParent->isDerivedVisible()));
 	}
 	
 	bool Object::_isDerivedClickThrough()
@@ -1087,7 +1092,7 @@ namespace aprilui
 
 	float Object::_getDisabledAlphaFactor()
 	{
-		return (this->mUseDisabledAlpha && !this->_isDerivedEnabled() ? 0.5f : 1.0f);
+		return (this->mUseDisabledAlpha && !this->isDerivedEnabled() ? 0.5f : 1.0f);
 	}
 
 	Animator* Object::moveX(float x, float speed)

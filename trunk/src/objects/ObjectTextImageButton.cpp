@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.22
 /// 
 /// @section LICENSE
 /// 
@@ -52,7 +52,7 @@ namespace aprilui
 		ImageButton::OnDraw();
 		april::Color color = this->mTextColor;
 		april::Color drawColor = this->_getDrawColor();
-		if (!this->_isDerivedEnabled())
+		if (!this->isDerivedEnabled())
 		{
 			if (this->_mUseDisabledTextColor)
 			{
