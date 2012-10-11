@@ -75,6 +75,7 @@ namespace aprilui
 		void _setFilePath(chstr prefix) { this->mFilePath = prefix; }
 		hmap<hstr, Object*>& getObjects() { return this->mObjects; }
 		hmap<hstr, Image*>& getImages() { return this->mImages; }
+		hmap<hstr, Texture*>& getTextures() { return this->mTextures; }
 		template <class T>
 		hmap<hstr, T> getObjectsByType()
 		{
