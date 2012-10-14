@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.23
 /// 
 /// @section LICENSE
 /// 
@@ -189,12 +189,13 @@ namespace aprilui
 		void parseTextureGroup(hlxml::Node* node);
 		void parseCompositeImage(hlxml::Node* node);
 		void parseGlobalInclude(chstr path);
-		void parseObjectInclude(chstr path, Object* parent);
-		void parseObjectIncludeFile(chstr filename, Object* parent);
+		void parseObjectInclude(chstr path, Object* parent, chstr nameSuffix, gvec2 offset);
+		void parseObjectIncludeFile(chstr filename, Object* parent, chstr nameSuffix, gvec2 offset);
 		virtual void parseExternalXMLNode(hlxml::Node* node) { }
 		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
 		
 		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
+		Object* recursiveObjectParse(hlxml::Node* node, Object* parent, chstr nameSuffix, gvec2 offset);
 		
 		void readFile(chstr filename);
 		void _loadTexts(chstr path);

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.22
+/// @version 2.23
 /// 
 /// @section LICENSE
 /// 
@@ -35,6 +35,8 @@ namespace aprilui
 	class apriluiExport Object : public EventReceiver
 	{
 	public:
+		friend class Dataset;
+
 		Object(chstr name, grect rect);
 		~Object();
 		
@@ -65,6 +67,7 @@ namespace aprilui
 		/// @returns whether or not a given object is an ancestor of a this object
 		bool isAncestor(Object* obj);
 		harray<Object*> getAncestors();
+		harray<Object*> getDescendants();
 		hstr getName() { return this->mName; }
 		hstr getFullName();
 		bool isCursorInside();
@@ -188,7 +191,6 @@ namespace aprilui
 		virtual hstr getProperty(chstr name, bool* property_exists = NULL);
 		virtual bool setProperty(chstr name, chstr value);
 		virtual Dataset* getDataset() { return mDataset; }
-		void _setDataset(Dataset* value) { mDataset = value; }
 		
 		// dynamic animators
 		
@@ -278,6 +280,7 @@ namespace aprilui
 		bool triggerEvent(chstr name, unsigned int keyCode = 0, chstr extra = "");
 		// TODO - this needs to be seriously refactored
 		bool triggerEvent(chstr name, float x, float y, unsigned int keyCode = 0, chstr extra = "");
+
 	protected:
 		hstr mName;
 		grect mRect;
@@ -305,6 +308,8 @@ namespace aprilui
 		bool mClip;
 		bool mUseDisabledAlpha;
 		
+		void _setName(chstr value) { this->mName = value; }
+		void _setDataset(Dataset* value) { this->mDataset = value; }
 		void _sortChildren();
 
 		void _updateChildrenHorizontal(float difference);
