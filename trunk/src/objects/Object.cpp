@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.22
+/// @version 2.23
 /// 
 /// @section LICENSE
 /// 
@@ -926,6 +926,16 @@ namespace aprilui
 			parent = parent->getParent();
 		}
 		return result;
+	}
+
+	harray<Object*> Object::getDescendants()
+	{
+		harray<Object*> descendants = this->mChildren;
+		foreach (Object*, it, this->mChildren)
+		{
+			descendants += (*it)->getDescendants();
+		}
+		return descendants;
 	}
 
 	harray<gvec2> Object::transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot)
