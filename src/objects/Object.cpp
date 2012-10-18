@@ -490,8 +490,9 @@ namespace aprilui
 		{
 			(*it)->update(k);
 		}
+		// faster than creating a new array, adding expired animators and the deleting them
 		int i = 0;
-		Animator* animator;
+		Animator* animator = NULL;
 		while (i < this->mDynamicAnimators.size())
 		{
 			animator = this->mDynamicAnimators[i];
