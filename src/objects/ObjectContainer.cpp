@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.24
 /// 
 /// @section LICENSE
 /// 
@@ -37,11 +37,8 @@ namespace aprilui
 
 	void Container::OnDraw()
 	{
-		if (!aprilui::isDebugEnabled())
-		{
-			Object::OnDraw();
-		}
-		else
+		Object::OnDraw();
+		if (aprilui::isDebugEnabled())
 		{
 			grect rect = this->_getDrawRect();
 			april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_RED, 64));
