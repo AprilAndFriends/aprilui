@@ -1,12 +1,13 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "AnimatorTiledScrollerX.h"
@@ -46,13 +47,13 @@ namespace aprilui
 			ImageBox* imageBox = dynamic_cast<ImageBox*>(this->mParent);
 			if (imageBox == NULL)
 			{
-				aprilui::log("Animators::TiledScrollerX: parent object not a subclass of Objects::ImageBox!");
+				hlog::error(aprilui::logTag, "Animators::TiledScrollerX: parent object not a subclass of Objects::ImageBox!");
 				return;
 			}
 			TiledImage* image = dynamic_cast<TiledImage*>(imageBox->getImage());
 			if (image == NULL)
 			{
-				aprilui::log("Animators::TiledScrollerX: image in object not a subclass of Animators::TiledImage!");
+				hlog::error(aprilui::logTag, "Animators::TiledScrollerX: image in object not a subclass of Animators::TiledImage!");
 				return;
 			}
 			this->_valueUpdateSimple(k);

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.22
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -10,6 +10,7 @@
 
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
@@ -109,7 +110,7 @@ namespace aprilui
 		}
 		if (name == "use_disabled_color")
 		{
-			aprilui::log("WARNING: 'use_disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'use_disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
 			return this->_mUseDisabledTextColor;
 		}
 		if (name == "use_background")		return this->isUseBackground();
@@ -123,7 +124,7 @@ namespace aprilui
 	{
 		if (name == "use_disabled_color")
 		{
-			aprilui::log("WARNING: 'use_disabled_color=' is deprecated, use 'disabled_text_color=' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'use_disabled_color=' is deprecated, use 'disabled_text_color=' instead!"); // DEPRECATED
 			this->_mUseDisabledTextColor = !value;
 			this->setDisabledTextColor(this->mTextColor);
 		}

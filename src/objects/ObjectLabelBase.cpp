@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.06
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
@@ -135,7 +136,7 @@ namespace aprilui
 		else if (name == "text_key")	this->setTextKey(value);
 		else if (name == "textkey")
 		{
-			aprilui::log("WARNING: 'textkey=' is deprecated. Use 'text_key=' instead."); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'textkey=' is deprecated. Use 'text_key=' instead."); // DEPRECATED
 			this->setTextKey(value);
 		}
 		else if (name == "text")		this->setText(value);
@@ -150,7 +151,7 @@ namespace aprilui
 			else if (value == "justified")		this->setHorzFormatting(atres::JUSTIFIED);
 			else
 			{
-				aprilui::log("WARNING: 'horz_formatting=' does not support value '" + value + "'.");
+				hlog::warn(aprilui::logTag, "'horz_formatting=' does not support value '" + value + "'.");
 				return false;
 			}
 		}
@@ -161,7 +162,7 @@ namespace aprilui
 			else if (value == "bottom")	this->setVertFormatting(atres::BOTTOM);
 			else
 			{
-				aprilui::log("WARNING: 'vert_formatting=' does not support value '" + value + "'.");
+				hlog::warn(aprilui::logTag, "'vert_formatting=' does not support value '" + value + "'.");
 				return false;
 			}
 		}
@@ -182,7 +183,7 @@ namespace aprilui
 				else if (values[0] == "border")	this->setFontEffect(atres::BORDER);
 				else
 				{
-					aprilui::log("WARNING: 'effect=' does not support value '" + values[0] + "'.");
+					hlog::warn(aprilui::logTag, "'effect=' does not support value '" + values[0] + "'.");
 					return false;
 				}
 				if (values.size() > 1)
@@ -194,7 +195,7 @@ namespace aprilui
 					}
 					else
 					{
-						aprilui::log("WARNING: 'effect=' is using invalid color modifier '" + values[1] + "'.");
+						hlog::warn(aprilui::logTag, "'effect=' is using invalid color modifier '" + values[1] + "'.");
 						return false;
 					}
 				}

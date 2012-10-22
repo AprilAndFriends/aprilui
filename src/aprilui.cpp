@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.2
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -9,9 +9,6 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <stdio.h>
-#ifdef _ANDROID
-#include <android/log.h>
-#endif
 
 #include <april/april.h>
 #include <april/Keys.h>
@@ -19,6 +16,7 @@
 #include <april/Window.h>
 #include <atres/atres.h>
 #include <hltypes/harray.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -34,6 +32,17 @@
 
 namespace aprilui
 {
+	hstr logTag = "aprilui";
+
+	void log(chstr message, chstr prefix)
+	{
+		hlog::write(aprilui::logTag, message);
+	}
+	
+	void setLogFunction(void (*fnptr)(chstr))
+	{
+	}
+	
 	bool registerLock = false;
 	hmap<hstr, Dataset*> gDatasets;
 	hmap<hstr, Object* (*)(chstr, grect)> gObjectFactories;
@@ -55,29 +64,9 @@ namespace aprilui
 	// TODO - hack, has to be removed
 	bool forcedDynamicLoading = false;
 
-	void aprilui_writelog(chstr message)
-	{
-#ifndef _ANDROID
-		printf("%s\n", message.c_str());
-#else
-		__android_log_print(ANDROID_LOG_INFO, "aprilui", "%s", message.c_str());
-#endif
-	}
-	void (*g_logFunction)(chstr) = aprilui_writelog;
-	
-	void log(chstr message, chstr prefix)
-	{
-		g_logFunction(prefix + message);
-	}
-	
-	void setLogFunction(void (*fnptr)(chstr))
-	{
-		g_logFunction = fnptr;
-	}
-	
 	void init()
 	{
-		aprilui::log("initializing aprilui");
+		hlog::write(aprilui::logTag, "Initializing AprilUI.");
 		registerLock = false;
 		defaultScale = 1.0f;
 		cursorVisible = true;
@@ -125,7 +114,7 @@ namespace aprilui
 	
 	void destroy()
 	{
-		aprilui::log("destroying aprilui");
+		hlog::write(aprilui::logTag, "Destroying AprilUI.");
 		registerLock = true;
 		foreach_m (Dataset*, it, gDatasets)
 		{
@@ -218,8 +207,8 @@ namespace aprilui
 		if (supportedLocalizations.size() > 0 && !supportedLocalizations.contains(value) &&
 			value != defaultLocalization)
 		{
-			aprilui::log(hsprintf("WARNING: localization '%s' not supported, defaulting back to '%s'",
-				value.c_str(), defaultLocalization.c_str()));
+			hlog::warnf(aprilui::logTag, "Localization '%s' not supported, defaulting back to '%s'.",
+				value.c_str(), defaultLocalization.c_str());
 			localization = defaultLocalization;
 		}
 		else
@@ -417,7 +406,7 @@ namespace aprilui
 	{
 		if (prefixes.size() != scales.size())
 		{
-			aprilui::log("WARNING! 'setTextureExtensionPrefixes()' called with unmatching 'prefixes' and 'scales' sizes");
+			hlog::warn(aprilui::logTag, "setTextureExtensionPrefixes() called with unmatching 'prefixes' and 'scales' sizes.");
 			return false;
 		}
 		harray<hstr> currentExtensions = april::getTextureExtensions();

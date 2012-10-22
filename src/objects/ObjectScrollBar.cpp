@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.05
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -10,6 +10,7 @@
 #include <april/Color.h>
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
@@ -129,7 +130,7 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(this->mParent);
 			if (parent == NULL)
 			{
-				aprilui::log(hsprintf("WARNING: ScrollBar '%s' not attached to object of class Container!", this->mName.c_str()));
+				hlog::warnf(aprilui::logTag, "ScrollBar '%s' not attached to object of class Container!", this->mName.c_str());
 			}
 		}
 		else if (name == "SkinChange")

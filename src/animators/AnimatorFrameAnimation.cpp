@@ -1,13 +1,14 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "AnimatorFrameAnimation.h"
@@ -59,7 +60,7 @@ namespace aprilui
 			else if (name == "frame_count")		this->mFrameCount = value;
 			else if (name == "inherit_value")
 			{
-				aprilui::log("WARNING: Animators::FrameAnimation does not support 'inherit_value'!");
+				hlog::warn(aprilui::logTag, "Animators::FrameAnimation does not support 'inherit_value'!");
 			}
 			else Animator::setProperty(name, value);
 			return true;
@@ -85,7 +86,7 @@ namespace aprilui
 				ImageBox* imageBox = dynamic_cast<ImageBox*>(this->mParent);
 				if (imageBox == NULL)
 				{
-					aprilui::log("Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+					hlog::error(aprilui::logTag, "Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 					return;
 				}
 				this->mValue = this->_calculateValue(this->mTimeSinceLastFrame);

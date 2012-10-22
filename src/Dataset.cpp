@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.23
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -16,6 +16,7 @@
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hresource.h>
@@ -454,7 +455,7 @@ namespace aprilui
 	{
 		// parse dataset xml file, error checking first
 		hstr path = normalize_path(filename);
-		log("parsing object include file " + path);
+		hlog::write(aprilui::logTag, "Parsing object include file: " + path);
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
 		foreach_xmlnode (node, current)
@@ -493,7 +494,7 @@ namespace aprilui
 	{
 		// parse dataset xml file, error checking first
 		hstr path = normalize_path(filename);
-		aprilui::log("parsing dataset file '" + path + "'");
+		hlog::write(aprilui::logTag, "Parsing dataset file: " + path);
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
 
@@ -536,7 +537,7 @@ namespace aprilui
 	
 	void Dataset::_loadTexts(chstr path)
 	{
-		aprilui::log("loading texts from '" + path + "'");
+		hlog::write(aprilui::logTag, "Loading texts: '" + path);
 		harray<hstr> files = hdir::resource_files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
@@ -548,7 +549,7 @@ namespace aprilui
 			f.open(*it);
 			if (!f.is_open())
 			{
-				throw hl_exception("Failed to load file " + (*it));
+				throw hl_exception("Failed to load file: " + (*it));
 			}
 			lines = f.read_lines();
 			f.close();
@@ -958,14 +959,14 @@ namespace aprilui
 		{
 			if (!this->hasTextEntry(key))
 			{
-				aprilui::log(hsprintf("WARNING: Text key '%s' does not exist!", key.c_str()));
+				hlog::warnf(aprilui::logTag, "Text key '%s' does not exist!", key.c_str());
 			}
 			return this->getTextEntry(key);
 		}
 		int index = key.find_first_of('}');
 		if (index < 0)
 		{
-			aprilui::log(hsprintf("WARNING: Error while trying to parse formatted key '%s'.", key.c_str()));
+			hlog::errorf(aprilui::logTag, "Could not parse formatted key '%s'.", key.c_str());
 			return key;
 		}
 		harray<hstr> args;
@@ -973,20 +974,20 @@ namespace aprilui
 		hstr argString = key(index + 1, key.size() - index - 1).trim(' ');
 		if (!this->_processCompositeTextKeyArgs(argString, args))
 		{
-			aprilui::log(hsprintf("- while processing args: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			hlog::writef(aprilui::logTag, "- while processing args: '%s' with args '%s'.", format.c_str(), argString.c_str());
 			return key;
 		}
 		hstr preprocessedFormat;
 		harray<hstr> preprocessedArgs;
 		if (!this->_preprocessCompositeTextKeyFormat(format, args, preprocessedFormat, preprocessedArgs))
 		{
-			aprilui::log(hsprintf("- while preprocessing format: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			hlog::writef(aprilui::logTag, "- while preprocessing format: '%s' with args '%s'.", format.c_str(), argString.c_str());
 			return key;
 		}
 		hstr result;
 		if (!this->_processCompositeTextKeyFormat(preprocessedFormat, preprocessedArgs, result))
 		{
-			aprilui::log(hsprintf("- while processing format: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			hlog::writef(aprilui::logTag, "- while processing format: '%s' with args '%s'.", format.c_str(), argString.c_str());
 			return key;
 		}
 		return result;
@@ -1012,12 +1013,12 @@ namespace aprilui
 			}
 			if (openIndex < 0 || closeIndex < 0)
 			{
-				aprilui::log("WARNING: '{' without '}' or '}' without '{'");
+				hlog::error(aprilui::logTag, "'{' without '}' or '}' without '{'.");
 				return false;
 			}
 			if (closeIndex < openIndex)
 			{
-				aprilui::log("WARNING: '}' before '{'");
+				hlog::error(aprilui::logTag, "'}' before '{'.");
 				return false;
 			}
 			// getting all args before the {
@@ -1049,7 +1050,7 @@ namespace aprilui
 			}
 			if (index >= string.size() - 1)
 			{
-				aprilui::log("WARNING: Last character is '%'");
+				hlog::error(aprilui::logTag, "Last character is '%'!");
 				return false;
 			}
 			if (string[index + 1] == '%') // escaped "%", continue processing
@@ -1062,7 +1063,7 @@ namespace aprilui
 			{
 				if (args.size() == 0)
 				{
-					aprilui::log("WARNING: Not enough args");
+					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
 				preprocessedFormat += string(0, index + 2);
@@ -1074,7 +1075,7 @@ namespace aprilui
 			{
 				if (args.size() == 0)
 				{
-					aprilui::log("WARNING: Not enough args");
+					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
 				hstr arg = args.pop_first();
@@ -1086,7 +1087,7 @@ namespace aprilui
 				}
 				if (indexes.size() > args.size())
 				{
-					aprilui::log("WARNING: Not enough args");
+					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
 				preprocessedArgs += args.pop_first(indexes.size());
@@ -1108,12 +1109,12 @@ namespace aprilui
 		}
 		if (args.size() < indexes.size())
 		{
-			aprilui::log("WARNING: Not enough args");
+			hlog::error(aprilui::logTag, "Not enough args!");
 			return false;
 		}
 		if (indexes.size() > args.size())
 		{
-			aprilui::log("WARNING: Too many args");
+			hlog::error(aprilui::logTag, "Too many args!");
 			return false;
 		}
 		foreach (int, it, indexes)
@@ -1143,7 +1144,7 @@ namespace aprilui
 			}
 			if (index >= string.size() - 1)
 			{
-				aprilui::log("WARNING: Last character is '%'");
+				hlog::error(aprilui::logTag, "Last character is '%'!");
 				return false;
 			}
 			if (string[index + 1] == '%') // escaped "%", use just one "%".
@@ -1154,7 +1155,7 @@ namespace aprilui
 			}
 			if (string[index + 1] != 's')
 			{
-				aprilui::log(hsprintf("WARNING: Unsupported formatting '%%%c'", string[index + 1]));
+				hlog::errorf(aprilui::logTag, "Unsupported formatting '%%%c'!", string[index + 1]);
 				return false;
 			}
 			indexes += currentIndex + index;

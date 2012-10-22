@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -11,6 +11,7 @@
 #include <april/Keys.h>
 #include <atres/atres.h>
 #include <atres/FontResource.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 #include <april/Window.h>
@@ -376,7 +377,7 @@ namespace aprilui
 		if (name == "space_hack")		return this->mSpaceHack;
 		if (name == "background")
 		{
-			aprilui::log("WARNING: 'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
 			return this->isUseBackground();
 		}
 		 return Label::getProperty(name, property_exists);
@@ -393,7 +394,7 @@ namespace aprilui
 		else if	(name == "space_hack")		this->mSpaceHack = (bool)value;
 		else if	(name == "background")
 		{
-			aprilui::log("WARNING: 'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
 			this->setUseBackground(value);
 		}
 		else return Label::setProperty(name, value);
