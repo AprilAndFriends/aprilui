@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.2
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -32,10 +32,10 @@ namespace aprilui
 	class Image;
 	class Object;
 	
+	extern hstr logTag;
+
 	apriluiFnExport void init();
 	apriluiFnExport void destroy();
-	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
-	apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
 	
 	apriluiFnExport bool isDebugEnabled();
 	apriluiFnExport void setDebugEnabled(bool value);
@@ -102,6 +102,9 @@ namespace aprilui
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyUp(unsigned int keyCode);
 	DEPRECATED_ATTRIBUTE apriluiFnExport void OnChar(unsigned int charCode);
 	
+	DEPRECATED_ATTRIBUTE apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
+	DEPRECATED_ATTRIBUTE apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
+
 	// TODO - hack, has to be removed completely
 	apriluiFnExport bool getForcedDynamicLoading();
 	apriluiFnExport void setForcedDynamicLoading(bool value);

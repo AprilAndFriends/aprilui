@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.23
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -138,7 +138,7 @@ namespace aprilui
 			T object = dynamic_cast<T>(this->tryGetObject(name));
 			if (object == NULL)
 			{
-				aprilui::log("WARNING: Dynamic cast in getObject<T> failed, object: " + name);
+				hlog::warn(aprilui::logTag, "Dynamic cast in getObject<T> failed, object: " + name);
 			}
 			return object;
 		}

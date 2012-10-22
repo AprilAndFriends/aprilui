@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.23
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #include <gtypes/gtypesUtil.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -771,7 +772,7 @@ namespace aprilui
 		else if	(name == "click_through")			this->setClickThrough(value);
 		else if	(name == "clickthrough")
 		{
-			aprilui::log("WARNING: 'clickthrough=' is deprecated. Use 'click_through=' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'clickthrough=' is deprecated. Use 'click_through=' instead!"); // DEPRECATED
 			this->setClickThrough(value);
 		}
 		else if	(name == "inherits_alpha")			this->setInheritsAlpha(value);
@@ -803,7 +804,7 @@ namespace aprilui
 			anchors.remove_all("bottom");
 			if (anchors.size() > 0)
 			{
-				aprilui::log("WARNING: 'anchors=' does not support values '" + anchors.join(",") + "'.");
+				hlog::warn(aprilui::logTag, "'anchors=' does not support values '" + anchors.join(",") + "'.");
 				return false;
 			}
 		}

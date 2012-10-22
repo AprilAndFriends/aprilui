@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -12,6 +12,7 @@
 #include <gtypes/Matrix4.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hlog.h>
 
 #include "aprilui.h"
 #include "apriluiUtil.h"
@@ -21,25 +22,25 @@ namespace aprilui
 {
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
-		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
+		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		this->mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
 	{
-		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
+		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		this->mColor.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
 	{
-		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
+		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		this->mColor.set(color);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
 	{
-		aprilui::log("WARNING: 'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
+		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
 		this->mColor = color;
 	}
 

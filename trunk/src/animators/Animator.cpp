@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.0
+/// @version 2.25
 /// 
 /// @section LICENSE
 /// 
@@ -9,6 +9,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <gtypes/Rectangle.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
@@ -210,13 +211,13 @@ namespace aprilui
 		else if	(name == "offset")						return this->getOffset();
 		else if	(name == "dc_offset")
 		{
-			aprilui::log("WARNING: 'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
 			return this->getOffset();
 		}
 		else if	(name == "acceleration")	this->getAcceleration();
 		else if	(name == "discrete")
 		{
-			aprilui::log("WARNING: 'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
 			return this->getDiscreteStep();
 		}
 		else if	(name == "discrete_step")	return this->getDiscreteStep();
@@ -252,13 +253,13 @@ namespace aprilui
 		else if	(name == "offset")						this->setOffset(value);
 		else if	(name == "dc_offset")
 		{
-			aprilui::log("WARNING: 'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
 			this->setOffset(value);
 		}
 		else if	(name == "acceleration")	this->setAcceleration(value);
 		else if	(name == "discrete")
 		{
-			aprilui::log("WARNING: 'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
 			this->setDiscreteStep((bool)value ? 0 : 1);
 		}
 		else if	(name == "discrete_step")	this->setDiscreteStep(value);
