@@ -17,6 +17,7 @@
 
 #include <gtypes/Rectangle.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
