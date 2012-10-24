@@ -25,9 +25,9 @@ namespace aprilui
 		ImageButton(name, rect)
 	{
 		this->mText = "TextImageButton: " + name;
-		this->mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
-		this->mHoverTextColor = APRIL_COLOR_GREY;
-		this->mDisabledTextColor = APRIL_COLOR_GREY;
+		this->mPushedTextColor = april::Color::White / 5.0f;
+		this->mHoverTextColor = april::Color::Grey;
+		this->mDisabledTextColor = april::Color::Grey;
 		this->_mUseHoverTextColor = false;
 		this->_mUsePushedTextColor = false;
 		this->_mUseDisabledTextColor = false;
