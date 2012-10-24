@@ -47,7 +47,7 @@ namespace aprilui
 		void attach(Object* object);
 		void detach();
 		Object* getParent() { return this->mParent; }
-		void removeChildren();
+		void removeChildren(bool recursive = false);
 		void destroyChildren();
 		harray<Object*>& getChildren() { return this->mChildren; }
 		hmap<hstr, Event*>& getEvents() { return this->mEvents; }
