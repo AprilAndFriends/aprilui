@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -33,8 +33,8 @@ namespace aprilui
 		
 		hstr getName();
 		bool isCursorInside();
-		bool isUseBackground() { return this->mUseBackground; }
-		void setUseBackground(bool value) { this->mUseBackground = value; }
+		Object* getParent();
+		Dataset* getDataset();
 		april::Color getHoverTextColor() { return this->mHoverTextColor; }
 		void setHoverTextColor(april::Color value) { this->mHoverTextColor = value; }
 		void setHoverTextColor(chstr value) { this->mHoverTextColor.set(value); }
@@ -44,8 +44,6 @@ namespace aprilui
 		april::Color getDisabledTextColor() { return this->mDisabledTextColor; }
 		void setDisabledTextColor(april::Color value) { this->mDisabledTextColor = value; }
 		void setDisabledTextColor(chstr value) { this->mDisabledTextColor.set(value); }
-		Object* getParent();
-		Dataset* getDataset();
 
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
@@ -55,12 +53,7 @@ namespace aprilui
 		void onMouseMove();
 		void cancelMouseDown();
 		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
-
 	protected:
-		bool mUseBackground;
 		april::Color mHoverTextColor;
 		april::Color mPushedTextColor;
 		april::Color mDisabledTextColor;

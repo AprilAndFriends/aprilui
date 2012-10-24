@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.26
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -149,6 +149,7 @@ namespace aprilui
 		void setClip(bool value) { this->mClip = value; }
 		bool isUseDisabledAlpha() { return this->mUseDisabledAlpha; }
 		void setUseDisabledAlpha(bool value) { this->mUseDisabledAlpha = value; }
+		virtual Dataset* getDataset() { return mDataset; }
 		
 		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
 		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
@@ -188,7 +189,6 @@ namespace aprilui
 		
 		virtual hstr getProperty(chstr name, bool* property_exists = NULL);
 		virtual bool setProperty(chstr name, chstr value);
-		virtual Dataset* getDataset() { return mDataset; }
 		
 		// dynamic animators
 		
@@ -263,15 +263,6 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void moveToBack() { if (this->mParent != NULL) { this->mParent->getChildren().remove(this); this->mParent->getChildren().push_front(this); } }
 		DEPRECATED_ATTRIBUTE bool isClickthrough() { return this->mClickThrough; }
 		DEPRECATED_ATTRIBUTE void setClickthrough(bool value) { this->mClickThrough = value; }
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { this->onMouseMove(); }
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keyCode) { this->onKeyDown(keyCode); }
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keyCode) { this->onKeyUp(keyCode); }
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charCode) { this->onChar(charCode); }
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 		DEPRECATED_ATTRIBUTE grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return this->getBoundingRect(overrideRoot); }
 		
 		// TODO - this needs to be seriously refactored

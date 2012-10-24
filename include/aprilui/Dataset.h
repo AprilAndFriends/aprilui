@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.26
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -80,7 +80,7 @@ namespace aprilui
 		template <class T>
 		hmap<hstr, T> getObjectsByType()
 		{
-			return mObjects.dyn_cast_value<hstr, T>();
+			return this->mObjects.dyn_cast_value<hstr, T>();
 		}
 
 		void updateTextures(float k);
@@ -109,7 +109,7 @@ namespace aprilui
 		virtual hstr getTextEntry(chstr textKey);
 		virtual bool hasTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
-		hmap<hstr, hstr>& getTextEntries() { return mTexts; }
+		hmap<hstr, hstr>& getTextEntries() { return this->mTexts; }
 		harray<hstr> getTextEntries(harray<hstr> keys);
 
 		hstr getName() { return this->mName; }
@@ -128,12 +128,10 @@ namespace aprilui
 			}
 			return object;
 		}
-
 		template <class T> void getObject(chstr name, T& out)
 		{
 			out = this->getObject<T>(name);
 		}
-		
 		template <class T> T tryGetObject(chstr name)
 		{
 			T object = dynamic_cast<T>(this->tryGetObject(name));
@@ -143,7 +141,6 @@ namespace aprilui
 			}
 			return object;
 		}
-		
 		template <class T> void tryGetObject(chstr name, T& out)
 		{
 			out = this->tryGetObject<T>(name);
@@ -153,21 +150,6 @@ namespace aprilui
 		void reloadTexts();
 		void reloadTextures();
 		void removeFocus();
-
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name) { this->destroyObject(name); }
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object) { this->destroyObject(object); }
-		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { this->onMouseMove(); }
-		DEPRECATED_ATTRIBUTE void OnKeyDown(unsigned int keyCode) { this->onKeyDown(keyCode); }
-		DEPRECATED_ATTRIBUTE void OnKeyUp(unsigned int keyCode) { this->onKeyUp(keyCode); }
-		DEPRECATED_ATTRIBUTE void OnChar(unsigned int charCode) { this->onChar(charCode); }
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
-		DEPRECATED_ATTRIBUTE bool textExists(chstr key) { return this->hasTextEntry(key); }
-		DEPRECATED_ATTRIBUTE bool hasTextKey(chstr key) { return this->hasTextEntry(key); }
-		DEPRECATED_ATTRIBUTE hmap<hstr, hstr>& getTexts() { return this->getTextEntries(); }
 
 	protected:
 		hstr mName;

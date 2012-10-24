@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -25,7 +25,6 @@ namespace aprilui
 		ImageButton(name, rect)
 	{
 		this->mText = "TextImageButton: " + name;
-		this->mUseBackground = false;
 		this->mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
 		this->mHoverTextColor = APRIL_COLOR_GREY;
 		this->mDisabledTextColor = APRIL_COLOR_GREY;
@@ -53,6 +52,7 @@ namespace aprilui
 		ImageButton::OnDraw();
 		april::Color color = this->mTextColor;
 		april::Color drawColor = this->_getDrawColor();
+		unsigned char alpha = this->mBackgroundColor.a;
 		if (!this->isDerivedEnabled())
 		{
 			if (this->_mUseDisabledTextColor)
@@ -66,6 +66,7 @@ namespace aprilui
 		}
 		else if (this->mHovered)
 		{
+			this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * 0.75f);
 			if (this->mPushed)
 			{
 				if (this->_mUsePushedTextColor)
@@ -79,15 +80,10 @@ namespace aprilui
 			}
 		}
 		grect rect = this->_getDrawRect();
-		if (this->mUseBackground)
-		{
-			april::Color backgroundColor = april::Color(APRIL_COLOR_BLACK, (unsigned char)(((this->mHovered && this->mPushed) ? 255 : 191) * drawColor.a_f()));
-			april::rendersys->drawFilledRect(rect, backgroundColor);
-			backgroundColor = april::Color(this->mTextColor, backgroundColor.a);
-			april::rendersys->drawRect(rect, backgroundColor);
-		}
-		LabelBase::_drawLabel(rect, drawColor);
+		this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * this->_getDisabledAlphaFactor());
+		LabelBase::_drawLabel(rect, drawColor, this->mBackgroundColor);
 		this->mTextColor = color;
+		this->mBackgroundColor.a = alpha;
 	}
 	
 	void TextImageButton::notifyEvent(chstr name, void* params)
@@ -113,7 +109,6 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'use_disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
 			return this->_mUseDisabledTextColor;
 		}
-		if (name == "use_background")		return this->isUseBackground();
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
@@ -128,7 +123,6 @@ namespace aprilui
 			this->_mUseDisabledTextColor = !value;
 			this->setDisabledTextColor(this->mTextColor);
 		}
-		else if (name == "use_background")		this->setUseBackground(value);
 		else if (name == "hover_text_color")	this->setHoverTextColor(value);
 		else if (name == "pushed_text_color")	this->setPushedTextColor(value);
 		else if (name == "disabled_text_color")	this->setDisabledTextColor(value);

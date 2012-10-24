@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -40,7 +40,7 @@ namespace aprilui
 		this->mCtrlMode = false;
 		this->mFilter = "";
 		this->mBlinkTimer = 0.0f;
-		this->mUseBackground = true;
+		this->mBackgroundColor = APRIL_COLOR_BLACK;
 		/// TODO - remove
 		this->mSpaceHack = false;
 	}
@@ -176,18 +176,6 @@ namespace aprilui
 		}
 		//////////////
 		grect rect = this->_getDrawRect();
-		april::Color color = APRIL_COLOR_BLACK;
-		if (this->mUseBackground)
-		{
-			if (!this->mPushed)
-			{
-				color.a = 191;
-			}
-			color.a = this->getDerivedAlpha();
-			april::rendersys->drawFilledRect(rect, color);
-			color = april::Color(this->mTextColor, color.a);
-			april::rendersys->drawRect(rect, color);
-		}
 		hstr text = this->mText;
 		harray<unsigned int> unicodeChars = this->mUnicodeChars;
 		if (this->mPasswordChar != '\0' && this->mText != "")
@@ -231,7 +219,13 @@ namespace aprilui
 		{
 			this->mText = this->mEmptyText;
 		}
+		unsigned char alpha = this->mBackgroundColor.a;
+		if (this->mPushed)
+		{
+			this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * 0.75f);
+		}
 		Label::OnDraw();
+		this->mBackgroundColor.a = alpha;
 		this->mText = renderText;
 		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 		{
@@ -371,16 +365,10 @@ namespace aprilui
 		if (name == "max_length")		return this->getMaxLength();
 		if (name == "password_char")	return this->getPasswordChar();
 		if (name == "filter")			return this->getFilter();
-		if (name == "use_background")	return this->isUseBackground();
 		if (name == "empty_text")		return this->getEmptyText();
 		if (name == "empty_text_key")	return this->getEmptyTextKey();
 		if (name == "space_hack")		return this->mSpaceHack;
-		if (name == "background")
-		{
-			hlog::warn(aprilui::logTag, "'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
-			return this->isUseBackground();
-		}
-		 return Label::getProperty(name, property_exists);
+		return Label::getProperty(name, property_exists);
 	}
 	
 	bool EditBox::setProperty(chstr name, chstr value)
@@ -390,13 +378,7 @@ namespace aprilui
 		else if	(name == "filter")			this->setFilter(value);
 		else if	(name == "empty_text")		this->setEmptyText(value);
 		else if	(name == "empty_text_key")	this->setEmptyTextKey(value);
-		else if	(name == "use_background")	this->setUseBackground(value);
 		else if	(name == "space_hack")		this->mSpaceHack = (bool)value;
-		else if	(name == "background")
-		{
-			hlog::warn(aprilui::logTag, "'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
-			this->setUseBackground(value);
-		}
 		else return Label::setProperty(name, value);
 		return true;
 	}

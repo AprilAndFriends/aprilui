@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -42,9 +42,12 @@ namespace aprilui
 	void Label::OnDraw()
 	{
 		Object::OnDraw();
+		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		april::Color color = this->_getDrawColor();
-		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		LabelBase::_drawLabel(this->_getDrawRect(), color);
+		color.a = (unsigned char)(color.a * disabledAlphaFactor);
+		april::Color backgroundColor = this->mBackgroundColor;
+		backgroundColor.a = (unsigned char)(backgroundColor.a * disabledAlphaFactor);
+		LabelBase::_drawLabel(this->_getDrawRect(), color, backgroundColor);
 	}
 
 	void Label::notifyEvent(chstr name, void* params)

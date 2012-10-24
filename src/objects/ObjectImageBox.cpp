@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.05
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -72,24 +72,6 @@ namespace aprilui
 		return false;
 	}
 	
-	void ImageBox::notifyEvent(chstr name, void* params)
-	{	
-		if (name == "UpdateImage")
-		{
-			this->setImageByName(this->mImageName);
-		}
-		Object::notifyEvent(name, params);
-	}
-	
-	void ImageBox::resizeToFitImage()
-	{
-		if (this->mImage != NULL)
-		{
-			this->mRect.setSize(this->mImage->getSrcRect().getSize() * aprilui::getDefaultScale());
-			this->resetCenter();
-		}
-	}
-
 	void ImageBox::OnDraw()
 	{
 		if (this->mImage == NULL)
@@ -111,6 +93,24 @@ namespace aprilui
 			this->mImage->draw(rect, color);
 		}
 		Object::OnDraw();
+	}
+	
+	void ImageBox::resizeToFitImage()
+	{
+		if (this->mImage != NULL)
+		{
+			this->mRect.setSize(this->mImage->getSrcRect().getSize() * aprilui::getDefaultScale());
+			this->resetCenter();
+		}
+	}
+
+	void ImageBox::notifyEvent(chstr name, void* params)
+	{	
+		if (name == "UpdateImage")
+		{
+			this->setImageByName(this->mImageName);
+		}
+		Object::notifyEvent(name, params);
 	}
 	
 	hstr ImageBox::getProperty(chstr name, bool* property_exists)

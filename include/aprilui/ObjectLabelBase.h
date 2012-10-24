@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.01
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -60,11 +60,17 @@ namespace aprilui
 		april::Color getFontEffectColor() { return this->mFontEffectColor; }
 		void setFontEffectColor(april::Color value) { this->mFontEffectColor = value; }
 		void setFontEffectColor(chstr value) { this->mFontEffectColor.set(value); }
+		april::Color getBackgroundColor() { return this->mBackgroundColor; }
+		void setBackgroundColor(april::Color value) { this->mBackgroundColor = value; }
+		void setBackgroundColor(chstr value) { this->mBackgroundColor.set(value); }
 		
 		virtual void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
+		DEPRECATED_ATTRIBUTE bool isUseBackground() { return (this->mBackgroundColor.a != 0); }
+		DEPRECATED_ATTRIBUTE void setUseBackground(bool value) { this->mBackgroundColor.a = (value ? 128 : 0); }
+
 	protected:
 		hstr mText;
 		hstr mTextKey;
@@ -77,8 +83,9 @@ namespace aprilui
 		atres::Effect mFontEffect;
 		bool mUseFontEffectColor;
 		april::Color mFontEffectColor;
+		april::Color mBackgroundColor;
 		
-		void _drawLabel(grect rect, april::Color color);
+		void _drawLabel(grect rect, april::Color color, april::Color backgroundColor);
 		
 	};
 	
