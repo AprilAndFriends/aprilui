@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -32,6 +32,7 @@ namespace aprilui
 		static Object* createInstance(chstr name, grect rect);
 		
 		Dataset* getDataset();
+		unsigned char getDerivedAlpha();
 
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
@@ -40,9 +41,6 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
-
 	protected:
 		void OnDraw();
 		

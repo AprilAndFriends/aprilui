@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -56,8 +56,6 @@ namespace aprilui
 
 		static float ScrollDistance;
 		static float GridSize;
-
-		DEPRECATED_ATTRIBUTE void onMouseMove(float x, float y) { this->onMouseMove(); }
 
 	protected:
 		hstr mSkinName;

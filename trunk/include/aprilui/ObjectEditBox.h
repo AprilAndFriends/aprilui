@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -39,8 +39,6 @@ namespace aprilui
 		void setPasswordChar(char value) { this->mPasswordChar = value; }
 		hstr getFilter() { return this->mFilter; }
 		void setFilter(chstr value);
-		bool isUseBackground() { return this->mUseBackground; }
-		void setUseBackground(bool value) { this->mUseBackground = value; }
 		hstr getEmptyText() { return this->mEmptyText; }
 		void setEmptyText(chstr value);
 		hstr getEmptyTextKey() { return this->mEmptyTextKey; }
@@ -52,18 +50,15 @@ namespace aprilui
 		void update(float time);
 
 		void notifyEvent(chstr name, void* params);
+		hstr getProperty(chstr name, bool* property_exists = NULL);
+		bool setProperty(chstr name, chstr value);
+		
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
 		void onKeyDown(unsigned int keyCode);
 		void onKeyUp(unsigned int keyCode);
 		void onChar(unsigned int charCode);
 		void cancelMouseDown();
-		
-		hstr getProperty(chstr name, bool* property_exists = NULL);
-		bool setProperty(chstr name, chstr value);
-		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		
 	protected:
 		hstr mEmptyText;
@@ -74,7 +69,6 @@ namespace aprilui
 		int mMaxLength;
 		char mPasswordChar;
 		bool mCtrlMode;
-		bool mUseBackground; // TODO - replace with background color and move to LabelBase
 		bool mSpaceHack; // TODO - remove
 		float mBlinkTimer;
 		hstr mFilter;

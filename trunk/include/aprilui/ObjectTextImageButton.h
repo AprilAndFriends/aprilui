@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -32,8 +32,6 @@ namespace aprilui
 		static Object* createInstance(chstr name, grect rect);
 
 		Dataset* getDataset();
-		bool isUseBackground() { return this->mUseBackground; }
-		void setUseBackground(bool value) { this->mUseBackground = value; }
 		april::Color getHoverTextColor() { return this->mHoverTextColor; }
 		void setHoverTextColor(april::Color value) { this->mHoverTextColor = value; this->_mUseHoverTextColor = true; }
 		void setHoverTextColor(chstr value) { this->mHoverTextColor.set(value); this->_mUseHoverTextColor = true; }
@@ -44,12 +42,11 @@ namespace aprilui
 		void setDisabledTextColor(april::Color value) { this->mDisabledTextColor = value; this->_mUseDisabledTextColor = true; }
 		void setDisabledTextColor(chstr value) { this->mDisabledTextColor.set(value); this->_mUseDisabledTextColor = true; }
 
-		hstr getProperty(chstr name, bool* property_exists = NULL);
 		void notifyEvent(chstr name, void* params);
+		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		bool mUseBackground;
 		april::Color mHoverTextColor;
 		april::Color mPushedTextColor;
 		april::Color mDisabledTextColor;

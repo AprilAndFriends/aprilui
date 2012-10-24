@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -37,16 +37,22 @@ namespace aprilui
 		this->mFontEffect = atres::NONE;
 		this->mUseFontEffectColor = false;
 		this->mFontEffectColor = APRIL_COLOR_BLACK;
+		this->mBackgroundColor = APRIL_COLOR_CLEAR;
 	}
 
 	LabelBase::~LabelBase()
 	{
 	}
 
-	void LabelBase::_drawLabel(grect rect, april::Color color)
+	void LabelBase::_drawLabel(grect rect, april::Color color, april::Color backgroundColor)
 	{
 		color *= this->mTextColor;
-		if (aprilui::isDebugEnabled())
+		if (this->mBackgroundColor.a > 0)
+		{
+			april::rendersys->drawFilledRect(rect, this->mBackgroundColor);
+			april::rendersys->drawRect(rect, april::Color(this->mTextColor, this->mBackgroundColor.a));
+		}
+		else if (aprilui::isDebugEnabled())
 		{
 			unsigned char alpha = color.a / 2;
 			april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_BLACK, alpha));
@@ -89,9 +95,9 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "font")			return this->getFont();
-		if (name == "text")			return this->getText();
-		if (name == "text_key")		return this->getTextKey();
+		if (name == "font")				return this->getFont();
+		if (name == "text")				return this->getText();
+		if (name == "text_key")			return this->getTextKey();
 		if (name == "horz_formatting")
 		{
 			if (this->mHorzFormatting == atres::LEFT)			return "left";
@@ -108,7 +114,7 @@ namespace aprilui
 			if (this->mVertFormatting == atres::CENTER)	return "center";
 			if (this->mVertFormatting == atres::BOTTOM)	return "bottom";
 		}
-		if (name == "text_color")	return this->getTextColor().hex();
+		if (name == "text_color")		return this->getTextColor().hex();
 		if (name == "effect")
 		{
 			hstr effect = "";
@@ -121,8 +127,19 @@ namespace aprilui
 			}
 			return effect;
 		}
-		if (name == "offset_x")		return this->mDrawOffset.x;
-		if (name == "offset_y")		return this->mDrawOffset.y;
+		if (name == "offset_x")			return this->mDrawOffset.x;
+		if (name == "offset_y")			return this->mDrawOffset.y;
+		if (name == "background")
+		{
+			hlog::warn(aprilui::logTag, "'background' is deprecated, use 'background_color' instead!"); // DEPRECATED
+			return (this->mBackgroundColor.a > 0);
+		}
+		if (name == "use_background")
+		{
+			hlog::warn(aprilui::logTag, "'use_background' is deprecated, use 'background_color' instead!"); // DEPRECATED
+			return (this->mBackgroundColor.a > 0);
+		}
+		if (name == "background_color")	return this->mBackgroundColor.hex();
 		if (property_exists != NULL)
 		{
 			*property_exists = false;
@@ -132,14 +149,14 @@ namespace aprilui
 	
 	bool LabelBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "font")				this->setFont(value);
-		else if (name == "text_key")	this->setTextKey(value);
+		if (name == "font")					this->setFont(value);
+		else if (name == "text_key")		this->setTextKey(value);
 		else if (name == "textkey")
 		{
 			hlog::warn(aprilui::logTag, "'textkey=' is deprecated. Use 'text_key=' instead."); // DEPRECATED
 			this->setTextKey(value);
 		}
-		else if (name == "text")		this->setText(value);
+		else if (name == "text")			this->setText(value);
 		else if (name == "horz_formatting")
 		{
 			if (value == "left")				this->setHorzFormatting(atres::LEFT);
@@ -157,16 +174,16 @@ namespace aprilui
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")			this->setVertFormatting(atres::TOP);
-			else if (value == "center")	this->setVertFormatting(atres::CENTER);
-			else if (value == "bottom")	this->setVertFormatting(atres::BOTTOM);
+			if (value == "top")				this->setVertFormatting(atres::TOP);
+			else if (value == "center")		this->setVertFormatting(atres::CENTER);
+			else if (value == "bottom")		this->setVertFormatting(atres::BOTTOM);
 			else
 			{
 				hlog::warn(aprilui::logTag, "'vert_formatting=' does not support value '" + value + "'.");
 				return false;
 			}
 		}
-		else if (name == "text_color")	this->setTextColor(value);
+		else if (name == "text_color")		this->setTextColor(value);
 		else if (name == "color")
 		{
 			throw hl_exception("LabelBase instance using 'color=' which is conflicted with TextImageButton's color and cannot be used! Maybe you meant 'text_color='?");
@@ -201,8 +218,19 @@ namespace aprilui
 				}
 			}
 		}
-		else if (name == "offset_x")	this->mDrawOffset.x = (float)value;
-		else if (name == "offset_y")	this->mDrawOffset.y = (float)value;
+		else if (name == "offset_x")		this->mDrawOffset.x = (float)value;
+		else if (name == "offset_y")		this->mDrawOffset.y = (float)value;
+		else if (name == "background")
+		{
+			hlog::warn(aprilui::logTag, "'background=' is deprecated, use 'background_color=' instead!"); // DEPRECATED
+			this->mBackgroundColor.a = (value ? 128 : 0);
+		}
+		else if (name == "use_background")
+		{
+			hlog::warn(aprilui::logTag, "'use_background=' is deprecated, use 'background_color=' instead!"); // DEPRECATED
+			this->mBackgroundColor.a = (value ? 128 : 0);
+		}
+		else if (name == "background_color")	this->setBackgroundColor(value);
 		else return false;
 		return true;
 	}

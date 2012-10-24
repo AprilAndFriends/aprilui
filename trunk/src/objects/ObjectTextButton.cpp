@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -24,7 +24,7 @@ namespace aprilui
 	{
 		hlog::warn(aprilui::logTag, "'TextButton' is deprecated, use 'TextImageButton' without images instead!"); // DEPRECATED
 		this->mText = "TextButton: " + name;
-		this->mUseBackground = true;
+		this->mBackgroundColor = APRIL_COLOR_BLACK;
 		this->mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
 		this->mHoverTextColor = APRIL_COLOR_GREY;
 		this->mDisabledTextColor = APRIL_COLOR_GREY;
@@ -63,12 +63,14 @@ namespace aprilui
 	void TextButton::OnDraw()
 	{
 		april::Color color = this->mTextColor;
+		unsigned char alpha = this->mBackgroundColor.a;
 		if (!this->isDerivedEnabled())
 		{
 			this->mTextColor = this->mDisabledTextColor;
 		}
 		else if (this->mHovered)
 		{
+			this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * 0.75f);
 			if (this->mPushed)
 			{
 				this->mTextColor = this->mPushedTextColor;
@@ -78,29 +80,16 @@ namespace aprilui
 				this->mTextColor = this->mHoverTextColor;
 			}
 		}
-		if (this->mUseBackground)
-		{
-			grect rect = this->_getDrawRect();
-			april::Color drawColor = april::Color(APRIL_COLOR_BLACK, ((this->mHovered && this->mPushed) ? 255 : 191));
-			april::rendersys->drawFilledRect(rect, drawColor);
-			drawColor = april::Color(this->mTextColor, drawColor.a);
-			april::rendersys->drawRect(rect, drawColor);
-		}
 		Label::OnDraw();
+		this->mBackgroundColor.a = alpha;
 		this->mTextColor = color;
 	}
 	
 	hstr TextButton::getProperty(chstr name, bool* property_exists)
 	{
-		if (name == "use_background")		return this->isUseBackground();
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
-		if (name == "background")
-		{
-			hlog::warn(aprilui::logTag, "'background' is deprecated, use 'use_background' instead!"); // DEPRECATED
-			return this->isUseBackground();
-		}
 		if (name == "hover_color")
 		{
 			hlog::warn(aprilui::logTag, "'hover_color' is deprecated, use 'hover_text_color' instead!"); // DEPRECATED
@@ -121,15 +110,9 @@ namespace aprilui
 	
 	bool TextButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "use_background")		this->setUseBackground(value);
-		else if (name == "hover_text_color")	this->setHoverTextColor(value);
+		if		(name == "hover_text_color")	this->setHoverTextColor(value);
 		else if (name == "pushed_text_color")	this->setPushedTextColor(value);
 		else if (name == "disabled_text_color")	this->setDisabledTextColor(value);
-		else if (name == "background")
-		{
-			hlog::warn(aprilui::logTag, "'background=' is deprecated, use 'use_background=' instead!"); // DEPRECATED
-			this->setUseBackground(value);
-		}
 		else if (name == "hover_color")
 		{
 			hlog::warn(aprilui::logTag, "'hover_color=' is deprecated, use 'hover_text_color=' instead!"); // DEPRECATED

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.05
+/// @version 2.3
 /// 
 /// @section LICENSE
 /// 
@@ -39,17 +39,14 @@ namespace aprilui
 		/// @brief Optimized version.
 		bool trySetImageByName(chstr name);
 
-		void notifyEvent(chstr name, void* params);
 		void resizeToFitImage();
-		
+
+		void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* property_exists = NULL);
 		bool setProperty(chstr name, chstr value);
 
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
-		
-		DEPRECATED_ATTRIBUTE bool onMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
-		DEPRECATED_ATTRIBUTE bool onMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		
 	protected:
 		Image* mImage;
