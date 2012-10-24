@@ -35,7 +35,7 @@ namespace aprilui
 		Image(Image& img, chstr name);
 		virtual ~Image();
 		
-		virtual void draw(grect rect, april::Color color = APRIL_COLOR_WHITE);
+		virtual void draw(grect rect, april::Color color = april::Color::White);
 		void draw(grect rect, april::Color color, float angle);
 		
 		Texture* getTexture() const { return this->mTexture; }

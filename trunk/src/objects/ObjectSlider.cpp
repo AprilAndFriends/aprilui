@@ -113,7 +113,7 @@ namespace aprilui
 			this->mImage = this->mDataset->getImage("null");
 		}
 		april::Color color = this->_getDrawColor();
-		april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_WHITE, color.a));
+		april::rendersys->drawFilledRect(rect, april::Color(april::Color::White, color.a));
 		april::Color backColor(color / 4.0f, color.a);
 		rect.set(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
 		april::rendersys->drawFilledRect(rect, backColor);

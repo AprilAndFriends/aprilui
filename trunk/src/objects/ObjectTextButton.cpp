@@ -24,10 +24,10 @@ namespace aprilui
 	{
 		hlog::warn(aprilui::logTag, "'TextButton' is deprecated, use 'TextImageButton' without images instead!"); // DEPRECATED
 		this->mText = "TextButton: " + name;
-		this->mBackgroundColor = APRIL_COLOR_BLACK;
-		this->mPushedTextColor = APRIL_COLOR_WHITE / 5.0f;
-		this->mHoverTextColor = APRIL_COLOR_GREY;
-		this->mDisabledTextColor = APRIL_COLOR_GREY;
+		this->mBackgroundColor = april::Color::Black;
+		this->mPushedTextColor = april::Color::White / 5.0f;
+		this->mHoverTextColor = april::Color::Grey;
+		this->mDisabledTextColor = april::Color::Grey;
 	}
 
 	TextButton::~TextButton()

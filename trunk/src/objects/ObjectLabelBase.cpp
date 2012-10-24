@@ -30,14 +30,14 @@ namespace aprilui
 		this->mTextKey = "";
 		this->mFontName = "";
 		this->mTextFormatting = true;
-		this->mTextColor = APRIL_COLOR_WHITE;
+		this->mTextColor = april::Color::White;
 		this->mDrawOffset.set(0.0f, 0.0f);
 		this->mHorzFormatting = atres::CENTER_WRAPPED;
 		this->mVertFormatting = atres::CENTER;
 		this->mFontEffect = atres::NONE;
 		this->mUseFontEffectColor = false;
-		this->mFontEffectColor = APRIL_COLOR_BLACK;
-		this->mBackgroundColor = APRIL_COLOR_CLEAR;
+		this->mFontEffectColor = april::Color::Black;
+		this->mBackgroundColor = april::Color::Clear;
 	}
 
 	LabelBase::~LabelBase()
@@ -55,8 +55,8 @@ namespace aprilui
 		else if (aprilui::isDebugEnabled())
 		{
 			unsigned char alpha = color.a / 2;
-			april::rendersys->drawFilledRect(rect, april::Color(APRIL_COLOR_BLACK, alpha));
-			april::rendersys->drawRect(rect, april::Color(APRIL_COLOR_WHITE, alpha));
+			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Black, alpha));
+			april::rendersys->drawRect(rect, april::Color(april::Color::White, alpha));
 		}
 		if (this->mText.size() == 0)
 		{

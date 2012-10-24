@@ -40,7 +40,7 @@ namespace aprilui
 		this->mCtrlMode = false;
 		this->mFilter = "";
 		this->mBlinkTimer = 0.0f;
-		this->mBackgroundColor = APRIL_COLOR_BLACK;
+		this->mBackgroundColor = april::Color::Black;
 		/// TODO - remove
 		this->mSpaceHack = false;
 	}

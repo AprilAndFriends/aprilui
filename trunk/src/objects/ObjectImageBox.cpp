@@ -87,9 +87,9 @@ namespace aprilui
 		else
 		{
 			grect rect = this->_getDrawRect();
-			april::Color backColor = april::Color(APRIL_COLOR_BLACK, 96);
+			april::Color backColor = april::Color(april::Color::Black, 96);
 			april::rendersys->drawFilledRect(rect, backColor);
-			april::rendersys->drawRect(rect, april::Color(APRIL_COLOR_WHITE, 96));
+			april::rendersys->drawRect(rect, april::Color(april::Color::White, 96));
 			this->mImage->draw(rect, color);
 		}
 		Object::OnDraw();

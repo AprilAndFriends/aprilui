@@ -29,7 +29,7 @@ namespace aprilui
 	class apriluiExport ColoredImage : public Image
 	{
 	public:
-		ColoredImage(Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = APRIL_COLOR_WHITE);
+		ColoredImage(Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = april::Color::White);
 		// TODO - has to be refactored
 		/// @brief Takes an Image instance and creates a Colored Image 
 		ColoredImage(Image& img, chstr name, april::Color color);
