@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.26
 /// 
 /// @section LICENSE
 /// 
@@ -82,31 +82,21 @@ namespace aprilui
 		return normalize_path(get_basedir(filename));
 	}
 	
-	void Dataset::destroyObject(chstr name, bool recursive)
+	void Dataset::destroyObject(chstr name)
 	{
-		this->destroyObject(this->getObject(name), recursive);
+		this->destroyObject(this->getObject(name));
 	}
 	
-	void Dataset::destroyObject(Object* object, bool recursive)
+	void Dataset::destroyObject(Object* object)
 	{
 		if (!this->mObjects.has_key(object->getName()))
 		{
 			throw ResourceNotExistsException(object->getName(), "Object", this);
 		}
-		if (recursive)
+		harray<Object*> children = object->getChildren();
+		foreach (Object*, it, children)
 		{
-			harray<Object*> children = object->getChildren();
-			foreach (Object*, it, children)
-			{
-				this->destroyObject((*it), true);
-			}
-		}
-		else
-		{
-			while (object->getChildren().size() > 0)
-			{
-				object->removeChild(object->getChildren().first());
-			}
+			this->destroyObject(*it);
 		}
 		if (object->getParent() != NULL)
 		{

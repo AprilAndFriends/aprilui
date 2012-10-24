@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.26
 /// 
 /// @section LICENSE
 /// 
@@ -182,11 +182,11 @@ namespace aprilui
 		this->mChildren.clear();
 	}
 	
-	void Object::destroyChildren(bool recursive)
+	void Object::destroyChildren()
 	{
 		while (this->mChildren.size() > 0)
 		{
-			this->mDataset->destroyObject(this->mChildren.first(), recursive);
+			this->mDataset->destroyObject(this->mChildren.first());
 		}
 	}
 	

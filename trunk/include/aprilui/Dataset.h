@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.26
 /// 
 /// @section LICENSE
 /// 
@@ -93,8 +93,8 @@ namespace aprilui
 		void _destroyTexture(Texture* tex);
 		void _destroyImage(Image* img);
 		
-		void destroyObject(chstr name, bool recursive = false);
-		void destroyObject(Object* object, bool recursive = false);
+		void destroyObject(chstr name);
+		void destroyObject(Object* object);
 
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
@@ -154,8 +154,8 @@ namespace aprilui
 		void reloadTextures();
 		void removeFocus();
 
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name, bool recursive = false) { this->destroyObject(name, recursive); }
-		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object, bool recursive = false) { this->destroyObject(object, recursive); }
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(chstr name) { this->destroyObject(name); }
+		DEPRECATED_ATTRIBUTE void destroyAndDetachObject(Object* object) { this->destroyObject(object); }
 		DEPRECATED_ATTRIBUTE bool OnMouseDown(float x, float y, int button) { return this->onMouseDown(button); }
 		DEPRECATED_ATTRIBUTE bool OnMouseUp(float x, float y, int button) { return this->onMouseUp(button); }
 		DEPRECATED_ATTRIBUTE void OnMouseMove(float x, float y) { this->onMouseMove(); }
