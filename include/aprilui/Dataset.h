@@ -68,6 +68,7 @@ namespace aprilui
 		void setRoot(Object* obj) { this->mRoot = obj; }
 		hstr getTextsPath() { return this->mTextsPath; }
 		void setTextsPath(chstr value) { this->mTextsPath = value; }
+		hstr getFilePath() { return this->mFilePath; }
 		
 		hmap<hstr, Object*>& getObjects() { return this->mObjects; }
 		hmap<hstr, Image*>& getImages() { return this->mImages; }
