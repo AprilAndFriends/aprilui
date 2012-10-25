@@ -66,7 +66,7 @@ namespace aprilui
 		}
 		//////////////
 		grect rect = _getDrawRect();
-        april::Color color = APRIL_COLOR_BLACK;
+        april::Color color = april::Color::Black;
         if (mBackground)
         {
             if (!mPushed)
