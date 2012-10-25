@@ -69,11 +69,6 @@ namespace aprilui
 		hstr getTextsPath() { return this->mTextsPath; }
 		void setTextsPath(chstr value) { this->mTextsPath = value; }
 		
-		// use these functions only in debug purposes
-		hstr _getFilename() { return this->mFilename; }
-		void _setFilename(chstr filename) { this->mFilename = filename; }
-		hstr _getFilePath() { return this->mFilePath; }
-		void _setFilePath(chstr prefix) { this->mFilePath = prefix; }
 		hmap<hstr, Object*>& getObjects() { return this->mObjects; }
 		hmap<hstr, Image*>& getImages() { return this->mImages; }
 		hmap<hstr, Texture*>& getTextures() { return this->mTextures; }
