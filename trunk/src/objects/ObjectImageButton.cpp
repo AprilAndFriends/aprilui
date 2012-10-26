@@ -117,7 +117,7 @@ namespace aprilui
 	
 	bool ImageButton::isCursorInside()
 	{
-		return Object::isCursorInside();
+		return ImageBox::isCursorInside();
 	}
 	
 	void ImageButton::setPushedImage(Image* image)
@@ -196,26 +196,24 @@ namespace aprilui
 		{
 			*property_exists = true;
 		}
-		if (name == "image")			return this->getImageName();
 		if (name == "pushed_image")		return this->getPushedImageName();
 		if (name == "hover_image")		return this->getHoverImageName();
 		if (name == "disabled_image")	return this->getDisabledImageName();
-		return Object::getProperty(name, property_exists);
+		return ImageBox::getProperty(name, property_exists);
 	}
 
 	bool ImageButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "image")			this->setImageByName(value);
-		else if	(name == "pushed_image")	this->setPushedImageByName(value);
+		if		(name == "pushed_image")	this->setPushedImageByName(value);
 		else if	(name == "hover_image")		this->setHoverImageByName(value);
 		else if	(name == "disabled_image")	this->setDisabledImageByName(value);
-		else return Object::setProperty(name, value);
+		else return ImageBox::setProperty(name, value);
 		return true;
 	}
 	
 	bool ImageButton::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(button))
+		if (ImageBox::onMouseDown(button))
 		{
 			return true;
 		}
@@ -229,7 +227,7 @@ namespace aprilui
 
 	bool ImageButton::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(button))
+		if (ImageBox::onMouseUp(button))
 		{
 			return true;
 		}
@@ -243,13 +241,13 @@ namespace aprilui
 	
 	bool ImageButton::onMouseMove()
 	{
-		return (Object::onMouseMove() || ButtonBase::onMouseMove());
+		return (ImageBox::onMouseMove() || ButtonBase::onMouseMove());
 	}
 
 	void ImageButton::cancelMouseDown()
 	{
 		ButtonBase::cancelMouseDown();
-		Object::cancelMouseDown();
+		ImageBox::cancelMouseDown();
 	}
 	
 }
