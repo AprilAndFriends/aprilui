@@ -292,7 +292,7 @@ namespace aprilui
 		}
 		if (this->mAllowDrag)
 		{
-			ButtonBase::onMouseMove();
+			return ButtonBase::onMouseMove();
 		}
 		return false;
 	}
