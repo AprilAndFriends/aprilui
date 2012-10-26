@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -55,9 +55,9 @@ namespace aprilui
 		
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
-		void onKeyDown(unsigned int keyCode);
-		void onKeyUp(unsigned int keyCode);
-		void onChar(unsigned int charCode);
+		bool onKeyDown(unsigned int keyCode);
+		bool onKeyUp(unsigned int keyCode);
+		bool onChar(unsigned int charCode);
 		void cancelMouseDown();
 		
 	protected:

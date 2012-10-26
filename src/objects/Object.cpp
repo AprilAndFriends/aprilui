@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.26
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -549,8 +549,7 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() &&
-				!(*it)->isClickThrough() && (*it)->onMouseDown(button))
+			if ((*it)->onMouseDown(button))
 			{
 				return true;
 			}
@@ -566,8 +565,7 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() &&
-				!(*it)->isClickThrough() && (*it)->onMouseUp(button))
+			if ((*it)->onMouseUp(button))
 			{
 				return true;
 			}
@@ -576,67 +574,81 @@ namespace aprilui
 		return false;
 	}
 
-	void Object::onMouseMove()
+	bool Object::onMouseMove() // in general there is no need to block this input from being propagated to the children
 	{
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
+			if  ((*it)->onMouseMove())
 			{
-				(*it)->onMouseMove();
+				return true;
 			}
 		}
+		return false;
 	}
 
-	void Object::onMouseScroll(float x, float y)
+	bool Object::onMouseScroll(float x, float y) // in general there is no need to block this input from being propagated to the children
 	{
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
+			if  ((*it)->onMouseScroll(x, y))
 			{
-				(*it)->onMouseScroll(x, y);
+				return true;
 			}
 		}
+		return false;
 	}
 
-	void Object::onKeyDown(unsigned int keyCode)
+	bool Object::onKeyDown(unsigned int keyCode)
 	{
-		if (this->mDataset != NULL)
+		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
-			Object* object = this->mDataset->getFocusedObject();
-			if (object != NULL)
+			return false;
+		}
+		foreach_r (Object*, it, this->mChildren)
+		{
+			if ((*it)->onKeyDown(keyCode))
 			{
-				object->onKeyDown(keyCode);
+				return true;
 			}
 		}
+		return false;
 	}
 
-	void Object::onKeyUp(unsigned int keyCode)
+	bool Object::onKeyUp(unsigned int keyCode)
 	{
-		if (this->mDataset != NULL)
+		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
-			Object* object = this->mDataset->getFocusedObject();
-			if (object != NULL)
+			return false;
+		}
+		foreach_r (Object*, it, this->mChildren)
+		{
+			if ((*it)->onKeyUp(keyCode))
 			{
-				object->onKeyUp(keyCode);
+				return true;
 			}
 		}
+		return false;
 	}
 	
-	void Object::onChar(unsigned int charCode)
+	bool Object::onChar(unsigned int charCode)
 	{
-		if (this->mDataset != NULL)
+		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
-			Object* object = this->mDataset->getFocusedObject();
-			if (object != NULL)
+			return false;
+		}
+		foreach_r (Object*, it, this->mChildren)
+		{
+			if ((*it)->onChar(charCode))
 			{
-				object->onChar(charCode);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	void Object::cancelMouseDown()
 	{
-		foreach (Object*, it, mChildren)
+		foreach (Object*, it, this->mChildren)
 		{
 			(*it)->cancelMouseDown();
 		}

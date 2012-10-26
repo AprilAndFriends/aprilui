@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -284,13 +284,13 @@ namespace aprilui
 		return Object::onMouseUp(button);
 	}
 	
-	void ScrollArea::onMouseMove()
+	bool ScrollArea::onMouseMove()
 	{
 		if (this->mAllowDrag)
 		{
 			ButtonBase::onMouseMove();
 		}
-		Object::onMouseMove();
+		return Object::onMouseMove();
 	}
 
 	void ScrollArea::_adjustDragSpeed()

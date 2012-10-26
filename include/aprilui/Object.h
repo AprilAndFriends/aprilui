@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -173,11 +173,11 @@ namespace aprilui
 		// if a childs event returns true, event is not propagated to parents
 		virtual bool onMouseDown(int button);
 		virtual bool onMouseUp(int button);
-		virtual void onMouseMove();
-		virtual void onMouseScroll(float x, float y);
-		virtual void onKeyDown(unsigned int keyCode);
-		virtual void onKeyUp(unsigned int keyCode);
-		virtual void onChar(unsigned int charCode);
+		virtual bool onMouseMove();
+		virtual bool onMouseScroll(float x, float y);
+		virtual bool onKeyDown(unsigned int keyCode);
+		virtual bool onKeyUp(unsigned int keyCode);
+		virtual bool onChar(unsigned int charCode);
 		virtual void cancelMouseDown();
 
 		virtual void update(float k);

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -36,7 +36,7 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
-		void onMouseMove();
+		bool onMouseMove();
 		void cancelMouseDown();
 		
 	protected:

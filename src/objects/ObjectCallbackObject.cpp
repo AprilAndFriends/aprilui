@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -62,12 +62,6 @@ namespace aprilui
 		return false;
 	}
 
-	void CallbackObject::cancelMouseDown()
-	{
-		Object::cancelMouseDown();
-		this->triggerEvent("CancelMouseDown");
-	}
-
 	bool CallbackObject::onMouseUp(int button)
 	{
 		if (Object::onMouseUp(button))
@@ -82,21 +76,30 @@ namespace aprilui
 		return false;
 	}
 	
-	void CallbackObject::onMouseMove()
+	bool CallbackObject::onMouseMove()
 	{
-		Object::onMouseMove();
+		bool result = Object::onMouseMove();
 		if (this->isCursorInside())
 		{
 			this->triggerEvent("MouseMove");
 		}
+		return result;
 	}
 	
-	void CallbackObject::onMouseScroll(float x, float y)
+	bool CallbackObject::onMouseScroll(float x, float y)
 	{
-		Object::onMouseScroll(x, y);
+		bool result = Object::onMouseScroll(x, y);
 		if (this->isCursorInside())
 		{
 			this->triggerEvent("MouseScroll", x, y);
 		}
+		return result;
 	}
+
+	void CallbackObject::cancelMouseDown()
+	{
+		Object::cancelMouseDown();
+		this->triggerEvent("CancelMouseDown");
+	}
+
 }
