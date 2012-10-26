@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -38,8 +38,8 @@ namespace aprilui
 		void update(float k);
 		bool onMouseDown(int button);
 		bool onMouseUp(int button);
-		void onMouseMove();
-		void onMouseScroll(float x, float y);
+		bool onMouseMove();
+		bool onMouseScroll(float x, float y);
 		void cancelMouseDown();
 
 	protected:

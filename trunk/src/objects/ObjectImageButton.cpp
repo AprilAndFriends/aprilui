@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.22
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -241,16 +241,16 @@ namespace aprilui
 		return result;
 	}
 	
-	void ImageButton::onMouseMove()
+	bool ImageButton::onMouseMove()
 	{
-		Object::onMouseMove();
 		ButtonBase::onMouseMove();
+		return Object::onMouseMove();
 	}
 
 	void ImageButton::cancelMouseDown()
 	{
-		Object::cancelMouseDown();
 		ButtonBase::cancelMouseDown();
+		Object::cancelMouseDown();
 	}
 	
 }

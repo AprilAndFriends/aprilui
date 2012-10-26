@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.26
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -840,44 +840,29 @@ namespace aprilui
 		return (this->mRoot != NULL && this->mRoot->onMouseUp(button));
 	}
 	
-	void Dataset::onMouseMove()
+	bool Dataset::onMouseMove()
 	{
-		if (this->mRoot != NULL)
-		{
-			this->mRoot->onMouseMove();
-		}
+		return (this->mRoot != NULL && this->mRoot->onMouseMove());
 	}
 	
-	void Dataset::onMouseScroll(float x, float y)
+	bool Dataset::onMouseScroll(float x, float y)
 	{
-		if (this->mRoot != NULL)
-		{
-			this->mRoot->onMouseScroll(x, y);
-		}
+		return (this->mRoot != NULL && this->mRoot->onMouseScroll(x, y));
 	}
 	
-	void Dataset::onKeyDown(unsigned int keyCode)
+	bool Dataset::onKeyDown(unsigned int keyCode)
 	{
-		if (this->mRoot != NULL)
-		{
-			this->mRoot->onKeyDown(keyCode);
-		}
+		return (this->mRoot != NULL && this->mRoot->onKeyDown(keyCode));
 	}
 	
-	void Dataset::onKeyUp(unsigned int keyCode)
+	bool Dataset::onKeyUp(unsigned int keyCode)
 	{
-		if (this->mRoot != NULL)
-		{
-			this->mRoot->onKeyUp(keyCode);
-		}
+		return (this->mRoot != NULL && this->mRoot->onKeyUp(keyCode));
 	}
 	
-	void Dataset::onChar(unsigned int charCode)
+	bool Dataset::onChar(unsigned int charCode)
 	{
-		if (this->mRoot != NULL)
-		{
-			this->mRoot->onChar(charCode);
-		}
+		return (this->mRoot != NULL && this->mRoot->onChar(charCode));
 	}
 	
 	void Dataset::updateTextures(float k)

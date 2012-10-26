@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.25
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -211,17 +211,17 @@ namespace aprilui
 		return true;
 	}
 
-	void ScrollBar::onMouseMove()
+	bool ScrollBar::onMouseMove()
 	{
-		Object::onMouseMove();
 		if (this->mButtonBar != NULL && this->mButtonBar->isPushed())
 		{
 			gvec2 position = aprilui::getCursorPosition() / this->getDerivedScale() - this->_mClickPosition;
 			this->_moveScrollBar(position.x, position.y);
 		}
+		return Object::onMouseMove();
 	}
 
-	void ScrollBar::onMouseScroll(float x, float y)
+	bool ScrollBar::onMouseScroll(float x, float y)
 	{
 		Container* parent = dynamic_cast<Container*>(this->mParent);
 		if (parent != NULL && (parent->isCursorInside() || this->isCursorInside()))
@@ -233,7 +233,7 @@ namespace aprilui
 			}
 			this->addScrollValue(this->_calcScrollMove(x, y));
 		}
-		Object::onMouseScroll(x, y);
+		return Object::onMouseScroll(x, y);
 	}
 
 	void ScrollBar::_clickScrollBegin(EventArgs* args)

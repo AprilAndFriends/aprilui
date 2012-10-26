@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -84,15 +84,15 @@ namespace aprilui
 		return false;
 	}
 
-	void Slider::onMouseMove()
+	bool Slider::onMouseMove()
 	{
-		Object::onMouseMove();
 		if (this->mPushed)
 		{
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
 			this->setValue(position.x / (this->mRect.w - 4));
 			this->triggerEvent("Set");
 		}
+		return Object::onMouseMove();
 	}
 
 	void Slider::cancelMouseDown()

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -296,42 +296,46 @@ namespace aprilui
 		return false;
 	}
 
-	void EditBox::onKeyDown(unsigned int keyCode)
+	bool EditBox::onKeyDown(unsigned int keyCode)
 	{
-		switch (keyCode)
+		if (this->mDataset == NULL || this->mDataset->getFocusedObject() == this)
 		{
+			switch (keyCode)
+			{
 #ifndef _ANDROID // these keys aren't really available on Android
-		case april::AK_LEFT:
-			this->mCtrlMode ? this->_cursorMoveLeftWord() : this->_cursorMoveLeft();
-			break;
-		case april::AK_RIGHT:
-			this->mCtrlMode ? this->_cursorMoveRightWord() : this->_cursorMoveRight();
-			break;
+			case april::AK_LEFT:
+				this->mCtrlMode ? this->_cursorMoveLeftWord() : this->_cursorMoveLeft();
+				break;
+			case april::AK_RIGHT:
+				this->mCtrlMode ? this->_cursorMoveRightWord() : this->_cursorMoveRight();
+				break;
 #endif
-		case april::AK_BACK:
-			this->mCtrlMode ? this->_deleteLeftWord() : this->_deleteLeft();
-			break;
-		case april::AK_DELETE:
-			this->mCtrlMode ? this->_deleteRightWord() : this->_deleteRight();
-			break;
+			case april::AK_BACK:
+				this->mCtrlMode ? this->_deleteLeftWord() : this->_deleteLeft();
+				break;
+			case april::AK_DELETE:
+				this->mCtrlMode ? this->_deleteRightWord() : this->_deleteRight();
+				break;
 #ifndef _ANDROID // these keys aren't really available on Android
-		case april::AK_HOME:
-			this->setCursorIndex(0);
-			break;
-		case april::AK_END:
-			this->setCursorIndex(this->mUnicodeChars.size());
-			break;
-		case april::AK_CONTROL:
-			this->mCtrlMode = true;
-			break;
+			case april::AK_HOME:
+				this->setCursorIndex(0);
+				break;
+			case april::AK_END:
+				this->setCursorIndex(this->mUnicodeChars.size());
+				break;
+			case april::AK_CONTROL:
+				this->mCtrlMode = true;
+				break;
 #endif
-		case april::AK_RETURN:
-			this->triggerEvent("Submit", april::AK_RETURN);
-			break;
+			case april::AK_RETURN:
+				this->triggerEvent("Submit", april::AK_RETURN);
+				break;
+			}
 		}
+		return Object::onKeyDown(keyCode);
 	}
 	
-	void EditBox::onKeyUp(unsigned int keyCode)
+	bool EditBox::onKeyUp(unsigned int keyCode)
 	{
 		switch (keyCode)
 		{
@@ -340,14 +344,16 @@ namespace aprilui
 			this->mCtrlMode = false;
 			break;
 		}
+		return Object::onKeyUp(keyCode);
 	}
 
-	void EditBox::onChar(unsigned int charCode)
+	bool EditBox::onChar(unsigned int charCode)
 	{
 		if (atres::renderer->getFontResource(this->mFontName)->hasChar(charCode) && (this->mFilterChars.size() == 0 || this->mFilterChars.contains(charCode)))
 		{
 			this->_insertChar(charCode);
 		}
+		return Object::onChar(charCode);
 	}
 
 	void EditBox::cancelMouseDown()
