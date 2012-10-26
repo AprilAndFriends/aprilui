@@ -539,6 +539,7 @@ namespace aprilui
 
 	bool Object::onMouseDown(int button)
 	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -549,7 +550,9 @@ namespace aprilui
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->onMouseDown(button))
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
+				(*it)->isDerivedEnabled() && (*it)->onMouseDown(button))
 			{
 				return true;
 			}
@@ -559,26 +562,16 @@ namespace aprilui
 
 	bool Object::onMouseUp(int button)
 	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->onMouseUp(button))
-			{
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
-	bool Object::onMouseMove() // in general there is no need to block this input from being propagated to the children
-	{
-		foreach_r (Object*, it, this->mChildren)
-		{
-			if  ((*it)->onMouseMove())
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
+				(*it)->isDerivedEnabled() && (*it)->onMouseUp(button))
 			{
 				return true;
 			}
@@ -586,11 +579,35 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onMouseScroll(float x, float y) // in general there is no need to block this input from being propagated to the children
+	bool Object::onMouseMove()
 	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if  ((*it)->onMouseScroll(x, y))
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseMove())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool Object::onMouseScroll(float x, float y)
+	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
+		foreach_r (Object*, it, this->mChildren)
+		{
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseScroll(x, y))
 			{
 				return true;
 			}
@@ -600,13 +617,15 @@ namespace aprilui
 
 	bool Object::onKeyDown(unsigned int keyCode)
 	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->onKeyDown(keyCode))
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyDown(keyCode))
 			{
 				return true;
 			}
@@ -616,13 +635,15 @@ namespace aprilui
 
 	bool Object::onKeyUp(unsigned int keyCode)
 	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->onKeyUp(keyCode))
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyUp(keyCode))
 			{
 				return true;
 			}
@@ -632,13 +653,15 @@ namespace aprilui
 	
 	bool Object::onChar(unsigned int charCode)
 	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
 		foreach_r (Object*, it, this->mChildren)
 		{
-			if ((*it)->onChar(charCode))
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onChar(charCode))
 			{
 				return true;
 			}

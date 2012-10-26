@@ -538,15 +538,6 @@ namespace aprilui
 		}
 	}
 	
-	bool isDebugMode() { return isDebugEnabled(); } // DEPRECATED
-	void setDebugMode(bool value) { setDebugEnabled(value); } // DEPRECATED
-	void OnMouseDown(float x, float y, int button) { onMouseDown(button); } // DEPRECATED
-	void OnMouseUp(float x, float y, int button) { onMouseUp(button); } // DEPRECATED
-	void OnMouseMove(float x, float y) { onMouseMove(); } // DEPRECATED
-	void OnKeyDown(unsigned int keyCode) { onKeyDown(keyCode); } // DEPRECATED
-	void OnKeyUp(unsigned int keyCode) { onKeyUp(keyCode); } // DEPRECATED
-	void OnChar(unsigned int charCode) { onChar(charCode); } // DEPRECATED
-	
 	// TODO - hack, has to be removed
 	bool getForcedDynamicLoading() { return forcedDynamicLoading; }
 	void setForcedDynamicLoading(bool value) { forcedDynamicLoading = value; }
