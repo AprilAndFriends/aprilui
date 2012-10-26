@@ -30,12 +30,12 @@ namespace aprilui
 	Slider::~Slider()
 	{
 	}
-
+	
 	Object* Slider::createInstance(chstr name, grect rect)
 	{
 		return new Slider(name, rect);
 	}
-
+	
 	void Slider::update(float k)
 	{
 		ImageBox::update(k);
@@ -51,10 +51,10 @@ namespace aprilui
 	{
 		this->mValue = hclamp(value, 0.0f, 1.0f);
 	}
-
+	
 	bool Slider::onMouseDown(int button)
 	{
-		if (Object::onMouseDown(button))
+		if (ImageBox::onMouseDown(button))
 		{
 			return true;
 		}
@@ -68,10 +68,10 @@ namespace aprilui
 		}
 		return false;
 	}
-
+	
 	bool Slider::onMouseUp(int button)
 	{
-		if (Object::onMouseUp(button))
+		if (ImageBox::onMouseUp(button))
 		{
 			return true;
 		}
@@ -83,10 +83,10 @@ namespace aprilui
 		this->mPushed = false;
 		return false;
 	}
-
+	
 	bool Slider::onMouseMove()
 	{
-		if (Object::onMouseMove())
+		if (ImageBox::onMouseMove())
 		{
 			return true;
 		}
@@ -98,13 +98,13 @@ namespace aprilui
 		}
 		return false;
 	}
-
+	
 	void Slider::cancelMouseDown()
 	{
 		this->mPushed = false;
-		Object::cancelMouseDown();
+		ImageBox::cancelMouseDown();
 	}
-
+	
 	void Slider::OnDraw()
 	{
 		grect rect = this->_getDrawRect();
@@ -124,7 +124,7 @@ namespace aprilui
 		rect.set(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
 		this->mImage->draw(rect, color);
 	}
-
+	
 	bool Slider::setProperty(chstr name, chstr value)
 	{
 		return ImageBox::setProperty(name, value);
