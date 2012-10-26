@@ -167,8 +167,7 @@ namespace aprilui
 
 	bool TextButton::onMouseMove()
 	{
-		ButtonBase::onMouseMove();
-		return Object::onMouseMove();
+		return (Object::onMouseMove() || ButtonBase::onMouseMove());
 	}
 
 	void TextButton::cancelMouseDown()

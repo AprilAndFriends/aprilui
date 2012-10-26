@@ -298,6 +298,10 @@ namespace aprilui
 
 	bool EditBox::onKeyDown(unsigned int keyCode)
 	{
+		if (Object::onKeyDown(keyCode))
+		{
+			return true;
+		}
 		if (this->mDataset == NULL || this->mDataset->getFocusedObject() == this)
 		{
 			switch (keyCode)
@@ -332,11 +336,15 @@ namespace aprilui
 				break;
 			}
 		}
-		return Object::onKeyDown(keyCode);
+		return false;
 	}
 	
 	bool EditBox::onKeyUp(unsigned int keyCode)
 	{
+		if (Object::onKeyUp(keyCode))
+		{
+			return true;
+		}
 		switch (keyCode)
 		{
 		case april::AK_CONTROL:
@@ -344,16 +352,20 @@ namespace aprilui
 			this->mCtrlMode = false;
 			break;
 		}
-		return Object::onKeyUp(keyCode);
+		return false;
 	}
 
 	bool EditBox::onChar(unsigned int charCode)
 	{
+		if (Object::onChar(charCode))
+		{
+			return true;
+		}
 		if (atres::renderer->getFontResource(this->mFontName)->hasChar(charCode) && (this->mFilterChars.size() == 0 || this->mFilterChars.contains(charCode)))
 		{
 			this->_insertChar(charCode);
 		}
-		return Object::onChar(charCode);
+		return false;
 	}
 
 	void EditBox::cancelMouseDown()

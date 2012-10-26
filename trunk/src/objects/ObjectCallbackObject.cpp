@@ -78,22 +78,28 @@ namespace aprilui
 	
 	bool CallbackObject::onMouseMove()
 	{
-		bool result = Object::onMouseMove();
+		if (Object::onMouseMove())
+		{
+			return true;
+		}
 		if (this->isCursorInside())
 		{
 			this->triggerEvent("MouseMove");
 		}
-		return result;
+		return false;
 	}
 	
 	bool CallbackObject::onMouseScroll(float x, float y)
 	{
-		bool result = Object::onMouseScroll(x, y);
+		if (Object::onMouseScroll(x, y))
+		{
+			return true;
+		}
 		if (this->isCursorInside())
 		{
 			this->triggerEvent("MouseScroll", x, y);
 		}
-		return result;
+		return false;
 	}
 
 	void CallbackObject::cancelMouseDown()
