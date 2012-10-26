@@ -93,15 +93,6 @@ namespace aprilui
 	apriluiFnExport void onKeyUp(unsigned int keyCode);
 	apriluiFnExport void onChar(unsigned int charCode);
 
-	DEPRECATED_ATTRIBUTE apriluiFnExport bool isDebugMode();
-	DEPRECATED_ATTRIBUTE apriluiFnExport void setDebugMode(bool value);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseDown(float x, float y, int button);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseUp(float x, float y, int button);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnMouseMove(float x, float y);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyDown(unsigned int keyCode);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnKeyUp(unsigned int keyCode);
-	DEPRECATED_ATTRIBUTE apriluiFnExport void OnChar(unsigned int charCode);
-	
 	DEPRECATED_ATTRIBUTE apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
 	DEPRECATED_ATTRIBUTE apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
 
