@@ -286,11 +286,15 @@ namespace aprilui
 	
 	bool ScrollArea::onMouseMove()
 	{
+		if (Object::onMouseMove())
+		{
+			return true;
+		}
 		if (this->mAllowDrag)
 		{
 			ButtonBase::onMouseMove();
 		}
-		return Object::onMouseMove();
+		return false;
 	}
 
 	void ScrollArea::_adjustDragSpeed()

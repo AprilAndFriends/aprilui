@@ -243,8 +243,7 @@ namespace aprilui
 	
 	bool ImageButton::onMouseMove()
 	{
-		ButtonBase::onMouseMove();
-		return Object::onMouseMove();
+		return (Object::onMouseMove() || ButtonBase::onMouseMove());
 	}
 
 	void ImageButton::cancelMouseDown()

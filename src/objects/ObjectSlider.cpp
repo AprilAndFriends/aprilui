@@ -86,13 +86,17 @@ namespace aprilui
 
 	bool Slider::onMouseMove()
 	{
+		if (Object::onMouseMove())
+		{
+			return true;
+		}
 		if (this->mPushed)
 		{
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
 			this->setValue(position.x / (this->mRect.w - 4));
 			this->triggerEvent("Set");
 		}
-		return Object::onMouseMove();
+		return false;
 	}
 
 	void Slider::cancelMouseDown()
