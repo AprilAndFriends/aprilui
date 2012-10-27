@@ -461,6 +461,11 @@ namespace aprilui
 			april::rendersys->scale(this->mScale.x, this->mScale.y, 1.0f);
 		}
 		OnDraw();
+		if (aprilui::isDebugEnabled())
+		{
+			april::rendersys->drawRect(grect(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
+			april::rendersys->drawRect(grect(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
+		}
 		if (this->mCenter.x != 0.0f || this->mCenter.y != 0.0f)
 		{
 			april::rendersys->translate(-this->mCenter.x, -this->mCenter.y);
