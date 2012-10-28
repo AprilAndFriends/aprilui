@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -321,10 +321,10 @@ namespace aprilui
 	
 	Object* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent)
 	{
-		return this->recursiveObjectParse(node, parent, "", gvec2());
+		return this->recursiveObjectParse(node, parent, "", "", gvec2());
 	}
 
-	Object* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, chstr nameSuffix, gvec2 offset)
+	Object* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		hstr className;
 		hstr objectName;
@@ -333,7 +333,8 @@ namespace aprilui
 		if (*node == "Include")
 		{
 			this->parseObjectInclude(this->mFilePath + "/" + node->pstr("path"), parent,
-				nameSuffix + node->pstr("name_suffix", ""), gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f)));
+				namePrefix + node->pstr("name_prefix", ""), nameSuffix + node->pstr("name_suffix", ""),
+				gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f)));
 			return NULL;
 		}
 
@@ -343,7 +344,7 @@ namespace aprilui
 		{
 			if (node->pexists("name"))
 			{
-				objectName = node->pstr("name") + nameSuffix;
+				objectName = namePrefix + node->pstr("name") + nameSuffix;
 			}
 			else
 			{
@@ -413,7 +414,7 @@ namespace aprilui
 			type = child->getType();
 			if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
 			{
-				this->recursiveObjectParse(child, object, nameSuffix, gvec2());
+				this->recursiveObjectParse(child, object, namePrefix, nameSuffix, gvec2());
 			}
 		}
 		return object;
@@ -441,7 +442,7 @@ namespace aprilui
 		this->mFilePath = originalFilePath;
 	}
 	
-	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent, chstr nameSuffix, gvec2 offset)
+	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = normalize_path(filename);
@@ -452,17 +453,17 @@ namespace aprilui
 		{
 			if (*node == "Object" || *node == "Animator")
 			{
-				this->recursiveObjectParse(node, parent, nameSuffix, offset);
+				this->recursiveObjectParse(node, parent, namePrefix, nameSuffix, offset);
 			}
 		}
 		hlxml::close(doc);
 	}
 	
-	void Dataset::parseObjectInclude(chstr path, Object* parent, chstr nameSuffix, gvec2 offset)
+	void Dataset::parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		if (!path.contains("*"))
 		{
-			this->parseObjectIncludeFile(path, parent, nameSuffix, offset);
+			this->parseObjectIncludeFile(path, parent, namePrefix, nameSuffix, offset);
 			return;
 		}
 		hstr basedir = get_basedir(path);
@@ -919,11 +920,19 @@ namespace aprilui
 		}
 	}
 
+	void Dataset::focus(Object* object)
+	{
+		this->removeFocus();
+		this->mFocusedObject = object;
+		this->mFocusedObject->triggerEvent("GainFocus");
+	}
+
 	void Dataset::removeFocus()
 	{
 		if (this->mFocusedObject != NULL)
 		{
 			april::window->terminateKeyboardHandling();
+			this->mFocusedObject->triggerEvent("LoseFocus");
 		}
 		this->mFocusedObject = NULL;
 	}
