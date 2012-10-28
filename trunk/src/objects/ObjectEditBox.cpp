@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -132,14 +132,14 @@ namespace aprilui
 		{
 			if (value)
 			{
-				this->mDataset->setFocusedObject(this);
+				this->mDataset->focus(this);
 				this->mBlinkTimer = 0.0f;
 				april::window->beginKeyboardHandling();
 			}
 			else if (this->mDataset->getFocusedObject() == this)
 			{
 				april::window->terminateKeyboardHandling();
-				this->mDataset->setFocusedObject(NULL);
+				this->mDataset->removeFocus();
 			}
 		}
 	}
@@ -361,9 +361,12 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (atres::renderer->getFontResource(this->mFontName)->hasChar(charCode) && (this->mFilterChars.size() == 0 || this->mFilterChars.contains(charCode)))
+		if (this->mDataset == NULL || this->mDataset->getFocusedObject() == this)
 		{
-			this->_insertChar(charCode);
+			if (atres::renderer->getFontResource(this->mFontName)->hasChar(charCode) && (this->mFilterChars.size() == 0 || this->mFilterChars.contains(charCode)))
+			{
+				this->_insertChar(charCode);
+			}
 		}
 		return false;
 	}

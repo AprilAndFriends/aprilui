@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.41
 /// 
 /// @section LICENSE
 /// 
@@ -62,7 +62,6 @@ namespace aprilui
 		
 		bool isAnimated();
 		bool isWaitingAnimation();
-		void setFocusedObject(Object* object) { this->mFocusedObject = object; }
 		Object* getFocusedObject() { return this->mFocusedObject; }
 		Object* getRoot() { return this->mRoot; }
 		void setRoot(Object* obj) { this->mRoot = obj; }
@@ -145,6 +144,7 @@ namespace aprilui
 		void notifyEvent(chstr name, void* params);
 		void reloadTexts();
 		void reloadTextures();
+		void focus(Object* object);
 		void removeFocus();
 		
 	protected:
@@ -168,13 +168,13 @@ namespace aprilui
 		void parseTextureGroup(hlxml::Node* node);
 		void parseCompositeImage(hlxml::Node* node);
 		void parseGlobalInclude(chstr path);
-		void parseObjectInclude(chstr path, Object* parent, chstr nameSuffix, gvec2 offset);
-		void parseObjectIncludeFile(chstr filename, Object* parent, chstr nameSuffix, gvec2 offset);
+		void parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		virtual void parseExternalXMLNode(hlxml::Node* node) { }
 		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
 		
 		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
-		Object* recursiveObjectParse(hlxml::Node* node, Object* parent, chstr nameSuffix, gvec2 offset);
+		Object* recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		
 		void readFile(chstr filename);
 		void _loadTexts(chstr path);
