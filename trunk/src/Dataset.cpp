@@ -301,7 +301,7 @@ namespace aprilui
 	
 	Object* Dataset::parseObject(hlxml::Node* node, Object* parent)
 	{
-		return recursiveObjectParse(node, parent, "", gvec2());
+		return this->recursiveObjectParse(node, parent, "", "", gvec2());
 	}
 	
 	void Dataset::parseTextureGroup(hlxml::Node* node)
@@ -333,7 +333,7 @@ namespace aprilui
 		if (*node == "Include")
 		{
 			this->parseObjectInclude(this->mFilePath + "/" + node->pstr("path"), parent,
-				namePrefix + node->pstr("name_prefix", ""), nameSuffix + node->pstr("name_suffix", ""),
+				node->pstr("name_prefix", "") + namePrefix, nameSuffix + node->pstr("name_suffix", ""),
 				gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f)));
 			return NULL;
 		}
@@ -476,7 +476,7 @@ namespace aprilui
 		{
 			if ((*it).starts_with(left) && (*it).ends_with(right))
 			{
-				this->parseObjectIncludeFile(basedir + "/" + (*it), parent, "", gvec2());
+				this->parseObjectIncludeFile(basedir + "/" + (*it), parent, "", "", gvec2());
 			}
 		}
 	}
