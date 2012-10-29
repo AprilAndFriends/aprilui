@@ -183,24 +183,24 @@ namespace aprilui
 		return OnMouseUp(0, 0, button);
 	}
 	
-	void Object::onMouseMove()
+	bool Object::onMouseMove()
 	{
-		OnMouseMove(0, 0);
+		return OnMouseMove(0, 0);
 	}
 	
-	void Object::onKeyDown(unsigned int keyCode)
+	bool Object::onKeyDown(unsigned int keyCode)
 	{
-		OnKeyDown(keyCode);
+		return OnKeyDown(keyCode);
 	}
 	
-	void Object::onKeyUp(unsigned int keyCode)
+	bool Object::onKeyUp(unsigned int keyCode)
 	{
-		OnKeyUp(keyCode);
+		return OnKeyUp(keyCode);
 	}
 	
-	void Object::onChar(unsigned int charCode)
+	bool Object::onChar(unsigned int charCode)
 	{
-		OnChar(charCode);
+		return OnChar(charCode);
 	}
 	
 	void Object::registerChild(Object* object)
@@ -254,55 +254,75 @@ namespace aprilui
 				return true;
 			}
 		}
-		
 		return false;
 	}
 
-	void Object::OnMouseMove(float x, float y)
+	bool Object::OnMouseMove(float x, float y)
 	{
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
 		foreach_r (Object*, it, mChildren)
 		{
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled())
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() &&
+				(*it)->OnMouseMove(x - mRect.x, y - mRect.y))
 			{
-				(*it)->OnMouseMove(x - mRect.x, y - mRect.y);
+				return true;
 			}
 		}
+		return false;
 	}
 
-	void Object::OnKeyDown(unsigned int keyCode)
+	bool Object::OnKeyDown(unsigned int keyCode)
 	{
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
-			if (object != NULL)
+			if (object != NULL && object->OnKeyDown(keyCode))
 			{
-				object->OnKeyDown(keyCode);
+				return true;
 			}
 		}
+		return false;
 	}
 
-	void Object::OnKeyUp(unsigned int keyCode)
+	bool Object::OnKeyUp(unsigned int keyCode)
 	{
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
-			if (object != NULL)
+			if (object != NULL && object->OnKeyUp(keyCode))
 			{
-				object->OnKeyUp(keyCode);
+				return true;
 			}
 		}
+		return false;
 	}
 	
-	void Object::OnChar(unsigned int charCode)
+	bool Object::OnChar(unsigned int charCode)
 	{
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
-			if (object != NULL)
+			if (object != NULL && object->OnChar(charCode))
 			{
-				object->OnChar(charCode);
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	hstr Object::getProperty(chstr prop, bool* prop_exists) // new-april compatibility

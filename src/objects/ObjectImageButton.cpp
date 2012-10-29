@@ -129,9 +129,9 @@ namespace aprilui
 		return false;
 	}
 
-	void ImageButton::OnMouseMove(float x, float y)
+	bool ImageButton::OnMouseMove(float x, float y)
 	{
-		ImageBox::OnMouseMove(x, y);
+		return ImageBox::OnMouseMove(x, y);
 	}
 
 	bool ImageButton::setProperty(chstr name, chstr value)

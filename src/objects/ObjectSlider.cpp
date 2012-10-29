@@ -62,14 +62,19 @@ namespace aprilui
 		return false;
 	}
 
-	void Slider::OnMouseMove(float x, float y)
+	bool Slider::OnMouseMove(float x, float y)
 	{
-		Object::OnMouseMove(x, y);
+		if (Object::OnMouseMove(x, y))
+		{
+			return true;
+		}
 		if (mPushed)
 		{
 			setValue((x - mRect.x) / (mRect.w - 4));
 			triggerEvent("Set", x, y, 0);
+			return true;
 		}
+		return false;
 	}
 
 	void Slider::OnDraw(gvec2 offset)
