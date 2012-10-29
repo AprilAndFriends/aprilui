@@ -104,17 +104,17 @@ namespace aprilui
 		// if a childs event returns true, event is not propagated to parents
 		virtual bool OnMouseDown(float x, float y, int button);
 		virtual bool OnMouseUp(float x, float y, int button);
-		virtual void OnMouseMove(float x, float y);
-		virtual void OnKeyDown(unsigned int keyCode);
-		virtual void OnKeyUp(unsigned int keyCode);
-		virtual void OnChar(unsigned int charCode);
+		virtual bool OnMouseMove(float x, float y);
+		virtual bool OnKeyDown(unsigned int keyCode);
+		virtual bool OnKeyUp(unsigned int keyCode);
+		virtual bool OnChar(unsigned int charCode);
 
-		bool onMouseDown(int button); // aprilui legacy compatibility
-		bool onMouseUp(int button);
-		void onMouseMove();
-		void onKeyDown(unsigned int keyCode);
-		void onKeyUp(unsigned int keyCode);
-		void onChar(unsigned int charCode);
+		virtual bool onMouseDown(int button); // aprilui legacy compatibility
+		virtual bool onMouseUp(int button);
+		virtual bool onMouseMove();
+		virtual bool onKeyDown(unsigned int keyCode);
+		virtual bool onKeyUp(unsigned int keyCode);
+		virtual bool onChar(unsigned int charCode);
 		void registerChild(Object* object);
 		
 		void unregisterChild(Object* object);

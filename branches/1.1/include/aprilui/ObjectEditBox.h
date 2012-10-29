@@ -39,9 +39,9 @@ namespace aprilui
 		
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
-		void OnKeyDown(unsigned int keyCode);
-		void OnKeyUp(unsigned int keyCode);
-		void OnChar(unsigned int charCode);
+		bool OnKeyDown(unsigned int keyCode);
+		bool OnKeyUp(unsigned int keyCode);
+		bool OnChar(unsigned int charCode);
 		
 	protected:
 		bool mPushed;

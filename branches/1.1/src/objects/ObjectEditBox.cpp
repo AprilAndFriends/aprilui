@@ -233,8 +233,12 @@ namespace aprilui
 		return false;
 	}
 
-	void EditBox::OnKeyDown(unsigned int keyCode)
+	bool EditBox::OnKeyDown(unsigned int keyCode)
 	{
+		if (Label::OnKeyDown(keyCode))
+		{
+			return true;
+		}
 		switch (keyCode)
 		{
 #ifndef _ANDROID // these keys aren't really available on Android
@@ -266,10 +270,15 @@ namespace aprilui
 			triggerEvent("Submit", april::AK_RETURN);
 			break;
 		}
+		return false;
 	}
 	
-	void EditBox::OnKeyUp(unsigned int keyCode)
+	bool EditBox::OnKeyUp(unsigned int keyCode)
 	{
+		if (Label::OnKeyUp(keyCode))
+		{
+			return true;
+		}
 		switch (keyCode)
 		{
 		case april::AK_CONTROL:
@@ -277,14 +286,20 @@ namespace aprilui
 			mCtrlMode = false;
 			break;
 		}
+		return false;
 	}
 
-	void EditBox::OnChar(unsigned int charCode)
+	bool EditBox::OnChar(unsigned int charCode)
 	{
+		if (Label::OnChar(charCode))
+		{
+			return true;
+		}
 		if (atres::renderer->getFontResource(mFontName)->hasChar(charCode) && (mFilterChars.size() == 0 || mFilterChars.contains(charCode)))
 		{
 			_insertChar(charCode);
 		}
+		return false;
 	}
 
 	harray<unsigned int> EditBox::_convertToUnicodeChars(chstr string)
