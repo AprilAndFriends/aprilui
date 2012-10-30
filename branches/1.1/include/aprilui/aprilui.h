@@ -22,9 +22,8 @@ namespace aprilui
 	
 	apriluiFnExport void init();
 	apriluiFnExport void destroy();
-	apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
-	void log(chstr message, chstr prefix = "[aprilui] ");
-	void logMessage(chstr message, chstr prefix = "[aprilui] ");
+	void log(chstr message, chstr prefix = "aprilui");
+	void logMessage(chstr message, chstr prefix = "aprilui");
 	void aprilui_writelog(chstr message);
 	
 #ifdef _DEBUG

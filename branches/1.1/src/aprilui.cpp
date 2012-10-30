@@ -11,6 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <april/RenderSystem.h>
 #include <atres/atres.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
@@ -30,7 +31,6 @@ namespace aprilui
 	bool debugMode = false;
 #endif
 	hstr defaultTextsPath = "texts";
-	void (*g_logFunction)(chstr) = aprilui_writelog;
 	hstr g_locale;
 	float textureIdleUnloadTime = 0.0f;
 	grect viewport(0.0f, 0.0f, 1024.0f, 768.0f);
@@ -39,7 +39,7 @@ namespace aprilui
 	
 	void log(chstr message, chstr prefix)
 	{
-		g_logFunction(prefix + message);
+		hlog::write(prefix, message);
 	}
 	void logMessage(chstr message, chstr prefix)
 	{
@@ -48,12 +48,7 @@ namespace aprilui
 	
 	void aprilui_writelog(chstr message)
 	{
-		printf("%s\n", message.c_str());		
-	}
-	
-	void setLogFunction(void (*fnptr)(chstr))
-	{
-		g_logFunction = fnptr;
+		log("aprilui", message);
 	}
 	
 	void init()
