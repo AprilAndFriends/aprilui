@@ -387,6 +387,7 @@ namespace aprilui
 			throw hlxml::XMLUnknownClassException(className, node);
 		}
 		object->_setDataset(this);
+		object->notifyEvent("RegisterInDataset", this);
 		this->mObjects[objectName] = object;
 		if (this->mRoot == NULL)
 		{
@@ -627,6 +628,7 @@ namespace aprilui
 		}
 		this->mObjects[name] = object;
 		object->_setDataset(this);
+		object->notifyEvent("RegisterInDataset", this);
 	}
 	
 	void Dataset::unregisterManualObject(Object* object)
@@ -638,6 +640,7 @@ namespace aprilui
 		}
 		this->mObjects.remove_key(name);
 		object->_setDataset(NULL);
+		object->notifyEvent("UnregisterFromDataset", this);
 	}
 	
 	void Dataset::registerManualImage(Image* image)
