@@ -203,6 +203,7 @@ namespace aprilui
 	
 	void setLocalization(chstr value)
 	{
+		hlog::write(aprilui::logTag, "Setting localization to: " + value);
 		hstr previousLocalization = localization;
 		if (supportedLocalizations.size() > 0 && !supportedLocalizations.contains(value) &&
 			value != defaultLocalization)
@@ -219,13 +220,19 @@ namespace aprilui
 		{
 			foreach_m (Dataset*, it, gDatasets)
 			{
-				it->second->reloadTexts();
-				it->second->reloadTextures();
+				if (it->second->isLoaded())
+				{
+					it->second->reloadTexts();
+					it->second->reloadTextures();
+				}
 			}
 			// finished localization change, now call the appropriate event
 			foreach_m (Dataset*, it, gDatasets)
 			{
-				it->second->notifyEvent("onLocalizationChanged", NULL);
+				if (it->second->isLoaded())
+				{
+					it->second->notifyEvent("onLocalizationChanged", NULL);
+				}
 			}
 		}
 	}
