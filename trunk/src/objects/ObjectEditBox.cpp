@@ -377,11 +377,11 @@ namespace aprilui
 		Object::cancelMouseDown();
 	}
 
-	hstr EditBox::getProperty(chstr name, bool* property_exists)
+	hstr EditBox::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if (name == "max_length")		return this->getMaxLength();
 		if (name == "password_char")	return this->getPasswordChar();
@@ -389,7 +389,7 @@ namespace aprilui
 		if (name == "empty_text")		return this->getEmptyText();
 		if (name == "empty_text_key")	return this->getEmptyTextKey();
 		if (name == "space_hack")		return this->mSpaceHack;
-		return Label::getProperty(name, property_exists);
+		return Label::getProperty(name, propertyExists);
 	}
 	
 	bool EditBox::setProperty(chstr name, chstr value)

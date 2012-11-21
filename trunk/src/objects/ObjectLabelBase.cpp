@@ -89,11 +89,11 @@ namespace aprilui
 		}
 	}
 
-	hstr LabelBase::getProperty(chstr name, bool* property_exists)
+	hstr LabelBase::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if (name == "font")				return this->getFont();
 		if (name == "text")				return this->getText();
@@ -140,9 +140,9 @@ namespace aprilui
 			return (this->mBackgroundColor.a > 0);
 		}
 		if (name == "background_color")	return this->mBackgroundColor.hex();
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = false;
+			*propertyExists = false;
 		}
 		return "";
 	}

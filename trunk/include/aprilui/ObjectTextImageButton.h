@@ -43,7 +43,7 @@ namespace aprilui
 		void setDisabledTextColor(chstr value) { this->mDisabledTextColor.set(value); this->_mUseDisabledTextColor = true; }
 
 		void notifyEvent(chstr name, void* params);
-		hstr getProperty(chstr name, bool* property_exists = NULL);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 
 	protected:

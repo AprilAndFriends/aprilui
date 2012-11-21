@@ -77,7 +77,7 @@ namespace aprilui
 		bool isExpired();
 		void setTime(float value);
 		
-		hstr getProperty(chstr name, bool* property_exists);
+		hstr getProperty(chstr name, bool* propertyExists);
 		bool setProperty(chstr name, chstr value);
 
 		void notifyEvent(chstr name, void* params);

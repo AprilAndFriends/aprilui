@@ -65,7 +65,7 @@ namespace aprilui
 		void setBackgroundColor(chstr value) { this->mBackgroundColor.set(value); }
 		
 		virtual void notifyEvent(chstr name, void* params);
-		hstr getProperty(chstr name, bool* property_exists = NULL);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
 		DEPRECATED_ATTRIBUTE bool isUseBackground() { return (this->mBackgroundColor.a != 0); }

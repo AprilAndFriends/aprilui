@@ -187,7 +187,7 @@ namespace aprilui
 		
 		void resetCenter();
 		
-		virtual hstr getProperty(chstr name, bool* property_exists = NULL);
+		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
 		virtual bool setProperty(chstr name, chstr value);
 		
 		// dynamic animators

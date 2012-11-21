@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -42,6 +42,9 @@ namespace aprilui
 		virtual bool onMouseUp(int button);
 		virtual bool onMouseMove();
 		virtual void cancelMouseDown();
+
+		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
+		virtual bool setProperty(chstr name, chstr value);
 
 		static void setAllowedButtons(harray<unsigned char> buttons);
 		

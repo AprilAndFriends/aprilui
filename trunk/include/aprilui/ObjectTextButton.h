@@ -45,7 +45,7 @@ namespace aprilui
 		void setDisabledTextColor(april::Color value) { this->mDisabledTextColor = value; }
 		void setDisabledTextColor(chstr value) { this->mDisabledTextColor.set(value); }
 
-		hstr getProperty(chstr name, bool* property_exists = NULL);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
 		bool onMouseDown(int button);

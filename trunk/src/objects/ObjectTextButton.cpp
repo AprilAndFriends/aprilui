@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -85,8 +85,12 @@ namespace aprilui
 		this->mTextColor = color;
 	}
 	
-	hstr TextButton::getProperty(chstr name, bool* property_exists)
+	hstr TextButton::getProperty(chstr name, bool* propertyExists)
 	{
+		if (propertyExists != NULL)
+		{
+			*propertyExists = true;
+		}
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
@@ -105,7 +109,17 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
 			return this->getDisabledTextColor().hex();
 		}
-		return Label::getProperty(name, property_exists);
+		bool exists = false;
+		hstr result = ButtonBase::getProperty(name, &exists);
+		if (!exists)
+		{
+			result = Label::getProperty(name, &exists);
+		}
+		if (propertyExists != NULL)
+		{
+			*propertyExists = exists;
+		}
+		return result;
 	}
 	
 	bool TextButton::setProperty(chstr name, chstr value)
@@ -128,6 +142,7 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'disabled_color=' is deprecated, use 'disabled_text_color=' instead!"); // DEPRECATED
 			this->setDisabledTextColor(value);
 		}
+		else if (ButtonBase::setProperty(name, value)) { }
 		else return Label::setProperty(name, value);
 		return true;
 	}
