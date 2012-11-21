@@ -529,7 +529,7 @@ namespace aprilui
 	
 	void Dataset::_loadTexts(chstr path)
 	{
-		hlog::write(aprilui::logTag, "Loading texts: '" + path);
+		hlog::write(aprilui::logTag, "Loading texts: " + path);
 		harray<hstr> files = hdir::resource_files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
