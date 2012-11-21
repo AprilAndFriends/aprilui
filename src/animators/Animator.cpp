@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.25
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -185,22 +185,22 @@ namespace aprilui
 		this->mSpeed = 1.0f / value;
 	}
 	
-	hstr Animator::getProperty(chstr name, bool* property_exists)
+	hstr Animator::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if		(name == "function" || name == "func")
 		{
-			if		(mFunction == aprilui::Animator::Sine)     return "sine";
-			else if	(mFunction == aprilui::Animator::Saw)      return "saw";
-			else if	(mFunction == aprilui::Animator::Square)   return "square";
-			else if	(mFunction == aprilui::Animator::Triangle) return "triangle";
-			else if	(mFunction == aprilui::Animator::Linear)   return "linear";
-			else if	(mFunction == aprilui::Animator::Random)   return "random";
-			else if	(mFunction == aprilui::Animator::Hover)    return "hover";
-			else                                               return "custom";
+			if		(mFunction == aprilui::Animator::Sine)		return "sine";
+			else if	(mFunction == aprilui::Animator::Saw)		return "saw";
+			else if	(mFunction == aprilui::Animator::Square)	return "square";
+			else if	(mFunction == aprilui::Animator::Triangle)	return "triangle";
+			else if	(mFunction == aprilui::Animator::Linear)	return "linear";
+			else if	(mFunction == aprilui::Animator::Random)	return "random";
+			else if	(mFunction == aprilui::Animator::Hover)		return "hover";
+			else												return "custom";
 		}
 		else if	(name == "timer")						return this->getTimer();
 		else if	(name == "delay")						return this->getDelay();
@@ -228,7 +228,7 @@ namespace aprilui
 		{
 			return this->getTarget();
 		}
-		return Object::getProperty(name, property_exists);
+		return Object::getProperty(name, propertyExists);
 	}
 	
 	bool Animator::setProperty(chstr name, chstr value)

@@ -60,7 +60,7 @@ namespace aprilui
 		/// @brief Optimized version.
 		bool trySetDisabledImageByName(chstr name);
 
-		hstr getProperty(chstr name, bool* property_exists = NULL);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 
 		bool onMouseDown(int button);

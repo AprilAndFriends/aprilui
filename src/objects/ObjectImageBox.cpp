@@ -113,14 +113,14 @@ namespace aprilui
 		Object::notifyEvent(name, params);
 	}
 	
-	hstr ImageBox::getProperty(chstr name, bool* property_exists)
+	hstr ImageBox::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if (name == "image")	return this->getImageName();
-		return Object::getProperty(name, property_exists);
+		return Object::getProperty(name, propertyExists);
 	}
 
 	bool ImageBox::setProperty(chstr name, chstr value)

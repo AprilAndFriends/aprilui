@@ -48,7 +48,7 @@ namespace aprilui
 		void turnOn() { mToggled = true; }
 		void turnOff() { mToggled = false; }
 		
-		hstr getProperty(chstr name, bool* property_exists = NULL);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 
 		bool onMouseUp(int button);

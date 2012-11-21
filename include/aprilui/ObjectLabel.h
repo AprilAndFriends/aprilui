@@ -38,7 +38,7 @@ namespace aprilui
 		bool onMouseUp(int button);
 
 		void notifyEvent(chstr name, void* params);
-		hstr getProperty(chstr name, bool* property_exists = NULL);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
 	protected:

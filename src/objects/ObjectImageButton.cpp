@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -190,16 +190,26 @@ namespace aprilui
 		this->mNormalImageName = this->mImageName;
 	}
 	
-	hstr ImageButton::getProperty(chstr name, bool* property_exists)
+	hstr ImageButton::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if (name == "pushed_image")		return this->getPushedImageName();
 		if (name == "hover_image")		return this->getHoverImageName();
 		if (name == "disabled_image")	return this->getDisabledImageName();
-		return ImageBox::getProperty(name, property_exists);
+		bool exists = false;
+		hstr result = ButtonBase::getProperty(name, &exists);
+		if (!exists)
+		{
+			result = ImageBox::getProperty(name, &exists);
+		}
+		if (propertyExists != NULL)
+		{
+			*propertyExists = exists;
+		}
+		return result;
 	}
 
 	bool ImageButton::setProperty(chstr name, chstr value)
@@ -207,6 +217,7 @@ namespace aprilui
 		if		(name == "pushed_image")	this->setPushedImageByName(value);
 		else if	(name == "hover_image")		this->setHoverImageByName(value);
 		else if	(name == "disabled_image")	this->setDisabledImageByName(value);
+		else if (ButtonBase::setProperty(name, value)) { }
 		else return ImageBox::setProperty(name, value);
 		return true;
 	}

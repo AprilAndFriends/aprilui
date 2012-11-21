@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -103,6 +103,20 @@ namespace aprilui
 		this->mHovered = this->_checkHover();
 	}
 
+	hstr ButtonBase::getProperty(chstr name, bool* propertyExists)
+	{
+		if (propertyExists != NULL)
+		{
+			*propertyExists = false;
+		}
+		return "";
+	}
+	
+	bool ButtonBase::setProperty(chstr name, chstr value)
+	{
+		return false;
+	}
+	
 	void ButtonBase::setAllowedButtons(harray<unsigned char> buttons)
 	{
 		allowedButtons = buttons;

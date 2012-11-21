@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -92,17 +92,11 @@ namespace aprilui
 		LabelBase::notifyEvent(name, params);
 	}
 	
-	hstr TextImageButton::getProperty(chstr name, bool* property_exists)
+	hstr TextImageButton::getProperty(chstr name, bool* propertyExists)
 	{
-		bool exists = false;
-		hstr result = LabelBase::getProperty(name, &exists);
-		if (!exists)
+		if (propertyExists != NULL)
 		{
-			return ImageButton::getProperty(name, property_exists);
-		}
-		if (property_exists != NULL)
-		{
-			*property_exists = exists;
+			*propertyExists = true;
 		}
 		if (name == "use_disabled_color")
 		{
@@ -112,6 +106,16 @@ namespace aprilui
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
+		bool exists = false;
+		hstr result = LabelBase::getProperty(name, &exists);
+		if (!exists)
+		{
+			result = ImageButton::getProperty(name, &exists);
+		}
+		if (propertyExists != NULL)
+		{
+			*propertyExists = exists;
+		}
 		return result;
 	}
 	

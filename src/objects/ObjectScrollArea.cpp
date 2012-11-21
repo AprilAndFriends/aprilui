@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -230,18 +230,28 @@ namespace aprilui
 		}
 	}
 
-	hstr ScrollArea::getProperty(chstr name, bool* property_exists)
+	hstr ScrollArea::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if (name == "allow_drag")			return this->isAllowDrag();
 		if (name == "inertia")				return this->getInertia();
 		if (name == "drag_threshold")		return this->getDragThreshold();
 		if (name == "drag_max_speed")		return this->getDragMaxSpeed();
 		if (name == "swap_scroll_wheels")	return this->isSwapScrollWheels();
-		return Object::getProperty(name, property_exists);
+		bool exists = false;
+		hstr result = ButtonBase::getProperty(name, &exists);
+		if (!exists)
+		{
+			result = Object::getProperty(name, &exists);
+		}
+		if (propertyExists != NULL)
+		{
+			*propertyExists = exists;
+		}
+		return result;
 	}
 
 	bool ScrollArea::setProperty(chstr name, chstr value)
@@ -251,6 +261,7 @@ namespace aprilui
 		else if (name == "drag_threshold")		this->setDragThreshold(value);
 		else if (name == "drag_max_speed")		this->setDragMaxSpeed(value);
 		else if (name == "swap_scroll_wheels")	this->setSwapScrollWheels(value);
+		else if (ButtonBase::setProperty(name, value)) { }
 		else return Object::setProperty(name, value);
 		return true;
 	}

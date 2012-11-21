@@ -50,7 +50,7 @@ namespace aprilui
 		void update(float time);
 
 		void notifyEvent(chstr name, void* params);
-		hstr getProperty(chstr name, bool* property_exists = NULL);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
 		bool onMouseDown(int button);

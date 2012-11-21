@@ -190,16 +190,16 @@ namespace aprilui
 		}
 	}
 
-	hstr ScrollBar::getProperty(chstr name, bool* property_exists)
+	hstr ScrollBar::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if (name == "skin")			return this->getSkinName();
 		if (name == "grid_size")	return this->getGridSize();
 		if (name == "use_fading")	return this->isUseFading();
-		return Object::getProperty(name, property_exists);
+		return Object::getProperty(name, propertyExists);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)

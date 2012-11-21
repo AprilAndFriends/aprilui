@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.42
 /// 
 /// @section LICENSE
 /// 
@@ -759,11 +759,11 @@ namespace aprilui
 		this->mColor.a = value;
 	}
 
-	hstr Object::getProperty(chstr name, bool* property_exists)
+	hstr Object::getProperty(chstr name, bool* propertyExists)
 	{
-		if (property_exists != NULL)
+		if (propertyExists != NULL)
 		{
-			*property_exists = true;
+			*propertyExists = true;
 		}
 		if (name == "x")					return this->getX();
 		if (name == "y")					return this->getY();
@@ -791,11 +791,11 @@ namespace aprilui
 		if (name == "retain_anchor_aspect")	return this->isRetainAnchorAspect();
 		if (name == "clip")					return this->isClip();
 		if (name == "use_disabled_alpha")	return this->isUseDisabledAlpha();
-		if (name == "name")                 return this->getName();
-		if (name == "full_name")	        return this->getFullName();
-		if (property_exists != NULL)
+		if (name == "name")					return this->getName();
+		if (name == "full_name")			return this->getFullName();
+		if (propertyExists != NULL)
 		{
-			*property_exists = false;
+			*propertyExists = false;
 		}
 		return "";
 	}
