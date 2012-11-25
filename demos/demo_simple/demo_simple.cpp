@@ -2,17 +2,22 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.75
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#ifdef _ANDROID
-#define RESOURCE_PATH "./"
-#else
+#include <hltypes/hplatform.h>
+#ifndef _ANDROID
+#if !_HL_WINRT
 #define RESOURCE_PATH "../media/"
+#else
+#define RESOURCE_PATH "media/"
+#endif
+#else
+#define RESOURCE_PATH "./"
 #endif
 
 #include <stdio.h>
@@ -28,9 +33,8 @@
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
+#include <aprilui/Texture.h>
 #include <atres/atres.h>
-#include <atres/FontResourceBitmap.h>
-#include <atres/Renderer.h>
 
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
 #ifndef _ANDROID
@@ -39,13 +43,21 @@ grect viewport = drawRect;
 grect viewport(0.0f, 0.0f, 480.0f, 320.0f);
 #endif
 
-aprilui::Dataset* dataset;
+aprilui::Dataset* dataset = NULL;
 
 bool render(float time)
 {
+	aprilui::updateCursorPosition();
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(drawRect);
-	aprilui::updateCursorPosition();
+	april::rendersys->drawFilledRect(drawRect, april::Color::Grey);
+	april::rendersys->drawFilledRect(grect(0.0f, 0.0f, 100.0f, 75.0f), april::Color::Yellow);
+	/*
+	april::rendersys->setTexture(dataset->getTexture("texture")->getRenderTexture());
+	april::rendersys->drawTexturedRect(grect(0.0f, 0.0f, 200.0f, 150.0f), grect(0, 0, 1, 1));
+	((aprilui::ImageBox*)dataset->getObject("root")->getChildren()[0])->getImage()->
+		draw(grect(200.0f, 200.0f, 200.0f, 150.0f), april::Color::White);
+	*/
 	dataset->getObject("root")->draw();
 	dataset->update(time);
 	return true;
@@ -106,7 +118,6 @@ void april_init(const harray<hstr>& args)
 		aprilui::init();
 		aprilui::setLocalization("en");
 		april::window->setUpdateCallback(&render);
-		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_simple.dts");
 		dataset->load();
 	}
@@ -121,8 +132,8 @@ void april_destroy()
 	try
 	{
 		delete dataset;
-		atres::destroy();
 		aprilui::destroy();
+		atres::destroy();
 		april::destroy();
 	}
 	catch (aprilui::_GenericException e)
