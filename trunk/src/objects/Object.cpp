@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.42
+/// @version 2.43
 /// 
 /// @section LICENSE
 /// 
@@ -460,7 +460,7 @@ namespace aprilui
 		{
 			april::rendersys->scale(this->mScale.x, this->mScale.y, 1.0f);
 		}
-		OnDraw();
+		this->OnDraw();
 		if (aprilui::isDebugEnabled())
 		{
 			april::rendersys->drawRect(grect(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
