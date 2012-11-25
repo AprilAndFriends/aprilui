@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.43
 /// 
 /// @section LICENSE
 /// 
@@ -279,6 +279,21 @@ namespace aprilui
 		}
 		// v = sqrt(2 * a * s)
 		area->_mDragSpeed.x = -hsgn(s) * sqrt(2 * inertia * habs(s));
+	}
+
+	bool ScrollBarH::_checkAreaSize()
+	{
+		Container* parent = dynamic_cast<Container*>(this->mParent);
+		if (parent == NULL)
+		{
+			return true;
+		}
+		ScrollArea* area = parent->_getScrollArea();
+		if (area == NULL)
+		{
+			return true;
+		}
+		return (area->getWidth() > parent->getWidth());
 	}
 
 }
