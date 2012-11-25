@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="net.sourceforge.aprilui.demoSimple.winrt" Publisher="CN=AprilUI" Version="2.5.0.0" />
+  <Identity Name="net.sourceforge.aprilui.demoTiledImage.winrt" Publisher="CN=AprilUI" Version="2.5.0.0" />
   <Properties>
-    <DisplayName>AprilUI Demo Simple</DisplayName>
+    <DisplayName>AprilUI Demo Tiled Image</DisplayName>
     <PublisherDisplayName>AprilUI</PublisherDisplayName>
     <Logo>media\assets\store_icon.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="demo_simple.App">
-      <VisualElements DisplayName="demo_simple" Logo="media\assets\logo_icon.png" SmallLogo="media\assets\small_icon.png" Description="AprilUI Demo Simple" ForegroundText="light" BackgroundColor="#464646">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="demo_tiledimage.App">
+      <VisualElements DisplayName="demo_tiledimage" Logo="media\assets\logo_icon.png" SmallLogo="media\assets\small_icon.png" Description="AprilUI Demo Tiled Image" ForegroundText="light" BackgroundColor="#464646">
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="media\assets\splash.png" />
         <InitialRotationPreference>

@@ -16,11 +16,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\li
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libatres", "..\atres\libatres_WinRT.vcxproj", "{A1E808A0-FE36-47FE-9E3B-CF195EA31F0A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_gui_WinRT", "demos\demo_gui\demo_gui_WinRT.vcxproj", "{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_gui", "demos\demo_gui\demo_gui_WinRT.vcxproj", "{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_zorder_WinRT", "demos\demo_zorder\demo_zorder_WinRT.vcxproj", "{0AC0BEAB-AFC2-476C-8B3C-565AD0408A5E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_zorder", "demos\demo_zorder\demo_zorder_WinRT.vcxproj", "{0AC0BEAB-AFC2-476C-8B3C-565AD0408A5E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_tiledimage_WinRT", "demos\demo_tiledimage\demo_tiledimage_WinRT.vcxproj", "{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_tiledimage", "demos\demo_tiledimage\demo_tiledimage_WinRT.vcxproj", "{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhlxml", "..\hltypes\hlxml\libhlxml_WinRT.vcxproj", "{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -48,7 +48,6 @@ Global
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug|ARM.ActiveCfg = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug|Win32.Build.0 = Debug|Win32
-		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug|Win32.Deploy.0 = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Debug|x64.ActiveCfg = Debug|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Release|ARM.ActiveCfg = Release|Win32
 		{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}.Release|Win32.ActiveCfg = Release|Win32
@@ -89,6 +88,7 @@ Global
 		{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}.Debug|ARM.ActiveCfg = Debug|Win32
 		{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}.Debug|Win32.Build.0 = Debug|Win32
+		{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}.Debug|Win32.Deploy.0 = Debug|Win32
 		{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}.Debug|x64.ActiveCfg = Debug|Win32
 		{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}.Release|ARM.ActiveCfg = Release|Win32
 		{8ED4E1B5-7C0E-411F-BCC6-E96882CC73F3}.Release|Win32.ActiveCfg = Release|Win32

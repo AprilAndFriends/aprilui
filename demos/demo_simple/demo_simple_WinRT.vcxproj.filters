@@ -42,16 +42,7 @@
     <None Include="media\arial.font">
       <Filter>Win8xap\media</Filter>
     </None>
-    <None Include="media\demo_gui.dts">
-      <Filter>Win8xap\media</Filter>
-    </None>
     <None Include="media\demo_simple.dts">
-      <Filter>Win8xap\media</Filter>
-    </None>
-    <None Include="media\demo_tiledimage.dts">
-      <Filter>Win8xap\media</Filter>
-    </None>
-    <None Include="media\demo_zorder.dts">
       <Filter>Win8xap\media</Filter>
     </None>
     <None Include="media\scroll_skin.tex">

@@ -2,17 +2,22 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 1.9
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#ifdef _ANDROID
-#define RESOURCE_PATH "./"
-#else
+#include <hltypes/hplatform.h>
+#ifndef _ANDROID
+#if !_HL_WINRT
 #define RESOURCE_PATH "../media/"
+#else
+#define RESOURCE_PATH "media/"
+#endif
+#else
+#define RESOURCE_PATH "./"
 #endif
 
 #include <stdio.h>
@@ -156,8 +161,6 @@ void april_init(const harray<hstr>& args)
 		april::window->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setLocalization("en");
-		aprilui::setViewport(viewport);
-		aprilui::setScreenViewport(drawRect);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
@@ -176,8 +179,8 @@ void april_destroy()
 	try
 	{
 		delete dataset;
-		atres::destroy();
 		aprilui::destroy();
+		atres::destroy();
 		april::destroy();
 	}
 	catch (aprilui::_GenericException e)
