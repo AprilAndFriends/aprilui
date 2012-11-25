@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.43
 /// 
 /// @section LICENSE
 /// 
@@ -64,6 +64,7 @@ namespace aprilui
 		void _moveScrollBar(float x, float y);
 		void _updateBar();
 		void _adjustDragSpeed();
+		bool _checkAreaSize();
 
 	};
 }

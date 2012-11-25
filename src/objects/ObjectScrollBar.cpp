@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.43
 /// 
 /// @section LICENSE
 /// 
@@ -35,6 +35,7 @@ namespace aprilui
 	{
 		this->mGridSize = GridSize;
 		this->mUseFading = true;
+		this->mHeightHide = true;
 		this->mButtonBegin = NULL;
 		this->mButtonEnd = NULL;
 		this->mButtonBack = NULL;
@@ -108,7 +109,8 @@ namespace aprilui
 					{
 						this->_mRetainTime = RETAIN_TIME;
 					}
-					if (!this->mUseFading || this->_mRetainTime > 0.0f)
+					if ((!this->mUseFading || this->_mRetainTime > 0.0f) &&
+						(!this->mHeightHide || this->_checkAreaSize()))
 					{
 						april::Color color = this->_getDrawColor();
 						if (this->mUseFading && this->_mRetainTime < FADE_OUT_TIME)
@@ -199,6 +201,7 @@ namespace aprilui
 		if (name == "skin")			return this->getSkinName();
 		if (name == "grid_size")	return this->getGridSize();
 		if (name == "use_fading")	return this->isUseFading();
+		if (name == "height_hide")	return this->isHeightHide();
 		return Object::getProperty(name, propertyExists);
 	}
 
@@ -207,6 +210,7 @@ namespace aprilui
 		if		(name == "skin")		this->setSkinName(value);
 		else if	(name == "grid_size")	this->setGridSize(value);
 		else if	(name == "use_fading")	this->setUseFading(value);
+		else if	(name == "height_hide")	this->setHeightHide(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}

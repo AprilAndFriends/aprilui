@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.43
 /// 
 /// @section LICENSE
 /// 
@@ -40,6 +40,8 @@ namespace aprilui
 		void setGridSize(float value) { this->mGridSize = value; }
 		bool isUseFading() { return this->mUseFading; }
 		void setUseFading(bool value) { this->mUseFading = value; }
+		bool isHeightHide() { return this->mHeightHide; }
+		void setHeightHide(bool value) { this->mHeightHide = value; }
 
 		void update(float k);
 		void OnDraw();
@@ -61,6 +63,7 @@ namespace aprilui
 		hstr mSkinName;
 		float mGridSize;
 		bool mUseFading;
+		bool mHeightHide;
 		ImageButton* mButtonBegin;
 		ImageButton* mButtonEnd;
 		ImageButton* mButtonBack;
@@ -88,6 +91,7 @@ namespace aprilui
 		virtual void _moveScrollBar(float x, float y) = 0;
 		virtual void _updateBar() = 0;
 		virtual void _adjustDragSpeed() = 0;
+		virtual bool _checkAreaSize() = 0;
 
 		static void _clickScrollBegin(EventArgs* args);
 		static void _clickScrollEnd(EventArgs* args);
