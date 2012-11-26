@@ -66,9 +66,6 @@
     <None Include="demo_simple_TemporaryKey.pfx">
       <Filter>Win8xap</Filter>
     </None>
-    <None Include="..\..\bin\Win32\libxml2.dll">
-      <Filter>DLLs</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="media\assets\logo_icon.png">

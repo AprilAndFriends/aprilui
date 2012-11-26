@@ -63,9 +63,6 @@
     <None Include="media\texts\en\demo.loc">
       <Filter>Win8xap\media\texts\en</Filter>
     </None>
-    <None Include="..\..\bin\Win32\libxml2.dll">
-      <Filter>DLLs</Filter>
-    </None>
     <None Include="demo_gui_TemporaryKey.pfx">
       <Filter>Win8xap</Filter>
     </None>
