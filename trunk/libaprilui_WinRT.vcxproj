@@ -62,8 +62,6 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
-      <FunctionLevelLinking>
-      </FunctionLevelLinking>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
     </ClCompile>
@@ -238,7 +236,7 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\hltypes\hlxml\libhlxml.vcxproj">
+    <ProjectReference Include="..\hltypes\hlxml\libhlxml_WinRT.vcxproj">
       <Project>{601bcb9e-aaf2-412e-8aeb-9fc77d0505d8}</Project>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <Private>true</Private>
