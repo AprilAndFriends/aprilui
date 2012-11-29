@@ -100,14 +100,14 @@ namespace aprilui
 	
 	bool ImageButton::OnMouseDown(float x, float y, int button)
 	{
-		if (ImageBox::OnMouseDown(x, y, button))
-		{
-			return true;
-		}
 		if (isCursorInside())
 		{
 			mPushed = true;
 			triggerEvent("MouseDown", x, y, 0);
+			return true;
+		}
+		if (ImageBox::OnMouseDown(x, y, button))
+		{
 			return true;
 		}
 		return false;
@@ -115,10 +115,6 @@ namespace aprilui
 
 	bool ImageButton::OnMouseUp(float x, float y, int button)
 	{
-		if (ImageBox::OnMouseUp(x, y, button))
-		{
-			return true;
-		}
 		if (mPushed && isCursorInside())
 		{
 			mPushed = false;
@@ -126,6 +122,10 @@ namespace aprilui
 			return true;
 		}
 		mPushed = false;
+		if (ImageBox::OnMouseUp(x, y, button))
+		{
+			return true;
+		}
 		return false;
 	}
 
