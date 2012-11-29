@@ -283,7 +283,7 @@ namespace aprilui
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
-			if (object != NULL && object->OnKeyDown(keyCode))
+			if (object != NULL && object != this && object->OnKeyDown(keyCode))
 			{
 				return true;
 			}
@@ -300,7 +300,7 @@ namespace aprilui
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
-			if (object != NULL && object->OnKeyUp(keyCode))
+			if (object != NULL && object != this && object->OnKeyUp(keyCode))
 			{
 				return true;
 			}
@@ -317,7 +317,7 @@ namespace aprilui
 		if (mDataset != NULL)
 		{
 			Object* object = mDataset->getFocusedObject();
-			if (object != NULL && object->OnChar(charCode))
+			if (object != NULL && object != this && object->OnChar(charCode))
 			{
 				return true;
 			}
