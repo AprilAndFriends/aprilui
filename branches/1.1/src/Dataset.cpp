@@ -448,12 +448,7 @@ namespace aprilui
 	
 	void Dataset::_loadTexts(hstr path)
 	{
-		hstr localization = getLocalization();
-		if (localization != "")
-		{
-			path += "/" + localization;
-		}
-		logMessage("loading texts from '" + path + "'");
+		logMessage("Loading texts: " + path);
 		harray<hstr> files = hdir::resource_files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
@@ -462,19 +457,25 @@ namespace aprilui
 		hresource f;
 		foreach (hstr, it, files)
 		{
-			if (!it->ends_with(".loc")) continue;
 			f.open(*it);
-			if (!f.is_open())
-			{
-				throw hl_exception("Failed to load file " + (*it));
-			}
 			lines = f.read_lines();
 			f.close();
-			
-			if (lines.size() == 0) continue; // empty file
-
-			while (lines[0].size() > 0 && lines[0][0] < 0) lines[0]=lines[0](1,lines[0].size()-1);
-
+			if (lines.size() == 0)
+			{
+				continue;
+			}
+			// ignore file header, silly utf-8 encoded text files have 2-3 char markers
+			hstr firstLine = lines.first();
+			if (firstLine.size() > 0)
+			{
+				int i = 0;
+				while (i < firstLine.size() && !is_between((int)firstLine[i], 0, 127))
+				{
+					i++;
+				}
+				lines[0] = (i < firstLine.size() ? firstLine(i, firstLine.size() - i) : "");
+			}
+			// now parse the entries
 			foreach (hstr, it2, lines)
 			{
 				if (keyMode)
