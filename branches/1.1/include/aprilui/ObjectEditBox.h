@@ -34,6 +34,9 @@ namespace aprilui
 		void setFilter(chstr filter);
 		void setText(chstr text);
 		
+		bool isFocused();
+		void setFocus();
+		
 		void update(float time);
 		bool setProperty(chstr name, chstr value);
 		
