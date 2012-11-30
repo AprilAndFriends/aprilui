@@ -70,6 +70,7 @@ namespace aprilui
 				this->mDataset->setFocusedObject(NULL);
 			}
 		}
+		mPushed = false;
 	}
 
 	void EditBox::OnDraw(gvec2 offset)
@@ -233,22 +234,6 @@ namespace aprilui
 		return false;
 	}
 
-	bool EditBox::isFocused()
-	{
-		return mDataset->getFocusedObject() == this;
-	}
-	
-	void EditBox::setFocus()
-	{
-		if (mDataset)
-		{
-			mDataset->setFocusedObject(this);
-			mBlinkTimer = 0.0f;
-		}
-		april::window->beginKeyboardHandling();
-		mPushed = false;
-	}
-	
 	bool EditBox::OnMouseUp(float x, float y, int button)
 	{
 		if (Object::OnMouseUp(x, y, button))
