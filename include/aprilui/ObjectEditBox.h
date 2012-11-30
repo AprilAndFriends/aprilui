@@ -33,6 +33,8 @@ namespace aprilui
 		hstr getFilter() { return mFilter; }
 		void setFilter(chstr filter);
 		void setText(chstr text);
+		bool isFocused();
+		void setFocused(bool value);
 		
 		bool isFocused();
 		void setFocus();

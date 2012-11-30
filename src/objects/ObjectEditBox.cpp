@@ -49,6 +49,29 @@ namespace aprilui
 		mBlinkTimer = (mBlinkTimer - (int)mBlinkTimer);
 	}
 
+	bool EditBox::isFocused()
+	{
+		return (this->mDataset != NULL && this->mDataset->getFocusedObject() == this);
+	}
+
+	void EditBox::setFocused(bool value)
+	{
+		if (this->mDataset != NULL)
+		{
+			if (value)
+			{
+				this->mDataset->setFocusedObject(this);
+				this->mBlinkTimer = 0.0f;
+				april::window->beginKeyboardHandling();
+			}
+			else if (this->mDataset->getFocusedObject() == this)
+			{
+				april::window->terminateKeyboardHandling();
+				this->mDataset->setFocusedObject(NULL);
+			}
+		}
+	}
+
 	void EditBox::OnDraw(gvec2 offset)
 	{
 		//////////////
