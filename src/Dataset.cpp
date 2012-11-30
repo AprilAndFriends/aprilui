@@ -539,10 +539,6 @@ namespace aprilui
 		foreach (hstr, it, files)
 		{
 			f.open(*it);
-			if (!f.is_open())
-			{
-				throw hl_exception("Failed to load file: " + (*it));
-			}
 			lines = f.read_lines();
 			f.close();
 			if (lines.size() == 0)
