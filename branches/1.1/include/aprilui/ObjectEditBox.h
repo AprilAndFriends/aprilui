@@ -36,9 +36,6 @@ namespace aprilui
 		bool isFocused();
 		void setFocused(bool value);
 		
-		bool isFocused();
-		void setFocus();
-		
 		void update(float time);
 		bool setProperty(chstr name, chstr value);
 		
