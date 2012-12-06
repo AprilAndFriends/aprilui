@@ -433,12 +433,9 @@ namespace aprilui
 	
 	void Dataset::load(chstr path)
 	{
-		hstr textsPath = (path != "" ? path : getDefaultTextsPath());
-		hstr base_dir = pathGetBaseDir(mFilename);
 		// texts
 		logMessage("loading texts");
-		hstr filepath = normalize_path(mFilenamePrefix + "/" + textsPath);
-		_loadTexts(filepath);
+		_loadTexts(_makeTextsPath());
 		// audio
 		mLoaded = true;
 		logMessage("loading datadef: " + mFilename);
@@ -504,6 +501,17 @@ namespace aprilui
 				}
 			}
 		}
+	}
+	
+	hstr Dataset::_makeTextsPath()
+	{
+		hstr filepathPrefix = mFilenamePrefix + "/" + aprilui::getDefaultTextsPath();
+		hstr filepath = normalize_path(filepathPrefix + "/" + aprilui::getLocalization());
+		if (!hdir::resource_exists(filepath))
+		{
+			filepath = normalize_path(filepathPrefix);
+		}
+		return filepath;
 	}
 	
 	void Dataset::unload()
@@ -802,13 +810,7 @@ namespace aprilui
 	void Dataset::reloadTexts()
 	{
 		mTexts.clear();
-		hstr filepath = mFilenamePrefix;
-		hstr textsPath = getDefaultTextsPath();
-		if (textsPath != "")
-		{
-			filepath += "/" + textsPath;
-		}
-		_loadTexts(filepath);
+		_loadTexts(_makeTextsPath());
 	}
 	
 	void Dataset::reloadTextures()
