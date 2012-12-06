@@ -119,6 +119,7 @@ namespace aprilui
 		
 		void readFile(chstr filename);
 		void _loadTexts(hstr path);
+		hstr _makeTextsPath();
 		
 		hstr _makeFilePath(chstr filename, chstr name, bool useNameBasePath);
 		hstr _makeLocalizedTextureName(chstr filename);
