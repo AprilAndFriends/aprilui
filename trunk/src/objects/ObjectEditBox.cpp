@@ -388,6 +388,7 @@ namespace aprilui
 		if (name == "filter")			return this->getFilter();
 		if (name == "empty_text")		return this->getEmptyText();
 		if (name == "empty_text_key")	return this->getEmptyTextKey();
+		if (name == "cursor_index")		return this->getCursorIndex();
 		if (name == "space_hack")		return this->mSpaceHack;
 		return Label::getProperty(name, propertyExists);
 	}
@@ -399,6 +400,7 @@ namespace aprilui
 		else if	(name == "filter")			this->setFilter(value);
 		else if	(name == "empty_text")		this->setEmptyText(value);
 		else if	(name == "empty_text_key")	this->setEmptyTextKey(value);
+		else if (name == "cursor_index")	this->setCursorIndex(value);
 		else if	(name == "space_hack")		this->mSpaceHack = (bool)value;
 		else return Label::setProperty(name, value);
 		return true;
