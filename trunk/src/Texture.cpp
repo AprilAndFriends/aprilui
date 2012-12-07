@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.44
 /// 
 /// @section LICENSE
 /// 
@@ -102,8 +102,8 @@ namespace aprilui
 		this->mTexture->load();
 		foreach (Texture*, it, this->mDynamicLinks)
 		{
-			(*it)->resetUnusedTime();
-			(*it)->getRenderTexture()->load();
+			(*it)->mUnusedTime = 0.0f;
+			(*it)->mTexture->load();
 		}
 	}
 

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.41
+/// @version 2.44
 /// 
 /// @section LICENSE
 /// 
@@ -235,14 +235,14 @@ namespace aprilui
 			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
 			{
 				float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
-				rect.x += (this->mRect.w - w) / 2;
+				rect.x += (this->mRect.w - w) * 0.5f;
 			}
 			else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
 			{
 				float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
 				rect.x += this->mRect.w - w;
 			}
-			rect.y += (rect.h - h) / 2 + 2;
+			rect.y += (rect.h - h) * 0.5f + 2;
 			rect.w = 1;
 			rect.h = h - 4;
 			april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);

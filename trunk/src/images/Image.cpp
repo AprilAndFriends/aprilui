@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.44
 /// 
 /// @section LICENSE
 /// 
@@ -54,7 +54,7 @@ namespace aprilui
 	
 	hstr Image::getFullName() const
 	{
-		return mDataset->getName() + "." + mName;
+		return (mDataset != NULL ? mDataset->getName() + "." + mName : mName);
 	}
 	
 	void Image::setSrcRect(grect value)
@@ -68,14 +68,14 @@ namespace aprilui
 		if (!this->mTextureCoordinatesLoaded && this->mTexture != NULL && this->mTexture->getWidth() > 0 && this->mTexture->getHeight() > 0)
 		{
 			this->mTextureCoordinatesLoaded = true;
-			float w = (float)this->mTexture->getWidth();
-			float h = (float)this->mTexture->getHeight();
+			float iw = 1.0f / this->mTexture->getWidth();
+			float ih = 1.0f / this->mTexture->getHeight();
 			if (!this->mVertical)
 			{
-				this->_tVertices[0].u = this->_tVertices[2].u = this->mSrcRect.left() / w;
-				this->_tVertices[0].v = this->_tVertices[1].v = this->mSrcRect.top() / h;
-				this->_tVertices[1].u = this->_tVertices[3].u = this->mSrcRect.right() / w;
-				this->_tVertices[2].v = this->_tVertices[3].v = this->mSrcRect.bottom() / h;
+				this->_tVertices[0].u = this->_tVertices[2].u = this->mSrcRect.left() * iw;
+				this->_tVertices[0].v = this->_tVertices[1].v = this->mSrcRect.top() * ih;
+				this->_tVertices[1].u = this->_tVertices[3].u = this->mSrcRect.right() * iw;
+				this->_tVertices[2].v = this->_tVertices[3].v = this->mSrcRect.bottom() * ih;
 				if (this->mInvertX)
 				{
 					hswap(this->_tVertices[0].u, this->_tVertices[1].u);
@@ -89,10 +89,10 @@ namespace aprilui
 			}
 			else
 			{
-				this->_tVertices[0].u = this->_tVertices[1].u = (this->mSrcRect.x + this->mSrcRect.h) / w;
-				this->_tVertices[0].v = this->_tVertices[2].v = this->mSrcRect.y / h;
-				this->_tVertices[1].v = this->_tVertices[3].v = (this->mSrcRect.y + this->mSrcRect.w) / h;
-				this->_tVertices[2].u = this->_tVertices[3].u = this->mSrcRect.x / w;
+				this->_tVertices[0].u = this->_tVertices[1].u = (this->mSrcRect.x + this->mSrcRect.h) * iw;
+				this->_tVertices[0].v = this->_tVertices[2].v = this->mSrcRect.y * ih;
+				this->_tVertices[1].v = this->_tVertices[3].v = (this->mSrcRect.y + this->mSrcRect.w) * ih;
+				this->_tVertices[2].u = this->_tVertices[3].u = this->mSrcRect.x * iw;
 				if (this->mInvertY)
 				{
 					hswap(this->_tVertices[0].u, this->_tVertices[2].u);
@@ -138,9 +138,9 @@ namespace aprilui
 			return;
 		}
 		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-		april::rendersys->translate(rect.w / 2, rect.h / 2);
+		april::rendersys->translate(rect.w * 0.5f, rect.h * 0.5f);
 		april::rendersys->rotate(angle);
-		this->draw(rect - rect.getSize() / 2, color);
+		this->draw(rect - rect.getSize() * 0.5f, color);
 		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
 

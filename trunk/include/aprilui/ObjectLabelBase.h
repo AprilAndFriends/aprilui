@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.44
 /// 
 /// @section LICENSE
 /// 
@@ -40,9 +40,10 @@ namespace aprilui
 		virtual void setText(chstr value);
 		hstr getTextKey() { return this->mTextKey; }
 		void setTextKey(chstr value);
-		
 		hstr getFont() { return this->mFontName; }
 		void setFont(chstr value) { this->mFontName = value; }
+
+		bool trySetTextKey(chstr textKey);
 		
 		april::Color getTextColor() { return this->mTextColor; }
 		void setTextColor(april::Color value) { this->mTextColor = value; }
