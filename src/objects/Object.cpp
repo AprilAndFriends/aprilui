@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.43
+/// @version 2.44
 /// 
 /// @section LICENSE
 /// 
@@ -81,13 +81,13 @@ namespace aprilui
 		this->mRect = rect;
 		if (this->mRect.w != -1)
 		{
-			this->mCenter.x = this->mRect.w / 2;
+			this->mCenter.x = this->mRect.w * 0.5f;
 		}
 		if (this->mRect.h != -1)
 		{
-			this->mCenter.y = this->mRect.h / 2;
+			this->mCenter.y = this->mRect.h* 0.5f;
 		}
-		this->mScale = gvec2(1.0f, 1.0f);
+		this->mScale.set(1.0f, 1.0f);
 		this->mParent = NULL;
 		this->mChildUnderCursor = NULL;
 		this->mCheckedChildUnderCursor = false;
@@ -230,6 +230,10 @@ namespace aprilui
 
 	void Object::_updateChildrenHorizontal(float difference)
 	{
+		if (heqf(difference, 0.0f))
+		{
+			return;
+		}
 		float width;
 		float height;
 		float differenceAlt;
@@ -278,6 +282,10 @@ namespace aprilui
 
 	void Object::_updateChildrenVertical(float difference)
 	{
+		if (heqf(difference, 0.0f))
+		{
+			return;
+		}
 		float width;
 		float height;
 		float differenceAlt;

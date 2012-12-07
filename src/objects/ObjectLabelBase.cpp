@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.44
 /// 
 /// @section LICENSE
 /// 
@@ -257,6 +257,19 @@ namespace aprilui
 		hstr textKey = value; // because value is a chstr which could reference mTextKey
 		this->setText(this->getDataset()->getText(textKey));
 		this->mTextKey = textKey;
+	}
+
+	bool LabelBase::trySetTextKey(chstr textKey)
+	{
+		if (this->mTextKey != textKey)
+		{
+			// using c/p code because of performance reasons
+			hstr newTextKey = textKey; // because value is a chstr which could reference mTextKey
+			this->setText(this->getDataset()->getText(newTextKey));
+			this->mTextKey = newTextKey;
+			return true;
+		}
+		return false;
 	}
 
 }

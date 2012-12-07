@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.3
+/// @version 2.44
 /// 
 /// @section LICENSE
 /// 
@@ -42,12 +42,12 @@ namespace aprilui
 			if (this->mRect.w == -1)
 			{
 				this->mRect.w = rect.w * aprilui::getDefaultScale();
-				this->mCenter.x = mRect.w / 2;
+				this->mCenter.x = mRect.w * 0.5f;
 			}
 			if (this->mRect.h == -1)
 			{
 				this->mRect.h = rect.h * aprilui::getDefaultScale();
-				this->mCenter.y = this->mRect.h / 2;
+				this->mCenter.y = this->mRect.h * 0.5f;
 			}
 			this->mImageName = image->getFullName();
 		}
@@ -66,7 +66,8 @@ namespace aprilui
 	{
 		if (this->mImageName != name)
 		{
-			this->setImageByName(name);
+			// using c/p code because of performance reasons
+			this->setImage(this->mDataset->getImage(name));
 			return true;
 		}
 		return false;
