@@ -52,6 +52,7 @@ namespace aprilui
 		
 		Dataset* getDataset() { return this->mDataset; }
 		void _setDataset(Dataset* dataset) { this->mDataset = dataset; }
+		
 	protected:
 		Dataset* mDataset;
 		Texture* mTexture;
@@ -63,9 +64,9 @@ namespace aprilui
 		bool mInvertX;
 		bool mInvertY;
 		bool mTextureCoordinatesLoaded;
-
+		
 		void _tryLoadTexCoords();
-
+		
 	private:
 		april::TexturedVertex _tVertices[4];
 		
