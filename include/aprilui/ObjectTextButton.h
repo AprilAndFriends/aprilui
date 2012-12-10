@@ -28,6 +28,10 @@ namespace aprilui
 	{
 	public:
 		DEPRECATED_ATTRIBUTE TextButton(chstr name, grect rect);
+
+		//! introduced second constructor to silence internal warning when compiling aprilui
+		TextButton(chstr name, grect rect, bool warningless_internal_hack);
+
 		~TextButton();
 		static Object* createInstance(chstr name, grect rect);
 		

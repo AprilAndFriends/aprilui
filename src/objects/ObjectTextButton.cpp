@@ -19,8 +19,20 @@
 namespace aprilui
 {
 	TextButton::TextButton(chstr name, grect rect) :
-		Label(name, rect),
-		ButtonBase()
+	Label(name, rect),
+	ButtonBase()
+	{
+		hlog::warn(aprilui::logTag, "'TextButton' is deprecated, use 'TextImageButton' without images instead!"); // DEPRECATED
+		this->mText = "TextButton: " + name;
+		this->mBackgroundColor = april::Color::Black;
+		this->mPushedTextColor = april::Color::White * 0.2f;
+		this->mHoverTextColor = april::Color::Grey;
+		this->mDisabledTextColor = april::Color::Grey;
+	}
+	
+	TextButton::TextButton(chstr name, grect rect, bool warningless_internal_hack) :
+	Label(name, rect),
+	ButtonBase()
 	{
 		hlog::warn(aprilui::logTag, "'TextButton' is deprecated, use 'TextImageButton' without images instead!"); // DEPRECATED
 		this->mText = "TextButton: " + name;
@@ -32,11 +44,12 @@ namespace aprilui
 
 	TextButton::~TextButton()
 	{
+		
 	}
 
 	Object* TextButton::createInstance(chstr name, grect rect)
 	{
-		return new TextButton(name, rect);
+		return new TextButton(name, rect, true);
 	}
 
 	hstr TextButton::getName()
