@@ -27,7 +27,7 @@ namespace aprilui
 	class apriluiExport TextButton : public Label, public ButtonBase
 	{
 	public:
-		TextButton(chstr name, grect rect);
+		DEPRECATED_ATTRIBUTE TextButton(chstr name, grect rect);
 		~TextButton();
 		static Object* createInstance(chstr name, grect rect);
 		
