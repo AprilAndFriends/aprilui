@@ -54,9 +54,8 @@ namespace aprilui
 		}
 		else if (aprilui::isDebugEnabled())
 		{
-			unsigned char alpha = color.a / 2;
-			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Black, alpha));
-			april::rendersys->drawRect(rect, april::Color(april::Color::White, alpha));
+			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Black, (unsigned char)(32 * color.a_f())));
+			april::rendersys->drawRect(rect, april::Color(april::Color::Green, (unsigned char)(64 * color.a_f())));
 		}
 		if (this->mText.size() == 0)
 		{
