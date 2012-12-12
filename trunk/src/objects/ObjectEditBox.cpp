@@ -121,11 +121,6 @@ namespace aprilui
 		this->mEmptyTextKey = emptyTextKey;
 	}
 
-	bool EditBox::isFocused()
-	{
-		return (this->mDataset != NULL && this->mDataset->getFocusedObject() == this);
-	}
-
 	void EditBox::setFocused(bool value)
 	{
 		if (this->mDataset != NULL)

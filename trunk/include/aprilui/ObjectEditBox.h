@@ -44,7 +44,6 @@ namespace aprilui
 		hstr getEmptyTextKey() { return this->mEmptyTextKey; }
 		void setEmptyTextKey(chstr value);
 		void setText(chstr value);
-		bool isFocused();
 		void setFocused(bool value);
 		
 		void update(float time);

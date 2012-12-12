@@ -119,6 +119,11 @@ namespace aprilui
 			delete (*it);
 		}
 		this->mDynamicAnimators.clear();
+		
+		if (this->isFocused())
+		{
+			this->setFocus(false);
+		}
 	}
 	
 	void Object::_sortChildren()
@@ -1017,6 +1022,26 @@ namespace aprilui
 			}
 		}
 		return points;
+	}
+	
+	bool Object::isFocused()
+	{
+		return (this->mDataset != NULL && this->mDataset->getFocusedObject() == this);
+	}
+	
+	void Object::setFocus(bool focused)
+	{
+		if (this->mDataset != NULL)
+		{
+			if (focused)
+			{
+				this->mDataset->focus(this);
+			}
+			else
+			{
+				this->mDataset->removeFocus();
+			}
+		}
 	}
 
 	gvec2 Object::transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot)
