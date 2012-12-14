@@ -122,7 +122,7 @@ namespace aprilui
 		
 		if (this->isFocused())
 		{
-			this->setFocus(false);
+			this->setFocused(false);
 		}
 	}
 	
@@ -1029,7 +1029,7 @@ namespace aprilui
 		return (this->mDataset != NULL && this->mDataset->getFocusedObject() == this);
 	}
 	
-	void Object::setFocus(bool focused)
+	void Object::setFocused(bool focused)
 	{
 		if (this->mDataset != NULL)
 		{
