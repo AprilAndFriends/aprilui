@@ -102,9 +102,9 @@ namespace aprilui
 		{
 			object->detach();
 		}
-		if (this->mFocusedObject == object)
+		if (object->isFocused())
 		{
-			this->mFocusedObject = NULL;
+			object->setFocused(false);
 		}
 		this->mObjects.remove_key(object->getName());
 		delete object;

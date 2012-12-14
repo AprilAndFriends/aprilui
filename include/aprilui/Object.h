@@ -152,7 +152,7 @@ namespace aprilui
 		virtual Dataset* getDataset() { return mDataset; }
 		
 		virtual bool isFocused();
-		virtual void setFocus(bool focused);
+		virtual void setFocused(bool focused);
 		
 		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
 		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
