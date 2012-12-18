@@ -429,13 +429,16 @@ namespace aprilui
 		// adding new extensions and scales
 		harray<hstr> newExtensions;
 		harray<float> newScales;
-		foreach (hstr, it, defaultExtensions)
+		for_iter (i, 0, prefixes.size())
 		{
-			for_iter (i, 0, prefixes.size())
+			foreach (hstr, it, defaultExtensions)
 			{
 				newExtensions += prefixes[i] + (*it);
 				newScales += scales[i];
 			}
+		}
+		foreach (hstr, it, defaultExtensions)
+		{
 			newExtensions += (*it);
 			newScales += 1.0f;
 		}
