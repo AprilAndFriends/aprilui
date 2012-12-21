@@ -36,6 +36,11 @@ namespace aprilui
 		Image* getImage() { return mNormalImage; };
 		void setImage(Image* value);
 		
+		// compatibility methods
+		void trySetPushedImageByName(chstr image) { setPushedImageByName(image); }
+		void trySetHoverImageByName(chstr image) { setHoverImageByName(image); }
+		void trySetDisabledImageByName(chstr image) { setDisabledImageByName(image); }
+
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
 		bool OnMouseMove(float x, float y);

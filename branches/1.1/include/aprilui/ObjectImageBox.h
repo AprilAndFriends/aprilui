@@ -31,6 +31,9 @@ namespace aprilui
 		void setImageByName(chstr name);
 		void notifyEvent(chstr name, void* params);
 		
+		// compatibility methods
+		void trySetImageByName(chstr image) { setImageByName(image); }
+
 		void resizeToFitImage();
 		
 		bool setProperty(chstr name, chstr value);
