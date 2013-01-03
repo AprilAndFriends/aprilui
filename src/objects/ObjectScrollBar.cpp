@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.43
+/// @version 2.45
 /// 
 /// @section LICENSE
 /// 
@@ -251,13 +251,13 @@ namespace aprilui
 	void ScrollBar::_clickScrollBegin(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->addScrollValue(-ScrollBar::ScrollDistance);
+		scrollBar->addScrollValue(-hmax(habs(scrollBar->getGridSize()), habs(ScrollBar::ScrollDistance)));
 	}
 
 	void ScrollBar::_clickScrollEnd(EventArgs* args)
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->addScrollValue(ScrollBar::ScrollDistance);
+		scrollBar->addScrollValue(hmax(habs(scrollBar->getGridSize()), habs(ScrollBar::ScrollDistance)));
 	}
 
 	void ScrollBar::_clickScrollBack(EventArgs* args)
