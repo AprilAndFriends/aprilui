@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.43
+/// @version 2.45
 /// 
 /// @section LICENSE
 /// 
@@ -267,7 +267,7 @@ namespace aprilui
 		// these are grid snapping cases when grid size exceeds parent size
 		else if (habs(difference) == 0.0f) // using habs because it can be -0.0f!
 		{
-			s = hsgn(s) * mGridSize;
+			s = hsgn(s) * this->mGridSize;
 		}
 		else if (habs(s) < habs(difference) || hsgn(s) != hsgn(difference))
 		{
