@@ -70,6 +70,7 @@ namespace aprilui
 		void _destroyImage(chstr img);
 		void _destroyTexture(Texture* tex);
 		void _destroyImage(Image* img);
+		void destroyObject(Object* object);
 
 		void OnMouseDown(float x, float y, int button);
 		void OnMouseUp(float x, float y, int button);

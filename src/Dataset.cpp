@@ -431,6 +431,25 @@ namespace aprilui
 		}
 	}
 	
+	void Dataset::destroyObject(Object* object)
+	{
+		if (!this->mObjects.has_key(object->getName()))
+		{
+			throw ResourceNotExistsException(object->getName(), "Object", this);
+		}
+		harray<Object*> children = object->getChildren();
+		foreach (Object*, it, children)
+		{
+			this->destroyObject(*it);
+		}
+		if (object->getParent() != NULL)
+		{
+			object->getParent()->removeChild(object);
+		}
+		this->mObjects.remove_key(object->getName());
+		delete object;
+	}
+	
 	void Dataset::load(chstr path)
 	{
 		// texts
