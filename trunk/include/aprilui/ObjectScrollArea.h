@@ -50,7 +50,11 @@ namespace aprilui
 		bool isCursorInside();
 		Object* getParent();
 		Dataset* getDataset();
-		bool isScrolling();
+		bool isScrolling();		
+		bool isScrollable();
+		bool isScrollableX();
+		bool isScrollableY();
+		
 		gvec2 getScrollOffset();
 		void setScrollOffset(gvec2 value);
 		void setScrollOffset(float x, float y);

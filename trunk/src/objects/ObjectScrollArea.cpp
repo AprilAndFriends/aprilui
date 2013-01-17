@@ -72,6 +72,24 @@ namespace aprilui
 	{
 		return (!this->mPushed && (this->_mDragSpeed.x != 0.0f || this->_mDragSpeed.y != 0.0f));
 	}
+	
+	bool ScrollArea::isScrollable()
+	{
+		Container* parent = dynamic_cast<Container*>(this->mParent);
+		return (parent != NULL && (this->mRect.w > parent->mRect.w || this->mRect.h > parent->mRect.h));
+	}
+	
+	bool ScrollArea::isScrollableX()
+	{
+		Container* parent = dynamic_cast<Container*>(this->mParent);
+		return (parent != NULL && this->mRect.w > parent->mRect.w);
+	}
+	
+	bool ScrollArea::isScrollableY()
+	{
+		Container* parent = dynamic_cast<Container*>(this->mParent);
+		return (parent != NULL && this->mRect.h > parent->mRect.h);
+	}
 
 	gvec2 ScrollArea::getScrollOffset()
 	{
