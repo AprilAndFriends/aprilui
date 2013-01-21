@@ -40,6 +40,13 @@ namespace aprilui
 	{
 	}
 	
+	void Image::setSourceRect(grect r)
+	{
+		mSource = r;
+		mTextureCoordinatesLoaded = 0;
+	}
+
+	
 	void Image::_tryLoadTexCoords()
 	{
 		if (!mTextureCoordinatesLoaded && mTexture != NULL && mTexture->getWidth() > 0 && mTexture->getHeight() > 0)
