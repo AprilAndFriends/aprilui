@@ -726,6 +726,11 @@ namespace aprilui
 		return this->mImages.has_key(name);
 	}
 	
+	bool Dataset::hasTexture(chstr name)
+	{
+		return this->mTextures.has_key(name);
+	}
+	
 	Object* Dataset::tryGetObject(chstr name)
 	{
 		return this->mObjects.try_get_by_key(name, NULL);
@@ -742,7 +747,7 @@ namespace aprilui
 	
 	Image* Dataset::getImage(chstr name)
 	{
-		Image* image;
+		Image* image = NULL;
 		if (name == "null")
 		{
 			if (!this->mNullImage)
@@ -753,13 +758,14 @@ namespace aprilui
 			return this->mNullImage;
 		}
 		
-		if (!this->mImages.has_key(name) && name.starts_with("0x")) // create new image with a color. don't overuse this, it's meant to be handy when needed only ;)
+		bool hasKey = this->mImages.has_key(name);
+		if (!hasKey && name.starts_with("0x")) // create new image with a color. don't overuse this, it's meant to be handy when needed only ;)
 		{
 			image = new ColorImage(name);
 			this->mImages[name] = image;
 			image->_setDataset(this);
 		}
-		else
+		else if (hasKey)
 		{
 			image = this->mImages[name];
 		}
