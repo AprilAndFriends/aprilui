@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -25,6 +25,7 @@
 #include "ObjectImageBox.h"
 #include "ObjectImageButton.h"
 #include "ObjectLabel.h"
+#include "ObjectProgressBar.h"
 #include "ObjectScrollArea.h"
 #include "ObjectScrollBarH.h"
 #include "ObjectScrollBarV.h"

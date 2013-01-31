@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -88,6 +88,7 @@ namespace aprilui
 		APRILUI_REGISTER_OBJECT_TYPE(ImageBox);
 		APRILUI_REGISTER_OBJECT_TYPE(ImageButton);
 		APRILUI_REGISTER_OBJECT_TYPE(Label);
+		APRILUI_REGISTER_OBJECT_TYPE(ProgressBar);
 		APRILUI_REGISTER_OBJECT_TYPE(Slider);
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollArea);
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollBarH);
