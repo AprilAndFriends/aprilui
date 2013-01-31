@@ -110,6 +110,8 @@
 			<Object type="Label" name="label_format_0" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="504" w="600" h="32"/>
 			<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" x="0" y="536" w="600" h="32"/>
 			<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="568" w="600" h="32"/>
+			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" stretching="0" direction="right" x="0" y="0" w="128" h="16"/>
+			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_red" progress_image="texture/test_green" stretching="0" direction="up" x="0" y="32" w="16" h="128"/>
 		</Object>
 		
 	</Object>

@@ -222,6 +222,7 @@
     <ClCompile Include="src\objects\ObjectImageButton.cpp" />
     <ClCompile Include="src\objects\ObjectLabel.cpp" />
     <ClCompile Include="src\objects\ObjectLabelBase.cpp" />
+    <ClCompile Include="src\objects\ObjectProgressBar.cpp" />
     <ClCompile Include="src\objects\ObjectSlider.cpp" />
     <ClCompile Include="src\objects\ObjectTextButton.cpp" />
     <ClCompile Include="src\objects\ObjectTextImageButton.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="include\aprilui\ObjectImageButton.h" />
     <ClInclude Include="include\aprilui\ObjectLabel.h" />
     <ClInclude Include="include\aprilui\ObjectLabelBase.h" />
+    <ClInclude Include="include\aprilui\ObjectProgressBar.h" />
     <ClInclude Include="include\aprilui\ObjectSlider.h" />
     <ClInclude Include="include\aprilui\ObjectTextButton.h" />
     <ClInclude Include="include\aprilui\ObjectTextImageButton.h" />

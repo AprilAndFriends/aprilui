@@ -60,6 +60,11 @@ bool update(float k)
 	april::rendersys->clear();
 	april::rendersys->setOrthoProjection(drawRect);
 	aprilui::updateCursorPosition();
+	aprilui::ProgressBar* progressBar;
+	progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_1");
+	progressBar->setProgress(hmodf(progressBar->getProgress() + k * 0.2f, 1.0f));
+	progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_2");
+	progressBar->setProgress(hmodf(progressBar->getProgress() + k * 0.25f, 1.0f));
 	dataset->update(k);
 	dataset->getObject("root")->draw();
 	return true;
