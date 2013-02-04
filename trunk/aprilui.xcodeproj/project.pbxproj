@@ -158,6 +158,9 @@
 		D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9912158BE54D00C058CE /* EventReceiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D16E9915158BE54D00C058CE /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9913158BE54D00C058CE /* Texture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
+		D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
+		D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
+		D1BA0FC716BFD81F0085EE2B /* ObjectProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
 		D1C2083415FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
 		D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */; };
@@ -277,6 +280,8 @@
 		D16E9912158BE54D00C058CE /* EventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventReceiver.h; path = include/aprilui/EventReceiver.h; sourceTree = "<group>"; };
 		D16E9913158BE54D00C058CE /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = include/aprilui/Texture.h; sourceTree = "<group>"; };
 		D1981D35140F913B0057C3AF /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
+		D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBar.cpp; sourceTree = "<group>"; };
+		D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBar.h; path = include/aprilui/ObjectProgressBar.h; sourceTree = "<group>"; };
 		D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverX.cpp; sourceTree = "<group>"; };
 		D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverY.cpp; sourceTree = "<group>"; };
 		D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorCenterMoverX.h; path = include/aprilui/AnimatorCenterMoverX.h; sourceTree = "<group>"; };
@@ -362,23 +367,23 @@
 		7F6D54811201B06200A2BDF6 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
-				D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */,
-				D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */,
+				7F33B1FF120FE16F004B5E89 /* Animator.cpp */,
+				7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */,
+				7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */,
 				D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */,
 				D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */,
-				7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */,
-				7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */,
-				7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */,
-				7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */,
-				7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */,
+				7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */,
 				7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */,
-				7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */,
-				7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */,
 				7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */,
 				7FA3013012B647A000F71E5E /* AnimatorMoverY.cpp */,
-				7F33B1FF120FE16F004B5E89 /* Animator.cpp */,
-				7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */,
+				7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */,
+				7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */,
+				7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */,
 				7F38C720120967CC002B5134 /* AnimatorRotator.cpp */,
+				7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */,
+				7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */,
+				D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */,
+				D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */,
 			);
 			name = Animators;
 			path = src/animators;
@@ -387,20 +392,21 @@
 		7F6D548C1201B06200A2BDF6 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				7FB0C7AE120AE107005EA739 /* Object.cpp */,
+				7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */,
+				7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */,
+				7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */,
+				7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */,
+				7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */,
+				7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */,
+				7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */,
+				7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */,
+				7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */,
+				D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */,
 				C98E1DB014C823D200CB9F1C /* ObjectScrollArea.cpp */,
 				C98E1DB114C823D300CB9F1C /* ObjectScrollBar.cpp */,
 				C98E1DB214C823D300CB9F1C /* ObjectScrollBarH.cpp */,
 				C98E1DB314C823D300CB9F1C /* ObjectScrollBarV.cpp */,
-				7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */,
-				7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */,
-				7FB0C7AE120AE107005EA739 /* Object.cpp */,
-				7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */,
-				7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */,
-				7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */,
-				7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */,
-				7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */,
-				7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */,
-				7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */,
 				7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */,
 				7F38C6C6120967B9002B5134 /* ObjectTextButton.cpp */,
 				7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */,
@@ -413,10 +419,10 @@
 		7F7A4A9E129D21A300E0ED12 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				7F7A4AA2129D21A300E0ED12 /* Image.cpp */,
 				7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */,
 				7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */,
 				7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */,
-				7F7A4AA2129D21A300E0ED12 /* Image.cpp */,
 				7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */,
 				7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */,
 			);
@@ -430,16 +436,16 @@
 				7F7A4A9E129D21A300E0ED12 /* Images */,
 				7F6D54811201B06200A2BDF6 /* Animators */,
 				7F6D548C1201B06200A2BDF6 /* Objects */,
-				D16E990B158BE53800C058CE /* EventReceiver.cpp */,
-				D16E990C158BE53800C058CE /* Texture.cpp */,
-				7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */,
 				7F1B524712E4719E00E958D8 /* aprilui.cpp */,
-				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
+				C93D4A7314F288D30097AB06 /* apriluiUtil.h */,
+				C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */,
 				7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */,
 				7FC8042A11EC725B00851062 /* Dataset.cpp */,
+				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
+				D16E990B158BE53800C058CE /* EventReceiver.cpp */,
 				7FC8042B11EC725B00851062 /* Exception.cpp */,
-				C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */,
-				C93D4A7314F288D30097AB06 /* apriluiUtil.h */,
+				7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */,
+				D16E990C158BE53800C058CE /* Texture.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -448,19 +454,19 @@
 			isa = PBXGroup;
 			children = (
 				C942B3FF13278C7100C1D1E8 /* Images */,
-				C942B3FE13278C5900C1D1E8 /* Objects */,
 				C942B3F113278C3300C1D1E8 /* Animators */,
-				7FDB9898131BA90C0064B968 /* EventUtils.h */,
-				D16E9912158BE54D00C058CE /* EventReceiver.h */,
-				D16E9913158BE54D00C058CE /* Texture.h */,
-				7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */,
-				7F1B524912E471B800E958D8 /* apriluiExport.h */,
+				C942B3FE13278C5900C1D1E8 /* Objects */,
 				7F1B524D12E471B800E958D8 /* aprilui.h */,
+				7F1B524912E471B800E958D8 /* apriluiExport.h */,
 				7FCD395E12018C7B00608217 /* CallbackEvent.h */,
+				7FC8041811EC721E00851062 /* Dataset.h */,
 				7FCD396412018C7B00608217 /* Event.h */,
 				7FCD396512018C7B00608217 /* EventArgs.h */,
-				7FC8041811EC721E00851062 /* Dataset.h */,
+				7FDB9898131BA90C0064B968 /* EventUtils.h */,
+				D16E9912158BE54D00C058CE /* EventReceiver.h */,
 				7FC8041911EC721E00851062 /* Exception.h */,
+				7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */,
+				D16E9913158BE54D00C058CE /* Texture.h */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -468,24 +474,24 @@
 		C942B3F113278C3300C1D1E8 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
-				D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */,
-				D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */,
 				7F33B207120FE2D5004B5E89 /* Animator.h */,
-				D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */,
-				D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */,
-				7FA3014212B647E200F71E5E /* AnimatorMoverY.h */,
-				7FA3014112B647E200F71E5E /* AnimatorMoverX.h */,
 				7FC8041511EC721E00851062 /* Animators.h */,
-				7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */,
-				7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */,
-				7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */,
-				7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */,
 				7FA3013F12B647E200F71E5E /* AnimatorAlphaChanger.h */,
 				7F1B524A12E471B800E958D8 /* AnimatorBlueChanger.h */,
-				7F1B524B12E471B800E958D8 /* AnimatorGreenChanger.h */,
-				7F1B524C12E471B800E958D8 /* AnimatorRedChanger.h */,
+				D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */,
+				D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */,
 				7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */,
+				7F1B524B12E471B800E958D8 /* AnimatorGreenChanger.h */,
+				7FA3014112B647E200F71E5E /* AnimatorMoverX.h */,
+				7FA3014212B647E200F71E5E /* AnimatorMoverY.h */,
+				7F1B524C12E471B800E958D8 /* AnimatorRedChanger.h */,
+				7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */,
+				7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */,
 				7F38C68D12096793002B5134 /* AnimatorRotator.h */,
+				7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */,
+				7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */,
+				D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */,
+				D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */,
 			);
 			name = Animators;
 			sourceTree = "<group>";
@@ -493,21 +499,22 @@
 		C942B3FE13278C5900C1D1E8 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				C98E1DBD14C823F200CB9F1C /* ObjectScrollArea.h */,
-				C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */,
-				C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */,
-				C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */,
-				7FC8041B11EC721E00851062 /* Objects.h */,
-				7F1B524E12E471B800E958D8 /* ObjectContainer.h */,
-				7FA3014512B647E200F71E5E /* ObjectButtonBase.h */,
 				7FB0C7B0120AE117005EA739 /* Object.h */,
+				7FC8041B11EC721E00851062 /* Objects.h */,
+				7FA3014512B647E200F71E5E /* ObjectButtonBase.h */,
 				7F38C68F12096793002B5134 /* ObjectCallbackObject.h */,
 				7F38C69112096793002B5134 /* ObjectColoredQuad.h */,
+				7F1B524E12E471B800E958D8 /* ObjectContainer.h */,
 				7F38C69312096793002B5134 /* ObjectEditBox.h */,
 				7F38C69412096793002B5134 /* ObjectImageBox.h */,
 				7F38C69512096793002B5134 /* ObjectImageButton.h */,
-				7F38C69612096793002B5134 /* ObjectLabel.h */,
 				7F38C69712096793002B5134 /* ObjectLabelBase.h */,
+				7F38C69612096793002B5134 /* ObjectLabel.h */,
+				D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */,
+				C98E1DBD14C823F200CB9F1C /* ObjectScrollArea.h */,
+				C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */,
+				C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */,
+				C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */,
 				7F38C69B12096793002B5134 /* ObjectSlider.h */,
 				7F38C69C12096793002B5134 /* ObjectTextButton.h */,
 				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
@@ -520,12 +527,12 @@
 			isa = PBXGroup;
 			children = (
 				7FC8041A11EC721E00851062 /* Image.h */,
-				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
-				7F7A4A8F129D217700E0ED12 /* NullImage.h */,
 				7F7A4A90129D217700E0ED12 /* Images.h */,
-				7F7A4A91129D217700E0ED12 /* CompositeImage.h */,
-				7F7A4A92129D217700E0ED12 /* ColorImage.h */,
 				7F7A4A93129D217700E0ED12 /* ColoredImage.h */,
+				7F7A4A92129D217700E0ED12 /* ColorImage.h */,
+				7F7A4A91129D217700E0ED12 /* CompositeImage.h */,
+				7F7A4A8F129D217700E0ED12 /* NullImage.h */,
+				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -586,6 +593,7 @@
 				C98E1DC514C823F200CB9F1C /* ObjectScrollBarH.h in Headers */,
 				C98E1DC714C823F200CB9F1C /* ObjectScrollBarV.h in Headers */,
 				7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */,
+				D1BA0FC716BFD81F0085EE2B /* ObjectProgressBar.h in Headers */,
 				7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */,
 				7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */,
 				D1C2083A15FDC57000AB5DCA /* AnimatorCenterMoverX.h in Headers */,
@@ -728,6 +736,7 @@
 				D16E990F158BE53800C058CE /* Texture.cpp in Sources */,
 				D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */,
 				D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
+				D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,6 +794,7 @@
 				D16E9910158BE53800C058CE /* Texture.cpp in Sources */,
 				D1C2083415FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */,
 				D1C2083615FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
+				D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
