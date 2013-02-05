@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.51
 /// 
 /// @section LICENSE
 /// 
@@ -44,6 +44,10 @@ namespace aprilui
 		void setProgressImage(Image* image);
 		hstr getProgressImageName() { return this->mProgressImageName; }
 		void setProgressImageByName(chstr image);
+		Image* getMaskImage() { return this->mMaskImage; }
+		void setMaskImage(Image* image);
+		hstr getMaskImageName() { return this->mProgressImageName; }
+		void setMaskImageByName(chstr image);
 		float getProgress() { return this->mProgress; }
 		void setProgress(float value) { this->mProgress = value; }
 		bool isStretching() { return this->mStretching; }
@@ -53,6 +57,7 @@ namespace aprilui
 		
 		/// @brief Optimized version.
 		bool trySetProgressImageByName(chstr name);
+		bool trySetMaskImageByName(chstr name);
 
 		void OnDraw();
 
@@ -62,6 +67,8 @@ namespace aprilui
 	protected:
 		Image* mProgressImage;
 		hstr mProgressImageName;
+		Image* mMaskImage;
+		hstr mMaskImageName;
 		float mProgress;
 		bool mStretching;
 		Direction mDirection;
