@@ -403,10 +403,19 @@ namespace aprilui
 	
 	harray<unsigned int> EditBox::_convertToUnicodeChars(chstr string)
 	{
-		std::basic_string<unsigned int> text = utf8_to_unicode(string);
-		return harray<unsigned int>(text.c_str(), text.size());
+		if (string.size() > 0)
+		{
+			std::basic_string<unsigned int> text;
+			text = utf8_to_unicode(string);
+			return harray<unsigned int>(text.c_str(), text.size());
+		}
+		else
+		{
+			harray<unsigned int> emptyArray;
+			return emptyArray;
+		}
 	}
-	
+
 	void EditBox::_cursorMoveLeft()
 	{
 		this->setCursorIndex(this->mCursorIndex - 1);
