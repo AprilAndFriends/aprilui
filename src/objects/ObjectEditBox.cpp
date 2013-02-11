@@ -328,6 +328,12 @@ namespace aprilui
 
 	harray<unsigned int> EditBox::_convertToUnicodeChars(chstr string)
 	{
+		if (string.size() == 0) // Mac llvm workarround, crashes, probably a bug in mac STL
+		{
+			harray<unsigned int> array;
+			return array;
+		}
+		
 		std::basic_string<unsigned int> text = utf8_to_unicode(string);
 		return harray<unsigned int>(text.c_str(), text.size());
 	}
