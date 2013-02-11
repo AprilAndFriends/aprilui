@@ -593,21 +593,28 @@ namespace aprilui
 		{
 			throw GenericException("Unable to unload dataset '" + this->getName() + "', data not loaded!");
 		}
+		aprilui::Object* obj;
 		foreach_m (Object*, it, this->mObjects)
 		{
-			delete it->second;
+			obj = it->second;
+			if (obj->getParent()) obj->detach();
+			obj->removeChildren(false);
+			delete obj;
 		}
 		this->mObjects.clear();
+		
 		foreach_m (Image*, it, this->mImages)
 		{
 			delete it->second;
 		}
 		this->mImages.clear();
+		
 		foreach_m (Texture*, it, this->mTextures)
 		{
 			delete it->second;
 		}
 		this->mTextures.clear();
+		
 		this->mCallbacks.clear();
 		this->mTexts.clear();
 		this->mRoot = NULL;
