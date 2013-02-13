@@ -242,12 +242,17 @@ namespace aprilui
 		{
 			return true;
 		}
-		bool result = ButtonBase::onMouseUp(button);
-		if (result)
+		bool click = ButtonBase::onMouseUp(button);
+		bool up = false;
+		if (this->mHovered)
+		{
+			up = this->triggerEvent("MouseUp", button);
+		}
+		if (click)
 		{
 			this->triggerEvent("Click", button);
 		}
-		return result;
+		return click || up;
 	}
 	
 	bool ImageButton::onMouseMove()
