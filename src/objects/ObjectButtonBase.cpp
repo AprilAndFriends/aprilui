@@ -60,7 +60,7 @@ namespace aprilui
 		return (child != NULL && child == dynamic_cast<Object*>(this));
 	}
 
-	bool ButtonBase::onMouseDown(int button)
+	bool ButtonBase::onMouseDown(april::Key button)
 	{
 		if (!allowedButtons.contains(button))
 		{
@@ -75,7 +75,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool ButtonBase::onMouseUp(int button)
+	bool ButtonBase::onMouseUp(april::Key button)
 	{
 		if (!allowedButtons.contains(button))
 		{

@@ -15,6 +15,7 @@
 #ifndef APRILUI_H
 #define APRILUI_H
 
+#include <april/Keys.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hmap.h>
@@ -85,12 +86,12 @@ namespace aprilui
 	apriluiFnExport float getTextureExtensionScale(chstr extension);
 	apriluiFnExport float findTextureExtensionScale(chstr filename);
 	
-	apriluiFnExport void onMouseDown(int button);
-	apriluiFnExport void onMouseUp(int button);
+	apriluiFnExport void onMouseDown(april::Key button);
+	apriluiFnExport void onMouseUp(april::Key button);
 	apriluiFnExport void onMouseMove();
 	apriluiFnExport void onMouseScroll(float x, float y);
-	apriluiFnExport void onKeyDown(unsigned int keyCode);
-	apriluiFnExport void onKeyUp(unsigned int keyCode);
+	apriluiFnExport void onKeyDown(april::Key keyCode);
+	apriluiFnExport void onKeyUp(april::Key keyCode);
 	apriluiFnExport void onChar(unsigned int charCode);
 
 	DEPRECATED_ATTRIBUTE apriluiFnExport void setLogFunction(void (*fnptr)(chstr));

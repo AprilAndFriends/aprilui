@@ -258,7 +258,7 @@ namespace aprilui
 		Label::notifyEvent(name, params);
 	}
 	
-	bool EditBox::onMouseDown(int button)
+	bool EditBox::onMouseDown(april::Key button)
 	{
 		if (Object::onMouseDown(button))
 		{
@@ -272,7 +272,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool EditBox::onMouseUp(int button)
+	bool EditBox::onMouseUp(april::Key button)
 	{
 		if (Object::onMouseUp(button))
 		{
@@ -291,7 +291,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool EditBox::onKeyDown(unsigned int keyCode)
+	bool EditBox::onKeyDown(april::Key keyCode)
 	{
 		if (Object::onKeyDown(keyCode))
 		{
@@ -334,7 +334,7 @@ namespace aprilui
 		return false;
 	}
 	
-	bool EditBox::onKeyUp(unsigned int keyCode)
+	bool EditBox::onKeyUp(april::Key keyCode)
 	{
 		if (Object::onKeyUp(keyCode))
 		{

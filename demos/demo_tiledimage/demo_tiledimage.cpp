@@ -30,6 +30,7 @@
 #include <april/april.h>
 #include <april/main.h>
 #include <april/RenderSystem.h>
+#include <april/UpdateDelegate.h>
 #include <april/Window.h>
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
@@ -43,25 +44,28 @@
 
 #define SCROLL_SPEED gvec2(50.0f, -50.0f)
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
-#ifndef _ANDROID
 grect viewport = drawRect;
-#else
-grect viewport(0.0f, 0.0f, 480.0f, 320.0f);
-#endif
 
 aprilui::Dataset* dataset;
 
-bool render(float time)
+class UpdateDelegate : public april::UpdateDelegate
 {
-	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(drawRect);
-	aprilui::updateCursorPosition();
-	aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
-	image->setScroll(image->getScroll() + SCROLL_SPEED * time); // manual scrolling
-	dataset->getObject("root")->draw();
-	dataset->update(time);
-	return true;
-}
+public:
+	bool onUpdate(float timeSinceLastFrame)
+	{
+		april::rendersys->clear();
+		april::rendersys->setOrthoProjection(viewport);
+		aprilui::updateCursorPosition();
+		aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
+		image->setScroll(image->getScroll() + SCROLL_SPEED * timeSinceLastFrame); // manual scrolling
+		dataset->getObject("root")->draw();
+		dataset->update(timeSinceLastFrame);
+		return true;
+	}
+
+};
+
+static UpdateDelegate* updateDelegate = NULL;
 
 void april_init(const harray<hstr>& args)
 {
@@ -77,47 +81,50 @@ void april_init(const harray<hstr>& args)
 
 		CFURLRef url = CFBundleCopyBundleURL(CFBundleGetMainBundle());
 		CFStringRef path = CFURLCopyFileSystemPath(url, kCFURLPOSIXPathStyle);
-		
 		// let's hope chdir() will be happy with utf8 encoding
-		const char* cpath=CFStringGetCStringPtr(path, kCFStringEncodingUTF8);
-		char* cpath_alloc=0;
-		if(!cpath)
+		const char* cpath = CFStringGetCStringPtr(path, kCFStringEncodingUTF8);
+		char* cpath_alloc = NULL;
+		if (cpath == NULL)
 		{
 			// CFStringGetCStringPtr is allowed to return NULL. bummer.
 			// we need to use CFStringGetCString instead.
-			cpath_alloc = (char*)malloc(CFStringGetLength(path)+1);
-			CFStringGetCString(path, cpath_alloc, CFStringGetLength(path)+1, kCFStringEncodingUTF8);
+			cpath_alloc = (char*)malloc(CFStringGetLength(path) + 1);
+			CFStringGetCString(path, cpath_alloc, CFStringGetLength(path) + 1, kCFStringEncodingUTF8);
 		}
-		else {
+		else
+		{
 			// even though it didn't return NULL, we still want to slice off bundle name.
-			cpath_alloc = (char*)malloc(CFStringGetLength(path)+1);
+			cpath_alloc = (char*)malloc(CFStringGetLength(path) + 1);
 			strcpy(cpath_alloc, cpath);
 		}
 		// just in case / is appended to .app path for some reason
-		if(cpath_alloc[CFStringGetLength(path)-1]=='/')
-			cpath_alloc[CFStringGetLength(path)-1] = 0;
-		
+		if (cpath_alloc[CFStringGetLength(path) - 1] == '/')
+		{
+			cpath_alloc[CFStringGetLength(path) - 1] = 0;
+		}
 		// replace pre-.app / with a null character, thus
 		// cutting off .app's name and getting parent of .app.
 		strrchr(cpath_alloc, '/')[0] = 0;
-							   
 		// change current dir using posix api
 		chdir(cpath_alloc);
-		
 		free(cpath_alloc); // even if null, still ok
 		CFRelease(path);
 		CFRelease(url);
 	}
 #endif
+	updateDelegate = new UpdateDelegate();
 	try
 	{
+#if defined(_ANDROID) || defined(_IOS)
+		drawRect.setSize(april::getSystemInfo().displayResolution);
+#endif
 		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
 		april::createRenderSystem();
-		april::createWindow((int)viewport.w, (int)viewport.h, false, "demo_tileimage");
+		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "demo_tileimage");
 		atres::init();
 		aprilui::init();
 		aprilui::setLocalization("en");
-		april::window->setUpdateCallback(&render);
+		april::window->setUpdateDelegate(updateDelegate);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tiledimage.dts");
 		dataset->load();
 	}
@@ -140,4 +147,6 @@ void april_destroy()
 	{
 		printf("%s\n", e.getType().c_str());
 	}
+	delete updateDelegate;
+	updateDelegate = NULL;
 }

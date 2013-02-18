@@ -34,8 +34,8 @@ namespace aprilui
 		Dataset* getDataset();
 		unsigned char getDerivedAlpha();
 
-		bool onMouseDown(int button);
-		bool onMouseUp(int button);
+		bool onMouseDown(april::Key button);
+		bool onMouseUp(april::Key button);
 
 		void notifyEvent(chstr name, void* params);
 		hstr getProperty(chstr name, bool* propertyExists = NULL);

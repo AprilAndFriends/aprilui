@@ -36,8 +36,8 @@ namespace aprilui
 		
 		void OnDraw();
 		void update(float k);
-		bool onMouseDown(int button);
-		bool onMouseUp(int button);
+		bool onMouseDown(april::Key button);
+		bool onMouseUp(april::Key button);
 		bool onMouseMove();
 		bool onMouseScroll(float x, float y);
 		void cancelMouseDown();

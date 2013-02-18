@@ -34,8 +34,8 @@ namespace aprilui
 		void setValue(float value);
 		
 		bool setProperty(chstr name, chstr value);
-		bool onMouseDown(int button);
-		bool onMouseUp(int button);
+		bool onMouseDown(april::Key button);
+		bool onMouseUp(april::Key button);
 		bool onMouseMove();
 		void cancelMouseDown();
 		

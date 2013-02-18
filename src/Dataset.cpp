@@ -180,7 +180,7 @@ namespace aprilui
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->loadTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
+		april::Texture* aprilTexture = april::rendersys->createTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
 		if (aprilTexture == NULL)
 		{
 			throw file_not_found(locpath);
@@ -274,7 +274,7 @@ namespace aprilui
 		}
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->loadRamTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
+		april::Texture* aprilTexture = april::rendersys->createRamTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
 		if (!aprilTexture)
 		{
 			throw file_not_found(locpath);
@@ -847,12 +847,12 @@ namespace aprilui
 		}
 	}
 	
-	bool Dataset::onMouseDown(int button)
+	bool Dataset::onMouseDown(april::Key button)
 	{
 		return (this->mRoot != NULL && this->mRoot->onMouseDown(button));
 	}
 	
-	bool Dataset::onMouseUp(int button)
+	bool Dataset::onMouseUp(april::Key button)
 	{
 		return (this->mRoot != NULL && this->mRoot->onMouseUp(button));
 	}
@@ -867,12 +867,12 @@ namespace aprilui
 		return (this->mRoot != NULL && this->mRoot->onMouseScroll(x, y));
 	}
 	
-	bool Dataset::onKeyDown(unsigned int keyCode)
+	bool Dataset::onKeyDown(april::Key keyCode)
 	{
 		return (this->mRoot != NULL && this->mRoot->onKeyDown(keyCode));
 	}
 	
-	bool Dataset::onKeyUp(unsigned int keyCode)
+	bool Dataset::onKeyUp(april::Key keyCode)
 	{
 		return (this->mRoot != NULL && this->mRoot->onKeyUp(keyCode));
 	}
