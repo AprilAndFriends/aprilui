@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="DLLs">
+      <UniqueIdentifier>{b2723e8d-96b8-47f3-b82d-232fef21f0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap">
+      <UniqueIdentifier>{0ea29358-fbd2-4807-a2f0-94fd734f3a6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media">
+      <UniqueIdentifier>{54efa6e1-3382-4ddd-9816-22a5b9847916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media\assets">
+      <UniqueIdentifier>{2b355d7e-3803-4399-95a9-ddf7211d6321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media\texts">
+      <UniqueIdentifier>{6dd5e922-d67e-40e9-918f-f6a111ee3a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media\texts\de">
+      <UniqueIdentifier>{098ade51-9b3b-43b6-9fc9-d463be669ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win8xap\media\texts\en">
+      <UniqueIdentifier>{36209121-ee16-43cb-abed-452b1fd59577}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="demo_zorder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\lib\WinRT\libpng.dll">
+      <Filter>DLLs</Filter>
+    </None>
+    <None Include="..\..\..\lib\WinRT\zlib1.dll">
+      <Filter>DLLs</Filter>
+    </None>
+    <None Include="media\arial.font">
+      <Filter>Win8xap\media</Filter>
+    </None>
+    <None Include="media\demo_zorder.dts">
+      <Filter>Win8xap\media</Filter>
+    </None>
+    <None Include="media\scroll_skin.tex">
+      <Filter>Win8xap\media</Filter>
+    </None>
+    <None Include="media\texture.tex">
+      <Filter>Win8xap\media</Filter>
+    </None>
+    <None Include="media\texture_gui.tex">
+      <Filter>Win8xap\media</Filter>
+    </None>
+    <None Include="media\transparency.tex">
+      <Filter>Win8xap\media</Filter>
+    </None>
+    <None Include="media\texts\de\demo.loc">
+      <Filter>Win8xap\media\texts\de</Filter>
+    </None>
+    <None Include="media\texts\en\demo.loc">
+      <Filter>Win8xap\media\texts\en</Filter>
+    </None>
+    <None Include="demo_zorder_TemporaryKey.pfx">
+      <Filter>Win8xap</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="media\assets\logo_icon.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\small_icon.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\splash.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\store_icon.png">
+      <Filter>Win8xap\media\assets</Filter>
+    </Image>
+    <Image Include="media\arial.png">
+      <Filter>Win8xap\media</Filter>
+    </Image>
+    <Image Include="media\scroll_skin.png">
+      <Filter>Win8xap\media</Filter>
+    </Image>
+    <Image Include="media\texture.jpg">
+      <Filter>Win8xap\media</Filter>
+    </Image>
+    <Image Include="media\transparency.png">
+      <Filter>Win8xap\media</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <Filter>Win8xap</Filter>
+    </AppxManifest>
+  </ItemGroup>
+</Project>
