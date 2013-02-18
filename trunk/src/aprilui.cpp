@@ -490,7 +490,7 @@ namespace aprilui
 		return 1.0f;
 	}
 	
-	void onMouseDown(int button)
+	void onMouseDown(april::Key button)
 	{
 		aprilui::updateCursorPosition();
 		foreach_m (Dataset*, it, gDatasets)
@@ -499,7 +499,7 @@ namespace aprilui
 		}
 	}
 	
-	void onMouseUp(int button)
+	void onMouseUp(april::Key button)
 	{
 		aprilui::updateCursorPosition();
 		foreach_m (Dataset*, it, gDatasets)
@@ -525,7 +525,7 @@ namespace aprilui
 		}
 	}
 	
-	void onKeyDown(unsigned int keyCode)
+	void onKeyDown(april::Key keyCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
@@ -533,7 +533,7 @@ namespace aprilui
 		}
 	}
 	
-	void onKeyUp(unsigned int keyCode)
+	void onKeyUp(april::Key keyCode)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{

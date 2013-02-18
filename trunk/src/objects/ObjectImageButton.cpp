@@ -222,7 +222,7 @@ namespace aprilui
 		return true;
 	}
 	
-	bool ImageButton::onMouseDown(int button)
+	bool ImageButton::onMouseDown(april::Key button)
 	{
 		if (Object::onMouseDown(button)) // not a mistake, ImageBox does handle a MouseDown even and this behavior has to be overriden (will be refactored)
 		{
@@ -236,7 +236,7 @@ namespace aprilui
 		return result;
 	}
 
-	bool ImageButton::onMouseUp(int button)
+	bool ImageButton::onMouseUp(april::Key button)
 	{
 		if (Object::onMouseUp(button)) // not a mistake, ImageBox does handle a MouseUp even and this behavior has to be overriden (will be refactored)
 		{

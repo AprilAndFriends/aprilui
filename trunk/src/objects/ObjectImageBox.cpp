@@ -130,7 +130,7 @@ namespace aprilui
 		return true;
 	}
 
-	bool ImageBox::onMouseDown(int button)
+	bool ImageBox::onMouseDown(april::Key button)
 	{
 		if (Object::onMouseDown(button))
 		{
@@ -144,7 +144,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool ImageBox::onMouseUp(int button)
+	bool ImageBox::onMouseUp(april::Key button)
 	{
 		if (Object::onMouseUp(button))
 		{

@@ -135,7 +135,7 @@ namespace aprilui
 		return true;
 	}
 	
-	bool ToggleButton::onMouseUp(int button)
+	bool ToggleButton::onMouseUp(april::Key button)
 	{
 		bool result = ImageButton::onMouseUp(button);
 		if (result)

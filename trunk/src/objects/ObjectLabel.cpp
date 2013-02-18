@@ -62,7 +62,7 @@ namespace aprilui
 		Object::notifyEvent(name, params);
 	}
 	
-	bool Label::onMouseDown(int button)
+	bool Label::onMouseDown(april::Key button)
 	{
 		if (Object::onMouseDown(button))
 		{
@@ -76,7 +76,7 @@ namespace aprilui
 		return false;
 	}
 	
-	bool Label::onMouseUp(int button)
+	bool Label::onMouseUp(april::Key button)
 	{
 		if (Object::onMouseUp(button))
 		{

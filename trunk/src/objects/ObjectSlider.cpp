@@ -52,7 +52,7 @@ namespace aprilui
 		this->mValue = hclamp(value, 0.0f, 1.0f);
 	}
 	
-	bool Slider::onMouseDown(int button)
+	bool Slider::onMouseDown(april::Key button)
 	{
 		if (ImageBox::onMouseDown(button))
 		{
@@ -69,7 +69,7 @@ namespace aprilui
 		return false;
 	}
 	
-	bool Slider::onMouseUp(int button)
+	bool Slider::onMouseUp(april::Key button)
 	{
 		if (ImageBox::onMouseUp(button))
 		{

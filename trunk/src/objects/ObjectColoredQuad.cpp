@@ -36,7 +36,7 @@ namespace aprilui
 		april::rendersys->drawFilledRect(this->_getDrawRect(), this->_getDrawColor());
 	}
 
-	bool ColoredQuad::onMouseDown(int button)
+	bool ColoredQuad::onMouseDown(april::Key button)
 	{
 		if (Object::onMouseDown(button))
 		{
@@ -50,7 +50,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool ColoredQuad::onMouseUp(int button)
+	bool ColoredQuad::onMouseUp(april::Key button)
 	{
 		if (Object::onMouseUp(button))
 		{

@@ -165,7 +165,7 @@ namespace aprilui
 		return Label::isCursorInside();
 	}
 
-	bool TextButton::onMouseDown(int button)
+	bool TextButton::onMouseDown(april::Key button)
 	{
 		if (Label::onMouseDown(button))
 		{
@@ -179,7 +179,7 @@ namespace aprilui
 		return result;
 	}
 
-	bool TextButton::onMouseUp(int button)
+	bool TextButton::onMouseUp(april::Key button)
 	{
 		if (Label::onMouseUp(button))
 		{

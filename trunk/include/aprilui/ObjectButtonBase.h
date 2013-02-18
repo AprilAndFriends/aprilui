@@ -38,8 +38,8 @@ namespace aprilui
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
 		
-		virtual bool onMouseDown(int button);
-		virtual bool onMouseUp(int button);
+		virtual bool onMouseDown(april::Key button);
+		virtual bool onMouseUp(april::Key button);
 		virtual bool onMouseMove();
 		virtual void cancelMouseDown();
 

@@ -27,8 +27,11 @@
 #endif
 
 #include <april/april.h>
+#include <april/KeyboardDelegate.h>
 #include <april/main.h>
+#include <april/MouseDelegate.h>
 #include <april/RenderSystem.h>
+#include <april/UpdateDelegate.h>
 #include <april/Window.h>
 #include <aprilui/Animator.h>
 #include <aprilui/aprilui.h>
@@ -41,11 +44,7 @@
 #include <gtypes/Vector2.h>
 
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
-#ifndef _ANDROID
 grect viewport = drawRect;
-#else
-grect viewport(0.0f, 0.0f, 480.0f, 320.0f);
-#endif
 
 aprilui::Dataset* dataset;
 
@@ -55,55 +54,102 @@ float _animatorCustomFunction(aprilui::Animator* animator, float time)
 	return (sine * sine * animator->getAmplitude()); // sin(x)^2
 }
 
-bool update(float k)
+class UpdateDelegate : public april::UpdateDelegate
 {
-	april::rendersys->clear();
-	april::rendersys->setOrthoProjection(drawRect);
-	aprilui::updateCursorPosition();
-	aprilui::ProgressBar* progressBar;
-	progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_1");
-	progressBar->setProgress(hmodf(progressBar->getProgress() + k * 0.2f, 1.0f));
-	progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_2");
-	progressBar->setProgress(hmodf(progressBar->getProgress() + k * 0.25f, 1.0f));
-	dataset->update(k);
-	dataset->getObject("root")->draw();
-	return true;
-}
-
-void onKeyDown(unsigned int keycode)
-{
-	aprilui::Object* object;
-	switch (keycode)
+public:
+	bool onUpdate(float timeSinceLastFrame)
 	{
-	case april::AK_RETURN:
-		dataset->unload();
-		dataset->load();
-		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
-		break;
-	case april::AK_BACK:
-		aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
-		{
-			aprilui::Texture* texture = dataset->getTexture("texture");
-			texture->reload(aprilui::getLocalization() == "en" ? "../media/texture" : "../media/transparency");
-		}
-		break;
-	case april::AK_N:
-		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
-		if (object->getHeight() > 128)
-		{
-			object->setHeight(object->getHeight() - 128);
-		}
-		break;
-	case april::AK_M:
-		object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
-		object->setHeight(object->getHeight() + 128);
-		break;
-	case april::AK_D:
-		aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
-		break;
+		april::rendersys->clear();
+		april::rendersys->setOrthoProjection(viewport);
+		aprilui::updateCursorPosition();
+		aprilui::ProgressBar* progressBar;
+		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_1");
+		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.2f, 1.0f));
+		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_2");
+		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.25f, 1.0f));
+		dataset->update(timeSinceLastFrame);
+		dataset->getObject("root")->draw();
+		return true;
 	}
-	aprilui::onKeyDown(keycode);
-}
+
+};
+
+class KeyboardDelegate : public april::KeyboardDelegate
+{
+	void onKeyDown(april::Key keyCode)
+	{
+		aprilui::Object* object;
+		switch (keyCode)
+		{
+		case april::AK_RETURN:
+			dataset->unload();
+			dataset->load();
+			dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
+			break;
+		case april::AK_BACK:
+			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
+			{
+				aprilui::Texture* texture = dataset->getTexture("texture");
+				texture->reload(aprilui::getLocalization() == "en" ? "../media/texture" : "../media/transparency");
+			}
+			break;
+		case april::AK_N:
+			object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
+			if (object->getHeight() > 128)
+			{
+				object->setHeight(object->getHeight() - 128);
+			}
+			break;
+		case april::AK_M:
+			object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
+			object->setHeight(object->getHeight() + 128);
+			break;
+		case april::AK_D:
+			aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
+			break;
+		}
+		aprilui::onKeyDown(keyCode);
+	}
+
+	void onKeyUp(april::Key keyCode)
+	{
+		aprilui::onKeyUp(keyCode);
+	}
+
+	void onChar(unsigned int charCode)
+	{
+		aprilui::onChar(charCode);
+	}
+
+};
+
+class MouseDelegate : public april::MouseDelegate
+{
+	void onMouseDown(april::Key button)
+	{
+		aprilui::onMouseDown(button);
+	}
+
+	void onMouseUp(april::Key button)
+	{
+		aprilui::onMouseUp(button);
+	}
+
+	void onMouseMove()
+	{
+		aprilui::onMouseMove();
+	}
+
+	void onMouseScroll(float x, float y)
+	{
+		aprilui::onMouseScroll(x, y);
+	}
+
+};
+
+static UpdateDelegate* updateDelegate = NULL;
+static KeyboardDelegate* keyboardDelegate = NULL;
+static MouseDelegate* mouseDelegate = NULL;
 
 void april_init(const harray<hstr>& args)
 {
@@ -119,7 +165,6 @@ void april_init(const harray<hstr>& args)
 
 		CFURLRef url = CFBundleCopyBundleURL(CFBundleGetMainBundle());
 		CFStringRef path = CFURLCopyFileSystemPath(url, kCFURLPOSIXPathStyle);
-		
 		// let's hope chdir() will be happy with utf8 encoding
 		const char* cpath = CFStringGetCStringPtr(path, kCFStringEncodingUTF8);
 		char* cpath_alloc = NULL;
@@ -133,7 +178,7 @@ void april_init(const harray<hstr>& args)
 		else
 		{
 			// even though it didn't return NULL, we still want to slice off bundle name.
-			cpath_alloc = (char*)malloc(CFStringGetLength(path)+1);
+			cpath_alloc = (char*)malloc(CFStringGetLength(path) + 1);
 			strcpy(cpath_alloc, cpath);
 		}
 		// just in case / is appended to .app path for some reason
@@ -141,29 +186,32 @@ void april_init(const harray<hstr>& args)
 		{
 			cpath_alloc[CFStringGetLength(path) - 1] = 0;
 		}
-		
 		// replace pre-.app / with a null character, thus
 		// cutting off .app's name and getting parent of .app.
 		strrchr(cpath_alloc, '/')[0] = 0;
-							   
 		// change current dir using posix api
 		chdir(cpath_alloc);
-		
 		free(cpath_alloc); // even if null, still ok
 		CFRelease(path);
 		CFRelease(url);
 	}
 #endif
+	updateDelegate = new UpdateDelegate();
+	keyboardDelegate = new KeyboardDelegate();
+	mouseDelegate = new MouseDelegate();
 	try
 	{
+#if defined(_ANDROID) || defined(_IOS)
+		drawRect.setSize(april::getSystemInfo().displayResolution);
+#endif
 		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
 		april::createRenderSystem();
-		april::createWindow((int)viewport.w, (int)viewport.h, false, "demo_gui");
+		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "demo_gui");
 		atres::init();
 		aprilui::init();
-		april::window->setUpdateCallback(&update);
-		april::window->setMouseCallbacks(&aprilui::onMouseDown, &aprilui::onMouseUp, &aprilui::onMouseMove, &aprilui::onMouseScroll);
-		april::window->setKeyboardCallbacks(&onKeyDown, &aprilui::onKeyUp, &aprilui::onChar);
+		april::window->setUpdateDelegate(updateDelegate);
+		april::window->setKeyboardDelegate(keyboardDelegate);
+		april::window->setMouseDelegate(mouseDelegate);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setLocalization("en");
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
@@ -192,4 +240,10 @@ void april_destroy()
 	{
 		printf("%s\n", e.getErrorText().c_str());
 	}
+	delete updateDelegate;
+	updateDelegate = NULL;
+	delete keyboardDelegate;
+	keyboardDelegate = NULL;
+	delete mouseDelegate;
+	mouseDelegate = NULL;
 }

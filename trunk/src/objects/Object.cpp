@@ -555,7 +555,7 @@ namespace aprilui
 		return grect(0.0f, 0.0f, this->mRect.getSize()).isPointInside(this->transformToLocalSpace(position));
 	}
 
-	bool Object::onMouseDown(int button)
+	bool Object::onMouseDown(april::Key button)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
@@ -578,7 +578,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onMouseUp(int button)
+	bool Object::onMouseUp(april::Key button)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
@@ -633,7 +633,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onKeyDown(unsigned int keyCode)
+	bool Object::onKeyDown(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
@@ -651,7 +651,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onKeyUp(unsigned int keyCode)
+	bool Object::onKeyUp(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())

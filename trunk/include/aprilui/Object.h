@@ -16,6 +16,7 @@
 #define APRILUI_OBJECT_H
 
 #include <april/Color.h>
+#include <april/Keys.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
@@ -174,12 +175,12 @@ namespace aprilui
 		bool hasDynamicAnimation();
 		
 		// if a childs event returns true, event is not propagated to parents
-		virtual bool onMouseDown(int button);
-		virtual bool onMouseUp(int button);
+		virtual bool onMouseDown(april::Key button);
+		virtual bool onMouseUp(april::Key button);
 		virtual bool onMouseMove();
 		virtual bool onMouseScroll(float x, float y);
-		virtual bool onKeyDown(unsigned int keyCode);
-		virtual bool onKeyUp(unsigned int keyCode);
+		virtual bool onKeyDown(april::Key keyCode);
+		virtual bool onKeyUp(april::Key keyCode);
 		virtual bool onChar(unsigned int charCode);
 		virtual void cancelMouseDown();
 

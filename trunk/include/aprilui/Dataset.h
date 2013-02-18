@@ -91,12 +91,12 @@ namespace aprilui
 		void destroyObject(chstr name);
 		void destroyObject(Object* object);
 		
-		bool onMouseDown(int button);
-		bool onMouseUp(int button);
+		bool onMouseDown(april::Key button);
+		bool onMouseUp(april::Key button);
 		bool onMouseMove();
 		bool onMouseScroll(float x, float y);
-		bool onKeyDown(unsigned int keyCode);
-		bool onKeyUp(unsigned int keyCode);
+		bool onKeyDown(april::Key keyCode);
+		bool onKeyUp(april::Key keyCode);
 		bool onChar(unsigned int charCode);
 		
 		virtual Texture* getTexture(chstr name);

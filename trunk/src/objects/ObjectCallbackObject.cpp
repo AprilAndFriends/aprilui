@@ -48,7 +48,7 @@ namespace aprilui
 		Object::update(k);
 	}
 	
-	bool CallbackObject::onMouseDown(int button)
+	bool CallbackObject::onMouseDown(april::Key button)
 	{
 		if (Object::onMouseDown(button))
 		{
@@ -62,7 +62,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool CallbackObject::onMouseUp(int button)
+	bool CallbackObject::onMouseUp(april::Key button)
 	{
 		if (Object::onMouseUp(button))
 		{

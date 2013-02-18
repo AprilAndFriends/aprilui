@@ -284,7 +284,7 @@ namespace aprilui
 		return true;
 	}
 
-	bool ScrollArea::onMouseDown(int button)
+	bool ScrollArea::onMouseDown(april::Key button)
 	{
 		if (this->mAllowDrag)
 		{
@@ -299,7 +299,7 @@ namespace aprilui
 		return Object::onMouseDown(button);
 	}
 
-	bool ScrollArea::onMouseUp(int button)
+	bool ScrollArea::onMouseUp(april::Key button)
 	{
 		if (this->mAllowDrag)
 		{
