@@ -251,6 +251,10 @@ namespace aprilui
 					{
 						image->setBlendMode(april::ADD);
 					}
+					else if (mode == "subtract")
+					{
+						image->setBlendMode(april::SUBTRACT);
+					}
 					this->mImages[name] = image;
 					image->_setDataset(this);
 				}
