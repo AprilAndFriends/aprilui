@@ -180,7 +180,7 @@ namespace aprilui
 		bool dynamicLoad = node->pbool("dynamic_load", false);
 
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createTexture(locpath, aprilui::getForcedDynamicLoading() || dynamicLoad);
+		april::Texture* aprilTexture = april::rendersys->createTexture(locpath, !(aprilui::getForcedDynamicLoading() || dynamicLoad));
 		if (aprilTexture == NULL)
 		{
 			throw file_not_found(locpath);
