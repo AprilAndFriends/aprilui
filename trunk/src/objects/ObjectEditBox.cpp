@@ -329,6 +329,8 @@ namespace aprilui
 			case april::AK_RETURN:
 				this->triggerEvent("Submit", april::AK_RETURN);
 				break;
+			default:
+				break;
 			}
 		}
 		return false;
@@ -345,6 +347,8 @@ namespace aprilui
 		case april::AK_CONTROL:
 		case april::AK_MENU:
 			this->mCtrlMode = false;
+			break;
+		default:
 			break;
 		}
 		return false;
