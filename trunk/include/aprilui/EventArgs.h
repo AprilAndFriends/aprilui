@@ -16,6 +16,7 @@
 #define APRILUI_EVENT_ARGS_H
 
 #include <hltypes/hstring.h>
+#include <april/Keys.h>
 #include "apriluiExport.h"
 
 namespace aprilui
@@ -28,10 +29,10 @@ namespace aprilui
 		Object* object;
 		float x;
 		float y;
-		unsigned int keyCode;
+		april::Key keyCode;
 		hstr extra;
 		
-		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, unsigned int keyCode = 0, chstr extra = "");
+		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, april::Key keyCode = april::AK_NONE, chstr extra = "");
 		~EventArgs();
 
 	};
