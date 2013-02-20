@@ -12,7 +12,7 @@
 
 namespace aprilui
 {
-	EventArgs::EventArgs(Object* object, float x, float y, unsigned int keyCode, chstr extra)
+	EventArgs::EventArgs(Object* object, float x, float y, april::Key keyCode, chstr extra)
 	{
 		this->object = object;
 		this->x = x;
