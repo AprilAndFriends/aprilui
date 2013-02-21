@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.51
 /// 
 /// @section LICENSE
 /// 
@@ -182,6 +182,7 @@ namespace aprilui
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
 		hstr _makeLocalizedTextureName(chstr filename);
 		hstr _makeTextsPath();
+		bool _findTextEntry(chstr textKey, hstr* text);
 		
 		hstr _parseCompositeTextKey(chstr key);
 		bool _processCompositeTextKeyArgs(chstr argString, harray<hstr>& args);

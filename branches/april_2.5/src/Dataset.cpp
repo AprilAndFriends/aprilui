@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.51
 /// 
 /// @section LICENSE
 /// 
@@ -800,15 +800,40 @@ namespace aprilui
 		}
 		return image;
 	}
+
+	bool Dataset::_findTextEntry(chstr textKey, hstr* text)
+	{
+		int dot = textKey.find('.');
+		if (dot < 0)
+		{
+			if (!this->mTexts.has_key(textKey))
+			{
+				if (text != NULL)
+				{
+					*text = "ERROR: Text '" + textKey + "' not found!";
+				}
+				return false;
+			}
+			if (text != NULL)
+			{
+				*text = this->mTexts[textKey];
+			}
+			return true;
+		}
+		Dataset* dataset = aprilui::getDatasetByName(textKey(0, dot));
+		return dataset->_findTextEntry(textKey(dot + 1, 100), text);
+	}
 	
 	hstr Dataset::getTextEntry(chstr textKey)
 	{
-		return this->mTexts.try_get_by_key(textKey, "");
+		hstr text;
+		this->_findTextEntry(textKey, &text);
+		return text;
 	}
 	
 	bool Dataset::hasTextEntry(chstr textKey)
 	{
-		return this->mTexts.has_key(textKey);
+		return this->_findTextEntry(textKey, NULL);
 	}
 	
 	hstr Dataset::getText(chstr compositeTextKey)
