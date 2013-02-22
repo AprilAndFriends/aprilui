@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Textures>{% load hdscales %}
 
-    <Texture filename="{{texture.trimmedName}}" dynamic_load="1">{% for sprite in allSprites %}
+	<Texture filename="{{texture.trimmedName}}" dynamic_load="1">{% for sprite in allSprites %}
 		<Image name="{{sprite.trimmedName}}" x="{{sprite.frameRect.x|hdscales}}" y="{{sprite.frameRect.y|hdscales}}" w="{{sprite.frameRect.width|hdscales}}" h="{{sprite.frameRect.height|hdscales}}"{% if sprite.rotated %} vertical="1"{% endif %}/>{% endfor %}
-    </Texture>
+	</Texture>
 	
 </Textures>
