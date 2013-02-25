@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -66,6 +66,10 @@ namespace aprilui
 		void setBackgroundColor(chstr value) { this->mBackgroundColor.set(value); }
 		
 		virtual void notifyEvent(chstr name, void* params);
+		// TODO - this needs to be seriously refactored
+		virtual bool triggerEvent(chstr name, unsigned int keyCode = 0, chstr extra = "") = 0;
+		// TODO - this needs to be seriously refactored
+		virtual bool triggerEvent(chstr name, float x, float y, unsigned int keyCode = 0, chstr extra = "") = 0;
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		

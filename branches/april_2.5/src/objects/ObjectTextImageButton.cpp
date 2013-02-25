@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -88,10 +88,20 @@ namespace aprilui
 	
 	void TextImageButton::notifyEvent(chstr name, void* params)
 	{
-		ImageButton::notifyEvent(name, params);
 		LabelBase::notifyEvent(name, params);
+		ImageButton::notifyEvent(name, params);
 	}
 	
+	bool TextImageButton::triggerEvent(chstr name, unsigned int keyCode, chstr extra)
+	{
+		return ImageButton::triggerEvent(name, keyCode, extra);
+	}
+
+	bool TextImageButton::triggerEvent(chstr name, float x, float y, unsigned int keyCode, chstr extra)
+	{
+		return ImageButton::triggerEvent(name, x, y, keyCode, extra);
+	}
+
 	hstr TextImageButton::getProperty(chstr name, bool* propertyExists)
 	{
 		if (propertyExists != NULL)
