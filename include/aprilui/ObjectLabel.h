@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -38,9 +38,13 @@ namespace aprilui
 		bool onMouseUp(int button);
 
 		void notifyEvent(chstr name, void* params);
+		// TODO - this needs to be seriously refactored
+		bool triggerEvent(chstr name, unsigned int keyCode = 0, chstr extra = "");
+		// TODO - this needs to be seriously refactored
+		bool triggerEvent(chstr name, float x, float y, unsigned int keyCode = 0, chstr extra = "");
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
-		
+
 	protected:
 		void OnDraw();
 		
