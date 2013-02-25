@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -15,6 +15,7 @@
 #ifndef APRILUI_LABEL_H
 #define APRILUI_LABEL_H
 
+#include <april/Keys.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
@@ -38,9 +39,13 @@ namespace aprilui
 		bool onMouseUp(april::Key button);
 
 		void notifyEvent(chstr name, void* params);
+		// TODO - this needs to be seriously refactored
+		bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
+		// TODO - this needs to be seriously refactored
+		bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
-		
+
 	protected:
 		void OnDraw();
 		

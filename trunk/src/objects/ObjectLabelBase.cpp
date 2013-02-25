@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -247,25 +247,35 @@ namespace aprilui
 	
 	void LabelBase::setText(chstr value)
 	{
+		bool changed = (this->mText != value);
 		this->mText = value;
 		this->mTextKey = "";
+		if (changed)
+		{
+			this->triggerEvent("onTextChanged");
+		}
 	}
 
 	void LabelBase::setTextKey(chstr value)
 	{
-		hstr textKey = value; // because value is a chstr which could reference mTextKey
-		this->setText(this->getDataset()->getText(textKey));
-		this->mTextKey = textKey;
+		bool changed = (this->mTextKey != value);
+		hstr newTextKey = value; // because value is a chstr which could reference mTextKey
+		this->setText(this->getDataset()->getText(newTextKey));
+		this->mTextKey = newTextKey;
+		if (changed)
+		{
+			this->triggerEvent("onTextKeyChanged");
+		}
 	}
 
 	bool LabelBase::trySetTextKey(chstr textKey)
 	{
 		if (this->mTextKey != textKey)
 		{
-			// using c/p code because of performance reasons
 			hstr newTextKey = textKey; // because value is a chstr which could reference mTextKey
 			this->setText(this->getDataset()->getText(newTextKey));
 			this->mTextKey = newTextKey;
+			this->triggerEvent("onTextKeyChanged");
 			return true;
 		}
 		return false;
