@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -16,6 +16,7 @@
 #define APRILUI_LABEL_BASE_H
 
 #include <april/Color.h>
+#include <april/Keys.h>
 #include <april/RenderSystem.h>
 #include <atres/atres.h>
 #include <gtypes/Rectangle.h>
@@ -66,6 +67,10 @@ namespace aprilui
 		void setBackgroundColor(chstr value) { this->mBackgroundColor.set(value); }
 		
 		virtual void notifyEvent(chstr name, void* params);
+		// TODO - this needs to be seriously refactored
+		virtual bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "") = 0;
+		// TODO - this needs to be seriously refactored
+		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "") = 0;
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		

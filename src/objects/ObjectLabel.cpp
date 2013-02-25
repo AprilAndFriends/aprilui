@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.52
 /// 
 /// @section LICENSE
 /// 
@@ -52,16 +52,20 @@ namespace aprilui
 
 	void Label::notifyEvent(chstr name, void* params)
 	{
-		if (name == "onLocalizationChanged")
-		{
-			if (this->mTextKey != "")
-			{
-				this->setTextKey(this->mTextKey);
-			}
-		}
+		LabelBase::notifyEvent(name, params);
 		Object::notifyEvent(name, params);
 	}
-	
+
+	bool Label::triggerEvent(chstr name, april::Key keyCode, chstr extra)
+	{
+		return Object::triggerEvent(name, keyCode, extra);
+	}
+
+	bool Label::triggerEvent(chstr name, float x, float y, april::Key keyCode, chstr extra)
+	{
+		return Object::triggerEvent(name, x, y, keyCode, extra);
+	}
+
 	bool Label::onMouseDown(april::Key button)
 	{
 		if (Object::onMouseDown(button))
