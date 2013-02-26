@@ -22,7 +22,7 @@
         <key>dataFormat</key>
         <string>aprilui-basic</string>
         <key>textureFileName</key>
-        <filename>C:/aprilui.png</filename>
+        <filename>C:/aprilui-basic.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>C:/aprilui.tex</filename>
+        <filename>C:/aprilui-basic.tex</filename>
         <key>mainExtension</key>
         <string></string>
         <key>forceIdenticalLayout</key>

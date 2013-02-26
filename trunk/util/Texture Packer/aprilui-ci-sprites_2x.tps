@@ -20,9 +20,9 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>aprilui-ci-sprites</string>
+        <string>aprilui-ci-sprites-2x</string>
         <key>textureFileName</key>
-        <filename>C:/aprilui-ci-sprites.png</filename>
+        <filename>C:/aprilui-ci-sprites_2x.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -111,7 +111,7 @@
             <enum type="AndEngine::MagFilter">MagLinear</enum>
         </struct>
         <key>dataFileName</key>
-        <filename>C:/aprilui-ci-sprites.tex</filename>
+        <filename>C:/aprilui-ci-sprites_2x.tex</filename>
         <key>mainExtension</key>
         <string></string>
         <key>forceIdenticalLayout</key>
