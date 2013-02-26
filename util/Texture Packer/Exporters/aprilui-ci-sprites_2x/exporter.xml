@@ -1,9 +1,9 @@
 <exporter version="1.0">
 	<!-- identifier of the exporter -->
-	<name>aprilui-ci-sprites</name>
+	<name>aprilui-ci-sprites-2x</name>
 
 	<!-- display name of the exporter for the combo box -->
-	<displayName>AprilUI Composite Image Sprites</displayName>
+	<displayName>AprilUI Composite Image Sprites (2x)</displayName>
 
 	<!-- description of the exporter -->
 	<description>Exports into AprilUI .tex format.</description>

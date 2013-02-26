@@ -1,9 +1,9 @@
 <exporter version="1.0">
 	<!-- identifier of the exporter -->
-	<name>aprilui-2x</name>
+	<name>aprilui-basic-2x</name>
 
 	<!-- display name of the exporter for the combo box -->
-	<displayName>AprilUI 2x Base Graphics</displayName>
+	<displayName>AprilUI Basic (2x)</displayName>
 
 	<!-- description of the exporter -->
 	<description>Exports into AprilUI .tex format.</description>

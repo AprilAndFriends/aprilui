@@ -40,7 +40,7 @@
             </struct>
         </struct>
         <key>shapePadding</key>
-        <uint>4</uint>
+        <uint>2</uint>
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
@@ -54,9 +54,9 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>2048</int>
+            <int>1024</int>
             <key>height</key>
-            <int>2048</int>
+            <int>1024</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -146,8 +146,8 @@
         <key>replaceList</key>
         <array/>
         <key>commonDivisorX</key>
-        <uint>4</uint>
+        <uint>2</uint>
         <key>commonDivisorY</key>
-        <uint>4</uint>
+        <uint>2</uint>
     </struct>
 </data>
