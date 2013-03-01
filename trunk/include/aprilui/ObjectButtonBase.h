@@ -15,6 +15,7 @@
 #ifndef APRILUI_BUTTON_BASE_H
 #define APRILUI_BUTTON_BASE_H
 
+#include <april/Keys.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
