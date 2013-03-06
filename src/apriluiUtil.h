@@ -15,12 +15,13 @@
 #define APRILUI_UTIL_H
 
 #include <hltypes/hstring.h>
-#include "apriluiExport.h"
 
-#define APRILUI_E_TOLERANCE 0.0001f
+#include "apriluiExport.h"
 
 namespace aprilui
 {
+	static const float eTolerance = 0.0001f;
+
 	apriluiFnExport hstr generateName(chstr prefix);
 	
 }

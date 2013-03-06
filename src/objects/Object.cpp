@@ -442,7 +442,7 @@ namespace aprilui
 
 	void Object::draw()
 	{
-		if (!this->isVisible() || heqf(this->mScale.x, 0.0f, APRILUI_E_TOLERANCE) || heqf(this->mScale.y, 0.0f, APRILUI_E_TOLERANCE))
+		if (!this->isVisible() || heqf(this->mScale.x, 0.0f, aprilui::eTolerance) || heqf(this->mScale.y, 0.0f, aprilui::eTolerance))
 		{
 			return;
 		}
@@ -534,7 +534,7 @@ namespace aprilui
 	
 	bool Object::isPointInside(gvec2 position)
 	{
-		if (heqf(this->mScale.x, 0.0f, APRILUI_E_TOLERANCE) || heqf(this->mScale.y, 0.0f, APRILUI_E_TOLERANCE))
+		if (heqf(this->mScale.x, 0.0f, aprilui::eTolerance) || heqf(this->mScale.y, 0.0f, aprilui::eTolerance))
 		{
 			return false;
 		}
