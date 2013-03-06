@@ -46,7 +46,7 @@
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
 				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
 				<Object type="Label" angle="-10" name="label" text="I [b:00FF00]am[/b] a [s 0000FF]label[/s]." effect="border:FF0000" x="0" y="64" w="192" h="32"/>
-				<Object type="TextButton" angle="-10" name="textButton" text="I am a button." hover_text_color="BFBFBF" pushed_text_color="7F7F7F" x="0" y="128" w="192" h="32"/>
+				<Object type="TextImageButton" angle="-10" name="textButton" text="I am a button." hover_text_color="BFBFBF" pushed_text_color="7F7F7F" x="0" y="128" w="192" h="32"/>
 			</Object>
 			<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64">
 				<Animator type="AlphaChanger" function="sine" periods="-1" amplitude="64" speed="1.05" offset="191"/>

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.51
+/// @version 2.53
 /// 
 /// @section LICENSE
 /// 
@@ -184,13 +184,15 @@ namespace aprilui
 		hstr _makeTextsPath();
 		bool _findTextEntry(chstr textKey, hstr* text);
 		
-		hstr _parseCompositeTextKey(chstr key);
-		bool _processCompositeTextKeyArgs(chstr argString, harray<hstr>& args);
-		bool _preprocessCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& preprocessedFormat, harray<hstr>& preprocessedArgs);
-		bool _processCompositeTextKeyFormat(chstr format, harray<hstr> args, hstr& result);
-		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
-		bool _getCompositeTextKeyFormatIndexes(chstr format, harray<int>& indexes);
+		typedef std::basic_string<unsigned int> ustr;
 		
+		hstr _parseCompositeTextKey(chstr key);
+		bool _processCompositeTextKeyArgs(ustr argString, harray<ustr>& args);
+		bool _preprocessCompositeTextKeyFormat(ustr format, harray<ustr> args, ustr& preprocessedFormat, harray<ustr>& preprocessedArgs);
+		bool _processCompositeTextKeyFormat(ustr format, harray<ustr> args, hstr& result);
+		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
+		bool _getCompositeTextKeyFormatIndexes(ustr format, harray<int>& indexes);
+		harray<ustr> _getArgEntries(ustr string);
 		
 	};
 
