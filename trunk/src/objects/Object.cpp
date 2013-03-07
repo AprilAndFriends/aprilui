@@ -255,7 +255,7 @@ namespace aprilui
 				}
 				else
 				{
-					(*it)->setX((*it)->getX() + difference / 2);
+					(*it)->setX((*it)->getX() + difference * 0.5f);
 				}
 			}
 			else if ((*it)->isAnchorRight())
@@ -270,7 +270,7 @@ namespace aprilui
 					(*it)->setHeight(height + differenceAlt);
 					if ((*it)->isAnchorTop() == (*it)->isAnchorBottom())
 					{
-						(*it)->setY((*it)->getY() - differenceAlt / 2);
+						(*it)->setY((*it)->getY() - differenceAlt * 0.5f);
 					}
 					else if ((*it)->isAnchorBottom())
 					{
@@ -307,7 +307,7 @@ namespace aprilui
 				}
 				else
 				{
-					(*it)->setY((*it)->getY() + difference / 2);
+					(*it)->setY((*it)->getY() + difference * 0.5f);
 				}
 			}
 			else if ((*it)->isAnchorBottom())
@@ -322,7 +322,7 @@ namespace aprilui
 					(*it)->setWidth(width + differenceAlt);
 					if ((*it)->isAnchorLeft() == (*it)->isAnchorRight())
 					{
-						(*it)->setX((*it)->getX() - differenceAlt / 2);
+						(*it)->setX((*it)->getX() - differenceAlt * 0.5f);
 					}
 					else if ((*it)->isAnchorRight())
 					{
