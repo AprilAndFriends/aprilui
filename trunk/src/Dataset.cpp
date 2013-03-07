@@ -983,6 +983,12 @@ namespace aprilui
 		ustr chars = key.u_str();
 		if (chars.size() == 0 || chars[0] != '{')
 		{
+			if ((int)chars.find_first_of('{') >= 0 || (int)chars.find_first_of('}') >= 0)
+			{
+				hstr text = hsprintf("Malformed formatted text key '%s'!", key.c_str());
+				hlog::error(aprilui::logTag, text);
+				return text;
+			}
 			if (!this->hasTextEntry(key))
 			{
 				hlog::warnf(aprilui::logTag, "Text key '%s' does not exist!", key.c_str());
