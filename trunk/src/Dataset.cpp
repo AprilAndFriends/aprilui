@@ -49,7 +49,7 @@ namespace aprilui
 		this->mNullImage = NULL;
 		if (this->mName == "")
 		{
-			this->mName = this->mFilename.rsplit(".", 1, false).pop_first().rsplit("/", 1, false).pop_last();
+			this->mName = this->mFilename.rsplit(".", 1, false).remove_first().rsplit("/", 1, false).remove_last();
 		}
 		this->mLoaded = false;
 		aprilui::_registerDataset(this->mName, this);
@@ -73,7 +73,7 @@ namespace aprilui
 	{
 		if (name != "" && useNameBasePath)
 		{
-			hstr extension = "." + filename.rsplit(".", -1, false).pop_last();
+			hstr extension = "." + filename.rsplit(".", -1, false).remove_last();
 			if (filename.ends_with(name + extension))
 			{
 				return normalize_path(filename.replace(name + extension, ""));
@@ -1119,7 +1119,7 @@ namespace aprilui
 				}
 				preprocessedFormat += format.substr(0, index + 2);
 				format = format.substr(index + 2, format.size() - index - 2);
-				preprocessedArgs += args.pop_first();
+				preprocessedArgs += args.remove_first();
 				continue;
 			}
 			if (format[index + 1] == 'f')
@@ -1129,7 +1129,7 @@ namespace aprilui
 					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
-				arg = args.pop_first();
+				arg = args.remove_first();
 				preprocessedFormat += format.substr(0, index) + arg;
 				format = format.substr(index + 2, format.size() - index - 2);
 				if (!this->_getCompositeTextKeyFormatIndexes(arg, indexes))
@@ -1141,7 +1141,7 @@ namespace aprilui
 					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
-				preprocessedArgs += args.pop_first(indexes.size());
+				preprocessedArgs += args.remove_first(indexes.size());
 			}
 		}
 		preprocessedArgs += args; // remaining args
@@ -1171,7 +1171,7 @@ namespace aprilui
 		foreach (int, it, indexes)
 		{
 			preResult += format.substr(0, (*it));
-			preResult += args.pop_first();
+			preResult += args.remove_first();
 			format = format.substr((*it) + 2, format.size() - (*it) - 2);
 		}
 		preResult += format;
