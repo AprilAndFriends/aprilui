@@ -1112,11 +1112,11 @@ namespace aprilui
 		gvec2 max;
 		gvec2 min;
 		harray<gvec2> corners = this->getDerivedCorners(overrideRoot);
-		min = max = corners.pop_first(); // guaranteed to return 4 corner points previously
+		min = max = corners.remove_first(); // guaranteed to return 4 corner points previously
 		gvec2 corner;
 		while (corners.size() > 0)
 		{
-			corner = corners.pop_first();
+			corner = corners.remove_first();
 			max.x = hmax(max.x, corner.x);
 			max.y = hmax(max.y, corner.y);
 			min.x = hmin(min.x, corner.x);
