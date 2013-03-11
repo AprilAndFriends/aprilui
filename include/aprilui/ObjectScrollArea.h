@@ -63,6 +63,7 @@ namespace aprilui
 		float getScrollOffsetY();
 		void setScrollOffsetY(float value);
 
+		void OnDraw();
 		void update(float k);
 
 		void notifyEvent(chstr name, void* params);
