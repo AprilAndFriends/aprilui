@@ -134,6 +134,17 @@ namespace aprilui
 		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
 	}
 
+	void ScrollArea::OnDraw()
+	{
+		Object::OnDraw();
+		if (aprilui::isDebugEnabled())
+		{
+			grect rect = this->_getDrawRect();
+			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Green, 32));
+			april::rendersys->drawRect(rect, april::Color(april::Color::Yellow, 64));
+		}
+	}
+
 	void ScrollArea::update(float k)
 	{
 		Object::update(k);
