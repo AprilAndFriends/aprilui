@@ -47,6 +47,8 @@ namespace aprilui
 		// TODO - this needs to be seriously refactored
 		bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
 		// TODO - this needs to be seriously refactored
+		bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "");
+		// TODO - this needs to be seriously refactored
 		bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);

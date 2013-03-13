@@ -555,7 +555,7 @@ namespace aprilui
 		return grect(0.0f, 0.0f, this->mRect.getSize()).isPointInside(this->transformToLocalSpace(position));
 	}
 
-	bool Object::onMouseDown(april::Key button)
+	bool Object::onMouseDown(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
@@ -570,7 +570,7 @@ namespace aprilui
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
-				(*it)->isDerivedEnabled() && (*it)->onMouseDown(button))
+				(*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
 			{
 				return true;
 			}
@@ -578,7 +578,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onMouseUp(april::Key button)
+	bool Object::onMouseUp(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
@@ -589,7 +589,7 @@ namespace aprilui
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
-				(*it)->isDerivedEnabled() && (*it)->onMouseUp(button))
+				(*it)->isDerivedEnabled() && (*it)->onMouseUp(keyCode))
 			{
 				return true;
 			}
@@ -687,6 +687,42 @@ namespace aprilui
 		return false;
 	}
 
+	bool Object::onButtonDown(april::Button buttonCode)
+	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
+		foreach_r (Object*, it, this->mChildren)
+		{
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonDown(buttonCode))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool Object::onButtonUp(april::Button buttonCode)
+	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
+		foreach_r (Object*, it, this->mChildren)
+		{
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonUp(buttonCode))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	void Object::cancelMouseDown()
 	{
 		foreach (Object*, it, this->mChildren)
@@ -729,6 +765,19 @@ namespace aprilui
 		{
 			gvec2 cursorPosition = aprilui::getCursorPosition();
 			EventArgs args(this, cursorPosition.x, cursorPosition.y, keyCode, extra);
+			this->mEvents[name]->execute(&args);
+			return true;
+		}
+		return false;
+	}
+
+	// TODO - this needs to be seriously refactored
+	bool Object::triggerEvent(chstr name, april::Button buttonCode, chstr extra)
+	{
+		if (this->mEvents.has_key(name))
+		{
+			gvec2 cursorPosition = aprilui::getCursorPosition();
+			EventArgs args(this, cursorPosition.x, cursorPosition.y, buttonCode, extra);
 			this->mEvents[name]->execute(&args);
 			return true;
 		}

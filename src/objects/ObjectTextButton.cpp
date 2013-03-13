@@ -165,30 +165,30 @@ namespace aprilui
 		return Label::isCursorInside();
 	}
 
-	bool TextButton::onMouseDown(april::Key button)
+	bool TextButton::onMouseDown(april::Key keyCode)
 	{
-		if (Label::onMouseDown(button))
+		if (Label::onMouseDown(keyCode))
 		{
 			return true;
 		}
-		bool result = ButtonBase::onMouseDown(button);
+		bool result = ButtonBase::onMouseDown(keyCode);
 		if (result)
 		{
-			this->triggerEvent("MouseDown", button);
+			this->triggerEvent("MouseDown", keyCode);
 		}
 		return result;
 	}
 
-	bool TextButton::onMouseUp(april::Key button)
+	bool TextButton::onMouseUp(april::Key keyCode)
 	{
-		if (Label::onMouseUp(button))
+		if (Label::onMouseUp(keyCode))
 		{
 			return true;
 		}
-		bool result = ButtonBase::onMouseUp(button);
+		bool result = ButtonBase::onMouseUp(keyCode);
 		if (result)
 		{
-			this->triggerEvent("Click", button);
+			this->triggerEvent("Click", keyCode);
 		}
 		return result;
 	}
@@ -196,6 +196,39 @@ namespace aprilui
 	bool TextButton::onMouseMove()
 	{
 		return (Label::onMouseMove() || ButtonBase::onMouseMove());
+	}
+
+	bool TextButton::onButtonDown(april::Button buttonCode)
+	{
+		if (Label::onButtonDown(buttonCode))
+		{
+			return true;
+		}
+		bool result = ButtonBase::onButtonDown(buttonCode);
+		if (result)
+		{
+			this->triggerEvent("ButtonDown", buttonCode);
+		}
+		return result;
+	}
+
+	bool TextButton::onButtonUp(april::Button buttonCode)
+	{
+		if (Label::onButtonUp(buttonCode))
+		{
+			return true;
+		}
+		bool click = ButtonBase::onButtonUp(buttonCode);
+		bool up = false;
+		if (this->mHovered)
+		{
+			up = this->triggerEvent("ButtonUp", buttonCode);
+		}
+		if (click)
+		{
+			this->triggerEvent("ButtonClick", buttonCode);
+		}
+		return (click || up);
 	}
 
 	void TextButton::cancelMouseDown()

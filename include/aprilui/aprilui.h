@@ -86,8 +86,8 @@ namespace aprilui
 	apriluiFnExport float getTextureExtensionScale(chstr extension);
 	apriluiFnExport float findTextureExtensionScale(chstr filename);
 	
-	apriluiFnExport void onMouseDown(april::Key button);
-	apriluiFnExport void onMouseUp(april::Key button);
+	apriluiFnExport void onMouseDown(april::Key keyCode);
+	apriluiFnExport void onMouseUp(april::Key keyCode);
 	apriluiFnExport void onMouseMove();
 	apriluiFnExport void onMouseScroll(float x, float y);
 	apriluiFnExport void onKeyDown(april::Key keyCode);

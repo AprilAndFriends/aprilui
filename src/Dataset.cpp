@@ -872,14 +872,14 @@ namespace aprilui
 		}
 	}
 	
-	bool Dataset::onMouseDown(april::Key button)
+	bool Dataset::onMouseDown(april::Key keyCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onMouseDown(button));
+		return (this->mRoot != NULL && this->mRoot->onMouseDown(keyCode));
 	}
 	
-	bool Dataset::onMouseUp(april::Key button)
+	bool Dataset::onMouseUp(april::Key keyCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onMouseUp(button));
+		return (this->mRoot != NULL && this->mRoot->onMouseUp(keyCode));
 	}
 	
 	bool Dataset::onMouseMove()

@@ -48,29 +48,29 @@ namespace aprilui
 		Object::update(k);
 	}
 	
-	bool CallbackObject::onMouseDown(april::Key button)
+	bool CallbackObject::onMouseDown(april::Key keyCode)
 	{
-		if (Object::onMouseDown(button))
+		if (Object::onMouseDown(keyCode))
 		{
 			return true;
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent("MouseDown", button);
+			this->triggerEvent("MouseDown", keyCode);
 			return true;
 		}
 		return false;
 	}
 
-	bool CallbackObject::onMouseUp(april::Key button)
+	bool CallbackObject::onMouseUp(april::Key keyCode)
 	{
-		if (Object::onMouseUp(button))
+		if (Object::onMouseUp(keyCode))
 		{
 			return true;
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent("Click", button);
+			this->triggerEvent("Click", keyCode);
 			return true;
 		}
 		return false;

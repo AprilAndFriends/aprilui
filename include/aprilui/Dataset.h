@@ -91,8 +91,8 @@ namespace aprilui
 		void destroyObject(chstr name);
 		void destroyObject(Object* object);
 		
-		bool onMouseDown(april::Key button);
-		bool onMouseUp(april::Key button);
+		bool onMouseDown(april::Key keyCode);
+		bool onMouseUp(april::Key keyCode);
 		bool onMouseMove();
 		bool onMouseScroll(float x, float y);
 		bool onKeyDown(april::Key keyCode);

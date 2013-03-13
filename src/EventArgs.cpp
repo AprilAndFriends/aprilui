@@ -18,6 +18,17 @@ namespace aprilui
 		this->x = x;
 		this->y = y;
 		this->keyCode = keyCode;
+		this->buttonCode = april::AB_NONE;
+		this->extra = extra;
+	}
+
+	EventArgs::EventArgs(Object* object, float x, float y, april::Button buttonCode, chstr extra)
+	{
+		this->object = object;
+		this->x = x;
+		this->y = y;
+		this->keyCode = april::AK_NONE;
+		this->buttonCode = buttonCode;
 		this->extra = extra;
 	}
 

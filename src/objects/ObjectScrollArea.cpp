@@ -9,6 +9,7 @@
 
 #include <april/Color.h>
 #include <april/RenderSystem.h>
+#include <april/Keys.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
@@ -295,33 +296,33 @@ namespace aprilui
 		return true;
 	}
 
-	bool ScrollArea::onMouseDown(april::Key button)
+	bool ScrollArea::onMouseDown(april::Key keyCode)
 	{
 		if (this->mAllowDrag)
 		{
 			this->mDragging = true;
-			bool result = ButtonBase::onMouseDown(button);
+			bool result = ButtonBase::onMouseDown(keyCode);
 			this->mDragging = false;
 			if (result)
 			{
 				this->_mClickPosition = aprilui::getCursorPosition();
 			}
 		}
-		return Object::onMouseDown(button);
+		return Object::onMouseDown(keyCode);
 	}
 
-	bool ScrollArea::onMouseUp(april::Key button)
+	bool ScrollArea::onMouseUp(april::Key keyCode)
 	{
 		if (this->mAllowDrag)
 		{
 			this->mDragging = false;
 			this->_adjustDragSpeed();
-			if (ButtonBase::onMouseUp(button))
+			if (ButtonBase::onMouseUp(keyCode))
 			{
 				return true;
 			}
 		}
-		return Object::onMouseUp(button);
+		return Object::onMouseUp(keyCode);
 	}
 	
 	bool ScrollArea::onMouseMove()
@@ -337,6 +338,16 @@ namespace aprilui
 		return false;
 	}
 
+	bool ScrollArea::onButtonDown(april::Button buttonCode)
+	{
+		return Object::onButtonDown(buttonCode);
+	}
+
+	bool ScrollArea::onButtonUp(april::Button buttonCode)
+	{
+		return Object::onButtonUp(buttonCode);
+	}
+	
 	void ScrollArea::_adjustDragSpeed()
 	{
 		this->_mLastScrollOffset = this->getScrollOffset();

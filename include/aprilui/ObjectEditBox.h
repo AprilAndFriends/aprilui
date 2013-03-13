@@ -52,8 +52,8 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
-		bool onMouseDown(april::Key button);
-		bool onMouseUp(april::Key button);
+		bool onMouseDown(april::Key keyCode);
+		bool onMouseUp(april::Key keyCode);
 		bool onKeyDown(april::Key keyCode);
 		bool onKeyUp(april::Key keyCode);
 		bool onChar(unsigned int charCode);

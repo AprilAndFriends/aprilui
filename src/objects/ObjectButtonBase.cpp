@@ -18,7 +18,8 @@
 
 namespace aprilui
 {
-	static harray<unsigned char> allowedButtons;
+	static harray<april::Key> allowedKeys;
+	static harray<april::Button> allowedButtons;
 
 	ButtonBase::ButtonBase()
 	{
@@ -60,9 +61,9 @@ namespace aprilui
 		return (child != NULL && child == dynamic_cast<Object*>(this));
 	}
 
-	bool ButtonBase::onMouseDown(april::Key button)
+	bool ButtonBase::onMouseDown(april::Key keyCode)
 	{
-		if (!allowedButtons.contains(button))
+		if (!allowedKeys.contains(keyCode))
 		{
 			return false;
 		}
@@ -75,9 +76,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool ButtonBase::onMouseUp(april::Key button)
+	bool ButtonBase::onMouseUp(april::Key keyCode)
 	{
-		if (!allowedButtons.contains(button))
+		if (!allowedKeys.contains(keyCode))
 		{
 			return false;
 		}
@@ -94,6 +95,37 @@ namespace aprilui
 	bool ButtonBase::onMouseMove()
 	{
 		this->mHovered = this->_checkHover();
+		return false;
+	}
+
+	bool ButtonBase::onButtonDown(april::Button buttonCode)
+	{
+		if (!allowedButtons.contains(buttonCode))
+		{
+			return false;
+		}
+		this->mHovered = this->_checkHover();
+		if (this->mHovered)
+		{
+			this->mPushed = true;
+			return true;
+		}
+		return false;
+	}
+
+	bool ButtonBase::onButtonUp(april::Button buttonCode)
+	{
+		if (!allowedButtons.contains(buttonCode))
+		{
+			return false;
+		}
+		this->mHovered = this->_checkHover();
+		if (this->mPushed && this->mHovered)
+		{
+			this->mPushed = false;
+			return true;
+		}
+		this->mPushed = false;
 		return false;
 	}
 
@@ -117,7 +149,12 @@ namespace aprilui
 		return false;
 	}
 	
-	void ButtonBase::setAllowedButtons(harray<unsigned char> buttons)
+	void ButtonBase::setAllowedKeys(harray<april::Key> keys)
+	{
+		allowedKeys = keys;
+	}
+	
+	void ButtonBase::setAllowedButtons(harray<april::Button> buttons)
 	{
 		allowedButtons = buttons;
 	}
