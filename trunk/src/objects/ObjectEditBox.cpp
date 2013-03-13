@@ -258,9 +258,9 @@ namespace aprilui
 		Label::notifyEvent(name, params);
 	}
 	
-	bool EditBox::onMouseDown(april::Key button)
+	bool EditBox::onMouseDown(april::Key keyCode)
 	{
-		if (Object::onMouseDown(button))
+		if (Object::onMouseDown(keyCode))
 		{
 			return true;
 		}
@@ -272,9 +272,9 @@ namespace aprilui
 		return false;
 	}
 
-	bool EditBox::onMouseUp(april::Key button)
+	bool EditBox::onMouseUp(april::Key keyCode)
 	{
-		if (Object::onMouseUp(button))
+		if (Object::onMouseUp(keyCode))
 		{
 			return true;
 		}
@@ -284,7 +284,7 @@ namespace aprilui
 			this->setCursorIndexAt(position.x, position.y);
 			this->setFocused(true);
 			this->mPushed = false;
-			this->triggerEvent("Click", button);
+			this->triggerEvent("Click", keyCode);
 			return true;
 		}
 		this->mPushed = false;

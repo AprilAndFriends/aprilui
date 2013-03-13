@@ -33,8 +33,8 @@ namespace aprilui
 		
 		void OnDraw();
 
-		bool onMouseDown(april::Key button);
-		bool onMouseUp(april::Key button);
+		bool onMouseDown(april::Key keyCode);
+		bool onMouseUp(april::Key keyCode);
 		
 	};
 }

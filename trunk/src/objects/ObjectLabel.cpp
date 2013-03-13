@@ -61,35 +61,40 @@ namespace aprilui
 		return Object::triggerEvent(name, keyCode, extra);
 	}
 
+	bool Label::triggerEvent(chstr name, april::Button buttonCode, chstr extra)
+	{
+		return Object::triggerEvent(name, buttonCode, extra);
+	}
+
 	bool Label::triggerEvent(chstr name, float x, float y, april::Key keyCode, chstr extra)
 	{
 		return Object::triggerEvent(name, x, y, keyCode, extra);
 	}
 
-	bool Label::onMouseDown(april::Key button)
+	bool Label::onMouseDown(april::Key keyCode)
 	{
-		if (Object::onMouseDown(button))
+		if (Object::onMouseDown(keyCode))
 		{
 			return true;
 		}
 		if (isCursorInside())
 		{
-			this->triggerEvent("MouseDown", button);
+			this->triggerEvent("MouseDown", keyCode);
 			return true;
 		}
 		return false;
 	}
 	
-	bool Label::onMouseUp(april::Key button)
+	bool Label::onMouseUp(april::Key keyCode)
 	{
-		if (Object::onMouseUp(button))
+		if (Object::onMouseUp(keyCode))
 		{
 			return true;
 		}
 		if (this->isCursorInside())
 		{
 			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
-			this->triggerEvent("Click", button);
+			this->triggerEvent("Click", keyCode);
 			return true;
 		}
 		return false;

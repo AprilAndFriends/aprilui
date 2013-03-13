@@ -52,9 +52,9 @@ namespace aprilui
 		this->mValue = hclamp(value, 0.0f, 1.0f);
 	}
 	
-	bool Slider::onMouseDown(april::Key button)
+	bool Slider::onMouseDown(april::Key keyCode)
 	{
-		if (ImageBox::onMouseDown(button))
+		if (ImageBox::onMouseDown(keyCode))
 		{
 			return true;
 		}
@@ -63,15 +63,15 @@ namespace aprilui
 			this->mPushed = true;
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
 			this->setValue(position.x / (this->mRect.w - 4));
-			this->triggerEvent("Set", button);
+			this->triggerEvent("Set", keyCode);
 			return true;
 		}
 		return false;
 	}
 	
-	bool Slider::onMouseUp(april::Key button)
+	bool Slider::onMouseUp(april::Key keyCode)
 	{
-		if (ImageBox::onMouseUp(button))
+		if (ImageBox::onMouseUp(keyCode))
 		{
 			return true;
 		}

@@ -20,7 +20,6 @@
 
 #include "apriluiExport.h"
 #include "Image.h"
-#include "ObjectButtonBase.h"
 #include "ObjectImageBox.h"
 
 namespace aprilui

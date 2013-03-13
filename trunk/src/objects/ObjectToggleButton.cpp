@@ -135,9 +135,9 @@ namespace aprilui
 		return true;
 	}
 	
-	bool ToggleButton::onMouseUp(april::Key button)
+	bool ToggleButton::onMouseUp(april::Key keyCode)
 	{
-		bool result = ImageButton::onMouseUp(button);
+		bool result = ImageButton::onMouseUp(keyCode);
 		if (result)
 		{
 			this->mToggled = !this->mToggled;

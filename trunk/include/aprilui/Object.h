@@ -175,13 +175,15 @@ namespace aprilui
 		bool hasDynamicAnimation();
 		
 		// if a childs event returns true, event is not propagated to parents
-		virtual bool onMouseDown(april::Key button);
-		virtual bool onMouseUp(april::Key button);
+		virtual bool onMouseDown(april::Key keyCode);
+		virtual bool onMouseUp(april::Key keyCode);
 		virtual bool onMouseMove();
 		virtual bool onMouseScroll(float x, float y);
 		virtual bool onKeyDown(april::Key keyCode);
 		virtual bool onKeyUp(april::Key keyCode);
 		virtual bool onChar(unsigned int charCode);
+		virtual bool onButtonDown(april::Button buttonCode);
+		virtual bool onButtonUp(april::Button buttonCode);
 		virtual void cancelMouseDown();
 
 		virtual void update(float k);
@@ -271,6 +273,8 @@ namespace aprilui
 		
 		// TODO - this needs to be seriously refactored
 		virtual bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
+		// TODO - this needs to be seriously refactored
+		virtual bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "");
 		// TODO - this needs to be seriously refactored
 		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
 

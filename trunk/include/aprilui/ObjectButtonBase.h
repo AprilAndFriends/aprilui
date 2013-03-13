@@ -39,15 +39,18 @@ namespace aprilui
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
 		
-		virtual bool onMouseDown(april::Key button);
-		virtual bool onMouseUp(april::Key button);
+		virtual bool onMouseDown(april::Key keyCode);
+		virtual bool onMouseUp(april::Key keyCode);
 		virtual bool onMouseMove();
+		virtual bool onButtonDown(april::Button buttonCode);
+		virtual bool onButtonUp(april::Button buttonCode);
 		virtual void cancelMouseDown();
 
 		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
 		virtual bool setProperty(chstr name, chstr value);
 
-		static void setAllowedButtons(harray<unsigned char> buttons);
+		static void setAllowedKeys(harray<april::Key> keys);
+		static void setAllowedButtons(harray<april::Button> buttons);
 		
 	protected:
 		bool mHovered;

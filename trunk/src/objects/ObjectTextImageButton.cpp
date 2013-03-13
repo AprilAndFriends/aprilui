@@ -97,6 +97,11 @@ namespace aprilui
 		return ImageButton::triggerEvent(name, keyCode, extra);
 	}
 
+	bool TextImageButton::triggerEvent(chstr name, april::Button buttonCode, chstr extra)
+	{
+		return ImageButton::triggerEvent(name, buttonCode, extra);
+	}
+
 	bool TextImageButton::triggerEvent(chstr name, float x, float y, april::Key keyCode, chstr extra)
 	{
 		return ImageButton::triggerEvent(name, x, y, keyCode, extra);

@@ -45,8 +45,8 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 
-		bool onMouseDown(april::Key button);
-		bool onMouseUp(april::Key button);
+		bool onMouseDown(april::Key keyCode);
+		bool onMouseUp(april::Key keyCode);
 		
 	protected:
 		Image* mImage;

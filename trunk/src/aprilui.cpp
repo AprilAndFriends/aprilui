@@ -77,8 +77,11 @@ namespace aprilui
 		localization = "";
 		textureIdleUnloadTime = 0.0f;
 		viewport.setSize((float)april::window->getWidth(), (float)april::window->getHeight());
-		harray<unsigned char> allowedButtons;
-		allowedButtons += april::AK_LBUTTON;
+		harray<april::Key> allowedKeys;
+		allowedKeys += april::AK_LBUTTON;
+		ButtonBase::setAllowedKeys(allowedKeys);
+		harray<april::Button> allowedButtons;
+		allowedButtons += april::AB_A;
 		ButtonBase::setAllowedButtons(allowedButtons);
 
 		APRILUI_REGISTER_OBJECT_TYPE(CallbackObject);
@@ -490,21 +493,21 @@ namespace aprilui
 		return 1.0f;
 	}
 	
-	void onMouseDown(april::Key button)
+	void onMouseDown(april::Key keyCode)
 	{
 		aprilui::updateCursorPosition();
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onMouseDown(button);
+			it->second->onMouseDown(keyCode);
 		}
 	}
 	
-	void onMouseUp(april::Key button)
+	void onMouseUp(april::Key keyCode)
 	{
 		aprilui::updateCursorPosition();
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->onMouseUp(button);
+			it->second->onMouseUp(keyCode);
 		}
 	}
 	
