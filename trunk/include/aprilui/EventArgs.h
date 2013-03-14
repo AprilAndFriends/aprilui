@@ -17,6 +17,7 @@
 
 #include <hltypes/hstring.h>
 #include <april/Keys.h>
+
 #include "apriluiExport.h"
 
 namespace aprilui
@@ -34,7 +35,7 @@ namespace aprilui
 		hstr extra;
 		
 		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, april::Key keyCode = april::AK_NONE, chstr extra = "");
-		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, april::Button buttonCode = april::AB_NONE, chstr extra = "");
+		EventArgs(Object* object, float x, float y, april::Button buttonCode, chstr extra = "");
 		~EventArgs();
 
 	};
