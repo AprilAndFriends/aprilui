@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.53
+/// @version 2.54
 /// 
 /// @section LICENSE
 /// 
@@ -1184,7 +1184,7 @@ namespace aprilui
 			}
 			index = preResult.find_first_of('%', index + 1);
 		}
-		result = unicode_to_utf8(preResult.c_str());
+		result = hstr::from_unicode(preResult.c_str());
 		return true;
 	}
 
@@ -1236,10 +1236,10 @@ namespace aprilui
 			{
 				break;
 			}
-			keys += unicode_to_utf8(string.substr(0, index).c_str());
+			keys += hstr::from_unicode(string.substr(0, index).c_str());
 			string = string.substr(index + 1);
 		}
-		keys += unicode_to_utf8(string.c_str());
+		keys += hstr::from_unicode(string.c_str());
 		keys.remove_all("");
 		harray<ustr> result;
 		foreach (hstr, it, keys)

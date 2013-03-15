@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.54
 /// 
 /// @section LICENSE
 /// 
@@ -71,9 +71,6 @@ namespace aprilui
 		bool mSpaceHack; // TODO - remove
 		float mBlinkTimer;
 		hstr mFilter;
-		harray<unsigned int> mUnicodeChars;
-		harray<unsigned int> mEmptyUnicodeChars;
-		harray<unsigned int> mFilterChars;
 		
 		void OnDraw();
 		
@@ -87,8 +84,6 @@ namespace aprilui
 		void _deleteRightWord();
 		void _insertChar(unsigned int charCode);
 
-		harray<unsigned int> _convertToUnicodeChars(chstr string);
-		
 	};
 
 }
