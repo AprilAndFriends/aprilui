@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.53
+/// @version 2.55
 /// 
 /// @section LICENSE
 /// 
@@ -68,6 +68,11 @@ namespace aprilui
 		hstr getTextsPath() { return this->mTextsPath; }
 		void setTextsPath(chstr value) { this->mTextsPath = value; }
 		hstr getFilePath() { return this->mFilePath; }
+
+		int getFocusedObjectIndex();
+		bool trySetFocusedObjectByIndex(int value);
+		harray<int> findPossibleFocusIndices();
+		harray<int> findAllFocusIndices();
 		
 		hmap<hstr, Object*>& getObjects() { return this->mObjects; }
 		hmap<hstr, Image*>& getImages() { return this->mImages; }

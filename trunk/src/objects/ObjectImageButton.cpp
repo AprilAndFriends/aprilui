@@ -45,6 +45,11 @@ namespace aprilui
 		return ImageBox::getName();
 	}
 
+	int ImageButton::getFocusIndex()
+	{
+		return ImageBox::getFocusIndex();
+	}
+
 	Object* ImageButton::getParent()
 	{
 		return ImageBox::getParent();

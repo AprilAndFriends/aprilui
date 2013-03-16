@@ -150,6 +150,9 @@ namespace aprilui
 		void setClip(bool value) { this->mClip = value; }
 		bool isUseDisabledAlpha() { return this->mUseDisabledAlpha; }
 		void setUseDisabledAlpha(bool value) { this->mUseDisabledAlpha = value; }
+
+		virtual int getFocusIndex() { return this->mFocusIndex; }
+		void setFocusIndex(int value) { this->mFocusIndex = value; }
 		virtual Dataset* getDataset() { return mDataset; }
 		
 		virtual bool isFocused();
@@ -301,9 +304,10 @@ namespace aprilui
 		bool mAnchorTop;
 		bool mAnchorBottom;
 		bool mRetainAnchorAspect;
-		Dataset* mDataset;
 		bool mClip;
 		bool mUseDisabledAlpha;
+		int mFocusIndex;
+		Dataset* mDataset;
 		
 		void _setName(chstr value) { this->mName = value; }
 		void _setDataset(Dataset* value) { this->mDataset = value; }

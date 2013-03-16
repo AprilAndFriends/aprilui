@@ -103,6 +103,7 @@ namespace aprilui
 		this->mAnchorTop = true;
 		this->mAnchorBottom = false;
 		this->mRetainAnchorAspect = false;
+		this->mFocusIndex = -1;
 		this->mClip = false;
 		this->mUseDisabledAlpha = true;
 	}
@@ -853,6 +854,7 @@ namespace aprilui
 		if (name == "retain_anchor_aspect")	return this->isRetainAnchorAspect();
 		if (name == "clip")					return this->isClip();
 		if (name == "use_disabled_alpha")	return this->isUseDisabledAlpha();
+		if (name == "focus_index")			return this->getFocusIndex();
 		if (name == "name")					return this->getName();
 		if (name == "full_name")			return this->getFullName();
 		if (propertyExists != NULL)
@@ -912,6 +914,7 @@ namespace aprilui
 		}
 		else if	(name == "clip")					this->setClip(value);
 		else if	(name == "use_disabled_alpha")		this->setUseDisabledAlpha(value);
+		else if	(name == "focus_index")				this->setFocusIndex(value);
 		else return false;
 		return true;
 	}

@@ -50,6 +50,7 @@ namespace aprilui
 
 		Image* getImage() { return this->mNormalImage; };
 		void setImage(Image* value);
+		int getFocusIndex();
 		Object* getParent();
 		Dataset* getDataset();
 		
