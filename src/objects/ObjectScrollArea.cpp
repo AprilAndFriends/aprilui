@@ -54,6 +54,11 @@ namespace aprilui
 		return Object::getName();
 	}
 
+	int ScrollArea::getFocusIndex()
+	{
+		return Object::getFocusIndex();
+	}
+
 	bool ScrollArea::isCursorInside()
 	{
 		return Object::isCursorInside();

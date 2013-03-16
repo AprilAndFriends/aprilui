@@ -57,6 +57,11 @@ namespace aprilui
 		return Label::getName();
 	}
 
+	int TextButton::getFocusIndex()
+	{
+		return Label::getFocusIndex();
+	}
+
 	Object* TextButton::getParent()
 	{
 		return Label::getParent();

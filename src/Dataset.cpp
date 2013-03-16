@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.54
+/// @version 2.55
 /// 
 /// @section LICENSE
 /// 
@@ -67,6 +67,62 @@ namespace aprilui
 			this->unload();
 		}
 		aprilui::_unregisterDataset(this->mName, this);
+	}
+
+	int Dataset::getFocusedObjectIndex()
+	{
+		return (this->mFocusedObject != NULL ? this->mFocusedObject->getFocusIndex() : -1);
+	}
+
+	bool Dataset::trySetFocusedObjectByIndex(int value)
+	{
+		if (value < 0)
+		{
+			this->removeFocus();
+			return true;
+		}
+		foreach_m (Object*, it, this->mObjects)
+		{
+			if (it->second->isVisible() && it->second->isEnabled() && it->second->getFocusIndex() == value)
+			{
+				this->focus(it->second);
+				return true;
+			}
+		}
+#ifdef _DEBUG
+		hlog::warnf(aprilui::logTag, "Object with Focus Index '%d' does not exist, is not visible or is not enabled!", value);
+#endif
+		return false;
+	}
+
+	harray<int> Dataset::findPossibleFocusIndices()
+	{
+		harray<int> result;
+		int focusIndex;
+		foreach_m (Object*, it, this->mObjects)
+		{
+			focusIndex = it->second->getFocusIndex();
+			if (focusIndex >= 0 && it->second->isVisible() && it->second->isEnabled())
+			{
+				result += focusIndex;
+			}
+		}
+		return result;
+	}
+
+	harray<int> Dataset::findAllFocusIndices()
+	{
+		harray<int> result;
+		int focusIndex;
+		foreach_m (Object*, it, this->mObjects)
+		{
+			focusIndex = it->second->getFocusIndex();
+			if (focusIndex >= 0)
+			{
+				result += focusIndex;
+			}
+		}
+		return result;
 	}
 
 	hstr Dataset::_makeFilePath(chstr filename, chstr name, bool useNameBasePath)

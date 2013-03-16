@@ -36,6 +36,7 @@ namespace aprilui
 		bool isPushed() { return this->mPushed; }
 		virtual hstr getName() = 0;
 		virtual bool isCursorInside() = 0;
+		virtual int getFocusIndex() = 0;
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
 		

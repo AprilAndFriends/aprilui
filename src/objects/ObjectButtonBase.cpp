@@ -9,6 +9,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <april/Keys.h>
+#include <april/Window.h>
 #include <hltypes/harray.h>
 
 #include "aprilui.h"
@@ -42,6 +43,11 @@ namespace aprilui
 		Dataset* dataset = this->getDataset();
 		if (dataset != NULL)
 		{
+			int focusIndex = this->getFocusIndex();
+			if (focusIndex >= 0 && dataset->getFocusedObjectIndex() == focusIndex)
+			{
+				return true;
+			}
 			root = dataset->getRoot();
 		}
 		if (root == NULL)

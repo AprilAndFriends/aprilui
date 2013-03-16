@@ -37,6 +37,7 @@ namespace aprilui
 		
 		hstr getName();
 		bool isCursorInside();
+		int getFocusIndex();
 		Object* getParent();
 		Dataset* getDataset();
 		april::Color getHoverTextColor() { return this->mHoverTextColor; }

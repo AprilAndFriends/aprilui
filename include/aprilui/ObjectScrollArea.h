@@ -48,6 +48,7 @@ namespace aprilui
 		bool isDragging() { return this->mDragging; }
 		hstr getName();
 		bool isCursorInside();
+		int getFocusIndex();
 		Object* getParent();
 		Dataset* getDataset();
 		bool isScrolling();		
