@@ -55,6 +55,8 @@ namespace aprilui
 		bool onMouseScroll(float x, float y);
 
 		virtual void addScrollValue(float value) = 0;
+		void addScrollValueBegin(float multiplier = 1.0f);
+		void addScrollValueEnd(float multiplier = 1.0f);
 
 		static float ScrollDistance;
 		static float GridSize;

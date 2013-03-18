@@ -248,16 +248,24 @@ namespace aprilui
 		return false;
 	}
 
+	void ScrollBar::addScrollValueBegin(float multiplier)
+	{
+		this->addScrollValue(-hmax(habs(this->mGridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+	}
+
+	void ScrollBar::addScrollValueEnd(float multiplier)
+	{
+		this->addScrollValue(hmax(habs(this->mGridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+	}
+
 	void ScrollBar::_clickScrollBegin(EventArgs* args)
 	{
-		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->addScrollValue(-hmax(habs(scrollBar->getGridSize()), habs(ScrollBar::ScrollDistance)));
+		((ScrollBar*)args->object->getParent())->addScrollValueBegin();
 	}
 
 	void ScrollBar::_clickScrollEnd(EventArgs* args)
 	{
-		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
-		scrollBar->addScrollValue(hmax(habs(scrollBar->getGridSize()), habs(ScrollBar::ScrollDistance)));
+		((ScrollBar*)args->object->getParent())->addScrollValueEnd();
 	}
 
 	void ScrollBar::_clickScrollBack(EventArgs* args)
