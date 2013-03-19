@@ -71,11 +71,11 @@ namespace aprilui
 
 	int Dataset::getFocusedObjectIndex()
 	{
-		return (this->mFocusedObject != NULL && this->mFocusedObject->isDerivedEnabled() &&
-			this->mFocusedObject->isDerivedVisible() ? this->mFocusedObject->getFocusIndex() : -1);
+		return (this->mFocusedObject != NULL && this->mFocusedObject->isEnabled() &&
+			this->mFocusedObject->isVisible() ? this->mFocusedObject->getFocusIndex() : -1);
 	}
 
-	bool Dataset::trySetFocusedObjectByIndex(int value)
+	bool Dataset::trySetFocusedObjectByIndex(int value, bool strict)
 	{
 		if (value < 0)
 		{
@@ -84,7 +84,8 @@ namespace aprilui
 		}
 		foreach_m (Object*, it, this->mObjects)
 		{
-			if (it->second->isVisible() && it->second->isEnabled() && it->second->getFocusIndex() == value)
+			if (it->second->getFocusIndex() == value && (!strict && it->second->isEnabled() && it->second->isVisible() ||
+				strict && it->second->isDerivedEnabled() && it->second->isDerivedVisible()))
 			{
 				this->focus(it->second);
 				return true;
@@ -96,14 +97,15 @@ namespace aprilui
 		return false;
 	}
 
-	harray<int> Dataset::findPossibleFocusIndices()
+	harray<int> Dataset::findPossibleFocusIndices(bool strict)
 	{
 		harray<int> result;
 		int focusIndex;
 		foreach_m (Object*, it, this->mObjects)
 		{
 			focusIndex = it->second->getFocusIndex();
-			if (focusIndex >= 0 && it->second->isVisible() && it->second->isEnabled())
+			if (focusIndex >= 0 && (!strict && it->second->isEnabled() && it->second->isVisible() ||
+				 strict && it->second->isDerivedEnabled() && it->second->isDerivedVisible()))
 			{
 				result += focusIndex;
 			}

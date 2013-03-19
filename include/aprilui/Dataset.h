@@ -70,8 +70,8 @@ namespace aprilui
 		hstr getFilePath() { return this->mFilePath; }
 
 		int getFocusedObjectIndex();
-		bool trySetFocusedObjectByIndex(int value);
-		harray<int> findPossibleFocusIndices();
+		bool trySetFocusedObjectByIndex(int value, bool strict = false);
+		harray<int> findPossibleFocusIndices(bool strict = false);
 		harray<int> findAllFocusIndices();
 		
 		hmap<hstr, Object*>& getObjects() { return this->mObjects; }
