@@ -71,7 +71,8 @@ namespace aprilui
 
 	int Dataset::getFocusedObjectIndex()
 	{
-		return (this->mFocusedObject != NULL ? this->mFocusedObject->getFocusIndex() : -1);
+		return (this->mFocusedObject != NULL && this->mFocusedObject->isDerivedEnabled() &&
+			this->mFocusedObject->isDerivedVisible() ? this->mFocusedObject->getFocusIndex() : -1);
 	}
 
 	bool Dataset::trySetFocusedObjectByIndex(int value)
