@@ -48,17 +48,49 @@ namespace aprilui
 		int countY = (int)ceil((rect.h - scrollY) / tileH);
 		int i;
 		int j;
+		int minY = -1;
+		int maxY = countY;
+		int minX = -1;
+		int maxX = countX;
+		int clipped;
+		// TODO - this can be optimized further by rendering corners separately, then the edges in one call and finally the center piece in one call
 		for_iterx (j, 0, countY)
 		{
 			for_iterx (i, 0, countX)
 			{
-				this->_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color);
+				clipped = this->_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color);
+				if ((clipped & 0x0010) != 0x0)
+				{
+					minX = i + 1;
+				}
+				if ((clipped & 0x0100) != 0x0)
+				{
+					maxX = i;
+				}
+				if ((clipped & 0x0001) != 0x0)
+				{
+					minY = j + 1;
+				}
+				if ((clipped & 0x1000) != 0x0)
+				{
+					maxY = j;
+				}
 			}
+		}
+		if (minX < maxX && minY < maxY)
+		{
+			grect src = this->mSrcRect;
+			this->mSrcRect.w *= (maxX - minX);
+			this->mSrcRect.h *= (maxY - minY);
+			this->mTextureCoordinatesLoaded = false; // srcRect has been changed
+			Image::draw(grect(rect.x + scrollX + minX * tileW, rect.y + scrollY + minY * tileH, (maxX - minX) * tileW, (maxY - minY) * tileH), color);
+			this->mSrcRect = src;
 		}
 	}
 
-	void TiledImage::_drawTile(grect rect, grect tileRect, april::Color color)
+	int TiledImage::_drawTile(grect rect, grect tileRect, april::Color color)
 	{
+		int clipped = 0;
 		float difference;
 		float srcDifference;
 		grect src = this->mSrcRect;
@@ -70,6 +102,7 @@ namespace aprilui
 			this->mSrcRect.w -= srcDifference;
 			tileRect.x += difference;
 			tileRect.w -= difference;
+			clipped |= 0x0010;
 		}
 		if (tileRect.x + tileRect.w > rect.x + rect.w)
 		{
@@ -77,6 +110,7 @@ namespace aprilui
 			srcDifference = src.w * difference / tileRect.w;
 			this->mSrcRect.w -= srcDifference;
 			tileRect.w -= difference;
+			clipped |= 0x0100;
 		}
 		if (tileRect.y < rect.y)
 		{
@@ -86,6 +120,7 @@ namespace aprilui
 			this->mSrcRect.h -= srcDifference;
 			tileRect.y += difference;
 			tileRect.h -= difference;
+			clipped |= 0x0001;
 		}
 		if (tileRect.y + tileRect.h > rect.y + rect.h)
 		{
@@ -93,10 +128,15 @@ namespace aprilui
 			srcDifference = src.h * difference / tileRect.h;
 			this->mSrcRect.h -= srcDifference;
 			tileRect.h -= difference;
+			clipped |= 0x1000;
 		}
-		this->mTextureCoordinatesLoaded = false; // srcRect has been changed
-		Image::draw(tileRect, color);
+		if (clipped != 0)
+		{
+			this->mTextureCoordinatesLoaded = false; // srcRect has been changed
+			Image::draw(tileRect, color);
+		}
 		this->mSrcRect = src;
+		return clipped;
 	}
 
 }

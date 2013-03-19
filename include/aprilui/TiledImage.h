@@ -52,7 +52,7 @@ namespace aprilui
 		gvec2 mTile;
 		gvec2 mScroll;
 
-		void _drawTile(grect rect, grect tileRect, april::Color color);
+		int _drawTile(grect rect, grect tileRect, april::Color color);
 		
 	};
 	
