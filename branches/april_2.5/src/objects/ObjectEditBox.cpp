@@ -65,7 +65,7 @@ namespace aprilui
 		hstr text;
 		if (this->mPasswordChar == '\0' || this->mText == "")
 		{
-			text = unicode_to_utf8(this->mUnicodeChars(this->mOffsetIndex, this->mUnicodeChars.size() - this->mOffsetIndex));
+			text = hstr::from_unicode(this->mUnicodeChars(this->mOffsetIndex, this->mUnicodeChars.size() - this->mOffsetIndex));
 		}
 		else
 		{
@@ -81,7 +81,7 @@ namespace aprilui
 		if (this->mMaxLength > 0 && this->mUnicodeChars.size() > this->mMaxLength)
 		{
 			this->mUnicodeChars = this->mUnicodeChars(0, this->mMaxLength);
-			this->mText = unicode_to_utf8(this->mUnicodeChars);
+			this->mText = hstr::from_unicode(this->mUnicodeChars);
 			this->setCursorIndex(this->mCursorIndex);
 		}
 	}
@@ -104,7 +104,7 @@ namespace aprilui
 		{
 			this->mUnicodeChars = this->mUnicodeChars(0, this->mMaxLength);
 		}
-		Label::setText(unicode_to_utf8(this->mUnicodeChars));
+		Label::setText(hstr::from_unicode(this->mUnicodeChars));
 		this->setCursorIndex(this->mCursorIndex);
 	}
 
@@ -158,7 +158,7 @@ namespace aprilui
 				{
 					this->mUnicodeChars.remove_at(0);
 				}
-				this->mText = unicode_to_utf8(this->mUnicodeChars);
+				this->mText = hstr::from_unicode(this->mUnicodeChars);
 			}
 			if (this->mEmptyUnicodeChars.size() > 0 && this->mEmptyUnicodeChars[0] == UNICODE_CHAR_SPACE)
 			{
@@ -166,7 +166,7 @@ namespace aprilui
 				{
 					this->mEmptyUnicodeChars.remove_at(0);
 				}
-				this->mEmptyText = unicode_to_utf8(this->mEmptyUnicodeChars);
+				this->mEmptyText = hstr::from_unicode(this->mEmptyUnicodeChars);
 			}
 		}
 		//////////////
@@ -193,7 +193,7 @@ namespace aprilui
 		int count;
 		while (true)
 		{
-			this->mText = unicode_to_utf8(this->mUnicodeChars(this->mOffsetIndex, this->mUnicodeChars.size() - this->mOffsetIndex));
+			this->mText = hstr::from_unicode(this->mUnicodeChars(this->mOffsetIndex, this->mUnicodeChars.size() - this->mOffsetIndex));
 			count = atres::renderer->getTextCountUnformatted(this->mFontName, this->mText, rect.w);
 			count = this->_convertToUnicodeChars(this->mText(0, count)).size();
 			if (this->mOffsetIndex > this->mCursorIndex)
@@ -224,7 +224,7 @@ namespace aprilui
 		this->mText = renderText;
 		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 		{
-			this->mText = unicode_to_utf8(this->mUnicodeChars(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex));
+			this->mText = hstr::from_unicode(this->mUnicodeChars(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex));
 			rect.x += atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
 			float h = atres::renderer->getFontLineHeight(this->mFontName);
 			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
@@ -405,15 +405,10 @@ namespace aprilui
 	{
 		if (string.size() > 0)
 		{
-			std::basic_string<unsigned int> text;
-			text = utf8_to_unicode(string);
+			std::basic_string<unsigned int> text = string.u_str();
 			return harray<unsigned int>(text.c_str(), text.size());
 		}
-		else
-		{
-			harray<unsigned int> emptyArray;
-			return emptyArray;
-		}
+		return harray<unsigned int>();
 	}
 
 	void EditBox::_cursorMoveLeft()
@@ -469,7 +464,7 @@ namespace aprilui
 			}
 			this->mCursorIndex -= count;
 			this->mUnicodeChars = left + right;
-			this->mText = unicode_to_utf8(this->mUnicodeChars);
+			this->mText = hstr::from_unicode(this->mUnicodeChars);
 			this->mBlinkTimer = 0.0f;
 		}
 	}
@@ -533,7 +528,7 @@ namespace aprilui
 		}
 		this->mCursorIndex++;
 		this->mUnicodeChars = (left + charCode) + right;
-		this->mText = unicode_to_utf8(this->mUnicodeChars);
+		this->mText = hstr::from_unicode(this->mUnicodeChars);
 		this->mBlinkTimer = 0.0f;
 	}
 	
