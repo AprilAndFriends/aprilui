@@ -53,7 +53,8 @@ namespace aprilui
 		int minY = 0;
 		int maxY = countY - 1;
 		int clipped;
-		bool fullTexture = (this->mSrcRect == grect(0.0f, 0.0f, this->mTexture->getWidth(), this->mTexture->getHeight()));
+		bool fullTexture = (this->mTexture->isValid() && this->mTexture->getRenderTexture()->isLoaded() &&
+			this->mSrcRect == grect(0.0f, 0.0f, (float)this->mTexture->getWidth(), (float)this->mTexture->getHeight()));
 		// TODO - this can be optimized further by rendering corners separately, then the edges in one call and finally the center piece in one call
 		for_iterx (j, 0, countY)
 		{
