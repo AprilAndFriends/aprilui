@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.55
 /// 
 /// @section LICENSE
 /// 
@@ -48,17 +48,18 @@ namespace aprilui
 		int countY = (int)ceil((rect.h - scrollY) / tileH);
 		int i;
 		int j;
-		int minY = -1;
-		int maxY = countY;
-		int minX = -1;
-		int maxX = countX;
+		int minX = 0;
+		int maxX = countX - 1;
+		int minY = 0;
+		int maxY = countY - 1;
 		int clipped;
+		bool fullTexture = (this->mSrcRect == grect(0.0f, 0.0f, this->mTexture->getWidth(), this->mTexture->getHeight()));
 		// TODO - this can be optimized further by rendering corners separately, then the edges in one call and finally the center piece in one call
 		for_iterx (j, 0, countY)
 		{
 			for_iterx (i, 0, countX)
 			{
-				clipped = this->_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color);
+				clipped = this->_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color, fullTexture);
 				if ((clipped & 0x0010) != 0x0)
 				{
 					minX = i + 1;
@@ -77,7 +78,7 @@ namespace aprilui
 				}
 			}
 		}
-		if (minX < maxX && minY < maxY)
+		if (fullTexture && minX < maxX && minY < maxY)
 		{
 			grect src = this->mSrcRect;
 			this->mSrcRect.w *= (maxX - minX);
@@ -88,7 +89,7 @@ namespace aprilui
 		}
 	}
 
-	int TiledImage::_drawTile(grect rect, grect tileRect, april::Color color)
+	int TiledImage::_drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture)
 	{
 		int clipped = 0;
 		float difference;
@@ -130,13 +131,13 @@ namespace aprilui
 			tileRect.h -= difference;
 			clipped |= 0x1000;
 		}
-		if (clipped != 0)
+		if (!fullTexture || clipped != 0)
 		{
 			this->mTextureCoordinatesLoaded = false; // srcRect has been changed
 			Image::draw(tileRect, color);
 		}
 		this->mSrcRect = src;
-		return clipped;
+		return (fullTexture ? clipped : 0);
 	}
 
 }
