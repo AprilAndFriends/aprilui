@@ -77,6 +77,7 @@ namespace aprilui
 		bool onMouseMove();
 		bool onButtonDown(april::Button buttonCode);
 		bool onButtonUp(april::Button buttonCode);
+        void cancelMouseDown();
 
 		static float Inertia;
 		static float DragThreshold;
