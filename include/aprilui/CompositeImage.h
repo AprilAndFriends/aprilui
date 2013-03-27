@@ -40,6 +40,7 @@ namespace aprilui
 		~CompositeImage();
 		
 		void addImageRef(Image* image, grect rect);
+        void clearImages();
 		
 		void draw(grect rect, april::Color color);
 		

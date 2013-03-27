@@ -44,6 +44,11 @@ namespace aprilui
 		reference.rect = rect;
 		this->mImages += reference;
 	}
+    
+    void CompositeImage::clearImages()
+    {
+        mImages.clear();
+    }
 
 	void CompositeImage::draw(grect rect, april::Color color)
 	{
