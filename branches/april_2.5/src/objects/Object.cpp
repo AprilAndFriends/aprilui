@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.55
 /// 
 /// @section LICENSE
 /// 
@@ -255,7 +255,7 @@ namespace aprilui
 				}
 				else
 				{
-					(*it)->setX((*it)->getX() + difference / 2);
+					(*it)->setX((*it)->getX() + difference * 0.5f);
 				}
 			}
 			else if ((*it)->isAnchorRight())
@@ -270,7 +270,7 @@ namespace aprilui
 					(*it)->setHeight(height + differenceAlt);
 					if ((*it)->isAnchorTop() == (*it)->isAnchorBottom())
 					{
-						(*it)->setY((*it)->getY() - differenceAlt / 2);
+						(*it)->setY((*it)->getY() - differenceAlt * 0.5f);
 					}
 					else if ((*it)->isAnchorBottom())
 					{
@@ -307,7 +307,7 @@ namespace aprilui
 				}
 				else
 				{
-					(*it)->setY((*it)->getY() + difference / 2);
+					(*it)->setY((*it)->getY() + difference * 0.5f);
 				}
 			}
 			else if ((*it)->isAnchorBottom())
@@ -322,7 +322,7 @@ namespace aprilui
 					(*it)->setWidth(width + differenceAlt);
 					if ((*it)->isAnchorLeft() == (*it)->isAnchorRight())
 					{
-						(*it)->setX((*it)->getX() - differenceAlt / 2);
+						(*it)->setX((*it)->getX() - differenceAlt * 0.5f);
 					}
 					else if ((*it)->isAnchorRight())
 					{
@@ -569,8 +569,7 @@ namespace aprilui
 		foreach_r (Object*, it, this->mChildren)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
-				(*it)->isDerivedEnabled() && (*it)->onMouseDown(button))
+			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
 			{
 				return true;
 			}
@@ -585,14 +584,30 @@ namespace aprilui
 		{
 			return false;
 		}
+		harray<Object*> validObjects;
+		Object* object = NULL;
 		foreach_r (Object*, it, this->mChildren)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
-				(*it)->isDerivedEnabled() && (*it)->onMouseUp(button))
+			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled())
 			{
-				return true;
+				if (object == NULL && (*it)->onMouseUp(keyCode))
+				{
+					object = (*it);
+				}
+				else
+				{
+					validObjects += (*it);
+				}
 			}
+		}
+		if (object != NULL)
+		{
+			foreach (Object*, it, validObjects)
+			{
+				(*it)->cancelMouseDown();
+			}
+			return true;
 		}
 		return false;
 	}
