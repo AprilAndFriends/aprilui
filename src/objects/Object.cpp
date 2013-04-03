@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.55
 /// 
 /// @section LICENSE
 /// 
@@ -570,8 +570,7 @@ namespace aprilui
 		foreach_r (Object*, it, this->mChildren)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
-				(*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
+			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
 			{
 				return true;
 			}
@@ -586,14 +585,30 @@ namespace aprilui
 		{
 			return false;
 		}
+		harray<Object*> validObjects;
+		Object* object = NULL;
 		foreach_r (Object*, it, this->mChildren)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if (!(*it)->isClickThrough() && (*it)->isVisible() &&
-				(*it)->isDerivedEnabled() && (*it)->onMouseUp(keyCode))
+			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled())
 			{
-				return true;
+				if (object == NULL && (*it)->onMouseUp(keyCode))
+				{
+					object = (*it);
+				}
+				else
+				{
+					validObjects += (*it);
+				}
 			}
+		}
+		if (object != NULL)
+		{
+			foreach (Object*, it, validObjects)
+			{
+				(*it)->cancelMouseDown();
+			}
+			return true;
 		}
 		return false;
 	}
