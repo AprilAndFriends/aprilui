@@ -608,8 +608,16 @@ namespace aprilui
 			{
 				(*it)->cancelMouseDown();
 			}
+            // TODO
+            // this object also has to process their cancelMouseDown, but without sending it to its children
+            // this needs to be removed and fixed upon the next major system refactoring
+            validObjects = this->mChildren;
+            this->mChildren.clear();
+            this->cancelMouseDown();
+            this->mChildren = validObjects;
 			return true;
 		}
+        
 		return false;
 	}
 
