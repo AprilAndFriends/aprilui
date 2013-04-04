@@ -567,7 +567,7 @@ namespace aprilui
 		{
 			this->mDataset->removeFocus();
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -589,7 +589,7 @@ namespace aprilui
 		}
 		harray<Object*> validObjects;
 		Object* object = NULL;
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -632,7 +632,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -652,7 +652,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -672,7 +672,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -692,7 +692,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -712,7 +712,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -732,7 +732,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -752,7 +752,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
@@ -767,7 +767,7 @@ namespace aprilui
 	
 	void Object::cancelMouseDown()
 	{
-		// needs to be conpied in case mChildren gets changed
+		// needs to be copied in case mChildren gets changed
 		harray<Object*> children = this->mChildren;
 		foreach_r (Object*, it, children)
 		{
