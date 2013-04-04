@@ -567,7 +567,9 @@ namespace aprilui
 		{
 			this->mDataset->removeFocus();
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
@@ -587,7 +589,9 @@ namespace aprilui
 		}
 		harray<Object*> validObjects;
 		Object* object = NULL;
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled())
@@ -628,7 +632,9 @@ namespace aprilui
 		{
 			return false;
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseMove())
@@ -646,7 +652,9 @@ namespace aprilui
 		{
 			return false;
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseScroll(x, y))
@@ -664,7 +672,9 @@ namespace aprilui
 		{
 			return false;
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyDown(keyCode))
@@ -682,7 +692,9 @@ namespace aprilui
 		{
 			return false;
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyUp(keyCode))
@@ -700,7 +712,9 @@ namespace aprilui
 		{
 			return false;
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onChar(charCode))
@@ -718,7 +732,9 @@ namespace aprilui
 		{
 			return false;
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonDown(buttonCode))
@@ -736,7 +752,9 @@ namespace aprilui
 		{
 			return false;
 		}
-		foreach_r (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonUp(buttonCode))
@@ -749,7 +767,9 @@ namespace aprilui
 	
 	void Object::cancelMouseDown()
 	{
-		foreach (Object*, it, this->mChildren)
+		// needs to be conpied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
 		{
 			(*it)->cancelMouseDown();
 		}
