@@ -78,6 +78,9 @@ namespace aprilui
 		bool onButtonDown(april::Button buttonCode);
 		bool onButtonUp(april::Button buttonCode);
         void cancelMouseDown();
+		
+		// Temporary hack to help battle cancelMouseDown() problems in scrollarea
+		void __stop();
 
 		static float Inertia;
 		static float DragThreshold;

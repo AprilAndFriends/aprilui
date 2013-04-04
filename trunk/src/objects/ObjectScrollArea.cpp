@@ -356,6 +356,14 @@ namespace aprilui
     void ScrollArea::cancelMouseDown()
 	{
         Object::cancelMouseDown();
+		//this->mDragging = false;
+        //this->mPushed = false;
+        //this->_mDragSpeed.set(0, 0);
+	}
+	
+	// Temporary hack to help battle cancelMouseDown() problems in scrollarea
+    void ScrollArea::__stop()
+	{
         this->mDragging = false;
         this->mPushed = false;
         this->_mDragSpeed.set(0, 0);
