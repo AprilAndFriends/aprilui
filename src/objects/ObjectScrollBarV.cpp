@@ -133,7 +133,7 @@ namespace aprilui
 
 	float ScrollBarV::_calcScrollMove(float x, float y)
 	{
-		return hroundf(y * hmax(ScrollBar::ScrollDistance, this->mGridSize)); // hround prevents partial pixels when getting weird X values
+		return hroundf(y * ScrollBar::ScrollDistance); // hround prevents partial pixels when getting weird Y values
 	}
 
 	void ScrollBarV::notifyEvent(chstr name, void* params)

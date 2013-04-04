@@ -352,21 +352,18 @@ namespace aprilui
 	{
 		return Object::onButtonUp(buttonCode);
 	}
-    
-    void ScrollArea::cancelMouseDown()
+	
+	void ScrollArea::cancelMouseDown()
 	{
-        Object::cancelMouseDown();
-		//this->mDragging = false;
-        //this->mPushed = false;
-        //this->_mDragSpeed.set(0, 0);
+		Object::cancelMouseDown();
 	}
 	
 	// Temporary hack to help battle cancelMouseDown() problems in scrollarea
-    void ScrollArea::__stop()
+	void ScrollArea::__stop()
 	{
-        this->mDragging = false;
-        this->mPushed = false;
-        this->_mDragSpeed.set(0, 0);
+		this->mDragging = false;
+		this->mPushed = false;
+		this->_mDragSpeed.set(0, 0);
 	}
 	
 	void ScrollArea::_adjustDragSpeed()
