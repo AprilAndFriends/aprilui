@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.5
+/// @version 2.56
 /// 
 /// @section LICENSE
 /// 
@@ -40,6 +40,10 @@ namespace aprilui
 	}
 	
 	Animator::~Animator()
+	{
+	}
+
+	void Animator::OnDrawDebug()
 	{
 	}
 

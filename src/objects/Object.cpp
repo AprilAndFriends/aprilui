@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.55
+/// @version 2.56
 /// 
 /// @section LICENSE
 /// 
@@ -477,8 +477,7 @@ namespace aprilui
 		this->OnDraw();
 		if (aprilui::isDebugEnabled())
 		{
-			april::rendersys->drawRect(grect(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
-			april::rendersys->drawRect(grect(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
+			this->OnDrawDebug();
 		}
 		if (this->mCenter.x != 0.0f || this->mCenter.y != 0.0f)
 		{
@@ -526,6 +525,16 @@ namespace aprilui
 				i++;
 			}
 		}
+	}
+
+	void Object::OnDraw()
+	{
+	}
+
+	void Object::OnDrawDebug()
+	{
+		april::rendersys->drawRect(grect(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
+		april::rendersys->drawRect(grect(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
 	}
 
 	bool Object::isCursorInside()
