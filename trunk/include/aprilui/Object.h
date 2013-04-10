@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.52
+/// @version 2.56
 /// 
 /// @section LICENSE
 /// 
@@ -323,7 +323,8 @@ namespace aprilui
 		float _getDisabledAlphaFactor();
 		void _setParent(Object* value) { this->mParent = value; }
 
-		virtual void OnDraw() { }
+		virtual void OnDraw();
+		virtual void OnDrawDebug();
 
 	};
 	

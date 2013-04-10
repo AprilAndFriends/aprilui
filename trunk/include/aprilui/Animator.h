@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.5
+/// @version 2.56
 /// 
 /// @section LICENSE
 /// 
@@ -83,6 +83,8 @@ namespace aprilui
 		void notifyEvent(chstr name, void* params);
 		
 		void update(float k);
+
+		void OnDrawDebug();
 		
 	protected:
 		float mTimeSinceLastFrame;
