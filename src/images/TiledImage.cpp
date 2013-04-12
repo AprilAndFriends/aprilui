@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.55
+/// @version 2.56
 /// 
 /// @section LICENSE
 /// 
@@ -96,7 +96,7 @@ namespace aprilui
 		float difference;
 		float srcDifference;
 		grect src = this->mSrcRect;
-		if (tileRect.x < rect.x)
+		if (tileRect.x <= rect.x)
 		{
 			difference = rect.x - tileRect.x;
 			srcDifference = src.w * difference / tileRect.w;
@@ -106,7 +106,7 @@ namespace aprilui
 			tileRect.w -= difference;
 			clipped |= 0x0010;
 		}
-		if (tileRect.x + tileRect.w > rect.x + rect.w)
+		if (tileRect.x + tileRect.w >= rect.x + rect.w)
 		{
 			difference = tileRect.x + tileRect.w - (rect.x + rect.w);
 			srcDifference = src.w * difference / tileRect.w;
@@ -114,7 +114,7 @@ namespace aprilui
 			tileRect.w -= difference;
 			clipped |= 0x0100;
 		}
-		if (tileRect.y < rect.y)
+		if (tileRect.y <= rect.y)
 		{
 			difference = rect.y - tileRect.y;
 			srcDifference = src.h * difference / tileRect.h;
@@ -124,7 +124,7 @@ namespace aprilui
 			tileRect.h -= difference;
 			clipped |= 0x0001;
 		}
-		if (tileRect.y + tileRect.h > rect.y + rect.h)
+		if (tileRect.y + tileRect.h >= rect.y + rect.h)
 		{
 			difference = tileRect.y + tileRect.h - (rect.y + rect.h);
 			srcDifference = src.h * difference / tileRect.h;
