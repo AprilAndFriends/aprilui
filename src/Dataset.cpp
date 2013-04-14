@@ -1032,9 +1032,11 @@ namespace aprilui
 		if (this->mFocusedObject != NULL)
 		{
 			april::window->terminateKeyboardHandling();
-			this->mFocusedObject->triggerEvent("LoseFocus");
+			// in case of a recursive call, the focused object has to be removed first.
+			aprilui::Object* object = this->mFocusedObject;
+			this->mFocusedObject = NULL;
+			object->triggerEvent("LoseFocus");
 		}
-		this->mFocusedObject = NULL;
 	}
 	
 	hstr Dataset::_parseCompositeTextKey(chstr key)
