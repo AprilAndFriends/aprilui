@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.52
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -128,16 +128,6 @@ namespace aprilui
 		}
 		if (name == "offset_x")			return this->mDrawOffset.x;
 		if (name == "offset_y")			return this->mDrawOffset.y;
-		if (name == "background")
-		{
-			hlog::warn(aprilui::logTag, "'background' is deprecated, use 'background_color' instead!"); // DEPRECATED
-			return (this->mBackgroundColor.a > 0);
-		}
-		if (name == "use_background")
-		{
-			hlog::warn(aprilui::logTag, "'use_background' is deprecated, use 'background_color' instead!"); // DEPRECATED
-			return (this->mBackgroundColor.a > 0);
-		}
 		if (name == "background_color")	return this->mBackgroundColor.hex();
 		if (propertyExists != NULL)
 		{
@@ -150,11 +140,6 @@ namespace aprilui
 	{
 		if (name == "font")					this->setFont(value);
 		else if (name == "text_key")		this->setTextKey(value);
-		else if (name == "textkey")
-		{
-			hlog::warn(aprilui::logTag, "'textkey=' is deprecated. Use 'text_key=' instead."); // DEPRECATED
-			this->setTextKey(value);
-		}
 		else if (name == "text")			this->setText(value);
 		else if (name == "horz_formatting")
 		{
@@ -219,16 +204,6 @@ namespace aprilui
 		}
 		else if (name == "offset_x")		this->mDrawOffset.x = (float)value;
 		else if (name == "offset_y")		this->mDrawOffset.y = (float)value;
-		else if (name == "background")
-		{
-			hlog::warn(aprilui::logTag, "'background=' is deprecated, use 'background_color=' instead!"); // DEPRECATED
-			this->mBackgroundColor.a = (value ? 128 : 0);
-		}
-		else if (name == "use_background")
-		{
-			hlog::warn(aprilui::logTag, "'use_background=' is deprecated, use 'background_color=' instead!"); // DEPRECATED
-			this->mBackgroundColor.a = (value ? 128 : 0);
-		}
 		else if (name == "background_color")	this->setBackgroundColor(value);
 		else return false;
 		return true;

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.52
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -113,11 +113,6 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
-		if (name == "use_disabled_color")
-		{
-			hlog::warn(aprilui::logTag, "'use_disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
-			return this->_mUseDisabledTextColor;
-		}
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
@@ -136,13 +131,7 @@ namespace aprilui
 	
 	bool TextImageButton::setProperty(chstr name, chstr value)
 	{
-		if (name == "use_disabled_color")
-		{
-			hlog::warn(aprilui::logTag, "'use_disabled_color=' is deprecated, use 'disabled_text_color=' instead!"); // DEPRECATED
-			this->_mUseDisabledTextColor = !value;
-			this->setDisabledTextColor(this->mTextColor);
-		}
-		else if (name == "hover_text_color")	this->setHoverTextColor(value);
+		if (name == "hover_text_color")	this->setHoverTextColor(value);
 		else if (name == "pushed_text_color")	this->setPushedTextColor(value);
 		else if (name == "disabled_text_color")	this->setDisabledTextColor(value);
 		else if (LabelBase::setProperty(name, value)) { }

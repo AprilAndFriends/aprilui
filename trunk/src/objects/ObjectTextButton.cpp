@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -19,8 +19,8 @@
 namespace aprilui
 {
 	TextButton::TextButton(chstr name, grect rect) :
-	Label(name, rect),
-	ButtonBase()
+		Label(name, rect),
+		ButtonBase()
 	{
 		hlog::warn(aprilui::logTag, "'TextButton' is deprecated, use 'TextImageButton' without images instead!"); // DEPRECATED
 		this->mText = "TextButton: " + name;
@@ -31,8 +31,8 @@ namespace aprilui
 	}
 	
 	TextButton::TextButton(chstr name, grect rect, bool warningless_internal_hack) :
-	Label(name, rect),
-	ButtonBase()
+		Label(name, rect),
+		ButtonBase()
 	{
 		hlog::warn(aprilui::logTag, "'TextButton' is deprecated, use 'TextImageButton' without images instead!"); // DEPRECATED
 		this->mText = "TextButton: " + name;
@@ -112,21 +112,6 @@ namespace aprilui
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
-		if (name == "hover_color")
-		{
-			hlog::warn(aprilui::logTag, "'hover_color' is deprecated, use 'hover_text_color' instead!"); // DEPRECATED
-			return this->getHoverTextColor().hex();
-		}
-		if (name == "pushed_color")
-		{
-			hlog::warn(aprilui::logTag, "'pushed_color' is deprecated, use 'pushed_text_color' instead!"); // DEPRECATED
-			return this->getPushedTextColor().hex();
-		}
-		if (name == "disabled_color")
-		{
-			hlog::warn(aprilui::logTag, "'disabled_color' is deprecated, use 'disabled_text_color' instead!"); // DEPRECATED
-			return this->getDisabledTextColor().hex();
-		}
 		bool exists = false;
 		hstr result = ButtonBase::getProperty(name, &exists);
 		if (!exists)
@@ -145,21 +130,6 @@ namespace aprilui
 		if		(name == "hover_text_color")	this->setHoverTextColor(value);
 		else if (name == "pushed_text_color")	this->setPushedTextColor(value);
 		else if (name == "disabled_text_color")	this->setDisabledTextColor(value);
-		else if (name == "hover_color")
-		{
-			hlog::warn(aprilui::logTag, "'hover_color=' is deprecated, use 'hover_text_color=' instead!"); // DEPRECATED
-			this->setHoverTextColor(value);
-		}
-		else if (name == "pushed_color")
-		{
-			hlog::warn(aprilui::logTag, "'pushed_color=' is deprecated, use 'pushed_text_color=' instead!"); // DEPRECATED
-			this->setPushedTextColor(value);
-		}
-		else if (name == "disabled_color")
-		{
-			hlog::warn(aprilui::logTag, "'disabled_color=' is deprecated, use 'disabled_text_color=' instead!"); // DEPRECATED
-			this->setDisabledTextColor(value);
-		}
 		else if (ButtonBase::setProperty(name, value)) { }
 		else return Label::setProperty(name, value);
 		return true;
