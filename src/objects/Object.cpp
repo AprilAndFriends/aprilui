@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.56
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -926,11 +926,6 @@ namespace aprilui
 		else if	(name == "zorder")					this->setZOrder(value);
 		else if	(name == "enabled")					this->setEnabled(value);
 		else if	(name == "click_through")			this->setClickThrough(value);
-		else if	(name == "clickthrough")
-		{
-			hlog::warn(aprilui::logTag, "'clickthrough=' is deprecated. Use 'click_through=' instead!"); // DEPRECATED
-			this->setClickThrough(value);
-		}
 		else if	(name == "inherits_alpha")			this->setInheritsAlpha(value);
 		else if	(name == "red")						this->setRed((int)value);
 		else if	(name == "green")					this->setGreen((int)value);

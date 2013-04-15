@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -93,9 +93,6 @@ namespace aprilui
 	apriluiFnExport void onKeyDown(april::Key keyCode);
 	apriluiFnExport void onKeyUp(april::Key keyCode);
 	apriluiFnExport void onChar(unsigned int charCode);
-
-	DEPRECATED_ATTRIBUTE apriluiFnExport void setLogFunction(void (*fnptr)(chstr));
-	DEPRECATED_ATTRIBUTE apriluiFnExport void log(chstr message, chstr prefix = "[aprilui] ");
 
 	// TODO - hack, has to be removed completely
 	apriluiFnExport bool getForcedDynamicLoading();

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.56
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -213,17 +213,7 @@ namespace aprilui
 		else if	(name == "peak_to_peak")				return this->getAmplitude();
 		else if	(name == "speed")						return this->getSpeed();
 		else if	(name == "offset")						return this->getOffset();
-		else if	(name == "dc_offset")
-		{
-			hlog::warn(aprilui::logTag, "'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
-			return this->getOffset();
-		}
 		else if	(name == "acceleration")	this->getAcceleration();
-		else if	(name == "discrete")
-		{
-			hlog::warn(aprilui::logTag, "'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
-			return this->getDiscreteStep();
-		}
 		else if	(name == "discrete_step")	return this->getDiscreteStep();
 		else if	(name == "reset")			return this->getReset();
 		else if	(name == "inherit_value")	return this->getInheritValue();
@@ -255,17 +245,7 @@ namespace aprilui
 		else if	(name == "peak_to_peak")				this->setAmplitude((float)value / 2.0f);
 		else if	(name == "speed")						this->setSpeed(value);
 		else if	(name == "offset")						this->setOffset(value);
-		else if	(name == "dc_offset")
-		{
-			hlog::warn(aprilui::logTag, "'dc_offset=' is deprecated, use 'offset=' instead!"); // DEPRECATED
-			this->setOffset(value);
-		}
 		else if	(name == "acceleration")	this->setAcceleration(value);
-		else if	(name == "discrete")
-		{
-			hlog::warn(aprilui::logTag, "'discrete=' is deprecated, use 'discrete_step=' instead!"); // DEPRECATED
-			this->setDiscreteStep((bool)value ? 0 : 1);
-		}
 		else if	(name == "discrete_step")	this->setDiscreteStep(value);
 		else if	(name == "reset")			this->setReset(value);
 		else if	(name == "inherit_value")	this->setInheritValue(value);

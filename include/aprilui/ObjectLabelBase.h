@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.52
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -76,9 +76,6 @@ namespace aprilui
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
-		DEPRECATED_ATTRIBUTE bool isUseBackground() { return (this->mBackgroundColor.a != 0); }
-		DEPRECATED_ATTRIBUTE void setUseBackground(bool value) { this->mBackgroundColor.a = (value ? 128 : 0); }
-
 	protected:
 		hstr mText;
 		hstr mTextKey;

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.56
+/// @version 2.6
 /// 
 /// @section LICENSE
 /// 
@@ -267,12 +267,6 @@ namespace aprilui
 		void resizeStop();
 		void moveCenterStop();
 		void fadeColorStop();
-		
-		DEPRECATED_ATTRIBUTE void moveToFront() { if (this->mParent != NULL) { this->mParent->getChildren().remove(this); this->mParent->getChildren().push_back(this); } }
-		DEPRECATED_ATTRIBUTE void moveToBack() { if (this->mParent != NULL) { this->mParent->getChildren().remove(this); this->mParent->getChildren().push_front(this); } }
-		DEPRECATED_ATTRIBUTE bool isClickthrough() { return this->mClickThrough; }
-		DEPRECATED_ATTRIBUTE void setClickthrough(bool value) { this->mClickThrough = value; }
-		DEPRECATED_ATTRIBUTE grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return this->getBoundingRect(overrideRoot); }
 		
 		// TODO - this needs to be seriously refactored
 		virtual bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
