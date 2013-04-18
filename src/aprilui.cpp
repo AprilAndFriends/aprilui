@@ -381,6 +381,14 @@ namespace aprilui
 		}
 	}
 	
+	apriluiFnExport void processEvents()
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->processEvents();
+		}
+	}
+
 	void update(float k)
 	{
 		foreach_m (Dataset*, it, gDatasets)

@@ -974,6 +974,45 @@ namespace aprilui
 		}
 	}
 	
+	void Dataset:: processEvents()
+	{
+		QueuedCallback callback;
+		while (mCallbackQueue.size())
+		{
+			callback = mCallbackQueue.front();
+			mCallbackQueue.pop_front();
+			callback.event->execute(callback.args);
+			delete callback.args;
+		}
+	}
+	
+	void Dataset::queueCallback(Event* event, EventArgs* args)
+	{
+		QueuedCallback callback;
+		callback.event = event;
+		callback.args = args;
+		this->mCallbackQueue.push_back(callback);
+	}
+	
+	void Dataset::removeCallbackFromQueue(Event* event)
+	{
+		int index = 0;
+		foreach (QueuedCallback, it, this->mCallbackQueue)
+		{
+			if (it->event == event)
+			{
+				break;
+			}
+			index += 1;
+		}
+		if (index != this->mCallbackQueue.size())
+		{
+			QueuedCallback callback = this->mCallbackQueue[index];
+			delete callback.args;
+			this->mCallbackQueue.remove_at(index);
+		}
+	}
+	
 	void Dataset::update(float k)
 	{
 		this->updateTextures(k);
