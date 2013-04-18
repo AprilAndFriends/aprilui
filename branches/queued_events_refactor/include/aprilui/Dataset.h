@@ -38,6 +38,8 @@ namespace aprilui
 	class Image;
 	class Texture;
 	class NullImage;
+	class Event;
+	class EventArgs;
 	
 	class apriluiExport Dataset : public EventReceiver
 	{
@@ -85,6 +87,11 @@ namespace aprilui
 		
 		void updateTextures(float k);
 		void unloadUnusedTextures();
+		
+		void processEvents();
+		void queueCallback(Event* event, EventArgs* args);
+		void removeCallbackFromQueue(Event* event);
+		
 		virtual void update(float k);
 		void draw();
 		
@@ -152,7 +159,7 @@ namespace aprilui
 		void reloadTextures();
 		void focus(Object* object);
 		void removeFocus();
-		
+
 	protected:
 		hstr mName;
 		hstr mFilename;
@@ -166,6 +173,13 @@ namespace aprilui
 		hmap<hstr, Image*> mImages;
 		hmap<hstr, hstr> mTexts;
 		NullImage* mNullImage;
+
+		struct QueuedCallback
+		{
+			aprilui::Event* event;
+			aprilui::EventArgs* args;
+		};
+		harray<QueuedCallback> mCallbackQueue;
 		
 		hmap<hstr, void (*)()> mCallbacks;
 		
@@ -198,7 +212,6 @@ namespace aprilui
 		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
 		bool _getCompositeTextKeyFormatIndexes(ustr format, harray<int>& indexes);
 		harray<ustr> _getArgEntries(ustr string);
-		
 	};
 
 }

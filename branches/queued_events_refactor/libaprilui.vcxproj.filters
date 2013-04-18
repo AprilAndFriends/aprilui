@@ -185,6 +185,9 @@
     <ClCompile Include="src\animators\AnimatorCenterMoverY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
+    <ClCompile Include="src\QueuedCallbackEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\aprilui\Animators.h">
@@ -357,6 +360,9 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\AnimatorCenterMoverY.h">
       <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\QueuedCallbackEvent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

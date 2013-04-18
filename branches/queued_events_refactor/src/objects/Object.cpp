@@ -817,8 +817,8 @@ namespace aprilui
 		if (this->mEvents.has_key(name))
 		{
 			gvec2 cursorPosition = aprilui::getCursorPosition();
-			EventArgs args(this, cursorPosition.x, cursorPosition.y, keyCode, extra);
-			this->mEvents[name]->execute(&args);
+			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, keyCode, extra);
+			this->mDataset->queueCallback(this->mEvents[name], args);
 			return true;
 		}
 		return false;
@@ -830,8 +830,8 @@ namespace aprilui
 		if (this->mEvents.has_key(name))
 		{
 			gvec2 cursorPosition = aprilui::getCursorPosition();
-			EventArgs args(this, cursorPosition.x, cursorPosition.y, buttonCode, extra);
-			this->mEvents[name]->execute(&args);
+			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, buttonCode, extra);
+			this->mDataset->queueCallback(this->mEvents[name], args);
 			return true;
 		}
 		return false;
@@ -842,8 +842,8 @@ namespace aprilui
 	{
 		if (this->mEvents.has_key(name))
 		{
-			EventArgs args(this, x, y, keyCode, extra);
-			this->mEvents[name]->execute(&args);
+			EventArgs* args = new EventArgs(this, x, y, keyCode, extra);
+			this->mDataset->queueCallback(this->mEvents[name], args);
 			return true;
 		}
 		return false;
