@@ -569,7 +569,7 @@ namespace aprilui
 		foreach_r (Object*, it, this->mChildren)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
+			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(button))
 			{
 				return true;
 			}
@@ -591,7 +591,7 @@ namespace aprilui
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled())
 			{
-				if (object == NULL && (*it)->onMouseUp(keyCode))
+				if (object == NULL && (*it)->onMouseUp(button))
 				{
 					object = (*it);
 				}
