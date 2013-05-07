@@ -36,7 +36,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}</ProjectGuid>
-    <RootNamespace>libaprilui</RootNamespace>
+    <RootNamespace>aprilui</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\v110.default.props" />
