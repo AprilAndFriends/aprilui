@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -49,8 +49,8 @@ namespace aprilui
 		april::Color getTextColor() { return this->mTextColor; }
 		void setTextColor(april::Color value) { this->mTextColor = value; }
 		void setTextColor(chstr value) { this->mTextColor.set(value); }
-		gvec2 getDrawOffset() { return this->mDrawOffset; }
-		void setDrawOffset(gvec2 value) { this->mDrawOffset = value; }
+		gvec2 getTextOffset() { return this->mTextOffset; }
+		void setTextOffset(gvec2 value) { this->mTextOffset = value; }
 		atres::Alignment getHorzFormatting() { return this->mHorzFormatting; }
 		void setHorzFormatting(atres::Alignment value) { this->mHorzFormatting = value; }
 		atres::Alignment getVertFormatting() { return this->mVertFormatting; }
@@ -82,7 +82,7 @@ namespace aprilui
 		hstr mFontName;
 		bool mTextFormatting;
 		april::Color mTextColor;
-		gvec2 mDrawOffset;
+		gvec2 mTextOffset;
 		atres::Alignment mHorzFormatting;
 		atres::Alignment mVertFormatting;
 		atres::Effect mFontEffect;

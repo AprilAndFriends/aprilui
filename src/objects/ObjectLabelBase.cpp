@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -31,7 +31,7 @@ namespace aprilui
 		this->mFontName = "";
 		this->mTextFormatting = true;
 		this->mTextColor = april::Color::White;
-		this->mDrawOffset.set(0.0f, 0.0f);
+		this->mTextOffset.set(0.0f, 0.0f);
 		this->mHorzFormatting = atres::CENTER_WRAPPED;
 		this->mVertFormatting = atres::CENTER;
 		this->mFontEffect = atres::NONE;
@@ -80,11 +80,11 @@ namespace aprilui
 		}
 		if (this->mTextFormatting)
 		{
-			atres::renderer->drawText(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mDrawOffset);
+			atres::renderer->drawText(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mTextOffset);
 		}
 		else
 		{
-			atres::renderer->drawTextUnformatted(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mDrawOffset);
+			atres::renderer->drawTextUnformatted(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mTextOffset);
 		}
 	}
 
@@ -126,8 +126,8 @@ namespace aprilui
 			}
 			return effect;
 		}
-		if (name == "offset_x")			return this->mDrawOffset.x;
-		if (name == "offset_y")			return this->mDrawOffset.y;
+		if (name == "text_offset_x")	return this->mTextOffset.x;
+		if (name == "text_offset_y")	return this->mTextOffset.y;
 		if (name == "background_color")	return this->mBackgroundColor.hex();
 		if (propertyExists != NULL)
 		{
@@ -138,9 +138,9 @@ namespace aprilui
 	
 	bool LabelBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "font")					this->setFont(value);
-		else if (name == "text_key")		this->setTextKey(value);
-		else if (name == "text")			this->setText(value);
+		if (name == "font")						this->setFont(value);
+		else if (name == "text_key")			this->setTextKey(value);
+		else if (name == "text")				this->setText(value);
 		else if (name == "horz_formatting")
 		{
 			if (value == "left")				this->setHorzFormatting(atres::LEFT);
@@ -158,16 +158,16 @@ namespace aprilui
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")				this->setVertFormatting(atres::TOP);
-			else if (value == "center")		this->setVertFormatting(atres::CENTER);
-			else if (value == "bottom")		this->setVertFormatting(atres::BOTTOM);
+			if (value == "top")			this->setVertFormatting(atres::TOP);
+			else if (value == "center")	this->setVertFormatting(atres::CENTER);
+			else if (value == "bottom")	this->setVertFormatting(atres::BOTTOM);
 			else
 			{
 				hlog::warn(aprilui::logTag, "'vert_formatting=' does not support value '" + value + "'.");
 				return false;
 			}
 		}
-		else if (name == "text_color")		this->setTextColor(value);
+		else if (name == "text_color")			this->setTextColor(value);
 		else if (name == "color")
 		{
 			throw hl_exception("LabelBase instance using 'color=' which is conflicted with TextImageButton's color and cannot be used! Maybe you meant 'text_color='?");
@@ -202,8 +202,8 @@ namespace aprilui
 				}
 			}
 		}
-		else if (name == "offset_x")		this->mDrawOffset.x = (float)value;
-		else if (name == "offset_y")		this->mDrawOffset.y = (float)value;
+		else if (name == "text_offset_x")		this->mTextOffset.x = (float)value;
+		else if (name == "text_offset_y")		this->mTextOffset.y = (float)value;
 		else if (name == "background_color")	this->setBackgroundColor(value);
 		else return false;
 		return true;
