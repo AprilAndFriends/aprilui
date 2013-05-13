@@ -819,14 +819,12 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -847,12 +845,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -877,7 +873,14 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -895,7 +898,14 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -912,7 +922,14 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				SDKROOT = macosx;
 			};
 			name = "App Store";
@@ -926,12 +943,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -956,7 +971,14 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -972,14 +994,12 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -1003,7 +1023,14 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
 				SDKROOT = macosx;
 			};
 			name = "Release-LLVM";
@@ -1017,12 +1044,10 @@
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "${SRCROOT}/../lib/mac";
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
@@ -1054,15 +1079,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../hltypes/hlxml/include",
-					"${SRCROOT}/../atres/include",
-					"${SRCROOT}/../april/include",
-					/usr/include/libxml2,
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
@@ -1091,15 +1107,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../hltypes/hlxml/include",
-					"${SRCROOT}/../atres/include",
-					"${SRCROOT}/../april/include",
-					/usr/include/libxml2,
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
@@ -1123,15 +1130,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../hltypes/hlxml/include",
-					"${SRCROOT}/../atres/include",
-					"${SRCROOT}/../april/include",
-					/usr/include/libxml2,
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
@@ -1156,15 +1154,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../hltypes/hlxml/include",
-					"${SRCROOT}/../atres/include",
-					"${SRCROOT}/../april/include",
-					/usr/include/libxml2,
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
@@ -1189,15 +1178,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/../gtypes/include",
-					"${SRCROOT}/../hltypes/hlxml/include",
-					"${SRCROOT}/../atres/include",
-					"${SRCROOT}/../april/include",
-					/usr/include/libxml2,
-					"${SRCROOT}/include",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
