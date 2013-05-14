@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.55
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -97,7 +97,7 @@ namespace aprilui
 				area->_mLastScrollOffset.y = area->getScrollOffsetY();
 				area->_mDragTimer.y = 0.0f;
 			}
-			area->_mDragSpeed.y = -hsgn(value) * sqrt(2 * inertia * habs(value));
+			area->_mDragSpeed.y = -hsgn(value) * hsqrt(2 * inertia * habs(value));
 			this->_adjustDragSpeed();
 		}
 		this->_updateBar();
@@ -278,7 +278,7 @@ namespace aprilui
 			s = hsgn(s) * hmodf(-habs(difference), this->mGridSize);
 		}
 		// v = sqrt(2 * a * s)
-		area->_mDragSpeed.y = -hsgn(s) * sqrt(2 * inertia * habs(s));
+		area->_mDragSpeed.y = -hsgn(s) * hsqrt(2 * inertia * habs(s));
 	}
 
 	bool ScrollBarV::_checkAreaSize()

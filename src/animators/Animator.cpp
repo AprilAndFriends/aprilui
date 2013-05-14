@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.6
+/// @version 2.61
 /// 
 /// @section LICENSE
 /// 
@@ -105,20 +105,20 @@ namespace aprilui
 			result = (float)dsin(time * this->mSpeed * 360) * this->mAmplitude;
 			break;
 		case aprilui::Animator::Square:
-			result = (fmod(time * this->mSpeed, 1.0f) < 0.5f ? this->mAmplitude : -this->mAmplitude);
+			result = (hmodf(time * this->mSpeed, 1.0f) < 0.5f ? this->mAmplitude : -this->mAmplitude);
 			break;
 		case aprilui::Animator::Saw:
-			result = (fmod(time * this->mSpeed + 0.5f, 1.0f) - 0.5f) * 2 * this->mAmplitude;
+			result = (hmodf(time * this->mSpeed + 0.5f, 1.0f) - 0.5f) * 2 * this->mAmplitude;
 			break;
 		case aprilui::Animator::Triangle:
-			result = fmod(time * this->mSpeed, 1.0f);
+			result = hmodf(time * this->mSpeed, 1.0f);
 			if (!is_in_range(result, 0.25f, 0.75f))
 			{
-				result = (fmod(time * this->mSpeed + 0.5f, 1.0f) - 0.5f) * 4 * this->mAmplitude;
+				result = (hmodf(time * this->mSpeed + 0.5f, 1.0f) - 0.5f) * 4 * this->mAmplitude;
 			}
 			else
 			{
-				result = -(fmod(time * this->mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * this->mAmplitude;
+				result = -(hmodf(time * this->mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * this->mAmplitude;
 			}
 			break;
 		case aprilui::Animator::Random:
