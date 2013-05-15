@@ -34,15 +34,6 @@ namespace aprilui
 {
 	hstr logTag = "aprilui";
 
-	void log(chstr message, chstr prefix)
-	{
-		hlog::write(aprilui::logTag, message);
-	}
-	
-	void setLogFunction(void (*fnptr)(chstr))
-	{
-	}
-	
 	bool registerLock = false;
 	hmap<hstr, Dataset*> gDatasets;
 	hmap<hstr, Object* (*)(chstr, grect)> gObjectFactories;
