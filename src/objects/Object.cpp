@@ -377,6 +377,14 @@ namespace aprilui
 		this->notifyEvent("Resized", NULL);
 	}
 
+	void Object::setAnchors(bool left, bool right, bool top, bool bottom)
+	{
+		this->mAnchorLeft = left;
+		this->mAnchorRight = right;
+		this->mAnchorTop = top;
+		this->mAnchorBottom = bottom;
+	}
+	
 	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot)
 	{
 		// recursive function that combines all the alpha from the parents (if any)
