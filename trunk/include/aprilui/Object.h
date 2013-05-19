@@ -116,6 +116,7 @@ namespace aprilui
 		void setEnabled(bool value) { this->mEnabled = value; }
 		float getAngle() { return this->mAngle; }
 		void setAngle(float value) { this->mAngle = value; }
+		void setAnchors(bool left, bool right, bool top, bool bottom);
 		bool isAnchorLeft() { return this->mAnchorLeft; }
 		void setAnchorLeft(bool value) { this->mAnchorLeft = value; }
 		bool isAnchorRight() { return this->mAnchorRight; }
