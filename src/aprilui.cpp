@@ -52,8 +52,7 @@ namespace aprilui
 	harray<hstr> supportedLocalizations;
 	float textureIdleUnloadTime = 0.0f;
 	hmap<hstr, float> extensionScales;
-	// TODO - hack, has to be removed
-	bool forcedDynamicLoading = false;
+	bool defaultDynamicLoading = false;
 
 	void init()
 	{
@@ -551,8 +550,7 @@ namespace aprilui
 		}
 	}
 	
-	// TODO - hack, has to be removed
-	bool getForcedDynamicLoading() { return forcedDynamicLoading; }
-	void setForcedDynamicLoading(bool value) { forcedDynamicLoading = value; }
+	bool getDefaultDynamicLoading() { return defaultDynamicLoading; }
+	void setDefaultDynamicLoading(bool value) { defaultDynamicLoading = value; }
 	
 }
