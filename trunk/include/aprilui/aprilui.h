@@ -96,9 +96,8 @@ namespace aprilui
 	apriluiFnExport void onKeyUp(april::Key keyCode);
 	apriluiFnExport void onChar(unsigned int charCode);
 
-	// TODO - hack, has to be removed completely
-	apriluiFnExport bool getForcedDynamicLoading();
-	apriluiFnExport void setForcedDynamicLoading(bool value);
+	apriluiFnExport bool getDefaultDynamicLoading();
+	apriluiFnExport void setDefaultDynamicLoading(bool value);
 
 }
 
