@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="libaprilui"
 	ProjectGUID="{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}"
 	RootNamespace="hltypes"
@@ -205,6 +205,10 @@
 			</File>
 			<File
 				RelativePath=".\src\MemberCallbackEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\QueuedCallbackEvent.cpp"
 				>
 			</File>
 			<File
@@ -451,6 +455,10 @@
 			</File>
 			<File
 				RelativePath=".\include\aprilui\Objects.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\aprilui\QueuedCallbackEvent.h"
 				>
 			</File>
 			<File

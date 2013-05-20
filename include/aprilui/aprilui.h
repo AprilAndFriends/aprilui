@@ -76,6 +76,8 @@ namespace aprilui
 	apriluiFnExport void drawCursor();
 	
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
+	
+	apriluiFnExport void processEvents();
 	apriluiFnExport void update(float k);
 	apriluiFnExport void updateTextures(float k);
 	apriluiFnExport void unloadUnusedTextures();
