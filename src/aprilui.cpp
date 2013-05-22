@@ -509,6 +509,15 @@ namespace aprilui
 		}
 	}
 	
+	void onMouseCancel(april::Key keyCode)
+	{
+		aprilui::updateCursorPosition();
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onMouseCancel(keyCode);
+		}
+	}
+	
 	void onMouseMove()
 	{
 		aprilui::updateCursorPosition();

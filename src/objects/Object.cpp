@@ -627,19 +627,24 @@ namespace aprilui
 		{
 			foreach (Object*, it, validObjects)
 			{
-				(*it)->cancelMouseDown();
+				(*it)->onMouseCancel(keyCode);
 			}
-            // TODO
-            // this object also has to process their cancelMouseDown, but without sending it to its children
-            // this needs to be removed and fixed upon the next major system refactoring
-            validObjects = this->mChildren;
-            this->mChildren.clear();
-            this->cancelMouseDown();
-            this->mChildren = validObjects;
+            // does not call the mouse cancel event for its children
+            this->mouseCancel();
 			return true;
 		}
-        
 		return false;
+	}
+
+	bool Object::onMouseCancel(april::Key keyCode)
+	{
+		this->mouseCancel();
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
+		{
+			(*it)->onMouseCancel(keyCode);
+		}
+		return true;
 	}
 
 	bool Object::onMouseMove()
@@ -781,17 +786,11 @@ namespace aprilui
 		}
 		return false;
 	}
-	
-	void Object::cancelMouseDown()
-	{
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
-		foreach_r (Object*, it, children)
-		{
-			(*it)->cancelMouseDown();
-		}
-	}
 
+	void Object::mouseCancel()
+	{
+	}
+	
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
 		this->registerEvent(name, new CallbackEvent(callback));

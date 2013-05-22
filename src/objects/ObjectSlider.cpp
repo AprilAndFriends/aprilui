@@ -99,10 +99,10 @@ namespace aprilui
 		return false;
 	}
 	
-	void Slider::cancelMouseDown()
+	void Slider::mouseCancel()
 	{
 		this->mPushed = false;
-		ImageBox::cancelMouseDown();
+		ImageBox::mouseCancel();
 	}
 	
 	void Slider::OnDraw()

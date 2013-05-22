@@ -98,6 +98,11 @@ namespace aprilui
 		return false;
 	}
 
+	bool ButtonBase::onMouseCancel(april::Key keyCode)
+	{
+		return true;
+	}
+
 	bool ButtonBase::onMouseMove()
 	{
 		this->mHovered = this->_checkHover();
@@ -135,7 +140,7 @@ namespace aprilui
 		return false;
 	}
 
-	void ButtonBase::cancelMouseDown()
+	void ButtonBase::mouseCancel()
 	{
 		this->mPushed = false;
 		this->mHovered = this->_checkHover();

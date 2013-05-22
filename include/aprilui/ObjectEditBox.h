@@ -57,7 +57,7 @@ namespace aprilui
 		bool onKeyDown(april::Key keyCode);
 		bool onKeyUp(april::Key keyCode);
 		bool onChar(unsigned int charCode);
-		void cancelMouseDown();
+		void mouseCancel();
 		
 	protected:
 		hstr mEmptyText;
