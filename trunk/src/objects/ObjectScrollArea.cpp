@@ -168,7 +168,7 @@ namespace aprilui
 					this->_mLastPosition = position;
 					foreach (Object*, it, this->mChildren)
 					{
-						(*it)->cancelMouseDown();
+						(*it)->onMouseCancel(april::AK_LBUTTON);
 					}
 				}
 				else
@@ -353,12 +353,12 @@ namespace aprilui
 		return Object::onButtonUp(buttonCode);
 	}
 	
-	void ScrollArea::cancelMouseDown()
+	void ScrollArea::mouseCancel()
 	{
-		Object::cancelMouseDown();
+		Object::mouseCancel();
 	}
 	
-	// Temporary hack to help battle cancelMouseDown() problems in scrollarea
+	// TODO - remove this temporary hack
 	void ScrollArea::__stop()
 	{
 		this->mDragging = false;

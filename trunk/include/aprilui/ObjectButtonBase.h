@@ -42,10 +42,11 @@ namespace aprilui
 		
 		virtual bool onMouseDown(april::Key keyCode);
 		virtual bool onMouseUp(april::Key keyCode);
+		virtual bool onMouseCancel(april::Key keyCode);
 		virtual bool onMouseMove();
 		virtual bool onButtonDown(april::Button buttonCode);
 		virtual bool onButtonUp(april::Button buttonCode);
-		virtual void cancelMouseDown();
+		virtual void mouseCancel();
 
 		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
 		virtual bool setProperty(chstr name, chstr value);

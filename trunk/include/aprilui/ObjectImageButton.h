@@ -69,7 +69,7 @@ namespace aprilui
 		bool onMouseMove();
 		bool onButtonDown(april::Button buttonCode);
 		bool onButtonUp(april::Button buttonCode);
-		void cancelMouseDown();
+		void mouseCancel();
 		
 	protected:
 		Image* mNormalImage;

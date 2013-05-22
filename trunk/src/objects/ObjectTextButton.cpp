@@ -206,10 +206,10 @@ namespace aprilui
 		return (click || up);
 	}
 
-	void TextButton::cancelMouseDown()
+	void TextButton::mouseCancel()
 	{
-		ButtonBase::cancelMouseDown();
-		Label::cancelMouseDown();
+		ButtonBase::mouseCancel();
+		Label::mouseCancel();
 	}
 
 }

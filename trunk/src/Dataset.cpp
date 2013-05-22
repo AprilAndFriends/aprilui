@@ -941,6 +941,11 @@ namespace aprilui
 		return (this->mRoot != NULL && this->mRoot->onMouseUp(keyCode));
 	}
 	
+	bool Dataset::onMouseCancel(april::Key keyCode)
+	{
+		return (this->mRoot != NULL && this->mRoot->onMouseCancel(keyCode));
+	}
+	
 	bool Dataset::onMouseMove()
 	{
 		return (this->mRoot != NULL && this->mRoot->onMouseMove());

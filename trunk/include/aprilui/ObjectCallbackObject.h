@@ -40,7 +40,7 @@ namespace aprilui
 		bool onMouseUp(april::Key keyCode);
 		bool onMouseMove();
 		bool onMouseScroll(float x, float y);
-		void cancelMouseDown();
+		void mouseCancel();
 
 	protected:
 		void (*mDrawCallback)(CallbackObject*);

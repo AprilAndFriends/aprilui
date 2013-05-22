@@ -358,10 +358,10 @@ namespace aprilui
 		return false;
 	}
 
-	void EditBox::cancelMouseDown()
+	void EditBox::mouseCancel()
 	{
 		this->mPushed = false;
-		Object::cancelMouseDown();
+		Object::mouseCancel();
 	}
 
 	hstr EditBox::getProperty(chstr name, bool* propertyExists)

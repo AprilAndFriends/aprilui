@@ -102,10 +102,10 @@ namespace aprilui
 		return false;
 	}
 
-	void CallbackObject::cancelMouseDown()
+	void CallbackObject::mouseCancel()
 	{
-		Object::cancelMouseDown();
-		this->triggerEvent("CancelMouseDown");
+		Object::mouseCancel();
+		this->triggerEvent("MouseCancel");
 	}
 
 }

@@ -105,6 +105,7 @@ namespace aprilui
 		
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
+		bool onMouseCancel(april::Key keyCode);
 		bool onMouseMove();
 		bool onMouseScroll(float x, float y);
 		bool onKeyDown(april::Key keyCode);
