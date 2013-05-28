@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -78,14 +78,11 @@ namespace aprilui
 		default:
 			break;
 		}
-		if (this->mTextFormatting)
+		if (!this->mTextFormatting)
 		{
-			atres::renderer->drawText(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mTextOffset);
+			text = "[-]" + text;
 		}
-		else
-		{
-			atres::renderer->drawTextUnformatted(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mTextOffset);
-		}
+		atres::renderer->drawText(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mTextOffset);
 	}
 
 	hstr LabelBase::getProperty(chstr name, bool* propertyExists)

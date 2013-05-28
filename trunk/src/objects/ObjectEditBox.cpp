@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.54
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -31,7 +31,6 @@ namespace aprilui
 		this->mEmptyText = "";
 		this->mEmptyTextKey = "";
 		this->mHorzFormatting = atres::LEFT;
-		this->mTextFormatting = false;
 		this->mPushed = false;
 		this->mMaxLength = 0;
 		this->mPasswordChar = '\0';

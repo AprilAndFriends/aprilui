@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.56
+/// @version 2.62
 /// 
 /// @section LICENSE
 /// 
@@ -61,13 +61,13 @@ namespace aprilui
 		void setAcceleration(float value) { this->mAcceleration = value; }
 		int getDiscreteStep() { return this->mDiscreteStep; }
 		void setDiscreteStep(int value) { this->mDiscreteStep = value; }
-		bool getReset() { return this->mReset; }
+		bool isReset() { return this->mReset; }
 		void setReset(bool value) { this->mReset = value; }
 		bool getInheritValue() { return this->mInheritValue; }
 		void setInheritValue(bool value) { this->mInheritValue = value; }
 		float getTarget() { return this->mTarget; }
 		void setTarget(float value) { this->mTarget = value; }
-		bool getUseTarget() { return this->mUseTarget; }
+		bool isUseTarget() { return this->mUseTarget; }
 		void setUseTarget(bool value) { this->mUseTarget = value; }
 		float (*getCustomFunction())(Animator*, float) { return this->mCustomFunction; }
 		void setCustomFunction(float (*value)(Animator*, float)) { this->mCustomFunction = value; }
@@ -86,6 +86,9 @@ namespace aprilui
 
 		void OnDrawDebug();
 		
+		DEPRECATED_ATTRIBUTE bool getUseTarget() { return this->isUseTarget(); }
+		DEPRECATED_ATTRIBUTE bool getReset() { return this->isReset(); }
+
 	protected:
 		float mTimeSinceLastFrame;
 		float mValue;
