@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.62
+/// @version 2.63
 /// 
 /// @section LICENSE
 /// 
@@ -69,6 +69,15 @@ namespace aprilui
 		else
 		{
 			text = hstr(this->mPasswordChar, this->mText.utf8_size() - this->mOffsetIndex);
+		}
+		switch (this->mHorzFormatting)
+		{
+		case atres::RIGHT:
+		case atres::RIGHT_WRAPPED:
+			x -= this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text));
+		case atres::CENTER:
+		case atres::CENTER_WRAPPED:
+			x -= (this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text))) * 0.5f;
 		}
 		int count = atres::renderer->getTextCountUnformatted(this->mFontName, text, x);
 		this->setCursorIndex(this->mOffsetIndex + text(0, count).utf8_size());
