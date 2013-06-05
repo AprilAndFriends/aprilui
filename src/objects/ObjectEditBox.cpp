@@ -74,10 +74,10 @@ namespace aprilui
 		{
 		case atres::RIGHT:
 		case atres::RIGHT_WRAPPED:
-			x -= this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text));
+			x -= this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text);
 		case atres::CENTER:
 		case atres::CENTER_WRAPPED:
-			x -= (this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text))) * 0.5f;
+			x -= (this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text)) * 0.5f;
 		}
 		int count = atres::renderer->getTextCountUnformatted(this->mFontName, text, x);
 		this->setCursorIndex(this->mOffsetIndex + text(0, count).utf8_size());
