@@ -371,7 +371,7 @@ namespace aprilui
 		}
 	}
 	
-	apriluiFnExport void processEvents()
+	void processEvents()
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
@@ -490,7 +490,7 @@ namespace aprilui
 		}
 		return 1.0f;
 	}
-	
+
 	void onMouseDown(april::Key keyCode)
 	{
 		aprilui::updateCursorPosition();
