@@ -881,6 +881,15 @@ namespace aprilui
 		this->mColor.a = value;
 	}
 
+	void Object::setEnabled(bool value)
+	{
+		if (value != this->mEnabled)
+		{
+			this->mEnabled = value;
+			this->notifyEvent("OnEnableChanged", NULL);
+		}
+	}
+
 	hstr Object::getProperty(chstr name, bool* propertyExists)
 	{
 		if (propertyExists != NULL)
