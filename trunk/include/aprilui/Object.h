@@ -113,7 +113,7 @@ namespace aprilui
 		void setCenterY(float value) { this->mCenter.y = value; }
 		
 		bool isEnabled() { return this->mEnabled; }
-		void setEnabled(bool value) { this->mEnabled = value; }
+		void setEnabled(bool value);
 		float getAngle() { return this->mAngle; }
 		void setAngle(float value) { this->mAngle = value; }
 		void setAnchors(bool left, bool right, bool top, bool bottom);
