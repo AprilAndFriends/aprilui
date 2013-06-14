@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.55
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -818,7 +818,7 @@ namespace aprilui
 	Image* Dataset::getImage(chstr name)
 	{
 		Image* image = NULL;
-		if (name == "null")
+		if (name == APRILUI_IMAGE_NAME_NULL)
 		{
 			if (!this->mNullImage)
 			{

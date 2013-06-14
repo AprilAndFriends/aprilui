@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.51
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -87,7 +87,7 @@ namespace aprilui
 	void ProgressBar::setProgressImage(Image* image)
 	{
 		this->mProgressImage = image;
-		this->mProgressImageName = (image != NULL ? image->getFullName() : "null");
+		this->mProgressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
 	void ProgressBar::setProgressImageByName(chstr name)
@@ -98,7 +98,7 @@ namespace aprilui
 	void ProgressBar::setMaskImage(Image* image)
 	{
 		this->mMaskImage = image;
-		this->mMaskImageName = (image != NULL ? image->getFullName() : "null");
+		this->mMaskImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
 	void ProgressBar::setMaskImageByName(chstr name)

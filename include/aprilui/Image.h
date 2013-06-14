@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -22,6 +22,8 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+
+#define APRILUI_IMAGE_NAME_NULL "null"
 
 namespace aprilui
 {
