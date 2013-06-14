@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -53,7 +53,7 @@ namespace aprilui
 		}
 		else
 		{
-			this->mImageName = "null";
+			this->mImageName = APRILUI_IMAGE_NAME_NULL;
 		}
 	}
 
@@ -77,7 +77,7 @@ namespace aprilui
 	{
 		if (this->mImage == NULL)
 		{
-			this->mImage = this->mDataset->getImage("null");
+			this->mImage = this->mDataset->getImage(APRILUI_IMAGE_NAME_NULL);
 		}
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());

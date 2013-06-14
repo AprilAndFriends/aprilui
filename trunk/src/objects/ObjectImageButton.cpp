@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.51
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -93,7 +93,7 @@ namespace aprilui
 		this->mImage = this->mNormalImage;
 		if (this->mImage == NULL)
 		{
-			this->mImage = this->mDataset->getImage("null");
+			this->mImage = this->mDataset->getImage(APRILUI_IMAGE_NAME_NULL);
 		}
 		if (!this->isDerivedEnabled())
 		{
@@ -127,7 +127,7 @@ namespace aprilui
 	void ImageButton::setPushedImage(Image* image)
 	{
 		this->mPushedImage = image;
-		this->mPushedImageName = (image != NULL ? image->getFullName() : "null");
+		this->mPushedImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
 	void ImageButton::setPushedImageByName(chstr name)
@@ -138,7 +138,7 @@ namespace aprilui
 	void ImageButton::setHoverImage(Image* image)
 	{
 		this->mHoverImage = image;
-		this->mHoverImageName = (image != NULL ? image->getFullName() : "null");
+		this->mHoverImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
 	void ImageButton::setHoverImageByName(chstr name)
@@ -149,7 +149,7 @@ namespace aprilui
 	void ImageButton::setDisabledImage(Image* image)
 	{
 		this->mDisabledImage = image;
-		this->mDisabledImageName = (image != NULL ? image->getFullName() : "null");
+		this->mDisabledImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
 	void ImageButton::setDisabledImageByName(chstr name)

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.64
 /// 
 /// @section LICENSE
 /// 
@@ -14,7 +14,7 @@
 
 namespace aprilui
 {
-	NullImage::NullImage() : Image(0, "null", grect())
+	NullImage::NullImage() : Image(0, APRILUI_IMAGE_NAME_NULL, grect())
 	{
 	}
 	
