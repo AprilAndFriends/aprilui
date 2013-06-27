@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.62
+/// @version 2.65
 /// 
 /// @section LICENSE
 /// 
@@ -26,18 +26,17 @@ namespace aprilui
 	class apriluiExport Animator : public Object
 	{
 	public:
-		enum AnimationFunction
-		{
-			Linear,
-			Sine,
-			Square,
-			Saw,
-			Triangle,
-			Random,
-			Hover,
-			Custom
-		};
-	
+		friend class Object;
+
+		DEPRECATED_ATTRIBUTE static AnimationFunction Linear;
+		DEPRECATED_ATTRIBUTE static AnimationFunction Sine;
+		DEPRECATED_ATTRIBUTE static AnimationFunction Square;
+		DEPRECATED_ATTRIBUTE static AnimationFunction Saw;
+		DEPRECATED_ATTRIBUTE static AnimationFunction Triangle;
+		DEPRECATED_ATTRIBUTE static AnimationFunction Random;
+		DEPRECATED_ATTRIBUTE static AnimationFunction Hover;
+		DEPRECATED_ATTRIBUTE static AnimationFunction Custom;
+
 		Animator(chstr name);
 		~Animator();
 		
