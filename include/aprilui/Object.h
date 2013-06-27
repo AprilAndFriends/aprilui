@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.65
 /// 
 /// @section LICENSE
 /// 
@@ -36,6 +36,18 @@ namespace aprilui
 	class apriluiExport Object : public EventReceiver
 	{
 	public:
+		enum AnimationFunction
+		{
+			Linear,
+			Sine,
+			Square,
+			Saw,
+			Triangle,
+			Random,
+			Hover,
+			Custom
+		};
+	
 		friend class Dataset;
 
 		Object(chstr name, grect rect);
@@ -52,7 +64,6 @@ namespace aprilui
 		void destroyChildren();
 		harray<Object*>& getChildren() { return this->mChildren; }
 		hmap<hstr, Event*>& getEvents() { return this->mEvents; }
-		Object* getChildByName(chstr name, bool recursive = false);
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
@@ -195,6 +206,7 @@ namespace aprilui
 		void draw();
 		
 		Object* findChildByName(chstr name);
+		Object* findDescendantByName(chstr name);
 		
 		void resetCenter();
 		
@@ -227,6 +239,8 @@ namespace aprilui
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
 		void fadeColor(april::Color color, float speed);
 		
+		Animator* moveYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
 		Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f);
@@ -250,7 +264,7 @@ namespace aprilui
 		void moveCenterQueue(gvec2 center, float speed, float delay = 0.0f);
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
-		
+
 		void moveXStop();
 		void moveYStop();
 		void scaleXStop();
@@ -276,6 +290,8 @@ namespace aprilui
 		virtual bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "");
 		// TODO - this needs to be seriously refactored
 		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
+
+		DEPRECATED_ATTRIBUTE Object* getChildByName(chstr name, bool recursive) { return (!recursive ? this->findChildByName(name) : this->findDescendantByName(name)); }
 
 	protected:
 		hstr mName;

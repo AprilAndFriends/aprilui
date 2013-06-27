@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.62
+/// @version 2.65
 /// 
 /// @section LICENSE
 /// 
@@ -18,12 +18,21 @@
 
 namespace aprilui
 {
+	Object::AnimationFunction Animator::Linear = Object::AnimationFunction::Linear; // DEPRECATED
+	Object::AnimationFunction Animator::Sine = Object::AnimationFunction::Sine; // DEPRECATED
+	Object::AnimationFunction Animator::Square = Object::AnimationFunction::Square; // DEPRECATED
+	Object::AnimationFunction Animator::Saw = Object::AnimationFunction::Saw; // DEPRECATED
+	Object::AnimationFunction Animator::Triangle = Object::AnimationFunction::Triangle; // DEPRECATED
+	Object::AnimationFunction Animator::Random = Object::AnimationFunction::Random; // DEPRECATED
+	Object::AnimationFunction Animator::Hover = Object::AnimationFunction::Hover; // DEPRECATED
+	Object::AnimationFunction Animator::Custom = Object::AnimationFunction::Custom; // DEPRECATED
+
 	Animator::Animator(chstr name) :
 		Object(name, grect(0, 0, 1, 1))
 	{
 		this->mTimeSinceLastFrame = 0.0f;
 		this->mValue = 0.0f;
-		this->mFunction = aprilui::Animator::Linear;
+		this->mFunction = aprilui::Object::Linear;
 		this->mTimer = 0.0f;
 		this->mDelay = 0.0f;
 		this->mPeriods = 1.0f;
@@ -98,19 +107,19 @@ namespace aprilui
 		float result = 0.0f;
 		switch (this->mFunction)
 		{
-		case aprilui::Animator::Linear:
+		case Object::Linear:
 			result = time * this->mSpeed * this->mAmplitude;
 			break;
-		case aprilui::Animator::Sine:
+		case Object::Sine:
 			result = (float)dsin(time * this->mSpeed * 360) * this->mAmplitude;
 			break;
-		case aprilui::Animator::Square:
+		case Object::Square:
 			result = (hmodf(time * this->mSpeed, 1.0f) < 0.5f ? this->mAmplitude : -this->mAmplitude);
 			break;
-		case aprilui::Animator::Saw:
+		case Object::Saw:
 			result = (hmodf(time * this->mSpeed + 0.5f, 1.0f) - 0.5f) * 2 * this->mAmplitude;
 			break;
-		case aprilui::Animator::Triangle:
+		case Object::Triangle:
 			result = hmodf(time * this->mSpeed, 1.0f);
 			if (!is_in_range(result, 0.25f, 0.75f))
 			{
@@ -121,10 +130,10 @@ namespace aprilui
 				result = -(hmodf(time * this->mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * this->mAmplitude;
 			}
 			break;
-		case aprilui::Animator::Random:
+		case Object::Random:
 			result = hrandf(-this->mSpeed * this->mAmplitude, this->mSpeed * this->mAmplitude);
 			break;
-		case aprilui::Animator::Hover:
+		case Object::Hover:
 			if ((this->mAmplitude >= 0.0f) == this->mParent->isCursorInside())
 			{
 				result = hmin(this->mValue - this->mOffset + k * this->mSpeed, (float)habs(this->mAmplitude));
@@ -134,7 +143,7 @@ namespace aprilui
 				result = hmax(this->mValue - this->mOffset - k * this->mSpeed, -(float)habs(this->mAmplitude));
 			}
 			break;
-		case aprilui::Animator::Custom:
+		case Object::Custom:
 			result = (this->mCustomFunction != NULL ? this->mCustomFunction(this, time) : this->mValue);
 			break;
 		}
@@ -147,7 +156,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		if (this->mFunction == Hover)
+		if (this->mFunction == Object::Hover)
 		{
 			return true;
 		}
@@ -168,7 +177,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		if (this->mFunction == Hover)
+		if (this->mFunction == Object::Hover)
 		{
 			return true;
 		}
@@ -204,14 +213,14 @@ namespace aprilui
 		}
 		if		(name == "function" || name == "func")
 		{
-			if		(mFunction == aprilui::Animator::Sine)		return "sine";
-			else if	(mFunction == aprilui::Animator::Saw)		return "saw";
-			else if	(mFunction == aprilui::Animator::Square)	return "square";
-			else if	(mFunction == aprilui::Animator::Triangle)	return "triangle";
-			else if	(mFunction == aprilui::Animator::Linear)	return "linear";
-			else if	(mFunction == aprilui::Animator::Random)	return "random";
-			else if	(mFunction == aprilui::Animator::Hover)		return "hover";
-			else												return "custom";
+			if		(mFunction == Object::Sine)		return "sine";
+			else if	(mFunction == Object::Saw)		return "saw";
+			else if	(mFunction == Object::Square)	return "square";
+			else if	(mFunction == Object::Triangle)	return "triangle";
+			else if	(mFunction == Object::Linear)	return "linear";
+			else if	(mFunction == Object::Random)	return "random";
+			else if	(mFunction == Object::Hover)	return "hover";
+			else									return "custom";
 		}
 		else if	(name == "timer")			return this->getTimer();
 		else if	(name == "delay")			return this->getDelay();
@@ -241,14 +250,14 @@ namespace aprilui
 	{
 		if		(name == "function" || name == "func")
 		{
-			if		(value == "sine")		this->setAnimationFunction(aprilui::Animator::Sine);
-			else if	(value == "saw")		this->setAnimationFunction(aprilui::Animator::Saw);
-			else if	(value == "square")		this->setAnimationFunction(aprilui::Animator::Square);
-			else if	(value == "triangle")	this->setAnimationFunction(aprilui::Animator::Triangle);
-			else if	(value == "linear")		this->setAnimationFunction(aprilui::Animator::Linear);
-			else if	(value == "random")		this->setAnimationFunction(aprilui::Animator::Random);
-			else if	(value == "hover")		this->setAnimationFunction(aprilui::Animator::Hover);
-			else if	(value == "custom")		this->setAnimationFunction(aprilui::Animator::Custom);
+			if		(value == "sine")		this->setAnimationFunction(Object::Sine);
+			else if	(value == "saw")		this->setAnimationFunction(Object::Saw);
+			else if	(value == "square")		this->setAnimationFunction(Object::Square);
+			else if	(value == "triangle")	this->setAnimationFunction(Object::Triangle);
+			else if	(value == "linear")		this->setAnimationFunction(Object::Linear);
+			else if	(value == "random")		this->setAnimationFunction(Object::Random);
+			else if	(value == "hover")		this->setAnimationFunction(Object::Hover);
+			else if	(value == "custom")		this->setAnimationFunction(Object::Custom);
 		}
 		else if	(name == "timer")			this->setTimer(value);
 		else if	(name == "delay")			this->setDelay(value);

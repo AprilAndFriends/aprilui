@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.65
 /// 
 /// @section LICENSE
 /// 
@@ -53,6 +53,8 @@
 	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
 	this->mDynamicAnimators += animator ## type; \
 	animator ## type->_setParent(this); \
+	animator ## type->setSpeed(speed); \
+	animator ## type->setPeriods(1.0f); \
 	if (delay == 0.0f) \
 	{ \
 		animator ## type->setOffset(offset); \
@@ -64,9 +66,26 @@
 		animator ## type->setUseTarget(true); \
 		animator ## type->setInheritValue(true); \
 		animator ## type->setDelay(delay); \
-	} \
-	animator ## type->setSpeed(speed); \
-	animator ## type->setPeriods(1.0f);
+	}
+
+#define CREATE_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength) \
+	CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength, 0.0f);
+
+#define CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength, delay) \
+	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
+	this->mDynamicAnimators += animator ## type; \
+	animator ## type->_setParent(this); \
+	animator ## type->setOffset(offset); \
+	animator ## type->setAmplitude(amplitude); \
+	animator ## type->setAnimationFunction(function); \
+	animator ## type->setSpeed(speed * periodLength); \
+	animator ## type->setPeriods(periodStart + periodLength); \
+	animator ## type->setTimer(periodStart / (speed * periodLength)); \
+	if (delay > 0.0f) \
+	{ \
+		animator ## type->setInheritValue(true); \
+		animator ## type->setDelay(delay); \
+	}
 
 namespace aprilui
 {
@@ -222,6 +241,24 @@ namespace aprilui
 		return NULL;
 	}
 	
+	Object* Object::findDescendantByName(chstr name)
+	{
+		Object* object = this->findChildByName(name);
+		if (object != NULL)
+		{
+			return object;
+		}
+		foreach (Object*, it, this->mChildren)
+		{
+			object = (*it)->findDescendantByName(name);
+			if (object != NULL)
+			{
+				return object;
+			}
+		}
+		return NULL;
+	}
+
 	void Object::setZOrder(int zorder)
 	{
 		if (this->mZOrder != zorder)
@@ -991,31 +1028,6 @@ namespace aprilui
 		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
 	}
 
-	Object* Object::getChildByName(chstr name, bool recursive)
-	{
-		foreach (Object*, it, this->mChildren)
-		{
-			if ((*it)->getName() == name)
-			{
-				return (*it);
-			}
-		}
-		if (recursive)
-		{
-			Object* object;
-			foreach (Object*, it, this->mChildren)
-			{
-				object = (*it)->getChildByName(name, recursive);
-				if (object != NULL)
-				{
-					return object;
-				}
-			}
-		}
-		return NULL;
-	}
-
-	
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
 		if (!this->isVisible() || this->isClickThrough())
@@ -1472,6 +1484,13 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)this->mColor.g, (float)color.g, speed);
 		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)this->mColor.b, (float)color.b, speed);
 		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->mColor.a, (float)color.a, speed);
+	}
+
+	Animator* Object::moveYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength)
+	{
+		REMOVE_EXISTING_ANIMATORS(MoverY);
+		CREATE_DYNAMIC_ANIMATOR_F(MoverY, offset, amplitude, speed, function, periodStart, periodLength);
+		return animatorMoverY;
 	}
 	
 	Animator* Object::moveXQueue(float x, float speed, float delay)
