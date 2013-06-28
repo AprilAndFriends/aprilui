@@ -18,14 +18,14 @@
 
 namespace aprilui
 {
-	Object::AnimationFunction Animator::Linear = Object::AnimationFunction::Linear; // DEPRECATED
-	Object::AnimationFunction Animator::Sine = Object::AnimationFunction::Sine; // DEPRECATED
-	Object::AnimationFunction Animator::Square = Object::AnimationFunction::Square; // DEPRECATED
-	Object::AnimationFunction Animator::Saw = Object::AnimationFunction::Saw; // DEPRECATED
-	Object::AnimationFunction Animator::Triangle = Object::AnimationFunction::Triangle; // DEPRECATED
-	Object::AnimationFunction Animator::Random = Object::AnimationFunction::Random; // DEPRECATED
-	Object::AnimationFunction Animator::Hover = Object::AnimationFunction::Hover; // DEPRECATED
-	Object::AnimationFunction Animator::Custom = Object::AnimationFunction::Custom; // DEPRECATED
+	Object::AnimationFunction Animator::Linear = Object::Linear; // DEPRECATED
+	Object::AnimationFunction Animator::Sine = Object::Sine; // DEPRECATED
+	Object::AnimationFunction Animator::Square = Object::Square; // DEPRECATED
+	Object::AnimationFunction Animator::Saw = Object::Saw; // DEPRECATED
+	Object::AnimationFunction Animator::Triangle = Object::Triangle; // DEPRECATED
+	Object::AnimationFunction Animator::Random = Object::Random; // DEPRECATED
+	Object::AnimationFunction Animator::Hover = Object::Hover; // DEPRECATED
+	Object::AnimationFunction Animator::Custom = Object::Custom; // DEPRECATED
 
 	Animator::Animator(chstr name) :
 		Object(name, grect(0, 0, 1, 1))
