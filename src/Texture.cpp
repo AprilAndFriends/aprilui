@@ -15,6 +15,9 @@
 
 namespace aprilui
 {
+	void (*Texture::loadListener)(Texture*) = NULL;
+	void (*Texture::unloadListener)(Texture*) = NULL;
+
 	Texture::Texture(chstr filename, april::Texture* texture)
 	{
 		this->mOriginalFilename = filename;
@@ -72,6 +75,12 @@ namespace aprilui
 		this->mTexture->setAddressMode(value);
 	}
 
+	bool Texture::isLoaded()
+	{
+		if (this->mTexture == NULL) return false;
+		return this->mTexture->isLoaded();
+	}
+	
 	bool Texture::isValid()
 	{
 		return (this->mTexture != NULL);
@@ -85,6 +94,10 @@ namespace aprilui
 			this->mUnusedTime += k;
 			if (maxTime > 0.0f && mUnusedTime > maxTime)
 			{
+				if (unloadListener != NULL)
+				{
+					(*unloadListener)(this);
+				}
 				this->mTexture->unload();
 				this->mUnusedTime = 0.0f; // safe guard if texture is reloaded externally at some point
 			}
@@ -95,20 +108,42 @@ namespace aprilui
 	{
 		this->mUnusedTime = 0.0f;
 	}
-
-	void Texture::load()
+	
+	void Texture::load(bool ignoreDynamicLinks)
 	{
 		this->mUnusedTime = 0.0f;
-		this->mTexture->load();
-		foreach (Texture*, it, this->mDynamicLinks)
+		if (!this->mTexture->isLoaded())
 		{
-			(*it)->mUnusedTime = 0.0f;
-			(*it)->mTexture->load();
+			this->mTexture->load();
+			if (loadListener != NULL)
+			{
+				(*loadListener)(this);
+			}
+		}
+		
+		if (!ignoreDynamicLinks)
+		{
+			foreach (Texture*, it, this->mDynamicLinks)
+			{
+				(*it)->mUnusedTime = 0.0f;
+				if (!(*it)->mTexture->isLoaded())
+				{
+					(*it)->mTexture->load();
+					if (loadListener != NULL)
+					{
+						(*loadListener)(*it);
+					}
+				}
+			}
 		}
 	}
 
 	void Texture::unload()
 	{
+		if (unloadListener != NULL)
+		{
+			(*unloadListener)(this);
+		}
 		this->mTexture->unload();
 	}
 
@@ -159,6 +194,16 @@ namespace aprilui
 		{
 			this->mDynamicLinks -= link;
 		}
+	}
+	
+	void Texture::setLoadListener(void (*callback)(Texture*))
+	{
+		Texture::loadListener = callback;
+	}
+	
+	void Texture::setUnloadListener(void (*callback)(Texture*))
+	{
+		Texture::unloadListener = callback;
 	}
 	
 }

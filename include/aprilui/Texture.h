@@ -37,6 +37,7 @@ namespace aprilui
 		april::Texture* getRenderTexture();
 		int getWidth();
 		int getHeight();
+		bool isLoaded();
 		bool isValid();
 		void setFilter(april::Texture::Filter value);
 		void setAddressMode(april::Texture::AddressMode value);
@@ -44,13 +45,16 @@ namespace aprilui
 		void update(float k);
 		void resetUnusedTime();
 
-		void load();
+		void load(bool ignoreDynamicLinks = false);
 		void unload();
 		void reload(chstr filename);
 		
 		void addDynamicLink(Texture* link);
 		void removeDynamicLink(Texture* link);
-
+		harray<Texture*> getDynamicLinks() { return mDynamicLinks; };
+		
+		static void setLoadListener(void (*callback)(Texture*));
+		static void setUnloadListener(void (*callback)(Texture*));
 	protected:
 		hstr mOriginalFilename;
 		hstr mFilename;
@@ -61,7 +65,8 @@ namespace aprilui
 		harray<Texture*> mDynamicLinks;
 		april::Texture::Filter mFilter;
 		april::Texture::AddressMode mAddressMode;
-
+		static void (*loadListener)(Texture*);
+		static void (*unloadListener)(Texture*);
 	};
 
 }
