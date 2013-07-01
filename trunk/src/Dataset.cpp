@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.64
+/// @version 2.66
 /// 
 /// @section LICENSE
 /// 
@@ -779,16 +779,30 @@ namespace aprilui
 	
 	Object* Dataset::getObject(chstr name)
 	{
-		if (!this->mObjects.has_key(name))
+		int dot = name.find('.');
+		if (dot < 0)
+		{
+			if (!this->mObjects.has_key(name))
+			{
+				throw ResourceNotExistsException(name, "Object", this);
+			}
+			return this->mObjects[name];
+		}
+		Dataset* dataset;
+		try
+		{
+			dataset = aprilui::getDatasetByName(name(0, dot));
+		}
+		catch (_GenericException)
 		{
 			throw ResourceNotExistsException(name, "Object", this);
 		}
-		return this->mObjects[name];
+		return dataset->getObject(name(dot + 1, -1));
 	}
 	
 	bool Dataset::hasObject(chstr name)
 	{
-		return this->tryGetObject(name) != NULL;
+		return (this->tryGetObject(name) != NULL);
 	}
 	
 	bool Dataset::hasImage(chstr name)
@@ -803,7 +817,21 @@ namespace aprilui
 	
 	Object* Dataset::tryGetObject(chstr name)
 	{
-		return this->mObjects.try_get_by_key(name, NULL);
+		int dot = name.find('.');
+		if (dot < 0)
+		{
+			return this->mObjects.try_get_by_key(name, NULL);
+		}
+		Dataset* dataset;
+		try
+		{
+			dataset = aprilui::getDatasetByName(name(0, dot));
+		}
+		catch (_GenericException)
+		{
+			return NULL;
+		}
+		return dataset->tryGetObject(name(dot + 1, -1));
 	}
 	
 	Texture* Dataset::getTexture(chstr name)
@@ -855,7 +883,7 @@ namespace aprilui
 			{
 				throw ResourceNotExistsException(name, "Image", this);
 			}
-			image = dataset->getImage(name(dot + 1, 100));
+			image = dataset->getImage(name(dot + 1, -1));
 		}
 		return image;
 	}
@@ -880,7 +908,7 @@ namespace aprilui
 			return true;
 		}
 		Dataset* dataset = aprilui::getDatasetByName(textKey(0, dot));
-		return dataset->_findTextEntry(textKey(dot + 1, 100), text);
+		return dataset->_findTextEntry(textKey(dot + 1, -1), text);
 	}
 	
 	hstr Dataset::getTextEntry(chstr textKey)
