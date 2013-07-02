@@ -1029,20 +1029,28 @@ namespace aprilui
 	
 	void Dataset::removeCallbackFromQueue(Event* event)
 	{
-		int index = 0;
+		if (event == NULL || this->mCallbackQueue.size() == 0) return; // optimizations, callback queue is often empty.
+		// remove all instances of the given event
+		harray<int> removeList;
+		int index = 0, offset = 0;
+		QueuedCallback callback;
+
 		foreach (QueuedCallback, it, this->mCallbackQueue)
 		{
 			if (it->event == event)
 			{
-				break;
+				removeList += index;
 			}
-			index += 1;
+			index++;
 		}
-		if (index != this->mCallbackQueue.size())
+
+		foreach (int, it, removeList)
 		{
-			QueuedCallback callback = this->mCallbackQueue[index];
+			index = *it - offset;
+			callback = this->mCallbackQueue[index];
 			delete callback.args;
 			this->mCallbackQueue.remove_at(index);
+			offset++;
 		}
 	}
 	

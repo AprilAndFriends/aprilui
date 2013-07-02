@@ -131,6 +131,7 @@ namespace aprilui
 	{
 		foreach_m (Event*, it, this->mEvents)
 		{
+			if (mDataset) mDataset->removeCallbackFromQueue(it->second);
 			delete it->second;
 		}
 		this->mEvents.clear();
@@ -838,6 +839,10 @@ namespace aprilui
 		if (this->mEvents.has_key(name))
 		{
 			Event* oldEvent = this->mEvents[name];
+			if (mDataset != NULL)
+			{
+				mDataset->removeCallbackFromQueue(oldEvent);
+			}
 			if (e == NULL)
 			{
 				this->mEvents.remove_key(name);
@@ -852,7 +857,15 @@ namespace aprilui
 
 	void Object::unregisterEvent(chstr name)
 	{
-		this->mEvents.remove_key(name);
+		if (this->mEvents.has_key(name))
+		{
+			Event* event = this->mEvents[name];
+			if (mDataset != NULL)
+			{
+				mDataset->removeCallbackFromQueue(event);
+			}
+			this->mEvents.remove_key(name);
+		}
 	}
 
 	// TODO - this needs to be seriously refactored
