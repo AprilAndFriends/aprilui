@@ -1104,6 +1104,7 @@ namespace aprilui
 	{
 		this->removeFocus();
 		this->mFocusedObject = object;
+		this->mFocusedObject->notifyEvent("onGainFocus", NULL);
 		this->mFocusedObject->triggerEvent("GainFocus");
 	}
 
