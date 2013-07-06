@@ -142,11 +142,9 @@ namespace aprilui
 			{
 				this->mDataset->focus(this);
 				this->mBlinkTimer = 0.0f;
-				april::window->beginKeyboardHandling();
 			}
 			else if (this->mDataset->getFocusedObject() == this)
 			{
-				april::window->terminateKeyboardHandling();
 				this->mDataset->removeFocus();
 			}
 		}
@@ -252,6 +250,10 @@ namespace aprilui
 			{
 				this->setEmptyTextKey(this->mEmptyTextKey);
 			}
+		}
+		else if (name == "onGainFocus")
+		{
+			april::window->beginKeyboardHandling();
 		}
 		Label::notifyEvent(name, params);
 	}
