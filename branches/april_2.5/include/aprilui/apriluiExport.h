@@ -15,7 +15,7 @@
 #ifndef APRILUI_EXPORT_H
 #define APRILUI_EXPORT_H
 
-	#ifdef _STATICLIB
+	#ifdef _LIB
 		#define apriluiExport
 		#define apriluiFnExport
 	#else
