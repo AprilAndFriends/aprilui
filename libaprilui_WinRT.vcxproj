@@ -315,14 +315,6 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\hltypes\hlxml\libhlxml_WinRT.vcxproj">
-      <Project>{601bcb9e-aaf2-412e-8aeb-9fc77d0505d8}</Project>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <Private>true</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="..\hltypes\libhltypes_WinRT.vcxproj">
       <Project>{e4d373bf-e227-48b9-99e6-84987e8674ec}</Project>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
