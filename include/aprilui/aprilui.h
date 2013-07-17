@@ -59,6 +59,8 @@ namespace aprilui
 	apriluiFnExport void setSupportedLocalizations(harray<hstr> value);
 	apriluiFnExport float getTextureIdleUnloadTime();
 	apriluiFnExport void setTextureIdleUnloadTime(float value);
+	apriluiFnExport bool isUseVirtualKeyboardVisibilityEventing();
+	apriluiFnExport void setUseVirtualKeyboardVisibilityEventing(bool value);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect));

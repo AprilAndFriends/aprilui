@@ -51,6 +51,7 @@ namespace aprilui
 	hstr localization = "";
 	harray<hstr> supportedLocalizations;
 	float textureIdleUnloadTime = 0.0f;
+	bool useVirtualKeyboardVisibilityEventing = true;
 	hmap<hstr, float> extensionScales;
 	bool defaultDynamicLoading = false;
 
@@ -249,6 +250,16 @@ namespace aprilui
 	void setTextureIdleUnloadTime(float value)
 	{
 		textureIdleUnloadTime = value;
+	}
+
+	bool isUseVirtualKeyboardVisibilityEventing()
+	{
+		return useVirtualKeyboardVisibilityEventing;
+	}
+
+	void setUseVirtualKeyboardVisibilityEventing(bool value)
+	{
+		useVirtualKeyboardVisibilityEventing = value;
 	}
 	
 	hmap<hstr, Dataset*> getDatasets()
