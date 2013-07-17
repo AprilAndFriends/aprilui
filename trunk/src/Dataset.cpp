@@ -1056,6 +1056,14 @@ namespace aprilui
 	
 	void Dataset::update(float k)
 	{
+		if (!aprilui::isUseVirtualKeyboardVisibilityEventing() && !april::window->isVirtualKeyboardVisible())
+		{
+			aprilui::EditBox* box = dynamic_cast<aprilui::EditBox*>(this->mFocusedObject);
+			if (box != NULL)
+			{
+				april::window->beginKeyboardHandling();
+			}
+		}
 		this->updateTextures(k);
 		if (this->mRoot != NULL)
 		{

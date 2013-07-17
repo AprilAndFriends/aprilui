@@ -253,7 +253,10 @@ namespace aprilui
 		}
 		else if (name == "onGainFocus")
 		{
-			april::window->beginKeyboardHandling();
+			if (aprilui::isUseVirtualKeyboardVisibilityEventing())
+			{
+				april::window->beginKeyboardHandling();
+			}
 		}
 		Label::notifyEvent(name, params);
 	}
