@@ -130,11 +130,11 @@ namespace aprilui
 			mFilename = filename;
 			if (!isRamTexture)
 			{
-				mTexture = april::rendersys->loadTexture(mFilename, aprilui::getForcedDynamicLoading() || mDynamic);
+				mTexture = april::rendersys->createTexture(mFilename, !(aprilui::getForcedDynamicLoading() || mDynamic));
 			}
 			else
 			{
-				mTexture = april::rendersys->loadRamTexture(mFilename, aprilui::getForcedDynamicLoading() || mDynamic);
+				mTexture = april::rendersys->createRamTexture(mFilename, !(aprilui::getForcedDynamicLoading() || mDynamic));
 			}
 			if (mTexture == NULL)
 			{
