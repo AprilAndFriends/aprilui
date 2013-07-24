@@ -85,7 +85,7 @@ namespace aprilui
 				{
 					mUnicodeChars.remove_at(0);
 				}
-				mText = unicode_to_utf8(mUnicodeChars);
+				mText = hstr::from_unicode(mUnicodeChars);
 			}
 		}
 		//////////////
@@ -122,7 +122,7 @@ namespace aprilui
 		int count;
 		while (true)
 		{
-			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
+			mText = hstr::from_unicode(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
 			count = atres::renderer->getTextCountUnformatted(mFontName, mText, rect.w);
 			count = _convertToUnicodeChars(mText(0, count)).size();
 			if (mOffsetIndex > mCursorIndex)
@@ -141,7 +141,7 @@ namespace aprilui
 		Label::OnDraw(gvec2(0,0));
 		if (mDataset != NULL && mDataset->getFocusedObject() == this && mBlinkTimer < 0.5f)
 		{
-			mText = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
+			mText = hstr::from_unicode(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
 			rect.x += atres::renderer->getTextWidthUnformatted(mFontName, mText);
 			float h = atres::renderer->getFontHeight(mFontName);
 			rect.y += (rect.h - h) / 2 + 2;
@@ -177,7 +177,7 @@ namespace aprilui
 		hstr text;
 		if (mPasswordChar == '\0' || mText == "")
 		{
-			text = unicode_to_utf8(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
+			text = hstr::from_unicode(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
 		}
 		else
 		{
@@ -193,7 +193,7 @@ namespace aprilui
 		if (mMaxLength > 0 && mUnicodeChars.size() > mMaxLength)
 		{
 			mUnicodeChars = mUnicodeChars(0, mMaxLength);
-			mText = unicode_to_utf8(mUnicodeChars);
+			mText = hstr::from_unicode(mUnicodeChars);
 			setCursorIndex(mCursorIndex);
 		}
 	}
@@ -216,7 +216,7 @@ namespace aprilui
 		{
 			mUnicodeChars = mUnicodeChars(0, mMaxLength);
 		}
-		Label::setText(unicode_to_utf8(mUnicodeChars));
+		Label::setText(hstr::from_unicode(mUnicodeChars));
 		setCursorIndex(mCursorIndex);
 	}
 
@@ -334,7 +334,7 @@ namespace aprilui
 			return array;
 		}
 		
-		std::basic_string<unsigned int> text = utf8_to_unicode(string);
+		std::basic_string<unsigned int> text = string.u_str();
 		return harray<unsigned int>(text.c_str(), text.size());
 	}
 	
@@ -383,7 +383,7 @@ namespace aprilui
 			harray<unsigned int> right = (mCursorIndex < mUnicodeChars.size() ? mUnicodeChars(mCursorIndex, mUnicodeChars.size() - mCursorIndex) : harray<unsigned int>());
 			mCursorIndex -= count;
 			mUnicodeChars = left + right;
-			mText = unicode_to_utf8(mUnicodeChars);
+			mText = hstr::from_unicode(mUnicodeChars);
 			mBlinkTimer = 0.0f;
 		}
 	}
@@ -441,7 +441,7 @@ namespace aprilui
 			mUnicodeChars(mCursorIndex, mUnicodeChars.size() - mCursorIndex) : harray<unsigned int>());
 		mCursorIndex++;
 		mUnicodeChars = (left + charCode) + right;
-		mText = unicode_to_utf8(mUnicodeChars);
+		mText = hstr::from_unicode(mUnicodeChars);
 		mBlinkTimer = 0.0f;
 	}
 	
