@@ -14,25 +14,24 @@
 namespace aprilui
 {
 	_GenericException::_GenericException(chstr errorText, chstr type, const char* file, int line) : 
-					   hltypes::exception("", file, line)
+					   hltypes::exception(errorText, file, line)
 	{
-		this->msg += errorText;
 	}
 	_GenericException::~_GenericException() { }
 
 	_ResourceExistsException::_ResourceExistsException(chstr objectName, chstr className,
 													   Dataset* dict, const char* file, int line) :
-							  _GenericException("", "ResourceExistsException", file, line)
+							  _GenericException(className + " already exists: " + objectName + " in dataset " + dict->getName(),
+								  "ResourceExistsException", file, line)
 	{
-		this->msg += className + " already exists: " + objectName + " in dataset " + dict->getName();
 	}
 	_ResourceExistsException::~_ResourceExistsException() { }
 
 	_ResourceNotExistsException::_ResourceNotExistsException(chstr objectName, chstr className,
 															 Dataset* dict, const char* file, int line) :
-								 _GenericException("", "ResourceNotExistsException", file, line)
+								 _GenericException(className + " doesn't exist: " + objectName + " in dataset " + dict->getName(),
+									 "ResourceNotExistsException", file, line)
 	{
-		this->msg += className + " doesn't exist: " + objectName + " in dataset " + dict->getName();
 	}
 	_ResourceNotExistsException::~_ResourceNotExistsException() { }
 
@@ -42,41 +41,40 @@ namespace aprilui
 	
 	_ObjectHasParentException::_ObjectHasParentException(chstr child, chstr parent,
 														 const char* file, int line) :
-							   _GenericException("", "ObjectHasParentException", file, line)
+							   _GenericException("Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent",
+								   "ObjectHasParentException", file, line)
 	{
-		this->msg += "Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent";
 	}
 	_ObjectHasParentException::~_ObjectHasParentException() { }
 
 	_ObjectWithoutParentException::_ObjectWithoutParentException(chstr child,
 																 const char* file, int line) :
-								   _GenericException("", "ObjectWihoutParentException", file, line)
+								   _GenericException("Cannot detach object '" + child + "', object has no parent",
+									   "ObjectWihoutParentException", file, line)
 	{
-		this->msg += "Cannot detach object '" + child + "', object has no parent";
 	}
 	_ObjectWithoutParentException::~_ObjectWithoutParentException() { }
 
 	_ObjectNotChildException::_ObjectNotChildException(chstr child, chstr parent,
 													   const char* file, int line) :
-							  _GenericException("", "ObjectNotChildException", file, line)
+							  _GenericException("Cannot detach object '" + child + "' from object '" + parent + "', object is not a child", "ObjectNotChildException", file, line)
 	{
-		this->msg += "Cannot detach object '" + child + "' from object '" + parent + "', object is not a child";
 	}
 	_ObjectNotChildException::~_ObjectNotChildException() { }
 
 	_ObjectFactoryExistsException::_ObjectFactoryExistsException(chstr name,
 																 const char* file, int line) :
-							  _GenericException("", "ObjectFactoryExistsException", file, line)
+							  _GenericException("Object factory named '" + name + "' already exists",
+								  "ObjectFactoryExistsException", file, line)
 	{
-		this->msg += "Object factory named '" + name + "' already exists";
 	}
 	_ObjectFactoryExistsException::~_ObjectFactoryExistsException() { }
 
 	_AnimatorFactoryExistsException::_AnimatorFactoryExistsException(chstr name,
 																	 const char* file, int line) :
-							  _GenericException("", "AnimatorFactoryExistsException", file, line)
+							  _GenericException("Animator factory named '" + name + "' already exists",
+								  "AnimatorFactoryExistsException", file, line)
 	{
-		this->msg += "Animator factory named '" + name + "' already exists";
 	}
 	_AnimatorFactoryExistsException::~_AnimatorFactoryExistsException() { }
 
