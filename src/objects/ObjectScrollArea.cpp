@@ -226,8 +226,20 @@ namespace aprilui
 					this->_mDragTimer.y = 0.0f;
 				}
 			}
+			gvec2 offset = this->getScrollOffset();
 			this->setScrollOffset(this->_mLastScrollOffset - distance);
 			this->_snapScrollOffset();
+			gvec2 newOffset = this->getScrollOffset();
+			if (offset.x == newOffset.x)
+			{
+				this->_mDragSpeed.x = 0.0f;
+				this->_mDragTimer.x = 0.0f;
+			}
+			if (offset.y == newOffset.y)
+			{
+				this->_mDragSpeed.y = 0.0f;
+				this->_mDragTimer.y = 0.0f;
+			}
 		}
 		else
 		{
