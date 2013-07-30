@@ -67,7 +67,7 @@ namespace aprilui
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
 		Object* getChildUnderCursor();
-		void clearChildUnderCursor();
+		virtual void clearChildUnderCursor();
 		/// @returns Whether or not a given object is a direct child of this object
 		bool isChild(Object* obj);
 		/// @returns whether or not a given object is a descendant of this object (child or child of a child etc recursively)

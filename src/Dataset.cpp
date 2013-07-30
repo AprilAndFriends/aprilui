@@ -237,7 +237,6 @@ namespace aprilui
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", getDefaultDynamicLoading());
-
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
 		april::Texture* aprilTexture = april::rendersys->createTexture(locpath, !dynamicLoad);
 		if (aprilTexture == NULL)
@@ -392,7 +391,6 @@ namespace aprilui
 		hstr className;
 		hstr objectName;
 		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
-		
 		if (*node == "Include")
 		{
 			this->parseObjectInclude(this->mFilePath + "/" + node->pstr("path"), parent,
@@ -400,9 +398,7 @@ namespace aprilui
 				gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f)));
 			return NULL;
 		}
-
 		className = node->pstr("type");
-		
 		if (*node == "Object" || *node == "Animator")
 		{
 			if (node->pexists("name"))
@@ -430,7 +426,6 @@ namespace aprilui
 		{
 			throw ResourceExistsException(objectName, "Object", this);
 		}
-
 		Object* object = NULL;
 		if (*node == "Object")
 		{
@@ -444,7 +439,6 @@ namespace aprilui
 		{
 			object = this->parseExternalObjectClass(node, objectName, rect);
 		}
-
 		if (object == NULL)
 		{
 			throw hlxml::XMLUnknownClassException(className, node);
@@ -461,7 +455,6 @@ namespace aprilui
 			parent->addChild(object);
 		}
 		hstr name;
-
 		foreach_xmlproperty (prop, node)
 		{
 			name = prop->name();
@@ -471,7 +464,6 @@ namespace aprilui
 			}
 			object->setProperty(name, prop->value());
 		}
-		
 		hlxml::Node::Type type;
 		foreach_xmlnode (child, node)
 		{
@@ -552,9 +544,7 @@ namespace aprilui
 		hlog::write(aprilui::logTag, "Parsing dataset file: " + path);
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
-
 		this->parseExternalXMLNode(current);
-
 		foreach_xmlnode (node, current)
 		{
 			if		(*node == "Texture")		parseTexture(node);
@@ -665,19 +655,16 @@ namespace aprilui
 			delete obj;
 		}
 		this->mObjects.clear();
-		
 		foreach_m (Image*, it, this->mImages)
 		{
 			delete it->second;
 		}
 		this->mImages.clear();
-		
 		foreach_m (Texture*, it, this->mTextures)
 		{
 			delete it->second;
 		}
 		this->mTextures.clear();
-		
 		this->mCallbacks.clear();
 		this->mTexts.clear();
 		this->mRoot = NULL;
@@ -1010,10 +997,9 @@ namespace aprilui
 	void Dataset::processEvents()
 	{
 		QueuedCallback callback;
-		while (mCallbackQueue.size())
+		while (this->mCallbackQueue.size() > 0)
 		{
-			callback = mCallbackQueue.front();
-			mCallbackQueue.pop_front();
+			callback = this->mCallbackQueue.pop_first();
 			callback.event->execute(callback.args);
 			delete callback.args;
 		}
@@ -1024,33 +1010,29 @@ namespace aprilui
 		QueuedCallback callback;
 		callback.event = event;
 		callback.args = args;
-		this->mCallbackQueue.push_back(callback);
+		this->mCallbackQueue += callback;
 	}
 	
 	void Dataset::removeCallbackFromQueue(Event* event)
 	{
-		if (event == NULL || this->mCallbackQueue.size() == 0) return; // optimizations, callback queue is often empty.
+		if (event == NULL || this->mCallbackQueue.size() == 0)
+		{
+			return; // optimizations, callback queue is often empty.
+		}
 		// remove all instances of the given event
 		harray<int> removeList;
-		int index = 0, offset = 0;
-		QueuedCallback callback;
-
-		foreach (QueuedCallback, it, this->mCallbackQueue)
+		for_iter (i, 0, this->mCallbackQueue.size())
 		{
-			if (it->event == event)
+			if (this->mCallbackQueue[i].event == event)
 			{
-				removeList += index;
+				removeList += i;
 			}
-			index++;
 		}
-
+		removeList.sort();
+		removeList.reverse();
 		foreach (int, it, removeList)
 		{
-			index = *it - offset;
-			callback = this->mCallbackQueue[index];
-			delete callback.args;
-			this->mCallbackQueue.remove_at(index);
-			offset++;
+			delete this->mCallbackQueue.remove_at(*it).args;
 		}
 	}
 	
@@ -1061,6 +1043,11 @@ namespace aprilui
 		{
 			this->mRoot->update(k);
 		}
+		this->clearChildUnderCursor();
+	}
+
+	void Dataset::clearChildUnderCursor()
+	{
 		foreach_m (aprilui::Object*, it, this->mObjects)
 		{
 			it->second->clearChildUnderCursor();
@@ -1188,7 +1175,6 @@ namespace aprilui
 		}
 		return result;
 	}
-
 
 	bool Dataset::_processCompositeTextKeyArgs(ustr argString, harray<ustr>& args)
 	{
