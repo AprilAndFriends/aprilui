@@ -87,6 +87,7 @@ namespace aprilui
 		
 		void updateTextures(float k);
 		void unloadUnusedTextures();
+		void clearChildUnderCursor();
 		
 		void processEvents();
 		void queueCallback(Event* event, EventArgs* args);

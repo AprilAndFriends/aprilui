@@ -242,7 +242,7 @@ namespace aprilui
 
 	bool ImageButton::onMouseUp(april::Key keyCode)
 	{
-		if (Object::onMouseUp(keyCode)) // not a mistake, ImageBox does handle a MouseUp even and this behavior has to be overriden (will be refactored)
+		if (Object::onMouseUp(keyCode)) // not a mistake, ImageBox does handle a MouseUp event and this behavior has to be overriden (will be refactored)
 		{
 			return true;
 		}
