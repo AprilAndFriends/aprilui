@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.65
+/// @version 2.67
 /// 
 /// @section LICENSE
 /// 
@@ -198,6 +198,7 @@ namespace aprilui
 		virtual bool onKeyDown(april::Key keyCode);
 		virtual bool onKeyUp(april::Key keyCode);
 		virtual bool onChar(unsigned int charCode);
+		virtual bool onTouch(const harray<gvec2>& touches);
 		virtual bool onButtonDown(april::Button buttonCode);
 		virtual bool onButtonUp(april::Button buttonCode);
 		virtual void mouseCancel();

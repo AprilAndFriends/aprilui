@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.67
 /// 
 /// @section LICENSE
 /// 
@@ -556,6 +556,30 @@ namespace aprilui
 		foreach_m (Dataset*, it, gDatasets)
 		{
 			it->second->onChar(charCode);
+		}
+	}
+	
+	void onTouch(const harray<gvec2>& touches)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onTouch(touches);
+		}
+	}
+	
+	void onButtonDown(april::Button buttonCode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onButtonDown(buttonCode);
+		}
+	}
+	
+	void onButtonUp(april::Button buttonCode)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->onButtonUp(buttonCode);
 		}
 	}
 	

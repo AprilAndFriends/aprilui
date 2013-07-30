@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.55
+/// @version 2.67
 /// 
 /// @section LICENSE
 /// 
@@ -112,6 +112,9 @@ namespace aprilui
 		bool onKeyDown(april::Key keyCode);
 		bool onKeyUp(april::Key keyCode);
 		bool onChar(unsigned int charCode);
+		bool onTouch(const harray<gvec2>& touches);
+		bool onButtonDown(april::Button buttonCode);
+		bool onButtonUp(april::Button buttonCode);
 		
 		virtual Texture* getTexture(chstr name);
 		virtual Image* getImage(chstr name);
