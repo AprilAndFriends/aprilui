@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.65
+/// @version 2.67
 /// 
 /// @section LICENSE
 /// 
@@ -778,6 +778,26 @@ namespace aprilui
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onChar(charCode))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool Object::onTouch(const harray<gvec2>& touches)
+	{
+		// this check is important when the object is directly accessed for processing (might be refactored in the future)
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
+		// needs to be copied in case mChildren gets changed
+		harray<Object*> children = this->mChildren;
+		foreach_r (Object*, it, children)
+		{
+			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
+			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onTouch(touches))
 			{
 				return true;
 			}

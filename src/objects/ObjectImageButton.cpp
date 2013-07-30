@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.64
+/// @version 2.67
 /// 
 /// @section LICENSE
 /// 
@@ -266,7 +266,7 @@ namespace aprilui
 
 	bool ImageButton::onButtonDown(april::Button buttonCode)
 	{
-		if (Object::onButtonDown(buttonCode)) // not a mistake, ImageBox does handle a MouseDown even and this behavior has to be overriden (will be refactored)
+		if (Object::onButtonDown(buttonCode)) // not a mistake, ImageBox does handle a MouseDown event and this behavior has to be overriden (will be refactored)
 		{
 			return true;
 		}

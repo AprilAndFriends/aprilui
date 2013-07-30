@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.6
+/// @version 2.67
 /// 
 /// @section LICENSE
 /// 
@@ -90,11 +90,15 @@ namespace aprilui
 	
 	apriluiFnExport void onMouseDown(april::Key keyCode);
 	apriluiFnExport void onMouseUp(april::Key keyCode);
+	apriluiFnExport void onMouseCancel(april::Key keyCode);
 	apriluiFnExport void onMouseMove();
 	apriluiFnExport void onMouseScroll(float x, float y);
 	apriluiFnExport void onKeyDown(april::Key keyCode);
 	apriluiFnExport void onKeyUp(april::Key keyCode);
 	apriluiFnExport void onChar(unsigned int charCode);
+	apriluiFnExport void onTouch(const harray<gvec2>& touches);
+	apriluiFnExport void onButtonDown(april::Button buttonCode);
+	apriluiFnExport void onButtonUp(april::Button buttonCode);
 
 	apriluiFnExport bool getDefaultDynamicLoading();
 	apriluiFnExport void setDefaultDynamicLoading(bool value);

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.66
+/// @version 2.67
 /// 
 /// @section LICENSE
 /// 
@@ -984,6 +984,21 @@ namespace aprilui
 	bool Dataset::onChar(unsigned int charCode)
 	{
 		return (this->mRoot != NULL && this->mRoot->onChar(charCode));
+	}
+	
+	bool Dataset::onTouch(const harray<gvec2>& touches)
+	{
+		return (this->mRoot != NULL && this->mRoot->onTouch(touches));
+	}
+	
+	bool Dataset::onButtonDown(april::Button buttonCode)
+	{
+		return (this->mRoot != NULL && this->mRoot->onButtonDown(buttonCode));
+	}
+	
+	bool Dataset::onButtonUp(april::Button buttonCode)
+	{
+		return (this->mRoot != NULL && this->mRoot->onButtonUp(buttonCode));
 	}
 	
 	void Dataset::updateTextures(float k)
