@@ -31,6 +31,7 @@ namespace aprilui
 		this->mEmptyText = "";
 		this->mEmptyTextKey = "";
 		this->mHorzFormatting = atres::LEFT;
+		this->mTextFormatting = false;
 		this->mPushed = false;
 		this->mMaxLength = 0;
 		this->mPasswordChar = '\0';
