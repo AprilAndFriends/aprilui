@@ -29,6 +29,7 @@
 #include <april/KeyboardDelegate.h>
 #include <april/main.h>
 #include <april/MouseDelegate.h>
+#include <april/Platform.h>
 #include <april/RenderSystem.h>
 #include <april/UpdateDelegate.h>
 #include <april/Window.h>
@@ -200,7 +201,8 @@ void april_init(const harray<hstr>& args)
 	mouseDelegate = new MouseDelegate();
 	try
 	{
-#if defined(_ANDROID) || defined(_IOS)
+		hlog::setLevelDebug(true);
+#if defined(_ANDROID) || defined(_IOS) || defined(_WINRT)
 		drawRect.setSize(april::getSystemInfo().displayResolution);
 #endif
 		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
@@ -220,7 +222,7 @@ void april_init(const harray<hstr>& args)
 		//aprilui::setDebugMode(true);
 #endif
 	}
-	catch (aprilui::_GenericException e)
+	catch (aprilui::_GenericException& e)
 	{
 		printf("%s\n", e.getErrorText().c_str());
 	}
@@ -235,7 +237,7 @@ void april_destroy()
 		atres::destroy();
 		april::destroy();
 	}
-	catch (aprilui::_GenericException e)
+	catch (aprilui::_GenericException& e)
 	{
 		printf("%s\n", e.getErrorText().c_str());
 	}
