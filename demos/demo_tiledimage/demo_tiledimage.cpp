@@ -26,8 +26,8 @@
 #endif
 
 #include <april/april.h>
-#include <april/april.h>
 #include <april/main.h>
+#include <april/Platform.h>
 #include <april/RenderSystem.h>
 #include <april/UpdateDelegate.h>
 #include <april/Window.h>
@@ -114,7 +114,8 @@ void april_init(const harray<hstr>& args)
 	updateDelegate = new UpdateDelegate();
 	try
 	{
-#if defined(_ANDROID) || defined(_IOS)
+		hlog::setLevelDebug(true);
+#if defined(_ANDROID) || defined(_IOS) || defined(_WINRT)
 		drawRect.setSize(april::getSystemInfo().displayResolution);
 #endif
 		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
@@ -127,7 +128,7 @@ void april_init(const harray<hstr>& args)
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tiledimage.dts");
 		dataset->load();
 	}
-	catch (aprilui::_GenericException e)
+	catch (aprilui::_GenericException& e)
 	{
 		printf("%s\n", e.getType().c_str());
 	}
@@ -142,7 +143,7 @@ void april_destroy()
 		atres::destroy();
 		april::destroy();
 	}
-	catch (aprilui::_GenericException e)
+	catch (aprilui::_GenericException& e)
 	{
 		printf("%s\n", e.getType().c_str());
 	}
