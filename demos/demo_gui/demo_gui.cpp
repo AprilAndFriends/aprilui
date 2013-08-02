@@ -214,6 +214,7 @@ void april_init(const harray<hstr>& args)
 		april::window->setKeyboardDelegate(keyboardDelegate);
 		april::window->setMouseDelegate(mouseDelegate);
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
+		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
