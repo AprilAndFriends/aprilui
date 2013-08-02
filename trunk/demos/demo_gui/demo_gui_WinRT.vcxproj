@@ -23,7 +23,7 @@
     <ProjectName>demo_gui</ProjectName>
     <RootNamespace>demo_gui</RootNamespace>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>en</DefaultLanguage>
     <AppContainerApplication>true</AppContainerApplication>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
