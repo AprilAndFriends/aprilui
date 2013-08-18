@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.63
+/// @version 2.68
 /// 
 /// @section LICENSE
 /// 
@@ -83,7 +83,12 @@ namespace aprilui
 			break;
 		}
 		int count = atres::renderer->getTextCountUnformatted(this->mFontName, text, x);
-		this->setCursorIndex(this->mOffsetIndex + text(0, count).utf8_size());
+		hstr offsetText = text(0, count);
+		if (count < text.size() && x - atres::renderer->getTextWidthUnformatted(this->mFontName, offsetText) > 0.0f)
+		{
+			offsetText += text(count, -1).utf8_substr(0, 1);
+		}
+		this->setCursorIndex(this->mOffsetIndex + offsetText.utf8_size());
 	}
 	
 	void EditBox::setMaxLength(int value)
@@ -281,7 +286,7 @@ namespace aprilui
 		}
 		if (this->mPushed && this->isCursorInside())
 		{
-			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
+			gvec2 position = this->transformToLocalSpace(aprilui::getCursorPosition());;
 			this->setCursorIndexAt(position.x, position.y);
 			this->setFocused(true);
 			this->mPushed = false;
