@@ -84,9 +84,14 @@ namespace aprilui
 		}
 		int count = atres::renderer->getTextCountUnformatted(this->mFontName, text, x);
 		hstr offsetText = text(0, count);
-		if (count < text.size() && x - atres::renderer->getTextWidthUnformatted(this->mFontName, offsetText) > 0.0f)
+		if (count < text.size())
 		{
-			offsetText += text(count, -1).utf8_substr(0, 1);
+			hstr offsetChar = text(count, -1).utf8_substr(0, 1);
+			if (x - atres::renderer->getTextWidthUnformatted(this->mFontName, offsetText) >=
+				atres::renderer->getTextWidthUnformatted(this->mFontName, offsetChar) * 0.5f)
+			{
+				offsetText += offsetChar;
+			}
 		}
 		this->setCursorIndex(this->mOffsetIndex + offsetText.utf8_size());
 	}
