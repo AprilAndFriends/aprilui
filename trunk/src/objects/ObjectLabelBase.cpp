@@ -62,6 +62,10 @@ namespace aprilui
 			return;
 		}
 		hstr text = this->mText;
+		if (!this->mTextFormatting)
+		{
+			text = "[-]" + text;
+		}
 		hstr colorCode = "";
 		if (this->mUseFontEffectColor)
 		{
@@ -77,10 +81,6 @@ namespace aprilui
 			break;
 		default:
 			break;
-		}
-		if (!this->mTextFormatting)
-		{
-			text = "[-]" + text;
 		}
 		atres::renderer->drawText(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mTextOffset);
 	}
