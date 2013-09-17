@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Phone
+# Visual Studio Express 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libaprilui", "libaprilui_WinRT.vcxproj", "{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8} = {601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}
