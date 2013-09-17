@@ -86,6 +86,7 @@ namespace aprilui
 		
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
+		void setAnchors(bool a, bool b, bool c, bool d) {}
 
 		void moveToFront();
 		void moveToBack();
