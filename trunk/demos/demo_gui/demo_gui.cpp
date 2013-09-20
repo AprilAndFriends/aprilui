@@ -90,7 +90,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 			{
 				aprilui::Texture* texture = dataset->getTexture("texture");
-				texture->reload(aprilui::getLocalization() == "en" ? "../media/texture" : "../media/transparency");
+				texture->reload(aprilui::getLocalization() == "en" ? RESOURCE_PATH "texture" : RESOURCE_PATH "transparency");
 			}
 			break;
 		case april::AK_N:
