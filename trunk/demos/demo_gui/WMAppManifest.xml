@@ -5,7 +5,7 @@
     <Language code="en" />
     <Language code="de" />
   </Languages>
-  <App xmlns="" ProductID="{e0e4d21b-ece1-40f9-8335-ed9000e4c2fd}" Title="Demo GUI" RuntimeType="Modern Native" Version="2.5.0.0" Genre="apps.game" Author="AprilUI" Description="Demo GUI" Publisher="AprilUI" PublisherID="{016db639-0f24-4f88-8062-7ceb291b9cfd}">
+  <App xmlns="" ProductID="{A2C8B2E8-C8E6-47E6-A48F-FE41891D732F}" Title="Demo GUI" RuntimeType="Modern Native" Version="2.5.0.0" Genre="apps.game" Author="AprilUI" Description="Demo GUI" Publisher="AprilUI" PublisherID="{016db639-0f24-4f88-8062-7ceb291b9cfd}">
     <IconPath IsRelative="true" IsResource="false">media\assets\icon.png</IconPath>
     <Capabilities>
     </Capabilities>
