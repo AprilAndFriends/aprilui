@@ -16,7 +16,7 @@
 #define APRILUI_MEMBER_CALLBACK_EVENT_H
 
 #include "Event.h"
-#include "AprilUIExport.h"
+#include "apriluiExport.h"
 
 namespace aprilui
 {
