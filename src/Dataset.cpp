@@ -1054,7 +1054,7 @@ namespace aprilui
 	void Dataset::update(float k)
 	{
 		this->updateTextures(k);
-		if (this->mRoot != NULL)
+		if (this->mRoot != NULL && this->mRoot->getParent() == NULL)
 		{
 			this->mRoot->update(k);
 		}
