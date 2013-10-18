@@ -150,6 +150,14 @@ namespace aprilui
 	{
 		if (!this->mObjects.has_key(object->getName()))
 		{
+			// this object could be from another dataset, so check that first.
+			Dataset* dataset = object->getDataset();
+			if (dataset != this)
+			{
+				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().c_str(), object->getFullName().c_str());
+				dataset->destroyObject(object);
+				return;
+			}
 			throw ResourceNotExistsException(object->getName(), "Object", this);
 		}
 		harray<Object*> children = object->getChildren();
