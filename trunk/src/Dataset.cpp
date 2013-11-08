@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.67
+/// @version 2.69
 /// 
 /// @section LICENSE
 /// 
@@ -312,15 +312,25 @@ namespace aprilui
 						bool invertY = child->pbool("inverty", false);
 						image = new Image(texture, name, rect, vertical, invertX, invertY);	
 					}
-					hstr mode = child->pstr("blend_mode", "default");
-					if (mode == "add")
+					hstr blendMode = child->pstr("blend_mode", "default");
+					if (blendMode == "add")
 					{
 						image->setBlendMode(april::ADD);
 					}
-					else if (mode == "subtract")
+					else if (blendMode == "subtract")
 					{
 						image->setBlendMode(april::SUBTRACT);
 					}
+					hstr colorMode = child->pstr("color_mode", "normal");
+					if (colorMode == "lerp")
+					{
+						image->setColorMode(april::LERP);
+					}
+					else if (colorMode == "alpha_map")
+					{
+						image->setColorMode(april::ALPHA_MAP);
+					}
+					image->setColorModeAlpha(child->pint("color_mode_alpha", 255));
 					this->mImages[name] = image;
 					image->_setDataset(this);
 				}

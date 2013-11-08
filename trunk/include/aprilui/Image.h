@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.64
+/// @version 2.69
 /// 
 /// @section LICENSE
 /// 
@@ -50,10 +50,14 @@ namespace aprilui
 		bool isYInverted() { return this->mInvertY; };
 		
 		april::BlendMode getBlendMode() { return this->mBlendMode; }
-		void setBlendMode(april::BlendMode mode) { this->mBlendMode = mode; }
+		void setBlendMode(april::BlendMode value) { this->mBlendMode = value; }
+		april::ColorMode getColorMode() { return this->mColorMode; }
+		void setColorMode(april::ColorMode value) { this->mColorMode = value; }
+		unsigned char getColorModeAlpha() { return this->mColorModeAlpha; }
+		void setColorModeAlpha(unsigned char value) { this->mColorModeAlpha = value; }
 		
 		Dataset* getDataset() { return this->mDataset; }
-		void _setDataset(Dataset* dataset) { this->mDataset = dataset; }
+		void _setDataset(Dataset* value) { this->mDataset = value; }
 		
 	protected:
 		Dataset* mDataset;
@@ -62,6 +66,8 @@ namespace aprilui
 		hstr mImageName;
 		grect mSrcRect;
 		april::BlendMode mBlendMode;
+		april::ColorMode mColorMode;
+		unsigned char mColorModeAlpha;
 		bool mVertical;
 		bool mInvertX;
 		bool mInvertY;
