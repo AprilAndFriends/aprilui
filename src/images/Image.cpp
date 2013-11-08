@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.69
 /// 
 /// @section LICENSE
 /// 
@@ -29,6 +29,8 @@ namespace aprilui
 		this->mName = name;
 		this->mSrcRect = source;
 		this->mBlendMode = april::ALPHA_BLEND;
+		this->mColorMode = april::MULTIPLY;
+		this->mColorModeAlpha = 255;
 		this->mVertical = vertical;
 		this->mInvertX = invertX;
 		this->mInvertY = invertY;
@@ -42,6 +44,8 @@ namespace aprilui
 		this->mName = name;
 		this->mSrcRect = img.mSrcRect;
 		this->mBlendMode = img.mBlendMode;
+		this->mColorMode = img.mColorMode;
+		this->mColorModeAlpha = img.mColorModeAlpha;
 		this->mVertical = img.mVertical;
 		this->mInvertX = img.mInvertX;
 		this->mInvertY = img.mInvertY;
@@ -119,6 +123,7 @@ namespace aprilui
 		this->_tryLoadTexCoords();
 			
 		april::rendersys->setTextureBlendMode(this->mBlendMode);
+		april::rendersys->setTextureColorMode(this->mColorMode, this->mColorModeAlpha);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
 			april::rendersys->render(april::TriangleStrip, this->_tVertices, 4, color);
@@ -128,6 +133,7 @@ namespace aprilui
 			april::rendersys->render(april::TriangleStrip, this->_tVertices, 4);
 		}
 		april::rendersys->setTextureBlendMode(april::DEFAULT);
+		april::rendersys->setTextureColorMode(april::NORMAL, 255);
 	}
 	
 	void Image::draw(grect rect, april::Color color, float angle)
