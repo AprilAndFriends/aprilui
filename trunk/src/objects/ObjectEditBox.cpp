@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.68
+/// @version 2.69
 /// 
 /// @section LICENSE
 /// 
@@ -201,7 +201,7 @@ namespace aprilui
 		int count;
 		while (true)
 		{
-			this->mText = text.utf8_substr(this->mOffsetIndex, size - this->mOffsetIndex);
+			this->mText = this->mText.utf8_substr(this->mOffsetIndex, size - this->mOffsetIndex);
 			count = atres::renderer->getTextCountUnformatted(this->mFontName, this->mText, rect.w);
 			count = this->mText(0, count).utf8_size();
 			if (this->mOffsetIndex > this->mCursorIndex)
@@ -232,7 +232,7 @@ namespace aprilui
 		this->mText = renderText;
 		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 		{
-			this->mText = text.utf8_substr(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex);
+			this->mText = this->mText.utf8_substr(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex);
 			rect.x += atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
 			float h = atres::renderer->getFontLineHeight(this->mFontName);
 			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
