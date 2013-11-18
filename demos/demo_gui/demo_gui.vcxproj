@@ -116,9 +116,11 @@
     <ClCompile>
       <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <UndefinePreprocessorDefinitions>_CONSOLE</UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libtinyxml.lib;libpng.lib;libjpeg.lib;zlib1.lib;d3d9.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Win32'">
@@ -129,6 +131,10 @@
     <Link>
       <AdditionalDependencies>libtinyxml.lib;libpng.lib;libjpeg.lib;zlib1.lib;d3d9.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile />
+    <Link />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\april\libapril.vcxproj">
