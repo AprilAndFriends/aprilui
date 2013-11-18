@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.51
+/// @version 2.69
 /// 
 /// @section LICENSE
 /// 
@@ -24,6 +24,8 @@
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
 #endif
+
+#define __APRIL_SINGLE_INSTANCE_NAME "demo_zorder"
 
 #include <april/april.h>
 #include <april/main.h>
