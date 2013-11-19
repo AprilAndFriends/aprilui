@@ -223,8 +223,9 @@ void april_init(const harray<hstr>& args)
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 		float width = dataset->getRoot()->getWidth();
-		aprilui::Label* label = new aprilui::Label("keyboard_height", grect((float)(int)(width * 0.5f) - 64.0f, 0.0f, 64.0f, 32.0f));
+		aprilui::Label* label = new aprilui::Label("keyboard_height", grect((float)(int)(width * 0.5f) - 32.0f, 0.0f, 64.0f, 32.0f));
 		dataset->getRoot()->registerChild(label);
+		label->setAnchors(false, false, false, false);
 		label->setBackgroundColor(april::Color(april::Color::Black, 128));
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
