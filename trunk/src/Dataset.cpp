@@ -544,7 +544,7 @@ namespace aprilui
 		hstr left;
 		hstr right;
 		filename.split("*", left, right);
-		harray<hstr> contents = hrdir::resource_files(basedir).sorted();
+		harray<hstr> contents = hrdir::files(basedir).sorted();
 		foreach (hstr, it, contents)
 		{
 			if ((*it).starts_with(left) && (*it).ends_with(right))
@@ -600,7 +600,7 @@ namespace aprilui
 	void Dataset::_loadTexts(chstr path)
 	{
 		hlog::write(aprilui::logTag, "Loading texts: " + path);
-		harray<hstr> files = hrdir::resource_files(path, true);
+		harray<hstr> files = hrdir::files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
 		bool keyMode = true;
