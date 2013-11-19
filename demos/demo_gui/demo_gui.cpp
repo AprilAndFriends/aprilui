@@ -69,6 +69,7 @@ public:
 		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.2f, 1.0f));
 		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_2");
 		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.25f, 1.0f));
+		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("%d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
 		dataset->update(timeSinceLastFrame);
 		dataset->getObject("root")->draw();
 		return true;
@@ -221,6 +222,10 @@ void april_init(const harray<hstr>& args)
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
+		float width = dataset->getRoot()->getWidth();
+		aprilui::Label* label = new aprilui::Label("keyboard_height", grect((float)(int)(width * 0.5f) - 64.0f, 0.0f, 64.0f, 32.0f));
+		dataset->getRoot()->registerChild(label);
+		label->setBackgroundColor(april::Color(april::Color::Black, 128));
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif
