@@ -15,10 +15,10 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
-#include <hltypes/hdir.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hrdir.h>
 #include <hltypes/hresource.h>
 #include <hlxml/Document.h>
 #include <hlxml/Exception.h>
@@ -43,13 +43,13 @@ namespace aprilui
 	{
 		this->mFocusedObject = NULL;
 		this->mRoot = NULL;
-		this->mFilename = hdir::normalize(filename);
+		this->mFilename = hrdir::normalize(filename);
 		this->mFilePath = this->_makeFilePath(this->mFilename, name, useNameBasePath);
 		this->mName = name;
 		this->mNullImage = NULL;
 		if (this->mName == "")
 		{
-			this->mName = hdir::basename(this->mFilename.rsplit(".", 1, false).remove_first());
+			this->mName = hrdir::basename(hresource::no_extension(this->mFilename));
 		}
 		this->mLoaded = false;
 		aprilui::_registerDataset(this->mName, this);
@@ -135,10 +135,10 @@ namespace aprilui
 			hstr newFilename = name + "." + hresource::extension_of(filename);
 			if (filename.ends_with(newFilename))
 			{
-				return hdir::normalize(filename.replace(newFilename, ""));
+				return hrdir::normalize(filename.replace(newFilename, ""));
 			}
 		}
-		return hdir::normalize(hdir::basedir(filename));
+		return hrdir::normalize(hrdir::basedir(filename));
 	}
 	
 	void Dataset::destroyObject(chstr name)
@@ -224,7 +224,7 @@ namespace aprilui
 		hstr localization = aprilui::getLocalization();
 		if (localization != "")
 		{
-			hstr locpath = hdir::basedir(filename) + "/" + localization + "/" + hdir::basename(filename);
+			hstr locpath = hrdir::basedir(filename) + "/" + localization + "/" + hrdir::basename(filename);
 			locpath = april::rendersys->findTextureFilename(locpath);
 			if (locpath != "")
 			{
@@ -236,9 +236,9 @@ namespace aprilui
 	
 	void Dataset::parseTexture(hlxml::Node* node)
 	{
-		hstr filename = hdir::normalize(node->pstr("filename"));
-		hstr filepath = hdir::normalize(this->mFilePath + "/" + filename);
-		hstr textureName = hdir::basename(filename);
+		hstr filename = hrdir::normalize(node->pstr("filename"));
+		hstr filepath = hrdir::normalize(this->mFilePath + "/" + filename);
+		hstr textureName = hrdir::basename(filename);
 		if (this->mTextures.has_key(textureName))
 		{
 			throw ObjectExistsException(textureName, filename);
@@ -340,8 +340,8 @@ namespace aprilui
 	
 	void Dataset::parseRamTexture(hlxml::Node* node)
 	{
-		hstr filename = hdir::normalize(node->pstr("filename"));
-		hstr filepath = hdir::normalize(mFilePath + "/" + filename);
+		hstr filename = hrdir::normalize(node->pstr("filename"));
+		hstr filepath = hrdir::normalize(mFilePath + "/" + filename);
 		hstr textureName = hresource::no_extension(filename(filename.find('/') + 1, -1));
 		if (this->mTextures.has_key(textureName))
 		{
@@ -503,8 +503,8 @@ namespace aprilui
 			this->mFilePath = originalFilePath;
 			return;
 		}
-		hstr extension = hdir::basename(path).replace("*", "");
-		harray<hstr> contents = hdir::resource_files(this->mFilePath, true).sorted();
+		hstr extension = hrdir::basename(path).replace("*", "");
+		harray<hstr> contents = hrdir::files(this->mFilePath, true).sorted();
 		foreach (hstr, it, contents)
 		{
 			if ((*it).ends_with(extension))
@@ -518,7 +518,7 @@ namespace aprilui
 	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		// parse dataset xml file, error checking first
-		hstr path = hdir::normalize(filename);
+		hstr path = hrdir::normalize(filename);
 		hlog::write(aprilui::logTag, "Parsing object include file: " + path);
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
@@ -539,12 +539,12 @@ namespace aprilui
 			this->parseObjectIncludeFile(path, parent, namePrefix, nameSuffix, offset);
 			return;
 		}
-		hstr basedir = hdir::basedir(path);
+		hstr basedir = hrdir::basedir(path);
 		hstr filename = path(basedir.size() + 1, -1);
 		hstr left;
 		hstr right;
 		filename.split("*", left, right);
-		harray<hstr> contents = hdir::resource_files(basedir).sorted();
+		harray<hstr> contents = hrdir::resource_files(basedir).sorted();
 		foreach (hstr, it, contents)
 		{
 			if ((*it).starts_with(left) && (*it).ends_with(right))
@@ -557,7 +557,7 @@ namespace aprilui
 	void Dataset::readFile(chstr filename)
 	{
 		// parse dataset xml file, error checking first
-		hstr path = hdir::normalize(filename);
+		hstr path = hrdir::normalize(filename);
 		hlog::write(aprilui::logTag, "Parsing dataset file: " + path);
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
@@ -568,7 +568,7 @@ namespace aprilui
 			else if	(*node == "RamTexture")		parseRamTexture(node);
 			else if	(*node == "CompositeImage")	parseCompositeImage(node);
 			else if	(*node == "Object")			parseObject(node);
-			else if	(*node == "Include")		parseGlobalInclude(hdir::basedir(path) + "/" + node->pstr("path"));
+			else if	(*node == "Include")		parseGlobalInclude(hrdir::basedir(path) + "/" + node->pstr("path"));
 			else if	(*node == "TextureGroup")	parseTextureGroup(node);
 			else
 			{
@@ -589,10 +589,10 @@ namespace aprilui
 	hstr Dataset::_makeTextsPath()
 	{
 		hstr filepathPrefix = this->mFilePath + "/" + (this->mTextsPath != "" ? this->mTextsPath : aprilui::getDefaultTextsPath()) + "/";
-		hstr filepath = hdir::normalize(filepathPrefix + aprilui::getLocalization());
-		if (!hdir::resource_exists(filepath))
+		hstr filepath = hrdir::normalize(filepathPrefix + aprilui::getLocalization());
+		if (!hrdir::exists(filepath))
 		{
-			filepath = hdir::normalize(filepathPrefix + aprilui::getDefaultLocalization());
+			filepath = hrdir::normalize(filepathPrefix + aprilui::getDefaultLocalization());
 		}
 		return filepath;
 	}
@@ -600,7 +600,7 @@ namespace aprilui
 	void Dataset::_loadTexts(chstr path)
 	{
 		hlog::write(aprilui::logTag, "Loading texts: " + path);
-		harray<hstr> files = hdir::resource_files(path, true);
+		harray<hstr> files = hrdir::resource_files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
 		bool keyMode = true;
