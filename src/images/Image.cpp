@@ -58,7 +58,7 @@ namespace aprilui
 	
 	hstr Image::getFullName() const
 	{
-		return (mDataset != NULL ? mDataset->getName() + "." + mName : mName);
+		return (this->mDataset != NULL ? this->mDataset->getName() + "." + this->mName : this->mName);
 	}
 	
 	void Image::setSrcRect(grect value)

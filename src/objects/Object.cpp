@@ -154,7 +154,7 @@ namespace aprilui
 
 	hstr Object::getFullName()
 	{
-		return ((this->mDataset != NULL ? this->mDataset->getName() + "." : "") + this->mName);
+		return (this->mDataset != NULL ? this->mDataset->getName() + "." + this->mName : this->mName);
 	}
 
 	void Object::addChild(Object* object)
