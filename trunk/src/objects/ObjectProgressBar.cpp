@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.64
+/// @version 2.69
 /// 
 /// @section LICENSE
 /// 
@@ -62,7 +62,7 @@ namespace aprilui
 
 	grect ProgressBar::_calcRectDirection(grect rect, float progress)
 	{
-		static float size;
+		float size = 0.0f;
 		switch (this->mDirection)
 		{
 		case Right:
