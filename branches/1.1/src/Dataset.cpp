@@ -12,6 +12,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
+#include <hltypes/hrdir.h>
 #include <hltypes/hfile.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
@@ -40,7 +41,7 @@ namespace aprilui
 	Dataset::Dataset(chstr filename, chstr name) : EventReceiver()
 	{
 		mFocusedObject = NULL;
-		mFilename = normalize_path(filename);
+		mFilename = hdir::normalize(filename);
 		mFilenamePrefix = _makeFilePath(mFilename, name, false);
 		mName = name;
 		if (mName == "")
@@ -67,10 +68,10 @@ namespace aprilui
 			hstr extension = "." + filename.rsplit(".", -1, false).pop_last();
 			if (filename.ends_with(name + extension))
 			{
-				return normalize_path(filename.replace(name + extension, ""));
+				return hdir::normalize(filename.replace(name + extension, ""));
 			}
 		}
-		return normalize_path(get_basedir(filename));
+		return hdir::normalize(hdir::basedir(filename));
 	}
 	
 	void Dataset::_destroyTexture(Texture* texture)
@@ -120,7 +121,7 @@ namespace aprilui
 		hstr localization = getLocalization();
 		if (localization != "")
 		{
-			hstr locpath = get_basedir(filename) + "/" + localization + "/" + get_basename(filename);
+			hstr locpath = hdir::basedir(filename) + "/" + localization + "/" + hdir::basename(filename);
 			locpath = april::rendersys->findTextureFilename(locpath);
 			if (locpath != "")
 			{
@@ -132,9 +133,9 @@ namespace aprilui
 
 	Texture* Dataset::parseTexture(hlxml::Node* node)
 	{
-		hstr filename = normalize_path(node->pstr("filename"));
+		hstr filename = hdir::normalize(node->pstr("filename"));
 		if (filename.starts_with("$")) filename = expandMacro(filename);
-		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
+		hstr filepath = hdir::normalize(mFilenamePrefix + "/" + filename);
 
 		int slash = filename.rfind('/') + 1;
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
@@ -224,8 +225,8 @@ namespace aprilui
 	
 	void Dataset::parseRamTexture(hlxml::Node* node)
 	{
-		hstr filename = normalize_path(node->pstr("filename"));
-		hstr filepath = normalize_path(mFilenamePrefix + "/" + filename);
+		hstr filename = hdir::normalize(node->pstr("filename"));
+		hstr filepath = hdir::normalize(mFilenamePrefix + "/" + filename);
 		int slash = filename.find('/') + 1;
 		hstr textureName = filename(slash, filename.rfind('.') - slash);
 		if (mTextures.has_key(textureName))
@@ -384,7 +385,7 @@ namespace aprilui
 	
 	void Dataset::readFile(chstr filename)
 	{
-		hstr path = normalize_path(filename);
+		hstr path = hdir::normalize(filename);
 		aprilui::log("parsing dataset file '" + path + "'");
 		hlxml::Document* doc = hlxml::open(path);
 		hlxml::Node* current = doc->root();
@@ -465,7 +466,7 @@ namespace aprilui
 	void Dataset::_loadTexts(hstr path)
 	{
 		logMessage("Loading texts: " + path);
-		harray<hstr> files = hdir::resource_files(path, true);
+		harray<hstr> files = hrdir::files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
 		bool keyMode = true;
@@ -525,10 +526,10 @@ namespace aprilui
 	hstr Dataset::_makeTextsPath()
 	{
 		hstr filepathPrefix = mFilenamePrefix + "/" + aprilui::getDefaultTextsPath();
-		hstr filepath = normalize_path(filepathPrefix + "/" + aprilui::getLocalization());
-		if (!hdir::resource_exists(filepath))
+		hstr filepath = hdir::normalize(filepathPrefix + "/" + aprilui::getLocalization());
+		if (!hrdir::exists(filepath))
 		{
-			filepath = normalize_path(filepathPrefix);
+			filepath = hdir::normalize(filepathPrefix);
 		}
 		return filepath;
 	}

@@ -13,6 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 #include <april/RenderSystem.h>
 #include <hltypes/hltypesUtil.h>
+#include <hltypes/hdir.h>
 #include <hltypes/hmap.h>
 
 #include "apriluiUtil.h"
@@ -22,7 +23,7 @@ namespace aprilui
 {
 	hstr pathGetBaseDir(chstr path)
 	{
-		hstr normalized = normalize_path(path);
+		hstr normalized = hdir::normalize(path);
 		int index = normalized.rfind('/');
 		return (index < 0 ? "" : normalized(0, index));
 	}
