@@ -371,6 +371,14 @@ namespace aprilui
 		}
 	}
 	
+	void notifyEvent(chstr name, void* params)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->notifyEvent(name, params);
+		}
+	}
+	
 	void processEvents()
 	{
 		foreach_m (Dataset*, it, gDatasets)
