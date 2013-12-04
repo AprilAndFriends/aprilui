@@ -1031,7 +1031,7 @@ namespace aprilui
 		QueuedCallback callback;
 		while (this->mCallbackQueue.size() > 0)
 		{
-			callback = this->mCallbackQueue.pop_first();
+			callback = this->mCallbackQueue.remove_first();
 			callback.event->execute(callback.args);
 			delete callback.args;
 		}
