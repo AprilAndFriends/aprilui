@@ -1033,7 +1033,7 @@ namespace aprilui
 		{
 			callback = this->mCallbackQueue.remove_first();
 			callback.event->execute(callback.args);
-			delete callback.args;
+			delete callback.args; // deleting only args because event is a pointer to object's events which get deleted by the owning object, while args are allocated by the callback queue.
 		}
 	}
 	
