@@ -580,8 +580,11 @@ namespace aprilui
 
 	void Dataset::load()
 	{
-		this->_loadTexts(this->_makeTextsPath());
-		this->readFile(this->mFilename);
+		if (this->mFilename != "")
+		{
+			this->_loadTexts(this->_makeTextsPath());
+			this->readFile(this->mFilename);
+		}
 		this->mLoaded = true;
 		this->update(0.0f);
 	}
