@@ -427,6 +427,10 @@ namespace aprilui
 	{
 		// recursive function that combines all the alpha from the parents (if any)
 		float factor = 1.0f;
+		if (overrideRoot == this)
+		{
+			return this->getAlpha();
+		}
 		if (this->mInheritsAlpha && this->mParent != NULL && this->mParent != overrideRoot)
 		{
 			factor *= this->mParent->getDerivedAlpha(overrideRoot) / 255.0f;
@@ -437,7 +441,11 @@ namespace aprilui
 	float Object::_getDerivedAngle(aprilui::Object* overrideRoot)
 	{
 		float angle = this->mAngle;
-		if (this->mParent != overrideRoot)
+		if (overrideRoot == this)
+		{
+			return angle;
+		}
+		if (this->mParent != overrideRoot && this->mParent != NULL)
 		{
 			angle += this->mParent->_getDerivedAngle(overrideRoot);
 		}
@@ -1312,8 +1320,12 @@ namespace aprilui
 	
 	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
 	{
+		if (overrideRoot == this)
+		{
+			return this->mScale;
+		}
 		gvec2 scale = this->mScale;
-		if (this->mParent != overrideRoot)
+		if (this->mParent != overrideRoot && this->mParent != NULL)
 		{
 			scale *= this->mParent->getDerivedScale(overrideRoot);
 		}
