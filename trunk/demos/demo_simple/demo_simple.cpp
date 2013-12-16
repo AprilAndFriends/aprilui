@@ -126,9 +126,10 @@ void april_init(const harray<hstr>& args)
 		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "AprilUI: Simple Demo");
 		atres::init();
 		aprilui::init();
+		april::window->setUpdateDelegate(updateDelegate);
+		april::window->setCursorFilename(RESOURCE_PATH "cursor");
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
-		april::window->setUpdateDelegate(updateDelegate);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_simple.dts");
 		dataset->load();
 	}

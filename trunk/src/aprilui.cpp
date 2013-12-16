@@ -66,7 +66,7 @@ namespace aprilui
 		defaultTextsPath = "texts";
 		localization = "";
 		textureIdleUnloadTime = 0.0f;
-		viewport.setSize((float)april::window->getWidth(), (float)april::window->getHeight());
+		viewport.setSize(april::window->getSize());
 		harray<april::Key> allowedKeys;
 		allowedKeys += april::AK_LBUTTON;
 		ButtonBase::setAllowedKeys(allowedKeys);
