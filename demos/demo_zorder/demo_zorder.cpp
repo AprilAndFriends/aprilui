@@ -123,6 +123,7 @@ void april_init(const harray<hstr>& args)
 		atres::init();
 		aprilui::init();
 		april::window->setUpdateDelegate(updateDelegate);
+		april::window->setCursorFilename(RESOURCE_PATH "cursor");
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_zorder.dts");

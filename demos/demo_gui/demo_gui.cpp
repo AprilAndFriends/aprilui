@@ -216,6 +216,7 @@ void april_init(const harray<hstr>& args)
 		april::window->setUpdateDelegate(updateDelegate);
 		april::window->setKeyboardDelegate(keyboardDelegate);
 		april::window->setMouseDelegate(mouseDelegate);
+		april::window->setCursorFilename(RESOURCE_PATH "cursor");
 		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
