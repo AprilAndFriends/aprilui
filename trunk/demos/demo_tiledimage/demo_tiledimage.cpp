@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.69
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -57,6 +57,7 @@ public:
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
 		aprilui::updateCursorPosition();
+		aprilui::processEvents();
 		aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
 		image->setScroll(image->getScroll() + SCROLL_SPEED * timeSinceLastFrame); // manual scrolling
 		dataset->getObject("root")->draw();

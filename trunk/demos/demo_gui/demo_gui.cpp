@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.69
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -64,6 +64,7 @@ public:
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
 		aprilui::updateCursorPosition();
+		aprilui::processEvents();
 		aprilui::ProgressBar* progressBar;
 		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_1");
 		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.2f, 1.0f));
@@ -131,21 +132,25 @@ class MouseDelegate : public april::MouseDelegate
 	void onMouseDown(april::Key button)
 	{
 		aprilui::onMouseDown(button);
+		aprilui::processEvents();
 	}
-
+	
 	void onMouseUp(april::Key button)
 	{
 		aprilui::onMouseUp(button);
+		aprilui::processEvents();
 	}
 
 	void onMouseMove()
 	{
 		aprilui::onMouseMove();
+		aprilui::processEvents();
 	}
 
 	void onMouseScroll(float x, float y)
 	{
 		aprilui::onMouseScroll(x, y);
+		aprilui::processEvents();
 	}
 
 };
@@ -223,11 +228,6 @@ void april_init(const harray<hstr>& args)
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
-		float width = dataset->getRoot()->getWidth();
-		aprilui::Label* label = new aprilui::Label("keyboard_height", grect((float)(int)(width * 0.5f) - 32.0f, 0.0f, 64.0f, 32.0f));
-		dataset->getRoot()->registerChild(label);
-		label->setAnchors(false, false, false, false);
-		label->setBackgroundColor(april::Color(april::Color::Black, 128));
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif
