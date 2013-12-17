@@ -165,6 +165,8 @@ namespace aprilui
 		void focus(Object* object);
 		void removeFocus();
 
+		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+
 	protected:
 		hstr mName;
 		hstr mFilename;
@@ -194,7 +196,6 @@ namespace aprilui
 		void parseCompositeImage(hlxml::Node* node);
 		void parseGlobalInclude(chstr path);
 		void parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
-		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		virtual void parseExternalXMLNode(hlxml::Node* node) { }
 		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
 		
