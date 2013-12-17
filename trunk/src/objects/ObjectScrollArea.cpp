@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -176,10 +176,12 @@ namespace aprilui
 					this->_mDragSpeed.set(0.0f, 0.0f);
 					this->_snapScrollOffset();
 				}
+				this->_mDragDistance.set(0.0f, 0.0f);
 			}
 			if (this->mDragging)
 			{
 				this->setScrollOffset(this->_mClickScrollOffset + (this->_mClickPosition - position) / this->getDerivedScale());
+				this->_mDragDistance.set(0.0f, 0.0f);
 				this->_mDragSpeed = (position - this->_mLastPosition) / k;
 				if (this->mDragMaxSpeed > 0.0f)
 				{
@@ -192,6 +194,7 @@ namespace aprilui
 				this->_mLastPosition = position;
 				this->_mLastScrollOffset = this->getScrollOffset();
 				this->_mDragTimer.set(0.0f, 0.0f);
+				this->_adjustDragSpeed();
 			}
 		}
 		if (!this->mDragging && this->mInertia > 0.0f && this->isScrolling())
@@ -209,6 +212,7 @@ namespace aprilui
 				else
 				{
 					this->_mLastScrollOffset.x -= hsgn(this->_mDragSpeed.x) * (this->mInertia * (inertiaTime.x * inertiaTime.x * 0.5f));
+					this->_mDragDistance.x = 0.0f;
 					this->_mDragSpeed.x = 0.0f;
 					this->_mDragTimer.x = 0.0f;
 				}
@@ -222,6 +226,7 @@ namespace aprilui
 				else
 				{
 					this->_mLastScrollOffset.y -= hsgn(this->_mDragSpeed.y) * (this->mInertia * (inertiaTime.y * inertiaTime.y * 0.5f));
+					this->_mDragDistance.y = 0.0f;
 					this->_mDragSpeed.y = 0.0f;
 					this->_mDragTimer.y = 0.0f;
 				}
@@ -232,17 +237,20 @@ namespace aprilui
 			gvec2 newOffset = this->getScrollOffset();
 			if (offset.x == newOffset.x)
 			{
+				this->_mDragDistance.x = 0.0f;
 				this->_mDragSpeed.x = 0.0f;
 				this->_mDragTimer.x = 0.0f;
 			}
 			if (offset.y == newOffset.y)
 			{
+				this->_mDragDistance.y = 0.0f;
 				this->_mDragSpeed.y = 0.0f;
 				this->_mDragTimer.y = 0.0f;
 			}
 		}
 		else
 		{
+			this->_mDragDistance.set(0.0f, 0.0f);
 			this->_mDragTimer.set(0.0f, 0.0f);
 		}
 	}
@@ -375,7 +383,8 @@ namespace aprilui
 	{
 		this->mDragging = false;
 		this->mPushed = false;
-		this->_mDragSpeed.set(0, 0);
+		this->_mDragDistance.set(0.0f, 0.0f);
+		this->_mDragSpeed.set(0.0f, 0.0f);
 	}
 	
 	void ScrollArea::_adjustDragSpeed()

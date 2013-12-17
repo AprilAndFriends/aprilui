@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -103,6 +103,7 @@ namespace aprilui
 		gvec2 _mLastPosition;
 		gvec2 _mClickScrollOffset;
 		gvec2 _mLastScrollOffset;
+		gvec2 _mDragDistance;
 		gvec2 _mDragSpeed;
 		gvec2 _mDragTimer;
 

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -243,7 +243,7 @@ namespace aprilui
 			{
 				hswap(x, y);
 			}
-			this->addScrollValue(this->_calcScrollMove(x, y));
+			this->addScrollValue(this->_calcScrollMove(x, y), true);
 		}
 		return false;
 	}
