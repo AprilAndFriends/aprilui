@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.61
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -69,7 +69,7 @@ namespace aprilui
 		return result;
 	}
 
-	void ScrollBarH::addScrollValue(float value)
+	void ScrollBarH::addScrollValue(float value, bool useAccumulated)
 	{
 		Container* parent = dynamic_cast<Container*>(this->mParent);
 		if (parent == NULL)
@@ -89,13 +89,23 @@ namespace aprilui
 		else
 		{
 			this->_initAreaDragging();
-			if (area->_mDragSpeed.x != 0.0f)
+			bool noAccumulation = (area->_mDragDistance.x == 0.0f);
+			if (useAccumulated)
+			{
+				area->_mDragDistance.x += value;
+				value = area->_mDragDistance.x;
+			}
+			value = hroundf(value);
+			if (area->_mDragSpeed.x != 0.0f && area->_mDragTimer.x > 0.0f && noAccumulation)
 			{
 				float time = habs(area->_mDragSpeed.x / inertia);
 				float distance = area->_mDragSpeed.x * area->_mDragTimer.x - hsgn(area->_mDragSpeed.x) * inertia * area->_mDragTimer.x * area->_mDragTimer.x * 0.5f;
 				value -= hroundf(hsgn(area->_mDragSpeed.x) * inertia * time * time * 0.5f - distance);
 				area->_mLastScrollOffset.x = area->getScrollOffsetX();
-				area->_mDragTimer.x = 0.0f;
+			}
+			else if (this->mGridSize > 0.0f && habs(value) < this->mGridSize)
+			{
+				value = hsgn(value) * this->mGridSize;
 			}
 			area->_mDragSpeed.x = -hsgn(value) * hsqrt(2 * inertia * habs(value));
 			this->_adjustDragSpeed();
@@ -133,7 +143,7 @@ namespace aprilui
 
 	float ScrollBarH::_calcScrollMove(float x, float y)
 	{
-		return hroundf(x * ScrollBar::ScrollDistance); // hround prevents partial pixels when getting weird X values
+		return (x * ScrollBar::ScrollDistance);
 	}
 
 	void ScrollBarH::notifyEvent(chstr name, void* params)

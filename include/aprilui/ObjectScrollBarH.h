@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.5
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -31,7 +31,7 @@ namespace aprilui
 
 		void notifyEvent(chstr name, void* params);
 
-		void addScrollValue(float value);
+		void addScrollValue(float value, bool useAccumulated);
 
 		static hstr SkinNameLeftNormal;
 		static hstr SkinNameLeftHover;
