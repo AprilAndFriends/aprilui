@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.69
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -55,6 +55,7 @@ public:
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
 		aprilui::updateCursorPosition();
+		aprilui::processEvents();
 		dataset->getObject("obj0" + hstr(hrand(1, 8)))->setZOrder(hrand(100));
 		dataset->getObject("root")->draw();
 		dataset->update(timeSinceLastFrame);

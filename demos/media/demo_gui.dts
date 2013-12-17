@@ -76,8 +76,8 @@
 						<Animator type="Rotator" periods="-1" speed="30"/>
 					</Object>
 				</Object>
-				<Object type="ScrollBarV" name="scroll_v" skin="scroll_skin" grid_size="64" x="128" y="0" w="16" h="128"/>
-				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" x="0" y="128" w="128" h="16"/>
+				<Object type="ScrollBarV" name="scroll_v" skin="scroll_skin" grid_size="32" x="128" y="0" w="16" h="128"/>
+				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" grid_size="32" x="0" y="128" w="128" h="16"/>
 			</Object>
 			<Object type="Container" name="slider_container" x="200" y="200" w="800" h="600">
 				<Object type="Slider" name="slider" image="texture/test_yellow" x="232" y="280" w="128" h="16">
@@ -113,7 +113,7 @@
 			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" x="0" y="0" w="128" h="16"/>
 			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" x="0" y="32" w="16" h="128"/>
 		</Object>
-		
+		<Object type="Label" name="keyboard_height" background_color="0000007F" anchors="" x="368" y="0" w="64" h="32"/>
 	</Object>
 	
 </Dataset>

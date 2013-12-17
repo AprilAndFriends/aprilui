@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.69
+/// @version 2.7
 /// 
 /// @section LICENSE
 /// 
@@ -50,6 +50,7 @@ public:
 	bool onUpdate(float timeSinceLastFrame)
 	{
 		aprilui::updateCursorPosition();
+		aprilui::processEvents();
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
 		april::rendersys->drawFilledRect(viewport, april::Color::Grey);
