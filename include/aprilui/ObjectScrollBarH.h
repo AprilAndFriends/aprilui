@@ -31,7 +31,7 @@ namespace aprilui
 
 		void notifyEvent(chstr name, void* params);
 
-		void addScrollValue(float value, bool useAccumulated);
+		void addScrollValue(float value, bool useAccumulated = false);
 
 		static hstr SkinNameLeftNormal;
 		static hstr SkinNameLeftHover;
