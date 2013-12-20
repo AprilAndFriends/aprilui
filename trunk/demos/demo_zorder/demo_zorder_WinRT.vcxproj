@@ -200,6 +200,8 @@
     <None Include="media\arial.font">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="media\cursor.ani" />
+    <None Include="media\cursor.cur" />
     <None Include="media\demo_gui.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -237,6 +239,9 @@
     <Xml Include="WMAppManifest.xml">
       <SubType>Designer</SubType>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="winrt-cursors.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Condition="'$(PlatformToolset)'=='v110_wp80'" Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />
