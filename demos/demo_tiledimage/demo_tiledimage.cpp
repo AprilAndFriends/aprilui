@@ -126,6 +126,9 @@ void april_init(const harray<hstr>& args)
 		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "demo_tileimage");
 		atres::init();
 		aprilui::init();
+#ifdef _WINRT
+		april::window->setParam("cursor_mappings", "101 " RESOURCE_PATH "cursor\n102 " RESOURCE_PATH "simple");
+#endif
 		april::window->setUpdateDelegate(updateDelegate);
 		april::window->setCursorFilename(RESOURCE_PATH "cursor");
 		aprilui::setViewport(viewport);
