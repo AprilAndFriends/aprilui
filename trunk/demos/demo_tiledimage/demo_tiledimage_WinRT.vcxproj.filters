@@ -109,7 +109,7 @@
     <None Include="media\cursor.ani">
       <Filter>winrt\media</Filter>
     </None>
-    <None Include="media\cursor.cur">
+    <None Include="media\simple.cur">
       <Filter>winrt\media</Filter>
     </None>
   </ItemGroup>
