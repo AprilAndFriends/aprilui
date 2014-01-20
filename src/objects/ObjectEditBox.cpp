@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.69
+/// @version 2.71
 /// 
 /// @section LICENSE
 /// 
@@ -35,6 +35,7 @@ namespace aprilui
 		this->mPushed = false;
 		this->mMaxLength = 0;
 		this->mPasswordChar = '\0';
+		this->mMultiLine = false;
 		this->mCursorIndex = 0;
 		this->mOffsetIndex = 0;
 		this->mCtrlMode = false;
@@ -121,6 +122,7 @@ namespace aprilui
 			harray<unsigned int> uText(ustr.c_str(), ustr.size());
 			ustr = this->mFilter.u_str();
 			harray<unsigned int> uFilter(ustr.c_str(), ustr.size());
+			uFilter |= '\n'; // this is for multiline
 			uText &= uFilter; // intersect, remove from first all that are not in second
 			newValue = hstr::from_unicode(uText);
 		}
@@ -180,42 +182,48 @@ namespace aprilui
 		//////////////
 		grect rect = this->_getDrawRect();
 		hstr text = this->mText;
-		//harray<unsigned int> unicodeChars = this->mUnicodeChars;
-		if (this->mPasswordChar != '\0' && this->mText != "")
-		{
-			this->mText = hstr(this->mPasswordChar, this->mText.utf8_size());
-		}
-		while (this->mOffsetIndex > 0 && this->mOffsetIndex >= this->mCursorIndex)
-		{
-			this->mOffsetIndex = hmax(0, this->mCursorIndex - 5);
-		}
-		int size = this->mText.utf8_size();
-		//////////////
-		// TODO - remove this hack, fix it in ATRES
-		while (this->mOffsetIndex < size - 1 && this->mText.first_unicode_char(this->mOffsetIndex) == UNICODE_CHAR_SPACE)
-		{
-			this->mOffsetIndex++;
-		}
-		//////////////
 		rect.w -= 12;
-		int count;
-		while (true)
+		if (!this->mMultiLine)
 		{
-			this->mText = this->mText.utf8_substr(this->mOffsetIndex, size - this->mOffsetIndex);
-			count = atres::renderer->getTextCountUnformatted(this->mFontName, this->mText, rect.w);
-			count = this->mText(0, count).utf8_size();
-			if (this->mOffsetIndex > this->mCursorIndex)
+			if (this->mPasswordChar != '\0' && this->mText != "")
 			{
-				this->mOffsetIndex = this->mCursorIndex;
+				this->mText = hstr(this->mPasswordChar, this->mText.utf8_size());
 			}
-			else if (this->mOffsetIndex < this->mCursorIndex - count)
+			while (this->mOffsetIndex > 0 && this->mOffsetIndex >= this->mCursorIndex)
 			{
-				this->mOffsetIndex = this->mCursorIndex - count;
+				this->mOffsetIndex = hmax(0, this->mCursorIndex - 5);
 			}
-			else
+			int size = this->mText.utf8_size();
+			//////////////
+			// TODO - remove this hack, fix it in ATRES
+			while (this->mOffsetIndex < size - 1 && this->mText.first_unicode_char(this->mOffsetIndex) == UNICODE_CHAR_SPACE)
 			{
-				break;
+				this->mOffsetIndex++;
 			}
+			//////////////
+			int count;
+			while (true)
+			{
+				this->mText = this->mText.utf8_substr(this->mOffsetIndex, size - this->mOffsetIndex);
+				count = atres::renderer->getTextCountUnformatted(this->mFontName, this->mText, rect.w);
+				count = this->mText(0, count).utf8_size();
+				if (this->mOffsetIndex > this->mCursorIndex)
+				{
+					this->mOffsetIndex = this->mCursorIndex;
+				}
+				else if (this->mOffsetIndex < this->mCursorIndex - count)
+				{
+					this->mOffsetIndex = this->mCursorIndex - count;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		else
+		{
+			this->mOffsetIndex = 0;
 		}
 		hstr renderText = this->mText;
 		if (renderText == "" && this->mDataset != NULL && this->mDataset->getFocusedObject() != this)
@@ -230,25 +238,89 @@ namespace aprilui
 		Label::OnDraw();
 		this->mBackgroundColor.a = alpha;
 		this->mText = renderText;
-		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
+		// caret render
+		if (!this->mMultiLine)
 		{
-			this->mText = this->mText.utf8_substr(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex);
-			rect.x += atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
-			float h = atres::renderer->getFontLineHeight(this->mFontName);
-			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
+			if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 			{
-				float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
-				rect.x += (this->mRect.w - w) * 0.5f;
+				this->mText = this->mText.utf8_substr(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex);
+				rect.x += atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
+				float h = atres::renderer->getFontLineHeight(this->mFontName);
+				if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
+				{
+					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
+					rect.x += (this->mRect.w - w) * 0.5f;
+				}
+				else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
+				{
+					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
+					rect.x += this->mRect.w - w;
+				}
+				rect.y += (rect.h - h) * 0.5f + 2;
+				rect.w = 1;
+				rect.h = h - 4;
+				april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);
 			}
-			else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
+		}
+		else
+		{
+			// TODO - finish this
+			if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 			{
-				float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
-				rect.x += this->mRect.w - w;
+				this->mText = this->mText.utf8_substr(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex);
+				rect.x = -this->mRect.w * 0.5f;
+				rect.y = -this->mRect.h * 0.5f;
+				float xw = 0.0f;
+				int lineCount = 0;
+				if (this->mText != "")
+				{
+					// TODO - maybe integrate this as function within atres::Renderer
+					hstr parseText = this->mText;
+					harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->mFontName);
+					harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, 100000.0f), parseText, tags, this->mHorzFormatting, this->mVertFormatting);
+					atres::FontResource* font = atres::renderer->getFontResource(this->mFontName);
+
+					rect.x += lines.last().rect.x + lines.last().rect.w;
+					rect.y += lines.last().rect.y + 2;
+				}
+				float h = atres::renderer->getFontLineHeight(this->mFontName);
+				/*
+				if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
+				{
+					if (this->mText.u_str().back() != '\n') // if last line is not empty
+					{
+						rect.x += xw;
+					}
+					else
+					{
+						lineCount++;
+					}
+					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
+					rect.x += (this->mRect.w - w) * 0.5f;
+				}
+				else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
+				{
+					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
+					rect.x += this->mRect.w - w;
+				}
+				rect.y = -this->mRect.h * 0.5f + lineCount * h + 2;
+				/*
+				if (this->mVertFormatting == atres::TOP)
+				{
+					float th = atres::renderer->getTextHeightUnformatted(this->mFontName, this->mText, 100000.0f);
+				}
+				else if (this->mVertFormatting == atres::CENTER)
+				{
+					float th = atres::renderer->getTextHeightUnformatted(this->mFontName, this->mText, 100000.0f);
+				}
+				else if (this->mVertFormatting == atres::BOTTOM)
+				{
+				}
+				*/
+				rect.w = 1;
+				rect.h = h - 4;
+				april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);
 			}
-			rect.y += (rect.h - h) * 0.5f + 2;
-			rect.w = 1;
-			rect.h = h - 4;
-			april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);
 		}
 		this->mText = text;
 	}
@@ -338,6 +410,10 @@ namespace aprilui
 				break;
 #endif
 			case april::AK_RETURN:
+				if (this->mMultiLine)
+				{
+					this->_insertChar('\n');
+				}
 				this->triggerEvent("Submit", april::AK_RETURN);
 				break;
 			default:
@@ -399,6 +475,7 @@ namespace aprilui
 		if (name == "empty_text")		return this->getEmptyText();
 		if (name == "empty_text_key")	return this->getEmptyTextKey();
 		if (name == "cursor_index")		return this->getCursorIndex();
+		if (name == "multi_line")		return this->isMultiLine();
 		if (name == "space_hack")		return this->mSpaceHack;
 		return Label::getProperty(name, propertyExists);
 	}
@@ -411,6 +488,7 @@ namespace aprilui
 		else if	(name == "empty_text")		this->setEmptyText(value);
 		else if	(name == "empty_text_key")	this->setEmptyTextKey(value);
 		else if (name == "cursor_index")	this->setCursorIndex(value);
+		else if	(name == "multi_line")		this->setMultiLine(value);
 		else if	(name == "space_hack")		this->mSpaceHack = (bool)value;
 		else return Label::setProperty(name, value);
 		return true;

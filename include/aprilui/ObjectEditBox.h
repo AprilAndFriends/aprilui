@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.54
+/// @version 2.71
 /// 
 /// @section LICENSE
 /// 
@@ -37,6 +37,8 @@ namespace aprilui
 		void setMaxLength(int value);
 		char getPasswordChar() { return this->mPasswordChar; }
 		void setPasswordChar(char value) { this->mPasswordChar = value; }
+		bool isMultiLine() { return this->mMultiLine; }
+		void setMultiLine(bool value) { this->mMultiLine = value; }
 		hstr getFilter() { return this->mFilter; }
 		void setFilter(chstr value);
 		hstr getEmptyText() { return this->mEmptyText; }
@@ -67,6 +69,7 @@ namespace aprilui
 		int mOffsetIndex;
 		int mMaxLength;
 		char mPasswordChar;
+		bool mMultiLine;
 		bool mCtrlMode;
 		bool mSpaceHack; // TODO - remove
 		float mBlinkTimer;
