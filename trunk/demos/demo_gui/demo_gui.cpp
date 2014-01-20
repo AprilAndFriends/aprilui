@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.7
+/// @version 2.71
 /// 
 /// @section LICENSE
 /// 
@@ -85,12 +85,12 @@ class KeyboardDelegate : public april::KeyboardDelegate
 		aprilui::Object* object;
 		switch (keyCode)
 		{
-		case april::AK_RETURN:
+		case april::AK_MENU:
 			dataset->unload();
 			dataset->load();
 			dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 			break;
-		case april::AK_BACK:
+		case april::AK_CONTROL:
 			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 			{
 				aprilui::Texture* texture = dataset->getTexture("texture");
