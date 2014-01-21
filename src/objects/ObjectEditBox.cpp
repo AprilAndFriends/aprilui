@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.71
+/// @version 2.72
 /// 
 /// @section LICENSE
 /// 
@@ -239,86 +239,87 @@ namespace aprilui
 		this->mBackgroundColor.a = alpha;
 		this->mText = renderText;
 		// caret render
-		if (!this->mMultiLine)
+		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 		{
-			if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
+			float fh = atres::renderer->getFontLineHeight(this->mFontName);
+			// full text
+			harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->mFontName);
+			harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.getSize()), text, tags, this->mHorzFormatting, this->mVertFormatting);
+			int lineCount = fullLines.size();
+			if (lineCount == 0 || fullLines.last().terminated)
 			{
-				this->mText = this->mText.utf8_substr(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex);
-				rect.x += atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
-				float h = atres::renderer->getFontLineHeight(this->mFontName);
-				if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
-				{
-					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
-					rect.x += (this->mRect.w - w) * 0.5f;
-				}
-				else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
-				{
-					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, text);
-					rect.x += this->mRect.w - w;
-				}
-				rect.y += (rect.h - h) * 0.5f + 2;
-				rect.w = 1;
-				rect.h = h - 4;
-				april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);
+				lineCount++;
 			}
-		}
-		else
-		{
-			// TODO - finish this
-			if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
+			float w2 = this->mRect.w * 0.5f;
+			float h2 = this->mRect.h * 0.5f;
+			gvec2 base;
+			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
 			{
-				this->mText = this->mText.utf8_substr(this->mOffsetIndex, this->mCursorIndex - this->mOffsetIndex);
-				rect.x = -this->mRect.w * 0.5f;
-				rect.y = -this->mRect.h * 0.5f;
-				float xw = 0.0f;
-				int lineCount = 0;
-				if (this->mText != "")
+				base.x = w2;
+			}
+			else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
+			{
+				base.x = w2 * 2;
+			}
+			if (this->mVertFormatting == atres::CENTER)
+			{
+				base.y = h2 - fh * 0.5f;
+			}
+			else if (this->mVertFormatting == atres::BOTTOM)
+			{
+				base.y = h2 * 2 - fh;
+			}
+			// caret position
+			this->mText = this->mText.utf8_substr(0, this->mCursorIndex - this->mOffsetIndex);
+			// caret separated text
+			if (this->mText != "")
+			{
+				tags = atres::renderer->prepareTags(this->mFontName);
+				harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.getSize()), this->mText, tags, this->mHorzFormatting, this->mVertFormatting);
+				if (lines.size() > 0)
 				{
-					// TODO - maybe integrate this as function within atres::Renderer
-					hstr parseText = this->mText;
-					harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->mFontName);
-					harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, 100000.0f), parseText, tags, this->mHorzFormatting, this->mVertFormatting);
-					atres::FontResource* font = atres::renderer->getFontResource(this->mFontName);
-
-					rect.x += lines.last().rect.x + lines.last().rect.w;
-					rect.y += lines.last().rect.y + 2;
-				}
-				float h = atres::renderer->getFontLineHeight(this->mFontName);
-				/*
-				if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
-				{
-					if (this->mText.u_str().back() != '\n') // if last line is not empty
+					atres::RenderLine line = lines.last();
+					atres::RenderLine fullLine = fullLines[lines.size() - 1];
+					rect.y += fullLine.rect.y;
+					if (line.terminated)
 					{
-						rect.x += xw;
+						rect.y += fh;
+						if (fullLines.size() > lines.size())
+						{
+							fullLine = fullLines[lines.size()];
+							rect.x += fullLine.rect.x;
+						}
+						else
+						{
+							rect.x += base.x;
+						}
 					}
 					else
 					{
-						lineCount++;
+						rect.x += fullLine.rect.x + line.rect.w;
 					}
-					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
-					rect.x += (this->mRect.w - w) * 0.5f;
 				}
-				else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
-				{
-					float w = atres::renderer->getTextWidthUnformatted(this->mFontName, this->mText);
-					rect.x += this->mRect.w - w;
-				}
-				rect.y = -this->mRect.h * 0.5f + lineCount * h + 2;
-				/*
-				if (this->mVertFormatting == atres::TOP)
-				{
-					float th = atres::renderer->getTextHeightUnformatted(this->mFontName, this->mText, 100000.0f);
-				}
-				else if (this->mVertFormatting == atres::CENTER)
-				{
-					float th = atres::renderer->getTextHeightUnformatted(this->mFontName, this->mText, 100000.0f);
-				}
-				else if (this->mVertFormatting == atres::BOTTOM)
-				{
-				}
-				*/
-				rect.w = 1;
-				rect.h = h - 4;
+			}
+			else if (fullLines.size() > 0)
+			{
+				rect.x += fullLines[0].rect.x;
+				rect.y += fullLines[0].rect.y;
+			}
+			else
+			{
+				rect += base;
+			}
+			rect.y += 2;
+			rect.w = 1;
+			rect.h = fh - 4;
+			rect.h = hmin(fh - 4, h2 - rect.y);
+			if (rect.y < -h2)
+			{
+				rect.h += rect.y + h2;
+				rect.y = -h2;
+			}
+			if (rect.w > 0.0f && rect.h > 0.0f)
+			{
 				april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);
 			}
 		}
