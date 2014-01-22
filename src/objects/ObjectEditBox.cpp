@@ -21,6 +21,7 @@
 #include "ObjectEditBox.h"
 
 #define UNICODE_CHAR_SPACE 0x20
+#define CHECK_RECT_HEIGHT 100000.0f
 
 namespace aprilui
 {
@@ -63,38 +64,95 @@ namespace aprilui
 	
 	void EditBox::setCursorIndexAt(float x, float y)
 	{
-		hstr text;
-		if (this->mPasswordChar == '\0' || this->mText == "")
+		if (this->mText == "")
 		{
-			text = this->mText.utf8_substr(this->mOffsetIndex, this->mText.utf8_size() - this->mOffsetIndex);
+			this->setCursorIndex(0);
+			return;
 		}
-		else
+		float fh = atres::renderer->getFontLineHeight(this->mFontName);
+		// full text
+		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->mFontName);
+		harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, CHECK_RECT_HEIGHT), this->mText, tags, this->mHorzFormatting, this->mVertFormatting);
+		float w2 = this->mRect.w * 0.5f;
+		float h2 = this->mRect.h * 0.5f;
+		float xhf = 0.0f; // x height factor
+		gvec2 base;
+		if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
 		{
-			text = hstr(this->mPasswordChar, this->mText.utf8_size() - this->mOffsetIndex);
+			base.x = w2;
 		}
-		switch (this->mHorzFormatting)
+		else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
 		{
-		case atres::RIGHT:
-		case atres::RIGHT_WRAPPED:
-			x -= this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text);
-		case atres::CENTER:
-		case atres::CENTER_WRAPPED:
-			x -= (this->mRect.w - atres::renderer->getTextWidthUnformatted(this->mFontName, text)) * 0.5f;
-		default:
-			break;
+			base.x = w2 * 2;
 		}
-		int count = atres::renderer->getTextCountUnformatted(this->mFontName, text, x);
-		hstr offsetText = text(0, count);
-		if (count < text.size())
+		if (this->mVertFormatting == atres::CENTER)
 		{
-			hstr offsetChar = text(count, -1).utf8_substr(0, 1);
-			if (x - atres::renderer->getTextWidthUnformatted(this->mFontName, offsetText) >=
-				atres::renderer->getTextWidthUnformatted(this->mFontName, offsetChar) * 0.5f)
+			xhf = 0.5f;
+		}
+		else if (this->mVertFormatting == atres::BOTTOM)
+		{
+			xhf = 1.0f;
+		}
+		base.y = (h2 * 2 - fh) * xhf;
+		int offsetIndex = this->mText.size();
+		y += xhf * (CHECK_RECT_HEIGHT - this->mRect.h);
+		if (lines.size() > 0 && y >= lines.first().rect.y/* + xhf * (this->mRect.h - CHECK_RECT_HEIGHT)*/)
+		{
+			atres::RenderLine* line = NULL;
+			for_iter (i, 0, lines.size())
 			{
-				offsetText += offsetChar;
+				if (is_in_range(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h))
+				{
+					if (x <= lines[i].rect.x + lines[i].rect.w)
+					{
+						line = &lines[i];
+					}
+					else
+					{
+						offsetIndex = lines[i].start + lines[i].count;
+					}
+					break;
+				}
+			}
+			if (line != NULL)
+			{
+				offsetIndex = line->start;
+				if (line->words.size() > 0)
+				{
+					atres::RenderWord* word = NULL;
+					foreach (atres::RenderWord, it, line->words)
+					{
+						if (is_in_range(x, (*it).rect.x, (*it).rect.x + (*it).rect.w))
+						{
+							word = &(*it);
+							break;
+						}
+					}
+					if (word != NULL)
+					{
+						float ow = word->rect.x;
+						offsetIndex = word->start;
+						float cw = 0.0f;
+						foreach (float, it, word->charWidths)
+						{
+							cw = (*it) * 0.5f;
+							if (is_in_range(x, ow, ow + cw))
+							{
+								break;
+							}
+							offsetIndex++;
+							ow += cw;
+							if (is_in_range(x, ow, ow + cw))
+							{
+								break;
+							}
+							ow += cw;
+						}
+					}
+				}
 			}
 		}
-		this->setCursorIndex(this->mOffsetIndex + offsetText.utf8_size());
+		this->setCursorIndex(this->mText(0, offsetIndex).utf8_size());
 	}
 	
 	void EditBox::setMaxLength(int value)
@@ -244,7 +302,7 @@ namespace aprilui
 			float fh = atres::renderer->getFontLineHeight(this->mFontName);
 			// full text
 			harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->mFontName);
-			harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.getSize()), text, tags, this->mHorzFormatting, this->mVertFormatting);
+			harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, CHECK_RECT_HEIGHT), text, tags, this->mHorzFormatting, this->mVertFormatting);
 			int lineCount = fullLines.size();
 			if (lineCount == 0 || fullLines.last().terminated)
 			{
@@ -252,6 +310,7 @@ namespace aprilui
 			}
 			float w2 = this->mRect.w * 0.5f;
 			float h2 = this->mRect.h * 0.5f;
+			float xhf = 0.0f; // x height factor
 			gvec2 base;
 			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
 			{
@@ -263,24 +322,25 @@ namespace aprilui
 			}
 			if (this->mVertFormatting == atres::CENTER)
 			{
-				base.y = h2 - fh * 0.5f;
+				xhf = 0.5f;
 			}
 			else if (this->mVertFormatting == atres::BOTTOM)
 			{
-				base.y = h2 * 2 - fh;
+				xhf = 1.0f;
 			}
+			base.y = (h2 * 2 - fh) * xhf;
 			// caret position
 			this->mText = this->mText.utf8_substr(0, this->mCursorIndex - this->mOffsetIndex);
 			// caret separated text
 			if (this->mText != "")
 			{
 				tags = atres::renderer->prepareTags(this->mFontName);
-				harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.getSize()), this->mText, tags, this->mHorzFormatting, this->mVertFormatting);
+				harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, CHECK_RECT_HEIGHT), this->mText, tags, this->mHorzFormatting, this->mVertFormatting);
 				if (lines.size() > 0)
 				{
 					atres::RenderLine line = lines.last();
 					atres::RenderLine fullLine = fullLines[lines.size() - 1];
-					rect.y += fullLine.rect.y;
+					rect.y += fullLine.rect.y + xhf * (this->mRect.h - CHECK_RECT_HEIGHT);
 					if (line.terminated)
 					{
 						rect.y += fh;
@@ -308,6 +368,10 @@ namespace aprilui
 			else
 			{
 				rect += base;
+			}
+			if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
+			{
+				rect.x -= 1;
 			}
 			rect.y += 2;
 			rect.w = 1;
