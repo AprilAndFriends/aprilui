@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.72
+/// @version 2.8
 /// 
 /// @section LICENSE
 /// 
@@ -66,7 +66,6 @@ namespace aprilui
 		hstr mEmptyTextKey;
 		bool mPushed;
 		int mCursorIndex;
-		int mOffsetIndex;
 		int mMaxLength;
 		char mPasswordChar;
 		bool mMultiLine;
@@ -79,6 +78,8 @@ namespace aprilui
 		
 		void _cursorMoveLeft();
 		void _cursorMoveRight();
+		void _cursorMoveUp();
+		void _cursorMoveDown();
 		void _cursorMoveLeftWord();
 		void _cursorMoveRightWord();
 		void _deleteLeft(int count = 1);
@@ -86,6 +87,7 @@ namespace aprilui
 		void _deleteLeftWord();
 		void _deleteRightWord();
 		void _insertChar(unsigned int charCode);
+		gvec2 _makeCaretPosition(chstr text, chstr originalText);
 
 	};
 
