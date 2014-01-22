@@ -2,7 +2,7 @@
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
 /// @author  Ivan Vucica
-/// @version 2.71
+/// @version 2.8
 /// 
 /// @section LICENSE
 /// 
@@ -53,12 +53,12 @@ aprilui::Dataset* dataset;
 float _animatorCustomFunction(aprilui::Animator* animator, float time)
 {
 	float sine = (float)dsin(time * animator->getSpeed() * 360);
-	return (sine * sine * animator->getAmplitude()); // sin(x)^2
+	return (sine * sine * animator->getAmplitude() + time * 30); // sin(t)^2 + t*30
 }
 
 class UpdateDelegate : public april::UpdateDelegate
 {
-public:
+public: 
 	bool onUpdate(float timeSinceLastFrame)
 	{
 		april::rendersys->clear();
@@ -90,7 +90,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			dataset->load();
 			dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 			break;
-		case april::AK_CONTROL:
+		case april::AK_INSERT:
 			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 			{
 				aprilui::Texture* texture = dataset->getTexture("texture");

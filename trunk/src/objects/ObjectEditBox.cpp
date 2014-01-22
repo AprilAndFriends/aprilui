@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.72
+/// @version 2.8
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@
 #include "ObjectEditBox.h"
 
 #define UNICODE_CHAR_SPACE 0x20
+#define UNICODE_CHAR_NEWLINE 0x0A
 #define CHECK_RECT_HEIGHT 100000.0f
 
 namespace aprilui
@@ -38,7 +39,6 @@ namespace aprilui
 		this->mPasswordChar = '\0';
 		this->mMultiLine = false;
 		this->mCursorIndex = 0;
-		this->mOffsetIndex = 0;
 		this->mCtrlMode = false;
 		this->mFilter = "";
 		this->mBlinkTimer = 0.0f;
@@ -95,61 +95,70 @@ namespace aprilui
 		}
 		base.y = (h2 * 2 - fh) * xhf;
 		int offsetIndex = this->mText.size();
-		y += xhf * (CHECK_RECT_HEIGHT - this->mRect.h);
-		if (lines.size() > 0 && y >= lines.first().rect.y/* + xhf * (this->mRect.h - CHECK_RECT_HEIGHT)*/)
+		x -= this->mTextOffset.x;
+		y += xhf * (CHECK_RECT_HEIGHT - this->mRect.h) - this->mTextOffset.y;
+		if (lines.size() > 0)
 		{
-			atres::RenderLine* line = NULL;
-			for_iter (i, 0, lines.size())
+			if (y >= lines.first().rect.y)
 			{
-				if (is_in_range(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h))
+				offsetIndex = this->mText.size();
+				atres::RenderLine* line = NULL;
+				for_iter (i, 0, lines.size())
 				{
-					if (x <= lines[i].rect.x + lines[i].rect.w)
+					if (is_in_range(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h))
 					{
-						line = &lines[i];
+						if (x <= lines[i].rect.x + lines[i].rect.w)
+						{
+							line = &lines[i];
+						}
+						else
+						{
+							offsetIndex = lines[i].start + lines[i].count;
+						}
+						break;
 					}
-					else
+				}
+				if (line != NULL)
+				{
+					offsetIndex = line->start;
+					if (line->words.size() > 0)
 					{
-						offsetIndex = lines[i].start + lines[i].count;
+						atres::RenderWord* word = NULL;
+						foreach (atres::RenderWord, it, line->words)
+						{
+							if (is_in_range(x, (*it).rect.x, (*it).rect.x + (*it).rect.w))
+							{
+								word = &(*it);
+								break;
+							}
+						}
+						if (word != NULL)
+						{
+							float ow = word->rect.x;
+							offsetIndex = word->start;
+							float cw = 0.0f;
+							foreach (float, it, word->charWidths)
+							{
+								cw = (*it) * 0.5f;
+								if (is_in_range(x, ow, ow + cw))
+								{
+									break;
+								}
+								offsetIndex++;
+								ow += cw;
+								if (is_in_range(x, ow, ow + cw))
+								{
+									break;
+								}
+								ow += cw;
+							}
+						}
 					}
-					break;
 				}
 			}
-			if (line != NULL)
+			else
 			{
-				offsetIndex = line->start;
-				if (line->words.size() > 0)
-				{
-					atres::RenderWord* word = NULL;
-					foreach (atres::RenderWord, it, line->words)
-					{
-						if (is_in_range(x, (*it).rect.x, (*it).rect.x + (*it).rect.w))
-						{
-							word = &(*it);
-							break;
-						}
-					}
-					if (word != NULL)
-					{
-						float ow = word->rect.x;
-						offsetIndex = word->start;
-						float cw = 0.0f;
-						foreach (float, it, word->charWidths)
-						{
-							cw = (*it) * 0.5f;
-							if (is_in_range(x, ow, ow + cw))
-							{
-								break;
-							}
-							offsetIndex++;
-							ow += cw;
-							if (is_in_range(x, ow, ow + cw))
-							{
-								break;
-							}
-							ow += cw;
-						}
-					}
-				}
+				offsetIndex = 0;
 			}
 		}
 		this->setCursorIndex(this->mText(0, offsetIndex).utf8_size());
@@ -241,47 +250,9 @@ namespace aprilui
 		grect rect = this->_getDrawRect();
 		hstr text = this->mText;
 		rect.w -= 12;
-		if (!this->mMultiLine)
+		if (this->mPasswordChar != '\0' && this->mText != "")
 		{
-			if (this->mPasswordChar != '\0' && this->mText != "")
-			{
-				this->mText = hstr(this->mPasswordChar, this->mText.utf8_size());
-			}
-			while (this->mOffsetIndex > 0 && this->mOffsetIndex >= this->mCursorIndex)
-			{
-				this->mOffsetIndex = hmax(0, this->mCursorIndex - 5);
-			}
-			int size = this->mText.utf8_size();
-			//////////////
-			// TODO - remove this hack, fix it in ATRES
-			while (this->mOffsetIndex < size - 1 && this->mText.first_unicode_char(this->mOffsetIndex) == UNICODE_CHAR_SPACE)
-			{
-				this->mOffsetIndex++;
-			}
-			//////////////
-			int count;
-			while (true)
-			{
-				this->mText = this->mText.utf8_substr(this->mOffsetIndex, size - this->mOffsetIndex);
-				count = atres::renderer->getTextCountUnformatted(this->mFontName, this->mText, rect.w);
-				count = this->mText(0, count).utf8_size();
-				if (this->mOffsetIndex > this->mCursorIndex)
-				{
-					this->mOffsetIndex = this->mCursorIndex;
-				}
-				else if (this->mOffsetIndex < this->mCursorIndex - count)
-				{
-					this->mOffsetIndex = this->mCursorIndex - count;
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
-		else
-		{
-			this->mOffsetIndex = 0;
+			this->mText = hstr(this->mPasswordChar, this->mText.utf8_size());
 		}
 		hstr renderText = this->mText;
 		if (renderText == "" && this->mDataset != NULL && this->mDataset->getFocusedObject() != this)
@@ -293,101 +264,137 @@ namespace aprilui
 		{
 			this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * 0.75f);
 		}
+		this->mText = renderText;
+		float fh = atres::renderer->getFontLineHeight(this->mFontName);
+		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this)
+		{
+			rect.setPosition(this->_makeCaretPosition(this->mText.utf8_substr(0, this->mCursorIndex), text));
+			if (this->mHorzFormatting != atres::LEFT_WRAPPED && this->mHorzFormatting != atres::CENTER_WRAPPED &&
+				this->mHorzFormatting != atres::RIGHT_WRAPPED && this->mHorzFormatting != atres::JUSTIFIED)
+			{
+				while (rect.x < 0.0f || rect.x < fh && this->mTextOffset.x < 0.0f && this->mCursorIndex > 0)
+				{
+					rect.x += fh;
+					this->mTextOffset.x += fh;
+				}
+				while (rect.x + fh >= this->mRect.w)
+				{
+					rect.x -= fh;
+					this->mTextOffset.x -= fh;
+				}
+			}
+			while (rect.y < fh * 0.5f || rect.y < fh && this->mTextOffset.y < 0.0f)
+			{
+				rect.y += fh;
+				this->mTextOffset.y += fh;
+			}
+			while (rect.y + fh * 0.5f >= this->mRect.h)
+			{
+				rect.y -= fh;
+				this->mTextOffset.y -= fh;
+			}
+		}
 		Label::OnDraw();
 		this->mBackgroundColor.a = alpha;
-		this->mText = renderText;
 		// caret render
 		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this && this->mBlinkTimer < 0.5f)
 		{
-			float fh = atres::renderer->getFontLineHeight(this->mFontName);
-			// full text
-			harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->mFontName);
-			harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, CHECK_RECT_HEIGHT), text, tags, this->mHorzFormatting, this->mVertFormatting);
-			int lineCount = fullLines.size();
-			if (lineCount == 0 || fullLines.last().terminated)
-			{
-				lineCount++;
-			}
-			float w2 = this->mRect.w * 0.5f;
-			float h2 = this->mRect.h * 0.5f;
-			float xhf = 0.0f; // x height factor
-			gvec2 base;
-			if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
-			{
-				base.x = w2;
-			}
-			else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
-			{
-				base.x = w2 * 2;
-			}
-			if (this->mVertFormatting == atres::CENTER)
-			{
-				xhf = 0.5f;
-			}
-			else if (this->mVertFormatting == atres::BOTTOM)
-			{
-				xhf = 1.0f;
-			}
-			base.y = (h2 * 2 - fh) * xhf;
-			// caret position
-			this->mText = this->mText.utf8_substr(0, this->mCursorIndex - this->mOffsetIndex);
-			// caret separated text
-			if (this->mText != "")
-			{
-				tags = atres::renderer->prepareTags(this->mFontName);
-				harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, CHECK_RECT_HEIGHT), this->mText, tags, this->mHorzFormatting, this->mVertFormatting);
-				if (lines.size() > 0)
-				{
-					atres::RenderLine line = lines.last();
-					atres::RenderLine fullLine = fullLines[lines.size() - 1];
-					rect.y += fullLine.rect.y + xhf * (this->mRect.h - CHECK_RECT_HEIGHT);
-					if (line.terminated)
-					{
-						rect.y += fh;
-						if (fullLines.size() > lines.size())
-						{
-							fullLine = fullLines[lines.size()];
-							rect.x += fullLine.rect.x;
-						}
-						else
-						{
-							rect.x += base.x;
-						}
-					}
-					else
-					{
-						rect.x += fullLine.rect.x + line.rect.w;
-					}
-				}
-			}
-			else if (fullLines.size() > 0)
-			{
-				rect.x += fullLines[0].rect.x;
-				rect.y += fullLines[0].rect.y;
-			}
-			else
-			{
-				rect += base;
-			}
-			if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
-			{
-				rect.x -= 1;
-			}
-			rect.y += 2;
+			rect.y -= fh * 0.5f - 2;
 			rect.w = 1;
-			rect.h = fh - 4;
-			rect.h = hmin(fh - 4, h2 - rect.y);
-			if (rect.y < -h2)
+			rect.h = hmin(fh - 4, this->mRect.h - rect.y);
+			if (rect.y < 0.0f)
 			{
-				rect.h += rect.y + h2;
-				rect.y = -h2;
+				rect.h += rect.y;
+				rect.y = 0.0f;
 			}
-			if (rect.w > 0.0f && rect.h > 0.0f)
+			if (rect.h > 0.0f)
 			{
-				april::rendersys->drawRect(rect, this->_getDrawColor() * this->mTextColor);
+				april::rendersys->drawRect(rect - this->mRect.getSize() * 0.5f, this->_getDrawColor() * this->mTextColor);
 			}
 		}
 		this->mText = text;
+	}
+
+	gvec2 EditBox::_makeCaretPosition(chstr text, chstr originalText)
+	{
+		gvec2 position;
+		float fh = atres::renderer->getFontLineHeight(this->mFontName);
+		// full text
+		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->mFontName);
+		harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, CHECK_RECT_HEIGHT),
+			originalText, tags, this->mHorzFormatting, this->mVertFormatting);
+		int lineCount = fullLines.size();
+		if (lineCount == 0 || fullLines.last().terminated)
+		{
+			lineCount++;
+		}
+		float w2 = this->mRect.w * 0.5f;
+		float h2 = this->mRect.h * 0.5f;
+		float xhf = 0.0f; // x height factor
+		gvec2 base;
+		if (this->mHorzFormatting == atres::CENTER || this->mHorzFormatting == atres::CENTER_WRAPPED)
+		{
+			base.x = w2;
+		}
+		else if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
+		{
+			base.x = w2 * 2;
+		}
+		if (this->mVertFormatting == atres::CENTER)
+		{
+			xhf = 0.5f;
+		}
+		else if (this->mVertFormatting == atres::BOTTOM)
+		{
+			xhf = 1.0f;
+		}
+		base.y = (h2 * 2 - fh) * xhf;
+		// caret position
+		if (text != "")
+		{
+			tags = atres::renderer->prepareTags(this->mFontName);
+			harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->mRect.w, CHECK_RECT_HEIGHT),
+				text, tags, this->mHorzFormatting, this->mVertFormatting, gvec2(), true);
+			if (lines.size() > 0)
+			{
+				atres::RenderLine line = lines.last();
+				atres::RenderLine fullLine = fullLines[lines.size() - 1];
+				position.y += fullLine.rect.y + xhf * (this->mRect.h - CHECK_RECT_HEIGHT);
+				if (line.terminated)
+				{
+					position.y += fh;
+					if (fullLines.size() > lines.size())
+					{
+						fullLine = fullLines[lines.size()];
+						position.x += fullLine.rect.x;
+					}
+					else
+					{
+						position.x += base.x;
+					}
+				}
+				else
+				{
+					position.x += fullLine.rect.x + line.rect.w;
+				}
+			}
+		}
+		else if (fullLines.size() > 0)
+		{
+			position.x += fullLines[0].rect.x;
+			position.y += fullLines[0].rect.y;
+		}
+		else
+		{
+			position += base;
+		}
+		if (this->mHorzFormatting == atres::RIGHT || this->mHorzFormatting == atres::RIGHT_WRAPPED)
+		{
+			position.x -= 1;
+		}
+		position += this->mTextOffset;
+		position.y += fh * 0.5f;
+		return position;
 	}
 	
 	void EditBox::notifyEvent(chstr name, void* params)
@@ -455,6 +462,12 @@ namespace aprilui
 				break;
 			case april::AK_RIGHT:
 				this->mCtrlMode ? this->_cursorMoveRightWord() : this->_cursorMoveRight();
+				break;
+			case april::AK_UP:
+				this->mMultiLine ? this->_cursorMoveUp() : this->setCursorIndex(0);
+				break;
+			case april::AK_DOWN:
+				this->mMultiLine ? this->_cursorMoveDown() : this->setCursorIndex(this->mText.utf8_size());
 				break;
 #endif
 			case april::AK_BACK:
@@ -569,15 +582,59 @@ namespace aprilui
 		this->setCursorIndex(this->mCursorIndex + 1);
 	}
 	
+	void EditBox::_cursorMoveUp()
+	{
+		if (this->mCursorIndex > 0)
+		{
+			gvec2 position = this->_makeCaretPosition(this->mText.utf8_substr(0, this->mCursorIndex), this->mText);
+			this->setCursorIndexAt(position.x, position.y - atres::renderer->getFontLineHeight(this->mFontName));
+		}
+	}
+	
+	void EditBox::_cursorMoveDown()
+	{
+		if (this->mCursorIndex < this->mText.utf8_size())
+		{
+			gvec2 position = this->_makeCaretPosition(this->mText.utf8_substr(0, this->mCursorIndex), this->mText);
+			this->setCursorIndexAt(position.x, position.y + atres::renderer->getFontLineHeight(this->mFontName));
+		}
+	}
+	
 	void EditBox::_cursorMoveLeftWord()
 	{
-		while (this->mCursorIndex > 0 && this->mText.first_unicode_char(mCursorIndex - 1) == UNICODE_CHAR_SPACE)
+		unsigned char c = 0;
+		bool first = true;
+		bool newLine = false;
+		while (this->mCursorIndex > 0)
 		{
+			c = this->mText.first_unicode_char(mCursorIndex - 1);
+			if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
+			{
+				break;
+			}
+			if (c == UNICODE_CHAR_NEWLINE)
+			{
+				newLine = true;
+				if (first)
+				{
+					this->mCursorIndex--;
+				}
+				break;
+			}
+			first = false;
 			this->mCursorIndex--;
 		}
-		while (this->mCursorIndex > 0 && this->mText.first_unicode_char(mCursorIndex - 1) != UNICODE_CHAR_SPACE)
+		if (!newLine)
 		{
-			this->mCursorIndex--;
+			while (this->mCursorIndex > 0)
+			{
+				c = this->mText.first_unicode_char(mCursorIndex - 1);
+				if (c == UNICODE_CHAR_SPACE || c == UNICODE_CHAR_NEWLINE)
+				{
+					break;
+				}
+				this->mCursorIndex--;
+			}
 		}
 		this->mBlinkTimer = 0.0f;
 	}
@@ -585,13 +642,39 @@ namespace aprilui
 	void EditBox::_cursorMoveRightWord()
 	{
 		int size = this->mText.utf8_size();
-		while (this->mCursorIndex < size && this->mText.first_unicode_char(mCursorIndex) != UNICODE_CHAR_SPACE)
+		unsigned char c = 0;
+		bool first = true;
+		bool newLine = false;
+		while (this->mCursorIndex < size)
 		{
+			c = this->mText.first_unicode_char(mCursorIndex);
+			if (c == UNICODE_CHAR_SPACE)
+			{
+				break;
+			}
+			if (c == UNICODE_CHAR_NEWLINE)
+			{
+				newLine = true;
+				if (first)
+				{
+					this->mCursorIndex++;
+				}
+				break;
+			}
+			first = false;
 			this->mCursorIndex++;
 		}
-		while (this->mCursorIndex < size && this->mText.first_unicode_char(mCursorIndex) == UNICODE_CHAR_SPACE)
+		if (!newLine)
 		{
-			this->mCursorIndex++;
+			while (this->mCursorIndex < size)
+			{
+				c = this->mText.first_unicode_char(mCursorIndex);
+				if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
+				{
+					break;
+				}
+				this->mCursorIndex++;
+			}
 		}
 		this->mBlinkTimer = 0.0f;
 	}
