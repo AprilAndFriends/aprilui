@@ -254,8 +254,7 @@ namespace aprilui
 		{
 			this->mText = hstr(this->mPasswordChar, this->mText.utf8_size());
 		}
-		hstr renderText = this->mText;
-		if (renderText == "" && this->mDataset != NULL && this->mDataset->getFocusedObject() != this)
+		if (this->mText == "" && this->mDataset != NULL && this->mDataset->getFocusedObject() != this)
 		{
 			this->mText = this->mEmptyText;
 		}
@@ -264,7 +263,6 @@ namespace aprilui
 		{
 			this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * 0.75f);
 		}
-		this->mText = renderText;
 		float fh = atres::renderer->getFontLineHeight(this->mFontName);
 		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this)
 		{
