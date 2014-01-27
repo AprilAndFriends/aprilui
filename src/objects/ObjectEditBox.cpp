@@ -266,7 +266,7 @@ namespace aprilui
 		float fh = atres::renderer->getFontLineHeight(this->mFontName);
 		if (this->mDataset != NULL && this->mDataset->getFocusedObject() == this)
 		{
-			rect.setPosition(this->_makeCaretPosition(this->mText.utf8_substr(0, this->mCursorIndex), text));
+			rect.setPosition(this->_makeCaretPosition(this->mText.utf8_substr(0, this->mCursorIndex), this->mText));
 			if (this->mHorzFormatting != atres::LEFT_WRAPPED && this->mHorzFormatting != atres::CENTER_WRAPPED &&
 				this->mHorzFormatting != atres::RIGHT_WRAPPED && this->mHorzFormatting != atres::JUSTIFIED)
 			{
@@ -275,7 +275,7 @@ namespace aprilui
 					rect.x += fh;
 					this->mTextOffset.x += fh;
 				}
-				while (rect.x + fh >= this->mRect.w)
+				while (rect.x + fh > this->mRect.w)
 				{
 					rect.x -= fh;
 					this->mTextOffset.x -= fh;
@@ -286,7 +286,7 @@ namespace aprilui
 				rect.y += fh;
 				this->mTextOffset.y += fh;
 			}
-			while (rect.y + fh * 0.5f >= this->mRect.h)
+			while (rect.y + fh * 0.5f > this->mRect.h)
 			{
 				rect.y -= fh;
 				this->mTextOffset.y -= fh;
@@ -380,7 +380,7 @@ namespace aprilui
 		else if (fullLines.size() > 0)
 		{
 			position.x += fullLines[0].rect.x;
-			position.y += fullLines[0].rect.y;
+			position.y += fullLines[0].rect.y + xhf * (this->mRect.h - CHECK_RECT_HEIGHT);
 		}
 		else
 		{
