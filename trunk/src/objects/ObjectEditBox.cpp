@@ -275,7 +275,8 @@ namespace aprilui
 					rect.x += fh;
 					this->mTextOffset.x += fh;
 				}
-				while (rect.x + fh > this->mRect.w)
+				float frh = (this->mHorzFormatting == atres::RIGHT ? 0.0f : fh);
+				while (rect.x + frh > this->mRect.w)
 				{
 					rect.x -= fh;
 					this->mTextOffset.x -= fh;
