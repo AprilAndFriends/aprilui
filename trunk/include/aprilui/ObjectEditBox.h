@@ -45,8 +45,10 @@ namespace aprilui
 		void setEmptyText(chstr value);
 		hstr getEmptyTextKey() { return this->mEmptyTextKey; }
 		void setEmptyTextKey(chstr value);
+		gvec2 getCaretPosition() { return this->mCaretPosition; }
 		void setText(chstr value);
 		void setFocused(bool value);
+		gvec2 getCaretPosition();
 		
 		void update(float time);
 
@@ -62,6 +64,7 @@ namespace aprilui
 		void mouseCancel();
 		
 	protected:
+		gvec2 mCaretPosition;
 		hstr mEmptyText;
 		hstr mEmptyTextKey;
 		bool mPushed;
