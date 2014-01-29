@@ -48,7 +48,6 @@ namespace aprilui
 		gvec2 getCaretPosition() { return this->mCaretPosition; }
 		void setText(chstr value);
 		void setFocused(bool value);
-		gvec2 getCaretPosition();
 		
 		void update(float time);
 
