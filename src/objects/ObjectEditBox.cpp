@@ -292,6 +292,7 @@ namespace aprilui
 				rect.y -= fh;
 				this->mTextOffset.y -= fh;
 			}
+			this->mCaretPosition = rect.getPosition();
 		}
 		Label::OnDraw();
 		this->mBackgroundColor.a = alpha;
