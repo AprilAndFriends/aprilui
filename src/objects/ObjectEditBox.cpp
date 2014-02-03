@@ -309,7 +309,7 @@ namespace aprilui
 			}
 			if (rect.h > 0.0f)
 			{
-				april::rendersys->drawRect(rect - this->mRect.getSize() * 0.5f, this->_getDrawColor() * this->mTextColor);
+				april::rendersys->drawRect(rect - this->mCenter, this->_getDrawColor() * this->mTextColor);
 			}
 		}
 		this->mText = text;
