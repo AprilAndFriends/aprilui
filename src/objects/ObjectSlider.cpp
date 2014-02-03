@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -20,11 +20,10 @@
 
 namespace aprilui
 {
-	Slider::Slider(chstr name, grect rect) :
-		ImageBox(name, rect)
+	Slider::Slider(chstr name, grect rect) : ImageBox(name, rect)
 	{
-		this->mValue = 0.0f;
-		this->mPushed = false;
+		this->value = 0.0f;
+		this->pushed = false;
 	}
 	
 	Slider::~Slider()
@@ -40,7 +39,7 @@ namespace aprilui
 	{
 		ImageBox::update(k);
 		gvec2 position = aprilui::getCursorPosition();
-		if (this->mPushed && this->isPointInside(position))
+		if (this->pushed && this->isPointInside(position))
 		{
 			grect rect = this->getBoundingRect();
 			this->setValue((position.x - rect.x) / (rect.w - 4));
@@ -49,7 +48,7 @@ namespace aprilui
 	
 	void Slider::setValue(float value)
 	{
-		this->mValue = hclamp(value, 0.0f, 1.0f);
+		this->value = hclamp(value, 0.0f, 1.0f);
 	}
 	
 	bool Slider::onMouseDown(april::Key keyCode)
@@ -60,9 +59,9 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->mPushed = true;
+			this->pushed = true;
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
-			this->setValue(position.x / (this->mRect.w - 4));
+			this->setValue(position.x / (this->rect.w - 4));
 			this->triggerEvent("Set", keyCode);
 			return true;
 		}
@@ -75,12 +74,12 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (this->mPushed && this->isCursorInside())
+		if (this->pushed && this->isCursorInside())
 		{
-			this->mPushed = false;
+			this->pushed = false;
 			return true;
 		}
-		this->mPushed = false;
+		this->pushed = false;
 		return false;
 	}
 	
@@ -90,10 +89,10 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (this->mPushed)
+		if (this->pushed)
 		{
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
-			this->setValue(position.x / (this->mRect.w - 4));
+			this->setValue(position.x / (this->rect.w - 4));
 			this->triggerEvent("Set");
 		}
 		return false;
@@ -101,7 +100,7 @@ namespace aprilui
 	
 	void Slider::mouseCancel()
 	{
-		this->mPushed = false;
+		this->pushed = false;
 		ImageBox::mouseCancel();
 	}
 	
@@ -112,22 +111,17 @@ namespace aprilui
 		{
 			return;
 		}
-		if (this->mImage == NULL)
+		if (this->image == NULL)
 		{
-			this->mImage = this->mDataset->getImage(APRILUI_IMAGE_NAME_NULL);
+			this->image = this->dataset->getImage(APRILUI_IMAGE_NAME_NULL);
 		}
 		april::Color color = this->_getDrawColor();
 		april::rendersys->drawFilledRect(rect, april::Color(april::Color::White, color.a));
 		april::Color backColor(color / 4.0f, color.a);
 		rect.set(rect.x + 1, rect.y + 1, rect.w - 2, rect.h - 2);
 		april::rendersys->drawFilledRect(rect, backColor);
-		rect.set(rect.x + 1, rect.y + 1, floor((rect.w - 2) * mValue), rect.h - 2);
-		this->mImage->draw(rect, color);
-	}
-	
-	bool Slider::setProperty(chstr name, chstr value)
-	{
-		return ImageBox::setProperty(name, value);
+		rect.set(rect.x + 1, rect.y + 1, floor((rect.w - 2) * this->value), rect.h - 2);
+		this->image->draw(rect, color);
 	}
 	
 }

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -34,15 +34,13 @@ namespace aprilui
 		/// @brief Takes an Image instance and creates a Colored Image 
 		ColoredImage(Image& img, chstr name, april::Color color);
 		~ColoredImage();
+
+		HL_DEFINE_GETSET(april::Color, color, Color);
 		
 		void draw(grect rect, april::Color color);
 
-		unsigned char getAlpha();
-		void setAlpha(unsigned char value);
-		void setColor(april::Color value) { this->mColor = value; }
-		
 	protected:
-		april::Color mColor;
+		april::Color color;
 		
 	};
 

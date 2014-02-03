@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -41,38 +41,38 @@ namespace aprilui
 	
 	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath) : EventReceiver()
 	{
-		this->mFocusedObject = NULL;
-		this->mRoot = NULL;
-		this->mFilename = hrdir::normalize(filename);
-		this->mFilePath = this->_makeFilePath(this->mFilename, name, useNameBasePath);
-		this->mName = name;
-		this->mNullImage = NULL;
-		if (this->mName == "")
+		this->focusedObject = NULL;
+		this->root = NULL;
+		this->filename = hrdir::normalize(filename);
+		this->filePath = this->_makeFilePath(this->filename, name, useNameBasePath);
+		this->name = name;
+		this->nullImage = NULL;
+		if (this->name == "")
 		{
-			this->mName = hrdir::basename(hresource::no_extension(this->mFilename));
+			this->name = hrdir::basename(hresource::no_extension(this->filename));
 		}
-		this->mLoaded = false;
-		aprilui::_registerDataset(this->mName, this);
+		this->loaded = false;
+		aprilui::_registerDataset(this->name, this);
 	}
 	
 	Dataset::~Dataset()
 	{
-		if (this->mNullImage != NULL) delete this->mNullImage;
+		if (this->nullImage != NULL) delete this->nullImage;
 		if (this->isLoaded())
 		{
-			if (this->mFocusedObject != NULL)
+			if (this->focusedObject != NULL)
 			{
 				april::window->terminateKeyboardHandling();
 			}
 			this->unload();
 		}
-		aprilui::_unregisterDataset(this->mName, this);
+		aprilui::_unregisterDataset(this->name, this);
 	}
 
 	int Dataset::getFocusedObjectIndex()
 	{
-		return (this->mFocusedObject != NULL && this->mFocusedObject->isEnabled() &&
-			this->mFocusedObject->isVisible() ? this->mFocusedObject->getFocusIndex() : -1);
+		return (this->focusedObject != NULL && this->focusedObject->isEnabled() &&
+			this->focusedObject->isVisible() ? this->focusedObject->getFocusIndex() : -1);
 	}
 
 	bool Dataset::trySetFocusedObjectByIndex(int value, bool strict)
@@ -82,7 +82,7 @@ namespace aprilui
 			this->removeFocus();
 			return true;
 		}
-		foreach_m (Object*, it, this->mObjects)
+		foreach_m (Object*, it, this->objects)
 		{
 			if (it->second->getFocusIndex() == value && (!strict && it->second->isEnabled() && it->second->isVisible() ||
 				strict && it->second->isDerivedEnabled() && it->second->isDerivedVisible()))
@@ -101,7 +101,7 @@ namespace aprilui
 	{
 		harray<int> result;
 		int focusIndex;
-		foreach_m (Object*, it, this->mObjects)
+		foreach_m (Object*, it, this->objects)
 		{
 			focusIndex = it->second->getFocusIndex();
 			if (focusIndex >= 0 && (!strict && it->second->isEnabled() && it->second->isVisible() ||
@@ -117,7 +117,7 @@ namespace aprilui
 	{
 		harray<int> result;
 		int focusIndex;
-		foreach_m (Object*, it, this->mObjects)
+		foreach_m (Object*, it, this->objects)
 		{
 			focusIndex = it->second->getFocusIndex();
 			if (focusIndex >= 0)
@@ -148,7 +148,7 @@ namespace aprilui
 	
 	void Dataset::destroyObject(Object* object)
 	{
-		if (!this->mObjects.has_key(object->getName()))
+		if (!this->objects.has_key(object->getName()))
 		{
 			// this object could be from another dataset, so check that first.
 			Dataset* dataset = object->getDataset();
@@ -173,50 +173,50 @@ namespace aprilui
 		{
 			object->setFocused(false);
 		}
-		this->mObjects.remove_key(object->getName());
+		this->objects.remove_key(object->getName());
 		delete object;
 	}
 	
 	void Dataset::_destroyTexture(Texture* texture)
 	{
 		hstr filename = texture->getFilename();
-		if (!this->mTextures.has_key(filename))
+		if (!this->textures.has_key(filename))
 		{
 			throw ResourceNotExistsException(filename, "Texture", this);
 		}
-		this->mTextures.remove_key(filename);
+		this->textures.remove_key(filename);
 		delete texture;
 	}
 	
 	void Dataset::_destroyImage(Image* image)
 	{
 		hstr name = image->getName();
-		if (!this->mImages.has_key(name))
+		if (!this->images.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Image", this);
 		}
-		this->mImages.remove_key(name);
+		this->images.remove_key(name);
 		delete image;
 	}
 	
 	void Dataset::_destroyTexture(chstr name)
 	{
-		if (!this->mTextures.has_key(name))
+		if (!this->textures.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Texture", this);
 		}
-		delete this->mTextures[name];
-		this->mTextures.remove_key(name);
+		delete this->textures[name];
+		this->textures.remove_key(name);
 	}
 	
 	void Dataset::_destroyImage(chstr name)
 	{
-		if (!this->mImages.has_key(name))
+		if (!this->images.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Image", this);
 		}
-		delete this->mImages[name];
-		this->mImages.remove_key(name);
+		delete this->images[name];
+		this->images.remove_key(name);
 	}
 
 	hstr Dataset::_makeLocalizedTextureName(chstr filename)
@@ -237,9 +237,9 @@ namespace aprilui
 	void Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
-		hstr filepath = hrdir::normalize(this->mFilePath + "/" + filename);
+		hstr filepath = hrdir::normalize(this->filePath + "/" + filename);
 		hstr textureName = hrdir::basename(filename);
-		if (this->mTextures.has_key(textureName))
+		if (this->textures.has_key(textureName))
 		{
 			throw ObjectExistsException(textureName, filename);
 		}
@@ -267,17 +267,17 @@ namespace aprilui
 		{
 			texture->setAddressMode(april::Texture::ADDRESS_CLAMP);
 		}
-		this->mTextures[textureName] = texture;
+		this->textures[textureName] = texture;
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
 		{
-			if (this->mImages.has_key(textureName))
+			if (this->images.has_key(textureName))
 			{
 				throw ResourceExistsException(filename, "Texture", this);
 			}
 			Image* img = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
-			this->mImages[textureName] = img;
-			img->_setDataset(this);
+			this->images[textureName] = img;
+			img->dataset = this;
 		}
 		else
 		{
@@ -287,7 +287,7 @@ namespace aprilui
 				if (*child == "Image")
 				{
 					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
-					if (this->mImages.has_key(name))
+					if (this->images.has_key(name))
 					{
 						throw ResourceExistsException(name, "Image", this);
 					}
@@ -331,8 +331,8 @@ namespace aprilui
 						image->setColorMode(april::ALPHA_MAP);
 					}
 					image->setColorModeAlpha(child->pint("color_mode_alpha", 255));
-					this->mImages[name] = image;
-					image->_setDataset(this);
+					this->images[name] = image;
+					image->dataset = this;
 				}
 			}
 		}
@@ -341,9 +341,9 @@ namespace aprilui
 	void Dataset::parseRamTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
-		hstr filepath = hrdir::normalize(mFilePath + "/" + filename);
+		hstr filepath = hrdir::normalize(filePath + "/" + filename);
 		hstr textureName = hresource::no_extension(filename(filename.find('/') + 1, -1));
-		if (this->mTextures.has_key(textureName))
+		if (this->textures.has_key(textureName))
 		{
 			throw ResourceExistsException(filename, "RamTexture", this);
 		}
@@ -354,14 +354,14 @@ namespace aprilui
 		{
 			throw file_not_found(locpath);
 		}
-		this->mTextures[textureName] = new Texture(filepath, aprilTexture);
+		this->textures[textureName] = new Texture(filepath, aprilTexture);
 	}
 	
 	void Dataset::parseCompositeImage(hlxml::Node* node)
 	{
 		hstr name = node->pstr("name");
 		hstr refname;
-		if (this->mImages.has_key(name))
+		if (this->images.has_key(name))
 		{
 			throw ResourceExistsException(name, "CompositeImage", this);
 		}
@@ -374,8 +374,8 @@ namespace aprilui
 				image->addImageRef(this->getImage(refname), grect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h")));
 			}
 		}
-		this->mImages[name] = image;
-		image->_setDataset(this);
+		this->images[name] = image;
+		image->dataset = this;
 	}
 	
 	Object* Dataset::parseObject(hlxml::Node* node, Object* parent)
@@ -410,7 +410,7 @@ namespace aprilui
 		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
 		if (*node == "Include")
 		{
-			this->parseObjectInclude(this->mFilePath + "/" + node->pstr("path"), parent,
+			this->parseObjectInclude(this->filePath + "/" + node->pstr("path"), parent,
 				node->pstr("name_prefix", "") + namePrefix, nameSuffix + node->pstr("name_suffix", ""),
 				gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f)));
 			return NULL;
@@ -439,7 +439,7 @@ namespace aprilui
 		{
 			return NULL;
 		}
-		if (this->mObjects.has_key(objectName))
+		if (this->objects.has_key(objectName))
 		{
 			throw ResourceExistsException(objectName, "Object", this);
 		}
@@ -460,12 +460,12 @@ namespace aprilui
 		{
 			throw hlxml::XMLUnknownClassException(className, node);
 		}
-		object->_setDataset(this);
+		object->dataset = this;
 		object->notifyEvent("RegisterInDataset", this);
-		this->mObjects[objectName] = object;
-		if (this->mRoot == NULL)
+		this->objects[objectName] = object;
+		if (this->root == NULL)
 		{
-			this->mRoot = object;
+			this->root = object;
 		}
 		if (parent != NULL)
 		{
@@ -495,16 +495,16 @@ namespace aprilui
 	
 	void Dataset::parseGlobalInclude(chstr path)
 	{
-		hstr originalFilePath = this->mFilePath;
-		this->mFilePath = this->_makeFilePath(path);
+		hstr originalFilePath = this->filePath;
+		this->filePath = this->_makeFilePath(path);
 		if (!path.contains("*"))
 		{
 			this->readFile(path);
-			this->mFilePath = originalFilePath;
+			this->filePath = originalFilePath;
 			return;
 		}
 		hstr extension = hrdir::basename(path).replace("*", "");
-		harray<hstr> contents = hrdir::files(this->mFilePath, true).sorted();
+		harray<hstr> contents = hrdir::files(this->filePath, true).sorted();
 		foreach (hstr, it, contents)
 		{
 			if ((*it).ends_with(extension))
@@ -512,7 +512,7 @@ namespace aprilui
 				this->readFile((*it));
 			}
 		}
-		this->mFilePath = originalFilePath;
+		this->filePath = originalFilePath;
 	}
 	
 	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
@@ -580,18 +580,18 @@ namespace aprilui
 
 	void Dataset::load()
 	{
-		if (this->mFilename != "")
+		if (this->filename != "")
 		{
 			this->_loadTexts(this->_makeTextsPath());
-			this->readFile(this->mFilename);
+			this->readFile(this->filename);
 		}
-		this->mLoaded = true;
+		this->loaded = true;
 		this->update(0.0f);
 	}
 
 	hstr Dataset::_makeTextsPath()
 	{
-		hstr filepathPrefix = this->mFilePath + "/" + (this->mTextsPath != "" ? this->mTextsPath : aprilui::getDefaultTextsPath()) + "/";
+		hstr filepathPrefix = this->filePath + "/" + (this->textsPath != "" ? this->textsPath : aprilui::getDefaultTextsPath()) + "/";
 		hstr filepath = hrdir::normalize(filepathPrefix + aprilui::getLocalization());
 		if (!hrdir::exists(filepath))
 		{
@@ -649,7 +649,7 @@ namespace aprilui
 					keyMode = true;
 					if (key != "")
 					{
-						mTexts[key] = values.join('\n');
+						this->texts[key] = values.join('\n');
 					}
 				}
 				else
@@ -662,106 +662,106 @@ namespace aprilui
 	
 	void Dataset::unload()
 	{
-		if (!this->mLoaded)
+		if (!this->loaded)
 		{
 			throw GenericException("Unable to unload dataset '" + this->getName() + "', data not loaded!");
 		}
 		aprilui::Object* obj;
-		foreach_m (Object*, it, this->mObjects)
+		foreach_m (Object*, it, this->objects)
 		{
 			obj = it->second;
 			if (obj->getParent()) obj->detach();
 			obj->removeChildren(false);
 			delete obj;
 		}
-		this->mObjects.clear();
-		foreach_m (Image*, it, this->mImages)
+		this->objects.clear();
+		foreach_m (Image*, it, this->images)
 		{
 			delete it->second;
 		}
-		this->mImages.clear();
-		foreach_m (Texture*, it, this->mTextures)
+		this->images.clear();
+		foreach_m (Texture*, it, this->textures)
 		{
 			delete it->second;
 		}
-		this->mTextures.clear();
-		this->mCallbacks.clear();
-		this->mTexts.clear();
-		this->mRoot = NULL;
-		this->mFocusedObject = NULL;
-		this->mLoaded = false;
+		this->textures.clear();
+		this->callbacks.clear();
+		this->texts.clear();
+		this->root = NULL;
+		this->focusedObject = NULL;
+		this->loaded = false;
 	}
 	
 	void Dataset::registerManualObject(Object* object)
 	{
 		hstr name = object->getName();
-		if (this->mObjects.has_key(name))
+		if (this->objects.has_key(name))
 		{
 			throw ResourceExistsException(name, "Object", this);
 		}
-		this->mObjects[name] = object;
-		object->_setDataset(this);
+		this->objects[name] = object;
+		object->dataset = this;
 		object->notifyEvent("RegisterInDataset", this);
 	}
 	
 	void Dataset::unregisterManualObject(Object* object)
 	{
 		hstr name = object->getName();
-		if (!this->mObjects.has_key(name))
+		if (!this->objects.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Object", this);
 		}
-		this->mObjects.remove_key(name);
-		object->_setDataset(NULL);
+		this->objects.remove_key(name);
+		object->dataset = NULL;
 		object->notifyEvent("UnregisterFromDataset", this);
 	}
 	
 	void Dataset::registerManualImage(Image* image)
 	{
 		hstr name = image->getName();
-		if (this->mImages.has_key(name))
+		if (this->images.has_key(name))
 		{
 			throw ResourceExistsException(name, "Image", this);
 		}
-		this->mImages[name] = image;
-		image->_setDataset(this);
+		this->images[name] = image;
+		image->dataset = this;
 	}
 	
 	void Dataset::unregisterManualImage(Image* image)
 	{
 		hstr name = image->getName();
-		if (!this->mImages.has_key(name))
+		if (!this->images.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Image", this);
 		}
-		this->mImages.remove_key(name);
-		image->_setDataset(NULL);
+		this->images.remove_key(name);
+		image->dataset = NULL;
 	}
 	
 	void Dataset::registerManualTexture(Texture* texture)
 	{
 		hstr name = texture->getFilename();
-		if (this->mTextures.has_key(name))
+		if (this->textures.has_key(name))
 		{
 			throw ResourceExistsException(name, "Texture", this);
 		}
-		this->mTextures[name] = texture;
+		this->textures[name] = texture;
 	}
 
 	void Dataset::unregisterManualTexture(Texture* texture)
 	{
 		hstr name = texture->getFilename();
-		if (!this->mTextures.has_key(name))
+		if (!this->textures.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Texture", this);
 		}
-		this->mTextures.remove_key(name);
+		this->textures.remove_key(name);
 	}
 	
 	bool Dataset::isAnimated()
 	{
 		aprilui::Animator* object;
-		foreach_m (Object*, it, this->mObjects)
+		foreach_m (Object*, it, this->objects)
 		{
 			object = dynamic_cast<aprilui::Animator*>(it->second);
 			if (object != NULL && object->isAnimated())
@@ -774,7 +774,7 @@ namespace aprilui
 	
 	bool Dataset::isWaitingAnimation()
 	{
-		foreach_m (Object*, it, this->mObjects)
+		foreach_m (Object*, it, this->objects)
 		{
 			if (it->second->isWaitingAnimation())
 			{
@@ -789,11 +789,11 @@ namespace aprilui
 		int dot = name.find('.');
 		if (dot < 0)
 		{
-			if (!this->mObjects.has_key(name))
+			if (!this->objects.has_key(name))
 			{
 				throw ResourceNotExistsException(name, "Object", this);
 			}
-			return this->mObjects[name];
+			return this->objects[name];
 		}
 		Dataset* dataset;
 		try
@@ -814,12 +814,12 @@ namespace aprilui
 	
 	bool Dataset::hasImage(chstr name)
 	{
-		return this->mImages.has_key(name);
+		return this->images.has_key(name);
 	}
 	
 	bool Dataset::hasTexture(chstr name)
 	{
-		return this->mTextures.has_key(name);
+		return this->textures.has_key(name);
 	}
 	
 	Object* Dataset::tryGetObject(chstr name)
@@ -827,7 +827,7 @@ namespace aprilui
 		int dot = name.find('.');
 		if (dot < 0)
 		{
-			return this->mObjects.try_get_by_key(name, NULL);
+			return this->objects.try_get_by_key(name, NULL);
 		}
 		Dataset* dataset;
 		try
@@ -843,11 +843,11 @@ namespace aprilui
 	
 	Texture* Dataset::getTexture(chstr name)
 	{
-		if (!this->mTextures.has_key(name))
+		if (!this->textures.has_key(name))
 		{
 			throw ResourceNotExistsException(name, "Texture", this);
 		}
-		return this->mTextures[name];
+		return this->textures[name];
 	}
 	
 	Image* Dataset::getImage(chstr name)
@@ -855,24 +855,24 @@ namespace aprilui
 		Image* image = NULL;
 		if (name == APRILUI_IMAGE_NAME_NULL)
 		{
-			if (!this->mNullImage)
+			if (!this->nullImage)
 			{
-				this->mNullImage = new NullImage();
-				this->mNullImage->_setDataset(this);
+				this->nullImage = new NullImage();
+				this->nullImage->dataset = this;
 			}
-			return this->mNullImage;
+			return this->nullImage;
 		}
 		
-		bool hasKey = this->mImages.has_key(name);
+		bool hasKey = this->images.has_key(name);
 		if (!hasKey && name.starts_with("0x")) // create new image with a color. don't overuse this, it's meant to be handy when needed only ;)
 		{
 			image = new ColorImage(name);
-			this->mImages[name] = image;
-			image->_setDataset(this);
+			this->images[name] = image;
+			image->dataset = this;
 		}
 		else if (hasKey)
 		{
-			image = this->mImages[name];
+			image = this->images[name];
 		}
 		if (image == NULL)
 		{
@@ -900,7 +900,7 @@ namespace aprilui
 		int dot = textKey.find('.');
 		if (dot < 0)
 		{
-			if (!this->mTexts.has_key(textKey))
+			if (!this->texts.has_key(textKey))
 			{
 				if (text != NULL)
 				{
@@ -910,7 +910,7 @@ namespace aprilui
 			}
 			if (text != NULL)
 			{
-				*text = this->mTexts[textKey];
+				*text = this->texts[textKey];
 			}
 			return true;
 		}
@@ -935,7 +935,7 @@ namespace aprilui
 		return this->_parseCompositeTextKey(compositeTextKey);
 	}
 	
-	harray<hstr> Dataset::getTextEntries(harray<hstr> keys)
+	harray<hstr> Dataset::getTexts(harray<hstr> keys)
 	{
 		harray<hstr> result;
 		foreach (hstr, it, keys)
@@ -947,83 +947,83 @@ namespace aprilui
 
 	void Dataset::registerCallback(chstr name, void (*callback)())
 	{
-		this->mCallbacks[name] = callback;
+		this->callbacks[name] = callback;
 	}
 	
 	void Dataset::triggerCallback(chstr name)
 	{
-		if (this->mCallbacks.has_key(name))
+		if (this->callbacks.has_key(name))
 		{
-			(*this->mCallbacks[name])();
+			(*this->callbacks[name])();
 		}
 	}
 	
 	void Dataset::draw()
 	{
-		if (this->mRoot != NULL)
+		if (this->root != NULL)
 		{
-			this->mRoot->draw();
+			this->root->draw();
 		}
 	}
 	
 	bool Dataset::onMouseDown(april::Key keyCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onMouseDown(keyCode));
+		return (this->root != NULL && this->root->onMouseDown(keyCode));
 	}
 	
 	bool Dataset::onMouseUp(april::Key keyCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onMouseUp(keyCode));
+		return (this->root != NULL && this->root->onMouseUp(keyCode));
 	}
 	
 	bool Dataset::onMouseCancel(april::Key keyCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onMouseCancel(keyCode));
+		return (this->root != NULL && this->root->onMouseCancel(keyCode));
 	}
 	
 	bool Dataset::onMouseMove()
 	{
-		return (this->mRoot != NULL && this->mRoot->onMouseMove());
+		return (this->root != NULL && this->root->onMouseMove());
 	}
 	
 	bool Dataset::onMouseScroll(float x, float y)
 	{
-		return (this->mRoot != NULL && this->mRoot->onMouseScroll(x, y));
+		return (this->root != NULL && this->root->onMouseScroll(x, y));
 	}
 	
 	bool Dataset::onKeyDown(april::Key keyCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onKeyDown(keyCode));
+		return (this->root != NULL && this->root->onKeyDown(keyCode));
 	}
 	
 	bool Dataset::onKeyUp(april::Key keyCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onKeyUp(keyCode));
+		return (this->root != NULL && this->root->onKeyUp(keyCode));
 	}
 	
 	bool Dataset::onChar(unsigned int charCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onChar(charCode));
+		return (this->root != NULL && this->root->onChar(charCode));
 	}
 	
 	bool Dataset::onTouch(const harray<gvec2>& touches)
 	{
-		return (this->mRoot != NULL && this->mRoot->onTouch(touches));
+		return (this->root != NULL && this->root->onTouch(touches));
 	}
 	
 	bool Dataset::onButtonDown(april::Button buttonCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onButtonDown(buttonCode));
+		return (this->root != NULL && this->root->onButtonDown(buttonCode));
 	}
 	
 	bool Dataset::onButtonUp(april::Button buttonCode)
 	{
-		return (this->mRoot != NULL && this->mRoot->onButtonUp(buttonCode));
+		return (this->root != NULL && this->root->onButtonUp(buttonCode));
 	}
 	
 	void Dataset::updateTextures(float k)
 	{
-		foreach_m (Texture*, it, this->mTextures)
+		foreach_m (Texture*, it, this->textures)
 		{
 			it->second->update(k);
 		}
@@ -1032,9 +1032,9 @@ namespace aprilui
 	void Dataset::processEvents()
 	{
 		QueuedCallback callback;
-		while (this->mCallbackQueue.size() > 0)
+		while (this->callbackQueue.size() > 0)
 		{
-			callback = this->mCallbackQueue.remove_first();
+			callback = this->callbackQueue.remove_first();
 			callback.event->execute(callback.args);
 			delete callback.args; // deleting only args because event is a pointer to object's events which get deleted by the owning object, while args are allocated by the callback queue.
 		}
@@ -1045,20 +1045,20 @@ namespace aprilui
 		QueuedCallback callback;
 		callback.event = event;
 		callback.args = args;
-		this->mCallbackQueue += callback;
+		this->callbackQueue += callback;
 	}
 	
 	void Dataset::removeCallbackFromQueue(Event* event)
 	{
-		if (event == NULL || this->mCallbackQueue.size() == 0)
+		if (event == NULL || this->callbackQueue.size() == 0)
 		{
 			return; // optimizations, callback queue is often empty.
 		}
 		// remove all instances of the given event
 		harray<int> removeList;
-		for_iter (i, 0, this->mCallbackQueue.size())
+		for_iter (i, 0, this->callbackQueue.size())
 		{
-			if (this->mCallbackQueue[i].event == event)
+			if (this->callbackQueue[i].event == event)
 			{
 				removeList += i;
 			}
@@ -1067,23 +1067,23 @@ namespace aprilui
 		removeList.reverse();
 		foreach (int, it, removeList)
 		{
-			delete this->mCallbackQueue.remove_at(*it).args;
+			delete this->callbackQueue.remove_at(*it).args;
 		}
 	}
 	
 	void Dataset::update(float k)
 	{
 		this->updateTextures(k);
-		if (this->mRoot != NULL && this->mRoot->getParent() == NULL)
+		if (this->root != NULL && this->root->getParent() == NULL)
 		{
-			this->mRoot->update(k);
+			this->root->update(k);
 		}
 		this->clearChildUnderCursor();
 	}
 
 	void Dataset::clearChildUnderCursor()
 	{
-		foreach_m (aprilui::Object*, it, this->mObjects)
+		foreach_m (aprilui::Object*, it, this->objects)
 		{
 			it->second->clearChildUnderCursor();
 		}
@@ -1091,7 +1091,7 @@ namespace aprilui
 
 	void Dataset::notifyEvent(chstr name, void* params)
 	{
-		foreach_m (aprilui::Object*, it, this->mObjects)
+		foreach_m (aprilui::Object*, it, this->objects)
 		{
 			it->second->notifyEvent(name, params);
 		}
@@ -1099,7 +1099,7 @@ namespace aprilui
 	
 	void Dataset::unloadUnusedTextures()
 	{
-		foreach_m (Texture*, it, this->mTextures)
+		foreach_m (Texture*, it, this->textures)
 		{
 			if (it->second->isDynamic() && it->second->getUnusedTime() > 1.0f)
 			{
@@ -1110,13 +1110,13 @@ namespace aprilui
 	
 	void Dataset::reloadTexts()
 	{
-		this->mTexts.clear();
+		this->texts.clear();
 		this->_loadTexts(this->_makeTextsPath());
 	}
 	
 	void Dataset::reloadTextures()
 	{
-		foreach_m (aprilui::Texture*, it, this->mTextures)
+		foreach_m (aprilui::Texture*, it, this->textures)
 		{
 			it->second->reload(this->_makeLocalizedTextureName(it->second->getOriginalFilename()));
 		}
@@ -1125,19 +1125,19 @@ namespace aprilui
 	void Dataset::focus(Object* object)
 	{
 		this->removeFocus();
-		this->mFocusedObject = object;
-		this->mFocusedObject->notifyEvent("onGainFocus", NULL);
-		this->mFocusedObject->triggerEvent("GainFocus");
+		this->focusedObject = object;
+		this->focusedObject->notifyEvent("onGainFocus", NULL);
+		this->focusedObject->triggerEvent("GainFocus");
 	}
 
 	void Dataset::removeFocus()
 	{
-		if (this->mFocusedObject != NULL)
+		if (this->focusedObject != NULL)
 		{
 			april::window->terminateKeyboardHandling();
 			// in case of a recursive call, the focused object has to be removed first.
-			aprilui::Object* object = this->mFocusedObject;
-			this->mFocusedObject = NULL;
+			aprilui::Object* object = this->focusedObject;
+			this->focusedObject = NULL;
 			object->triggerEvent("LoseFocus");
 		}
 	}

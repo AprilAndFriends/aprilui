@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float MoverY::_getObjectValue()
 		{
-			return this->mParent->getY();
+			return this->parent->getY();
 		}
 
 		void MoverY::_setObjectValue(float value)
 		{
-			this->mParent->setY(value);
+			this->parent->setY(value);
 		}
 
 		void MoverY::update(float k)

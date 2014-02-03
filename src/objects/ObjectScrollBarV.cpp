@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -48,9 +48,9 @@ namespace aprilui
 	grect ScrollBarV::_getBarDrawRect()
 	{
 		grect result = this->_getDrawRect();
-		if (this->mSkinName == "")
+		if (this->skinName == "")
 		{
-			Container* parent = dynamic_cast<Container*>(this->mParent);
+			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
 			{
 				ScrollArea* area = parent->_getScrollArea();
@@ -72,7 +72,7 @@ namespace aprilui
 
 	void ScrollBarV::addScrollValue(float value, bool useAccumulated)
 	{
-		Container* parent = dynamic_cast<Container*>(this->mParent);
+		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent == NULL)
 		{
 			return;
@@ -90,25 +90,25 @@ namespace aprilui
 		else
 		{
 			this->_initAreaDragging();
-			bool noAccumulation = (area->_mDragDistance.y == 0.0f);
+			bool noAccumulation = (area->_dragDistance.y == 0.0f);
 			if (useAccumulated)
 			{
-				area->_mDragDistance.y += value;
-				value = area->_mDragDistance.y;
+				area->_dragDistance.y += value;
+				value = area->_dragDistance.y;
 			}
 			value = hroundf(value);
-			if (area->_mDragSpeed.y != 0.0f && area->_mDragTimer.y > 0.0f && noAccumulation)
+			if (area->_dragSpeed.y != 0.0f && area->_dragTimer.y > 0.0f && noAccumulation)
 			{
-				float time = habs(area->_mDragSpeed.y / inertia);
-				float distance = area->_mDragSpeed.y * area->_mDragTimer.y - hsgn(area->_mDragSpeed.y) * inertia * area->_mDragTimer.y * area->_mDragTimer.y * 0.5f;
-				value -= hroundf(hsgn(area->_mDragSpeed.y) * inertia * time * time * 0.5f - distance);
-				area->_mLastScrollOffset.y = area->getScrollOffsetY();
+				float time = habs(area->_dragSpeed.y / inertia);
+				float distance = area->_dragSpeed.y * area->_dragTimer.y - hsgn(area->_dragSpeed.y) * inertia * area->_dragTimer.y * area->_dragTimer.y * 0.5f;
+				value -= hroundf(hsgn(area->_dragSpeed.y) * inertia * time * time * 0.5f - distance);
+				area->_lastScrollOffset.y = area->getScrollOffsetY();
 			}
-			else if (this->mGridSize > 0.0f && habs(value) < this->mGridSize)
+			else if (this->gridSize > 0.0f && habs(value) < this->gridSize)
 			{
-				value = hsgn(value) * this->mGridSize;
+				value = hsgn(value) * this->gridSize;
 			}
-			area->_mDragSpeed.y = -hsgn(value) * hsqrt(2 * inertia * habs(value));
+			area->_dragSpeed.y = -hsgn(value) * hsqrt(2 * inertia * habs(value));
 			this->_adjustDragSpeed();
 		}
 		this->_updateBar();
@@ -116,11 +116,11 @@ namespace aprilui
 
 	float ScrollBarV::_calcScrollJump(float x, float y)
 	{
-		if (this->mButtonBar == NULL)
+		if (this->buttonBar == NULL)
 		{
 			return 0.0f;
 		}
-		Container* parent = dynamic_cast<Container*>(this->mParent);
+		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent == NULL)
 		{
 			return 0.0f;
@@ -130,7 +130,7 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		float result = hsgn(y + this->mButtonBegin->getY() - this->mButtonBar->getY()) * parent->getHeight();
+		float result = hsgn(y + this->buttonBegin->getY() - this->buttonBar->getY()) * parent->getHeight();
 		if (result < 0.0f)
 		{
 			result = hmax(result, -area->getScrollOffsetY());
@@ -152,7 +152,7 @@ namespace aprilui
 		ScrollBar::notifyEvent(name, params);
 		if (name == "AttachToObject")
 		{
-			Container* parent = dynamic_cast<Container*>(this->mParent);
+			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
 			{
 				parent->_setScrollBarV(this);
@@ -160,7 +160,7 @@ namespace aprilui
 		}
 		else if (name == "DetachFromObject")
 		{
-			Container* parent = dynamic_cast<Container*>(this->mParent);
+			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
 			{
 				parent->_setScrollBarV(NULL);
@@ -170,34 +170,34 @@ namespace aprilui
 
 	void ScrollBarV::_updateChildren()
 	{
-		mButtonBegin->setAnchorTop(true);
-		mButtonBegin->setAnchorBottom(false);
-		mButtonBegin->setAnchorLeft(false);
-		mButtonBegin->setAnchorRight(false);
-		mButtonEnd->setY(this->getHeight() - this->mButtonEnd->getHeight());
-		mButtonEnd->setAnchorTop(false);
-		mButtonEnd->setAnchorBottom(true);
-		mButtonEnd->setAnchorLeft(false);
-		mButtonEnd->setAnchorRight(false);
-		mButtonBack->setY(this->mButtonBegin->getHeight());
-		mButtonBack->setSize(this->getWidth(), this->getHeight() - this->mButtonBegin->getHeight() - this->mButtonEnd->getHeight());
-		mButtonBack->setAnchorTop(true);
-		mButtonBack->setAnchorBottom(true);
-		mButtonBack->setAnchorLeft(false);
-		mButtonBack->setAnchorRight(false);
-		mButtonBar->setAnchorTop(true);
-		mButtonBar->setAnchorBottom(false);
-		mButtonBar->setAnchorLeft(false);
-		mButtonBar->setAnchorRight(false);
+		buttonBegin->setAnchorTop(true);
+		buttonBegin->setAnchorBottom(false);
+		buttonBegin->setAnchorLeft(false);
+		buttonBegin->setAnchorRight(false);
+		buttonEnd->setY(this->getHeight() - this->buttonEnd->getHeight());
+		buttonEnd->setAnchorTop(false);
+		buttonEnd->setAnchorBottom(true);
+		buttonEnd->setAnchorLeft(false);
+		buttonEnd->setAnchorRight(false);
+		buttonBack->setY(this->buttonBegin->getHeight());
+		buttonBack->setSize(this->getWidth(), this->getHeight() - this->buttonBegin->getHeight() - this->buttonEnd->getHeight());
+		buttonBack->setAnchorTop(true);
+		buttonBack->setAnchorBottom(true);
+		buttonBack->setAnchorLeft(false);
+		buttonBack->setAnchorRight(false);
+		buttonBar->setAnchorTop(true);
+		buttonBar->setAnchorBottom(false);
+		buttonBar->setAnchorLeft(false);
+		buttonBar->setAnchorRight(false);
 	}
 
 	void ScrollBarV::_moveScrollBar(float x, float y)
 	{
-		if (this->mButtonBar == NULL)
+		if (this->buttonBar == NULL)
 		{
 			return;
 		}
-		Container* parent = dynamic_cast<Container*>(this->mParent);
+		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent == NULL)
 		{
 			return;
@@ -207,17 +207,17 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setScrollOffsetY(hroundf(y * parent->getHeight() / this->mButtonBar->getHeight()));
+		area->setScrollOffsetY(hroundf(y * parent->getHeight() / this->buttonBar->getHeight()));
 		this->_updateBar();
 	}
 
 	void ScrollBarV::_updateBar()
 	{
-		if (this->mButtonBar == NULL)
+		if (this->buttonBar == NULL)
 		{
 			return;
 		}
-		Container* parent = dynamic_cast<Container*>(this->mParent);
+		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent == NULL)
 		{
 			return;
@@ -227,28 +227,28 @@ namespace aprilui
 		{
 			return;
 		}
-		float range = this->getHeight() - this->mButtonBegin->getHeight() - this->mButtonEnd->getHeight();
+		float range = this->getHeight() - this->buttonBegin->getHeight() - this->buttonEnd->getHeight();
 		float factor = area->getHeight();
 		float ratio = (factor - parent->getHeight()) / factor;
 		if (ratio > 0.0f)
 		{
-			this->mButtonBar->setHeight(hclamp((1 - ratio) * range, 8.0f, range));
-			this->mButtonBar->setY(hroundf(this->mButtonBegin->getHeight() - area->getY() / factor * range));
+			this->buttonBar->setHeight(hclamp((1 - ratio) * range, 8.0f, range));
+			this->buttonBar->setY(hroundf(this->buttonBegin->getHeight() - area->getY() / factor * range));
 		}
 		else
 		{
-			this->mButtonBar->setHeight(range);
-			this->mButtonBar->setY(this->mButtonBegin->getHeight());
+			this->buttonBar->setHeight(range);
+			this->buttonBar->setY(this->buttonBegin->getHeight());
 		}
 	}
 
 	void ScrollBarV::_adjustDragSpeed()
 	{
-		if (this->mGridSize <= 0.0f)
+		if (this->gridSize <= 0.0f)
 		{
 			return;
 		}
-		Container* parent = dynamic_cast<Container*>(this->mParent);
+		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent == NULL)
 		{
 			return;
@@ -264,21 +264,21 @@ namespace aprilui
 			return;
 		}
 		float s = 0.0f;
-		if (area->_mDragSpeed.y != 0.0f)
+		if (area->_dragSpeed.y != 0.0f)
 		{
 			// s0 = v0 ^ 2 / (2 * a)
-			s = -hsgn(area->_mDragSpeed.y) * area->_mDragSpeed.y * area->_mDragSpeed.y * 0.5f / inertia;
+			s = -hsgn(area->_dragSpeed.y) * area->_dragSpeed.y * area->_dragSpeed.y * 0.5f / inertia;
 		}
-		float difference = area->_mLastScrollOffset.y - hroundf(area->_mLastScrollOffset.y / this->mGridSize) * this->mGridSize;
-		float offset = hroundf(s / this->mGridSize) * this->mGridSize - s;
-		if (parent->getHeight() > this->mGridSize)
+		float difference = area->_lastScrollOffset.y - hroundf(area->_lastScrollOffset.y / this->gridSize) * this->gridSize;
+		float offset = hroundf(s / this->gridSize) * this->gridSize - s;
+		if (parent->getHeight() > this->gridSize)
 		{
 			s = hroundf(s + offset - difference);
 		}
 		// these are grid snapping cases when grid size exceeds parent size
 		else if (habs(difference) == 0.0f) // using habs because it can be -0.0f!
 		{
-			s = hsgn(s) * this->mGridSize;
+			s = hsgn(s) * this->gridSize;
 		}
 		else if (habs(s) < habs(difference) || hsgn(s) != hsgn(difference))
 		{
@@ -286,15 +286,15 @@ namespace aprilui
 		}
 		else
 		{
-			s = hsgn(s) * hmodf(-habs(difference), this->mGridSize);
+			s = hsgn(s) * hmodf(-habs(difference), this->gridSize);
 		}
 		// v = sqrt(2 * a * s)
-		area->_mDragSpeed.y = -hsgn(s) * hsqrt(2 * inertia * habs(s));
+		area->_dragSpeed.y = -hsgn(s) * hsqrt(2 * inertia * habs(s));
 	}
 
 	bool ScrollBarV::_checkAreaSize()
 	{
-		Container* parent = dynamic_cast<Container*>(this->mParent);
+		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent == NULL)
 		{
 			return true;

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -34,17 +34,17 @@ namespace aprilui
 
 		float TiledScrollerY::_getObjectValue()
 		{
-			return dynamic_cast<TiledImage*>(dynamic_cast<ImageBox*>(this->mParent)->getImage())->getScrollY();
+			return dynamic_cast<TiledImage*>(dynamic_cast<ImageBox*>(this->parent)->getImage())->getScrollY();
 		}
 
 		void TiledScrollerY::_setObjectValue(float value)
 		{
-			dynamic_cast<TiledImage*>(dynamic_cast<ImageBox*>(this->mParent)->getImage())->setScrollY(value);
+			dynamic_cast<TiledImage*>(dynamic_cast<ImageBox*>(this->parent)->getImage())->setScrollY(value);
 		}
 
 		void TiledScrollerY::update(float k)
 		{
-			ImageBox* imageBox = dynamic_cast<ImageBox*>(this->mParent);
+			ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);
 			if (imageBox == NULL)
 			{
 				hlog::error(aprilui::logTag, "Animators::TiledScrollerY: parent object not a subclass of Objects::ImageBox!");

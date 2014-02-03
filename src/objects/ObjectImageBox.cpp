@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -18,10 +18,9 @@
 
 namespace aprilui
 {
-	ImageBox::ImageBox(chstr name, grect rect) :
-		Object(name, rect)
+	ImageBox::ImageBox(chstr name, grect rect) : Object(name, rect)
 	{
-		this->mImage = NULL;
+		this->image = NULL;
 	}
 
 	ImageBox::~ImageBox()
@@ -35,39 +34,39 @@ namespace aprilui
 
 	void ImageBox::setImage(Image* image)
 	{
-		this->mImage = image;
+		this->image = image;
 		if (image != NULL)
 		{
 			grect rect = image->getSrcRect();
-			if (this->mRect.w == -1)
+			if (this->rect.w == -1)
 			{
-				this->mRect.w = rect.w * aprilui::getDefaultScale();
-				this->mCenter.x = mRect.w * 0.5f;
+				this->rect.w = rect.w * aprilui::getDefaultScale();
+				this->center.x = rect.w * 0.5f;
 			}
-			if (this->mRect.h == -1)
+			if (this->rect.h == -1)
 			{
-				this->mRect.h = rect.h * aprilui::getDefaultScale();
-				this->mCenter.y = this->mRect.h * 0.5f;
+				this->rect.h = rect.h * aprilui::getDefaultScale();
+				this->center.y = this->rect.h * 0.5f;
 			}
-			this->mImageName = image->getFullName();
+			this->imageName = image->getFullName();
 		}
 		else
 		{
-			this->mImageName = APRILUI_IMAGE_NAME_NULL;
+			this->imageName = APRILUI_IMAGE_NAME_NULL;
 		}
 	}
 
 	void ImageBox::setImageByName(chstr name)
 	{
-		this->setImage(this->mDataset->getImage(name));
+		this->setImage(this->dataset->getImage(name));
 	}
 
 	bool ImageBox::trySetImageByName(chstr name)
 	{
-		if (this->mImageName != name)
+		if (this->imageName != name)
 		{
 			// using c/p code because of performance reasons
-			this->setImage(this->mDataset->getImage(name));
+			this->setImage(this->dataset->getImage(name));
 			return true;
 		}
 		return false;
@@ -75,31 +74,31 @@ namespace aprilui
 	
 	void ImageBox::OnDraw()
 	{
-		if (this->mImage == NULL)
+		if (this->image == NULL)
 		{
-			this->mImage = this->mDataset->getImage(APRILUI_IMAGE_NAME_NULL);
+			this->image = this->dataset->getImage(APRILUI_IMAGE_NAME_NULL);
 		}
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
 		if (!aprilui::isDebugEnabled())
 		{
-			this->mImage->draw(this->_getDrawRect(), color);
+			this->image->draw(this->_getDrawRect(), color);
 		}
 		else
 		{
 			grect rect = this->_getDrawRect();
 			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Black, 32));
 			april::rendersys->drawRect(rect, april::Color(april::Color::White, 64));
-			this->mImage->draw(rect, color);
+			this->image->draw(rect, color);
 		}
 		Object::OnDraw();
 	}
 	
 	void ImageBox::resizeToFitImage()
 	{
-		if (this->mImage != NULL)
+		if (this->image != NULL)
 		{
-			this->mRect.setSize(this->mImage->getSrcRect().getSize() * aprilui::getDefaultScale());
+			this->rect.setSize(this->image->getSrcRect().getSize() * aprilui::getDefaultScale());
 			this->resetCenter();
 		}
 	}
@@ -108,7 +107,7 @@ namespace aprilui
 	{	
 		if (name == "UpdateImage")
 		{
-			this->setImageByName(this->mImageName);
+			this->setImageByName(this->imageName);
 		}
 		Object::notifyEvent(name, params);
 	}

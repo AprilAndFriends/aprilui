@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float ResizerY::_getObjectValue()
 		{
-			return this->mParent->getHeight();
+			return this->parent->getHeight();
 		}
 
 		void ResizerY::_setObjectValue(float value)
 		{
-			this->mParent->setHeight(value);
+			this->parent->setHeight(value);
 		}
 
 		void ResizerY::update(float k)

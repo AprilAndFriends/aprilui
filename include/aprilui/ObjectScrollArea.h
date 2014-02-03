@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -35,17 +35,12 @@ namespace aprilui
 		~ScrollArea();
 		static Object* createInstance(chstr name, grect rect);
 
-		bool isAllowDrag() { return this->mAllowDrag; }
-		void setAllowDrag(bool value) { this->mAllowDrag = value; }
-		float getInertia() { return this->mInertia; }
-		void setInertia(float value) { this->mInertia = value; }
-		float getDragThreshold() { return this->mDragThreshold; }
-		void setDragThreshold(float value) { this->mDragThreshold = value; }
-		float getDragMaxSpeed() { return this->mDragMaxSpeed; }
-		void setDragMaxSpeed(float value) { this->mDragMaxSpeed = value; }
-		bool isSwapScrollWheels() { return this->mSwapScrollWheels; }
-		void setSwapScrollWheels(bool value) { this->mSwapScrollWheels = value; }
-		bool isDragging() { return this->mDragging; }
+		HL_DEFINE_ISSET(allowDrag, AllowDrag);
+		HL_DEFINE_GETSET(float, inertia, Inertia);
+		HL_DEFINE_GETSET(float, dragThreshold, DragThreshold);
+		HL_DEFINE_GETSET(float, dragMaxSpeed, DragMaxSpeed);
+		HL_DEFINE_ISSET(swapScrollWheels, SwapScrollWheels);
+		HL_DEFINE_IS(dragging, Dragging);
 		hstr getName();
 		bool isCursorInside();
 		int getFocusIndex();
@@ -87,25 +82,25 @@ namespace aprilui
 		static float DragMaxSpeed;
 
 	protected:
-		bool mAllowDrag;
-		float mInertia;
-		float mDragThreshold;
-		float mDragMaxSpeed;
-		bool mSwapScrollWheels;
-		bool mDragging;
+		bool allowDrag;
+		float inertia;
+		float dragThreshold;
+		float dragMaxSpeed;
+		bool swapScrollWheels;
+		bool dragging;
 
 		virtual bool _checkHover();
 		void _adjustDragSpeed();
 		void _snapScrollOffset();
 
 	private:
-		gvec2 _mClickPosition;
-		gvec2 _mLastPosition;
-		gvec2 _mClickScrollOffset;
-		gvec2 _mLastScrollOffset;
-		gvec2 _mDragDistance;
-		gvec2 _mDragSpeed;
-		gvec2 _mDragTimer;
+		gvec2 _clickPosition;
+		gvec2 _lastPosition;
+		gvec2 _clickScrollOffset;
+		gvec2 _lastScrollOffset;
+		gvec2 _dragDistance;
+		gvec2 _dragSpeed;
+		gvec2 _dragTimer;
 
 	};
 }

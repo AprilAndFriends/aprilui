@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,13 @@ namespace aprilui
 		~CallbackObject();
 		static Object* createInstance(chstr name, grect rect);
 
-		void (*getDrawCallback())(CallbackObject*) { return this->mDrawCallback; }
-		void setDrawCallback(void (*value)(CallbackObject*)) { this->mDrawCallback = value; }
-		void setUpdateCallback(void (*value)(float)) { this->mUpdateCallback = value; }
+		void (*getDrawCallback())(CallbackObject*) { return this->drawCallback; }
+		void setDrawCallback(void (*value)(CallbackObject*)) { this->drawCallback = value; }
+		void setUpdateCallback(void (*value)(float)) { this->updateCallback = value; }
 		
-		void OnDraw();
 		void update(float k);
+		void OnDraw();
+
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
 		bool onMouseMove();
@@ -43,8 +44,8 @@ namespace aprilui
 		void mouseCancel();
 
 	protected:
-		void (*mDrawCallback)(CallbackObject*);
-		void (*mUpdateCallback)(float);
+		void (*drawCallback)(CallbackObject*);
+		void (*updateCallback)(float);
 
 	};
 }

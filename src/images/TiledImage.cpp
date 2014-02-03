@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -21,7 +21,7 @@ namespace aprilui
 	TiledImage::TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
 		Image(texture, name, source, vertical)
 	{
-		this->mTile.set(tileW, tileH);
+		this->tile.set(tileW, tileH);
 	}
 
 	TiledImage::~TiledImage()
@@ -30,20 +30,20 @@ namespace aprilui
 
 	void TiledImage::setTile(float w, float h)
 	{
-		this->mTile.set(w, h);
+		this->tile.set(w, h);
 	}
 	
 	void TiledImage::setScroll(float x, float y)
 	{
-		this->mScroll.set(x, y);
+		this->scroll.set(x, y);
 	}
 
 	void TiledImage::draw(grect rect, april::Color color)
 	{
-		float tileW = (this->mTile.x > 0.0f ? rect.w / this->mTile.x : -this->mTile.x);
-		float tileH = (this->mTile.y > 0.0f ? rect.h / this->mTile.y : -this->mTile.y);
-		float scrollX = hmodf(this->mScroll.x, tileW) - tileW;
-		float scrollY = hmodf(this->mScroll.y, tileH) - tileH;
+		float tileW = (this->tile.x > 0.0f ? rect.w / this->tile.x : -this->tile.x);
+		float tileH = (this->tile.y > 0.0f ? rect.h / this->tile.y : -this->tile.y);
+		float scrollX = hmodf(this->scroll.x, tileW) - tileW;
+		float scrollY = hmodf(this->scroll.y, tileH) - tileH;
 		int countX = (int)ceil((rect.w - scrollX) / tileW);
 		int countY = (int)ceil((rect.h - scrollY) / tileH);
 		int i;
@@ -53,8 +53,8 @@ namespace aprilui
 		int minY = 0;
 		int maxY = countY - 1;
 		int clipped;
-		bool fullTexture = (this->mTexture->isValid() && this->mTexture->getRenderTexture()->isLoaded() &&
-			this->mSrcRect == grect(0.0f, 0.0f, (float)this->mTexture->getWidth(), (float)this->mTexture->getHeight()));
+		bool fullTexture = (this->texture->isValid() && this->texture->getRenderTexture()->isLoaded() &&
+			this->srcRect == grect(0.0f, 0.0f, (float)this->texture->getWidth(), (float)this->texture->getHeight()));
 		// TODO - this can be optimized further by rendering corners separately, then the edges in one call and finally the center piece in one call
 		for_iterx (j, 0, countY)
 		{
@@ -81,12 +81,12 @@ namespace aprilui
 		}
 		if (fullTexture && minX < maxX && minY < maxY)
 		{
-			grect src = this->mSrcRect;
-			this->mSrcRect.w *= (maxX - minX);
-			this->mSrcRect.h *= (maxY - minY);
-			this->mTextureCoordinatesLoaded = false; // srcRect has been changed
+			grect src = this->srcRect;
+			this->srcRect.w *= (maxX - minX);
+			this->srcRect.h *= (maxY - minY);
+			this->_textureCoordinatesLoaded = false; // srcRect has been changed
 			Image::draw(grect(rect.x + scrollX + minX * tileW, rect.y + scrollY + minY * tileH, (maxX - minX) * tileW, (maxY - minY) * tileH), color);
-			this->mSrcRect = src;
+			this->srcRect = src;
 		}
 	}
 
@@ -95,13 +95,13 @@ namespace aprilui
 		int clipped = 0;
 		float difference;
 		float srcDifference;
-		grect src = this->mSrcRect;
+		grect src = this->srcRect;
 		if (tileRect.x <= rect.x)
 		{
 			difference = rect.x - tileRect.x;
 			srcDifference = src.w * difference / tileRect.w;
-			this->mSrcRect.x += srcDifference;
-			this->mSrcRect.w -= srcDifference;
+			this->srcRect.x += srcDifference;
+			this->srcRect.w -= srcDifference;
 			tileRect.x += difference;
 			tileRect.w -= difference;
 			clipped |= 0x0010;
@@ -110,7 +110,7 @@ namespace aprilui
 		{
 			difference = tileRect.x + tileRect.w - (rect.x + rect.w);
 			srcDifference = src.w * difference / tileRect.w;
-			this->mSrcRect.w -= srcDifference;
+			this->srcRect.w -= srcDifference;
 			tileRect.w -= difference;
 			clipped |= 0x0100;
 		}
@@ -118,8 +118,8 @@ namespace aprilui
 		{
 			difference = rect.y - tileRect.y;
 			srcDifference = src.h * difference / tileRect.h;
-			this->mSrcRect.y += srcDifference;
-			this->mSrcRect.h -= srcDifference;
+			this->srcRect.y += srcDifference;
+			this->srcRect.h -= srcDifference;
 			tileRect.y += difference;
 			tileRect.h -= difference;
 			clipped |= 0x0001;
@@ -128,16 +128,16 @@ namespace aprilui
 		{
 			difference = tileRect.y + tileRect.h - (rect.y + rect.h);
 			srcDifference = src.h * difference / tileRect.h;
-			this->mSrcRect.h -= srcDifference;
+			this->srcRect.h -= srcDifference;
 			tileRect.h -= difference;
 			clipped |= 0x1000;
 		}
 		if (!fullTexture || clipped != 0)
 		{
-			this->mTextureCoordinatesLoaded = false; // srcRect has been changed
+			this->_textureCoordinatesLoaded = false; // srcRect has been changed
 			Image::draw(tileRect, color);
 		}
-		this->mSrcRect = src;
+		this->srcRect = src;
 		return (fullTexture ? clipped : 0);
 	}
 

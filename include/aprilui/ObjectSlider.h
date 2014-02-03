@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,18 +30,17 @@ namespace aprilui
 		~Slider();
 		static Object* createInstance(chstr name, grect rect);
 		
-		float getValue() { return this->mValue; }
+		HL_DEFINE_GET(float, value, Value);
 		void setValue(float value);
 		
-		bool setProperty(chstr name, chstr value);
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
 		bool onMouseMove();
 		void mouseCancel();
 		
 	protected:
-		bool mPushed;
-		float mValue;
+		bool pushed;
+		float value;
 		
 		void update(float k);
 		void OnDraw();

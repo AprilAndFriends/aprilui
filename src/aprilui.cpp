@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -86,7 +86,6 @@ namespace aprilui
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollArea);
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollBarH);
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollBarV);
-		APRILUI_REGISTER_OBJECT_TYPE(TextButton);
 		APRILUI_REGISTER_OBJECT_TYPE(TextImageButton);
 		APRILUI_REGISTER_OBJECT_TYPE(ToggleButton);
 

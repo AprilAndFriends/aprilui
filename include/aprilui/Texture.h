@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -28,19 +28,19 @@ namespace aprilui
 		Texture(chstr filename, april::Texture* texture);
 		~Texture();
 
-		hstr getOriginalFilename() { return this->mOriginalFilename; }
-		hstr getFilename() { return this->mFilename; }
-		gvec2 getScale() { return this->mScale; }
-		float getUnusedTime() { return this->mUnusedTime; }
-		bool isDynamic() { return this->mDynamic; }
-
-		april::Texture* getRenderTexture();
+		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);
+		HL_DEFINE_GET(hstr, filename, Filename);
+		HL_DEFINE_GET(gvec2, scale, Scale);
+		HL_DEFINE_GET(float, unusedTime, UnusedTime);
+		HL_DEFINE_IS(dynamic, Dynamic);
+		HL_DEFINE_GET(harray<Texture*>, dynamicLinks, DynamicLinks);
 		int getWidth();
 		int getHeight();
 		bool isLoaded();
 		bool isValid();
 		void setFilter(april::Texture::Filter value);
 		void setAddressMode(april::Texture::AddressMode value);
+		april::Texture* getRenderTexture();
 
 		void update(float k);
 		void resetUnusedTime();
@@ -51,22 +51,24 @@ namespace aprilui
 		
 		void addDynamicLink(Texture* link);
 		void removeDynamicLink(Texture* link);
-		harray<Texture*> getDynamicLinks() { return mDynamicLinks; };
 		
 		static void setLoadListener(void (*callback)(Texture*));
 		static void setUnloadListener(void (*callback)(Texture*));
+
 	protected:
-		hstr mOriginalFilename;
-		hstr mFilename;
-		april::Texture* mTexture;
-		gvec2 mScale;
-		float mUnusedTime;
-		bool mDynamic;
-		harray<Texture*> mDynamicLinks;
-		april::Texture::Filter mFilter;
-		april::Texture::AddressMode mAddressMode;
+		hstr originalFilename;
+		hstr filename;
+		april::Texture* texture;
+		gvec2 scale;
+		float unusedTime;
+		bool dynamic;
+		harray<Texture*> dynamicLinks;
+		april::Texture::Filter filter;
+		april::Texture::AddressMode addressMode;
+
 		static void (*loadListener)(Texture*);
 		static void (*unloadListener)(Texture*);
+
 	};
 
 }

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,25 +30,24 @@ namespace aprilui
 		~EditBox();
 		static Object* createInstance(chstr name, grect rect);
 		
-		int getCursorIndex() { return this->mCursorIndex; }
-		void setCursorIndex(int value);
-		void setCursorIndexAt(float x, float y);
-		int getMaxLength() { return this->mMaxLength; }
-		void setMaxLength(int value);
-		char getPasswordChar() { return this->mPasswordChar; }
-		void setPasswordChar(char value) { this->mPasswordChar = value; }
-		bool isMultiLine() { return this->mMultiLine; }
-		void setMultiLine(bool value) { this->mMultiLine = value; }
-		hstr getFilter() { return this->mFilter; }
-		void setFilter(chstr value);
-		hstr getEmptyText() { return this->mEmptyText; }
+		HL_DEFINE_GET(hstr, emptyText, EmptyText);
 		void setEmptyText(chstr value);
-		hstr getEmptyTextKey() { return this->mEmptyTextKey; }
+		HL_DEFINE_GET(hstr, emptyTextKey, EmptyTextKey);
 		void setEmptyTextKey(chstr value);
-		gvec2 getCaretPosition() { return this->mCaretPosition; }
+		HL_DEFINE_GET(int, cursorIndex, CursorIndex);
+		void setCursorIndex(int value);
+		HL_DEFINE_GET(int, maxLength, MaxLength);
+		void setMaxLength(int value);
+		HL_DEFINE_GETSET(char, passwordChar, PasswordChar);
+		HL_DEFINE_ISSET(multiLine, MultiLine);
+		HL_DEFINE_GET(hstr, filter, Filter);
+		void setFilter(chstr value);
+		HL_DEFINE_GET(gvec2, caretPosition, CaretPosition);
 		void setText(chstr value);
 		void setFocused(bool value);
 		
+		void setCursorIndexAt(float x, float y);
+
 		void update(float time);
 
 		void notifyEvent(chstr name, void* params);
@@ -63,18 +62,16 @@ namespace aprilui
 		void mouseCancel();
 		
 	protected:
-		gvec2 mCaretPosition;
-		hstr mEmptyText;
-		hstr mEmptyTextKey;
-		bool mPushed;
-		int mCursorIndex;
-		int mMaxLength;
-		char mPasswordChar;
-		bool mMultiLine;
-		bool mCtrlMode;
-		bool mSpaceHack; // TODO - remove
-		float mBlinkTimer;
-		hstr mFilter;
+		hstr emptyText;
+		hstr emptyTextKey;
+		bool pushed;
+		int cursorIndex;
+		int maxLength;
+		char passwordChar;
+		bool multiLine;
+		bool spaceHack; // TODO - remove
+		hstr filter;
+		gvec2 caretPosition;
 		
 		void OnDraw();
 		
@@ -90,6 +87,10 @@ namespace aprilui
 		void _deleteRightWord();
 		void _insertChar(unsigned int charCode);
 		gvec2 _makeCaretPosition(chstr text, chstr originalText);
+
+	private:
+		bool _ctrlMode;
+		float _blinkTimer;
 
 	};
 

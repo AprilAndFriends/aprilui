@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -18,11 +18,9 @@
 
 namespace aprilui
 {
-	Label::Label(chstr name, grect rect) :
-		LabelBase(),
-		Object(name, rect)
+	Label::Label(chstr name, grect rect) : Object(name, rect), LabelBase()
 	{
-		this->mText = "Label: " + name;
+		this->text = "Label: " + name;
 	}
 
 	Label::~Label()
@@ -45,7 +43,7 @@ namespace aprilui
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * disabledAlphaFactor);
-		april::Color backgroundColor = this->mBackgroundColor;
+		april::Color backgroundColor = this->backgroundColor;
 		backgroundColor.a = (unsigned char)(backgroundColor.a * disabledAlphaFactor);
 		LabelBase::_drawLabel(this->_getDrawRect(), color, backgroundColor);
 	}

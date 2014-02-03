@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -34,14 +34,11 @@ namespace aprilui
 		ScrollBar(chstr name, grect rect);
 		~ScrollBar();
 
-		hstr getSkinName() { return this->mSkinName; }
+		HL_DEFINE_GETSET(float, gridSize, GridSize);
+		HL_DEFINE_ISSET(useFading, UseFading);
+		HL_DEFINE_ISSET(heightHide, HeightHide);
+		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
-		float getGridSize() { return this->mGridSize; }
-		void setGridSize(float value) { this->mGridSize = value; }
-		bool isUseFading() { return this->mUseFading; }
-		void setUseFading(bool value) { this->mUseFading = value; }
-		bool isHeightHide() { return this->mHeightHide; }
-		void setHeightHide(bool value) { this->mHeightHide = value; }
 
 		void update(float k);
 		void OnDraw();
@@ -62,15 +59,15 @@ namespace aprilui
 		static float GridSize;
 
 	protected:
-		hstr mSkinName;
-		float mGridSize;
-		bool mUseFading;
-		bool mHeightHide;
-		ImageButton* mButtonBegin;
-		ImageButton* mButtonEnd;
-		ImageButton* mButtonBack;
-		ImageButton* mButtonBar;
-		float _mRetainTime;
+		hstr skinName;
+		float gridSize;
+		bool useFading;
+		bool heightHide;
+		ImageButton* buttonBegin;
+		ImageButton* buttonEnd;
+		ImageButton* buttonBack;
+		ImageButton* buttonBar;
+		float _retainTime;
 
 		void _initAreaDragging();
 
@@ -102,8 +99,8 @@ namespace aprilui
 		static void _clickScrollBar(EventArgs* args);
 
 	private:
-		bool _mScrolling;
-		gvec2 _mClickPosition;
+		bool _scrolling;
+		gvec2 _clickPosition;
 
 	};
 }

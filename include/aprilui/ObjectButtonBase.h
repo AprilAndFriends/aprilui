@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -32,8 +32,8 @@ namespace aprilui
 		ButtonBase();
 		virtual ~ButtonBase();
 
-		bool isHovered() { return this->mHovered; }
-		bool isPushed() { return this->mPushed; }
+		HL_DEFINE_IS(hovered, Hovered);
+		HL_DEFINE_IS(pushed, Pushed);
 		virtual hstr getName() = 0;
 		virtual bool isCursorInside() = 0;
 		virtual int getFocusIndex() = 0;
@@ -55,8 +55,8 @@ namespace aprilui
 		static void setAllowedButtons(harray<april::Button> buttons);
 		
 	protected:
-		bool mHovered;
-		bool mPushed;
+		bool hovered;
+		bool pushed;
 		
 		virtual void update(float k);
 		virtual bool _checkHover();

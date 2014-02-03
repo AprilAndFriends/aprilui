@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -39,21 +39,18 @@ namespace aprilui
 		~ProgressBar();
 		static Object* createInstance(chstr name, grect rect);
 		
-		Image* getProgressImage() { return this->mProgressImage; }
+		HL_DEFINE_GET(Image*, progressImage, ProgressImage);
+		HL_DEFINE_GET(Image*, maskImage, MaskImage);
+		HL_DEFINE_GET(hstr, progressImageName, ProgressImageName);
+		HL_DEFINE_GET(hstr, maskImageName, MaskImageName);
+		HL_DEFINE_GETSET(float, progress, Progress);
+		HL_DEFINE_ISSET(stretching, Stretching);
+		HL_DEFINE_GETSET(Direction, direction, Direction);
 		void setProgressImage(Image* image);
-		hstr getProgressImageName() { return this->mProgressImageName; }
-		void setProgressImageByName(chstr image);
-		Image* getMaskImage() { return this->mMaskImage; }
 		void setMaskImage(Image* image);
-		hstr getMaskImageName() { return this->mProgressImageName; }
-		void setMaskImageByName(chstr image);
-		float getProgress() { return this->mProgress; }
-		void setProgress(float value) { this->mProgress = value; }
-		bool isStretching() { return this->mStretching; }
-		void setStretching(bool value) { this->mStretching = value; }
-		Direction getDirection() { return this->mDirection; }
-		void setDirection(Direction value) { this->mDirection = value; }
-		
+		void setProgressImageByName(chstr name);
+		void setMaskImageByName(chstr name);
+
 		/// @brief Optimized version.
 		bool trySetProgressImageByName(chstr name);
 		bool trySetMaskImageByName(chstr name);
@@ -64,13 +61,13 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		Image* mProgressImage;
-		hstr mProgressImageName;
-		Image* mMaskImage;
-		hstr mMaskImageName;
-		float mProgress;
-		bool mStretching;
-		Direction mDirection;
+		Image* progressImage;
+		hstr progressImageName;
+		Image* maskImage;
+		hstr maskImageName;
+		float progress;
+		bool stretching;
+		Direction direction;
 
 		grect _calcRectDirection(grect rect, float progress);
 		

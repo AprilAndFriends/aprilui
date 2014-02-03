@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -29,36 +29,45 @@ namespace aprilui
 		~ToggleButton();
 		static Object* createInstance(chstr name, grect rect);
 
-		bool isToggled() { return this->mToggled; }
-		void setToggled(bool value) { this->mToggled = value; }
-		Image* getToggledNormalImage() { return this->mToggledNormalImage; }
-		void setToggledNormalImage(Image* image) { this->mToggledNormalImage = image; }
-		void setToggledNormalImageByName(chstr image);
-		Image* getToggledHoverImage() { return this->mToggledHoverImage; }
-		void setToggledHoverImage(Image* image) { this->mToggledHoverImage = image; }
-		void setToggledHoverImageByName(chstr image);
-		Image* getToggledPushedImage() { return this->mToggledPushedImage; }
-		void setToggledPushedImage(Image* image) { this->mToggledPushedImage = image; }
-		void setToggledPushedImageByName(chstr image);
-		Image* getToggledDisabledImage() { return this->mToggledDisabledImage; }
-		void setToggledDisabledImage(Image* image) { this->mToggledDisabledImage = image; }
-		void setToggledDisabledImageByName(chstr image);
+		HL_DEFINE_ISSET(toggled, Toggled);
+		HL_DEFINE_GET(Image*, toggledNormalImage, ToggledNormalImage);
+		HL_DEFINE_GET(Image*, toggledHoverImage, ToggledHoverImage);
+		HL_DEFINE_GET(Image*, toggledPushedImage, ToggledPushedImage);
+		HL_DEFINE_GET(Image*, toggledDisabledImage, ToggledDisabledImage);
+		void setToggledNormalImage(Image* image);
+		void setToggledHoverImage(Image* image);
+		void setToggledPushedImage(Image* image);
+		void setToggledDisabledImage(Image* image);
+		void setToggledNormalImageByName(chstr name);
+		void setToggledHoverImageByName(chstr name);
+		void setToggledPushedImageByName(chstr name);
+		void setToggledDisabledImageByName(chstr name);
 
-		void toggle() { mToggled = !mToggled; }
-		void turnOn() { mToggled = true; }
-		void turnOff() { mToggled = false; }
-		
+		/// @brief Optimized versions.
+		bool trySetToggledNormalImageByName(chstr name);
+		bool trySetToggledHoverImageByName(chstr name);
+		bool trySetToggledPushedImageByName(chstr name);
+		bool trySetToggledDisabledImageByName(chstr name);
+
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 
+		void toggle();
+		void turnOn();
+		void turnOff();
+		
 		bool onMouseUp(april::Key keyCode);
 
 	protected:
-		bool mToggled;
-		Image* mToggledNormalImage;
-		Image* mToggledHoverImage;
-		Image* mToggledPushedImage;
-		Image* mToggledDisabledImage;
+		bool toggled;
+		Image* toggledNormalImage;
+		Image* toggledHoverImage;
+		Image* toggledPushedImage;
+		Image* toggledDisabledImage;
+		hstr toggledNormalImageName;
+		hstr toggledHoverImageName;
+		hstr toggledPushedImageName;
+		hstr toggledDisabledImageName;
 
 		void update(float k);
 		void OnDraw();

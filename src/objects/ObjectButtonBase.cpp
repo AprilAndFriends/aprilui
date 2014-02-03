@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -24,8 +24,8 @@ namespace aprilui
 
 	ButtonBase::ButtonBase()
 	{
-		this->mHovered = false;
-		this->mPushed = false;
+		this->hovered = false;
+		this->pushed = false;
 	}
 	
 	ButtonBase::~ButtonBase()
@@ -34,7 +34,7 @@ namespace aprilui
 	
 	void ButtonBase::update(float k)
 	{
-		this->mHovered = this->_checkHover();
+		this->hovered = this->_checkHover();
 	}
 
 	bool ButtonBase::_checkHover()
@@ -73,10 +73,10 @@ namespace aprilui
 		{
 			return false;
 		}
-		this->mHovered = this->_checkHover();
-		if (this->mHovered)
+		this->hovered = this->_checkHover();
+		if (this->hovered)
 		{
-			this->mPushed = true;
+			this->pushed = true;
 			return true;
 		}
 		return false;
@@ -88,13 +88,13 @@ namespace aprilui
 		{
 			return false;
 		}
-		this->mHovered = this->_checkHover();
-		if (this->mPushed && this->mHovered)
+		this->hovered = this->_checkHover();
+		if (this->pushed && this->hovered)
 		{
-			this->mPushed = false;
+			this->pushed = false;
 			return true;
 		}
-		this->mPushed = false;
+		this->pushed = false;
 		return false;
 	}
 
@@ -105,7 +105,7 @@ namespace aprilui
 
 	bool ButtonBase::onMouseMove()
 	{
-		this->mHovered = this->_checkHover();
+		this->hovered = this->_checkHover();
 		return false;
 	}
 
@@ -115,10 +115,10 @@ namespace aprilui
 		{
 			return false;
 		}
-		this->mHovered = this->_checkHover();
-		if (this->mHovered)
+		this->hovered = this->_checkHover();
+		if (this->hovered)
 		{
-			this->mPushed = true;
+			this->pushed = true;
 			return true;
 		}
 		return false;
@@ -130,20 +130,20 @@ namespace aprilui
 		{
 			return false;
 		}
-		this->mHovered = this->_checkHover();
-		if (this->mPushed && this->mHovered)
+		this->hovered = this->_checkHover();
+		if (this->pushed && this->hovered)
 		{
-			this->mPushed = false;
+			this->pushed = false;
 			return true;
 		}
-		this->mPushed = false;
+		this->pushed = false;
 		return false;
 	}
 
 	void ButtonBase::mouseCancel()
 	{
-		this->mPushed = false;
-		this->mHovered = this->_checkHover();
+		this->pushed = false;
+		this->hovered = this->_checkHover();
 	}
 
 	hstr ButtonBase::getProperty(chstr name, bool* propertyExists)

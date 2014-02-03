@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -34,20 +34,19 @@ namespace aprilui
 			grect rect;
 		};
 		
-	public:
 		CompositeImage(chstr name, float w, float h);
 		CompositeImage(chstr name, CompositeImage& base);
 		~CompositeImage();
+		
+		const harray<ImageRef>& getImages() { return this->images; }
 		
 		void addImageRef(Image* image, grect rect);
         void clearImages();
 		
 		void draw(grect rect, april::Color color);
 		
-		const harray<ImageRef>& getImageList() { return this->mImages; }
-		
 	protected:
-		harray<ImageRef> mImages;
+		harray<ImageRef> images;
 		
 	};
 	

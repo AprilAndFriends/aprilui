@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float Rotator::_getObjectValue()
 		{
-			return this->mParent->getAngle();
+			return this->parent->getAngle();
 		}
 
 		void Rotator::_setObjectValue(float value)
 		{
-			this->mParent->setAngle(value);
+			this->parent->setAngle(value);
 		}
 
 		void Rotator::update(float k)

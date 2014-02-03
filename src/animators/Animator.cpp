@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -18,34 +18,24 @@
 
 namespace aprilui
 {
-	Object::AnimationFunction Animator::Linear = Object::Linear; // DEPRECATED
-	Object::AnimationFunction Animator::Sine = Object::Sine; // DEPRECATED
-	Object::AnimationFunction Animator::Square = Object::Square; // DEPRECATED
-	Object::AnimationFunction Animator::Saw = Object::Saw; // DEPRECATED
-	Object::AnimationFunction Animator::Triangle = Object::Triangle; // DEPRECATED
-	Object::AnimationFunction Animator::Random = Object::Random; // DEPRECATED
-	Object::AnimationFunction Animator::Hover = Object::Hover; // DEPRECATED
-	Object::AnimationFunction Animator::Custom = Object::Custom; // DEPRECATED
-
-	Animator::Animator(chstr name) :
-		Object(name, grect(0, 0, 1, 1))
+	Animator::Animator(chstr name) : Object(name, grect(0.0f, 0.0f, 1.0f, 1.0f))
 	{
-		this->mTimeSinceLastFrame = 0.0f;
-		this->mValue = 0.0f;
-		this->mFunction = aprilui::Object::Linear;
-		this->mTimer = 0.0f;
-		this->mDelay = 0.0f;
-		this->mPeriods = 1.0f;
-		this->mAmplitude = 0.5f;
-		this->mSpeed = 1.0f;
-		this->mOffset = 0.0f;
-		this->mAcceleration = 0.0f;
-		this->mDiscreteStep = 0;
-		this->mReset = false;
-		this->mInheritValue = false;
-		this->mTarget = 0.0f;
-		this->mUseTarget = false;
-		this->mCustomFunction = NULL;
+		this->timeSinceLastFrame = 0.0f;
+		this->value = 0.0f;
+		this->animationFunction = aprilui::Object::Linear;
+		this->timer = 0.0f;
+		this->delay = 0.0f;
+		this->periods = 1.0f;
+		this->amplitude = 0.5f;
+		this->speed = 1.0f;
+		this->offset = 0.0f;
+		this->acceleration = 0.0f;
+		this->discreteStep = 0;
+		this->reset = false;
+		this->inheritValue = false;
+		this->target = 0.0f;
+		this->useTarget = false;
+		this->customFunction = NULL;
 	}
 	
 	Animator::~Animator()
@@ -58,109 +48,109 @@ namespace aprilui
 
 	void Animator::update(float k)
 	{
-		this->mTimeSinceLastFrame = k;
-		Object::update(this->mTimeSinceLastFrame);
-		if (!this->mEnabled)
+		this->timeSinceLastFrame = k;
+		Object::update(this->timeSinceLastFrame);
+		if (!this->enabled)
 		{
 			return;
 		}
-		if (this->mDelay > 0.0f)
+		if (this->delay > 0.0f)
 		{
-			this->mDelay -= this->mTimeSinceLastFrame;
-			if (this->mDelay > 0.0f)
+			this->delay -= this->timeSinceLastFrame;
+			if (this->delay > 0.0f)
 			{
 				return;
 			}
 			this->notifyEvent("OnDelayEnd", NULL);
-			this->mTimeSinceLastFrame += this->mDelay;
+			this->timeSinceLastFrame += this->delay;
 		}
-		this->mTimer += this->mTimeSinceLastFrame;
-		if (!heqf(this->mAcceleration, 0.0f, (float)HL_E_TOLERANCE))
+		this->timer += this->timeSinceLastFrame;
+		if (!heqf(this->acceleration, 0.0f, (float)HL_E_TOLERANCE))
 		{
-			this->mSpeed += this->mAcceleration * this->mTimeSinceLastFrame;
+			this->speed += this->acceleration * this->timeSinceLastFrame;
 		}
 	}
 	
 	bool Animator::_checkUpdate(float k)
 	{
-		float delay = this->mDelay;
+		float delay = this->delay;
 		bool animated = this->isAnimated();
 		Animator::update(k);
-		return (animated || this->isAnimated() || delay > 0.0f && this->mDelay <= 0.0f);
+		return (animated || this->isAnimated() || delay > 0.0f && this->delay <= 0.0f);
 	}
 	
 	float Animator::_calculateValue(float k)
 	{
-		if (this->mDelay > 0.0f)
+		if (this->delay > 0.0f)
 		{
-			return (this->mDiscreteStep != 0 ? (float)((int)(this->mOffset / this->mDiscreteStep) * this->mDiscreteStep) : this->mOffset);
+			return (this->discreteStep != 0 ? (float)((int)(this->offset / this->discreteStep) * this->discreteStep) : this->offset);
 		}
-		float time = this->mTimer;
+		float time = this->timer;
 		if (this->isExpired())
 		{
-			if (this->mReset)
+			if (this->reset)
 			{
-				return (this->mDiscreteStep != 0 ? (float)((int)(this->mOffset / this->mDiscreteStep) * this->mDiscreteStep) : this->mOffset);
+				return (this->discreteStep != 0 ? (float)((int)(this->offset / this->discreteStep) * this->discreteStep) : this->offset);
 			}
-			time = this->mPeriods / habs(this->mSpeed);
+			time = this->periods / habs(this->speed);
 		}
 		float result = 0.0f;
-		switch (this->mFunction)
+		switch (this->animationFunction)
 		{
 		case Object::Linear:
-			result = time * this->mSpeed * this->mAmplitude;
+			result = time * this->speed * this->amplitude;
 			break;
 		case Object::Sine:
-			result = (float)dsin(time * this->mSpeed * 360) * this->mAmplitude;
+			result = (float)dsin(time * this->speed * 360) * this->amplitude;
 			break;
 		case Object::Square:
-			result = (hmodf(time * this->mSpeed, 1.0f) < 0.5f ? this->mAmplitude : -this->mAmplitude);
+			result = (hmodf(time * this->speed, 1.0f) < 0.5f ? this->amplitude : -this->amplitude);
 			break;
 		case Object::Saw:
-			result = (hmodf(time * this->mSpeed + 0.5f, 1.0f) - 0.5f) * 2 * this->mAmplitude;
+			result = (hmodf(time * this->speed + 0.5f, 1.0f) - 0.5f) * 2 * this->amplitude;
 			break;
 		case Object::Triangle:
-			result = hmodf(time * this->mSpeed, 1.0f);
+			result = hmodf(time * this->speed, 1.0f);
 			if (!is_in_range(result, 0.25f, 0.75f))
 			{
-				result = (hmodf(time * this->mSpeed + 0.5f, 1.0f) - 0.5f) * 4 * this->mAmplitude;
+				result = (hmodf(time * this->speed + 0.5f, 1.0f) - 0.5f) * 4 * this->amplitude;
 			}
 			else
 			{
-				result = -(hmodf(time * this->mSpeed - 0.25f, 1.0f) - 0.25f) * 4 * this->mAmplitude;
+				result = -(hmodf(time * this->speed - 0.25f, 1.0f) - 0.25f) * 4 * this->amplitude;
 			}
 			break;
 		case Object::Random:
-			result = hrandf(-this->mSpeed * this->mAmplitude, this->mSpeed * this->mAmplitude);
+			result = hrandf(-this->speed * this->amplitude, this->speed * this->amplitude);
 			break;
 		case Object::Hover:
-			if ((this->mAmplitude >= 0.0f) == this->mParent->isCursorInside())
+			if ((this->amplitude >= 0.0f) == this->parent->isCursorInside())
 			{
-				result = hmin(this->mValue - this->mOffset + k * this->mSpeed, (float)habs(this->mAmplitude));
+				result = hmin(this->value - this->offset + k * this->speed, (float)habs(this->amplitude));
 			}
 			else
 			{
-				result = hmax(this->mValue - this->mOffset - k * this->mSpeed, -(float)habs(this->mAmplitude));
+				result = hmax(this->value - this->offset - k * this->speed, -(float)habs(this->amplitude));
 			}
 			break;
 		case Object::Custom:
-			result = (this->mCustomFunction != NULL ? this->mCustomFunction(this, time) : this->mValue);
+			result = (this->customFunction != NULL ? this->customFunction(this, time) : this->value);
 			break;
 		}
-		return (this->mDiscreteStep != 0 ? (float)((int)((result + this->mOffset) / this->mDiscreteStep) * this->mDiscreteStep) : (result + this->mOffset));
+		return (this->discreteStep != 0 ? (float)((int)((result + this->offset) / this->discreteStep) * this->discreteStep) : (result + this->offset));
 	}
 	
 	bool Animator::isAnimated()
 	{
-		if (!this->mEnabled)
+		if (!this->enabled)
 		{
 			return false;
 		}
-		if (this->mFunction == Object::Hover)
+		if (this->animationFunction == Object::Hover)
 		{
 			return true;
 		}
-		if (this->mDelay > 0.0f)
+		if (this->delay > 0.0f)
 		{
 			return false;
 		}
@@ -173,11 +163,11 @@ namespace aprilui
 	
 	bool Animator::isWaitingAnimation()
 	{
-		if (!this->mEnabled)
+		if (!this->enabled)
 		{
 			return false;
 		}
-		if (this->mFunction == Object::Hover)
+		if (this->animationFunction == Object::Hover)
 		{
 			return true;
 		}
@@ -190,14 +180,14 @@ namespace aprilui
 	
 	bool Animator::isExpired()
 	{
-		return (!this->mEnabled || this->mPeriods >= 0.0f && this->mTimer * habs(this->mSpeed) > this->mPeriods);
+		return (!this->enabled || this->periods >= 0.0f && this->timer * habs(this->speed) > this->periods);
 	}
 	
 	void Animator::setTime(float value)
 	{
 		if (value > 0.0f)
 		{
-			this->mSpeed = 1.0f / value;
+			this->speed = 1.0f / value;
 		}
 		else
 		{
@@ -213,14 +203,14 @@ namespace aprilui
 		}
 		if		(name == "function" || name == "func")
 		{
-			if		(mFunction == Object::Sine)		return "sine";
-			else if	(mFunction == Object::Saw)		return "saw";
-			else if	(mFunction == Object::Square)	return "square";
-			else if	(mFunction == Object::Triangle)	return "triangle";
-			else if	(mFunction == Object::Linear)	return "linear";
-			else if	(mFunction == Object::Random)	return "random";
-			else if	(mFunction == Object::Hover)	return "hover";
-			else									return "custom";
+			if		(this->animationFunction == Object::Sine)		return "sine";
+			else if	(this->animationFunction == Object::Saw)		return "saw";
+			else if	(this->animationFunction == Object::Square)		return "square";
+			else if	(this->animationFunction == Object::Triangle)	return "triangle";
+			else if	(this->animationFunction == Object::Linear)		return "linear";
+			else if	(this->animationFunction == Object::Random)		return "random";
+			else if	(this->animationFunction == Object::Hover)		return "hover";
+			else													return "custom";
 		}
 		else if	(name == "timer")			return this->getTimer();
 		else if	(name == "delay")			return this->getDelay();
@@ -237,7 +227,7 @@ namespace aprilui
 		else if	(name == "acceleration")	return this->getAcceleration();
 		else if	(name == "discrete_step")	return this->getDiscreteStep();
 		else if	(name == "reset")			return this->isReset();
-		else if	(name == "inherit_value")	return this->getInheritValue();
+		else if	(name == "inherit_value")	return this->isInheritValue();
 		// derived values
 		else if	(name == "target")
 		{
@@ -289,12 +279,12 @@ namespace aprilui
 	
 	void Animator::notifyEvent(chstr name, void* params)
 	{
-		if (name == "AttachToObject" || name == "OnDelayEnd" && this->mInheritValue)
+		if (name == "AttachToObject" || name == "OnDelayEnd" && this->inheritValue)
 		{
-			this->mValue = this->mOffset = this->_getObjectValue();
-			if (this->mUseTarget)
+			this->value = this->offset = this->_getObjectValue();
+			if (this->useTarget)
 			{
-				this->mAmplitude = this->mTarget - this->mValue;
+				this->amplitude = this->target - this->value;
 			}
 		}
 		Object::notifyEvent(name, params);
@@ -304,9 +294,9 @@ namespace aprilui
 	{
 		if (this->_checkUpdate(k))
 		{
-			this->mValue = this->_getObjectValue(); // required because this->_calculateValue may use mValue
-			this->mValue = this->_calculateValue(this->mTimeSinceLastFrame);
-			this->_setObjectValue(this->mValue);
+			this->value = this->_getObjectValue(); // required because this->_calculateValue may use value
+			this->value = this->_calculateValue(this->timeSinceLastFrame);
+			this->_setObjectValue(this->value);
 		}
 	}
 	
@@ -314,10 +304,10 @@ namespace aprilui
 	{
 		if (this->_checkUpdate(k))
 		{
-			this->mValue = hclamp(this->_calculateValue(this->mTimeSinceLastFrame), 0.0f, 255.0f);
-			if ((unsigned char)this->mValue != (unsigned char)this->_getObjectValue())
+			this->value = hclamp(this->_calculateValue(this->timeSinceLastFrame), 0.0f, 255.0f);
+			if ((unsigned char)this->value != (unsigned char)this->_getObjectValue())
 			{
-				this->_setObjectValue(this->mValue);
+				this->_setObjectValue(this->value);
 			}
 		}
 	}

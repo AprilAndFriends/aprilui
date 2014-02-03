@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -32,13 +32,13 @@
 #define REMOVE_EXISTING_ANIMATORS(name) \
 	int i ## name = 0; \
 	Animators::name* removeAnimator ## name; \
-	while (i ## name < mDynamicAnimators.size()) \
+	while (i ## name < dynamicAnimators.size()) \
 	{ \
-		removeAnimator ## name = dynamic_cast<Animators::name*>(mDynamicAnimators[i ## name]); \
+		removeAnimator ## name = dynamic_cast<Animators::name*>(dynamicAnimators[i ## name]); \
 		if (removeAnimator ## name != NULL) \
 		{ \
 			delete removeAnimator ## name; \
-			this->mDynamicAnimators.remove_at(i ## name); \
+			this->dynamicAnimators.remove_at(i ## name); \
 		} \
 		else \
 		{ \
@@ -51,8 +51,8 @@
 
 #define CREATE_DELAYED_DYNAMIC_ANIMATOR(type, offset, target, speed, delay) \
 	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
-	this->mDynamicAnimators += animator ## type; \
-	animator ## type->_setParent(this); \
+	this->dynamicAnimators += animator ## type; \
+	animator ## type->parent = this; \
 	animator ## type->setSpeed(speed); \
 	animator ## type->setPeriods(1.0f); \
 	if (delay == 0.0f) \
@@ -73,8 +73,8 @@
 
 #define CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength, delay) \
 	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
-	this->mDynamicAnimators += animator ## type; \
-	animator ## type->_setParent(this); \
+	this->dynamicAnimators += animator ## type; \
+	animator ## type->parent = this; \
 	animator ## type->setOffset(offset); \
 	animator ## type->setAmplitude(amplitude); \
 	animator ## type->setAnimationFunction(function); \
@@ -89,57 +89,57 @@
 
 namespace aprilui
 {
-	bool _objectSortCallback(Object* a, Object* b)
+	static bool _objectSortCallback(Object* a, Object* b)
 	{
 		return (a->getZOrder() < b->getZOrder());
 	}
 
 	Object::Object(chstr name, grect rect) : EventReceiver()
 	{
-		this->mName = name;
-		this->mRect = rect;
-		if (this->mRect.w != -1)
+		this->name = name;
+		this->rect = rect;
+		if (this->rect.w != -1)
 		{
-			this->mCenter.x = this->mRect.w * 0.5f;
+			this->center.x = this->rect.w * 0.5f;
 		}
-		if (this->mRect.h != -1)
+		if (this->rect.h != -1)
 		{
-			this->mCenter.y = this->mRect.h* 0.5f;
+			this->center.y = this->rect.h* 0.5f;
 		}
-		this->mScale.set(1.0f, 1.0f);
-		this->mParent = NULL;
-		this->mChildUnderCursor = NULL;
-		this->mCheckedChildUnderCursor = false;
-		this->mDataset = NULL;
-		this->mZOrder = 0;
-		this->mEnabled = true;
-		this->mVisible = true;
-		this->mAngle = 0.0f;
-		this->mClickThrough = false;
-		this->mInheritsAlpha = true;
-		this->mAnchorLeft = true;
-		this->mAnchorRight = false;
-		this->mAnchorTop = true;
-		this->mAnchorBottom = false;
-		this->mRetainAnchorAspect = false;
-		this->mFocusIndex = -1;
-		this->mClip = false;
-		this->mUseDisabledAlpha = true;
+		this->scale.set(1.0f, 1.0f);
+		this->parent = NULL;
+		this->childUnderCursor = NULL;
+		this->checkedChildUnderCursor = false;
+		this->dataset = NULL;
+		this->zOrder = 0;
+		this->enabled = true;
+		this->visible = true;
+		this->angle = 0.0f;
+		this->clickThrough = false;
+		this->inheritAlpha = true;
+		this->anchorLeft = true;
+		this->anchorRight = false;
+		this->anchorTop = true;
+		this->anchorBottom = false;
+		this->retainAnchorAspect = false;
+		this->focusIndex = -1;
+		this->clip = false;
+		this->useDisabledAlpha = true;
 	}
 
 	Object::~Object()
 	{
-		foreach_m (Event*, it, this->mEvents)
+		foreach_m (Event*, it, this->events)
 		{
-			if (mDataset) mDataset->removeCallbackFromQueue(it->second);
+			if (dataset) dataset->removeCallbackFromQueue(it->second);
 			delete it->second;
 		}
-		this->mEvents.clear();
-		foreach (Animator*, it, this->mDynamicAnimators)
+		this->events.clear();
+		foreach (Animator*, it, this->dynamicAnimators)
 		{
 			delete (*it);
 		}
-		this->mDynamicAnimators.clear();
+		this->dynamicAnimators.clear();
 		
 		if (this->isFocused())
 		{
@@ -149,12 +149,12 @@ namespace aprilui
 	
 	void Object::_sortChildren()
 	{
-		this->mChildren.sort(&_objectSortCallback);
+		this->children.sort(&_objectSortCallback);
 	}
 
 	hstr Object::getFullName()
 	{
-		return (this->mDataset != NULL ? this->mDataset->getName() + "." + this->mName : this->mName);
+		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 
 	void Object::addChild(Object* object)
@@ -163,9 +163,9 @@ namespace aprilui
 		{
 			throw ObjectHasParentException(object->getName(), this->getName());
 		}
-		this->mChildren += object;
+		this->children += object;
 		this->_sortChildren();
-		object->_setParent(this);
+		object->parent = this;
 		object->notifyEvent("AttachToObject", NULL);
 	}
 	
@@ -176,43 +176,43 @@ namespace aprilui
 			throw ObjectNotChildException(object->getName(), this->getName());
 		}
 		object->notifyEvent("DetachFromObject", NULL);
-		this->mChildren -= object;
-		object->_setParent(NULL);
+		this->children -= object;
+		object->parent = NULL;
 	}
 
 	void Object::registerChild(Object* object)
 	{
 		this->addChild(object);
-		this->mDataset->registerManualObject(object);
+		this->dataset->registerManualObject(object);
 	}
 	
 	void Object::unregisterChild(Object* object)
 	{
 		this->removeChild(object);
-		this->mDataset->unregisterManualObject(object);
+		this->dataset->unregisterManualObject(object);
 	}
 
 	void Object::removeChildren(bool recursive)
 	{
 		if (recursive)
 		{
-			foreach (Object*, it, this->mChildren)
+			foreach (Object*, it, this->children)
 			{
 				(*it)->removeChildren(recursive);
 			}
 		}
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
-			(*it)->_setParent(NULL);
+			(*it)->parent = NULL;
 		}
-		this->mChildren.clear();
+		this->children.clear();
 	}
 	
 	void Object::destroyChildren()
 	{
-		while (this->mChildren.size() > 0)
+		while (this->children.size() > 0)
 		{
-			this->mDataset->destroyObject(this->mChildren.first());
+			this->dataset->destroyObject(this->children.first());
 		}
 	}
 	
@@ -223,16 +223,16 @@ namespace aprilui
 	
 	void Object::detach()
 	{
-		if (this->mParent == NULL)
+		if (this->parent == NULL)
 		{
 			throw ObjectWithoutParentException(this->getName());
 		}
-		this->mParent->removeChild(this);
+		this->parent->removeChild(this);
 	}
 	
 	Object* Object::findChildByName(chstr name)
 	{
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
 			if ((*it)->getName() == name)
 			{
@@ -249,7 +249,7 @@ namespace aprilui
 		{
 			return object;
 		}
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
 			object = (*it)->findDescendantByName(name);
 			if (object != NULL)
@@ -262,12 +262,12 @@ namespace aprilui
 
 	void Object::setZOrder(int zorder)
 	{
-		if (this->mZOrder != zorder)
+		if (this->zOrder != zorder)
 		{
-			this->mZOrder = zorder;
-			if (this->mParent != NULL)
+			this->zOrder = zorder;
+			if (this->parent != NULL)
 			{
-				this->mParent->_sortChildren();
+				this->parent->_sortChildren();
 			}
 		}
 	}
@@ -281,7 +281,7 @@ namespace aprilui
 		float width;
 		float height;
 		float differenceAlt;
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
 			width = (*it)->getWidth();
 			height = (*it)->getHeight();
@@ -333,7 +333,7 @@ namespace aprilui
 		float width;
 		float height;
 		float differenceAlt;
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
 			width = (*it)->getWidth();
 			height = (*it)->getHeight();
@@ -378,49 +378,49 @@ namespace aprilui
 
 	void Object::setWidth(float value)
 	{
-		this->_updateChildrenHorizontal(value - this->mRect.w);
-		this->mRect.w = value;
+		this->_updateChildrenHorizontal(value - this->rect.w);
+		this->rect.w = value;
 		this->notifyEvent("Resized", NULL);
 	}
 
 	void Object::setHeight(float value)
 	{
-		this->_updateChildrenVertical(value - this->mRect.h);
-		this->mRect.h = value;
+		this->_updateChildrenVertical(value - this->rect.h);
+		this->rect.h = value;
 		this->notifyEvent("Resized", NULL);
 	}
 
 	void Object::setSize(gvec2 value)
 	{
-		this->_updateChildrenHorizontal(value.x - this->mRect.w);
-		this->_updateChildrenVertical(value.y - this->mRect.h);
-		this->mRect.setSize(value);
+		this->_updateChildrenHorizontal(value.x - this->rect.w);
+		this->_updateChildrenVertical(value.y - this->rect.h);
+		this->rect.setSize(value);
 		this->notifyEvent("Resized", NULL);
 	}
 
 	void Object::setSize(float w, float h)
 	{
-		this->_updateChildrenHorizontal(w - this->mRect.w);
-		this->_updateChildrenVertical(h - this->mRect.h);
-		this->mRect.w = w;
-		this->mRect.h = h;
+		this->_updateChildrenHorizontal(w - this->rect.w);
+		this->_updateChildrenVertical(h - this->rect.h);
+		this->rect.w = w;
+		this->rect.h = h;
 		this->notifyEvent("Resized", NULL);
 	}
 
 	void Object::setRect(grect value)
 	{
-		this->_updateChildrenHorizontal(value.w - this->mRect.w);
-		this->_updateChildrenVertical(value.h - this->mRect.h);
-		this->mRect = value;
+		this->_updateChildrenHorizontal(value.w - this->rect.w);
+		this->_updateChildrenVertical(value.h - this->rect.h);
+		this->rect = value;
 		this->notifyEvent("Resized", NULL);
 	}
 
 	void Object::setAnchors(bool left, bool right, bool top, bool bottom)
 	{
-		this->mAnchorLeft = left;
-		this->mAnchorRight = right;
-		this->mAnchorTop = top;
-		this->mAnchorBottom = bottom;
+		this->anchorLeft = left;
+		this->anchorRight = right;
+		this->anchorTop = top;
+		this->anchorBottom = bottom;
 	}
 	
 	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot)
@@ -431,37 +431,37 @@ namespace aprilui
 		{
 			return this->getAlpha();
 		}
-		if (this->mInheritsAlpha && this->mParent != NULL && this->mParent != overrideRoot)
+		if (this->inheritAlpha && this->parent != NULL && this->parent != overrideRoot)
 		{
-			factor *= this->mParent->getDerivedAlpha(overrideRoot) / 255.0f;
+			factor *= this->parent->getDerivedAlpha(overrideRoot) / 255.0f;
 		}
 		return (unsigned char)(this->getAlpha() * factor);
 	}
 
 	float Object::_getDerivedAngle(aprilui::Object* overrideRoot)
 	{
-		float angle = this->mAngle;
+		float angle = this->angle;
 		if (overrideRoot == this)
 		{
 			return angle;
 		}
-		if (this->mParent != overrideRoot && this->mParent != NULL)
+		if (this->parent != overrideRoot && this->parent != NULL)
 		{
-			angle += this->mParent->_getDerivedAngle(overrideRoot);
+			angle += this->parent->_getDerivedAngle(overrideRoot);
 		}
 		return angle;
 	}
 
 	bool Object::isAnimated()
 	{
-		foreach (Animator*, it, this->mDynamicAnimators)
+		foreach (Animator*, it, this->dynamicAnimators)
 		{
 			if ((*it)->isAnimated())
 			{
 				return true;
 			}
 		}
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
 			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isAnimated())
 			{
@@ -473,14 +473,14 @@ namespace aprilui
 
 	bool Object::isWaitingAnimation()
 	{
-		foreach (Animator*, it, this->mDynamicAnimators)
+		foreach (Animator*, it, this->dynamicAnimators)
 		{
 			if ((*it)->isWaitingAnimation())
 			{
 				return true;
 			}
 		}
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
 			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isWaitingAnimation())
 			{
@@ -492,52 +492,52 @@ namespace aprilui
 
 	bool Object::hasDynamicAnimation()
 	{
-		return (this->mDynamicAnimators.size() > 0);
+		return (this->dynamicAnimators.size() > 0);
 	}
 
 	void Object::draw()
 	{
-		if (!this->isVisible() || heqf(this->mScale.x, 0.0f, aprilui::eTolerance) || heqf(this->mScale.y, 0.0f, aprilui::eTolerance))
+		if (!this->isVisible() || heqf(this->scale.x, 0.0f, aprilui::eTolerance) || heqf(this->scale.y, 0.0f, aprilui::eTolerance))
 		{
 			return;
 		}
 		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
 		grect viewport;
 		grect orthoProjection;
-		bool clipped = (this->mClip && this->mParent != NULL);
+		bool clipped = (this->clip && this->parent != NULL);
 		if (clipped)
 		{
 			// TODO - this has to be implemented using clipping planes in April
 			orthoProjection = april::rendersys->getOrthoProjection();
 			viewport = april::rendersys->getViewport();
-			grect rect = this->mParent->getBoundingRect();
+			grect rect = this->parent->getBoundingRect();
 			gvec2 ratio = orthoProjection.getSize() / viewport.getSize();
 			april::rendersys->setOrthoProjection(grect(-rect.getPosition(), rect.getSize()));
 			april::rendersys->setViewport(grect((rect.getPosition() + orthoProjection.getPosition()) / ratio, rect.getSize() / ratio));
 		}
-		gvec2 position = this->mRect.getPosition() + this->mCenter;
+		gvec2 position = this->rect.getPosition() + this->center;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
 			april::rendersys->translate(position.x, position.y);
 		}
-		if (this->mAngle != 0.0f)
+		if (this->angle != 0.0f)
 		{
-			april::rendersys->rotate(this->mAngle);
+			april::rendersys->rotate(this->angle);
 		}
-		if (this->mScale.x != 1.0f || this->mScale.y != 1.0f)
+		if (this->scale.x != 1.0f || this->scale.y != 1.0f)
 		{
-			april::rendersys->scale(this->mScale.x, this->mScale.y, 1.0f);
+			april::rendersys->scale(this->scale.x, this->scale.y, 1.0f);
 		}
 		this->OnDraw();
 		if (aprilui::isDebugEnabled())
 		{
 			this->OnDrawDebug();
 		}
-		if (this->mCenter.x != 0.0f || this->mCenter.y != 0.0f)
+		if (this->center.x != 0.0f || this->center.y != 0.0f)
 		{
-			april::rendersys->translate(-this->mCenter.x, -this->mCenter.y);
+			april::rendersys->translate(-this->center.x, -this->center.y);
 		}
-		foreach (Object*, it, mChildren)
+		foreach (Object*, it, children)
 		{
 			(*it)->draw();
 		}
@@ -551,28 +551,28 @@ namespace aprilui
 	
 	void Object::update(float k)
 	{
-		if (this->mCheckedChildUnderCursor)
+		if (this->checkedChildUnderCursor)
 		{
 			this->clearChildUnderCursor();
 		}
-		foreach (Object*, it, this->mChildren)
+		foreach (Object*, it, this->children)
 		{
 			(*it)->update(k);
 		}
-		foreach (Animator*, it, this->mDynamicAnimators)
+		foreach (Animator*, it, this->dynamicAnimators)
 		{
 			(*it)->update(k);
 		}
 		// faster than creating a new array, adding expired animators and the deleting them
 		int i = 0;
 		Animator* animator = NULL;
-		while (i < this->mDynamicAnimators.size())
+		while (i < this->dynamicAnimators.size())
 		{
-			animator = this->mDynamicAnimators[i];
+			animator = this->dynamicAnimators[i];
 			if (animator->isExpired())
 			{
 				delete animator;
-				this->mDynamicAnimators.remove_at(i);
+				this->dynamicAnimators.remove_at(i);
 			}
 			else
 			{
@@ -598,14 +598,14 @@ namespace aprilui
 	
 	bool Object::isPointInside(gvec2 position)
 	{
-		if (heqf(this->mScale.x, 0.0f, aprilui::eTolerance) || heqf(this->mScale.y, 0.0f, aprilui::eTolerance))
+		if (heqf(this->scale.x, 0.0f, aprilui::eTolerance) || heqf(this->scale.y, 0.0f, aprilui::eTolerance))
 		{
 			return false;
 		}
-		if (this->mParent != NULL)
+		if (this->parent != NULL)
 		{
 			Object* obj = this;
-			Object* parent = this->mParent;
+			Object* parent = this->parent;
 			while (parent != NULL)
 			{
 				if (obj->isClip() && !parent->getBoundingRect().isPointInside(position))
@@ -616,22 +616,22 @@ namespace aprilui
 				parent = obj->getParent();
 			}
 		}
-		return grect(0.0f, 0.0f, this->mRect.getSize()).isPointInside(this->transformToLocalSpace(position));
+		return grect(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
 	}
 
 	bool Object::onMouseDown(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
-		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
+		if (this->clickThrough || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
-		if (this->mDataset != NULL)
+		if (this->dataset != NULL)
 		{
-			this->mDataset->removeFocus();
+			this->dataset->removeFocus();
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -646,14 +646,14 @@ namespace aprilui
 	bool Object::onMouseUp(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
-		if (this->mClickThrough || !this->isVisible() || !this->isDerivedEnabled())
+		if (this->clickThrough || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
 		harray<Object*> validObjects;
 		Object* object = NULL;
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -685,7 +685,7 @@ namespace aprilui
 	bool Object::onMouseCancel(april::Key keyCode)
 	{
 		this->mouseCancel();
-		harray<Object*> children = this->mChildren;
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			(*it)->onMouseCancel(keyCode);
@@ -700,8 +700,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -720,8 +720,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -740,8 +740,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -760,8 +760,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -780,8 +780,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -800,8 +800,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -820,8 +820,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -840,8 +840,8 @@ namespace aprilui
 		{
 			return false;
 		}
-		// needs to be copied in case mChildren gets changed
-		harray<Object*> children = this->mChildren;
+		// needs to be copied in case children gets changed
+		harray<Object*> children = this->children;
 		foreach_r (Object*, it, children)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -864,46 +864,46 @@ namespace aprilui
 
 	void Object::registerEvent(chstr name, Event* e)
 	{
-		if (this->mEvents.has_key(name))
+		if (this->events.has_key(name))
 		{
-			Event* oldEvent = this->mEvents[name];
-			if (mDataset != NULL)
+			Event* oldEvent = this->events[name];
+			if (dataset != NULL)
 			{
-				mDataset->removeCallbackFromQueue(oldEvent);
+				dataset->removeCallbackFromQueue(oldEvent);
 			}
 			if (e == NULL)
 			{
-				this->mEvents.remove_key(name);
+				this->events.remove_key(name);
 			}
 			delete oldEvent;
 		}
 		if (e != NULL)
 		{
-			this->mEvents[name] = e;
+			this->events[name] = e;
 		}
 	}
 
 	void Object::unregisterEvent(chstr name)
 	{
-		if (this->mEvents.has_key(name))
+		if (this->events.has_key(name))
 		{
-			Event* event = this->mEvents[name];
-			if (mDataset != NULL)
+			Event* event = this->events[name];
+			if (dataset != NULL)
 			{
-				mDataset->removeCallbackFromQueue(event);
+				dataset->removeCallbackFromQueue(event);
 			}
-			this->mEvents.remove_key(name);
+			this->events.remove_key(name);
 		}
 	}
 
 	// TODO - this needs to be seriously refactored
 	bool Object::triggerEvent(chstr name, april::Key keyCode, chstr extra)
 	{
-		if (this->mEvents.has_key(name))
+		if (this->events.has_key(name))
 		{
 			gvec2 cursorPosition = aprilui::getCursorPosition();
 			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, keyCode, extra);
-			this->mDataset->queueCallback(this->mEvents[name], args);
+			this->dataset->queueCallback(this->events[name], args);
 			return true;
 		}
 		return false;
@@ -912,11 +912,11 @@ namespace aprilui
 	// TODO - this needs to be seriously refactored
 	bool Object::triggerEvent(chstr name, april::Button buttonCode, chstr extra)
 	{
-		if (this->mEvents.has_key(name))
+		if (this->events.has_key(name))
 		{
 			gvec2 cursorPosition = aprilui::getCursorPosition();
 			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, buttonCode, extra);
-			this->mDataset->queueCallback(this->mEvents[name], args);
+			this->dataset->queueCallback(this->events[name], args);
 			return true;
 		}
 		return false;
@@ -925,10 +925,10 @@ namespace aprilui
 	// TODO - this needs to be seriously refactored
 	bool Object::triggerEvent(chstr name, float x, float y, april::Key keyCode, chstr extra)
 	{
-		if (this->mEvents.has_key(name))
+		if (this->events.has_key(name))
 		{
 			EventArgs* args = new EventArgs(this, x, y, keyCode, extra);
-			this->mDataset->queueCallback(this->mEvents[name], args);
+			this->dataset->queueCallback(this->events[name], args);
 			return true;
 		}
 		return false;
@@ -936,34 +936,34 @@ namespace aprilui
 
 	void Object::resetCenter()
 	{
-		this->mCenter = this->mRect.getSize() / 2;
+		this->center = this->rect.getSize() / 2;
 	}
 
 	bool Object::isDerivedEnabled()
 	{
-		return (this->isEnabled() && (this->mParent == NULL || this->mParent->isDerivedEnabled()));
+		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
 	}
 	
 	bool Object::isDerivedVisible()
 	{
-		return (this->isVisible() && (this->mParent == NULL || this->mParent->isDerivedVisible()));
+		return (this->isVisible() && (this->parent == NULL || this->parent->isDerivedVisible()));
 	}
 	
 	bool Object::_isDerivedClickThrough()
 	{
-		return (this->isClickThrough() && (this->mParent == NULL || this->mParent->_isDerivedClickThrough()));
+		return (this->isClickThrough() && (this->parent == NULL || this->parent->_isDerivedClickThrough()));
 	}
 	
 	void Object::setAlpha(unsigned char value)
 	{
-		this->mColor.a = value;
+		this->color.a = value;
 	}
 
 	void Object::setEnabled(bool value)
 	{
-		if (value != this->mEnabled)
+		if (value != this->enabled)
 		{
-			this->mEnabled = value;
+			this->enabled = value;
 			this->notifyEvent("OnEnableChanged", NULL);
 		}
 	}
@@ -982,7 +982,7 @@ namespace aprilui
 		if (name == "zorder")				return this->getZOrder();
 		if (name == "enabled")				return this->isEnabled();
 		if (name == "click_through")		return this->isClickThrough();
-		if (name == "inherits_alpha")		return this->isInheritsAlpha();
+		if (name == "inherit_alpha")		return this->isInheritAlpha();
 		if (name == "red")					return this->getRed();
 		if (name == "green")				return this->getGreen();
 		if (name == "blue")					return this->getBlue();
@@ -1020,7 +1020,7 @@ namespace aprilui
 		else if	(name == "zorder")					this->setZOrder(value);
 		else if	(name == "enabled")					this->setEnabled(value);
 		else if	(name == "click_through")			this->setClickThrough(value);
-		else if	(name == "inherits_alpha")			this->setInheritsAlpha(value);
+		else if	(name == "inherit_alpha")			this->setInheritAlpha(value);
 		else if	(name == "red")						this->setRed((int)value);
 		else if	(name == "green")					this->setGreen((int)value);
 		else if	(name == "blue")					this->setBlue((int)value);
@@ -1064,8 +1064,8 @@ namespace aprilui
 	{
 		float s1 = (float)dsin(angle);
 		float c1 = (float)dcos(angle);
-		float s2 = (float)dsin(mAngle);
-		float c2 = (float)dcos(mAngle);
+		float s2 = (float)dsin(angle);
+		float c2 = (float)dcos(angle);
 		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
 	}
 
@@ -1076,7 +1076,7 @@ namespace aprilui
 			return NULL;
 		}
 		Object* object = NULL;
-		foreach_r (Object*, it, this->mChildren)
+		foreach_r (Object*, it, this->children)
 		{
 			object = (*it)->getChildUnderPoint(pos);
 			if (object != NULL && dynamic_cast<Animator*>(object) == NULL)
@@ -1094,18 +1094,18 @@ namespace aprilui
 	
 	Object* Object::getChildUnderCursor()
 	{
-		if (!this->mCheckedChildUnderCursor)
+		if (!this->checkedChildUnderCursor)
 		{
-			this->mChildUnderCursor = this->getChildUnderPoint(aprilui::getCursorPosition());
-			this->mCheckedChildUnderCursor = true;
+			this->childUnderCursor = this->getChildUnderPoint(aprilui::getCursorPosition());
+			this->checkedChildUnderCursor = true;
 		}
-		return this->mChildUnderCursor;
+		return this->childUnderCursor;
 	}
 	
 	void Object::clearChildUnderCursor()
 	{
-		this->mChildUnderCursor = NULL;
-		this->mCheckedChildUnderCursor = false;
+		this->childUnderCursor = NULL;
+		this->checkedChildUnderCursor = false;
 	}
 	
 	bool Object::isChild(Object* obj)
@@ -1120,7 +1120,7 @@ namespace aprilui
 	
 	bool Object::isParent(Object* obj)
 	{
-		return (obj != NULL && obj == this->mParent);
+		return (obj != NULL && obj == this->parent);
 	}
 	
 	bool Object::isAncestor(Object* obj)
@@ -1142,7 +1142,7 @@ namespace aprilui
 	harray<Object*> Object::getAncestors()
 	{
 		harray<Object*> result;
-		Object* parent = this->mParent;
+		Object* parent = this->parent;
 		while (parent != NULL)
 		{
 			result += parent;
@@ -1153,8 +1153,8 @@ namespace aprilui
 
 	harray<Object*> Object::getDescendants()
 	{
-		harray<Object*> descendants = this->mChildren;
-		foreach (Object*, it, this->mChildren)
+		harray<Object*> descendants = this->children;
+		foreach (Object*, it, this->children)
 		{
 			descendants += (*it)->getDescendants();
 		}
@@ -1194,20 +1194,20 @@ namespace aprilui
 	
 	bool Object::isFocused()
 	{
-		return (this->mDataset != NULL && this->mDataset->getFocusedObject() == this);
+		return (this->dataset != NULL && this->dataset->getFocusedObject() == this);
 	}
 	
 	void Object::setFocused(bool focused)
 	{
-		if (this->mDataset != NULL)
+		if (this->dataset != NULL)
 		{
 			if (focused)
 			{
-				this->mDataset->focus(this);
+				this->dataset->focus(this);
 			}
 			else
 			{
-				this->mDataset->removeFocus();
+				this->dataset->removeFocus();
 			}
 		}
 	}
@@ -1297,9 +1297,9 @@ namespace aprilui
 	{
 		harray<gvec2> points;
 		points += gvec2(0.0f, 0.0f);
-		points += gvec2(0.0f, this->mRect.h);
-		points += gvec2(this->mRect.w, 0.0f);
-		points += gvec2(this->mRect.w, this->mRect.h);
+		points += gvec2(0.0f, this->rect.h);
+		points += gvec2(this->rect.w, 0.0f);
+		points += gvec2(this->rect.w, this->rect.h);
 		return this->getDerivedPoints(points, overrideRoot);
 	}
 	
@@ -1315,32 +1315,32 @@ namespace aprilui
 
 	gvec2 Object::getDerivedCenter(aprilui::Object* overrideRoot)
 	{
-		return this->getDerivedPoint(this->mCenter, overrideRoot);
+		return this->getDerivedPoint(this->center, overrideRoot);
 	}
 	
 	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
 	{
 		if (overrideRoot == this)
 		{
-			return this->mScale;
+			return this->scale;
 		}
-		gvec2 scale = this->mScale;
-		if (this->mParent != overrideRoot && this->mParent != NULL)
+		gvec2 scale = this->scale;
+		if (this->parent != overrideRoot && this->parent != NULL)
 		{
-			scale *= this->mParent->getDerivedScale(overrideRoot);
+			scale *= this->parent->getDerivedScale(overrideRoot);
 		}
 		return scale;
 	}
 	
 	grect Object::_getDrawRect()
 	{
-		return grect(-this->mCenter, this->mRect.getSize());
+		return grect(-this->center, this->rect.getSize());
 	}
 
 	april::Color Object::_getDrawColor()
 	{
-		april::Color color = this->mColor;
-		if (this->mInheritsAlpha)
+		april::Color color = this->color;
+		if (this->inheritAlpha)
 		{
 			color.a = this->getDerivedAlpha();
 		}
@@ -1349,97 +1349,97 @@ namespace aprilui
 
 	float Object::_getDisabledAlphaFactor()
 	{
-		return (this->mUseDisabledAlpha && !this->isDerivedEnabled() ? 0.5f : 1.0f);
+		return (this->useDisabledAlpha && !this->isDerivedEnabled() ? 0.5f : 1.0f);
 	}
 
 	Animator* Object::moveX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
-		CREATE_DYNAMIC_ANIMATOR(MoverX, this->mRect.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverX, this->rect.x, x, speed);
 		return animatorMoverX;
 	}
 
 	Animator* Object::moveY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverY);
-		CREATE_DYNAMIC_ANIMATOR(MoverY, this->mRect.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed);
 		return animatorMoverY;
 	}
 
-	Animator* Object::scaleX(float x, float speed)
+	Animator* Object::rescaleX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->mScale.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed);
 		return animatorScalerX;
 	}
 
-	Animator* Object::scaleY(float y, float speed)
+	Animator* Object::rescaleY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->mScale.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed);
 		return animatorScalerY;
 	}
 
 	Animator* Object::resizeX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
-		CREATE_DYNAMIC_ANIMATOR(ResizerX, this->mRect.w, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, x, speed);
 		return animatorResizerX;
 	}
 
 	Animator* Object::resizeY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
-		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed);
 		return animatorResizerY;
 	}
 
 	Animator* Object::rotate(float angle, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(Rotator);
-		CREATE_DYNAMIC_ANIMATOR(Rotator, this->mAngle, angle, speed);
+		CREATE_DYNAMIC_ANIMATOR(Rotator, this->angle, angle, speed);
 		return animatorRotator;
 	}
 
 	Animator* Object::moveCenterX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed);
 		return animatorCenterMoverX;
 	}
 
 	Animator* Object::moveCenterY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed);
 		return animatorCenterMoverY;
 	}
 
 	Animator* Object::fadeRed(unsigned char r, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
-		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)r, speed);
+		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)this->color.r, (float)r, speed);
 		return animatorRedChanger;
 	}
 
 	Animator* Object::fadeGreen(unsigned char g, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(GreenChanger);
-		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)this->mColor.g, (float)g, speed);
+		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)this->color.g, (float)g, speed);
 		return animatorGreenChanger;
 	}
 
 	Animator* Object::fadeBlue(unsigned char b, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(BlueChanger);
-		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)this->mColor.b, (float)b, speed);
+		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)this->color.b, (float)b, speed);
 		return animatorBlueChanger;
 	}
 
 	Animator* Object::fadeAlpha(unsigned char a, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
-		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->mColor.a, (float)a, speed);
+		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)a, speed);
 		return animatorAlphaChanger;
 	}
 
@@ -1447,64 +1447,64 @@ namespace aprilui
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
 		REMOVE_EXISTING_ANIMATORS(MoverY);
-		CREATE_DYNAMIC_ANIMATOR(MoverX, this->mRect.x, x, speed);
-		CREATE_DYNAMIC_ANIMATOR(MoverY, this->mRect.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverX, this->rect.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed);
 	}
 
 	void Object::move(gvec2 position, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
 		REMOVE_EXISTING_ANIMATORS(MoverY);
-		CREATE_DYNAMIC_ANIMATOR(MoverX, this->mRect.x, position.x, speed);
-		CREATE_DYNAMIC_ANIMATOR(MoverY, this->mRect.y, position.y, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverX, this->rect.x, position.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(MoverY, this->rect.y, position.y, speed);
 	}
 
-	void Object::scale(float x, float y, float speed)
+	void Object::rescale(float x, float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->mScale.x, x, speed);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->mScale.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed);
 	}
 
-	void Object::scale(gvec2 scale, float speed)
+	void Object::rescale(gvec2 scale, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->mScale.x, scale.x, speed);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->mScale.y, scale.y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, scale.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, scale.y, speed);
 	}
 
 	void Object::resize(float x, float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
-		CREATE_DYNAMIC_ANIMATOR(ResizerX, this->mRect.w, x, speed);
-		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed);
 	}
 
 	void Object::resize(gvec2 size, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
-		CREATE_DYNAMIC_ANIMATOR(ResizerX, this->mRect.w, size.x, speed);
-		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, size.y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, size.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, size.y, speed);
 	}
 
 	void Object::moveCenter(float x, float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
 		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed);
 	}
 
 	void Object::moveCenter(gvec2 center, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
 		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, center.x, speed);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, center.y, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, center.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, center.y, speed);
 	}
 
 	void Object::fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed)
@@ -1513,10 +1513,10 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(GreenChanger);
 		REMOVE_EXISTING_ANIMATORS(BlueChanger);
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
-		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)r, speed);
-		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)this->mColor.g, (float)g, speed);
-		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)this->mColor.b, (float)b, speed);
-		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->mColor.a, (float)a, speed);
+		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)this->color.r, (float)r, speed);
+		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)this->color.g, (float)g, speed);
+		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)this->color.b, (float)b, speed);
+		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)a, speed);
 	}
 	
 	void Object::fadeColor(april::Color color, float speed)
@@ -1525,10 +1525,10 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(GreenChanger);
 		REMOVE_EXISTING_ANIMATORS(BlueChanger);
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
-		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)color.r, speed);
-		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)this->mColor.g, (float)color.g, speed);
-		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)this->mColor.b, (float)color.b, speed);
-		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->mColor.a, (float)color.a, speed);
+		CREATE_DYNAMIC_ANIMATOR(RedChanger, (float)this->color.r, (float)color.r, speed);
+		CREATE_DYNAMIC_ANIMATOR(GreenChanger, (float)this->color.g, (float)color.g, speed);
+		CREATE_DYNAMIC_ANIMATOR(BlueChanger, (float)this->color.b, (float)color.b, speed);
+		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)color.a, speed);
 	}
 
 	Animator* Object::moveYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength)
@@ -1540,144 +1540,144 @@ namespace aprilui
 	
 	Animator* Object::moveXQueue(float x, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->mRect.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->rect.x, x, speed, delay);
 		return animatorMoverX;
 	}
 
 	Animator* Object::moveYQueue(float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->mRect.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed, delay);
 		return animatorMoverY;
 	}
 
-	Animator* Object::scaleXQueue(float x, float speed, float delay)
+	Animator* Object::rescaleXQueue(float x, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->mScale.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed, delay);
 		return animatorScalerX;
 	}
 
-	Animator* Object::scaleYQueue(float y, float speed, float delay)
+	Animator* Object::rescaleYQueue(float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->mScale.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed, delay);
 		return animatorScalerY;
 	}
 
 	Animator* Object::resizeXQueue(float x, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->mRect.w, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, x, speed, delay);
 		return animatorResizerX;
 	}
 
 	Animator* Object::resizeYQueue(float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed, delay);
 		return animatorResizerY;
 	}
 
 	Animator* Object::rotateQueue(float angle, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(Rotator, this->mAngle, angle, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(Rotator, this->angle, angle, speed, delay);
 		return animatorRotator;
 	}
 
 	Animator* Object::moveCenterXQueue(float x, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed, delay);
 		return animatorCenterMoverX;
 	}
 
 	Animator* Object::moveCenterYQueue(float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed, delay);
 		return animatorCenterMoverY;
 	}
 
 	Animator* Object::fadeRedQueue(unsigned char r, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)r, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->color.r, (float)r, speed, delay);
 		return animatorRedChanger;
 	}
 
 	Animator* Object::fadeGreenQueue(unsigned char g, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)this->mColor.g, (float)g, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)this->color.g, (float)g, speed, delay);
 		return animatorGreenChanger;
 	}
 
 	Animator* Object::fadeBlueQueue(unsigned char b, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)this->mColor.b, (float)b, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)this->color.b, (float)b, speed, delay);
 		return animatorBlueChanger;
 	}
 
 	Animator* Object::fadeAlphaQueue(unsigned char a, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->mColor.a, (float)a, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)a, speed, delay);
 		return animatorAlphaChanger;
 	}
 
 	void Object::moveQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->mRect.x, x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->mRect.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->rect.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed, delay);
 	}
 
 	void Object::moveQueue(gvec2 position, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->mRect.x, position.x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->mRect.y, position.y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->rect.x, position.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, position.y, speed, delay);
 	}
 
-	void Object::scaleQueue(float x, float y, float speed, float delay)
+	void Object::rescaleQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->mScale.x, x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->mScale.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed, delay);
 	}
 
-	void Object::scaleQueue(gvec2 scale, float speed, float delay)
+	void Object::rescaleQueue(gvec2 scale, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->mScale.x, scale.x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->mScale.y, scale.y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, scale.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, scale.y, speed, delay);
 	}
 
 	void Object::resizeQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->mRect.w, x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed, delay);
 	}
 
 	void Object::resizeQueue(gvec2 size, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->mRect.w, size.x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->mRect.h, size.y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, size.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, size.y, speed, delay);
 	}
 
 	void Object::moveCenterQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed, delay);
 	}
 
 	void Object::moveCenterQueue(gvec2 center, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->mCenter.x, center.x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->mCenter.y, center.y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, center.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, center.y, speed, delay);
 	}
 
 	void Object::fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)r, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)this->mColor.g, (float)g, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)this->mColor.b, (float)b, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->mColor.a, (float)a, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->color.r, (float)r, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)this->color.g, (float)g, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)this->color.b, (float)b, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)a, speed, delay);
 	}
 
 	void Object::fadeColorQueue(april::Color color, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->mColor.r, (float)color.r, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)this->mColor.g, (float)color.g, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)this->mColor.b, (float)color.b, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->mColor.a, (float)color.a, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->color.r, (float)color.r, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)this->color.g, (float)color.g, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)this->color.b, (float)color.b, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)color.a, speed, delay);
 	}
 	
 	void Object::moveXStop()
@@ -1690,12 +1690,12 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(MoverY);
 	}
 
-	void Object::scaleXStop()
+	void Object::rescaleXStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 	}
 
-	void Object::scaleYStop()
+	void Object::rescaleYStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
 	}
@@ -1751,7 +1751,7 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(MoverY);
 	}
 
-	void Object::scaleStop()
+	void Object::rescaleStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);

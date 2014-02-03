@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -38,8 +38,8 @@ namespace aprilui
 	public:
 		MemberCallbackEventImpl(void (T::*function)(EventArgs*), T* object) : MemberCallbackEventBase()
 		{
-			this->mFunction = function;
-			this->mObject = object;
+			this->function = function;
+			this->object = object;
 		}
 		
 		~MemberCallbackEventImpl()
@@ -48,12 +48,12 @@ namespace aprilui
 
 		void execute(void* params)
 		{
-			(mObject->*mFunction)((EventArgs*)params);
+			(this->object->*function)((EventArgs*)params);
 		}
 
 	protected:
-		void (T::*mFunction)(EventArgs*);
-		T* mObject;
+		void (T::*function)(EventArgs*);
+		T* object;
 
 	};
 
@@ -63,14 +63,14 @@ namespace aprilui
 		template <typename T>
 		MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
 		{
-			this->mCallback = new MemberCallbackEventImpl<T>(function, obj);
+			this->callback = new MemberCallbackEventImpl<T>(function, obj);
 		}
 		~MemberCallbackEvent();
 
 		void execute(void* params);
 
 	protected:
-		MemberCallbackEventBase* mCallback;
+		MemberCallbackEventBase* callback;
 
 	};
 

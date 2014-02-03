@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -32,27 +32,25 @@ namespace aprilui
 		~ImageButton();
 		static Object* createInstance(chstr name, grect rect);
 		
+		HL_DEFINE_GET(Image*, hoverImage, HoverImage);
+		HL_DEFINE_GET(Image*, pushedImage, PushedImage);
+		HL_DEFINE_GET(Image*, disabledImage, DisabledImage);
+		HL_DEFINE_GET(hstr, hoverImageName, HoverImageName);
+		HL_DEFINE_GET(hstr, pushedImageName, PushedImageName);
+		HL_DEFINE_GET(hstr, disabledImageName, DisabledImageName);
+		Image* getImage() { return this->normalImage; };
+		void setImage(Image* value);
 		hstr getName();
 		bool isCursorInside();
-		
-		Image* getHoverImage() { return this->mHoverImage; }
-		void setHoverImage(Image* image);
-		hstr getHoverImageName() { return this->mHoverImageName; }
-		void setHoverImageByName(chstr image);
-		Image* getPushedImage() { return this->mPushedImage; }
-		void setPushedImage(Image* image);
-		hstr getPushedImageName() { return this->mPushedImageName; }
-		void setPushedImageByName(chstr image);
-		Image* getDisabledImage() { return this->mDisabledImage; }
-		void setDisabledImage(Image* image);
-		hstr getDisabledImageName() { return this->mDisabledImageName; }
-		void setDisabledImageByName(chstr image);
-
-		Image* getImage() { return this->mNormalImage; };
-		void setImage(Image* value);
 		int getFocusIndex();
 		Object* getParent();
 		Dataset* getDataset();
+		void setHoverImage(Image* image);
+		void setPushedImage(Image* image);
+		void setDisabledImage(Image* name);
+		void setHoverImageByName(chstr name);
+		void setPushedImageByName(chstr name);
+		void setDisabledImageByName(chstr name);
 		
 		/// @brief Optimized version.
 		bool trySetHoverImageByName(chstr name);
@@ -72,14 +70,14 @@ namespace aprilui
 		void mouseCancel();
 		
 	protected:
-		Image* mNormalImage;
-		Image* mHoverImage;
-		Image* mPushedImage;
-		Image* mDisabledImage;
-		hstr mNormalImageName;
-		hstr mHoverImageName;
-		hstr mPushedImageName;
-		hstr mDisabledImageName;
+		Image* normalImage;
+		Image* hoverImage;
+		Image* pushedImage;
+		Image* disabledImage;
+		hstr normalImageName;
+		hstr hoverImageName;
+		hstr pushedImageName;
+		hstr disabledImageName;
 		
 		void update(float k);
 		void OnDraw();

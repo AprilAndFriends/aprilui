@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -20,19 +20,18 @@
 namespace aprilui
 {
 	// small optimization
-	Image* tempNormalImage;
-	Image* tempHoverImage;
-	Image* tempPushedImage;
-	Image* tempDisabledImage;
+	static Image* tempNormalImage;
+	static Image* tempHoverImage;
+	static Image* tempPushedImage;
+	static Image* tempDisabledImage;
 
-	ToggleButton::ToggleButton(chstr name, grect rect) :
-		ImageButton(name, rect)
+	ToggleButton::ToggleButton(chstr name, grect rect) : ImageButton(name, rect)
 	{
-		this->mToggled = false;
-		this->mToggledNormalImage = NULL;
-		this->mToggledHoverImage = NULL;
-		this->mToggledPushedImage = NULL;
-		this->mToggledDisabledImage = NULL;
+		this->toggled = false;
+		this->toggledNormalImage = NULL;
+		this->toggledHoverImage = NULL;
+		this->toggledPushedImage = NULL;
+		this->toggledDisabledImage = NULL;
 	}
 
 	ToggleButton::~ToggleButton()
@@ -44,43 +43,126 @@ namespace aprilui
 		return new ToggleButton(name, rect);
 	}
 
-	void ToggleButton::setToggledNormalImageByName(chstr image)
+	void ToggleButton::setToggledNormalImage(Image* image)
 	{
-		this->setToggledNormalImage(this->mDataset->getImage(image));
+		this->toggledNormalImage = image;
+		this->toggledNormalImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ToggleButton::setToggledHoverImageByName(chstr image)
+	void ToggleButton::setToggledHoverImage(Image* image)
 	{
-		this->setToggledHoverImage(this->mDataset->getImage(image));
+		this->toggledHoverImage = image;
+		this->toggledHoverImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ToggleButton::setToggledPushedImageByName(chstr image)
+	void ToggleButton::setToggledPushedImage(Image* image)
 	{
-		this->setToggledPushedImage(this->mDataset->getImage(image));
+		this->toggledPushedImage = image;
+		this->toggledPushedImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ToggleButton::setToggledDisabledImageByName(chstr image)
+	void ToggleButton::setToggledDisabledImage(Image* image)
 	{
-		this->setToggledDisabledImage(this->mDataset->getImage(image));
+		this->toggledDisabledImage = image;
+		this->toggledDisabledImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
+	void ToggleButton::setToggledNormalImageByName(chstr name)
+	{
+		this->setToggledNormalImage(this->dataset->getImage(name));
+	}
+
+	void ToggleButton::setToggledHoverImageByName(chstr name)
+	{
+		this->setToggledHoverImage(this->dataset->getImage(name));
+	}
+
+	void ToggleButton::setToggledPushedImageByName(chstr name)
+	{
+		this->setToggledPushedImage(this->dataset->getImage(name));
+	}
+
+	void ToggleButton::setToggledDisabledImageByName(chstr name)
+	{
+		this->setToggledDisabledImage(this->dataset->getImage(name));
+	}
+
+	bool ToggleButton::trySetToggledNormalImageByName(chstr name)
+	{
+		if (this->toggledHoverImageName != name)
+		{
+			// using c/p code because of performance reasons
+			this->setToggledNormalImage(this->dataset->getImage(name));
+			return true;
+		}
+		return false;
+	}
+	
+	bool ToggleButton::trySetToggledHoverImageByName(chstr name)
+	{
+		if (this->toggledHoverImageName != name)
+		{
+			// using c/p code because of performance reasons
+			this->setToggledHoverImage(this->dataset->getImage(name));
+			return true;
+		}
+		return false;
+	}
+	
+	bool ToggleButton::trySetToggledPushedImageByName(chstr name)
+	{
+		if (this->toggledPushedImageName != name)
+		{
+			// using c/p code because of performance reasons
+			this->setToggledPushedImage(this->dataset->getImage(name));
+			return true;
+		}
+		return false;
+	}
+	
+	bool ToggleButton::trySetToggledDisabledImageByName(chstr name)
+	{
+		if (this->toggledDisabledImageName != name)
+		{
+			// using c/p code because of performance reasons
+			this->setToggledDisabledImage(this->dataset->getImage(name));
+			return true;
+		}
+		return false;
+	}
+	
+	void ToggleButton::toggle()
+	{
+		this->toggled = !this->toggled;
+	}
+
+	void ToggleButton::turnOn()
+	{
+		this->toggled = true;
+	}
+
+	void ToggleButton::turnOff()
+	{
+		this->toggled = false;
+	}
+		
 	void ToggleButton::OnDraw()
 	{
-		if (this->mToggled)
+		if (this->toggled)
 		{
-			tempNormalImage = this->mNormalImage;
-			tempHoverImage = this->mHoverImage;
-			tempPushedImage = this->mPushedImage;
-			tempDisabledImage = this->mDisabledImage;
-			this->mNormalImage = this->mToggledNormalImage;
-			this->mHoverImage = this->mToggledHoverImage;
-			this->mPushedImage = this->mToggledPushedImage;
-			this->mDisabledImage = this->mToggledDisabledImage;
+			tempNormalImage = this->normalImage;
+			tempHoverImage = this->hoverImage;
+			tempPushedImage = this->pushedImage;
+			tempDisabledImage = this->disabledImage;
+			this->normalImage = this->toggledNormalImage;
+			this->hoverImage = this->toggledHoverImage;
+			this->pushedImage = this->toggledPushedImage;
+			this->disabledImage = this->toggledDisabledImage;
 			ImageButton::OnDraw();
-			this->mNormalImage = tempNormalImage;
-			this->mHoverImage = tempHoverImage;
-			this->mPushedImage = tempPushedImage;
-			this->mDisabledImage = tempDisabledImage;
+			this->normalImage = tempNormalImage;
+			this->hoverImage = tempHoverImage;
+			this->pushedImage = tempPushedImage;
+			this->disabledImage = tempDisabledImage;
 		}
 		else
 		{
@@ -90,21 +172,21 @@ namespace aprilui
 
 	void ToggleButton::update(float k)
 	{
-		if (this->mToggled)
+		if (this->toggled)
 		{
-			tempNormalImage = this->mNormalImage;
-			tempHoverImage = this->mHoverImage;
-			tempPushedImage = this->mPushedImage;
-			tempDisabledImage = this->mDisabledImage;
-			this->mNormalImage = this->mToggledNormalImage;
-			this->mHoverImage = this->mToggledHoverImage;
-			this->mPushedImage = this->mToggledPushedImage;
-			this->mDisabledImage = this->mToggledDisabledImage;
+			tempNormalImage = this->normalImage;
+			tempHoverImage = this->hoverImage;
+			tempPushedImage = this->pushedImage;
+			tempDisabledImage = this->disabledImage;
+			this->normalImage = this->toggledNormalImage;
+			this->hoverImage = this->toggledHoverImage;
+			this->pushedImage = this->toggledPushedImage;
+			this->disabledImage = this->toggledDisabledImage;
 			ImageButton::update(k);
-			this->mNormalImage = tempNormalImage;
-			this->mHoverImage = tempHoverImage;
-			this->mPushedImage = tempPushedImage;
-			this->mDisabledImage = tempDisabledImage;
+			this->normalImage = tempNormalImage;
+			this->hoverImage = tempHoverImage;
+			this->pushedImage = tempPushedImage;
+			this->disabledImage = tempDisabledImage;
 		}
 		else
 		{
@@ -127,10 +209,10 @@ namespace aprilui
 
 	bool ToggleButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "toggled_image")			this->setToggledNormalImageByName(value);
-		else if	(name == "toggled_hover_image")		this->setToggledHoverImageByName(value);
-		else if	(name == "toggled_pushed_image")	this->setToggledPushedImageByName(value);
-		else if	(name == "toggled_disabled_image")	this->setToggledDisabledImageByName(value);
+		if		(name == "toggled_image")			this->trySetToggledNormalImageByName(value);
+		else if	(name == "toggled_hover_image")		this->trySetToggledHoverImageByName(value);
+		else if	(name == "toggled_pushed_image")	this->trySetToggledPushedImageByName(value);
+		else if	(name == "toggled_disabled_image")	this->trySetToggledDisabledImageByName(value);
 		else return ImageButton::setProperty(name, value);
 		return true;
 	}
@@ -140,7 +222,7 @@ namespace aprilui
 		bool result = ImageButton::onMouseUp(keyCode);
 		if (result)
 		{
-			this->mToggled = !this->mToggled;
+			this->toggled = !this->toggled;
 		}
 		return result;
 	}
