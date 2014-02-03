@@ -1,0 +1,49 @@
+<exporter version="1.0">
+	<!-- identifier of the exporter -->
+	<name>aprilui-basic</name>
+
+	<!-- display name of the exporter for the combo box -->
+	<displayName>AprilUI Basic</displayName>
+
+	<!-- description of the exporter -->
+	<description>Exports into AprilUI .tex format.</description>
+
+	<!-- exporter version -->
+	<version>1.0</version>
+
+	<!-- currently only one file allowed - more to come with update -->
+	<files>
+		<file>
+			<!-- name of this file variable -->
+			<name>apriluitex</name>
+
+			<!-- human readable name (for GUI) -->
+			<displayName>AprilUI Texture Definition</displayName>
+
+			<!-- file extension for the file -->
+			<fileExtension>tex</fileExtension>
+
+			<!-- name of the template file -->
+			<template>aprilui.tex</template>
+		</file>
+	</files>
+
+	<!-- target framework supports trimming -->
+	<supportsTrimming>true</supportsTrimming>
+
+	<!-- target framework supports rotated sprites -->
+	<supportsRotation>true</supportsRotation>
+
+	<!-- rotated sprites direction (cw/ccw) -->
+	<rotationDirection>cw</rotationDirection>
+
+	<!-- supports npot sizes -->
+	<supportsNPOT>true</supportsNPOT>
+
+	<!-- supports file name stripping (remove .png etc) -->
+	<supportsTrimSpriteNames>true</supportsTrimSpriteNames>
+
+	<!-- supports texure subpath -->
+	<supportsTextureSubPath>false</supportsTextureSubPath>
+
+</exporter>

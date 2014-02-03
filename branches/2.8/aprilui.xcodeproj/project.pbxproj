@@ -1,0 +1,1293 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F1B523F12E4716B00E958D8 /* ObjectContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */; };
+		7F1B524412E4717500E958D8 /* AnimatorBlueChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */; };
+		7F1B524512E4717500E958D8 /* AnimatorGreenChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */; };
+		7F1B524612E4717500E958D8 /* AnimatorRedChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */; };
+		7F1B524812E4719E00E958D8 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524712E4719E00E958D8 /* aprilui.cpp */; };
+		7F1B524F12E471B800E958D8 /* apriluiExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1B524912E471B800E958D8 /* apriluiExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F1B525012E471B800E958D8 /* AnimatorBlueChanger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1B524A12E471B800E958D8 /* AnimatorBlueChanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F1B525112E471B800E958D8 /* AnimatorGreenChanger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1B524B12E471B800E958D8 /* AnimatorGreenChanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F1B525212E471B800E958D8 /* AnimatorRedChanger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1B524C12E471B800E958D8 /* AnimatorRedChanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F1B525312E471B800E958D8 /* aprilui.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1B524D12E471B800E958D8 /* aprilui.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F1B525412E471B800E958D8 /* ObjectContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1B524E12E471B800E958D8 /* ObjectContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F33B200120FE16F004B5E89 /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F33B1FF120FE16F004B5E89 /* Animator.cpp */; };
+		7F33B208120FE2D5004B5E89 /* Animator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F33B207120FE2D5004B5E89 /* Animator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6A512096793002B5134 /* AnimatorFrameAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6A712096793002B5134 /* AnimatorRotator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68D12096793002B5134 /* AnimatorRotator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6A912096793002B5134 /* ObjectCallbackObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68F12096793002B5134 /* ObjectCallbackObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6AB12096793002B5134 /* ObjectColoredQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69112096793002B5134 /* ObjectColoredQuad.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6AD12096793002B5134 /* ObjectEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69312096793002B5134 /* ObjectEditBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6AE12096793002B5134 /* ObjectImageBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69412096793002B5134 /* ObjectImageBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6AF12096793002B5134 /* ObjectImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69512096793002B5134 /* ObjectImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6B012096793002B5134 /* ObjectLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69612096793002B5134 /* ObjectLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6B112096793002B5134 /* ObjectLabelBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69712096793002B5134 /* ObjectLabelBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6B512096793002B5134 /* ObjectSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69B12096793002B5134 /* ObjectSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6B612096793002B5134 /* ObjectTextButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69C12096793002B5134 /* ObjectTextButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6B712096793002B5134 /* ObjectTextImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69D12096793002B5134 /* ObjectTextImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6B812096793002B5134 /* ObjectToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69E12096793002B5134 /* ObjectToggleButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F38C6C9120967B9002B5134 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
+		7F38C6CB120967B9002B5134 /* ObjectColoredQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */; };
+		7F38C6CD120967B9002B5134 /* ObjectEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */; };
+		7F38C6CE120967B9002B5134 /* ObjectImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */; };
+		7F38C6CF120967B9002B5134 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
+		7F38C6D0120967B9002B5134 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */; };
+		7F38C6D1120967B9002B5134 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */; };
+		7F38C6D5120967B9002B5134 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */; };
+		7F38C6D6120967B9002B5134 /* ObjectTextButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C6120967B9002B5134 /* ObjectTextButton.cpp */; };
+		7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */; };
+		7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
+		7F38C728120967CC002B5134 /* AnimatorFrameAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */; };
+		7F38C72A120967CC002B5134 /* AnimatorRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C720120967CC002B5134 /* AnimatorRotator.cpp */; };
+		7F7A4A95129D217700E0ED12 /* TiledImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A8E129D217700E0ED12 /* TiledImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F7A4A96129D217700E0ED12 /* NullImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A8F129D217700E0ED12 /* NullImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F7A4A97129D217700E0ED12 /* Images.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A90129D217700E0ED12 /* Images.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F7A4A98129D217700E0ED12 /* CompositeImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A91129D217700E0ED12 /* CompositeImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F7A4A99129D217700E0ED12 /* ColorImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A92129D217700E0ED12 /* ColorImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F7A4A9A129D217700E0ED12 /* ColoredImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A93129D217700E0ED12 /* ColoredImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F7A4AA5129D21A300E0ED12 /* ColoredImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */; };
+		7F7A4AA6129D21A300E0ED12 /* ColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */; };
+		7F7A4AA7129D21A300E0ED12 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
+		7F7A4AA8129D21A300E0ED12 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA2129D21A300E0ED12 /* Image.cpp */; };
+		7F7A4AA9129D21A300E0ED12 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */; };
+		7F7A4AAA129D21A300E0ED12 /* TiledImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */; };
+		7F7A4AAC129D21BD00E0ED12 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
+		7FA3013312B647A000F71E5E /* AnimatorAlphaChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */; };
+		7FA3013512B647A000F71E5E /* AnimatorMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */; };
+		7FA3013612B647A000F71E5E /* AnimatorMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013012B647A000F71E5E /* AnimatorMoverY.cpp */; };
+		7FA3013A12B647AF00F71E5E /* ObjectButtonBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */; };
+		7FA3014612B647E200F71E5E /* AnimatorAlphaChanger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA3013F12B647E200F71E5E /* AnimatorAlphaChanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA3014812B647E200F71E5E /* AnimatorMoverX.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA3014112B647E200F71E5E /* AnimatorMoverX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA3014912B647E200F71E5E /* AnimatorMoverY.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA3014212B647E200F71E5E /* AnimatorMoverY.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FA3014C12B647E200F71E5E /* ObjectButtonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FA3014512B647E200F71E5E /* ObjectButtonBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FB0C7AF120AE107005EA739 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB0C7AE120AE107005EA739 /* Object.cpp */; };
+		7FB0C7B1120AE117005EA739 /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FB0C7B0120AE117005EA739 /* Object.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FC8041E11EC721E00851062 /* Animators.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041511EC721E00851062 /* Animators.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FC8042111EC721E00851062 /* Dataset.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041811EC721E00851062 /* Dataset.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FC8042211EC721E00851062 /* Exception.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041911EC721E00851062 /* Exception.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FC8042311EC721E00851062 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041A11EC721E00851062 /* Image.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FC8042411EC721E00851062 /* Objects.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FC8041B11EC721E00851062 /* Objects.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FC8043411EC725B00851062 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
+		7FC8043511EC725B00851062 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
+		7FC8045E11EC739000851062 /* april.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8045D11EC739000851062 /* april.framework */; };
+		7FC8046011EC739900851062 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8045F11EC739900851062 /* gtypes.framework */; };
+		7FC8046211EC739900851062 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8046111EC739900851062 /* hltypes.framework */; };
+		7FC8046411EC73B000851062 /* atres.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FC8046311EC73B000851062 /* atres.framework */; };
+		7FCD397112018C7B00608217 /* CallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD395E12018C7B00608217 /* CallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FCD397712018C7B00608217 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396412018C7B00608217 /* Event.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FCD397812018C7B00608217 /* EventArgs.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FCD396512018C7B00608217 /* EventArgs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */; };
+		7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */; };
+		7FDB989A131BA90C0064B968 /* AnimatorResizerX.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDB989B131BA90C0064B968 /* AnimatorResizerY.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDB989C131BA90C0064B968 /* EventUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9898131BA90C0064B968 /* EventUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7FDB98A0131BA9240064B968 /* AnimatorResizerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */; };
+		7FDB98A1131BA9240064B968 /* AnimatorResizerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */; };
+		7FDB98A3131BA9320064B968 /* MemberCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */; };
+		7FF4F1D012017ACA00F0BBB7 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
+		C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */; };
+		C93D4A7514F288D30097AB06 /* apriluiUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */; };
+		C93D4A7614F288D30097AB06 /* apriluiUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = C93D4A7314F288D30097AB06 /* apriluiUtil.h */; settings = {ATTRIBUTES = (); }; };
+		C98E1DB414C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB014C823D200CB9F1C /* ObjectScrollArea.cpp */; };
+		C98E1DB514C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB014C823D200CB9F1C /* ObjectScrollArea.cpp */; };
+		C98E1DB614C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB114C823D300CB9F1C /* ObjectScrollBar.cpp */; };
+		C98E1DB714C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB114C823D300CB9F1C /* ObjectScrollBar.cpp */; };
+		C98E1DB814C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB214C823D300CB9F1C /* ObjectScrollBarH.cpp */; };
+		C98E1DB914C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB214C823D300CB9F1C /* ObjectScrollBarH.cpp */; };
+		C98E1DBA14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB314C823D300CB9F1C /* ObjectScrollBarV.cpp */; };
+		C98E1DBB14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB314C823D300CB9F1C /* ObjectScrollBarV.cpp */; };
+		C98E1DC114C823F200CB9F1C /* ObjectScrollArea.h in Headers */ = {isa = PBXBuildFile; fileRef = C98E1DBD14C823F200CB9F1C /* ObjectScrollArea.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C98E1DC314C823F200CB9F1C /* ObjectScrollBar.h in Headers */ = {isa = PBXBuildFile; fileRef = C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C98E1DC514C823F200CB9F1C /* ObjectScrollBarH.h in Headers */ = {isa = PBXBuildFile; fileRef = C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C98E1DC714C823F200CB9F1C /* ObjectScrollBarV.h in Headers */ = {isa = PBXBuildFile; fileRef = C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D11F4D9E172027B20048DFD8 /* QueuedCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */; };
+		D11F4DA0172027BC0048DFD8 /* QueuedCallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1522E7A140F6A6B0012F290 /* MemberCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */; };
+		D1522E7B140F6A6B0012F290 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524712E4719E00E958D8 /* aprilui.cpp */; };
+		D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
+		D1522E7D140F6A6B0012F290 /* ColoredImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */; };
+		D1522E7E140F6A6B0012F290 /* ColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */; };
+		D1522E7F140F6A6B0012F290 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
+		D1522E80140F6A6B0012F290 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA2129D21A300E0ED12 /* Image.cpp */; };
+		D1522E81140F6A6B0012F290 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */; };
+		D1522E82140F6A6B0012F290 /* TiledImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */; };
+		D1522E83140F6A6B0012F290 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */; };
+		D1522E84140F6A6B0012F290 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */; };
+		D1522E85140F6A6B0012F290 /* AnimatorResizerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */; };
+		D1522E86140F6A6B0012F290 /* AnimatorResizerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */; };
+		D1522E87140F6A6B0012F290 /* AnimatorBlueChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */; };
+		D1522E88140F6A6B0012F290 /* AnimatorGreenChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */; };
+		D1522E89140F6A6B0012F290 /* AnimatorRedChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */; };
+		D1522E8A140F6A6B0012F290 /* AnimatorAlphaChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */; };
+		D1522E8B140F6A6B0012F290 /* AnimatorMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */; };
+		D1522E8C140F6A6B0012F290 /* AnimatorMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013012B647A000F71E5E /* AnimatorMoverY.cpp */; };
+		D1522E8D140F6A6B0012F290 /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F33B1FF120FE16F004B5E89 /* Animator.cpp */; };
+		D1522E8E140F6A6B0012F290 /* AnimatorFrameAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */; };
+		D1522E8F140F6A6B0012F290 /* AnimatorRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C720120967CC002B5134 /* AnimatorRotator.cpp */; };
+		D1522E91140F6A6B0012F290 /* ObjectContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */; };
+		D1522E92140F6A6B0012F290 /* ObjectButtonBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */; };
+		D1522E93140F6A6B0012F290 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB0C7AE120AE107005EA739 /* Object.cpp */; };
+		D1522E94140F6A6B0012F290 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
+		D1522E95140F6A6B0012F290 /* ObjectColoredQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */; };
+		D1522E96140F6A6B0012F290 /* ObjectEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */; };
+		D1522E97140F6A6B0012F290 /* ObjectImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */; };
+		D1522E98140F6A6B0012F290 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
+		D1522E99140F6A6B0012F290 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */; };
+		D1522E9A140F6A6B0012F290 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */; };
+		D1522E9B140F6A6B0012F290 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */; };
+		D1522E9C140F6A6B0012F290 /* ObjectTextButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C6120967B9002B5134 /* ObjectTextButton.cpp */; };
+		D1522E9D140F6A6B0012F290 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */; };
+		D1522E9E140F6A6B0012F290 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
+		D1522E9F140F6A6B0012F290 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
+		D1522EA0140F6A6B0012F290 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
+		D1522EA1140F6A6B0012F290 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
+		D1688913149026EB004FD97F /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
+		D1688914149026EB004FD97F /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
+		D16E990D158BE53800C058CE /* EventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990B158BE53800C058CE /* EventReceiver.cpp */; };
+		D16E990E158BE53800C058CE /* EventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990B158BE53800C058CE /* EventReceiver.cpp */; };
+		D16E990F158BE53800C058CE /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990C158BE53800C058CE /* Texture.cpp */; };
+		D16E9910158BE53800C058CE /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990C158BE53800C058CE /* Texture.cpp */; };
+		D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9912158BE54D00C058CE /* EventReceiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D16E9915158BE54D00C058CE /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9913158BE54D00C058CE /* Texture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
+		D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
+		D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
+		D1BA0FC716BFD81F0085EE2B /* ObjectProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
+		D1C2083415FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
+		D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */; };
+		D1C2083615FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */; };
+		D1C2083A15FDC57000AB5DCA /* AnimatorCenterMoverX.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1C2083B15FDC57000AB5DCA /* AnimatorCenterMoverY.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
+		D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
+		D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1F27B29177A2FCA00E5C131 /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
+		D1F27B2A177A2FCA00E5C131 /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
+		D1F27B2B177A2FCA00E5C131 /* MemberCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */; };
+		D1F27B2C177A2FCA00E5C131 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524712E4719E00E958D8 /* aprilui.cpp */; };
+		D1F27B2D177A2FCA00E5C131 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
+		D1F27B2E177A2FCA00E5C131 /* ColoredImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */; };
+		D1F27B2F177A2FCA00E5C131 /* ColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */; };
+		D1F27B30177A2FCA00E5C131 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
+		D1F27B31177A2FCA00E5C131 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA2129D21A300E0ED12 /* Image.cpp */; };
+		D1F27B32177A2FCA00E5C131 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */; };
+		D1F27B33177A2FCA00E5C131 /* TiledImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */; };
+		D1F27B34177A2FCA00E5C131 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */; };
+		D1F27B35177A2FCA00E5C131 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */; };
+		D1F27B36177A2FCA00E5C131 /* AnimatorResizerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */; };
+		D1F27B37177A2FCA00E5C131 /* AnimatorResizerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */; };
+		D1F27B38177A2FCA00E5C131 /* AnimatorBlueChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */; };
+		D1F27B39177A2FCA00E5C131 /* AnimatorGreenChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */; };
+		D1F27B3A177A2FCA00E5C131 /* AnimatorRedChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */; };
+		D1F27B3B177A2FCA00E5C131 /* AnimatorAlphaChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */; };
+		D1F27B3C177A2FCA00E5C131 /* AnimatorMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */; };
+		D1F27B3D177A2FCA00E5C131 /* AnimatorMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013012B647A000F71E5E /* AnimatorMoverY.cpp */; };
+		D1F27B3E177A2FCA00E5C131 /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F33B1FF120FE16F004B5E89 /* Animator.cpp */; };
+		D1F27B3F177A2FCA00E5C131 /* AnimatorFrameAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */; };
+		D1F27B40177A2FCA00E5C131 /* AnimatorRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C720120967CC002B5134 /* AnimatorRotator.cpp */; };
+		D1F27B41177A2FCA00E5C131 /* ObjectContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */; };
+		D1F27B42177A2FCA00E5C131 /* ObjectButtonBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */; };
+		D1F27B43177A2FCA00E5C131 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB0C7AE120AE107005EA739 /* Object.cpp */; };
+		D1F27B44177A2FCA00E5C131 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
+		D1F27B45177A2FCA00E5C131 /* ObjectColoredQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */; };
+		D1F27B46177A2FCA00E5C131 /* ObjectEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */; };
+		D1F27B47177A2FCA00E5C131 /* ObjectImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */; };
+		D1F27B48177A2FCA00E5C131 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
+		D1F27B49177A2FCA00E5C131 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */; };
+		D1F27B4A177A2FCA00E5C131 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */; };
+		D1F27B4B177A2FCA00E5C131 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */; };
+		D1F27B4C177A2FCA00E5C131 /* ObjectTextButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C6120967B9002B5134 /* ObjectTextButton.cpp */; };
+		D1F27B4D177A2FCA00E5C131 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */; };
+		D1F27B4E177A2FCA00E5C131 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
+		D1F27B4F177A2FCA00E5C131 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
+		D1F27B50177A2FCA00E5C131 /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042A11EC725B00851062 /* Dataset.cpp */; };
+		D1F27B51177A2FCA00E5C131 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
+		D1F27B52177A2FCA00E5C131 /* ObjectScrollArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB014C823D200CB9F1C /* ObjectScrollArea.cpp */; };
+		D1F27B53177A2FCA00E5C131 /* ObjectScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB114C823D300CB9F1C /* ObjectScrollBar.cpp */; };
+		D1F27B54177A2FCA00E5C131 /* ObjectScrollBarH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB214C823D300CB9F1C /* ObjectScrollBarH.cpp */; };
+		D1F27B55177A2FCA00E5C131 /* ObjectScrollBarV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C98E1DB314C823D300CB9F1C /* ObjectScrollBarV.cpp */; };
+		D1F27B56177A2FCA00E5C131 /* apriluiUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */; };
+		D1F27B57177A2FCA00E5C131 /* EventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990B158BE53800C058CE /* EventReceiver.cpp */; };
+		D1F27B58177A2FCA00E5C131 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990C158BE53800C058CE /* Texture.cpp */; };
+		D1F27B59177A2FCA00E5C131 /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
+		D1F27B5A177A2FCA00E5C131 /* AnimatorCenterMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */; };
+		D1F27B5B177A2FCA00E5C131 /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectContainer.cpp; sourceTree = "<group>"; };
+		7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorBlueChanger.cpp; sourceTree = "<group>"; };
+		7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorGreenChanger.cpp; sourceTree = "<group>"; };
+		7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRedChanger.cpp; sourceTree = "<group>"; };
+		7F1B524712E4719E00E958D8 /* aprilui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aprilui.cpp; path = src/aprilui.cpp; sourceTree = "<group>"; };
+		7F1B524912E471B800E958D8 /* apriluiExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apriluiExport.h; path = include/aprilui/apriluiExport.h; sourceTree = "<group>"; };
+		7F1B524A12E471B800E958D8 /* AnimatorBlueChanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorBlueChanger.h; path = include/aprilui/AnimatorBlueChanger.h; sourceTree = "<group>"; };
+		7F1B524B12E471B800E958D8 /* AnimatorGreenChanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorGreenChanger.h; path = include/aprilui/AnimatorGreenChanger.h; sourceTree = "<group>"; };
+		7F1B524C12E471B800E958D8 /* AnimatorRedChanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorRedChanger.h; path = include/aprilui/AnimatorRedChanger.h; sourceTree = "<group>"; };
+		7F1B524D12E471B800E958D8 /* aprilui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aprilui.h; path = include/aprilui/aprilui.h; sourceTree = "<group>"; };
+		7F1B524E12E471B800E958D8 /* ObjectContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectContainer.h; path = include/aprilui/ObjectContainer.h; sourceTree = "<group>"; };
+		7F33B1FF120FE16F004B5E89 /* Animator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animator.cpp; sourceTree = "<group>"; };
+		7F33B207120FE2D5004B5E89 /* Animator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animator.h; path = include/aprilui/Animator.h; sourceTree = "<group>"; };
+		7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorFrameAnimation.h; path = include/aprilui/AnimatorFrameAnimation.h; sourceTree = "<group>"; };
+		7F38C68D12096793002B5134 /* AnimatorRotator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorRotator.h; path = include/aprilui/AnimatorRotator.h; sourceTree = "<group>"; };
+		7F38C68F12096793002B5134 /* ObjectCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectCallbackObject.h; path = include/aprilui/ObjectCallbackObject.h; sourceTree = "<group>"; };
+		7F38C69112096793002B5134 /* ObjectColoredQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectColoredQuad.h; path = include/aprilui/ObjectColoredQuad.h; sourceTree = "<group>"; };
+		7F38C69312096793002B5134 /* ObjectEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectEditBox.h; path = include/aprilui/ObjectEditBox.h; sourceTree = "<group>"; };
+		7F38C69412096793002B5134 /* ObjectImageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectImageBox.h; path = include/aprilui/ObjectImageBox.h; sourceTree = "<group>"; };
+		7F38C69512096793002B5134 /* ObjectImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectImageButton.h; path = include/aprilui/ObjectImageButton.h; sourceTree = "<group>"; };
+		7F38C69612096793002B5134 /* ObjectLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectLabel.h; path = include/aprilui/ObjectLabel.h; sourceTree = "<group>"; };
+		7F38C69712096793002B5134 /* ObjectLabelBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectLabelBase.h; path = include/aprilui/ObjectLabelBase.h; sourceTree = "<group>"; };
+		7F38C69B12096793002B5134 /* ObjectSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectSlider.h; path = include/aprilui/ObjectSlider.h; sourceTree = "<group>"; };
+		7F38C69C12096793002B5134 /* ObjectTextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectTextButton.h; path = include/aprilui/ObjectTextButton.h; sourceTree = "<group>"; };
+		7F38C69D12096793002B5134 /* ObjectTextImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectTextImageButton.h; path = include/aprilui/ObjectTextImageButton.h; sourceTree = "<group>"; };
+		7F38C69E12096793002B5134 /* ObjectToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectToggleButton.h; path = include/aprilui/ObjectToggleButton.h; sourceTree = "<group>"; };
+		7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectCallbackObject.cpp; sourceTree = "<group>"; };
+		7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectColoredQuad.cpp; sourceTree = "<group>"; };
+		7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectEditBox.cpp; sourceTree = "<group>"; };
+		7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectImageBox.cpp; sourceTree = "<group>"; };
+		7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectImageButton.cpp; sourceTree = "<group>"; };
+		7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectLabel.cpp; sourceTree = "<group>"; };
+		7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectLabelBase.cpp; sourceTree = "<group>"; };
+		7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectSlider.cpp; sourceTree = "<group>"; };
+		7F38C6C6120967B9002B5134 /* ObjectTextButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectTextButton.cpp; sourceTree = "<group>"; };
+		7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectTextImageButton.cpp; sourceTree = "<group>"; };
+		7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectToggleButton.cpp; sourceTree = "<group>"; };
+		7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorFrameAnimation.cpp; sourceTree = "<group>"; };
+		7F38C720120967CC002B5134 /* AnimatorRotator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotator.cpp; sourceTree = "<group>"; };
+		7F7A4A8E129D217700E0ED12 /* TiledImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiledImage.h; path = include/aprilui/TiledImage.h; sourceTree = "<group>"; };
+		7F7A4A8F129D217700E0ED12 /* NullImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NullImage.h; path = include/aprilui/NullImage.h; sourceTree = "<group>"; };
+		7F7A4A90129D217700E0ED12 /* Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Images.h; path = include/aprilui/Images.h; sourceTree = "<group>"; };
+		7F7A4A91129D217700E0ED12 /* CompositeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompositeImage.h; path = include/aprilui/CompositeImage.h; sourceTree = "<group>"; };
+		7F7A4A92129D217700E0ED12 /* ColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorImage.h; path = include/aprilui/ColorImage.h; sourceTree = "<group>"; };
+		7F7A4A93129D217700E0ED12 /* ColoredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColoredImage.h; path = include/aprilui/ColoredImage.h; sourceTree = "<group>"; };
+		7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColoredImage.cpp; sourceTree = "<group>"; };
+		7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorImage.cpp; sourceTree = "<group>"; };
+		7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompositeImage.cpp; sourceTree = "<group>"; };
+		7F7A4AA2129D21A300E0ED12 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
+		7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullImage.cpp; sourceTree = "<group>"; };
+		7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TiledImage.cpp; sourceTree = "<group>"; };
+		7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventArgs.cpp; path = src/EventArgs.cpp; sourceTree = "<group>"; };
+		7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorAlphaChanger.cpp; sourceTree = "<group>"; };
+		7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorMoverX.cpp; sourceTree = "<group>"; };
+		7FA3013012B647A000F71E5E /* AnimatorMoverY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorMoverY.cpp; sourceTree = "<group>"; };
+		7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectButtonBase.cpp; sourceTree = "<group>"; };
+		7FA3013F12B647E200F71E5E /* AnimatorAlphaChanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorAlphaChanger.h; path = include/aprilui/AnimatorAlphaChanger.h; sourceTree = "<group>"; };
+		7FA3014112B647E200F71E5E /* AnimatorMoverX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorMoverX.h; path = include/aprilui/AnimatorMoverX.h; sourceTree = "<group>"; };
+		7FA3014212B647E200F71E5E /* AnimatorMoverY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorMoverY.h; path = include/aprilui/AnimatorMoverY.h; sourceTree = "<group>"; };
+		7FA3014512B647E200F71E5E /* ObjectButtonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectButtonBase.h; path = include/aprilui/ObjectButtonBase.h; sourceTree = "<group>"; };
+		7FB0C7AE120AE107005EA739 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
+		7FB0C7B0120AE117005EA739 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Object.h; path = include/aprilui/Object.h; sourceTree = "<group>"; };
+		7FC8041511EC721E00851062 /* Animators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animators.h; path = include/aprilui/Animators.h; sourceTree = "<group>"; };
+		7FC8041811EC721E00851062 /* Dataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dataset.h; path = include/aprilui/Dataset.h; sourceTree = "<group>"; };
+		7FC8041911EC721E00851062 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = include/aprilui/Exception.h; sourceTree = "<group>"; };
+		7FC8041A11EC721E00851062 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = include/aprilui/Image.h; sourceTree = "<group>"; };
+		7FC8041B11EC721E00851062 /* Objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Objects.h; path = include/aprilui/Objects.h; sourceTree = "<group>"; };
+		7FC8042A11EC725B00851062 /* Dataset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Dataset.cpp; path = src/Dataset.cpp; sourceTree = "<group>"; };
+		7FC8042B11EC725B00851062 /* Exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Exception.cpp; path = src/Exception.cpp; sourceTree = "<group>"; };
+		7FC8045D11EC739000851062 /* april.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = april.framework; path = Library/Frameworks/april.framework; sourceTree = SDKROOT; };
+		7FC8045F11EC739900851062 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = Library/Frameworks/gtypes.framework; sourceTree = SDKROOT; };
+		7FC8046111EC739900851062 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = Library/Frameworks/hltypes.framework; sourceTree = SDKROOT; };
+		7FC8046311EC73B000851062 /* atres.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = atres.framework; path = Library/Frameworks/atres.framework; sourceTree = SDKROOT; };
+		7FCD395E12018C7B00608217 /* CallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallbackEvent.h; path = include/aprilui/CallbackEvent.h; sourceTree = "<group>"; };
+		7FCD396412018C7B00608217 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = include/aprilui/Event.h; sourceTree = "<group>"; };
+		7FCD396512018C7B00608217 /* EventArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventArgs.h; path = include/aprilui/EventArgs.h; sourceTree = "<group>"; };
+		7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorScalerX.h; path = include/aprilui/AnimatorScalerX.h; sourceTree = "<group>"; };
+		7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorScalerY.h; path = include/aprilui/AnimatorScalerY.h; sourceTree = "<group>"; };
+		7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScalerX.cpp; sourceTree = "<group>"; };
+		7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScalerY.cpp; sourceTree = "<group>"; };
+		7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorResizerX.h; path = include/aprilui/AnimatorResizerX.h; sourceTree = "<group>"; };
+		7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorResizerY.h; path = include/aprilui/AnimatorResizerY.h; sourceTree = "<group>"; };
+		7FDB9898131BA90C0064B968 /* EventUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventUtils.h; path = include/aprilui/EventUtils.h; sourceTree = "<group>"; };
+		7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberCallbackEvent.h; path = include/aprilui/MemberCallbackEvent.h; sourceTree = "<group>"; };
+		7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerX.cpp; sourceTree = "<group>"; };
+		7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerY.cpp; sourceTree = "<group>"; };
+		7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemberCallbackEvent.cpp; path = src/MemberCallbackEvent.cpp; sourceTree = "<group>"; };
+		7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CallbackEvent.cpp; path = src/CallbackEvent.cpp; sourceTree = "<group>"; };
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DC2EF5B0486A6940098B216 /* aprilui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = aprilui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apriluiUtil.cpp; path = src/apriluiUtil.cpp; sourceTree = "<group>"; };
+		C93D4A7314F288D30097AB06 /* apriluiUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apriluiUtil.h; path = src/apriluiUtil.h; sourceTree = "<group>"; };
+		C98E1DB014C823D200CB9F1C /* ObjectScrollArea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollArea.cpp; sourceTree = "<group>"; };
+		C98E1DB114C823D300CB9F1C /* ObjectScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBar.cpp; sourceTree = "<group>"; };
+		C98E1DB214C823D300CB9F1C /* ObjectScrollBarH.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarH.cpp; sourceTree = "<group>"; };
+		C98E1DB314C823D300CB9F1C /* ObjectScrollBarV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarV.cpp; sourceTree = "<group>"; };
+		C98E1DBD14C823F200CB9F1C /* ObjectScrollArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollArea.h; path = include/aprilui/ObjectScrollArea.h; sourceTree = "<group>"; };
+		C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBar.h; path = include/aprilui/ObjectScrollBar.h; sourceTree = "<group>"; };
+		C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarH.h; path = include/aprilui/ObjectScrollBarH.h; sourceTree = "<group>"; };
+		C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarV.h; path = include/aprilui/ObjectScrollBarV.h; sourceTree = "<group>"; };
+		D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QueuedCallbackEvent.cpp; path = src/QueuedCallbackEvent.cpp; sourceTree = "<group>"; };
+		D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueuedCallbackEvent.h; path = include/aprilui/QueuedCallbackEvent.h; sourceTree = "<group>"; };
+		D1522E69140F6A040012F290 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D16E990B158BE53800C058CE /* EventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventReceiver.cpp; path = src/EventReceiver.cpp; sourceTree = "<group>"; };
+		D16E990C158BE53800C058CE /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = src/Texture.cpp; sourceTree = "<group>"; };
+		D16E9912158BE54D00C058CE /* EventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventReceiver.h; path = include/aprilui/EventReceiver.h; sourceTree = "<group>"; };
+		D16E9913158BE54D00C058CE /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = include/aprilui/Texture.h; sourceTree = "<group>"; };
+		D1981D35140F913B0057C3AF /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
+		D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBar.cpp; sourceTree = "<group>"; };
+		D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBar.h; path = include/aprilui/ObjectProgressBar.h; sourceTree = "<group>"; };
+		D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverX.cpp; sourceTree = "<group>"; };
+		D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverY.cpp; sourceTree = "<group>"; };
+		D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorCenterMoverX.h; path = include/aprilui/AnimatorCenterMoverX.h; sourceTree = "<group>"; };
+		D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorCenterMoverY.h; path = include/aprilui/AnimatorCenterMoverY.h; sourceTree = "<group>"; };
+		D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorTiledScrollerX.cpp; sourceTree = "<group>"; };
+		D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorTiledScrollerY.cpp; sourceTree = "<group>"; };
+		D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorTiledScrollerX.h; path = include/aprilui/AnimatorTiledScrollerX.h; sourceTree = "<group>"; };
+		D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorTiledScrollerY.h; path = include/aprilui/AnimatorTiledScrollerY.h; sourceTree = "<group>"; };
+		D1F27B63177A2FCA00E5C131 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */,
+				7FC8045E11EC739000851062 /* april.framework in Frameworks */,
+				7FC8046011EC739900851062 /* gtypes.framework in Frameworks */,
+				7FC8046211EC739900851062 /* hltypes.framework in Frameworks */,
+				7FC8046411EC73B000851062 /* atres.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1522E66140F6A040012F290 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1F27B5C177A2FCA00E5C131 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* aprilui.framework */,
+				D1522E69140F6A040012F290 /* libaprilui.a */,
+				D1F27B63177A2FCA00E5C131 /* libaprilui.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* libaprilui */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				7FC8041211EC71CF00851062 /* include */,
+				7FC8041111EC71CC00851062 /* src */,
+				089C1665FE841158C02AAC07 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = libaprilui;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B0FEA5585E11CA2CBB /* mac */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		089C1665FE841158C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				D1981D35140F913B0057C3AF /* hlxml.framework */,
+				7FC8045D11EC739000851062 /* april.framework */,
+				7FC8045F11EC739900851062 /* gtypes.framework */,
+				7FC8046111EC739900851062 /* hltypes.framework */,
+				7FC8046311EC73B000851062 /* atres.framework */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
+		7F6D54811201B06200A2BDF6 /* Animators */ = {
+			isa = PBXGroup;
+			children = (
+				7F33B1FF120FE16F004B5E89 /* Animator.cpp */,
+				7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */,
+				7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */,
+				D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */,
+				D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */,
+				7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */,
+				7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */,
+				7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */,
+				7FA3013012B647A000F71E5E /* AnimatorMoverY.cpp */,
+				7F1B524312E4717500E958D8 /* AnimatorRedChanger.cpp */,
+				7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */,
+				7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */,
+				7F38C720120967CC002B5134 /* AnimatorRotator.cpp */,
+				7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */,
+				7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */,
+				D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */,
+				D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */,
+			);
+			name = Animators;
+			path = src/animators;
+			sourceTree = "<group>";
+		};
+		7F6D548C1201B06200A2BDF6 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				7FB0C7AE120AE107005EA739 /* Object.cpp */,
+				7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */,
+				7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */,
+				7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */,
+				7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */,
+				7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */,
+				7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */,
+				7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */,
+				7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */,
+				7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */,
+				D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */,
+				C98E1DB014C823D200CB9F1C /* ObjectScrollArea.cpp */,
+				C98E1DB114C823D300CB9F1C /* ObjectScrollBar.cpp */,
+				C98E1DB214C823D300CB9F1C /* ObjectScrollBarH.cpp */,
+				C98E1DB314C823D300CB9F1C /* ObjectScrollBarV.cpp */,
+				7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */,
+				7F38C6C6120967B9002B5134 /* ObjectTextButton.cpp */,
+				7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */,
+				7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */,
+			);
+			name = Objects;
+			path = src/objects;
+			sourceTree = "<group>";
+		};
+		7F7A4A9E129D21A300E0ED12 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7F7A4AA2129D21A300E0ED12 /* Image.cpp */,
+				7F7A4A9F129D21A300E0ED12 /* ColoredImage.cpp */,
+				7F7A4AA0129D21A300E0ED12 /* ColorImage.cpp */,
+				7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */,
+				7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */,
+				7F7A4AA4129D21A300E0ED12 /* TiledImage.cpp */,
+			);
+			name = Images;
+			path = src/images;
+			sourceTree = "<group>";
+		};
+		7FC8041111EC71CC00851062 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				7F7A4A9E129D21A300E0ED12 /* Images */,
+				7F6D54811201B06200A2BDF6 /* Animators */,
+				7F6D548C1201B06200A2BDF6 /* Objects */,
+				7F1B524712E4719E00E958D8 /* aprilui.cpp */,
+				C93D4A7314F288D30097AB06 /* apriluiUtil.h */,
+				C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */,
+				7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */,
+				7FC8042A11EC725B00851062 /* Dataset.cpp */,
+				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
+				D16E990B158BE53800C058CE /* EventReceiver.cpp */,
+				7FC8042B11EC725B00851062 /* Exception.cpp */,
+				D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */,
+				7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */,
+				D16E990C158BE53800C058CE /* Texture.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		7FC8041211EC71CF00851062 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C942B3FF13278C7100C1D1E8 /* Images */,
+				C942B3F113278C3300C1D1E8 /* Animators */,
+				C942B3FE13278C5900C1D1E8 /* Objects */,
+				7F1B524D12E471B800E958D8 /* aprilui.h */,
+				7F1B524912E471B800E958D8 /* apriluiExport.h */,
+				7FCD395E12018C7B00608217 /* CallbackEvent.h */,
+				7FC8041811EC721E00851062 /* Dataset.h */,
+				7FCD396412018C7B00608217 /* Event.h */,
+				7FCD396512018C7B00608217 /* EventArgs.h */,
+				7FDB9898131BA90C0064B968 /* EventUtils.h */,
+				D16E9912158BE54D00C058CE /* EventReceiver.h */,
+				7FC8041911EC721E00851062 /* Exception.h */,
+				D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */,
+				7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */,
+				D16E9913158BE54D00C058CE /* Texture.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		C942B3F113278C3300C1D1E8 /* Animators */ = {
+			isa = PBXGroup;
+			children = (
+				7F33B207120FE2D5004B5E89 /* Animator.h */,
+				7FC8041511EC721E00851062 /* Animators.h */,
+				7FA3013F12B647E200F71E5E /* AnimatorAlphaChanger.h */,
+				7F1B524A12E471B800E958D8 /* AnimatorBlueChanger.h */,
+				D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */,
+				D1C2083915FDC57000AB5DCA /* AnimatorCenterMoverY.h */,
+				7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */,
+				7F1B524B12E471B800E958D8 /* AnimatorGreenChanger.h */,
+				7FA3014112B647E200F71E5E /* AnimatorMoverX.h */,
+				7FA3014212B647E200F71E5E /* AnimatorMoverY.h */,
+				7F1B524C12E471B800E958D8 /* AnimatorRedChanger.h */,
+				7FDB9896131BA90C0064B968 /* AnimatorResizerX.h */,
+				7FDB9897131BA90C0064B968 /* AnimatorResizerY.h */,
+				7F38C68D12096793002B5134 /* AnimatorRotator.h */,
+				7FDAF2EF131CF15A006CBC59 /* AnimatorScalerX.h */,
+				7FDAF2F0131CF15A006CBC59 /* AnimatorScalerY.h */,
+				D1CDBE75147E3D5E001F9A43 /* AnimatorTiledScrollerX.h */,
+				D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */,
+			);
+			name = Animators;
+			sourceTree = "<group>";
+		};
+		C942B3FE13278C5900C1D1E8 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				7FB0C7B0120AE117005EA739 /* Object.h */,
+				7FC8041B11EC721E00851062 /* Objects.h */,
+				7FA3014512B647E200F71E5E /* ObjectButtonBase.h */,
+				7F38C68F12096793002B5134 /* ObjectCallbackObject.h */,
+				7F38C69112096793002B5134 /* ObjectColoredQuad.h */,
+				7F1B524E12E471B800E958D8 /* ObjectContainer.h */,
+				7F38C69312096793002B5134 /* ObjectEditBox.h */,
+				7F38C69412096793002B5134 /* ObjectImageBox.h */,
+				7F38C69512096793002B5134 /* ObjectImageButton.h */,
+				7F38C69712096793002B5134 /* ObjectLabelBase.h */,
+				7F38C69612096793002B5134 /* ObjectLabel.h */,
+				D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */,
+				C98E1DBD14C823F200CB9F1C /* ObjectScrollArea.h */,
+				C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */,
+				C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */,
+				C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */,
+				7F38C69B12096793002B5134 /* ObjectSlider.h */,
+				7F38C69C12096793002B5134 /* ObjectTextButton.h */,
+				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
+				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		C942B3FF13278C7100C1D1E8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7FC8041A11EC721E00851062 /* Image.h */,
+				7F7A4A90129D217700E0ED12 /* Images.h */,
+				7F7A4A93129D217700E0ED12 /* ColoredImage.h */,
+				7F7A4A92129D217700E0ED12 /* ColorImage.h */,
+				7F7A4A91129D217700E0ED12 /* CompositeImage.h */,
+				7F7A4A8F129D217700E0ED12 /* NullImage.h */,
+				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FC8041E11EC721E00851062 /* Animators.h in Headers */,
+				7FC8042111EC721E00851062 /* Dataset.h in Headers */,
+				7FC8042211EC721E00851062 /* Exception.h in Headers */,
+				7FC8042311EC721E00851062 /* Image.h in Headers */,
+				7FC8042411EC721E00851062 /* Objects.h in Headers */,
+				7FCD397112018C7B00608217 /* CallbackEvent.h in Headers */,
+				7FCD397712018C7B00608217 /* Event.h in Headers */,
+				7FCD397812018C7B00608217 /* EventArgs.h in Headers */,
+				7F38C6A512096793002B5134 /* AnimatorFrameAnimation.h in Headers */,
+				7F38C6A712096793002B5134 /* AnimatorRotator.h in Headers */,
+				7F38C6A912096793002B5134 /* ObjectCallbackObject.h in Headers */,
+				7F38C6AB12096793002B5134 /* ObjectColoredQuad.h in Headers */,
+				7F38C6AD12096793002B5134 /* ObjectEditBox.h in Headers */,
+				7F38C6AE12096793002B5134 /* ObjectImageBox.h in Headers */,
+				7F38C6AF12096793002B5134 /* ObjectImageButton.h in Headers */,
+				7F38C6B012096793002B5134 /* ObjectLabel.h in Headers */,
+				7F38C6B112096793002B5134 /* ObjectLabelBase.h in Headers */,
+				7F38C6B512096793002B5134 /* ObjectSlider.h in Headers */,
+				7F38C6B612096793002B5134 /* ObjectTextButton.h in Headers */,
+				7F38C6B712096793002B5134 /* ObjectTextImageButton.h in Headers */,
+				7F38C6B812096793002B5134 /* ObjectToggleButton.h in Headers */,
+				7FB0C7B1120AE117005EA739 /* Object.h in Headers */,
+				7F33B208120FE2D5004B5E89 /* Animator.h in Headers */,
+				7F7A4A95129D217700E0ED12 /* TiledImage.h in Headers */,
+				7F7A4A96129D217700E0ED12 /* NullImage.h in Headers */,
+				7F7A4A97129D217700E0ED12 /* Images.h in Headers */,
+				7F7A4A98129D217700E0ED12 /* CompositeImage.h in Headers */,
+				7F7A4A99129D217700E0ED12 /* ColorImage.h in Headers */,
+				7F7A4A9A129D217700E0ED12 /* ColoredImage.h in Headers */,
+				7FA3014612B647E200F71E5E /* AnimatorAlphaChanger.h in Headers */,
+				7FA3014812B647E200F71E5E /* AnimatorMoverX.h in Headers */,
+				7FA3014912B647E200F71E5E /* AnimatorMoverY.h in Headers */,
+				7FA3014C12B647E200F71E5E /* ObjectButtonBase.h in Headers */,
+				7F1B524F12E471B800E958D8 /* apriluiExport.h in Headers */,
+				7F1B525012E471B800E958D8 /* AnimatorBlueChanger.h in Headers */,
+				7F1B525112E471B800E958D8 /* AnimatorGreenChanger.h in Headers */,
+				7F1B525212E471B800E958D8 /* AnimatorRedChanger.h in Headers */,
+				7F1B525312E471B800E958D8 /* aprilui.h in Headers */,
+				7F1B525412E471B800E958D8 /* ObjectContainer.h in Headers */,
+				7FDB989A131BA90C0064B968 /* AnimatorResizerX.h in Headers */,
+				7FDB989B131BA90C0064B968 /* AnimatorResizerY.h in Headers */,
+				7FDB989C131BA90C0064B968 /* EventUtils.h in Headers */,
+				D1CDBE77147E3D5E001F9A43 /* AnimatorTiledScrollerX.h in Headers */,
+				D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */,
+				C98E1DC114C823F200CB9F1C /* ObjectScrollArea.h in Headers */,
+				C98E1DC314C823F200CB9F1C /* ObjectScrollBar.h in Headers */,
+				C98E1DC514C823F200CB9F1C /* ObjectScrollBarH.h in Headers */,
+				C98E1DC714C823F200CB9F1C /* ObjectScrollBarV.h in Headers */,
+				7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */,
+				D1BA0FC716BFD81F0085EE2B /* ObjectProgressBar.h in Headers */,
+				7FDAF2F1131CF15A006CBC59 /* AnimatorScalerX.h in Headers */,
+				7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */,
+				D1C2083A15FDC57000AB5DCA /* AnimatorCenterMoverX.h in Headers */,
+				D1C2083B15FDC57000AB5DCA /* AnimatorCenterMoverY.h in Headers */,
+				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
+				D11F4DA0172027BC0048DFD8 /* QueuedCallbackEvent.h in Headers */,
+				D16E9915158BE54D00C058CE /* Texture.h in Headers */,
+				C93D4A7614F288D30097AB06 /* apriluiUtil.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8DC2EF4F0486A6940098B216 /* aprilui */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "aprilui" */;
+			buildPhases = (
+				8DC2EF520486A6940098B216 /* Resources */,
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+				8DC2EF500486A6940098B216 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = aprilui;
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = libaprilui;
+			productReference = 8DC2EF5B0486A6940098B216 /* aprilui.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D1522E68140F6A040012F290 /* aprilui (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1522E78140F6A050012F290 /* Build configuration list for PBXNativeTarget "aprilui (iOS)" */;
+			buildPhases = (
+				D1522E65140F6A040012F290 /* Sources */,
+				D1522E66140F6A040012F290 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "aprilui (iOS)";
+			productName = "libaprilui-ios";
+			productReference = D1522E69140F6A040012F290 /* libaprilui.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D1F27B27177A2FCA00E5C131 /* aprilui (Mac) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1F27B5D177A2FCA00E5C131 /* Build configuration list for PBXNativeTarget "aprilui (Mac)" */;
+			buildPhases = (
+				D1F27B28177A2FCA00E5C131 /* Sources */,
+				D1F27B5C177A2FCA00E5C131 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "aprilui (Mac)";
+			productName = "libaprilui-ios";
+			productReference = D1F27B63177A2FCA00E5C131 /* libaprilui.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* libaprilui */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* aprilui */,
+				D1F27B27177A2FCA00E5C131 /* aprilui (Mac) */,
+				D1522E68140F6A040012F290 /* aprilui (iOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7FC8043411EC725B00851062 /* Dataset.cpp in Sources */,
+				7FC8043511EC725B00851062 /* Exception.cpp in Sources */,
+				7FF4F1D012017ACA00F0BBB7 /* CallbackEvent.cpp in Sources */,
+				7F38C6C9120967B9002B5134 /* ObjectCallbackObject.cpp in Sources */,
+				7F38C6CB120967B9002B5134 /* ObjectColoredQuad.cpp in Sources */,
+				7F38C6CD120967B9002B5134 /* ObjectEditBox.cpp in Sources */,
+				7F38C6CE120967B9002B5134 /* ObjectImageBox.cpp in Sources */,
+				7F38C6CF120967B9002B5134 /* ObjectImageButton.cpp in Sources */,
+				7F38C6D0120967B9002B5134 /* ObjectLabel.cpp in Sources */,
+				7F38C6D1120967B9002B5134 /* ObjectLabelBase.cpp in Sources */,
+				7F38C6D5120967B9002B5134 /* ObjectSlider.cpp in Sources */,
+				7F38C6D6120967B9002B5134 /* ObjectTextButton.cpp in Sources */,
+				7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */,
+				7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */,
+				7F38C728120967CC002B5134 /* AnimatorFrameAnimation.cpp in Sources */,
+				7F38C72A120967CC002B5134 /* AnimatorRotator.cpp in Sources */,
+				7FB0C7AF120AE107005EA739 /* Object.cpp in Sources */,
+				7F33B200120FE16F004B5E89 /* Animator.cpp in Sources */,
+				7F7A4AA5129D21A300E0ED12 /* ColoredImage.cpp in Sources */,
+				7F7A4AA6129D21A300E0ED12 /* ColorImage.cpp in Sources */,
+				7F7A4AA7129D21A300E0ED12 /* CompositeImage.cpp in Sources */,
+				7F7A4AA8129D21A300E0ED12 /* Image.cpp in Sources */,
+				7F7A4AA9129D21A300E0ED12 /* NullImage.cpp in Sources */,
+				7F7A4AAA129D21A300E0ED12 /* TiledImage.cpp in Sources */,
+				7F7A4AAC129D21BD00E0ED12 /* EventArgs.cpp in Sources */,
+				7FA3013312B647A000F71E5E /* AnimatorAlphaChanger.cpp in Sources */,
+				7FA3013512B647A000F71E5E /* AnimatorMoverX.cpp in Sources */,
+				7FA3013612B647A000F71E5E /* AnimatorMoverY.cpp in Sources */,
+				7FA3013A12B647AF00F71E5E /* ObjectButtonBase.cpp in Sources */,
+				7F1B523F12E4716B00E958D8 /* ObjectContainer.cpp in Sources */,
+				7F1B524412E4717500E958D8 /* AnimatorBlueChanger.cpp in Sources */,
+				7F1B524512E4717500E958D8 /* AnimatorGreenChanger.cpp in Sources */,
+				7F1B524612E4717500E958D8 /* AnimatorRedChanger.cpp in Sources */,
+				7F1B524812E4719E00E958D8 /* aprilui.cpp in Sources */,
+				7FDB98A0131BA9240064B968 /* AnimatorResizerX.cpp in Sources */,
+				7FDB98A1131BA9240064B968 /* AnimatorResizerY.cpp in Sources */,
+				7FDB98A3131BA9320064B968 /* MemberCallbackEvent.cpp in Sources */,
+				7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */,
+				7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */,
+				D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */,
+				D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */,
+				C98E1DB414C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */,
+				C98E1DB614C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */,
+				C98E1DB814C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */,
+				C98E1DBA14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */,
+				C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */,
+				D16E990D158BE53800C058CE /* EventReceiver.cpp in Sources */,
+				D16E990F158BE53800C058CE /* Texture.cpp in Sources */,
+				D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */,
+				D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
+				D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */,
+				D11F4D9E172027B20048DFD8 /* QueuedCallbackEvent.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1522E65140F6A040012F290 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1688913149026EB004FD97F /* AnimatorTiledScrollerX.cpp in Sources */,
+				D1688914149026EB004FD97F /* AnimatorTiledScrollerY.cpp in Sources */,
+				D1522E7A140F6A6B0012F290 /* MemberCallbackEvent.cpp in Sources */,
+				D1522E7B140F6A6B0012F290 /* aprilui.cpp in Sources */,
+				D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */,
+				D1522E7D140F6A6B0012F290 /* ColoredImage.cpp in Sources */,
+				D1522E7E140F6A6B0012F290 /* ColorImage.cpp in Sources */,
+				D1522E7F140F6A6B0012F290 /* CompositeImage.cpp in Sources */,
+				D1522E80140F6A6B0012F290 /* Image.cpp in Sources */,
+				D1522E81140F6A6B0012F290 /* NullImage.cpp in Sources */,
+				D1522E82140F6A6B0012F290 /* TiledImage.cpp in Sources */,
+				D1522E83140F6A6B0012F290 /* AnimatorScalerX.cpp in Sources */,
+				D1522E84140F6A6B0012F290 /* AnimatorScalerY.cpp in Sources */,
+				D1522E85140F6A6B0012F290 /* AnimatorResizerX.cpp in Sources */,
+				D1522E86140F6A6B0012F290 /* AnimatorResizerY.cpp in Sources */,
+				D1522E87140F6A6B0012F290 /* AnimatorBlueChanger.cpp in Sources */,
+				D1522E88140F6A6B0012F290 /* AnimatorGreenChanger.cpp in Sources */,
+				D1522E89140F6A6B0012F290 /* AnimatorRedChanger.cpp in Sources */,
+				D1522E8A140F6A6B0012F290 /* AnimatorAlphaChanger.cpp in Sources */,
+				D1522E8B140F6A6B0012F290 /* AnimatorMoverX.cpp in Sources */,
+				D1522E8C140F6A6B0012F290 /* AnimatorMoverY.cpp in Sources */,
+				D1522E8D140F6A6B0012F290 /* Animator.cpp in Sources */,
+				D1522E8E140F6A6B0012F290 /* AnimatorFrameAnimation.cpp in Sources */,
+				D1522E8F140F6A6B0012F290 /* AnimatorRotator.cpp in Sources */,
+				D1522E91140F6A6B0012F290 /* ObjectContainer.cpp in Sources */,
+				D1522E92140F6A6B0012F290 /* ObjectButtonBase.cpp in Sources */,
+				D1522E93140F6A6B0012F290 /* Object.cpp in Sources */,
+				D1522E94140F6A6B0012F290 /* ObjectCallbackObject.cpp in Sources */,
+				D1522E95140F6A6B0012F290 /* ObjectColoredQuad.cpp in Sources */,
+				D1522E96140F6A6B0012F290 /* ObjectEditBox.cpp in Sources */,
+				D1522E97140F6A6B0012F290 /* ObjectImageBox.cpp in Sources */,
+				D1522E98140F6A6B0012F290 /* ObjectImageButton.cpp in Sources */,
+				D1522E99140F6A6B0012F290 /* ObjectLabel.cpp in Sources */,
+				D1522E9A140F6A6B0012F290 /* ObjectLabelBase.cpp in Sources */,
+				D1522E9B140F6A6B0012F290 /* ObjectSlider.cpp in Sources */,
+				D1522E9C140F6A6B0012F290 /* ObjectTextButton.cpp in Sources */,
+				D1522E9D140F6A6B0012F290 /* ObjectTextImageButton.cpp in Sources */,
+				D1522E9E140F6A6B0012F290 /* ObjectToggleButton.cpp in Sources */,
+				D1522E9F140F6A6B0012F290 /* CallbackEvent.cpp in Sources */,
+				D1522EA0140F6A6B0012F290 /* Dataset.cpp in Sources */,
+				D1522EA1140F6A6B0012F290 /* Exception.cpp in Sources */,
+				C98E1DB514C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */,
+				C98E1DB714C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */,
+				C98E1DB914C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */,
+				C98E1DBB14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */,
+				C93D4A7514F288D30097AB06 /* apriluiUtil.cpp in Sources */,
+				D16E990E158BE53800C058CE /* EventReceiver.cpp in Sources */,
+				D16E9910158BE53800C058CE /* Texture.cpp in Sources */,
+				D1C2083415FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */,
+				D1C2083615FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
+				D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1F27B28177A2FCA00E5C131 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1F27B29177A2FCA00E5C131 /* AnimatorTiledScrollerX.cpp in Sources */,
+				D1F27B2A177A2FCA00E5C131 /* AnimatorTiledScrollerY.cpp in Sources */,
+				D1F27B2B177A2FCA00E5C131 /* MemberCallbackEvent.cpp in Sources */,
+				D1F27B2C177A2FCA00E5C131 /* aprilui.cpp in Sources */,
+				D1F27B2D177A2FCA00E5C131 /* EventArgs.cpp in Sources */,
+				D1F27B2E177A2FCA00E5C131 /* ColoredImage.cpp in Sources */,
+				D1F27B2F177A2FCA00E5C131 /* ColorImage.cpp in Sources */,
+				D1F27B30177A2FCA00E5C131 /* CompositeImage.cpp in Sources */,
+				D1F27B31177A2FCA00E5C131 /* Image.cpp in Sources */,
+				D1F27B32177A2FCA00E5C131 /* NullImage.cpp in Sources */,
+				D1F27B33177A2FCA00E5C131 /* TiledImage.cpp in Sources */,
+				D1F27B34177A2FCA00E5C131 /* AnimatorScalerX.cpp in Sources */,
+				D1F27B35177A2FCA00E5C131 /* AnimatorScalerY.cpp in Sources */,
+				D1F27B36177A2FCA00E5C131 /* AnimatorResizerX.cpp in Sources */,
+				D1F27B37177A2FCA00E5C131 /* AnimatorResizerY.cpp in Sources */,
+				D1F27B38177A2FCA00E5C131 /* AnimatorBlueChanger.cpp in Sources */,
+				D1F27B39177A2FCA00E5C131 /* AnimatorGreenChanger.cpp in Sources */,
+				D1F27B3A177A2FCA00E5C131 /* AnimatorRedChanger.cpp in Sources */,
+				D1F27B3B177A2FCA00E5C131 /* AnimatorAlphaChanger.cpp in Sources */,
+				D1F27B3C177A2FCA00E5C131 /* AnimatorMoverX.cpp in Sources */,
+				D1F27B3D177A2FCA00E5C131 /* AnimatorMoverY.cpp in Sources */,
+				D1F27B3E177A2FCA00E5C131 /* Animator.cpp in Sources */,
+				D1F27B3F177A2FCA00E5C131 /* AnimatorFrameAnimation.cpp in Sources */,
+				D1F27B40177A2FCA00E5C131 /* AnimatorRotator.cpp in Sources */,
+				D1F27B41177A2FCA00E5C131 /* ObjectContainer.cpp in Sources */,
+				D1F27B42177A2FCA00E5C131 /* ObjectButtonBase.cpp in Sources */,
+				D1F27B43177A2FCA00E5C131 /* Object.cpp in Sources */,
+				D1F27B44177A2FCA00E5C131 /* ObjectCallbackObject.cpp in Sources */,
+				D1F27B45177A2FCA00E5C131 /* ObjectColoredQuad.cpp in Sources */,
+				D1F27B46177A2FCA00E5C131 /* ObjectEditBox.cpp in Sources */,
+				D1F27B47177A2FCA00E5C131 /* ObjectImageBox.cpp in Sources */,
+				D1F27B48177A2FCA00E5C131 /* ObjectImageButton.cpp in Sources */,
+				D1F27B49177A2FCA00E5C131 /* ObjectLabel.cpp in Sources */,
+				D1F27B4A177A2FCA00E5C131 /* ObjectLabelBase.cpp in Sources */,
+				D1F27B4B177A2FCA00E5C131 /* ObjectSlider.cpp in Sources */,
+				D1F27B4C177A2FCA00E5C131 /* ObjectTextButton.cpp in Sources */,
+				D1F27B4D177A2FCA00E5C131 /* ObjectTextImageButton.cpp in Sources */,
+				D1F27B4E177A2FCA00E5C131 /* ObjectToggleButton.cpp in Sources */,
+				D1F27B4F177A2FCA00E5C131 /* CallbackEvent.cpp in Sources */,
+				D1F27B50177A2FCA00E5C131 /* Dataset.cpp in Sources */,
+				D1F27B51177A2FCA00E5C131 /* Exception.cpp in Sources */,
+				D1F27B52177A2FCA00E5C131 /* ObjectScrollArea.cpp in Sources */,
+				D1F27B53177A2FCA00E5C131 /* ObjectScrollBar.cpp in Sources */,
+				D1F27B54177A2FCA00E5C131 /* ObjectScrollBarH.cpp in Sources */,
+				D1F27B55177A2FCA00E5C131 /* ObjectScrollBarV.cpp in Sources */,
+				D1F27B56177A2FCA00E5C131 /* apriluiUtil.cpp in Sources */,
+				D1F27B57177A2FCA00E5C131 /* EventReceiver.cpp in Sources */,
+				D1F27B58177A2FCA00E5C131 /* Texture.cpp in Sources */,
+				D1F27B59177A2FCA00E5C131 /* AnimatorCenterMoverX.cpp in Sources */,
+				D1F27B5A177A2FCA00E5C131 /* AnimatorCenterMoverY.cpp in Sources */,
+				D1F27B5B177A2FCA00E5C131 /* ObjectProgressBar.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7FC8A8B11296C772003D3931 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = i386;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = macosx;
+			};
+			name = "App Store";
+		};
+		7FC8A8B21296C772003D3931 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "App Store";
+		};
+		C981CCD7132AF0A90072B5A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C981CCD8132AF0A90072B5A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		C981CCD9132AF0AF0072B5A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C981CCDA132AF0AF0072B5A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DSTROOT = /;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64 ppc";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		D1522E74140F6A050012F290 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libaprilui_ios.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D1522E76140F6A050012F290 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libaprilui_ios.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1522E77140F6A050012F290 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libaprilui_ios.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					"$(inherited)",
+				);
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
+		D1F27B5F177A2FCA00E5C131 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libaprilui_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D1F27B61177A2FCA00E5C131 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libaprilui_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1F27B62177A2FCA00E5C131 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libaprilui_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					"$(inherited)",
+				);
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = aprilui;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "aprilui" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C981CCD8132AF0A90072B5A9 /* Debug */,
+				C981CCDA132AF0AF0072B5A9 /* Release */,
+				7FC8A8B21296C772003D3931 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C981CCD7132AF0A90072B5A9 /* Debug */,
+				C981CCD9132AF0AF0072B5A9 /* Release */,
+				7FC8A8B11296C772003D3931 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D1522E78140F6A050012F290 /* Build configuration list for PBXNativeTarget "aprilui (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1522E74140F6A050012F290 /* Debug */,
+				D1522E76140F6A050012F290 /* Release */,
+				D1522E77140F6A050012F290 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D1F27B5D177A2FCA00E5C131 /* Build configuration list for PBXNativeTarget "aprilui (Mac)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1F27B5F177A2FCA00E5C131 /* Debug */,
+				D1F27B61177A2FCA00E5C131 /* Release */,
+				D1F27B62177A2FCA00E5C131 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

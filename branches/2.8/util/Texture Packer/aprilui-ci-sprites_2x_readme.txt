@@ -1,0 +1,1 @@
+Does the same as CI-Sprites, but also includes the 2x rescaling like Basic-2x.
