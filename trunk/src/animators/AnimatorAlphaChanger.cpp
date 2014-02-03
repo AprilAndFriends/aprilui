@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float AlphaChanger::_getObjectValue()
 		{
-			return (float)this->mParent->getAlpha();
+			return (float)this->parent->getAlpha();
 		}
 
 		void AlphaChanger::_setObjectValue(float value)
 		{
-			this->mParent->setAlpha((unsigned char)value);
+			this->parent->setAlpha((unsigned char)value);
 		}
 
 		void AlphaChanger::update(float k)

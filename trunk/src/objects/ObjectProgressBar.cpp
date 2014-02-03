@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -20,13 +20,11 @@ namespace aprilui
 	ProgressBar::ProgressBar(chstr name, grect rect) :
 		ImageBox(name, rect)
 	{
-		this->mProgressImage = NULL;
-		this->mProgressImageName = "";
-		this->mMaskImage = NULL;
-		this->mMaskImageName = "";
-		this->mProgress = 1.0f;
-		this->mStretching = false;
-		this->mDirection = Right;
+		this->progressImage = NULL;
+		this->maskImage = NULL;
+		this->progress = 1.0f;
+		this->stretching = false;
+		this->direction = Right;
 	}
 
 	ProgressBar::~ProgressBar()
@@ -41,29 +39,29 @@ namespace aprilui
 	void ProgressBar::OnDraw()
 	{
 		ImageBox::OnDraw();
-		float progress = hclamp(this->mProgress, 0.0f, 1.0f);
+		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		if (this->mProgressImage != NULL && progress > 0.0f)
+		if (this->progressImage != NULL && progress > 0.0f)
 		{
-			grect srcRect = this->mProgressImage->getSrcRect();
-			if (!this->mStretching)
+			grect srcRect = this->progressImage->getSrcRect();
+			if (!this->stretching)
 			{
-				this->mProgressImage->setSrcRect(this->_calcRectDirection(srcRect, progress));
+				this->progressImage->setSrcRect(this->_calcRectDirection(srcRect, progress));
 			}
-			this->mProgressImage->draw(this->_calcRectDirection(this->_getDrawRect(), progress), color);
-			this->mProgressImage->setSrcRect(srcRect);
+			this->progressImage->draw(this->_calcRectDirection(this->_getDrawRect(), progress), color);
+			this->progressImage->setSrcRect(srcRect);
 		}
-		if (this->mMaskImage != NULL)
+		if (this->maskImage != NULL)
 		{
-			this->mMaskImage->draw(this->_getDrawRect(), color);
+			this->maskImage->draw(this->_getDrawRect(), color);
 		}
 	}
 
 	grect ProgressBar::_calcRectDirection(grect rect, float progress)
 	{
 		float size = 0.0f;
-		switch (this->mDirection)
+		switch (this->direction)
 		{
 		case Right:
 			rect.w *= progress;
@@ -86,31 +84,32 @@ namespace aprilui
 
 	void ProgressBar::setProgressImage(Image* image)
 	{
-		this->mProgressImage = image;
-		this->mProgressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
-	}
-
-	void ProgressBar::setProgressImageByName(chstr name)
-	{
-		this->setProgressImage(this->mDataset->getImage(name));
+		this->progressImage = image;
+		this->progressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
 	void ProgressBar::setMaskImage(Image* image)
 	{
-		this->mMaskImage = image;
-		this->mMaskImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->maskImage = image;
+		this->maskImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+	}
+
+	void ProgressBar::setProgressImageByName(chstr name)
+	{
+		this->setProgressImage(this->dataset->getImage(name));
 	}
 
 	void ProgressBar::setMaskImageByName(chstr name)
 	{
-		this->setMaskImage(this->mDataset->getImage(name));
+		this->setMaskImage(this->dataset->getImage(name));
 	}
 
 	bool ProgressBar::trySetProgressImageByName(chstr name)
 	{
-		if (this->mProgressImageName != name)
+		if (this->progressImageName != name)
 		{
-			this->setProgressImageByName(name);
+			// using c/p code because of performance reasons
+			this->setProgressImage(this->dataset->getImage(name));
 			return true;
 		}
 		return false;
@@ -118,9 +117,10 @@ namespace aprilui
 	
 	bool ProgressBar::trySetMaskImageByName(chstr name)
 	{
-		if (this->mMaskImageName != name)
+		if (this->maskImageName != name)
 		{
-			this->setMaskImageByName(name);
+			// using c/p code because of performance reasons
+			this->setMaskImage(this->dataset->getImage(name));
 			return true;
 		}
 		return false;
@@ -138,10 +138,10 @@ namespace aprilui
 		if (name == "stretching")		return this->isStretching();
 		if (name == "direction")
 		{
-			if (this->mDirection == Right)	return "right";
-			if (this->mDirection == Left)	return "left";
-			if (this->mDirection == Down)	return "down";
-			if (this->mDirection == Up)		return "up";
+			if (this->direction == Right)	return "right";
+			if (this->direction == Left)	return "left";
+			if (this->direction == Down)	return "down";
+			if (this->direction == Up)		return "up";
 		}
 		return ImageBox::getProperty(name, propertyExists);
 	}

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -24,13 +24,13 @@ namespace aprilui
 		LabelBase(),
 		ImageButton(name, rect)
 	{
-		this->mText = "TextImageButton: " + name;
-		this->mPushedTextColor = april::Color::White * 0.2f;
-		this->mHoverTextColor = april::Color::Grey;
-		this->mDisabledTextColor = april::Color::Grey;
-		this->_mUseHoverTextColor = false;
-		this->_mUsePushedTextColor = false;
-		this->_mUseDisabledTextColor = false;
+		this->text = "TextImageButton: " + name;
+		this->pushedTextColor = april::Color::White * 0.2f;
+		this->hoverTextColor = april::Color::Grey;
+		this->disabledTextColor = april::Color::Grey;
+		this->_useHoverTextColor = false;
+		this->_usePushedTextColor = false;
+		this->_useDisabledTextColor = false;
 	}
 
 	TextImageButton::~TextImageButton()
@@ -50,40 +50,40 @@ namespace aprilui
 	void TextImageButton::OnDraw()
 	{
 		ImageButton::OnDraw();
-		april::Color color = this->mTextColor;
+		april::Color color = this->textColor;
 		april::Color drawColor = this->_getDrawColor();
-		unsigned char alpha = this->mBackgroundColor.a;
+		unsigned char alpha = this->backgroundColor.a;
 		if (!this->isDerivedEnabled())
 		{
-			if (this->_mUseDisabledTextColor)
+			if (this->_useDisabledTextColor)
 			{
-				this->mTextColor = this->mDisabledTextColor;
+				this->textColor = this->disabledTextColor;
 			}
 			else
 			{
 				drawColor.a = (unsigned char)(drawColor.a * this->_getDisabledAlphaFactor());
 			}
 		}
-		else if (this->mHovered)
+		else if (this->hovered)
 		{
-			this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * 0.75f);
-			if (this->mPushed)
+			this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * 0.75f);
+			if (this->pushed)
 			{
-				if (this->_mUsePushedTextColor)
+				if (this->_usePushedTextColor)
 				{
-					this->mTextColor = this->mPushedTextColor;
+					this->textColor = this->pushedTextColor;
 				}
 			}
-			else if (aprilui::isHoverEffectEnabled() && this->_mUseHoverTextColor)
+			else if (aprilui::isHoverEffectEnabled() && this->_useHoverTextColor)
 			{
-				this->mTextColor = this->mHoverTextColor;
+				this->textColor = this->hoverTextColor;
 			}
 		}
 		grect rect = this->_getDrawRect();
-		this->mBackgroundColor.a = (unsigned char)(this->mBackgroundColor.a * this->_getDisabledAlphaFactor());
-		LabelBase::_drawLabel(rect, drawColor, this->mBackgroundColor);
-		this->mTextColor = color;
-		this->mBackgroundColor.a = alpha;
+		this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * this->_getDisabledAlphaFactor());
+		LabelBase::_drawLabel(rect, drawColor, this->backgroundColor);
+		this->textColor = color;
+		this->backgroundColor.a = alpha;
 	}
 	
 	void TextImageButton::notifyEvent(chstr name, void* params)
@@ -131,7 +131,7 @@ namespace aprilui
 	
 	bool TextImageButton::setProperty(chstr name, chstr value)
 	{
-		if (name == "hover_text_color")	this->setHoverTextColor(value);
+		if		(name == "hover_text_color")	this->setHoverTextColor(value);
 		else if (name == "pushed_text_color")	this->setPushedTextColor(value);
 		else if (name == "disabled_text_color")	this->setDisabledTextColor(value);
 		else if (LabelBase::setProperty(name, value)) { }

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float ScalerX::_getObjectValue()
 		{
-			return this->mParent->getScaleX();
+			return this->parent->getScaleX();
 		}
 
 		void ScalerX::_setObjectValue(float value)
 		{
-			this->mParent->setScaleX(value);
+			this->parent->setScaleX(value);
 		}
 
 		void ScalerX::update(float k)

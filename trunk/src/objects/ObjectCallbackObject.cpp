@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -15,11 +15,10 @@
 
 namespace aprilui
 {
-	CallbackObject::CallbackObject(chstr name, grect rect) :
-		Object(name, rect)
+	CallbackObject::CallbackObject(chstr name, grect rect) : Object(name, rect)
 	{
-		this->mDrawCallback = NULL;
-		this->mUpdateCallback = NULL;
+		this->drawCallback = NULL;
+		this->updateCallback = NULL;
 	}
 
 	CallbackObject::~CallbackObject()
@@ -33,17 +32,17 @@ namespace aprilui
 
 	void CallbackObject::OnDraw()
 	{
-		if (this->mDrawCallback != NULL)
+		if (this->drawCallback != NULL)
 		{
-			(*this->mDrawCallback)(this);
+			(*this->drawCallback)(this);
 		}
 	}
 
 	void CallbackObject::update(float k)
 	{
-		if (this->mUpdateCallback != NULL)
+		if (this->updateCallback != NULL)
 		{
-			(*this->mUpdateCallback)(k);
+			(*this->updateCallback)(k);
 		}
 		Object::update(k);
 	}

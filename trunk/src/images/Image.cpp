@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -25,67 +25,67 @@ namespace aprilui
 {
 	Image::Image(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY)
 	{
-		this->mTexture = texture;
-		this->mName = name;
-		this->mSrcRect = source;
-		this->mBlendMode = april::ALPHA_BLEND;
-		this->mColorMode = april::MULTIPLY;
-		this->mColorModeAlpha = 255;
-		this->mVertical = vertical;
-		this->mInvertX = invertX;
-		this->mInvertY = invertY;
-		this->mTextureCoordinatesLoaded = false;
-		this->mDataset = NULL;
+		this->texture = texture;
+		this->name = name;
+		this->srcRect = source;
+		this->blendMode = april::ALPHA_BLEND;
+		this->colorMode = april::MULTIPLY;
+		this->colorModeAlpha = 255;
+		this->vertical = vertical;
+		this->invertedX = invertX;
+		this->invertedY = invertY;
+		this->_textureCoordinatesLoaded = false;
+		this->dataset = NULL;
 	}
 
 	Image::Image(Image& img, chstr name)
 	{
-		this->mTexture = img.mTexture;
-		this->mName = name;
-		this->mSrcRect = img.mSrcRect;
-		this->mBlendMode = img.mBlendMode;
-		this->mColorMode = img.mColorMode;
-		this->mColorModeAlpha = img.mColorModeAlpha;
-		this->mVertical = img.mVertical;
-		this->mInvertX = img.mInvertX;
-		this->mInvertY = img.mInvertY;
-		this->mTextureCoordinatesLoaded = false;
+		this->texture = img.texture;
+		this->name = name;
+		this->srcRect = img.srcRect;
+		this->blendMode = img.blendMode;
+		this->colorMode = img.colorMode;
+		this->colorModeAlpha = img.colorModeAlpha;
+		this->vertical = img.vertical;
+		this->invertedX = img.invertedX;
+		this->invertedY = img.invertedY;
+		this->_textureCoordinatesLoaded = false;
 	}
 	
 	Image::~Image()
 	{
 	}
 	
-	hstr Image::getFullName() const
+	hstr Image::getFullName()
 	{
-		return (this->mDataset != NULL ? this->mDataset->getName() + "." + this->mName : this->mName);
+		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 	
 	void Image::setSrcRect(grect value)
 	{
-		this->mSrcRect = value;
-		this->mTextureCoordinatesLoaded = false;
+		this->srcRect = value;
+		this->_textureCoordinatesLoaded = false;
 	}
 	
 	void Image::_tryLoadTexCoords()
 	{
-		if (!this->mTextureCoordinatesLoaded && this->mTexture != NULL && this->mTexture->getWidth() > 0 && this->mTexture->getHeight() > 0)
+		if (!this->_textureCoordinatesLoaded && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)
 		{
-			this->mTextureCoordinatesLoaded = true;
-			float iw = 1.0f / this->mTexture->getWidth();
-			float ih = 1.0f / this->mTexture->getHeight();
-			if (!this->mVertical)
+			this->_textureCoordinatesLoaded = true;
+			float iw = 1.0f / this->texture->getWidth();
+			float ih = 1.0f / this->texture->getHeight();
+			if (!this->vertical)
 			{
-				this->_tVertices[0].u = this->_tVertices[2].u = this->mSrcRect.left() * iw;
-				this->_tVertices[0].v = this->_tVertices[1].v = this->mSrcRect.top() * ih;
-				this->_tVertices[1].u = this->_tVertices[3].u = this->mSrcRect.right() * iw;
-				this->_tVertices[2].v = this->_tVertices[3].v = this->mSrcRect.bottom() * ih;
-				if (this->mInvertX)
+				this->_tVertices[0].u = this->_tVertices[2].u = this->srcRect.left() * iw;
+				this->_tVertices[0].v = this->_tVertices[1].v = this->srcRect.top() * ih;
+				this->_tVertices[1].u = this->_tVertices[3].u = this->srcRect.right() * iw;
+				this->_tVertices[2].v = this->_tVertices[3].v = this->srcRect.bottom() * ih;
+				if (this->invertedX)
 				{
 					hswap(this->_tVertices[0].u, this->_tVertices[1].u);
 					hswap(this->_tVertices[2].u, this->_tVertices[3].u);
 				}
-				if (this->mInvertY)
+				if (this->invertedY)
 				{
 					hswap(this->_tVertices[0].v, this->_tVertices[2].v);
 					hswap(this->_tVertices[1].v, this->_tVertices[3].v);
@@ -93,16 +93,16 @@ namespace aprilui
 			}
 			else
 			{
-				this->_tVertices[0].u = this->_tVertices[1].u = (this->mSrcRect.x + this->mSrcRect.h) * iw;
-				this->_tVertices[0].v = this->_tVertices[2].v = this->mSrcRect.y * ih;
-				this->_tVertices[1].v = this->_tVertices[3].v = (this->mSrcRect.y + this->mSrcRect.w) * ih;
-				this->_tVertices[2].u = this->_tVertices[3].u = this->mSrcRect.x * iw;
-				if (this->mInvertY)
+				this->_tVertices[0].u = this->_tVertices[1].u = (this->srcRect.x + this->srcRect.h) * iw;
+				this->_tVertices[0].v = this->_tVertices[2].v = this->srcRect.y * ih;
+				this->_tVertices[1].v = this->_tVertices[3].v = (this->srcRect.y + this->srcRect.w) * ih;
+				this->_tVertices[2].u = this->_tVertices[3].u = this->srcRect.x * iw;
+				if (this->invertedY)
 				{
 					hswap(this->_tVertices[0].u, this->_tVertices[2].u);
 					hswap(this->_tVertices[1].u, this->_tVertices[3].u);
 				}
-				if (this->mInvertX)
+				if (this->invertedX)
 				{
 					hswap(this->_tVertices[0].v, this->_tVertices[1].v);
 					hswap(this->_tVertices[2].v, this->_tVertices[3].v);
@@ -118,12 +118,12 @@ namespace aprilui
 		this->_tVertices[1].x = this->_tVertices[3].x = rect.right();
 		this->_tVertices[2].y = this->_tVertices[3].y = rect.bottom();
 		
-		this->mTexture->load();
-		april::rendersys->setTexture(this->mTexture->getRenderTexture());
+		this->texture->load();
+		april::rendersys->setTexture(this->texture->getRenderTexture());
 		this->_tryLoadTexCoords();
 			
-		april::rendersys->setTextureBlendMode(this->mBlendMode);
-		april::rendersys->setTextureColorMode(this->mColorMode, this->mColorModeAlpha);
+		april::rendersys->setTextureBlendMode(this->blendMode);
+		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeAlpha);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
 			april::rendersys->render(april::TriangleStrip, this->_tVertices, 4, color);

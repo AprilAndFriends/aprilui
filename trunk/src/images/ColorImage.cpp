@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -23,25 +23,25 @@ namespace aprilui
 	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
 	{
 		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		this->mColor.set(name);
+		this->color.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
 	{
 		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		this->mColor.set(name);
+		this->color.set(name);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
 	{
 		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		this->mColor.set(color);
+		this->color.set(color);
 	}
 
 	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
 	{
 		hlog::warn(aprilui::logTag, "'ColorImage' is deprecated, use 'ColoredQuad' instead!"); // DEPRECATED
-		this->mColor = color;
+		this->color = color;
 	}
 
 	ColorImage::~ColorImage()
@@ -55,8 +55,8 @@ namespace aprilui
 		this->_pVertices[1].x = this->_pVertices[3].x = rect.right();
 		this->_pVertices[2].y = this->_pVertices[3].y = rect.bottom();
 		
-		april::rendersys->setTextureBlendMode(this->mBlendMode);
-		april::rendersys->render(april::TriangleStrip, this->_pVertices, 4, this->mColor * color);
+		april::rendersys->setTextureBlendMode(this->blendMode);
+		april::rendersys->render(april::TriangleStrip, this->_pVertices, 4, this->color * color);
 		april::rendersys->setTextureBlendMode(april::DEFAULT);
 	}
 

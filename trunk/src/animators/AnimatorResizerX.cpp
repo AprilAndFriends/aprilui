@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float ResizerX::_getObjectValue()
 		{
-			return this->mParent->getWidth();
+			return this->parent->getWidth();
 		}
 
 		void ResizerX::_setObjectValue(float value)
 		{
-			this->mParent->setWidth(value);
+			this->parent->setWidth(value);
 		}
 
 		void ResizerX::update(float k)

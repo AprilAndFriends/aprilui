@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -52,21 +52,95 @@ namespace aprilui
 
 		Object(chstr name, grect rect);
 		~Object();
+
+		HL_DEFINE_GET(Object*, parent, Parent);
+		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GET(int, zOrder, ZOrder);
+		void setZOrder(int zorder);
+
+		HL_DEFINE_GET(grect, rect, Rect);
+		void setRect(grect value);
+		float getX() { return this->rect.x; }
+		void setX(float value) { this->rect.x = value; }
+		float getY() { return this->rect.y; }
+		void setY(float value) { this->rect.y = value; }
+		gvec2 getPosition() { return this->rect.getPosition(); }
+		void setPosition(gvec2 value) { this->rect.setPosition(value); }
+		void setPosition(float x, float y) { this->rect.setPosition(x, y); }
+		float getWidth() { return this->rect.w; }
+		void setWidth(float value);
+		float getHeight() { return this->rect.h; }
+		void setHeight(float value);
+		gvec2 getSize() { return this->rect.getSize(); }
+		void setSize(gvec2 value);
+		void setSize(float w, float h);
+
+		HL_DEFINE_GET(gvec2, scale, Scale);
+		void setScale(float x, float y) { this->scale.set(x, y); }
+		float getScaleX() { return this->scale.x; }
+		void setScaleX(float value) { this->scale.x = value; }
+		float getScaleY() { return this->scale.y; }
+		void setScaleY(float value) { this->scale.y = value; }
+
+		HL_DEFINE_GET(gvec2, center, Center);
+		void setCenter(float x, float y) { this->center.set(x, y); }
+		float getCenterX() { return this->center.x; }
+		void setCenterX(float value) { this->center.x = value; }
+		float getCenterY() { return this->center.y; }
+		void setCenterY(float value) { this->center.y = value; }
+
+		HL_DEFINE_GETSET(april::Color, color, Color);
+		unsigned char getRed() { return this->color.r; }
+		void setRed(unsigned char value) { this->color.r = value; }
+		unsigned char getGreen() { return this->color.g; }
+		void setGreen(unsigned char value) { this->color.g = value; }
+		unsigned char getBlue() { return this->color.b; }
+		void setBlue(unsigned char value) { this->color.b = value; }
+		unsigned char getAlpha() { return this->color.a; }
+		void setAlpha(unsigned char value);
+
+		HL_DEFINE_IS(enabled, Enabled);
+		void setEnabled(bool value);
+		HL_DEFINE_GETSET(float, angle, Angle);
+		HL_DEFINE_ISSET(anchorLeft, AnchorLeft);
+		HL_DEFINE_ISSET(anchorRight, AnchorRight);
+		HL_DEFINE_ISSET(anchorTop, AnchorTop);
+		HL_DEFINE_ISSET(anchorBottom, AnchorBottom);
+		void setAnchors(bool left, bool right, bool top, bool bottom);
+		HL_DEFINE_ISSET(retainAnchorAspect, RetainAnchorAspect);
+		HL_DEFINE_ISSET(clickThrough, ClickThrough);
+		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
+		bool isVisible() { return (this->visible && this->color.a > 0); }
+		HL_DEFINE_SET(bool, visible, Visible);
+		bool getVisibilityFlag() { return this->visible; }
+		HL_DEFINE_ISSET(clip, Clip);
+		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
+		virtual HL_DEFINE_GET(int, focusIndex, FocusIndex);
+		HL_DEFINE_SET(int, focusIndex, FocusIndex);
+		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		
+		harray<Object*>& getChildren() { return this->children; }
+		hmap<hstr, Event*>& getEvents() { return this->events; }
+		virtual bool isFocused();
+		virtual void setFocused(bool focused);
+		hstr getFullName();
+		bool isCursorInside();
+		Object* getChildUnderCursor();
+		harray<Object*> getAncestors();
+		harray<Object*> getDescendants();
+
+		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
+
 		void addChild(Object* object);
 		void removeChild(Object* object);
 		void registerChild(Object* object);
 		void unregisterChild(Object* object);
 		void attach(Object* object);
 		void detach();
-		Object* getParent() { return this->mParent; }
 		void removeChildren(bool recursive = false);
 		void destroyChildren();
-		harray<Object*>& getChildren() { return this->mChildren; }
-		hmap<hstr, Event*>& getEvents() { return this->mEvents; }
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
-		Object* getChildUnderCursor();
 		virtual void clearChildUnderCursor();
 		/// @returns Whether or not a given object is a direct child of this object
 		bool isChild(Object* obj);
@@ -76,99 +150,11 @@ namespace aprilui
 		bool isParent(Object* obj);
 		/// @returns whether or not a given object is an ancestor of a this object
 		bool isAncestor(Object* obj);
-		harray<Object*> getAncestors();
-		harray<Object*> getDescendants();
-		hstr getName() { return this->mName; }
-		hstr getFullName();
-		bool isCursorInside();
 		virtual bool isPointInside(gvec2 position);
 		bool angleEquals(float angle);
 		void unregisterEvent(chstr name);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 		void registerEvent(chstr name, Event* e);
-		
-		float getX() { return this->mRect.x; }
-		void setX(float value) { this->mRect.x = value; }
-		float getY() { return this->mRect.y; }
-		void setY(float value) { this->mRect.y = value; }
-		gvec2 getPosition() { return this->mRect.getPosition(); }
-		void setPosition(gvec2 value) { this->mRect.setPosition(value); }
-		void setPosition(float x, float y) { this->mRect.setPosition(x, y); }
-		float getWidth() { return this->mRect.w; }
-		void setWidth(float value);
-		float getHeight() { return this->mRect.h; }
-		void setHeight(float value);
-		gvec2 getSize() { return this->mRect.getSize(); }
-		void setSize(gvec2 value);
-		void setSize(float w, float h);
-		grect getRect() { return this->mRect; }
-		void setRect(grect value);
-
-		int getZOrder() { return this->mZOrder; }
-		void setZOrder(int zorder);
-		
-		gvec2 getScale() { return this->mScale; }
-		void setScale(gvec2 value) { this->mScale = value; }
-		void setScale(float x, float y) { this->mScale.set(x, y); }
-		float getScaleX() { return this->mScale.x; }
-		void setScaleX(float value) { this->mScale.x = value; }
-		float getScaleY() { return this->mScale.y; }
-		void setScaleY(float value) { this->mScale.y = value; }
-
-		gvec2 getCenter() { return this->mCenter; }
-		void setCenter(gvec2 value) { this->mCenter = value; }
-		void setCenter(float x, float y) { this->mCenter.set(x, y); }
-		float getCenterX() { return this->mCenter.x; }
-		void setCenterX(float value) { this->mCenter.x = value; }
-		float getCenterY() { return this->mCenter.y; }
-		void setCenterY(float value) { this->mCenter.y = value; }
-		
-		bool isEnabled() { return this->mEnabled; }
-		void setEnabled(bool value);
-		float getAngle() { return this->mAngle; }
-		void setAngle(float value) { this->mAngle = value; }
-		void setAnchors(bool left, bool right, bool top, bool bottom);
-		bool isAnchorLeft() { return this->mAnchorLeft; }
-		void setAnchorLeft(bool value) { this->mAnchorLeft = value; }
-		bool isAnchorRight() { return this->mAnchorRight; }
-		void setAnchorRight(bool value) { this->mAnchorRight = value; }
-		bool isAnchorTop() { return this->mAnchorTop; }
-		void setAnchorTop(bool value) { this->mAnchorTop = value; }
-		bool isAnchorBottom() { return this->mAnchorBottom; }
-		void setAnchorBottom(bool value) { this->mAnchorBottom = value; }
-		bool isRetainAnchorAspect() { return this->mRetainAnchorAspect; }
-		void setRetainAnchorAspect(bool value) { this->mRetainAnchorAspect = value; }
-		bool isClickThrough() { return this->mClickThrough; }
-		void setClickThrough(bool value) { this->mClickThrough = value; }
-		bool isInheritsAlpha() { return this->mInheritsAlpha; }
-		void setInheritsAlpha(bool value) { this->mInheritsAlpha = value; }
-		april::Color getColor() { return this->mColor; }
-		void setColor(april::Color value) { this->mColor = value; }
-		void setColor(chstr value) { this->mColor.set(value); }
-		
-		unsigned char getRed() { return this->mColor.r; }
-		void setRed(unsigned char value) { this->mColor.r = value; }
-		unsigned char getGreen() { return this->mColor.g; }
-		void setGreen(unsigned char value) { this->mColor.g = value; }
-		unsigned char getBlue() { return this->mColor.b; }
-		void setBlue(unsigned char value) { this->mColor.b = value; }
-		unsigned char getAlpha() { return this->mColor.a; }
-		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
-		void setAlpha(unsigned char value);
-		bool isVisible() { return (this->mVisible && this->mColor.a > 0); }
-		void setVisible(bool value) { this->mVisible = value; }
-		bool getVisibilityFlag() { return this->mVisible; }
-		bool isClip() { return this->mClip; }
-		void setClip(bool value) { this->mClip = value; }
-		bool isUseDisabledAlpha() { return this->mUseDisabledAlpha; }
-		void setUseDisabledAlpha(bool value) { this->mUseDisabledAlpha = value; }
-
-		virtual int getFocusIndex() { return this->mFocusIndex; }
-		void setFocusIndex(int value) { this->mFocusIndex = value; }
-		virtual Dataset* getDataset() { return mDataset; }
-		
-		virtual bool isFocused();
-		virtual void setFocused(bool focused);
 		
 		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
 		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
@@ -218,8 +204,8 @@ namespace aprilui
 		
 		Animator* moveX(float x, float speed);
 		Animator* moveY(float y, float speed);
-		Animator* scaleX(float x, float speed);
-		Animator* scaleY(float y, float speed);
+		Animator* rescaleX(float x, float speed);
+		Animator* rescaleY(float y, float speed);
 		Animator* resizeX(float x, float speed);
 		Animator* resizeY(float y, float speed);
 		Animator* rotate(float angle, float speed);
@@ -231,8 +217,8 @@ namespace aprilui
 		Animator* fadeAlpha(unsigned char a, float speed);
 		void move(float x, float y, float speed);
 		void move(gvec2 position, float speed);
-		void scale(float x, float y, float speed);
-		void scale(gvec2 scale, float speed);
+		void rescale(float x, float y, float speed);
+		void rescale(gvec2 scale, float speed);
 		void resize(float x, float y, float speed);
 		void resize(gvec2 size, float speed);
 		void moveCenter(float x, float y, float speed);
@@ -246,8 +232,8 @@ namespace aprilui
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
 		Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveCenterYQueue(float y, float speed, float delay = 0.0f);
-		Animator* scaleXQueue(float x, float speed, float delay = 0.0f);
-		Animator* scaleYQueue(float y, float speed, float delay = 0.0f);
+		Animator* rescaleXQueue(float x, float speed, float delay = 0.0f);
+		Animator* rescaleYQueue(float y, float speed, float delay = 0.0f);
 		Animator* resizeXQueue(float x, float speed, float delay = 0.0f);
 		Animator* resizeYQueue(float y, float speed, float delay = 0.0f);
 		Animator* rotateQueue(float angle, float speed, float delay = 0.0f);
@@ -257,8 +243,8 @@ namespace aprilui
 		Animator* fadeAlphaQueue(unsigned char a, float speed, float delay = 0.0f);
 		void moveQueue(float x, float y, float speed, float delay = 0.0f);
 		void moveQueue(gvec2 position, float speed, float delay = 0.0f);
-		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
-		void scaleQueue(gvec2 scale, float speed, float delay = 0.0f);
+		void rescaleQueue(float x, float y, float speed, float delay = 0.0f);
+		void rescaleQueue(gvec2 scale, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
 		void resizeQueue(gvec2 size, float speed, float delay = 0.0f);
 		void moveCenterQueue(float x, float y, float speed, float delay = 0.0f);
@@ -268,8 +254,8 @@ namespace aprilui
 
 		void moveXStop();
 		void moveYStop();
-		void scaleXStop();
-		void scaleYStop();
+		void rescaleXStop();
+		void rescaleYStop();
 		void resizeXStop();
 		void resizeYStop();
 		void rotateStop();
@@ -280,7 +266,7 @@ namespace aprilui
 		void fadeBlueStop();
 		void fadeAlphaStop();
 		void moveStop();
-		void scaleStop();
+		void rescaleStop();
 		void resizeStop();
 		void moveCenterStop();
 		void fadeColorStop();
@@ -295,35 +281,33 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE Object* getChildByName(chstr name, bool recursive) { return (!recursive ? this->findChildByName(name) : this->findDescendantByName(name)); }
 
 	protected:
-		hstr mName;
-		grect mRect;
-		gvec2 mScale;
-		gvec2 mCenter;
-		Object* mParent;
-		Object* mChildUnderCursor;
-		bool mCheckedChildUnderCursor;
-		harray<Object*> mChildren;
-		harray<Animator*> mDynamicAnimators;
-		hmap<hstr, Event*> mEvents;
-		int mZOrder;
-		bool mEnabled;
-		bool mVisible;
-		float mAngle;
-		bool mClickThrough;
-		bool mInheritsAlpha;
-		april::Color mColor;
-		bool mAnchorLeft;
-		bool mAnchorRight;
-		bool mAnchorTop;
-		bool mAnchorBottom;
-		bool mRetainAnchorAspect;
-		bool mClip;
-		bool mUseDisabledAlpha;
-		int mFocusIndex;
-		Dataset* mDataset;
+		hstr name;
+		grect rect;
+		gvec2 scale;
+		gvec2 center;
+		Object* parent;
+		Object* childUnderCursor;
+		bool checkedChildUnderCursor;
+		harray<Object*> children;
+		harray<Animator*> dynamicAnimators;
+		hmap<hstr, Event*> events;
+		int zOrder;
+		bool enabled;
+		bool visible;
+		float angle;
+		bool clickThrough;
+		bool inheritAlpha;
+		april::Color color;
+		bool anchorLeft;
+		bool anchorRight;
+		bool anchorTop;
+		bool anchorBottom;
+		bool retainAnchorAspect;
+		bool clip;
+		bool useDisabledAlpha;
+		int focusIndex;
+		Dataset* dataset;
 		
-		void _setName(chstr value) { this->mName = value; }
-		void _setDataset(Dataset* value) { this->mDataset = value; }
 		void _sortChildren();
 
 		void _updateChildrenHorizontal(float difference);
@@ -334,7 +318,6 @@ namespace aprilui
 		grect _getDrawRect();
 		april::Color _getDrawColor();
 		float _getDisabledAlphaFactor();
-		void _setParent(Object* value) { this->mParent = value; }
 
 		virtual void OnDraw();
 		virtual void OnDrawDebug();

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -49,9 +49,22 @@ namespace aprilui
 		Dataset(chstr filename, chstr name = "", bool useNameBasePath = false);
 		~Dataset();
 		
+		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GET(hstr, filePath, FilePath);
+		HL_DEFINE_GETSET(hstr, textsPath, TextsPath);
+		HL_DEFINE_IS(loaded, Loaded);
+		HL_DEFINE_GET(Object*, focusedObject, FocusedObject);
+		HL_DEFINE_GETSET(Object*, root, Root);
+		hmap<hstr, Object*>& getObjects() { return this->objects; }
+		hmap<hstr, Image*>& getImages() { return this->images; }
+		hmap<hstr, Texture*>& getTextures() { return this->textures; }
+		hmap<hstr, hstr>& getTexts() { return this->texts; }
+		bool isAnimated();
+		bool isWaitingAnimation();
+		int getFocusedObjectIndex();
+
 		void load();
 		void unload();
-		bool isLoaded() { return this->mLoaded; }
 		void registerManualObject(Object* o);
 		void unregisterManualObject(Object* o);
 		void registerManualImage(Image* img);
@@ -62,23 +75,10 @@ namespace aprilui
 		void registerCallback(chstr name, void (*callback)());
 		void triggerCallback(chstr name);
 		
-		bool isAnimated();
-		bool isWaitingAnimation();
-		Object* getFocusedObject() { return this->mFocusedObject; }
-		Object* getRoot() { return this->mRoot; }
-		void setRoot(Object* obj) { this->mRoot = obj; }
-		hstr getTextsPath() { return this->mTextsPath; }
-		void setTextsPath(chstr value) { this->mTextsPath = value; }
-		hstr getFilePath() { return this->mFilePath; }
-
-		int getFocusedObjectIndex();
 		bool trySetFocusedObjectByIndex(int value, bool strict = false);
 		harray<int> findPossibleFocusIndices(bool strict = false);
 		harray<int> findAllFocusIndices();
 		
-		hmap<hstr, Object*>& getObjects() { return this->mObjects; }
-		hmap<hstr, Image*>& getImages() { return this->mImages; }
-		hmap<hstr, Texture*>& getTextures() { return this->mTextures; }
 		template <class T>
 		hmap<hstr, T> getObjectsByType()
 		{
@@ -121,10 +121,7 @@ namespace aprilui
 		virtual hstr getTextEntry(chstr textKey);
 		virtual bool hasTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
-		hmap<hstr, hstr>& getTextEntries() { return this->mTexts; }
-		harray<hstr> getTextEntries(harray<hstr> keys);
-		
-		hstr getName() { return this->mName; }
+		harray<hstr> getTexts(harray<hstr> keys);
 		
 		virtual Object* getObject(chstr name);
 		bool hasImage(chstr name);
@@ -167,28 +164,29 @@ namespace aprilui
 
 		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
-	protected:
-		hstr mName;
-		hstr mFilename;
-		hstr mFilePath;
-		hstr mTextsPath;
-		bool mLoaded;
-		Object* mFocusedObject;
-		Object* mRoot;
-		hmap<hstr, Object*> mObjects;
-		hmap<hstr, Texture*> mTextures;
-		hmap<hstr, Image*> mImages;
-		hmap<hstr, hstr> mTexts;
-		NullImage* mNullImage;
+		DEPRECATED_ATTRIBUTE hmap<hstr, hstr>& getTextEntries() { return this->getTexts(); }
 
+	protected:
 		struct QueuedCallback
 		{
 			aprilui::Event* event;
 			aprilui::EventArgs* args;
 		};
-		harray<QueuedCallback> mCallbackQueue;
-		
-		hmap<hstr, void (*)()> mCallbacks;
+
+		hstr name;
+		hstr filename;
+		hstr filePath;
+		hstr textsPath;
+		bool loaded;
+		Object* focusedObject;
+		Object* root;
+		hmap<hstr, Object*> objects;
+		hmap<hstr, Texture*> textures;
+		hmap<hstr, Image*> images;
+		hmap<hstr, hstr> texts;
+		NullImage* nullImage;
+		harray<QueuedCallback> callbackQueue;
+		hmap<hstr, void (*)()> callbacks;
 		
 		void parseTexture(hlxml::Node* node);
 		void parseRamTexture(hlxml::Node* node);
@@ -218,6 +216,7 @@ namespace aprilui
 		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
 		bool _getCompositeTextKeyFormatIndexes(ustr format, harray<int>& indexes);
 		harray<ustr> _getArgEntries(ustr string);
+
 	};
 
 }

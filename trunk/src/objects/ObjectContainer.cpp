@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -18,12 +18,11 @@
 
 namespace aprilui
 {
-	Container::Container(chstr name, grect rect) :
-		Object(name, rect)
+	Container::Container(chstr name, grect rect) : Object(name, rect)
 	{
-		this->mScrollArea = NULL;
-		this->mScrollBarH = NULL;
-		this->mScrollBarV = NULL;
+		this->scrollArea = NULL;
+		this->scrollBarH = NULL;
+		this->scrollBarV = NULL;
 	}
 
 	Container::~Container()

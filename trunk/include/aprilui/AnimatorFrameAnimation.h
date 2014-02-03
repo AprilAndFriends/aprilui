@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -29,13 +29,10 @@ namespace aprilui
 			~FrameAnimation();
 			static Animator* createInstance(chstr name);
 
+			HL_DEFINE_GETSET(hstr, imageBaseName, ImageBaseName);
+			HL_DEFINE_GETSET(int, firstFrame, FirstFrame);
+			HL_DEFINE_GETSET(int, frameCount, FrameCount);
 			bool isAnimated();
-			hstr getImageBaseName() { return this->mImageBaseName; }
-			void setImageBaseName(chstr value) { this->mImageBaseName = value; }
-			int getFirstFrame() { return this->mFirstFrame; }
-			void setFirstFrame(int value) { this->mFirstFrame = value; }
-			int getFrameCount() { return this->mFrameCount; }
-			void setFrameCount(int value) { this->mFrameCount = value; }
 			bool setProperty(chstr name, chstr value);
 
 			void notifyEvent(chstr name, void* params);
@@ -43,9 +40,9 @@ namespace aprilui
 			void update(float k);
 			
 		protected:
-			hstr mImageBaseName;
-			int mFirstFrame;
-			int mFrameCount;
+			hstr imageBaseName;
+			int firstFrame;
+			int frameCount;
 			
 			float _getObjectValue() { return 0.0f; }
 			void _setObjectValue(float value) { }

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float ScalerY::_getObjectValue()
 		{
-			return this->mParent->getScaleY();
+			return this->parent->getScaleY();
 		}
 
 		void ScalerY::_setObjectValue(float value)
 		{
-			this->mParent->setScaleY(value);
+			this->parent->setScaleY(value);
 		}
 
 		void ScalerY::update(float k)

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -36,14 +36,12 @@ namespace aprilui
 		ColorImage(chstr name, grect rect, april::Color color);
 		~ColorImage();
 		
-		april::Color getColor() { return this->mColor; }
-		void setColor(april::Color value) { this->mColor = value; }
-		void setColor(chstr value) { this->mColor.set(value); }
+		HL_DEFINE_GETSET(april::Color, color, Color);
 
 		void draw(grect rect, april::Color color);
 		
 	protected:
-		april::Color mColor;
+		april::Color color;
 
 	private:
 		april::PlainVertex _pVertices[4];

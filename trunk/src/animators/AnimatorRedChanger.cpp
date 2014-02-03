@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float RedChanger::_getObjectValue()
 		{
-			return (float)this->mParent->getRed();
+			return (float)this->parent->getRed();
 		}
 
 		void RedChanger::_setObjectValue(float value)
 		{
-			this->mParent->setRed((unsigned char)value);
+			this->parent->setRed((unsigned char)value);
 		}
 
 		void RedChanger::update(float k)

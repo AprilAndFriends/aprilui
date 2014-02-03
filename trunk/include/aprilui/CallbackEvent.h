@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,7 +30,7 @@ namespace aprilui
 		void execute(void* params);
 		
 	protected:
-		void (*mCallback)(EventArgs*);
+		void (*callback)(EventArgs*);
 		
 	};
 

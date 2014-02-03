@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -19,6 +19,7 @@
 #include <april/Color.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -33,6 +34,8 @@ namespace aprilui
 	class apriluiExport Image
 	{
 	public:
+		friend class Dataset;
+
 		Image(Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
 		Image(Image& img, chstr name);
 		virtual ~Image();
@@ -40,38 +43,33 @@ namespace aprilui
 		virtual void draw(grect rect, april::Color color = april::Color::White);
 		void draw(grect rect, april::Color color, float angle);
 		
-		Texture* getTexture() const { return this->mTexture; }
-		hstr getName() const { return this->mName; }
-		hstr getFullName() const;
-		grect getSrcRect() const { return this->mSrcRect; }
+		HL_DEFINE_GET(Dataset*, dataset, Dataset);
+		HL_DEFINE_GET(Texture*, texture, Texture);
+		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GET(grect, srcRect, SrcRect);
+		HL_DEFINE_IS(vertical, Vertical);
+		HL_DEFINE_IS(invertedX, InvertedX);
+		HL_DEFINE_IS(invertedY, InvertedY);
+		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
+		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
+		HL_DEFINE_GETSET(unsigned char, colorModeAlpha, ColorModeAlpha);
+		hstr getFullName();
 		void setSrcRect(grect value);
-		bool isVertical() { return this->mVertical; };
-		bool isXInverted() { return this->mInvertX; };
-		bool isYInverted() { return this->mInvertY; };
-		
-		april::BlendMode getBlendMode() { return this->mBlendMode; }
-		void setBlendMode(april::BlendMode value) { this->mBlendMode = value; }
-		april::ColorMode getColorMode() { return this->mColorMode; }
-		void setColorMode(april::ColorMode value) { this->mColorMode = value; }
-		unsigned char getColorModeAlpha() { return this->mColorModeAlpha; }
-		void setColorModeAlpha(unsigned char value) { this->mColorModeAlpha = value; }
-		
-		Dataset* getDataset() { return this->mDataset; }
-		void _setDataset(Dataset* value) { this->mDataset = value; }
 		
 	protected:
-		Dataset* mDataset;
-		Texture* mTexture;
-		hstr mName;
-		hstr mImageName;
-		grect mSrcRect;
-		april::BlendMode mBlendMode;
-		april::ColorMode mColorMode;
-		unsigned char mColorModeAlpha;
-		bool mVertical;
-		bool mInvertX;
-		bool mInvertY;
-		bool mTextureCoordinatesLoaded;
+		Dataset* dataset;
+		Texture* texture;
+		hstr name;
+		hstr imageName;
+		grect srcRect;
+		april::BlendMode blendMode;
+		april::ColorMode colorMode;
+		unsigned char colorModeAlpha;
+		bool vertical;
+		bool invertedX;
+		bool invertedY;
+
+		bool _textureCoordinatesLoaded;
 		
 		void _tryLoadTexCoords();
 		

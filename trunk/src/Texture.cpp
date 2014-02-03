@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -20,115 +20,113 @@ namespace aprilui
 
 	Texture::Texture(chstr filename, april::Texture* texture)
 	{
-		this->mOriginalFilename = filename;
-		this->mFilename = texture->getFilename();
-		this->mTexture = texture;
-		this->mFilter = texture->getFilter();
-		this->mAddressMode = texture->getAddressMode();
-		float scale = aprilui::findTextureExtensionScale(this->mFilename);
-		this->mScale.set(scale, scale);
-		this->mUnusedTime = 0.0f;
-		this->mDynamic = !texture->isLoaded();
+		this->originalFilename = filename;
+		this->filename = texture->getFilename();
+		this->texture = texture;
+		this->filter = texture->getFilter();
+		this->addressMode = texture->getAddressMode();
+		float scale = aprilui::findTextureExtensionScale(this->filename);
+		this->scale.set(scale, scale);
+		this->unusedTime = 0.0f;
+		this->dynamic = !texture->isLoaded();
 	}
 
 	Texture::~Texture()
 	{
-		if (this->mTexture != NULL)
+		if (this->texture != NULL)
 		{
-			delete this->mTexture;
+			delete this->texture;
 		}
-		foreach (Texture*, it, this->mDynamicLinks)
+		foreach (Texture*, it, this->dynamicLinks)
 		{
 			(*it)->removeDynamicLink(this);
 		}
 	}
 
-	april::Texture* Texture::getRenderTexture()
-	{
-		this->mUnusedTime = 0.0f;
-		foreach (Texture*, it, this->mDynamicLinks)
-		{
-			(*it)->mUnusedTime = 0.0f;
-		}
-		return this->mTexture;
-	}
-
 	int Texture::getWidth()
 	{
-		return (int)(this->mTexture->getWidth() * this->mScale.x);
+		return (int)(this->texture->getWidth() * this->scale.x);
 	}
 
 	int Texture::getHeight()
 	{
-		return (int)(this->mTexture->getHeight() * this->mScale.y);
+		return (int)(this->texture->getHeight() * this->scale.y);
 	}
 
 	void Texture::setFilter(april::Texture::Filter value)
 	{
-		this->mFilter = value;
-		this->mTexture->setFilter(value);
+		this->filter = value;
+		this->texture->setFilter(value);
 	}
 
 	void Texture::setAddressMode(april::Texture::AddressMode value)
 	{
-		this->mAddressMode = value;
-		this->mTexture->setAddressMode(value);
+		this->addressMode = value;
+		this->texture->setAddressMode(value);
 	}
 
 	bool Texture::isLoaded()
 	{
-		if (this->mTexture == NULL) return false;
-		return this->mTexture->isLoaded();
+		return (this->texture != NULL && this->texture->isLoaded());
 	}
 	
 	bool Texture::isValid()
 	{
-		return (this->mTexture != NULL);
+		return (this->texture != NULL);
 	}
 	
+	april::Texture* Texture::getRenderTexture()
+	{
+		this->unusedTime = 0.0f;
+		foreach (Texture*, it, this->dynamicLinks)
+		{
+			(*it)->unusedTime = 0.0f;
+		}
+		return this->texture;
+	}
+
 	void Texture::update(float k)
 	{
-		if (this->mDynamic && this->mTexture->isLoaded())
+		if (this->dynamic && this->texture->isLoaded())
 		{
 			float maxTime = aprilui::getTextureIdleUnloadTime();
-			this->mUnusedTime += k;
-			if (maxTime > 0.0f && mUnusedTime > maxTime)
+			this->unusedTime += k;
+			if (maxTime > 0.0f && unusedTime > maxTime)
 			{
 				if (unloadListener != NULL)
 				{
 					(*unloadListener)(this);
 				}
-				this->mTexture->unload();
-				this->mUnusedTime = 0.0f; // safe guard if texture is reloaded externally at some point
+				this->texture->unload();
+				this->unusedTime = 0.0f; // safe guard if texture is reloaded externally at some point
 			}
 		}
 	}
 
 	void Texture::resetUnusedTime()
 	{
-		this->mUnusedTime = 0.0f;
+		this->unusedTime = 0.0f;
 	}
 	
 	void Texture::load(bool ignoreDynamicLinks)
 	{
-		this->mUnusedTime = 0.0f;
-		if (!this->mTexture->isLoaded())
+		this->unusedTime = 0.0f;
+		if (!this->texture->isLoaded())
 		{
-			this->mTexture->load();
+			this->texture->load();
 			if (loadListener != NULL)
 			{
 				(*loadListener)(this);
 			}
 		}
-		
 		if (!ignoreDynamicLinks)
 		{
-			foreach (Texture*, it, this->mDynamicLinks)
+			foreach (Texture*, it, this->dynamicLinks)
 			{
-				(*it)->mUnusedTime = 0.0f;
-				if (!(*it)->mTexture->isLoaded())
+				(*it)->unusedTime = 0.0f;
+				if (!(*it)->texture->isLoaded())
 				{
-					(*it)->mTexture->load();
+					(*it)->texture->load();
 					if (loadListener != NULL)
 					{
 						(*loadListener)(*it);
@@ -144,55 +142,55 @@ namespace aprilui
 		{
 			(*unloadListener)(this);
 		}
-		this->mTexture->unload();
+		this->texture->unload();
 	}
 
 	void Texture::reload(chstr filename)
 	{
-		if (this->mFilename != filename)
+		if (this->filename != filename)
 		{
 			// TODO - remove when RamTexture was removed
 			bool isRamTexture = false;
-			if (this->mTexture != NULL)
+			if (this->texture != NULL)
 			{
-				isRamTexture = (dynamic_cast<april::RamTexture*>(this->mTexture) != NULL);
-				delete this->mTexture;
+				isRamTexture = (dynamic_cast<april::RamTexture*>(this->texture) != NULL);
+				delete this->texture;
 			}
-			this->mUnusedTime = 0.0f;
+			this->unusedTime = 0.0f;
 			if (!isRamTexture)
 			{
-				this->mTexture = april::rendersys->createTexture(filename, !this->mDynamic && !aprilui::getDefaultDynamicLoading());
+				this->texture = april::rendersys->createTexture(filename, !this->dynamic && !aprilui::getDefaultDynamicLoading());
 			}
 			else
 			{
-				this->mTexture = april::rendersys->createRamTexture(filename, !this->mDynamic && !aprilui::getDefaultDynamicLoading());
+				this->texture = april::rendersys->createRamTexture(filename, !this->dynamic && !aprilui::getDefaultDynamicLoading());
 			}
-			if (this->mTexture == NULL)
+			if (this->texture == NULL)
 			{
 				throw file_not_found(filename);
 			}
-			this->mFilename = this->mTexture->getFilename();
-			this->mTexture->setFilter(this->mFilter);
-			this->mTexture->setAddressMode(this->mAddressMode);
-			float scale = aprilui::findTextureExtensionScale(this->mFilename);
-			this->mScale.set(scale, scale);
+			this->filename = this->texture->getFilename();
+			this->texture->setFilter(this->filter);
+			this->texture->setAddressMode(this->addressMode);
+			float scale = aprilui::findTextureExtensionScale(this->filename);
+			this->scale.set(scale, scale);
 		}
 	}
 
 	void Texture::addDynamicLink(Texture* link)
 	{
-		if (!this->mDynamicLinks.contains(link))
+		if (!this->dynamicLinks.contains(link))
 		{
-			this->mDynamicLinks += link;
+			this->dynamicLinks += link;
 			link->addDynamicLink(this);
 		}
 	}
 	
 	void Texture::removeDynamicLink(Texture* link)
 	{
-		if (this->mDynamicLinks.contains(link))
+		if (this->dynamicLinks.contains(link))
 		{
-			this->mDynamicLinks -= link;
+			this->dynamicLinks -= link;
 		}
 	}
 	

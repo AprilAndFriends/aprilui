@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -26,18 +26,18 @@ namespace aprilui
 {
 	LabelBase::LabelBase()
 	{
-		this->mText = "";
-		this->mTextKey = "";
-		this->mFontName = "";
-		this->mTextFormatting = true;
-		this->mTextColor = april::Color::White;
-		this->mTextOffset.set(0.0f, 0.0f);
-		this->mHorzFormatting = atres::CENTER_WRAPPED;
-		this->mVertFormatting = atres::CENTER;
-		this->mFontEffect = atres::NONE;
-		this->mUseFontEffectColor = false;
-		this->mFontEffectColor = april::Color::Black;
-		this->mBackgroundColor = april::Color::Clear;
+		this->text = "";
+		this->textKey = "";
+		this->fontName = "";
+		this->textFormatting = true;
+		this->textColor = april::Color::White;
+		this->textOffset.set(0.0f, 0.0f);
+		this->horzFormatting = atres::CENTER_WRAPPED;
+		this->vertFormatting = atres::CENTER;
+		this->fontEffect = atres::NONE;
+		this->useFontEffectColor = false;
+		this->fontEffectColor = april::Color::Black;
+		this->backgroundColor = april::Color::Clear;
 	}
 
 	LabelBase::~LabelBase()
@@ -46,32 +46,32 @@ namespace aprilui
 
 	void LabelBase::_drawLabel(grect rect, april::Color color, april::Color backgroundColor)
 	{
-		color *= this->mTextColor;
-		if (this->mBackgroundColor.a > 0)
+		color *= this->textColor;
+		if (this->backgroundColor.a > 0)
 		{
-			april::rendersys->drawFilledRect(rect, this->mBackgroundColor);
-			april::rendersys->drawRect(rect, april::Color(this->mTextColor, this->mBackgroundColor.a));
+			april::rendersys->drawFilledRect(rect, this->backgroundColor);
+			april::rendersys->drawRect(rect, april::Color(this->textColor, this->backgroundColor.a));
 		}
 		else if (aprilui::isDebugEnabled())
 		{
 			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Black, (unsigned char)(32 * color.a_f())));
 			april::rendersys->drawRect(rect, april::Color(april::Color::Green, (unsigned char)(64 * color.a_f())));
 		}
-		if (this->mText.size() == 0)
+		if (this->text.size() == 0)
 		{
 			return;
 		}
-		hstr text = this->mText;
-		if (!this->mTextFormatting)
+		hstr text = this->text;
+		if (!this->textFormatting)
 		{
 			text = "[-]" + text;
 		}
 		hstr colorCode = "";
-		if (this->mUseFontEffectColor)
+		if (this->useFontEffectColor)
 		{
-			colorCode += ":" + this->mFontEffectColor.hex();
+			colorCode += ":" + this->fontEffectColor.hex();
 		}
-		switch (this->mFontEffect)
+		switch (this->fontEffect)
 		{
 		case atres::BORDER:
 			text = "[b" + colorCode + "]" + text;
@@ -82,7 +82,7 @@ namespace aprilui
 		default:
 			break;
 		}
-		atres::renderer->drawText(this->mFontName, rect, text, this->mHorzFormatting, this->mVertFormatting, color, -this->mTextOffset);
+		atres::renderer->drawText(this->fontName, rect, text, this->horzFormatting, this->vertFormatting, color, -this->textOffset);
 	}
 
 	hstr LabelBase::getProperty(chstr name, bool* propertyExists)
@@ -91,41 +91,41 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
-		if (name == "font")				return this->getFont();
+		if (name == "font")				return this->getFontName();
 		if (name == "text")				return this->getText();
 		if (name == "text_key")			return this->getTextKey();
 		if (name == "horz_formatting")
 		{
-			if (this->mHorzFormatting == atres::LEFT)			return "left";
-			if (this->mHorzFormatting == atres::RIGHT)			return "right";
-			if (this->mHorzFormatting == atres::CENTER)			return "center";
-			if (this->mHorzFormatting == atres::LEFT_WRAPPED)	return "left_wrapped";
-			if (this->mHorzFormatting == atres::RIGHT_WRAPPED)	return "right_wrapped";
-			if (this->mHorzFormatting == atres::CENTER_WRAPPED)	return "center_wrapped";
-			if (this->mHorzFormatting == atres::JUSTIFIED)		return "justified";
+			if (this->horzFormatting == atres::LEFT)			return "left";
+			if (this->horzFormatting == atres::RIGHT)			return "right";
+			if (this->horzFormatting == atres::CENTER)			return "center";
+			if (this->horzFormatting == atres::LEFT_WRAPPED)	return "left_wrapped";
+			if (this->horzFormatting == atres::RIGHT_WRAPPED)	return "right_wrapped";
+			if (this->horzFormatting == atres::CENTER_WRAPPED)	return "center_wrapped";
+			if (this->horzFormatting == atres::JUSTIFIED)		return "justified";
 		}
 		if (name == "vert_formatting")
 		{
-			if (this->mVertFormatting == atres::TOP)	return "top";
-			if (this->mVertFormatting == atres::CENTER)	return "center";
-			if (this->mVertFormatting == atres::BOTTOM)	return "bottom";
+			if (this->vertFormatting == atres::TOP)		return "top";
+			if (this->vertFormatting == atres::CENTER)	return "center";
+			if (this->vertFormatting == atres::BOTTOM)	return "bottom";
 		}
 		if (name == "text_color")		return this->getTextColor().hex();
 		if (name == "effect")
 		{
 			hstr effect = "";
-			if (this->mFontEffect == atres::SHADOW)	effect = "shadow";
-			if (this->mFontEffect == atres::BORDER)	effect = "border";
-			if (this->mFontEffect == atres::NONE)	effect = "none";
-			if (this->mUseFontEffectColor)
+			if (this->fontEffect == atres::SHADOW)	effect = "shadow";
+			if (this->fontEffect == atres::BORDER)	effect = "border";
+			if (this->fontEffect == atres::NONE)	effect = "none";
+			if (this->useFontEffectColor)
 			{
-				effect += ":" + this->mFontEffectColor.hex();
+				effect += ":" + this->fontEffectColor.hex();
 			}
 			return effect;
 		}
-		if (name == "text_offset_x")	return this->mTextOffset.x;
-		if (name == "text_offset_y")	return this->mTextOffset.y;
-		if (name == "background_color")	return this->mBackgroundColor.hex();
+		if (name == "text_offset_x")	return this->textOffset.x;
+		if (name == "text_offset_y")	return this->textOffset.y;
+		if (name == "background_color")	return this->backgroundColor.hex();
 		if (propertyExists != NULL)
 		{
 			*propertyExists = false;
@@ -135,7 +135,7 @@ namespace aprilui
 	
 	bool LabelBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "font")						this->setFont(value);
+		if (name == "font")						this->setFontName(value);
 		else if (name == "text_key")			this->setTextKey(value);
 		else if (name == "text")				this->setText(value);
 		else if (name == "horz_formatting")
@@ -199,8 +199,8 @@ namespace aprilui
 				}
 			}
 		}
-		else if (name == "text_offset_x")		this->mTextOffset.x = (float)value;
-		else if (name == "text_offset_y")		this->mTextOffset.y = (float)value;
+		else if (name == "text_offset_x")		this->textOffset.x = (float)value;
+		else if (name == "text_offset_y")		this->textOffset.y = (float)value;
 		else if (name == "background_color")	this->setBackgroundColor(value);
 		else return false;
 		return true;
@@ -210,18 +210,18 @@ namespace aprilui
 	{
 		if (name == "onLocalizationChanged")
 		{
-			if (this->mTextKey != "")
+			if (this->textKey != "")
 			{
-				this->setTextKey(this->mTextKey);
+				this->setTextKey(this->textKey);
 			}
 		}
 	}
 	
 	void LabelBase::setText(chstr value)
 	{
-		bool changed = (this->mText != value);
-		this->mText = value;
-		this->mTextKey = "";
+		bool changed = (this->text != value);
+		this->text = value;
+		this->textKey = "";
 		if (changed)
 		{
 			this->triggerEvent("onTextChanged");
@@ -230,10 +230,10 @@ namespace aprilui
 
 	void LabelBase::setTextKey(chstr value)
 	{
-		bool changed = (this->mTextKey != value);
-		hstr newTextKey = value; // because value is a chstr which could reference mTextKey
+		bool changed = (this->textKey != value);
+		hstr newTextKey = value; // because value is a chstr which could reference textKey
 		this->setText(this->getDataset()->getText(newTextKey));
-		this->mTextKey = newTextKey;
+		this->textKey = newTextKey;
 		if (changed)
 		{
 			this->triggerEvent("onTextKeyChanged");
@@ -242,11 +242,11 @@ namespace aprilui
 
 	bool LabelBase::trySetTextKey(chstr textKey)
 	{
-		if (this->mTextKey != textKey)
+		if (this->textKey != textKey)
 		{
-			hstr newTextKey = textKey; // because value is a chstr which could reference mTextKey
+			hstr newTextKey = textKey; // because value is a chstr which could reference textKey
 			this->setText(this->getDataset()->getText(newTextKey));
-			this->mTextKey = newTextKey;
+			this->textKey = newTextKey;
 			this->triggerEvent("onTextKeyChanged");
 			return true;
 		}

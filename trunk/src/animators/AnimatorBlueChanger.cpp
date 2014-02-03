@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float BlueChanger::_getObjectValue()
 		{
-			return (float)this->mParent->getBlue();
+			return (float)this->parent->getBlue();
 		}
 
 		void BlueChanger::_setObjectValue(float value)
 		{
-			this->mParent->setBlue((unsigned char)value);
+			this->parent->setBlue((unsigned char)value);
 		}
 
 		void BlueChanger::update(float k)

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,7 +30,6 @@
 #include "ObjectScrollBarH.h"
 #include "ObjectScrollBarV.h"
 #include "ObjectSlider.h"
-#include "ObjectTextButton.h"
 #include "ObjectTextImageButton.h"
 #include "ObjectToggleButton.h"
 

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float GreenChanger::_getObjectValue()
 		{
-			return (float)this->mParent->getGreen();
+			return (float)this->parent->getGreen();
 		}
 
 		void GreenChanger::_setObjectValue(float value)
 		{
-			this->mParent->setGreen((unsigned char)value);
+			this->parent->setGreen((unsigned char)value);
 		}
 
 		void GreenChanger::update(float k)

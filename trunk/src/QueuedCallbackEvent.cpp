@@ -8,15 +8,15 @@
 
 namespace aprilui
 {
-	QueuedCallbackEvent::QueuedCallbackEvent(aprilui::Event* e)
+	QueuedCallbackEvent::QueuedCallbackEvent(aprilui::Event* event)
 	{
-		this->event = e;
 		this->dataset = NULL;
+		this->event = event;
 	}
 
 	QueuedCallbackEvent::~QueuedCallbackEvent()
 	{
-		if (this->dataset)
+		if (this->dataset != NULL)
 		{
 			this->dataset->removeCallbackFromQueue(this->event);
 		}
@@ -29,7 +29,7 @@ namespace aprilui
 		this->dataset = dynamic_cast<Dataset*>(args->object->getDataset());
 		if (this->dataset == NULL)
 		{
-			throw hl_exception("QueuedCallbackEvent: unable to process queued event, object's dataset is not a Chapter class.");
+			throw hl_exception("QueuedCallbackEvent: unable to process queued event, object's dataset is not a Dataset class.");
 		}
 		this->dataset->queueCallback(this->event, new aprilui::EventArgs(args->object, args->x, args->y, args->keyCode, args->extra));
 	}

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -17,8 +17,7 @@
 
 namespace aprilui
 {
-	ColoredQuad::ColoredQuad(chstr name, grect rect) :
-		Object(name, rect)
+	ColoredQuad::ColoredQuad(chstr name, grect rect) : Object(name, rect)
 	{
 	}
 	

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -32,10 +32,11 @@ namespace aprilui
 		~ImageBox();
 		static Object* createInstance(chstr name, grect rect);
 		
-		virtual Image* getImage() { return this->mImage; };
+		virtual Image* getImage() { return this->image; };
 		virtual void setImage(Image* value);
-		hstr getImageName() { return this->mImageName; }
+		HL_DEFINE_GET(hstr, imageName, ImageName);
 		void setImageByName(chstr name);
+
 		/// @brief Optimized version.
 		bool trySetImageByName(chstr name);
 
@@ -49,8 +50,8 @@ namespace aprilui
 		bool onMouseUp(april::Key keyCode);
 		
 	protected:
-		Image* mImage;
-		hstr mImageName;
+		Image* image;
+		hstr imageName;
 		
 		void OnDraw();
 		

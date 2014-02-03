@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -22,9 +22,9 @@ namespace aprilui
 	{
 		FrameAnimation::FrameAnimation(chstr name) : Animator(name)
 		{
-			this->mImageBaseName = "";
-			this->mFirstFrame = 0;
-			this->mFrameCount = 0;
+			this->imageBaseName = "";
+			this->firstFrame = 0;
+			this->frameCount = 0;
 		}
 
 		FrameAnimation::~FrameAnimation()
@@ -42,11 +42,11 @@ namespace aprilui
 			{
 				return false;
 			}
-			if (this->mImageBaseName == "")
+			if (this->imageBaseName == "")
 			{
 				return false;
 			}
-			if (this->mFrameCount <= 0)
+			if (this->frameCount <= 0)
 			{
 				return false;
 			}
@@ -55,9 +55,9 @@ namespace aprilui
 
 		bool FrameAnimation::setProperty(chstr name, chstr value)
 		{
-			if		(name == "base_name")		this->mImageBaseName = value;
-			else if (name == "first_frame")		this->mFirstFrame = value;
-			else if (name == "frame_count")		this->mFrameCount = value;
+			if		(name == "base_name")		this->imageBaseName = value;
+			else if (name == "first_frame")		this->firstFrame = value;
+			else if (name == "frame_count")		this->frameCount = value;
 			else if (name == "inherit_value")
 			{
 				hlog::warn(aprilui::logTag, "Animators::FrameAnimation does not support 'inherit_value'!");
@@ -70,11 +70,11 @@ namespace aprilui
 		{
 			if (name == "AttachToObject")
 			{
-				this->mValue = (float)this->mFirstFrame;
-				float delay = this->mDelay;
-				this->mDelay = 0.0f;
+				this->value = (float)this->firstFrame;
+				float delay = this->delay;
+				this->delay = 0.0f;
 				this->update(0.0f);
-				this->mDelay = delay;
+				this->delay = delay;
 			}
 			Animator::notifyEvent(name, params);
 		}
@@ -83,20 +83,20 @@ namespace aprilui
 		{
 			if (this->_checkUpdate(k))
 			{
-				ImageBox* imageBox = dynamic_cast<ImageBox*>(this->mParent);
+				ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);
 				if (imageBox == NULL)
 				{
 					hlog::error(aprilui::logTag, "Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 					return;
 				}
-				this->mValue = this->_calculateValue(this->mTimeSinceLastFrame);
-				int frame = (int)this->mValue;
-				int lastFrame = this->mFirstFrame + this->mFrameCount - 1;
+				this->value = this->_calculateValue(this->timeSinceLastFrame);
+				int frame = (int)this->value;
+				int lastFrame = this->firstFrame + this->frameCount - 1;
 				if (isExpired() || frame > lastFrame)
 				{
-					frame = (this->mReset ? this->mFirstFrame : lastFrame);
+					frame = (this->reset ? this->firstFrame : lastFrame);
 				}
-				imageBox->setImageByName(this->mImageBaseName + hstr(frame));
+				imageBox->setImageByName(this->imageBaseName + hstr(frame));
 			}
 		}
 		

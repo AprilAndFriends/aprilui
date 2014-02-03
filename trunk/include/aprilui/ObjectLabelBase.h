@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -36,35 +36,23 @@ namespace aprilui
 		LabelBase();
 		virtual ~LabelBase();
 		
-		virtual Dataset* getDataset() = 0;
-		hstr getText() { return this->mText; }
+		HL_DEFINE_GET(hstr, text, Text);
 		virtual void setText(chstr value);
-		hstr getTextKey() { return this->mTextKey; }
+		HL_DEFINE_GET(hstr, textKey, TextKey);
 		void setTextKey(chstr value);
-		hstr getFont() { return this->mFontName; }
-		void setFont(chstr value) { this->mFontName = value; }
+		HL_DEFINE_GETSET(hstr, fontName, FontName);
+		HL_DEFINE_GETSET(april::Color, textColor, TextColor);
+		HL_DEFINE_GETSET(gvec2, textOffset, TextOffset);
+		HL_DEFINE_GETSET(atres::Alignment, horzFormatting, HorzFormatting);
+		HL_DEFINE_GETSET(atres::Alignment, vertFormatting, VertFormatting);
+		HL_DEFINE_GETSET(atres::Effect, fontEffect, FontEffect);
+		HL_DEFINE_ISSET(useFontEffectColor, UseFontEffectColor);
+		HL_DEFINE_GETSET(april::Color, fontEffectColor, FontEffectColor);
+		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
+
+		virtual Dataset* getDataset() = 0;
 
 		bool trySetTextKey(chstr textKey);
-		
-		april::Color getTextColor() { return this->mTextColor; }
-		void setTextColor(april::Color value) { this->mTextColor = value; }
-		void setTextColor(chstr value) { this->mTextColor.set(value); }
-		gvec2 getTextOffset() { return this->mTextOffset; }
-		void setTextOffset(gvec2 value) { this->mTextOffset = value; }
-		atres::Alignment getHorzFormatting() { return this->mHorzFormatting; }
-		void setHorzFormatting(atres::Alignment value) { this->mHorzFormatting = value; }
-		atres::Alignment getVertFormatting() { return this->mVertFormatting; }
-		void setVertFormatting(atres::Alignment value) { this->mVertFormatting = value; }
-		atres::Effect getFontEffect() { return this->mFontEffect; }
-		void setFontEffect(atres::Effect value) { this->mFontEffect = value; }
-		bool isUseFontEffectColor() { return this->mUseFontEffectColor; }
-		void setUseFontEffectColor(bool value) { this->mUseFontEffectColor = value; }
-		april::Color getFontEffectColor() { return this->mFontEffectColor; }
-		void setFontEffectColor(april::Color value) { this->mFontEffectColor = value; }
-		void setFontEffectColor(chstr value) { this->mFontEffectColor.set(value); }
-		april::Color getBackgroundColor() { return this->mBackgroundColor; }
-		void setBackgroundColor(april::Color value) { this->mBackgroundColor = value; }
-		void setBackgroundColor(chstr value) { this->mBackgroundColor.set(value); }
 		
 		virtual void notifyEvent(chstr name, void* params);
 		// TODO - this needs to be seriously refactored
@@ -73,22 +61,23 @@ namespace aprilui
 		virtual bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "") = 0;
 		// TODO - this needs to be seriously refactored
 		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "") = 0;
+
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 		
 	protected:
-		hstr mText;
-		hstr mTextKey;
-		hstr mFontName;
-		bool mTextFormatting;
-		april::Color mTextColor;
-		gvec2 mTextOffset;
-		atres::Alignment mHorzFormatting;
-		atres::Alignment mVertFormatting;
-		atres::Effect mFontEffect;
-		bool mUseFontEffectColor;
-		april::Color mFontEffectColor;
-		april::Color mBackgroundColor;
+		hstr text;
+		hstr textKey;
+		hstr fontName;
+		bool textFormatting;
+		april::Color textColor;
+		gvec2 textOffset;
+		atres::Alignment horzFormatting;
+		atres::Alignment vertFormatting;
+		atres::Effect fontEffect;
+		bool useFontEffectColor;
+		april::Color fontEffectColor;
+		april::Color backgroundColor;
 		
 		void _drawLabel(grect rect, april::Color color, april::Color backgroundColor);
 		

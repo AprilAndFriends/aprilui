@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -32,16 +32,10 @@ namespace aprilui
 		~TextImageButton();
 		static Object* createInstance(chstr name, grect rect);
 
+		HL_DEFINE_GETSET(april::Color, hoverTextColor, HoverTextColor);
+		HL_DEFINE_GETSET(april::Color, pushedTextColor, PushedTextColor);
+		HL_DEFINE_GETSET(april::Color, disabledTextColor, DisabledTextColor);
 		Dataset* getDataset();
-		april::Color getHoverTextColor() { return this->mHoverTextColor; }
-		void setHoverTextColor(april::Color value) { this->mHoverTextColor = value; this->_mUseHoverTextColor = true; }
-		void setHoverTextColor(chstr value) { this->mHoverTextColor.set(value); this->_mUseHoverTextColor = true; }
-		april::Color getPushedTextColor() { return this->mPushedTextColor; }
-		void setPushedTextColor(april::Color value) { this->mPushedTextColor = value; this->_mUsePushedTextColor = true; }
-		void setPushedTextColor(chstr value) { this->mPushedTextColor.set(value); this->_mUsePushedTextColor = true; }
-		april::Color getDisabledTextColor() { return this->mDisabledTextColor; }
-		void setDisabledTextColor(april::Color value) { this->mDisabledTextColor = value; this->_mUseDisabledTextColor = true; }
-		void setDisabledTextColor(chstr value) { this->mDisabledTextColor.set(value); this->_mUseDisabledTextColor = true; }
 
 		void notifyEvent(chstr name, void* params);
 		// TODO - this needs to be seriously refactored
@@ -54,16 +48,16 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		april::Color mHoverTextColor;
-		april::Color mPushedTextColor;
-		april::Color mDisabledTextColor;
+		april::Color hoverTextColor;
+		april::Color pushedTextColor;
+		april::Color disabledTextColor;
 		
 		void OnDraw();
 
 	private:
-		bool _mUseHoverTextColor;
-		bool _mUsePushedTextColor;
-		bool _mUseDisabledTextColor;
+		bool _useHoverTextColor;
+		bool _usePushedTextColor;
+		bool _useDisabledTextColor;
 
 	};
 	

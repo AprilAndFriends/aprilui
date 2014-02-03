@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,11 +30,10 @@ namespace aprilui
 		_GenericException(chstr errorText, chstr type = "", const char* file = "", int line = 0);
 		~_GenericException();
 
-		hstr getType(){ return this->mType; }
-		hstr getErrorText() { return this->msg; }
+		HL_DEFINE_GET(hstr, type, Type);
 
 	protected:
-		hstr mType;
+		hstr type;
 		
 	};
 

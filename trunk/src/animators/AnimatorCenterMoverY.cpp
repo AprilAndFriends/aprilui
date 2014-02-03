@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.8
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -30,12 +30,12 @@ namespace aprilui
 
 		float CenterMoverY::_getObjectValue()
 		{
-			return this->mParent->getCenterY();
+			return this->parent->getCenterY();
 		}
 
 		void CenterMoverY::_setObjectValue(float value)
 		{
-			this->mParent->setCenterY(value);
+			this->parent->setCenterY(value);
 		}
 
 		void CenterMoverY::update(float k)
