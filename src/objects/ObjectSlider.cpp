@@ -53,7 +53,7 @@ namespace aprilui
 	
 	bool Slider::onMouseDown(april::Key keyCode)
 	{
-		if (ImageBox::onMouseDown(keyCode))
+		if (Object::onMouseDown(keyCode)) // currently needs to override ImageBox behavior
 		{
 			return true;
 		}
@@ -70,7 +70,7 @@ namespace aprilui
 	
 	bool Slider::onMouseUp(april::Key keyCode)
 	{
-		if (ImageBox::onMouseUp(keyCode))
+		if (Object::onMouseUp(keyCode)) // currently needs to override ImageBox behavior
 		{
 			return true;
 		}
@@ -85,7 +85,7 @@ namespace aprilui
 	
 	bool Slider::onMouseMove()
 	{
-		if (ImageBox::onMouseMove())
+		if (Object::onMouseMove()) // currently needs to override ImageBox behavior
 		{
 			return true;
 		}

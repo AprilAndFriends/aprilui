@@ -32,9 +32,12 @@ namespace aprilui
 		~TextImageButton();
 		static Object* createInstance(chstr name, grect rect);
 
-		HL_DEFINE_GETSET(april::Color, hoverTextColor, HoverTextColor);
-		HL_DEFINE_GETSET(april::Color, pushedTextColor, PushedTextColor);
-		HL_DEFINE_GETSET(april::Color, disabledTextColor, DisabledTextColor);
+		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
+		HL_DEFINE_GET(april::Color, pushedTextColor, PushedTextColor);
+		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
+		void setHoverTextColor(april::Color value);
+		void setPushedTextColor(april::Color value);
+		void setDisabledTextColor(april::Color value);
 		Dataset* getDataset();
 
 		void notifyEvent(chstr name, void* params);
