@@ -17,6 +17,7 @@
 
 #include <hltypes/exception.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hltypesUtil.h>
 
 #include "apriluiExport.h"
 
@@ -26,15 +27,13 @@ namespace aprilui
 	
 	class apriluiExport _GenericException : public hltypes::exception
 	{
+	protected:
+		hstr type;
 	public:
 		_GenericException(chstr errorText, chstr type = "", const char* file = "", int line = 0);
 		~_GenericException();
 
 		HL_DEFINE_GET(hstr, type, Type);
-
-	protected:
-		hstr type;
-		
 	};
 
 	#define GenericException(msg) _GenericException(msg, "GenericException", __FILE__, __LINE__)

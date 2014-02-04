@@ -82,7 +82,7 @@ namespace aprilui
 		template <class T>
 		hmap<hstr, T> getObjectsByType()
 		{
-			return this->mObjects.dyn_cast_value<hstr, T>();
+			return this->objects.dyn_cast_value<hstr, T>();
 		}
 		
 		void updateTextures(float k);
