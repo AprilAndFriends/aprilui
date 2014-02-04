@@ -47,6 +47,24 @@ namespace aprilui
 		return ImageButton::getDataset();
 	}
 
+	void TextImageButton::setHoverTextColor(april::Color value)
+	{
+		this->hoverTextColor = value;
+		this->_useHoverTextColor = true;
+	}
+
+	void TextImageButton::setPushedTextColor(april::Color value)
+	{
+		this->pushedTextColor = value;
+		this->_usePushedTextColor = true;
+	}
+
+	void TextImageButton::setDisabledTextColor(april::Color value)
+	{
+		this->disabledTextColor = value;
+		this->_useDisabledTextColor = true;
+	}
+
 	void TextImageButton::OnDraw()
 	{
 		ImageButton::OnDraw();
