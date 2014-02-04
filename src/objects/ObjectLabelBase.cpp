@@ -28,7 +28,7 @@ namespace aprilui
 	{
 		this->text = "";
 		this->textKey = "";
-		this->fontName = "";
+		this->font = "";
 		this->textFormatting = true;
 		this->textColor = april::Color::White;
 		this->textOffset.set(0.0f, 0.0f);
@@ -82,7 +82,7 @@ namespace aprilui
 		default:
 			break;
 		}
-		atres::renderer->drawText(this->fontName, rect, text, this->horzFormatting, this->vertFormatting, color, -this->textOffset);
+		atres::renderer->drawText(this->font, rect, text, this->horzFormatting, this->vertFormatting, color, -this->textOffset);
 	}
 
 	hstr LabelBase::getProperty(chstr name, bool* propertyExists)
@@ -91,7 +91,7 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
-		if (name == "font")				return this->getFontName();
+		if (name == "font")				return this->getFont();
 		if (name == "text")				return this->getText();
 		if (name == "text_key")			return this->getTextKey();
 		if (name == "horz_formatting")
@@ -135,7 +135,7 @@ namespace aprilui
 	
 	bool LabelBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "font")						this->setFontName(value);
+		if (name == "font")						this->setFont(value);
 		else if (name == "text_key")			this->setTextKey(value);
 		else if (name == "text")				this->setText(value);
 		else if (name == "horz_formatting")

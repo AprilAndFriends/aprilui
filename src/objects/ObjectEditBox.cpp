@@ -68,9 +68,9 @@ namespace aprilui
 			this->setCursorIndex(0);
 			return;
 		}
-		float fh = atres::renderer->getFontLineHeight(this->fontName);
+		float fh = atres::renderer->getFontLineHeight(this->font);
 		// full text
-		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->fontName);
+		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
 		harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT), this->text, tags, this->horzFormatting, this->vertFormatting);
 		float w2 = this->rect.w * 0.5f;
 		float h2 = this->rect.h * 0.5f;
@@ -262,7 +262,7 @@ namespace aprilui
 		{
 			this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * 0.75f);
 		}
-		float fh = atres::renderer->getFontLineHeight(this->fontName);
+		float fh = atres::renderer->getFontLineHeight(this->font);
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this)
 		{
 			rect.setPosition(this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text));
@@ -317,9 +317,9 @@ namespace aprilui
 	gvec2 EditBox::_makeCaretPosition(chstr text, chstr originalText)
 	{
 		gvec2 position;
-		float fh = atres::renderer->getFontLineHeight(this->fontName);
+		float fh = atres::renderer->getFontLineHeight(this->font);
 		// full text
-		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->fontName);
+		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
 		harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
 			originalText, tags, this->horzFormatting, this->vertFormatting);
 		int lineCount = fullLines.size();
@@ -351,7 +351,7 @@ namespace aprilui
 		// caret position
 		if (text != "")
 		{
-			tags = atres::renderer->prepareTags(this->fontName);
+			tags = atres::renderer->prepareTags(this->font);
 			harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
 				text, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
 			if (lines.size() > 0)
@@ -526,7 +526,7 @@ namespace aprilui
 		}
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
-			if (atres::renderer->getFontResource(this->fontName)->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
+			if (atres::renderer->getFontResource(this->font)->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
 			{
 				this->_insertChar(charCode);
 			}
@@ -586,7 +586,7 @@ namespace aprilui
 		if (this->cursorIndex > 0)
 		{
 			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text);
-			this->setCursorIndexAt(position.x, position.y - atres::renderer->getFontLineHeight(this->fontName));
+			this->setCursorIndexAt(position.x, position.y - atres::renderer->getFontLineHeight(this->font));
 		}
 	}
 	
@@ -595,7 +595,7 @@ namespace aprilui
 		if (this->cursorIndex < this->text.utf8_size())
 		{
 			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text);
-			this->setCursorIndexAt(position.x, position.y + atres::renderer->getFontLineHeight(this->fontName));
+			this->setCursorIndexAt(position.x, position.y + atres::renderer->getFontLineHeight(this->font));
 		}
 	}
 	
