@@ -75,14 +75,14 @@ namespace aprilui
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
-		HL_DEFINE_GET(gvec2, scale, Scale);
+		HL_DEFINE_GETSET(gvec2, scale, Scale);
 		void setScale(float x, float y) { this->scale.set(x, y); }
 		float getScaleX() { return this->scale.x; }
 		void setScaleX(float value) { this->scale.x = value; }
 		float getScaleY() { return this->scale.y; }
 		void setScaleY(float value) { this->scale.y = value; }
 
-		HL_DEFINE_GET(gvec2, center, Center);
+		HL_DEFINE_GETSET(gvec2, center, Center);
 		void setCenter(float x, float y) { this->center.set(x, y); }
 		float getCenterX() { return this->center.x; }
 		void setCenterX(float value) { this->center.x = value; }
