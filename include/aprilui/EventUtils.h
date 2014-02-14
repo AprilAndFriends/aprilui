@@ -1,0 +1,1 @@
+#define _SET_CLICK_EVENT_FUNCTION(a, b) ;
