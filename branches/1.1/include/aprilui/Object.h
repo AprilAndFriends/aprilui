@@ -132,6 +132,7 @@ namespace aprilui
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
 
 		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
+		virtual void OnDraw(gvec2 offset = gvec2()) { }
 
 	protected:
 		Object* mParent;
@@ -157,7 +158,6 @@ namespace aprilui
 		bool isDerivedEnabled();
 		bool isDerivedClickThrough();
 		
-		virtual void OnDraw(gvec2 offset = gvec2()) { }
 		void setParent(Object* value) { mParent = value; }
 
 		void _moveChildToFront(Object* object);
