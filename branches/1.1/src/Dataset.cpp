@@ -154,7 +154,7 @@ namespace aprilui
 		}
 
 		hstr locpath = _makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createTexture(locpath, !(aprilui::getForcedDynamicLoading() || dynamicLoad));
+		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, !(aprilui::getForcedDynamicLoading() || dynamicLoad));
 		if (aprilTexture == NULL)
 		{
 			throw FileNotFoundException(locpath);
@@ -214,7 +214,7 @@ namespace aprilui
 					hstr mode = child->pstr("blend_mode", "default");
 					if (mode == "add")
 					{
-						image->setBlendMode(april::ADD);
+						image->setBlendMode(april::BM_ADD);
 					}
 					mImages[name] = image;
 				}

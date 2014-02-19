@@ -130,7 +130,7 @@ namespace aprilui
 			mFilename = filename;
 			if (!isRamTexture)
 			{
-				mTexture = april::rendersys->createTexture(mFilename, !(aprilui::getForcedDynamicLoading() || mDynamic));
+				mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::TYPE_IMMUTABLE, !(aprilui::getForcedDynamicLoading() || mDynamic));
 			}
 			else
 			{

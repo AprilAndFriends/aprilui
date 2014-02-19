@@ -44,15 +44,15 @@ namespace aprilui
 		_pVertices[2].x = rect.x;          _pVertices[2].y = rect.y + rect.h;
 		_pVertices[3].x = rect.x + rect.w; _pVertices[3].y = rect.y + rect.h;
 		
-		if (mBlendMode != april::ALPHA_BLEND)
+		if (mBlendMode != april::BM_ALPHA)
 		{
 			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
 		color *= mColor;
-		april::rendersys->render(april::TriangleStrip, _pVertices, 4, color);
-		if (mBlendMode != april::ALPHA_BLEND)
+		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
+		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::DEFAULT);
+			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		}
 	}
 
@@ -67,14 +67,14 @@ namespace aprilui
 		april::rendersys->setIdentityTransform();
 		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		april::rendersys->rotate(angle);
-		if (mBlendMode != april::ALPHA_BLEND)
+		if (mBlendMode != april::BM_ALPHA)
 		{
 			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
-		april::rendersys->render(april::TriangleStrip, _pVertices, 4, color);
-		if (mBlendMode != april::ALPHA_BLEND)
+		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
+		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::DEFAULT);
+			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		}
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}

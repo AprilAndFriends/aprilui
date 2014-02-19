@@ -29,7 +29,7 @@ namespace aprilui
 		mImageName = name(index, name.size() - index); // the name without the dataset's name prefix
 		mSource = source;
 
-		mBlendMode = april::ALPHA_BLEND;
+		mBlendMode = april::BM_DEFAULT;
 		mVertical = vertical;
 		mInvertX = invertX;
 		mInvertY = invertY;
@@ -115,21 +115,21 @@ namespace aprilui
 		april::rendersys->setTexture(mTexture->getRenderTexture());
 		_tryLoadTexCoords();
 			
-		if (mBlendMode != april::ALPHA_BLEND)
+		if (mBlendMode != april::BM_ALPHA)
 		{
 			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::TriangleStrip, _tVertexes, 4, color);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
 		}
 		else
 		{
-			april::rendersys->render(april::TriangleStrip, _tVertexes, 4);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
 		}
-		if (mBlendMode != april::ALPHA_BLEND)
+		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::DEFAULT);
+			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		}
 	}
 
@@ -158,21 +158,21 @@ namespace aprilui
 		april::rendersys->setTexture(mTexture->getRenderTexture());
 		_tryLoadTexCoords();
 		
-		if (mBlendMode != april::ALPHA_BLEND)
+		if (mBlendMode != april::BM_ALPHA)
 		{
 			april::rendersys->setTextureBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::TriangleStrip, _tVertexes, 4, color);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
 		}
 		else
 		{
-			april::rendersys->render(april::TriangleStrip, _tVertexes, 4);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
 		}
-		if (mBlendMode != april::ALPHA_BLEND)
+		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::DEFAULT);
+			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		}
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}
