@@ -75,7 +75,7 @@ namespace aprilui
 		if (enabled && this->hovered && !this->pushed && this->hoverImage == NULL && aprilui::isHoverEffectEnabled())
 		{
 			april::BlendMode blendMode = this->image->getBlendMode();
-			this->image->setBlendMode(april::ADD);
+			this->image->setBlendMode(april::BM_ADD);
 			this->image->draw(rect, april::Color(this->_getDrawColor(), this->getDerivedAlpha() / 4));
 			this->image->setBlendMode(blendMode);
 		}
