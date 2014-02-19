@@ -28,8 +28,8 @@ namespace aprilui
 		this->texture = texture;
 		this->name = name;
 		this->srcRect = source;
-		this->blendMode = april::ALPHA_BLEND;
-		this->colorMode = april::MULTIPLY;
+		this->blendMode = april::BM_DEFAULT;
+		this->colorMode = april::CM_DEFAULT;
 		this->colorModeAlpha = 255;
 		this->vertical = vertical;
 		this->invertedX = invertX;
@@ -126,14 +126,14 @@ namespace aprilui
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeAlpha);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::TriangleStrip, this->_tVertices, 4, color);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->_tVertices, 4, color);
 		}
 		else
 		{
-			april::rendersys->render(april::TriangleStrip, this->_tVertices, 4);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->_tVertices, 4);
 		}
-		april::rendersys->setTextureBlendMode(april::DEFAULT);
-		april::rendersys->setTextureColorMode(april::NORMAL, 255);
+		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+		april::rendersys->setTextureColorMode(april::CM_DEFAULT, 255);
 	}
 	
 	void Image::draw(grect rect, april::Color color, float angle)

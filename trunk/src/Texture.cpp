@@ -159,7 +159,7 @@ namespace aprilui
 			this->unusedTime = 0.0f;
 			if (!isRamTexture)
 			{
-				this->texture = april::rendersys->createTexture(filename, !this->dynamic && !aprilui::getDefaultDynamicLoading());
+				this->texture = april::rendersys->createTextureFromResource(filename, april::Texture::TYPE_IMMUTABLE, !this->dynamic && !aprilui::getDefaultDynamicLoading());
 			}
 			else
 			{
