@@ -246,7 +246,7 @@ namespace aprilui
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool dynamicLoad = node->pbool("dynamic_load", getDefaultDynamicLoading());
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createTexture(locpath, !dynamicLoad);
+		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, !dynamicLoad);
 		if (aprilTexture == NULL)
 		{
 			throw file_not_found(locpath);
@@ -315,20 +315,24 @@ namespace aprilui
 					hstr blendMode = child->pstr("blend_mode", "default");
 					if (blendMode == "add")
 					{
-						image->setBlendMode(april::ADD);
+						image->setBlendMode(april::BM_ADD);
 					}
 					else if (blendMode == "subtract")
 					{
-						image->setBlendMode(april::SUBTRACT);
+						image->setBlendMode(april::BM_SUBTRACT);
+					}
+					else if (blendMode == "overwrite")
+					{
+						image->setBlendMode(april::BM_OVERWRITE);
 					}
 					hstr colorMode = child->pstr("color_mode", "normal");
 					if (colorMode == "lerp")
 					{
-						image->setColorMode(april::LERP);
+						image->setColorMode(april::CM_LERP);
 					}
 					else if (colorMode == "alpha_map")
 					{
-						image->setColorMode(april::ALPHA_MAP);
+						image->setColorMode(april::CM_ALPHA_MAP);
 					}
 					image->setColorModeAlpha(child->pint("color_mode_alpha", 255));
 					this->images[name] = image;

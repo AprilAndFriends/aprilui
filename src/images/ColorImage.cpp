@@ -56,8 +56,8 @@ namespace aprilui
 		this->_pVertices[2].y = this->_pVertices[3].y = rect.bottom();
 		
 		april::rendersys->setTextureBlendMode(this->blendMode);
-		april::rendersys->render(april::TriangleStrip, this->_pVertices, 4, this->color * color);
-		april::rendersys->setTextureBlendMode(april::DEFAULT);
+		april::rendersys->render(april::RO_TRIANGLE_STRIP, this->_pVertices, 4, this->color * color);
+		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 	}
 
 }
