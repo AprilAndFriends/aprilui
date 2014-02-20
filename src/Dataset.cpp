@@ -867,6 +867,7 @@ namespace aprilui
 			return this->nullImage;
 		}
 		
+		// kspes@20140220 - ColorImage has been integrated into CAGE 3.x. CAGE 1.3 an 1.1 still pending. scheduled for removal after that
 		bool hasKey = this->images.has_key(name);
 		if (!hasKey && name.starts_with("0x")) // create new image with a color. don't overuse this, it's meant to be handy when needed only ;)
 		{
