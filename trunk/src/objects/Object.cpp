@@ -864,19 +864,7 @@ namespace aprilui
 
 	void Object::registerEvent(chstr name, Event* e)
 	{
-		if (this->events.has_key(name))
-		{
-			Event* oldEvent = this->events[name];
-			if (dataset != NULL)
-			{
-				dataset->removeCallbackFromQueue(oldEvent);
-			}
-			if (e == NULL)
-			{
-				this->events.remove_key(name);
-			}
-			delete oldEvent;
-		}
+		this->unregisterEvent(name);
 		if (e != NULL)
 		{
 			this->events[name] = e;
@@ -888,10 +876,11 @@ namespace aprilui
 		if (this->events.has_key(name))
 		{
 			Event* event = this->events[name];
-			if (dataset != NULL)
+			if (this->dataset != NULL)
 			{
-				dataset->removeCallbackFromQueue(event);
+				this->dataset->removeCallbackFromQueue(event);
 			}
+			delete event;
 			this->events.remove_key(name);
 		}
 	}
