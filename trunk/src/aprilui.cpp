@@ -273,6 +273,34 @@ namespace aprilui
 		gAnimatorFactories[typeName] = factory;
 	}
 	
+	void unregisterObjectFactory(chstr typeName)
+	{
+		if (!gObjectFactories.has_key(typeName))
+		{
+			throw ObjectFactoryNotExistsException(typeName);
+		}
+		gObjectFactories.remove_key(typeName);
+	}
+	
+	void unregisterAnimatorFactory(chstr typeName)
+	{
+		if (!gAnimatorFactories.has_key(typeName))
+		{
+			throw AnimatorFactoryNotExistsException(typeName);
+		}
+		gAnimatorFactories.remove_key(typeName);
+	}
+
+	bool hasObjectFactory(chstr typeName)
+	{
+		return gObjectFactories.has_key(typeName);
+	}
+	
+	bool hasAnimatorFactory(chstr typeName)
+	{
+		return gAnimatorFactories.has_key(typeName);
+	}
+	
 	Object* createObject(chstr typeName, chstr name, grect rect)
 	{
 		if (gObjectFactories.has_key(typeName))

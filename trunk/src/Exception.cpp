@@ -64,16 +64,32 @@ namespace aprilui
 
 	_ObjectFactoryExistsException::_ObjectFactoryExistsException(chstr name,
 																 const char* file, int line) :
-							  _GenericException("Object factory named '" + name + "' already exists",
-								  "ObjectFactoryExistsException", file, line)
+	_GenericException("Object factory named '" + name + "' already exists",
+					  "ObjectFactoryExistsException", file, line)
 	{
 	}
 	_ObjectFactoryExistsException::~_ObjectFactoryExistsException() { }
 
+	_ObjectFactoryNotExistsException::_ObjectFactoryNotExistsException(chstr name,
+																 const char* file, int line) :
+	_GenericException("Object factory named '" + name + "' doesn't exists",
+					  "ObjectFactoryNotExistsException", file, line)
+	{
+	}
+	_ObjectFactoryNotExistsException::~_ObjectFactoryNotExistsException() { }
+
 	_AnimatorFactoryExistsException::_AnimatorFactoryExistsException(chstr name,
 																	 const char* file, int line) :
-							  _GenericException("Animator factory named '" + name + "' already exists",
-								  "AnimatorFactoryExistsException", file, line)
+	_GenericException("Animator factory named '" + name + "' already exists",
+					  "AnimatorFactoryExistsException", file, line)
+	{
+	}
+	_AnimatorFactoryNotExistsException::~_AnimatorFactoryNotExistsException() { }
+
+	_AnimatorFactoryNotExistsException::_AnimatorFactoryNotExistsException(chstr name,
+																	 const char* file, int line) :
+	_GenericException("Animator factory named '" + name + "' doesn't exist",
+					  "AnimatorFactoryNotExistsException", file, line)
 	{
 	}
 	_AnimatorFactoryExistsException::~_AnimatorFactoryExistsException() { }

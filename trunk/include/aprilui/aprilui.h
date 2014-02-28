@@ -63,6 +63,10 @@ namespace aprilui
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect));
 	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));
+	apriluiFnExport bool hasObjectFactory(chstr typeName);
+	apriluiFnExport bool hasAnimatorFactory(chstr typeName);
+	apriluiFnExport void unregisterObjectFactory(chstr typeName);
+	apriluiFnExport void unregisterAnimatorFactory(chstr typeName);
 	apriluiFnExport Object* createObject(chstr type, chstr name, grect rect);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	
