@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.01
 /// 
 /// @section LICENSE
 /// 
@@ -90,13 +90,13 @@ namespace aprilui
 					return;
 				}
 				this->value = this->_calculateValue(this->timeSinceLastFrame);
-				int frame = (int)this->value;
-				int lastFrame = this->firstFrame + this->frameCount - 1;
+				int frame = hmax((int)this->value, 0);
+				int lastFrame = this->frameCount - 1;
 				if (isExpired() || frame > lastFrame)
 				{
-					frame = (this->reset ? this->firstFrame : lastFrame);
+					frame = (this->reset ? 0 : lastFrame);
 				}
-				imageBox->setImageByName(this->imageBaseName + hstr(frame));
+				imageBox->trySetImageByName(this->imageBaseName + hstr(this->firstFrame + frame));
 			}
 		}
 		
