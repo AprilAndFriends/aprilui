@@ -226,7 +226,19 @@ namespace aprilui
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
 		void fadeColor(april::Color color, float speed);
 		
+		Animator* moveXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
 		Animator* moveYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* rescaleXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* rescaleYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* resizeXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* resizeYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* rotateF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* moveCenterXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* moveCenterYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeRedF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeGreenF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeBlueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeAlphaF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
 		
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
@@ -252,6 +264,20 @@ namespace aprilui
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
 
+		Animator* moveXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* moveYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* rescaleXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* rescaleYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* resizeXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* resizeYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* rotateQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* moveCenterXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* moveCenterYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeRedQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeGreenQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeBlueQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeAlphaQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		
 		void moveXStop();
 		void moveYStop();
 		void rescaleXStop();

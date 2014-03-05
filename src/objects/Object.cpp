@@ -87,6 +87,21 @@
 		animator ## type->setDelay(delay); \
 	}
 
+#define DEFINE_ANIMATOR_F(functionName, animatorName) \
+	Animator* Object::functionName ## F(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength) \
+	{ \
+		REMOVE_EXISTING_ANIMATORS(animatorName); \
+		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, periodStart, periodLength); \
+		return animator ## animatorName; \
+	}
+
+#define DEFINE_ANIMATOR_F_DELAYED(functionName, animatorName) \
+	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay) \
+	{ \
+		CREATE_DELAYED_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, periodStart, periodLength, delay); \
+		return animator ## animatorName; \
+	}
+
 namespace aprilui
 {
 	static bool _objectSortCallback(Object* a, Object* b)
@@ -1520,12 +1535,19 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)color.a, speed);
 	}
 
-	Animator* Object::moveYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength)
-	{
-		REMOVE_EXISTING_ANIMATORS(MoverY);
-		CREATE_DYNAMIC_ANIMATOR_F(MoverY, offset, amplitude, speed, function, periodStart, periodLength);
-		return animatorMoverY;
-	}
+	DEFINE_ANIMATOR_F(moveX, MoverX);
+	DEFINE_ANIMATOR_F(moveY, MoverY);
+	DEFINE_ANIMATOR_F(rescaleX, ScalerX);
+	DEFINE_ANIMATOR_F(rescaleY, ScalerY);
+	DEFINE_ANIMATOR_F(resizeX, ResizerX);
+	DEFINE_ANIMATOR_F(resizeY, ResizerY);
+	DEFINE_ANIMATOR_F(rotate, Rotator);
+	DEFINE_ANIMATOR_F(moveCenterX, CenterMoverX);
+	DEFINE_ANIMATOR_F(moveCenterY, CenterMoverY);
+	DEFINE_ANIMATOR_F(fadeAlpha, AlphaChanger);
+	DEFINE_ANIMATOR_F(fadeRed, RedChanger);
+	DEFINE_ANIMATOR_F(fadeGreen, GreenChanger);
+	DEFINE_ANIMATOR_F(fadeBlue, BlueChanger);
 	
 	Animator* Object::moveXQueue(float x, float speed, float delay)
 	{
@@ -1668,6 +1690,20 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(BlueChanger, (float)this->color.b, (float)color.b, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)color.a, speed, delay);
 	}
+	
+	DEFINE_ANIMATOR_F_DELAYED(moveX, MoverX);
+	DEFINE_ANIMATOR_F_DELAYED(moveY, MoverY);
+	DEFINE_ANIMATOR_F_DELAYED(rescaleX, ScalerX);
+	DEFINE_ANIMATOR_F_DELAYED(rescaleY, ScalerY);
+	DEFINE_ANIMATOR_F_DELAYED(resizeX, ResizerX);
+	DEFINE_ANIMATOR_F_DELAYED(resizeY, ResizerY);
+	DEFINE_ANIMATOR_F_DELAYED(rotate, Rotator);
+	DEFINE_ANIMATOR_F_DELAYED(moveCenterX, CenterMoverX);
+	DEFINE_ANIMATOR_F_DELAYED(moveCenterY, CenterMoverY);
+	DEFINE_ANIMATOR_F_DELAYED(fadeAlpha, AlphaChanger);
+	DEFINE_ANIMATOR_F_DELAYED(fadeRed, RedChanger);
+	DEFINE_ANIMATOR_F_DELAYED(fadeGreen, GreenChanger);
+	DEFINE_ANIMATOR_F_DELAYED(fadeBlue, BlueChanger);
 	
 	void Object::moveXStop()
 	{
