@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -75,12 +75,13 @@ namespace aprilui
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
-		HL_DEFINE_GETSET(gvec2, scale, Scale);
-		void setScale(float x, float y) { this->scale.set(x, y); }
-		float getScaleX() { return this->scale.x; }
-		void setScaleX(float value) { this->scale.x = value; }
-		float getScaleY() { return this->scale.y; }
-		void setScaleY(float value) { this->scale.y = value; }
+		gvec2 getScale() { return this->scaleFactor; }
+		void setScale(gvec2 value) { this->scaleFactor = value; }
+		void setScale(float x, float y) { this->scaleFactor.set(x, y); }
+		float getScaleX() { return this->scaleFactor.x; }
+		void setScaleX(float value) { this->scaleFactor.x = value; }
+		float getScaleY() { return this->scaleFactor.y; }
+		void setScaleY(float value) { this->scaleFactor.y = value; }
 
 		HL_DEFINE_GETSET(gvec2, center, Center);
 		void setCenter(float x, float y) { this->center.set(x, y); }
@@ -204,8 +205,8 @@ namespace aprilui
 		
 		Animator* moveX(float x, float speed);
 		Animator* moveY(float y, float speed);
-		Animator* rescaleX(float x, float speed);
-		Animator* rescaleY(float y, float speed);
+		Animator* scaleX(float x, float speed);
+		Animator* scaleY(float y, float speed);
 		Animator* resizeX(float x, float speed);
 		Animator* resizeY(float y, float speed);
 		Animator* rotate(float angle, float speed);
@@ -217,8 +218,8 @@ namespace aprilui
 		Animator* fadeAlpha(unsigned char a, float speed);
 		void move(float x, float y, float speed);
 		void move(gvec2 position, float speed);
-		void rescale(float x, float y, float speed);
-		void rescale(gvec2 scale, float speed);
+		void scale(float x, float y, float speed);
+		void scale(gvec2 scale, float speed);
 		void resize(float x, float y, float speed);
 		void resize(gvec2 size, float speed);
 		void moveCenter(float x, float y, float speed);
@@ -228,8 +229,8 @@ namespace aprilui
 		
 		Animator* moveXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
 		Animator* moveYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* rescaleXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* rescaleYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* scaleXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* scaleYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
 		Animator* resizeXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
 		Animator* resizeYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
 		Animator* rotateF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
@@ -244,8 +245,8 @@ namespace aprilui
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
 		Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveCenterYQueue(float y, float speed, float delay = 0.0f);
-		Animator* rescaleXQueue(float x, float speed, float delay = 0.0f);
-		Animator* rescaleYQueue(float y, float speed, float delay = 0.0f);
+		Animator* scaleXQueue(float x, float speed, float delay = 0.0f);
+		Animator* scaleYQueue(float y, float speed, float delay = 0.0f);
 		Animator* resizeXQueue(float x, float speed, float delay = 0.0f);
 		Animator* resizeYQueue(float y, float speed, float delay = 0.0f);
 		Animator* rotateQueue(float angle, float speed, float delay = 0.0f);
@@ -255,8 +256,8 @@ namespace aprilui
 		Animator* fadeAlphaQueue(unsigned char a, float speed, float delay = 0.0f);
 		void moveQueue(float x, float y, float speed, float delay = 0.0f);
 		void moveQueue(gvec2 position, float speed, float delay = 0.0f);
-		void rescaleQueue(float x, float y, float speed, float delay = 0.0f);
-		void rescaleQueue(gvec2 scale, float speed, float delay = 0.0f);
+		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
+		void scaleQueue(gvec2 scale, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
 		void resizeQueue(gvec2 size, float speed, float delay = 0.0f);
 		void moveCenterQueue(float x, float y, float speed, float delay = 0.0f);
@@ -266,8 +267,8 @@ namespace aprilui
 
 		Animator* moveXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		Animator* moveYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* rescaleXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* rescaleYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* scaleXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* scaleYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		Animator* resizeXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		Animator* resizeYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		Animator* rotateQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
@@ -280,8 +281,8 @@ namespace aprilui
 		
 		void moveXStop();
 		void moveYStop();
-		void rescaleXStop();
-		void rescaleYStop();
+		void scaleXStop();
+		void scaleYStop();
 		void resizeXStop();
 		void resizeYStop();
 		void rotateStop();
@@ -292,7 +293,7 @@ namespace aprilui
 		void fadeBlueStop();
 		void fadeAlphaStop();
 		void moveStop();
-		void rescaleStop();
+		void scaleStop();
 		void resizeStop();
 		void moveCenterStop();
 		void fadeColorStop();
@@ -304,12 +305,10 @@ namespace aprilui
 		// TODO - this needs to be seriously refactored
 		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
 
-		DEPRECATED_ATTRIBUTE Object* getChildByName(chstr name, bool recursive) { return (!recursive ? this->findChildByName(name) : this->findDescendantByName(name)); }
-
 	protected:
 		hstr name;
 		grect rect;
-		gvec2 scale;
+		gvec2 scaleFactor;
 		gvec2 center;
 		Object* parent;
 		Object* childUnderCursor;

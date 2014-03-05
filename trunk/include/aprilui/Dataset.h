@@ -164,8 +164,6 @@ namespace aprilui
 
 		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
-		DEPRECATED_ATTRIBUTE hmap<hstr, hstr>& getTextEntries() { return this->getTexts(); }
-
 	protected:
 		struct QueuedCallback
 		{

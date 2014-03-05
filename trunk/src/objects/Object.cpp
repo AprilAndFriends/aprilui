@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.03
 /// 
 /// @section LICENSE
 /// 
@@ -121,7 +121,7 @@ namespace aprilui
 		{
 			this->center.y = this->rect.h* 0.5f;
 		}
-		this->scale.set(1.0f, 1.0f);
+		this->scaleFactor.set(1.0f, 1.0f);
 		this->parent = NULL;
 		this->childUnderCursor = NULL;
 		this->checkedChildUnderCursor = false;
@@ -512,7 +512,7 @@ namespace aprilui
 
 	void Object::draw()
 	{
-		if (!this->isVisible() || heqf(this->scale.x, 0.0f, aprilui::eTolerance) || heqf(this->scale.y, 0.0f, aprilui::eTolerance))
+		if (!this->isVisible() || heqf(this->scaleFactor.x, 0.0f, aprilui::eTolerance) || heqf(this->scaleFactor.y, 0.0f, aprilui::eTolerance))
 		{
 			return;
 		}
@@ -539,9 +539,9 @@ namespace aprilui
 		{
 			april::rendersys->rotate(this->angle);
 		}
-		if (this->scale.x != 1.0f || this->scale.y != 1.0f)
+		if (this->scaleFactor.x != 1.0f || this->scaleFactor.y != 1.0f)
 		{
-			april::rendersys->scale(this->scale.x, this->scale.y, 1.0f);
+			april::rendersys->scale(this->scaleFactor.x, this->scaleFactor.y, 1.0f);
 		}
 		this->OnDraw();
 		if (aprilui::isDebugEnabled())
@@ -613,7 +613,7 @@ namespace aprilui
 	
 	bool Object::isPointInside(gvec2 position)
 	{
-		if (heqf(this->scale.x, 0.0f, aprilui::eTolerance) || heqf(this->scale.y, 0.0f, aprilui::eTolerance))
+		if (heqf(this->scaleFactor.x, 0.0f, aprilui::eTolerance) || heqf(this->scaleFactor.y, 0.0f, aprilui::eTolerance))
 		{
 			return false;
 		}
@@ -1326,9 +1326,9 @@ namespace aprilui
 	{
 		if (overrideRoot == this)
 		{
-			return this->scale;
+			return this->scaleFactor;
 		}
-		gvec2 scale = this->scale;
+		gvec2 scale = this->scaleFactor;
 		if (this->parent != overrideRoot && this->parent != NULL)
 		{
 			scale *= this->parent->getDerivedScale(overrideRoot);
@@ -1370,17 +1370,17 @@ namespace aprilui
 		return animatorMoverY;
 	}
 
-	Animator* Object::rescaleX(float x, float speed)
+	Animator* Object::scaleX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, x, speed);
 		return animatorScalerX;
 	}
 
-	Animator* Object::rescaleY(float y, float speed)
+	Animator* Object::scaleY(float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed);
 		return animatorScalerY;
 	}
 
@@ -1463,20 +1463,20 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(MoverY, this->rect.y, position.y, speed);
 	}
 
-	void Object::rescale(float x, float y, float speed)
+	void Object::scale(float x, float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed);
 	}
 
-	void Object::rescale(gvec2 scale, float speed)
+	void Object::scale(gvec2 scale, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
-		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, scale.x, speed);
-		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, scale.y, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, scale.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, scale.y, speed);
 	}
 
 	void Object::resize(float x, float y, float speed)
@@ -1537,8 +1537,8 @@ namespace aprilui
 
 	DEFINE_ANIMATOR_F(moveX, MoverX);
 	DEFINE_ANIMATOR_F(moveY, MoverY);
-	DEFINE_ANIMATOR_F(rescaleX, ScalerX);
-	DEFINE_ANIMATOR_F(rescaleY, ScalerY);
+	DEFINE_ANIMATOR_F(scaleX, ScalerX);
+	DEFINE_ANIMATOR_F(scaleY, ScalerY);
 	DEFINE_ANIMATOR_F(resizeX, ResizerX);
 	DEFINE_ANIMATOR_F(resizeY, ResizerY);
 	DEFINE_ANIMATOR_F(rotate, Rotator);
@@ -1561,15 +1561,15 @@ namespace aprilui
 		return animatorMoverY;
 	}
 
-	Animator* Object::rescaleXQueue(float x, float speed, float delay)
+	Animator* Object::scaleXQueue(float x, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, x, speed, delay);
 		return animatorScalerX;
 	}
 
-	Animator* Object::rescaleYQueue(float y, float speed, float delay)
+	Animator* Object::scaleYQueue(float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed, delay);
 		return animatorScalerY;
 	}
 
@@ -1639,16 +1639,16 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, position.y, speed, delay);
 	}
 
-	void Object::rescaleQueue(float x, float y, float speed, float delay)
+	void Object::scaleQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed, delay);
 	}
 
-	void Object::rescaleQueue(gvec2 scale, float speed, float delay)
+	void Object::scaleQueue(gvec2 scale, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scale.x, scale.x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scale.y, scale.y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, scale.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, scale.y, speed, delay);
 	}
 
 	void Object::resizeQueue(float x, float y, float speed, float delay)
@@ -1693,8 +1693,8 @@ namespace aprilui
 	
 	DEFINE_ANIMATOR_F_DELAYED(moveX, MoverX);
 	DEFINE_ANIMATOR_F_DELAYED(moveY, MoverY);
-	DEFINE_ANIMATOR_F_DELAYED(rescaleX, ScalerX);
-	DEFINE_ANIMATOR_F_DELAYED(rescaleY, ScalerY);
+	DEFINE_ANIMATOR_F_DELAYED(scaleX, ScalerX);
+	DEFINE_ANIMATOR_F_DELAYED(scaleY, ScalerY);
 	DEFINE_ANIMATOR_F_DELAYED(resizeX, ResizerX);
 	DEFINE_ANIMATOR_F_DELAYED(resizeY, ResizerY);
 	DEFINE_ANIMATOR_F_DELAYED(rotate, Rotator);
@@ -1715,12 +1715,12 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(MoverY);
 	}
 
-	void Object::rescaleXStop()
+	void Object::scaleXStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 	}
 
-	void Object::rescaleYStop()
+	void Object::scaleYStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
 	}
@@ -1776,7 +1776,7 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(MoverY);
 	}
 
-	void Object::rescaleStop()
+	void Object::scaleStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
