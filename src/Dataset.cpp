@@ -348,7 +348,7 @@ namespace aprilui
 		hstr filepath = hrdir::normalize(hrdir::join_path(filePath, filename, false));
 		harray<hstr> paths = hrdir::split_path(filename);
 		paths.remove_first();
-		hstr textureName = hresource::no_extension(hrdir::join_path(paths));
+		hstr textureName = hresource::no_extension(hrdir::join_paths(paths));
 		if (this->textures.has_key(textureName))
 		{
 			throw ResourceExistsException(filename, "RamTexture", this);
