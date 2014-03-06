@@ -224,7 +224,7 @@ namespace aprilui
 		hstr localization = aprilui::getLocalization();
 		if (localization != "")
 		{
-			hstr locpath = hrdir::basedir(filename) + "/" + localization + "/" + hrdir::basename(filename);
+			hstr locpath = hrdir::join_path(hrdir::join_path(hrdir::basedir(filename), localization), hrdir::basename(filename));
 			locpath = april::rendersys->findTextureResource(locpath);
 			if (locpath != "")
 			{
@@ -237,7 +237,7 @@ namespace aprilui
 	void Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
-		hstr filepath = hrdir::normalize(this->filePath + "/" + filename);
+		hstr filepath = hrdir::normalize(hrdir::join_path(this->filePath, filename, false));
 		hstr textureName = hrdir::basename(filename);
 		if (this->textures.has_key(textureName))
 		{
@@ -345,8 +345,10 @@ namespace aprilui
 	void Dataset::parseRamTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
-		hstr filepath = hrdir::normalize(filePath + "/" + filename);
-		hstr textureName = hresource::no_extension(filename(filename.find('/') + 1, -1));
+		hstr filepath = hrdir::normalize(hrdir::join_path(filePath, filename, false));
+		harray<hstr> paths = hrdir::split_path(filename);
+		paths.remove_first();
+		hstr textureName = hresource::no_extension(hrdir::join_path(paths));
 		if (this->textures.has_key(textureName))
 		{
 			throw ResourceExistsException(filename, "RamTexture", this);
@@ -414,7 +416,7 @@ namespace aprilui
 		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
 		if (*node == "Include")
 		{
-			this->parseObjectInclude(this->filePath + "/" + node->pstr("path"), parent,
+			this->parseObjectInclude(hrdir::join_path(this->filePath, node->pstr("path"), false), parent,
 				node->pstr("name_prefix", "") + namePrefix, nameSuffix + node->pstr("name_suffix", ""),
 				gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f)));
 			return NULL;
@@ -553,7 +555,7 @@ namespace aprilui
 		{
 			if ((*it).starts_with(left) && (*it).ends_with(right))
 			{
-				this->parseObjectIncludeFile(basedir + "/" + (*it), parent, "", "", gvec2());
+				this->parseObjectIncludeFile(hrdir::join_path(basedir, (*it), false), parent, "", "", gvec2());
 			}
 		}
 	}
@@ -572,7 +574,7 @@ namespace aprilui
 			else if	(*node == "RamTexture")		parseRamTexture(node);
 			else if	(*node == "CompositeImage")	parseCompositeImage(node);
 			else if	(*node == "Object")			parseObject(node);
-			else if	(*node == "Include")		parseGlobalInclude(hrdir::basedir(path) + "/" + node->pstr("path"));
+			else if	(*node == "Include")		parseGlobalInclude(hrdir::join_path(hrdir::basedir(path), node->pstr("path"), false));
 			else if	(*node == "TextureGroup")	parseTextureGroup(node);
 			else
 			{
@@ -595,11 +597,11 @@ namespace aprilui
 
 	hstr Dataset::_makeTextsPath()
 	{
-		hstr filepathPrefix = this->filePath + "/" + (this->textsPath != "" ? this->textsPath : aprilui::getDefaultTextsPath()) + "/";
-		hstr filepath = hrdir::normalize(filepathPrefix + aprilui::getLocalization());
+		hstr filepathPrefix = hrdir::join_path(this->filePath, (this->textsPath != "" ? this->textsPath : aprilui::getDefaultTextsPath()), false);
+		hstr filepath = hrdir::normalize(hrdir::join_path(filepathPrefix, aprilui::getLocalization(), false));
 		if (!hrdir::exists(filepath))
 		{
-			filepath = hrdir::normalize(filepathPrefix + aprilui::getDefaultLocalization());
+			filepath = hrdir::normalize(hrdir::join_path(filepathPrefix, aprilui::getDefaultLocalization(), false));
 		}
 		return filepath;
 	}
