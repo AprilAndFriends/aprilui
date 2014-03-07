@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.04
 /// 
 /// @section LICENSE
 /// 
@@ -68,7 +68,7 @@ namespace aprilui
 			this->setCursorIndex(0);
 			return;
 		}
-		float fh = atres::renderer->getFontLineHeight(this->font);
+		float fh = atres::renderer->getFontResource(this->font)->getLineHeight();
 		// full text
 		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
 		harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT), this->text, tags, this->horzFormatting, this->vertFormatting);
@@ -102,9 +102,14 @@ namespace aprilui
 			{
 				offsetIndex = this->text.size();
 				atres::RenderLine* line = NULL;
+				float descender = 0.0f;
 				for_iter (i, 0, lines.size())
 				{
-					if (is_in_range(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h))
+					if (i == lines.size() - 1)
+					{
+						descender = atres::renderer->getFontResource(this->font)->getDescender();
+					}
+					if (is_in_range(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h + descender))
 					{
 						if (x <= lines[i].rect.x + lines[i].rect.w)
 						{
@@ -215,25 +220,26 @@ namespace aprilui
 
 	void EditBox::setFocused(bool value)
 	{
-		if (this->dataset != NULL)
+		Label::setFocused(value);
+		if (this->dataset != NULL && value)
 		{
-			if (value)
-			{
-				this->dataset->focus(this);
-				this->_blinkTimer = 0.0f;
-			}
-			else if (this->dataset->getFocusedObject() == this)
-			{
-				this->dataset->removeFocus();
-			}
+			this->_blinkTimer = 0.0f;
 		}
 	}
 
 	void EditBox::update(float time)
 	{
 		Label::update(time);
-		this->_blinkTimer += time * 2;
-		this->_blinkTimer = (this->_blinkTimer - (int)this->_blinkTimer);
+		if (!this->pushed)
+		{
+			this->_blinkTimer += time * 2;
+			this->_blinkTimer = (this->_blinkTimer - (int)this->_blinkTimer);
+		}
+		else
+		{
+			gvec2 position = this->transformToLocalSpace(aprilui::getCursorPosition());;
+			this->setCursorIndexAt(position.x, position.y);
+		}
 	}
 
 	void EditBox::OnDraw()
@@ -262,23 +268,29 @@ namespace aprilui
 		{
 			this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * 0.75f);
 		}
-		float fh = atres::renderer->getFontLineHeight(this->font);
+		float fh = atres::renderer->getFontResource(this->font)->getLineHeight();
+		float descender = atres::renderer->getFontResource(this->font)->getDescender();
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this)
 		{
-			rect.setPosition(this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text));
+			hstr leftText = this->text.utf8_substr(0, this->cursorIndex);
+			rect.setPosition(this->_makeCaretPosition(leftText, this->text));
 			if (this->horzFormatting != atres::LEFT_WRAPPED && this->horzFormatting != atres::CENTER_WRAPPED &&
 				this->horzFormatting != atres::RIGHT_WRAPPED && this->horzFormatting != atres::JUSTIFIED)
 			{
-				while (rect.x < 0.0f || rect.x < fh && this->textOffset.x < 0.0f && this->cursorIndex > 0)
+				if (atres::renderer->getTextWidth(this->font, this->text) > rect.w)
 				{
-					rect.x += fh;
-					this->textOffset.x += fh;
-				}
-				float frh = (this->horzFormatting == atres::RIGHT ? 0.0f : fh);
-				while (rect.x + frh > this->rect.w)
-				{
-					rect.x -= fh;
-					this->textOffset.x -= fh;
+					while (rect.x < fh && (this->horzFormatting != atres::LEFT || this->textOffset.x < 0.0f))
+					{
+						rect.x += fh;
+						this->textOffset.x += fh;
+					}
+					float boundary = (this->horzFormatting == atres::CENTER ? fh : 0.0f);
+					boundary = (this->horzFormatting == atres::RIGHT ? 0.0f : fh);
+					while (rect.x + fh > this->rect.w && (this->horzFormatting != atres::RIGHT || this->textOffset.x > 0.0f))
+					{
+						rect.x -= fh;
+						this->textOffset.x -= fh;
+					}
 				}
 			}
 			while (rect.y < fh * 0.5f || rect.y < fh && this->textOffset.y < 0.0f)
@@ -286,7 +298,8 @@ namespace aprilui
 				rect.y += fh;
 				this->textOffset.y += fh;
 			}
-			while (rect.y + fh * 0.5f > this->rect.h)
+			float lh = fh + descender;
+			while (rect.y + lh * 0.5f > this->rect.h)
 			{
 				rect.y -= fh;
 				this->textOffset.y -= fh;
@@ -298,9 +311,9 @@ namespace aprilui
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
-			rect.y -= fh * 0.5f - 2;
+			rect.y += 2 - fh * 0.5f;
 			rect.w = 1;
-			rect.h = hmin(fh - 4, this->rect.h - rect.y);
+			rect.h = hmin(fh + descender - 4, this->rect.h - rect.y);
 			if (rect.y < 0.0f)
 			{
 				rect.h += rect.y;
@@ -317,7 +330,8 @@ namespace aprilui
 	gvec2 EditBox::_makeCaretPosition(chstr text, chstr originalText)
 	{
 		gvec2 position;
-		float fh = atres::renderer->getFontLineHeight(this->font);
+		float fh = atres::renderer->getFontResource(this->font)->getLineHeight();
+		float descender = atres::renderer->getFontResource(this->font)->getDescender();
 		// full text
 		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
 		harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
@@ -329,7 +343,7 @@ namespace aprilui
 		}
 		float w2 = this->rect.w * 0.5f;
 		float h2 = this->rect.h * 0.5f;
-		float xhf = 0.0f; // x height factor
+		float xhf = 0.0f; // multiplier height factor
 		gvec2 base;
 		if (this->horzFormatting == atres::CENTER || this->horzFormatting == atres::CENTER_WRAPPED)
 		{
@@ -347,7 +361,7 @@ namespace aprilui
 		{
 			xhf = 1.0f;
 		}
-		base.y = (h2 * 2 - fh) * xhf;
+		base.y = (h2 * 2 - fh - descender) * xhf;
 		// caret position
 		if (text != "")
 		{
@@ -420,6 +434,9 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
+			gvec2 position = this->transformToLocalSpace(aprilui::getCursorPosition());;
+			this->setCursorIndexAt(position.x, position.y);
+			this->setFocused(true);
 			this->pushed = true;
 			return true;
 		}
@@ -434,9 +451,6 @@ namespace aprilui
 		}
 		if (this->pushed && this->isCursorInside())
 		{
-			gvec2 position = this->transformToLocalSpace(aprilui::getCursorPosition());;
-			this->setCursorIndexAt(position.x, position.y);
-			this->setFocused(true);
 			this->pushed = false;
 			this->triggerEvent("Click", keyCode);
 			return true;
@@ -586,7 +600,7 @@ namespace aprilui
 		if (this->cursorIndex > 0)
 		{
 			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text);
-			this->setCursorIndexAt(position.x, position.y - atres::renderer->getFontLineHeight(this->font));
+			this->setCursorIndexAt(position.x, position.y - atres::renderer->getFontResource(this->font)->getLineHeight());
 		}
 	}
 	
@@ -595,7 +609,7 @@ namespace aprilui
 		if (this->cursorIndex < this->text.utf8_size())
 		{
 			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text);
-			this->setCursorIndexAt(position.x, position.y + atres::renderer->getFontLineHeight(this->font));
+			this->setCursorIndexAt(position.x, position.y + atres::renderer->getFontResource(this->font)->getLineHeight());
 		}
 	}
 	

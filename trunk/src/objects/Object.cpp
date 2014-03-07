@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.03
+/// @version 3.04
 /// 
 /// @section LICENSE
 /// 
@@ -1201,15 +1201,15 @@ namespace aprilui
 		return (this->dataset != NULL && this->dataset->getFocusedObject() == this);
 	}
 	
-	void Object::setFocused(bool focused)
+	void Object::setFocused(bool value)
 	{
 		if (this->dataset != NULL)
 		{
-			if (focused)
+			if (value)
 			{
 				this->dataset->focus(this);
 			}
-			else
+			else if (this->dataset->getFocusedObject() == this)
 			{
 				this->dataset->removeFocus();
 			}
