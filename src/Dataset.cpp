@@ -325,7 +325,7 @@ namespace aprilui
 					{
 						image->setBlendMode(april::BM_OVERWRITE);
 					}
-					hstr colorMode = child->pstr("color_mode", "normal");
+					hstr colorMode = child->pstr("color_mode", "default");
 					if (colorMode == "lerp")
 					{
 						image->setColorMode(april::CM_LERP);
@@ -334,7 +334,7 @@ namespace aprilui
 					{
 						image->setColorMode(april::CM_ALPHA_MAP);
 					}
-					image->setColorModeAlpha(child->pint("color_mode_alpha", 255));
+					image->setColorModeFactor(child->pfloat("color_mode_factor", 1.0f));
 					this->images[name] = image;
 					image->dataset = this;
 				}

@@ -52,7 +52,7 @@ namespace aprilui
 		HL_DEFINE_IS(invertedY, InvertedY);
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
-		HL_DEFINE_GETSET(unsigned char, colorModeAlpha, ColorModeAlpha);
+		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
 		hstr getFullName();
 		void setSrcRect(grect value);
 		
@@ -64,7 +64,7 @@ namespace aprilui
 		grect srcRect;
 		april::BlendMode blendMode;
 		april::ColorMode colorMode;
-		unsigned char colorModeAlpha;
+		float colorModeFactor;
 		bool vertical;
 		bool invertedX;
 		bool invertedY;
