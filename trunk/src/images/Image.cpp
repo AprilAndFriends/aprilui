@@ -30,7 +30,7 @@ namespace aprilui
 		this->srcRect = source;
 		this->blendMode = april::BM_DEFAULT;
 		this->colorMode = april::CM_DEFAULT;
-		this->colorModeAlpha = 255;
+		this->colorModeFactor = 1.0f;
 		this->vertical = vertical;
 		this->invertedX = invertX;
 		this->invertedY = invertY;
@@ -45,7 +45,7 @@ namespace aprilui
 		this->srcRect = img.srcRect;
 		this->blendMode = img.blendMode;
 		this->colorMode = img.colorMode;
-		this->colorModeAlpha = img.colorModeAlpha;
+		this->colorModeFactor = img.colorModeFactor;
 		this->vertical = img.vertical;
 		this->invertedX = img.invertedX;
 		this->invertedY = img.invertedY;
@@ -123,7 +123,7 @@ namespace aprilui
 		this->_tryLoadTexCoords();
 			
 		april::rendersys->setTextureBlendMode(this->blendMode);
-		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeAlpha);
+		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
 			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->_tVertices, 4, color);
@@ -133,7 +133,7 @@ namespace aprilui
 			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->_tVertices, 4);
 		}
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
-		april::rendersys->setTextureColorMode(april::CM_DEFAULT, 255);
+		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
 	}
 	
 	void Image::draw(grect rect, april::Color color, float angle)
