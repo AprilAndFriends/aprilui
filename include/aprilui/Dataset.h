@@ -134,7 +134,7 @@ namespace aprilui
 			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
 			{
-				throw _InvalidObjectTypeCast(hsprintf("Object '%s' found in dataset '%s' but dynamic cast failed.", name.c_str(), this->getName().c_str()));
+				throw InvalidObjectTypeCast(hsprintf("Object '%s' found in dataset '%s' but dynamic cast failed.", name.c_str(), this->getName().c_str()));
 			}
 			return object;
 		}
