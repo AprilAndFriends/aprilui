@@ -324,6 +324,8 @@
 		D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QueuedCallbackEvent.cpp; path = src/QueuedCallbackEvent.cpp; sourceTree = "<group>"; };
 		D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueuedCallbackEvent.h; path = include/aprilui/QueuedCallbackEvent.h; sourceTree = "<group>"; };
 		D1522E69140F6A040012F290 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1681BAC18D768BC0088FC68 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
+		D1681BAD18D768BC0088FC68 /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
 		D16E990B158BE53800C058CE /* EventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventReceiver.cpp; path = src/EventReceiver.cpp; sourceTree = "<group>"; };
 		D16E990C158BE53800C058CE /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = src/Texture.cpp; sourceTree = "<group>"; };
 		D16E9912158BE54D00C058CE /* EventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventReceiver.h; path = include/aprilui/EventReceiver.h; sourceTree = "<group>"; };
@@ -385,7 +387,7 @@
 		0867D691FE84028FC02AAC07 /* libaprilui */ = {
 			isa = PBXGroup;
 			children = (
-				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				D1681B9818D7674D0088FC68 /* config */,
 				7FC8041211EC71CF00851062 /* include */,
 				7FC8041111EC71CC00851062 /* src */,
 				089C1665FE841158C02AAC07 /* Resources */,
@@ -593,6 +595,16 @@
 				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		D1681B9818D7674D0088FC68 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				D1681BAC18D768BC0088FC68 /* iOS.xcconfig */,
+				D1681BAD18D768BC0088FC68 /* Mac.xcconfig */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+			);
+			name = config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -959,6 +971,7 @@
 		};
 		7FC8A8B21296C772003D3931 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1013,6 +1026,7 @@
 		};
 		C981CCD8132AF0A90072B5A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1067,6 +1081,7 @@
 		};
 		C981CCDA132AF0AF0072B5A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1093,6 +1108,7 @@
 		};
 		D1522E74140F6A050012F290 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAC18D768BC0088FC68 /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1110,7 +1126,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
 				SDKROOT = iphoneos;
@@ -1120,6 +1135,7 @@
 		};
 		D1522E76140F6A050012F290 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAC18D768BC0088FC68 /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1136,7 +1152,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
 				SDKROOT = iphoneos;
@@ -1147,6 +1162,7 @@
 		};
 		D1522E77140F6A050012F290 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAC18D768BC0088FC68 /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -1163,7 +1179,6 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = aprilui;
 				SDKROOT = iphoneos;
@@ -1174,6 +1189,7 @@
 		};
 		D1F27B5F177A2FCA00E5C131 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
@@ -1194,6 +1210,7 @@
 		};
 		D1F27B61177A2FCA00E5C131 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
@@ -1214,6 +1231,7 @@
 		};
 		D1F27B62177A2FCA00E5C131 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
