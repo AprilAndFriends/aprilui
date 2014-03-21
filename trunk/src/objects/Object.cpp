@@ -42,7 +42,7 @@
 		} \
 		else \
 		{ \
-			(i ## name)++; \
+			++(i ## name); \
 		} \
 	}
 
@@ -591,7 +591,7 @@ namespace aprilui
 			}
 			else
 			{
-				i++;
+				++i;
 			}
 		}
 	}
