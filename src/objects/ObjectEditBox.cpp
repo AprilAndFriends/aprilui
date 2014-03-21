@@ -148,7 +148,7 @@ namespace aprilui
 								{
 									break;
 								}
-								offsetIndex++;
+								++offsetIndex;
 								ow += cw;
 								if (is_in_range(x, ow, ow + cw))
 								{
@@ -339,7 +339,7 @@ namespace aprilui
 		int lineCount = fullLines.size();
 		if (lineCount == 0 || fullLines.last().terminated)
 		{
-			lineCount++;
+			++lineCount;
 		}
 		float w2 = this->rect.w * 0.5f;
 		float h2 = this->rect.h * 0.5f;
@@ -630,12 +630,12 @@ namespace aprilui
 				newLine = true;
 				if (first)
 				{
-					this->cursorIndex--;
+					--this->cursorIndex;
 				}
 				break;
 			}
 			first = false;
-			this->cursorIndex--;
+			--this->cursorIndex;
 		}
 		if (!newLine)
 		{
@@ -646,7 +646,7 @@ namespace aprilui
 				{
 					break;
 				}
-				this->cursorIndex--;
+				--this->cursorIndex;
 			}
 		}
 		this->_blinkTimer = 0.0f;
@@ -670,12 +670,12 @@ namespace aprilui
 				newLine = true;
 				if (first)
 				{
-					this->cursorIndex++;
+					++this->cursorIndex;
 				}
 				break;
 			}
 			first = false;
-			this->cursorIndex++;
+			++this->cursorIndex;
 		}
 		if (!newLine)
 		{
@@ -686,7 +686,7 @@ namespace aprilui
 				{
 					break;
 				}
-				this->cursorIndex++;
+				++this->cursorIndex;
 			}
 		}
 		this->_blinkTimer = 0.0f;
@@ -726,11 +726,11 @@ namespace aprilui
 		int index = this->cursorIndex;
 		while (index > 0 && this->text.first_unicode_char(index - 1) == UNICODE_CHAR_SPACE)
 		{
-			index--;
+			--index;
 		}
 		while (index > 0 && this->text.first_unicode_char(index - 1) != UNICODE_CHAR_SPACE)
 		{
-			index--;
+			--index;
 		}
 		if (this->cursorIndex > index)
 		{
@@ -744,11 +744,11 @@ namespace aprilui
 		int size = this->text.utf8_size();
 		while (index < size && this->text.first_unicode_char(index) != UNICODE_CHAR_SPACE)
 		{
-			index++;
+			++index;
 		}
 		while (index < size && this->text.first_unicode_char(index) == UNICODE_CHAR_SPACE)
 		{
-			index++;
+			++index;
 		}
 		if (index > this->cursorIndex)
 		{
@@ -773,7 +773,7 @@ namespace aprilui
 		{
 			right = this->text.utf8_substr(this->cursorIndex, size - this->cursorIndex);
 		}
-		this->cursorIndex++;
+		++this->cursorIndex;
 		this->text = (left + hstr::from_unicode(charCode)) + right;
 		this->_blinkTimer = 0.0f;
 	}

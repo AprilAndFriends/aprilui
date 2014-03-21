@@ -631,7 +631,7 @@ namespace aprilui
 				int i = 0;
 				while (i < firstLine.size() && !is_between((int)firstLine[i], 0, 127))
 				{
-					i++;
+					++i;
 				}
 				lines[0] = (i < firstLine.size() ? firstLine(i, firstLine.size() - i) : "");
 			}
@@ -1181,7 +1181,7 @@ namespace aprilui
 			const unsigned int* cstr = argString.c_str();
 			while (cstr[0] == ' ')
 			{
-				cstr++;
+				++cstr;
 			}
 			argString = cstr;
 			// r-trimming
@@ -1191,7 +1191,7 @@ namespace aprilui
 				int i = argString.size() - 1;
 				while (i >= 0 && cstr[i] == ' ')
 				{
-					i--;
+					--i;
 				}
 				argString = argString.substr(0, i + 1);
 			}
