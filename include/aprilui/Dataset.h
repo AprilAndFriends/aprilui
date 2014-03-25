@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.05
 /// 
 /// @section LICENSE
 /// 
@@ -27,6 +27,7 @@
 
 namespace hlxml
 {
+	class Document;
 	class Node;
 }
 
@@ -185,6 +186,10 @@ namespace aprilui
 		NullImage* nullImage;
 		harray<QueuedCallback> callbackQueue;
 		hmap<hstr, void (*)()> callbacks;
+		hmap<hstr, hlxml::Document*> includeDocuments;
+		
+		hlxml::Document* _openDocument(chstr filename);
+		void _closeDocuments();
 		
 		void parseTexture(hlxml::Node* node);
 		void parseRamTexture(hlxml::Node* node);
