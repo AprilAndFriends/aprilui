@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.05
 /// 
 /// @section LICENSE
 /// 
@@ -432,7 +432,6 @@ namespace aprilui
 			{
 				objectName = aprilui::generateName(className);
 			}
-			node->setProperty("name", objectName);
 			if (*node == "Object")
 			{
 				rect.x = node->pfloat("x") + offset.x;
@@ -526,7 +525,7 @@ namespace aprilui
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
 		hlog::write(aprilui::logTag, "Parsing object include file: " + path);
-		hlxml::Document* doc = hlxml::open(path);
+		hlxml::Document* doc = this->_openDocument(path);
 		hlxml::Node* current = doc->root();
 		foreach_xmlnode (node, current)
 		{
@@ -535,7 +534,26 @@ namespace aprilui
 				this->recursiveObjectParse(node, parent, namePrefix, nameSuffix, offset);
 			}
 		}
-		hlxml::close(doc);
+	}
+	
+	hlxml::Document* Dataset::_openDocument(chstr filename)
+	{
+		hlxml::Document* document = this->includeDocuments.try_get_by_key(filename, NULL);
+		if (document == NULL)
+		{
+			document = hlxml::open(filename);
+			this->includeDocuments[filename] = document;
+		}
+		return document;
+	}
+	
+	void Dataset::_closeDocuments()
+	{
+		foreach_m (hlxml::Document*, it, this->includeDocuments)
+		{
+			hlxml::close(it->second);
+		}
+		this->includeDocuments.clear();
 	}
 	
 	void Dataset::parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
@@ -589,7 +607,16 @@ namespace aprilui
 		if (this->filename != "")
 		{
 			this->_loadTexts(this->_makeTextsPath());
-			this->readFile(this->filename);
+			try
+			{
+				this->readFile(this->filename);
+				this->_closeDocuments(); // safe not to throw an exception
+			}
+			catch (hltypes::exception& e)
+			{
+				this->_closeDocuments(); // safe not to throw an exception
+				throw e;
+			}
 		}
 		this->loaded = true;
 		this->update(0.0f);
