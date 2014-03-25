@@ -615,6 +615,7 @@ namespace aprilui
 			catch (hltypes::exception& e)
 			{
 				this->_closeDocuments(); // safe not to throw an exception
+				hlog::error(aprilui::logTag, e.message());
 				throw e;
 			}
 		}
