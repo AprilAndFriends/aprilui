@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.06
 /// 
 /// @section LICENSE
 /// 
@@ -96,6 +96,7 @@ namespace aprilui
 				float distance = area->_dragSpeed.y * area->_dragTimer.y - hsgn(area->_dragSpeed.y) * inertia * area->_dragTimer.y * area->_dragTimer.y * 0.5f;
 				value -= hroundf(hsgn(area->_dragSpeed.y) * inertia * time * time * 0.5f - distance);
 				area->_lastScrollOffset.y = area->getScrollOffsetY();
+				area->_dragTimer.y = 0.0f;
 			}
 			else if (this->gridSize > 0.0f && habs(value) < this->gridSize)
 			{

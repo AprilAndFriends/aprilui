@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.06
 /// 
 /// @section LICENSE
 /// 
@@ -99,8 +99,8 @@ namespace aprilui
 		static void _clickScrollBar(EventArgs* args);
 
 	private:
-		bool _scrolling;
 		gvec2 _clickPosition;
+		bool _scrolling;
 
 	};
 }
