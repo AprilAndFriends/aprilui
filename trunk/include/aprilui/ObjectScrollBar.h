@@ -51,7 +51,7 @@ namespace aprilui
 		bool onMouseMove();
 		bool onMouseScroll(float x, float y);
 
-		virtual void addScrollValue(float value, bool useAccumulated = false) = 0;
+		virtual void addScrollValue(float value) = 0;
 		void addScrollValueBegin(float multiplier = 1.0f);
 		void addScrollValueEnd(float multiplier = 1.0f);
 
