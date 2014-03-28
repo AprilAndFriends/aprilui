@@ -174,12 +174,10 @@ namespace aprilui
 					this->_dragSpeed.set(0.0f, 0.0f);
 					this->_snapScrollOffset();
 				}
-				this->_dragDistance.set(0.0f, 0.0f);
 			}
 			if (this->dragging)
 			{
 				this->setScrollOffset(this->_clickScrollOffset + (this->_clickPosition - position) / this->getDerivedScale());
-				this->_dragDistance.set(0.0f, 0.0f);
 				this->_dragSpeed = (position - this->_lastPosition) / k;
 				if (this->dragMaxSpeed > 0.0f)
 				{
@@ -210,7 +208,6 @@ namespace aprilui
 				else
 				{
 					this->_lastScrollOffset.x -= hsgn(this->_dragSpeed.x) * (this->inertia * (inertiaTime.x * inertiaTime.x * 0.5f));
-					this->_dragDistance.x = 0.0f;
 					this->_dragSpeed.x = 0.0f;
 					this->_dragTimer.x = 0.0f;
 				}
@@ -224,7 +221,6 @@ namespace aprilui
 				else
 				{
 					this->_lastScrollOffset.y -= hsgn(this->_dragSpeed.y) * (this->inertia * (inertiaTime.y * inertiaTime.y * 0.5f));
-					this->_dragDistance.y = 0.0f;
 					this->_dragSpeed.y = 0.0f;
 					this->_dragTimer.y = 0.0f;
 				}
@@ -235,20 +231,17 @@ namespace aprilui
 			gvec2 newOffset = this->getScrollOffset();
 			if (offset.x == newOffset.x)
 			{
-				this->_dragDistance.x = 0.0f;
 				this->_dragSpeed.x = 0.0f;
 				this->_dragTimer.x = 0.0f;
 			}
 			if (offset.y == newOffset.y)
 			{
-				this->_dragDistance.y = 0.0f;
 				this->_dragSpeed.y = 0.0f;
 				this->_dragTimer.y = 0.0f;
 			}
 		}
 		else
 		{
-			this->_dragDistance.set(0.0f, 0.0f);
 			this->_dragTimer.set(0.0f, 0.0f);
 		}
 	}
@@ -381,7 +374,6 @@ namespace aprilui
 	{
 		this->dragging = false;
 		this->pushed = false;
-		this->_dragDistance.set(0.0f, 0.0f);
 		this->_dragSpeed.set(0.0f, 0.0f);
 	}
 	

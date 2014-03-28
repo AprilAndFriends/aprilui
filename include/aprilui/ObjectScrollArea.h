@@ -98,7 +98,6 @@ namespace aprilui
 		gvec2 _lastPosition;
 		gvec2 _clickScrollOffset;
 		gvec2 _lastScrollOffset;
-		gvec2 _dragDistance;
 		gvec2 _dragSpeed;
 		gvec2 _dragTimer;
 

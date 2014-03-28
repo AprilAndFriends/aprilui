@@ -243,7 +243,7 @@ namespace aprilui
 			{
 				hswap(x, y);
 			}
-			this->addScrollValue(this->_calcScrollMove(x, y), true);
+			this->addScrollValue(this->_calcScrollMove(x, y));
 		}
 		return false;
 	}

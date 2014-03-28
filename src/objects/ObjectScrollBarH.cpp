@@ -69,7 +69,7 @@ namespace aprilui
 		return result;
 	}
 
-	void ScrollBarH::addScrollValue(float value, bool useAccumulated)
+	void ScrollBarH::addScrollValue(float value)
 	{
 		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent == NULL)
@@ -89,14 +89,7 @@ namespace aprilui
 		else
 		{
 			this->_initAreaDragging();
-			bool noAccumulation = (area->_dragDistance.x == 0.0f);
-			if (useAccumulated)
-			{
-				area->_dragDistance.x += value;
-				value = area->_dragDistance.x;
-			}
-			value = hroundf(value);
-			if (area->_dragSpeed.x != 0.0f && area->_dragTimer.x > 0.0f && noAccumulation)
+			if (area->_dragSpeed.x != 0.0f)
 			{
 				float time = habs(area->_dragSpeed.x / inertia);
 				float distance = area->_dragSpeed.x * area->_dragTimer.x - hsgn(area->_dragSpeed.x) * inertia * area->_dragTimer.x * area->_dragTimer.x * 0.5f;
@@ -143,7 +136,7 @@ namespace aprilui
 
 	float ScrollBarH::_calcScrollMove(float x, float y)
 	{
-		return (x * ScrollBar::ScrollDistance);
+		return hroundf(x * ScrollBar::ScrollDistance);
 	}
 
 	void ScrollBarH::notifyEvent(chstr name, void* params)
