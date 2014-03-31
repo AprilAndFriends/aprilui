@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -19,6 +19,7 @@
 #include <april/Color.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/harray.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
@@ -41,15 +42,15 @@ namespace aprilui
 		virtual ~Image();
 		
 		virtual void draw(grect rect, april::Color color = april::Color::White);
-		void draw(grect rect, april::Color color, float angle);
+		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White);
 		
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(Texture*, texture, Texture);
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(grect, srcRect, SrcRect);
 		HL_DEFINE_IS(vertical, Vertical);
-		HL_DEFINE_IS(invertedX, InvertedX);
-		HL_DEFINE_IS(invertedY, InvertedY);
+		HL_DEFINE_IS(invertX, InvertX);
+		HL_DEFINE_IS(invertY, InvertY);
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
@@ -66,8 +67,8 @@ namespace aprilui
 		april::ColorMode colorMode;
 		float colorModeFactor;
 		bool vertical;
-		bool invertedX;
-		bool invertedY;
+		bool invertX;
+		bool invertY;
 
 		bool _textureCoordinatesLoaded;
 		

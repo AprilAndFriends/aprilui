@@ -188,6 +188,9 @@
     <ClCompile Include="src\objects\ObjectProgressCircle.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\ObjectProgressBase.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\aprilui\Animators.h">
@@ -362,6 +365,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\ObjectProgressCircle.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectProgressBase.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -21,10 +21,11 @@
 #include "apriluiExport.h"
 #include "Image.h"
 #include "ObjectImageBox.h"
+#include "ObjectProgressBase.h"
 
 namespace aprilui
 {
-	class apriluiExport ProgressBar : public ImageBox
+	class apriluiExport ProgressBar : public ImageBox, public ProgressBase
 	{
 	public:
 		enum Direction
@@ -39,21 +40,9 @@ namespace aprilui
 		~ProgressBar();
 		static Object* createInstance(chstr name, grect rect);
 		
-		HL_DEFINE_GET(Image*, progressImage, ProgressImage);
-		HL_DEFINE_GET(Image*, maskImage, MaskImage);
-		HL_DEFINE_GET(hstr, progressImageName, ProgressImageName);
-		HL_DEFINE_GET(hstr, maskImageName, MaskImageName);
-		HL_DEFINE_GETSET(float, progress, Progress);
 		HL_DEFINE_ISSET(stretching, Stretching);
 		HL_DEFINE_GETSET(Direction, direction, Direction);
-		void setProgressImage(Image* image);
-		void setMaskImage(Image* image);
-		void setProgressImageByName(chstr name);
-		void setMaskImageByName(chstr name);
-
-		/// @brief Optimized version.
-		bool trySetProgressImageByName(chstr name);
-		bool trySetMaskImageByName(chstr name);
+		Dataset* getDataset();
 
 		void OnDraw();
 
@@ -61,11 +50,6 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		Image* progressImage;
-		hstr progressImageName;
-		Image* maskImage;
-		hstr maskImageName;
-		float progress;
 		bool stretching;
 		Direction direction;
 

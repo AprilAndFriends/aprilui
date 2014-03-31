@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -17,8 +17,8 @@
 
 namespace aprilui
 {
-	ColoredImage::ColoredImage(Texture* texture, chstr name, grect source, bool vertical, april::Color color) :
-				  Image(texture, name, source, vertical)
+	ColoredImage::ColoredImage(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY, april::Color color) :
+				  Image(texture, name, source, vertical, invertX, invertY)
 	{
 		this->color = color;
 	}

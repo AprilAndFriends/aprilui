@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -29,7 +29,7 @@ namespace aprilui
 	class apriluiExport ColoredImage : public Image
 	{
 	public:
-		ColoredImage(Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = april::Color::White);
+		ColoredImage(Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false, april::Color color = april::Color::White);
 		// TODO - has to be refactored
 		/// @brief Takes an Image instance and creates a Colored Image 
 		ColoredImage(Image& img, chstr name, april::Color color);

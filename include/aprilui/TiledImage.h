@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -27,7 +27,7 @@ namespace aprilui
 	class apriluiExport TiledImage : public Image
 	{
 	public:
-		TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
+		TiledImage(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY, float tileW, float tileH);
 		~TiledImage();
 		
 		HL_DEFINE_GETSET(gvec2, tile, Tile);

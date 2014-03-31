@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -32,8 +32,8 @@ namespace aprilui
 		this->colorMode = april::CM_DEFAULT;
 		this->colorModeFactor = 1.0f;
 		this->vertical = vertical;
-		this->invertedX = invertX;
-		this->invertedY = invertY;
+		this->invertX = invertX;
+		this->invertY = invertY;
 		this->_textureCoordinatesLoaded = false;
 		this->dataset = NULL;
 	}
@@ -47,8 +47,8 @@ namespace aprilui
 		this->colorMode = img.colorMode;
 		this->colorModeFactor = img.colorModeFactor;
 		this->vertical = img.vertical;
-		this->invertedX = img.invertedX;
-		this->invertedY = img.invertedY;
+		this->invertX = img.invertX;
+		this->invertY = img.invertY;
 		this->_textureCoordinatesLoaded = false;
 	}
 	
@@ -74,39 +74,26 @@ namespace aprilui
 			this->_textureCoordinatesLoaded = true;
 			float iw = 1.0f / this->texture->getWidth();
 			float ih = 1.0f / this->texture->getHeight();
-			if (!this->vertical)
+
+			this->_tVertices[0].u = this->_tVertices[2].u = this->srcRect.left() * iw;
+			this->_tVertices[0].v = this->_tVertices[1].v = this->srcRect.top() * ih;
+			this->_tVertices[1].u = this->_tVertices[3].u = this->srcRect.right() * iw;
+			this->_tVertices[2].v = this->_tVertices[3].v = this->srcRect.bottom() * ih;
+			if (this->invertX)
 			{
-				this->_tVertices[0].u = this->_tVertices[2].u = this->srcRect.left() * iw;
-				this->_tVertices[0].v = this->_tVertices[1].v = this->srcRect.top() * ih;
-				this->_tVertices[1].u = this->_tVertices[3].u = this->srcRect.right() * iw;
-				this->_tVertices[2].v = this->_tVertices[3].v = this->srcRect.bottom() * ih;
-				if (this->invertedX)
-				{
-					hswap(this->_tVertices[0].u, this->_tVertices[1].u);
-					hswap(this->_tVertices[2].u, this->_tVertices[3].u);
-				}
-				if (this->invertedY)
-				{
-					hswap(this->_tVertices[0].v, this->_tVertices[2].v);
-					hswap(this->_tVertices[1].v, this->_tVertices[3].v);
-				}
+				hswap(this->_tVertices[0].u, this->_tVertices[1].u);
+				hswap(this->_tVertices[2].u, this->_tVertices[3].u);
 			}
-			else
+			if (this->invertY)
 			{
-				this->_tVertices[0].u = this->_tVertices[1].u = (this->srcRect.x + this->srcRect.h) * iw;
-				this->_tVertices[0].v = this->_tVertices[2].v = this->srcRect.y * ih;
-				this->_tVertices[1].v = this->_tVertices[3].v = (this->srcRect.y + this->srcRect.w) * ih;
-				this->_tVertices[2].u = this->_tVertices[3].u = this->srcRect.x * iw;
-				if (this->invertedY)
-				{
-					hswap(this->_tVertices[0].u, this->_tVertices[2].u);
-					hswap(this->_tVertices[1].u, this->_tVertices[3].u);
-				}
-				if (this->invertedX)
-				{
-					hswap(this->_tVertices[0].v, this->_tVertices[1].v);
-					hswap(this->_tVertices[2].v, this->_tVertices[3].v);
-				}
+				hswap(this->_tVertices[0].v, this->_tVertices[2].v);
+				hswap(this->_tVertices[1].v, this->_tVertices[3].v);
+			}
+			// vertical is applied last
+			if (this->vertical)
+			{
+				hswap(this->_tVertices[0].u, this->_tVertices[2].v);
+				hswap(this->_tVertices[3].u, this->_tVertices[1].v);
 			}
 		}
 	}
@@ -121,7 +108,7 @@ namespace aprilui
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getRenderTexture());
 		this->_tryLoadTexCoords();
-			
+		
 		april::rendersys->setTextureBlendMode(this->blendMode);
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
@@ -135,19 +122,35 @@ namespace aprilui
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
 	}
-	
-	void Image::draw(grect rect, april::Color color, float angle)
-	{
-		if (angle == 0.0f)
-		{
-			this->draw(rect, color);
-			return;
-		}
-		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-		april::rendersys->translate(rect.w * 0.5f, rect.h * 0.5f);
-		april::rendersys->rotate(angle);
-		this->draw(rect - rect.getSize() * 0.5f, color);
-		april::rendersys->setModelviewMatrix(originalMatrix);
-	}
 
+	void Image::draw(harray<april::TexturedVertex> vertices, april::Color color)
+	{
+		this->texture->load();
+		april::rendersys->setTexture(this->texture->getRenderTexture());
+		this->_tryLoadTexCoords();
+			
+		float iw = 1.0f / this->texture->getWidth();
+		float ih = 1.0f / this->texture->getHeight();
+		harray<april::TexturedVertex> newVertices = vertices;
+		foreach (april::TexturedVertex, it, newVertices)
+		{
+			it->u = (this->srcRect.x + it->u * this->srcRect.w) * iw;
+			it->v = (this->srcRect.y + it->v * this->srcRect.h) * ih;
+		}
+
+
+		april::rendersys->setTextureBlendMode(this->blendMode);
+		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
+		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
+		{
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &newVertices[0], newVertices.size(), color);
+		}
+		else
+		{
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &newVertices[0], newVertices.size());
+		}
+		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
+	}
+	
 }

@@ -126,6 +126,7 @@
     <ClCompile Include="src\EventReceiver.cpp" />
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\MemberCallbackEvent.cpp" />
+    <ClCompile Include="src\objects\ObjectProgressBase.cpp" />
     <ClCompile Include="src\objects\ObjectProgressCircle.cpp" />
     <ClCompile Include="src\objects\ObjectScrollArea.cpp" />
     <ClCompile Include="src\objects\ObjectScrollBar.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="include\aprilui\EventReceiver.h" />
     <ClInclude Include="include\aprilui\EventUtils.h" />
     <ClInclude Include="include\aprilui\MemberCallbackEvent.h" />
+    <ClInclude Include="include\aprilui\ObjectProgressBase.h" />
     <ClInclude Include="include\aprilui\ObjectProgressCircle.h" />
     <ClInclude Include="include\aprilui\ObjectScrollArea.h" />
     <ClInclude Include="include\aprilui\ObjectScrollBar.h" />
