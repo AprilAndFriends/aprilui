@@ -16,12 +16,8 @@
 
 namespace aprilui
 {
-	ProgressCircle::ProgressCircle(chstr name, grect rect) :
-		ImageBox(name, rect)
+	ProgressCircle::ProgressCircle(chstr name, grect rect) : ImageBox(name, rect), ProgressBase()
 	{
-		this->progressImage = NULL;
-		this->maskImage = NULL;
-		this->progress = 1.0f;
 		this->startAngle = 0.0f;
 		this->direction = Clockwise;
 	}
@@ -35,17 +31,82 @@ namespace aprilui
 		return new ProgressCircle(name, rect);
 	}
 
+	Dataset* ProgressCircle::getDataset()
+	{
+		return ImageBox::getDataset();
+	}
+
 	void ProgressCircle::OnDraw()
 	{
 		ImageBox::OnDraw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		if (this->progressImage != NULL && progress > 0.0f)
+		if (this->progressImage != NULL)
 		{
-			grect srcRect = this->progressImage->getSrcRect();
-			this->progressImage->draw(this->_calcRectDirection(this->_getDrawRect(), progress), color);
-			this->progressImage->setSrcRect(srcRect);
+			grect rect = this->_getDrawRect();
+			if (progress == 1.0f)
+			{
+				this->progressImage->draw(rect, color);
+			}
+			else if (progress > 0.0f)
+			{
+				harray<april::TexturedVertex> vertices;
+				{
+					april::TexturedVertex vertex(rect.centerX(), rect.centerY(), 0.0f);
+					vertex.u = 0.5f;
+					vertex.v = 0.5f;
+					vertices += vertex;
+				}
+				{
+					april::TexturedVertex vertex(rect.centerX(), rect.y, 0.0f);
+					vertex.u = 0.5f;
+					vertex.v = 0.0f;
+					vertices += vertex;
+				}
+				if (progress > 0.125f)
+				{
+					april::TexturedVertex vertex(rect.right(), rect.y, 0.0f);
+					vertex.u = 1.0f;
+					vertex.v = 0.0f;
+					vertices += vertex;
+					vertices += vertices.first();
+					vertices += vertex;
+				}
+				if (progress > 0.375f)
+				{
+					april::TexturedVertex vertex(rect.right(), rect.bottom(), 0.0f);
+					vertex.u = 1.0f;
+					vertex.v = 1.0f;
+					vertices += vertex;
+					vertices += vertices.first();
+					vertices += vertex;
+				}
+				if (progress > 0.625f)
+				{
+					april::TexturedVertex vertex(rect.x, rect.bottom(), 0.0f);
+					vertex.u = 0.0f;
+					vertex.v = 1.0f;
+					vertices += vertex;
+					vertices += vertices.first();
+					vertices += vertex;
+				}
+				if (progress > 0.875f)
+				{
+					april::TexturedVertex vertex(rect.x, rect.y, 0.0f);
+					vertex.u = 0.0f;
+					vertex.v = 0.0f;
+					vertices += vertex;
+					//vertices += vertices.first();
+					//vertices += vertex;
+					//vertices += vertices[1];
+				}
+				else
+				{
+					vertices += vertices.first();
+				}
+				this->progressImage->draw(vertices, color);
+			}
 		}
 		if (this->maskImage != NULL)
 		{
@@ -53,91 +114,34 @@ namespace aprilui
 		}
 	}
 
-	grect ProgressCircle::_calcRectDirection(grect rect, float progress)
-	{
-		float size = 0.0f;
-		switch (this->direction)
-		{
-		case Clockwise:
-			rect.w *= progress;
-			break;
-		case Counterclockwise:
-			size = rect.w * progress;
-			rect.x += rect.w - size;
-			rect.w = size;
-			break;
-		}
-		return rect;
-	}
-
-	void ProgressCircle::setProgressImage(Image* image)
-	{
-		this->progressImage = image;
-		this->progressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
-	}
-
-	void ProgressCircle::setMaskImage(Image* image)
-	{
-		this->maskImage = image;
-		this->maskImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
-	}
-
-	void ProgressCircle::setProgressImageByName(chstr name)
-	{
-		this->setProgressImage(this->dataset->getImage(name));
-	}
-
-	void ProgressCircle::setMaskImageByName(chstr name)
-	{
-		this->setMaskImage(this->dataset->getImage(name));
-	}
-
-	bool ProgressCircle::trySetProgressImageByName(chstr name)
-	{
-		if (this->progressImageName != name)
-		{
-			// using c/p code because of performance reasons
-			this->setProgressImage(this->dataset->getImage(name));
-			return true;
-		}
-		return false;
-	}
-	
-	bool ProgressCircle::trySetMaskImageByName(chstr name)
-	{
-		if (this->maskImageName != name)
-		{
-			// using c/p code because of performance reasons
-			this->setMaskImage(this->dataset->getImage(name));
-			return true;
-		}
-		return false;
-	}
-	
 	hstr ProgressCircle::getProperty(chstr name, bool* propertyExists)
 	{
 		if (propertyExists != NULL)
 		{
 			*propertyExists = true;
 		}
-		if (name == "progress_image")	return this->getProgressImageName();
-		if (name == "mask_image")		return this->getMaskImageName();
-		if (name == "progress")			return this->getProgress();
-		if (name == "start_angle")		return this->getStartAngle();
+		if (name == "start_angle")	return this->getStartAngle();
 		if (name == "direction")
 		{
 			if (this->direction == Clockwise)			return "clockwise";
 			if (this->direction == Counterclockwise)	return "counterclockwise";
 		}
-		return ImageBox::getProperty(name, propertyExists);
+		bool exists = false;
+		hstr result = ProgressBase::getProperty(name, &exists);
+		if (!exists)
+		{
+			result = ImageBox::getProperty(name, &exists);
+		}
+		if (propertyExists != NULL)
+		{
+			*propertyExists = exists;
+		}
+		return result;
 	}
 
 	bool ProgressCircle::setProperty(chstr name, chstr value)
 	{
-		if		(name == "progress_image")	this->setProgressImageByName(value);
-		else if (name == "mask_image")		this->setMaskImageByName(value);
-		else if (name == "progress")		this->setProgress(value);
-		else if (name == "start_angle")		this->setStartAngle(value);
+		if		(name == "start_angle")	this->setStartAngle(value);
 		else if (name == "direction")
 		{
 			if (value == "clockwise")				this->setDirection(Clockwise);
@@ -148,6 +152,7 @@ namespace aprilui
 				return false;
 			}
 		}
+		else if (ProgressBase::setProperty(name, value)) { }
 		else return ImageBox::setProperty(name, value);
 		return true;
 	}

@@ -143,7 +143,7 @@ class MouseDelegate : public april::MouseDelegate
 		aprilui::onMouseUp(button);
 		aprilui::processEvents();
 	}
-
+	
 	void onMouseMove()
 	{
 		aprilui::onMouseMove();

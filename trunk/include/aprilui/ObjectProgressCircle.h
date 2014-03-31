@@ -20,10 +20,11 @@
 #include "apriluiExport.h"
 #include "Image.h"
 #include "ObjectImageBox.h"
+#include "ObjectProgressBase.h"
 
 namespace aprilui
 {
-	class apriluiExport ProgressCircle : public ImageBox
+	class apriluiExport ProgressCircle : public ImageBox, public ProgressBase
 	{
 	public:
 		enum Direction
@@ -36,21 +37,9 @@ namespace aprilui
 		~ProgressCircle();
 		static Object* createInstance(chstr name, grect rect);
 		
-		HL_DEFINE_GET(Image*, progressImage, ProgressImage);
-		HL_DEFINE_GET(Image*, maskImage, MaskImage);
-		HL_DEFINE_GET(hstr, progressImageName, ProgressImageName);
-		HL_DEFINE_GET(hstr, maskImageName, MaskImageName);
-		HL_DEFINE_GETSET(float, progress, Progress);
 		HL_DEFINE_GETSET(float, startAngle, StartAngle);
 		HL_DEFINE_GETSET(Direction, direction, Direction);
-		void setProgressImage(Image* image);
-		void setMaskImage(Image* image);
-		void setProgressImageByName(chstr name);
-		void setMaskImageByName(chstr name);
-
-		/// @brief Optimized version.
-		bool trySetProgressImageByName(chstr name);
-		bool trySetMaskImageByName(chstr name);
+		Dataset* getDataset();
 
 		void OnDraw();
 
@@ -58,15 +47,8 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		Image* progressImage;
-		hstr progressImageName;
-		Image* maskImage;
-		hstr maskImageName;
-		float progress;
 		float startAngle;
 		Direction direction;
-
-		grect _calcRectDirection(grect rect, float progress);
 		
 	};
 }

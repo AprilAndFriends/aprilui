@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -17,12 +17,8 @@
 
 namespace aprilui
 {
-	ProgressBar::ProgressBar(chstr name, grect rect) :
-		ImageBox(name, rect)
+	ProgressBar::ProgressBar(chstr name, grect rect) : ImageBox(name, rect), ProgressBase()
 	{
-		this->progressImage = NULL;
-		this->maskImage = NULL;
-		this->progress = 1.0f;
 		this->stretching = false;
 		this->direction = Right;
 	}
@@ -34,6 +30,11 @@ namespace aprilui
 	Object* ProgressBar::createInstance(chstr name, grect rect)
 	{
 		return new ProgressBar(name, rect);
+	}
+
+	Dataset* ProgressBar::getDataset()
+	{
+		return ImageBox::getDataset();
 	}
 
 	void ProgressBar::OnDraw()
@@ -82,60 +83,13 @@ namespace aprilui
 		return rect;
 	}
 
-	void ProgressBar::setProgressImage(Image* image)
-	{
-		this->progressImage = image;
-		this->progressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
-	}
-
-	void ProgressBar::setMaskImage(Image* image)
-	{
-		this->maskImage = image;
-		this->maskImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
-	}
-
-	void ProgressBar::setProgressImageByName(chstr name)
-	{
-		this->setProgressImage(this->dataset->getImage(name));
-	}
-
-	void ProgressBar::setMaskImageByName(chstr name)
-	{
-		this->setMaskImage(this->dataset->getImage(name));
-	}
-
-	bool ProgressBar::trySetProgressImageByName(chstr name)
-	{
-		if (this->progressImageName != name)
-		{
-			// using c/p code because of performance reasons
-			this->setProgressImage(this->dataset->getImage(name));
-			return true;
-		}
-		return false;
-	}
-	
-	bool ProgressBar::trySetMaskImageByName(chstr name)
-	{
-		if (this->maskImageName != name)
-		{
-			// using c/p code because of performance reasons
-			this->setMaskImage(this->dataset->getImage(name));
-			return true;
-		}
-		return false;
-	}
-	
 	hstr ProgressBar::getProperty(chstr name, bool* propertyExists)
 	{
 		if (propertyExists != NULL)
 		{
 			*propertyExists = true;
 		}
-		if (name == "progress_image")	return this->getProgressImageName();
-		if (name == "mask_image")		return this->getMaskImageName();
-		if (name == "progress")			return this->getProgress();
-		if (name == "stretching")		return this->isStretching();
+		if (name == "stretching")	return this->isStretching();
 		if (name == "direction")
 		{
 			if (this->direction == Right)	return "right";
@@ -143,15 +97,22 @@ namespace aprilui
 			if (this->direction == Down)	return "down";
 			if (this->direction == Up)		return "up";
 		}
-		return ImageBox::getProperty(name, propertyExists);
+		bool exists = false;
+		hstr result = ProgressBase::getProperty(name, &exists);
+		if (!exists)
+		{
+			result = ImageBox::getProperty(name, &exists);
+		}
+		if (propertyExists != NULL)
+		{
+			*propertyExists = exists;
+		}
+		return result;
 	}
 
 	bool ProgressBar::setProperty(chstr name, chstr value)
 	{
-		if		(name == "progress_image")	this->setProgressImageByName(value);
-		else if (name == "mask_image")		this->setMaskImageByName(value);
-		else if (name == "progress")		this->setProgress(value);
-		else if (name == "stretching")		this->setStretching(value);
+		if		(name == "stretching")	this->setStretching(value);
 		else if (name == "direction")
 		{
 			if (value == "right")		this->setDirection(Right);
@@ -164,6 +125,7 @@ namespace aprilui
 				return false;
 			}
 		}
+		else if (ProgressBase::setProperty(name, value)) { }
 		else return ImageBox::setProperty(name, value);
 		return true;
 	}

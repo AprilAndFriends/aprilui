@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -18,8 +18,8 @@
 
 namespace aprilui
 {
-	TiledImage::TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH) :
-		Image(texture, name, source, vertical)
+	TiledImage::TiledImage(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY, float tileW, float tileH) :
+		Image(texture, name, source, vertical, invertX, invertY)
 	{
 		this->tile.set(tileW, tileH);
 	}

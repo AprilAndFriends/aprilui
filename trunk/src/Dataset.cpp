@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.05
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -296,20 +296,30 @@ namespace aprilui
 					bool vertical = child->pbool("vertical", false);
 					float tile_w = child->pfloat("tile_w", 1.0f);
 					float tile_h = child->pfloat("tile_h", 1.0f);
+					bool invertX = child->pbool("invert_x", false);
+					if (!child->pexists("invert_x") && child->pexists("invertx"))
+					{
+						invertX = child->pbool("invertx");
+						hlog::warn(aprilui::logTag, "\"invertx\"= is deprecated. Use \"invert_x\" instead."); // DEPRECATED
+					}
+					bool invertY = child->pbool("invert_y", false);
+					if (!child->pexists("invert_y") && child->pexists("invertx"))
+					{
+						invertX = child->pbool("inverty");
+						hlog::warn(aprilui::logTag, "\"inverty\"= is deprecated. Use \"invert_y\" instead."); // DEPRECATED
+					}
 					
 					if (tile_w != 1.0f || tile_h != 1.0f)
 					{
-						image = new TiledImage(texture, name, rect, vertical, tile_w, tile_h);
+						image = new TiledImage(texture, name, rect, vertical, invertX, invertY, tile_w, tile_h);
 					}
 					else if (child->pexists("color"))
 					{
 						april::Color color(child->pstr("color"));
-						image = new ColoredImage(texture, name, rect, vertical, color);
+						image = new ColoredImage(texture, name, rect, vertical, invertX, invertY, color);
 					}
 					else
 					{
-						bool invertX = child->pbool("invertx", false);
-						bool invertY = child->pbool("inverty", false);
 						image = new Image(texture, name, rect, vertical, invertX, invertY);	
 					}
 					hstr blendMode = child->pstr("blend_mode", "default");
