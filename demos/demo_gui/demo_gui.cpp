@@ -66,10 +66,13 @@ public:
 		aprilui::updateCursorPosition();
 		aprilui::processEvents();
 		aprilui::ProgressBar* progressBar;
+		aprilui::ProgressCircle* progressCircle;
 		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_1");
 		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.2f, 1.0f));
 		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_2");
 		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.25f, 1.0f));
+		progressCircle = dataset->getObject<aprilui::ProgressCircle*>("progress_circle_1");
+		progressCircle->setProgress(hmodf(progressCircle->getProgress() + timeSinceLastFrame * 0.2f, 1.0f));
 		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("%d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
 		dataset->update(timeSinceLastFrame);
 		dataset->getObject("root")->draw();
