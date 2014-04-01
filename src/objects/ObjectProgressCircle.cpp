@@ -7,6 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
@@ -14,11 +15,12 @@
 #include "Image.h"
 #include "ObjectProgressCircle.h"
 
+#define MAKE_VERTEX(vec2) april::TexturedVertex(rect.x + (vec2).x * rect.w, rect.y + (vec2).y * rect.h, 0.0f, (vec2).x, (vec2).y)
+
 namespace aprilui
 {
 	ProgressCircle::ProgressCircle(chstr name, grect rect) : ImageBox(name, rect), ProgressBase()
 	{
-		this->startAngle = 0.0f;
 		this->direction = Clockwise;
 	}
 
@@ -51,60 +53,87 @@ namespace aprilui
 			}
 			else if (progress > 0.0f)
 			{
+				gvec2 p0;
+				gvec2 p1;
+				gvec2 splitCenter;
+				gvec2 topLeft;
+				gvec2 topRight;
+				gvec2 bottomLeft;
+				gvec2 bottomRight;
+				switch (this->direction)
+				{
+				case Clockwise:
+					splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 1.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(1.0f, 0.0f);
+					break;
+				case Clockwise90:
+					splitCenter.set(0.5f, 0.0f);	topLeft.set(1.0f, 1.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(0.0f, 0.0f);
+					break;
+				case Clockwise180:
+					splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 0.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(0.0f, 1.0f);
+					break;
+				case Clockwise270:
+					splitCenter.set(0.5f, 1.0f);	topLeft.set(0.0f, 0.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(1.0f, 1.0f);
+					break;
+				case Counterclockwise:
+					splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 0.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(1.0f, 1.0f);
+					break;
+				case Counterclockwise90:
+					splitCenter.set(0.5f, 0.0f);	topLeft.set(0.0f, 1.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(1.0f, 0.0f);
+					break;
+				case Counterclockwise180:
+					splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 1.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(0.0f, 0.0f);
+					break;
+				case Counterclockwise270:
+					splitCenter.set(0.5f, 1.0f);	topLeft.set(1.0f, 0.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(0.0f, 1.0f);
+					break;
+				}
 				harray<april::TexturedVertex> vertices;
-				{
-					april::TexturedVertex vertex(rect.centerX(), rect.centerY(), 0.0f);
-					vertex.u = 0.5f;
-					vertex.v = 0.5f;
-					vertices += vertex;
-				}
-				{
-					april::TexturedVertex vertex(rect.centerX(), rect.y, 0.0f);
-					vertex.u = 0.5f;
-					vertex.v = 0.0f;
-					vertices += vertex;
-				}
+				vertices += MAKE_VERTEX(gvec2(0.5f, 0.5f));
+				vertices += MAKE_VERTEX(splitCenter);
+				april::TexturedVertex vertex;
+				p0 = bottomRight;
+				p1 = topRight;
 				if (progress > 0.125f)
 				{
-					april::TexturedVertex vertex(rect.right(), rect.y, 0.0f);
-					vertex.u = 1.0f;
-					vertex.v = 0.0f;
+					vertex = MAKE_VERTEX(topRight);
 					vertices += vertex;
 					vertices += vertices.first();
 					vertices += vertex;
+					p0 = topRight;
+					p1 = topLeft;
 				}
 				if (progress > 0.375f)
 				{
-					april::TexturedVertex vertex(rect.right(), rect.bottom(), 0.0f);
-					vertex.u = 1.0f;
-					vertex.v = 1.0f;
+					vertex = MAKE_VERTEX(topLeft);
 					vertices += vertex;
 					vertices += vertices.first();
 					vertices += vertex;
+					p0 = topLeft;
+					p1 = bottomLeft;
 				}
 				if (progress > 0.625f)
 				{
-					april::TexturedVertex vertex(rect.x, rect.bottom(), 0.0f);
-					vertex.u = 0.0f;
-					vertex.v = 1.0f;
+					vertex = MAKE_VERTEX(bottomLeft);
 					vertices += vertex;
 					vertices += vertices.first();
 					vertices += vertex;
+					p0 = bottomLeft;
+					p1 = bottomRight;
 				}
 				if (progress > 0.875f)
 				{
-					april::TexturedVertex vertex(rect.x, rect.y, 0.0f);
-					vertex.u = 0.0f;
-					vertex.v = 0.0f;
+					vertex = MAKE_VERTEX(bottomRight);
 					vertices += vertex;
-					//vertices += vertices.first();
-					//vertices += vertex;
-					//vertices += vertices[1];
-				}
-				else
-				{
 					vertices += vertices.first();
+					vertices += vertex;
+					p0 = bottomRight;
+					p1 = topRight;
 				}
+				double angle = hmodf(progress * 360.0f + 45.0f, 90.0f) - 45.0f;
+				// angle will always be between -45° and 45° so there is no risk here
+				float ratio = (float)dtan(angle) * 0.5f + 0.5f;
+				p0 += (p1 - p0) * ratio;
+				vertices += MAKE_VERTEX(p0);
 				this->progressImage->draw(vertices, color);
 			}
 		}
@@ -120,11 +149,16 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
-		if (name == "start_angle")	return this->getStartAngle();
 		if (name == "direction")
 		{
 			if (this->direction == Clockwise)			return "clockwise";
+			if (this->direction == Clockwise90)			return "clockwise90";
+			if (this->direction == Clockwise180)		return "clockwise180";
+			if (this->direction == Clockwise270)		return "clockwise270";
 			if (this->direction == Counterclockwise)	return "counterclockwise";
+			if (this->direction == Counterclockwise90)	return "counterclockwise90";
+			if (this->direction == Counterclockwise180)	return "counterclockwise180";
+			if (this->direction == Counterclockwise270)	return "counterclockwise270";
 		}
 		bool exists = false;
 		hstr result = ProgressBase::getProperty(name, &exists);
@@ -141,11 +175,16 @@ namespace aprilui
 
 	bool ProgressCircle::setProperty(chstr name, chstr value)
 	{
-		if		(name == "start_angle")	this->setStartAngle(value);
-		else if (name == "direction")
+		if		(name == "direction")
 		{
-			if (value == "clockwise")				this->setDirection(Clockwise);
-			else if (value == "counterclockwise")	this->setDirection(Counterclockwise);
+			if (value == "clockwise")					this->setDirection(Clockwise);
+			else if (value == "clockwise90")			this->setDirection(Clockwise90);
+			else if (value == "clockwise180")			this->setDirection(Clockwise180);
+			else if (value == "clockwise270")			this->setDirection(Clockwise270);
+			else if (value == "counterclockwise")		this->setDirection(Counterclockwise);
+			else if (value == "counterclockwise90")		this->setDirection(Counterclockwise90);
+			else if (value == "counterclockwise180")	this->setDirection(Counterclockwise180);
+			else if (value == "counterclockwise270")	this->setDirection(Counterclockwise270);
 			else
 			{
 				hlog::warn(aprilui::logTag, "'direction=' does not support value '" + value + "'.");

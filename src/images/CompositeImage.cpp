@@ -13,8 +13,10 @@
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 
+#include "aprilui.h"
 #include "CompositeImage.h"
 
 namespace aprilui
@@ -59,6 +61,11 @@ namespace aprilui
 			drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
 			(*it).image->draw(drawRect, color);
 		}
+	}
+	
+	void CompositeImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
+	{
+		hlog::warn(aprilui::logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is currently not supported!");
 	}
 	
 }

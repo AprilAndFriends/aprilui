@@ -39,6 +39,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, color, Color);
 
 		void draw(grect rect, april::Color color);
+		void draw(harray<april::TexturedVertex> vertices, april::Color color);
 		
 	protected:
 		april::Color color;

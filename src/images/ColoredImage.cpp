@@ -37,4 +37,9 @@ namespace aprilui
 		Image::draw(rect, this->color * color);
 	}
 
+	void ColoredImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
+	{
+		Image::draw(vertices, this->color * color);
+	}
+
 }

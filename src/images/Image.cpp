@@ -128,26 +128,25 @@ namespace aprilui
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getRenderTexture());
 		this->_tryLoadTexCoords();
-			
+
+		// texture coordinate scaling
 		float iw = 1.0f / this->texture->getWidth();
 		float ih = 1.0f / this->texture->getHeight();
-		harray<april::TexturedVertex> newVertices = vertices;
-		foreach (april::TexturedVertex, it, newVertices)
+		foreach (april::TexturedVertex, it, vertices)
 		{
 			it->u = (this->srcRect.x + it->u * this->srcRect.w) * iw;
 			it->v = (this->srcRect.y + it->v * this->srcRect.h) * ih;
 		}
 
-
 		april::rendersys->setTextureBlendMode(this->blendMode);
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &newVertices[0], newVertices.size(), color);
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &vertices[0], vertices.size(), color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &newVertices[0], newVertices.size());
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &vertices[0], vertices.size());
 		}
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
