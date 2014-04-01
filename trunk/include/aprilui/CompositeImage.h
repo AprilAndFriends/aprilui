@@ -44,6 +44,7 @@ namespace aprilui
         void clearImages();
 		
 		void draw(grect rect, april::Color color);
+		void draw(harray<april::TexturedVertex> vertices, april::Color color);
 		
 	protected:
 		harray<ImageRef> images;

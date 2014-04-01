@@ -30,14 +30,19 @@ namespace aprilui
 		enum Direction
 		{
 			Clockwise = 0,
-			Counterclockwise = 1
+			Clockwise90 = 1,
+			Clockwise180 = 2,
+			Clockwise270 = 3,
+			Counterclockwise = 4,
+			Counterclockwise90 = 5,
+			Counterclockwise180 = 6,
+			Counterclockwise270 = 7
 		};
 
 		ProgressCircle(chstr name, grect rect);
 		~ProgressCircle();
 		static Object* createInstance(chstr name, grect rect);
 		
-		HL_DEFINE_GETSET(float, startAngle, StartAngle);
 		HL_DEFINE_GETSET(Direction, direction, Direction);
 		Dataset* getDataset();
 
@@ -47,7 +52,6 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		float startAngle;
 		Direction direction;
 		
 	};

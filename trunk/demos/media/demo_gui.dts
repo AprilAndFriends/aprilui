@@ -112,7 +112,7 @@
 			<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="568" w="600" h="32"/>
 			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" x="0" y="0" w="128" h="16"/>
 			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" x="0" y="32" w="16" h="128"/>
-			<Object type="ProgressCircle" name="progress_circle_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="clockwise" start_angle="-90" x="20" y="20" w="64" h="64"/>
+			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" x="20" y="20" w="64" h="64"/>
 		</Object>
 		<Object type="Label" name="keyboard_height" background_color="0000007F" anchors="" x="368" y="0" w="64" h="32"/>
 	</Object>

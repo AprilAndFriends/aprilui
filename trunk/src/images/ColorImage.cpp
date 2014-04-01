@@ -60,4 +60,16 @@ namespace aprilui
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 	}
 
+	void ColorImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
+	{
+		harray<april::PlainVertex> plainVertices;
+		foreach (april::TexturedVertex, it, vertices)
+		{
+			plainVertices += april::PlainVertex(*it);
+		}
+		april::rendersys->setTextureBlendMode(this->blendMode);
+		april::rendersys->render(april::RO_TRIANGLE_LIST, &plainVertices[0], plainVertices.size(), color);
+		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+	}
+	
 }
