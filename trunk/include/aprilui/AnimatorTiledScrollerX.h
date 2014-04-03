@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -20,6 +20,8 @@
 
 namespace aprilui
 {
+	class TiledImage;
+
 	namespace Animators
 	{
 		class apriluiExport TiledScrollerX : public Animator
@@ -34,6 +36,7 @@ namespace aprilui
 		protected:
 			float _getObjectValue();
 			void _setObjectValue(float value);
+			TiledImage* _getParentsTiledImage();
 			
 		};
 	}
