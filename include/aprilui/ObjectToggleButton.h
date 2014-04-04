@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -34,6 +34,10 @@ namespace aprilui
 		HL_DEFINE_GET(Image*, toggledHoverImage, ToggledHoverImage);
 		HL_DEFINE_GET(Image*, toggledPushedImage, ToggledPushedImage);
 		HL_DEFINE_GET(Image*, toggledDisabledImage, ToggledDisabledImage);
+		HL_DEFINE_GET(hstr, toggledNormalImageName, ToggledNormalImageName);
+		HL_DEFINE_GET(hstr, toggledHoverImageName, ToggledHoverImageName);
+		HL_DEFINE_GET(hstr, toggledPushedImageName, ToggledPushedImageName);
+		HL_DEFINE_GET(hstr, toggledDisabledImageName, ToggledDisabledImageName);
 		void setToggledNormalImage(Image* image);
 		void setToggledHoverImage(Image* image);
 		void setToggledPushedImage(Image* image);
