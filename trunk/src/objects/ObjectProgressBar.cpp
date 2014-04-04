@@ -37,6 +37,31 @@ namespace aprilui
 		return ImageBox::getDataset();
 	}
 
+	Image* ProgressBar::getImage()
+	{
+		return ImageBox::getImage();
+	}
+
+	void ProgressBar::setImage(Image* image)
+	{
+		ImageBox::setImage(image);
+	}
+
+	hstr ProgressBar::getImageName()
+	{
+		return ImageBox::getImageName();
+	}
+
+	void ProgressBar::setImageByName(chstr name)
+	{
+		ImageBox::setImageByName(name);
+	}
+
+	bool ProgressBar::trySetImageByName(chstr name)
+	{
+		return ImageBox::trySetImageByName(name);
+	}
+
 	void ProgressBar::OnDraw()
 	{
 		ImageBox::OnDraw();

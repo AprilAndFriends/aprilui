@@ -38,6 +38,31 @@ namespace aprilui
 		return ImageBox::getDataset();
 	}
 
+	Image* ProgressCircle::getImage()
+	{
+		return ImageBox::getImage();
+	}
+
+	void ProgressCircle::setImage(Image* image)
+	{
+		ImageBox::setImage(image);
+	}
+
+	hstr ProgressCircle::getImageName()
+	{
+		return ImageBox::getImageName();
+	}
+
+	void ProgressCircle::setImageByName(chstr name)
+	{
+		ImageBox::setImageByName(name);
+	}
+
+	bool ProgressCircle::trySetImageByName(chstr name)
+	{
+		return ImageBox::trySetImageByName(name);
+	}
+
 	void ProgressCircle::OnDraw()
 	{
 		ImageBox::OnDraw();

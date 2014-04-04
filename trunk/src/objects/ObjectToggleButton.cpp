@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -200,10 +200,10 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
-		if (name == "toggled_image")			return this->getToggledNormalImage()->getName();
-		if (name == "toggled_hover_image")		return this->getToggledHoverImage()->getName();
-		if (name == "toggled_pushed_image")		return this->getToggledPushedImage()->getName();
-		if (name == "toggled_disabled_image")	return this->getToggledDisabledImage()->getName();
+		if (name == "toggled_image")			return this->getToggledNormalImageName();
+		if (name == "toggled_hover_image")		return this->getToggledHoverImageName();
+		if (name == "toggled_pushed_image")		return this->getToggledPushedImageName();
+		if (name == "toggled_disabled_image")	return this->getToggledDisabledImageName();
 		return ImageButton::getProperty(name, propertyExists);
 	}
 

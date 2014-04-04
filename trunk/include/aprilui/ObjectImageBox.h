@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -34,11 +34,11 @@ namespace aprilui
 		
 		virtual Image* getImage() { return this->image; };
 		virtual void setImage(Image* value);
-		HL_DEFINE_GET(hstr, imageName, ImageName);
-		void setImageByName(chstr name);
+		virtual HL_DEFINE_GET(hstr, imageName, ImageName);
+		virtual void setImageByName(chstr name);
 
 		/// @brief Optimized version.
-		bool trySetImageByName(chstr name);
+		virtual bool trySetImageByName(chstr name);
 
 		void resizeToFitImage();
 
