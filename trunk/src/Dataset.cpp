@@ -303,9 +303,9 @@ namespace aprilui
 						hlog::warn(aprilui::logTag, "\"invertx\"= is deprecated. Use \"invert_x\" instead."); // DEPRECATED
 					}
 					bool invertY = child->pbool("invert_y", false);
-					if (!child->pexists("invert_y") && child->pexists("invertx"))
+					if (!child->pexists("invert_y") && child->pexists("inverty"))
 					{
-						invertX = child->pbool("inverty");
+						invertY = child->pbool("inverty");
 						hlog::warn(aprilui::logTag, "\"inverty\"= is deprecated. Use \"invert_y\" instead."); // DEPRECATED
 					}
 					
