@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.04
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -978,6 +978,9 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
+		if (name == "rect")					return grect_to_hstr(this->getRect());
+		if (name == "position")				return gvec2_to_hstr(this->getPosition());
+		if (name == "size")					return gvec2_to_hstr(this->getSize());
 		if (name == "x")					return this->getX();
 		if (name == "y")					return this->getY();
 		if (name == "w")					return this->getWidth();
@@ -993,8 +996,10 @@ namespace aprilui
 		if (name == "alpha")				return this->getAlpha();
 		if (name == "color")				return this->getColor().hex();
 		if (name == "angle")				return this->getAngle();
+		if (name == "scale")				return gvec2_to_hstr(this->getScale());
 		if (name == "scale_x")				return this->getScaleX();
 		if (name == "scale_y")				return this->getScaleY();
+		if (name == "center")				return gvec2_to_hstr(this->getCenter());
 		if (name == "center_x")				return this->getCenterX();
 		if (name == "center_y")				return this->getCenterY();
 		if (name == "anchor_left")			return this->isAnchorLeft();
@@ -1016,7 +1021,10 @@ namespace aprilui
 	
 	bool Object::setProperty(chstr name, chstr value)
 	{
-		if		(name == "x")						this->setX(value);
+		if		(name == "rect")					this->setRect(hstr_to_grect(value));
+		else if	(name == "position")				this->setPosition(hstr_to_gvec2(value));
+		else if	(name == "size")					this->setSize(hstr_to_gvec2(value));
+		else if	(name == "x")						this->setX(value);
 		else if	(name == "y")						this->setY(value);
 		else if	(name == "w")						this->setWidth(value);
 		else if	(name == "h")						this->setHeight(value);
@@ -1031,8 +1039,10 @@ namespace aprilui
 		else if	(name == "alpha")					this->setAlpha((int)value);
 		else if	(name == "color")					this->setColor(value);
 		else if	(name == "angle")					this->setAngle(value);
+		else if	(name == "scale")					this->setScale(hstr_to_gvec2(value));
 		else if	(name == "scale_x")					this->setScaleX(value);
 		else if	(name == "scale_y")					this->setScaleY(value);
+		else if	(name == "center")					this->setCenter(hstr_to_gvec2(value));
 		else if	(name == "center_x")				this->setCenterX(value);
 		else if	(name == "center_y")				this->setCenterY(value);
 		else if	(name == "anchor_left")				this->setAnchorLeft(value);

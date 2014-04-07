@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -18,6 +18,7 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "ObjectLabelBase.h"
@@ -123,9 +124,10 @@ namespace aprilui
 			}
 			return effect;
 		}
-		if (name == "text_offset_x")	return this->textOffset.x;
-		if (name == "text_offset_y")	return this->textOffset.y;
-		if (name == "background_color")	return this->backgroundColor.hex();
+		if (name == "text_offset")		return gvec2_to_hstr(this->getTextOffset());
+		if (name == "text_offset_x")	return this->getTextOffsetX();
+		if (name == "text_offset_y")	return this->getTextOffsetY();
+		if (name == "background_color")	return this->getBackgroundColor().hex();
 		if (propertyExists != NULL)
 		{
 			*propertyExists = false;
@@ -199,8 +201,9 @@ namespace aprilui
 				}
 			}
 		}
-		else if (name == "text_offset_x")		this->textOffset.x = (float)value;
-		else if (name == "text_offset_y")		this->textOffset.y = (float)value;
+		else if (name == "text_offset")			this->setTextOffset(hstr_to_gvec2(value));
+		else if (name == "text_offset_x")		this->setTextOffsetX(value);
+		else if (name == "text_offset_y")		this->setTextOffsetY(value);
 		else if (name == "background_color")	this->setBackgroundColor(value);
 		else return false;
 		return true;
