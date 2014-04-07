@@ -421,7 +421,16 @@ namespace aprilui
 		{
 			throw ResourceExistsException(name, "CompositeImage", this);
 		}
-		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
+		gvec2 size;
+		if (node->pexists("size"))
+		{
+			size = hstr_to_gvec2(node->pstr("size"));
+		}
+		else
+		{
+			size.set(node->pfloat("w"), node->pfloat("h"));
+		}
+		CompositeImage* image = new CompositeImage(name, size.x, size.y);
 		grect rect;
 		foreach_xmlnode (child, node)
 		{
