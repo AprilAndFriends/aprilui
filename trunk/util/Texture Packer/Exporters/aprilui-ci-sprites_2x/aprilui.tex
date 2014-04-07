@@ -2,9 +2,9 @@
 <Textures>{% load hdscales %}
 
 	<Texture filename="{{texture.trimmedName}}" dynamic_load="1">{% for sprite in allSprites %}
-		<Image name="_{{sprite.trimmedName}}" x="{{sprite.frameRect.x|hdscales}}" y="{{sprite.frameRect.y|hdscales}}" w="{{sprite.frameRect.width|hdscales}}" h="{{sprite.frameRect.height|hdscales}}"{% if sprite.rotated %} vertical="1"{% endif %}/>{% endfor %}
+		<Image name="_{{sprite.trimmedName}}" rect="{{sprite.frameRect.x|hdscales}},{{sprite.frameRect.y|hdscales}},{{sprite.frameRect.width|hdscales}},{{sprite.frameRect.height|hdscales}}"{% if sprite.rotated %} vertical="1"{% endif %}/>{% endfor %}
 	</Texture>
 	{% for sprite in allSprites %}
-	<CompositeImage name="{{texture.trimmedName}}/{{sprite.trimmedName}}" w="{{sprite.untrimmedSize.width|hdscales}}" h="{{sprite.untrimmedSize.height|hdscales}}"><ImageRef name="{{texture.trimmedName}}/_{{sprite.trimmedName}}" x="{{sprite.sourceRect.x|hdscales}}" y="{{sprite.sourceRect.y|hdscales}}" w="{{sprite.sourceRect.width|hdscales}}" h="{{sprite.sourceRect.height|hdscales}}"/></CompositeImage>{% endfor %}
+	<CompositeImage name="{{texture.trimmedName}}/{{sprite.trimmedName}}" size="{{sprite.untrimmedSize.width|hdscales}},{{sprite.untrimmedSize.height|hdscales}}"><ImageRef name="{{texture.trimmedName}}/_{{sprite.trimmedName}}" rect="{{sprite.sourceRect.x|hdscales}},{{sprite.sourceRect.y|hdscales}},{{sprite.sourceRect.width|hdscales}},{{sprite.sourceRect.height|hdscales}}"/></CompositeImage>{% endfor %}
 	
 </Textures>
