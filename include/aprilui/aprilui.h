@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -32,6 +32,8 @@ namespace aprilui
 	class Dataset;
 	class Image;
 	class Object;
+
+	static const char SeparatorParameter = ',';
 	
 	extern hstr logTag;
 

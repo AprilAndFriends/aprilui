@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -281,48 +281,88 @@ namespace aprilui
 		}
 		else
 		{
-			Image* image;
+			Image* image = NULL;
+			hstr name;
+			grect rect;
+			bool vertical = false;
+			gvec2 tile;
+			bool invertX = false;
+			bool invertY = false;
+			april::Color color;
+			hstr blendMode;
+			hstr colorMode;
 			foreach_xmlnode (child, node)
 			{
 				if (*child == "Image")
 				{
-					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
+					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (this->images.has_key(name))
 					{
 						throw ResourceExistsException(name, "Image", this);
 					}
-					grect rect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h"));
+					rect.set(0.0f, 0.0f, 0.0f, 0.0f);
+					if (child->pexists("rect"))
+					{
+						rect = hstr_to_grect(child->pstr("rect"));
+					}
+					else
+					{
+						if (child->pexists("position"))
+						{
+							rect.setPosition(hstr_to_gvec2(child->pstr("position")));
+						}
+						else
+						{
+							rect.setPosition(child->pfloat("x"), child->pfloat("y"));
+						}
+						if (child->pexists("size"))
+						{
+							rect.setSize(hstr_to_gvec2(child->pstr("size")));
+						}
+						else
+						{
+							rect.setSize(child->pfloat("w"), child->pfloat("h"));
+						}
+					}
 					
-					bool vertical = child->pbool("vertical", false);
-					float tile_w = child->pfloat("tile_w", 1.0f);
-					float tile_h = child->pfloat("tile_h", 1.0f);
-					bool invertX = child->pbool("invert_x", false);
+					vertical = child->pbool("vertical", false);
+					tile.set(1.0f, 1.0f);
+					if (child->pexists("tile"))
+					{
+						tile = hstr_to_gvec2(child->pstr("tile"));
+					}
+					else
+					{
+						tile.set(child->pfloat("tile_w", 1.0f), child->pfloat("tile_h", 1.0f));
+					}
+
+					invertX = child->pbool("invert_x", false);
 					if (!child->pexists("invert_x") && child->pexists("invertx"))
 					{
 						invertX = child->pbool("invertx");
 						hlog::warn(aprilui::logTag, "\"invertx\"= is deprecated. Use \"invert_x\" instead."); // DEPRECATED
 					}
-					bool invertY = child->pbool("invert_y", false);
+					invertY = child->pbool("invert_y", false);
 					if (!child->pexists("invert_y") && child->pexists("inverty"))
 					{
 						invertY = child->pbool("inverty");
 						hlog::warn(aprilui::logTag, "\"inverty\"= is deprecated. Use \"invert_y\" instead."); // DEPRECATED
 					}
 					
-					if (tile_w != 1.0f || tile_h != 1.0f)
+					if (tile.x != 1.0f || tile.y != 1.0f)
 					{
-						image = new TiledImage(texture, name, rect, vertical, invertX, invertY, tile_w, tile_h);
+						image = new TiledImage(texture, name, rect, vertical, invertX, invertY, tile.x, tile.y);
 					}
 					else if (child->pexists("color"))
 					{
-						april::Color color(child->pstr("color"));
+						color.set(child->pstr("color"));
 						image = new ColoredImage(texture, name, rect, vertical, invertX, invertY, color);
 					}
 					else
 					{
 						image = new Image(texture, name, rect, vertical, invertX, invertY);	
 					}
-					hstr blendMode = child->pstr("blend_mode", "default");
+					blendMode = child->pstr("blend_mode", "default");
 					if (blendMode == "add")
 					{
 						image->setBlendMode(april::BM_ADD);
@@ -335,7 +375,7 @@ namespace aprilui
 					{
 						image->setBlendMode(april::BM_OVERWRITE);
 					}
-					hstr colorMode = child->pstr("color_mode", "default");
+					colorMode = child->pstr("color_mode", "default");
 					if (colorMode == "lerp")
 					{
 						image->setColorMode(april::CM_LERP);
@@ -382,12 +422,37 @@ namespace aprilui
 			throw ResourceExistsException(name, "CompositeImage", this);
 		}
 		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
+		grect rect;
 		foreach_xmlnode (child, node)
 		{
 			if (*child == "ImageRef")
 			{
 				refname = child->pstr("name");
-				image->addImageRef(this->getImage(refname), grect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h")));
+				rect.set(0.0f, 0.0f, 0.0f, 0.0f);
+				if (child->pexists("rect"))
+				{
+					rect = hstr_to_grect(child->pstr("rect"));
+				}
+				else
+				{
+					if (child->pexists("position"))
+					{
+						rect.setPosition(hstr_to_gvec2(child->pstr("position")));
+					}
+					else
+					{
+						rect.setPosition(child->pfloat("x"), child->pfloat("y"));
+					}
+					if (child->pexists("size"))
+					{
+						rect.setSize(hstr_to_gvec2(child->pstr("size")));
+					}
+					else
+					{
+						rect.setSize(child->pfloat("w"), child->pfloat("h"));
+					}
+				}
+				image->addImageRef(this->getImage(refname), rect);
 			}
 		}
 		this->images[name] = image;
@@ -426,9 +491,17 @@ namespace aprilui
 		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
 		if (*node == "Include")
 		{
+			gvec2 offset;
+			if (node->pexists("position"))
+			{
+				offset = hstr_to_gvec2(node->pstr("position"));
+			}
+			else
+			{
+				offset.set(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
+			}
 			this->parseObjectInclude(hrdir::join_path(this->filePath, node->pstr("path"), false), parent,
-				node->pstr("name_prefix", "") + namePrefix, nameSuffix + node->pstr("name_suffix", ""),
-				gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f)));
+				node->pstr("name_prefix", "") + namePrefix, nameSuffix + node->pstr("name_suffix", ""), offset);
 			return NULL;
 		}
 		className = node->pstr("type");
@@ -444,10 +517,31 @@ namespace aprilui
 			}
 			if (*node == "Object")
 			{
-				rect.x = node->pfloat("x") + offset.x;
-				rect.y = node->pfloat("y") + offset.y;
-				rect.w = node->pfloat("w", -1.0f);
-				rect.h = node->pfloat("h", -1.0f);
+				rect.set(0.0f, 0.0f, -1.0f, -1.0f);
+				if (node->pexists("rect"))
+				{
+					rect = hstr_to_grect(node->pstr("rect"));
+				}
+				else
+				{
+					if (node->pexists("position"))
+					{
+						rect.setPosition(hstr_to_gvec2(node->pstr("position")));
+					}
+					else
+					{
+						rect.setPosition(node->pfloat("x"), node->pfloat("y"));
+					}
+					if (node->pexists("size"))
+					{
+						rect.setSize(hstr_to_gvec2(node->pstr("size")));
+					}
+					else
+					{
+						rect.setSize(node->pfloat("w", -1.0f), node->pfloat("h", -1.0f));
+					}
+				}
+				rect += offset;
 			}
 		}
 		else
@@ -490,7 +584,7 @@ namespace aprilui
 		foreach_xmlproperty (prop, node)
 		{
 			name = prop->name();
-			if (name == "x" || name == "y" || name == "w" || name == "h")
+			if (name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
 			{
 				continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
 			}

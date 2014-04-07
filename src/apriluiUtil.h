@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.11
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,8 @@
 #ifndef APRILUI_UTIL_H
 #define APRILUI_UTIL_H
 
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -22,7 +24,11 @@ namespace aprilui
 {
 	static const float eTolerance = 0.0001f;
 
-	apriluiFnExport hstr generateName(chstr prefix);
+	hstr generateName(chstr prefix);
+	hstr gvec2_to_hstr(gvec2 vector);
+	hstr grect_to_hstr(grect rect);
+	gvec2 hstr_to_gvec2(chstr string);
+	grect hstr_to_grect(chstr string);
 	
 }
 #endif
