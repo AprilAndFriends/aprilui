@@ -18,8 +18,6 @@
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
-#include "apriluiExport.h"
-
 namespace aprilui
 {
 	static const float eTolerance = 0.0001f;
