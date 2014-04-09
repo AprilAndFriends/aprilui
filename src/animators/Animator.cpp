@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 3.0
+/// @version 3.12
 /// 
 /// @section LICENSE
 /// 
@@ -83,14 +83,14 @@ namespace aprilui
 	{
 		if (this->delay > 0.0f)
 		{
-			return (this->discreteStep != 0 ? (float)((int)(this->offset / this->discreteStep) * this->discreteStep) : this->offset);
+			return (this->discreteStep != 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
 		}
 		float time = this->timer;
 		if (this->isExpired())
 		{
 			if (this->reset)
 			{
-				return (this->discreteStep != 0 ? (float)((int)(this->offset / this->discreteStep) * this->discreteStep) : this->offset);
+				return (this->discreteStep != 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
 			}
 			time = this->periods / habs(this->speed);
 		}
@@ -137,7 +137,8 @@ namespace aprilui
 			result = (this->customFunction != NULL ? this->customFunction(this, time) : this->value);
 			break;
 		}
-		return (this->discreteStep != 0 ? (float)((int)((result + this->offset) / this->discreteStep) * this->discreteStep) : (result + this->offset));
+		
+		return (this->discreteStep != 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
 	}
 	
 	bool Animator::isAnimated()
