@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.11
+/// @version 3.13
 /// 
 /// @section LICENSE
 /// 
@@ -1338,12 +1338,26 @@ namespace aprilui
 		{
 			return this->scaleFactor;
 		}
-		gvec2 scale = this->scaleFactor;
+		gvec2 scaleFactor = this->scaleFactor;
 		if (this->parent != overrideRoot && this->parent != NULL)
 		{
-			scale *= this->parent->getDerivedScale(overrideRoot);
+			scaleFactor *= this->parent->getDerivedScale(overrideRoot);
 		}
-		return scale;
+		return scaleFactor;
+	}
+	
+	float Object::getDerivedAngle(aprilui::Object* overrideRoot)
+	{
+		if (overrideRoot == this)
+		{
+			return this->angle;
+		}
+		float angle = this->angle;
+		if (this->parent != overrideRoot && this->parent != NULL)
+		{
+			angle += this->parent->getDerivedAngle(overrideRoot);
+		}
+		return angle;
 	}
 	
 	grect Object::_getDrawRect()

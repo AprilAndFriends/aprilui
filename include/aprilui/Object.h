@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.03
+/// @version 3.13
 /// 
 /// @section LICENSE
 /// 
@@ -170,6 +170,7 @@ namespace aprilui
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
+		float getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool isDerivedEnabled();
 		bool isDerivedVisible();
 		virtual bool isAnimated();
