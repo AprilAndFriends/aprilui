@@ -259,7 +259,7 @@ namespace aprilui
 			else if	(filter == "nearest")	texture->setFilter(april::Texture::FILTER_NEAREST);
 			else throw hl_exception("texture filter '" + filter + "' not supported");
 		}
-		if (node->pbool("wrap", true))
+		if (node->pbool("wrap", false))
 		{
 			texture->setAddressMode(april::Texture::ADDRESS_WRAP);
 		}
