@@ -143,7 +143,7 @@ namespace aprilui
 		{
 			mText = hstr::from_unicode(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
 			rect.x += atres::renderer->getTextWidthUnformatted(mFontName, mText);
-			float h = atres::renderer->getFontHeight(mFontName);
+			float h = atres::renderer->getFontResource(mFontName)->getHeight();
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 1;
 			rect.h = h - 4;

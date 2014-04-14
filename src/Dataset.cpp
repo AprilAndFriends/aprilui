@@ -122,7 +122,7 @@ namespace aprilui
 		if (localization != "")
 		{
 			hstr locpath = hdir::basedir(filename) + "/" + localization + "/" + hdir::basename(filename);
-			locpath = april::rendersys->findTextureFilename(locpath);
+			locpath = april::rendersys->findTextureResource(locpath);
 			if (locpath != "")
 			{
 				return locpath;
