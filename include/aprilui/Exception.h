@@ -41,9 +41,9 @@ namespace aprilui
 	#define exception_cls(name) class apriluiExport name : public _GenericException \
 	{ \
 	public: \
-		name(chstr errorText, chstr type = "", const char* file = "", int line = 0) : \
+		inline name(chstr errorText, chstr type = "", const char* file = "", int line = 0) : \
 		  _GenericException(errorText, type, file, line) { } \
-		~name() { } \
+		inline ~name() { } \
 	}
 
 	exception_cls(_ObjectExistsException);

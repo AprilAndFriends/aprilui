@@ -958,11 +958,6 @@ namespace aprilui
 		return (this->isClickThrough() && (this->parent == NULL || this->parent->_isDerivedClickThrough()));
 	}
 	
-	void Object::setAlpha(unsigned char value)
-	{
-		this->color.a = value;
-	}
-
 	void Object::setEnabled(bool value)
 	{
 		if (value != this->enabled)

@@ -45,8 +45,8 @@ namespace aprilui
 		HL_DEFINE_ISSET(inheritValue, InheritValue);
 		HL_DEFINE_GETSET(float, target, Target);
 		HL_DEFINE_ISSET(useTarget, UseTarget);
-		float (*getCustomFunction())(Animator*, float) { return this->customFunction; }
-		void setCustomFunction(float (*value)(Animator*, float)) { this->customFunction = value; }
+		inline float (*getCustomFunction())(Animator*, float) { return this->customFunction; }
+		inline void setCustomFunction(float (*value)(Animator*, float)) { this->customFunction = value; }
 
 		bool isAnimated();
 		bool isWaitingAnimation();

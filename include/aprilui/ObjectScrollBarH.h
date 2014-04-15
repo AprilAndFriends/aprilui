@@ -45,16 +45,16 @@ namespace aprilui
 		static hstr SkinNameBarHPushed;
 
 	protected:
-		hstr _getSkinNameBeginNormal() { return SkinNameLeftNormal; }
-		hstr _getSkinNameBeginHover() { return SkinNameLeftHover; }
-		hstr _getSkinNameBeginPushed() { return SkinNameLeftPushed; }
-		hstr _getSkinNameEndNormal() { return SkinNameRightNormal; }
-		hstr _getSkinNameEndHover() { return SkinNameRightHover; }
-		hstr _getSkinNameEndPushed() { return SkinNameRightPushed; }
-		hstr _getSkinNameBackground() { return SkinNameBackgroundH; }
-		hstr _getSkinNameBarNormal() { return SkinNameBarHNormal; }
-		hstr _getSkinNameBarHover() { return SkinNameBarHHover; }
-		hstr _getSkinNameBarPushed() { return SkinNameBarHPushed; }
+		inline hstr _getSkinNameBeginNormal() { return SkinNameLeftNormal; }
+		inline hstr _getSkinNameBeginHover() { return SkinNameLeftHover; }
+		inline hstr _getSkinNameBeginPushed() { return SkinNameLeftPushed; }
+		inline hstr _getSkinNameEndNormal() { return SkinNameRightNormal; }
+		inline hstr _getSkinNameEndHover() { return SkinNameRightHover; }
+		inline hstr _getSkinNameEndPushed() { return SkinNameRightPushed; }
+		inline hstr _getSkinNameBackground() { return SkinNameBackgroundH; }
+		inline hstr _getSkinNameBarNormal() { return SkinNameBarHNormal; }
+		inline hstr _getSkinNameBarHover() { return SkinNameBarHHover; }
+		inline hstr _getSkinNameBarPushed() { return SkinNameBarHPushed; }
 
 		grect _getBarDrawRect();
 
