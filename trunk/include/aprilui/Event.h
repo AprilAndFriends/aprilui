@@ -22,8 +22,8 @@ namespace aprilui
 	class apriluiExport Event
 	{
 	public:
-		Event() { }
-		virtual ~Event() { }
+		inline Event() { }
+		inline virtual ~Event() { }
 
 		virtual void execute(void* params) = 0;
 		

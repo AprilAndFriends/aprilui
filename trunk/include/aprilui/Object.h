@@ -60,45 +60,44 @@ namespace aprilui
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);
-		float getX() { return this->rect.x; }
-		void setX(float value) { this->rect.x = value; }
-		float getY() { return this->rect.y; }
-		void setY(float value) { this->rect.y = value; }
-		gvec2 getPosition() { return this->rect.getPosition(); }
-		void setPosition(gvec2 value) { this->rect.setPosition(value); }
-		void setPosition(float x, float y) { this->rect.setPosition(x, y); }
-		float getWidth() { return this->rect.w; }
+		inline float getX() { return this->rect.x; }
+		inline void setX(float value) { this->rect.x = value; }
+		inline float getY() { return this->rect.y; }
+		inline void setY(float value) { this->rect.y = value; }
+		inline gvec2 getPosition() { return this->rect.getPosition(); }
+		inline void setPosition(gvec2 value) { this->rect.setPosition(value); }
+		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
+		inline float getWidth() { return this->rect.w; }
 		void setWidth(float value);
-		float getHeight() { return this->rect.h; }
+		inline float getHeight() { return this->rect.h; }
 		void setHeight(float value);
-		gvec2 getSize() { return this->rect.getSize(); }
+		inline gvec2 getSize() { return this->rect.getSize(); }
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
-		gvec2 getScale() { return this->scaleFactor; }
-		void setScale(gvec2 value) { this->scaleFactor = value; }
-		void setScale(float x, float y) { this->scaleFactor.set(x, y); }
-		float getScaleX() { return this->scaleFactor.x; }
-		void setScaleX(float value) { this->scaleFactor.x = value; }
-		float getScaleY() { return this->scaleFactor.y; }
-		void setScaleY(float value) { this->scaleFactor.y = value; }
+		HL_DEFINE_GETSET(gvec2, scaleFactor, Scale)
+		inline void setScale(float x, float y) { this->scaleFactor.set(x, y); }
+		inline float getScaleX() { return this->scaleFactor.x; }
+		inline void setScaleX(float value) { this->scaleFactor.x = value; }
+		inline float getScaleY() { return this->scaleFactor.y; }
+		inline void setScaleY(float value) { this->scaleFactor.y = value; }
 
 		HL_DEFINE_GETSET(gvec2, center, Center);
-		void setCenter(float x, float y) { this->center.set(x, y); }
-		float getCenterX() { return this->center.x; }
-		void setCenterX(float value) { this->center.x = value; }
-		float getCenterY() { return this->center.y; }
-		void setCenterY(float value) { this->center.y = value; }
+		inline void setCenter(float x, float y) { this->center.set(x, y); }
+		inline float getCenterX() { return this->center.x; }
+		inline void setCenterX(float value) { this->center.x = value; }
+		inline float getCenterY() { return this->center.y; }
+		inline void setCenterY(float value) { this->center.y = value; }
 
 		HL_DEFINE_GETSET(april::Color, color, Color);
-		unsigned char getRed() { return this->color.r; }
-		void setRed(unsigned char value) { this->color.r = value; }
-		unsigned char getGreen() { return this->color.g; }
-		void setGreen(unsigned char value) { this->color.g = value; }
-		unsigned char getBlue() { return this->color.b; }
-		void setBlue(unsigned char value) { this->color.b = value; }
-		unsigned char getAlpha() { return this->color.a; }
-		void setAlpha(unsigned char value);
+		inline unsigned char getRed() { return this->color.r; }
+		inline void setRed(unsigned char value) { this->color.r = value; }
+		inline unsigned char getGreen() { return this->color.g; }
+		inline void setGreen(unsigned char value) { this->color.g = value; }
+		inline unsigned char getBlue() { return this->color.b; }
+		inline void setBlue(unsigned char value) { this->color.b = value; }
+		inline unsigned char getAlpha() { return this->color.a; }
+		inline void setAlpha(unsigned char value) { this->color.a = value; }
 
 		HL_DEFINE_IS(enabled, Enabled);
 		void setEnabled(bool value);
@@ -111,17 +110,17 @@ namespace aprilui
 		HL_DEFINE_ISSET(retainAnchorAspect, RetainAnchorAspect);
 		HL_DEFINE_ISSET(clickThrough, ClickThrough);
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
-		bool isVisible() { return (this->visible && this->color.a > 0); }
+		inline bool isVisible() { return (this->visible && this->color.a > 0); }
 		HL_DEFINE_SET(bool, visible, Visible);
-		bool getVisibilityFlag() { return this->visible; }
+		inline bool getVisibilityFlag() { return this->visible; }
 		HL_DEFINE_ISSET(clip, Clip);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
 		virtual HL_DEFINE_GET(int, focusIndex, FocusIndex);
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		
-		harray<Object*>& getChildren() { return this->children; }
-		hmap<hstr, Event*>& getEvents() { return this->events; }
+		inline harray<Object*>& getChildren() { return this->children; }
+		inline hmap<hstr, Event*>& getEvents() { return this->events; }
 		virtual bool isFocused();
 		virtual void setFocused(bool focused);
 		hstr getFullName();

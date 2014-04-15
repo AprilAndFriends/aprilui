@@ -30,9 +30,9 @@ namespace aprilui
 		~CallbackObject();
 		static Object* createInstance(chstr name, grect rect);
 
-		void (*getDrawCallback())(CallbackObject*) { return this->drawCallback; }
-		void setDrawCallback(void (*value)(CallbackObject*)) { this->drawCallback = value; }
-		void setUpdateCallback(void (*value)(float)) { this->updateCallback = value; }
+		inline void (*getDrawCallback())(CallbackObject*) { return this->drawCallback; }
+		inline void setDrawCallback(void (*value)(CallbackObject*)) { this->drawCallback = value; }
+		inline void setUpdateCallback(void (*value)(float)) { this->updateCallback = value; }
 		
 		void update(float k);
 		void OnDraw();

@@ -46,12 +46,12 @@ namespace aprilui
 		ScrollBarH* scrollBarH;
 		ScrollBarV* scrollBarV;
 
-		ScrollArea* _getScrollArea() { return this->scrollArea; }
-		void _setScrollArea(ScrollArea* value) { this->scrollArea = value; }
-		ScrollBarH* _getScrollBarH() { return this->scrollBarH; }
-		void _setScrollBarH(ScrollBarH* value) { this->scrollBarH = value; }
-		ScrollBarV* _getScrollBarV() { return this->scrollBarV; }
-		void _setScrollBarV(ScrollBarV* value) { this->scrollBarV = value; }
+		inline ScrollArea* _getScrollArea() { return this->scrollArea; }
+		inline void _setScrollArea(ScrollArea* value) { this->scrollArea = value; }
+		inline ScrollBarH* _getScrollBarH() { return this->scrollBarH; }
+		inline void _setScrollBarH(ScrollBarH* value) { this->scrollBarH = value; }
+		inline ScrollBarV* _getScrollBarV() { return this->scrollBarV; }
+		inline void _setScrollBarV(ScrollBarV* value) { this->scrollBarV = value; }
 
 	};
 }
