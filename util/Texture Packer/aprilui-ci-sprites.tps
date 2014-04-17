@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>aprilui-ci-sprites</string>
         <key>textureFileName</key>
-        <filename>C:/aprilui-ci-sprites{n}.png</filename>
+        <filename>C:/aprilui-ci-sprites.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -127,7 +127,7 @@
             <key>apriluitex</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>C:/aprilui-ci-sprites_{n}.tex</filename>
+                <filename>C:/aprilui-ci-sprites.tex</filename>
             </struct>
             <key>java</key>
             <struct type="DataFile">
@@ -136,7 +136,7 @@
             </struct>
         </map>
         <key>multiPack</key>
-        <true/>
+        <false/>
         <key>forceIdenticalLayout</key>
         <false/>
         <key>outputFormat</key>
