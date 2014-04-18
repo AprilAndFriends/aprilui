@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -28,6 +28,10 @@
 #include "ObjectProgressBar.h"
 #include "ObjectProgressCircle.h"
 #include "ObjectScrollArea.h"
+#include "ObjectScrollBarButtonBackground.h"
+#include "ObjectScrollBarButtonBackward.h"
+#include "ObjectScrollBarButtonForward.h"
+#include "ObjectScrollBarButtonSlider.h"
 #include "ObjectScrollBarH.h"
 #include "ObjectScrollBarV.h"
 #include "ObjectSlider.h"
