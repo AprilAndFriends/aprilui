@@ -36,10 +36,10 @@ namespace aprilui
 		this->gridSize = GridSize;
 		this->useFading = true;
 		this->heightHide = true;
-		this->buttonBegin = NULL;
-		this->buttonEnd = NULL;
-		this->buttonBack = NULL;
-		this->buttonBar = NULL;
+		this->buttonBackground = NULL;
+		this->buttonSlider = NULL;
+		this->buttonBackward = NULL;
+		this->buttonForward = NULL;
 		this->_clickPosition.set(0.0f, 0.0f);
 		this->_retainTime = 0.0f;
 	}
@@ -139,55 +139,55 @@ namespace aprilui
 		{
 			if (this->skinName != "")
 			{
-				if (this->buttonBegin == NULL)
+				if (this->buttonBackward == NULL)
 				{
-					this->buttonBegin = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBegin"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonBegin);
-					_SET_CLICK_EVENT_FUNCTION(this->buttonBegin, _clickScrollBegin);
-					this->buttonEnd = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonEnd"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonEnd);
-					_SET_CLICK_EVENT_FUNCTION(this->buttonEnd, _clickScrollEnd);
-					this->buttonBack = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBack"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonBack);
-					_SET_CLICK_EVENT_FUNCTION(this->buttonBack, _clickScrollBack);
-					this->buttonBar = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBar"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonBar);
-					_SET_MOUSEDOWN_EVENT_FUNCTION(this->buttonBar, _mouseDownScrollBar);
-					_SET_CLICK_EVENT_FUNCTION(this->buttonBar, _clickScrollBar);
+					this->buttonBackground = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBack"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->buttonBackground);
+					_SET_CLICK_EVENT_FUNCTION(this->buttonBackground, _clickScrollBack);
+					this->buttonSlider = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBar"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->buttonSlider);
+					_SET_MOUSEDOWN_EVENT_FUNCTION(this->buttonSlider, _mouseDownScrollBar);
+					_SET_CLICK_EVENT_FUNCTION(this->buttonSlider, _clickScrollBar);
+					this->buttonForward = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonEnd"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->buttonForward);
+					_SET_CLICK_EVENT_FUNCTION(this->buttonForward, _clickScrollForward);
+					this->buttonBackward = new ImageButton(aprilui::generateName("aprilui::ScrollSkinButtonBegin"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->buttonBackward);
+					_SET_CLICK_EVENT_FUNCTION(this->buttonBackward, _clickScrollBackward);
 				}
-				this->buttonBegin->trySetImageByName(this->skinName + "/" + this->_getSkinNameBeginNormal());
-				this->buttonBegin->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBeginHover());
-				this->buttonBegin->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBeginPushed());
-				this->buttonBegin->resizeToFitImage();
-				this->buttonEnd->trySetImageByName(this->skinName + "/" + this->_getSkinNameEndNormal());
-				this->buttonEnd->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameEndHover());
-				this->buttonEnd->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameEndPushed());
-				this->buttonEnd->resizeToFitImage();
-				this->buttonBack->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->buttonBack->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->buttonBack->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->buttonBack->resizeToFitImage();
-				this->buttonBar->trySetImageByName(this->skinName + "/" + this->_getSkinNameBarNormal());
-				this->buttonBar->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBarHover());
-				this->buttonBar->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBarPushed());
-				this->buttonBar->resizeToFitImage();
+				this->buttonBackground->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackground());
+				this->buttonBackground->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackground());
+				this->buttonBackground->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackground());
+				this->buttonBackground->resizeToFitImage();
+				this->buttonSlider->trySetImageByName(this->skinName + "/" + this->_getSkinNameSliderNormal());
+				this->buttonSlider->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameSliderHover());
+				this->buttonSlider->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameSliderPushed());
+				this->buttonSlider->resizeToFitImage();
+				this->buttonForward->trySetImageByName(this->skinName + "/" + this->_getSkinNameForwardNormal());
+				this->buttonForward->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameForwardHover());
+				this->buttonForward->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameForwardPushed());
+				this->buttonForward->resizeToFitImage();
+				this->buttonBackward->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackwardNormal());
+				this->buttonBackward->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackwardHover());
+				this->buttonBackward->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackwardPushed());
+				this->buttonBackward->resizeToFitImage();
 				this->_updateChildren();
 				this->_updateBar();
 			}
-			else if (buttonBegin != NULL)
+			else if (buttonBackward != NULL)
 			{
-				this->unregisterChild(this->buttonBegin);
-				delete this->buttonBegin;
-				this->buttonBegin = NULL;
-				this->unregisterChild(this->buttonEnd);
-				delete this->buttonEnd;
-				this->buttonEnd = NULL;
-				this->unregisterChild(this->buttonBack);
-				delete this->buttonBack;
-				this->buttonBack = NULL;
-				this->unregisterChild(this->buttonBar);
-				delete this->buttonBar;
-				this->buttonBar = NULL;
+				this->unregisterChild(this->buttonBackward);
+				delete this->buttonBackward;
+				this->buttonBackward = NULL;
+				this->unregisterChild(this->buttonForward);
+				delete this->buttonForward;
+				this->buttonForward = NULL;
+				this->unregisterChild(this->buttonBackground);
+				delete this->buttonBackground;
+				this->buttonBackground = NULL;
+				this->unregisterChild(this->buttonSlider);
+				delete this->buttonSlider;
+				this->buttonSlider = NULL;
 			}
 		}
 	}
@@ -221,7 +221,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (this->buttonBar != NULL && this->buttonBar->isPushed())
+		if (this->buttonSlider != NULL && this->buttonSlider->isPushed())
 		{
 			gvec2 position = aprilui::getCursorPosition() / this->getDerivedScale() - this->_clickPosition;
 			this->_moveScrollBar(position.x, position.y);
@@ -258,12 +258,12 @@ namespace aprilui
 		this->addScrollValue(hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
 	}
 
-	void ScrollBar::_clickScrollBegin(EventArgs* args)
+	void ScrollBar::_clickScrollBackward(EventArgs* args)
 	{
 		((ScrollBar*)args->object->getParent())->addScrollValueBegin();
 	}
 
-	void ScrollBar::_clickScrollEnd(EventArgs* args)
+	void ScrollBar::_clickScrollForward(EventArgs* args)
 	{
 		((ScrollBar*)args->object->getParent())->addScrollValueEnd();
 	}
@@ -279,7 +279,7 @@ namespace aprilui
 	{
 		ScrollBar* scrollBar = (ScrollBar*)args->object->getParent();
 		scrollBar->_clickPosition = aprilui::getCursorPosition() / scrollBar->getDerivedScale() -
-			scrollBar->buttonBar->getPosition() + scrollBar->buttonBegin->getSize();
+			scrollBar->buttonSlider->getPosition() + scrollBar->buttonBackward->getSize();
 	}
 
 	void ScrollBar::_clickScrollBar(EventArgs* args)

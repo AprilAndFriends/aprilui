@@ -191,6 +191,18 @@
     <ClCompile Include="src\objects\ObjectProgressBase.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollBarButtonBackground.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollBarButtonBackward.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollBarButtonForward.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\ObjectScrollBarButtonSlider.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\aprilui\Animators.h">
@@ -368,6 +380,18 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\ObjectProgressBase.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonBackground.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonBackward.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonForward.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonSlider.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
