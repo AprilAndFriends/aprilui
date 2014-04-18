@@ -44,8 +44,8 @@ namespace aprilui
 			int firstFrame;
 			int frameCount;
 			
-			inline float _getObjectValue() { return 0.0f; }
-			inline void _setObjectValue(float value) { }
+			HL_INLINE float _getObjectValue() { return 0.0f; }
+			HL_INLINE void _setObjectValue(float value) { }
 
 		};
 	}

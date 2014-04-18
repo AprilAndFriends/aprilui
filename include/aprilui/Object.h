@@ -60,44 +60,44 @@ namespace aprilui
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);
-		inline float getX() { return this->rect.x; }
-		inline void setX(float value) { this->rect.x = value; }
-		inline float getY() { return this->rect.y; }
-		inline void setY(float value) { this->rect.y = value; }
-		inline gvec2 getPosition() { return this->rect.getPosition(); }
-		inline void setPosition(gvec2 value) { this->rect.setPosition(value); }
-		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
-		inline float getWidth() { return this->rect.w; }
+		HL_INLINE float getX() { return this->rect.x; }
+		HL_INLINE void setX(float value) { this->rect.x = value; }
+		HL_INLINE float getY() { return this->rect.y; }
+		HL_INLINE void setY(float value) { this->rect.y = value; }
+		HL_INLINE gvec2 getPosition() { return this->rect.getPosition(); }
+		HL_INLINE void setPosition(gvec2 value) { this->rect.setPosition(value); }
+		HL_INLINE void setPosition(float x, float y) { this->rect.setPosition(x, y); }
+		HL_INLINE float getWidth() { return this->rect.w; }
 		void setWidth(float value);
-		inline float getHeight() { return this->rect.h; }
+		HL_INLINE float getHeight() { return this->rect.h; }
 		void setHeight(float value);
-		inline gvec2 getSize() { return this->rect.getSize(); }
+		HL_INLINE gvec2 getSize() { return this->rect.getSize(); }
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
 		HL_DEFINE_GETSET(gvec2, scaleFactor, Scale)
-		inline void setScale(float x, float y) { this->scaleFactor.set(x, y); }
-		inline float getScaleX() { return this->scaleFactor.x; }
-		inline void setScaleX(float value) { this->scaleFactor.x = value; }
-		inline float getScaleY() { return this->scaleFactor.y; }
-		inline void setScaleY(float value) { this->scaleFactor.y = value; }
+		HL_INLINE void setScale(float x, float y) { this->scaleFactor.set(x, y); }
+		HL_INLINE float getScaleX() { return this->scaleFactor.x; }
+		HL_INLINE void setScaleX(float value) { this->scaleFactor.x = value; }
+		HL_INLINE float getScaleY() { return this->scaleFactor.y; }
+		HL_INLINE void setScaleY(float value) { this->scaleFactor.y = value; }
 
 		HL_DEFINE_GETSET(gvec2, center, Center);
-		inline void setCenter(float x, float y) { this->center.set(x, y); }
-		inline float getCenterX() { return this->center.x; }
-		inline void setCenterX(float value) { this->center.x = value; }
-		inline float getCenterY() { return this->center.y; }
-		inline void setCenterY(float value) { this->center.y = value; }
+		HL_INLINE void setCenter(float x, float y) { this->center.set(x, y); }
+		HL_INLINE float getCenterX() { return this->center.x; }
+		HL_INLINE void setCenterX(float value) { this->center.x = value; }
+		HL_INLINE float getCenterY() { return this->center.y; }
+		HL_INLINE void setCenterY(float value) { this->center.y = value; }
 
 		HL_DEFINE_GETSET(april::Color, color, Color);
-		inline unsigned char getRed() { return this->color.r; }
-		inline void setRed(unsigned char value) { this->color.r = value; }
-		inline unsigned char getGreen() { return this->color.g; }
-		inline void setGreen(unsigned char value) { this->color.g = value; }
-		inline unsigned char getBlue() { return this->color.b; }
-		inline void setBlue(unsigned char value) { this->color.b = value; }
-		inline unsigned char getAlpha() { return this->color.a; }
-		inline void setAlpha(unsigned char value) { this->color.a = value; }
+		HL_INLINE unsigned char getRed() { return this->color.r; }
+		HL_INLINE void setRed(unsigned char value) { this->color.r = value; }
+		HL_INLINE unsigned char getGreen() { return this->color.g; }
+		HL_INLINE void setGreen(unsigned char value) { this->color.g = value; }
+		HL_INLINE unsigned char getBlue() { return this->color.b; }
+		HL_INLINE void setBlue(unsigned char value) { this->color.b = value; }
+		HL_INLINE unsigned char getAlpha() { return this->color.a; }
+		HL_INLINE void setAlpha(unsigned char value) { this->color.a = value; }
 
 		HL_DEFINE_IS(enabled, Enabled);
 		void setEnabled(bool value);
@@ -110,17 +110,17 @@ namespace aprilui
 		HL_DEFINE_ISSET(retainAnchorAspect, RetainAnchorAspect);
 		HL_DEFINE_ISSET(clickThrough, ClickThrough);
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
-		inline bool isVisible() { return (this->visible && this->color.a > 0); }
+		HL_INLINE bool isVisible() { return (this->visible && this->color.a > 0); }
 		HL_DEFINE_SET(bool, visible, Visible);
-		inline bool getVisibilityFlag() { return this->visible; }
+		HL_INLINE bool getVisibilityFlag() { return this->visible; }
 		HL_DEFINE_ISSET(clip, Clip);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
 		virtual HL_DEFINE_GET(int, focusIndex, FocusIndex);
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		
-		inline harray<Object*>& getChildren() { return this->children; }
-		inline hmap<hstr, Event*>& getEvents() { return this->events; }
+		HL_INLINE harray<Object*>& getChildren() { return this->children; }
+		HL_INLINE hmap<hstr, Event*>& getEvents() { return this->events; }
 		virtual bool isFocused();
 		virtual void setFocused(bool focused);
 		hstr getFullName();

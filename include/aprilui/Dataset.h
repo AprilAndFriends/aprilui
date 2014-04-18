@@ -56,10 +56,10 @@ namespace aprilui
 		HL_DEFINE_IS(loaded, Loaded);
 		HL_DEFINE_GET(Object*, focusedObject, FocusedObject);
 		HL_DEFINE_GETSET(Object*, root, Root);
-		inline hmap<hstr, Object*>& getObjects() { return this->objects; }
-		inline hmap<hstr, Image*>& getImages() { return this->images; }
-		inline hmap<hstr, Texture*>& getTextures() { return this->textures; }
-		inline hmap<hstr, hstr>& getTexts() { return this->texts; }
+		HL_INLINE hmap<hstr, Object*>& getObjects() { return this->objects; }
+		HL_INLINE hmap<hstr, Image*>& getImages() { return this->images; }
+		HL_INLINE hmap<hstr, Texture*>& getTextures() { return this->textures; }
+		HL_INLINE hmap<hstr, hstr>& getTexts() { return this->texts; }
 		bool isAnimated();
 		bool isWaitingAnimation();
 		int getFocusedObjectIndex();
@@ -81,7 +81,7 @@ namespace aprilui
 		harray<int> findAllFocusIndices();
 		
 		template <class T>
-		inline hmap<hstr, T> getObjectsByType()
+		HL_INLINE hmap<hstr, T> getObjectsByType()
 		{
 			return this->objects.dyn_cast_value<hstr, T>();
 		}
@@ -131,7 +131,7 @@ namespace aprilui
 		Object* tryGetObject(chstr name);
 		
 		template <class T>
-		inline T getObject(chstr name)
+		HL_INLINE T getObject(chstr name)
 		{
 			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
@@ -141,12 +141,12 @@ namespace aprilui
 			return object;
 		}
 		template <class T>
-		inline void getObject(chstr name, T& out)
+		HL_INLINE void getObject(chstr name, T& out)
 		{
 			out = this->getObject<T>(name);
 		}
 		template <class T>
-		inline T tryGetObject(chstr name)
+		HL_INLINE T tryGetObject(chstr name)
 		{
 			T object = dynamic_cast<T>(this->tryGetObject(name));
 			if (object == NULL)
@@ -156,7 +156,7 @@ namespace aprilui
 			return object;
 		}
 		template <class T>
-		inline void tryGetObject(chstr name, T& out)
+		HL_INLINE void tryGetObject(chstr name, T& out)
 		{
 			out = this->tryGetObject<T>(name);
 		}
@@ -201,8 +201,8 @@ namespace aprilui
 		void parseCompositeImage(hlxml::Node* node);
 		void parseGlobalInclude(chstr path);
 		void parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
-		virtual inline void parseExternalXMLNode(hlxml::Node* node) { }
-		virtual inline Object* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
+		virtual HL_INLINE void parseExternalXMLNode(hlxml::Node* node) { }
+		virtual HL_INLINE Object* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
 		
 		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		Object* recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);

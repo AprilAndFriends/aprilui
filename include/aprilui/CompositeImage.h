@@ -38,7 +38,7 @@ namespace aprilui
 		CompositeImage(chstr name, CompositeImage& base);
 		~CompositeImage();
 		
-		inline const harray<ImageRef>& getImages() { return this->images; }
+		HL_INLINE const harray<ImageRef>& getImages() { return this->images; }
 		
 		void addImageRef(Image* image, grect rect);
         void clearImages();
