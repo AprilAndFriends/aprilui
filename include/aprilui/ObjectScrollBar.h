@@ -63,24 +63,24 @@ namespace aprilui
 		float gridSize;
 		bool useFading;
 		bool heightHide;
-		ImageButton* buttonBegin;
-		ImageButton* buttonEnd;
-		ImageButton* buttonBack;
-		ImageButton* buttonBar;
+		ImageButton* buttonBackground;
+		ImageButton* buttonSlider;
+		ImageButton* buttonForward;
+		ImageButton* buttonBackward;
 		float _retainTime;
 
 		void _initAreaDragging();
 
-		virtual hstr _getSkinNameBeginNormal() = 0;
-		virtual hstr _getSkinNameBeginHover() = 0;
-		virtual hstr _getSkinNameBeginPushed() = 0;
-		virtual hstr _getSkinNameEndNormal() = 0;
-		virtual hstr _getSkinNameEndHover() = 0;
-		virtual hstr _getSkinNameEndPushed() = 0;
 		virtual hstr _getSkinNameBackground() = 0;
-		virtual hstr _getSkinNameBarNormal() = 0;
-		virtual hstr _getSkinNameBarHover() = 0;
-		virtual hstr _getSkinNameBarPushed() = 0;
+		virtual hstr _getSkinNameSliderNormal() = 0;
+		virtual hstr _getSkinNameSliderHover() = 0;
+		virtual hstr _getSkinNameSliderPushed() = 0;
+		virtual hstr _getSkinNameForwardNormal() = 0;
+		virtual hstr _getSkinNameForwardHover() = 0;
+		virtual hstr _getSkinNameForwardPushed() = 0;
+		virtual hstr _getSkinNameBackwardNormal() = 0;
+		virtual hstr _getSkinNameBackwardHover() = 0;
+		virtual hstr _getSkinNameBackwardPushed() = 0;
 
 		virtual grect _getBarDrawRect() = 0;
 
@@ -92,8 +92,8 @@ namespace aprilui
 		virtual void _adjustDragSpeed() = 0;
 		virtual bool _checkAreaSize() = 0;
 
-		static void _clickScrollBegin(EventArgs* args);
-		static void _clickScrollEnd(EventArgs* args);
+		static void _clickScrollBackward(EventArgs* args);
+		static void _clickScrollForward(EventArgs* args);
 		static void _clickScrollBack(EventArgs* args);
 		static void _mouseDownScrollBar(EventArgs* args);
 		static void _clickScrollBar(EventArgs* args);

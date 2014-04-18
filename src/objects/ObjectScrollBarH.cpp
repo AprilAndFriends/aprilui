@@ -19,19 +19,18 @@
 
 namespace aprilui
 {
-	hstr ScrollBarH::SkinNameLeftNormal = "left_normal";
-	hstr ScrollBarH::SkinNameLeftHover = "left_hover";
-	hstr ScrollBarH::SkinNameLeftPushed = "left_pushed";
-	hstr ScrollBarH::SkinNameRightNormal = "right_normal";
-	hstr ScrollBarH::SkinNameRightHover = "right_hover";
-	hstr ScrollBarH::SkinNameRightPushed = "right_pushed";
-	hstr ScrollBarH::SkinNameBackgroundH = "background_h";
-	hstr ScrollBarH::SkinNameBarHNormal = "bar_h_normal";
-	hstr ScrollBarH::SkinNameBarHHover = "bar_h_hover";
-	hstr ScrollBarH::SkinNameBarHPushed = "bar_h_pushed";
+	hstr ScrollBarH::SkinNameHBackground = "h_background";
+	hstr ScrollBarH::SkinNameHSliderNormal = "h_slider_normal";
+	hstr ScrollBarH::SkinNameHSliderHover = "h_slider_hover";
+	hstr ScrollBarH::SkinNameHSliderPushed = "h_slider_pushed";
+	hstr ScrollBarH::SkinNameHForwardNormal = "right_normal";
+	hstr ScrollBarH::SkinNameHForwardHover = "right_hover";
+	hstr ScrollBarH::SkinNameHForwardPushed = "right_pushed";
+	hstr ScrollBarH::SkinNameHBackwardNormal = "left_normal";
+	hstr ScrollBarH::SkinNameHBackwardHover = "left_hover";
+	hstr ScrollBarH::SkinNameHBackwardPushed = "left_pushed";
 
-	ScrollBarH::ScrollBarH(chstr name, grect rect) :
-		ScrollBar(name, rect)
+	ScrollBarH::ScrollBarH(chstr name, grect rect) : ScrollBar(name, rect)
 	{
 	}
 
@@ -109,7 +108,7 @@ namespace aprilui
 
 	float ScrollBarH::_calcScrollJump(float x, float y)
 	{
-		if (this->buttonBar == NULL)
+		if (this->buttonSlider == NULL)
 		{
 			return 0.0f;
 		}
@@ -123,7 +122,7 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		float result = hsgn(x + this->buttonBegin->getX() - this->buttonBar->getX()) * parent->getWidth();
+		float result = hsgn(x + this->buttonBackward->getX() - this->buttonSlider->getX()) * parent->getWidth();
 		if (result < 0.0f)
 		{
 			result = hmax(result, -area->getScrollOffsetX());
@@ -163,30 +162,30 @@ namespace aprilui
 
 	void ScrollBarH::_updateChildren()
 	{
-		buttonBegin->setAnchorTop(false);
-		buttonBegin->setAnchorBottom(false);
-		buttonBegin->setAnchorLeft(true);
-		buttonBegin->setAnchorRight(false);
-		buttonEnd->setX(this->getWidth() - this->buttonEnd->getWidth());
-		buttonEnd->setAnchorTop(false);
-		buttonEnd->setAnchorBottom(false);
-		buttonEnd->setAnchorLeft(false);
-		buttonEnd->setAnchorRight(true);
-		buttonBack->setX(this->buttonBegin->getWidth());
-		buttonBack->setSize(this->getWidth() - this->buttonBegin->getWidth() - this->buttonEnd->getWidth(), this->getHeight());
-		buttonBack->setAnchorTop(false);
-		buttonBack->setAnchorBottom(false);
-		buttonBack->setAnchorLeft(true);
-		buttonBack->setAnchorRight(true);
-		buttonBar->setAnchorTop(false);
-		buttonBar->setAnchorBottom(false);
-		buttonBar->setAnchorLeft(true);
-		buttonBar->setAnchorRight(false);
+		this->buttonBackward->setAnchorTop(false);
+		this->buttonBackward->setAnchorBottom(false);
+		this->buttonBackward->setAnchorLeft(true);
+		this->buttonBackward->setAnchorRight(false);
+		this->buttonForward->setX(this->getWidth() - this->buttonForward->getWidth());
+		this->buttonForward->setAnchorTop(false);
+		this->buttonForward->setAnchorBottom(false);
+		this->buttonForward->setAnchorLeft(false);
+		this->buttonForward->setAnchorRight(true);
+		this->buttonBackground->setX(this->buttonBackward->getWidth());
+		this->buttonBackground->setSize(this->getWidth() - this->buttonBackward->getWidth() - this->buttonForward->getWidth(), this->getHeight());
+		this->buttonBackground->setAnchorTop(false);
+		this->buttonBackground->setAnchorBottom(false);
+		this->buttonBackground->setAnchorLeft(true);
+		this->buttonBackground->setAnchorRight(true);
+		this->buttonSlider->setAnchorTop(false);
+		this->buttonSlider->setAnchorBottom(false);
+		this->buttonSlider->setAnchorLeft(true);
+		this->buttonSlider->setAnchorRight(false);
 	}
 
 	void ScrollBarH::_moveScrollBar(float x, float y)
 	{
-		if (this->buttonBar == NULL)
+		if (this->buttonSlider == NULL)
 		{
 			return;
 		}
@@ -200,13 +199,13 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setScrollOffsetX(hroundf(x * parent->getWidth() / this->buttonBar->getWidth()));
+		area->setScrollOffsetX(hroundf(x * parent->getWidth() / this->buttonSlider->getWidth()));
 		this->_updateBar();
 	}
 
 	void ScrollBarH::_updateBar()
 	{
-		if (this->buttonBar == NULL)
+		if (this->buttonSlider == NULL)
 		{
 			return;
 		}
@@ -220,18 +219,18 @@ namespace aprilui
 		{
 			return;
 		}
-		float range = this->getWidth() - this->buttonBegin->getWidth() - this->buttonEnd->getWidth();
+		float range = this->getWidth() - this->buttonBackward->getWidth() - this->buttonForward->getWidth();
 		float factor = area->getWidth();
 		float ratio = (factor - parent->getWidth()) / factor;
 		if (ratio > 0.0f)
 		{
-			this->buttonBar->setWidth(hclamp((1 - ratio) * range, 8.0f, range));
-			this->buttonBar->setX(hroundf(this->buttonBegin->getWidth() - area->getX() / factor * range));
+			this->buttonSlider->setWidth(hclamp((1 - ratio) * range, 8.0f, range));
+			this->buttonSlider->setX(hroundf(this->buttonBackward->getWidth() - area->getX() / factor * range));
 		}
 		else
 		{
-			this->buttonBar->setWidth(range);
-			this->buttonBar->setX(this->buttonBegin->getWidth());
+			this->buttonSlider->setWidth(range);
+			this->buttonSlider->setX(this->buttonBackward->getWidth());
 		}
 	}
 

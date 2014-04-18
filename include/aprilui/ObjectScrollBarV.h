@@ -33,28 +33,28 @@ namespace aprilui
 
 		void addScrollValue(float value);
 
-		static hstr SkinNameUpNormal;
-		static hstr SkinNameUpHover;
-		static hstr SkinNameUpPushed;
-		static hstr SkinNameDownNormal;
-		static hstr SkinNameDownHover;
-		static hstr SkinNameDownPushed;
-		static hstr SkinNameBackgroundV;
-		static hstr SkinNameBarVNormal;
-		static hstr SkinNameBarVHover;
-		static hstr SkinNameBarVPushed;
+		static hstr SkinNameVBackground;
+		static hstr SkinNameVSliderNormal;
+		static hstr SkinNameVSliderHover;
+		static hstr SkinNameVSliderPushed;
+		static hstr SkinNameVForwardNormal;
+		static hstr SkinNameVForwardHover;
+		static hstr SkinNameVForwardPushed;
+		static hstr SkinNameVBackwardNormal;
+		static hstr SkinNameVBackwardHover;
+		static hstr SkinNameVBackwardPushed;
 
 	protected:
-		inline hstr _getSkinNameBeginNormal() { return SkinNameUpNormal; }
-		inline hstr _getSkinNameBeginHover() { return SkinNameUpHover; }
-		inline hstr _getSkinNameBeginPushed() { return SkinNameUpPushed; }
-		inline hstr _getSkinNameEndNormal() { return SkinNameDownNormal; }
-		inline hstr _getSkinNameEndHover() { return SkinNameDownHover; }
-		inline hstr _getSkinNameEndPushed() { return SkinNameDownPushed; }
-		inline hstr _getSkinNameBackground() { return SkinNameBackgroundV; }
-		inline hstr _getSkinNameBarNormal() { return SkinNameBarVNormal; }
-		inline hstr _getSkinNameBarHover() { return SkinNameBarVHover; }
-		inline hstr _getSkinNameBarPushed() { return SkinNameBarVPushed; }
+		inline hstr _getSkinNameBackground() { return SkinNameVBackground; }
+		inline hstr _getSkinNameSliderNormal() { return SkinNameVSliderNormal; }
+		inline hstr _getSkinNameSliderHover() { return SkinNameVSliderHover; }
+		inline hstr _getSkinNameSliderPushed() { return SkinNameVSliderPushed; }
+		inline hstr _getSkinNameForwardNormal() { return SkinNameVForwardNormal; }
+		inline hstr _getSkinNameForwardHover() { return SkinNameVForwardHover; }
+		inline hstr _getSkinNameForwardPushed() { return SkinNameVForwardPushed; }
+		inline hstr _getSkinNameBackwardNormal() { return SkinNameVBackwardNormal; }
+		inline hstr _getSkinNameBackwardHover() { return SkinNameVBackwardHover; }
+		inline hstr _getSkinNameBackwardPushed() { return SkinNameVBackwardPushed; }
 
 		grect _getBarDrawRect();
 

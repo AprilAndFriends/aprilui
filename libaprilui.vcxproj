@@ -130,6 +130,10 @@
     <ClCompile Include="src\objects\ObjectProgressCircle.cpp" />
     <ClCompile Include="src\objects\ObjectScrollArea.cpp" />
     <ClCompile Include="src\objects\ObjectScrollBar.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollBarButtonBackground.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollBarButtonBackward.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollBarButtonForward.cpp" />
+    <ClCompile Include="src\objects\ObjectScrollBarButtonSlider.cpp" />
     <ClCompile Include="src\objects\ObjectScrollBarH.cpp" />
     <ClCompile Include="src\objects\ObjectScrollBarV.cpp" />
     <ClCompile Include="src\apriluiUtil.cpp" />
@@ -181,6 +185,10 @@
     <ClInclude Include="include\aprilui\ObjectProgressCircle.h" />
     <ClInclude Include="include\aprilui\ObjectScrollArea.h" />
     <ClInclude Include="include\aprilui\ObjectScrollBar.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonBackground.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonBackward.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonForward.h" />
+    <ClInclude Include="include\aprilui\ObjectScrollBarButtonSlider.h" />
     <ClInclude Include="include\aprilui\ObjectScrollBarH.h" />
     <ClInclude Include="include\aprilui\ObjectScrollBarV.h" />
     <ClInclude Include="include\aprilui\QueuedCallbackEvent.h" />

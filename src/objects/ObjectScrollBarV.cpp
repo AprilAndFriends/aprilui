@@ -8,7 +8,6 @@
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #include <gtypes/Rectangle.h>
-#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
@@ -20,19 +19,18 @@
 
 namespace aprilui
 {
-	hstr ScrollBarV::SkinNameUpNormal = "up_normal";
-	hstr ScrollBarV::SkinNameUpHover = "up_hover";
-	hstr ScrollBarV::SkinNameUpPushed = "up_pushed";
-	hstr ScrollBarV::SkinNameDownNormal = "down_normal";
-	hstr ScrollBarV::SkinNameDownHover = "down_hover";
-	hstr ScrollBarV::SkinNameDownPushed = "down_pushed";
-	hstr ScrollBarV::SkinNameBackgroundV = "background_v";
-	hstr ScrollBarV::SkinNameBarVNormal = "bar_v_normal";
-	hstr ScrollBarV::SkinNameBarVHover = "bar_v_hover";
-	hstr ScrollBarV::SkinNameBarVPushed = "bar_v_pushed";
+	hstr ScrollBarV::SkinNameVBackground = "v_background";
+	hstr ScrollBarV::SkinNameVSliderNormal = "v_slider_normal";
+	hstr ScrollBarV::SkinNameVSliderHover = "v_slider_hover";
+	hstr ScrollBarV::SkinNameVSliderPushed = "v_slider_pushed";
+	hstr ScrollBarV::SkinNameVForwardNormal = "down_normal";
+	hstr ScrollBarV::SkinNameVForwardHover = "down_hover";
+	hstr ScrollBarV::SkinNameVForwardPushed = "down_pushed";
+	hstr ScrollBarV::SkinNameVBackwardNormal = "up_normal";
+	hstr ScrollBarV::SkinNameVBackwardHover = "up_hover";
+	hstr ScrollBarV::SkinNameVBackwardPushed = "up_pushed";
 
-	ScrollBarV::ScrollBarV(chstr name, grect rect) :
-		ScrollBar(name, rect)
+	ScrollBarV::ScrollBarV(chstr name, grect rect) : ScrollBar(name, rect)
 	{
 	}
 
@@ -110,7 +108,7 @@ namespace aprilui
 
 	float ScrollBarV::_calcScrollJump(float x, float y)
 	{
-		if (this->buttonBar == NULL)
+		if (this->buttonSlider == NULL)
 		{
 			return 0.0f;
 		}
@@ -124,7 +122,7 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		float result = hsgn(y + this->buttonBegin->getY() - this->buttonBar->getY()) * parent->getHeight();
+		float result = hsgn(y + this->buttonBackward->getY() - this->buttonSlider->getY()) * parent->getHeight();
 		if (result < 0.0f)
 		{
 			result = hmax(result, -area->getScrollOffsetY());
@@ -164,30 +162,30 @@ namespace aprilui
 
 	void ScrollBarV::_updateChildren()
 	{
-		buttonBegin->setAnchorTop(true);
-		buttonBegin->setAnchorBottom(false);
-		buttonBegin->setAnchorLeft(false);
-		buttonBegin->setAnchorRight(false);
-		buttonEnd->setY(this->getHeight() - this->buttonEnd->getHeight());
-		buttonEnd->setAnchorTop(false);
-		buttonEnd->setAnchorBottom(true);
-		buttonEnd->setAnchorLeft(false);
-		buttonEnd->setAnchorRight(false);
-		buttonBack->setY(this->buttonBegin->getHeight());
-		buttonBack->setSize(this->getWidth(), this->getHeight() - this->buttonBegin->getHeight() - this->buttonEnd->getHeight());
-		buttonBack->setAnchorTop(true);
-		buttonBack->setAnchorBottom(true);
-		buttonBack->setAnchorLeft(false);
-		buttonBack->setAnchorRight(false);
-		buttonBar->setAnchorTop(true);
-		buttonBar->setAnchorBottom(false);
-		buttonBar->setAnchorLeft(false);
-		buttonBar->setAnchorRight(false);
+		this->buttonBackward->setAnchorTop(true);
+		this->buttonBackward->setAnchorBottom(false);
+		this->buttonBackward->setAnchorLeft(false);
+		this->buttonBackward->setAnchorRight(false);
+		this->buttonForward->setY(this->getHeight() - this->buttonForward->getHeight());
+		this->buttonForward->setAnchorTop(false);
+		this->buttonForward->setAnchorBottom(true);
+		this->buttonForward->setAnchorLeft(false);
+		this->buttonForward->setAnchorRight(false);
+		this->buttonBackground->setY(this->buttonBackward->getHeight());
+		this->buttonBackground->setSize(this->getWidth(), this->getHeight() - this->buttonBackward->getHeight() - this->buttonForward->getHeight());
+		this->buttonBackground->setAnchorTop(true);
+		this->buttonBackground->setAnchorBottom(true);
+		this->buttonBackground->setAnchorLeft(false);
+		this->buttonBackground->setAnchorRight(false);
+		this->buttonSlider->setAnchorTop(true);
+		this->buttonSlider->setAnchorBottom(false);
+		this->buttonSlider->setAnchorLeft(false);
+		this->buttonSlider->setAnchorRight(false);
 	}
 
 	void ScrollBarV::_moveScrollBar(float x, float y)
 	{
-		if (this->buttonBar == NULL)
+		if (this->buttonSlider == NULL)
 		{
 			return;
 		}
@@ -201,13 +199,13 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setScrollOffsetY(hroundf(y * parent->getHeight() / this->buttonBar->getHeight()));
+		area->setScrollOffsetY(hroundf(y * parent->getHeight() / this->buttonSlider->getHeight()));
 		this->_updateBar();
 	}
 
 	void ScrollBarV::_updateBar()
 	{
-		if (this->buttonBar == NULL)
+		if (this->buttonSlider == NULL)
 		{
 			return;
 		}
@@ -221,18 +219,18 @@ namespace aprilui
 		{
 			return;
 		}
-		float range = this->getHeight() - this->buttonBegin->getHeight() - this->buttonEnd->getHeight();
+		float range = this->getHeight() - this->buttonBackward->getHeight() - this->buttonForward->getHeight();
 		float factor = area->getHeight();
 		float ratio = (factor - parent->getHeight()) / factor;
 		if (ratio > 0.0f)
 		{
-			this->buttonBar->setHeight(hclamp((1 - ratio) * range, 8.0f, range));
-			this->buttonBar->setY(hroundf(this->buttonBegin->getHeight() - area->getY() / factor * range));
+			this->buttonSlider->setHeight(hclamp((1 - ratio) * range, 8.0f, range));
+			this->buttonSlider->setY(hroundf(this->buttonBackward->getHeight() - area->getY() / factor * range));
 		}
 		else
 		{
-			this->buttonBar->setHeight(range);
-			this->buttonBar->setY(this->buttonBegin->getHeight());
+			this->buttonSlider->setHeight(range);
+			this->buttonSlider->setY(this->buttonBackward->getHeight());
 		}
 	}
 
