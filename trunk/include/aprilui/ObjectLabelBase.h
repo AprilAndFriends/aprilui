@@ -43,10 +43,10 @@ namespace aprilui
 		HL_DEFINE_GETSET(hstr, font, Font);
 		HL_DEFINE_GETSET(april::Color, textColor, TextColor);
 		HL_DEFINE_GETSET(gvec2, textOffset, TextOffset);
-		inline float getTextOffsetX() { return this->textOffset.x; }
-		inline void setTextOffsetX(float value) { this->textOffset.x = value; }
-		inline float getTextOffsetY() { return this->textOffset.y; }
-		inline void setTextOffsetY(float value) { this->textOffset.y = value; }
+		HL_INLINE float getTextOffsetX() { return this->textOffset.x; }
+		HL_INLINE void setTextOffsetX(float value) { this->textOffset.x = value; }
+		HL_INLINE float getTextOffsetY() { return this->textOffset.y; }
+		HL_INLINE void setTextOffsetY(float value) { this->textOffset.y = value; }
 		HL_DEFINE_GETSET(atres::Alignment, horzFormatting, HorzFormatting);
 		HL_DEFINE_GETSET(atres::Alignment, vertFormatting, VertFormatting);
 		HL_DEFINE_GETSET(atres::Effect, fontEffect, FontEffect);
