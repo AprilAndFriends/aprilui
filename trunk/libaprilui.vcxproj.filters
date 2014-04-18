@@ -191,7 +191,7 @@
     <ClCompile Include="src\objects\ObjectProgressBase.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarButtonBackground.cpp">
+    <ClCompile Include="src\objects\ObjectScrollBarButtonSlider.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\ObjectScrollBarButtonBackward.cpp">
@@ -200,7 +200,7 @@
     <ClCompile Include="src\objects\ObjectScrollBarButtonForward.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarButtonSlider.cpp">
+    <ClCompile Include="src\objects\ObjectScrollBarButtonBackground.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>

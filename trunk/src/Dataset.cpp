@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -727,8 +727,8 @@ namespace aprilui
 			}
 			catch (hltypes::exception& e)
 			{
-				this->_closeDocuments(); // safe not to throw an exception
 				hlog::error(aprilui::logTag, e.message());
+				this->_closeDocuments(); // safe not to throw an exception
 				throw e;
 			}
 		}

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.06
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -15,6 +15,10 @@
 #include "ObjectImageBox.h"
 #include "ObjectImageButton.h"
 #include "ObjectScrollArea.h"
+#include "ObjectScrollBarButtonBackground.h"
+#include "ObjectScrollBarButtonBackward.h"
+#include "ObjectScrollBarButtonForward.h"
+#include "ObjectScrollBarButtonSlider.h"
 #include "ObjectScrollBarH.h"
 
 namespace aprilui
@@ -162,25 +166,25 @@ namespace aprilui
 
 	void ScrollBarH::_updateChildren()
 	{
-		this->buttonBackward->setAnchorTop(false);
-		this->buttonBackward->setAnchorBottom(false);
-		this->buttonBackward->setAnchorLeft(true);
-		this->buttonBackward->setAnchorRight(false);
-		this->buttonForward->setX(this->getWidth() - this->buttonForward->getWidth());
-		this->buttonForward->setAnchorTop(false);
-		this->buttonForward->setAnchorBottom(false);
-		this->buttonForward->setAnchorLeft(false);
-		this->buttonForward->setAnchorRight(true);
-		this->buttonBackground->setX(this->buttonBackward->getWidth());
-		this->buttonBackground->setSize(this->getWidth() - this->buttonBackward->getWidth() - this->buttonForward->getWidth(), this->getHeight());
-		this->buttonBackground->setAnchorTop(false);
-		this->buttonBackground->setAnchorBottom(false);
-		this->buttonBackground->setAnchorLeft(true);
-		this->buttonBackground->setAnchorRight(true);
-		this->buttonSlider->setAnchorTop(false);
-		this->buttonSlider->setAnchorBottom(false);
-		this->buttonSlider->setAnchorLeft(true);
-		this->buttonSlider->setAnchorRight(false);
+		if (this->skinButtonBackground)
+		{
+			this->buttonBackground->setX(this->buttonBackward->getWidth());
+			this->buttonBackground->setSize(this->getWidth() - this->buttonBackward->getWidth() - this->buttonForward->getWidth(), this->getHeight());
+			this->buttonBackground->setAnchors(true, true, false, false);
+		}
+		if (this->skinButtonSlider)
+		{
+			this->buttonSlider->setAnchors(true, false, false, false);
+		}
+		if (this->skinButtonForward)
+		{
+			this->buttonForward->setX(this->getWidth() - this->buttonForward->getWidth());
+			this->buttonForward->setAnchors(false, true, false, false);
+		}
+		if (this->skinButtonBackward)
+		{
+			this->buttonBackward->setAnchors(true, false, false, false);
+		}
 	}
 
 	void ScrollBarH::_moveScrollBar(float x, float y)

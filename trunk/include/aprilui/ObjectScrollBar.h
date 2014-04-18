@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.06
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -25,11 +25,19 @@ namespace aprilui
 {
 	class ImageButton;
 	class ScrollArea;
+	class ScrollBarButtonBackground;
+	class ScrollBarButtonBackward;
+	class ScrollBarButtonForward;
+	class ScrollBarButtonSlider;
 
 	class apriluiExport ScrollBar : public Object
 	{
 	public:
 		friend class ScrollArea;
+		friend class ScrollBarButtonBackground;
+		friend class ScrollBarButtonBackward;
+		friend class ScrollBarButtonForward;
+		friend class ScrollBarButtonSlider;
 
 		ScrollBar(chstr name, grect rect);
 		~ScrollBar();
@@ -52,8 +60,8 @@ namespace aprilui
 		bool onMouseScroll(float x, float y);
 
 		virtual void addScrollValue(float value) = 0;
-		void addScrollValueBegin(float multiplier = 1.0f);
-		void addScrollValueEnd(float multiplier = 1.0f);
+		void addScrollValueForward(float multiplier = 1.0f);
+		void addScrollValueBackward(float multiplier = 1.0f);
 
 		static float ScrollDistance;
 		static float GridSize;
@@ -63,11 +71,20 @@ namespace aprilui
 		float gridSize;
 		bool useFading;
 		bool heightHide;
-		ImageButton* buttonBackground;
-		ImageButton* buttonSlider;
-		ImageButton* buttonForward;
-		ImageButton* buttonBackward;
+		ScrollBarButtonBackground* buttonBackground;
+		ScrollBarButtonSlider* buttonSlider;
+		ScrollBarButtonForward* buttonForward;
+		ScrollBarButtonBackward* buttonBackward;
+		bool skinButtonBackground;
+		bool skinButtonSlider;
+		bool skinButtonForward;
+		bool skinButtonBackward;
 		float _retainTime;
+
+		void _setButtonBackground(ScrollBarButtonBackground* button);
+		void _setButtonSlider(ScrollBarButtonSlider* button);
+		void _setButtonForward(ScrollBarButtonForward* button);
+		void _setButtonBackward(ScrollBarButtonBackward* button);
 
 		void _initAreaDragging();
 
@@ -91,12 +108,6 @@ namespace aprilui
 		virtual void _updateBar() = 0;
 		virtual void _adjustDragSpeed() = 0;
 		virtual bool _checkAreaSize() = 0;
-
-		static void _clickScrollBackward(EventArgs* args);
-		static void _clickScrollForward(EventArgs* args);
-		static void _clickScrollBack(EventArgs* args);
-		static void _mouseDownScrollBar(EventArgs* args);
-		static void _clickScrollBar(EventArgs* args);
 
 	private:
 		gvec2 _clickPosition;

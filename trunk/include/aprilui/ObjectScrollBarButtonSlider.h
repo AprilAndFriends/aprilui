@@ -30,6 +30,12 @@ namespace aprilui
 		~ScrollBarButtonSlider();
 		static Object* createInstance(chstr name, grect rect);
 
+		void notifyEvent(chstr name, void* params);
+
+	protected:
+		static void _mouseDown(EventArgs* args);
+		static void _click(EventArgs* args);
+
 	};
 }
 
