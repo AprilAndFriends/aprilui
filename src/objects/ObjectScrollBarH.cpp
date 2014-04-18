@@ -110,7 +110,7 @@ namespace aprilui
 		this->_updateBar();
 	}
 
-	float ScrollBarH::_calcScrollJump(float x, float y)
+	float ScrollBarH::_calcScrollJump(float x, float y, gvec2 size)
 	{
 		if (this->buttonSlider == NULL)
 		{

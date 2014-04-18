@@ -15,8 +15,6 @@
 #ifndef APRILUI_MEMBER_CALLBACK_EVENT_H
 #define APRILUI_MEMBER_CALLBACK_EVENT_H
 
-#include <hltypes/hltypesUtil.h>
-
 #include "Event.h"
 #include "apriluiExport.h"
 
@@ -27,8 +25,8 @@ namespace aprilui
 	class apriluiExport MemberCallbackEventBase
 	{
 	public:
-		HL_INLINE MemberCallbackEventBase() { }
-		HL_INLINE virtual ~MemberCallbackEventBase() { }
+		inline MemberCallbackEventBase() { }
+		inline virtual ~MemberCallbackEventBase() { }
 
 		virtual void execute(void* params) = 0;
 
@@ -38,17 +36,17 @@ namespace aprilui
 	class MemberCallbackEventImpl : public MemberCallbackEventBase
 	{
 	public:
-		HL_INLINE MemberCallbackEventImpl(void (T::*function)(EventArgs*), T* object) : MemberCallbackEventBase()
+		inline MemberCallbackEventImpl(void (T::*function)(EventArgs*), T* object) : MemberCallbackEventBase()
 		{
 			this->function = function;
 			this->object = object;
 		}
 		
-		HL_INLINE ~MemberCallbackEventImpl()
+		inline ~MemberCallbackEventImpl()
 		{
 		}
 
-		HL_INLINE void execute(void* params)
+		inline void execute(void* params)
 		{
 			(this->object->*function)((EventArgs*)params);
 		}
@@ -63,7 +61,7 @@ namespace aprilui
 	{
 	public:
 		template <typename T>
-		HL_INLINE MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
+		inline MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
 		{
 			this->callback = new MemberCallbackEventImpl<T>(function, obj);
 		}

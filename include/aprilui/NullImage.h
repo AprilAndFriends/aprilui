@@ -27,7 +27,7 @@ namespace aprilui
 		NullImage();
 		~NullImage();
 		
-		HL_INLINE void draw(grect rect, april::Color color) { }
+		inline void draw(grect rect, april::Color color) { }
 		
 	};
 
