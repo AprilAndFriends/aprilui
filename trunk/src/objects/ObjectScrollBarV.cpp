@@ -110,7 +110,7 @@ namespace aprilui
 		this->_updateBar();
 	}
 
-	float ScrollBarV::_calcScrollJump(float x, float y)
+	float ScrollBarV::_calcScrollJump(float x, float y, gvec2 size)
 	{
 		if (this->buttonSlider == NULL)
 		{
@@ -126,6 +126,18 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
+		/*
+		float offset = area->getScrollOffsetY();
+		float result = y / size.y * area->getHeight();// - parent->getHeight());
+		if (result < offset)
+		{
+			result = hmax(result, -offset);
+		}
+		else
+		{
+			result = hmin(result, area->getHeight() - parent->getHeight() - offset);
+		}
+		//*/
 		float result = hsgn(y + this->buttonBackward->getY() - this->buttonSlider->getY()) * parent->getHeight();
 		if (result < 0.0f)
 		{
@@ -135,6 +147,7 @@ namespace aprilui
 		{
 			result = hmin(result, area->getHeight() - parent->getHeight() - area->getScrollOffsetY());
 		}
+		//*/
 		return result;
 	}
 

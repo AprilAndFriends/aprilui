@@ -58,7 +58,7 @@ namespace aprilui
 
 		grect _getBarDrawRect();
 
-		float _calcScrollJump(float x, float y);
+		float _calcScrollJump(float x, float y, gvec2 size);
 		float _calcScrollMove(float x, float y);
 		void _updateChildren();
 		void _moveScrollBar(float x, float y);

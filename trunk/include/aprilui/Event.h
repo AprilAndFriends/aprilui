@@ -15,8 +15,6 @@
 #ifndef APRILUI_EVENT_H
 #define APRILUI_EVENT_H
 
-#include <hltypes/hltypesUtil.h>
-
 #include "apriluiExport.h"
 
 namespace aprilui
@@ -24,8 +22,8 @@ namespace aprilui
 	class apriluiExport Event
 	{
 	public:
-		HL_INLINE Event() { }
-		HL_INLINE virtual ~Event() { }
+		inline Event() { }
+		inline virtual ~Event() { }
 
 		virtual void execute(void* params) = 0;
 		
