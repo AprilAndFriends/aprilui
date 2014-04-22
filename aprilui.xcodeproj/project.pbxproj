@@ -164,6 +164,22 @@
 		D16E9910158BE53800C058CE /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990C158BE53800C058CE /* Texture.cpp */; };
 		D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9912158BE54D00C058CE /* EventReceiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D16E9915158BE54D00C058CE /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = D16E9913158BE54D00C058CE /* Texture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D18CB6161902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */; };
+		D18CB6171902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */; };
+		D18CB6181902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */; };
+		D18CB6191902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6131902CE040071C391 /* ObjectScrollBarButtonBackward.cpp */; };
+		D18CB61A1902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6131902CE040071C391 /* ObjectScrollBarButtonBackward.cpp */; };
+		D18CB61B1902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6131902CE040071C391 /* ObjectScrollBarButtonBackward.cpp */; };
+		D18CB61C1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6141902CE040071C391 /* ObjectScrollBarButtonForward.cpp */; };
+		D18CB61D1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6141902CE040071C391 /* ObjectScrollBarButtonForward.cpp */; };
+		D18CB61E1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6141902CE040071C391 /* ObjectScrollBarButtonForward.cpp */; };
+		D18CB61F1902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6151902CE040071C391 /* ObjectScrollBarButtonSlider.cpp */; };
+		D18CB6201902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6151902CE040071C391 /* ObjectScrollBarButtonSlider.cpp */; };
+		D18CB6211902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6151902CE040071C391 /* ObjectScrollBarButtonSlider.cpp */; };
+		D18CB6261902CE1C0071C391 /* ObjectScrollBarButtonBackground.h in Headers */ = {isa = PBXBuildFile; fileRef = D18CB6221902CE1C0071C391 /* ObjectScrollBarButtonBackground.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D18CB6271902CE1C0071C391 /* ObjectScrollBarButtonBackward.h in Headers */ = {isa = PBXBuildFile; fileRef = D18CB6231902CE1C0071C391 /* ObjectScrollBarButtonBackward.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D18CB6281902CE1C0071C391 /* ObjectScrollBarButtonForward.h in Headers */ = {isa = PBXBuildFile; fileRef = D18CB6241902CE1C0071C391 /* ObjectScrollBarButtonForward.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D18CB6291902CE1C0071C391 /* ObjectScrollBarButtonSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = D18CB6251902CE1C0071C391 /* ObjectScrollBarButtonSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
 		D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
 		D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
@@ -342,6 +358,14 @@
 		D16E990C158BE53800C058CE /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = src/Texture.cpp; sourceTree = "<group>"; };
 		D16E9912158BE54D00C058CE /* EventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventReceiver.h; path = include/aprilui/EventReceiver.h; sourceTree = "<group>"; };
 		D16E9913158BE54D00C058CE /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = include/aprilui/Texture.h; sourceTree = "<group>"; };
+		D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarButtonBackground.cpp; sourceTree = "<group>"; };
+		D18CB6131902CE040071C391 /* ObjectScrollBarButtonBackward.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarButtonBackward.cpp; sourceTree = "<group>"; };
+		D18CB6141902CE040071C391 /* ObjectScrollBarButtonForward.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarButtonForward.cpp; sourceTree = "<group>"; };
+		D18CB6151902CE040071C391 /* ObjectScrollBarButtonSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarButtonSlider.cpp; sourceTree = "<group>"; };
+		D18CB6221902CE1C0071C391 /* ObjectScrollBarButtonBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarButtonBackground.h; path = include/aprilui/ObjectScrollBarButtonBackground.h; sourceTree = SOURCE_ROOT; };
+		D18CB6231902CE1C0071C391 /* ObjectScrollBarButtonBackward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarButtonBackward.h; path = include/aprilui/ObjectScrollBarButtonBackward.h; sourceTree = SOURCE_ROOT; };
+		D18CB6241902CE1C0071C391 /* ObjectScrollBarButtonForward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarButtonForward.h; path = include/aprilui/ObjectScrollBarButtonForward.h; sourceTree = SOURCE_ROOT; };
+		D18CB6251902CE1C0071C391 /* ObjectScrollBarButtonSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarButtonSlider.h; path = include/aprilui/ObjectScrollBarButtonSlider.h; sourceTree = SOURCE_ROOT; };
 		D1981D35140F913B0057C3AF /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
 		D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBar.cpp; sourceTree = "<group>"; };
 		D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBar.h; path = include/aprilui/ObjectProgressBar.h; sourceTree = "<group>"; };
@@ -479,6 +503,10 @@
 				C98E1DB114C823D300CB9F1C /* ObjectScrollBar.cpp */,
 				C98E1DB214C823D300CB9F1C /* ObjectScrollBarH.cpp */,
 				C98E1DB314C823D300CB9F1C /* ObjectScrollBarV.cpp */,
+				D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */,
+				D18CB6131902CE040071C391 /* ObjectScrollBarButtonBackward.cpp */,
+				D18CB6141902CE040071C391 /* ObjectScrollBarButtonForward.cpp */,
+				D18CB6151902CE040071C391 /* ObjectScrollBarButtonSlider.cpp */,
 				7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */,
 				7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */,
 				7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */,
@@ -592,6 +620,10 @@
 				C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */,
 				C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */,
 				C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */,
+				D18CB6221902CE1C0071C391 /* ObjectScrollBarButtonBackground.h */,
+				D18CB6231902CE1C0071C391 /* ObjectScrollBarButtonBackward.h */,
+				D18CB6241902CE1C0071C391 /* ObjectScrollBarButtonForward.h */,
+				D18CB6251902CE1C0071C391 /* ObjectScrollBarButtonSlider.h */,
 				7F38C69B12096793002B5134 /* ObjectSlider.h */,
 				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
 				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
@@ -683,6 +715,10 @@
 				7FDAF2F2131CF15A006CBC59 /* AnimatorScalerY.h in Headers */,
 				D1C2083A15FDC57000AB5DCA /* AnimatorCenterMoverX.h in Headers */,
 				D1C2083B15FDC57000AB5DCA /* AnimatorCenterMoverY.h in Headers */,
+				D18CB6261902CE1C0071C391 /* ObjectScrollBarButtonBackground.h in Headers */,
+				D18CB6271902CE1C0071C391 /* ObjectScrollBarButtonBackward.h in Headers */,
+				D18CB6281902CE1C0071C391 /* ObjectScrollBarButtonForward.h in Headers */,
+				D18CB6291902CE1C0071C391 /* ObjectScrollBarButtonSlider.h in Headers */,
 				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
 				D11F4DA0172027BC0048DFD8 /* QueuedCallbackEvent.h in Headers */,
 				D140388618EAF8290092608C /* ObjectProgressCircle.h in Headers */,
@@ -801,6 +837,7 @@
 				7F38C6CF120967B9002B5134 /* ObjectImageButton.cpp in Sources */,
 				7F38C6D0120967B9002B5134 /* ObjectLabel.cpp in Sources */,
 				7F38C6D1120967B9002B5134 /* ObjectLabelBase.cpp in Sources */,
+				D18CB61C1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */,
 				7F38C6D5120967B9002B5134 /* ObjectSlider.cpp in Sources */,
 				7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */,
 				7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */,
@@ -834,14 +871,17 @@
 				D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */,
 				D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */,
 				C98E1DB414C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */,
+				D18CB6191902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */,
 				C98E1DB614C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */,
 				C98E1DB814C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */,
 				C98E1DBA14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */,
 				C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */,
+				D18CB6161902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
 				D16E990D158BE53800C058CE /* EventReceiver.cpp in Sources */,
 				D16E990F158BE53800C058CE /* Texture.cpp in Sources */,
 				D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */,
 				D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
+				D18CB61F1902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
 				D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */,
 				D11F4D9E172027B20048DFD8 /* QueuedCallbackEvent.cpp in Sources */,
 			);
@@ -853,11 +893,14 @@
 			files = (
 				D1688913149026EB004FD97F /* AnimatorTiledScrollerX.cpp in Sources */,
 				D1688914149026EB004FD97F /* AnimatorTiledScrollerY.cpp in Sources */,
+				D18CB6211902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
 				D1522E7A140F6A6B0012F290 /* MemberCallbackEvent.cpp in Sources */,
 				D1522E7B140F6A6B0012F290 /* aprilui.cpp in Sources */,
 				D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */,
+				D18CB6181902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
 				D1522E7D140F6A6B0012F290 /* ColoredImage.cpp in Sources */,
 				D1522E7E140F6A6B0012F290 /* ColorImage.cpp in Sources */,
+				D18CB61B1902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */,
 				D140388218EAF8150092608C /* ObjectProgressCircle.cpp in Sources */,
 				D1522E7F140F6A6B0012F290 /* CompositeImage.cpp in Sources */,
 				D1522E80140F6A6B0012F290 /* Image.cpp in Sources */,
@@ -892,6 +935,7 @@
 				D1522E9E140F6A6B0012F290 /* ObjectToggleButton.cpp in Sources */,
 				D1522E9F140F6A6B0012F290 /* CallbackEvent.cpp in Sources */,
 				D1522EA0140F6A6B0012F290 /* Dataset.cpp in Sources */,
+				D18CB61E1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */,
 				D1522EA1140F6A6B0012F290 /* Exception.cpp in Sources */,
 				C98E1DB514C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */,
 				C98E1DB714C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */,
@@ -912,11 +956,14 @@
 			files = (
 				D1F27B29177A2FCA00E5C131 /* AnimatorTiledScrollerX.cpp in Sources */,
 				D1F27B2A177A2FCA00E5C131 /* AnimatorTiledScrollerY.cpp in Sources */,
+				D18CB6201902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
 				D1F27B2B177A2FCA00E5C131 /* MemberCallbackEvent.cpp in Sources */,
 				D1F27B2C177A2FCA00E5C131 /* aprilui.cpp in Sources */,
 				D1F27B2D177A2FCA00E5C131 /* EventArgs.cpp in Sources */,
+				D18CB6171902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
 				D1F27B2E177A2FCA00E5C131 /* ColoredImage.cpp in Sources */,
 				D1F27B2F177A2FCA00E5C131 /* ColorImage.cpp in Sources */,
+				D18CB61A1902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */,
 				D140388118EAF8150092608C /* ObjectProgressCircle.cpp in Sources */,
 				D1F27B30177A2FCA00E5C131 /* CompositeImage.cpp in Sources */,
 				D1F27B31177A2FCA00E5C131 /* Image.cpp in Sources */,
@@ -951,6 +998,7 @@
 				D1F27B4E177A2FCA00E5C131 /* ObjectToggleButton.cpp in Sources */,
 				D1F27B4F177A2FCA00E5C131 /* CallbackEvent.cpp in Sources */,
 				D1F27B50177A2FCA00E5C131 /* Dataset.cpp in Sources */,
+				D18CB61D1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */,
 				D1F27B51177A2FCA00E5C131 /* Exception.cpp in Sources */,
 				D1F27B52177A2FCA00E5C131 /* ObjectScrollArea.cpp in Sources */,
 				D1F27B53177A2FCA00E5C131 /* ObjectScrollBar.cpp in Sources */,
