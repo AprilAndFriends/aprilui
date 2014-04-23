@@ -67,6 +67,158 @@ namespace aprilui
 		this->_textureCoordinatesLoaded = false;
 	}
 	
+	void Image::setProperty(chstr name, chstr value)
+	{
+		if (name == "x")
+		{
+			this->srcRect.x = value;
+		}
+		else if (name == "y")
+		{
+			this->srcRect.y = value;
+		}
+		else if (name == "w")
+		{
+			this->srcRect.w = value;
+		}
+		else if (name == "h")
+		{
+			this->srcRect.h = value;
+		}
+		else if (name == "vertical")
+		{
+			this->vertical = value;
+		}
+		else if (name == "invert_x")
+		{
+			this->invertX = value;
+		}
+		else if (name == "invert_y")
+		{
+			this->invertX = value;
+			
+		}
+		else if (name == "blend_mode")
+		{
+			if (value == "add")
+			{
+				this->setBlendMode(april::BM_ADD);
+			}
+			else if (value == "subtract")
+			{
+				this->setBlendMode(april::BM_SUBTRACT);
+			}
+			else if (value == "overwrite")
+			{
+				this->setBlendMode(april::BM_OVERWRITE);
+			}
+			else
+			{
+				this->setBlendMode(april::BM_DEFAULT);
+			}
+		}
+		else if (name == "color_mode")
+		{
+			if (value == "lerp")
+			{
+				this->setColorMode(april::CM_LERP);
+			}
+			else if (value == "alpha_map")
+			{
+				this->setColorMode(april::CM_ALPHA_MAP);
+			}
+			else
+			{
+				this->setColorMode(april::CM_DEFAULT);
+			}
+		}
+		else if (name == "color_mode_factor")
+		{
+			this->colorModeFactor = value;
+		}
+		else
+		{
+			throw hl_exception("Unknown april::Image property: " + name);
+		}
+	}
+	
+	hstr Image::getProperty(chstr name)
+	{
+		if (name == "x")
+		{
+			return this->srcRect.x;
+		}
+		else if (name == "y")
+		{
+			return this->srcRect.y;
+		}
+		else if (name == "w")
+		{
+			return this->srcRect.w;
+		}
+		else if (name == "h")
+		{
+			return this->srcRect.h;
+		}
+		else if (name == "vertical")
+		{
+			return this->vertical;
+		}
+		else if (name == "invert_x")
+		{
+			return this->invertX;
+		}
+		else if (name == "invert_y")
+		{
+			return this->invertX;
+		}
+		else if (name == "blend_mode")
+		{
+			april::BlendMode blendMode = this->getBlendMode();
+			if (blendMode == april::BM_ADD)
+			{
+				return "add";
+			}
+			else if (blendMode == april::BM_SUBTRACT)
+			{
+				return "subtract";
+			}
+			else if (blendMode == april::BM_OVERWRITE)
+			{
+				return "overwrite";
+			}
+			else
+			{
+				return "default";
+			}
+		}
+		else if (name == "color_mode")
+		{
+			april::ColorMode colorMode = this->getColorMode();
+			if (colorMode == april::CM_LERP)
+			{
+				return "lerp";
+			}
+			else if (colorMode == april::CM_ALPHA_MAP)
+			{
+				return "alpha_map";
+			}
+			else
+			{
+				return "default";
+			}
+		}
+		else if (name == "color_mode_factor")
+		{
+			return this->colorModeFactor;
+		}
+		else
+		{
+			throw hl_exception("Unknown april::Image property: " + name);
+		}
+		return "";
+	}
+	
 	void Image::_tryLoadTexCoords()
 	{
 		if (!this->_textureCoordinatesLoaded && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)

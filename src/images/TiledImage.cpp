@@ -37,6 +37,24 @@ namespace aprilui
 	{
 		this->scroll.set(x, y);
 	}
+	
+	void TiledImage::setProperty(chstr name, chstr value)
+	{
+		if (name == "todo")
+		{
+			this->srcRect.x = value;
+		}
+		else aprilui::Image::setProperty(name, value);
+	}
+	
+	hstr TiledImage::getProperty(chstr name)
+	{
+		if (name == "todo")
+		{
+			return this->srcRect.x;
+		}
+		else return aprilui::Image::getProperty(name);
+	}
 
 	void TiledImage::draw(grect rect, april::Color color)
 	{
