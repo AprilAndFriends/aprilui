@@ -41,5 +41,23 @@ namespace aprilui
 	{
 		Image::draw(vertices, this->color * color);
 	}
+	
+	void ColoredImage::setProperty(chstr name, chstr value)
+	{
+		if (name == "color")
+		{
+			this->color.set(value);
+		}
+		else aprilui::Image::setProperty(name, value);
+	}
+	
+	hstr ColoredImage::getProperty(chstr name)
+	{
+		if (name == "color")
+		{
+			return this->color.hex();
+		}
+		else return aprilui::Image::getProperty(name);
+	}
 
 }

@@ -57,6 +57,9 @@ namespace aprilui
 		hstr getFullName();
 		void setSrcRect(grect value);
 		
+		virtual void setProperty(chstr name, chstr value);
+		virtual hstr getProperty(chstr name);
+		
 	protected:
 		Dataset* dataset;
 		Texture* texture;

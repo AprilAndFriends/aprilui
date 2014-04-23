@@ -41,6 +41,9 @@ namespace aprilui
 		inline float getScrollY() { return this->scroll.y; }
 		inline void setScrollY(float value) { this->scroll.y = value; }
 		
+		void setProperty(chstr name, chstr value);
+		hstr getProperty(chstr name);
+
 		void setTile(float w, float h);
 		void setScroll(float x, float y);
 		
