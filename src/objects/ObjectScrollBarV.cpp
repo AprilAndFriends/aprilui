@@ -112,7 +112,7 @@ namespace aprilui
 
 	float ScrollBarV::_calcScrollJump(float x, float y, gvec2 size)
 	{
-		if (this->buttonSlider == NULL)
+		if (this->_getButtonSlider() == NULL)
 		{
 			return 0.0f;
 		}
@@ -126,28 +126,16 @@ namespace aprilui
 		{
 			return 0.0f;
 		}
-		/*
 		float offset = area->getScrollOffsetY();
-		float result = y / size.y * area->getHeight();// - parent->getHeight());
-		if (result < offset)
+		float result = 0.0f;
+		if (y / size.y * area->getHeight() < offset)
 		{
-			result = hmax(result, -offset);
+			result = hmax(-parent->getHeight(), -offset);
 		}
 		else
 		{
-			result = hmin(result, area->getHeight() - parent->getHeight() - offset);
+			result = hmin(parent->getHeight(), area->getHeight() - parent->getHeight() - offset);
 		}
-		//*/
-		float result = hsgn(y + this->buttonBackward->getY() - this->buttonSlider->getY()) * parent->getHeight();
-		if (result < 0.0f)
-		{
-			result = hmax(result, -area->getScrollOffsetY());
-		}
-		else
-		{
-			result = hmin(result, area->getHeight() - parent->getHeight() - area->getScrollOffsetY());
-		}
-		//*/
 		return result;
 	}
 
@@ -179,30 +167,36 @@ namespace aprilui
 
 	void ScrollBarV::_updateChildren()
 	{
-		if (this->skinButtonBackground)
+		if (this->_buttonBackgroundSkinned != NULL)
 		{
-			this->buttonBackground->setY(this->buttonBackward->getHeight());
-			this->buttonBackground->setSize(this->getWidth(), this->getHeight() - this->buttonBackward->getHeight() - this->buttonForward->getHeight());
-			this->buttonBackground->setAnchors(false, false, true, true);
+			this->_buttonBackgroundSkinned->setY(this->_buttonBackwardSkinned->getHeight());
+			this->_buttonBackgroundSkinned->setSize(this->getWidth(), this->getHeight() - this->_buttonBackwardSkinned->getHeight() - this->_buttonForwardSkinned->getHeight());
+			this->_buttonBackgroundSkinned->setAnchors(false, false, true, true);
 		}
-		if (this->skinButtonSlider)
+		if (this->_buttonSliderSkinned != NULL)
 		{
-			this->buttonSlider->setAnchors(false, false, true, false);
+			this->_buttonSliderSkinned->setAnchors(false, false, true, false);
 		}
-		if (this->skinButtonForward)
+		if (this->_buttonForwardSkinned != NULL)
 		{
-			this->buttonForward->setY(this->getHeight() - this->buttonForward->getHeight());
-			this->buttonForward->setAnchors(false, false, false, true);
+			this->_buttonForwardSkinned->setY(this->getHeight() - this->_buttonForwardSkinned->getHeight());
+			this->_buttonForwardSkinned->setAnchors(false, false, false, true);
 		}
-		if (this->skinButtonBackward)
+		if (this->_buttonBackwardSkinned != NULL)
 		{
-			this->buttonBackward->setAnchors(false, false, true, false);
+			this->_buttonBackwardSkinned->setAnchors(false, false, true, false);
 		}
 	}
 
 	void ScrollBarV::_moveScrollBar(float x, float y)
 	{
-		if (this->buttonSlider == NULL)
+		ScrollBarButtonSlider* buttonSlider = this->_getButtonSlider();
+		if (buttonSlider == NULL)
+		{
+			return;
+		}
+		ScrollBarButtonBackground* buttonBackground = this->_getButtonBackground();
+		if (buttonBackground == NULL)
 		{
 			return;
 		}
@@ -216,13 +210,18 @@ namespace aprilui
 		{
 			return;
 		}
-		area->setScrollOffsetY(hroundf(y * parent->getHeight() / this->buttonSlider->getHeight()));
+		area->setScrollOffsetY(hroundf(y * (area->getHeight() - parent->getHeight()) / (buttonBackground->getHeight() - buttonSlider->getHeight())));
 		this->_updateBar();
 	}
 
 	void ScrollBarV::_updateBar()
 	{
-		if (this->buttonSlider == NULL)
+		if (this->_buttonSlider == NULL && this->_buttonSliderSkinned == NULL)
+		{
+			return;
+		}
+		ScrollBarButtonBackground* buttonBackground = this->_getButtonBackground();
+		if (buttonBackground == NULL)
 		{
 			return;
 		}
@@ -236,18 +235,49 @@ namespace aprilui
 		{
 			return;
 		}
-		float range = this->getHeight() - this->buttonBackward->getHeight() - this->buttonForward->getHeight();
-		float factor = area->getHeight();
-		float ratio = (factor - parent->getHeight()) / factor;
-		if (ratio > 0.0f)
+		float offset = buttonBackground->getY();
+		float size = buttonBackground->getHeight();
+		float areaSize = area->getHeight();
+		float scrollSize = areaSize - parent->getHeight();
+		float areaRatio = scrollSize / areaSize;
+		float scrollOffsetRatio = area->getScrollOffsetY() / scrollSize;
+		if (this->_buttonSlider != NULL)
 		{
-			this->buttonSlider->setHeight(hclamp((1 - ratio) * range, 8.0f, range));
-			this->buttonSlider->setY(hroundf(this->buttonBackward->getHeight() - area->getY() / factor * range));
+			if (areaRatio > 0.0f)
+			{
+				this->_buttonSlider->setY(hroundf(offset + scrollOffsetRatio * (size - this->_buttonSlider->getHeight())));
+			}
+			else
+			{
+				this->_buttonSlider->setY(hroundf(offset + (size - this->_buttonSlider->getHeight()) * 0.5f));
+			}
 		}
-		else
+		if (this->_buttonSliderSkinned != NULL)
 		{
-			this->buttonSlider->setHeight(range);
-			this->buttonSlider->setY(this->buttonBackward->getHeight());
+			if (areaRatio > 0.0f)
+			{
+				if (this->useStretchedSlider)
+				{
+					this->_buttonSliderSkinned->setHeight(hclamp((1 - areaRatio) * size, 8.0f, size));
+				}
+				else
+				{
+					this->_buttonSliderSkinned->resizeToFitImage();
+				}
+				this->_buttonSliderSkinned->setY(hroundf(offset + scrollOffsetRatio * (size - this->_buttonSliderSkinned->getHeight())));
+			}
+			else
+			{
+				if (this->useStretchedSlider)
+				{
+					this->_buttonSliderSkinned->setHeight(size);
+				}
+				else
+				{
+					this->_buttonSliderSkinned->resizeToFitImage();
+				}
+				this->_buttonSliderSkinned->setY(offset);
+			}
 		}
 	}
 

@@ -39,14 +39,15 @@ namespace aprilui
 		this->gridSize = GridSize;
 		this->useFading = true;
 		this->heightHide = true;
-		this->buttonBackground = NULL;
-		this->buttonSlider = NULL;
-		this->buttonBackward = NULL;
-		this->buttonForward = NULL;
-		this->skinButtonBackground = false;
-		this->skinButtonSlider = false;
-		this->skinButtonForward = false;
-		this->skinButtonBackward = false;
+		this->useStretchedSlider = true;
+		this->_buttonBackground = NULL;
+		this->_buttonSlider = NULL;
+		this->_buttonBackward = NULL;
+		this->_buttonForward = NULL;
+		this->_buttonBackgroundSkinned = NULL;
+		this->_buttonSliderSkinned = NULL;
+		this->_buttonBackwardSkinned = NULL;
+		this->_buttonForwardSkinned = NULL;
 		this->_clickPosition.set(0.0f, 0.0f);
 		this->_retainTime = 0.0f;
 	}
@@ -61,24 +62,120 @@ namespace aprilui
 		this->notifyEvent("SkinChange", NULL);
 	}
 
+	ScrollBarButtonBackground* ScrollBar::_getButtonBackground()
+	{
+		return (this->_buttonBackground != NULL ? this->_buttonBackground : this->_buttonBackgroundSkinned);
+	}
+
 	void ScrollBar::_setButtonBackground(ScrollBarButtonBackground* button)
 	{
-		this->buttonBackground = button;
+		if (this->_buttonBackgroundSkinned != button)
+		{
+			this->_buttonBackground = button;
+		}
+		if (this->_buttonBackgroundSkinned != NULL)
+		{
+			this->_buttonBackgroundSkinned->setVisible(this->_buttonBackground == NULL);
+		}
+	}
+
+	void ScrollBar::_unsetButtonBackground(ScrollBarButtonBackground* button)
+	{
+		if (this->_buttonBackgroundSkinned != button)
+		{
+			this->_buttonBackground = NULL;
+		}
+		if (this->_buttonBackgroundSkinned != NULL)
+		{
+			this->_buttonBackgroundSkinned->setVisible(this->_buttonBackground == NULL);
+		}
+	}
+
+	ScrollBarButtonSlider* ScrollBar::_getButtonSlider()
+	{
+		return (this->_buttonSlider != NULL ? this->_buttonSlider : this->_buttonSliderSkinned);
 	}
 
 	void ScrollBar::_setButtonSlider(ScrollBarButtonSlider* button)
 	{
-		this->buttonSlider = button;
+		if (this->_buttonSliderSkinned != button)
+		{
+			this->_buttonSlider = button;
+		}
+		if (this->_buttonSliderSkinned != NULL)
+		{
+			this->_buttonSliderSkinned->setVisible(this->_buttonSlider == NULL);
+		}
+	}
+
+	void ScrollBar::_unsetButtonSlider(ScrollBarButtonSlider* button)
+	{
+		if (this->_buttonSliderSkinned != button)
+		{
+			this->_buttonSlider = NULL;
+		}
+		if (this->_buttonSliderSkinned != NULL)
+		{
+			this->_buttonSliderSkinned->setVisible(this->_buttonSlider == NULL);
+		}
+	}
+
+	ScrollBarButtonForward* ScrollBar::_getButtonForward()
+	{
+		return (this->_buttonForward != NULL ? this->_buttonForward : this->_buttonForwardSkinned);
 	}
 
 	void ScrollBar::_setButtonForward(ScrollBarButtonForward* button)
 	{
-		this->buttonForward = button;
+		if (this->_buttonForwardSkinned != button)
+		{
+			this->_buttonForward = button;
+		}
+		if (this->_buttonForwardSkinned != NULL)
+		{
+			this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
+		}
+	}
+
+	void ScrollBar::_unsetButtonForward(ScrollBarButtonForward* button)
+	{
+		if (this->_buttonForwardSkinned != button)
+		{
+			this->_buttonForward = NULL;
+		}
+		if (this->_buttonForwardSkinned != NULL)
+		{
+			this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
+		}
+	}
+
+	ScrollBarButtonBackward* ScrollBar::_getButtonBackward()
+	{
+		return (this->_buttonBackward != NULL ? this->_buttonBackward : this->_buttonBackwardSkinned);
 	}
 
 	void ScrollBar::_setButtonBackward(ScrollBarButtonBackward* button)
 	{
-		this->buttonBackward = button;
+		if (this->_buttonBackwardSkinned != button)
+		{
+			this->_buttonBackward = button;
+		}
+		if (this->_buttonBackwardSkinned != NULL)
+		{
+			this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
+		}
+	}
+
+	void ScrollBar::_unsetButtonBackward(ScrollBarButtonBackward* button)
+	{
+		if (this->_buttonBackwardSkinned != button)
+		{
+			this->_buttonBackward = NULL;
+		}
+		if (this->_buttonBackwardSkinned != NULL)
+		{
+			this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
+		}
 	}
 
 	void ScrollBar::update(float k)
@@ -166,78 +263,74 @@ namespace aprilui
 		{
 			if (this->skinName != "")
 			{
-				if (this->buttonBackground == NULL)
+				if (this->_buttonBackgroundSkinned == NULL)
 				{
-					this->skinButtonBackground = true;
-					this->buttonBackground = new ScrollBarButtonBackground(aprilui::generateName("aprilui::ScrollButtonBackground"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonBackground);
+					this->_buttonBackgroundSkinned = new ScrollBarButtonBackground(aprilui::generateName("aprilui::ScrollButtonBackground"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->_buttonBackgroundSkinned);
 				}
-				if (this->buttonSlider == NULL)
+				if (this->_buttonSliderSkinned == NULL)
 				{
-					this->skinButtonSlider = true;
-					this->buttonSlider = new ScrollBarButtonSlider(aprilui::generateName("aprilui::ScrollButtonSlider"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonSlider);
+					this->_buttonSliderSkinned = new ScrollBarButtonSlider(aprilui::generateName("aprilui::ScrollButtonSlider"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->_buttonSliderSkinned);
 				}
-				if (this->buttonForward == NULL)
+				if (this->_buttonForwardSkinned == NULL)
 				{
-					this->skinButtonForward = true;
-					this->buttonForward = new ScrollBarButtonForward(aprilui::generateName("aprilui::ScrollButtonForward"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonForward);
+					this->_buttonForwardSkinned = new ScrollBarButtonForward(aprilui::generateName("aprilui::ScrollButtonForward"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->_buttonForwardSkinned);
 				}
-				if (this->buttonBackward == NULL)
+				if (this->_buttonBackwardSkinned == NULL)
 				{
-					this->skinButtonBackward = true;
-					this->buttonBackward = new ScrollBarButtonBackward(aprilui::generateName("aprilui::ScrollButtonBackward"), grect(0.0f, 0.0f, -1.0f, -1.0f));
-					this->registerChild(this->buttonBackward);
+					this->_buttonBackwardSkinned = new ScrollBarButtonBackward(aprilui::generateName("aprilui::ScrollButtonBackward"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->registerChild(this->_buttonBackwardSkinned);
 				}
-				this->buttonBackground->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->buttonBackground->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->buttonBackground->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->buttonBackground->resizeToFitImage();
-				this->buttonSlider->trySetImageByName(this->skinName + "/" + this->_getSkinNameSliderNormal());
-				this->buttonSlider->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameSliderHover());
-				this->buttonSlider->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameSliderPushed());
-				this->buttonSlider->resizeToFitImage();
-				this->buttonForward->trySetImageByName(this->skinName + "/" + this->_getSkinNameForwardNormal());
-				this->buttonForward->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameForwardHover());
-				this->buttonForward->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameForwardPushed());
-				this->buttonForward->resizeToFitImage();
-				this->buttonBackward->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackwardNormal());
-				this->buttonBackward->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackwardHover());
-				this->buttonBackward->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackwardPushed());
-				this->buttonBackward->resizeToFitImage();
+				this->_buttonBackgroundSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackground());
+				this->_buttonBackgroundSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackground());
+				this->_buttonBackgroundSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackground());
+				this->_buttonBackgroundSkinned->resizeToFitImage();
+				this->_buttonBackgroundSkinned->setVisible(this->_buttonBackground == NULL);
+				this->_buttonSliderSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameSliderNormal());
+				this->_buttonSliderSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameSliderHover());
+				this->_buttonSliderSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameSliderPushed());
+				this->_buttonSliderSkinned->resizeToFitImage();
+				this->_buttonSliderSkinned->setVisible(this->_buttonSlider == NULL);
+				this->_buttonForwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameForwardNormal());
+				this->_buttonForwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameForwardHover());
+				this->_buttonForwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameForwardPushed());
+				this->_buttonForwardSkinned->resizeToFitImage();
+				this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
+				this->_buttonBackwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackwardNormal());
+				this->_buttonBackwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackwardHover());
+				this->_buttonBackwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackwardPushed());
+				this->_buttonBackwardSkinned->resizeToFitImage();
+				this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
 				this->_updateChildren();
 				this->_updateBar();
 			}
 			else
 			{
-				if (this->skinButtonBackground)
+				if (this->_buttonBackgroundSkinned != NULL)
 				{
-					this->skinButtonBackground = false;
-					this->unregisterChild(this->buttonBackground);
-					delete this->buttonBackground;
-					this->buttonBackground = NULL;
+					this->unregisterChild(this->_buttonBackgroundSkinned);
+					delete this->_buttonBackgroundSkinned;
+					this->_buttonBackgroundSkinned = NULL;
 				}
-				if (this->skinButtonSlider)
+				if (this->_buttonSliderSkinned != NULL)
 				{
-					this->skinButtonSlider = false;
-					this->unregisterChild(this->buttonSlider);
-					delete this->buttonSlider;
-					this->buttonSlider = NULL;
+					this->unregisterChild(this->_buttonSliderSkinned);
+					delete this->_buttonSliderSkinned;
+					this->_buttonSliderSkinned = NULL;
 				}
-				if (this->skinButtonForward)
+				if (this->_buttonForwardSkinned != NULL)
 				{
-					this->skinButtonForward = false;
-					this->unregisterChild(this->buttonForward);
-					delete this->buttonForward;
-					this->buttonForward = NULL;
+					this->unregisterChild(this->_buttonForwardSkinned);
+					delete this->_buttonForwardSkinned;
+					this->_buttonForwardSkinned = NULL;
 				}
-				if (this->skinButtonBackward)
+				if (this->_buttonBackwardSkinned != NULL)
 				{
-					this->skinButtonBackward = false;
-					this->unregisterChild(this->buttonBackward);
-					delete this->buttonBackward;
-					this->buttonBackward = NULL;
+					this->unregisterChild(this->_buttonBackwardSkinned);
+					delete this->_buttonBackwardSkinned;
+					this->_buttonBackwardSkinned = NULL;
 				}
 			}
 		}
@@ -249,19 +342,21 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
-		if (name == "skin")			return this->getSkinName();
-		if (name == "grid_size")	return this->getGridSize();
-		if (name == "use_fading")	return this->isUseFading();
-		if (name == "height_hide")	return this->isHeightHide();
+		if (name == "skin")					return this->getSkinName();
+		if (name == "grid_size")			return this->getGridSize();
+		if (name == "use_fading")			return this->isUseFading();
+		if (name == "height_hide")			return this->isHeightHide();
+		if (name == "use_stretched_slider")	return this->isUseStretchedSlider();
 		return Object::getProperty(name, propertyExists);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)
 	{
-		if		(name == "skin")		this->setSkinName(value);
-		else if	(name == "grid_size")	this->setGridSize(value);
-		else if	(name == "use_fading")	this->setUseFading(value);
-		else if	(name == "height_hide")	this->setHeightHide(value);
+		if		(name == "skin")					this->setSkinName(value);
+		else if	(name == "grid_size")				this->setGridSize(value);
+		else if	(name == "use_fading")				this->setUseFading(value);
+		else if	(name == "height_hide")				this->setHeightHide(value);
+		else if	(name == "use_stretched_slider")	this->setUseStretchedSlider(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
@@ -272,10 +367,15 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (this->buttonSlider != NULL && this->buttonSlider->isPushed())
+		ScrollBarButtonSlider* buttonSlider = this->_getButtonSlider();
+		if (buttonSlider != NULL && buttonSlider->isPushed())
 		{
-			gvec2 position = aprilui::getCursorPosition() / this->getDerivedScale() - this->_clickPosition;
-			this->_moveScrollBar(position.x, position.y);
+			ScrollBarButtonBackground* buttonBackground = this->_getButtonBackground();
+			if (buttonBackground != NULL)
+			{
+				gvec2 position = buttonBackground->transformToLocalSpace(aprilui::getCursorPosition()) - this->_clickPosition;
+				this->_moveScrollBar(position.x, position.y);
+			}
 		}
 		return false;
 	}

@@ -45,6 +45,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, gridSize, GridSize);
 		HL_DEFINE_ISSET(useFading, UseFading);
 		HL_DEFINE_ISSET(heightHide, HeightHide);
+		HL_DEFINE_ISSET(useStretchedSlider, UseStretchedSlider);
 		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
 
@@ -71,20 +72,29 @@ namespace aprilui
 		float gridSize;
 		bool useFading;
 		bool heightHide;
-		ScrollBarButtonBackground* buttonBackground;
-		ScrollBarButtonSlider* buttonSlider;
-		ScrollBarButtonForward* buttonForward;
-		ScrollBarButtonBackward* buttonBackward;
-		bool skinButtonBackground;
-		bool skinButtonSlider;
-		bool skinButtonForward;
-		bool skinButtonBackward;
+		bool useStretchedSlider;
 		float _retainTime;
+		ScrollBarButtonBackground* _buttonBackground;
+		ScrollBarButtonSlider* _buttonSlider;
+		ScrollBarButtonForward* _buttonForward;
+		ScrollBarButtonBackward* _buttonBackward;
+		ScrollBarButtonBackground* _buttonBackgroundSkinned;
+		ScrollBarButtonSlider* _buttonSliderSkinned;
+		ScrollBarButtonForward* _buttonForwardSkinned;
+		ScrollBarButtonBackward* _buttonBackwardSkinned;
 
+		ScrollBarButtonBackground* _getButtonBackground();
 		void _setButtonBackground(ScrollBarButtonBackground* button);
+		void _unsetButtonBackground(ScrollBarButtonBackground* button);
+		ScrollBarButtonSlider* _getButtonSlider();
 		void _setButtonSlider(ScrollBarButtonSlider* button);
+		void _unsetButtonSlider(ScrollBarButtonSlider* button);
+		ScrollBarButtonForward* _getButtonForward();
 		void _setButtonForward(ScrollBarButtonForward* button);
+		void _unsetButtonForward(ScrollBarButtonForward* button);
+		ScrollBarButtonBackward* _getButtonBackward();
 		void _setButtonBackward(ScrollBarButtonBackward* button);
+		void _unsetButtonBackward(ScrollBarButtonBackward* button);
 
 		void _initAreaDragging();
 

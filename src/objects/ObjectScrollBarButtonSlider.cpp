@@ -15,7 +15,7 @@
 #include "EventArgs.h"
 #include "EventUtils.h"
 #include "ObjectScrollBar.h"
-#include "ObjectScrollBarButtonBackward.h"
+#include "ObjectScrollBarButtonBackground.h"
 #include "ObjectScrollBarButtonSlider.h"
 
 namespace aprilui
@@ -51,7 +51,7 @@ namespace aprilui
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
 			{
-				parent->_setButtonSlider(NULL);
+				parent->_unsetButtonSlider(this);
 			}
 		}
 	}
@@ -61,8 +61,13 @@ namespace aprilui
 		ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
 		if (scrollBar != NULL)
 		{
-			scrollBar->_clickPosition = aprilui::getCursorPosition() / scrollBar->getDerivedScale() -
-				scrollBar->buttonSlider->getPosition() + scrollBar->buttonBackward->getSize();
+			ScrollBarButtonBackground* buttonBackground = scrollBar->_getButtonBackground();
+			if (buttonBackground != NULL)
+			{
+				gvec2 position = args->object->transformToLocalSpace(aprilui::getCursorPosition());
+				position = args->object->getDerivedPoint(position, scrollBar) - args->object->getPosition() + buttonBackground->getPosition();
+				scrollBar->_clickPosition = buttonBackground->transformToLocalSpace(position, scrollBar);
+			}
 		}
 	}
 
