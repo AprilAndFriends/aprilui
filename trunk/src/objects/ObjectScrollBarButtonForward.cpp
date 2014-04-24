@@ -49,7 +49,7 @@ namespace aprilui
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
 			{
-				parent->_setButtonForward(NULL);
+				parent->_unsetButtonForward(this);
 			}
 		}
 	}
