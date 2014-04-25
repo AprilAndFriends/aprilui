@@ -13,6 +13,7 @@
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hdir.h>
 #include <hltypes/hltypesUtil.h>
 
 #include "apriluiUtil.h"
@@ -166,7 +167,7 @@ namespace aprilui
 		if (name == "color_mode_factor")	return this->getColorModeFactor();
 		if (name == "texture")
 		{
-			return (this->texture != NULL ? this->texture->getOriginalFilename() : "");
+			return (this->texture != NULL ? hdir::basename(this->texture->getOriginalFilename()) : "");
 		}
 		if (name == "dataset")
 		{
