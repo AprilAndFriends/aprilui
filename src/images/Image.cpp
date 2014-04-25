@@ -184,10 +184,10 @@ namespace aprilui
 		if		(name == "rect")				this->setSrcRect(hstr_to_grect(value));
 		else if	(name == "position")			this->srcRect.setPosition(hstr_to_gvec2(value));
 		else if	(name == "size")				this->srcRect.setSize(hstr_to_gvec2(value));
-		else if	(name == "x")					this->srcRect.x = value;
-		else if	(name == "y")					this->srcRect.y = value;
-		else if	(name == "w")					this->srcRect.w = value;
-		else if	(name == "h")					this->srcRect.h = value;
+		else if	(name == "x")					this->setSrcX(value);
+		else if	(name == "y")					this->setSrcY(value);
+		else if	(name == "w")					this->setSrcWidth(value);
+		else if	(name == "h")					this->setSrcHeight(value);
 		else if	(name == "color")				this->setColor(value);
 		else if	(name == "rotated")				this->setRotated(value);
 		else if	(name == "vertical")
