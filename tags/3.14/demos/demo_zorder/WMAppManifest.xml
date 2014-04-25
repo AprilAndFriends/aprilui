@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
+  <DefaultLanguage xmlns="" code="en" />
+  <Languages xmlns="">
+    <Language code="en" />
+    <Language code="de" />
+  </Languages>
+  <App xmlns="" ProductID="{7E454582-BD2A-43DB-9C3E-CBE18EF52CA4}" Title="Demo Z-Order" RuntimeType="Modern Native" Version="2.5.0.0" Genre="apps.game" Author="AprilUI" Description="Demo Z-Order" Publisher="AprilUI" PublisherID="{016db639-0f24-4f88-8062-7ceb291b9cfd}">
+    <IconPath IsRelative="true" IsResource="false">media\assets\icon.png</IconPath>
+    <Capabilities>
+    </Capabilities>
+    <Tasks>
+      <DefaultTask Name="_default" ImagePath="demo_zorder.exe" ImageParams="" />
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="Demo Z-OrderToken" TaskName="_default">
+        <TemplateFlip>
+          <SmallImageURI IsRelative="true" IsResource="false">media\assets\tile-small.png</SmallImageURI>
+          <Count>0</Count>
+          <BackgroundImageURI IsRelative="true" IsResource="false">media\assets\tile-medium.png</BackgroundImageURI>
+          <Title>Demo Z-Order</Title>
+        </TemplateFlip>
+      </PrimaryToken>
+    </Tokens>
+    <ScreenResolutions>
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
+      <ScreenResolution Name="ID_RESOLUTION_WXGA" />
+      <ScreenResolution Name="ID_RESOLUTION_HD720P" />
+    </ScreenResolutions>
+  </App>
+</Deployment>
