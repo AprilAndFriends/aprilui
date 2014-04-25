@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.13
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -60,44 +60,34 @@ namespace aprilui
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);
-		inline float getX() { return this->rect.x; }
-		inline void setX(float value) { this->rect.x = value; }
-		inline float getY() { return this->rect.y; }
-		inline void setY(float value) { this->rect.y = value; }
+		HL_DEFINE_GETSET(float, rect.x, X);
+		HL_DEFINE_GETSET(float, rect.y, Y);
+		HL_DEFINE_GET(float, rect.w, Width);
+		void setWidth(float value);
+		HL_DEFINE_GET(float, rect.h, Height);
+		void setHeight(float value);
 		inline gvec2 getPosition() { return this->rect.getPosition(); }
 		inline void setPosition(gvec2 value) { this->rect.setPosition(value); }
 		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
-		inline float getWidth() { return this->rect.w; }
-		void setWidth(float value);
-		inline float getHeight() { return this->rect.h; }
-		void setHeight(float value);
 		inline gvec2 getSize() { return this->rect.getSize(); }
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
 		HL_DEFINE_GETSET(gvec2, scaleFactor, Scale)
 		inline void setScale(float x, float y) { this->scaleFactor.set(x, y); }
-		inline float getScaleX() { return this->scaleFactor.x; }
-		inline void setScaleX(float value) { this->scaleFactor.x = value; }
-		inline float getScaleY() { return this->scaleFactor.y; }
-		inline void setScaleY(float value) { this->scaleFactor.y = value; }
+		HL_DEFINE_GETSET(float, scaleFactor.x, ScaleX);
+		HL_DEFINE_GETSET(float, scaleFactor.y, ScaleY);
 
 		HL_DEFINE_GETSET(gvec2, center, Center);
 		inline void setCenter(float x, float y) { this->center.set(x, y); }
-		inline float getCenterX() { return this->center.x; }
-		inline void setCenterX(float value) { this->center.x = value; }
-		inline float getCenterY() { return this->center.y; }
-		inline void setCenterY(float value) { this->center.y = value; }
+		HL_DEFINE_GETSET(float, center.x, CenterX);
+		HL_DEFINE_GETSET(float, center.y, CenterY);
 
 		HL_DEFINE_GETSET(april::Color, color, Color);
-		inline unsigned char getRed() { return this->color.r; }
-		inline void setRed(unsigned char value) { this->color.r = value; }
-		inline unsigned char getGreen() { return this->color.g; }
-		inline void setGreen(unsigned char value) { this->color.g = value; }
-		inline unsigned char getBlue() { return this->color.b; }
-		inline void setBlue(unsigned char value) { this->color.b = value; }
-		inline unsigned char getAlpha() { return this->color.a; }
-		inline void setAlpha(unsigned char value) { this->color.a = value; }
+		HL_DEFINE_GETSET(unsigned char, color.r, Red);
+		HL_DEFINE_GETSET(unsigned char, color.g, Green);
+		HL_DEFINE_GETSET(unsigned char, color.b, Blue);
+		HL_DEFINE_GETSET(unsigned char, color.a, Alpha);
 
 		HL_DEFINE_IS(enabled, Enabled);
 		void setEnabled(bool value);

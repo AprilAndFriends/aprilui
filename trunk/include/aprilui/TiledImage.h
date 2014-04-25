@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -27,26 +27,21 @@ namespace aprilui
 	class apriluiExport TiledImage : public Image
 	{
 	public:
-		TiledImage(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY, float tileW, float tileH);
+		TiledImage(Texture* texture, chstr name, grect source, float tileW, float tileH);
 		~TiledImage();
 		
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
+		inline void setTile(float w, float h) { this->tile.set(w, h); }
+		HL_DEFINE_GETSET(float, tile.x, TileW);
+		HL_DEFINE_GETSET(float, tile.y, TileH);
 		HL_DEFINE_GETSET(gvec2, scroll, Scroll);
-		inline float getTileW() { return this->tile.x; }
-		inline void setTileW(float value) { this->tile.x = value; }
-		inline float getTileH() { return this->tile.y; }
-		inline void setTileH(float value) { this->tile.y = value; }
-		inline float getScrollX() { return this->scroll.x; }
-		inline void setScrollX(float value) { this->scroll.x = value; }
-		inline float getScrollY() { return this->scroll.y; }
-		inline void setScrollY(float value) { this->scroll.y = value; }
+		inline void setScroll(float x, float y) { this->scroll.set(x, y); }
+		HL_DEFINE_GETSET(float, scroll.x, ScrollX);
+		HL_DEFINE_GETSET(float, scroll.y, ScrollY);
 		
-		void setProperty(chstr name, chstr value);
-		hstr getProperty(chstr name);
+		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
+		virtual bool setProperty(chstr name, chstr value);
 
-		void setTile(float w, float h);
-		void setScroll(float x, float y);
-		
 		void draw(grect rect, april::Color color);
 		
 	protected:

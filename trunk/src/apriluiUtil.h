@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -18,6 +18,11 @@
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
+namespace hlxml
+{
+	class Node;
+}
+
 namespace aprilui
 {
 	static const float eTolerance = 0.0001f;
@@ -27,6 +32,8 @@ namespace aprilui
 	hstr grect_to_hstr(grect rect);
 	gvec2 hstr_to_gvec2(chstr string);
 	grect hstr_to_grect(chstr string);
+
+	void read_rect_node(grect& rect, hlxml::Node* node, bool allowNoSize = false);
 	
 }
 #endif

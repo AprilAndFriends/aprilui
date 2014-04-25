@@ -1,7 +1,7 @@
 /// @file
 /// @author  Boris Mikic
 /// @author  Kresimir Spes
-/// @version 3.12
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -202,38 +202,30 @@ namespace aprilui
 		{
 			*propertyExists = true;
 		}
-		if		(name == "function" || name == "func")
+		if (name == "function" || name == "func")
 		{
-			if		(this->animationFunction == Object::Sine)		return "sine";
-			else if	(this->animationFunction == Object::Saw)		return "saw";
-			else if	(this->animationFunction == Object::Square)		return "square";
-			else if	(this->animationFunction == Object::Triangle)	return "triangle";
-			else if	(this->animationFunction == Object::Linear)		return "linear";
-			else if	(this->animationFunction == Object::Random)		return "random";
-			else if	(this->animationFunction == Object::Hover)		return "hover";
-			else													return "custom";
+			if (this->animationFunction == Object::Sine)		return "sine";
+			if (this->animationFunction == Object::Saw)			return "saw";
+			if (this->animationFunction == Object::Square)		return "square";
+			if (this->animationFunction == Object::Triangle)	return "triangle";
+			if (this->animationFunction == Object::Linear)		return "linear";
+			if (this->animationFunction == Object::Random)		return "random";
+			if (this->animationFunction == Object::Hover)		return "hover";
+			return "custom";
 		}
-		else if	(name == "timer")			return this->getTimer();
-		else if	(name == "delay")			return this->getDelay();
-		else if	(name == "periods")			return this->getPeriods();
-		else if	(name == "amplitude")		return this->getAmplitude();
-		else if	(name == "amp")
-		{
-			hlog::warn(aprilui::logTag, "\"amp\" is deprecated. Use \"amplitude\" instead."); // DEPRECATED
-			return this->getAmplitude();
-		}
-		else if	(name == "peak_to_peak")	return (2 * this->getAmplitude());
-		else if	(name == "speed")			return this->getSpeed();
-		else if	(name == "offset")			return this->getOffset();
-		else if	(name == "acceleration")	return this->getAcceleration();
-		else if	(name == "discrete_step")	return this->getDiscreteStep();
-		else if	(name == "reset")			return this->isReset();
-		else if	(name == "inherit_value")	return this->isInheritValue();
+		if (name == "timer")			return this->getTimer();
+		if (name == "delay")			return this->getDelay();
+		if (name == "periods")			return this->getPeriods();
+		if (name == "amplitude")		return this->getAmplitude();
+		if (name == "peak_to_peak")		return (2 * this->getAmplitude());
+		if (name == "speed")			return this->getSpeed();
+		if (name == "offset")			return this->getOffset();
+		if (name == "acceleration")		return this->getAcceleration();
+		if (name == "discrete_step")	return this->getDiscreteStep();
+		if (name == "reset")			return this->isReset();
+		if (name == "inherit_value")	return this->isInheritValue();
 		// derived values
-		else if	(name == "target")
-		{
-			return this->getTarget();
-		}
+		if	(name == "target")			return this->getTarget();
 		return Object::getProperty(name, propertyExists);
 	}
 	
@@ -254,11 +246,6 @@ namespace aprilui
 		else if	(name == "delay")			this->setDelay(value);
 		else if	(name == "periods")			this->setPeriods(value);
 		else if	(name == "amplitude")		this->setAmplitude(value);
-		else if	(name == "amp")
-		{
-			hlog::warn(aprilui::logTag, "\"amp=\" is deprecated. Use \"amplitude=\" instead."); // DEPRECATED
-			this->setAmplitude(value);
-		}
 		else if	(name == "peak_to_peak")	this->setAmplitude((float)value * 0.5f);
 		else if	(name == "speed")			this->setSpeed(value);
 		else if	(name == "offset")			this->setOffset(value);

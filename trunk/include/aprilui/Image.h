@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -37,8 +37,8 @@ namespace aprilui
 	public:
 		friend class Dataset;
 
-		Image(Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
-		Image(Image& img, chstr name);
+		Image(Texture* texture, chstr name, grect source);
+		Image(Image& other, chstr name);
 		virtual ~Image();
 		
 		virtual void draw(grect rect, april::Color color = april::Color::White);
@@ -48,17 +48,35 @@ namespace aprilui
 		HL_DEFINE_GET(Texture*, texture, Texture);
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(grect, srcRect, SrcRect);
-		HL_DEFINE_IS(vertical, Vertical);
-		HL_DEFINE_IS(invertX, InvertX);
-		HL_DEFINE_IS(invertY, InvertY);
+		void setSrcRect(grect value);
+		HL_DEFINE_GET(float, srcRect.x, SrcX);
+		void setSrcX(float value);
+		HL_DEFINE_GET(float, srcRect.y, SrcY);
+		void setSrcY(float value);
+		HL_DEFINE_GET(float, srcRect.w, SrcWidth);
+		void setSrcWidth(float value);
+		HL_DEFINE_GET(float, srcRect.h, SrcHeight);
+		void setSrcHeight(float value);
+		inline gvec2 getPosition() { return this->srcRect.getPosition(); }
+		void setPosition(gvec2 value);
+		void setPosition(float x, float y);
+		inline gvec2 getSize() { return this->srcRect.getSize(); }
+		void setSize(gvec2 value);
+		void setSize(float x, float y);
+		HL_DEFINE_GETSET(april::Color, color, Color);
+		HL_DEFINE_ISSET(rotated, Rotated);
+		HL_DEFINE_ISSET(invertX, InvertX);
+		HL_DEFINE_ISSET(invertY, InvertY);
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
 		hstr getFullName();
-		void setSrcRect(grect value);
 		
-		virtual void setProperty(chstr name, chstr value);
-		virtual hstr getProperty(chstr name);
+		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
+		virtual bool setProperty(chstr name, chstr value);
+
+		DEPRECATED_ATTRIBUTE inline bool isVertical() { return this->rotated; }
+		DEPRECATED_ATTRIBUTE inline void setVertical(bool value) { this->rotated = value; }
 		
 	protected:
 		Dataset* dataset;
@@ -66,10 +84,11 @@ namespace aprilui
 		hstr name;
 		hstr imageName;
 		grect srcRect;
+		april::Color color;
 		april::BlendMode blendMode;
 		april::ColorMode colorMode;
 		float colorModeFactor;
-		bool vertical;
+		bool rotated;
 		bool invertX;
 		bool invertY;
 
