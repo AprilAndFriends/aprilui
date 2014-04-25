@@ -172,6 +172,10 @@ namespace aprilui
 		{
 			return this->invertX;
 		}
+		else if (name == "texture")
+		{
+			return this->texture == NULL ? "" : this->texture->getOriginalFilename();
+		}
 		else if (name == "blend_mode")
 		{
 			april::BlendMode blendMode = this->getBlendMode();
