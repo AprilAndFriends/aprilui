@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -17,7 +17,6 @@
 
 #include "Image.h"
 #include "ColorImage.h"
-#include "ColoredImage.h"
 #include "CompositeImage.h"
 #include "NullImage.h"
 #include "TiledImage.h"

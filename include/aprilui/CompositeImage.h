@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.0
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -43,8 +43,8 @@ namespace aprilui
 		void addImageRef(Image* image, grect rect);
         void clearImages();
 		
-		void setProperty(chstr name, chstr value);
-		hstr getProperty(chstr name);
+		hstr getProperty(chstr name, bool* propertyExists = NULL);
+		bool setProperty(chstr name, chstr value);
 
 		void draw(grect rect, april::Color color);
 		void draw(harray<april::TexturedVertex> vertices, april::Color color);

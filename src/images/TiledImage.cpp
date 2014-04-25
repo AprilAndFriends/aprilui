@@ -1,25 +1,23 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#include <math.h>
-
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 
+#include "apriluiUtil.h"
 #include "Texture.h"
 #include "TiledImage.h"
 
 namespace aprilui
 {
-	TiledImage::TiledImage(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY, float tileW, float tileH) :
-		Image(texture, name, source, vertical, invertX, invertY)
+	TiledImage::TiledImage(Texture* texture, chstr name, grect source, float tileW, float tileH) : Image(texture, name, source)
 	{
 		this->tile.set(tileW, tileH);
 	}
@@ -28,32 +26,31 @@ namespace aprilui
 	{
 	}
 
-	void TiledImage::setTile(float w, float h)
+	hstr TiledImage::getProperty(chstr name, bool* propertyExists)
 	{
-		this->tile.set(w, h);
-	}
-	
-	void TiledImage::setScroll(float x, float y)
-	{
-		this->scroll.set(x, y);
-	}
-	
-	void TiledImage::setProperty(chstr name, chstr value)
-	{
-		if (name == "todo")
+		if (propertyExists != NULL)
 		{
-			this->srcRect.x = value;
+			*propertyExists = true;
 		}
-		else aprilui::Image::setProperty(name, value);
+		if (name == "tile")		return gvec2_to_hstr(this->getTile());
+		if (name == "tile_w")	return this->getTileW();
+		if (name == "tile_h")	return this->getTileH();
+		if (name == "scroll")	return gvec2_to_hstr(this->getScroll());
+		if (name == "scroll_x")	return this->getScrollX();
+		if (name == "scroll_y")	return this->getScrollY();
+		return Image::getProperty(name, propertyExists);
 	}
-	
-	hstr TiledImage::getProperty(chstr name)
+
+	bool TiledImage::setProperty(chstr name, chstr value)
 	{
-		if (name == "todo")
-		{
-			return this->srcRect.x;
-		}
-		else return aprilui::Image::getProperty(name);
+		if		(name == "tile")		this->setTile(hstr_to_gvec2(value));
+		else if	(name == "tile_w")		this->setTileW(value);
+		else if (name == "tile_h")		this->setTileH(value);
+		else if	(name == "scroll")		this->setScroll(hstr_to_gvec2(value));
+		else if (name == "scroll_x")	this->setScrollX(value);
+		else if	(name == "scroll_y")	this->setScrollY(value);
+		else return Image::setProperty(name, value);
+		return true;
 	}
 
 	void TiledImage::draw(grect rect, april::Color color)

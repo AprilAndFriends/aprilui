@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.11
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -12,6 +12,7 @@
 #include <gtypes/Vector2.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hlxml/Node.h>
 
 #include "aprilui.h"
 #include "apriluiUtil.h"
@@ -55,5 +56,41 @@ namespace aprilui
 		}
 		return grect(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim());
 	}
-	
+
+	void read_rect_node(grect& rect, hlxml::Node* node, bool allowNoSize)
+	{
+		rect.set(0.0f, 0.0f, 0.0f, 0.0f);
+		if (allowNoSize)
+		{
+			rect.setSize(-1.0f, -1.0f);
+		}
+		if (node->pexists("rect"))
+		{
+			rect = hstr_to_grect(node->pstr("rect"));
+		}
+		else
+		{
+			if (node->pexists("position"))
+			{
+				rect.setPosition(hstr_to_gvec2(node->pstr("position")));
+			}
+			else
+			{
+				rect.setPosition(node->pfloat("x"), node->pfloat("y"));
+			}
+			if (node->pexists("size"))
+			{
+				rect.setSize(hstr_to_gvec2(node->pstr("size")));
+			}
+			else if (!allowNoSize)
+			{
+				rect.setSize(node->pfloat("w"), node->pfloat("h"));
+			}
+			else
+			{
+				rect.setSize(node->pfloat("w", -1.0f), node->pfloat("h", -1.0f));
+			}
+		}
+	}
+
 }

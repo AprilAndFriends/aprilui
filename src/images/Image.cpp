@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.1
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -23,33 +23,36 @@
 
 namespace aprilui
 {
-	Image::Image(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY)
+	Image::Image(Texture* texture, chstr name, grect source)
 	{
 		this->texture = texture;
 		this->name = name;
 		this->srcRect = source;
+		this->color = april::Color::White;
 		this->blendMode = april::BM_DEFAULT;
 		this->colorMode = april::CM_DEFAULT;
 		this->colorModeFactor = 1.0f;
-		this->vertical = vertical;
-		this->invertX = invertX;
-		this->invertY = invertY;
+		this->rotated = false;
+		this->invertX = false;
+		this->invertY = false;
 		this->_textureCoordinatesLoaded = false;
 		this->dataset = NULL;
 	}
 
-	Image::Image(Image& img, chstr name)
+	Image::Image(Image& other, chstr name)
 	{
-		this->texture = img.texture;
+		this->texture = other.texture;
 		this->name = name;
-		this->srcRect = img.srcRect;
-		this->blendMode = img.blendMode;
-		this->colorMode = img.colorMode;
-		this->colorModeFactor = img.colorModeFactor;
-		this->vertical = img.vertical;
-		this->invertX = img.invertX;
-		this->invertY = img.invertY;
+		this->srcRect = other.srcRect;
+		this->color = other.color;
+		this->blendMode = other.blendMode;
+		this->colorMode = other.colorMode;
+		this->colorModeFactor = other.colorModeFactor;
+		this->rotated = other.rotated;
+		this->invertX = other.invertX;
+		this->invertY = other.invertY;
 		this->_textureCoordinatesLoaded = false;
+		this->dataset = NULL;
 	}
 	
 	Image::~Image()
@@ -66,163 +69,166 @@ namespace aprilui
 		this->srcRect = value;
 		this->_textureCoordinatesLoaded = false;
 	}
-	
-	void Image::setProperty(chstr name, chstr value)
+
+	void Image::setSrcX(float value)
 	{
-		if (name == "x")
-		{
-			this->srcRect.x = value;
-		}
-		else if (name == "y")
-		{
-			this->srcRect.y = value;
-		}
-		else if (name == "w")
-		{
-			this->srcRect.w = value;
-		}
-		else if (name == "h")
-		{
-			this->srcRect.h = value;
-		}
-		else if (name == "vertical")
-		{
-			this->vertical = value;
-		}
-		else if (name == "invert_x")
-		{
-			this->invertX = value;
-		}
-		else if (name == "invert_y")
-		{
-			this->invertX = value;
-			
-		}
-		else if (name == "blend_mode")
-		{
-			if (value == "add")
-			{
-				this->setBlendMode(april::BM_ADD);
-			}
-			else if (value == "subtract")
-			{
-				this->setBlendMode(april::BM_SUBTRACT);
-			}
-			else if (value == "overwrite")
-			{
-				this->setBlendMode(april::BM_OVERWRITE);
-			}
-			else
-			{
-				this->setBlendMode(april::BM_DEFAULT);
-			}
-		}
-		else if (name == "color_mode")
-		{
-			if (value == "lerp")
-			{
-				this->setColorMode(april::CM_LERP);
-			}
-			else if (value == "alpha_map")
-			{
-				this->setColorMode(april::CM_ALPHA_MAP);
-			}
-			else
-			{
-				this->setColorMode(april::CM_DEFAULT);
-			}
-		}
-		else if (name == "color_mode_factor")
-		{
-			this->colorModeFactor = value;
-		}
-		else
-		{
-			throw hl_exception("Unknown april::Image property: " + name);
-		}
+		this->srcRect.x = value;
+		this->_textureCoordinatesLoaded = false;
 	}
-	
-	hstr Image::getProperty(chstr name)
+
+	void Image::setSrcY(float value)
 	{
-		if (name == "x")
+		this->srcRect.y = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setSrcWidth(float value)
+	{
+		this->srcRect.w = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setSrcHeight(float value)
+	{
+		this->srcRect.h = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setPosition(gvec2 value)
+	{
+		this->srcRect.setPosition(value);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setPosition(float x, float y)
+	{
+		this->srcRect.setPosition(x, y);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setSize(gvec2 value)
+	{
+		this->srcRect.setSize(value);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setSize(float x, float y)
+	{
+		this->srcRect.setSize(x, y);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	hstr Image::getProperty(chstr name, bool* propertyExists)
+	{
+		if (propertyExists != NULL)
 		{
-			return this->srcRect.x;
+			*propertyExists = true;
 		}
-		else if (name == "y")
+		if (name == "rect")					return grect_to_hstr(this->getSrcRect());
+		if (name == "position")				return gvec2_to_hstr(this->getSrcRect().getPosition());
+		if (name == "size")					return gvec2_to_hstr(this->getSrcRect().getSize());
+		if (name == "x")					return this->getSrcRect().x;
+		if (name == "y")					return this->getSrcRect().y;
+		if (name == "w")					return this->getSrcRect().w;
+		if (name == "h")					return this->getSrcRect().h;
+		if (name == "color")				return this->getColor().hex();
+		if (name == "rotated")				return this->isRotated();
+		if (name == "vertical")
 		{
-			return this->srcRect.y;
+			hlog::warn(aprilui::logTag, "\"vertical\" is deprecated. Use \"vertical\" instead."); // DEPRECATED
+			return this->isRotated();
 		}
-		else if (name == "w")
+		if (name == "invert_x")				return this->isInvertX();
+		if (name == "invertx")
 		{
-			return this->srcRect.w;
+			hlog::warn(aprilui::logTag, "\"invertx\" is deprecated. Use \"invert_x\" instead."); // DEPRECATED
+			return this->isInvertX();
 		}
-		else if (name == "h")
+		if (name == "invert_y")				return this->isInvertY();
+		if (name == "inverty")
 		{
-			return this->srcRect.h;
+			hlog::warn(aprilui::logTag, "\"inverty\" is deprecated. Use \"invert_y\" instead."); // DEPRECATED
+			return this->isInvertY();
 		}
-		else if (name == "vertical")
+		if (name == "blend_mode")
 		{
-			return this->vertical;
+			if (this->blendMode == april::BM_ADD)		return "add";
+			if (this->blendMode == april::BM_SUBTRACT)	return "subtract";
+			if (this->blendMode == april::BM_OVERWRITE)	return "overwrite";
+			return "default";
 		}
-		else if (name == "invert_x")
+		if (name == "color_mode")
 		{
-			return this->invertX;
+			if (this->colorMode == april::CM_LERP)		return "lerp";
+			if (this->colorMode == april::CM_MULTIPLY)	return "alpha_map";
+			return "multiply";
 		}
-		else if (name == "invert_y")
+		if (name == "color_mode_factor")	return this->getColorModeFactor();
+		if (name == "texture")
 		{
-			return this->invertX;
+			return (this->texture != NULL ? this->texture->getOriginalFilename() : "");
 		}
-		else if (name == "texture")
+		if (name == "dataset")
 		{
-			return this->texture == NULL ? "" : this->texture->getOriginalFilename();
+			return (this->dataset != NULL ? this->dataset->getName() : "");
 		}
-		else if (name == "blend_mode")
+		if (propertyExists != NULL)
 		{
-			april::BlendMode blendMode = this->getBlendMode();
-			if (blendMode == april::BM_ADD)
-			{
-				return "add";
-			}
-			else if (blendMode == april::BM_SUBTRACT)
-			{
-				return "subtract";
-			}
-			else if (blendMode == april::BM_OVERWRITE)
-			{
-				return "overwrite";
-			}
-			else
-			{
-				return "default";
-			}
-		}
-		else if (name == "color_mode")
-		{
-			april::ColorMode colorMode = this->getColorMode();
-			if (colorMode == april::CM_LERP)
-			{
-				return "lerp";
-			}
-			else if (colorMode == april::CM_ALPHA_MAP)
-			{
-				return "alpha_map";
-			}
-			else
-			{
-				return "default";
-			}
-		}
-		else if (name == "color_mode_factor")
-		{
-			return this->colorModeFactor;
-		}
-		else
-		{
-			throw hl_exception("Unknown april::Image property: " + name);
+			*propertyExists = false;
 		}
 		return "";
 	}
 	
+	bool Image::setProperty(chstr name, chstr value)
+	{
+		if		(name == "rect")				this->setSrcRect(hstr_to_grect(value));
+		else if	(name == "position")			this->srcRect.setPosition(hstr_to_gvec2(value));
+		else if	(name == "size")				this->srcRect.setSize(hstr_to_gvec2(value));
+		else if	(name == "x")					this->srcRect.x = value;
+		else if	(name == "y")					this->srcRect.y = value;
+		else if	(name == "w")					this->srcRect.w = value;
+		else if	(name == "h")					this->srcRect.h = value;
+		else if	(name == "color")				this->setColor(value);
+		else if	(name == "rotated")				this->setRotated(value);
+		else if	(name == "vertical")
+		{
+			hlog::warn(aprilui::logTag, "\"vertical=\" is deprecated. Use \"rotated=\" instead."); // DEPRECATED
+			this->setRotated(value);
+		}
+		else if	(name == "invert_x")			this->setInvertX(value);
+		else if	(name == "invertx")
+		{
+			hlog::warn(aprilui::logTag, "\"invertx=\" is deprecated. Use \"invert_x=\" instead."); // DEPRECATED
+			this->setInvertX(value);
+		}
+		else if	(name == "invert_y")			this->setInvertY(value);
+		else if	(name == "inverty")
+		{
+			hlog::warn(aprilui::logTag, "\"inverty=\" is deprecated. Use \"invert_y=\" instead."); // DEPRECATED
+			this->setInvertY(value);
+		}
+		else if	(name == "blend_mode")
+		{
+			if		(value == "default")	this->setBlendMode(april::BM_DEFAULT);
+			else if	(value == "alpha")		this->setBlendMode(april::BM_ALPHA);
+			else if	(value == "add")		this->setBlendMode(april::BM_ADD);
+			else if	(value == "subtract")	this->setBlendMode(april::BM_SUBTRACT);
+			else if	(value == "overwrite")	this->setBlendMode(april::BM_OVERWRITE);
+			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.c_str(), name.c_str(), this->name.c_str());
+		}
+		else if	(name == "color_mode")
+		{
+			if		(value == "default")	this->setColorMode(april::CM_DEFAULT);
+			else if	(value == "multiply")	this->setColorMode(april::CM_MULTIPLY);
+			else if	(value == "lerp")		this->setColorMode(april::CM_LERP);
+			else if	(value == "alpha_map")	this->setColorMode(april::CM_ALPHA_MAP);
+			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.c_str(), name.c_str(), this->name.c_str());
+		}
+		else if	(name == "color_mode_factor")	this->setColorModeFactor(value);
+		else return false;
+		return true;
+	}
+
 	void Image::_tryLoadTexCoords()
 	{
 		if (!this->_textureCoordinatesLoaded && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)
@@ -246,7 +252,7 @@ namespace aprilui
 				hswap(this->_tVertices[1].v, this->_tVertices[3].v);
 			}
 			// vertical is applied last
-			if (this->vertical)
+			if (this->rotated)
 			{
 				hswap(this->_tVertices[0].u, this->_tVertices[2].v);
 				hswap(this->_tVertices[3].u, this->_tVertices[1].v);
@@ -256,6 +262,10 @@ namespace aprilui
 
 	void Image::draw(grect rect, april::Color color)
 	{
+		if (this->color != april::Color::White)
+		{
+			color *= this->color;
+		}
 		this->_tVertices[0].x = this->_tVertices[2].x = rect.left();
 		this->_tVertices[0].y = this->_tVertices[1].y = rect.top();
 		this->_tVertices[1].x = this->_tVertices[3].x = rect.right();
@@ -281,6 +291,10 @@ namespace aprilui
 
 	void Image::draw(harray<april::TexturedVertex> vertices, april::Color color)
 	{
+		if (this->color != april::Color::White)
+		{
+			color *= this->color;
+		}
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getRenderTexture());
 		this->_tryLoadTexCoords();
