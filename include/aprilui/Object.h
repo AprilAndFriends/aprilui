@@ -30,6 +30,7 @@ namespace aprilui
 {
 	class Animator;
 	class Dataset;
+	class Image;
 	class Event;
 	class EventArgs;
 	
@@ -118,7 +119,8 @@ namespace aprilui
 		Object* getChildUnderCursor();
 		harray<Object*> getAncestors();
 		harray<Object*> getDescendants();
-
+		
+		virtual harray<Image*> getUsedImages();
 		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 
 		void addChild(Object* object);

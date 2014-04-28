@@ -72,6 +72,16 @@ namespace aprilui
 		return false;
 	}
 	
+	harray<Image*> ImageBox::getUsedImages()
+	{
+		harray<Image*> images;
+		if (this->image != NULL)
+		{
+			images += this->image;
+		}
+		return images;
+	}
+	
 	void ImageBox::OnDraw()
 	{
 		if (this->image == NULL)

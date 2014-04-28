@@ -1355,6 +1355,12 @@ namespace aprilui
 		return angle;
 	}
 	
+	harray<Image*> Object::getUsedImages()
+	{
+		harray<Image*> array;
+		return array;
+	}
+	
 	grect Object::_getDrawRect()
 	{
 		return grect(-this->center, this->rect.getSize());

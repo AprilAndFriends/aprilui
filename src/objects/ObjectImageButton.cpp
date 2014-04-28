@@ -188,6 +188,28 @@ namespace aprilui
 		this->normalImageName = this->imageName;
 	}
 	
+	harray<Image*> ImageButton::getUsedImages()
+	{
+		harray<Image*> images;
+		if (this->image != NULL)
+		{
+			images += this->image;
+		}
+		if (this->pushedImage != NULL)
+		{
+			images += this->pushedImage;
+		}
+		if (this->hoverImage != NULL)
+		{
+			images += this->hoverImage;
+		}
+		if (this->disabledImage != NULL)
+		{
+			images += this->disabledImage;
+		}
+		return images;
+	}
+	
 	hstr ImageButton::getProperty(chstr name, bool* propertyExists)
 	{
 		if (propertyExists != NULL)

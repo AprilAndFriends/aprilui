@@ -552,8 +552,6 @@
 				C942B3F113278C3300C1D1E8 /* Animators */,
 				C942B3FE13278C5900C1D1E8 /* Objects */,
 				7F1B524D12E471B800E958D8 /* aprilui.h */,
-				D140388318EAF8290092608C /* ObjectProgressBase.h */,
-				D140388418EAF8290092608C /* ObjectProgressCircle.h */,
 				7F1B524912E471B800E958D8 /* apriluiExport.h */,
 				7FCD395E12018C7B00608217 /* CallbackEvent.h */,
 				7FC8041811EC721E00851062 /* Dataset.h */,
@@ -620,6 +618,8 @@
 				7F38C69B12096793002B5134 /* ObjectSlider.h */,
 				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
 				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
+				D140388318EAF8290092608C /* ObjectProgressBase.h */,
+				D140388418EAF8290092608C /* ObjectProgressCircle.h */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
