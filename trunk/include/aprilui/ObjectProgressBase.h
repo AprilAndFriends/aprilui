@@ -39,6 +39,8 @@ namespace aprilui
 		void setMaskImage(Image* image);
 		void setProgressImageByName(chstr name);
 		void setMaskImageByName(chstr name);
+		harray<Image*> getUsedImages();
+
 		virtual Dataset* getDataset() = 0;
 		virtual Image* getImage() = 0;
 		virtual void setImage(Image* image) = 0;
@@ -49,7 +51,7 @@ namespace aprilui
 		bool trySetProgressImageByName(chstr name);
 		bool trySetMaskImageByName(chstr name);
 		virtual bool trySetImageByName(chstr name) = 0;
-
+		
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);
 

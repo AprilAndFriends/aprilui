@@ -50,6 +50,19 @@ namespace aprilui
 		this->setMaskImage(this->getDataset()->getImage(name));
 	}
 
+	harray<Image*> ProgressBase::getUsedImages()
+	{
+		harray<Image*> images;
+		if (this->progressImage != NULL)
+		{
+			images += this->progressImage;
+		}
+		if (this->maskImage != NULL)
+		{
+			images += this->maskImage;
+		}
+		return images;
+	}
 	bool ProgressBase::trySetProgressImageByName(chstr name)
 	{
 		if (this->progressImageName != name)

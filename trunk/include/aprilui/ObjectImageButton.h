@@ -58,6 +58,8 @@ namespace aprilui
 		bool trySetPushedImageByName(chstr name);
 		/// @brief Optimized version.
 		bool trySetDisabledImageByName(chstr name);
+		
+		harray<Image*> getUsedImages();
 
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);

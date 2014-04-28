@@ -52,6 +52,8 @@ namespace aprilui
 		bool trySetToggledHoverImageByName(chstr name);
 		bool trySetToggledPushedImageByName(chstr name);
 		bool trySetToggledDisabledImageByName(chstr name);
+		
+		harray<Image*> getUsedImages();
 
 		hstr getProperty(chstr name, bool* propertyExists = NULL);
 		bool setProperty(chstr name, chstr value);

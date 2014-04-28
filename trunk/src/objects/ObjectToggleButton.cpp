@@ -131,6 +131,27 @@ namespace aprilui
 		return false;
 	}
 	
+	harray<Image*> ToggleButton::getUsedImages()
+	{
+		harray<Image*> images;
+		if (this->image != NULL)
+		{
+			images += this->image;
+		}
+		if (this->pushedImage != NULL)
+		{
+			images += this->pushedImage;
+		}
+		if (this->hoverImage != NULL)
+		{
+			images += this->hoverImage;
+		}
+		if (this->disabledImage != NULL)
+		{
+			images += this->disabledImage;
+		}
+		return images;
+	}
 	void ToggleButton::toggle()
 	{
 		this->toggled = !this->toggled;
