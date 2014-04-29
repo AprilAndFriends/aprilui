@@ -86,7 +86,7 @@ namespace aprilui
 			return this->objects.dyn_cast_value<hstr, T>();
 		}
 		
-		void updateTextures(float k);
+		void updateTextures(float timeDelta);
 		void unloadUnusedTextures();
 		void clearChildUnderCursor();
 		
@@ -94,7 +94,7 @@ namespace aprilui
 		void queueCallback(Event* event, EventArgs* args);
 		void removeCallbackFromQueue(Event* event);
 		
-		virtual void update(float k);
+		virtual void update(float timeDelta);
 		void draw();
 		
 		void _destroyTexture(chstr tex);

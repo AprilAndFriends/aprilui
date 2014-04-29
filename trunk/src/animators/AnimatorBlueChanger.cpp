@@ -38,9 +38,9 @@ namespace aprilui
 			this->parent->setBlue((unsigned char)value);
 		}
 
-		void BlueChanger::update(float k)
+		void BlueChanger::update(float timeDelta)
 		{
-			this->_valueUpdateUChar(k);
+			this->_valueUpdateUChar(timeDelta);
 		}
 		
 	}

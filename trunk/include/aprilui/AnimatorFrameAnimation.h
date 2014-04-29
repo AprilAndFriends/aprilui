@@ -37,7 +37,7 @@ namespace aprilui
 
 			void notifyEvent(chstr name, void* params);
 			
-			void update(float k);
+			void update(float timeDelta);
 			
 		protected:
 			hstr imageBaseName;

@@ -79,9 +79,9 @@ namespace aprilui
 			Animator::notifyEvent(name, params);
 		}
 
-		void FrameAnimation::update(float k)
+		void FrameAnimation::update(float timeDelta)
 		{
-			if (this->_checkUpdate(k))
+			if (this->_checkUpdate(timeDelta))
 			{
 				ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);
 				if (imageBox == NULL)
@@ -89,7 +89,7 @@ namespace aprilui
 					hlog::error(aprilui::logTag, "Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 					return;
 				}
-				this->value = this->_calculateValue(this->timeSinceLastFrame);
+				this->value = this->_calculateValue(this->timeDelta);
 				int frame = hmax((int)this->value, 0);
 				int lastFrame = this->frameCount - 1;
 				if (isExpired() || frame > lastFrame)

@@ -85,13 +85,13 @@ namespace aprilui
 		return this->texture;
 	}
 
-	void Texture::update(float k)
+	void Texture::update(float timeDelta)
 	{
 		if (this->dynamic && this->texture->isLoaded())
 		{
 			float maxTime = aprilui::getTextureIdleUnloadTime();
-			this->unusedTime += k;
-			if (maxTime > 0.0f && unusedTime > maxTime)
+			this->unusedTime += timeDelta;
+			if (maxTime > 0.0f && unusedTime >= maxTime)
 			{
 				if (unloadListener != NULL)
 				{

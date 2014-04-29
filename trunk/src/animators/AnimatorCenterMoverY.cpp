@@ -38,9 +38,9 @@ namespace aprilui
 			this->parent->setCenterY(value);
 		}
 
-		void CenterMoverY::update(float k)
+		void CenterMoverY::update(float timeDelta)
 		{
-			this->_valueUpdateSimple(k);
+			this->_valueUpdateSimple(timeDelta);
 		}
 		
 	}

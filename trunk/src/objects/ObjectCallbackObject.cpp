@@ -38,13 +38,13 @@ namespace aprilui
 		}
 	}
 
-	void CallbackObject::update(float k)
+	void CallbackObject::update(float timeDelta)
 	{
 		if (this->updateCallback != NULL)
 		{
-			(*this->updateCallback)(k);
+			(*this->updateCallback)(timeDelta);
 		}
-		Object::update(k);
+		Object::update(timeDelta);
 	}
 	
 	bool CallbackObject::onMouseDown(april::Key keyCode)

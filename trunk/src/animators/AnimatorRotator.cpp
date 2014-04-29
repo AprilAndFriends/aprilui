@@ -38,9 +38,9 @@ namespace aprilui
 			this->parent->setAngle(value);
 		}
 
-		void Rotator::update(float k)
+		void Rotator::update(float timeDelta)
 		{
-			this->_valueUpdateSimple(k);
+			this->_valueUpdateSimple(timeDelta);
 		}
 		
 	}

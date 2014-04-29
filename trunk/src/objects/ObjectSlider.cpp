@@ -35,9 +35,9 @@ namespace aprilui
 		return new Slider(name, rect);
 	}
 	
-	void Slider::update(float k)
+	void Slider::update(float timeDelta)
 	{
-		ImageBox::update(k);
+		ImageBox::update(timeDelta);
 		gvec2 position = aprilui::getCursorPosition();
 		if (this->pushed && this->isPointInside(position))
 		{

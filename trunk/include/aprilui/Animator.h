@@ -58,12 +58,12 @@ namespace aprilui
 
 		void notifyEvent(chstr name, void* params);
 		
-		void update(float k);
+		void update(float timeDelta);
 
 		void OnDrawDebug();
 		
 	protected:
-		float timeSinceLastFrame;
+		float timeDelta;
 		float value;
 		AnimationFunction animationFunction;
 		float timer;
@@ -80,11 +80,11 @@ namespace aprilui
 		bool useTarget;
 		float (*customFunction)(Animator*, float);
 		
-		float _calculateValue(float k);
-		bool _checkUpdate(float k);
+		float _calculateValue(float timeDelta);
+		bool _checkUpdate(float timeDelta);
 
-		void _valueUpdateSimple(float k);
-		void _valueUpdateUChar(float k);
+		void _valueUpdateSimple(float timeDelta);
+		void _valueUpdateUChar(float timeDelta);
 
 		virtual float _getObjectValue() = 0;
 		virtual void _setObjectValue(float value) = 0;

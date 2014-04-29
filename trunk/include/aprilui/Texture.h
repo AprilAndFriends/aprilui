@@ -42,7 +42,7 @@ namespace aprilui
 		void setAddressMode(april::Texture::AddressMode value);
 		april::Texture* getRenderTexture();
 
-		void update(float k);
+		void update(float timeDelta);
 		void resetUnusedTime();
 
 		void load(bool ignoreDynamicLinks = false);

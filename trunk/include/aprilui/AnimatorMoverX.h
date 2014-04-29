@@ -29,7 +29,7 @@ namespace aprilui
 			~MoverX();
 			static Animator* createInstance(chstr name);
 			
-			void update(float k);
+			void update(float timeDelta);
 			
 		protected:
 			float _getObjectValue();

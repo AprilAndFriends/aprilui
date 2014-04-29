@@ -32,7 +32,7 @@ namespace aprilui
 	{
 	}
 	
-	void ButtonBase::update(float k)
+	void ButtonBase::update(float timeDelta)
 	{
 		this->hovered = this->_checkHover();
 	}

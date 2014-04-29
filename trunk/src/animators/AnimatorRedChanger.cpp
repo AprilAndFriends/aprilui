@@ -38,9 +38,9 @@ namespace aprilui
 			this->parent->setRed((unsigned char)value);
 		}
 
-		void RedChanger::update(float k)
+		void RedChanger::update(float timeDelta)
 		{
-			this->_valueUpdateUChar(k);
+			this->_valueUpdateUChar(timeDelta);
 		}
 		
 	}

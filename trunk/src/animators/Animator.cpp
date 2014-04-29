@@ -20,7 +20,7 @@ namespace aprilui
 {
 	Animator::Animator(chstr name) : Object(name, grect(0.0f, 0.0f, 1.0f, 1.0f))
 	{
-		this->timeSinceLastFrame = 0.0f;
+		this->timeDelta = 0.0f;
 		this->value = 0.0f;
 		this->animationFunction = aprilui::Object::Linear;
 		this->timer = 0.0f;
@@ -46,40 +46,40 @@ namespace aprilui
 	{
 	}
 
-	void Animator::update(float k)
+	void Animator::update(float timeDelta)
 	{
-		this->timeSinceLastFrame = k;
-		Object::update(this->timeSinceLastFrame);
+		this->timeDelta = timeDelta;
+		Object::update(this->timeDelta);
 		if (!this->enabled)
 		{
 			return;
 		}
 		if (this->delay > 0.0f)
 		{
-			this->delay -= this->timeSinceLastFrame;
+			this->delay -= this->timeDelta;
 			if (this->delay > 0.0f)
 			{
 				return;
 			}
 			this->notifyEvent("OnDelayEnd", NULL);
-			this->timeSinceLastFrame += this->delay;
+			this->timeDelta += this->delay;
 		}
-		this->timer += this->timeSinceLastFrame;
+		this->timer += this->timeDelta;
 		if (!heqf(this->acceleration, 0.0f, (float)HL_E_TOLERANCE))
 		{
-			this->speed += this->acceleration * this->timeSinceLastFrame;
+			this->speed += this->acceleration * this->timeDelta;
 		}
 	}
 	
-	bool Animator::_checkUpdate(float k)
+	bool Animator::_checkUpdate(float timeDelta)
 	{
 		float delay = this->delay;
 		bool animated = this->isAnimated();
-		Animator::update(k);
+		Animator::update(timeDelta);
 		return (animated || this->isAnimated() || delay > 0.0f && this->delay <= 0.0f);
 	}
 	
-	float Animator::_calculateValue(float k)
+	float Animator::_calculateValue(float timeDelta)
 	{
 		if (this->delay > 0.0f)
 		{
@@ -126,11 +126,11 @@ namespace aprilui
 		case Object::Hover:
 			if ((this->amplitude >= 0.0f) == this->parent->isCursorInside())
 			{
-				result = hmin(this->value - this->offset + k * this->speed, (float)habs(this->amplitude));
+				result = hmin(this->value - this->offset + timeDelta * this->speed, (float)habs(this->amplitude));
 			}
 			else
 			{
-				result = hmax(this->value - this->offset - k * this->speed, -(float)habs(this->amplitude));
+				result = hmax(this->value - this->offset - timeDelta * this->speed, -(float)habs(this->amplitude));
 			}
 			break;
 		case Object::Custom:
@@ -278,21 +278,21 @@ namespace aprilui
 		Object::notifyEvent(name, params);
 	}
 		
-	void Animator::_valueUpdateSimple(float k)
+	void Animator::_valueUpdateSimple(float timeDelta)
 	{
-		if (this->_checkUpdate(k))
+		if (this->_checkUpdate(timeDelta))
 		{
 			this->value = this->_getObjectValue(); // required because this->_calculateValue may use value
-			this->value = this->_calculateValue(this->timeSinceLastFrame);
+			this->value = this->_calculateValue(this->timeDelta);
 			this->_setObjectValue(this->value);
 		}
 	}
 	
-	void Animator::_valueUpdateUChar(float k)
+	void Animator::_valueUpdateUChar(float timeDelta)
 	{
-		if (this->_checkUpdate(k))
+		if (this->_checkUpdate(timeDelta))
 		{
-			this->value = hclamp(this->_calculateValue(this->timeSinceLastFrame), 0.0f, 255.0f);
+			this->value = hclamp(this->_calculateValue(this->timeDelta), 0.0f, 255.0f);
 			if ((unsigned char)this->value != (unsigned char)this->_getObjectValue())
 			{
 				this->_setObjectValue(this->value);
