@@ -140,6 +140,7 @@ namespace aprilui
 		this->focusIndex = -1;
 		this->clip = false;
 		this->useDisabledAlpha = true;
+		this->customPointInsideCallback = NULL;
 	}
 
 	Object::~Object()
@@ -631,6 +632,7 @@ namespace aprilui
 				parent = obj->getParent();
 			}
 		}
+		if (this->customPointInsideCallback) return this->customPointInsideCallback(this, position);
 		return grect(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
 	}
 

@@ -33,7 +33,10 @@ namespace aprilui
 	class Image;
 	class Event;
 	class EventArgs;
+	class Object;
 	
+	typedef bool (*CustomPointInsideCallback)(Object*, gvec2);
+
 	class apriluiExport Object : public EventReceiver
 	{
 	public:
@@ -109,6 +112,8 @@ namespace aprilui
 		virtual HL_DEFINE_GET(int, focusIndex, FocusIndex);
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
+		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
+		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 		
 		inline harray<Object*>& getChildren() { return this->children; }
 		inline hmap<hstr, Event*>& getEvents() { return this->events; }
@@ -119,7 +124,7 @@ namespace aprilui
 		Object* getChildUnderCursor();
 		harray<Object*> getAncestors();
 		harray<Object*> getDescendants();
-		
+				
 		virtual harray<Image*> getUsedImages();
 		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 
@@ -323,6 +328,7 @@ namespace aprilui
 		bool clip;
 		bool useDisabledAlpha;
 		int focusIndex;
+		CustomPointInsideCallback customPointInsideCallback;
 		Dataset* dataset;
 		
 		void _sortChildren();
