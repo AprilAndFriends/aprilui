@@ -75,7 +75,7 @@ namespace aprilui
 		hstr toggledPushedImageName;
 		hstr toggledDisabledImageName;
 
-		void update(float k);
+		void update(float timeDelta);
 		void OnDraw();
 		
 	};

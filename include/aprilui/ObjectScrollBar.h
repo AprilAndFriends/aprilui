@@ -49,7 +49,7 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
 
-		void update(float k);
+		void update(float timeDelta);
 		void OnDraw();
 
 		void notifyEvent(chstr name, void* params);

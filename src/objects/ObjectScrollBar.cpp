@@ -178,9 +178,9 @@ namespace aprilui
 		}
 	}
 
-	void ScrollBar::update(float k)
+	void ScrollBar::update(float timeDelta)
 	{
-		Object::update(k);
+		Object::update(timeDelta);
 		this->_updateBar();
 		if (this->skinName == "")
 		{
@@ -190,7 +190,7 @@ namespace aprilui
 				ScrollArea* area = parent->_getScrollArea();
 				if (area != NULL && this->_retainTime > 0.0f)
 				{
-					this->_retainTime -= k;
+					this->_retainTime -= timeDelta;
 				}
 			}
 		}

@@ -38,9 +38,9 @@ namespace aprilui
 			this->parent->setX(value);
 		}
 
-		void MoverX::update(float k)
+		void MoverX::update(float timeDelta)
 		{
-			this->_valueUpdateSimple(k);
+			this->_valueUpdateSimple(timeDelta);
 		}
 		
 	}

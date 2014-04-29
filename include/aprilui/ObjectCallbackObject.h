@@ -34,7 +34,7 @@ namespace aprilui
 		inline void setDrawCallback(void (*value)(CallbackObject*)) { this->drawCallback = value; }
 		inline void setUpdateCallback(void (*value)(float)) { this->updateCallback = value; }
 		
-		void update(float k);
+		void update(float timeDelta);
 		void OnDraw();
 
 		bool onMouseDown(april::Key keyCode);

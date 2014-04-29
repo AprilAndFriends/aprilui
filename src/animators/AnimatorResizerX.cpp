@@ -38,9 +38,9 @@ namespace aprilui
 			this->parent->setWidth(value);
 		}
 
-		void ResizerX::update(float k)
+		void ResizerX::update(float timeDelta)
 		{
-			this->_valueUpdateSimple(k);
+			this->_valueUpdateSimple(timeDelta);
 		}
 		
 	}

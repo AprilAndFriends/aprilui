@@ -1059,11 +1059,11 @@ namespace aprilui
 		return (this->root != NULL && this->root->onButtonUp(buttonCode));
 	}
 	
-	void Dataset::updateTextures(float k)
+	void Dataset::updateTextures(float timeDelta)
 	{
 		foreach_m (Texture*, it, this->textures)
 		{
-			it->second->update(k);
+			it->second->update(timeDelta);
 		}
 	}
 	
@@ -1109,12 +1109,12 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::update(float k)
+	void Dataset::update(float timeDelta)
 	{
-		this->updateTextures(k);
+		this->updateTextures(timeDelta);
 		if (this->root != NULL && this->root->getParent() == NULL)
 		{
-			this->root->update(k);
+			this->root->update(timeDelta);
 		}
 		this->clearChildUnderCursor();
 	}

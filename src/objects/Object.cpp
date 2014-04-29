@@ -564,7 +564,7 @@ namespace aprilui
 		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
 	
-	void Object::update(float k)
+	void Object::update(float timeDelta)
 	{
 		if (this->checkedChildUnderCursor)
 		{
@@ -572,11 +572,11 @@ namespace aprilui
 		}
 		foreach (Object*, it, this->children)
 		{
-			(*it)->update(k);
+			(*it)->update(timeDelta);
 		}
 		foreach (Animator*, it, this->dynamicAnimators)
 		{
-			(*it)->update(k);
+			(*it)->update(timeDelta);
 		}
 		// faster than creating a new array, adding expired animators and the deleting them
 		int i = 0;

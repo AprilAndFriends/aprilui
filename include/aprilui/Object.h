@@ -182,7 +182,7 @@ namespace aprilui
 		virtual bool onButtonUp(april::Button buttonCode);
 		virtual void mouseCancel();
 
-		virtual void update(float k);
+		virtual void update(float timeDelta);
 		void draw();
 		
 		Object* findChildByName(chstr name);

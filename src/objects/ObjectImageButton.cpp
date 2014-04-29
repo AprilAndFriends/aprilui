@@ -81,9 +81,9 @@ namespace aprilui
 		}
 	}
 
-	void ImageButton::update(float k)
+	void ImageButton::update(float timeDelta)
 	{
-		ButtonBase::update(k);
+		ButtonBase::update(timeDelta);
 		this->image = this->normalImage;
 		if (this->image == NULL)
 		{
@@ -110,7 +110,7 @@ namespace aprilui
 				this->image = this->hoverImage;
 			}
 		}
-		ImageBox::update(k);
+		ImageBox::update(timeDelta);
 	}
 	
 	bool ImageButton::isCursorInside()

@@ -42,7 +42,7 @@ namespace aprilui
 		bool pushed;
 		float value;
 		
-		void update(float k);
+		void update(float timeDelta);
 		void OnDraw();
 		
 	};

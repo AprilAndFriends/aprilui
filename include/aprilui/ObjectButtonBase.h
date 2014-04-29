@@ -58,7 +58,7 @@ namespace aprilui
 		bool hovered;
 		bool pushed;
 		
-		virtual void update(float k);
+		virtual void update(float timeDelta);
 		virtual bool _checkHover();
 		
 	};

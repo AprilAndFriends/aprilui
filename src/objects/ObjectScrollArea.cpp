@@ -149,12 +149,12 @@ namespace aprilui
 		}
 	}
 
-	void ScrollArea::update(float k)
+	void ScrollArea::update(float timeDelta)
 	{
-		Object::update(k);
+		Object::update(timeDelta);
 		if (this->allowDrag && this->parent != NULL)
 		{
-			ButtonBase::update(k);
+			ButtonBase::update(timeDelta);
 			gvec2 position = aprilui::getCursorPosition();
 			if (this->pushed)
 			{
@@ -178,7 +178,7 @@ namespace aprilui
 			if (this->dragging)
 			{
 				this->setScrollOffset(this->_clickScrollOffset + (this->_clickPosition - position) / this->getDerivedScale());
-				this->_dragSpeed = (position - this->_lastPosition) / k;
+				this->_dragSpeed = (position - this->_lastPosition) / timeDelta;
 				if (this->dragMaxSpeed > 0.0f)
 				{
 					float length = this->_dragSpeed.length();
@@ -195,8 +195,8 @@ namespace aprilui
 		}
 		if (!this->dragging && this->inertia > 0.0f && this->isScrolling())
 		{
-			this->_dragTimer.x += k;
-			this->_dragTimer.y += k;
+			this->_dragTimer.x += timeDelta;
+			this->_dragTimer.y += timeDelta;
 			gvec2 inertiaTime(habs(this->_dragSpeed.x) / this->inertia, habs(this->_dragSpeed.y) / this->inertia);
 			gvec2 distance;
 			if (this->_dragSpeed.x != 0.0f)

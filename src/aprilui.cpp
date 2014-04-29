@@ -419,19 +419,19 @@ namespace aprilui
 		}
 	}
 
-	void update(float k)
+	void update(float timeDelta)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->update(k);
+			it->second->update(timeDelta);
 		}
 	}
 	
-	void updateTextures(float k)
+	void updateTextures(float timeDelta)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->updateTextures(k);
+			it->second->updateTextures(timeDelta);
 		}
 	}
 	

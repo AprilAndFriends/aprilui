@@ -85,8 +85,8 @@ namespace aprilui
 	
 	apriluiFnExport void notifyEvent(chstr name, void* params);
 	apriluiFnExport void processEvents();
-	apriluiFnExport void update(float k);
-	apriluiFnExport void updateTextures(float k);
+	apriluiFnExport void update(float timeDelta);
+	apriluiFnExport void updateTextures(float timeDelta);
 	apriluiFnExport void unloadUnusedTextures();
 	apriluiFnExport void reloadTextures();
 
