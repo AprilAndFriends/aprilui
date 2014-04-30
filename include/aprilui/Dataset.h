@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.05
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -66,12 +66,14 @@ namespace aprilui
 
 		void load();
 		void unload();
-		void registerManualObject(Object* o);
-		void unregisterManualObject(Object* o);
-		void registerManualImage(Image* img);
-		void unregisterManualImage(Image* img);
-		void registerManualTexture(Texture* tex);
-		void unregisterManualTexture(Texture* tex);
+		/// @note This method is recursive!
+		void registerObjects(Object* root);
+		/// @note This method is recursive!
+		void unregisterObjects(Object* root);
+		void registerImage(Image* image);
+		void unregisterImage(Image* image);
+		void registerTexture(Texture* texture);
+		void unregisterTexture(Texture* texture);
 		
 		void registerCallback(chstr name, void (*callback)());
 		void triggerCallback(chstr name);
@@ -102,7 +104,9 @@ namespace aprilui
 		void _destroyTexture(Texture* tex);
 		void _destroyImage(Image* img);
 		
+		/// @note This method is recursive!
 		void destroyObject(chstr name);
+		/// @note This method is recursive!
 		void destroyObject(Object* object);
 		
 		bool onMouseDown(april::Key keyCode);
@@ -168,6 +172,13 @@ namespace aprilui
 		void removeFocus();
 
 		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+
+		DEPRECATED_ATTRIBUTE void registerManualObject(Object* object) { this->registerObjects(object); }
+		DEPRECATED_ATTRIBUTE void unregisterManualObject(Object* object) { this->unregisterObjects(object); }
+		DEPRECATED_ATTRIBUTE void registerManualImage(Image* image) { this->registerImage(image); }
+		DEPRECATED_ATTRIBUTE void unregisterManualImage(Image* image) { this->unregisterImage(image); }
+		DEPRECATED_ATTRIBUTE void registerManualTexture(Texture* texture) { this->registerTexture(texture); }
+		DEPRECATED_ATTRIBUTE void unregisterManualTexture(Texture* texture) { this->unregisterTexture(texture); }
 
 	protected:
 		struct QueuedCallback
