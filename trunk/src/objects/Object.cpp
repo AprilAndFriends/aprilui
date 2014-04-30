@@ -228,7 +228,7 @@ namespace aprilui
 	{
 		while (this->children.size() > 0)
 		{
-			this->dataset->destroyObject(this->children.first());
+			this->dataset->destroyObjects(this->children.first());
 		}
 	}
 	
