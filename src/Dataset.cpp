@@ -141,40 +141,40 @@ namespace aprilui
 		return hrdir::normalize(hrdir::basedir(filename));
 	}
 	
-	void Dataset::destroyObject(chstr name)
+	void Dataset::destroyObjects(chstr rootName)
 	{
-		this->destroyObject(this->getObject(name));
+		this->destroyObjects(this->getObject(rootName));
 	}
 	
-	void Dataset::destroyObject(Object* object)
+	void Dataset::destroyObjects(Object* root)
 	{
-		if (!this->objects.has_key(object->getName()))
+		if (!this->objects.has_key(root->getName()))
 		{
 			// this object could be from another dataset, so check that first.
-			Dataset* dataset = object->getDataset();
+			Dataset* dataset = root->getDataset();
 			if (dataset != this)
 			{
-				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().c_str(), object->getFullName().c_str());
-				dataset->destroyObject(object);
+				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().c_str(), root->getFullName().c_str());
+				dataset->destroyObject(root);
 				return;
 			}
-			throw ResourceNotExistsException(object->getName(), "Object", this);
+			throw ResourceNotExistsException(root->getName(), "Object", this);
 		}
-		harray<Object*> children = object->getChildren();
+		harray<Object*> children = root->getChildren();
 		foreach (Object*, it, children)
 		{
 			this->destroyObject(*it);
 		}
-		if (object->getParent() != NULL)
+		if (root->getParent() != NULL)
 		{
-			object->detach();
+			root->detach();
 		}
-		if (object->isFocused())
+		if (root->isFocused())
 		{
-			object->setFocused(false);
+			root->setFocused(false);
 		}
-		this->objects.remove_key(object->getName());
-		delete object;
+		this->objects.remove_key(root->getName());
+		delete root;
 	}
 	
 	void Dataset::_destroyTexture(Texture* texture)
@@ -756,7 +756,7 @@ namespace aprilui
 			Dataset* dataset = root->getDataset();
 			if (dataset != this)
 			{
-				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().c_str(), root->getFullName().c_str());
+				hlog::writef(logTag, "Dataset '%s' unregistering object from another dataset: '%s'", this->getName().c_str(), root->getFullName().c_str());
 				dataset->unregisterObjects(root);
 				return;
 			}
@@ -767,11 +767,6 @@ namespace aprilui
 		{
 			this->unregisterObjects(*it);
 		}
-			//this->objects.remove_key(name);
-			//object->dataset = NULL;
-			//object->notifyEvent("UnregisterFromDataset", this);
-
-
 		if (root->isFocused())
 		{
 			root->setFocused(false);
@@ -898,7 +893,7 @@ namespace aprilui
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
 		}
-		catch (_GenericException)
+		catch (_GenericException&)
 		{
 			return NULL;
 		}
