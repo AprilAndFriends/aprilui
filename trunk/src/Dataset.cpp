@@ -729,31 +729,50 @@ namespace aprilui
 		this->loaded = false;
 	}
 	
-	void Dataset::registerManualObject(Object* object)
+	void Dataset::registerObjects(Object* root)
 	{
-		hstr name = object->getName();
-		if (this->objects.has_key(name))
+		Object* object;
+		hstr name;
+		harray<Object*> objects;
+		objects += root;
+		objects += root->getDescendants();
+		objects.reverse(); // so remove_last() can be used
+		while (objects.size() > 0)
 		{
-			throw ResourceExistsException(name, "Object", this);
+			object = objects.remove_last(); // faster than remove_first()
+			name = object->getName();
+			if (this->objects.has_key(name))
+			{
+				throw ResourceExistsException(name, "Object", this);
+			}
+			this->objects[name] = object;
+			object->dataset = this;
+			object->notifyEvent("RegisterInDataset", this);
 		}
-		this->objects[name] = object;
-		object->dataset = this;
-		object->notifyEvent("RegisterInDataset", this);
 	}
 	
-	void Dataset::unregisterManualObject(Object* object)
+	void Dataset::unregisterObjects(Object* root)
 	{
-		hstr name = object->getName();
-		if (!this->objects.has_key(name))
+		Object* object;
+		hstr name;
+		harray<Object*> objects;
+		objects += root;
+		objects += root->getDescendants();
+		while (objects.size() > 0)
 		{
-			throw ResourceNotExistsException(name, "Object", this);
+			object = objects.remove_last();
+			name = object->getName();
+			if (!this->objects.has_key(name))
+			{
+				throw ResourceNotExistsException(name, "Object", this);
+			}
+			this->objects.remove_key(name);
+			object->dataset = NULL;
+			object->notifyEvent("UnregisterFromDataset", this);
 		}
-		this->objects.remove_key(name);
-		object->dataset = NULL;
-		object->notifyEvent("UnregisterFromDataset", this);
 	}
 	
-	void Dataset::registerManualImage(Image* image)
+	void Dataset::registerImage(Image* image)
 	{
 		hstr name = image->getName();
 		if (this->images.has_key(name))
@@ -764,7 +783,7 @@ namespace aprilui
 		image->dataset = this;
 	}
 	
-	void Dataset::unregisterManualImage(Image* image)
+	void Dataset::unregisterImage(Image* image)
 	{
 		hstr name = image->getName();
 		if (!this->images.has_key(name))
@@ -775,7 +794,7 @@ namespace aprilui
 		image->dataset = NULL;
 	}
 	
-	void Dataset::registerManualTexture(Texture* texture)
+	void Dataset::registerTexture(Texture* texture)
 	{
 		hstr name = texture->getFilename();
 		if (this->textures.has_key(name))
@@ -785,7 +804,7 @@ namespace aprilui
 		this->textures[name] = texture;
 	}
 
-	void Dataset::unregisterManualTexture(Texture* texture)
+	void Dataset::unregisterTexture(Texture* texture)
 	{
 		hstr name = texture->getFilename();
 		if (!this->textures.has_key(name))

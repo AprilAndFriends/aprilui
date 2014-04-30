@@ -1,7 +1,7 @@
 /// @file
 /// @author  Kresimir Spes
 /// @author  Boris Mikic
-/// @version 3.13
+/// @version 3.14
 /// 
 /// @section LICENSE
 /// 
@@ -199,13 +199,13 @@ namespace aprilui
 	void Object::registerChild(Object* object)
 	{
 		this->addChild(object);
-		this->dataset->registerManualObject(object);
+		this->dataset->registerObjects(object);
 	}
 	
 	void Object::unregisterChild(Object* object)
 	{
 		this->removeChild(object);
-		this->dataset->unregisterManualObject(object);
+		this->dataset->unregisterObjects(object);
 	}
 
 	void Object::removeChildren(bool recursive)
