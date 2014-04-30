@@ -731,45 +731,53 @@ namespace aprilui
 	
 	void Dataset::registerObjects(Object* root)
 	{
-		Object* object;
 		hstr name;
 		harray<Object*> objects;
 		objects += root;
 		objects += root->getDescendants();
-		objects.reverse(); // so remove_last() can be used
-		while (objects.size() > 0)
+		foreach (Object*, it, objects)
 		{
-			object = objects.remove_last(); // faster than remove_first()
-			name = object->getName();
+			name = (*it)->getName();
 			if (this->objects.has_key(name))
 			{
 				throw ResourceExistsException(name, "Object", this);
 			}
-			this->objects[name] = object;
-			object->dataset = this;
-			object->notifyEvent("RegisterInDataset", this);
+			this->objects[name] = (*it);
+			(*it)->dataset = this;
+			(*it)->notifyEvent("RegisterInDataset", this);
 		}
 	}
 	
 	void Dataset::unregisterObjects(Object* root)
 	{
-		Object* object;
-		hstr name;
-		harray<Object*> objects;
-		objects += root;
-		objects += root->getDescendants();
-		while (objects.size() > 0)
+		if (!this->objects.has_key(root->getName()))
 		{
-			object = objects.remove_last();
-			name = object->getName();
-			if (!this->objects.has_key(name))
+			// this object could be from another dataset, so check that first.
+			Dataset* dataset = root->getDataset();
+			if (dataset != this)
 			{
-				throw ResourceNotExistsException(name, "Object", this);
+				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().c_str(), root->getFullName().c_str());
+				dataset->unregisterObjects(root);
+				return;
 			}
-			this->objects.remove_key(name);
-			object->dataset = NULL;
-			object->notifyEvent("UnregisterFromDataset", this);
+			throw ResourceNotExistsException(root->getName(), "Object", this);
 		}
+		harray<Object*> children = root->getChildren();
+		foreach (Object*, it, children)
+		{
+			this->unregisterObjects(*it);
+		}
+			//this->objects.remove_key(name);
+			//object->dataset = NULL;
+			//object->notifyEvent("UnregisterFromDataset", this);
+
+
+		if (root->isFocused())
+		{
+			root->setFocused(false);
+		}
+		this->objects.remove_key(root->getName());
+		root->dataset = NULL;
 	}
 	
 	void Dataset::registerImage(Image* image)
