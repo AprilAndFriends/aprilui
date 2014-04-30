@@ -155,7 +155,7 @@ namespace aprilui
 			if (dataset != this)
 			{
 				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().c_str(), root->getFullName().c_str());
-				dataset->destroyObject(root);
+				dataset->destroyObjects(root);
 				return;
 			}
 			throw ResourceNotExistsException(root->getName(), "Object", this);
@@ -163,7 +163,7 @@ namespace aprilui
 		harray<Object*> children = root->getChildren();
 		foreach (Object*, it, children)
 		{
-			this->destroyObject(*it);
+			this->destroyObjects(*it);
 		}
 		if (root->getParent() != NULL)
 		{
@@ -859,7 +859,7 @@ namespace aprilui
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
 		}
-		catch (_GenericException)
+		catch (_GenericException&)
 		{
 			throw ResourceNotExistsException(name, "Object", this);
 		}
@@ -946,7 +946,7 @@ namespace aprilui
 			{
 				dataset = aprilui::getDatasetByName(name(0, dot));
 			}
-			catch (_GenericException)
+			catch (_GenericException&)
 			{
 				throw ResourceNotExistsException(name, "Image", this);
 			}
