@@ -66,9 +66,7 @@ namespace aprilui
 
 		void load();
 		void unload();
-		/// @note This method is recursive!
 		void registerObjects(Object* root);
-		/// @note This method is recursive!
 		void unregisterObjects(Object* root);
 		void registerImage(Image* image);
 		void unregisterImage(Image* image);
@@ -104,10 +102,8 @@ namespace aprilui
 		void _destroyTexture(Texture* tex);
 		void _destroyImage(Image* img);
 		
-		/// @note This method is recursive!
-		void destroyObject(chstr name);
-		/// @note This method is recursive!
-		void destroyObject(Object* object);
+		void destroyObjects(chstr rootName);
+		void destroyObjects(Object* root);
 		
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
@@ -179,6 +175,8 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void unregisterManualImage(Image* image) { this->unregisterImage(image); }
 		DEPRECATED_ATTRIBUTE void registerManualTexture(Texture* texture) { this->registerTexture(texture); }
 		DEPRECATED_ATTRIBUTE void unregisterManualTexture(Texture* texture) { this->unregisterTexture(texture); }
+		DEPRECATED_ATTRIBUTE void destroyObject(chstr rootName) { this->destroyObjects(rootName); }
+		DEPRECATED_ATTRIBUTE void destroyObject(Object* root) { this->destroyObjects(root); }
 
 	protected:
 		struct QueuedCallback
