@@ -252,11 +252,11 @@ namespace aprilui
 				hswap(this->_tVertices[0].v, this->_tVertices[2].v);
 				hswap(this->_tVertices[1].v, this->_tVertices[3].v);
 			}
-			// vertical is applied last
+			// rotation is applied last
 			if (this->rotated)
 			{
-				hswap(this->_tVertices[0].u, this->_tVertices[2].v);
-				hswap(this->_tVertices[3].u, this->_tVertices[1].v);
+				hswap(this->_tVertices[0].u, this->_tVertices[3].u);
+				hswap(this->_tVertices[1].v, this->_tVertices[2].v);
 			}
 		}
 	}
