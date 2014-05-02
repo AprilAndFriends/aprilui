@@ -238,10 +238,21 @@ namespace aprilui
 			float iw = 1.0f / this->texture->getWidth();
 			float ih = 1.0f / this->texture->getHeight();
 
-			this->_tVertices[0].u = this->_tVertices[2].u = this->srcRect.left() * iw;
-			this->_tVertices[0].v = this->_tVertices[1].v = this->srcRect.top() * ih;
-			this->_tVertices[1].u = this->_tVertices[3].u = this->srcRect.right() * iw;
-			this->_tVertices[2].v = this->_tVertices[3].v = this->srcRect.bottom() * ih;
+			if (!this->rotated)
+			{
+				this->_tVertices[0].u = this->_tVertices[2].u = this->srcRect.left() * iw;
+				this->_tVertices[0].v = this->_tVertices[1].v = this->srcRect.top() * ih;
+				this->_tVertices[1].u = this->_tVertices[3].u = this->srcRect.right() * iw;
+				this->_tVertices[2].v = this->_tVertices[3].v = this->srcRect.bottom() * ih;
+			}
+			else
+			{
+				this->_tVertices[0].u = this->_tVertices[1].u = (this->srcRect.x + this->srcRect.h) * iw;
+				this->_tVertices[0].v = this->_tVertices[2].v = this->srcRect.y * ih;
+				this->_tVertices[1].v = this->_tVertices[3].v = (this->srcRect.y + this->srcRect.w) * ih;
+				this->_tVertices[2].u = this->_tVertices[3].u = this->srcRect.x * iw;
+			}
+
 			if (this->invertX)
 			{
 				hswap(this->_tVertices[0].u, this->_tVertices[1].u);
@@ -251,12 +262,6 @@ namespace aprilui
 			{
 				hswap(this->_tVertices[0].v, this->_tVertices[2].v);
 				hswap(this->_tVertices[1].v, this->_tVertices[3].v);
-			}
-			// rotation is applied last
-			if (this->rotated)
-			{
-				hswap(this->_tVertices[0].u, this->_tVertices[3].u);
-				hswap(this->_tVertices[1].v, this->_tVertices[2].v);
 			}
 		}
 	}
