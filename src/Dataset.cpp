@@ -328,27 +328,6 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::parseRamTexture(hlxml::Node* node)
-	{
-		hstr filename = hrdir::normalize(node->pstr("filename"));
-		hstr filepath = hrdir::normalize(hrdir::join_path(filePath, filename, false));
-		harray<hstr> paths = hrdir::split_path(filename);
-		paths.remove_first();
-		hstr textureName = hresource::no_extension(hrdir::join_paths(paths));
-		if (this->textures.has_key(textureName))
-		{
-			throw ResourceExistsException(filename, "RamTexture", this);
-		}
-		bool dynamicLoad = node->pbool("dynamic_load", getDefaultDynamicLoading());
-		hstr locpath = this->_makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createRamTexture(locpath, !dynamicLoad);
-		if (!aprilTexture)
-		{
-			throw file_not_found(locpath);
-		}
-		this->textures[textureName] = new Texture(filepath, aprilTexture);
-	}
-	
 	void Dataset::parseCompositeImage(hlxml::Node* node)
 	{
 		hstr name = node->pstr("name");
@@ -592,7 +571,6 @@ namespace aprilui
 		foreach_xmlnode (node, current)
 		{
 			if		(*node == "Texture")		parseTexture(node);
-			else if	(*node == "RamTexture")		parseRamTexture(node);
 			else if	(*node == "CompositeImage")	parseCompositeImage(node);
 			else if	(*node == "Object")			parseObject(node);
 			else if	(*node == "Include")		parseGlobalInclude(hrdir::join_path(hrdir::basedir(path), node->pstr("path"), false));

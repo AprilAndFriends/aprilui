@@ -205,7 +205,6 @@ namespace aprilui
 		void _closeDocuments();
 		
 		void parseTexture(hlxml::Node* node);
-		void parseRamTexture(hlxml::Node* node);
 		void parseTextureGroup(hlxml::Node* node);
 		void parseCompositeImage(hlxml::Node* node);
 		void parseGlobalInclude(chstr path);
