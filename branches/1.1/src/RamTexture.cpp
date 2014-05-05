@@ -26,7 +26,7 @@ namespace aprilui
 	{
 		this->filename = filename;
 		this->source = NULL;
-		hlog::write(aprilui::logTag, "Registering RAM texture.");
+		hlog::write(aprilui::logTag, "Registering RAM texture." + filename);
 	}
 
 	RamTexture::RamTexture(int w, int h)
