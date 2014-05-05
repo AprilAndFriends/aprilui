@@ -240,6 +240,8 @@
 		C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorScaleOscillator.cpp; sourceTree = "<group>"; };
 		C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorRotationOscillator.h; path = include/aprilui/AnimatorRotationOscillator.h; sourceTree = "<group>"; };
 		C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotationOscillator.cpp; sourceTree = "<group>"; };
+		D1126262191792520091950A /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
+		D1126263191792520091950A /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
 		D1459F6B146EF30100D61731 /* aprilui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aprilui.h; path = include/aprilui/aprilui.h; sourceTree = "<group>"; };
 		D1459F6C146EF30F00D61731 /* aprilui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aprilui.cpp; path = src/aprilui.cpp; sourceTree = "<group>"; };
 		D14D912215909D3400A7155A /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
@@ -303,6 +305,8 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D1126262191792520091950A /* iOS.xcconfig */,
+				D1126263191792520091950A /* Mac.xcconfig */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 			);
 			name = Resources;
@@ -574,7 +578,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -736,6 +740,7 @@
 		};
 		7FC8A8B21296C772003D3931 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -782,6 +787,7 @@
 		};
 		C9448A4A13D59A56003910ED /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1126263191792520091950A /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -828,6 +834,7 @@
 		};
 		C9448A4E13D59A63003910ED /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1126263191792520091950A /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -851,6 +858,7 @@
 		};
 		D18ECFD415736468005AD969 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -873,6 +881,7 @@
 		};
 		D18ECFD615736468005AD969 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -890,6 +899,7 @@
 		};
 		D18ECFD715736468005AD969 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1126263191792520091950A /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
