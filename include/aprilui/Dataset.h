@@ -39,6 +39,8 @@ namespace aprilui
 		
 		Dataset(chstr filename, chstr name = "");
 		~Dataset();
+		
+		hstr getFilePath() { return mFilePath; }
 
 		void load(chstr path = "");
 		void unload();
@@ -101,7 +103,7 @@ namespace aprilui
 
 	protected:
 		hstr mName;
-		hstr mFilename;
+		hstr mFilename, mFilePath;
 		hstr mFilenamePrefix;
 		bool mLoaded;
 		hstr mTexExtOverride;
