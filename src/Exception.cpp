@@ -29,7 +29,7 @@ namespace aprilui
 
 	_ResourceNotExistsException::_ResourceNotExistsException(chstr objectName, chstr className,
 															 Dataset* dict, const char* file, int line) :
-								 _GenericException(className + " doesn't exist: " + objectName + " in dataset " + dict->getName(),
+								 _GenericException(className + " doesn't exist: '" + objectName + "' in dataset '" + dict->getName() + "'",
 									 "ResourceNotExistsException", file, line)
 	{
 	}
