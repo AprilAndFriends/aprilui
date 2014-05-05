@@ -44,6 +44,7 @@ namespace aprilui
 		mFocusedObject = NULL;
 		mFilename = hdir::normalize(filename);
 		mFilenamePrefix = _makeFilePath(mFilename, name, false);
+		mFilePath = mFilenamePrefix;
 		mName = name;
 		if (mName == "")
 		{
@@ -52,6 +53,7 @@ namespace aprilui
 		mLoaded = false;
 		_registerDataset(mName, this);
 	}
+	
 	
 	Dataset::~Dataset()
 	{

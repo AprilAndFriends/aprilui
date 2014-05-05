@@ -119,23 +119,9 @@ namespace aprilui
 	{
 		if (mFilename != filename)
 		{
-			// TODO - remove when RamTexture was removed
-			bool isRamTexture = false;
-			if (mTexture != NULL)
-			{
-				isRamTexture = (dynamic_cast<april::RamTexture*>(mTexture) != NULL);
-				delete mTexture;
-			}
 			mUnusedTime = 0.0f;
 			mFilename = filename;
-			if (!isRamTexture)
-			{
-				mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::TYPE_IMMUTABLE, !(aprilui::getForcedDynamicLoading() || mDynamic));
-			}
-			else
-			{
-				mTexture = april::rendersys->createRamTexture(mFilename, !(aprilui::getForcedDynamicLoading() || mDynamic));
-			}
+			mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::TYPE_IMMUTABLE, !(aprilui::getForcedDynamicLoading() || mDynamic));
 			if (mTexture == NULL)
 			{
 				throw file_not_found(mFilename);
