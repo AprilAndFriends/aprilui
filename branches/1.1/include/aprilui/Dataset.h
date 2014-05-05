@@ -30,6 +30,7 @@ namespace aprilui
 	class Object;
 	class Image;
 	class Texture;
+	class RamTexture;
 
 	class apriluiExport Dataset : public EventReceiver
 	{
@@ -82,6 +83,7 @@ namespace aprilui
 		
 		virtual Object* getObject(chstr name);
 		virtual Texture* getTexture(chstr name);
+		RamTexture* getRamTexture(chstr name);
 		virtual Image* getImage(chstr name);
 		virtual hstr getTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
@@ -108,6 +110,7 @@ namespace aprilui
 		hmap<hstr, Texture*> mTextures;
 		hmap<hstr, Image*> mImages;
 		hmap<hstr, hstr> mTexts;
+		hmap<hstr, RamTexture*> mRamTextures;
 
 		hmap<hstr, void (*)()> mCallbacks;
 

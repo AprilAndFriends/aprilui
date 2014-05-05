@@ -21,6 +21,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	const char* logTag = "aprilui";
+	
 	hstr pathGetBaseDir(chstr path)
 	{
 		hstr normalized = hdir::normalize(path);

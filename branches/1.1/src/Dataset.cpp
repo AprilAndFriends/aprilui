@@ -30,6 +30,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "Images.h"
 #include "Objects.h"
 #include "Texture.h"
+#include "RamTexture.h"
 
 namespace aprilui
 {
@@ -233,14 +234,14 @@ namespace aprilui
 		{
 			throw ResourceExistsException(filename, "RamTexture", this);
 		}
-		bool dynamicLoad = node->pbool("dynamic_load", false);
+//		bool dynamicLoad = node->pbool("dynamic_load", false);
 		hstr locpath = _makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createRamTexture(locpath, !(aprilui::getForcedDynamicLoading() || dynamicLoad));
-		if (aprilTexture == NULL)
+		if (!hresource::exists(locpath))
 		{
 			throw file_not_found(locpath);
 		}
-		mTextures[textureName] = new Texture(filepath, aprilTexture);
+		RamTexture* tex = new RamTexture(locpath);
+		mRamTextures[textureName] = tex;
 	}
 	
 	void Dataset::parseCompositeImage(hlxml::Node* node)
@@ -554,7 +555,13 @@ namespace aprilui
 		{
 			delete it->second;
 		}
+		
+		foreach_m (aprilui::RamTexture*, it, mRamTextures)
+		{
+			delete it->second;
+		}
 		mTextures.clear();
+		mRamTextures.clear();
 		mCallbacks.clear();
 		mTexts.clear();
 		mLoaded = false;
@@ -644,6 +651,15 @@ namespace aprilui
 			throw ResourceNotExistsException(name, "Texture", this);
 		}
 		return mTextures[name];
+	}
+	
+	RamTexture* Dataset::getRamTexture(chstr name)
+	{
+		if (!mRamTextures.has_key(name))
+		{
+			throw ResourceNotExistsException(name, "RamTexture", this);
+		}
+		return mRamTextures[name];
 	}
 	
 	Image* Dataset::getImage(chstr name)
