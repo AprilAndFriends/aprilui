@@ -15,6 +15,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 
 namespace aprilui
 {
+	extern const char* logTag;
 	hstr pathGetBaseDir(chstr path);
 	hstr generateName(chstr prefix);
 	hstr getPWD();

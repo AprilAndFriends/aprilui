@@ -92,6 +92,9 @@
 		C9A6A30C1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9A6A30B1296843F00E3A6D3 /* AnimatorScaleOscillator.cpp */; };
 		C9B7FFD21271BE8500F79E1A /* AnimatorRotationOscillator.h in Headers */ = {isa = PBXBuildFile; fileRef = C9B7FFD11271BE8500F79E1A /* AnimatorRotationOscillator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9B7FFD51271BE9500F79E1A /* AnimatorRotationOscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */; };
+		D11262C019179B880091950A /* RamTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = D11262BF19179B880091950A /* RamTexture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D11262C219179B9F0091950A /* RamTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D11262C119179B9F0091950A /* RamTexture.cpp */; };
+		D11262C319179B9F0091950A /* RamTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D11262C119179B9F0091950A /* RamTexture.cpp */; };
 		D12AFF5E147087780061E9E5 /* aprilui.h in Headers */ = {isa = PBXBuildFile; fileRef = D1459F6B146EF30100D61731 /* aprilui.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1459F6D146EF30F00D61731 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1459F6C146EF30F00D61731 /* aprilui.cpp */; };
 		D14D912315909D3400A7155A /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14D912215909D3400A7155A /* hlxml.framework */; };
@@ -242,6 +245,8 @@
 		C9B7FFD41271BE9500F79E1A /* AnimatorRotationOscillator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotationOscillator.cpp; sourceTree = "<group>"; };
 		D1126262191792520091950A /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
 		D1126263191792520091950A /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
+		D11262BF19179B880091950A /* RamTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RamTexture.h; path = include/aprilui/RamTexture.h; sourceTree = "<group>"; };
+		D11262C119179B9F0091950A /* RamTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RamTexture.cpp; path = src/RamTexture.cpp; sourceTree = "<group>"; };
 		D1459F6B146EF30100D61731 /* aprilui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aprilui.h; path = include/aprilui/aprilui.h; sourceTree = "<group>"; };
 		D1459F6C146EF30F00D61731 /* aprilui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aprilui.cpp; path = src/aprilui.cpp; sourceTree = "<group>"; };
 		D14D912215909D3400A7155A /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
@@ -386,6 +391,7 @@
 				D1958AC715905FEE009AB880 /* EventReceiver.cpp */,
 				D1958AC815905FEE009AB880 /* Texture.cpp */,
 				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
+				D11262C119179B9F0091950A /* RamTexture.cpp */,
 				7FB0C7AE120AE107005EA739 /* Object.cpp */,
 			);
 			name = src;
@@ -394,6 +400,7 @@
 		7FC8041211EC71CF00851062 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				D11262BF19179B880091950A /* RamTexture.h */,
 				D1958AC115905FD9009AB880 /* EventReceiver.h */,
 				D1958AC215905FD9009AB880 /* Texture.h */,
 				7F7A4A8E129D217700E0ED12 /* TiledImage.h */,
@@ -519,6 +526,7 @@
 				7F7A4A99129D217700E0ED12 /* ColorImage.h in Headers */,
 				7F7A4A9A129D217700E0ED12 /* ColoredImage.h in Headers */,
 				D1958AC315905FD9009AB880 /* EventReceiver.h in Headers */,
+				D11262C019179B880091950A /* RamTexture.h in Headers */,
 				D1958AC415905FD9009AB880 /* Texture.h in Headers */,
 				7F7A4A9B129D217700E0ED12 /* AnimatorMoveOscillator.h in Headers */,
 				D1958ACB15905FEE009AB880 /* apriluiUtil.h in Headers */,
@@ -631,6 +639,7 @@
 				7F38C6D3120967B9002B5134 /* ObjectRotatableImageBox.cpp in Sources */,
 				7F38C6D4120967B9002B5134 /* ObjectRotationImageBox.cpp in Sources */,
 				7F38C6D5120967B9002B5134 /* ObjectSlider.cpp in Sources */,
+				D11262C219179B9F0091950A /* RamTexture.cpp in Sources */,
 				7F38C6D6120967B9002B5134 /* ObjectTextButton.cpp in Sources */,
 				7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */,
 				7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */,
@@ -682,6 +691,7 @@
 				D18D343B1573BF1E00B30E42 /* AnimatorAlphaHover.cpp in Sources */,
 				D18D343C1573BF1E00B30E42 /* AnimatorAlphaOscillator.cpp in Sources */,
 				D18D343D1573BF1E00B30E42 /* AnimatorBlinker.cpp in Sources */,
+				D11262C319179B9F0091950A /* RamTexture.cpp in Sources */,
 				D18D343E1573BF1E00B30E42 /* AnimatorColorAlternator.cpp in Sources */,
 				D18D343F1573BF1E00B30E42 /* AnimatorEarthquake.cpp in Sources */,
 				D18D34401573BF1E00B30E42 /* AnimatorFrameAnimation.cpp in Sources */,
