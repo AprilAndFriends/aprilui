@@ -137,7 +137,7 @@ namespace aprilui
 	
 	bool LabelBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "font")						this->setFont(value);
+		if (name == "font")                     this->setFont(value);
 		else if (name == "text_key")			this->setTextKey(value);
 		else if (name == "text")				this->setText(value);
 		else if (name == "horz_formatting")
@@ -241,6 +241,13 @@ namespace aprilui
 		{
 			this->triggerEvent("onTextKeyChanged");
 		}
+	}
+	
+	void LabelBase::setFont(chstr name)
+	{
+		hstr baseFontName = name.contains(":") ? name.split(":", 1)[0] : name;
+		if (!atres::renderer->hasFont(baseFontName)) throw hl_exception(hsprintf("Unable to set font '%s' to LabelBase object, font doesn't exist", baseFontName.c_str()));
+		this->font = name;
 	}
 
 	bool LabelBase::trySetTextKey(chstr textKey)
