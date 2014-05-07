@@ -40,7 +40,8 @@ namespace aprilui
 		virtual void setText(chstr value);
 		HL_DEFINE_GET(hstr, textKey, TextKey);
 		void setTextKey(chstr value);
-		HL_DEFINE_GETSET(hstr, font, Font);
+		HL_DEFINE_GET(hstr, font, Font);
+		void setFont(chstr name);
 		HL_DEFINE_GETSET(april::Color, textColor, TextColor);
 		HL_DEFINE_GETSET(gvec2, textOffset, TextOffset);
 		inline float getTextOffsetX() { return this->textOffset.x; }
