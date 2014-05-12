@@ -32,7 +32,7 @@ namespace aprilui
 		~ImageBox();
 		static Object* createInstance(chstr name, grect rect);
 		
-		virtual Image* getImage() { return this->image; }
+		virtual HL_DEFINE_GET(Image*, image, Image);
 		virtual void setImage(Image* value);
 		virtual HL_DEFINE_GET(hstr, imageName, ImageName);
 		virtual void setImageByName(chstr name);
