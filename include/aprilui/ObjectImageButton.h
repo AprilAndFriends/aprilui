@@ -38,7 +38,7 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, hoverImageName, HoverImageName);
 		HL_DEFINE_GET(hstr, pushedImageName, PushedImageName);
 		HL_DEFINE_GET(hstr, disabledImageName, DisabledImageName);
-		inline Image* getImage() { return this->normalImage; };
+		HL_DEFINE_GET(Image*, normalImage, Image);
 		void setImage(Image* value);
 		hstr getName();
 		bool isCursorInside();

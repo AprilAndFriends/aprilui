@@ -10,7 +10,7 @@
 
 #include <april/Keys.h>
 #include <atres/atres.h>
-#include <atres/FontResource.h>
+#include <atres/Font.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
@@ -68,7 +68,7 @@ namespace aprilui
 			this->setCursorIndex(0);
 			return;
 		}
-		float fh = atres::renderer->getFontResource(this->font)->getLineHeight();
+		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		// full text
 		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
 		harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT), this->text, tags, this->horzFormatting, this->vertFormatting);
@@ -107,7 +107,7 @@ namespace aprilui
 				{
 					if (i == lines.size() - 1)
 					{
-						descender = atres::renderer->getFontResource(this->font)->getDescender();
+						descender = atres::renderer->getFont(this->font)->getDescender();
 					}
 					if (is_in_range(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h + descender))
 					{
@@ -268,8 +268,8 @@ namespace aprilui
 		{
 			this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * 0.75f);
 		}
-		float fh = atres::renderer->getFontResource(this->font)->getLineHeight();
-		float descender = atres::renderer->getFontResource(this->font)->getDescender();
+		float fh = atres::renderer->getFont(this->font)->getLineHeight();
+		float descender = atres::renderer->getFont(this->font)->getDescender();
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this)
 		{
 			hstr leftText = this->text.utf8_substr(0, this->cursorIndex);
@@ -330,8 +330,8 @@ namespace aprilui
 	gvec2 EditBox::_makeCaretPosition(chstr text, chstr originalText)
 	{
 		gvec2 position;
-		float fh = atres::renderer->getFontResource(this->font)->getLineHeight();
-		float descender = atres::renderer->getFontResource(this->font)->getDescender();
+		float fh = atres::renderer->getFont(this->font)->getLineHeight();
+		float descender = atres::renderer->getFont(this->font)->getDescender();
 		// full text
 		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
 		harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
@@ -540,7 +540,7 @@ namespace aprilui
 		}
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
-			if (atres::renderer->getFontResource(this->font)->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
+			if (atres::renderer->getFont(this->font)->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
 			{
 				this->_insertChar(charCode);
 			}
@@ -600,7 +600,7 @@ namespace aprilui
 		if (this->cursorIndex > 0)
 		{
 			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text);
-			this->setCursorIndexAt(position.x, position.y - atres::renderer->getFontResource(this->font)->getLineHeight());
+			this->setCursorIndexAt(position.x, position.y - atres::renderer->getFont(this->font)->getLineHeight());
 		}
 	}
 	
@@ -609,7 +609,7 @@ namespace aprilui
 		if (this->cursorIndex < this->text.utf8_size())
 		{
 			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->cursorIndex), this->text);
-			this->setCursorIndexAt(position.x, position.y + atres::renderer->getFontResource(this->font)->getLineHeight());
+			this->setCursorIndexAt(position.x, position.y + atres::renderer->getFont(this->font)->getLineHeight());
 		}
 	}
 	
