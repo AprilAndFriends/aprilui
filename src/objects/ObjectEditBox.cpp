@@ -9,7 +9,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 \************************************************************************************/
 #include <april/Keys.h>
 #include <atres/atres.h>
-#include <atres/FontResource.h>
+#include <atres/Font.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 #include <april/Window.h>
@@ -143,7 +143,7 @@ namespace aprilui
 		{
 			mText = hstr::from_unicode(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
 			rect.x += atres::renderer->getTextWidthUnformatted(mFontName, mText);
-			float h = atres::renderer->getFontResource(mFontName)->getHeight();
+			float h = atres::renderer->getFont(mFontName)->getHeight();
 			rect.y += (rect.h - h) / 2 + 2;
 			rect.w = 1;
 			rect.h = h - 4;
@@ -319,7 +319,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		if (atres::renderer->getFontResource(mFontName)->hasChar(charCode) && (mFilterChars.size() == 0 || mFilterChars.contains(charCode)))
+		if (atres::renderer->getFont(mFontName)->hasChar(charCode) && (mFilterChars.size() == 0 || mFilterChars.contains(charCode)))
 		{
 			_insertChar(charCode);
 		}
