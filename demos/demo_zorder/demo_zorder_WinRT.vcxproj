@@ -194,6 +194,7 @@
     <Image Include="media\assets\tile-medium.png" />
     <Image Include="media\assets\tile-small.png" />
     <Image Include="media\arial.png" />
+    <Image Include="media\circle.png" />
     <Image Include="media\scroll_skin.png" />
     <Image Include="media\texture.jpg" />
     <Image Include="media\transparency.png" />

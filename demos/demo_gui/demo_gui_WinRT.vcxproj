@@ -94,7 +94,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <PackageCertificateThumbprint>4878A9B26A5A30A36C26CCE5A48EAE0F29160FD8</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>011B616D2A154198EF263933AB07123DCBE39EC5</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxPackageDir>$(SolutionDir)bin\AppPackages\$(ProjectName)\</AppxPackageDir>
     <PackageCertificateKeyFile>TemporaryKey.pfx</PackageCertificateKeyFile>
@@ -194,6 +194,7 @@
     <Image Include="media\assets\tile-medium.png" />
     <Image Include="media\assets\tile-small.png" />
     <Image Include="media\arial.png" />
+    <Image Include="media\circle.png" />
     <Image Include="media\scroll_skin.png" />
     <Image Include="media\texture.jpg" />
     <Image Include="media\transparency.png" />

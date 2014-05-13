@@ -38,7 +38,6 @@
 #include <aprilui/Objects.h>
 #include <aprilui/TiledImage.h>
 #include <atres/atres.h>
-#include <atres/FontResourceBitmap.h>
 #include <atres/Renderer.h>
 #include <atres/atres.h>
 #include <gtypes/Vector2.h>

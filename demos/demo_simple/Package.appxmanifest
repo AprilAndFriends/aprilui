@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="net.sourceforge.aprilui.demoSimple.winrt" Publisher="CN=AprilUI" Version="2.5.1.0" />
+  <Identity Name="net.sourceforge.aprilui.demoSimple.winrt" Publisher="CN=AprilUI" Version="3.1.4.0" />
   <Properties>
     <DisplayName>AprilUI Demo Simple</DisplayName>
     <PublisherDisplayName>AprilUI</PublisherDisplayName>

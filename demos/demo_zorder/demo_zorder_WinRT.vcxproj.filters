@@ -63,6 +63,9 @@
     <Image Include="media\transparency.png">
       <Filter>winrt\media</Filter>
     </Image>
+    <Image Include="media\circle.png">
+      <Filter>winrt\media</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml">
