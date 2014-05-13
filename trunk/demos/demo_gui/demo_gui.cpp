@@ -41,7 +41,7 @@
 #include <aprilui/Objects.h>
 #include <aprilui/Texture.h>
 #include <atres/atres.h>
-#include <atres/FontResourceBitmap.h>
+#include <atres/FontBitmap.h>
 #include <atres/Renderer.h>
 #include <gtypes/Vector2.h>
 
@@ -228,7 +228,7 @@ void april_init(const harray<hstr>& args)
 		april::window->setKeyboardDelegate(keyboardDelegate);
 		april::window->setMouseDelegate(mouseDelegate);
 		april::window->setCursorFilename(RESOURCE_PATH "cursor");
-		atres::renderer->registerFontResource(new atres::FontResourceBitmap(RESOURCE_PATH "arial.font"));
+		atres::renderer->registerFont(new atres::FontBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");

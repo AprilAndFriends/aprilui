@@ -37,7 +37,6 @@
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <atres/atres.h>
-#include <atres/FontResourceBitmap.h>
 #include <atres/Renderer.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hltypesUtil.h>
