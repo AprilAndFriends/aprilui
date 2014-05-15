@@ -161,6 +161,9 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RamTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\apriluiUtil.h">
@@ -310,5 +313,11 @@
     <ClInclude Include="include\aprilui\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\aprilui\RamTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="fileproperties.rc" />
   </ItemGroup>
 </Project>

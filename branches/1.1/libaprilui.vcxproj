@@ -124,9 +124,11 @@
     <ClCompile Include="src\images\Image.cpp" />
     <ClCompile Include="src\images\NullImage.cpp" />
     <ClCompile Include="src\images\TiledImage.cpp" />
+    <ClCompile Include="src\RamTexture.cpp" />
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\aprilui\RamTexture.h" />
     <ClInclude Include="src\apriluiUtil.h" />
     <ClInclude Include="include\aprilui\EventReceiver.h" />
     <ClInclude Include="include\aprilui\Texture.h" />
