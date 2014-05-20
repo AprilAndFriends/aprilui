@@ -28,6 +28,7 @@
 #define __APRIL_SINGLE_INSTANCE_NAME "demo_tiledimage"
 
 #include <april/april.h>
+#include <april/Cursor.h>
 #include <april/main.h>
 #include <april/Platform.h>
 #include <april/RenderSystem.h>
@@ -46,7 +47,8 @@
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
 grect viewport = drawRect;
 
-aprilui::Dataset* dataset;
+april::Cursor* cursor = NULL;
+aprilui::Dataset* dataset = NULL;
 
 class UpdateDelegate : public april::UpdateDelegate
 {
@@ -129,7 +131,8 @@ void april_init(const harray<hstr>& args)
 		april::window->setParam("cursor_mappings", "101 " RESOURCE_PATH "cursor\n102 " RESOURCE_PATH "simple");
 #endif
 		april::window->setUpdateDelegate(updateDelegate);
-		april::window->setCursorFilename(RESOURCE_PATH "cursor");
+		cursor = april::window->createCursor(RESOURCE_PATH "cursor");
+		april::window->setCursor(cursor);
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tiledimage.dts");
@@ -145,6 +148,8 @@ void april_destroy()
 {
 	try
 	{
+		april::window->setCursor(NULL);
+		delete cursor;
 		delete dataset;
 		aprilui::destroy();
 		atres::destroy();
