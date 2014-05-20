@@ -28,6 +28,7 @@
 #define __APRIL_SINGLE_INSTANCE_NAME "demo_gui"
 
 #include <april/april.h>
+#include <april/Cursor.h>
 #include <april/KeyboardDelegate.h>
 #include <april/main.h>
 #include <april/MouseDelegate.h>
@@ -48,7 +49,8 @@
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
 grect viewport = drawRect;
 
-aprilui::Dataset* dataset;
+april::Cursor* cursor = NULL;
+aprilui::Dataset* dataset = NULL;
 
 float _animatorCustomFunction(aprilui::Animator* animator, float time)
 {
@@ -227,7 +229,8 @@ void april_init(const harray<hstr>& args)
 		april::window->setUpdateDelegate(updateDelegate);
 		april::window->setKeyboardDelegate(keyboardDelegate);
 		april::window->setMouseDelegate(mouseDelegate);
-		april::window->setCursorFilename(RESOURCE_PATH "cursor");
+		cursor = april::window->createCursor(RESOURCE_PATH "cursor");
+		april::window->setCursor(cursor);
 		atres::renderer->registerFont(new atres::FontBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
@@ -248,6 +251,8 @@ void april_destroy()
 {
 	try
 	{
+		april::window->setCursor(NULL);
+		delete cursor;
 		delete dataset;
 		aprilui::destroy();
 		atres::destroy();
