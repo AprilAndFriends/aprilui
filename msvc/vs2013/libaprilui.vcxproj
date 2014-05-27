@@ -184,20 +184,50 @@
     <ClInclude Include="..\..\include\aprilui\TiledImage.h" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="..\..\fileproperties.rc">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Android' or '$(Platform)'=='Android-x86' or '$(ConfigurationType)'=='StaticLibrary'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\april\msvc\vs2013\libapril.vcxproj">
       <Project>{2d053cda-686b-4b36-80eb-1da5f0cef8f9}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\atres\msvc\vs2013\libatres.vcxproj">
       <Project>{a1e808a0-fe36-47fe-9e3b-cf195ea31f0a}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\gtypes\msvc\vs2013\libgtypes.vcxproj">
       <Project>{9c043b29-db40-48d5-97d8-1bc44128e3ba}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\hltypes\hlxml\msvc\vs2013\libhlxml.vcxproj">
       <Project>{601bcb9e-aaf2-412e-8aeb-9fc77d0505d8}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\hltypes\msvc\vs2013\libhltypes.vcxproj">
       <Project>{e4d373bf-e227-48b9-99e6-84987e8674ec}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
