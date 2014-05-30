@@ -141,7 +141,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\jpg\libjpeg_WinRT.vcxproj">
+    <ProjectReference Include="..\..\..\april\lib\jpeg\libjpeg_WinRT.vcxproj">
       <Project>{019dbd2a-273d-4ba4-bf86-b5efe2ed76b1}</Project>
       <CopyLocal>false</CopyLocal>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
@@ -149,7 +149,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\png\projects\vstudio11-winrt\libpng\libpng.vcxproj">
+    <ProjectReference Include="..\..\..\april\lib\png\projects\vstudio11-winrt\libpng\libpng.vcxproj">
       <Project>{f7df3dfe-7ffe-4488-bc92-1cb3b6679f6e}</Project>
       <CopyLocal>false</CopyLocal>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
@@ -157,7 +157,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\png\projects\vstudio11-winrt\zlib\zlib.vcxproj">
+    <ProjectReference Include="..\..\..\hltypes\lib\zlib\contrib\vstudio11-winrt\zlib\zlib.vcxproj">
       <Project>{60f89955-91c6-3a36-8000-13c592fec2df}</Project>
       <CopyLocal>false</CopyLocal>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
@@ -165,7 +165,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\tinyxml\libtinyxml_WinRT.vcxproj">
+    <ProjectReference Include="..\..\..\hltypes\lib\tinyxml\libtinyxml_WinRT.vcxproj">
       <Project>{c406daec-0886-4771-8dea-9d7329b46cc1}</Project>
       <CopyLocal>false</CopyLocal>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>

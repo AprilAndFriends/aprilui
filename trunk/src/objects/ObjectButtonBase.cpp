@@ -98,6 +98,7 @@ namespace aprilui
 
 	bool ButtonBase::onMouseCancel(april::Key keyCode)
 	{
+		this->pushed = false;
 		return true;
 	}
 
