@@ -143,6 +143,12 @@ class MouseDelegate : public april::MouseDelegate
 		aprilui::processEvents();
 	}
 	
+	void onMouseCancel(april::Key button)
+	{
+		aprilui::onMouseCancel(button);
+		aprilui::processEvents();
+	}
+
 	void onMouseMove()
 	{
 		aprilui::onMouseMove();

@@ -419,7 +419,10 @@ namespace aprilui
 		}
 		else if (name == "onGainFocus")
 		{
-			april::window->beginKeyboardHandling();
+			if (!this->pushed) // some OSes will disable the keyboard if it is shown before a mouse-up event
+			{
+				april::window->beginKeyboardHandling();
+			}
 		}
 		Label::notifyEvent(name, params);
 	}
@@ -451,6 +454,8 @@ namespace aprilui
 		{
 			this->pushed = false;
 			this->triggerEvent("Click", keyCode);
+			// some OSes will disable the keyboard if it is shown before a mouse-up event
+			april::window->beginKeyboardHandling();
 			return true;
 		}
 		this->pushed = false;
@@ -549,7 +554,7 @@ namespace aprilui
 	void EditBox::mouseCancel()
 	{
 		this->pushed = false;
-		Object::mouseCancel();
+		Label::mouseCancel();
 	}
 
 	hstr EditBox::getProperty(chstr name, bool* propertyExists)
