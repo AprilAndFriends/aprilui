@@ -21,7 +21,7 @@
       <AdditionalDependencies>-laprilui;-latres;-lapril;-lhlxml;-lhltypes;-lgtypes;-ljpeg;-lpng;-lzip;-ltinyxml;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <AntBuild>
-      <AntBuildPath>$(ProjectDir)android</AntBuildPath>
+      <AntBuildPath>$(ProjectDir)..\..\demos\$(ProjectName)\android</AntBuildPath>
     </AntBuild>
   </ItemDefinitionGroup>
 </Project>
