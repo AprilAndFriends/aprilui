@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="winrt">
+      <UniqueIdentifier>{f0ae1058-a500-44e2-8f2a-326b57b71662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="winrt\media">
+      <UniqueIdentifier>{df25b4c6-d8ac-462d-b490-c614f00bcfbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="winrt\media\assets">
+      <UniqueIdentifier>{88ab3f03-5374-4194-8762-3355cfa6d25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="winrt\media\texts">
+      <UniqueIdentifier>{a7128d06-f7e9-456b-a765-0cf52592e07e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="winrt\media\texts\de">
+      <UniqueIdentifier>{47f8a67e-1188-4dde-a1df-cc3b455f4b6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="winrt\media\texts\en">
+      <UniqueIdentifier>{47408bfb-0960-4745-ac56-e74cfea2abae}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="..\..\demos\demo_gui\Package.appxmanifest">
+      <Filter>winrt</Filter>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="media\assets\logo_icon.png">
+      <Filter>winrt\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\small_icon.png">
+      <Filter>winrt\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\splash.png">
+      <Filter>winrt\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\store_icon.png">
+      <Filter>winrt\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\icon.png">
+      <Filter>winrt\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\tile-medium.png">
+      <Filter>winrt\media\assets</Filter>
+    </Image>
+    <Image Include="media\assets\tile-small.png">
+      <Filter>winrt\media\assets</Filter>
+    </Image>
+    <Image Include="media\arial.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\scroll_skin.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\texture.jpg">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\transparency.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\circle.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\demos\demo_gui\TemporaryKey.pfx">
+      <Filter>winrt</Filter>
+    </None>
+    <None Include="media\arial.font">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\demo_gui.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\demo_simple.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\demo_tiledimage.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\demo_gui.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\scroll_skin.tex">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\texture.tex">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\texture_gui.tex">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\transparency.tex">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\texts\de\demo.loc">
+      <Filter>winrt\media\texts\de</Filter>
+    </None>
+    <None Include="media\texts\en\demo.loc">
+      <Filter>winrt\media\texts\en</Filter>
+    </None>
+    <None Include="media\cursor.ani">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\simple.cur">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\demo_zorder.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\demos\demo_gui\winrt-cursors.rc">
+      <Filter>winrt</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\demos\demo_gui\demo_gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
