@@ -89,6 +89,7 @@ namespace aprilui
 	private:
 		bool _ctrlMode;
 		float _blinkTimer;
+		bool _sizeProblemReported;
 
 	};
 
