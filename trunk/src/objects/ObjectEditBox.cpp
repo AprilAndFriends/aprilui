@@ -40,6 +40,7 @@ namespace aprilui
 		this->filter = "";
 		this->_ctrlMode = false;
 		this->_blinkTimer = 0.0f;
+		this->_sizeProblemReported = false;
 		/// TODO - remove
 		this->spaceHack = false;
 	}
@@ -268,6 +269,7 @@ namespace aprilui
 		}
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		float descender = atres::renderer->getFont(this->font)->getDescender();
+		float lh = fh + descender;
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this)
 		{
 			hstr leftText = this->text.utf8_substr(0, this->cursorIndex);
@@ -291,18 +293,25 @@ namespace aprilui
 					}
 				}
 			}
-			while (rect.y < fh * 0.5f || rect.y < fh && this->textOffset.y < 0.0f)
+			if (this->multiLine)
 			{
-				rect.y += fh;
-				this->textOffset.y += fh;
-			}
-			float lh = fh + descender;
-			while (rect.y + lh * 0.5f > this->rect.h)
-			{
-				rect.y -= fh;
-				this->textOffset.y -= fh;
+				while (rect.y < fh * 0.5f || rect.y < fh && this->textOffset.y < 0.0f)
+				{
+					rect.y += fh;
+					this->textOffset.y += fh;
+				}
+				while (rect.y + lh * 0.5f > this->rect.h)
+				{
+					rect.y -= fh;
+					this->textOffset.y -= fh;
+				}
 			}
 			this->caretPosition = rect.getPosition();
+		}
+		if (this->multiLine && !this->_sizeProblemReported)
+		{
+			hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.c_str(), (int)this->rect.h, (int)lh, this->font.c_str());
+			this->_sizeProblemReported = true;
 		}
 		Label::OnDraw();
 		this->backgroundColor.a = alpha;
