@@ -23,6 +23,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> LabelBase::_propertyDescriptions;
+
 	LabelBase::LabelBase()
 	{
 		this->text = "";
@@ -41,6 +43,25 @@ namespace aprilui
 
 	LabelBase::~LabelBase()
 	{
+	}
+
+	harray<PropertyDescription> LabelBase::getPropertyDescriptions()
+	{
+		if (LabelBase::_propertyDescriptions.size() == 0)
+		{
+			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::TYPE_STRING);
+			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::TYPE_STRING);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::TYPE_STRING);
+			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::TYPE_ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::TYPE_ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::TYPE_HEXCOLOR);
+			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::TYPE_ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset", PropertyDescription::TYPE_GVEC2);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::TYPE_FLOAT);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::TYPE_FLOAT);
+			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::TYPE_HEXCOLOR);
+		}
+		return LabelBase::_propertyDescriptions;
 	}
 
 	void LabelBase::_drawLabel(grect rect, april::Color color, april::Color backgroundColor)

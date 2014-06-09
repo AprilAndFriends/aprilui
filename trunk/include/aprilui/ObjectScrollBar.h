@@ -48,6 +48,8 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
 
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		void update(float timeDelta);
 		void OnDraw();
 
@@ -120,6 +122,8 @@ namespace aprilui
 		virtual bool _checkAreaSize() = 0;
 
 	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 		gvec2 _clickPosition;
 		bool _scrolling;
 

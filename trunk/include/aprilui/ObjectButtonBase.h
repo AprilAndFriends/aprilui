@@ -37,7 +37,7 @@ namespace aprilui
 		virtual int getFocusIndex() = 0;
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
-		
+
 		virtual bool onMouseDown(april::Key keyCode);
 		virtual bool onMouseUp(april::Key keyCode);
 		virtual bool onMouseCancel(april::Key keyCode);

@@ -15,6 +15,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> ProgressBar::_propertyDescriptions;
+
 	ProgressBar::ProgressBar(chstr name, grect rect) : ImageBox(name, rect), ProgressBase()
 	{
 		this->stretching = false;
@@ -53,6 +55,16 @@ namespace aprilui
 	void ProgressBar::setImageByName(chstr name)
 	{
 		ImageBox::setImageByName(name);
+	}
+
+	harray<PropertyDescription> ProgressBar::getPropertyDescriptions()
+	{
+		if (ProgressBar::_propertyDescriptions.size() == 0)
+		{
+			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::TYPE_BOOL);
+			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::TYPE_ENUM);
+		}
+		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressBar::_propertyDescriptions);
 	}
 
 	bool ProgressBar::trySetImageByName(chstr name)

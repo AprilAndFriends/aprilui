@@ -30,6 +30,8 @@ namespace aprilui
 		~ImageBox();
 		static Object* createInstance(chstr name, grect rect);
 		
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		virtual HL_DEFINE_GET(Image*, image, Image);
 		virtual void setImage(Image* value);
 		virtual HL_DEFINE_GET(hstr, imageName, ImageName);
@@ -55,6 +57,9 @@ namespace aprilui
 		
 		void OnDraw();
 		
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 }
 

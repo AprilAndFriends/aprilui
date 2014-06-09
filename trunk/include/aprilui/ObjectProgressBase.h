@@ -17,11 +17,13 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "Image.h"
-#include "ObjectImageBox.h"
+#include "PropertyDescription.h"
 
 namespace aprilui
 {
+	class Dataset;
+	class Image;
+
 	class apriluiExport ProgressBase
 	{
 	public:
@@ -45,6 +47,8 @@ namespace aprilui
 		virtual hstr getImageName() = 0;
 		virtual void setImageByName(chstr name) = 0;
 
+		virtual harray<PropertyDescription> getPropertyDescriptions();
+
 		/// @brief Optimized version.
 		bool trySetProgressImageByName(chstr name);
 		bool trySetMaskImageByName(chstr name);
@@ -60,6 +64,9 @@ namespace aprilui
 		hstr maskImageName;
 		float progress;
 		
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 }
 

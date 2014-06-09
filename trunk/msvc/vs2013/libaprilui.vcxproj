@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\src\images\Image.cpp" />
     <ClCompile Include="..\..\src\images\NullImage.cpp" />
     <ClCompile Include="..\..\src\images\TiledImage.cpp" />
+    <ClCompile Include="..\..\src\PropertyDescription.cpp" />
     <ClCompile Include="..\..\src\QueuedCallbackEvent.cpp" />
     <ClCompile Include="..\..\src\Texture.cpp" />
   </ItemGroup>
@@ -141,6 +142,7 @@
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonSlider.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarH.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarV.h" />
+    <ClInclude Include="..\..\include\aprilui\PropertyDescription.h" />
     <ClInclude Include="..\..\include\aprilui\QueuedCallbackEvent.h" />
     <ClInclude Include="..\..\include\aprilui\Texture.h" />
     <ClInclude Include="..\..\src\apriluiUtil.h" />

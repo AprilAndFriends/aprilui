@@ -50,6 +50,8 @@ namespace aprilui
 		void setPushedImageByName(chstr name);
 		void setDisabledImageByName(chstr name);
 		
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		/// @brief Optimized version.
 		bool trySetHoverImageByName(chstr name);
 		/// @brief Optimized version.
@@ -82,6 +84,9 @@ namespace aprilui
 		void update(float timeDelta);
 		void OnDraw();
 		
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 }
 

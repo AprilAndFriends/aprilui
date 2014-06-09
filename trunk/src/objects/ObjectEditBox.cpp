@@ -24,6 +24,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> EditBox::_propertyDescriptions;
+
 	EditBox::EditBox(chstr name, grect rect) : Label(name, rect)
 	{
 		this->text = "";
@@ -52,6 +54,22 @@ namespace aprilui
 	Object* EditBox::createInstance(chstr name, grect rect)
 	{
 		return new EditBox(name, rect);
+	}
+
+	harray<PropertyDescription> EditBox::getPropertyDescriptions()
+	{
+		if (EditBox::_propertyDescriptions.size() == 0)
+		{
+			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::TYPE_INT);
+			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::TYPE_CHAR);
+			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::TYPE_STRING);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::TYPE_STRING);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::TYPE_STRING);
+			EditBox::_propertyDescriptions += PropertyDescription("cursor_index", PropertyDescription::TYPE_INT);
+			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::TYPE_BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::TYPE_BOOL);
+		}
+		return (Object::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}
 
 	void EditBox::setCursorIndex(int value)

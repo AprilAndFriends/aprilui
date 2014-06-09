@@ -46,6 +46,8 @@ namespace aprilui
 		hstr getImageName();
 		void setImageByName(chstr name);
 
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		bool trySetImageByName(chstr name);
 
 		void OnDraw();
@@ -59,6 +61,9 @@ namespace aprilui
 
 		grect _calcRectDirection(grect rect, float progress);
 		
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 }
 

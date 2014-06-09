@@ -19,10 +19,12 @@
 namespace aprilui
 {
 	// small optimization
-	static Image* tempNormalImage;
-	static Image* tempHoverImage;
-	static Image* tempPushedImage;
-	static Image* tempDisabledImage;
+	static Image* tempNormalImage = NULL;
+	static Image* tempHoverImage = NULL;
+	static Image* tempPushedImage = NULL;
+	static Image* tempDisabledImage = NULL;
+
+	harray<PropertyDescription> ToggleButton::_propertyDescriptions;
 
 	ToggleButton::ToggleButton(chstr name, grect rect) : ImageButton(name, rect)
 	{
@@ -84,6 +86,18 @@ namespace aprilui
 	void ToggleButton::setToggledDisabledImageByName(chstr name)
 	{
 		this->setToggledDisabledImage(this->dataset->getImage(name));
+	}
+
+	harray<PropertyDescription> ToggleButton::getPropertyDescriptions()
+	{
+		if (ToggleButton::_propertyDescriptions.size() == 0)
+		{
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_image", PropertyDescription::TYPE_STRING);
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_hover_image", PropertyDescription::TYPE_STRING);
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_pushed_image", PropertyDescription::TYPE_STRING);
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_disabled_image", PropertyDescription::TYPE_STRING);
+		}
+		return (ImageButton::getPropertyDescriptions() + ToggleButton::_propertyDescriptions);
 	}
 
 	bool ToggleButton::trySetToggledNormalImageByName(chstr name)
