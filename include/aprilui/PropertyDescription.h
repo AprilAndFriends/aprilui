@@ -29,7 +29,7 @@ namespace aprilui
 			TYPE_FLOAT,
 			TYPE_CHAR,
 			TYPE_UCHAR,
-			TYPE_BOOL,
+			TYPE_BOOLEAN,
 			TYPE_STRING,
 			TYPE_ENUM,
 			TYPE_GRECT,
