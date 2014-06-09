@@ -521,7 +521,7 @@ namespace aprilui
 		hlxml::Document* document = this->includeDocuments.try_get_by_key(filename, NULL);
 		if (document == NULL)
 		{
-			document = hlxml::open(filename);
+			document = new hlxml::Document(filename);
 			this->includeDocuments[filename] = document;
 		}
 		return document;
@@ -531,7 +531,7 @@ namespace aprilui
 	{
 		foreach_m (hlxml::Document*, it, this->includeDocuments)
 		{
-			hlxml::close(it->second);
+			delete it->second;
 		}
 		this->includeDocuments.clear();
 	}
@@ -563,8 +563,8 @@ namespace aprilui
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
 		hlog::write(aprilui::logTag, "Parsing dataset file: " + path);
-		hlxml::Document* doc = hlxml::open(path);
-		hlxml::Node* current = doc->root();
+		hlxml::Document doc(path);
+		hlxml::Node* current = doc.root();
 		this->parseExternalXMLNode(current);
 		foreach_xmlnode (node, current)
 		{
@@ -578,7 +578,6 @@ namespace aprilui
 				this->parseExternalXMLNode(node);
 			}
 		}
-		hlxml::close(doc);
 	}
 
 	void Dataset::load()
