@@ -43,6 +43,8 @@ namespace aprilui
 		HL_DEFINE_GET(gvec2, caretPosition, CaretPosition);
 		void setText(chstr value);
 		void setFocused(bool value);
+
+		harray<PropertyDescription> getPropertyDescriptions();
 		
 		void setCursorIndexAt(float x, float y);
 
@@ -87,6 +89,8 @@ namespace aprilui
 		gvec2 _makeCaretPosition(chstr text, chstr originalText);
 
 	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 		bool _ctrlMode;
 		float _blinkTimer;
 		bool _sizeProblemReported;

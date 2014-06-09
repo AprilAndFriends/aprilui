@@ -38,6 +38,8 @@ namespace aprilui
 		void setDisabledTextColor(april::Color value);
 		Dataset* getDataset();
 
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		void notifyEvent(chstr name, void* params);
 		// TODO - this needs to be seriously refactored
 		bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
@@ -56,6 +58,8 @@ namespace aprilui
 		void OnDraw();
 
 	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 		bool _useHoverTextColor;
 		bool _usePushedTextColor;
 		bool _useDisabledTextColor;

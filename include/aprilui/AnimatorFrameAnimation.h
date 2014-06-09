@@ -32,6 +32,10 @@ namespace aprilui
 			HL_DEFINE_GETSET(int, firstFrame, FirstFrame);
 			HL_DEFINE_GETSET(int, frameCount, FrameCount);
 			bool isAnimated();
+
+			harray<PropertyDescription> getPropertyDescriptions();
+
+			hstr getProperty(chstr name, bool* propertyExists);
 			bool setProperty(chstr name, chstr value);
 
 			void notifyEvent(chstr name, void* params);
@@ -45,6 +49,9 @@ namespace aprilui
 			
 			inline float _getObjectValue() { return 0.0f; }
 			inline void _setObjectValue(float value) { }
+
+		private:
+			static harray<PropertyDescription> _propertyDescriptions;
 
 		};
 	}

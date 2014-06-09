@@ -23,6 +23,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "PropertyDescription.h"
 
 namespace aprilui
 {
@@ -51,6 +52,8 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
 
 		virtual Dataset* getDataset() = 0;
+
+		virtual harray<PropertyDescription> getPropertyDescriptions();
 
 		bool trySetTextKey(chstr textKey);
 		
@@ -81,6 +84,9 @@ namespace aprilui
 		
 		void _drawLabel(grect rect, april::Color color, april::Color backgroundColor);
 		
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 	
 }

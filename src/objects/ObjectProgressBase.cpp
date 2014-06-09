@@ -15,6 +15,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> ProgressBase::_propertyDescriptions;
+
 	ProgressBase::ProgressBase()
 	{
 		this->progressImage = NULL;
@@ -61,6 +63,18 @@ namespace aprilui
 		}
 		return images;
 	}
+
+	harray<PropertyDescription> ProgressBase::getPropertyDescriptions()
+	{
+		if (ProgressBase::_propertyDescriptions.size() == 0)
+		{
+			ProgressBase::_propertyDescriptions += PropertyDescription("progress_image", PropertyDescription::TYPE_STRING);
+			ProgressBase::_propertyDescriptions += PropertyDescription("mask_image", PropertyDescription::TYPE_STRING);
+			ProgressBase::_propertyDescriptions += PropertyDescription("progress", PropertyDescription::TYPE_FLOAT);
+		}
+		return ProgressBase::_propertyDescriptions;
+	}
+
 	bool ProgressBase::trySetProgressImageByName(chstr name)
 	{
 		if (this->progressImageName != name)

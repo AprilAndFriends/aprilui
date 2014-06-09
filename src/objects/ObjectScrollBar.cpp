@@ -33,6 +33,8 @@ namespace aprilui
 	float ScrollBar::ScrollDistance = 32.0f;
 	float ScrollBar::GridSize = 0.0f;
 
+	harray<PropertyDescription> ScrollBar::_propertyDescriptions;
+
 	ScrollBar::ScrollBar(chstr name, grect rect) : Object(name, rect)
 	{
 		this->gridSize = GridSize;
@@ -59,6 +61,19 @@ namespace aprilui
 	{
 		this->skinName = value;
 		this->notifyEvent("SkinChange", NULL);
+	}
+
+	harray<PropertyDescription> ScrollBar::getPropertyDescriptions()
+	{
+		if (ScrollBar::_propertyDescriptions.size() == 0)
+		{
+			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::TYPE_STRING);
+			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::TYPE_FLOAT);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::TYPE_BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::TYPE_BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::TYPE_BOOL);
+		}
+		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
 	}
 
 	ScrollBarButtonBackground* ScrollBar::_getButtonBackground()

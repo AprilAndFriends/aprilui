@@ -46,6 +46,8 @@ namespace aprilui
 		void setToggledPushedImageByName(chstr name);
 		void setToggledDisabledImageByName(chstr name);
 
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		/// @brief Optimized versions.
 		bool trySetToggledNormalImageByName(chstr name);
 		bool trySetToggledHoverImageByName(chstr name);
@@ -77,6 +79,9 @@ namespace aprilui
 		void update(float timeDelta);
 		void OnDraw();
 		
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 }
 

@@ -15,6 +15,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> ImageButton::_propertyDescriptions;
+
 	ImageButton::ImageButton(chstr name, grect rect) : ImageBox(name, rect), ButtonBase()
 	{
 		this->normalImage = NULL;
@@ -50,6 +52,17 @@ namespace aprilui
 	Dataset* ImageButton::getDataset()
 	{
 		return ImageBox::getDataset();
+	}
+
+	harray<PropertyDescription> ImageButton::getPropertyDescriptions()
+	{
+		if (ImageButton::_propertyDescriptions.size() == 0)
+		{
+			ImageButton::_propertyDescriptions += PropertyDescription("pushed_image", PropertyDescription::TYPE_STRING);
+			ImageButton::_propertyDescriptions += PropertyDescription("hover_image", PropertyDescription::TYPE_STRING);
+			ImageButton::_propertyDescriptions += PropertyDescription("disabled_image", PropertyDescription::TYPE_STRING);
+		}
+		return (ImageBox::getPropertyDescriptions() + ImageButton::_propertyDescriptions);
 	}
 
 	void ImageButton::OnDraw()

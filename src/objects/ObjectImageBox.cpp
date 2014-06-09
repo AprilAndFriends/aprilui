@@ -16,6 +16,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> ImageBox::_propertyDescriptions;
+
 	ImageBox::ImageBox(chstr name, grect rect) : Object(name, rect)
 	{
 		this->image = NULL;
@@ -28,6 +30,15 @@ namespace aprilui
 	Object* ImageBox::createInstance(chstr name, grect rect)
 	{
 		return new ImageBox(name, rect);
+	}
+
+	harray<PropertyDescription> ImageBox::getPropertyDescriptions()
+	{
+		if (ImageBox::_propertyDescriptions.size() == 0)
+		{
+			ImageBox::_propertyDescriptions += PropertyDescription("image", PropertyDescription::TYPE_STRING);
+		}
+		return (Object::getPropertyDescriptions() + ImageBox::_propertyDescriptions);
 	}
 
 	void ImageBox::setImage(Image* image)

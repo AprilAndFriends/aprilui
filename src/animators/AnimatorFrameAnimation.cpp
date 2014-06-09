@@ -18,6 +18,8 @@ namespace aprilui
 {
 	namespace Animators
 	{
+		harray<PropertyDescription> FrameAnimation::_propertyDescriptions;
+
 		FrameAnimation::FrameAnimation(chstr name) : Animator(name)
 		{
 			this->imageBaseName = "";
@@ -51,16 +53,39 @@ namespace aprilui
 			return true;
 		}
 
+		harray<PropertyDescription> FrameAnimation::getPropertyDescriptions()
+		{
+			if (FrameAnimation::_propertyDescriptions.size() == 0)
+			{
+				FrameAnimation::_propertyDescriptions += PropertyDescription("base_name", PropertyDescription::TYPE_STRING);
+				FrameAnimation::_propertyDescriptions += PropertyDescription("first_frame", PropertyDescription::TYPE_INT);
+				FrameAnimation::_propertyDescriptions += PropertyDescription("frame_count", PropertyDescription::TYPE_INT);
+			}
+			return (Animator::getPropertyDescriptions() + FrameAnimation::_propertyDescriptions);
+		}
+
+		hstr FrameAnimation::getProperty(chstr name, bool* propertyExists)
+		{
+			if (propertyExists != NULL)
+			{
+				*propertyExists = true;
+			}
+			if (name == "base_name")	return this->getImageBaseName();
+			if (name == "first_frame")	return this->getFirstFrame();
+			if (name == "frame_count")	return this->getFrameCount();
+			return Animator::getProperty(name, propertyExists);
+		}
+
 		bool FrameAnimation::setProperty(chstr name, chstr value)
 		{
-			if		(name == "base_name")		this->imageBaseName = value;
-			else if (name == "first_frame")		this->firstFrame = value;
-			else if (name == "frame_count")		this->frameCount = value;
+			if		(name == "base_name")		this->setImageBaseName(value);
+			else if (name == "first_frame")		this->setFirstFrame(value);
+			else if (name == "frame_count")		this->setFrameCount(value);
 			else if (name == "inherit_value")
 			{
 				hlog::warn(aprilui::logTag, "Animators::FrameAnimation does not support 'inherit_value'!");
 			}
-			else Animator::setProperty(name, value);
+			else return Animator::setProperty(name, value);
 			return true;
 		}
 

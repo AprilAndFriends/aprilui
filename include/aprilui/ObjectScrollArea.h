@@ -58,6 +58,8 @@ namespace aprilui
 		float getScrollOffsetY();
 		void setScrollOffsetY(float value);
 
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		void OnDraw();
 		void update(float timeDelta);
 
@@ -93,6 +95,8 @@ namespace aprilui
 		void _snapScrollOffset();
 
 	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 		gvec2 _clickPosition;
 		gvec2 _lastPosition;
 		gvec2 _clickScrollOffset;

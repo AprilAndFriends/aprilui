@@ -33,6 +33,8 @@ namespace aprilui
 		Dataset* getDataset();
 		unsigned char getDerivedAlpha();
 
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
 

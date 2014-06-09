@@ -50,6 +50,8 @@ namespace aprilui
 		bool isWaitingAnimation();
 		bool isExpired();
 		void setTime(float value);
+
+		harray<PropertyDescription> getPropertyDescriptions();
 		
 		hstr getProperty(chstr name, bool* propertyExists);
 		bool setProperty(chstr name, chstr value);
@@ -86,6 +88,9 @@ namespace aprilui
 
 		virtual float _getObjectValue() = 0;
 		virtual void _setObjectValue(float value) = 0;
+
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
 
 	};
 

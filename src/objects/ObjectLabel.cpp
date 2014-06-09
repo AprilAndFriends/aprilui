@@ -35,6 +35,11 @@ namespace aprilui
 		return Object::getDataset();
 	}
 
+	harray<PropertyDescription> Label::getPropertyDescriptions()
+	{
+		return (Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions());
+	}
+
 	void Label::OnDraw()
 	{
 		Object::OnDraw();

@@ -26,6 +26,8 @@ namespace aprilui
 	float ScrollArea::Inertia = 2000.0f;
 	float ScrollArea::DragMaxSpeed = 0.0f;
 
+	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
+
 	ScrollArea::ScrollArea(chstr name, grect rect) : Object(name, rect), ButtonBase()
 	{
 		this->clip = true;
@@ -129,6 +131,19 @@ namespace aprilui
 	void ScrollArea::setScrollOffsetY(float value)
 	{
 		this->setY(this->parent != NULL ? hclamp(-value, hmin(this->parent->getHeight() - this->getHeight(), 0.0f), 0.0f) : -value);
+	}
+
+	harray<PropertyDescription> ScrollArea::getPropertyDescriptions()
+	{
+		if (ScrollArea::_propertyDescriptions.size() == 0)
+		{
+			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::TYPE_BOOL);
+			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::TYPE_FLOAT);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::TYPE_FLOAT);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::TYPE_FLOAT);
+			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::TYPE_BOOL);
+		}
+		return (Object::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
 	}
 
 	void ScrollArea::_snapScrollOffset()

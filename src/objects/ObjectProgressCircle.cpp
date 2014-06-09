@@ -18,6 +18,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> ProgressCircle::_propertyDescriptions;
+
 	ProgressCircle::ProgressCircle(chstr name, grect rect) : ImageBox(name, rect), ProgressBase()
 	{
 		this->direction = Clockwise;
@@ -55,6 +57,15 @@ namespace aprilui
 	void ProgressCircle::setImageByName(chstr name)
 	{
 		ImageBox::setImageByName(name);
+	}
+
+	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions()
+	{
+		if (ProgressCircle::_propertyDescriptions.size() == 0)
+		{
+			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::TYPE_ENUM);
+		}
+		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressCircle::_propertyDescriptions);
 	}
 
 	bool ProgressCircle::trySetImageByName(chstr name)

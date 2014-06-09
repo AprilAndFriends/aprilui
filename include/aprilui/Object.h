@@ -23,6 +23,7 @@
 
 #include "apriluiExport.h"
 #include "EventReceiver.h"
+#include "PropertyDescription.h"
 
 namespace aprilui
 {
@@ -112,6 +113,8 @@ namespace aprilui
 		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
+
+		virtual harray<PropertyDescription> getPropertyDescriptions();
 		
 		inline harray<Object*>& getChildren() { return this->children; }
 		inline hmap<hstr, Event*>& getEvents() { return this->events; }
@@ -342,6 +345,9 @@ namespace aprilui
 
 		virtual void OnDraw();
 		virtual void OnDrawDebug();
+
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
 
 	};
 	

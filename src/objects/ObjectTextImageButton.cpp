@@ -18,6 +18,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> TextImageButton::_propertyDescriptions;
+
 	TextImageButton::TextImageButton(chstr name, grect rect) :
 		LabelBase(),
 		ImageButton(name, rect)
@@ -61,6 +63,17 @@ namespace aprilui
 	{
 		this->disabledTextColor = value;
 		this->_useDisabledTextColor = true;
+	}
+
+	harray<PropertyDescription> TextImageButton::getPropertyDescriptions()
+	{
+		if (TextImageButton::_propertyDescriptions.size() == 0)
+		{
+			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::TYPE_HEXCOLOR);
+			TextImageButton::_propertyDescriptions += PropertyDescription("pushed_text_color", PropertyDescription::TYPE_HEXCOLOR);
+			TextImageButton::_propertyDescriptions += PropertyDescription("disabled_text_color", PropertyDescription::TYPE_HEXCOLOR);
+		}
+		return (LabelBase::getPropertyDescriptions() + ImageButton::getPropertyDescriptions() + TextImageButton::_propertyDescriptions);
 	}
 
 	void TextImageButton::OnDraw()
