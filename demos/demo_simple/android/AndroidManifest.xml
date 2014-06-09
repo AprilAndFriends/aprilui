@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		package="com.aprilui.demoSimple"
-		android:versionCode="3140"
-		android:versionName="3.1.4">
+		android:versionCode="3200"
+		android:versionName="3.2.0">
 	
 	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19"/>
 	<uses-feature android:glEsVersion="0x00010001"/>
