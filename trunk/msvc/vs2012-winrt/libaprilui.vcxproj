@@ -106,6 +106,7 @@
     <ClCompile Include="..\..\src\images\TiledImage.cpp" />
     <ClCompile Include="..\..\src\QueuedCallbackEvent.cpp" />
     <ClCompile Include="..\..\src\Texture.cpp" />
+    <ClCompile Include="..\..\src\PropertyDescription.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverX.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="..\..\include\aprilui\Image.h" />
     <ClInclude Include="..\..\include\aprilui\NullImage.h" />
     <ClInclude Include="..\..\include\aprilui\TiledImage.h" />
+    <ClInclude Include="..\..\include\aprilui\PropertyDescription.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\fileproperties.rc">

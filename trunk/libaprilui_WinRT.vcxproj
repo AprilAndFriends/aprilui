@@ -146,6 +146,7 @@
     <ClCompile Include="src\images\NullImage.cpp" />
     <ClCompile Include="src\images\TiledImage.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\PropertyDescription.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\aprilui\AnimatorCenterMoverX.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="include\aprilui\Image.h" />
     <ClInclude Include="include\aprilui\NullImage.h" />
     <ClInclude Include="include\aprilui\TiledImage.h" />
+    <ClInclude Include="include\aprilui\PropertyDescription.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\april\libapril_WinRT.vcxproj">
