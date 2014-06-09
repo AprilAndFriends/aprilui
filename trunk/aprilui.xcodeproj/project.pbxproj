@@ -181,6 +181,10 @@
 		D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
 		D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
 		D1BA0FC716BFD81F0085EE2B /* ObjectProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1C0FC4419460B8B00117F00 /* PropertyDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */; };
+		D1C0FC4519460B9100117F00 /* PropertyDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */; };
+		D1C0FC4619460B9200117F00 /* PropertyDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */; };
+		D1C0FC4819460BA200117F00 /* PropertyDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C0FC4719460BA200117F00 /* PropertyDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1C2083315FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
 		D1C2083415FDC56200AB5DCA /* AnimatorCenterMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */; };
 		D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */; };
@@ -363,6 +367,8 @@
 		D1981D35140F913B0057C3AF /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
 		D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBar.cpp; sourceTree = "<group>"; };
 		D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBar.h; path = include/aprilui/ObjectProgressBar.h; sourceTree = "<group>"; };
+		D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyDescription.cpp; path = src/PropertyDescription.cpp; sourceTree = "<group>"; };
+		D1C0FC4719460BA200117F00 /* PropertyDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PropertyDescription.h; path = include/aprilui/PropertyDescription.h; sourceTree = "<group>"; };
 		D1C2083115FDC56200AB5DCA /* AnimatorCenterMoverX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverX.cpp; sourceTree = "<group>"; };
 		D1C2083215FDC56200AB5DCA /* AnimatorCenterMoverY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorCenterMoverY.cpp; sourceTree = "<group>"; };
 		D1C2083815FDC57000AB5DCA /* AnimatorCenterMoverX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorCenterMoverX.h; path = include/aprilui/AnimatorCenterMoverX.h; sourceTree = "<group>"; };
@@ -538,6 +544,7 @@
 				7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */,
 				D16E990B158BE53800C058CE /* EventReceiver.cpp */,
 				7FC8042B11EC725B00851062 /* Exception.cpp */,
+				D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */,
 				D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */,
 				7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */,
 				D16E990C158BE53800C058CE /* Texture.cpp */,
@@ -559,6 +566,7 @@
 				7FCD396512018C7B00608217 /* EventArgs.h */,
 				7FDB9898131BA90C0064B968 /* EventUtils.h */,
 				D16E9912158BE54D00C058CE /* EventReceiver.h */,
+				D1C0FC4719460BA200117F00 /* PropertyDescription.h */,
 				7FC8041911EC721E00851062 /* Exception.h */,
 				D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */,
 				7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */,
@@ -709,6 +717,7 @@
 				D18CB6261902CE1C0071C391 /* ObjectScrollBarButtonBackground.h in Headers */,
 				D18CB6271902CE1C0071C391 /* ObjectScrollBarButtonBackward.h in Headers */,
 				D18CB6281902CE1C0071C391 /* ObjectScrollBarButtonForward.h in Headers */,
+				D1C0FC4819460BA200117F00 /* PropertyDescription.h in Headers */,
 				D18CB6291902CE1C0071C391 /* ObjectScrollBarButtonSlider.h in Headers */,
 				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
 				D11F4DA0172027BC0048DFD8 /* QueuedCallbackEvent.h in Headers */,
@@ -859,6 +868,7 @@
 				7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */,
 				7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */,
 				D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */,
+				D1C0FC4419460B8B00117F00 /* PropertyDescription.cpp in Sources */,
 				D1CDBE74147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp in Sources */,
 				C98E1DB414C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */,
 				D18CB6191902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */,
@@ -914,6 +924,7 @@
 				D1522E93140F6A6B0012F290 /* Object.cpp in Sources */,
 				D1522E94140F6A6B0012F290 /* ObjectCallbackObject.cpp in Sources */,
 				D1522E95140F6A6B0012F290 /* ObjectColoredQuad.cpp in Sources */,
+				D1C0FC4519460B9100117F00 /* PropertyDescription.cpp in Sources */,
 				D1522E96140F6A6B0012F290 /* ObjectEditBox.cpp in Sources */,
 				D1522E97140F6A6B0012F290 /* ObjectImageBox.cpp in Sources */,
 				D1522E98140F6A6B0012F290 /* ObjectImageButton.cpp in Sources */,
@@ -976,6 +987,7 @@
 				D1F27B43177A2FCA00E5C131 /* Object.cpp in Sources */,
 				D1F27B44177A2FCA00E5C131 /* ObjectCallbackObject.cpp in Sources */,
 				D1F27B45177A2FCA00E5C131 /* ObjectColoredQuad.cpp in Sources */,
+				D1C0FC4619460B9200117F00 /* PropertyDescription.cpp in Sources */,
 				D1F27B46177A2FCA00E5C131 /* ObjectEditBox.cpp in Sources */,
 				D1F27B47177A2FCA00E5C131 /* ObjectImageBox.cpp in Sources */,
 				D1F27B48177A2FCA00E5C131 /* ObjectImageButton.cpp in Sources */,

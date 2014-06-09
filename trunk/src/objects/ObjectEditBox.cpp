@@ -66,8 +66,8 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::TYPE_STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::TYPE_STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("cursor_index", PropertyDescription::TYPE_INT);
-			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::TYPE_BOOL);
-			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::TYPE_BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::TYPE_BOOLEAN);
+			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::TYPE_BOOLEAN);
 		}
 		return (Object::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}

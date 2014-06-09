@@ -137,11 +137,11 @@ namespace aprilui
 	{
 		if (ScrollArea::_propertyDescriptions.size() == 0)
 		{
-			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::TYPE_BOOL);
+			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::TYPE_BOOLEAN);
 			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::TYPE_FLOAT);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::TYPE_FLOAT);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::TYPE_FLOAT);
-			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::TYPE_BOOL);
+			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::TYPE_BOOLEAN);
 		}
 		return (Object::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
 	}
