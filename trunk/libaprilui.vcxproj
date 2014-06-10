@@ -110,6 +110,9 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Win32'">
+    <ClCompile />
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\animators\AnimatorCenterMoverX.cpp" />
     <ClCompile Include="src\animators\AnimatorCenterMoverY.cpp" />
