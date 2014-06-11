@@ -55,7 +55,7 @@ namespace aprilui
 
 		void notifyEvent(chstr name, void* params);
 
-		hstr getProperty(chstr name, bool* propertyExists);
+		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 		bool onMouseMove();

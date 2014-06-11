@@ -101,17 +101,12 @@ namespace aprilui
 		return false;
 	}
 	
-	hstr Label::getProperty(chstr name, bool* propertyExists)
+	hstr Label::getProperty(chstr name)
 	{
-		bool exists = false;
-		hstr result = LabelBase::getProperty(name, &exists);
-		if (!exists)
+		hstr result = LabelBase::getProperty(name);
+		if (result == "")
 		{
-			return Object::getProperty(name, propertyExists);
-		}
-		if (propertyExists != NULL)
-		{
-			*propertyExists = exists;
+			result = Object::getProperty(name);
 		}
 		return result;
 	}

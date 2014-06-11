@@ -45,7 +45,7 @@ namespace aprilui
 		void resizeToFitImage();
 
 		void notifyEvent(chstr name, void* params);
-		hstr getProperty(chstr name, bool* propertyExists = NULL);
+		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 		bool onMouseDown(april::Key keyCode);

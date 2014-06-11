@@ -54,7 +54,7 @@ namespace aprilui
 		bool trySetMaskImageByName(chstr name);
 		virtual bool trySetImageByName(chstr name) = 0;
 		
-		hstr getProperty(chstr name, bool* propertyExists = NULL);
+		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 	protected:

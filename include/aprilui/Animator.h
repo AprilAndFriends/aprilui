@@ -53,7 +53,7 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 		
-		hstr getProperty(chstr name, bool* propertyExists);
+		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 		void notifyEvent(chstr name, void* params);

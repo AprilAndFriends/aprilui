@@ -56,7 +56,7 @@ namespace aprilui
 		
 		harray<Image*> getUsedImages();
 
-		hstr getProperty(chstr name, bool* propertyExists = NULL);
+		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 		void toggle();

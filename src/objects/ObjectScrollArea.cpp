@@ -137,11 +137,11 @@ namespace aprilui
 	{
 		if (ScrollArea::_propertyDescriptions.size() == 0)
 		{
-			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::TYPE_BOOLEAN);
+			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::TYPE_BOOL);
 			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::TYPE_FLOAT);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::TYPE_FLOAT);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::TYPE_FLOAT);
-			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::TYPE_BOOLEAN);
+			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::TYPE_BOOL);
 		}
 		return (Object::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
 	}
@@ -290,26 +290,17 @@ namespace aprilui
 		}
 	}
 
-	hstr ScrollArea::getProperty(chstr name, bool* propertyExists)
+	hstr ScrollArea::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "allow_drag")			return this->isAllowDrag();
 		if (name == "inertia")				return this->getInertia();
 		if (name == "drag_threshold")		return this->getDragThreshold();
 		if (name == "drag_max_speed")		return this->getDragMaxSpeed();
 		if (name == "swap_scroll_wheels")	return this->isSwapScrollWheels();
-		bool exists = false;
-		hstr result = ButtonBase::getProperty(name, &exists);
-		if (!exists)
+		hstr result = ButtonBase::getProperty(name);
+		if (result == "")
 		{
-			result = Object::getProperty(name, &exists);
-		}
-		if (propertyExists != NULL)
-		{
-			*propertyExists = exists;
+			result = Object::getProperty(name);
 		}
 		return result;
 	}

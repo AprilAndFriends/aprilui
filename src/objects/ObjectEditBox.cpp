@@ -66,8 +66,8 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::TYPE_STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::TYPE_STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("cursor_index", PropertyDescription::TYPE_INT);
-			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::TYPE_BOOLEAN);
-			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::TYPE_BOOLEAN);
+			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::TYPE_BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::TYPE_BOOL);
 		}
 		return (Object::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}
@@ -584,12 +584,8 @@ namespace aprilui
 		Label::mouseCancel();
 	}
 
-	hstr EditBox::getProperty(chstr name, bool* propertyExists)
+	hstr EditBox::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "max_length")		return this->getMaxLength();
 		if (name == "password_char")	return this->getPasswordChar();
 		if (name == "filter")			return this->getFilter();
@@ -598,7 +594,7 @@ namespace aprilui
 		if (name == "cursor_index")		return this->getCursorIndex();
 		if (name == "multi_line")		return this->isMultiLine();
 		if (name == "space_hack")		return this->spaceHack;
-		return Label::getProperty(name, propertyExists);
+		return Label::getProperty(name);
 	}
 	
 	bool EditBox::setProperty(chstr name, chstr value)

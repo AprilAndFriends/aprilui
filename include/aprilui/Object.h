@@ -115,6 +115,7 @@ namespace aprilui
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 
 		virtual harray<PropertyDescription> getPropertyDescriptions();
+		bool hasProperty(chstr name);
 		
 		inline harray<Object*>& getChildren() { return this->children; }
 		inline hmap<hstr, Event*>& getEvents() { return this->events; }
@@ -196,7 +197,7 @@ namespace aprilui
 		
 		void resetCenter();
 		
-		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
+		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 		
 		// dynamic animators

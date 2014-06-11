@@ -22,6 +22,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "PropertyDescription.h"
 
 #define APRILUI_IMAGE_NAME_NULL "null"
 
@@ -70,7 +71,9 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
 		hstr getFullName();
 		
-		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
+		virtual harray<PropertyDescription> getPropertyDescriptions();
+
+		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
 		DEPRECATED_ATTRIBUTE inline bool isVertical() { return this->rotated; }
@@ -95,6 +98,8 @@ namespace aprilui
 		void _tryLoadTexCoords();
 		
 	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 		april::TexturedVertex _tVertices[4];
 		
 	};

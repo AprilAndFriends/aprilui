@@ -228,17 +228,13 @@ namespace aprilui
 		}
 	}
 	
-	hstr ToggleButton::getProperty(chstr name, bool* propertyExists)
+	hstr ToggleButton::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "toggled_image")			return this->getToggledNormalImageName();
 		if (name == "toggled_hover_image")		return this->getToggledHoverImageName();
 		if (name == "toggled_pushed_image")		return this->getToggledPushedImageName();
 		if (name == "toggled_disabled_image")	return this->getToggledDisabledImageName();
-		return ImageButton::getProperty(name, propertyExists);
+		return ImageButton::getProperty(name);
 	}
 
 	bool ToggleButton::setProperty(chstr name, chstr value)

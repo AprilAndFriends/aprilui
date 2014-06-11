@@ -97,19 +97,11 @@ namespace aprilui
 		return false;
 	}
 	
-	hstr ProgressBase::getProperty(chstr name, bool* propertyExists)
+	hstr ProgressBase::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "progress_image")	return this->getProgressImageName();
 		if (name == "mask_image")		return this->getMaskImageName();
 		if (name == "progress")			return this->getProgress();
-		if (propertyExists != NULL)
-		{
-			*propertyExists = false;
-		}
 		return "";
 	}
 

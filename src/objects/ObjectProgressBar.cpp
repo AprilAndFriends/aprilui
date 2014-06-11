@@ -61,7 +61,7 @@ namespace aprilui
 	{
 		if (ProgressBar::_propertyDescriptions.size() == 0)
 		{
-			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::TYPE_BOOLEAN);
+			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::TYPE_BOOL);
 			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::TYPE_ENUM);
 		}
 		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressBar::_propertyDescriptions);
@@ -118,12 +118,8 @@ namespace aprilui
 		return rect;
 	}
 
-	hstr ProgressBar::getProperty(chstr name, bool* propertyExists)
+	hstr ProgressBar::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "stretching")	return this->isStretching();
 		if (name == "direction")
 		{
@@ -132,15 +128,10 @@ namespace aprilui
 			if (this->direction == Down)	return "down";
 			if (this->direction == Up)		return "up";
 		}
-		bool exists = false;
-		hstr result = ProgressBase::getProperty(name, &exists);
-		if (!exists)
+		hstr result = ProgressBase::getProperty(name);
+		if (result == "")
 		{
-			result = ImageBox::getProperty(name, &exists);
-		}
-		if (propertyExists != NULL)
-		{
-			*propertyExists = exists;
+			result = ImageBox::getProperty(name);
 		}
 		return result;
 	}

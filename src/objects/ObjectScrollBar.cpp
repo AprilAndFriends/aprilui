@@ -69,9 +69,9 @@ namespace aprilui
 		{
 			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::TYPE_STRING);
 			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::TYPE_FLOAT);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::TYPE_BOOLEAN);
-			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::TYPE_BOOLEAN);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::TYPE_BOOLEAN);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::TYPE_BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::TYPE_BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::TYPE_BOOL);
 		}
 		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
 	}
@@ -350,18 +350,14 @@ namespace aprilui
 		}
 	}
 
-	hstr ScrollBar::getProperty(chstr name, bool* propertyExists)
+	hstr ScrollBar::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "skin")					return this->getSkinName();
 		if (name == "grid_size")			return this->getGridSize();
 		if (name == "use_fading")			return this->isUseFading();
 		if (name == "height_hide")			return this->isHeightHide();
 		if (name == "use_stretched_slider")	return this->isUseStretchedSlider();
-		return Object::getProperty(name, propertyExists);
+		return Object::getProperty(name);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)
