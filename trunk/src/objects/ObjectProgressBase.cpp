@@ -68,9 +68,9 @@ namespace aprilui
 	{
 		if (ProgressBase::_propertyDescriptions.size() == 0)
 		{
-			ProgressBase::_propertyDescriptions += PropertyDescription("progress_image", PropertyDescription::TYPE_STRING);
-			ProgressBase::_propertyDescriptions += PropertyDescription("mask_image", PropertyDescription::TYPE_STRING);
-			ProgressBase::_propertyDescriptions += PropertyDescription("progress", PropertyDescription::TYPE_FLOAT);
+			ProgressBase::_propertyDescriptions += PropertyDescription("progress_image", PropertyDescription::STRING);
+			ProgressBase::_propertyDescriptions += PropertyDescription("mask_image", PropertyDescription::STRING);
+			ProgressBase::_propertyDescriptions += PropertyDescription("progress", PropertyDescription::FLOAT);
 		}
 		return ProgressBase::_propertyDescriptions;
 	}

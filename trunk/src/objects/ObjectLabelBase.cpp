@@ -49,17 +49,17 @@ namespace aprilui
 	{
 		if (LabelBase::_propertyDescriptions.size() == 0)
 		{
-			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::TYPE_STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::TYPE_STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::TYPE_STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::TYPE_ENUM);
-			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::TYPE_ENUM);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::TYPE_HEXCOLOR);
-			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::TYPE_ENUM);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset", PropertyDescription::TYPE_GVEC2);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::TYPE_FLOAT);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::TYPE_FLOAT);
-			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::TYPE_HEXCOLOR);
+			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::STRING);
+			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::STRING);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::STRING);
+			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::HEXCOLOR);
+			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset", PropertyDescription::GVEC2);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::FLOAT);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::FLOAT);
+			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::HEXCOLOR);
 		}
 		return LabelBase::_propertyDescriptions;
 	}

@@ -31,12 +31,12 @@ namespace aprilui
 	{
 		if (TiledImage::_propertyDescriptions.size() == 0)
 		{
-			TiledImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::TYPE_GVEC2);
-			TiledImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::TYPE_FLOAT);
-			TiledImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::TYPE_FLOAT);
-			TiledImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::TYPE_GVEC2);
-			TiledImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::TYPE_FLOAT);
-			TiledImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::TYPE_FLOAT);
+			TiledImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::GVEC2);
+			TiledImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::FLOAT);
+			TiledImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::FLOAT);
+			TiledImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::GVEC2);
+			TiledImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::FLOAT);
+			TiledImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::FLOAT);
 		}
 		return (Image::getPropertyDescriptions() + TiledImage::_propertyDescriptions);
 	}

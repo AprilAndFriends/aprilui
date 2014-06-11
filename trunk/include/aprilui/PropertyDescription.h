@@ -25,16 +25,16 @@ namespace aprilui
 	public:
 		enum PropertyType
 		{
-			TYPE_INT,
-			TYPE_FLOAT,
-			TYPE_CHAR,
-			TYPE_UCHAR,
-			TYPE_BOOL,
-			TYPE_STRING,
-			TYPE_ENUM,
-			TYPE_GRECT,
-			TYPE_GVEC2,
-			TYPE_HEXCOLOR
+			INT,
+			FLOAT,
+			CHAR,
+			UCHAR,
+			BOOL,
+			STRING,
+			ENUM,
+			GRECT,
+			GVEC2,
+			HEXCOLOR
 		};
 
 		PropertyDescription(chstr name, PropertyType type);

@@ -69,22 +69,22 @@ namespace aprilui
 	{
 		if (Image::_propertyDescriptions.size() == 0)
 		{
-			Image::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::TYPE_GRECT);
-			Image::_propertyDescriptions += PropertyDescription("position", PropertyDescription::TYPE_GVEC2);
-			Image::_propertyDescriptions += PropertyDescription("size", PropertyDescription::TYPE_GVEC2);
-			Image::_propertyDescriptions += PropertyDescription("x", PropertyDescription::TYPE_FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::TYPE_FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("w", PropertyDescription::TYPE_FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("h", PropertyDescription::TYPE_FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::TYPE_HEXCOLOR);
-			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::TYPE_BOOL);
-			Image::_propertyDescriptions += PropertyDescription("invert_x", PropertyDescription::TYPE_BOOL);
-			Image::_propertyDescriptions += PropertyDescription("invert_y", PropertyDescription::TYPE_BOOL);
-			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::TYPE_ENUM);
-			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::TYPE_ENUM);
-			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::TYPE_FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::TYPE_STRING);
-			Image::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::TYPE_STRING);
+			Image::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::GRECT);
+			Image::_propertyDescriptions += PropertyDescription("position", PropertyDescription::GVEC2);
+			Image::_propertyDescriptions += PropertyDescription("size", PropertyDescription::GVEC2);
+			Image::_propertyDescriptions += PropertyDescription("x", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::HEXCOLOR);
+			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::BOOL);
+			Image::_propertyDescriptions += PropertyDescription("invert_x", PropertyDescription::BOOL);
+			Image::_propertyDescriptions += PropertyDescription("invert_y", PropertyDescription::BOOL);
+			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::ENUM);
+			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::ENUM);
+			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::STRING);
+			Image::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::STRING);
 		}
 		return Image::_propertyDescriptions;
 	}

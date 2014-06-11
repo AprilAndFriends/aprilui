@@ -46,21 +46,21 @@ namespace aprilui
 	{
 		if (Animator::_propertyDescriptions.size() == 0)
 		{
-			Animator::_propertyDescriptions += PropertyDescription("function", PropertyDescription::TYPE_ENUM);
-			Animator::_propertyDescriptions += PropertyDescription("func", PropertyDescription::TYPE_ENUM);
-			Animator::_propertyDescriptions += PropertyDescription("timer", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("delay", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("periods", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("amplitude", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("peak_to_peak", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("speed", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("offset", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("acceleration", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("discrete_step", PropertyDescription::TYPE_INT);
-			Animator::_propertyDescriptions += PropertyDescription("reset", PropertyDescription::TYPE_BOOL);
-			Animator::_propertyDescriptions += PropertyDescription("inherit_value", PropertyDescription::TYPE_BOOL);
-			Animator::_propertyDescriptions += PropertyDescription("target", PropertyDescription::TYPE_FLOAT);
-			Animator::_propertyDescriptions += PropertyDescription("time", PropertyDescription::TYPE_FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("function", PropertyDescription::ENUM);
+			Animator::_propertyDescriptions += PropertyDescription("func", PropertyDescription::ENUM);
+			Animator::_propertyDescriptions += PropertyDescription("timer", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("delay", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("periods", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("amplitude", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("peak_to_peak", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("speed", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("offset", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("acceleration", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("discrete_step", PropertyDescription::INT);
+			Animator::_propertyDescriptions += PropertyDescription("reset", PropertyDescription::BOOL);
+			Animator::_propertyDescriptions += PropertyDescription("inherit_value", PropertyDescription::BOOL);
+			Animator::_propertyDescriptions += PropertyDescription("target", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("time", PropertyDescription::FLOAT);
 		}
 		return (Object::getPropertyDescriptions() + Animator::_propertyDescriptions);
 	}
