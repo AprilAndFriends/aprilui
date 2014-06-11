@@ -32,368 +32,365 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\aprilui.cpp">
+    <ClCompile Include="..\..\src\aprilui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CallbackEvent.cpp">
+    <ClCompile Include="..\..\src\CallbackEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dataset.cpp">
+    <ClCompile Include="..\..\src\Dataset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventArgs.cpp">
+    <ClCompile Include="..\..\src\EventArgs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Exception.cpp">
+    <ClCompile Include="..\..\src\Exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\Animator.cpp">
+    <ClCompile Include="..\..\src\animators\Animator.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorAlphaChanger.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorAlphaChanger.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorBlueChanger.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorBlueChanger.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorFrameAnimation.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorFrameAnimation.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorGreenChanger.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorGreenChanger.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorMoverX.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorMoverX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorMoverY.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorMoverY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorRedChanger.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorRedChanger.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorRotator.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorRotator.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Object.cpp">
+    <ClCompile Include="..\..\src\objects\Object.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectButtonBase.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectButtonBase.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectCallbackObject.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectCallbackObject.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectColoredQuad.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectColoredQuad.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectContainer.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectContainer.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectEditBox.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectEditBox.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectImageBox.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectImageBox.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectImageButton.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectImageButton.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectLabel.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectLabel.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectLabelBase.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectLabelBase.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectProgressBar.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectProgressBar.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectSlider.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectSlider.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectTextImageButton.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectTextImageButton.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectToggleButton.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectToggleButton.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\ColorImage.cpp">
+    <ClCompile Include="..\..\src\images\CompositeImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\CompositeImage.cpp">
+    <ClCompile Include="..\..\src\images\Image.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\Image.cpp">
+    <ClCompile Include="..\..\src\images\NullImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\NullImage.cpp">
+    <ClCompile Include="..\..\src\images\TiledImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
-    <ClCompile Include="src\images\TiledImage.cpp">
-      <Filter>Source Files\Images</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MemberCallbackEvent.cpp">
+    <ClCompile Include="..\..\src\MemberCallbackEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorResizerX.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorResizerX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorResizerY.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorResizerY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorScalerX.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorScalerX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorScalerY.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorScalerY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorTiledScrollerX.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorTiledScrollerX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorTiledScrollerY.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorTiledScrollerY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollArea.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollArea.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBar.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollBar.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarH.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollBarH.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarV.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollBarV.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\apriluiUtil.cpp">
+    <ClCompile Include="..\..\src\apriluiUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventReceiver.cpp">
+    <ClCompile Include="..\..\src\EventReceiver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
+    <ClCompile Include="..\..\src\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorCenterMoverX.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorCenterMoverX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\animators\AnimatorCenterMoverY.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorCenterMoverY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectProgressBase.cpp">
+    <ClCompile Include="..\..\src\QueuedCallbackEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectProgressCircle.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectProgressCircle.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectProgressBase.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarButtonBackground.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollBarButtonSlider.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarButtonBackward.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollBarButtonBackward.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarButtonForward.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollBarButtonForward.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\ObjectScrollBarButtonSlider.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectScrollBarButtonBackground.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\PropertyDescription.cpp">
+    <ClCompile Include="..\..\src\PropertyDescription.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\aprilui\Animators.h">
+    <ClInclude Include="..\..\include\aprilui\Animators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\aprilui.h">
+    <ClInclude Include="..\..\include\aprilui\aprilui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\apriluiExport.h">
+    <ClInclude Include="..\..\include\aprilui\apriluiExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\CallbackEvent.h">
+    <ClInclude Include="..\..\include\aprilui\CallbackEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Dataset.h">
+    <ClInclude Include="..\..\include\aprilui\Dataset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Event.h">
+    <ClInclude Include="..\..\include\aprilui\Event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\EventArgs.h">
+    <ClInclude Include="..\..\include\aprilui\EventArgs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Exception.h">
+    <ClInclude Include="..\..\include\aprilui\Exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Images.h">
+    <ClInclude Include="..\..\include\aprilui\Images.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Objects.h">
+    <ClInclude Include="..\..\include\aprilui\Objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Animator.h">
+    <ClInclude Include="..\..\include\aprilui\Animator.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorAlphaChanger.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorAlphaChanger.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorBlueChanger.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorBlueChanger.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorFrameAnimation.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorFrameAnimation.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorGreenChanger.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorGreenChanger.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorMoverX.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorMoverX.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorMoverY.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorMoverY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorRedChanger.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorRedChanger.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorRotator.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorRotator.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Object.h">
+    <ClInclude Include="..\..\include\aprilui\Object.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectButtonBase.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectButtonBase.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectCallbackObject.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectCallbackObject.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectColoredQuad.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectColoredQuad.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectContainer.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectContainer.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectEditBox.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectEditBox.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectImageBox.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectImageBox.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectImageButton.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectImageButton.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectLabel.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectLabel.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectLabelBase.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectLabelBase.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectProgressBar.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectProgressBar.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectSlider.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectSlider.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectTextImageButton.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectTextImageButton.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectToggleButton.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectToggleButton.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ColorImage.h">
+    <ClInclude Include="..\..\include\aprilui\CompositeImage.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\CompositeImage.h">
+    <ClInclude Include="..\..\include\aprilui\Image.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Image.h">
+    <ClInclude Include="..\..\include\aprilui\NullImage.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\NullImage.h">
+    <ClInclude Include="..\..\include\aprilui\TiledImage.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\TiledImage.h">
-      <Filter>Header Files\Images</Filter>
-    </ClInclude>
-    <ClInclude Include="include\aprilui\EventUtils.h">
+    <ClInclude Include="..\..\include\aprilui\EventUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\MemberCallbackEvent.h">
+    <ClInclude Include="..\..\include\aprilui\MemberCallbackEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorResizerX.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorResizerX.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorResizerY.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorResizerY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorScalerX.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorScalerX.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorScalerY.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorScalerY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorTiledScrollerX.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorTiledScrollerX.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorTiledScrollerY.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorTiledScrollerY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollArea.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollArea.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollBar.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollBar.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollBarH.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollBarH.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollBarV.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollBarV.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\apriluiUtil.h">
+    <ClInclude Include="..\..\src\apriluiUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\EventReceiver.h">
+    <ClInclude Include="..\..\include\aprilui\EventReceiver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\Texture.h">
+    <ClInclude Include="..\..\include\aprilui\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorCenterMoverX.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverX.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\AnimatorCenterMoverY.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectProgressBase.h">
+    <ClInclude Include="..\..\include\aprilui\QueuedCallbackEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectProgressCircle.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectProgressCircle.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectProgressBase.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollBarButtonBackground.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonBackground.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollBarButtonBackward.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonBackward.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollBarButtonForward.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonForward.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\ObjectScrollBarButtonSlider.h">
+    <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonSlider.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="include\aprilui\QueuedCallbackEvent.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="include\aprilui\PropertyDescription.h">
+    <ClInclude Include="..\..\include\aprilui\PropertyDescription.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="fileproperties.rc">
+    <ResourceCompile Include="..\..\fileproperties.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

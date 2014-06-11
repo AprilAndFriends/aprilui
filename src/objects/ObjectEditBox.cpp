@@ -326,7 +326,7 @@ namespace aprilui
 			}
 			this->caretPosition = rect.getPosition();
 		}
-		if (this->multiLine && !this->_sizeProblemReported)
+		if (this->multiLine && !this->_sizeProblemReported && this->rect.h < lh)
 		{
 			hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.c_str(), (int)this->rect.h, (int)lh, this->font.c_str());
 			this->_sizeProblemReported = true;
