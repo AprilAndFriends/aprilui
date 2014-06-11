@@ -67,11 +67,11 @@ namespace aprilui
 	{
 		if (ScrollBar::_propertyDescriptions.size() == 0)
 		{
-			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::TYPE_STRING);
-			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::TYPE_FLOAT);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::TYPE_BOOL);
-			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::TYPE_BOOL);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::TYPE_BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::STRING);
+			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::FLOAT);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::BOOL);
 		}
 		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
 	}

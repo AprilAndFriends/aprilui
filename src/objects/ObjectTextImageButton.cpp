@@ -69,9 +69,9 @@ namespace aprilui
 	{
 		if (TextImageButton::_propertyDescriptions.size() == 0)
 		{
-			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::TYPE_HEXCOLOR);
-			TextImageButton::_propertyDescriptions += PropertyDescription("pushed_text_color", PropertyDescription::TYPE_HEXCOLOR);
-			TextImageButton::_propertyDescriptions += PropertyDescription("disabled_text_color", PropertyDescription::TYPE_HEXCOLOR);
+			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::HEXCOLOR);
+			TextImageButton::_propertyDescriptions += PropertyDescription("pushed_text_color", PropertyDescription::HEXCOLOR);
+			TextImageButton::_propertyDescriptions += PropertyDescription("disabled_text_color", PropertyDescription::HEXCOLOR);
 		}
 		return (LabelBase::getPropertyDescriptions() + ImageButton::getPropertyDescriptions() + TextImageButton::_propertyDescriptions);
 	}

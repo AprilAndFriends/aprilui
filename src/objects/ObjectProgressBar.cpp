@@ -61,8 +61,8 @@ namespace aprilui
 	{
 		if (ProgressBar::_propertyDescriptions.size() == 0)
 		{
-			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::TYPE_BOOL);
-			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::TYPE_ENUM);
+			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::BOOL);
+			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::ENUM);
 		}
 		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressBar::_propertyDescriptions);
 	}

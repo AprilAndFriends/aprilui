@@ -60,14 +60,14 @@ namespace aprilui
 	{
 		if (EditBox::_propertyDescriptions.size() == 0)
 		{
-			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::TYPE_INT);
-			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::TYPE_CHAR);
-			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::TYPE_STRING);
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::TYPE_STRING);
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::TYPE_STRING);
-			EditBox::_propertyDescriptions += PropertyDescription("cursor_index", PropertyDescription::TYPE_INT);
-			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::TYPE_BOOL);
-			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::TYPE_BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::INT);
+			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::CHAR);
+			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::STRING);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::STRING);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::STRING);
+			EditBox::_propertyDescriptions += PropertyDescription("cursor_index", PropertyDescription::INT);
+			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::BOOL);
 		}
 		return (Object::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}

@@ -92,10 +92,10 @@ namespace aprilui
 	{
 		if (ToggleButton::_propertyDescriptions.size() == 0)
 		{
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_image", PropertyDescription::TYPE_STRING);
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_hover_image", PropertyDescription::TYPE_STRING);
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_pushed_image", PropertyDescription::TYPE_STRING);
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_disabled_image", PropertyDescription::TYPE_STRING);
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_image", PropertyDescription::STRING);
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_hover_image", PropertyDescription::STRING);
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_pushed_image", PropertyDescription::STRING);
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_disabled_image", PropertyDescription::STRING);
 		}
 		return (ImageButton::getPropertyDescriptions() + ToggleButton::_propertyDescriptions);
 	}

@@ -58,9 +58,9 @@ namespace aprilui
 	{
 		if (ImageButton::_propertyDescriptions.size() == 0)
 		{
-			ImageButton::_propertyDescriptions += PropertyDescription("pushed_image", PropertyDescription::TYPE_STRING);
-			ImageButton::_propertyDescriptions += PropertyDescription("hover_image", PropertyDescription::TYPE_STRING);
-			ImageButton::_propertyDescriptions += PropertyDescription("disabled_image", PropertyDescription::TYPE_STRING);
+			ImageButton::_propertyDescriptions += PropertyDescription("pushed_image", PropertyDescription::STRING);
+			ImageButton::_propertyDescriptions += PropertyDescription("hover_image", PropertyDescription::STRING);
+			ImageButton::_propertyDescriptions += PropertyDescription("disabled_image", PropertyDescription::STRING);
 		}
 		return (ImageBox::getPropertyDescriptions() + ImageButton::_propertyDescriptions);
 	}

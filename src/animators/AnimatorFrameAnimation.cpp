@@ -57,9 +57,9 @@ namespace aprilui
 		{
 			if (FrameAnimation::_propertyDescriptions.size() == 0)
 			{
-				FrameAnimation::_propertyDescriptions += PropertyDescription("base_name", PropertyDescription::TYPE_STRING);
-				FrameAnimation::_propertyDescriptions += PropertyDescription("first_frame", PropertyDescription::TYPE_INT);
-				FrameAnimation::_propertyDescriptions += PropertyDescription("frame_count", PropertyDescription::TYPE_INT);
+				FrameAnimation::_propertyDescriptions += PropertyDescription("base_name", PropertyDescription::STRING);
+				FrameAnimation::_propertyDescriptions += PropertyDescription("first_frame", PropertyDescription::INT);
+				FrameAnimation::_propertyDescriptions += PropertyDescription("frame_count", PropertyDescription::INT);
 			}
 			return (Animator::getPropertyDescriptions() + FrameAnimation::_propertyDescriptions);
 		}
