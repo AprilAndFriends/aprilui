@@ -163,7 +163,6 @@
     <ClCompile Include="src\objects\ObjectSlider.cpp" />
     <ClCompile Include="src\objects\ObjectTextImageButton.cpp" />
     <ClCompile Include="src\objects\ObjectToggleButton.cpp" />
-    <ClCompile Include="src\images\ColorImage.cpp" />
     <ClCompile Include="src\images\CompositeImage.cpp" />
     <ClCompile Include="src\images\Image.cpp" />
     <ClCompile Include="src\images\NullImage.cpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="include\aprilui\ObjectSlider.h" />
     <ClInclude Include="include\aprilui\ObjectTextImageButton.h" />
     <ClInclude Include="include\aprilui\ObjectToggleButton.h" />
-    <ClInclude Include="include\aprilui\ColorImage.h" />
     <ClInclude Include="include\aprilui\CompositeImage.h" />
     <ClInclude Include="include\aprilui\Image.h" />
     <ClInclude Include="include\aprilui\NullImage.h" />
