@@ -116,9 +116,6 @@
     <ClCompile Include="..\..\src\objects\ObjectToggleButton.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\images\ColorImage.cpp">
-      <Filter>Source Files\Images</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\images\CompositeImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
@@ -303,9 +300,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectToggleButton.h">
       <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\aprilui\ColorImage.h">
-      <Filter>Header Files\Images</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\CompositeImage.h">
       <Filter>Header Files\Images</Filter>
