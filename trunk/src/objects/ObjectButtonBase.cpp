@@ -145,12 +145,8 @@ namespace aprilui
 		this->hovered = this->_checkHover();
 	}
 
-	hstr ButtonBase::getProperty(chstr name, bool* propertyExists)
+	hstr ButtonBase::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = false;
-		}
 		return "";
 	}
 	

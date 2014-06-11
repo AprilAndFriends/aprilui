@@ -46,7 +46,7 @@ namespace aprilui
 		virtual bool onButtonUp(april::Button buttonCode);
 		virtual void mouseCancel();
 
-		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
+		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
 		static void setAllowedKeys(harray<april::Key> keys);

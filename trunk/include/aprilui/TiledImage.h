@@ -37,8 +37,10 @@ namespace aprilui
 		inline void setScroll(float x, float y) { this->scroll.set(x, y); }
 		HL_DEFINE_GETSET(float, scroll.x, ScrollX);
 		HL_DEFINE_GETSET(float, scroll.y, ScrollY);
+
+		harray<PropertyDescription> getPropertyDescriptions();
 		
-		virtual hstr getProperty(chstr name, bool* propertyExists = NULL);
+		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
 		void draw(grect rect, april::Color color);
@@ -49,6 +51,9 @@ namespace aprilui
 
 		int _drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture);
 		
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 	
 }

@@ -57,8 +57,8 @@ namespace aprilui
 			Animator::_propertyDescriptions += PropertyDescription("offset", PropertyDescription::TYPE_FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("acceleration", PropertyDescription::TYPE_FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("discrete_step", PropertyDescription::TYPE_INT);
-			Animator::_propertyDescriptions += PropertyDescription("reset", PropertyDescription::TYPE_BOOLEAN);
-			Animator::_propertyDescriptions += PropertyDescription("inherit_value", PropertyDescription::TYPE_BOOLEAN);
+			Animator::_propertyDescriptions += PropertyDescription("reset", PropertyDescription::TYPE_BOOL);
+			Animator::_propertyDescriptions += PropertyDescription("inherit_value", PropertyDescription::TYPE_BOOL);
 			Animator::_propertyDescriptions += PropertyDescription("target", PropertyDescription::TYPE_FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("time", PropertyDescription::TYPE_FLOAT);
 		}
@@ -219,12 +219,8 @@ namespace aprilui
 		}
 	}
 	
-	hstr Animator::getProperty(chstr name, bool* propertyExists)
+	hstr Animator::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "function" || name == "func")
 		{
 			if (this->animationFunction == Object::Sine)		return "sine";
@@ -249,7 +245,7 @@ namespace aprilui
 		if (name == "inherit_value")	return this->isInheritValue();
 		// derived values
 		if	(name == "target")			return this->getTarget();
-		return Object::getProperty(name, propertyExists);
+		return Object::getProperty(name);
 	}
 	
 	bool Animator::setProperty(chstr name, chstr value)

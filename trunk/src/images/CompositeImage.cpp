@@ -50,26 +50,6 @@ namespace aprilui
         this->images.clear();
     }
 	
-	// TODO - are these get/set properties required?
-	hstr CompositeImage::getProperty(chstr name, bool* propertyExists)
-	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
-		if (name == "todo")		return this->getColor().hex();
-		if (name == "todo2")	return this->getColor().hex();
-		return Image::getProperty(name, propertyExists);
-	}
-
-	bool CompositeImage::setProperty(chstr name, chstr value)
-	{
-		if		(name == "todo")	this->setColor(value);
-		else if (name == "todo2")	this->setColor(value);
-		else return Image::setProperty(name, value);
-		return true;
-	}
-
 	void CompositeImage::draw(grect rect, april::Color color)
 	{
 		gvec2 sf = rect.getSize() / this->srcRect.getSize();

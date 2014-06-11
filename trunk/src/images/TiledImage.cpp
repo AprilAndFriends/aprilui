@@ -16,6 +16,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> TiledImage::_propertyDescriptions;
+
 	TiledImage::TiledImage(Texture* texture, chstr name, grect source, float tileW, float tileH) : Image(texture, name, source)
 	{
 		this->tile.set(tileW, tileH);
@@ -25,19 +27,29 @@ namespace aprilui
 	{
 	}
 
-	hstr TiledImage::getProperty(chstr name, bool* propertyExists)
+	harray<PropertyDescription> TiledImage::getPropertyDescriptions()
 	{
-		if (propertyExists != NULL)
+		if (TiledImage::_propertyDescriptions.size() == 0)
 		{
-			*propertyExists = true;
+			TiledImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::TYPE_GVEC2);
+			TiledImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::TYPE_FLOAT);
+			TiledImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::TYPE_FLOAT);
+			TiledImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::TYPE_GVEC2);
+			TiledImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::TYPE_FLOAT);
+			TiledImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::TYPE_FLOAT);
 		}
+		return (Image::getPropertyDescriptions() + TiledImage::_propertyDescriptions);
+	}
+
+	hstr TiledImage::getProperty(chstr name)
+	{
 		if (name == "tile")		return gvec2_to_hstr(this->getTile());
 		if (name == "tile_w")	return this->getTileW();
 		if (name == "tile_h")	return this->getTileH();
 		if (name == "scroll")	return gvec2_to_hstr(this->getScroll());
 		if (name == "scroll_x")	return this->getScrollX();
 		if (name == "scroll_y")	return this->getScrollY();
-		return Image::getProperty(name, propertyExists);
+		return Image::getProperty(name);
 	}
 
 	bool TiledImage::setProperty(chstr name, chstr value)

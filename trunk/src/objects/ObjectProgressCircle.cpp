@@ -178,12 +178,8 @@ namespace aprilui
 		}
 	}
 
-	hstr ProgressCircle::getProperty(chstr name, bool* propertyExists)
+	hstr ProgressCircle::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "direction")
 		{
 			if (this->direction == Clockwise)			return "clockwise";
@@ -195,15 +191,10 @@ namespace aprilui
 			if (this->direction == Counterclockwise180)	return "counterclockwise180";
 			if (this->direction == Counterclockwise270)	return "counterclockwise270";
 		}
-		bool exists = false;
-		hstr result = ProgressBase::getProperty(name, &exists);
-		if (!exists)
+		hstr result = ProgressBase::getProperty(name);
+		if (result == "")
 		{
-			result = ImageBox::getProperty(name, &exists);
-		}
-		if (propertyExists != NULL)
-		{
-			*propertyExists = exists;
+			result = ImageBox::getProperty(name);
 		}
 		return result;
 	}

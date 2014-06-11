@@ -105,12 +105,8 @@ namespace aprilui
 		atres::renderer->drawText(this->font, rect, text, this->horzFormatting, this->vertFormatting, color, -this->textOffset);
 	}
 
-	hstr LabelBase::getProperty(chstr name, bool* propertyExists)
+	hstr LabelBase::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "font")				return this->getFont();
 		if (name == "text")				return this->getText();
 		if (name == "text_key")			return this->getTextKey();
@@ -147,10 +143,6 @@ namespace aprilui
 		if (name == "text_offset_x")	return this->getTextOffsetX();
 		if (name == "text_offset_y")	return this->getTextOffsetY();
 		if (name == "background_color")	return this->getBackgroundColor().hex();
-		if (propertyExists != NULL)
-		{
-			*propertyExists = false;
-		}
 		return "";
 	}
 	

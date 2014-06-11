@@ -174,11 +174,11 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("y", PropertyDescription::TYPE_FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("w", PropertyDescription::TYPE_FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::TYPE_FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::TYPE_BOOLEAN);
+			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::TYPE_BOOL);
 			Object::_propertyDescriptions += PropertyDescription("zorder", PropertyDescription::TYPE_INT);
-			Object::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::TYPE_BOOLEAN);
+			Object::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::TYPE_BOOL);
 			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::TYPE_UCHAR);
 			Object::_propertyDescriptions += PropertyDescription("green", PropertyDescription::TYPE_UCHAR);
 			Object::_propertyDescriptions += PropertyDescription("blue", PropertyDescription::TYPE_UCHAR);
@@ -191,18 +191,31 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("center", PropertyDescription::TYPE_GVEC2);
 			Object::_propertyDescriptions += PropertyDescription("center_x", PropertyDescription::TYPE_FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("center_y", PropertyDescription::TYPE_FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("anchor_bottom", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("retain_anchor_aspect", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("clip", PropertyDescription::TYPE_BOOLEAN);
-			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::TYPE_BOOLEAN);
+			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("anchor_bottom", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("retain_anchor_aspect", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("clip", PropertyDescription::TYPE_BOOL);
+			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::TYPE_BOOL);
 			Object::_propertyDescriptions += PropertyDescription("focus_index", PropertyDescription::TYPE_INT);
 			Object::_propertyDescriptions += PropertyDescription("name", PropertyDescription::TYPE_STRING);
 			Object::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::TYPE_STRING);
 		}
 		return Object::_propertyDescriptions;
+	}
+
+	bool Object::hasProperty(chstr name)
+	{
+		harray<PropertyDescription> properties = this->getPropertyDescriptions();
+		foreach (PropertyDescription, it, properties)
+		{
+			if ((*it).getName() == name)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void Object::_sortChildren()
@@ -1011,12 +1024,8 @@ namespace aprilui
 		}
 	}
 
-	hstr Object::getProperty(chstr name, bool* propertyExists)
+	hstr Object::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "rect")					return grect_to_hstr(this->getRect());
 		if (name == "position")				return gvec2_to_hstr(this->getPosition());
 		if (name == "size")					return gvec2_to_hstr(this->getSize());
@@ -1051,10 +1060,6 @@ namespace aprilui
 		if (name == "focus_index")			return this->getFocusIndex();
 		if (name == "name")					return this->getName();
 		if (name == "full_name")			return this->getFullName();
-		if (propertyExists != NULL)
-		{
-			*propertyExists = false;
-		}
 		return "";
 	}
 	

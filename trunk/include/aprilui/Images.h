@@ -14,7 +14,6 @@
 #define APRILUI_IMAGES_H
 
 #include "Image.h"
-#include "ColorImage.h"
 #include "CompositeImage.h"
 #include "NullImage.h"
 #include "TiledImage.h"

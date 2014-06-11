@@ -22,6 +22,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> Image::_propertyDescriptions;
+
 	Image::Image(Texture* texture, chstr name, grect source)
 	{
 		this->texture = texture;
@@ -63,6 +65,30 @@ namespace aprilui
 		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 	
+	harray<PropertyDescription> Image::getPropertyDescriptions()
+	{
+		if (Image::_propertyDescriptions.size() == 0)
+		{
+			Image::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::TYPE_GRECT);
+			Image::_propertyDescriptions += PropertyDescription("position", PropertyDescription::TYPE_GVEC2);
+			Image::_propertyDescriptions += PropertyDescription("size", PropertyDescription::TYPE_GVEC2);
+			Image::_propertyDescriptions += PropertyDescription("x", PropertyDescription::TYPE_FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::TYPE_FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("w", PropertyDescription::TYPE_FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("h", PropertyDescription::TYPE_FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::TYPE_HEXCOLOR);
+			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::TYPE_BOOL);
+			Image::_propertyDescriptions += PropertyDescription("invert_x", PropertyDescription::TYPE_BOOL);
+			Image::_propertyDescriptions += PropertyDescription("invert_y", PropertyDescription::TYPE_BOOL);
+			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::TYPE_ENUM);
+			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::TYPE_ENUM);
+			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::TYPE_FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::TYPE_STRING);
+			Image::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::TYPE_STRING);
+		}
+		return Image::_propertyDescriptions;
+	}
+
 	void Image::setSrcRect(grect value)
 	{
 		this->srcRect = value;
@@ -117,12 +143,8 @@ namespace aprilui
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	hstr Image::getProperty(chstr name, bool* propertyExists)
+	hstr Image::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "rect")					return grect_to_hstr(this->getSrcRect());
 		if (name == "position")				return gvec2_to_hstr(this->getSrcRect().getPosition());
 		if (name == "size")					return gvec2_to_hstr(this->getSrcRect().getSize());
@@ -134,7 +156,7 @@ namespace aprilui
 		if (name == "rotated")				return this->isRotated();
 		if (name == "vertical")
 		{
-			hlog::warn(aprilui::logTag, "\"vertical\" is deprecated. Use \"vertical\" instead."); // DEPRECATED
+			hlog::warn(aprilui::logTag, "\"vertical\" is deprecated. Use \"rotated\" instead."); // DEPRECATED
 			return this->isRotated();
 		}
 		if (name == "invert_x")				return this->isInvertX();
@@ -170,10 +192,6 @@ namespace aprilui
 		if (name == "dataset")
 		{
 			return (this->dataset != NULL ? this->dataset->getName() : "");
-		}
-		if (propertyExists != NULL)
-		{
-			*propertyExists = false;
 		}
 		return "";
 	}

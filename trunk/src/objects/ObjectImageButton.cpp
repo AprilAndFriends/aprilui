@@ -221,24 +221,15 @@ namespace aprilui
 		return images;
 	}
 	
-	hstr ImageButton::getProperty(chstr name, bool* propertyExists)
+	hstr ImageButton::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "pushed_image")		return this->getPushedImageName();
 		if (name == "hover_image")		return this->getHoverImageName();
 		if (name == "disabled_image")	return this->getDisabledImageName();
-		bool exists = false;
-		hstr result = ButtonBase::getProperty(name, &exists);
-		if (!exists)
+		hstr result = ButtonBase::getProperty(name);
+		if (result == "")
 		{
-			result = ImageBox::getProperty(name, &exists);
-		}
-		if (propertyExists != NULL)
-		{
-			*propertyExists = exists;
+			result = ImageBox::getProperty(name);
 		}
 		return result;
 	}

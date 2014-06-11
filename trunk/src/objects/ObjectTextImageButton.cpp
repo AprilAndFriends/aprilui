@@ -136,24 +136,15 @@ namespace aprilui
 		return ImageButton::triggerEvent(name, x, y, keyCode, extra);
 	}
 
-	hstr TextImageButton::getProperty(chstr name, bool* propertyExists)
+	hstr TextImageButton::getProperty(chstr name)
 	{
-		if (propertyExists != NULL)
-		{
-			*propertyExists = true;
-		}
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
-		bool exists = false;
-		hstr result = LabelBase::getProperty(name, &exists);
-		if (!exists)
+		hstr result = LabelBase::getProperty(name);
+		if (result == "")
 		{
-			result = ImageButton::getProperty(name, &exists);
-		}
-		if (propertyExists != NULL)
-		{
-			*propertyExists = exists;
+			result = ImageButton::getProperty(name);
 		}
 		return result;
 	}

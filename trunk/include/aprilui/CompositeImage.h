@@ -41,9 +41,6 @@ namespace aprilui
 		void addImageRef(Image* image, grect rect);
         void clearImages();
 		
-		hstr getProperty(chstr name, bool* propertyExists = NULL);
-		bool setProperty(chstr name, chstr value);
-
 		void draw(grect rect, april::Color color);
 		void draw(harray<april::TexturedVertex> vertices, april::Color color);
 		

@@ -64,16 +64,12 @@ namespace aprilui
 			return (Animator::getPropertyDescriptions() + FrameAnimation::_propertyDescriptions);
 		}
 
-		hstr FrameAnimation::getProperty(chstr name, bool* propertyExists)
+		hstr FrameAnimation::getProperty(chstr name)
 		{
-			if (propertyExists != NULL)
-			{
-				*propertyExists = true;
-			}
 			if (name == "base_name")	return this->getImageBaseName();
 			if (name == "first_frame")	return this->getFirstFrame();
 			if (name == "frame_count")	return this->getFrameCount();
-			return Animator::getProperty(name, propertyExists);
+			return Animator::getProperty(name);
 		}
 
 		bool FrameAnimation::setProperty(chstr name, chstr value)

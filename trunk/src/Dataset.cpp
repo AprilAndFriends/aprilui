@@ -49,13 +49,16 @@ namespace aprilui
 		{
 			this->name = hrdir::basename(hresource::no_extension(this->filename));
 		}
+		this->nullImage = new NullImage();
+		this->nullImage->dataset = this;
 		this->loaded = false;
 		aprilui::_registerDataset(this->name, this);
 	}
 	
 	Dataset::~Dataset()
 	{
-		if (this->nullImage != NULL) delete this->nullImage;
+		delete this->nullImage;
+		aprilui::_unregisterDataset(this->name, this);
 		if (this->isLoaded())
 		{
 			if (this->focusedObject != NULL)
@@ -64,7 +67,6 @@ namespace aprilui
 			}
 			this->unload();
 		}
-		aprilui::_unregisterDataset(this->name, this);
 	}
 
 	int Dataset::getFocusedObjectIndex()
@@ -889,23 +891,10 @@ namespace aprilui
 		Image* image = NULL;
 		if (name == APRILUI_IMAGE_NAME_NULL)
 		{
-			if (!this->nullImage)
-			{
-				this->nullImage = new NullImage();
-				this->nullImage->dataset = this;
-			}
 			return this->nullImage;
 		}
 		
-		// kspes@20140220 - ColorImage has been integrated into CAGE 3.x. CAGE 1.3 an 1.1 still pending. scheduled for removal after that
-		bool hasKey = this->images.has_key(name);
-		if (!hasKey && name.starts_with("0x")) // create new image with a color. don't overuse this, it's meant to be handy when needed only ;)
-		{
-			image = new ColorImage(name);
-			this->images[name] = image;
-			image->dataset = this;
-		}
-		else if (hasKey)
+		if (this->images.has_key(name))
 		{
 			image = this->images[name];
 		}
