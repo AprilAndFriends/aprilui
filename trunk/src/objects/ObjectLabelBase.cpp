@@ -178,10 +178,6 @@ namespace aprilui
 			}
 		}
 		else if (name == "text_color")			this->setTextColor(value);
-		else if (name == "color")
-		{
-			throw hl_exception("LabelBase instance using 'color=' which is conflicted with TextImageButton's color and cannot be used! Maybe you meant 'text_color='?");
-		}
 		else if (name == "effect")
 		{
 			this->setFontEffect(atres::NONE);

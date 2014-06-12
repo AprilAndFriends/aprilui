@@ -53,8 +53,8 @@ namespace aprilui
 
 	void Label::notifyEvent(chstr name, void* params)
 	{
-		LabelBase::notifyEvent(name, params);
 		Object::notifyEvent(name, params);
+		LabelBase::notifyEvent(name, params);
 	}
 
 	bool Label::triggerEvent(chstr name, april::Key keyCode, chstr extra)
@@ -103,21 +103,21 @@ namespace aprilui
 	
 	hstr Label::getProperty(chstr name)
 	{
-		hstr result = LabelBase::getProperty(name);
+		hstr result = Object::getProperty(name);
 		if (result == "")
 		{
-			result = Object::getProperty(name);
+			result = LabelBase::getProperty(name);
 		}
 		return result;
 	}
 
 	bool Label::setProperty(chstr name, chstr value)
 	{
-		if (LabelBase::setProperty(name, value))
+		if (Object::setProperty(name, value))
 		{
 			return true;
 		}
-		return Object::setProperty(name, value);
+		return LabelBase::setProperty(name, value);
 	}
 	
 }

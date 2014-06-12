@@ -141,10 +141,10 @@ namespace aprilui
 		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
 		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
 		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
-		hstr result = LabelBase::getProperty(name);
+		hstr result = ImageButton::getProperty(name);
 		if (result == "")
 		{
-			result = ImageButton::getProperty(name);
+			result = LabelBase::getProperty(name);
 		}
 		return result;
 	}
@@ -154,8 +154,8 @@ namespace aprilui
 		if		(name == "hover_text_color")	this->setHoverTextColor(value);
 		else if (name == "pushed_text_color")	this->setPushedTextColor(value);
 		else if (name == "disabled_text_color")	this->setDisabledTextColor(value);
-		else if (LabelBase::setProperty(name, value)) { }
-		else return ImageButton::setProperty(name, value);
+		else if (ImageButton::setProperty(name, value)) { }
+		else return LabelBase::setProperty(name, value);
 		return true;
 	}
 	
