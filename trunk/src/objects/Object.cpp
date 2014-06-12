@@ -1033,7 +1033,7 @@ namespace aprilui
 		if (name == "y")					return this->getY();
 		if (name == "w")					return this->getWidth();
 		if (name == "h")					return this->getHeight();
-		if (name == "visible")				return this->isVisible();
+		if (name == "visible")				return this->getVisibilityFlag();
 		if (name == "zorder")				return this->getZOrder();
 		if (name == "enabled")				return this->isEnabled();
 		if (name == "click_through")		return this->isClickThrough();
