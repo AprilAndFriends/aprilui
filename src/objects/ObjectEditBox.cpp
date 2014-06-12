@@ -69,7 +69,7 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::BOOL);
 		}
-		return (Object::getPropertyDescriptions() + EditBox::_propertyDescriptions);
+		return (Label::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}
 
 	void EditBox::setCursorIndex(int value)
