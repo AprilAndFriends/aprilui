@@ -26,7 +26,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>premultiplyAlpha</key>
         <false/>
         <key>shapeDebug</key>

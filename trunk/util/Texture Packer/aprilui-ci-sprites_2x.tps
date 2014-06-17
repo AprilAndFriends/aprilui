@@ -26,7 +26,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>premultiplyAlpha</key>
         <false/>
         <key>shapeDebug</key>
@@ -136,7 +136,7 @@
             </struct>
         </map>
         <key>multiPack</key>
-        <false/>
+        <true/>
         <key>forceIdenticalLayout</key>
         <false/>
         <key>outputFormat</key>
@@ -163,7 +163,7 @@
             <key>extrude</key>
             <uint>0</uint>
             <key>trimThreshold</key>
-            <uint>1</uint>
+            <uint>5</uint>
             <key>trimMode</key>
             <enum type="SpriteSettings::TrimMode">Trim</enum>
             <key>heuristicMask</key>
