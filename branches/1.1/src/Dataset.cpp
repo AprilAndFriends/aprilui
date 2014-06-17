@@ -390,7 +390,7 @@ namespace aprilui
 	{
 		hstr path = hdir::normalize(filename);
 		aprilui::log("parsing dataset file '" + path + "'");
-		hlxml::Document* doc = hlxml::open(path);
+		hlxml::Document* doc = new hlxml::Document(path);
 		hlxml::Node* current = doc->root();
 
 		parseExternalXMLNode(current);
@@ -421,7 +421,7 @@ namespace aprilui
 				parseExternalXMLNode(p);
 			}
 		}
-		hlxml::close(doc);
+		delete  doc;
 
 		// adjust dynamic texture links
 		harray<hstr> dlst;
