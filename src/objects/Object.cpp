@@ -48,7 +48,7 @@
 	CREATE_DELAYED_DYNAMIC_ANIMATOR(type, offset, target, speed, 0.0f);
 
 #define CREATE_DELAYED_DYNAMIC_ANIMATOR(type, offset, target, speed, delay) \
-	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
+	Animator* animator ## type = new Animators::type(april::generateName("dynamic_animator_")); \
 	this->dynamicAnimators += animator ## type; \
 	animator ## type->parent = this; \
 	animator ## type->setSpeed(speed); \
@@ -70,7 +70,7 @@
 	CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength, 0.0f);
 
 #define CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength, delay) \
-	Animator* animator ## type = new Animators::type(generateName("dynamic_animator_")); \
+	Animator* animator ## type = new Animators::type(april::generateName("dynamic_animator_")); \
 	this->dynamicAnimators += animator ## type; \
 	animator ## type->parent = this; \
 	animator ## type->setOffset(offset); \

@@ -16,15 +16,7 @@
 #include "apriluiUtil.h"
 
 namespace aprilui
-{
-	hstr generateName(chstr prefix)
-	{
-		static hmap<hstr, int> counters;
-		int count = counters[prefix] + 1;
-		counters[prefix] = count;
-		return prefix + hstr(count);
-	}
-	
+{	
 	hstr gvec2_to_hstr(gvec2 vector)
 	{
 		return hsprintf("%f%c%f", vector.x, aprilui::SeparatorParameter, vector.y);

@@ -26,7 +26,6 @@ namespace aprilui
 {
 	static const float eTolerance = 0.0001f;
 
-	hstr generateName(chstr prefix);
 	hstr gvec2_to_hstr(gvec2 vector);
 	hstr grect_to_hstr(grect rect);
 	gvec2 hstr_to_gvec2(chstr string);
