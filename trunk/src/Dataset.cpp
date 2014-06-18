@@ -414,7 +414,7 @@ namespace aprilui
 			}
 			else
 			{
-				objectName = aprilui::generateName(className);
+				objectName = april::generateName(className);
 			}
 			if (*node == "Object")
 			{
