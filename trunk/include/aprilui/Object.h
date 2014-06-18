@@ -55,6 +55,7 @@ namespace aprilui
 
 		Object(chstr name, grect rect);
 		~Object();
+		virtual hstr getClassName() const { return "Object"; }
 
 		HL_DEFINE_GET(Object*, parent, Parent);
 		HL_DEFINE_GET(hstr, name, Name);

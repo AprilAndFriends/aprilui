@@ -27,6 +27,8 @@ namespace aprilui
 	public:
 		ScrollBarButtonForward(chstr name, grect rect);
 		~ScrollBarButtonForward();
+		hstr getClassName() const { return "ScrollBarButtonForward"; }
+
 		static Object* createInstance(chstr name, grect rect);
 
 		void notifyEvent(chstr name, void* params);

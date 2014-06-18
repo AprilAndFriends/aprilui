@@ -26,6 +26,8 @@ namespace aprilui
 		public:
 			ResizerY(chstr name);
 			~ResizerY();
+			hstr getClassName() const { return "ResizerY"; }
+
 			static Animator* createInstance(chstr name);
 			
 			void update(float timeDelta);

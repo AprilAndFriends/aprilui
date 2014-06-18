@@ -26,6 +26,8 @@ namespace aprilui
 		public:
 			Rotator(chstr name);
 			~Rotator();
+			hstr getClassName() const { return "Rotator"; }
+
 			static Animator* createInstance(chstr name);
 			
 			void update(float timeDelta);

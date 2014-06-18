@@ -26,6 +26,8 @@ namespace aprilui
 		public:
 			RedChanger(chstr name);
 			~RedChanger();
+			hstr getClassName() const { return "RedChanger"; }
+
 			static Animator* createInstance(chstr name);
 			
 			void update(float timeDelta);

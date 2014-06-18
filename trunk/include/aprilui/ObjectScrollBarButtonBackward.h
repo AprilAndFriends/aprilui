@@ -27,6 +27,8 @@ namespace aprilui
 	public:
 		ScrollBarButtonBackward(chstr name, grect rect);
 		~ScrollBarButtonBackward();
+		hstr getClassName() const { return "ScrollBarButtonBackward"; }
+
 		static Object* createInstance(chstr name, grect rect);
 
 		void notifyEvent(chstr name, void* params);

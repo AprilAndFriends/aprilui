@@ -26,6 +26,8 @@ namespace aprilui
 		public:
 			ScalerX(chstr name);
 			~ScalerX();
+			hstr getClassName() const { return "ScalerX"; }
+
 			static Animator* createInstance(chstr name);
 			
 			void update(float timeDelta);
