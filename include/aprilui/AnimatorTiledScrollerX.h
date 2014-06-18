@@ -28,6 +28,8 @@ namespace aprilui
 		public:
 			TiledScrollerX(chstr name);
 			~TiledScrollerX();
+			hstr getClassName() const { return "TiledScrollerX"; }
+
 			static Animator* createInstance(chstr name);
 			
 			void update(float timeDelta);

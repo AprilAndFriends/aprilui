@@ -26,6 +26,8 @@ namespace aprilui
 		public:
 			MoverY(chstr name);
 			~MoverY();
+			hstr getClassName() const { return "MoverY"; }
+
 			static Animator* createInstance(chstr name);
 			
 			void update(float timeDelta);

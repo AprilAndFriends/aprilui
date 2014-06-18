@@ -29,7 +29,8 @@ namespace aprilui
 	public:
 		ProgressBase();
 		virtual ~ProgressBase();
-		
+		hstr getClassName() const { return "ProgressBar"; }
+
 		HL_DEFINE_GET(Image*, progressImage, ProgressImage);
 		HL_DEFINE_GET(Image*, maskImage, MaskImage);
 		HL_DEFINE_GET(hstr, progressImageName, ProgressImageName);

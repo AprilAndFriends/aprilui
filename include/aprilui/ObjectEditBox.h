@@ -26,6 +26,8 @@ namespace aprilui
 	public:
 		EditBox(chstr name, grect rect);
 		~EditBox();
+		hstr getClassName() const { return "EditBox"; }
+
 		static Object* createInstance(chstr name, grect rect);
 		
 		HL_DEFINE_GET(hstr, emptyText, EmptyText);

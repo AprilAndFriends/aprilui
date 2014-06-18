@@ -26,6 +26,8 @@ namespace aprilui
 	public:
 		Slider(chstr name, grect rect);
 		~Slider();
+		hstr getClassName() const { return "Slider"; }
+
 		static Object* createInstance(chstr name, grect rect);
 		
 		HL_DEFINE_GET(float, value, Value);

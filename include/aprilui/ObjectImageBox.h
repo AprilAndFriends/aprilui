@@ -28,6 +28,8 @@ namespace aprilui
 	public:
 		ImageBox(chstr name, grect rect);
 		~ImageBox();
+		hstr getClassName() const { return "ImageBox"; }
+
 		static Object* createInstance(chstr name, grect rect);
 		
 		harray<PropertyDescription> getPropertyDescriptions();

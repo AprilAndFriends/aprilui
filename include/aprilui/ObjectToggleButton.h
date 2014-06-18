@@ -26,6 +26,8 @@ namespace aprilui
 	public:
 		ToggleButton(chstr name, grect rect);
 		~ToggleButton();
+		hstr getClassName() const { return "ToggleButton"; }
+
 		static Object* createInstance(chstr name, grect rect);
 
 		HL_DEFINE_ISSET(toggled, Toggled);

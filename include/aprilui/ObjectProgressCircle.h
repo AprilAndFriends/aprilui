@@ -40,6 +40,8 @@ namespace aprilui
 
 		ProgressCircle(chstr name, grect rect);
 		~ProgressCircle();
+		hstr getClassName() const { return "ProgressCircle"; }
+
 		static Object* createInstance(chstr name, grect rect);
 		
 		HL_DEFINE_GETSET(Direction, direction, Direction);

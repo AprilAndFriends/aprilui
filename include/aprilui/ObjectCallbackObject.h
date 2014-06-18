@@ -26,6 +26,8 @@ namespace aprilui
 	public:
 		CallbackObject(chstr name, grect rect);
 		~CallbackObject();
+		hstr getClassName() const { return "CallbackObject"; }
+
 		static Object* createInstance(chstr name, grect rect);
 
 		inline void (*getDrawCallback())(CallbackObject*) { return this->drawCallback; }

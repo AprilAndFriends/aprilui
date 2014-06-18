@@ -26,6 +26,8 @@ namespace aprilui
 		public:
 			FrameAnimation(chstr name);
 			~FrameAnimation();
+			hstr getClassName() const { return "FrameAnimation"; }
+
 			static Animator* createInstance(chstr name);
 
 			HL_DEFINE_GETSET(hstr, imageBaseName, ImageBaseName);
