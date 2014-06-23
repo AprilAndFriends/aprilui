@@ -580,6 +580,11 @@ namespace aprilui
 		object->_setDataset(this);
 	}
 	
+	void Dataset::registerObjects(Object* o) // aprilui trunk compatibility
+	{
+		registerManualObject(o);
+	}
+	
 	void Dataset::unregisterManualObject(Object* object)
 	{
 		hstr name = object->getName();
@@ -599,6 +604,11 @@ namespace aprilui
 			throw ResourceExistsException(name, "Image", this);
 		}
 		mImages[name] = image;
+	}
+	
+	void Dataset::registerImage(Image* img) // aprilui trunk compatibility
+	{
+		registerManualImage(img);
 	}
 	
 	void Dataset::unregisterManualImage(Image* image)
@@ -621,6 +631,11 @@ namespace aprilui
 			throw ResourceExistsException(name, "Texture", this);
 		}
 		mTextures[name] = tex;
+	}
+	
+	void Dataset::registerTexture(Texture* texture) // aprilui trunk compatibility
+	{
+		registerManualTexture(texture);
 	}
 	
 	bool Dataset::isAnimated()

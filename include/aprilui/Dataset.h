@@ -46,8 +46,11 @@ namespace aprilui
 		void unload();
 		bool isLoaded() { return mLoaded; }
 		void registerManualObject(Object* o);
+		void registerObjects(Object* o); // aprilui trunk compatibility
 		void unregisterManualObject(Object* o);
 		void registerManualImage(Image* img);
+		void registerImage(Image* img); // aprilui trunk compatibility
+		void registerTexture(Texture* texture); // aprilui trunk compatibility
 		void registerManualTexture(Texture* tex);
 		void unregisterManualImage(Image* img);
 
