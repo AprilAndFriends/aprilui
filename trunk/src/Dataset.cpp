@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.21
 /// 
 /// @section LICENSE
 /// 
@@ -480,6 +480,15 @@ namespace aprilui
 		return object;
 	}
 	
+	void Dataset::parseGlobalIncludeFile(chstr filename)
+	{
+		// parse dataset xml file, error checking first
+		hstr originalFilePath = this->filePath;
+		this->filePath = this->_makeFilePath(filename);
+		this->readFile(filename);
+		this->filePath = originalFilePath;
+	}
+	
 	void Dataset::parseGlobalInclude(chstr path)
 	{
 		hstr originalFilePath = this->filePath;
@@ -518,26 +527,6 @@ namespace aprilui
 		}
 	}
 	
-	hlxml::Document* Dataset::_openDocument(chstr filename)
-	{
-		hlxml::Document* document = this->includeDocuments.try_get_by_key(filename, NULL);
-		if (document == NULL)
-		{
-			document = new hlxml::Document(filename);
-			this->includeDocuments[filename] = document;
-		}
-		return document;
-	}
-	
-	void Dataset::_closeDocuments()
-	{
-		foreach_m (hlxml::Document*, it, this->includeDocuments)
-		{
-			delete it->second;
-		}
-		this->includeDocuments.clear();
-	}
-	
 	void Dataset::parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		if (!path.contains("*"))
@@ -558,6 +547,26 @@ namespace aprilui
 				this->parseObjectIncludeFile(hrdir::join_path(basedir, (*it), false), parent, "", "", gvec2());
 			}
 		}
+	}
+	
+	hlxml::Document* Dataset::_openDocument(chstr filename)
+	{
+		hlxml::Document* document = this->includeDocuments.try_get_by_key(filename, NULL);
+		if (document == NULL)
+		{
+			document = new hlxml::Document(filename);
+			this->includeDocuments[filename] = document;
+		}
+		return document;
+	}
+	
+	void Dataset::_closeDocuments()
+	{
+		foreach_m (hlxml::Document*, it, this->includeDocuments)
+		{
+			delete it->second;
+		}
+		this->includeDocuments.clear();
 	}
 	
 	void Dataset::readFile(chstr filename)
@@ -893,7 +902,6 @@ namespace aprilui
 		{
 			return this->nullImage;
 		}
-		
 		if (this->images.has_key(name))
 		{
 			image = this->images[name];

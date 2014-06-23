@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.21
 /// 
 /// @section LICENSE
 /// 
@@ -165,6 +165,7 @@ namespace aprilui
 		void focus(Object* object);
 		void removeFocus();
 
+		void parseGlobalIncludeFile(chstr filename);
 		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
 		DEPRECATED_ATTRIBUTE void registerManualObject(Object* object) { this->registerObjects(object); }
