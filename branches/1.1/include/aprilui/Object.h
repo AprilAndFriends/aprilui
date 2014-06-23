@@ -25,6 +25,11 @@ namespace aprilui
 	class Event;
 	class EventArgs;
 	
+	struct PropertyDescription // april trunk compatibility
+	{
+	
+	};
+	
 	class apriluiExport Object : public EventReceiver
 	{
 	public:
@@ -96,7 +101,7 @@ namespace aprilui
 		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
-		hstr getProperty(chstr prop, bool* prop_exists); // new-april compatibility
+		hstr getProperty(chstr prop, bool* prop_exists = NULL); // new-april compatibility
 		
 		void _setTypeName(chstr type) { mTypeName = type; }
 		hstr getType() { return mTypeName; }
