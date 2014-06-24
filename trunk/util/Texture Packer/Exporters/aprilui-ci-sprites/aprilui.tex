@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Textures>
-
+	
 	<Texture filename="{{texture.trimmedName}}" dynamic_load="1">{% for sprite in allSprites %}
 		<Image name="_{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{% if sprite.rotated %}{{sprite.frameRect.height}},{{sprite.frameRect.width}}{% else %}{{sprite.frameRect.width}},{{sprite.frameRect.height}}{% endif %}"{% if sprite.rotated %} rotated="1"{% endif %}/>{% endfor %}
 	</Texture>
