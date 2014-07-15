@@ -35,20 +35,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0AC0BEAB-AFC2-476C-8B3C-565AD0408A5E}</ProjectGuid>
-    <RootNamespace>demo_zorder</RootNamespace>
+    <ProjectGuid>{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}</ProjectGuid>
+    <RootNamespace>demo_tiledimage</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationType>Windows Phone</ApplicationType>
     <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
     <AppContainerApplication>true</AppContainerApplication>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props-demos\default.props" />
-  <Import Project="..\..\..\hltypes\msvc\vs2013-winrt\props-generic\platform-$(Platform).props" />
+  <Import Project="..\..\..\hltypes\msvc\vs2013-winp8\props-generic\platform-$(Platform).props" />
   <Import Project="props-demos\configurations.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="..\..\..\hltypes\msvc\vs2013-winrt\props-generic\build-defaults.props" />
+  <Import Project="..\..\..\hltypes\msvc\vs2013-winp8\props-generic\build-defaults.props" />
   <Import Project="props-demos\build-defaults.props" />
   <Import Project="props-demos\configuration.props" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugS|Win32'">
@@ -70,76 +70,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demos\demo_zorder\demo_zorder.cpp" />
+    <ClCompile Include="..\..\demos\demo_tiledimage\demo_tiledimage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="media\arial.png" />
     <Image Include="media\assets\Logo.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="media\assets\Logo.scale-140.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\Logo.scale-180.png">
+    <Image Include="media\assets\Logo.scale-240.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\Logo.scale-80.png">
+    <Image Include="media\assets\LogoSmallP8.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoBig.scale-100.png">
+    <Image Include="media\assets\LogoSmallP8.scale-140.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoBig.scale-140.png">
+    <Image Include="media\assets\LogoSmallP8.scale-240.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoBig.scale-180.png">
+    <Image Include="media\assets\LogoTinyP8.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoBig.scale-80.png">
+    <Image Include="media\assets\LogoTinyP8.scale-140.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-100.png">
+    <Image Include="media\assets\LogoTinyP8.scale-240.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-140.png">
+    <Image Include="media\assets\SplashP8.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-180.png">
+    <Image Include="media\assets\SplashP8.scale-140.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\LogoSmall.scale-80.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.scale-100.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.scale-140.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.scale-180.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.scale-80.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-16.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-256.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-32.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\LogoTiny.targetsize-48.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\Splash.scale-100.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\Splash.scale-140.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\assets\Splash.scale-180.png">
+    <Image Include="media\assets\SplashP8.scale-240.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="media\assets\StoreLogo.scale-100.png">
@@ -148,7 +116,7 @@
     <Image Include="media\assets\StoreLogo.scale-140.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\StoreLogo.scale-180.png">
+    <Image Include="media\assets\StoreLogo.scale-240.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="media\assets\WideLogo.scale-100.png">
@@ -157,22 +125,20 @@
     <Image Include="media\assets\WideLogo.scale-140.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\WideLogo.scale-180.png">
+    <Image Include="media\assets\WideLogo.scale-240.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\assets\WideLogo.scale-80.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="media\arial.png" />
     <Image Include="media\circle.png" />
+    <Image Include="media\cursor.png" />
     <Image Include="media\scroll_skin.png" />
     <Image Include="media\texture.jpg" />
     <Image Include="media\transparency.png" />
     <None Include="media\arial.font">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="media\cursor.ani" />
-    <None Include="media\simple.cur" />
+    <None Include="media\cursor.ani">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="media\demo_gui.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
@@ -186,6 +152,9 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="media\scroll_skin.tex">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="media\simple.cur">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="media\texts\de\demo.loc">
@@ -203,13 +172,10 @@
     <None Include="media\transparency.tex">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="..\..\demos\demo_zorder\TemporaryKey.pfx" />
-    <AppxManifest Include="..\..\demos\demo_zorder\Package.appxmanifest">
+    <None Include="..\..\demos\demo_tiledimage\TemporaryKey.pfx" />
+    <AppxManifest Include="..\..\demos\demo_tiledimage\Package-winp8.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\demos\demo_zorder\winrt-cursors.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
