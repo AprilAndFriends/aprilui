@@ -245,11 +245,13 @@ namespace aprilui
 			gvec2 newOffset = this->getScrollOffset();
 			if (offset.x == newOffset.x)
 			{
+				this->_lastScrollOffset.x = offset.x;
 				this->_dragSpeed.x = 0.0f;
 				this->_dragTimer.x = 0.0f;
 			}
 			if (offset.y == newOffset.y)
 			{
+				this->_lastScrollOffset.y = offset.y;
 				this->_dragSpeed.y = 0.0f;
 				this->_dragTimer.y = 0.0f;
 			}
