@@ -9,6 +9,7 @@
 	<uses-feature android:name="android.hardware.screen.landscape"/>
 	
 	<application android:label="Demo Tiled Image"
+			android:icon="@drawable/icon"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		<activity android:name=".DemoTiledImage"
 				android:label="Demo Tiled Image"
