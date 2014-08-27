@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -74,7 +74,7 @@ public:
 		progressCircle->setProgress(hmodf(progressCircle->getProgress() + timeSinceLastFrame * 0.2f, 1.25f));
 		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("%d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
 		dataset->update(timeSinceLastFrame);
-		dataset->getObject("root")->draw();
+		dataset->draw();
 		return true;
 	}
 

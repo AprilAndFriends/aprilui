@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.21
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -69,6 +69,13 @@ namespace aprilui
 		}
 	}
 
+	hmap<hstr, BaseObject*> Dataset::getAllObjects()
+	{
+		hmap<hstr, BaseObject*> result = this->animators.cast<hstr, BaseObject*>();
+		result.inject(this->objects.cast<hstr, BaseObject*>());
+		return result;
+	}
+
 	int Dataset::getFocusedObjectIndex()
 	{
 		return (this->focusedObject != NULL && this->focusedObject->isEnabled() &&
@@ -100,12 +107,12 @@ namespace aprilui
 	harray<int> Dataset::findPossibleFocusIndices(bool strict)
 	{
 		harray<int> result;
-		int focusIndex;
+		int focusIndex = 0;
 		foreach_m (Object*, it, this->objects)
 		{
 			focusIndex = it->second->getFocusIndex();
 			if (focusIndex >= 0 && (!strict && it->second->isEnabled() && it->second->isVisible() ||
-				 strict && it->second->isDerivedEnabled() && it->second->isDerivedVisible()))
+				strict && it->second->isDerivedEnabled() && it->second->isDerivedVisible()))
 			{
 				result += focusIndex;
 			}
@@ -116,7 +123,7 @@ namespace aprilui
 	harray<int> Dataset::findAllFocusIndices()
 	{
 		harray<int> result;
-		int focusIndex;
+		int focusIndex = 0;
 		foreach_m (Object*, it, this->objects)
 		{
 			focusIndex = it->second->getFocusIndex();
@@ -146,9 +153,9 @@ namespace aprilui
 		this->destroyObjects(this->getObject(rootName));
 	}
 	
-	void Dataset::destroyObjects(Object* root)
+	void Dataset::destroyObjects(BaseObject* root)
 	{
-		if (!this->objects.has_key(root->getName()))
+		if (!this->objects.has_key(root->getName()) && !this->animators.has_key(root->getName()))
 		{
 			// this object could be from another dataset, so check that first.
 			Dataset* dataset = root->getDataset();
@@ -160,8 +167,8 @@ namespace aprilui
 			}
 			throw ResourceNotExistsException(root->getName(), "Object", this);
 		}
-		harray<Object*> children = root->getChildren();
-		foreach (Object*, it, children)
+		harray<BaseObject*> children = root->getChildren();
+		foreach (BaseObject*, it, children)
 		{
 			this->destroyObjects(*it);
 		}
@@ -169,11 +176,23 @@ namespace aprilui
 		{
 			root->detach();
 		}
-		if (root->isFocused())
+		Object* object = dynamic_cast<Object*>(root);
+		if (object != NULL)
 		{
-			root->setFocused(false);
+			if (object->isFocused())
+			{
+				object->setFocused(false);
+			}
+			this->objects.remove_key(root->getName());
 		}
-		this->objects.remove_key(root->getName());
+		else
+		{
+			Animator* animator = dynamic_cast<Animator*>(root);
+			if (animator != NULL)
+			{
+				this->animators.remove_key(root->getName());
+			}
+		}
 		delete root;
 	}
 	
@@ -360,7 +379,7 @@ namespace aprilui
 		image->dataset = this;
 	}
 	
-	Object* Dataset::parseObject(hlxml::Node* node, Object* parent)
+	BaseObject* Dataset::parseObject(hlxml::Node* node, Object* parent)
 	{
 		return this->recursiveObjectParse(node, parent, "", "", gvec2());
 	}
@@ -380,12 +399,12 @@ namespace aprilui
 		}
 	}
 	
-	Object* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent)
+	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent)
 	{
 		return this->recursiveObjectParse(node, parent, "", "", gvec2());
 	}
 
-	Object* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		hstr className;
 		hstr objectName;
@@ -430,33 +449,54 @@ namespace aprilui
 		{
 			throw ResourceExistsException(objectName, "Object", this);
 		}
+		BaseObject* baseObject = NULL;
 		Object* object = NULL;
+		Animator* animator = NULL;
 		if (*node == "Object")
 		{
-			object = aprilui::createObject(className, objectName, rect);
+			baseObject = object = aprilui::createObject(className, objectName, rect);
 		}
 		else if (*node == "Animator")
 		{
-			object = aprilui::createAnimator(className, objectName);
+			baseObject = animator = aprilui::createAnimator(className, objectName);
 		}
-		if (object == NULL)
+		if (baseObject == NULL)
 		{
-			object = this->parseExternalObjectClass(node, objectName, rect);
+			baseObject = this->parseExternalObjectClass(node, objectName, rect);
+			if (baseObject != NULL)
+			{
+				object = dynamic_cast<Object*>(baseObject);
+				if (object == NULL)
+				{
+					animator = dynamic_cast<Animator*>(baseObject);
+				}
+			}
 		}
-		if (object == NULL)
+		if (baseObject == NULL)
 		{
 			throw hlxml::XMLUnknownClassException(className, node);
 		}
-		object->dataset = this;
-		object->notifyEvent("RegisterInDataset", this);
-		this->objects[objectName] = object;
-		if (this->root == NULL)
+		baseObject->dataset = this;
+		baseObject->notifyEvent("RegisterInDataset", this);
+		if (object != NULL)
 		{
-			this->root = object;
+			this->objects[objectName] = object;
+			if (this->root == NULL)
+			{
+				this->root = object;
+			}
+			if (parent != NULL)
+			{
+				parent->addChild(object);
+			}
 		}
-		if (parent != NULL)
+		else if (animator != NULL)
 		{
-			parent->addChild(object);
+			this->animators[objectName] = animator;
+			if (parent != NULL)
+			{
+				parent->addChild(animator);
+			}
 		}
 		hstr name;
 		foreach_xmlproperty (prop, node)
@@ -466,18 +506,21 @@ namespace aprilui
 			{
 				continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
 			}
-			object->setProperty(name, prop->value());
+			baseObject->setProperty(name, prop->value());
 		}
-		hlxml::Node::Type type;
-		foreach_xmlnode (child, node)
+		if (object != NULL)
 		{
-			type = child->getType();
-			if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
+			hlxml::Node::Type type;
+			foreach_xmlnode (child, node)
 			{
-				this->recursiveObjectParse(child, object, namePrefix, nameSuffix, gvec2());
+				type = child->getType();
+				if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
+				{
+					this->recursiveObjectParse(child, object, namePrefix, nameSuffix, gvec2());
+				}
 			}
 		}
-		return object;
+		return baseObject;
 	}
 	
 	void Dataset::parseGlobalIncludeFile(chstr filename)
@@ -689,13 +732,23 @@ namespace aprilui
 		{
 			throw GenericException("Unable to unload dataset '" + this->getName() + "', data not loaded!");
 		}
-		aprilui::Object* obj;
+		foreach_m (Animator*, it, this->animators)
+		{
+			if (it->second->getParent() != NULL)
+			{
+				it->second->detach();
+			}
+			delete it->second;
+		}
+		this->animators.clear();
 		foreach_m (Object*, it, this->objects)
 		{
-			obj = it->second;
-			if (obj->getParent()) obj->detach();
-			obj->removeChildren(false);
-			delete obj;
+			if (it->second->getParent() != NULL)
+			{
+				it->second->detach();
+			}
+			it->second->removeChildren(false);
+			delete it->second;
 		}
 		this->objects.clear();
 		foreach_m (Image*, it, this->images)
@@ -715,26 +768,40 @@ namespace aprilui
 		this->loaded = false;
 	}
 	
-	void Dataset::registerObjects(Object* root)
+	void Dataset::registerObjects(BaseObject* root)
 	{
 		hstr name;
-		harray<Object*> objects;
+		harray<BaseObject*> objects;
 		objects += root;
 		objects += root->getDescendants();
-		foreach (Object*, it, objects)
+		Object* object = NULL;
+		Animator* animator = NULL;
+		foreach (BaseObject*, it, objects)
 		{
 			name = (*it)->getName();
-			if (this->objects.has_key(name))
+			if (this->objects.has_key(name) || this->animators.has_key(name))
 			{
 				throw ResourceExistsException(name, "Object", this);
 			}
-			this->objects[name] = (*it);
+			object = dynamic_cast<Object*>(*it);
+			if (object != NULL)
+			{
+				this->objects[name] = object;
+			}
+			else
+			{
+				animator = dynamic_cast<Animator*>(*it);
+				if (animator != NULL)
+				{
+					this->animators[name] = animator;
+				}
+			}
 			(*it)->dataset = this;
 			(*it)->notifyEvent("RegisterInDataset", this);
 		}
 	}
 	
-	void Dataset::unregisterObjects(Object* root)
+	void Dataset::unregisterObjects(BaseObject* root)
 	{
 		if (!this->objects.has_key(root->getName()))
 		{
@@ -748,14 +815,15 @@ namespace aprilui
 			}
 			throw ResourceNotExistsException(root->getName(), "Object", this);
 		}
-		harray<Object*> children = root->getChildren();
-		foreach (Object*, it, children)
+		harray<BaseObject*> children = root->getChildren();
+		foreach (BaseObject*, it, children)
 		{
 			this->unregisterObjects(*it);
 		}
-		if (root->isFocused())
+		Object* focusedRoot = dynamic_cast<Object*>(root);
+		if (focusedRoot != NULL && focusedRoot->isFocused())
 		{
-			root->setFocused(false);
+			focusedRoot->setFocused(false);
 		}
 		this->objects.remove_key(root->getName());
 		root->dataset = NULL;
@@ -805,11 +873,16 @@ namespace aprilui
 	
 	bool Dataset::isAnimated()
 	{
-		aprilui::Animator* object;
 		foreach_m (Object*, it, this->objects)
 		{
-			object = dynamic_cast<aprilui::Animator*>(it->second);
-			if (object != NULL && object->isAnimated())
+			if (it->second->isAnimated())
+			{
+				return true;
+			}
+		}
+		foreach_m (Animator*, it, this->animators)
+		{
+			if (it->second->isAnimated())
 			{
 				return true;
 			}
@@ -820,6 +893,13 @@ namespace aprilui
 	bool Dataset::isWaitingAnimation()
 	{
 		foreach_m (Object*, it, this->objects)
+		{
+			if (it->second->isWaitingAnimation())
+			{
+				return true;
+			}
+		}
+		foreach_m (Animator*, it, this->animators)
 		{
 			if (it->second->isWaitingAnimation())
 			{
@@ -840,7 +920,7 @@ namespace aprilui
 			}
 			return this->objects[name];
 		}
-		Dataset* dataset;
+		Dataset* dataset = NULL;
 		try
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
@@ -851,10 +931,38 @@ namespace aprilui
 		}
 		return dataset->getObject(name(dot + 1, -1));
 	}
-	
+
+	Animator* Dataset::getAnimator(chstr name)
+	{
+		int dot = name.find('.');
+		if (dot < 0)
+		{
+			if (!this->animators.has_key(name))
+			{
+				throw ResourceNotExistsException(name, "Animator", this);
+			}
+			return this->animators[name];
+		}
+		Dataset* dataset = NULL;
+		try
+		{
+			dataset = aprilui::getDatasetByName(name(0, dot));
+		}
+		catch (_GenericException&)
+		{
+			throw ResourceNotExistsException(name, "Animator", this);
+		}
+		return dataset->getAnimator(name(dot + 1, -1));
+	}
+
 	bool Dataset::hasObject(chstr name)
 	{
 		return (this->tryGetObject(name) != NULL);
+	}
+	
+	bool Dataset::hasAnimator(chstr name)
+	{
+		return (this->tryGetAnimator(name) != NULL);
 	}
 	
 	bool Dataset::hasImage(chstr name)
@@ -874,7 +982,7 @@ namespace aprilui
 		{
 			return this->objects.try_get_by_key(name, NULL);
 		}
-		Dataset* dataset;
+		Dataset* dataset = NULL;
 		try
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
@@ -885,7 +993,26 @@ namespace aprilui
 		}
 		return dataset->tryGetObject(name(dot + 1, -1));
 	}
-	
+
+	Animator* Dataset::tryGetAnimator(chstr name)
+	{
+		int dot = name.find('.');
+		if (dot < 0)
+		{
+			return this->animators.try_get_by_key(name, NULL);
+		}
+		Dataset* dataset = NULL;
+		try
+		{
+			dataset = aprilui::getDatasetByName(name(0, dot));
+		}
+		catch (_GenericException&)
+		{
+			return NULL;
+		}
+		return dataset->tryGetAnimator(name(dot + 1, -1));
+	}
+
 	Texture* Dataset::getTexture(chstr name)
 	{
 		if (!this->textures.has_key(name))
@@ -1115,7 +1242,7 @@ namespace aprilui
 
 	void Dataset::clearChildUnderCursor()
 	{
-		foreach_m (aprilui::Object*, it, this->objects)
+		foreach_m (Object*, it, this->objects)
 		{
 			it->second->clearChildUnderCursor();
 		}
@@ -1123,7 +1250,11 @@ namespace aprilui
 
 	void Dataset::notifyEvent(chstr name, void* params)
 	{
-		foreach_m (aprilui::Object*, it, this->objects)
+		foreach_m (Object*, it, this->objects)
+		{
+			it->second->notifyEvent(name, params);
+		}
+		foreach_m (Animator*, it, this->animators)
 		{
 			it->second->notifyEvent(name, params);
 		}

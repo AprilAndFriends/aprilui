@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -9,6 +9,7 @@
 #include <hltypes/hstring.h>
 
 #include "AnimatorResizerX.h"
+#include "Object.h"
 
 namespace aprilui
 {

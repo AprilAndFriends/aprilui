@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -20,20 +20,20 @@
 
 namespace aprilui
 {
-	class Object;
+	class BaseObject;
 
 	class apriluiExport EventArgs
 	{
 	public:
-		Object* object;
+		BaseObject* object;
 		float x;
 		float y;
 		april::Key keyCode;
 		april::Button buttonCode;
 		hstr extra;
 		
-		EventArgs(Object* object, float x = 0.0f, float y = 0.0f, april::Key keyCode = april::AK_NONE, chstr extra = "");
-		EventArgs(Object* object, float x, float y, april::Button buttonCode, chstr extra = "");
+		EventArgs(BaseObject* object, float x = 0.0f, float y = 0.0f, april::Key keyCode = april::AK_NONE, chstr extra = "");
+		EventArgs(BaseObject* object, float x, float y, april::Button buttonCode, chstr extra = "");
 		~EventArgs();
 
 	};

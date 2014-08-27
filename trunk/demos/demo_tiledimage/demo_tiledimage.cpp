@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -58,7 +58,7 @@ public:
 		aprilui::processEvents();
 		aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
 		image->setScroll(image->getScroll() + SCROLL_SPEED * timeSinceLastFrame); // manual scrolling
-		dataset->getObject("root")->draw();
+		dataset->draw();
 		dataset->update(timeSinceLastFrame);
 		return true;
 	}
