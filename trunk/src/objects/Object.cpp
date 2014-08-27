@@ -30,9 +30,9 @@
 #define REMOVE_EXISTING_ANIMATORS(name) \
 	int i ## name = 0; \
 	Animators::name* removeAnimator ## name; \
-	while (i ## name < dynamicAnimators.size()) \
+	while (i ## name < this->dynamicAnimators.size()) \
 	{ \
-		removeAnimator ## name = dynamic_cast<Animators::name*>(dynamicAnimators[i ## name]); \
+		removeAnimator ## name = dynamic_cast<Animators::name*>(this->dynamicAnimators[i ## name]); \
 		if (removeAnimator ## name != NULL) \
 		{ \
 			delete removeAnimator ## name; \
@@ -571,20 +571,17 @@ namespace aprilui
 		{
 			(*it)->update(timeDelta);
 		}
-		// faster than creating a new array, adding expired animators and the deleting them
-		int i = 0;
-		Animator* animator = NULL;
-		while (i < this->dynamicAnimators.size())
+		harray<Animator*> animators = this->dynamicAnimators;
+		this->dynamicAnimators.clear();
+		foreach (Animator*, it, animators)
 		{
-			animator = this->dynamicAnimators[i];
-			if (animator->isExpired())
+			if ((*it)->isExpired())
 			{
-				delete animator;
-				this->dynamicAnimators.remove_at(i);
+				delete (*it);
 			}
 			else
 			{
-				++i;
+				this->dynamicAnimators += (*it);
 			}
 		}
 	}

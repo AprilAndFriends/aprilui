@@ -31,6 +31,7 @@ namespace aprilui
 		this->name = name;
 		this->dataset = NULL;
 		this->parent = NULL;
+		this->enabled = true;
 		this->zOrder = 0;
 	}
 
