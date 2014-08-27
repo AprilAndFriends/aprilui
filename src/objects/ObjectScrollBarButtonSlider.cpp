@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -63,9 +63,13 @@ namespace aprilui
 			ScrollBarButtonBackground* buttonBackground = scrollBar->_getButtonBackground();
 			if (buttonBackground != NULL)
 			{
-				gvec2 position = args->object->transformToLocalSpace(aprilui::getCursorPosition());
-				position = args->object->getDerivedPoint(position, scrollBar) - args->object->getPosition() + buttonBackground->getPosition();
-				scrollBar->_clickPosition = buttonBackground->transformToLocalSpace(position, scrollBar);
+				Object* object = dynamic_cast<Object*>(args->object);
+				if (object != NULL)
+				{
+					gvec2 position = object->transformToLocalSpace(aprilui::getCursorPosition());
+					position = object->getDerivedPoint(position, scrollBar) - object->getPosition() + buttonBackground->getPosition();
+					scrollBar->_clickPosition = buttonBackground->transformToLocalSpace(position, scrollBar);
+				}
 			}
 		}
 	}

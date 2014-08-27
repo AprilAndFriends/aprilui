@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -178,7 +178,7 @@ namespace aprilui
 					this->dragging = true;
 					this->_clickScrollOffset = this->getScrollOffset();
 					this->_lastPosition = position;
-					foreach (Object*, it, this->children)
+					foreach (Object*, it, this->objects)
 					{
 						(*it)->onMouseCancel(april::AK_LBUTTON);
 					}

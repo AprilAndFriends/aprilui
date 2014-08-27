@@ -200,6 +200,9 @@
     <ClCompile Include="src\PropertyDescription.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\BaseObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\aprilui\Animators.h">
@@ -386,6 +389,9 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\PropertyDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aprilui\BaseObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

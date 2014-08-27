@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -15,16 +15,27 @@
 
 #include <gtypes/Rectangle.h>
 
-#include "Object.h"
-
 #include "apriluiExport.h"
+#include "BaseObject.h"
 
 namespace aprilui
 {
-	class apriluiExport Animator : public Object
+	class apriluiExport Animator : public BaseObject
 	{
 	public:
-		friend class Object;
+		enum AnimationFunction
+		{
+			Linear,
+			Sine,
+			Square,
+			Saw,
+			Triangle,
+			Random,
+			Hover,
+			Custom
+		};
+
+		friend class BaseObject;
 
 		Animator(chstr name);
 		~Animator();
@@ -53,15 +64,13 @@ namespace aprilui
 		void setTime(float value);
 
 		harray<PropertyDescription> getPropertyDescriptions();
-		
+
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 		void notifyEvent(chstr name, void* params);
 		
 		void update(float timeDelta);
-
-		void OnDrawDebug();
 		
 	protected:
 		float timeDelta;

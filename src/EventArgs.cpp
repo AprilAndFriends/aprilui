@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -10,7 +10,7 @@
 
 namespace aprilui
 {
-	EventArgs::EventArgs(Object* object, float x, float y, april::Key keyCode, chstr extra)
+	EventArgs::EventArgs(BaseObject* object, float x, float y, april::Key keyCode, chstr extra)
 	{
 		this->object = object;
 		this->x = x;
@@ -20,7 +20,7 @@ namespace aprilui
 		this->extra = extra;
 	}
 
-	EventArgs::EventArgs(Object* object, float x, float y, april::Button buttonCode, chstr extra)
+	EventArgs::EventArgs(BaseObject* object, float x, float y, april::Button buttonCode, chstr extra)
 	{
 		this->object = object;
 		this->x = x;

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -8,7 +8,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a base object as a node in a tree-like structure for GUI elements and other objects.
+/// Defines an object that is actually displayed visually.
 
 #ifndef APRILUI_OBJECT_H
 #define APRILUI_OBJECT_H
@@ -21,13 +21,14 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
+#include "Animator.h"
 #include "apriluiExport.h"
+#include "BaseObject.h"
 #include "EventReceiver.h"
 #include "PropertyDescription.h"
 
 namespace aprilui
 {
-	class Animator;
 	class Dataset;
 	class Image;
 	class Event;
@@ -36,31 +37,14 @@ namespace aprilui
 	
 	typedef bool (*CustomPointInsideCallback)(Object*, gvec2);
 
-	class apriluiExport Object : public EventReceiver
+	class apriluiExport Object : public BaseObject
 	{
 	public:
-		enum AnimationFunction
-		{
-			Linear,
-			Sine,
-			Square,
-			Saw,
-			Triangle,
-			Random,
-			Hover,
-			Custom
-		};
-	
 		friend class Dataset;
 
 		Object(chstr name, grect rect);
 		~Object();
-		virtual hstr getClassName() const { return "Object"; }
-
-		HL_DEFINE_GET(Object*, parent, Parent);
-		HL_DEFINE_GET(hstr, name, Name);
-		HL_DEFINE_GET(int, zOrder, ZOrder);
-		void setZOrder(int zorder);
+		hstr getClassName() const { return "Object"; }
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);
@@ -93,8 +77,6 @@ namespace aprilui
 		HL_DEFINE_GETSET(unsigned char, color.b, Blue);
 		HL_DEFINE_GETSET(unsigned char, color.a, Alpha);
 
-		HL_DEFINE_IS(enabled, Enabled);
-		void setEnabled(bool value);
 		HL_DEFINE_GETSET(float, angle, Angle);
 		HL_DEFINE_ISSET(anchorLeft, AnchorLeft);
 		HL_DEFINE_ISSET(anchorRight, AnchorRight);
@@ -111,51 +93,32 @@ namespace aprilui
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
 		virtual HL_DEFINE_GET(int, focusIndex, FocusIndex);
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
-		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 
-		virtual harray<PropertyDescription> getPropertyDescriptions();
-		bool hasProperty(chstr name);
-		
-		inline harray<Object*>& getChildren() { return this->children; }
-		inline hmap<hstr, Event*>& getEvents() { return this->events; }
+		harray<PropertyDescription> getPropertyDescriptions();
+
 		virtual bool isFocused();
 		virtual void setFocused(bool focused);
-		hstr getFullName();
 		bool isCursorInside();
 		Object* getChildUnderCursor();
-		harray<Object*> getAncestors();
-		harray<Object*> getDescendants();
-				
+
 		virtual harray<Image*> getUsedImages();
 		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 
-		void addChild(Object* object);
-		void removeChild(Object* object);
-		void registerChild(Object* object);
-		void unregisterChild(Object* object);
-		void attach(Object* object);
-		void detach();
+		void addChild(BaseObject* object);
+		void removeChild(BaseObject* object);
+		void registerChild(BaseObject* object);
+		void unregisterChild(BaseObject* object);
 		void removeChildren(bool recursive = false);
 		void destroyChildren();
+
 		Object* getChildUnderPoint(gvec2 pos);
 		Object* getChildUnderPoint(float x, float y);
 		virtual void clearChildUnderCursor();
-		/// @returns Whether or not a given object is a direct child of this object
-		bool isChild(Object* obj);
-		/// @returns whether or not a given object is a descendant of this object (child or child of a child etc., recursively)
-		bool isDescendant(Object* obj);
-		/// @returns whether or not a given object is a direct parent of this object
-		bool isParent(Object* obj);
-		/// @returns whether or not a given object is an ancestor of a this object (parent or parent of a parent etc., recursively)
-		bool isAncestor(Object* obj);
 		virtual bool isPointInside(gvec2 position);
 		bool angleEquals(float angle);
-		void unregisterEvent(chstr name);
-		void registerEvent(chstr name, void (*callback)(EventArgs*));
-		void registerEvent(chstr name, Event* e);
-		
+
 		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
 		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
 
@@ -170,7 +133,6 @@ namespace aprilui
 		gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
 		float getDerivedAngle(aprilui::Object* overrideRoot = NULL);
-		bool isDerivedEnabled();
 		bool isDerivedVisible();
 		virtual bool isAnimated();
 		virtual bool isWaitingAnimation();
@@ -190,16 +152,13 @@ namespace aprilui
 		virtual bool onButtonUp(april::Button buttonCode);
 		virtual void mouseCancel();
 
-		virtual void update(float timeDelta);
+		void update(float timeDelta);
 		void draw();
-		
-		Object* findChildByName(chstr name);
-		Object* findDescendantByName(chstr name);
 		
 		void resetCenter();
 		
-		virtual hstr getProperty(chstr name);
-		virtual bool setProperty(chstr name, chstr value);
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
 		
 		// dynamic animators
 		
@@ -227,19 +186,19 @@ namespace aprilui
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
 		void fadeColor(april::Color color, float speed);
 		
-		Animator* moveXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* moveYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* scaleXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* scaleYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* resizeXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* resizeYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* rotateF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* moveCenterXF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* moveCenterYF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* fadeRedF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* fadeGreenF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* fadeBlueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
-		Animator* fadeAlphaF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength);
+		Animator* moveXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* moveYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* scaleXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* scaleYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* resizeXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* resizeYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* rotateF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* moveCenterXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* moveCenterYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeRedF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeGreenF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeBlueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* fadeAlphaF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
 		
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
@@ -265,19 +224,19 @@ namespace aprilui
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
 
-		Animator* moveXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* moveYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* scaleXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* scaleYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* resizeXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* resizeYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* rotateQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* moveCenterXQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* moveCenterYQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* fadeRedQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* fadeGreenQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* fadeBlueQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
-		Animator* fadeAlphaQueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* moveXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* moveYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* scaleXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* scaleYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* resizeXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* resizeYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* rotateQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* moveCenterXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* moveCenterYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeRedQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeGreenQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeBlueQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* fadeAlphaQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		
 		void moveXStop();
 		void moveYStop();
@@ -298,26 +257,13 @@ namespace aprilui
 		void moveCenterStop();
 		void fadeColorStop();
 		
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "");
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
-
 	protected:
-		hstr name;
 		grect rect;
 		gvec2 scaleFactor;
 		gvec2 center;
-		Object* parent;
 		Object* childUnderCursor;
 		bool checkedChildUnderCursor;
-		harray<Object*> children;
 		harray<Animator*> dynamicAnimators;
-		hmap<hstr, Event*> events;
-		int zOrder;
-		bool enabled;
 		bool visible;
 		float angle;
 		bool clickThrough;
@@ -332,10 +278,7 @@ namespace aprilui
 		bool useDisabledAlpha;
 		int focusIndex;
 		CustomPointInsideCallback customPointInsideCallback;
-		Dataset* dataset;
 		
-		void _sortChildren();
-
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
 		

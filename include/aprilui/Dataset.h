@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.21
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -33,17 +33,18 @@ namespace aprilui
 {
 	#define REGISTER_CALLBACK(dataDict, fn) dataDict->registerCallback(#fn, fn)
 	
-	class Object;
-	class Image;
-	class Texture;
-	class NullImage;
+	class BaseObject;
 	class Event;
 	class EventArgs;
+	class Image;
+	class NullImage;
+	class Object;
+	class Texture;
 	
 	class apriluiExport Dataset : public EventReceiver
 	{
 	public:
-		Object* parseObject(hlxml::Node* node, Object* parent = NULL);
+		BaseObject* parseObject(hlxml::Node* node, Object* parent = NULL);
 		
 		Dataset(chstr filename, chstr name = "", bool useNameBasePath = false);
 		~Dataset();
@@ -55,17 +56,19 @@ namespace aprilui
 		HL_DEFINE_GET(Object*, focusedObject, FocusedObject);
 		HL_DEFINE_GETSET(Object*, root, Root);
 		inline hmap<hstr, Object*>& getObjects() { return this->objects; }
+		inline hmap<hstr, Animator*>& getAnimators() { return this->animators; }
 		inline hmap<hstr, Image*>& getImages() { return this->images; }
 		inline hmap<hstr, Texture*>& getTextures() { return this->textures; }
 		inline hmap<hstr, hstr>& getTexts() { return this->texts; }
+		hmap<hstr, BaseObject*> getAllObjects();
 		bool isAnimated();
 		bool isWaitingAnimation();
 		int getFocusedObjectIndex();
 
 		void load();
 		void unload();
-		void registerObjects(Object* root);
-		void unregisterObjects(Object* root);
+		void registerObjects(BaseObject* root);
+		void unregisterObjects(BaseObject* root);
 		void registerImage(Image* image);
 		void unregisterImage(Image* image);
 		void registerTexture(Texture* texture);
@@ -83,7 +86,12 @@ namespace aprilui
 		{
 			return this->objects.dyn_cast_value<hstr, T>();
 		}
-		
+		template <class T>
+		inline hmap<hstr, T> getAnimatorsByType()
+		{
+			return this->animators.dyn_cast_value<hstr, T>();
+		}
+
 		void updateTextures(float timeDelta);
 		void unloadUnusedTextures();
 		void clearChildUnderCursor();
@@ -101,7 +109,7 @@ namespace aprilui
 		void _destroyImage(Image* img);
 		
 		void destroyObjects(chstr rootName);
-		void destroyObjects(Object* root);
+		void destroyObjects(BaseObject* root);
 		
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
@@ -123,11 +131,14 @@ namespace aprilui
 		harray<hstr> getTexts(harray<hstr> keys);
 		
 		virtual Object* getObject(chstr name);
+		virtual Animator* getAnimator(chstr name);
 		bool hasImage(chstr name);
 		bool hasTexture(chstr name);
 		bool hasObject(chstr name);
+		bool hasAnimator(chstr name);
 		Object* tryGetObject(chstr name);
-		
+		Animator* tryGetAnimator(chstr name);
+
 		template <class T>
 		inline T getObject(chstr name)
 		{
@@ -158,7 +169,38 @@ namespace aprilui
 		{
 			out = this->tryGetObject<T>(name);
 		}
-		
+
+		template <class T>
+		inline T getAnimator(chstr name)
+		{
+			T animator = dynamic_cast<T>(this->getAnimator(name));
+			if (animator == NULL)
+			{
+				throw InvalidObjectTypeCast(hsprintf("Animator '%s' found in dataset '%s' but dynamic cast failed.", name.c_str(), this->getName().c_str()));
+			}
+			return animator;
+		}
+		template <class T>
+		inline void getAnimator(chstr name, T& out)
+		{
+			out = this->getAnimator<T>(name);
+		}
+		template <class T>
+		inline T tryGetAnimator(chstr name)
+		{
+			T animator = dynamic_cast<T>(this->tryGetAnimator(name));
+			if (animator == NULL)
+			{
+				hlog::warn(aprilui::logTag, "Dynamic cast in getAnimator<T> failed, animator: " + name);
+			}
+			return animator;
+		}
+		template <class T>
+		inline void tryGetAnimator(chstr name, T& out)
+		{
+			out = this->tryGetAnimator<T>(name);
+		}
+
 		void notifyEvent(chstr name, void* params);
 		void reloadTexts();
 		void reloadTextures();
@@ -168,14 +210,14 @@ namespace aprilui
 		void parseGlobalIncludeFile(chstr filename);
 		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
-		DEPRECATED_ATTRIBUTE void registerManualObject(Object* object) { this->registerObjects(object); }
-		DEPRECATED_ATTRIBUTE void unregisterManualObject(Object* object) { this->unregisterObjects(object); }
+		DEPRECATED_ATTRIBUTE void registerManualObject(BaseObject* object) { this->registerObjects(object); }
+		DEPRECATED_ATTRIBUTE void unregisterManualObject(BaseObject* object) { this->unregisterObjects(object); }
 		DEPRECATED_ATTRIBUTE void registerManualImage(Image* image) { this->registerImage(image); }
 		DEPRECATED_ATTRIBUTE void unregisterManualImage(Image* image) { this->unregisterImage(image); }
 		DEPRECATED_ATTRIBUTE void registerManualTexture(Texture* texture) { this->registerTexture(texture); }
 		DEPRECATED_ATTRIBUTE void unregisterManualTexture(Texture* texture) { this->unregisterTexture(texture); }
 		DEPRECATED_ATTRIBUTE void destroyObject(chstr rootName) { this->destroyObjects(rootName); }
-		DEPRECATED_ATTRIBUTE void destroyObject(Object* root) { this->destroyObjects(root); }
+		DEPRECATED_ATTRIBUTE void destroyObject(BaseObject* root) { this->destroyObjects(root); }
 
 	protected:
 		struct QueuedCallback
@@ -192,6 +234,7 @@ namespace aprilui
 		Object* focusedObject;
 		Object* root;
 		hmap<hstr, Object*> objects;
+		hmap<hstr, Animator*> animators;
 		hmap<hstr, Texture*> textures;
 		hmap<hstr, Image*> images;
 		hmap<hstr, hstr> texts;
@@ -207,12 +250,12 @@ namespace aprilui
 		void parseTextureGroup(hlxml::Node* node);
 		void parseCompositeImage(hlxml::Node* node);
 		void parseGlobalInclude(chstr path);
-		void parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		void parseObjectInclude(chstr path, Object* object, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		virtual inline void parseExternalXMLNode(hlxml::Node* node) { }
-		virtual inline Object* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
+		virtual inline BaseObject* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
 		
-		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
-		Object* recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent);
+		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		
 		void readFile(chstr filename);
 		void _loadTexts(chstr path);

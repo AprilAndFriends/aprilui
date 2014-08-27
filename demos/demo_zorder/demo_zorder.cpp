@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -55,7 +55,7 @@ public:
 		aprilui::updateCursorPosition();
 		aprilui::processEvents();
 		dataset->getObject("obj0" + hstr(hrand(1, 8)))->setZOrder(hrand(100));
-		dataset->getObject("root")->draw();
+		dataset->draw();
 		dataset->update(timeSinceLastFrame);
 		return true;
 	}

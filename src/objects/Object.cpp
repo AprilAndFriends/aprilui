@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -86,7 +86,7 @@
 	}
 
 #define DEFINE_ANIMATOR_F(functionName, animatorName) \
-	Animator* Object::functionName ## F(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength) \
+	Animator* Object::functionName ## F(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength) \
 	{ \
 		REMOVE_EXISTING_ANIMATORS(animatorName); \
 		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, periodStart, periodLength); \
@@ -94,7 +94,7 @@
 	}
 
 #define DEFINE_ANIMATOR_F_DELAYED(functionName, animatorName) \
-	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, AnimationFunction function, float periodStart, float periodLength, float delay) \
+	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay) \
 	{ \
 		CREATE_DELAYED_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, periodStart, periodLength, delay); \
 		return animator ## animatorName; \
@@ -102,16 +102,10 @@
 
 namespace aprilui
 {
-	static bool _objectSortCallback(Object* a, Object* b)
-	{
-		return (a->getZOrder() < b->getZOrder());
-	}
-
 	harray<PropertyDescription> Object::_propertyDescriptions;
 
-	Object::Object(chstr name, grect rect) : EventReceiver()
+	Object::Object(chstr name, grect rect) : BaseObject(name)
 	{
-		this->name = name;
 		this->rect = rect;
 		if (this->rect.w != -1)
 		{
@@ -122,11 +116,8 @@ namespace aprilui
 			this->center.y = this->rect.h* 0.5f;
 		}
 		this->scaleFactor.set(1.0f, 1.0f);
-		this->parent = NULL;
 		this->childUnderCursor = NULL;
 		this->checkedChildUnderCursor = false;
-		this->dataset = NULL;
-		this->zOrder = 0;
 		this->enabled = true;
 		this->visible = true;
 		this->angle = 0.0f;
@@ -156,7 +147,6 @@ namespace aprilui
 			delete (*it);
 		}
 		this->dynamicAnimators.clear();
-		
 		if (this->isFocused())
 		{
 			this->setFocused(false);
@@ -175,8 +165,6 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("zorder", PropertyDescription::INT);
-			Object::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::UCHAR);
@@ -199,65 +187,64 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("clip", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("focus_index", PropertyDescription::INT);
-			Object::_propertyDescriptions += PropertyDescription("name", PropertyDescription::STRING);
-			Object::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::STRING);
 		}
-		return Object::_propertyDescriptions;
+		return (BaseObject::getPropertyDescriptions() + Object::_propertyDescriptions);
 	}
 
-	bool Object::hasProperty(chstr name)
+	void Object::addChild(BaseObject* obj)
 	{
-		harray<PropertyDescription> properties = this->getPropertyDescriptions();
-		foreach (PropertyDescription, it, properties)
+		if (obj->getParent() != NULL)
 		{
-			if ((*it).getName() == name)
+			throw ObjectHasParentException(obj->getName(), this->getName());
+		}
+		Object* object = dynamic_cast<Object*>(obj);
+		if (object != NULL)
+		{
+			this->objects += object;
+			this->_sortChildren();
+		}
+		else
+		{
+			Animator* animator = dynamic_cast<Animator*>(obj);
+			if (animator != NULL)
 			{
-				return true;
+				this->animators += animator;
 			}
 		}
-		return false;
+		obj->parent = this;
+		obj->notifyEvent("AttachToObject", NULL);
 	}
 
-	void Object::_sortChildren()
+	void Object::removeChild(BaseObject* obj)
 	{
-		this->children.sort(&_objectSortCallback);
-	}
-
-	hstr Object::getFullName()
-	{
-		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
-	}
-
-	void Object::addChild(Object* object)
-	{
-		if (object->getParent())
+		if (obj->getParent() != this)
 		{
-			throw ObjectHasParentException(object->getName(), this->getName());
+			throw ObjectNotChildException(obj->getName(), this->getName());
 		}
-		this->children += object;
-		this->_sortChildren();
-		object->parent = this;
-		object->notifyEvent("AttachToObject", NULL);
-	}
-	
-	void Object::removeChild(Object* object)
-	{
-		if (object->getParent() != this)
+		obj->notifyEvent("DetachFromObject", NULL);
+		Object* object = dynamic_cast<Object*>(obj);
+		if (object != NULL)
 		{
-			throw ObjectNotChildException(object->getName(), this->getName());
+			this->objects -= object;
 		}
-		object->notifyEvent("DetachFromObject", NULL);
-		this->children -= object;
-		object->parent = NULL;
+		else
+		{
+			Animator* animator = dynamic_cast<Animator*>(obj);
+			if (animator != NULL)
+			{
+				this->animators -= animator;
+			}
+		}
+		obj->parent = NULL;
 	}
 
-	void Object::registerChild(Object* object)
+	void Object::registerChild(BaseObject* object)
 	{
 		this->addChild(object);
 		this->dataset->registerObjects(object);
 	}
-	
-	void Object::unregisterChild(Object* object)
+
+	void Object::unregisterChild(BaseObject* object)
 	{
 		this->removeChild(object);
 		this->dataset->unregisterObjects(object);
@@ -267,79 +254,32 @@ namespace aprilui
 	{
 		if (recursive)
 		{
-			foreach (Object*, it, this->children)
+			foreach (Object*, it, this->objects)
 			{
 				(*it)->removeChildren(recursive);
 			}
 		}
-		foreach (Object*, it, this->children)
+		foreach (Object*, it, this->objects)
 		{
 			(*it)->parent = NULL;
 		}
-		this->children.clear();
-	}
-	
-	void Object::destroyChildren()
-	{
-		while (this->children.size() > 0)
+		foreach (Animator*, it, this->animators)
 		{
-			this->dataset->destroyObjects(this->children.first());
+			(*it)->parent = NULL;
 		}
-	}
-	
-	void Object::attach(Object* object)
-	{
-		object->addChild(this);
-	}
-	
-	void Object::detach()
-	{
-		if (this->parent == NULL)
-		{
-			throw ObjectWithoutParentException(this->getName());
-		}
-		this->parent->removeChild(this);
-	}
-	
-	Object* Object::findChildByName(chstr name)
-	{
-		foreach (Object*, it, this->children)
-		{
-			if ((*it)->getName() == name)
-			{
-				return (*it);
-			}
-		}
-		return NULL;
-	}
-	
-	Object* Object::findDescendantByName(chstr name)
-	{
-		Object* object = this->findChildByName(name);
-		if (object != NULL)
-		{
-			return object;
-		}
-		foreach (Object*, it, this->children)
-		{
-			object = (*it)->findDescendantByName(name);
-			if (object != NULL)
-			{
-				return object;
-			}
-		}
-		return NULL;
+		this->objects.clear();
+		this->animators.clear();
 	}
 
-	void Object::setZOrder(int zorder)
+	void Object::destroyChildren()
 	{
-		if (this->zOrder != zorder)
+		while (this->animators.size() > 0)
 		{
-			this->zOrder = zorder;
-			if (this->parent != NULL)
-			{
-				this->parent->_sortChildren();
-			}
+			this->dataset->destroyObjects(this->animators.first());
+		}
+		while (this->objects.size() > 0)
+		{
+			this->dataset->destroyObjects(this->objects.first());
 		}
 	}
 
@@ -349,10 +289,10 @@ namespace aprilui
 		{
 			return;
 		}
-		float width;
-		float height;
-		float differenceAlt;
-		foreach (Object*, it, this->children)
+		float width = 0.0f;
+		float height = 0.0f;
+		float differenceAlt = 0.0f;
+		foreach (Object*, it, this->objects)
 		{
 			width = (*it)->getWidth();
 			height = (*it)->getHeight();
@@ -401,10 +341,10 @@ namespace aprilui
 		{
 			return;
 		}
-		float width;
-		float height;
-		float differenceAlt;
-		foreach (Object*, it, this->children)
+		float width = 0.0f;
+		float height = 0.0f;
+		float differenceAlt = 0.0f;
+		foreach (Object*, it, this->objects)
 		{
 			width = (*it)->getWidth();
 			height = (*it)->getHeight();
@@ -532,9 +472,9 @@ namespace aprilui
 				return true;
 			}
 		}
-		foreach (Object*, it, this->children)
+		foreach (Animator*, it, this->animators)
 		{
-			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isAnimated())
+			if ((*it)->isAnimated())
 			{
 				return true;
 			}
@@ -551,9 +491,9 @@ namespace aprilui
 				return true;
 			}
 		}
-		foreach (Object*, it, this->children)
+		foreach (Animator*, it, this->animators)
 		{
-			if (dynamic_cast<Animator*>(*it) != NULL && (*it)->isWaitingAnimation())
+			if ((*it)->isWaitingAnimation())
 			{
 				return true;
 			}
@@ -608,7 +548,7 @@ namespace aprilui
 		{
 			april::rendersys->translate(-this->center.x, -this->center.y);
 		}
-		foreach (Object*, it, children)
+		foreach (Object*, it, this->objects)
 		{
 			(*it)->draw();
 		}
@@ -626,10 +566,7 @@ namespace aprilui
 		{
 			this->clearChildUnderCursor();
 		}
-		foreach (Object*, it, this->children)
-		{
-			(*it)->update(timeDelta);
-		}
+		BaseObject::update(timeDelta);
 		foreach (Animator*, it, this->dynamicAnimators)
 		{
 			(*it)->update(timeDelta);
@@ -703,8 +640,8 @@ namespace aprilui
 			this->dataset->removeFocus();
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
@@ -725,8 +662,8 @@ namespace aprilui
 		harray<Object*> validObjects;
 		Object* object = NULL;
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled())
@@ -757,8 +694,8 @@ namespace aprilui
 	bool Object::onMouseCancel(april::Key keyCode)
 	{
 		this->mouseCancel();
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			(*it)->onMouseCancel(keyCode);
 		}
@@ -773,8 +710,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseMove())
@@ -793,8 +730,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseScroll(x, y))
@@ -813,8 +750,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyDown(keyCode))
@@ -833,8 +770,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyUp(keyCode))
@@ -853,8 +790,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onChar(charCode))
@@ -873,8 +810,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onTouch(touches))
@@ -893,8 +830,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonDown(buttonCode))
@@ -913,8 +850,8 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> children = this->children;
-		foreach_r (Object*, it, children)
+		harray<Object*> objects = this->objects;
+		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
 			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonUp(buttonCode))
@@ -929,84 +866,14 @@ namespace aprilui
 	{
 	}
 	
-	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
-	{
-		this->registerEvent(name, new CallbackEvent(callback));
-	}
-
-	void Object::registerEvent(chstr name, Event* e)
-	{
-		this->unregisterEvent(name);
-		if (e != NULL)
-		{
-			this->events[name] = e;
-		}
-	}
-
-	void Object::unregisterEvent(chstr name)
-	{
-		if (this->events.has_key(name))
-		{
-			Event* event = this->events[name];
-			if (this->dataset != NULL)
-			{
-				this->dataset->removeCallbackFromQueue(event);
-			}
-			delete event;
-			this->events.remove_key(name);
-		}
-	}
-
-	// TODO - this needs to be seriously refactored
-	bool Object::triggerEvent(chstr name, april::Key keyCode, chstr extra)
-	{
-		if (this->events.has_key(name))
-		{
-			gvec2 cursorPosition = aprilui::getCursorPosition();
-			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, keyCode, extra);
-			this->dataset->queueCallback(this->events[name], args);
-			return true;
-		}
-		return false;
-	}
-
-	// TODO - this needs to be seriously refactored
-	bool Object::triggerEvent(chstr name, april::Button buttonCode, chstr extra)
-	{
-		if (this->events.has_key(name))
-		{
-			gvec2 cursorPosition = aprilui::getCursorPosition();
-			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, buttonCode, extra);
-			this->dataset->queueCallback(this->events[name], args);
-			return true;
-		}
-		return false;
-	}
-
-	// TODO - this needs to be seriously refactored
-	bool Object::triggerEvent(chstr name, float x, float y, april::Key keyCode, chstr extra)
-	{
-		if (this->events.has_key(name))
-		{
-			EventArgs* args = new EventArgs(this, x, y, keyCode, extra);
-			this->dataset->queueCallback(this->events[name], args);
-			return true;
-		}
-		return false;
-	}
-
 	void Object::resetCenter()
 	{
 		this->center = this->rect.getSize() / 2;
 	}
 
-	bool Object::isDerivedEnabled()
-	{
-		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
-	}
-	
 	bool Object::isDerivedVisible()
 	{
+
 		return (this->isVisible() && (this->parent == NULL || this->parent->isDerivedVisible()));
 	}
 	
@@ -1015,15 +882,6 @@ namespace aprilui
 		return (this->isClickThrough() && (this->parent == NULL || this->parent->_isDerivedClickThrough()));
 	}
 	
-	void Object::setEnabled(bool value)
-	{
-		if (value != this->enabled)
-		{
-			this->enabled = value;
-			this->notifyEvent("OnEnableChanged", NULL);
-		}
-	}
-
 	hstr Object::getProperty(chstr name)
 	{
 		if (name == "rect")					return grect_to_hstr(this->getRect());
@@ -1034,8 +892,6 @@ namespace aprilui
 		if (name == "w")					return this->getWidth();
 		if (name == "h")					return this->getHeight();
 		if (name == "visible")				return this->getVisibilityFlag();
-		if (name == "zorder")				return this->getZOrder();
-		if (name == "enabled")				return this->isEnabled();
 		if (name == "click_through")		return this->isClickThrough();
 		if (name == "inherit_alpha")		return this->isInheritAlpha();
 		if (name == "red")					return this->getRed();
@@ -1058,9 +914,7 @@ namespace aprilui
 		if (name == "clip")					return this->isClip();
 		if (name == "use_disabled_alpha")	return this->isUseDisabledAlpha();
 		if (name == "focus_index")			return this->getFocusIndex();
-		if (name == "name")					return this->getName();
-		if (name == "full_name")			return this->getFullName();
-		return "";
+		return BaseObject::getProperty(name);
 	}
 	
 	bool Object::setProperty(chstr name, chstr value)
@@ -1073,8 +927,6 @@ namespace aprilui
 		else if	(name == "w")						this->setWidth(value);
 		else if	(name == "h")						this->setHeight(value);
 		else if	(name == "visible")					this->setVisible(value);
-		else if	(name == "zorder")					this->setZOrder(value);
-		else if	(name == "enabled")					this->setEnabled(value);
 		else if	(name == "click_through")			this->setClickThrough(value);
 		else if	(name == "inherit_alpha")			this->setInheritAlpha(value);
 		else if	(name == "red")						this->setRed((int)value);
@@ -1114,7 +966,7 @@ namespace aprilui
 		else if	(name == "clip")					this->setClip(value);
 		else if	(name == "use_disabled_alpha")		this->setUseDisabledAlpha(value);
 		else if	(name == "focus_index")				this->setFocusIndex(value);
-		else return false;
+		else return BaseObject::setProperty(name, value);
 		return true;
 	}
 
@@ -1134,10 +986,10 @@ namespace aprilui
 			return NULL;
 		}
 		Object* object = NULL;
-		foreach_r (Object*, it, this->children)
+		foreach_r (Object*, it, this->objects)
 		{
 			object = (*it)->getChildUnderPoint(pos);
-			if (object != NULL && dynamic_cast<Animator*>(object) == NULL)
+			if (object != NULL)
 			{
 				break;
 			}
@@ -1166,59 +1018,6 @@ namespace aprilui
 		this->checkedChildUnderCursor = false;
 	}
 	
-	bool Object::isChild(Object* obj)
-	{
-		return (obj != NULL && obj->isParent(this));
-	}
-	
-	bool Object::isDescendant(Object* obj)
-	{
-		return (obj != NULL && obj->isAncestor(this));
-	}
-	
-	bool Object::isParent(Object* obj)
-	{
-		return (obj != NULL && obj == this->parent);
-	}
-	
-	bool Object::isAncestor(Object* obj)
-	{
-		if (obj == NULL)
-		{
-			return false;
-		}
-		for (Object* o = this->getParent(); o != NULL; o = o->getParent())
-		{
-			if (o == obj)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	harray<Object*> Object::getAncestors()
-	{
-		harray<Object*> result;
-		Object* parent = this->parent;
-		while (parent != NULL)
-		{
-			result += parent;
-			parent = parent->getParent();
-		}
-		return result;
-	}
-
-	harray<Object*> Object::getDescendants()
-	{
-		harray<Object*> descendants = this->children;
-		foreach (Object*, it, this->children)
-		{
-			descendants += (*it)->getDescendants();
-		}
-		return descendants;
-	}
-
 	harray<gvec2> Object::transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot)
 	{
 		harray<Object*> sequence;
@@ -1328,7 +1127,7 @@ namespace aprilui
 			point *= current->getScale();
 			point.rotate(-current->getAngle());
 			point += center + current->getPosition();
-			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
+			current = (overrideRoot == NULL || overrideRoot != current ? dynamic_cast<Object*>(current->getParent()) : NULL);
 		}
 		return point;
 	}

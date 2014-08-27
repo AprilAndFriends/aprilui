@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.2
+/// @version 3.3
 /// 
 /// @section LICENSE
 /// 
@@ -54,13 +54,7 @@ public:
 		april::rendersys->setOrthoProjection(viewport);
 		april::rendersys->drawFilledRect(viewport, april::Color::Grey);
 		april::rendersys->drawFilledRect(grect(0.0f, 0.0f, 100.0f, 75.0f), april::Color::Yellow);
-		/*
-		april::rendersys->setTexture(dataset->getTexture("texture")->getRenderTexture());
-		april::rendersys->drawTexturedRect(grect(0.0f, 0.0f, 200.0f, 150.0f), grect(0, 0, 1, 1));
-		((aprilui::ImageBox*)dataset->getObject("root")->getChildren()[0])->getImage()->
-			draw(grect(200.0f, 200.0f, 200.0f, 150.0f), april::Color::White);
-		*/
-		dataset->getObject("root")->draw();
+		dataset->draw();
 		dataset->update(timeSinceLastFrame);
 		return true;
 	}
