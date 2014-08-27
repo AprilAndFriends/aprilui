@@ -90,7 +90,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 		case april::AK_MENU:
 			dataset->unload();
 			dataset->load();
-			dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
+			dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 			break;
 		case april::AK_INSERT:
 			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
@@ -239,7 +239,7 @@ void april_init(const harray<hstr>& args)
 		aprilui::setLocalization("en");
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
-		dataset->getObject<aprilui::Animator*>("custom_animator")->setCustomFunction(&_animatorCustomFunction);
+		dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif
