@@ -19,9 +19,9 @@ namespace aprilui
 	{
 	}
 
-	void CallbackEvent::execute(void* params)
+	void CallbackEvent::execute(EventArgs* args)
 	{
-		(*this->callback)((EventArgs*)params);
+		(*this->callback)(args);
 	}
 
 }

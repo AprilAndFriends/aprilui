@@ -435,23 +435,23 @@ namespace aprilui
 		return position;
 	}
 	
-	void EditBox::notifyEvent(chstr name, void* params)
+	void EditBox::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		if (name == "onLocalizationChanged")
+		if (type == Event::LOCALIZATION_CHANGED)
 		{
 			if (this->emptyTextKey != "")
 			{
 				this->setEmptyTextKey(this->emptyTextKey);
 			}
 		}
-		else if (name == "onGainFocus")
+		else if (type == Event::FOCUS_GAINED)
 		{
 			if (!this->pushed) // some OSes will disable the keyboard if it is shown before a mouse-up event
 			{
 				april::window->beginKeyboardHandling();
 			}
 		}
-		Label::notifyEvent(name, params);
+		Label::notifyEvent(type, args);
 	}
 	
 	bool EditBox::onMouseDown(april::Key keyCode)
@@ -480,7 +480,7 @@ namespace aprilui
 		if (this->pushed && this->isCursorInside())
 		{
 			this->pushed = false;
-			this->triggerEvent("Click", keyCode);
+			this->triggerEvent(Event::CLICK, keyCode);
 			// some OSes will disable the keyboard if it is shown before a mouse-up event
 			april::window->beginKeyboardHandling();
 			return true;
@@ -535,7 +535,7 @@ namespace aprilui
 				{
 					this->_insertChar('\n');
 				}
-				this->triggerEvent("Submit", april::AK_RETURN);
+				this->triggerEvent(Event::SUBMIT_EDIT_TEXT, april::AK_RETURN);
 				break;
 			default:
 				break;

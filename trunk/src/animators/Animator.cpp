@@ -82,7 +82,7 @@ namespace aprilui
 			{
 				return;
 			}
-			this->notifyEvent("OnDelayEnd", NULL);
+			this->notifyEvent(Event::DELAY_EXPIRED, NULL);
 			this->timeDelta += this->delay;
 		}
 		this->timer += this->timeDelta;
@@ -282,9 +282,9 @@ namespace aprilui
 		return true;
 	}
 	
-	void Animator::notifyEvent(chstr name, void* params)
+	void Animator::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		if (name == "AttachToObject" || name == "OnDelayEnd" && this->inheritValue)
+		if (type == Event::ATTACHED_TO_OBJECT || type == Event::DELAY_EXPIRED && this->inheritValue)
 		{
 			this->value = this->offset = this->_getObjectValue();
 			if (this->useTarget)
@@ -292,9 +292,14 @@ namespace aprilui
 				this->amplitude = this->target - this->value;
 			}
 		}
-		BaseObject::notifyEvent(name, params);
+		BaseObject::notifyEvent(type, args);
 	}
-		
+
+	void Animator::notifyEvent(chstr customType, EventArgs* args)
+	{
+		BaseObject::notifyEvent(customType, args);
+	}
+
 	void Animator::_valueUpdateSimple(float timeDelta)
 	{
 		if (this->_checkUpdate(timeDelta))

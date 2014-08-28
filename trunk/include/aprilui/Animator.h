@@ -68,7 +68,8 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
-		void notifyEvent(chstr name, void* params);
+		void notifyEvent(Event::Type type, EventArgs* args);
+		void notifyEvent(chstr customType, EventArgs* args);
 		
 		void update(float timeDelta);
 		

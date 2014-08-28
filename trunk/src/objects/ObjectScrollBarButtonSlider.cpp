@@ -11,8 +11,8 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "CallbackEvent.h"
 #include "EventArgs.h"
-#include "EventUtils.h"
 #include "ObjectScrollBar.h"
 #include "ObjectScrollBarButtonBackground.h"
 #include "ObjectScrollBarButtonSlider.h"
@@ -21,8 +21,8 @@ namespace aprilui
 {
 	ScrollBarButtonSlider::ScrollBarButtonSlider(chstr name, grect rect) : ImageButton(name, rect)
 	{
-		_SET_MOUSEDOWN_EVENT_FUNCTION(this, _mouseDown);
-		_SET_CLICK_EVENT_FUNCTION(this, _click);
+		this->registerEvent(aprilui::Event::MOUSE_DOWN, new aprilui::CallbackEvent(&_mouseDown));
+		this->registerEvent(aprilui::Event::CLICK, new aprilui::CallbackEvent(&_click));
 	}
 
 	ScrollBarButtonSlider::~ScrollBarButtonSlider()
@@ -34,10 +34,10 @@ namespace aprilui
 		return new ScrollBarButtonSlider(name, rect);
 	}
 
-	void ScrollBarButtonSlider::notifyEvent(chstr name, void* params)
+	void ScrollBarButtonSlider::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		ImageButton::notifyEvent(name, params);
-		if (name == "AttachToObject")
+		ImageButton::notifyEvent(type, args);
+		if (type == Event::ATTACHED_TO_OBJECT)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -45,7 +45,7 @@ namespace aprilui
 				parent->_setButtonSlider(this);
 			}
 		}
-		else if (name == "DetachFromObject")
+		else if (type == Event::DETACHED_FROM_OBJECT)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -57,17 +57,16 @@ namespace aprilui
 
 	void ScrollBarButtonSlider::_mouseDown(EventArgs* args)
 	{
-		ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
-		if (scrollBar != NULL)
+		if (args->object != NULL)
 		{
-			ScrollBarButtonBackground* buttonBackground = scrollBar->_getButtonBackground();
-			if (buttonBackground != NULL)
+			ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
+			if (scrollBar != NULL)
 			{
-				Object* object = dynamic_cast<Object*>(args->object);
-				if (object != NULL)
+				ScrollBarButtonBackground* buttonBackground = scrollBar->_getButtonBackground();
+				if (buttonBackground != NULL)
 				{
-					gvec2 position = object->transformToLocalSpace(aprilui::getCursorPosition());
-					position = object->getDerivedPoint(position, scrollBar) - object->getPosition() + buttonBackground->getPosition();
+					gvec2 position = args->object->transformToLocalSpace(aprilui::getCursorPosition());
+					position = args->object->getDerivedPoint(position, scrollBar) - args->object->getPosition() + buttonBackground->getPosition();
 					scrollBar->_clickPosition = buttonBackground->transformToLocalSpace(position, scrollBar);
 				}
 			}
@@ -76,11 +75,14 @@ namespace aprilui
 
 	void ScrollBarButtonSlider::_click(EventArgs* args)
 	{
-		ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
-		if (scrollBar != NULL)
+		if (args->baseObject != NULL)
 		{
-			scrollBar->_initAreaDragging();
-			scrollBar->_adjustDragSpeed();
+			ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->baseObject->getParent());
+			if (scrollBar != NULL)
+			{
+				scrollBar->_initAreaDragging();
+				scrollBar->_adjustDragSpeed();
+			}
 		}
 	}
 

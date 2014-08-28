@@ -41,6 +41,9 @@
     <ClCompile Include="src\Dataset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\EventArgs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -128,9 +131,6 @@
     <ClCompile Include="src\images\TiledImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
-    <ClCompile Include="src\MemberCallbackEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\animators\AnimatorResizerX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
@@ -175,9 +175,6 @@
     </ClCompile>
     <ClCompile Include="src\animators\AnimatorCenterMoverY.cpp">
       <Filter>Source Files\Animators</Filter>
-    </ClCompile>
-    <ClCompile Include="src\QueuedCallbackEvent.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\ObjectProgressCircle.cpp">
       <Filter>Source Files\Objects</Filter>
@@ -366,9 +363,6 @@
     </ClInclude>
     <ClInclude Include="include\aprilui\AnimatorCenterMoverY.h">
       <Filter>Header Files\Animators</Filter>
-    </ClInclude>
-    <ClInclude Include="include\aprilui\QueuedCallbackEvent.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\aprilui\ObjectProgressCircle.h">
       <Filter>Header Files\Objects</Filter>

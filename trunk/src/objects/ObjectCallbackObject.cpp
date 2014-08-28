@@ -53,7 +53,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent("MouseDown", keyCode);
+			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
 			return true;
 		}
 		return false;
@@ -67,7 +67,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent("Click", keyCode);
+			this->triggerEvent(Event::CLICK, keyCode);
 			return true;
 		}
 		return false;
@@ -81,7 +81,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent("MouseMove");
+			this->triggerEvent(Event::MOUSE_MOVE);
 		}
 		return false;
 	}
@@ -94,7 +94,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent("MouseScroll", x, y);
+			this->triggerEvent(Event::MOUSE_SCROLL, april::AK_NONE, gvec2(x, y));
 		}
 		return false;
 	}
@@ -102,7 +102,7 @@ namespace aprilui
 	void CallbackObject::mouseCancel()
 	{
 		Object::mouseCancel();
-		this->triggerEvent("MouseCancel");
+		this->triggerEvent(Event::MOUSE_CANCEL);
 	}
 
 }

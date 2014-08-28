@@ -51,25 +51,40 @@ namespace aprilui
 		LabelBase::_drawLabel(this->_getDrawRect(), color, backgroundColor);
 	}
 
-	void Label::notifyEvent(chstr name, void* params)
+	void Label::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		Object::notifyEvent(name, params);
-		LabelBase::notifyEvent(name, params);
+		Object::notifyEvent(type, args);
+		LabelBase::notifyEvent(type, args);
 	}
 
-	bool Label::triggerEvent(chstr name, april::Key keyCode, chstr extra)
+	bool Label::triggerEvent(Event::Type type, april::Key keyCode)
 	{
-		return Object::triggerEvent(name, keyCode, extra);
+		return Object::triggerEvent(type, keyCode);
 	}
 
-	bool Label::triggerEvent(chstr name, april::Button buttonCode, chstr extra)
+	bool Label::triggerEvent(Event::Type type, april::Key keyCode, chstr string)
 	{
-		return Object::triggerEvent(name, buttonCode, extra);
+		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool Label::triggerEvent(chstr name, float x, float y, april::Key keyCode, chstr extra)
+	bool Label::triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string, void* userData)
 	{
-		return Object::triggerEvent(name, x, y, keyCode, extra);
+		return Object::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool Label::triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Object::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool Label::triggerEvent(Event::Type type, chstr string, void* userData)
+	{
+		return Object::triggerEvent(type, string, userData);
+	}
+
+	bool Label::triggerEvent(Event::Type type, void* userData)
+	{
+		return Object::triggerEvent(type, userData);
 	}
 
 	bool Label::onMouseDown(april::Key keyCode)
@@ -80,7 +95,7 @@ namespace aprilui
 		}
 		if (isCursorInside())
 		{
-			this->triggerEvent("MouseDown", keyCode);
+			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
 			return true;
 		}
 		return false;
@@ -95,7 +110,7 @@ namespace aprilui
 		if (this->isCursorInside())
 		{
 			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
-			this->triggerEvent("Click", keyCode);
+			this->triggerEvent(Event::CLICK, keyCode);
 			return true;
 		}
 		return false;

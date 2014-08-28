@@ -11,8 +11,8 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "CallbackEvent.h"
 #include "EventArgs.h"
-#include "EventUtils.h"
 #include "ObjectScrollBar.h"
 #include "ObjectScrollBarButtonBackground.h"
 
@@ -20,7 +20,7 @@ namespace aprilui
 {
 	ScrollBarButtonBackground::ScrollBarButtonBackground(chstr name, grect rect) : ImageButton(name, rect)
 	{
-		_SET_CLICK_EVENT_FUNCTION(this, _click);
+		this->registerEvent(aprilui::Event::CLICK, new aprilui::CallbackEvent(&_click));
 	}
 
 	ScrollBarButtonBackground::~ScrollBarButtonBackground()
@@ -32,10 +32,10 @@ namespace aprilui
 		return new ScrollBarButtonBackground(name, rect);
 	}
 
-	void ScrollBarButtonBackground::notifyEvent(chstr name, void* params)
+	void ScrollBarButtonBackground::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		ImageButton::notifyEvent(name, params);
-		if (name == "AttachToObject")
+		ImageButton::notifyEvent(type, args);
+		if (type == Event::ATTACHED_TO_OBJECT)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -43,7 +43,7 @@ namespace aprilui
 				parent->_setButtonBackground(this);
 			}
 		}
-		else if (name == "DetachFromObject")
+		else if (type == Event::DETACHED_FROM_OBJECT)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -55,14 +55,13 @@ namespace aprilui
 
 	void ScrollBarButtonBackground::_click(EventArgs* args)
 	{
-		ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
-		if (scrollBar != NULL)
+		if (args->object != NULL)
 		{
-			Object* object = dynamic_cast<Object*>(args->object);
-			if (object != NULL)
+			ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
+			if (scrollBar != NULL)
 			{
-				gvec2 position = object->transformToLocalSpace(aprilui::getCursorPosition());
-				scrollBar->addScrollValue(scrollBar->_calcScrollJump(position.x, position.y, object->getSize()));
+				gvec2 position = args->object->transformToLocalSpace(aprilui::getCursorPosition());
+				scrollBar->addScrollValue(scrollBar->_calcScrollJump(position.x, position.y, args->object->getSize()));
 			}
 		}
 	}

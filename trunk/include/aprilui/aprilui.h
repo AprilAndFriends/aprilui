@@ -20,6 +20,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Event.h"
 
 #define APRILUI_REGISTER_OBJECT_TYPE(name) aprilui::registerObjectFactory(#name, &name::createInstance)
 #define APRILUI_REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(#name, &name::createInstance)
@@ -81,7 +82,8 @@ namespace aprilui
 	
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
 	
-	apriluiFnExport void notifyEvent(chstr name, void* params);
+	apriluiFnExport void notifyEvent(Event::Type type, EventArgs* args);
+	apriluiFnExport void notifyEvent(chstr customType, EventArgs* args);
 	apriluiFnExport void processEvents();
 	apriluiFnExport void update(float timeDelta);
 	apriluiFnExport void updateTextures(float timeDelta);

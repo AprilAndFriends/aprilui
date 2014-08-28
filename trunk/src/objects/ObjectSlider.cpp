@@ -60,7 +60,7 @@ namespace aprilui
 			this->pushed = true;
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
 			this->setValue(position.x / (this->rect.w - 4));
-			this->triggerEvent("Set", keyCode);
+			this->triggerEvent(Event::SET_SLIDER_VALUE, keyCode);
 			return true;
 		}
 		return false;
@@ -91,7 +91,7 @@ namespace aprilui
 		{
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
 			this->setValue(position.x / (this->rect.w - 4));
-			this->triggerEvent("Set");
+			this->triggerEvent(Event::SET_SLIDER_VALUE);
 		}
 		return false;
 	}
