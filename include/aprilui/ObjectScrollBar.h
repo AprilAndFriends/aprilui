@@ -55,7 +55,7 @@ namespace aprilui
 		void update(float timeDelta);
 		void OnDraw();
 
-		void notifyEvent(chstr name, void* params);
+		void notifyEvent(Event::Type type, EventArgs* args);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

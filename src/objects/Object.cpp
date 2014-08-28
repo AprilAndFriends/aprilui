@@ -136,9 +136,12 @@ namespace aprilui
 
 	Object::~Object()
 	{
-		foreach_m (Event*, it, this->events)
+		foreach_map (Event::Type, Event*, it, this->events)
 		{
-			if (dataset) dataset->removeCallbackFromQueue(it->second);
+			if (this->dataset != NULL)
+			{
+				this->dataset->removeCallbackFromQueue(it->second);
+			}
 			delete it->second;
 		}
 		this->events.clear();
@@ -212,7 +215,7 @@ namespace aprilui
 			}
 		}
 		obj->parent = this;
-		obj->notifyEvent("AttachToObject", NULL);
+		obj->notifyEvent(Event::ATTACHED_TO_OBJECT, NULL);
 	}
 
 	void Object::removeChild(BaseObject* obj)
@@ -221,7 +224,7 @@ namespace aprilui
 		{
 			throw ObjectNotChildException(obj->getName(), this->getName());
 		}
-		obj->notifyEvent("DetachFromObject", NULL);
+		obj->notifyEvent(Event::DETACHED_FROM_OBJECT, NULL);
 		Object* object = dynamic_cast<Object*>(obj);
 		if (object != NULL)
 		{
@@ -391,14 +394,14 @@ namespace aprilui
 	{
 		this->_updateChildrenHorizontal(value - this->rect.w);
 		this->rect.w = value;
-		this->notifyEvent("Resized", NULL);
+		this->notifyEvent(Event::RESIZED, NULL);
 	}
 
 	void Object::setHeight(float value)
 	{
 		this->_updateChildrenVertical(value - this->rect.h);
 		this->rect.h = value;
-		this->notifyEvent("Resized", NULL);
+		this->notifyEvent(Event::RESIZED, NULL);
 	}
 
 	void Object::setSize(gvec2 value)
@@ -406,7 +409,7 @@ namespace aprilui
 		this->_updateChildrenHorizontal(value.x - this->rect.w);
 		this->_updateChildrenVertical(value.y - this->rect.h);
 		this->rect.setSize(value);
-		this->notifyEvent("Resized", NULL);
+		this->notifyEvent(Event::RESIZED, NULL);
 	}
 
 	void Object::setSize(float w, float h)
@@ -415,7 +418,7 @@ namespace aprilui
 		this->_updateChildrenVertical(h - this->rect.h);
 		this->rect.w = w;
 		this->rect.h = h;
-		this->notifyEvent("Resized", NULL);
+		this->notifyEvent(Event::RESIZED, NULL);
 	}
 
 	void Object::setRect(grect value)
@@ -423,7 +426,7 @@ namespace aprilui
 		this->_updateChildrenHorizontal(value.w - this->rect.w);
 		this->_updateChildrenVertical(value.h - this->rect.h);
 		this->rect = value;
-		this->notifyEvent("Resized", NULL);
+		this->notifyEvent(Event::RESIZED, NULL);
 	}
 
 	void Object::setAnchors(bool left, bool right, bool top, bool bottom)

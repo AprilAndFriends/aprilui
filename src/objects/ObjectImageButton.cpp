@@ -253,7 +253,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseDown(keyCode);
 		if (result)
 		{
-			this->triggerEvent("MouseDown", keyCode);
+			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
 		}
 		return result;
 	}
@@ -268,11 +268,11 @@ namespace aprilui
 		bool up = false;
 		if (this->hovered)
 		{
-			up = this->triggerEvent("MouseUp", keyCode);
+			up = this->triggerEvent(Event::MOUSE_UP, keyCode);
 		}
 		if (click)
 		{
-			this->triggerEvent("Click", keyCode);
+			this->triggerEvent(Event::CLICK, keyCode);
 		}
 		return (click || up);
 	}
@@ -291,7 +291,7 @@ namespace aprilui
 		bool result = ButtonBase::onButtonDown(buttonCode);
 		if (result)
 		{
-			this->triggerEvent("ButtonDown", buttonCode);
+			this->triggerEvent(Event::BUTTON_DOWN, buttonCode);
 		}
 		return result;
 	}
@@ -306,11 +306,11 @@ namespace aprilui
 		bool up = false;
 		if (this->hovered)
 		{
-			up = this->triggerEvent("ButtonUp", buttonCode);
+			up = this->triggerEvent(Event::BUTTON_UP, buttonCode);
 		}
 		if (click)
 		{
-			this->triggerEvent("ButtonClick", buttonCode);
+			this->triggerEvent(Event::BUTTON_TRIGGER, buttonCode);
 		}
 		return (click || up);
 	}

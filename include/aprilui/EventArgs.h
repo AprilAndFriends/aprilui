@@ -13,28 +13,50 @@
 #ifndef APRILUI_EVENT_ARGS_H
 #define APRILUI_EVENT_ARGS_H
 
-#include <hltypes/hstring.h>
 #include <april/Keys.h>
+#include <gtypes/Vector2.h>
+#include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
 
 namespace aprilui
 {
+	class Animator;
 	class BaseObject;
+	class Dataset;
+	class EventReceiver;
+	class Object;
 
 	class apriluiExport EventArgs
 	{
 	public:
-		BaseObject* object;
-		float x;
-		float y;
+		EventReceiver* receiver;
+		BaseObject* baseObject;
+		Object* object;
+		Animator* animator;
+		Dataset* dataset;
+		gvec2 position;
+		hstr string;
 		april::Key keyCode;
 		april::Button buttonCode;
-		hstr extra;
+		void* userData;
 		
-		EventArgs(BaseObject* object, float x = 0.0f, float y = 0.0f, april::Key keyCode = april::AK_NONE, chstr extra = "");
-		EventArgs(BaseObject* object, float x, float y, april::Button buttonCode, chstr extra = "");
+		EventArgs(EventReceiver* receiver, april::Key keyCode = april::AK_NONE, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(EventReceiver* receiver, april::Button buttonCode, chstr string = "", void* userData = NULL);
+		EventArgs(EventReceiver* receiver, chstr string, void* userData = NULL);
+		EventArgs(EventReceiver* receiver, void* userData);
+		EventArgs(Object* object, april::Key keyCode = april::AK_NONE, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(Object* object, april::Button buttonCode, chstr string = "", void* userData = NULL);
+		EventArgs(Object* object, chstr string, void* userData = NULL);
+		EventArgs(Object* object, void* userData);
+		EventArgs(Animator* animator, chstr string, void* userData = NULL);
+		EventArgs(Animator* animator, void* userData);
+		EventArgs(Dataset* dataset, chstr string, void* userData = NULL);
+		EventArgs(Dataset* dataset, void* userData);
 		~EventArgs();
+
+	protected:
+		void _initDefaults();
 
 	};
 

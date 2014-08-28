@@ -14,11 +14,13 @@
 #define APRILUI_BASE_OBJECT_H
 
 #include <april/Keys.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Event.h"
 #include "EventReceiver.h"
 #include "PropertyDescription.h"
 
@@ -26,7 +28,6 @@ namespace aprilui
 {
 	class Animator;
 	class Dataset;
-	class Event;
 	class EventArgs;
 	class Object;
 
@@ -51,7 +52,6 @@ namespace aprilui
 		inline harray<Object*>& getObjects() { return this->objects; }
 		inline harray<Animator*>& getAnimators() { return this->animators; }
 		harray<BaseObject*> getChildren();
-		inline hmap<hstr, Event*>& getEvents() { return this->events; }
 		virtual inline bool isAnimated() { return false; }
 		virtual inline bool isWaitingAnimation() { return false; }
 
@@ -82,26 +82,13 @@ namespace aprilui
 
 		virtual void update(float timeDelta);
 
-		void registerEvent(chstr name, void(*callback)(EventArgs*));
-		void registerEvent(chstr name, Event* event);
-		void unregisterEvent(chstr name);
-
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "");
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
-
 	protected:
 		hstr name;
-		Dataset* dataset;
 		Object* parent; // a BaseObject cannot be a parent
 		harray<Object*> objects;
 		harray<Animator*> animators;
 		bool enabled;
 		int zOrder;
-		hmap<hstr, Event*> events;
 
 		void _sortChildren();
 

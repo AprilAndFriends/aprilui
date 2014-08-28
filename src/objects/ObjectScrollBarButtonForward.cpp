@@ -11,8 +11,8 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "CallbackEvent.h"
 #include "EventArgs.h"
-#include "EventUtils.h"
 #include "ObjectScrollBar.h"
 #include "ObjectScrollBarButtonForward.h"
 
@@ -20,7 +20,7 @@ namespace aprilui
 {
 	ScrollBarButtonForward::ScrollBarButtonForward(chstr name, grect rect) : ImageButton(name, rect)
 	{
-		_SET_CLICK_EVENT_FUNCTION(this, _click);
+		this->registerEvent(aprilui::Event::CLICK, new aprilui::CallbackEvent(&_click));
 	}
 
 	ScrollBarButtonForward::~ScrollBarButtonForward()
@@ -32,10 +32,10 @@ namespace aprilui
 		return new ScrollBarButtonForward(name, rect);
 	}
 
-	void ScrollBarButtonForward::notifyEvent(chstr name, void* params)
+	void ScrollBarButtonForward::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		ImageButton::notifyEvent(name, params);
-		if (name == "AttachToObject")
+		ImageButton::notifyEvent(type, args);
+		if (type == Event::ATTACHED_TO_OBJECT)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -43,7 +43,7 @@ namespace aprilui
 				parent->_setButtonForward(this);
 			}
 		}
-		else if (name == "DetachFromObject")
+		else if (type == Event::DETACHED_FROM_OBJECT)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -55,10 +55,13 @@ namespace aprilui
 
 	void ScrollBarButtonForward::_click(EventArgs* args)
 	{
-		ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
-		if (scrollBar != NULL)
+		if (args->baseObject != NULL)
 		{
-			scrollBar->addScrollValueForward();
+			ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->baseObject->getParent());
+			if (scrollBar != NULL)
+			{
+				scrollBar->addScrollValueForward();
+			}
 		}
 	}
 

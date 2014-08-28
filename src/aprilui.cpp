@@ -227,7 +227,7 @@ namespace aprilui
 			{
 				if (it->second->isLoaded())
 				{
-					it->second->notifyEvent("onLocalizationChanged", NULL);
+					it->second->notifyEvent(Event::LOCALIZATION_CHANGED, NULL);
 				}
 			}
 		}
@@ -401,14 +401,22 @@ namespace aprilui
 		}
 	}
 	
-	void notifyEvent(chstr name, void* params)
+	void notifyEvent(Event::Type type, EventArgs* args)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->notifyEvent(name, params);
+			it->second->notifyEvent(type, args);
 		}
 	}
-	
+
+	void notifyEvent(chstr customType, EventArgs* args)
+	{
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			it->second->notifyEvent(customType, args);
+		}
+	}
+
 	void processEvents()
 	{
 		foreach_m (Dataset*, it, gDatasets)

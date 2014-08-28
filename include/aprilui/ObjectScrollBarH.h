@@ -30,7 +30,7 @@ namespace aprilui
 
 		static Object* createInstance(chstr name, grect rect);
 
-		void notifyEvent(chstr name, void* params);
+		void notifyEvent(Event::Type type, EventArgs* args);
 
 		void addScrollValue(float value);
 

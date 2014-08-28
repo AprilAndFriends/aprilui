@@ -85,9 +85,9 @@ namespace aprilui
 			return true;
 		}
 
-		void FrameAnimation::notifyEvent(chstr name, void* params)
+		void FrameAnimation::notifyEvent(Event::Type type, EventArgs* args)
 		{
-			if (name == "AttachToObject")
+			if (type == Event::ATTACHED_TO_OBJECT)
 			{
 				this->value = (float)this->firstFrame;
 				float delay = this->delay;
@@ -95,7 +95,7 @@ namespace aprilui
 				this->update(0.0f);
 				this->delay = delay;
 			}
-			Animator::notifyEvent(name, params);
+			Animator::notifyEvent(type, args);
 		}
 
 		void FrameAnimation::update(float timeDelta)

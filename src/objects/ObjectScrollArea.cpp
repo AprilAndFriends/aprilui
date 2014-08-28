@@ -267,10 +267,10 @@ namespace aprilui
 		return (!this->dragging ? ButtonBase::_checkHover() : this->isCursorInside());
 	}
 
-	void ScrollArea::notifyEvent(chstr name, void* params)
+	void ScrollArea::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		Object::notifyEvent(name, params);
-		if (name == "AttachToObject")
+		Object::notifyEvent(type, args);
+		if (type == Event::ATTACHED_TO_OBJECT)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
@@ -278,7 +278,7 @@ namespace aprilui
 				parent->_setScrollArea(this);
 			}
 		}
-		else if (name == "DetachFromObject")
+		else if (type == Event::DETACHED_FROM_OBJECT)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
@@ -286,7 +286,7 @@ namespace aprilui
 				parent->_setScrollArea(NULL);
 			}
 		}
-		else if (name == "Resized")
+		else if (type == Event::RESIZED)
 		{
 			this->setScrollOffset(this->getScrollOffset());
 		}

@@ -39,6 +39,7 @@ namespace aprilui
 	
 	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath) : EventReceiver()
 	{
+		this->dataset = this;
 		this->focusedObject = NULL;
 		this->root = NULL;
 		this->filename = hrdir::normalize(filename);
@@ -477,7 +478,8 @@ namespace aprilui
 			throw hlxml::XMLUnknownClassException(className, node);
 		}
 		baseObject->dataset = this;
-		baseObject->notifyEvent("RegisterInDataset", this);
+		EventArgs args(this);
+		baseObject->notifyEvent(Event::REGISTERED_IN_DATASET, &args);
 		if (object != NULL)
 		{
 			this->objects[objectName] = object;
@@ -776,6 +778,7 @@ namespace aprilui
 		objects += root->getDescendants();
 		Object* object = NULL;
 		Animator* animator = NULL;
+		EventArgs args(this);
 		foreach (BaseObject*, it, objects)
 		{
 			name = (*it)->getName();
@@ -797,7 +800,7 @@ namespace aprilui
 				}
 			}
 			(*it)->dataset = this;
-			(*it)->notifyEvent("RegisterInDataset", this);
+			(*it)->notifyEvent(Event::REGISTERED_IN_DATASET, &args);
 		}
 	}
 	
@@ -1248,18 +1251,30 @@ namespace aprilui
 		}
 	}
 
-	void Dataset::notifyEvent(chstr name, void* params)
+	void Dataset::notifyEvent(Event::Type type, EventArgs* args)
 	{
 		foreach_m (Object*, it, this->objects)
 		{
-			it->second->notifyEvent(name, params);
+			it->second->notifyEvent(type, args);
 		}
 		foreach_m (Animator*, it, this->animators)
 		{
-			it->second->notifyEvent(name, params);
+			it->second->notifyEvent(type, args);
 		}
 	}
-	
+
+	void Dataset::notifyEvent(chstr customType, EventArgs* args)
+	{
+		foreach_m (Object*, it, this->objects)
+		{
+			it->second->notifyEvent(customType, args);
+		}
+		foreach_m (Animator*, it, this->animators)
+		{
+			it->second->notifyEvent(customType, args);
+		}
+	}
+
 	void Dataset::unloadUnusedTextures()
 	{
 		foreach_m (Texture*, it, this->textures)
@@ -1289,8 +1304,8 @@ namespace aprilui
 	{
 		this->removeFocus();
 		this->focusedObject = object;
-		this->focusedObject->notifyEvent("onGainFocus", NULL);
-		this->focusedObject->triggerEvent("GainFocus");
+		this->focusedObject->notifyEvent(Event::FOCUS_GAINED, NULL);
+		this->focusedObject->triggerEvent(Event::FOCUS_GAINED);
 	}
 
 	void Dataset::removeFocus()
@@ -1301,7 +1316,7 @@ namespace aprilui
 			// in case of a recursive call, the focused object has to be removed first.
 			aprilui::Object* object = this->focusedObject;
 			this->focusedObject = NULL;
-			object->triggerEvent("LoseFocus");
+			object->triggerEvent(Event::FOCUS_LOST);
 		}
 	}
 	

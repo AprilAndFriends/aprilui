@@ -143,10 +143,10 @@ namespace aprilui
 		return hroundf(x * ScrollBar::ScrollDistance);
 	}
 
-	void ScrollBarH::notifyEvent(chstr name, void* params)
+	void ScrollBarH::notifyEvent(Event::Type type, EventArgs* args)
 	{
-		ScrollBar::notifyEvent(name, params);
-		if (name == "AttachToObject")
+		ScrollBar::notifyEvent(type, args);
+		if (type == Event::ATTACHED_TO_OBJECT)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
@@ -154,7 +154,7 @@ namespace aprilui
 				parent->_setScrollBarH(this);
 			}
 		}
-		else if (name == "DetachFromObject")
+		else if (type == Event::DETACHED_FROM_OBJECT)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)

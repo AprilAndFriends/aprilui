@@ -29,7 +29,6 @@ namespace aprilui
 	BaseObject::BaseObject(chstr name) : EventReceiver()
 	{
 		this->name = name;
-		this->dataset = NULL;
 		this->parent = NULL;
 		this->enabled = true;
 		this->zOrder = 0;
@@ -207,72 +206,6 @@ namespace aprilui
 		}
 	}
 
-	void BaseObject::registerEvent(chstr name, void(*callback)(EventArgs*))
-	{
-		this->registerEvent(name, new CallbackEvent(callback));
-	}
-
-	void BaseObject::registerEvent(chstr name, Event* event)
-	{
-		this->unregisterEvent(name);
-		if (event != NULL)
-		{
-			this->events[name] = event;
-		}
-	}
-
-	void BaseObject::unregisterEvent(chstr name)
-	{
-		if (this->events.has_key(name))
-		{
-			Event* event = this->events[name];
-			if (this->dataset != NULL)
-			{
-				this->dataset->removeCallbackFromQueue(event);
-			}
-			delete event;
-			this->events.remove_key(name);
-		}
-	}
-
-	// TODO - this needs to be seriously refactored
-	bool BaseObject::triggerEvent(chstr name, april::Key keyCode, chstr extra)
-	{
-		if (this->events.has_key(name))
-		{
-			gvec2 cursorPosition = aprilui::getCursorPosition();
-			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, keyCode, extra);
-			this->dataset->queueCallback(this->events[name], args);
-			return true;
-		}
-		return false;
-	}
-
-	// TODO - this needs to be seriously refactored
-	bool BaseObject::triggerEvent(chstr name, april::Button buttonCode, chstr extra)
-	{
-		if (this->events.has_key(name))
-		{
-			gvec2 cursorPosition = aprilui::getCursorPosition();
-			EventArgs* args = new EventArgs(this, cursorPosition.x, cursorPosition.y, buttonCode, extra);
-			this->dataset->queueCallback(this->events[name], args);
-			return true;
-		}
-		return false;
-	}
-
-	// TODO - this needs to be seriously refactored
-	bool BaseObject::triggerEvent(chstr name, float x, float y, april::Key keyCode, chstr extra)
-	{
-		if (this->events.has_key(name))
-		{
-			EventArgs* args = new EventArgs(this, x, y, keyCode, extra);
-			this->dataset->queueCallback(this->events[name], args);
-			return true;
-		}
-		return false;
-	}
-
 	bool BaseObject::isDerivedEnabled()
 	{
 		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
@@ -283,7 +216,7 @@ namespace aprilui
 		if (value != this->enabled)
 		{
 			this->enabled = value;
-			this->notifyEvent("OnEnableChanged", NULL);
+			this->notifyEvent(Event::ENABLED_CHANGED, NULL);
 		}
 	}
 

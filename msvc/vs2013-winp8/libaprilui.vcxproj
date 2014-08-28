@@ -62,10 +62,10 @@
     <ClCompile Include="..\..\src\BaseObject.cpp" />
     <ClCompile Include="..\..\src\CallbackEvent.cpp" />
     <ClCompile Include="..\..\src\Dataset.cpp" />
+    <ClCompile Include="..\..\src\Event.cpp" />
     <ClCompile Include="..\..\src\EventArgs.cpp" />
     <ClCompile Include="..\..\src\EventReceiver.cpp" />
     <ClCompile Include="..\..\src\Exception.cpp" />
-    <ClCompile Include="..\..\src\MemberCallbackEvent.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectProgressBase.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectProgressCircle.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectScrollArea.cpp" />
@@ -104,7 +104,6 @@
     <ClCompile Include="..\..\src\images\Image.cpp" />
     <ClCompile Include="..\..\src\images\NullImage.cpp" />
     <ClCompile Include="..\..\src\images\TiledImage.cpp" />
-    <ClCompile Include="..\..\src\QueuedCallbackEvent.cpp" />
     <ClCompile Include="..\..\src\Texture.cpp" />
     <ClCompile Include="..\..\src\PropertyDescription.cpp" />
   </ItemGroup>
@@ -131,7 +130,6 @@
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonSlider.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarH.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarV.h" />
-    <ClInclude Include="..\..\include\aprilui\QueuedCallbackEvent.h" />
     <ClInclude Include="..\..\include\aprilui\Texture.h" />
     <ClInclude Include="..\..\src\apriluiUtil.h" />
     <ClInclude Include="..\..\include\aprilui\Animators.h" />

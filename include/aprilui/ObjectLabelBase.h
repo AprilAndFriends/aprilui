@@ -23,6 +23,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Event.h"
 #include "PropertyDescription.h"
 
 namespace aprilui
@@ -58,13 +59,13 @@ namespace aprilui
 
 		bool trySetTextKey(chstr textKey);
 		
-		virtual void notifyEvent(chstr name, void* params);
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "") = 0;
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "") = 0;
-		// TODO - this needs to be seriously refactored
-		virtual bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "") = 0;
+		virtual void notifyEvent(Event::Type type, EventArgs* args);
+		virtual bool triggerEvent(Event::Type type, april::Key keyCode) = 0;
+		virtual bool triggerEvent(Event::Type type, april::Key keyCode, chstr string) = 0;
+		virtual bool triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
+		virtual bool triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData = NULL) = 0;
+		virtual bool triggerEvent(Event::Type type, chstr string, void* userData = NULL) = 0;
+		virtual bool triggerEvent(Event::Type type, void* userData = NULL) = 0;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

@@ -20,55 +20,28 @@ namespace aprilui
 {
 	class EventArgs;
 	
-	class apriluiExport MemberCallbackEventBase
-	{
-	public:
-		inline MemberCallbackEventBase() { }
-		inline virtual ~MemberCallbackEventBase() { }
-
-		virtual void execute(void* params) = 0;
-
-	};
-
 	template <typename T>
-	class MemberCallbackEventImpl : public MemberCallbackEventBase
+	class MemberCallbackEvent : public Event
 	{
 	public:
-		inline MemberCallbackEventImpl(void (T::*function)(EventArgs*), T* object) : MemberCallbackEventBase()
+		inline MemberCallbackEvent(void (T::*function)(EventArgs*), T* object) : Event()
 		{
-			this->function = function;
 			this->object = object;
+			this->function = function;
 		}
-		
-		inline ~MemberCallbackEventImpl()
+
+		inline ~MemberCallbackEvent()
 		{
 		}
 
-		inline void execute(void* params)
+		inline void execute(EventArgs* args)
 		{
-			(this->object->*function)((EventArgs*)params);
+			(this->object->*function)(args);
 		}
 
 	protected:
-		void (T::*function)(EventArgs*);
 		T* object;
-
-	};
-
-	class apriluiExport MemberCallbackEvent : public Event
-	{
-	public:
-		template <typename T>
-		inline MemberCallbackEvent(void (T::*function)(EventArgs*), T* obj) : Event()
-		{
-			this->callback = new MemberCallbackEventImpl<T>(function, obj);
-		}
-		~MemberCallbackEvent();
-
-		void execute(void* params);
-
-	protected:
-		MemberCallbackEventBase* callback;
+		void (T::*function)(EventArgs*);
 
 	};
 

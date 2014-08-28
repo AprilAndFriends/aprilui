@@ -42,13 +42,13 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		void notifyEvent(chstr name, void* params);
-		// TODO - this needs to be seriously refactored
-		bool triggerEvent(chstr name, april::Key keyCode = april::AK_NONE, chstr extra = "");
-		// TODO - this needs to be seriously refactored
-		bool triggerEvent(chstr name, april::Button buttonCode, chstr extra = "");
-		// TODO - this needs to be seriously refactored
-		bool triggerEvent(chstr name, float x, float y, april::Key keyCode = april::AK_NONE, chstr extra = "");
+		void notifyEvent(Event::Type type, EventArgs* args);
+		bool triggerEvent(Event::Type type, april::Key keyCode);
+		bool triggerEvent(Event::Type type, april::Key keyCode, chstr string);
+		bool triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData = NULL);
+		bool triggerEvent(Event::Type type, chstr string, void* userData = NULL);
+		bool triggerEvent(Event::Type type, void* userData = NULL);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
