@@ -87,35 +87,6 @@ namespace aprilui
 		return Object::triggerEvent(type, userData);
 	}
 
-	bool Label::onMouseDown(april::Key keyCode)
-	{
-		if (Object::onMouseDown(keyCode))
-		{
-			return true;
-		}
-		if (isCursorInside())
-		{
-			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
-			return true;
-		}
-		return false;
-	}
-	
-	bool Label::onMouseUp(april::Key keyCode)
-	{
-		if (Object::onMouseUp(keyCode))
-		{
-			return true;
-		}
-		if (this->isCursorInside())
-		{
-			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
-			this->triggerEvent(Event::CLICK, keyCode);
-			return true;
-		}
-		return false;
-	}
-	
 	hstr Label::getProperty(chstr name)
 	{
 		hstr result = Object::getProperty(name);
@@ -135,4 +106,33 @@ namespace aprilui
 		return LabelBase::setProperty(name, value);
 	}
 	
+	bool Label::onMouseDown(april::Key keyCode)
+	{
+		if (Object::onMouseDown(keyCode))
+		{
+			return true;
+		}
+		if (isCursorInside())
+		{
+			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
+			return true;
+		}
+		return false;
+	}
+
+	bool Label::onMouseUp(april::Key keyCode)
+	{
+		if (Object::onMouseUp(keyCode))
+		{
+			return true;
+		}
+		if (this->isCursorInside())
+		{
+			// TODO - this is not good as it will happen if you didn't click on the label, but released the button over it
+			this->triggerEvent(Event::CLICK, keyCode);
+			return true;
+		}
+		return false;
+	}
+
 }

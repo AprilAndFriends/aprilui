@@ -28,10 +28,7 @@
 			</Object>
 		</Object>
 		<Object type="Container" x="0" y="0" w="800" h="600">
-			<Object type="ImageBox" name="imageBox" image="texture/test" x="32" y="96" w="128" h="64">
-				<Animator type="Rotator" function="hover" amplitude="10" speed="180" offset="10"/>
-				<Animator type="AlphaChanger" function="hover" amplitude="64" speed="512" offset="191"/>
-			</Object>
+			<Object type="ImageButton" name="hoverImageButton" image="texture/test" x="32" y="96" w="128" h="64"/>
 			<Object type="ImageBox" name="coloredImageBox" image="texture/test" color="FF7F7F" x="32" y="128" w="128" h="64" zorder="100">
 				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
 				<Animator type="MoverY" amplitude="100" speed="0.25"/>
@@ -94,7 +91,6 @@
 				<Object type="ColoredQuad" name="crazy_quad" color="6F6F6F" x="0" y="0" w="128" h="128" anchors="" center_x="96" center_y="32">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>
 					<Animator type="ResizerY" function="sine" periods="-1" amplitude="32" timer="0.75"/>
-					<Animator type="Rotator" function="hover" amplitude="22.5" speed="180" offset="22.5"/>
 					
 					<Object type="ColoredQuad" color="FF00FF" anchors="left,right,top,bottom" x="40" y="40" w="48" h="48"/>
 					
