@@ -104,7 +104,7 @@ namespace aprilui
 		NAME_TO_TYPE_CHECK(SCROLL_SKIN_CHANGED, "ScrollSkinChanged");
 		NAME_TO_TYPE_CHECK(SET_SLIDER_VALUE, "SetSliderValue");
 		NAME_TO_TYPE_CHECK(DELAY_EXPIRED, "DelayExpired");
-
+		// DEPRECATED
 		NAME_TO_TYPE_CHECK_DEPRECATED(REGISTERED_IN_DATASET, "RegisterInDataset", "RegisteredInDataset");
 		NAME_TO_TYPE_CHECK_DEPRECATED(UNREGISTERED_FROM_DATASET, "UnregisterFromDataset", "UnregisteredFromDataset");
 		NAME_TO_TYPE_CHECK_DEPRECATED(ATTACHED_TO_OBJECT, "AttachToObject", "AttachedToObject");
