@@ -292,6 +292,36 @@ namespace aprilui
 		}
 	}
 
+	bool ScrollArea::triggerEvent(Event::Type type, april::Key keyCode)
+	{
+		return Object::triggerEvent(type, keyCode);
+	}
+
+	bool ScrollArea::triggerEvent(Event::Type type, april::Key keyCode, chstr string)
+	{
+		return Object::triggerEvent(type, keyCode, string);
+	}
+
+	bool ScrollArea::triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Object::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool ScrollArea::triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Object::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool ScrollArea::triggerEvent(Event::Type type, chstr string, void* userData)
+	{
+		return Object::triggerEvent(type, string, userData);
+	}
+
+	bool ScrollArea::triggerEvent(Event::Type type, void* userData)
+	{
+		return Object::triggerEvent(type, userData);
+	}
+
 	hstr ScrollArea::getProperty(chstr name)
 	{
 		if (name == "allow_drag")			return this->isAllowDrag();

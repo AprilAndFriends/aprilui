@@ -37,6 +37,8 @@
 #include <aprilui/Texture.h>
 #include <atres/atres.h>
 
+#define LOG_TAG "demo_simple"
+
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
 grect viewport = drawRect;
 

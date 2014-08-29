@@ -35,6 +35,7 @@
 #include <april/Window.h>
 #include <aprilui/Animator.h>
 #include <aprilui/aprilui.h>
+#include <aprilui/CallbackEvent.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
 #include <aprilui/Texture.h>
@@ -42,6 +43,8 @@
 #include <atres/FontBitmap.h>
 #include <atres/Renderer.h>
 #include <gtypes/Vector2.h>
+
+#define LOG_TAG "demo_gui"
 
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
 grect viewport = drawRect;
@@ -53,6 +56,16 @@ float _animatorCustomFunction(aprilui::Animator* animator, float time)
 {
 	float sine = (float)dsin(time * animator->getSpeed() * 360);
 	return (sine * sine * animator->getAmplitude() + time * 30); // sin(t)^2 + t*30
+}
+
+void _hoverStarted(aprilui::EventArgs* args)
+{
+	hlog::write(LOG_TAG, "Mouse Hover started: " + args->baseObject->getName());
+}
+
+void _hoverFinished(aprilui::EventArgs* args)
+{
+	hlog::write(LOG_TAG, "Mouse Hover finished: " + args->baseObject->getName());
 }
 
 class UpdateDelegate : public april::UpdateDelegate
@@ -240,6 +253,9 @@ void april_init(const harray<hstr>& args)
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
+		aprilui::Object* object = dataset->getObject("hoverImageButton");
+		object->registerEvent(aprilui::Event::HOVER_STARTED, new aprilui::CallbackEvent(&_hoverStarted));
+		object->registerEvent(aprilui::Event::HOVER_FINISHED, new aprilui::CallbackEvent(&_hoverFinished));
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif

@@ -255,9 +255,13 @@ namespace aprilui
 			else if	(value == "square")		this->setAnimationFunction(Square);
 			else if	(value == "triangle")	this->setAnimationFunction(Triangle);
 			else if	(value == "linear")		this->setAnimationFunction(Linear);
-			else if	(value == "random")		this->setAnimationFunction(Random);
-			else if	(value == "hover")		this->setAnimationFunction(Hover);
-			else if	(value == "custom")		this->setAnimationFunction(Custom);
+			else if (value == "random")		this->setAnimationFunction(Random);
+			else if	(value == "hover")
+			{
+				hlog::warn(aprilui::logTag, "\"hover\" is deprecated. Use events instead."); // DEPRECATED
+				this->setAnimationFunction(Hover);
+			}
+			else if (value == "custom")		this->setAnimationFunction(Custom);
 		}
 		else if	(name == "timer")			this->setTimer(value);
 		else if	(name == "delay")			this->setDelay(value);

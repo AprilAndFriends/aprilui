@@ -221,6 +221,36 @@ namespace aprilui
 		return images;
 	}
 	
+	bool ImageButton::triggerEvent(Event::Type type, april::Key keyCode)
+	{
+		return ImageBox::triggerEvent(type, keyCode);
+	}
+
+	bool ImageButton::triggerEvent(Event::Type type, april::Key keyCode, chstr string)
+	{
+		return ImageBox::triggerEvent(type, keyCode, string);
+	}
+
+	bool ImageButton::triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return ImageBox::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool ImageButton::triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return ImageBox::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool ImageButton::triggerEvent(Event::Type type, chstr string, void* userData)
+	{
+		return ImageBox::triggerEvent(type, string, userData);
+	}
+
+	bool ImageButton::triggerEvent(Event::Type type, void* userData)
+	{
+		return ImageBox::triggerEvent(type, userData);
+	}
+
 	hstr ImageButton::getProperty(chstr name)
 	{
 		if (name == "pushed_image")		return this->getPushedImageName();

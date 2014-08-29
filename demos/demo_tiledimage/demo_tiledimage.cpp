@@ -40,7 +40,9 @@
 #include <atres/atres.h>
 #include <gtypes/Vector2.h>
 
+#define LOG_TAG "demo_tiledimage"
 #define SCROLL_SPEED gvec2(50.0f, -50.0f)
+
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
 grect viewport = drawRect;
 

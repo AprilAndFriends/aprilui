@@ -32,7 +32,7 @@ namespace aprilui
 	
 	void ButtonBase::update(float timeDelta)
 	{
-		this->hovered = this->_checkHover();
+		this->_updateHover();
 	}
 
 	bool ButtonBase::_checkHover()
@@ -65,13 +65,23 @@ namespace aprilui
 		return (child != NULL && child == dynamic_cast<Object*>(this));
 	}
 
+	void ButtonBase::_updateHover()
+	{
+		bool previousHovered = this->hovered;
+		this->hovered = this->_checkHover();
+		if (previousHovered != this->hovered)
+		{
+			this->triggerEvent(this->hovered ? Event::HOVER_STARTED : Event::HOVER_FINISHED);
+		}
+	}
+
 	bool ButtonBase::onMouseDown(april::Key keyCode)
 	{
 		if (!allowedKeys.contains(keyCode))
 		{
 			return false;
 		}
-		this->hovered = this->_checkHover();
+		this->_updateHover();
 		if (this->hovered)
 		{
 			this->pushed = true;
@@ -86,7 +96,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		this->hovered = this->_checkHover();
+		this->_updateHover();
 		if (this->pushed && this->hovered)
 		{
 			this->pushed = false;
@@ -104,7 +114,7 @@ namespace aprilui
 
 	bool ButtonBase::onMouseMove()
 	{
-		this->hovered = this->_checkHover();
+		this->_updateHover();
 		return false;
 	}
 
@@ -114,7 +124,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		this->hovered = this->_checkHover();
+		this->_updateHover();
 		if (this->hovered)
 		{
 			this->pushed = true;
@@ -129,7 +139,7 @@ namespace aprilui
 		{
 			return false;
 		}
-		this->hovered = this->_checkHover();
+		this->_updateHover();
 		if (this->pushed && this->hovered)
 		{
 			this->pushed = false;
@@ -142,7 +152,7 @@ namespace aprilui
 	void ButtonBase::mouseCancel()
 	{
 		this->pushed = false;
-		this->hovered = this->_checkHover();
+		this->_updateHover();
 	}
 
 	hstr ButtonBase::getProperty(chstr name)

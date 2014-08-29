@@ -37,9 +37,6 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		bool onMouseDown(april::Key keyCode);
-		bool onMouseUp(april::Key keyCode);
-
 		void notifyEvent(Event::Type type, EventArgs* args);
 		bool triggerEvent(Event::Type type, april::Key keyCode);
 		bool triggerEvent(Event::Type type, april::Key keyCode, chstr string);
@@ -50,6 +47,9 @@ namespace aprilui
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
+		bool onMouseDown(april::Key keyCode);
+		bool onMouseUp(april::Key keyCode);
 
 	protected:
 		void OnDraw();
