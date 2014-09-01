@@ -521,13 +521,12 @@ namespace aprilui
 		bool clipped = (this->clip && this->parent != NULL);
 		if (clipped)
 		{
-			// TODO - this has to be implemented using clipping planes in April
 			orthoProjection = april::rendersys->getOrthoProjection();
 			viewport = april::rendersys->getViewport();
 			grect rect = this->parent->getBoundingRect();
 			gvec2 ratio = orthoProjection.getSize() / viewport.getSize();
 			april::rendersys->setOrthoProjection(grect(-rect.getPosition(), rect.getSize()));
-			april::rendersys->setViewport(grect((rect.getPosition() + orthoProjection.getPosition()) / ratio, rect.getSize() / ratio));
+			april::rendersys->setViewport(grect((rect.getPosition() + orthoProjection.getPosition() + viewport.getPosition()) / ratio, rect.getSize() / ratio));
 		}
 		gvec2 position = this->rect.getPosition() + this->center;
 		if (position.x != 0.0f || position.y != 0.0f)
