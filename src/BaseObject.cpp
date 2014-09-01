@@ -83,7 +83,7 @@ namespace aprilui
 	harray<BaseObject*> BaseObject::getDescendants()
 	{
 		harray<BaseObject*> descendants = this->getChildren();
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			descendants += (*it)->getDescendants();
 		}
@@ -104,12 +104,12 @@ namespace aprilui
 
 	harray<BaseObject*> BaseObject::getChildren()
 	{
-		return (this->objects.cast<BaseObject*>() + this->animators.cast<BaseObject*>());
+		return (this->childrenObjects.cast<BaseObject*>() + this->childrenAnimators.cast<BaseObject*>());
 	}
 
 	void BaseObject::_sortChildren()
 	{
-		this->objects.sort(&_objectSortCallback);
+		this->childrenObjects.sort(&_objectSortCallback);
 	}
 
 	bool BaseObject::isChild(BaseObject* obj)
@@ -145,14 +145,14 @@ namespace aprilui
 
 	BaseObject* BaseObject::findChildByName(chstr name)
 	{
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			if ((*it)->getName() == name)
 			{
 				return (*it);
 			}
 		}
-		foreach (Animator*, it, this->animators)
+		foreach (Animator*, it, this->childrenAnimators)
 		{
 			if ((*it)->getName() == name)
 			{
@@ -169,7 +169,7 @@ namespace aprilui
 		{
 			return object;
 		}
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			object = (*it)->findDescendantByName(name);
 			if (object != NULL)
@@ -196,11 +196,11 @@ namespace aprilui
 
 	void BaseObject::update(float timeDelta)
 	{
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			(*it)->update(timeDelta);
 		}
-		foreach (Animator*, it, this->animators)
+		foreach (Animator*, it, this->childrenAnimators)
 		{
 			(*it)->update(timeDelta);
 		}
