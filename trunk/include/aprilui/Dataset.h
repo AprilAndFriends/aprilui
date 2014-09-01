@@ -201,8 +201,7 @@ namespace aprilui
 			out = this->tryGetAnimator<T>(name);
 		}
 
-		void notifyEvent(Event::Type type, EventArgs* args);
-		void notifyEvent(chstr customType, EventArgs* args);
+		void notifyEvent(chstr type, EventArgs* args);
 		void reloadTexts();
 		void reloadTextures();
 		void focus(Object* object);

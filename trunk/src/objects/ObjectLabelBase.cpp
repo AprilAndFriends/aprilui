@@ -216,9 +216,9 @@ namespace aprilui
 		return true;
 	}
 	
-	void LabelBase::notifyEvent(Event::Type type, EventArgs* args)
+	void LabelBase::notifyEvent(chstr type, EventArgs* args)
 	{
-		if (type == Event::LOCALIZATION_CHANGED)
+		if (type == Event::LocalizationChanged)
 		{
 			if (this->textKey != "")
 			{
@@ -234,7 +234,7 @@ namespace aprilui
 		this->textKey = "";
 		if (changed)
 		{
-			this->triggerEvent(Event::TEXT_CHANGED);
+			this->triggerEvent(Event::TextChanged);
 		}
 	}
 	
@@ -246,7 +246,7 @@ namespace aprilui
 		this->textKey = newTextKey;
 		if (changed)
 		{
-			this->triggerEvent(Event::TEXT_KEY_CHANGED);
+			this->triggerEvent(Event::TextKeyChanged);
 		}
 	}
 	
@@ -257,7 +257,7 @@ namespace aprilui
 			hstr newTextKey = textKey; // because value is a chstr which could reference this->textKey itself
 			this->setText(this->getDataset()->getText(newTextKey));
 			this->textKey = newTextKey;
-			this->triggerEvent(Event::TEXT_KEY_CHANGED);
+			this->triggerEvent(Event::TextKeyChanged);
 			return true;
 		}
 		return false;

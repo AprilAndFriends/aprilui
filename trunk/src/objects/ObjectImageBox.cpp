@@ -122,15 +122,6 @@ namespace aprilui
 		}
 	}
 
-	void ImageBox::notifyEvent(Event::Type type, EventArgs* args)
-	{	
-		if (type == Event::UPDATE_IMAGE)
-		{
-			this->setImageByName(this->imageName);
-		}
-		Object::notifyEvent(type, args);
-	}
-	
 	hstr ImageBox::getProperty(chstr name)
 	{
 		if (name == "image")	return this->getImageName();
@@ -152,7 +143,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
+			this->triggerEvent(Event::MouseDown, keyCode);
 			return true;
 		}
 		return false;
@@ -166,7 +157,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent(Event::CLICK, keyCode);
+			this->triggerEvent(Event::Click, keyCode);
 			return true;
 		}
 		return false;

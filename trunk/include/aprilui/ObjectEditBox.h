@@ -52,7 +52,7 @@ namespace aprilui
 
 		void update(float time);
 
-		void notifyEvent(Event::Type type, EventArgs* args);
+		void notifyEvent(chstr type, EventArgs* args);
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 		

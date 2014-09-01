@@ -115,38 +115,38 @@ namespace aprilui
 		this->backgroundColor.a = alpha;
 	}
 	
-	void TextImageButton::notifyEvent(Event::Type type, EventArgs* args)
+	void TextImageButton::notifyEvent(chstr type, EventArgs* args)
 	{
 		LabelBase::notifyEvent(type, args);
 		ImageButton::notifyEvent(type, args);
 	}
 
-	bool TextImageButton::triggerEvent(Event::Type type, april::Key keyCode)
+	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode)
 	{
 		return ImageButton::triggerEvent(type, keyCode);
 	}
 
-	bool TextImageButton::triggerEvent(Event::Type type, april::Key keyCode, chstr string)
+	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, chstr string)
 	{
 		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool TextImageButton::triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
 	{
 		return ImageButton::triggerEvent(type, keyCode, position, string, userData);
 	}
 
-	bool TextImageButton::triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData)
+	bool TextImageButton::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
 	{
 		return ImageButton::triggerEvent(type, buttonCode, string, userData);
 	}
 
-	bool TextImageButton::triggerEvent(Event::Type type, chstr string, void* userData)
+	bool TextImageButton::triggerEvent(chstr type, chstr string, void* userData)
 	{
 		return ImageButton::triggerEvent(type, string, userData);
 	}
 
-	bool TextImageButton::triggerEvent(Event::Type type, void* userData)
+	bool TextImageButton::triggerEvent(chstr type, void* userData)
 	{
 		return ImageButton::triggerEvent(type, userData);
 	}

@@ -20,7 +20,7 @@ namespace aprilui
 {
 	ScrollBarButtonForward::ScrollBarButtonForward(chstr name, grect rect) : ImageButton(name, rect)
 	{
-		this->registerEvent(aprilui::Event::CLICK, new aprilui::CallbackEvent(&_click));
+		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
 
 	ScrollBarButtonForward::~ScrollBarButtonForward()
@@ -32,10 +32,10 @@ namespace aprilui
 		return new ScrollBarButtonForward(name, rect);
 	}
 
-	void ScrollBarButtonForward::notifyEvent(Event::Type type, EventArgs* args)
+	void ScrollBarButtonForward::notifyEvent(chstr type, EventArgs* args)
 	{
 		ImageButton::notifyEvent(type, args);
-		if (type == Event::ATTACHED_TO_OBJECT)
+		if (type == Event::AttachedToObject)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -43,7 +43,7 @@ namespace aprilui
 				parent->_setButtonForward(this);
 			}
 		}
-		else if (type == Event::DETACHED_FROM_OBJECT)
+		else if (type == Event::DetachedFromObject)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)

@@ -479,7 +479,7 @@ namespace aprilui
 		}
 		baseObject->dataset = this;
 		EventArgs args(this);
-		baseObject->notifyEvent(Event::REGISTERED_IN_DATASET, &args);
+		baseObject->notifyEvent(Event::RegisteredInDataset, &args);
 		if (object != NULL)
 		{
 			this->objects[objectName] = object;
@@ -800,7 +800,7 @@ namespace aprilui
 				}
 			}
 			(*it)->dataset = this;
-			(*it)->notifyEvent(Event::REGISTERED_IN_DATASET, &args);
+			(*it)->notifyEvent(Event::RegisteredInDataset, &args);
 		}
 	}
 	
@@ -1251,7 +1251,7 @@ namespace aprilui
 		}
 	}
 
-	void Dataset::notifyEvent(Event::Type type, EventArgs* args)
+	void Dataset::notifyEvent(chstr type, EventArgs* args)
 	{
 		foreach_m (Object*, it, this->objects)
 		{
@@ -1260,18 +1260,6 @@ namespace aprilui
 		foreach_m (Animator*, it, this->animators)
 		{
 			it->second->notifyEvent(type, args);
-		}
-	}
-
-	void Dataset::notifyEvent(chstr customType, EventArgs* args)
-	{
-		foreach_m (Object*, it, this->objects)
-		{
-			it->second->notifyEvent(customType, args);
-		}
-		foreach_m (Animator*, it, this->animators)
-		{
-			it->second->notifyEvent(customType, args);
 		}
 	}
 
@@ -1304,8 +1292,8 @@ namespace aprilui
 	{
 		this->removeFocus();
 		this->focusedObject = object;
-		this->focusedObject->notifyEvent(Event::FOCUS_GAINED, NULL);
-		this->focusedObject->triggerEvent(Event::FOCUS_GAINED);
+		this->focusedObject->notifyEvent(Event::FocusGained, NULL);
+		this->focusedObject->triggerEvent(Event::FocusGained);
 	}
 
 	void Dataset::removeFocus()
@@ -1316,7 +1304,7 @@ namespace aprilui
 			// in case of a recursive call, the focused object has to be removed first.
 			aprilui::Object* object = this->focusedObject;
 			this->focusedObject = NULL;
-			object->triggerEvent(Event::FOCUS_LOST);
+			object->triggerEvent(Event::FocusLost);
 		}
 	}
 	
