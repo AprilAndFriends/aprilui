@@ -31,7 +31,7 @@ namespace aprilui
 
 		static Object* createInstance(chstr name, grect rect);
 
-		void notifyEvent(Event::Type type, EventArgs* args);
+		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
 		static void _mouseDown(EventArgs* args);

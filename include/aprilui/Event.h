@@ -24,48 +24,42 @@ namespace aprilui
 	class apriluiExport Event
 	{
 	public:
-		enum Type
-		{
-			UNDEFINED = 0,
-			REGISTERED_IN_DATASET,
-			UNREGISTERED_FROM_DATASET,
-			ATTACHED_TO_OBJECT,
-			DETACHED_FROM_OBJECT,
-			MOUSE_DOWN,
-			MOUSE_UP,
-			MOUSE_MOVE,
-			MOUSE_SCROLL,
-			MOUSE_CANCEL,
-			CLICK,
-			KEY_DOWN,
-			KEY_UP,
-			BUTTON_DOWN,
-			BUTTON_UP,
-			BUTTON_TRIGGER,
-			ENABLED_CHANGED,
-			RESIZED,
-			FOCUS_GAINED,
-			FOCUS_LOST,
-			HOVER_STARTED,
-			HOVER_FINISHED,
-			TEXT_CHANGED,
-			TEXT_KEY_CHANGED,
-			LOCALIZATION_CHANGED,
-			SUBMIT_EDIT_TEXT,
-			UPDATE_IMAGE,
-			SCROLL_SKIN_CHANGED,
-			SET_SLIDER_VALUE,
-			DELAY_EXPIRED,
-		};
+		static hstr RegisteredInDataset;
+		static hstr UnregisteredFromDataset;
+		static hstr AttachedToObject;
+		static hstr DetachedFromObject;
+		static hstr MouseDown;
+		static hstr MouseUp;
+		static hstr MouseMove;
+		static hstr MouseScroll;
+		static hstr MouseCancel;
+		static hstr Click;
+		static hstr KeyDown;
+		static hstr KeyUp;
+		static hstr ButtonDown;
+		static hstr ButtonUp;
+		static hstr ButtonTrigger;
+		static hstr EnabledChanged;
+		static hstr Resized;
+		static hstr FocusGained;
+		static hstr FocusLost;
+		static hstr HoverStarted;
+		static hstr HoverFinished;
+		static hstr TextChanged;
+		static hstr TextKeyChanged;
+		static hstr LocalizationChanged;
+		static hstr SubmitEditText;
+		static hstr ScrollSkinChanged;
+		static hstr SetSliderValue;
+		static hstr DelayExpired;
 
 		Event();
 		virtual ~Event();
 
 		virtual void execute(EventArgs* args) = 0;
 
-		static hstr typeToName(Type type, bool ignoreWarning = false);
-		static Type nameToType(chstr name, bool ignoreWarning = false);
-		
+		static bool isSystemEvent(chstr type, bool caseSensitive = true);
+
 	};
 
 }

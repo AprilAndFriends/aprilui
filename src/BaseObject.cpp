@@ -216,7 +216,7 @@ namespace aprilui
 		if (value != this->enabled)
 		{
 			this->enabled = value;
-			this->notifyEvent(Event::ENABLED_CHANGED, NULL);
+			this->notifyEvent(Event::EnabledChanged, NULL);
 		}
 	}
 

@@ -82,8 +82,7 @@ namespace aprilui
 	
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
 	
-	apriluiFnExport void notifyEvent(Event::Type type, EventArgs* args);
-	apriluiFnExport void notifyEvent(chstr customType, EventArgs* args);
+	apriluiFnExport void notifyEvent(chstr type, EventArgs* args);
 	apriluiFnExport void processEvents();
 	apriluiFnExport void update(float timeDelta);
 	apriluiFnExport void updateTextures(float timeDelta);

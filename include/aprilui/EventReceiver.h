@@ -33,36 +33,24 @@ namespace aprilui
 		EventReceiver();
 		virtual ~EventReceiver();
 
-		inline hmap<Event::Type, Event*>& getEvents() { return this->events; }
-		inline hmap<hstr, Event*>& getCustomEvents() { return this->customEvents; }
+		inline hmap<hstr, Event*>& getEvents() { return this->events; }
 
-		bool registerEvent(Event::Type type, void(*callback)(EventArgs*));
-		bool registerEvent(Event::Type type, Event* event);
-		bool unregisterEvent(Event::Type type);
-		bool registerEvent(chstr customType, void(*callback)(EventArgs*));
-		bool registerEvent(chstr customType, Event* event);
-		bool unregisterEvent(chstr customType);
+		bool registerEvent(chstr type, void(*callback)(EventArgs*));
+		bool registerEvent(chstr type, Event* event);
+		bool unregisterEvent(chstr type);
 
-		virtual void notifyEvent(Event::Type type, EventArgs* args);
-		virtual void notifyEvent(chstr customType, EventArgs* args);
+		virtual void notifyEvent(chstr type, EventArgs* args);
 
-		virtual bool triggerEvent(Event::Type type, april::Key keyCode);
-		virtual bool triggerEvent(Event::Type type, april::Key keyCode, chstr string);
-		virtual bool triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
-		virtual bool triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData = NULL);
-		virtual bool triggerEvent(Event::Type type, chstr string, void* userData = NULL);
-		virtual bool triggerEvent(Event::Type type, void* userData = NULL);
-		virtual bool triggerEvent(chstr customType, april::Key keyCode);
-		virtual bool triggerEvent(chstr customType, april::Key keyCode, chstr string);
-		virtual bool triggerEvent(chstr customType, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
-		virtual bool triggerEvent(chstr customType, april::Button buttonCode, chstr string, void* userData = NULL);
-		virtual bool triggerEvent(chstr customType, chstr string, void* userData = NULL);
-		virtual bool triggerEvent(chstr customType, void* userData = NULL);
+		virtual bool triggerEvent(chstr type, april::Key keyCode);
+		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string);
+		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
+		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL);
+		virtual bool triggerEvent(chstr type, void* userData = NULL);
 
 	protected:
 		Dataset* dataset;
-		hmap<Event::Type, Event*> events;
-		hmap<hstr, Event*> customEvents;
+		hmap<hstr, Event*> events;
 
 	};
 

@@ -71,7 +71,7 @@ namespace aprilui
 		this->hovered = this->_checkHover();
 		if (previousHovered != this->hovered)
 		{
-			this->triggerEvent(this->hovered ? Event::HOVER_STARTED : Event::HOVER_FINISHED);
+			this->triggerEvent(this->hovered ? Event::HoverStarted : Event::HoverFinished);
 		}
 	}
 

@@ -267,10 +267,10 @@ namespace aprilui
 		return (!this->dragging ? ButtonBase::_checkHover() : this->isCursorInside());
 	}
 
-	void ScrollArea::notifyEvent(Event::Type type, EventArgs* args)
+	void ScrollArea::notifyEvent(chstr type, EventArgs* args)
 	{
 		Object::notifyEvent(type, args);
-		if (type == Event::ATTACHED_TO_OBJECT)
+		if (type == Event::AttachedToObject)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
@@ -278,7 +278,7 @@ namespace aprilui
 				parent->_setScrollArea(this);
 			}
 		}
-		else if (type == Event::DETACHED_FROM_OBJECT)
+		else if (type == Event::DetachedFromObject)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
@@ -286,38 +286,38 @@ namespace aprilui
 				parent->_setScrollArea(NULL);
 			}
 		}
-		else if (type == Event::RESIZED)
+		else if (type == Event::Resized)
 		{
 			this->setScrollOffset(this->getScrollOffset());
 		}
 	}
 
-	bool ScrollArea::triggerEvent(Event::Type type, april::Key keyCode)
+	bool ScrollArea::triggerEvent(chstr type, april::Key keyCode)
 	{
 		return Object::triggerEvent(type, keyCode);
 	}
 
-	bool ScrollArea::triggerEvent(Event::Type type, april::Key keyCode, chstr string)
+	bool ScrollArea::triggerEvent(chstr type, april::Key keyCode, chstr string)
 	{
 		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool ScrollArea::triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool ScrollArea::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
 	{
 		return Object::triggerEvent(type, keyCode, position, string, userData);
 	}
 
-	bool ScrollArea::triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData)
+	bool ScrollArea::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
 	{
 		return Object::triggerEvent(type, buttonCode, string, userData);
 	}
 
-	bool ScrollArea::triggerEvent(Event::Type type, chstr string, void* userData)
+	bool ScrollArea::triggerEvent(chstr type, chstr string, void* userData)
 	{
 		return Object::triggerEvent(type, string, userData);
 	}
 
-	bool ScrollArea::triggerEvent(Event::Type type, void* userData)
+	bool ScrollArea::triggerEvent(chstr type, void* userData)
 	{
 		return Object::triggerEvent(type, userData);
 	}

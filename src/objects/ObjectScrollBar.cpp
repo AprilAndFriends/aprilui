@@ -60,7 +60,7 @@ namespace aprilui
 	void ScrollBar::setSkinName(chstr value)
 	{
 		this->skinName = value;
-		this->notifyEvent(Event::SCROLL_SKIN_CHANGED, NULL);
+		this->notifyEvent(Event::ScrollSkinChanged, NULL);
 	}
 
 	harray<PropertyDescription> ScrollBar::getPropertyDescriptions()
@@ -262,10 +262,10 @@ namespace aprilui
 		}
 	}
 
-	void ScrollBar::notifyEvent(Event::Type type, EventArgs* args)
+	void ScrollBar::notifyEvent(chstr type, EventArgs* args)
 	{
 		Object::notifyEvent(type, args);
-		if (type == Event::ATTACHED_TO_OBJECT)
+		if (type == Event::AttachedToObject)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent == NULL)
@@ -273,7 +273,7 @@ namespace aprilui
 				hlog::warnf(aprilui::logTag, "ScrollBar '%s' not attached to object of class Container!", this->name.c_str());
 			}
 		}
-		else if (type == Event::SCROLL_SKIN_CHANGED)
+		else if (type == Event::ScrollSkinChanged)
 		{
 			if (this->skinName != "")
 			{

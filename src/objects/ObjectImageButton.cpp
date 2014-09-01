@@ -221,32 +221,32 @@ namespace aprilui
 		return images;
 	}
 	
-	bool ImageButton::triggerEvent(Event::Type type, april::Key keyCode)
+	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)
 	{
 		return ImageBox::triggerEvent(type, keyCode);
 	}
 
-	bool ImageButton::triggerEvent(Event::Type type, april::Key keyCode, chstr string)
+	bool ImageButton::triggerEvent(chstr type, april::Key keyCode, chstr string)
 	{
 		return ImageBox::triggerEvent(type, keyCode, string);
 	}
 
-	bool ImageButton::triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool ImageButton::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
 	{
 		return ImageBox::triggerEvent(type, keyCode, position, string, userData);
 	}
 
-	bool ImageButton::triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData)
+	bool ImageButton::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
 	{
 		return ImageBox::triggerEvent(type, buttonCode, string, userData);
 	}
 
-	bool ImageButton::triggerEvent(Event::Type type, chstr string, void* userData)
+	bool ImageButton::triggerEvent(chstr type, chstr string, void* userData)
 	{
 		return ImageBox::triggerEvent(type, string, userData);
 	}
 
-	bool ImageButton::triggerEvent(Event::Type type, void* userData)
+	bool ImageButton::triggerEvent(chstr type, void* userData)
 	{
 		return ImageBox::triggerEvent(type, userData);
 	}
@@ -283,7 +283,7 @@ namespace aprilui
 		bool result = ButtonBase::onMouseDown(keyCode);
 		if (result)
 		{
-			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
+			this->triggerEvent(Event::MouseDown, keyCode);
 		}
 		return result;
 	}
@@ -298,11 +298,11 @@ namespace aprilui
 		bool up = false;
 		if (this->hovered)
 		{
-			up = this->triggerEvent(Event::MOUSE_UP, keyCode);
+			up = this->triggerEvent(Event::MouseUp, keyCode);
 		}
 		if (click)
 		{
-			this->triggerEvent(Event::CLICK, keyCode);
+			this->triggerEvent(Event::Click, keyCode);
 		}
 		return (click || up);
 	}
@@ -321,7 +321,7 @@ namespace aprilui
 		bool result = ButtonBase::onButtonDown(buttonCode);
 		if (result)
 		{
-			this->triggerEvent(Event::BUTTON_DOWN, buttonCode);
+			this->triggerEvent(Event::ButtonDown, buttonCode);
 		}
 		return result;
 	}
@@ -336,11 +336,11 @@ namespace aprilui
 		bool up = false;
 		if (this->hovered)
 		{
-			up = this->triggerEvent(Event::BUTTON_UP, buttonCode);
+			up = this->triggerEvent(Event::ButtonUp, buttonCode);
 		}
 		if (click)
 		{
-			this->triggerEvent(Event::BUTTON_TRIGGER, buttonCode);
+			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (click || up);
 	}

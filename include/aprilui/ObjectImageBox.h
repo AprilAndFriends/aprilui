@@ -46,7 +46,6 @@ namespace aprilui
 
 		void resizeToFitImage();
 
-		void notifyEvent(Event::Type type, EventArgs* args);
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 

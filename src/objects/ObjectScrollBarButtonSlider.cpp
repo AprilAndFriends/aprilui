@@ -21,8 +21,8 @@ namespace aprilui
 {
 	ScrollBarButtonSlider::ScrollBarButtonSlider(chstr name, grect rect) : ImageButton(name, rect)
 	{
-		this->registerEvent(aprilui::Event::MOUSE_DOWN, new aprilui::CallbackEvent(&_mouseDown));
-		this->registerEvent(aprilui::Event::CLICK, new aprilui::CallbackEvent(&_click));
+		this->registerEvent(aprilui::Event::MouseDown, new aprilui::CallbackEvent(&_mouseDown));
+		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
 
 	ScrollBarButtonSlider::~ScrollBarButtonSlider()
@@ -34,10 +34,10 @@ namespace aprilui
 		return new ScrollBarButtonSlider(name, rect);
 	}
 
-	void ScrollBarButtonSlider::notifyEvent(Event::Type type, EventArgs* args)
+	void ScrollBarButtonSlider::notifyEvent(chstr type, EventArgs* args)
 	{
 		ImageButton::notifyEvent(type, args);
-		if (type == Event::ATTACHED_TO_OBJECT)
+		if (type == Event::AttachedToObject)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)
@@ -45,7 +45,7 @@ namespace aprilui
 				parent->_setButtonSlider(this);
 			}
 		}
-		else if (type == Event::DETACHED_FROM_OBJECT)
+		else if (type == Event::DetachedFromObject)
 		{
 			ScrollBar* parent = dynamic_cast<ScrollBar*>(this->parent);
 			if (parent != NULL)

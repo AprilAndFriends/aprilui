@@ -41,7 +41,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent(Event::MOUSE_DOWN, keyCode);
+			this->triggerEvent(Event::MouseDown, keyCode);
 			return true;
 		}
 		return false;
@@ -55,7 +55,7 @@ namespace aprilui
 		}
 		if (this->isCursorInside())
 		{
-			this->triggerEvent(Event::CLICK, keyCode);
+			this->triggerEvent(Event::Click, keyCode);
 			return true;
 		}
 		return false;

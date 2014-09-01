@@ -136,7 +136,7 @@ namespace aprilui
 
 	Object::~Object()
 	{
-		foreach_map (Event::Type, Event*, it, this->events)
+		foreach_m (Event*, it, this->events)
 		{
 			if (this->dataset != NULL)
 			{
@@ -215,7 +215,7 @@ namespace aprilui
 			}
 		}
 		obj->parent = this;
-		obj->notifyEvent(Event::ATTACHED_TO_OBJECT, NULL);
+		obj->notifyEvent(Event::AttachedToObject, NULL);
 	}
 
 	void Object::removeChild(BaseObject* obj)
@@ -224,7 +224,7 @@ namespace aprilui
 		{
 			throw ObjectNotChildException(obj->getName(), this->getName());
 		}
-		obj->notifyEvent(Event::DETACHED_FROM_OBJECT, NULL);
+		obj->notifyEvent(Event::DetachedFromObject, NULL);
 		Object* object = dynamic_cast<Object*>(obj);
 		if (object != NULL)
 		{
@@ -394,14 +394,14 @@ namespace aprilui
 	{
 		this->_updateChildrenHorizontal(value - this->rect.w);
 		this->rect.w = value;
-		this->notifyEvent(Event::RESIZED, NULL);
+		this->notifyEvent(Event::Resized, NULL);
 	}
 
 	void Object::setHeight(float value)
 	{
 		this->_updateChildrenVertical(value - this->rect.h);
 		this->rect.h = value;
-		this->notifyEvent(Event::RESIZED, NULL);
+		this->notifyEvent(Event::Resized, NULL);
 	}
 
 	void Object::setSize(gvec2 value)
@@ -409,7 +409,7 @@ namespace aprilui
 		this->_updateChildrenHorizontal(value.x - this->rect.w);
 		this->_updateChildrenVertical(value.y - this->rect.h);
 		this->rect.setSize(value);
-		this->notifyEvent(Event::RESIZED, NULL);
+		this->notifyEvent(Event::Resized, NULL);
 	}
 
 	void Object::setSize(float w, float h)
@@ -418,7 +418,7 @@ namespace aprilui
 		this->_updateChildrenVertical(h - this->rect.h);
 		this->rect.w = w;
 		this->rect.h = h;
-		this->notifyEvent(Event::RESIZED, NULL);
+		this->notifyEvent(Event::Resized, NULL);
 	}
 
 	void Object::setRect(grect value)
@@ -426,7 +426,7 @@ namespace aprilui
 		this->_updateChildrenHorizontal(value.w - this->rect.w);
 		this->_updateChildrenVertical(value.h - this->rect.h);
 		this->rect = value;
-		this->notifyEvent(Event::RESIZED, NULL);
+		this->notifyEvent(Event::Resized, NULL);
 	}
 
 	void Object::setAnchors(bool left, bool right, bool top, bool bottom)

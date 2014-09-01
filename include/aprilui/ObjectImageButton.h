@@ -63,12 +63,12 @@ namespace aprilui
 		
 		harray<Image*> getUsedImages();
 
-		bool triggerEvent(Event::Type type, april::Key keyCode);
-		bool triggerEvent(Event::Type type, april::Key keyCode, chstr string);
-		bool triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
-		bool triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData = NULL);
-		bool triggerEvent(Event::Type type, chstr string, void* userData = NULL);
-		bool triggerEvent(Event::Type type, void* userData = NULL);
+		bool triggerEvent(chstr type, april::Key keyCode);
+		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
+		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, void* userData = NULL);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

@@ -50,12 +50,12 @@ namespace aprilui
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
-		virtual bool triggerEvent(Event::Type type, april::Key keyCode) = 0;
-		virtual bool triggerEvent(Event::Type type, april::Key keyCode, chstr string) = 0;
-		virtual bool triggerEvent(Event::Type type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
-		virtual bool triggerEvent(Event::Type type, april::Button buttonCode, chstr string, void* userData = NULL) = 0;
-		virtual bool triggerEvent(Event::Type type, chstr string, void* userData = NULL) = 0;
-		virtual bool triggerEvent(Event::Type type, void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
 
 		static void setAllowedKeys(harray<april::Key> keys);
 		static void setAllowedButtons(harray<april::Button> buttons);
