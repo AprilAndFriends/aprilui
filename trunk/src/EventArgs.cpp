@@ -20,6 +20,7 @@ namespace aprilui
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
 		this->animator = dynamic_cast<Animator*>(receiver);
+		this->dataset = dynamic_cast<Dataset*>(receiver);
 		this->keyCode = keyCode;
 		this->position = position;
 		this->string = string;
@@ -33,6 +34,7 @@ namespace aprilui
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
 		this->animator = dynamic_cast<Animator*>(receiver);
+		this->dataset = dynamic_cast<Dataset*>(receiver);
 		this->buttonCode = buttonCode;
 		this->string = string;
 		this->userData = userData;
@@ -45,6 +47,7 @@ namespace aprilui
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
 		this->animator = dynamic_cast<Animator*>(receiver);
+		this->dataset = dynamic_cast<Dataset*>(receiver);
 		this->string = string;
 		this->userData = userData;
 	}
@@ -56,6 +59,7 @@ namespace aprilui
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
 		this->animator = dynamic_cast<Animator*>(receiver);
+		this->dataset = dynamic_cast<Dataset*>(receiver);
 		this->userData = userData;
 	}
 
