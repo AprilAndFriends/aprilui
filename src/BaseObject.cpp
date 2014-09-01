@@ -23,7 +23,7 @@ namespace aprilui
 	{
 		return (a->getZOrder() < b->getZOrder());
 	}
-
+	
 	harray<PropertyDescription> BaseObject::_propertyDescriptions;
 
 	BaseObject::BaseObject(chstr name) : EventReceiver()

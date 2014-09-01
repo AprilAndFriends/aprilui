@@ -41,18 +41,18 @@ namespace aprilui
 		april::Button buttonCode;
 		void* userData;
 		
-		EventArgs(EventReceiver* receiver, april::Key keyCode = april::AK_NONE, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(EventReceiver* receiver, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
 		EventArgs(EventReceiver* receiver, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		EventArgs(EventReceiver* receiver, chstr string, void* userData = NULL);
-		EventArgs(EventReceiver* receiver, void* userData);
-		EventArgs(Object* object, april::Key keyCode = april::AK_NONE, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(EventReceiver* receiver, void* userData = NULL);
+		EventArgs(Object* object, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
 		EventArgs(Object* object, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		EventArgs(Object* object, chstr string, void* userData = NULL);
-		EventArgs(Object* object, void* userData);
+		EventArgs(Object* object, void* userData = NULL);
 		EventArgs(Animator* animator, chstr string, void* userData = NULL);
-		EventArgs(Animator* animator, void* userData);
+		EventArgs(Animator* animator, void* userData = NULL);
 		EventArgs(Dataset* dataset, chstr string, void* userData = NULL);
-		EventArgs(Dataset* dataset, void* userData);
+		EventArgs(Dataset* dataset, void* userData = NULL);
 		~EventArgs();
 
 	protected:
@@ -63,3 +63,4 @@ namespace aprilui
 }
 
 #endif
+
