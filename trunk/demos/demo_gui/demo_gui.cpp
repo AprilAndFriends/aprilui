@@ -254,8 +254,8 @@ void april_init(const harray<hstr>& args)
 		dataset->load();
 		dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 		aprilui::Object* object = dataset->getObject("hoverImageButton");
-		object->registerEvent(aprilui::Event::HOVER_STARTED, new aprilui::CallbackEvent(&_hoverStarted));
-		object->registerEvent(aprilui::Event::HOVER_FINISHED, new aprilui::CallbackEvent(&_hoverFinished));
+		object->registerEvent(aprilui::Event::HoverStarted, new aprilui::CallbackEvent(&_hoverStarted));
+		object->registerEvent(aprilui::Event::HoverFinished, new aprilui::CallbackEvent(&_hoverFinished));
 #ifdef _DEBUG
 		//aprilui::setDebugMode(true);
 #endif
