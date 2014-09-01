@@ -203,7 +203,7 @@ namespace aprilui
 		Object* object = dynamic_cast<Object*>(obj);
 		if (object != NULL)
 		{
-			this->objects += object;
+			this->childrenObjects += object;
 			this->_sortChildren();
 		}
 		else
@@ -211,7 +211,7 @@ namespace aprilui
 			Animator* animator = dynamic_cast<Animator*>(obj);
 			if (animator != NULL)
 			{
-				this->animators += animator;
+				this->childrenAnimators += animator;
 			}
 		}
 		obj->parent = this;
@@ -228,14 +228,14 @@ namespace aprilui
 		Object* object = dynamic_cast<Object*>(obj);
 		if (object != NULL)
 		{
-			this->objects -= object;
+			this->childrenObjects -= object;
 		}
 		else
 		{
 			Animator* animator = dynamic_cast<Animator*>(obj);
 			if (animator != NULL)
 			{
-				this->animators -= animator;
+				this->childrenAnimators -= animator;
 			}
 		}
 		obj->parent = NULL;
@@ -257,32 +257,32 @@ namespace aprilui
 	{
 		if (recursive)
 		{
-			foreach (Object*, it, this->objects)
+			foreach (Object*, it, this->childrenObjects)
 			{
 				(*it)->removeChildren(recursive);
 			}
 		}
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			(*it)->parent = NULL;
 		}
-		foreach (Animator*, it, this->animators)
+		foreach (Animator*, it, this->childrenAnimators)
 		{
 			(*it)->parent = NULL;
 		}
-		this->objects.clear();
-		this->animators.clear();
+		this->childrenObjects.clear();
+		this->childrenAnimators.clear();
 	}
 
 	void Object::destroyChildren()
 	{
-		while (this->animators.size() > 0)
+		while (this->childrenAnimators.size() > 0)
 		{
-			this->dataset->destroyObjects(this->animators.first());
+			this->dataset->destroyObjects(this->childrenAnimators.first());
 		}
-		while (this->objects.size() > 0)
+		while (this->childrenObjects.size() > 0)
 		{
-			this->dataset->destroyObjects(this->objects.first());
+			this->dataset->destroyObjects(this->childrenObjects.first());
 		}
 	}
 
@@ -295,7 +295,7 @@ namespace aprilui
 		float width = 0.0f;
 		float height = 0.0f;
 		float differenceAlt = 0.0f;
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			width = (*it)->getWidth();
 			height = (*it)->getHeight();
@@ -347,7 +347,7 @@ namespace aprilui
 		float width = 0.0f;
 		float height = 0.0f;
 		float differenceAlt = 0.0f;
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			width = (*it)->getWidth();
 			height = (*it)->getHeight();
@@ -475,7 +475,7 @@ namespace aprilui
 				return true;
 			}
 		}
-		foreach (Animator*, it, this->animators)
+		foreach (Animator*, it, this->childrenAnimators)
 		{
 			if ((*it)->isAnimated())
 			{
@@ -494,7 +494,7 @@ namespace aprilui
 				return true;
 			}
 		}
-		foreach (Animator*, it, this->animators)
+		foreach (Animator*, it, this->childrenAnimators)
 		{
 			if ((*it)->isWaitingAnimation())
 			{
@@ -551,7 +551,7 @@ namespace aprilui
 		{
 			april::rendersys->translate(-this->center.x, -this->center.y);
 		}
-		foreach (Object*, it, this->objects)
+		foreach (Object*, it, this->childrenObjects)
 		{
 			(*it)->draw();
 		}
@@ -640,7 +640,7 @@ namespace aprilui
 			this->dataset->removeFocus();
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -662,7 +662,7 @@ namespace aprilui
 		harray<Object*> validObjects;
 		Object* object = NULL;
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -694,7 +694,7 @@ namespace aprilui
 	bool Object::onMouseCancel(april::Key keyCode)
 	{
 		this->mouseCancel();
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			(*it)->onMouseCancel(keyCode);
@@ -710,7 +710,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -730,7 +730,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -750,7 +750,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -770,7 +770,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -790,7 +790,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -810,7 +810,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -830,7 +830,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -850,7 +850,7 @@ namespace aprilui
 			return false;
 		}
 		// needs to be copied in case children gets changed
-		harray<Object*> objects = this->objects;
+		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
@@ -986,7 +986,7 @@ namespace aprilui
 			return NULL;
 		}
 		Object* object = NULL;
-		foreach_r (Object*, it, this->objects)
+		foreach_r (Object*, it, this->childrenObjects)
 		{
 			object = (*it)->getChildUnderPoint(pos);
 			if (object != NULL)

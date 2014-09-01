@@ -49,8 +49,8 @@ namespace aprilui
 		HL_DEFINE_GET(int, zOrder, ZOrder);
 		void setZOrder(int zorder);
 
-		inline harray<Object*>& getObjects() { return this->objects; }
-		inline harray<Animator*>& getAnimators() { return this->animators; }
+		inline harray<Object*>& getChildrenObjects() { return this->childrenObjects; }
+		inline harray<Animator*>& getChildrenAnimators() { return this->childrenAnimators; }
 		harray<BaseObject*> getChildren();
 		virtual inline bool isAnimated() { return false; }
 		virtual inline bool isWaitingAnimation() { return false; }
@@ -85,8 +85,8 @@ namespace aprilui
 	protected:
 		hstr name;
 		Object* parent; // a BaseObject cannot be a parent
-		harray<Object*> objects;
-		harray<Animator*> animators;
+		harray<Object*> childrenObjects;
+		harray<Animator*> childrenAnimators;
 		bool enabled;
 		int zOrder;
 
