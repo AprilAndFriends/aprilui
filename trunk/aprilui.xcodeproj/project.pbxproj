@@ -87,7 +87,6 @@
 		7FDB989D131BA90C0064B968 /* MemberCallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7FDB98A0131BA9240064B968 /* AnimatorResizerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */; };
 		7FDB98A1131BA9240064B968 /* AnimatorResizerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */; };
-		7FDB98A3131BA9320064B968 /* MemberCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */; };
 		7FF4F1D012017ACA00F0BBB7 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
 		C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */; };
 		C93D4A7514F288D30097AB06 /* apriluiUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */; };
@@ -104,8 +103,6 @@
 		C98E1DC314C823F200CB9F1C /* ObjectScrollBar.h in Headers */ = {isa = PBXBuildFile; fileRef = C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C98E1DC514C823F200CB9F1C /* ObjectScrollBarH.h in Headers */ = {isa = PBXBuildFile; fileRef = C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C98E1DC714C823F200CB9F1C /* ObjectScrollBarV.h in Headers */ = {isa = PBXBuildFile; fileRef = C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D11F4D9E172027B20048DFD8 /* QueuedCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */; };
-		D11F4DA0172027BC0048DFD8 /* QueuedCallbackEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D140387D18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
 		D140387E18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
 		D140387F18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
@@ -114,7 +111,6 @@
 		D140388218EAF8150092608C /* ObjectProgressCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387C18EAF8150092608C /* ObjectProgressCircle.cpp */; };
 		D140388518EAF8290092608C /* ObjectProgressBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D140388318EAF8290092608C /* ObjectProgressBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D140388618EAF8290092608C /* ObjectProgressCircle.h in Headers */ = {isa = PBXBuildFile; fileRef = D140388418EAF8290092608C /* ObjectProgressCircle.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1522E7A140F6A6B0012F290 /* MemberCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */; };
 		D1522E7B140F6A6B0012F290 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524712E4719E00E958D8 /* aprilui.cpp */; };
 		D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
 		D1522E7F140F6A6B0012F290 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
@@ -198,7 +194,6 @@
 		D1CDBE78147E3D5E001F9A43 /* AnimatorTiledScrollerY.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CDBE76147E3D5E001F9A43 /* AnimatorTiledScrollerY.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1F27B29177A2FCA00E5C131 /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
 		D1F27B2A177A2FCA00E5C131 /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
-		D1F27B2B177A2FCA00E5C131 /* MemberCallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */; };
 		D1F27B2C177A2FCA00E5C131 /* aprilui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524712E4719E00E958D8 /* aprilui.cpp */; };
 		D1F27B2D177A2FCA00E5C131 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
 		D1F27B30177A2FCA00E5C131 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
@@ -327,7 +322,6 @@
 		7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemberCallbackEvent.h; path = include/aprilui/MemberCallbackEvent.h; sourceTree = "<group>"; };
 		7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerX.cpp; sourceTree = "<group>"; };
 		7FDB989F131BA9240064B968 /* AnimatorResizerY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorResizerY.cpp; sourceTree = "<group>"; };
-		7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemberCallbackEvent.cpp; path = src/MemberCallbackEvent.cpp; sourceTree = "<group>"; };
 		7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CallbackEvent.cpp; path = src/CallbackEvent.cpp; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* aprilui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = aprilui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -341,8 +335,6 @@
 		C98E1DBE14C823F200CB9F1C /* ObjectScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBar.h; path = include/aprilui/ObjectScrollBar.h; sourceTree = "<group>"; };
 		C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarH.h; path = include/aprilui/ObjectScrollBarH.h; sourceTree = "<group>"; };
 		C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarV.h; path = include/aprilui/ObjectScrollBarV.h; sourceTree = "<group>"; };
-		D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = QueuedCallbackEvent.cpp; path = src/QueuedCallbackEvent.cpp; sourceTree = "<group>"; };
-		D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueuedCallbackEvent.h; path = include/aprilui/QueuedCallbackEvent.h; sourceTree = "<group>"; };
 		D140387B18EAF8150092608C /* ObjectProgressBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBase.cpp; sourceTree = "<group>"; };
 		D140387C18EAF8150092608C /* ObjectProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressCircle.cpp; sourceTree = "<group>"; };
 		D140388318EAF8290092608C /* ObjectProgressBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBase.h; path = include/aprilui/ObjectProgressBase.h; sourceTree = "<group>"; };
@@ -545,8 +537,6 @@
 				D16E990B158BE53800C058CE /* EventReceiver.cpp */,
 				7FC8042B11EC725B00851062 /* Exception.cpp */,
 				D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */,
-				D11F4D9D172027B20048DFD8 /* QueuedCallbackEvent.cpp */,
-				7FDB98A2131BA9320064B968 /* MemberCallbackEvent.cpp */,
 				D16E990C158BE53800C058CE /* Texture.cpp */,
 			);
 			name = src;
@@ -569,7 +559,6 @@
 				D16E9912158BE54D00C058CE /* EventReceiver.h */,
 				D1C0FC4719460BA200117F00 /* PropertyDescription.h */,
 				7FC8041911EC721E00851062 /* Exception.h */,
-				D11F4D9F172027BC0048DFD8 /* QueuedCallbackEvent.h */,
 				7FDB9899131BA90C0064B968 /* MemberCallbackEvent.h */,
 				D16E9913158BE54D00C058CE /* Texture.h */,
 			);
@@ -720,7 +709,6 @@
 				D1C0FC4819460BA200117F00 /* PropertyDescription.h in Headers */,
 				D18CB6291902CE1C0071C391 /* ObjectScrollBarButtonSlider.h in Headers */,
 				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
-				D11F4DA0172027BC0048DFD8 /* QueuedCallbackEvent.h in Headers */,
 				D140388618EAF8290092608C /* ObjectProgressCircle.h in Headers */,
 				D140388518EAF8290092608C /* ObjectProgressBase.h in Headers */,
 				D16E9915158BE54D00C058CE /* Texture.h in Headers */,
@@ -864,7 +852,6 @@
 				7F1B524812E4719E00E958D8 /* aprilui.cpp in Sources */,
 				7FDB98A0131BA9240064B968 /* AnimatorResizerX.cpp in Sources */,
 				7FDB98A1131BA9240064B968 /* AnimatorResizerY.cpp in Sources */,
-				7FDB98A3131BA9320064B968 /* MemberCallbackEvent.cpp in Sources */,
 				7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */,
 				7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */,
 				D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */,
@@ -883,7 +870,6 @@
 				D1C2083515FDC56200AB5DCA /* AnimatorCenterMoverY.cpp in Sources */,
 				D18CB61F1902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
 				D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */,
-				D11F4D9E172027B20048DFD8 /* QueuedCallbackEvent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -894,7 +880,6 @@
 				D1688913149026EB004FD97F /* AnimatorTiledScrollerX.cpp in Sources */,
 				D1688914149026EB004FD97F /* AnimatorTiledScrollerY.cpp in Sources */,
 				D18CB6211902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
-				D1522E7A140F6A6B0012F290 /* MemberCallbackEvent.cpp in Sources */,
 				D1522E7B140F6A6B0012F290 /* aprilui.cpp in Sources */,
 				D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */,
 				D18CB6181902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
@@ -957,7 +942,6 @@
 				D1F27B29177A2FCA00E5C131 /* AnimatorTiledScrollerX.cpp in Sources */,
 				D1F27B2A177A2FCA00E5C131 /* AnimatorTiledScrollerY.cpp in Sources */,
 				D18CB6201902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
-				D1F27B2B177A2FCA00E5C131 /* MemberCallbackEvent.cpp in Sources */,
 				D1F27B2C177A2FCA00E5C131 /* aprilui.cpp in Sources */,
 				D1F27B2D177A2FCA00E5C131 /* EventArgs.cpp in Sources */,
 				D18CB6171902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
