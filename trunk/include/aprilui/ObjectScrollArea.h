@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.31
 /// 
 /// @section LICENSE
 /// 
@@ -79,9 +79,10 @@ namespace aprilui
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
 		bool onMouseMove();
+		bool onMouseScroll(float x, float y);
 		bool onButtonDown(april::Button buttonCode);
 		bool onButtonUp(april::Button buttonCode);
-        void mouseCancel();
+		void mouseCancel();
 		
 		// TODO - remove this temporary hack
 		void __stop();

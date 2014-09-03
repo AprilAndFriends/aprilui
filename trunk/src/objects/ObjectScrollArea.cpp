@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.31
 /// 
 /// @section LICENSE
 /// 
@@ -391,6 +391,36 @@ namespace aprilui
 		return false;
 	}
 
+	bool ScrollArea::onMouseScroll(float x, float y)
+	{
+		if (Object::onMouseScroll(x, y))
+		{
+			return true;
+		}
+		bool result = false;
+		Container* parent = dynamic_cast<Container*>(this->parent);
+		if (parent != NULL && parent->isCursorInside())
+		{
+			if (this->swapScrollWheels)
+			{
+				hswap(x, y);
+			}
+			ScrollBar* barV = parent->_getScrollBarV();
+			if (barV != NULL)
+			{
+				barV->addScrollValue(barV->_calcScrollMove(x, y));
+				result = true;
+			}
+			ScrollBar* barH = parent->_getScrollBarH();
+			if (barH != NULL)
+			{
+				barH->addScrollValue(barH->_calcScrollMove(x, y));
+				result = true;
+			}
+		}
+		return result;
+	}
+
 	bool ScrollArea::onButtonDown(april::Button buttonCode)
 	{
 		return Object::onButtonDown(buttonCode);
@@ -412,6 +442,7 @@ namespace aprilui
 		this->dragging = false;
 		this->pushed = false;
 		this->_dragSpeed.set(0.0f, 0.0f);
+		this->_dragTimer.set(0.0f, 0.0f);
 	}
 	
 	void ScrollArea::_adjustDragSpeed()
