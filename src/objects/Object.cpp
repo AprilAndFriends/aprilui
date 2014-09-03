@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.31
 /// 
 /// @section LICENSE
 /// 
@@ -509,6 +509,32 @@ namespace aprilui
 		return (this->dynamicAnimators.size() > 0);
 	}
 
+	inline void _clipRect(grect& rect, const grect& clipper)
+	{
+		float left = rect.x - clipper.x;
+		if (left < 0.0f)
+		{
+			rect.w += left;
+			rect.x = clipper.x;
+		}
+		float top = rect.y - clipper.y;
+		if (top < 0.0f)
+		{
+			rect.h += top;
+			rect.y = clipper.y;
+		}
+		float right = rect.right() - clipper.right();
+		if (right > 0.0f)
+		{
+			rect.w -= right;
+		}
+		float bottom = rect.bottom() - clipper.bottom();
+		if (bottom > 0.0f)
+		{
+			rect.h -= bottom;
+		}
+	}
+
 	void Object::draw()
 	{
 		if (!this->isVisible() || heqf(this->scaleFactor.x, 0.0f, aprilui::eTolerance) || heqf(this->scaleFactor.y, 0.0f, aprilui::eTolerance))
@@ -524,9 +550,20 @@ namespace aprilui
 			orthoProjection = april::rendersys->getOrthoProjection();
 			viewport = april::rendersys->getViewport();
 			grect rect = this->parent->getBoundingRect();
+			_clipRect(rect, viewport);
+			if (rect.w <= 0.0f || rect.h <= 0.0f)
+			{
+				return;
+			}
 			gvec2 ratio = orthoProjection.getSize() / viewport.getSize();
+			grect newViewport((rect.getPosition() + orthoProjection.getPosition() + viewport.getPosition()) / ratio, rect.getSize() / ratio);
+			_clipRect(newViewport, viewport);
+			if (newViewport.w <= 0.0f || newViewport.h <= 0.0f)
+			{
+				return;
+			}
 			april::rendersys->setOrthoProjection(grect(-rect.getPosition(), rect.getSize()));
-			april::rendersys->setViewport(grect((rect.getPosition() + orthoProjection.getPosition() + viewport.getPosition()) / ratio, rect.getSize() / ratio));
+			april::rendersys->setViewport(newViewport);
 		}
 		gvec2 position = this->rect.getPosition() + this->center;
 		if (position.x != 0.0f || position.y != 0.0f)

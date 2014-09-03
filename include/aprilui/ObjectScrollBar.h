@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.31
 /// 
 /// @section LICENSE
 /// 
@@ -61,7 +61,6 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 		bool onMouseMove();
-		bool onMouseScroll(float x, float y);
 
 		virtual void addScrollValue(float value) = 0;
 		void addScrollValueForward(float multiplier = 1.0f);

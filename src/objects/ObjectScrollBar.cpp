@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.31
 /// 
 /// @section LICENSE
 /// 
@@ -386,25 +386,6 @@ namespace aprilui
 				gvec2 position = buttonBackground->transformToLocalSpace(aprilui::getCursorPosition()) - this->_clickPosition;
 				this->_moveScrollBar(position.x, position.y);
 			}
-		}
-		return false;
-	}
-
-	bool ScrollBar::onMouseScroll(float x, float y)
-	{
-		if (Object::onMouseScroll(x, y))
-		{
-			return true;
-		}
-		Container* parent = dynamic_cast<Container*>(this->parent);
-		if (parent != NULL && (parent->isCursorInside() || this->isCursorInside()))
-		{
-			ScrollArea* area = parent->_getScrollArea();
-			if (area != NULL && area->isSwapScrollWheels())
-			{
-				hswap(x, y);
-			}
-			this->addScrollValue(this->_calcScrollMove(x, y));
 		}
 		return false;
 	}
