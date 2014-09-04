@@ -30,6 +30,9 @@
 
 namespace aprilui
 {
+	bool getDefaultDynamicLoading() { return isDefaultManagedTextures(); } // DEPRECATED
+	void setDefaultDynamicLoading(bool value) { setDefaultManagedTextures(value); } // DEPRECATED
+
 	hstr logTag = "aprilui";
 
 	bool registerLock = false;
@@ -49,8 +52,9 @@ namespace aprilui
 	hstr localization = "";
 	harray<hstr> supportedLocalizations;
 	float textureIdleUnloadTime = 0.0f;
+	bool defaultManagedTextures = false;
+	april::Texture::LoadMode defaultTextureLoadMode = april::Texture::LOAD_IMMEDIATE;
 	hmap<hstr, float> extensionScales;
-	bool defaultDynamicLoading = false;
 
 	void init()
 	{
@@ -64,6 +68,8 @@ namespace aprilui
 		defaultTextsPath = "texts";
 		localization = "";
 		textureIdleUnloadTime = 0.0f;
+		defaultManagedTextures = false;
+		defaultTextureLoadMode = april::Texture::LOAD_IMMEDIATE;
 		viewport.setSize(april::window->getSize());
 		harray<april::Key> allowedKeys;
 		allowedKeys += april::AK_LBUTTON;
@@ -253,6 +259,26 @@ namespace aprilui
 		textureIdleUnloadTime = value;
 	}
 
+	bool isDefaultManagedTextures()
+	{
+		return defaultManagedTextures;
+	}
+
+	void setDefaultManagedTextures(bool value)
+	{
+		defaultManagedTextures = value;
+	}
+
+	april::Texture::LoadMode getDefaultTextureLoadMode()
+	{
+		return defaultTextureLoadMode;
+	}
+
+	void setDefaultTextureLoadMode(april::Texture::LoadMode value)
+	{
+		defaultTextureLoadMode = value;
+	}
+
 	hmap<hstr, Dataset*> getDatasets()
 	{
 		return gDatasets;
@@ -440,7 +466,7 @@ namespace aprilui
 			it->second->unloadUnusedTextures();
 		}
 	}
-	
+
 	void reloadTextures()
 	{
 		foreach_m (Dataset*, it, gDatasets)
@@ -620,8 +646,5 @@ namespace aprilui
 			it->second->onButtonUp(buttonCode);
 		}
 	}
-	
-	bool getDefaultDynamicLoading() { return defaultDynamicLoading; }
-	void setDefaultDynamicLoading(bool value) { defaultDynamicLoading = value; }
 	
 }
