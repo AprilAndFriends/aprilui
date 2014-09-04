@@ -14,6 +14,7 @@
 #define APRILUI_H
 
 #include <april/Keys.h>
+#include <april/Texture.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hmap.h>
@@ -60,6 +61,10 @@ namespace aprilui
 	apriluiFnExport void setSupportedLocalizations(harray<hstr> value);
 	apriluiFnExport float getTextureIdleUnloadTime();
 	apriluiFnExport void setTextureIdleUnloadTime(float value);
+	apriluiFnExport bool isDefaultManagedTextures();
+	apriluiFnExport void setDefaultManagedTextures(bool value);
+	apriluiFnExport april::Texture::LoadMode getDefaultTextureLoadMode();
+	apriluiFnExport void setDefaultTextureLoadMode(april::Texture::LoadMode value);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect));
@@ -106,8 +111,8 @@ namespace aprilui
 	apriluiFnExport void onButtonDown(april::Button buttonCode);
 	apriluiFnExport void onButtonUp(april::Button buttonCode);
 
-	apriluiFnExport bool getDefaultDynamicLoading();
-	apriluiFnExport void setDefaultDynamicLoading(bool value);
+	DEPRECATED_ATTRIBUTE apriluiFnExport bool getDefaultDynamicLoading();
+	DEPRECATED_ATTRIBUTE apriluiFnExport void setDefaultDynamicLoading(bool value);
 
 }
 

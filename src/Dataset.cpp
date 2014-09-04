@@ -264,14 +264,35 @@ namespace aprilui
 			throw ObjectExistsException(textureName, filename);
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
-		bool dynamicLoad = node->pbool("dynamic_load", getDefaultDynamicLoading());
+		bool managed = node->pbool("managed", aprilui::isDefaultManagedTextures());
+		april::Texture::LoadMode loadMode = aprilui::getDefaultTextureLoadMode();
+		// DEPRECATED
+		if (node->pexists("dynamic_load"))
+		{
+			hlog::warn(aprilui::logTag, "\"dynamic_load\" is deprecated. Use \"managed\" and \"load_mode\" instead.");
+			bool dynamicLoad = node->pbool("dynamic_load");
+			if (dynamicLoad)
+			{
+				managed = true;
+				loadMode = april::Texture::LOAD_ON_DEMAND;
+			}
+		}
+		if (node->pexists("load_mode"))
+		{
+			hstr mode = node->pstr("load_mode");
+			if (mode == "immediate")			loadMode = april::Texture::LOAD_IMMEDIATE;
+			else if (mode == "on_demand")		loadMode = april::Texture::LOAD_ON_DEMAND;
+			else if (mode == "async")			loadMode = april::Texture::LOAD_ASYNC;
+			else if (mode == "async_on_demand")	loadMode = april::Texture::LOAD_ASYNC_ON_DEMAND;
+			else throw hl_exception("load_mode '" + mode + "' not supported");
+		}
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, !dynamicLoad);
+		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, loadMode);
 		if (aprilTexture == NULL)
 		{
 			throw file_not_found(locpath);
 		}
-		Texture* texture = new Texture(filepath, aprilTexture);
+		Texture* texture = new Texture(filepath, aprilTexture, loadMode, managed);
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
@@ -394,7 +415,7 @@ namespace aprilui
 			{
 				if ((*it) != (*it2))
 				{
-					this->getTexture(*it)->addDynamicLink(this->getTexture(*it2));
+					this->getTexture(*it)->addLink(this->getTexture(*it2));
 				}
 			}
 		}
@@ -1267,13 +1288,13 @@ namespace aprilui
 	{
 		foreach_m (Texture*, it, this->textures)
 		{
-			if (it->second->isDynamic() && it->second->getUnusedTime() > 1.0f)
+			if (it->second->isManaged() && it->second->getUnusedTime() > 1.0f)
 			{
 				it->second->unload();
 			}
 		}
 	}
-	
+
 	void Dataset::reloadTexts()
 	{
 		this->texts.clear();
