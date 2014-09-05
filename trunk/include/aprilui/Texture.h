@@ -24,7 +24,7 @@ namespace aprilui
 	class apriluiExport Texture
 	{
 	public:
-		Texture(chstr filename, april::Texture* texture, april::Texture::LoadMode loadMode, bool managed);
+		Texture(chstr filename, april::Texture* texture, bool managed = false);
 		~Texture();
 
 		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);

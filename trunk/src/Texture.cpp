@@ -16,12 +16,12 @@ namespace aprilui
 	void (*Texture::loadListener)(Texture*) = NULL;
 	void (*Texture::unloadListener)(Texture*) = NULL;
 
-	Texture::Texture(chstr filename, april::Texture* texture, april::Texture::LoadMode loadMode, bool managed)
+	Texture::Texture(chstr filename, april::Texture* texture, bool managed)
 	{
 		this->originalFilename = filename;
 		this->filename = texture->getFilename();
 		this->texture = texture;
-		this->loadMode = loadMode;
+		this->loadMode = texture->getLoadMode();
 		this->managed = managed;
 		this->filter = texture->getFilter();
 		this->addressMode = texture->getAddressMode();

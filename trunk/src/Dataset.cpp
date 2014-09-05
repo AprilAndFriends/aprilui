@@ -292,7 +292,7 @@ namespace aprilui
 		{
 			throw file_not_found(locpath);
 		}
-		Texture* texture = new Texture(filepath, aprilTexture, loadMode, managed);
+		Texture* texture = new Texture(filepath, aprilTexture, managed);
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
