@@ -276,6 +276,11 @@ namespace aprilui
 				managed = true;
 				loadMode = april::Texture::LOAD_ON_DEMAND;
 			}
+			else
+			{
+				managed = false;
+				loadMode = april::Texture::LOAD_ASYNC;
+			}
 		}
 		if (node->pexists("load_mode"))
 		{
