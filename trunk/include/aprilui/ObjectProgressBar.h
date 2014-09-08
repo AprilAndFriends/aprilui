@@ -47,6 +47,7 @@ namespace aprilui
 		void setImage(Image* image);
 		hstr getImageName();
 		void setImageByName(chstr name);
+		harray<Image*> getUsedImages();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
