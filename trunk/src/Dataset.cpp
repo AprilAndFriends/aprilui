@@ -295,7 +295,7 @@ namespace aprilui
 		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, loadMode);
 		if (aprilTexture == NULL)
 		{
-			throw file_not_found(locpath);
+			throw file_could_not_open(locpath);
 		}
 		Texture* texture = new Texture(filepath, aprilTexture, managed);
 		if (node->pexists("filter"))
