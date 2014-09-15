@@ -130,15 +130,17 @@ namespace aprilui
 		}
 		if (!ignoreDynamicLinks)
 		{
+			Texture* tex;
 			foreach (Texture*, it, this->links)
 			{
-				(*it)->unusedTime = 0.0f;
-				if (!(*it)->isLoaded())
+				tex = *it;
+				tex->unusedTime = 0.0f;
+				if (!tex->isLoaded() && !tex->isLoadedAsync() && !tex->isAsyncLoadQueued())
 				{
-					(*it)->texture->load();
+					tex->texture->loadAsync();
 					if (loadListener != NULL)
 					{
-						(*loadListener)(this);
+						(*loadListener)(tex);
 					}
 				}
 			}

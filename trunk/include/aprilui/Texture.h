@@ -55,8 +55,8 @@ namespace aprilui
 		void addLink(Texture* link);
 		void removeLink(Texture* link);
 		
-		static void setLoadListener(void (*callback)(Texture*));
-		static void setUnloadListener(void (*callback)(Texture*));
+		DEPRECATED_ATTRIBUTE static void setLoadListener(void (*callback)(Texture*));
+		DEPRECATED_ATTRIBUTE static void setUnloadListener(void (*callback)(Texture*));
 
 	protected:
 		hstr originalFilename;
