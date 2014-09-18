@@ -29,6 +29,7 @@ namespace aprilui
 
 		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);
 		HL_DEFINE_GET(hstr, filename, Filename);
+		HL_DEFINE_GET(april::Texture*, texture, Texture);
 		HL_DEFINE_GET(april::Texture::LoadMode, loadMode, LoadMode);
 		HL_DEFINE_IS(managed, Managed);
 		HL_DEFINE_GET(gvec2, scale, Scale);
@@ -42,7 +43,6 @@ namespace aprilui
 		bool isValid();
 		void setFilter(april::Texture::Filter value);
 		void setAddressMode(april::Texture::AddressMode value);
-		april::Texture* getRenderTexture();
 
 		void update(float timeDelta);
 		void resetUnusedTime();

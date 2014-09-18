@@ -83,16 +83,6 @@ namespace aprilui
 	{
 		return (this->texture != NULL);
 	}
-	
-	april::Texture* Texture::getRenderTexture()
-	{
-		this->unusedTime = 0.0f;
-		foreach (Texture*, it, this->links)
-		{
-			(*it)->unusedTime = 0.0f;
-		}
-		return this->texture;
-	}
 
 	void Texture::update(float timeDelta)
 	{
@@ -115,6 +105,10 @@ namespace aprilui
 	void Texture::resetUnusedTime()
 	{
 		this->unusedTime = 0.0f;
+		foreach (Texture*, it, this->links)
+		{
+			(*it)->unusedTime = 0.0f;
+		}
 	}
 	
 	void Texture::load(bool ignoreDynamicLinks)

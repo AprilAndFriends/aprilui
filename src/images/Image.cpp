@@ -294,7 +294,7 @@ namespace aprilui
 		this->_tVertices[2].y = this->_tVertices[3].y = rect.bottom();
 		
 		this->texture->load();
-		april::rendersys->setTexture(this->texture->getRenderTexture());
+		april::rendersys->setTexture(this->texture->getTexture());
 		this->_tryLoadTexCoords();
 		
 		april::rendersys->setTextureBlendMode(this->blendMode);
@@ -318,7 +318,7 @@ namespace aprilui
 			color *= this->color;
 		}
 		this->texture->load();
-		april::rendersys->setTexture(this->texture->getRenderTexture());
+		april::rendersys->setTexture(this->texture->getTexture());
 		this->_tryLoadTexCoords();
 
 		// texture coordinate scaling
