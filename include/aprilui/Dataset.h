@@ -210,15 +210,6 @@ namespace aprilui
 		void parseGlobalIncludeFile(chstr filename);
 		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
-		DEPRECATED_ATTRIBUTE void registerManualObject(BaseObject* object) { this->registerObjects(object); }
-		DEPRECATED_ATTRIBUTE void unregisterManualObject(BaseObject* object) { this->unregisterObjects(object); }
-		DEPRECATED_ATTRIBUTE void registerManualImage(Image* image) { this->registerImage(image); }
-		DEPRECATED_ATTRIBUTE void unregisterManualImage(Image* image) { this->unregisterImage(image); }
-		DEPRECATED_ATTRIBUTE void registerManualTexture(Texture* texture) { this->registerTexture(texture); }
-		DEPRECATED_ATTRIBUTE void unregisterManualTexture(Texture* texture) { this->unregisterTexture(texture); }
-		DEPRECATED_ATTRIBUTE void destroyObject(chstr rootName) { this->destroyObjects(rootName); }
-		DEPRECATED_ATTRIBUTE void destroyObject(BaseObject* root) { this->destroyObjects(root); }
-
 	protected:
 		struct QueuedCallback
 		{
