@@ -832,7 +832,9 @@ namespace aprilui
 	
 	void Dataset::unregisterObjects(BaseObject* root)
 	{
-		if (!this->objects.has_key(root->getName()))
+		bool hasObject = this->objects.has_key(root->getName());
+		bool hasAnimator = this->animators.has_key(root->getName());
+		if (!hasObject && !hasAnimator)
 		{
 			// this object could be from another dataset, so check that first.
 			Dataset* dataset = root->getDataset();
@@ -849,12 +851,19 @@ namespace aprilui
 		{
 			this->unregisterObjects(*it);
 		}
-		Object* focusedRoot = dynamic_cast<Object*>(root);
-		if (focusedRoot != NULL && focusedRoot->isFocused())
+		if (hasObject)
 		{
-			focusedRoot->setFocused(false);
+			Object* focusedRoot = dynamic_cast<Object*>(root);
+			if (focusedRoot != NULL && focusedRoot->isFocused())
+			{
+				focusedRoot->setFocused(false);
+			}
+			this->objects.remove_key(root->getName());
 		}
-		this->objects.remove_key(root->getName());
+		else if (hasAnimator)
+		{
+			this->animators.remove_key(root->getName());
+		}
 		root->dataset = NULL;
 	}
 	
