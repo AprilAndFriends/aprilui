@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.32
 /// 
 /// @section LICENSE
 /// 
@@ -74,6 +74,8 @@ namespace aprilui
 		bool spaceHack; // TODO - remove
 		hstr filter;
 		gvec2 caretPosition;
+		int renderOffsetX;
+		int renderOffsetY;
 		
 		void OnDraw();
 		

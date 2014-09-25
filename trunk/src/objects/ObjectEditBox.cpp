@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.32
 /// 
 /// @section LICENSE
 /// 
@@ -43,6 +43,8 @@ namespace aprilui
 		this->_ctrlMode = false;
 		this->_blinkTimer = 0.0f;
 		this->_sizeProblemReported = false;
+		this->renderOffsetX = 0;
+		this->renderOffsetY = 0;
 		/// TODO - remove
 		this->spaceHack = false;
 	}
@@ -111,8 +113,8 @@ namespace aprilui
 		}
 		base.y = (h2 * 2 - fh) * xhf;
 		int offsetIndex = this->text.size();
-		x -= this->textOffset.x;
-		y += xhf * (CHECK_RECT_HEIGHT - this->rect.h) - this->textOffset.y;
+		x -= this->renderOffsetX * fh;
+		y += xhf * (CHECK_RECT_HEIGHT - this->rect.h) - this->renderOffsetY * fh;
 		if (lines.size() > 0)
 		{
 			if (y >= lines.first().rect.y)
@@ -173,6 +175,10 @@ namespace aprilui
 								}
 								ow += cw;
 							}
+						}
+						else if (x > line->rect.x)
+						{
+							offsetIndex = line->start + line->count;
 						}
 					}
 				}
@@ -269,9 +275,9 @@ namespace aprilui
 			this->emptyText = this->emptyText.ltrim();
 		}
 		//////////////
-		grect rect = this->_getDrawRect();
+		grect caretRect = this->_getDrawRect();
 		hstr text = this->text;
-		rect.w -= 12;
+		caretRect.w -= 12;
 		if (this->passwordChar != '\0' && this->text != "")
 		{
 			this->text = hstr(this->passwordChar, this->text.utf8_size());
@@ -288,43 +294,87 @@ namespace aprilui
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		float descender = atres::renderer->getFont(this->font)->getDescender();
 		float lh = fh + descender;
+		int jumps = 0;
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this)
 		{
 			hstr leftText = this->text.utf8_substr(0, this->cursorIndex);
-			rect.setPosition(this->_makeCaretPosition(leftText, this->text));
+			caretRect.setPosition(this->_makeCaretPosition(leftText, this->text));
 			if (this->horzFormatting != atres::LEFT_WRAPPED && this->horzFormatting != atres::CENTER_WRAPPED &&
 				this->horzFormatting != atres::RIGHT_WRAPPED && this->horzFormatting != atres::JUSTIFIED)
 			{
-				if (atres::renderer->getTextWidth(this->font, this->text) > rect.w)
+				if (atres::renderer->getTextWidth(this->font, this->text) > caretRect.w)
 				{
-					while (rect.x < fh && (this->horzFormatting != atres::LEFT || this->textOffset.x < 0.0f))
+					// left side
+					if (caretRect.x < fh && (this->horzFormatting != atres::LEFT || this->renderOffsetX < 0))
 					{
-						rect.x += fh;
-						this->textOffset.x += fh;
+						jumps = hceil((fh - caretRect.x) / fh);
+						if (this->horzFormatting == atres::LEFT)
+						{
+							jumps = hmin(jumps, -this->renderOffsetX);
+						}
+						if (jumps != 0)
+						{
+							caretRect.x += jumps * fh;
+							this->renderOffsetX += jumps;
+						}
 					}
-					float boundary = (this->horzFormatting == atres::CENTER ? fh : 0.0f);
-					boundary = (this->horzFormatting == atres::RIGHT ? 0.0f : fh);
-					while (rect.x + fh > this->rect.w && (this->horzFormatting != atres::RIGHT || this->textOffset.x > 0.0f))
+					// right side
+					if (caretRect.x + fh > this->rect.w && (this->horzFormatting != atres::RIGHT || this->renderOffsetX > 0))
 					{
-						rect.x -= fh;
-						this->textOffset.x -= fh;
+						jumps = -hceil((caretRect.x + fh - this->rect.w) / fh);
+						if (this->horzFormatting == atres::RIGHT)
+						{
+							jumps = hmax(jumps, -this->renderOffsetX);
+						}
+						if (jumps != 0)
+						{
+							caretRect.x += jumps * fh;
+							this->renderOffsetX += jumps;
+						}
 					}
+				}
+				else
+				{
+					this->renderOffsetX = 0;
 				}
 			}
 			if (this->multiLine)
 			{
-				while (rect.y < fh * 0.5f || rect.y < fh && this->textOffset.y < 0.0f)
+				// top side
+				if (caretRect.y < fh * 0.5f && (this->horzFormatting != atres::TOP || this->renderOffsetY < 0))
 				{
-					rect.y += fh;
-					this->textOffset.y += fh;
+					jumps = hceil((fh - caretRect.y) / fh);
+					if (this->vertFormatting == atres::TOP)
+					{
+						jumps = hmin(jumps, -this->renderOffsetY);
+					}
+					if (jumps != 0)
+					{
+						caretRect.y += jumps * fh;
+						this->renderOffsetY += jumps;
+					}
 				}
-				while (rect.y + lh * 0.5f > this->rect.h)
+				// bottom side
+				if (caretRect.y + lh * 0.5f > this->rect.h && (this->horzFormatting != atres::BOTTOM || this->renderOffsetY > 0))
 				{
-					rect.y -= fh;
-					this->textOffset.y -= fh;
+					jumps = -hceil((caretRect.y + lh * 0.5f - this->rect.h) / fh);
+					if (this->vertFormatting == atres::BOTTOM)
+					{
+						jumps = hmax(jumps, -this->renderOffsetY);
+					}
+					if (jumps != 0)
+					{
+						caretRect.y += jumps * fh;
+						this->renderOffsetY += jumps;
+					}
 				}
 			}
-			this->caretPosition = rect.getPosition();
+			else
+			{
+				this->renderOffsetY = 0;
+			}
+			this->textOffset.set(this->renderOffsetX * fh, this->renderOffsetY * fh);
+			this->caretPosition = caretRect.getPosition();
 		}
 		if (this->multiLine && !this->_sizeProblemReported && this->rect.h < lh)
 		{
@@ -336,17 +386,17 @@ namespace aprilui
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
-			rect.y += 2 - fh * 0.5f;
-			rect.w = 1;
-			rect.h = hmin(fh + descender - 4, this->rect.h - rect.y);
-			if (rect.y < 0.0f)
+			caretRect.y += 2 - fh * 0.5f;
+			caretRect.w = 1;
+			caretRect.h = hmin(fh + descender - 4, this->rect.h - caretRect.y);
+			if (caretRect.y < 0.0f)
 			{
-				rect.h += rect.y;
-				rect.y = 0.0f;
+				caretRect.h += caretRect.y;
+				caretRect.y = 0.0f;
 			}
-			if (rect.h > 0.0f)
+			if (caretRect.h > 0.0f)
 			{
-				april::rendersys->drawRect(rect - this->center, this->_getDrawColor() * this->textColor);
+				april::rendersys->drawRect(caretRect - this->center, this->_getDrawColor() * this->textColor);
 			}
 		}
 		this->text = text;
@@ -430,7 +480,7 @@ namespace aprilui
 		{
 			position.x -= 1;
 		}
-		position += this->textOffset;
+		position += gvec2((float)this->renderOffsetX, (float)this->renderOffsetY) * fh;
 		position.y += fh * 0.5f;
 		return position;
 	}
