@@ -128,7 +128,7 @@ namespace aprilui
 					{
 						descender = atres::renderer->getFont(this->font)->getDescender();
 					}
-					if (is_in_range(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h + descender))
+					if (is_between_ie(y, lines[i].rect.y, lines[i].rect.y + lines[i].rect.h + descender))
 					{
 						if (x <= lines[i].rect.x + lines[i].rect.w)
 						{
@@ -149,7 +149,7 @@ namespace aprilui
 						atres::RenderWord* word = NULL;
 						foreach (atres::RenderWord, it, line->words)
 						{
-							if (is_in_range(x, (*it).rect.x, (*it).rect.x + (*it).rect.w))
+							if (is_between_ie(x, (*it).rect.x, (*it).rect.x + (*it).rect.w))
 							{
 								word = &(*it);
 								break;
@@ -163,13 +163,13 @@ namespace aprilui
 							foreach (float, it, word->charWidths)
 							{
 								cw = (*it) * 0.5f;
-								if (is_in_range(x, ow, ow + cw))
+								if (is_between_ie(x, ow, ow + cw))
 								{
 									break;
 								}
 								++offsetIndex;
 								ow += cw;
-								if (is_in_range(x, ow, ow + cw))
+								if (is_between_ie(x, ow, ow + cw))
 								{
 									break;
 								}
