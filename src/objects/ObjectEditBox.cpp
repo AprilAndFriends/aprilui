@@ -530,7 +530,6 @@ namespace aprilui
 		if (this->pushed && this->isCursorInside())
 		{
 			this->pushed = false;
-			this->triggerEvent(Event::Click, keyCode);
 			// some OSes will disable the keyboard if it is shown before a mouse-up event
 			april::window->beginKeyboardHandling();
 			return true;

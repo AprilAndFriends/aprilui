@@ -95,6 +95,11 @@ namespace aprilui
 		return false;
 	}
 
+	bool EventReceiver::isEventRegistered(chstr type)
+	{
+		return this->events.has_key(type);
+	}
+
 	void EventReceiver::notifyEvent(chstr type, EventArgs* args)
 	{
 	}
