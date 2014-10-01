@@ -31,34 +31,5 @@ namespace aprilui
 	void ColoredQuad::OnDraw()
 	{
 		april::rendersys->drawFilledRect(this->_getDrawRect(), this->_getDrawColor());
-	}
-
-	bool ColoredQuad::onMouseDown(april::Key keyCode)
-	{
-		if (Object::onMouseDown(keyCode))
-		{
-			return true;
-		}
-		if (this->isCursorInside())
-		{
-			this->triggerEvent(Event::MouseDown, keyCode);
-			return true;
-		}
-		return false;
-	}
-
-	bool ColoredQuad::onMouseUp(april::Key keyCode)
-	{
-		if (Object::onMouseUp(keyCode))
-		{
-			return true;
-		}
-		if (this->isCursorInside())
-		{
-			this->triggerEvent(Event::Click, keyCode);
-			return true;
-		}
-		return false;
-	}
-	
+	}	
 }

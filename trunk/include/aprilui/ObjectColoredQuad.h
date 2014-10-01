@@ -32,10 +32,6 @@ namespace aprilui
 		static Object* createInstance(chstr name, grect rect);
 		
 		void OnDraw();
-
-		bool onMouseDown(april::Key keyCode);
-		bool onMouseUp(april::Key keyCode);
-		
 	};
 }
 

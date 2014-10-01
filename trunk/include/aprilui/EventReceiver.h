@@ -38,6 +38,7 @@ namespace aprilui
 		bool registerEvent(chstr type, void(*callback)(EventArgs*));
 		bool registerEvent(chstr type, Event* event);
 		bool unregisterEvent(chstr type);
+		bool isEventRegistered(chstr type);
 
 		virtual void notifyEvent(chstr type, EventArgs* args);
 

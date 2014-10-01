@@ -36,13 +36,6 @@ namespace aprilui
 		
 		void update(float timeDelta);
 		void OnDraw();
-
-		bool onMouseDown(april::Key keyCode);
-		bool onMouseUp(april::Key keyCode);
-		bool onMouseMove();
-		bool onMouseScroll(float x, float y);
-		void mouseCancel();
-
 	protected:
 		void (*drawCallback)(CallbackObject*);
 		void (*updateCallback)(float);
