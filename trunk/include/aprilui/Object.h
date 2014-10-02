@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.33
 /// 
 /// @section LICENSE
 /// 
@@ -41,6 +41,13 @@ namespace aprilui
 	{
 	public:
 		friend class Dataset;
+
+		enum HitTest
+		{
+			HIT_TEST_ENABLED = 0,
+			HIT_TEST_DISABLED = 1,
+			HIT_TEST_DISABLED_RECURSIVE = 2
+		};
 
 		Object(chstr name, grect rect);
 		~Object();
@@ -84,7 +91,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(anchorBottom, AnchorBottom);
 		void setAnchors(bool left, bool right, bool top, bool bottom);
 		HL_DEFINE_ISSET(retainAnchorAspect, RetainAnchorAspect);
-		HL_DEFINE_ISSET(clickThrough, ClickThrough);
+		HL_DEFINE_GETSET(HitTest, hitTest, HitTest);
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
 		inline bool isVisible() { return (this->visible && this->color.a > 0); }
 		HL_DEFINE_SET(bool, visible, Visible);
@@ -256,7 +263,10 @@ namespace aprilui
 		void resizeStop();
 		void moveCenterStop();
 		void fadeColorStop();
-		
+
+		DEPRECATED_ATTRIBUTE bool isClickThrough();
+		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED); }
+
 	protected:
 		grect rect;
 		gvec2 scaleFactor;
@@ -266,7 +276,7 @@ namespace aprilui
 		harray<Animator*> dynamicAnimators;
 		bool visible;
 		float angle;
-		bool clickThrough;
+		HitTest hitTest;
 		bool inheritAlpha;
 		april::Color color;
 		bool anchorLeft;
@@ -283,7 +293,7 @@ namespace aprilui
 		void _updateChildrenVertical(float difference);
 		
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
-		bool _isDerivedClickThrough();
+		bool _isDerivedHitTestEnabled();
 		grect _getDrawRect();
 		april::Color _getDrawColor();
 		float _getDisabledAlphaFactor();
