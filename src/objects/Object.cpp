@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.31
+/// @version 3.33
 /// 
 /// @section LICENSE
 /// 
@@ -102,6 +102,19 @@
 
 namespace aprilui
 {
+	bool Object::isClickThrough() // DEPRECATED
+	{
+		if (this->hitTest == HIT_TEST_DISABLED_RECURSIVE)
+		{
+			return true;
+		}
+		if (this->hitTest == HIT_TEST_DISABLED)
+		{
+			hlog::warn(aprilui::logTag, "\"hitTest\" value is \"HIT_TEST_DISABLED\", but accessing isClickThrough(), defaulting to false!");
+		}
+		return false;
+	}
+
 	harray<PropertyDescription> Object::_propertyDescriptions;
 
 	Object::Object(chstr name, grect rect) : BaseObject(name)
@@ -121,7 +134,7 @@ namespace aprilui
 		this->enabled = true;
 		this->visible = true;
 		this->angle = 0.0f;
-		this->clickThrough = false;
+		this->hitTest = HIT_TEST_ENABLED;
 		this->inheritAlpha = true;
 		this->anchorLeft = true;
 		this->anchorRight = false;
@@ -168,7 +181,7 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::BOOL);
+			Object::_propertyDescriptions += PropertyDescription("hit_test", PropertyDescription::ENUM);
 			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::UCHAR);
 			Object::_propertyDescriptions += PropertyDescription("green", PropertyDescription::UCHAR);
@@ -652,29 +665,32 @@ namespace aprilui
 		if (this->parent != NULL)
 		{
 			Object* obj = this;
-			Object* parent = this->parent;
-			while (parent != NULL)
+			Object* ancestor = this->parent;
+			while (ancestor != NULL)
 			{
-				if (obj->isClip() && !parent->getBoundingRect().isPointInside(position))
+				if (obj->isClip() && !ancestor->getBoundingRect().isPointInside(position))
 				{
 					return false;
 				}
-				obj = parent;
-				parent = obj->getParent();
+				obj = ancestor;
+				ancestor = obj->getParent();
 			}
 		}
-		if (this->customPointInsideCallback) return this->customPointInsideCallback(this, position);
+		if (this->customPointInsideCallback)
+		{
+			return this->customPointInsideCallback(this, position);
+		}
 		return grect(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
 	}
 
 	bool Object::onMouseDown(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
-		if (this->clickThrough || !this->isVisible() || !this->isDerivedEnabled())
+		if (this->hitTest == HIT_TEST_DISABLED_RECURSIVE || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
-		if (this->dataset != NULL)
+		if (this->hitTest == HIT_TEST_ENABLED && this->dataset != NULL)
 		{
 			this->dataset->removeFocus();
 		}
@@ -683,7 +699,7 @@ namespace aprilui
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
+			if ((*it)->getHitTest() != HIT_TEST_DISABLED_RECURSIVE && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
 			{
 				return true;
 			}
@@ -694,7 +710,7 @@ namespace aprilui
 	bool Object::onMouseUp(april::Key keyCode)
 	{
 		// this check is important when the object is directly accessed for processing (might be refactored in the future)
-		if (this->clickThrough || !this->isVisible() || !this->isDerivedEnabled())
+		if (this->hitTest == HIT_TEST_DISABLED_RECURSIVE || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
@@ -705,7 +721,7 @@ namespace aprilui
 		foreach_r (Object*, it, objects)
 		{
 			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if (!(*it)->isClickThrough() && (*it)->isVisible() && (*it)->isDerivedEnabled())
+			if ((*it)->getHitTest() != HIT_TEST_DISABLED_RECURSIVE && (*it)->isVisible() && (*it)->isDerivedEnabled())
 			{
 				if (object == NULL && (*it)->onMouseUp(keyCode))
 				{
@@ -912,13 +928,25 @@ namespace aprilui
 
 	bool Object::isDerivedVisible()
 	{
-
 		return (this->isVisible() && (this->parent == NULL || this->parent->isDerivedVisible()));
 	}
 	
-	bool Object::_isDerivedClickThrough()
+	bool Object::_isDerivedHitTestEnabled()
 	{
-		return (this->isClickThrough() && (this->parent == NULL || this->parent->_isDerivedClickThrough()));
+		if (this->hitTest != HIT_TEST_ENABLED)
+		{
+			return false;
+		}
+		Object* ancestor = this->parent;
+		while (ancestor != NULL)
+		{
+			if (ancestor->hitTest == HIT_TEST_DISABLED_RECURSIVE)
+			{
+				return false;
+			}
+			ancestor = ancestor->getParent();
+		}
+		return true;
 	}
 	
 	hstr Object::getProperty(chstr name)
@@ -931,7 +959,17 @@ namespace aprilui
 		if (name == "w")					return this->getWidth();
 		if (name == "h")					return this->getHeight();
 		if (name == "visible")				return this->getVisibilityFlag();
-		if (name == "click_through")		return this->isClickThrough();
+		if (name == "hit_test")				return this->getHitTest();
+		{
+			if (this->hitTest == HIT_TEST_ENABLED)				return "enabled";
+			if (this->hitTest == HIT_TEST_DISABLED)				return "disabled";
+			if (this->hitTest == HIT_TEST_DISABLED_RECURSIVE)	return "disabled_recursive";
+		}
+		if (name == "click_through")
+		{
+			hlog::warn(aprilui::logTag, "\"click_through\" is deprecated. Use \"hit_test\" instead."); // DEPRECATED
+			return (this->getHitTest() == HIT_TEST_DISABLED_RECURSIVE);
+		}
 		if (name == "inherit_alpha")		return this->isInheritAlpha();
 		if (name == "red")					return this->getRed();
 		if (name == "green")				return this->getGreen();
@@ -966,8 +1004,30 @@ namespace aprilui
 		else if	(name == "w")						this->setWidth(value);
 		else if	(name == "h")						this->setHeight(value);
 		else if	(name == "visible")					this->setVisible(value);
-		else if	(name == "click_through")			this->setClickThrough(value);
-		else if	(name == "inherit_alpha")			this->setInheritAlpha(value);
+		else if	(name == "hit_test")
+		{
+			if (value == "enabled")					this->setHitTest(HIT_TEST_ENABLED);
+			else if (value == "disabled")			this->setHitTest(HIT_TEST_DISABLED);
+			else if (value == "disabled_recursive")	this->setHitTest(HIT_TEST_DISABLED_RECURSIVE);
+			else
+			{
+				hlog::warn(aprilui::logTag, "'hit_test=' does not support value '" + value + "'.");
+				return false;
+			}
+		}
+		else if (name == "click_through")
+		{
+			if (value)
+			{
+				hlog::warn(aprilui::logTag, "\"click_through=1\" is deprecated. Use \"hit_test=disabled_recursive\" instead."); // DEPRECATED
+			}
+			else
+			{
+				hlog::warn(aprilui::logTag, "\"click_through=0\" is deprecated. Use \"hit_test=enabled\" instead."); // DEPRECATED
+			}
+			this->setHitTest(value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED);
+		}
+		else if (name == "inherit_alpha")			this->setInheritAlpha(value);
 		else if	(name == "red")						this->setRed((int)value);
 		else if	(name == "green")					this->setGreen((int)value);
 		else if	(name == "blue")					this->setBlue((int)value);
@@ -1020,7 +1080,7 @@ namespace aprilui
 
 	Object* Object::getChildUnderPoint(gvec2 pos)
 	{
-		if (!this->isVisible() || this->isClickThrough())
+		if (!this->isVisible() || this->hitTest == HIT_TEST_DISABLED_RECURSIVE)
 		{
 			return NULL;
 		}
@@ -1033,7 +1093,7 @@ namespace aprilui
 				break;
 			}
 		}
-		return (object == NULL && this->isPointInside(pos) ? this : object);
+		return (object == NULL && this->hitTest == HIT_TEST_ENABLED && this->isPointInside(pos) ? this : object);
 	}
 
 	Object* Object::getChildUnderPoint(float x, float y)

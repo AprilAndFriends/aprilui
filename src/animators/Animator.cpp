@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.33
 /// 
 /// @section LICENSE
 /// 
@@ -228,7 +228,7 @@ namespace aprilui
 			if (this->animationFunction == Linear)		return "linear";
 			if (this->animationFunction == Random)		return "random";
 			if (this->animationFunction == Hover)		return "hover";
-			return "custom";
+			if (this->animationFunction == Custom)		return "custom";
 		}
 		if (name == "timer")			return this->getTimer();
 		if (name == "delay")			return this->getDelay();
@@ -262,6 +262,11 @@ namespace aprilui
 				this->setAnimationFunction(Hover);
 			}
 			else if (value == "custom")		this->setAnimationFunction(Custom);
+			else
+			{
+				hlog::warn(aprilui::logTag, "'function=' does not support value '" + value + "'.");
+				return false;
+			}
 		}
 		else if	(name == "timer")			this->setTimer(value);
 		else if	(name == "delay")			this->setDelay(value);
