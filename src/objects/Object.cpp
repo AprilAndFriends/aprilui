@@ -959,7 +959,7 @@ namespace aprilui
 		if (name == "w")					return this->getWidth();
 		if (name == "h")					return this->getHeight();
 		if (name == "visible")				return this->getVisibilityFlag();
-		if (name == "hit_test")				return this->getHitTest();
+		if (name == "hit_test")
 		{
 			if (this->hitTest == HIT_TEST_ENABLED)				return "enabled";
 			if (this->hitTest == HIT_TEST_DISABLED)				return "disabled";
