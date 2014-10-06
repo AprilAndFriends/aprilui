@@ -182,6 +182,7 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("hit_test", PropertyDescription::ENUM);
+			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::BOOL); // DEPRECATED
 			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::UCHAR);
 			Object::_propertyDescriptions += PropertyDescription("green", PropertyDescription::UCHAR);
