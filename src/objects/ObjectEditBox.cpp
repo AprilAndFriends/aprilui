@@ -568,7 +568,7 @@ namespace aprilui
 			{
 				for_iter (i, linesStartCount, linesEndCount - 1)
 				{
-					this->_selectionRects += grect(allLines[i].rect.getPosition(), allLines[i].rect.w, fh);
+					this->_selectionRects += grect(allLines[i].rect.getPosition() + renderOffset, allLines[i].rect.w, fh);
 				}
 			}
 			if (allLineEnd != NULL)
@@ -624,7 +624,7 @@ namespace aprilui
 			harray<grect> selectionRects = this->_selectionRects;
 			foreach (grect, it, selectionRects)
 			{
-				(*it) += drawRect.getPosition() - this->textOffset;
+				(*it) += drawRect.getPosition();
 				(*it).clip(drawRect);
 				if ((*it).w > 0.0f && (*it).h > 0.0f)
 				{
