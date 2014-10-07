@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@ namespace aprilui
 		this->scrollArea = NULL;
 		this->scrollBarH = NULL;
 		this->scrollBarV = NULL;
+		this->debugColor = april::Color(april::Color::Orange, 32);
 	}
 
 	Container::~Container()
@@ -30,17 +31,6 @@ namespace aprilui
 	Object* Container::createInstance(chstr name, grect rect)
 	{
 		return new Container(name, rect);
-	}
-
-	void Container::OnDraw()
-	{
-		Object::OnDraw();
-		if (aprilui::isDebugEnabled())
-		{
-			grect rect = this->_getDrawRect();
-			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Red, 32));
-			april::rendersys->drawRect(rect, april::Color(april::Color::Yellow, 64));
-		}
 	}
 
 }

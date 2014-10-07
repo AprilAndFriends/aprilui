@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.31
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -37,6 +37,7 @@ namespace aprilui
 		this->dragMaxSpeed = DragMaxSpeed;
 		this->swapScrollWheels = false;
 		this->dragging = false;
+		this->debugColor = april::Color(april::Color::Yellow, 32);
 	}
 
 	ScrollArea::~ScrollArea()
@@ -150,17 +151,6 @@ namespace aprilui
 	{
 		gvec2 offset = this->getScrollOffset();
 		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
-	}
-
-	void ScrollArea::OnDraw()
-	{
-		Object::OnDraw();
-		if (aprilui::isDebugEnabled())
-		{
-			grect rect = this->_getDrawRect();
-			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Green, 32));
-			april::rendersys->drawRect(rect, april::Color(april::Color::Yellow, 64));
-		}
 	}
 
 	void ScrollArea::update(float timeDelta)

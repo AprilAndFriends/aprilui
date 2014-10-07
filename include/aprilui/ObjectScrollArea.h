@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.31
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -62,7 +62,6 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		void OnDraw();
 		void update(float timeDelta);
 
 		void notifyEvent(chstr type, EventArgs* args);

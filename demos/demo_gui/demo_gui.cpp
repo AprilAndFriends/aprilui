@@ -236,7 +236,9 @@ void april_init(const harray<hstr>& args)
 #endif
 		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
 		april::createRenderSystem();
-		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "demo_gui");
+		april::Window::Options options;
+		options.fpsCounter = true;
+		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "demo_gui", options);
 		atres::init();
 		aprilui::init();
 #ifdef _WINRT
@@ -256,9 +258,6 @@ void april_init(const harray<hstr>& args)
 		aprilui::Object* object = dataset->getObject("hoverImageButton");
 		object->registerEvent(aprilui::Event::HoverStarted, new aprilui::CallbackEvent(&_hoverStarted));
 		object->registerEvent(aprilui::Event::HoverFinished, new aprilui::CallbackEvent(&_hoverFinished));
-#ifdef _DEBUG
-		//aprilui::setDebugMode(true);
-#endif
 	}
 	catch (aprilui::_GenericException& e)
 	{

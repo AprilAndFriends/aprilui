@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.33
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -288,6 +288,7 @@ namespace aprilui
 		bool useDisabledAlpha;
 		int focusIndex;
 		CustomPointInsideCallback customPointInsideCallback;
+		april::Color debugColor;
 		
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);

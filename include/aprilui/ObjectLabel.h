@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -47,9 +47,10 @@ namespace aprilui
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
 	protected:
 		void OnDraw();
-		
+
 	};
 	
 }

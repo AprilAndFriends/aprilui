@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -84,7 +84,8 @@ namespace aprilui
 		april::Color fontEffectColor;
 		april::Color backgroundColor;
 		
-		void _drawLabel(grect rect, april::Color color, april::Color backgroundColor);
+		void _drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor);
+		void _drawLabel(grect rect, april::Color color);
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

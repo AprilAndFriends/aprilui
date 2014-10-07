@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.33
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -258,7 +258,7 @@ namespace aprilui
 			else if (value == "random")		this->setAnimationFunction(Random);
 			else if	(value == "hover")
 			{
-				hlog::warn(aprilui::logTag, "\"hover\" is deprecated. Use events instead."); // DEPRECATED
+				hlog::warn(aprilui::logTag, "'hover' is deprecated. Use events instead."); // DEPRECATED
 				this->setAnimationFunction(Hover);
 			}
 			else if (value == "custom")		this->setAnimationFunction(Custom);

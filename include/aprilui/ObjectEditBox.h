@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.32
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -34,21 +34,26 @@ namespace aprilui
 		void setEmptyText(chstr value);
 		HL_DEFINE_GET(hstr, emptyTextKey, EmptyTextKey);
 		void setEmptyTextKey(chstr value);
-		HL_DEFINE_GET(int, cursorIndex, CursorIndex);
-		void setCursorIndex(int value);
+		HL_DEFINE_GET(int, caretIndex, CaretIndex);
+		void setCaretIndex(int value);
+		HL_DEFINE_GET(int, selectionCount, SelectionCount);
+		void setSelectionCount(int value);
 		HL_DEFINE_GET(int, maxLength, MaxLength);
 		void setMaxLength(int value);
 		HL_DEFINE_GETSET(char, passwordChar, PasswordChar);
 		HL_DEFINE_ISSET(multiLine, MultiLine);
+		HL_DEFINE_ISSET(selectable, Selectable);
 		HL_DEFINE_GET(hstr, filter, Filter);
 		void setFilter(chstr value);
+		HL_DEFINE_GETSET(april::Color, selectionColor, SelectionColor);
 		HL_DEFINE_GET(gvec2, caretPosition, CaretPosition);
 		void setText(chstr value);
 		void setFocused(bool value);
+		hstr getSelectedText();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 		
-		void setCursorIndexAt(float x, float y);
+		void setCaretIndexAt(gvec2 position);
 
 		void update(float time);
 
@@ -62,40 +67,53 @@ namespace aprilui
 		bool onKeyUp(april::Key keyCode);
 		bool onChar(unsigned int charCode);
 		void mouseCancel();
+
+		DEPRECATED_ATTRIBUTE int getCursorIndex() { return getCaretIndex(); }
+		DEPRECATED_ATTRIBUTE void setCursorIndex(int value) { this->setCaretIndex(value); }
+		DEPRECATED_ATTRIBUTE void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
 		
 	protected:
 		hstr emptyText;
 		hstr emptyTextKey;
 		bool pushed;
-		int cursorIndex;
+		int caretIndex;
+		int selectionCount;
 		int maxLength;
 		char passwordChar;
 		bool multiLine;
+		bool selectable;
 		bool spaceHack; // TODO - remove
 		hstr filter;
+		april::Color selectionColor;
 		gvec2 caretPosition;
 		int renderOffsetX;
 		int renderOffsetY;
+
+		void _getBaseOffset(gvec2& offset, float& xhf);
 		
 		void OnDraw();
-		
-		void _cursorMoveLeft();
-		void _cursorMoveRight();
-		void _cursorMoveUp();
-		void _cursorMoveDown();
-		void _cursorMoveLeftWord();
-		void _cursorMoveRightWord();
+
+		void _caretMoveLeft();
+		void _caretMoveRight();
+		void _caretMoveUp();
+		void _caretMoveDown();
+		void _caretMoveLeftWord();
+		void _caretMoveRightWord();
 		void _deleteLeft(int count = 1);
 		void _deleteRight(int count = 1);
 		void _deleteLeftWord();
 		void _deleteRightWord();
+		bool _deleteSelected();
 		void _insertChar(unsigned int charCode);
 		gvec2 _makeCaretPosition(chstr text, chstr originalText);
+		int _makeCaretIndexAt(gvec2 position);
+		harray<grect> _makeSelectedRects();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
 		bool _ctrlMode;
+		bool _shiftMode;
 		float _blinkTimer;
 		bool _sizeProblemReported;
 
