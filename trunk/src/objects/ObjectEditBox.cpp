@@ -21,6 +21,7 @@
 #define UNICODE_CHAR_SPACE 0x20
 #define UNICODE_CHAR_NEWLINE 0x0A
 #define CHECK_RECT_HEIGHT 100000.0f
+#define CHECK_RECT (grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT))
 
 namespace aprilui
 {
@@ -46,6 +47,9 @@ namespace aprilui
 		this->_ctrlMode = false;
 		this->_shiftMode = false;
 		this->_blinkTimer = 0.0f;
+		this->_caretPositionDirty = false;
+		this->_caretDirty = false;
+		this->_selectionDirty = false;
 		this->_sizeProblemReported = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
@@ -82,51 +86,145 @@ namespace aprilui
 
 	void EditBox::setCaretIndex(int value)
 	{
-		this->caretIndex = hclamp(value, 0, this->text.utf8_size());
+		int newCaretIndex = hclamp(value, 0, this->text.utf8_size());
+		if (this->caretIndex != newCaretIndex)
+		{
+			this->caretIndex = newCaretIndex;
+			this->_caretDirty = true;
+			this->_selectionDirty = true;
+		}
 		this->_blinkTimer = 0.0f;
+	}
+
+	void EditBox::setSelectionCount(int value)
+	{
+		int newSelectionCount = (this->selectable ? hclamp(value, -this->caretIndex, this->text.utf8_size() - this->caretIndex) : 0);
+		if (this->selectionCount != newSelectionCount)
+		{
+			this->selectionCount = newSelectionCount;
+			this->_selectionDirty = true;
+		}
+	}
+
+	void EditBox::setMaxLength(int value)
+	{
+		this->maxLength = value;
+		if (this->maxLength > 0 && this->text.utf8_size() > this->maxLength)
+		{
+			this->text = this->text.utf8_substr(0, this->maxLength);
+			this->setCaretIndex(this->caretIndex);
+		}
+	}
+
+	void EditBox::setFilter(chstr value)
+	{
+		this->filter = value;
+		this->setText(this->text);
+	}
+
+	void EditBox::setText(chstr value)
+	{
+		hstr newValue = value;
+		if (newValue.size() > 0 && this->filter.size() > 0)
+		{
+			std::basic_string<unsigned int> ustr = newValue.u_str();
+			harray<unsigned int> uText(ustr.c_str(), ustr.size());
+			ustr = this->filter.u_str();
+			harray<unsigned int> uFilter(ustr.c_str(), ustr.size());
+			uFilter |= '\n'; // this is for multiline
+			uText &= uFilter; // intersect, remove from first all that are not in second
+			newValue = hstr::from_unicode(uText);
+		}
+		if (this->maxLength > 0 && newValue.utf8_size() > this->maxLength)
+		{
+			newValue = newValue.utf8_substr(0, this->maxLength);
+		}
+		if (this->text != newValue) // a text change has to trigger a recalculation
+		{
+			this->_caretDirty = true;
+			this->_selectionDirty = true;
+		}
+		Label::setText(newValue);
+		this->setCaretIndex(this->caretIndex);
+		this->setSelectionCount(this->selectionCount);
+	}
+
+	void EditBox::setEmptyText(chstr value)
+	{
+		this->emptyText = value;
+		this->emptyTextKey = "";
+	}
+
+	void EditBox::setEmptyTextKey(chstr value)
+	{
+		hstr emptyTextKey = value; // because value is a chstr which could reference textKey
+		this->setEmptyText(this->getDataset()->getText(emptyTextKey));
+		this->emptyTextKey = emptyTextKey;
+	}
+
+	void EditBox::setFocused(bool value)
+	{
+		Label::setFocused(value);
+		if (this->dataset != NULL && value)
+		{
+			this->_blinkTimer = 0.0f;
+		}
+	}
+
+	hstr EditBox::getSelectedText()
+	{
+		return (this->selectionCount != 0 ? this->text.utf8_substr(hmin(this->caretIndex, this->caretIndex + this->selectionCount), habs(this->selectionCount)) : hstr(""));
 	}
 
 	void EditBox::setCaretIndexAt(gvec2 position)
 	{
-		this->setCaretIndex(this->text(0, this->_makeCaretIndexAt(position)).utf8_size());
+		if (!this->pushed || this->_caretCursorPosition != position)
+		{
+			this->_caretCursorPosition = position;
+			this->_caretPositionDirty = true;
+		}
 	}
 
-	void EditBox::_getBaseOffset(gvec2& offset, float& xhf)
+	void EditBox::update(float time)
 	{
-		offset.set(0.0f, 0.0f);
-		xhf = 0.0f; // x height factor
-		float fh = atres::renderer->getFont(this->font)->getLineHeight();
-		float w2 = this->rect.w * 0.5f;
-		float h2 = this->rect.h * 0.5f;
-		if (this->horzFormatting == atres::CENTER || this->horzFormatting == atres::CENTER_WRAPPED)
+		Label::update(time);
+		if (!this->pushed)
 		{
-			offset.x = w2;
+			this->_blinkTimer += time * 2;
+			this->_blinkTimer = (this->_blinkTimer - (int)this->_blinkTimer);
+			this->_updateCaretRect();
+			this->_updateCaret();
+			this->_updateSelection();
+			return;
 		}
-		else if (this->horzFormatting == atres::RIGHT || this->horzFormatting == atres::RIGHT_WRAPPED)
+		int index = this->caretIndex;
+		this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
+		this->_updateCaretRect();
+		this->_updateCaret();
+		if (this->selectable)
 		{
-			offset.x = w2 * 2;
+			this->setSelectionCount(this->selectionCount + index - this->caretIndex);
 		}
-		if (this->vertFormatting == atres::CENTER)
-		{
-			xhf = 0.5f;
-		}
-		else if (this->vertFormatting == atres::BOTTOM)
-		{
-			xhf = 1.0f;
-		}
-		offset.y = (h2 * 2 - fh) * xhf;
+		this->_updateSelection();
 	}
-	
-	int EditBox::_makeCaretIndexAt(gvec2 position)
+
+	void EditBox::_updateCaretRect()
 	{
+		if (!this->_caretPositionDirty)
+		{
+			return;
+		}
+		this->_caretPositionDirty = false;
 		if (this->text == "")
 		{
-			return 0;
+			this->setCaretIndex(0);
+			return;
 		}
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
+		gvec2 position = this->_caretCursorPosition;
 		// full text
 		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
-		harray<atres::RenderLine> lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT), this->text, tags, this->horzFormatting, this->vertFormatting);
+		harray<atres::RenderLine> lines = atres::renderer->createRenderLines(CHECK_RECT, this->text, tags, this->horzFormatting, this->vertFormatting);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
@@ -140,7 +238,7 @@ namespace aprilui
 				offsetIndex = this->text.size();
 				atres::RenderLine* line = NULL;
 				float descender = 0.0f;
-				for_iter(i, 0, lines.size())
+				for_iter (i, 0, lines.size())
 				{
 					if (i == lines.size() - 1)
 					{
@@ -165,7 +263,7 @@ namespace aprilui
 					if (line->words.size() > 0)
 					{
 						atres::RenderWord* word = NULL;
-						foreach(atres::RenderWord, it, line->words)
+						foreach (atres::RenderWord, it, line->words)
 						{
 							if (is_between_ie(position.x, (*it).rect.x, (*it).rect.x + (*it).rect.w))
 							{
@@ -206,94 +304,277 @@ namespace aprilui
 				offsetIndex = 0;
 			}
 		}
-		return offsetIndex;
+		this->setCaretIndex(this->text(0, offsetIndex).utf8_size());
 	}
 
-	void EditBox::setSelectionCount(int value)
+	void EditBox::_updateCaret()
 	{
-		this->selectionCount = (this->selectable ? hclamp(value, -this->caretIndex, this->text.utf8_size() - this->caretIndex) : 0);
-	}
-
-	void EditBox::setMaxLength(int value)
-	{
-		this->maxLength = value;
-		if (this->maxLength > 0 && this->text.utf8_size() > this->maxLength)
+		if (!this->_caretDirty)
 		{
-			this->text = this->text.utf8_substr(0, this->maxLength);
-			this->setCaretIndex(this->caretIndex);
+			return;
 		}
-	}
-
-	void EditBox::setFilter(chstr value)
-	{
-		this->filter = value;
-		this->setText(this->text);
-	}
-	
-	void EditBox::setText(chstr value)
-	{
-		hstr newValue = value;
-		if (newValue.size() > 0 && this->filter.size() > 0)
+		this->_caretDirty = false;
+		hstr leftText = this->text.utf8_substr(0, this->caretIndex);
+		atres::Font* font = atres::renderer->getFont(this->font);
+		float fh = font->getLineHeight();
+		float descender = font->getDescender();
+		float lh = fh + descender;
+		this->caretRect.set(0.0f, 0.0f, 1.0f, fh);
+		// full text
+		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
+		harray<atres::RenderLine> allLines = atres::renderer->createRenderLines(CHECK_RECT,
+			this->text, tags, this->horzFormatting, this->vertFormatting);
+		gvec2 base;
+		float xhf = 0.0f; // x height factor
+		this->_getBaseOffset(base, xhf);
+		base.y -= descender * xhf;
+		// caret position
+		harray<atres::RenderLine> lines;
+		if (leftText != "")
 		{
-			std::basic_string<unsigned int> ustr = newValue.u_str();
-			harray<unsigned int> uText(ustr.c_str(), ustr.size());
-			ustr = this->filter.u_str();
-			harray<unsigned int> uFilter(ustr.c_str(), ustr.size());
-			uFilter |= '\n'; // this is for multiline
-			uText &= uFilter; // intersect, remove from first all that are not in second
-			newValue = hstr::from_unicode(uText);
+			tags = atres::renderer->prepareTags(this->font);
+			lines = atres::renderer->createRenderLines(CHECK_RECT,
+				leftText, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
+			if (lines.size() > 0)
+			{
+				atres::RenderLine line = lines.last();
+				atres::RenderLine allLine = allLines[lines.size() - 1];
+				this->caretRect.y = allLine.rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT);
+				if (line.terminated)
+				{
+					this->caretRect.y += fh;
+					if (allLines.size() > lines.size())
+					{
+						this->caretRect.x = allLines[lines.size()].rect.x;
+					}
+					else
+					{
+						this->caretRect.x = base.x;
+					}
+				}
+				else
+				{
+					this->caretRect.x = allLine.rect.x + line.rect.w;
+				}
+			}
 		}
-		if (this->maxLength > 0 && newValue.utf8_size() > this->maxLength)
+		if (leftText == "" || lines.size() == 0)
 		{
-			newValue = newValue.utf8_substr(0, this->maxLength);
+			if (allLines.size() > 0)
+			{
+				this->caretRect.setPosition(allLines[0].rect.x, allLines[0].rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+			}
+			else
+			{
+				this->caretRect.setPosition(base);
+			}
 		}
-		Label::setText(newValue);
-		this->setCaretIndex(this->caretIndex);
-	}
-
-	void EditBox::setEmptyText(chstr value)
-	{
-		this->emptyText = value;
-		this->emptyTextKey = "";
-	}
-
-	void EditBox::setEmptyTextKey(chstr value)
-	{
-		hstr emptyTextKey = value; // because value is a chstr which could reference textKey
-		this->setEmptyText(this->getDataset()->getText(emptyTextKey));
-		this->emptyTextKey = emptyTextKey;
-	}
-
-	void EditBox::setFocused(bool value)
-	{
-		Label::setFocused(value);
-		if (this->dataset != NULL && value)
+		if (this->horzFormatting == atres::RIGHT || this->horzFormatting == atres::RIGHT_WRAPPED)
 		{
-			this->_blinkTimer = 0.0f;
+			this->caretRect.x -= 1;
 		}
-	}
-
-	hstr EditBox::getSelectedText()
-	{
-		return (this->selectionCount != 0 ? this->text.utf8_substr(hmin(this->caretIndex, this->caretIndex + this->selectionCount), habs(this->selectionCount)) : hstr(""));
-	}
-
-	void EditBox::update(float time)
-	{
-		Label::update(time);
-		if (!this->pushed)
+		this->caretRect += gvec2((float)this->renderOffsetX, (float)this->renderOffsetY) * fh;
+		// calculate render offset
+		int jumps = 0;
+		if (this->horzFormatting != atres::LEFT_WRAPPED && this->horzFormatting != atres::CENTER_WRAPPED &&
+			this->horzFormatting != atres::RIGHT_WRAPPED && this->horzFormatting != atres::JUSTIFIED)
 		{
-			this->_blinkTimer += time * 2;
-			this->_blinkTimer = (this->_blinkTimer - (int)this->_blinkTimer);
+			if (atres::renderer->getTextWidth(this->font, this->text) > this->caretRect.w)
+			{
+				// left side
+				if (this->caretRect.x < fh && (this->horzFormatting != atres::LEFT || this->renderOffsetX < 0))
+				{
+					jumps = hceil((fh - this->caretRect.x) / fh);
+					if (this->horzFormatting == atres::LEFT)
+					{
+						jumps = hmin(jumps, -this->renderOffsetX);
+					}
+					if (jumps != 0)
+					{
+						this->caretRect.x += jumps * fh;
+						this->renderOffsetX += jumps;
+						if (this->pushed)
+						{
+							this->_caretPositionDirty = true;
+						}
+					}
+				}
+				// right side
+				if (this->caretRect.x + fh > this->rect.w && (this->horzFormatting != atres::RIGHT || this->renderOffsetX > 0))
+				{
+					jumps = -hceil((this->caretRect.x + fh - this->rect.w) / fh);
+					if (this->horzFormatting == atres::RIGHT)
+					{
+						jumps = hmax(jumps, -this->renderOffsetX);
+					}
+					if (jumps != 0)
+					{
+						this->caretRect.x += jumps * fh;
+						this->renderOffsetX += jumps;
+						if (this->pushed)
+						{
+							this->_caretPositionDirty = true;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (this->pushed && this->renderOffsetX != 0)
+				{
+					this->_caretPositionDirty = true;
+				}
+				this->renderOffsetX = 0;
+			}
 		}
-		else if (this->selectable)
+		if (this->multiLine)
 		{
-			this->selectionCount = this->_makeCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition())) - this->caretIndex;
+			// top side
+			if (this->caretRect.y < fh * 0.5f && (this->horzFormatting != atres::TOP || this->renderOffsetY < 0))
+			{
+				jumps = hceil((fh * 0.5f - this->caretRect.y) / fh);
+				if (this->vertFormatting == atres::TOP)
+				{
+					jumps = hmin(jumps, -this->renderOffsetY);
+				}
+				if (jumps != 0)
+				{
+					this->caretRect.y += jumps * fh;
+					this->renderOffsetY += jumps;
+					if (this->pushed)
+					{
+						this->_caretPositionDirty = true;
+					}
+				}
+			}
+			// bottom side
+			if (this->caretRect.y + (fh + lh) * 0.5f > this->rect.h && (this->horzFormatting != atres::BOTTOM || this->renderOffsetY > 0))
+			{
+				jumps = -hceil((this->caretRect.y + (fh + lh) * 0.5f - this->rect.h) / fh);
+				if (this->vertFormatting == atres::BOTTOM)
+				{
+					jumps = hmax(jumps, -this->renderOffsetY);
+				}
+				if (jumps != 0)
+				{
+					this->caretRect.y += jumps * fh;
+					this->renderOffsetY += jumps;
+					if (this->pushed)
+					{
+						this->_caretPositionDirty = true;
+					}
+				}
+			}
 		}
 		else
 		{
-			this->selectionCount = 0;
-			this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
+			if (this->pushed && this->renderOffsetY != 0)
+			{
+				this->_caretPositionDirty = true;
+			}
+			this->renderOffsetY = 0;
+		}
+		this->textOffset.set(this->renderOffsetX * fh, this->renderOffsetY * fh);
+	}
+
+	void EditBox::_updateSelection()
+	{
+		if (!this->_selectionDirty)
+		{
+			return;
+		}
+		this->_selectionDirty = false;
+		this->_selectionRects.clear();
+		if (this->selectionCount == 0 || this->text == "")
+		{
+			return;
+		}
+		grect rect;
+		float fh = atres::renderer->getFont(this->font)->getLineHeight();
+		// full text
+		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
+		harray<atres::RenderLine> allLines = atres::renderer->createRenderLines(CHECK_RECT,
+			this->text, tags, this->horzFormatting, this->vertFormatting);
+		gvec2 base;
+		float xhf = 0.0f; // x height factor
+		this->_getBaseOffset(base, xhf);
+		// vars
+		hstr textStart = this->text.utf8_substr(0, hmin(this->caretIndex, this->caretIndex + this->selectionCount));
+		hstr textEnd = this->text.utf8_substr(0, hmax(this->caretIndex, this->caretIndex + this->selectionCount));
+		harray<atres::RenderLine> linesStart;
+		harray<atres::RenderLine> linesEnd;
+		gvec2 positionStart;
+		gvec2 positionEnd;
+		atres::RenderLine* allLineStart = NULL;
+		atres::RenderLine* allLineEnd = NULL;
+		int linesStartCount = 0;
+		int linesEndCount = 0;
+		if (textStart != "")
+		{
+			tags = atres::renderer->prepareTags(this->font);
+			linesStart = atres::renderer->createRenderLines(CHECK_RECT,
+				textStart, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
+			if (linesStart.size() > 0)
+			{
+				allLineStart = &allLines[linesStart.size() - 1];
+				positionStart.set(allLineStart->rect.x + linesStart.last().rect.w, allLineStart->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+				linesStartCount = linesStart.size();
+			}
+		}
+		if (textStart == "" || linesStart.size() == 0)
+		{
+			if (allLines.size() > 0)
+			{
+				allLineStart = &allLines[0];
+				positionStart.set(allLineStart->rect.x, allLineStart->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+				linesStartCount = 1;
+			}
+			else
+			{
+				positionStart += base;
+			}
+		}
+		if (textEnd != this->text)
+		{
+			tags = atres::renderer->prepareTags(this->font);
+			linesEnd = atres::renderer->createRenderLines(CHECK_RECT,
+				textEnd, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
+			allLineEnd = &allLines[linesEnd.size() - 1];
+			positionEnd.set(allLineEnd->rect.x + linesEnd.last().rect.w, allLineEnd->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+			linesEndCount = linesEnd.size();
+		}
+		else if (allLines.size() > 0)
+		{
+			allLineEnd = &allLines.last();
+			positionEnd.set(allLineEnd->rect.right(), allLineEnd->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+			linesEndCount = allLines.size();
+		}
+		else
+		{
+			positionEnd += base;
+		}
+		gvec2 renderOffset(this->renderOffsetX * fh, this->renderOffsetY * fh);
+		if (linesStartCount == linesEndCount)
+		{
+			this->_selectionRects += grect(positionStart + renderOffset, positionEnd.x - positionStart.x, fh);
+		}
+		else
+		{
+			if (allLineStart != NULL)
+			{
+				this->_selectionRects += grect(positionStart + renderOffset, allLineStart->rect.right() - positionStart.x, fh);
+			}
+			if (linesEndCount - linesStartCount > 1)
+			{
+				for_iter (i, linesStartCount, linesEndCount - 1)
+				{
+					this->_selectionRects += grect(allLines[i].rect.getPosition(), allLines[i].rect.w, fh);
+				}
+			}
+			if (allLineEnd != NULL)
+			{
+				this->_selectionRects += grect(allLineEnd->rect.x + renderOffset.x, positionEnd.y + renderOffset.y, positionEnd.x - allLineStart->rect.x, fh);
+			}
 		}
 	}
 
@@ -309,9 +590,7 @@ namespace aprilui
 		//////////////
 		april::Color drawColor = this->_getDrawColor();
 		grect drawRect = this->_getDrawRect();
-		grect caretRect = drawRect;
 		hstr text = this->text;
-		caretRect.w -= 12;
 		if (this->passwordChar != '\0' && this->text != "")
 		{
 			this->text = hstr(this->passwordChar, this->text.utf8_size());
@@ -325,97 +604,13 @@ namespace aprilui
 		{
 			this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * 0.75f);
 		}
-		float fh = atres::renderer->getFont(this->font)->getLineHeight();
-		float descender = atres::renderer->getFont(this->font)->getDescender();
-		float lh = fh + descender;
-		int jumps = 0;
-		if (this->dataset != NULL && this->dataset->getFocusedObject() == this)
-		{
-			hstr leftText = this->text.utf8_substr(0, this->caretIndex);
-			caretRect.setPosition(this->_makeCaretPosition(leftText, this->text));
-			if (this->horzFormatting != atres::LEFT_WRAPPED && this->horzFormatting != atres::CENTER_WRAPPED &&
-				this->horzFormatting != atres::RIGHT_WRAPPED && this->horzFormatting != atres::JUSTIFIED)
-			{
-				if (atres::renderer->getTextWidth(this->font, this->text) > caretRect.w)
-				{
-					// left side
-					if (caretRect.x < fh && (this->horzFormatting != atres::LEFT || this->renderOffsetX < 0))
-					{
-						jumps = hceil((fh - caretRect.x) / fh);
-						if (this->horzFormatting == atres::LEFT)
-						{
-							jumps = hmin(jumps, -this->renderOffsetX);
-						}
-						if (jumps != 0)
-						{
-							caretRect.x += jumps * fh;
-							this->renderOffsetX += jumps;
-						}
-					}
-					// right side
-					if (caretRect.x + fh > this->rect.w && (this->horzFormatting != atres::RIGHT || this->renderOffsetX > 0))
-					{
-						jumps = -hceil((caretRect.x + fh - this->rect.w) / fh);
-						if (this->horzFormatting == atres::RIGHT)
-						{
-							jumps = hmax(jumps, -this->renderOffsetX);
-						}
-						if (jumps != 0)
-						{
-							caretRect.x += jumps * fh;
-							this->renderOffsetX += jumps;
-						}
-					}
-				}
-				else
-				{
-					this->renderOffsetX = 0;
-				}
-			}
-			if (this->multiLine)
-			{
-				// top side
-				if (caretRect.y < fh * 0.5f && (this->horzFormatting != atres::TOP || this->renderOffsetY < 0))
-				{
-					jumps = hceil((fh - caretRect.y) / fh);
-					if (this->vertFormatting == atres::TOP)
-					{
-						jumps = hmin(jumps, -this->renderOffsetY);
-					}
-					if (jumps != 0)
-					{
-						caretRect.y += jumps * fh;
-						this->renderOffsetY += jumps;
-					}
-				}
-				// bottom side
-				if (caretRect.y + lh * 0.5f > this->rect.h && (this->horzFormatting != atres::BOTTOM || this->renderOffsetY > 0))
-				{
-					jumps = -hceil((caretRect.y + lh * 0.5f - this->rect.h) / fh);
-					if (this->vertFormatting == atres::BOTTOM)
-					{
-						jumps = hmax(jumps, -this->renderOffsetY);
-					}
-					if (jumps != 0)
-					{
-						caretRect.y += jumps * fh;
-						this->renderOffsetY += jumps;
-					}
-				}
-			}
-			else
-			{
-				this->renderOffsetY = 0;
-			}
-			this->textOffset.set(this->renderOffsetX * fh, this->renderOffsetY * fh);
-			this->caretPosition = caretRect.getPosition();
-		}
+		atres::Font* font = atres::renderer->getFont(this->font);
+		float lh = font->getLineHeight() + font->getDescender();
 		if (this->multiLine && !this->_sizeProblemReported && this->rect.h < lh)
 		{
 			hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.c_str(), (int)this->rect.h, (int)lh, this->font.c_str());
 			this->_sizeProblemReported = true;
 		}
-		float caretHeight = hmin(fh, this->rect.h - caretRect.y);
 		// not using Label::OnDraw() directly
 		Object::OnDraw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
@@ -426,12 +621,15 @@ namespace aprilui
 		{
 			april::Color selectionColor = this->selectionColor;
 			selectionColor.a = (unsigned char)(selectionColor.a * disabledAlphaFactor);
-			harray<grect> selectionRects = this->_makeSelectedRects();
+			harray<grect> selectionRects = this->_selectionRects;
 			foreach (grect, it, selectionRects)
 			{
-				(*it) += drawRect.getPosition();
+				(*it) += drawRect.getPosition() - this->textOffset;
 				(*it).clip(drawRect);
-				april::rendersys->drawFilledRect((*it), selectionColor);
+				if ((*it).w > 0.0f && (*it).h > 0.0f)
+				{
+					april::rendersys->drawFilledRect((*it), selectionColor);
+				}
 			}
 		}
 		LabelBase::_drawLabel(drawRect, drawColor);
@@ -439,178 +637,40 @@ namespace aprilui
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
-			caretRect.y -= fh * 0.5f;
-			caretRect.w = 1;
-			caretRect.h = caretHeight;
-			if (caretRect.y < 0.0f)
+			grect renderRect = this->caretRect - this->center;
+			renderRect.clip(drawRect);
+			if (renderRect.h > 0.0f)
 			{
-				caretRect.h += caretRect.y;
-				caretRect.y = 0.0f;
-			}
-			if (caretRect.h > 0.0f)
-			{
-				april::rendersys->drawRect(caretRect - this->center, drawColor * this->textColor);
+				april::rendersys->drawRect(renderRect, drawColor * this->textColor);
 			}
 		}
 		this->text = text;
 	}
 
-	gvec2 EditBox::_makeCaretPosition(chstr text, chstr originalText)
+	void EditBox::_getBaseOffset(gvec2& offset, float& xhf)
 	{
-		gvec2 position;
+		offset.set(0.0f, 0.0f);
+		xhf = 0.0f; // x height factor
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
-		float descender = atres::renderer->getFont(this->font)->getDescender();
-		// full text
-		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
-		harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
-			originalText, tags, this->horzFormatting, this->vertFormatting);
-		gvec2 base;
-		float xhf = 0.0f; // x height factor
-		this->_getBaseOffset(base, xhf);
-		base.y -= descender * xhf;
-		// caret position
-		harray<atres::RenderLine> lines;
-		if (text != "")
+		float w2 = this->rect.w * 0.5f;
+		float h2 = this->rect.h * 0.5f;
+		if (this->horzFormatting == atres::CENTER || this->horzFormatting == atres::CENTER_WRAPPED)
 		{
-			tags = atres::renderer->prepareTags(this->font);
-			lines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
-				text, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
-			if (lines.size() > 0)
-			{
-				atres::RenderLine line = lines.last();
-				atres::RenderLine fullLine = fullLines[lines.size() - 1];
-				position.y = fullLine.rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT);
-				if (line.terminated)
-				{
-					position.y += fh;
-					if (fullLines.size() > lines.size())
-					{
-						position.x = fullLines[lines.size()].rect.x;
-					}
-					else
-					{
-						position.x = base.x;
-					}
-				}
-				else
-				{
-					position.x = fullLine.rect.x + line.rect.w;
-				}
-			}
+			offset.x = w2;
 		}
-		if (text == "" || lines.size() == 0)
+		else if (this->horzFormatting == atres::RIGHT || this->horzFormatting == atres::RIGHT_WRAPPED)
 		{
-			if (fullLines.size() > 0)
-			{
-				position.set(fullLines[0].rect.x, fullLines[0].rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
-			}
-			else
-			{
-				position = base;
-			}
+			offset.x = w2 * 2;
 		}
-		if (this->horzFormatting == atres::RIGHT || this->horzFormatting == atres::RIGHT_WRAPPED)
+		if (this->vertFormatting == atres::CENTER)
 		{
-			position.x -= 1;
+			xhf = 0.5f;
 		}
-		position += gvec2((float)this->renderOffsetX, (float)this->renderOffsetY) * fh;
-		position.y += fh * 0.5f;
-		return position;
-	}
-
-	harray<grect> EditBox::_makeSelectedRects()
-	{
-		harray<grect> result;
-		if (this->selectionCount == 0 || this->text == "")
+		else if (this->vertFormatting == atres::BOTTOM)
 		{
-			return result;
+			xhf = 1.0f;
 		}
-		grect rect;
-		float fh = atres::renderer->getFont(this->font)->getLineHeight();
-		float descender = atres::renderer->getFont(this->font)->getDescender();
-		// full text
-		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
-		harray<atres::RenderLine> fullLines = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
-			this->text, tags, this->horzFormatting, this->vertFormatting);
-		gvec2 base;
-		float xhf = 0.0f; // x height factor
-		this->_getBaseOffset(base, xhf);
-		// vars
-		hstr textStart = this->text.utf8_substr(0, hmin(this->caretIndex, this->caretIndex + this->selectionCount));
-		hstr textEnd = this->text.utf8_substr(0, hmax(this->caretIndex, this->caretIndex + this->selectionCount));
-		harray<atres::RenderLine> linesStart;
-		harray<atres::RenderLine> linesEnd;
-		gvec2 positionStart;
-		gvec2 positionEnd;
-		atres::RenderLine* fullLineStart = NULL;
-		atres::RenderLine* fullLineEnd = NULL;
-		int linesEndCount = 0;
-		if (textStart != "")
-		{
-			tags = atres::renderer->prepareTags(this->font);
-			linesStart = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
-				textStart, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
-			if (linesStart.size() > 0)
-			{
-				fullLineStart = &fullLines[linesStart.size() - 1];
-				positionStart.set(fullLineStart->rect.x + linesStart.last().rect.w, fullLineStart->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
-			}
-		}
-		if (textStart == "" || linesStart.size() == 0)
-		{
-			if (fullLines.size() > 0)
-			{
-				fullLineStart = &fullLines[0];
-				positionStart.set(fullLineStart->rect.x, fullLineStart->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
-			}
-			else
-			{
-				positionStart += base;
-			}
-		}
-		if (textEnd != this->text)
-		{
-			tags = atres::renderer->prepareTags(this->font);
-			linesEnd = atres::renderer->createRenderLines(grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT),
-				textEnd, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
-			fullLineEnd = &fullLines[linesEnd.size() - 1];
-			positionEnd.set(fullLineEnd->rect.x + linesEnd.last().rect.w, fullLineEnd->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
-			linesEndCount = linesEnd.size();
-		}
-		else if (fullLines.size() > 0)
-		{
-			fullLineEnd = &fullLines.last();
-			positionEnd.set(fullLineEnd->rect.right(), fullLineEnd->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
-			linesEndCount = fullLines.size();
-		}
-		else
-		{
-			positionEnd += base;
-		}
-		gvec2 renderOffset(this->renderOffsetX * fh, this->renderOffsetY * fh);
-		if (linesStart.size() == linesEndCount)
-		{
-			result += grect(positionStart + renderOffset, positionEnd.x - positionStart.x, fh);
-		}
-		else
-		{
-			if (fullLineStart != NULL)
-			{
-				result += grect(positionStart + renderOffset, fullLineStart->rect.right() - positionStart.x, fh);
-			}
-			if (linesEndCount - linesStart.size() > 1)
-			{
-				for_iter (i, linesStart.size(), linesEndCount)
-				{
-					result += grect(fullLines[i].rect.getPosition(), fullLines[i].rect.w, fh);
-				}
-			}
-			if (fullLineEnd != NULL)
-			{
-				result += grect(fullLineEnd->rect.x + renderOffset.x, positionEnd.y + renderOffset.y, positionEnd.x - fullLineStart->rect.x, fh);
-			}
-		}
-		return result;
+		offset.y = (h2 * 2 - fh) * xhf;
 	}
 
 	void EditBox::notifyEvent(chstr type, EventArgs* args)
@@ -636,18 +696,21 @@ namespace aprilui
 	{
 		if (Object::onMouseDown(keyCode))
 		{
-			this->selectionCount = 0;
+			this->setSelectionCount(0);
 			return true;
 		}
 		if (this->isCursorInside())
 		{
-			this->caretIndex = this->_makeCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
-			this->selectionCount = 0;
+			this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
+			this->setSelectionCount(0);
 			this->setFocused(true);
 			this->pushed = true;
+			this->_updateCaretRect();
+			this->_updateCaret();
+			this->_updateSelection();
 			return true;
 		}
-		this->selectionCount = 0;
+		this->setSelectionCount(0);
 		return false;
 	}
 
@@ -665,6 +728,20 @@ namespace aprilui
 			return true;
 		}
 		this->pushed = false;
+		return false;
+	}
+
+	bool EditBox::onMouseScroll(float x, float y)
+	{
+		if (Object::onMouseScroll(x, y))
+		{
+			return true;
+		}
+		if (this->multiLine && this->isCursorInside())
+		{
+			y > 0.0f ? this->_caretMoveDown() : this->_caretMoveUp();
+			return true;
+		}
 		return false;
 	}
 
@@ -686,10 +763,10 @@ namespace aprilui
 				this->_ctrlMode ? this->_caretMoveRightWord() : this->_caretMoveRight();
 				break;
 			case april::AK_UP:
-				this->multiLine ? this->_caretMoveUp() : this->setCaretIndex(0);
+				this->multiLine ? this->_caretMoveUp() : this->_caretMoveStart();
 				break;
 			case april::AK_DOWN:
-				this->multiLine ? this->_caretMoveDown() : this->setCaretIndex(this->text.utf8_size());
+				this->multiLine ? this->_caretMoveDown() : this->_caretMoveEnd();
 				break;
 #endif
 			case april::AK_BACK:
@@ -706,10 +783,10 @@ namespace aprilui
 				break;
 #ifndef _ANDROID // these keys aren't really available on Android
 			case april::AK_HOME:
-				this->setCaretIndex(0);
+				this->_caretMoveStart();
 				break;
 			case april::AK_END:
-				this->setCaretIndex(this->text.utf8_size());
+				this->_caretMoveEnd();
 				break;
 			case april::AK_CONTROL:
 				this->_ctrlMode = true;
@@ -815,52 +892,73 @@ namespace aprilui
 		else return Label::setProperty(name, value);
 		return true;
 	}
+
+	void EditBox::_updateSelectionCount(int previousCaretIndex)
+	{
+		this->setSelectionCount(this->_shiftMode && this->selectable ? this->selectionCount + previousCaretIndex - this->caretIndex : 0);
+	}
 	
+	void EditBox::_caretMoveStart()
+	{
+		int index = this->caretIndex;
+		this->setCaretIndex(0);
+		this->_updateSelectionCount(index);
+	}
+
+	void EditBox::_caretMoveEnd()
+	{
+		int index = this->caretIndex;
+		this->setCaretIndex(this->text.utf8_size());
+		this->_updateSelectionCount(index);
+	}
+
 	void EditBox::_caretMoveLeft()
 	{
-		this->_shiftMode && this->selectable ? ++this->selectionCount : this->selectionCount = 0;
+		int index = this->caretIndex;
 		this->setCaretIndex(this->caretIndex - 1);
+		this->_updateSelectionCount(index);
 	}
-	
+
 	void EditBox::_caretMoveRight()
 	{
-		this->_shiftMode && this->selectable ? --this->selectionCount : this->selectionCount = 0;
+		int index = this->caretIndex;
 		this->setCaretIndex(this->caretIndex + 1);
+		this->_updateSelectionCount(index);
 	}
-	
+
 	void EditBox::_caretMoveUp()
 	{
-		int previousCaretIndex = this->caretIndex;
+		int index = this->caretIndex;
 		if (this->caretIndex > 0)
 		{
-			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->caretIndex), this->text);
-			position.y -= atres::renderer->getFont(this->font)->getLineHeight();
-			this->setCaretIndexAt(position);
+			this->_updateCaretRect();
+			this->setCaretIndexAt(gvec2(this->caretRect.x, this->caretRect.y - atres::renderer->getFont(this->font)->getLineHeight() * 0.5f));
+			this->_updateCaretRect();
 		}
-		this->_shiftMode && this->selectable ? this->selectionCount += previousCaretIndex - this->caretIndex : this->selectionCount = 0;
+		this->_updateSelectionCount(index);
 	}
 	
 	void EditBox::_caretMoveDown()
 	{
-		int previousCaretIndex = this->caretIndex;
+		int index = this->caretIndex;
 		if (this->caretIndex < this->text.utf8_size())
 		{
-			gvec2 position = this->_makeCaretPosition(this->text.utf8_substr(0, this->caretIndex), this->text);
-			position.y += atres::renderer->getFont(this->font)->getLineHeight();
-			this->setCaretIndexAt(position);
+			this->_updateCaretRect();
+			this->setCaretIndexAt(gvec2(this->caretRect.x, this->caretRect.y + atres::renderer->getFont(this->font)->getLineHeight() * 1.5f));
+			this->_updateCaretRect();
 		}
-		this->_shiftMode && this->selectable ? this->selectionCount += previousCaretIndex - this->caretIndex : this->selectionCount = 0;
+		this->_updateSelectionCount(index);
 	}
 	
 	void EditBox::_caretMoveLeftWord()
 	{
-		int previousCaretIndex = this->caretIndex;
+		int newCaretIndex = this->caretIndex;
 		unsigned char c = 0;
 		bool first = true;
 		bool newLine = false;
-		while (this->caretIndex > 0)
+		while (newCaretIndex > 0)
 		{
-			c = this->text.first_unicode_char(caretIndex - 1);
+			c = this->text.first_unicode_char(newCaretIndex - 1);
 			if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
 			{
 				break;
@@ -870,39 +968,40 @@ namespace aprilui
 				newLine = true;
 				if (first)
 				{
-					--this->caretIndex;
+					--newCaretIndex;
 				}
 				break;
 			}
 			first = false;
-			--this->caretIndex;
+			--newCaretIndex;
 		}
 		if (!newLine)
 		{
-			while (this->caretIndex > 0)
+			while (newCaretIndex > 0)
 			{
-				c = this->text.first_unicode_char(caretIndex - 1);
+				c = this->text.first_unicode_char(newCaretIndex - 1);
 				if (c == UNICODE_CHAR_SPACE || c == UNICODE_CHAR_NEWLINE)
 				{
 					break;
 				}
-				--this->caretIndex;
+				--newCaretIndex;
 			}
 		}
-		this->_shiftMode && this->selectable ? this->selectionCount += previousCaretIndex - this->caretIndex : this->selectionCount = 0;
-		this->_blinkTimer = 0.0f;
+		int index = this->caretIndex;
+		this->setCaretIndex(newCaretIndex);
+		this->_updateSelectionCount(index);
 	}
 	
 	void EditBox::_caretMoveRightWord()
 	{
-		int previousCaretIndex = this->caretIndex;
+		int newCaretIndex = this->caretIndex;
 		int size = this->text.utf8_size();
 		unsigned char c = 0;
 		bool first = true;
 		bool newLine = false;
-		while (this->caretIndex < size)
+		while (newCaretIndex < size)
 		{
-			c = this->text.first_unicode_char(caretIndex);
+			c = this->text.first_unicode_char(newCaretIndex);
 			if (c == UNICODE_CHAR_SPACE)
 			{
 				break;
@@ -912,55 +1011,62 @@ namespace aprilui
 				newLine = true;
 				if (first)
 				{
-					++this->caretIndex;
+					++newCaretIndex;
 				}
 				break;
 			}
 			first = false;
-			++this->caretIndex;
+			++newCaretIndex;
 		}
 		if (!newLine)
 		{
-			while (this->caretIndex < size)
+			while (newCaretIndex < size)
 			{
-				c = this->text.first_unicode_char(caretIndex);
+				c = this->text.first_unicode_char(newCaretIndex);
 				if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
 				{
 					break;
 				}
-				++this->caretIndex;
+				++newCaretIndex;
 			}
 		}
-		this->_shiftMode && this->selectable ? this->selectionCount += previousCaretIndex - this->caretIndex : this->selectionCount = 0;
-		this->_blinkTimer = 0.0f;
+		int index = this->caretIndex;
+		this->setCaretIndex(newCaretIndex);
+		this->_updateSelectionCount(index);
 	}
 	
 	void EditBox::_deleteLeft(int count)
 	{
 		if (this->caretIndex > 0)
 		{
-			count = hmin(count, this->caretIndex);
+			int newCaretIndex = this->caretIndex;
+			count = hmin(count, newCaretIndex);
 			hstr left;
-			if (this->caretIndex > count)
+			if (newCaretIndex > count)
 			{
-				left = this->text.utf8_substr(0, this->caretIndex - count);
+				left = this->text.utf8_substr(0, newCaretIndex - count);
 			}
 			hstr right;
 			int size = this->text.utf8_size();
-			if (this->caretIndex < size)
+			if (newCaretIndex < size)
 			{
-				right = this->text.utf8_substr(this->caretIndex, size - this->caretIndex);
+				right = this->text.utf8_substr(newCaretIndex, size - newCaretIndex);
 			}
-			this->caretIndex -= count;
+			newCaretIndex -= count;
 			this->text = left + right;
 			this->_blinkTimer = 0.0f;
+			this->setCaretIndex(newCaretIndex);
 		}
+		this->setSelectionCount(0);
 	}
 	
 	void EditBox::_deleteRight(int count)
 	{
-		count = hmin(count, this->text.utf8_size() - this->caretIndex);
-		this->caretIndex += count;
+		int newCaretIndex = this->caretIndex;
+		count = hmin(count, this->text.utf8_size() - newCaretIndex);
+		newCaretIndex += count;
+		this->setCaretIndex(newCaretIndex);
+		this->setSelectionCount(0);
 		this->_deleteLeft(count);
 	}
 	
@@ -1012,7 +1118,7 @@ namespace aprilui
 			this->_deleteLeft(-this->selectionCount);
 			result = true;
 		}
-		this->selectionCount = 0;
+		this->setSelectionCount(0);
 		return result;
 	}
 
@@ -1034,9 +1140,8 @@ namespace aprilui
 		{
 			right = this->text.utf8_substr(this->caretIndex, size - this->caretIndex);
 		}
-		++this->caretIndex;
 		this->text = (left + hstr::from_unicode(charCode)) + right;
-		this->_blinkTimer = 0.0f;
+		this->setCaretIndex(this->caretIndex + 1);
 	}
 	
 

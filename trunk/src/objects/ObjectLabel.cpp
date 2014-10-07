@@ -19,7 +19,7 @@ namespace aprilui
 	Label::Label(chstr name, grect rect) : Object(name, rect), LabelBase()
 	{
 		this->text = "Label: " + name;
-		this->debugColor = april::Color(april::Color::Aqua, 64);
+		this->debugColor = april::Color(april::Color::Aqua, 32);
 	}
 
 	Label::~Label()
