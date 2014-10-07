@@ -46,7 +46,7 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, filter, Filter);
 		void setFilter(chstr value);
 		HL_DEFINE_GETSET(april::Color, selectionColor, SelectionColor);
-		HL_DEFINE_GET(gvec2, caretPosition, CaretPosition);
+		HL_DEFINE_GET(grect, caretRect, CaretRect);
 		void setText(chstr value);
 		void setFocused(bool value);
 		hstr getSelectedText();
@@ -63,6 +63,7 @@ namespace aprilui
 		
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
+		bool onMouseScroll(float x, float y);
 		bool onKeyDown(april::Key keyCode);
 		bool onKeyUp(april::Key keyCode);
 		bool onChar(unsigned int charCode);
@@ -71,6 +72,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE int getCursorIndex() { return getCaretIndex(); }
 		DEPRECATED_ATTRIBUTE void setCursorIndex(int value) { this->setCaretIndex(value); }
 		DEPRECATED_ATTRIBUTE void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
+		DEPRECATED_ATTRIBUTE gvec2 getCaretPosition() { return gvec2(this->caretRect.x, this->caretRect.y + this->caretRect.h * 0.5f); }
 		
 	protected:
 		hstr emptyText;
@@ -85,14 +87,21 @@ namespace aprilui
 		bool spaceHack; // TODO - remove
 		hstr filter;
 		april::Color selectionColor;
-		gvec2 caretPosition;
+		grect caretRect;
 		int renderOffsetX;
 		int renderOffsetY;
 
-		void _getBaseOffset(gvec2& offset, float& xhf);
+		void _updateCaretRect();
+		void _updateCaret();
+		void _updateSelection();
 		
 		void OnDraw();
 
+		void _getBaseOffset(gvec2& offset, float& xhf);
+
+		void _updateSelectionCount(int previousCaretIndex);
+		void _caretMoveStart();
+		void _caretMoveEnd();
 		void _caretMoveLeft();
 		void _caretMoveRight();
 		void _caretMoveUp();
@@ -105,9 +114,6 @@ namespace aprilui
 		void _deleteRightWord();
 		bool _deleteSelected();
 		void _insertChar(unsigned int charCode);
-		gvec2 _makeCaretPosition(chstr text, chstr originalText);
-		int _makeCaretIndexAt(gvec2 position);
-		harray<grect> _makeSelectedRects();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
@@ -115,7 +121,12 @@ namespace aprilui
 		bool _ctrlMode;
 		bool _shiftMode;
 		float _blinkTimer;
+		bool _caretPositionDirty;
+		bool _caretDirty;
+		bool _selectionDirty;
 		bool _sizeProblemReported;
+		gvec2 _caretCursorPosition;
+		harray<grect> _selectionRects;
 
 	};
 

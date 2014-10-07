@@ -31,7 +31,7 @@
 			<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0">
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
-			<Object type="EditBox" name="editBox" text="wow&#10;such Edit&#10;much Box&#10;amaze" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="1" multi_line="1" font="Arial" horz_formatting="left" vert_formatting="top" x="260" y="240" w="192" h="64"/>
+			<Object type="EditBox" name="editBox" text="wow&#10;such Edit&#10;much Box&#10;amaze" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="1" selection_color="009FFFBF" multi_line="1" font="Arial" horz_formatting="left" vert_formatting="top" x="260" y="240" w="192" h="164"/>
 			<Object type="ColoredQuad" color="007F00" x="32" y="320" w="192" h="160">
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
 				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
