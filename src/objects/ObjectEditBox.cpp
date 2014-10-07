@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.34
+/// @version 3.4
 /// 
 /// @section LICENSE
 /// 
@@ -223,8 +223,7 @@ namespace aprilui
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		gvec2 position = this->_caretCursorPosition;
 		// full text
-		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
-		harray<atres::RenderLine> lines = atres::renderer->createRenderLines(CHECK_RECT, this->text, tags, this->horzFormatting, this->vertFormatting);
+		harray<atres::RenderLine> lines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, this->text, this->horzFormatting, this->vertFormatting);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
@@ -321,9 +320,7 @@ namespace aprilui
 		float lh = fh + descender;
 		this->caretRect.set(0.0f, 0.0f, 1.0f, fh);
 		// full text
-		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
-		harray<atres::RenderLine> allLines = atres::renderer->createRenderLines(CHECK_RECT,
-			this->text, tags, this->horzFormatting, this->vertFormatting);
+		harray<atres::RenderLine> allLines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, this->text, this->horzFormatting, this->vertFormatting);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
@@ -332,9 +329,7 @@ namespace aprilui
 		harray<atres::RenderLine> lines;
 		if (leftText != "")
 		{
-			tags = atres::renderer->prepareTags(this->font);
-			lines = atres::renderer->createRenderLines(CHECK_RECT,
-				leftText, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
+			lines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, leftText, this->horzFormatting, this->vertFormatting);
 			if (lines.size() > 0)
 			{
 				atres::RenderLine line = lines.last();
@@ -492,9 +487,7 @@ namespace aprilui
 		grect rect;
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		// full text
-		harray<atres::FormatTag> tags = atres::renderer->prepareTags(this->font);
-		harray<atres::RenderLine> allLines = atres::renderer->createRenderLines(CHECK_RECT,
-			this->text, tags, this->horzFormatting, this->vertFormatting);
+		harray<atres::RenderLine> allLines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, this->text, this->horzFormatting, this->vertFormatting);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
@@ -511,9 +504,7 @@ namespace aprilui
 		int linesEndCount = 0;
 		if (textStart != "")
 		{
-			tags = atres::renderer->prepareTags(this->font);
-			linesStart = atres::renderer->createRenderLines(CHECK_RECT,
-				textStart, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
+			linesStart = atres::renderer->makeRenderLines(this->font, CHECK_RECT, textStart, this->horzFormatting, this->vertFormatting);
 			if (linesStart.size() > 0)
 			{
 				allLineStart = &allLines[linesStart.size() - 1];
@@ -536,9 +527,7 @@ namespace aprilui
 		}
 		if (textEnd != this->text)
 		{
-			tags = atres::renderer->prepareTags(this->font);
-			linesEnd = atres::renderer->createRenderLines(CHECK_RECT,
-				textEnd, tags, this->horzFormatting, this->vertFormatting, gvec2(), true);
+			linesEnd = atres::renderer->makeRenderLines(this->font, CHECK_RECT, textEnd, this->horzFormatting, this->vertFormatting);
 			allLineEnd = &allLines[linesEnd.size() - 1];
 			positionEnd.set(allLineEnd->rect.x + linesEnd.last().rect.w, allLineEnd->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
 			linesEndCount = linesEnd.size();
