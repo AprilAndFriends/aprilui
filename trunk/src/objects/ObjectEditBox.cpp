@@ -286,9 +286,14 @@ namespace aprilui
 			this->_blinkTimer += time * 2;
 			this->_blinkTimer = (this->_blinkTimer - (int)this->_blinkTimer);
 		}
+		else if (this->selectable)
+		{
+			this->selectionCount = this->_makeCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition())) - this->caretIndex;
+		}
 		else
 		{
-			this->selectionCount = (this->selectable ? this->_makeCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition())) - this->caretIndex : 0);
+			this->selectionCount = 0;
+			this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
 		}
 	}
 
