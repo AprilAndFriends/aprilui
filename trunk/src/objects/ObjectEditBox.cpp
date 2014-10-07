@@ -591,7 +591,7 @@ namespace aprilui
 		unsigned char alpha = this->backgroundColor.a;
 		if (this->pushed)
 		{
-			this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * 0.75f);
+			alpha = (unsigned char)(alpha * 0.75f);
 		}
 		atres::Font* font = atres::renderer->getFont(this->font);
 		float lh = font->getLineHeight() + font->getDescender();
@@ -604,8 +604,7 @@ namespace aprilui
 		Object::OnDraw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
-		this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * disabledAlphaFactor);
-		LabelBase::_drawLabelBackground(drawRect, drawColor, this->backgroundColor);
+		LabelBase::_drawLabelBackground(drawRect, drawColor, april::Color(this->backgroundColor, (unsigned char)(alpha * disabledAlphaFactor)));
 		if (this->selectionCount != 0)
 		{
 			april::Color selectionColor = this->selectionColor;
@@ -622,7 +621,6 @@ namespace aprilui
 			}
 		}
 		LabelBase::_drawLabel(drawRect, drawColor);
-		this->backgroundColor.a = alpha;
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
