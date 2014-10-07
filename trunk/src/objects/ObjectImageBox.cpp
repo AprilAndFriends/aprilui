@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@ namespace aprilui
 	ImageBox::ImageBox(chstr name, grect rect) : Object(name, rect)
 	{
 		this->image = NULL;
+		this->debugColor = april::Color::Clear;
 	}
 
 	ImageBox::~ImageBox()
@@ -99,17 +100,7 @@ namespace aprilui
 		}
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		if (!aprilui::isDebugEnabled())
-		{
-			this->image->draw(this->_getDrawRect(), color);
-		}
-		else
-		{
-			grect rect = this->_getDrawRect();
-			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Black, 32));
-			april::rendersys->drawRect(rect, april::Color(april::Color::White, 64));
-			this->image->draw(rect, color);
-		}
+		this->image->draw(this->_getDrawRect(), color);
 		Object::OnDraw();
 	}
 	

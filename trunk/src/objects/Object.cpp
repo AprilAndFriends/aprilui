@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.33
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -110,7 +110,7 @@ namespace aprilui
 		}
 		if (this->hitTest == HIT_TEST_DISABLED)
 		{
-			hlog::warn(aprilui::logTag, "\"hitTest\" value is \"HIT_TEST_DISABLED\", but accessing isClickThrough(), defaulting to false!");
+			hlog::warn(aprilui::logTag, "'hitTest' value is 'HIT_TEST_DISABLED', but accessing isClickThrough(), defaulting to false!");
 		}
 		return false;
 	}
@@ -145,6 +145,7 @@ namespace aprilui
 		this->clip = false;
 		this->useDisabledAlpha = true;
 		this->customPointInsideCallback = NULL;
+		this->debugColor = april::Color(april::Color::Black, 32);
 	}
 
 	Object::~Object()
@@ -523,32 +524,6 @@ namespace aprilui
 		return (this->dynamicAnimators.size() > 0);
 	}
 
-	inline void _clipRect(grect& rect, const grect& clipper)
-	{
-		float left = rect.x - clipper.x;
-		if (left < 0.0f)
-		{
-			rect.w += left;
-			rect.x = clipper.x;
-		}
-		float top = rect.y - clipper.y;
-		if (top < 0.0f)
-		{
-			rect.h += top;
-			rect.y = clipper.y;
-		}
-		float right = rect.right() - clipper.right();
-		if (right > 0.0f)
-		{
-			rect.w -= right;
-		}
-		float bottom = rect.bottom() - clipper.bottom();
-		if (bottom > 0.0f)
-		{
-			rect.h -= bottom;
-		}
-	}
-
 	void Object::draw()
 	{
 		if (!this->isVisible() || heqf(this->scaleFactor.x, 0.0f, aprilui::eTolerance) || heqf(this->scaleFactor.y, 0.0f, aprilui::eTolerance))
@@ -566,19 +541,19 @@ namespace aprilui
 			gvec2 ratio = viewport.getSize() / orthoProjection.getSize();
 			grect originalRect = this->parent->getBoundingRect();
 			grect rect(originalRect.getPosition() * ratio, originalRect.getSize() * ratio);
-			_clipRect(rect, viewport);
+			rect.clip(viewport);
 			if (rect.w <= 0.0f || rect.h <= 0.0f)
 			{
 				return;
 			}
 			grect newViewport = rect + viewport.getPosition();
-			_clipRect(newViewport, viewport);
+			newViewport.clip(viewport);
 			if (newViewport.w <= 0.0f || newViewport.h <= 0.0f)
 			{
 				return;
 			}
 			grect newRect(rect.getPosition() / ratio, rect.getSize() / ratio);
-			_clipRect(originalRect, newRect);
+			originalRect.clip(newRect);
 			april::rendersys->setOrthoProjection(grect(-originalRect.getPosition(), originalRect.getSize()));
 			april::rendersys->setViewport(newViewport);
 		}
@@ -648,6 +623,21 @@ namespace aprilui
 
 	void Object::OnDrawDebug()
 	{
+		grect rect = this->_getDrawRect();
+		if (this->debugColor.a > 0)
+		{
+			april::rendersys->drawFilledRect(rect, this->debugColor);
+		}
+		april::Color frameColor = april::Color::Green;
+		if (this->hitTest == HIT_TEST_DISABLED)
+		{
+			frameColor = april::Color::Yellow;
+		}
+		else if (this->hitTest == HIT_TEST_DISABLED_RECURSIVE)
+		{
+			frameColor = april::Color::Red;
+		}
+		april::rendersys->drawRect(rect, april::Color(frameColor, 64));
 		april::rendersys->drawRect(grect(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
 		april::rendersys->drawRect(grect(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
 	}
@@ -968,7 +958,7 @@ namespace aprilui
 		}
 		if (name == "click_through")
 		{
-			hlog::warn(aprilui::logTag, "\"click_through\" is deprecated. Use \"hit_test\" instead."); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'click_through' is deprecated. Use 'hit_test' instead."); // DEPRECATED
 			return (this->getHitTest() == HIT_TEST_DISABLED_RECURSIVE);
 		}
 		if (name == "inherit_alpha")		return this->isInheritAlpha();
@@ -1020,11 +1010,11 @@ namespace aprilui
 		{
 			if (value)
 			{
-				hlog::warn(aprilui::logTag, "\"click_through=1\" is deprecated. Use \"hit_test=disabled_recursive\" instead."); // DEPRECATED
+				hlog::warn(aprilui::logTag, "'click_through=\"1\"' is deprecated. Use 'hit_test=\"disabled_recursive\"' instead."); // DEPRECATED
 			}
 			else
 			{
-				hlog::warn(aprilui::logTag, "\"click_through=0\" is deprecated. Use \"hit_test=enabled\" instead."); // DEPRECATED
+				hlog::warn(aprilui::logTag, "'click_through=\"0\"' is deprecated. Use 'hit_test=\"enabled\"' instead."); // DEPRECATED
 			}
 			this->setHitTest(value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED);
 		}

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -40,8 +40,6 @@ namespace aprilui
 
 		static Object* createInstance(chstr name, grect rect);
 		
-		void OnDraw();
-
 	protected:
 		ScrollArea* scrollArea;
 		ScrollBarH* scrollBarH;

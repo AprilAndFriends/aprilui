@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -19,6 +19,7 @@ namespace aprilui
 	Label::Label(chstr name, grect rect) : Object(name, rect), LabelBase()
 	{
 		this->text = "Label: " + name;
+		this->debugColor = april::Color(april::Color::Aqua, 64);
 	}
 
 	Label::~Label()
@@ -48,7 +49,9 @@ namespace aprilui
 		color.a = (unsigned char)(color.a * disabledAlphaFactor);
 		april::Color backgroundColor = this->backgroundColor;
 		backgroundColor.a = (unsigned char)(backgroundColor.a * disabledAlphaFactor);
-		LabelBase::_drawLabel(this->_getDrawRect(), color, backgroundColor);
+		grect drawRect = this->_getDrawRect();
+		LabelBase::_drawLabelBackground(drawRect, color, backgroundColor);
+		LabelBase::_drawLabel(drawRect, color);
 	}
 
 	void Label::notifyEvent(chstr type, EventArgs* args)

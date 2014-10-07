@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -269,7 +269,7 @@ namespace aprilui
 		// DEPRECATED
 		if (node->pexists("dynamic_load"))
 		{
-			hlog::warn(aprilui::logTag, "\"dynamic_load\" is deprecated. Use \"managed\" and \"load_mode\" instead.");
+			hlog::warn(aprilui::logTag, "'dynamic_load' is deprecated. Use 'managed' and 'load_mode' instead.");
 			bool dynamicLoad = node->pbool("dynamic_load");
 			if (dynamicLoad)
 			{

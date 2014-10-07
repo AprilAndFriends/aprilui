@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -64,7 +64,7 @@ namespace aprilui
 		return LabelBase::_propertyDescriptions;
 	}
 
-	void LabelBase::_drawLabel(grect rect, april::Color color, april::Color backgroundColor)
+	void LabelBase::_drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor)
 	{
 		color *= this->textColor;
 		if (this->backgroundColor.a > 0)
@@ -72,11 +72,10 @@ namespace aprilui
 			april::rendersys->drawFilledRect(rect, this->backgroundColor);
 			april::rendersys->drawRect(rect, april::Color(this->textColor, this->backgroundColor.a));
 		}
-		else if (aprilui::isDebugEnabled())
-		{
-			april::rendersys->drawFilledRect(rect, april::Color(april::Color::Black, (unsigned char)(32 * color.a_f())));
-			april::rendersys->drawRect(rect, april::Color(april::Color::Green, (unsigned char)(64 * color.a_f())));
-		}
+	}
+
+	void LabelBase::_drawLabel(grect rect, april::Color color)
+	{
 		if (this->text.size() == 0)
 		{
 			return;

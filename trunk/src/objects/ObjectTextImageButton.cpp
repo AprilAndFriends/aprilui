@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.3
+/// @version 3.34
 /// 
 /// @section LICENSE
 /// 
@@ -110,7 +110,8 @@ namespace aprilui
 		}
 		grect rect = this->_getDrawRect();
 		this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * this->_getDisabledAlphaFactor());
-		LabelBase::_drawLabel(rect, drawColor, this->backgroundColor);
+		LabelBase::_drawLabelBackground(rect, drawColor, this->backgroundColor);
+		LabelBase::_drawLabel(rect, drawColor);
 		this->textColor = color;
 		this->backgroundColor.a = alpha;
 	}
