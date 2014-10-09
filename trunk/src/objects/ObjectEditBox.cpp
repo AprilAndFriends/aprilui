@@ -718,20 +718,6 @@ namespace aprilui
 		return false;
 	}
 
-	bool EditBox::onMouseScroll(float x, float y)
-	{
-		if (Object::onMouseScroll(x, y))
-		{
-			return true;
-		}
-		if (this->multiLine && this->isCursorInside())
-		{
-			y > 0.0f ? this->_caretMoveDown() : this->_caretMoveUp();
-			return true;
-		}
-		return false;
-	}
-
 	bool EditBox::onKeyDown(april::Key keyCode)
 	{
 		if (Object::onKeyDown(keyCode))
@@ -742,7 +728,7 @@ namespace aprilui
 		{
 			switch (keyCode)
 			{
-#ifndef _ANDROID // these keys aren't really available on Android
+#if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
 			case april::AK_LEFT:
 				this->_ctrlMode ? this->_caretMoveLeftWord() : this->_caretMoveLeft();
 				break;
@@ -768,7 +754,7 @@ namespace aprilui
 					this->_ctrlMode ? this->_deleteRightWord() : this->_deleteRight();
 				}
 				break;
-#ifndef _ANDROID // these keys aren't really available on Android
+#if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
 			case april::AK_HOME:
 				this->_caretMoveStart();
 				break;
@@ -780,6 +766,13 @@ namespace aprilui
 				break;
 			case april::AK_SHIFT:
 				this->_shiftMode = true;
+				break;
+			case april::AK_A:
+				if (this->_ctrlMode)
+				{
+					this->_caretMoveEnd();
+					this->setSelectionCount(-this->text.utf8_size());
+				}
 				break;
 #endif
 			case april::AK_RETURN:
@@ -1111,6 +1104,10 @@ namespace aprilui
 
 	void EditBox::_insertChar(unsigned int charCode)
 	{
+		if (this->_ctrlMode && (charCode == 'A' || charCode == 'a'))
+		{
+			return;
+		}
 		this->_deleteSelected();
 		int size = this->text.utf8_size();
 		if (this->maxLength > 0 && size >= this->maxLength)
