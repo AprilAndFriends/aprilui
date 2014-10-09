@@ -26,7 +26,7 @@ namespace aprilui
 		public:
 			ResizerY(chstr name);
 			~ResizerY();
-			hstr getClassName() const { return "ResizerY"; }
+			inline hstr getClassName() const { return "ResizerY"; }
 
 			static Animator* createInstance(chstr name);
 			

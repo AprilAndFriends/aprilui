@@ -39,7 +39,7 @@ namespace aprilui
 
 		Animator(chstr name);
 		~Animator();
-		hstr getClassName() const { return "Animator"; }
+		inline hstr getClassName() const { return "Animator"; }
 		
 		HL_DEFINE_GETSET(AnimationFunction, animationFunction, AnimationFunction);
 		HL_DEFINE_GETSET(float, value, Value);

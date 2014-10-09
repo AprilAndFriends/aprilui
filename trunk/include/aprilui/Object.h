@@ -51,7 +51,7 @@ namespace aprilui
 
 		Object(chstr name, grect rect);
 		~Object();
-		hstr getClassName() const { return "Object"; }
+		inline hstr getClassName() const { return "Object"; }
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);

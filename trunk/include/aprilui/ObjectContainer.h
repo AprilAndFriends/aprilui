@@ -36,7 +36,7 @@ namespace aprilui
 
 		Container(chstr name, grect rect);
 		~Container();
-		hstr getClassName() const { return "Container"; }
+		inline hstr getClassName() const { return "Container"; }
 
 		static Object* createInstance(chstr name, grect rect);
 		

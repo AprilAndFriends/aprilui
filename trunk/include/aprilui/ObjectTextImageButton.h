@@ -28,7 +28,7 @@ namespace aprilui
 	public:
 		TextImageButton(chstr name, grect rect);
 		~TextImageButton();
-		hstr getClassName() const { return "TextImageButton"; }
+		inline hstr getClassName() const { return "TextImageButton"; }
 
 		static Object* createInstance(chstr name, grect rect);
 

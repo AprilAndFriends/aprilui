@@ -36,7 +36,7 @@ namespace aprilui
 
 		ProgressBar(chstr name, grect rect);
 		~ProgressBar();
-		hstr getClassName() const { return "ProgressBar"; }
+		inline hstr getClassName() const { return "ProgressBar"; }
 
 		static Object* createInstance(chstr name, grect rect);
 		

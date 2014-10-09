@@ -28,7 +28,7 @@ namespace aprilui
 	public:
 		ImageBox(chstr name, grect rect);
 		~ImageBox();
-		hstr getClassName() const { return "ImageBox"; }
+		inline hstr getClassName() const { return "ImageBox"; }
 
 		static Object* createInstance(chstr name, grect rect);
 		

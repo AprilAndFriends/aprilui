@@ -32,7 +32,7 @@ namespace aprilui
 
 		ScrollArea(chstr name, grect rect);
 		~ScrollArea();
-		hstr getClassName() const { return "ScrollArea"; }
+		inline hstr getClassName() const { return "ScrollArea"; }
 
 		static Object* createInstance(chstr name, grect rect);
 
