@@ -68,10 +68,10 @@ namespace aprilui
 		bool onChar(unsigned int charCode);
 		void mouseCancel();
 
-		DEPRECATED_ATTRIBUTE int getCursorIndex() { return getCaretIndex(); }
-		DEPRECATED_ATTRIBUTE void setCursorIndex(int value) { this->setCaretIndex(value); }
-		DEPRECATED_ATTRIBUTE void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
-		DEPRECATED_ATTRIBUTE gvec2 getCaretPosition() { return gvec2(this->caretRect.x, this->caretRect.y + this->caretRect.h * 0.5f); }
+		DEPRECATED_ATTRIBUTE inline int getCursorIndex() { return getCaretIndex(); }
+		DEPRECATED_ATTRIBUTE inline void setCursorIndex(int value) { this->setCaretIndex(value); }
+		DEPRECATED_ATTRIBUTE inline void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
+		DEPRECATED_ATTRIBUTE inline gvec2 getCaretPosition() { return gvec2(this->caretRect.x, this->caretRect.y + this->caretRect.h * 0.5f); }
 		
 	protected:
 		hstr emptyText;
