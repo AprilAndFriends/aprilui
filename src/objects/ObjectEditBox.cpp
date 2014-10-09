@@ -23,6 +23,11 @@
 #define CHECK_RECT_HEIGHT 100000.0f
 #define CHECK_RECT (grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT))
 
+#define MAKE_RENDER_LINES(text) \
+	(this->textFormatting ? \
+		atres::renderer->makeRenderLines(this->font, CHECK_RECT, text, this->horzFormatting, this->vertFormatting) : \
+		atres::renderer->makeRenderLinesUnformatted(this->font, CHECK_RECT, text, this->horzFormatting, this->vertFormatting))
+
 namespace aprilui
 {
 	harray<PropertyDescription> EditBox::_propertyDescriptions;
@@ -223,7 +228,7 @@ namespace aprilui
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		gvec2 position = this->_caretCursorPosition;
 		// full text
-		harray<atres::RenderLine> lines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, this->text, this->horzFormatting, this->vertFormatting);
+		harray<atres::RenderLine> lines = MAKE_RENDER_LINES(this->text);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
@@ -320,7 +325,7 @@ namespace aprilui
 		float lh = fh + descender;
 		this->caretRect.set(0.0f, 0.0f, 1.0f, fh);
 		// full text
-		harray<atres::RenderLine> allLines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, this->text, this->horzFormatting, this->vertFormatting);
+		harray<atres::RenderLine> allLines = MAKE_RENDER_LINES(this->text);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
@@ -329,7 +334,7 @@ namespace aprilui
 		harray<atres::RenderLine> lines;
 		if (leftText != "")
 		{
-			lines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, leftText, this->horzFormatting, this->vertFormatting);
+			lines = MAKE_RENDER_LINES(leftText);
 			if (lines.size() > 0)
 			{
 				atres::RenderLine line = lines.last();
@@ -487,10 +492,11 @@ namespace aprilui
 		grect rect;
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		// full text
-		harray<atres::RenderLine> allLines = atres::renderer->makeRenderLines(this->font, CHECK_RECT, this->text, this->horzFormatting, this->vertFormatting);
+		harray<atres::RenderLine> allLines = MAKE_RENDER_LINES(this->text);
 		gvec2 base;
-		float xhf = 0.0f; // x height factor
-		this->_getBaseOffset(base, xhf);
+		float hf = 0.0f; // x height factor
+		this->_getBaseOffset(base, hf);
+		float yOffset = hf * (this->rect.h - CHECK_RECT_HEIGHT);
 		// vars
 		hstr textStart = this->text.utf8_substr(0, hmin(this->caretIndex, this->caretIndex + this->selectionCount));
 		hstr textEnd = this->text.utf8_substr(0, hmax(this->caretIndex, this->caretIndex + this->selectionCount));
@@ -504,11 +510,11 @@ namespace aprilui
 		int linesEndCount = 0;
 		if (textStart != "")
 		{
-			linesStart = atres::renderer->makeRenderLines(this->font, CHECK_RECT, textStart, this->horzFormatting, this->vertFormatting);
+			linesStart = MAKE_RENDER_LINES(textStart);
 			if (linesStart.size() > 0)
 			{
 				allLineStart = &allLines[linesStart.size() - 1];
-				positionStart.set(allLineStart->rect.x + linesStart.last().rect.w, allLineStart->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+				positionStart.set(allLineStart->rect.x + linesStart.last().rect.w, allLineStart->rect.y + yOffset);
 				linesStartCount = linesStart.size();
 			}
 		}
@@ -517,7 +523,7 @@ namespace aprilui
 			if (allLines.size() > 0)
 			{
 				allLineStart = &allLines[0];
-				positionStart.set(allLineStart->rect.x, allLineStart->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+				positionStart.set(allLineStart->rect.x, allLineStart->rect.y + yOffset);
 				linesStartCount = 1;
 			}
 			else
@@ -527,15 +533,15 @@ namespace aprilui
 		}
 		if (textEnd != this->text)
 		{
-			linesEnd = atres::renderer->makeRenderLines(this->font, CHECK_RECT, textEnd, this->horzFormatting, this->vertFormatting);
+			linesEnd = MAKE_RENDER_LINES(textEnd);
 			allLineEnd = &allLines[linesEnd.size() - 1];
-			positionEnd.set(allLineEnd->rect.x + linesEnd.last().rect.w, allLineEnd->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+			positionEnd.set(allLineEnd->rect.x + linesEnd.last().rect.w, allLineEnd->rect.y + yOffset);
 			linesEndCount = linesEnd.size();
 		}
 		else if (allLines.size() > 0)
 		{
 			allLineEnd = &allLines.last();
-			positionEnd.set(allLineEnd->rect.right(), allLineEnd->rect.y + xhf * (this->rect.h - CHECK_RECT_HEIGHT));
+			positionEnd.set(allLineEnd->rect.right(), allLineEnd->rect.y + yOffset);
 			linesEndCount = allLines.size();
 		}
 		else
@@ -557,12 +563,12 @@ namespace aprilui
 			{
 				for_iter (i, linesStartCount, linesEndCount - 1)
 				{
-					this->_selectionRects += grect(allLines[i].rect.getPosition() + renderOffset, allLines[i].rect.w, fh);
+					this->_selectionRects += grect(allLines[i].rect.x + renderOffset.x, allLines[i].rect.y + renderOffset.y + yOffset, allLines[i].rect.w, fh);
 				}
 			}
 			if (allLineEnd != NULL)
 			{
-				this->_selectionRects += grect(allLineEnd->rect.x + renderOffset.x, positionEnd.y + renderOffset.y, positionEnd.x - allLineStart->rect.x, fh);
+				this->_selectionRects += grect(allLineEnd->rect.x + renderOffset.x, positionEnd.y + renderOffset.y, positionEnd.x - allLineEnd->rect.x, fh);
 			}
 		}
 	}
@@ -634,10 +640,10 @@ namespace aprilui
 		this->text = text;
 	}
 
-	void EditBox::_getBaseOffset(gvec2& offset, float& xhf)
+	void EditBox::_getBaseOffset(gvec2& offset, float& hf)
 	{
 		offset.set(0.0f, 0.0f);
-		xhf = 0.0f; // x height factor
+		hf = 0.0f; // x height factor
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		float w2 = this->rect.w * 0.5f;
 		float h2 = this->rect.h * 0.5f;
@@ -651,13 +657,13 @@ namespace aprilui
 		}
 		if (this->vertFormatting == atres::CENTER)
 		{
-			xhf = 0.5f;
+			hf = 0.5f;
 		}
 		else if (this->vertFormatting == atres::BOTTOM)
 		{
-			xhf = 1.0f;
+			hf = 1.0f;
 		}
-		offset.y = (h2 * 2 - fh) * xhf;
+		offset.y = (h2 * 2 - fh) * hf;
 	}
 
 	void EditBox::notifyEvent(chstr type, EventArgs* args)
