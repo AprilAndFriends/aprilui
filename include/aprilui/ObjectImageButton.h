@@ -28,7 +28,7 @@ namespace aprilui
 	public:
 		ImageButton(chstr name, grect rect);
 		~ImageButton();
-		hstr getClassName() const { return "ImageButton"; }
+		inline hstr getClassName() const { return "ImageButton"; }
 
 		static Object* createInstance(chstr name, grect rect);
 		

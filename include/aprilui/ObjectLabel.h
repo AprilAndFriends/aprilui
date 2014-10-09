@@ -28,7 +28,7 @@ namespace aprilui
 	public:
 		Label(chstr name, grect rect);
 		~Label();
-		hstr getClassName() const { return "Label"; }
+		inline hstr getClassName() const { return "Label"; }
 
 		static Object* createInstance(chstr name, grect rect);
 		

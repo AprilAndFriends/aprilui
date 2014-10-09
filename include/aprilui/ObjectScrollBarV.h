@@ -26,7 +26,7 @@ namespace aprilui
 	public:
 		ScrollBarV(chstr name, grect rect);
 		~ScrollBarV();
-		hstr getClassName() const { return "ScrollBarV"; }
+		inline hstr getClassName() const { return "ScrollBarV"; }
 
 		static Object* createInstance(chstr name, grect rect);
 

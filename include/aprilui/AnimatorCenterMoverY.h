@@ -26,7 +26,7 @@ namespace aprilui
 		public:
 			CenterMoverY(chstr name);
 			~CenterMoverY();
-			hstr getClassName() const { return "CenterMoverY"; }
+			inline hstr getClassName() const { return "CenterMoverY"; }
 
 			static Animator* createInstance(chstr name);
 			

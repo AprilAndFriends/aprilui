@@ -26,7 +26,7 @@ namespace aprilui
 	public:
 		Slider(chstr name, grect rect);
 		~Slider();
-		hstr getClassName() const { return "Slider"; }
+		inline hstr getClassName() const { return "Slider"; }
 
 		static Object* createInstance(chstr name, grect rect);
 		

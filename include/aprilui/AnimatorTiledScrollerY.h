@@ -28,7 +28,7 @@ namespace aprilui
 		public:
 			TiledScrollerY(chstr name);
 			~TiledScrollerY();
-			hstr getClassName() const { return "TiledScrollerY"; }
+			inline hstr getClassName() const { return "TiledScrollerY"; }
 
 			static Animator* createInstance(chstr name);
 			

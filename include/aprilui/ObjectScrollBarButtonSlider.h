@@ -27,7 +27,7 @@ namespace aprilui
 	public:
 		ScrollBarButtonSlider(chstr name, grect rect);
 		~ScrollBarButtonSlider();
-		hstr getClassName() const { return "ScrollBarButtonSlider"; }
+		inline hstr getClassName() const { return "ScrollBarButtonSlider"; }
 
 		static Object* createInstance(chstr name, grect rect);
 

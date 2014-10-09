@@ -26,7 +26,7 @@ namespace aprilui
 		public:
 			Rotator(chstr name);
 			~Rotator();
-			hstr getClassName() const { return "Rotator"; }
+			inline hstr getClassName() const { return "Rotator"; }
 
 			static Animator* createInstance(chstr name);
 			

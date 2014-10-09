@@ -27,7 +27,7 @@ namespace aprilui
 	public:
 		ScrollBarButtonBackground(chstr name, grect rect);
 		~ScrollBarButtonBackground();
-		hstr getClassName() const { return "ScrollBarButtonBackground"; }
+		inline hstr getClassName() const { return "ScrollBarButtonBackground"; }
 
 		static Object* createInstance(chstr name, grect rect);
 

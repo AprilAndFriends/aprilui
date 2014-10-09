@@ -26,7 +26,7 @@ namespace aprilui
 		public:
 			ScalerX(chstr name);
 			~ScalerX();
-			hstr getClassName() const { return "ScalerX"; }
+			inline hstr getClassName() const { return "ScalerX"; }
 
 			static Animator* createInstance(chstr name);
 			

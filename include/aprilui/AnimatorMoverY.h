@@ -26,7 +26,7 @@ namespace aprilui
 		public:
 			MoverY(chstr name);
 			~MoverY();
-			hstr getClassName() const { return "MoverY"; }
+			inline hstr getClassName() const { return "MoverY"; }
 
 			static Animator* createInstance(chstr name);
 			

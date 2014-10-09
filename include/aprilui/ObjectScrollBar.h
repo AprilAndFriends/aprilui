@@ -40,7 +40,7 @@ namespace aprilui
 
 		ScrollBar(chstr name, grect rect);
 		~ScrollBar();
-		hstr getClassName() const { return "ScrollBar"; }
+		inline hstr getClassName() const { return "ScrollBar"; }
 
 
 		HL_DEFINE_GETSET(float, gridSize, GridSize);

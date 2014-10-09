@@ -29,7 +29,7 @@ namespace aprilui
 	public:
 		ButtonBase();
 		virtual ~ButtonBase();
-		hstr getClassName() const { return "ButtonBase"; }
+		inline hstr getClassName() const { return "ButtonBase"; }
 
 		HL_DEFINE_IS(hovered, Hovered);
 		HL_DEFINE_IS(pushed, Pushed);

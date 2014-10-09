@@ -27,7 +27,7 @@ namespace aprilui
 	public:
 		ColoredQuad(chstr name, grect rect);
 		~ColoredQuad();
-		hstr getClassName() const { return "ColoredQuad"; }
+		inline hstr getClassName() const { return "ColoredQuad"; }
 
 		static Object* createInstance(chstr name, grect rect);
 		
