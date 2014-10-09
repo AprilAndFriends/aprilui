@@ -631,7 +631,11 @@ namespace aprilui
 		{
 			frameColor = april::Color::Red;
 		}
-		april::rendersys->drawRect(rect, april::Color(frameColor, 64));
+		else if (!this->_isDerivedHitTestEnabled())
+		{
+			frameColor = april::Color::Cyan;
+		}
+		april::rendersys->drawRect(rect, april::Color(frameColor, 96));
 		april::rendersys->drawRect(grect(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
 		april::rendersys->drawRect(grect(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
 	}
