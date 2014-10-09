@@ -540,19 +540,13 @@ namespace aprilui
 			viewport = april::rendersys->getViewport();
 			gvec2 ratio = viewport.getSize() / orthoProjection.getSize();
 			grect originalRect = this->parent->getBoundingRect();
-			grect rect(originalRect.getPosition() * ratio, originalRect.getSize() * ratio);
-			rect.clip(viewport);
-			if (rect.w <= 0.0f || rect.h <= 0.0f)
-			{
-				return;
-			}
-			grect newViewport = rect + viewport.getPosition();
+			grect newViewport(originalRect.getPosition() * ratio, originalRect.getSize() * ratio);
 			newViewport.clip(viewport);
 			if (newViewport.w <= 0.0f || newViewport.h <= 0.0f)
 			{
 				return;
 			}
-			grect newRect(rect.getPosition() / ratio, rect.getSize() / ratio);
+			grect newRect(newViewport.getPosition() / ratio, newViewport.getSize() / ratio);
 			originalRect.clip(newRect);
 			april::rendersys->setOrthoProjection(grect(-originalRect.getPosition(), originalRect.getSize()));
 			april::rendersys->setViewport(newViewport);
