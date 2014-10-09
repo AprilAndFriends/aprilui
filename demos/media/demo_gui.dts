@@ -45,7 +45,7 @@
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="1.0" offset="0.0" speed="0.5"/>
 				<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.1" offset="1.2" timer="0.25"/>
 			</Object>
-			<Object type="Container" name="multi_rotation" x="432" y="272" w="64" h="64" zorder="100" angle="10" hit_test="disabled">
+			<Object type="Container" name="recursive_rotation_example" x="432" y="272" w="64" h="64" zorder="100" angle="10" hit_test="disabled">
 				<Object type="TextImageButton" name="textImageButton" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="50" y="20" w="128" h="64" angle="10" center_x="-100" center_y="-100">
 					<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="1" offset="191" timer="1.333333"/>
 					<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="1.2" offset="191" timer="0.6666667"/>
