@@ -96,7 +96,7 @@ namespace aprilui
 		
 		void OnDraw();
 
-		void _getBaseOffset(gvec2& offset, float& xhf);
+		void _getBaseOffset(gvec2& offset, float& hf);
 
 		void _updateSelectionCount(int previousCaretIndex);
 		void _caretMoveStart();
