@@ -80,6 +80,7 @@ namespace aprilui
 		{
 			return;
 		}
+		color *= this->textColor;
 		hstr text = this->text;
 		if (!this->textFormatting)
 		{
