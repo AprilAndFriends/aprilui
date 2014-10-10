@@ -768,6 +768,10 @@ namespace aprilui
 				this->_caretMoveEnd();
 				break;
 			case april::AK_CONTROL:
+#ifdef _MAC
+			case april::AK_LCOMMAND:
+			case april::AK_RCOMMAND:
+#endif
 				this->_ctrlMode = true;
 				break;
 			case april::AK_SHIFT:
@@ -805,6 +809,11 @@ namespace aprilui
 		{
 		case april::AK_CONTROL:
 		case april::AK_MENU:
+#ifdef _MAC
+			case april::AK_LCOMMAND:
+			case april::AK_RCOMMAND:
+#endif
+
 			this->_ctrlMode = false;
 			break;
 		case april::AK_SHIFT:
