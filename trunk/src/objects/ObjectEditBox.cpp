@@ -52,9 +52,9 @@ namespace aprilui
 		this->_ctrlMode = false;
 		this->_shiftMode = false;
 		this->_blinkTimer = 0.0f;
-		this->_caretPositionDirty = false;
-		this->_caretDirty = false;
-		this->_selectionDirty = false;
+		this->_caretPositionDirty = true; // calculates initial value
+		this->_caretDirty = true; // calculates initial value
+		this->_selectionDirty = true; // calculates initial value
 		this->_sizeProblemReported = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
