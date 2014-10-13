@@ -39,14 +39,6 @@ namespace aprilui
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
 
-		virtual bool onMouseDown(april::Key keyCode);
-		virtual bool onMouseUp(april::Key keyCode);
-		virtual bool onMouseCancel(april::Key keyCode);
-		virtual bool onMouseMove();
-		virtual bool onButtonDown(april::Button buttonCode);
-		virtual bool onButtonUp(april::Button buttonCode);
-		virtual void mouseCancel();
-
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
@@ -67,6 +59,13 @@ namespace aprilui
 		virtual void update(float timeDelta);
 		virtual bool _checkHover();
 		void _updateHover();
+
+		virtual bool _mouseDown(april::Key keyCode);
+		virtual bool _mouseUp(april::Key keyCode);
+		virtual void _mouseCancel(april::Key keyCode);
+		virtual bool _mouseMove();
+		virtual bool _buttonDown(april::Button buttonCode);
+		virtual bool _buttonUp(april::Button buttonCode);
 
 	};
 	

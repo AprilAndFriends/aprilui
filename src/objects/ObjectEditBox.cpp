@@ -573,7 +573,7 @@ namespace aprilui
 		}
 	}
 
-	void EditBox::OnDraw()
+	void EditBox::_draw()
 	{
 		//////////////
 		// TODO - remove this hack, fix it in ATRES
@@ -606,8 +606,8 @@ namespace aprilui
 			hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.c_str(), (int)this->rect.h, (int)lh, this->font.c_str());
 			this->_sizeProblemReported = true;
 		}
-		// not using Label::OnDraw() directly
-		Object::OnDraw();
+		// not using Label::_draw() directly
+		Object::_draw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
 		LabelBase::_drawLabelBackground(drawRect, drawColor, april::Color(this->backgroundColor, (unsigned char)(alpha * disabledAlphaFactor)));
@@ -685,13 +685,8 @@ namespace aprilui
 		Label::notifyEvent(type, args);
 	}
 	
-	bool EditBox::onMouseDown(april::Key keyCode)
+	bool EditBox::_mouseDown(april::Key keyCode)
 	{
-		if (Object::onMouseDown(keyCode))
-		{
-			this->setSelectionCount(0);
-			return true;
-		}
 		if (this->isCursorInside())
 		{
 			this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
@@ -704,15 +699,11 @@ namespace aprilui
 			return true;
 		}
 		this->setSelectionCount(0);
-		return false;
+		return Label::_mouseDown(keyCode);
 	}
 
-	bool EditBox::onMouseUp(april::Key keyCode)
+	bool EditBox::_mouseUp(april::Key keyCode)
 	{
-		if (Object::onMouseUp(keyCode))
-		{
-			return true;
-		}
 		if (this->pushed && this->isCursorInside())
 		{
 			this->pushed = false;
@@ -721,15 +712,17 @@ namespace aprilui
 			return true;
 		}
 		this->pushed = false;
-		return false;
+		return Label::_mouseUp(keyCode);
 	}
 
-	bool EditBox::onKeyDown(april::Key keyCode)
+	void EditBox::_mouseCancel(april::Key keyCode)
 	{
-		if (Object::onKeyDown(keyCode))
-		{
-			return true;
-		}
+		this->pushed = false;
+		Label::_mouseCancel(keyCode);
+	}
+
+	bool EditBox::_keyDown(april::Key keyCode)
+	{
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
 			switch (keyCode)
@@ -796,24 +789,19 @@ namespace aprilui
 				break;
 			}
 		}
-		return false;
+		return Label::_keyDown(keyCode);
 	}
 	
-	bool EditBox::onKeyUp(april::Key keyCode)
+	bool EditBox::_keyUp(april::Key keyCode)
 	{
-		if (Object::onKeyUp(keyCode))
-		{
-			return true;
-		}
 		switch (keyCode)
 		{
 		case april::AK_CONTROL:
 		case april::AK_MENU:
 #ifdef _MAC
-			case april::AK_LCOMMAND:
-			case april::AK_RCOMMAND:
+		case april::AK_LCOMMAND:
+		case april::AK_RCOMMAND:
 #endif
-
 			this->_ctrlMode = false;
 			break;
 		case april::AK_SHIFT:
@@ -822,15 +810,11 @@ namespace aprilui
 		default:
 			break;
 		}
-		return false;
+		return Label::_keyUp(keyCode);
 	}
 
-	bool EditBox::onChar(unsigned int charCode)
+	bool EditBox::_char(unsigned int charCode)
 	{
-		if (Object::onChar(charCode))
-		{
-			return true;
-		}
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
 			if (atres::renderer->getFont(this->font)->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
@@ -838,13 +822,7 @@ namespace aprilui
 				this->_insertChar(charCode);
 			}
 		}
-		return false;
-	}
-
-	void EditBox::mouseCancel()
-	{
-		this->pushed = false;
-		Label::mouseCancel();
+		return Label::_char(charCode);
 	}
 
 	hstr EditBox::getProperty(chstr name)

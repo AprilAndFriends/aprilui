@@ -41,9 +41,9 @@ namespace aprilui
 		return (Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions());
 	}
 
-	void Label::OnDraw()
+	void Label::_draw()
 	{
-		Object::OnDraw();
+		Object::_draw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * disabledAlphaFactor);

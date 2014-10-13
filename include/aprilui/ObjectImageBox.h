@@ -48,11 +48,12 @@ namespace aprilui
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
 	protected:
 		Image* image;
 		hstr imageName;
 		
-		void OnDraw();
+		void _draw();
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

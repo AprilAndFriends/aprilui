@@ -92,7 +92,7 @@ namespace aprilui
 		return images;
 	}
 	
-	void ImageBox::OnDraw()
+	void ImageBox::_draw()
 	{
 		if (this->image == NULL)
 		{
@@ -101,7 +101,7 @@ namespace aprilui
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
 		this->image->draw(this->_getDrawRect(), color);
-		Object::OnDraw();
+		Object::_draw();
 	}
 	
 	void ImageBox::resizeToFitImage()

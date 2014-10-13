@@ -18,7 +18,7 @@ namespace aprilui
 	ColoredQuad::ColoredQuad(chstr name, grect rect) : Object(name, rect)
 	{
 	}
-	
+
 	ColoredQuad::~ColoredQuad()
 	{
 	}
@@ -28,8 +28,9 @@ namespace aprilui
 		return new ColoredQuad(name, rect);
 	}
 
-	void ColoredQuad::OnDraw()
+	void ColoredQuad::_draw()
 	{
 		april::rendersys->drawFilledRect(this->_getDrawRect(), this->_getDrawColor());
-	}	
+	}
+	
 }

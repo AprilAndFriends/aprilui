@@ -65,7 +65,7 @@ namespace aprilui
 		return (ImageBox::getPropertyDescriptions() + ImageButton::_propertyDescriptions);
 	}
 
-	void ImageButton::OnDraw()
+	void ImageButton::_draw()
 	{
 		grect rect = this->_getDrawRect();
 		bool enabled = this->isDerivedEnabled();
@@ -81,7 +81,7 @@ namespace aprilui
 			this->image->draw(rect, april::Color(this->_getDrawColor() * 0.75f, this->getDerivedAlpha()));
 			return;
 		}
-		ImageBox::OnDraw();
+		ImageBox::_draw();
 		// the same thing for a hover image fallback solution
 		if (enabled && this->hovered && !this->pushed && this->hoverImage == NULL && aprilui::isHoverEffectEnabled())
 		{
@@ -274,81 +274,69 @@ namespace aprilui
 		return true;
 	}
 	
-	bool ImageButton::onMouseDown(april::Key keyCode)
+	bool ImageButton::_mouseDown(april::Key keyCode)
 	{
-		if (Object::onMouseDown(keyCode)) // not a mistake, ImageBox does handle a MouseDown even and this behavior has to be overriden (will be refactored)
-		{
-			return true;
-		}
-		bool result = ButtonBase::onMouseDown(keyCode);
+		bool result = ButtonBase::_mouseDown(keyCode);
 		if (result)
 		{
 			this->triggerEvent(Event::MouseDown, keyCode);
 		}
-		return result;
+		return (result || Object::_mouseDown(keyCode));
 	}
 
-	bool ImageButton::onMouseUp(april::Key keyCode)
+	bool ImageButton::_mouseUp(april::Key keyCode)
 	{
-		if (Object::onMouseUp(keyCode)) // not a mistake, ImageBox does handle a MouseUp event and this behavior has to be overriden (will be refactored)
-		{
-			return true;
-		}
-		bool click = ButtonBase::onMouseUp(keyCode);
+		bool result = ButtonBase::_mouseUp(keyCode);
 		bool up = false;
 		if (this->hovered)
 		{
 			up = this->triggerEvent(Event::MouseUp, keyCode);
 		}
-		if (click)
+		if (result)
 		{
 			this->triggerEvent(Event::Click, keyCode);
 		}
-		return (click || up);
+		return (result || up || Object::_mouseUp(keyCode));
 	}
 	
-	bool ImageButton::onMouseMove()
+	bool ImageButton::_mouseMove()
 	{
-		return (ImageBox::onMouseMove() || ButtonBase::onMouseMove());
+		return (ButtonBase::_mouseMove() || ImageBox::_mouseMove());
 	}
 
-	bool ImageButton::onButtonDown(april::Button buttonCode)
+	bool ImageButton::_buttonDown(april::Button buttonCode)
 	{
-		if (Object::onButtonDown(buttonCode)) // not a mistake, ImageBox does handle a MouseDown event and this behavior has to be overriden (will be refactored)
-		{
-			return true;
-		}
-		bool result = ButtonBase::onButtonDown(buttonCode);
+		bool result = ButtonBase::_buttonDown(buttonCode);
 		if (result)
 		{
 			this->triggerEvent(Event::ButtonDown, buttonCode);
 		}
-		return result;
+		return (result || Object::_buttonDown(buttonCode));
 	}
 
-	bool ImageButton::onButtonUp(april::Button buttonCode)
+	bool ImageButton::_buttonUp(april::Button buttonCode)
 	{
 		if (Object::onButtonUp(buttonCode)) // not a mistake, ImageBox does handle a MouseUp even and this behavior has to be overriden (will be refactored)
 		{
 			return true;
 		}
-		bool click = ButtonBase::onButtonUp(buttonCode);
+		bool result = ButtonBase::_buttonUp(buttonCode);
 		bool up = false;
 		if (this->hovered)
 		{
 			up = this->triggerEvent(Event::ButtonUp, buttonCode);
 		}
-		if (click)
+		if (result)
 		{
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
-		return (click || up);
+		return (result || up || Object::_buttonUp(buttonCode));
 	}
 	
-	void ImageButton::mouseCancel()
+	void ImageButton::_mouseCancel(april::Key keyCode)
 	{
-		ImageBox::mouseCancel();
-		ButtonBase::mouseCancel();
+		ButtonBase::_mouseCancel(keyCode);
+		ImageBox::_mouseCancel(keyCode);
 	}
 	
 }

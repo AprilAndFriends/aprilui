@@ -145,7 +145,8 @@ namespace aprilui
 		virtual bool isWaitingAnimation();
 		bool hasDynamicAnimation();
 		
-		// if a childs event returns true, event is not propagated to parents
+		// if this returns true, the event is processed and is not propagated to parents or other siblings, etc.
+		// (these should usually not be overriden)
 		virtual bool onMouseDown(april::Key keyCode);
 		virtual bool onMouseUp(april::Key keyCode);
 		virtual bool onMouseCancel(april::Key keyCode);
@@ -157,7 +158,6 @@ namespace aprilui
 		virtual bool onTouch(const harray<gvec2>& touches);
 		virtual bool onButtonDown(april::Button buttonCode);
 		virtual bool onButtonUp(april::Button buttonCode);
-		virtual void mouseCancel();
 
 		void update(float timeDelta);
 		void draw();
@@ -299,8 +299,21 @@ namespace aprilui
 		april::Color _getDrawColor();
 		float _getDisabledAlphaFactor();
 
-		virtual void OnDraw();
-		virtual void OnDrawDebug();
+		virtual void _draw();
+		virtual void _drawDebug();
+
+		// if this returns true, the event is processed and is not propagated to parents or other siblings, etc.
+		virtual bool _mouseDown(april::Key keyCode);
+		virtual bool _mouseUp(april::Key keyCode);
+		virtual void _mouseCancel(april::Key keyCode);
+		virtual bool _mouseMove();
+		virtual bool _mouseScroll(float x, float y);
+		virtual bool _keyDown(april::Key keyCode);
+		virtual bool _keyUp(april::Key keyCode);
+		virtual bool _char(unsigned int charCode);
+		virtual bool _touch(const harray<gvec2>& touches);
+		virtual bool _buttonDown(april::Button buttonCode);
+		virtual bool _buttonUp(april::Button buttonCode);
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

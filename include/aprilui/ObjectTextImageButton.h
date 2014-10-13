@@ -58,7 +58,7 @@ namespace aprilui
 		april::Color pushedTextColor;
 		april::Color disabledTextColor;
 		
-		void OnDraw();
+		void _draw();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
