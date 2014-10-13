@@ -180,7 +180,7 @@ namespace aprilui
 		this->toggled = false;
 	}
 		
-	void ToggleButton::OnDraw()
+	void ToggleButton::_draw()
 	{
 		if (this->toggled)
 		{
@@ -192,7 +192,7 @@ namespace aprilui
 			this->hoverImage = this->toggledHoverImage;
 			this->pushedImage = this->toggledPushedImage;
 			this->disabledImage = this->toggledDisabledImage;
-			ImageButton::OnDraw();
+			ImageButton::_draw();
 			this->normalImage = tempNormalImage;
 			this->hoverImage = tempHoverImage;
 			this->pushedImage = tempPushedImage;
@@ -200,7 +200,7 @@ namespace aprilui
 		}
 		else
 		{
-			ImageButton::OnDraw();
+			ImageButton::_draw();
 		}
 	}
 
@@ -247,14 +247,14 @@ namespace aprilui
 		return true;
 	}
 	
-	bool ToggleButton::onMouseUp(april::Key keyCode)
+	bool ToggleButton::_mouseUp(april::Key keyCode)
 	{
-		bool result = ImageButton::onMouseUp(keyCode);
+		bool result = ImageButton::_mouseUp(keyCode);
 		if (result)
 		{
 			this->toggled = !this->toggled;
 		}
-		return result;
+		return (result || ImageButton::_mouseUp(keyCode));
 	}
 	
 }

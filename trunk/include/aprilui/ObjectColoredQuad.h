@@ -30,8 +30,10 @@ namespace aprilui
 		inline hstr getClassName() const { return "ColoredQuad"; }
 
 		static Object* createInstance(chstr name, grect rect);
-		
-		void OnDraw();
+
+	protected:
+		void _draw();
+
 	};
 }
 

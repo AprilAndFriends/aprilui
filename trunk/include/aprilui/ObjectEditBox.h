@@ -61,13 +61,6 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 		
-		bool onMouseDown(april::Key keyCode);
-		bool onMouseUp(april::Key keyCode);
-		bool onKeyDown(april::Key keyCode);
-		bool onKeyUp(april::Key keyCode);
-		bool onChar(unsigned int charCode);
-		void mouseCancel();
-
 		DEPRECATED_ATTRIBUTE inline int getCursorIndex() { return getCaretIndex(); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndex(int value) { this->setCaretIndex(value); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
@@ -94,7 +87,7 @@ namespace aprilui
 		void _updateCaret();
 		void _updateSelection();
 		
-		void OnDraw();
+		void _draw();
 
 		void _getBaseOffset(gvec2& offset, float& hf);
 
@@ -113,6 +106,13 @@ namespace aprilui
 		void _deleteRightWord();
 		bool _deleteSelected();
 		void _insertChar(unsigned int charCode);
+
+		bool _mouseDown(april::Key keyCode);
+		bool _mouseUp(april::Key keyCode);
+		void _mouseCancel(april::Key keyCode);
+		bool _keyDown(april::Key keyCode);
+		bool _keyUp(april::Key keyCode);
+		bool _char(unsigned int charCode);
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

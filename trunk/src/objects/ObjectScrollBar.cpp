@@ -232,9 +232,9 @@ namespace aprilui
 		}
 	}
 
-	void ScrollBar::OnDraw()
+	void ScrollBar::_draw()
 	{
-		Object::OnDraw();
+		Object::_draw();
 		if (this->skinName == "")
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
@@ -371,12 +371,8 @@ namespace aprilui
 		return true;
 	}
 
-	bool ScrollBar::onMouseMove()
+	bool ScrollBar::_mouseMove()
 	{
-		if (Object::onMouseMove())
-		{
-			return true;
-		}
 		ScrollBarButtonSlider* buttonSlider = this->_getButtonSlider();
 		if (buttonSlider != NULL && buttonSlider->isPushed())
 		{
@@ -387,7 +383,7 @@ namespace aprilui
 				this->_moveScrollBar(position.x, position.y);
 			}
 		}
-		return false;
+		return Object::_mouseMove();
 	}
 
 	void ScrollBar::addScrollValueBackward(float multiplier)

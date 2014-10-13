@@ -564,10 +564,10 @@ namespace aprilui
 		{
 			april::rendersys->scale(this->scaleFactor.x, this->scaleFactor.y, 1.0f);
 		}
-		this->OnDraw();
+		this->_draw();
 		if (aprilui::isDebugEnabled())
 		{
-			this->OnDrawDebug();
+			this->_drawDebug();
 		}
 		if (this->center.x != 0.0f || this->center.y != 0.0f)
 		{
@@ -611,11 +611,11 @@ namespace aprilui
 		}
 	}
 
-	void Object::OnDraw()
+	void Object::_draw()
 	{
 	}
 
-	void Object::OnDrawDebug()
+	void Object::_drawDebug()
 	{
 		grect rect = this->_getDrawRect();
 		if (this->debugColor.a > 0)
@@ -674,7 +674,6 @@ namespace aprilui
 
 	bool Object::onMouseDown(april::Key keyCode)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->hitTest == HIT_TEST_DISABLED_RECURSIVE || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -687,68 +686,78 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->getHitTest() != HIT_TEST_DISABLED_RECURSIVE && (*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseDown(keyCode))
+			if ((*it)->onMouseDown(keyCode))
 			{
 				return true;
 			}
 		}
+		return this->_mouseDown(keyCode);
+	}
+
+	bool Object::_mouseDown(april::Key keyCode)
+	{
 		return false;
 	}
 
 	bool Object::onMouseUp(april::Key keyCode)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (this->hitTest == HIT_TEST_DISABLED_RECURSIVE || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
 		}
-		harray<Object*> validObjects;
+		harray<Object*> canceledObjects;
 		Object* object = NULL;
 		// needs to be copied in case children gets changed
 		harray<Object*> objects = this->childrenObjects;
-		foreach_r (Object*, it, objects)
+		for_iter_r (i, objects.size(), 0)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->getHitTest() != HIT_TEST_DISABLED_RECURSIVE && (*it)->isVisible() && (*it)->isDerivedEnabled())
+			if (objects[i]->onMouseUp(keyCode))
 			{
-				if (object == NULL && (*it)->onMouseUp(keyCode))
+				object = objects[i];
+				++i;
+				if (i < objects.size())
 				{
-					object = (*it);
+					canceledObjects += objects(i, -1);
 				}
-				else
-				{
-					validObjects += (*it);
-				}
+				break;
 			}
+			canceledObjects += objects[i];
 		}
 		if (object != NULL)
 		{
-			foreach (Object*, it, validObjects)
+			// does not call onMouseCancel() on self, because it would affect all children, not just a select few
+			this->_mouseCancel(keyCode);
+			foreach (Object*, it, canceledObjects)
 			{
 				(*it)->onMouseCancel(keyCode);
 			}
-            // does not call the mouse cancel event for its children
-            this->mouseCancel();
 			return true;
 		}
+		return this->_mouseUp(keyCode);
+	}
+
+	bool Object::_mouseUp(april::Key keyCode)
+	{
 		return false;
 	}
 
 	bool Object::onMouseCancel(april::Key keyCode)
 	{
-		this->mouseCancel();
 		harray<Object*> objects = this->childrenObjects;
+		this->_mouseCancel(keyCode); // _mouseCancel() is the only one that is first called on this object and then on all children afterwards
 		foreach_r (Object*, it, objects)
 		{
 			(*it)->onMouseCancel(keyCode);
 		}
-		return true;
+		return false;
+	}
+
+	void Object::_mouseCancel(april::Key keyCode)
+	{
 	}
 
 	bool Object::onMouseMove()
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -757,18 +766,21 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseMove())
+			if ((*it)->onMouseMove())
 			{
 				return true;
 			}
 		}
+		return this->_mouseMove();
+	}
+
+	bool Object::_mouseMove()
+	{
 		return false;
 	}
 
 	bool Object::onMouseScroll(float x, float y)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -777,18 +789,21 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onMouseScroll(x, y))
+			if ((*it)->onMouseScroll(x, y))
 			{
 				return true;
 			}
 		}
+		return this->_mouseScroll(x, y);
+	}
+
+	bool Object::_mouseScroll(float x, float y)
+	{
 		return false;
 	}
 
 	bool Object::onKeyDown(april::Key keyCode)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -797,18 +812,21 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyDown(keyCode))
+			if ((*it)->onKeyDown(keyCode))
 			{
 				return true;
 			}
 		}
+		return this->_keyDown(keyCode);
+	}
+
+	bool Object::_keyDown(april::Key keyCode)
+	{
 		return false;
 	}
 
 	bool Object::onKeyUp(april::Key keyCode)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -817,18 +835,21 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onKeyUp(keyCode))
+			if ((*it)->onKeyUp(keyCode))
 			{
 				return true;
 			}
 		}
+		return this->_keyUp(keyCode);
+	}
+	
+	bool Object::_keyUp(april::Key keyCode)
+	{
 		return false;
 	}
 	
 	bool Object::onChar(unsigned int charCode)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -837,18 +858,21 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onChar(charCode))
+			if ((*it)->onChar(charCode))
 			{
 				return true;
 			}
 		}
+		return this->_char(charCode); // charcoal
+	}
+
+	bool Object::_char(unsigned int charCode)
+	{
 		return false;
 	}
 
 	bool Object::onTouch(const harray<gvec2>& touches)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -857,18 +881,21 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onTouch(touches))
+			if ((*it)->onTouch(touches))
 			{
 				return true;
 			}
 		}
+		return this->_touch(touches);
+	}
+
+	bool Object::_touch(const harray<gvec2>& touches)
+	{
 		return false;
 	}
 
 	bool Object::onButtonDown(april::Button buttonCode)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -877,18 +904,21 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonDown(buttonCode))
+			if ((*it)->onButtonDown(buttonCode))
 			{
 				return true;
 			}
 		}
+		return this->_buttonDown(buttonCode);
+	}
+
+	bool Object::_buttonDown(april::Button buttonCode)
+	{
 		return false;
 	}
 
 	bool Object::onButtonUp(april::Button buttonCode)
 	{
-		// this check is important when the object is directly accessed for processing (might be refactored in the future)
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
@@ -897,19 +927,19 @@ namespace aprilui
 		harray<Object*> objects = this->childrenObjects;
 		foreach_r (Object*, it, objects)
 		{
-			// this check is generally important and should not be removed (the previous one should be removed for the system to work properly)
-			if ((*it)->isVisible() && (*it)->isDerivedEnabled() && (*it)->onButtonUp(buttonCode))
+			if ((*it)->onButtonUp(buttonCode))
 			{
 				return true;
 			}
 		}
+		return this->_buttonUp(buttonCode);
+	}
+
+	bool Object::_buttonUp(april::Button buttonCode)
+	{
 		return false;
 	}
 
-	void Object::mouseCancel()
-	{
-	}
-	
 	void Object::resetCenter()
 	{
 		this->center = this->rect.getSize() / 2;

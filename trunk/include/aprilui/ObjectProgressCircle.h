@@ -55,14 +55,14 @@ namespace aprilui
 
 		bool trySetImageByName(chstr name);
 
-		void OnDraw();
-
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 	protected:
 		Direction direction;
 		
+		void _draw();
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 

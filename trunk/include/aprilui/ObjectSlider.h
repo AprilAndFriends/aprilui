@@ -33,17 +33,18 @@ namespace aprilui
 		HL_DEFINE_GET(float, value, Value);
 		void setValue(float value);
 		
-		bool onMouseDown(april::Key keyCode);
-		bool onMouseUp(april::Key keyCode);
-		bool onMouseMove();
-		void mouseCancel();
-		
+		void update(float timeDelta);
+
 	protected:
 		bool pushed;
 		float value;
 		
-		void update(float timeDelta);
-		void OnDraw();
+		void _draw();
+		
+		bool _mouseDown(april::Key keyCode);
+		bool _mouseUp(april::Key keyCode);
+		void _mouseCancel(april::Key keyCode);
+		bool _mouseMove();
 		
 	};
 	

@@ -49,12 +49,8 @@ namespace aprilui
 		this->value = hclamp(value, 0.0f, 1.0f);
 	}
 	
-	bool Slider::onMouseDown(april::Key keyCode)
+	bool Slider::_mouseDown(april::Key keyCode)
 	{
-		if (Object::onMouseDown(keyCode)) // currently needs to override ImageBox behavior
-		{
-			return true;
-		}
 		if (this->isCursorInside())
 		{
 			this->pushed = true;
@@ -63,46 +59,38 @@ namespace aprilui
 			this->triggerEvent(Event::SetSliderValue, keyCode);
 			return true;
 		}
-		return false;
+		return ImageBox::_mouseDown(keyCode);
 	}
 	
-	bool Slider::onMouseUp(april::Key keyCode)
+	bool Slider::_mouseUp(april::Key keyCode)
 	{
-		if (Object::onMouseUp(keyCode)) // currently needs to override ImageBox behavior
-		{
-			return true;
-		}
 		if (this->pushed && this->isCursorInside())
 		{
 			this->pushed = false;
 			return true;
 		}
 		this->pushed = false;
-		return false;
+		return ImageBox::_mouseUp(keyCode);
 	}
 	
-	bool Slider::onMouseMove()
+	void Slider::_mouseCancel(april::Key keyCode)
 	{
-		if (Object::onMouseMove()) // currently needs to override ImageBox behavior
-		{
-			return true;
-		}
+		this->pushed = false;
+		ImageBox::_mouseCancel(keyCode);
+	}
+	
+	bool Slider::_mouseMove()
+	{
 		if (this->pushed)
 		{
 			gvec2 position = (aprilui::getCursorPosition() - this->getDerivedPosition()) / this->getDerivedScale();
 			this->setValue(position.x / (this->rect.w - 4));
 			this->triggerEvent(Event::SetSliderValue);
 		}
-		return false;
+		return ImageBox::_mouseMove();
 	}
 	
-	void Slider::mouseCancel()
-	{
-		this->pushed = false;
-		ImageBox::mouseCancel();
-	}
-	
-	void Slider::OnDraw()
+	void Slider::_draw()
 	{
 		grect rect = this->_getDrawRect();
 		if (rect.w < 5 || rect.h < 5)

@@ -75,7 +75,7 @@ namespace aprilui
 		}
 	}
 
-	bool ButtonBase::onMouseDown(april::Key keyCode)
+	bool ButtonBase::_mouseDown(april::Key keyCode)
 	{
 		if (!allowedKeys.contains(keyCode))
 		{
@@ -90,7 +90,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool ButtonBase::onMouseUp(april::Key keyCode)
+	bool ButtonBase::_mouseUp(april::Key keyCode)
 	{
 		if (!allowedKeys.contains(keyCode))
 		{
@@ -106,19 +106,19 @@ namespace aprilui
 		return false;
 	}
 
-	bool ButtonBase::onMouseCancel(april::Key keyCode)
+	void ButtonBase::_mouseCancel(april::Key keyCode)
 	{
 		this->pushed = false;
-		return true;
+		this->_updateHover();
 	}
 
-	bool ButtonBase::onMouseMove()
+	bool ButtonBase::_mouseMove()
 	{
 		this->_updateHover();
 		return false;
 	}
 
-	bool ButtonBase::onButtonDown(april::Button buttonCode)
+	bool ButtonBase::_buttonDown(april::Button buttonCode)
 	{
 		if (!allowedButtons.contains(buttonCode))
 		{
@@ -133,7 +133,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool ButtonBase::onButtonUp(april::Button buttonCode)
+	bool ButtonBase::_buttonUp(april::Button buttonCode)
 	{
 		if (!allowedButtons.contains(buttonCode))
 		{
@@ -147,12 +147,6 @@ namespace aprilui
 		}
 		this->pushed = false;
 		return false;
-	}
-
-	void ButtonBase::mouseCancel()
-	{
-		this->pushed = false;
-		this->_updateHover();
 	}
 
 	hstr ButtonBase::getProperty(chstr name)

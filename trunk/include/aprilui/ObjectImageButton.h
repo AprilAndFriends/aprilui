@@ -63,6 +63,8 @@ namespace aprilui
 		
 		harray<Image*> getUsedImages();
 
+		void update(float timeDelta);
+
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
@@ -73,13 +75,6 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
-		bool onMouseDown(april::Key keyCode);
-		bool onMouseUp(april::Key keyCode);
-		bool onMouseMove();
-		bool onButtonDown(april::Button buttonCode);
-		bool onButtonUp(april::Button buttonCode);
-		void mouseCancel();
-		
 	protected:
 		Image* normalImage;
 		Image* hoverImage;
@@ -90,8 +85,14 @@ namespace aprilui
 		hstr pushedImageName;
 		hstr disabledImageName;
 		
-		void update(float timeDelta);
-		void OnDraw();
+		void _draw();
+		
+		bool _mouseDown(april::Key keyCode);
+		bool _mouseUp(april::Key keyCode);
+		void _mouseCancel(april::Key keyCode);
+		bool _mouseMove();
+		bool _buttonDown(april::Button buttonCode);
+		bool _buttonUp(april::Button buttonCode);
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

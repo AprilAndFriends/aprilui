@@ -28,7 +28,7 @@ namespace aprilui
 		return new CallbackObject(name, rect);
 	}
 
-	void CallbackObject::OnDraw()
+	void CallbackObject::_draw()
 	{
 		if (this->drawCallback != NULL)
 		{

@@ -76,9 +76,9 @@ namespace aprilui
 		return (LabelBase::getPropertyDescriptions() + ImageButton::getPropertyDescriptions() + TextImageButton::_propertyDescriptions);
 	}
 
-	void TextImageButton::OnDraw()
+	void TextImageButton::_draw()
 	{
-		ImageButton::OnDraw();
+		ImageButton::_draw();
 		april::Color color = this->textColor;
 		april::Color drawColor = this->_getDrawColor();
 		unsigned char alpha = this->backgroundColor.a;

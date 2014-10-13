@@ -339,54 +339,52 @@ namespace aprilui
 		return true;
 	}
 
-	bool ScrollArea::onMouseDown(april::Key keyCode)
+	bool ScrollArea::_mouseDown(april::Key keyCode)
 	{
 		if (this->allowDrag)
 		{
 			this->dragging = true;
-			bool result = ButtonBase::onMouseDown(keyCode);
+			bool result = ButtonBase::_mouseDown(keyCode);
 			this->dragging = false;
 			if (result)
 			{
 				this->_clickPosition = aprilui::getCursorPosition();
 			}
 		}
-		return Object::onMouseDown(keyCode);
+		return Object::_mouseDown(keyCode);
 	}
 
-	bool ScrollArea::onMouseUp(april::Key keyCode)
+	bool ScrollArea::_mouseUp(april::Key keyCode)
 	{
 		if (this->allowDrag)
 		{
 			this->dragging = false;
 			this->_adjustDragSpeed();
-			if (ButtonBase::onMouseUp(keyCode))
+			if (ButtonBase::_mouseUp(keyCode))
 			{
 				return true;
 			}
 		}
-		return Object::onMouseUp(keyCode);
+		return Object::_mouseUp(keyCode);
 	}
 	
-	bool ScrollArea::onMouseMove()
+	void ScrollArea::_mouseCancel(april::Key keyCode)
 	{
-		if (Object::onMouseMove())
-		{
-			return true;
-		}
-		if (this->allowDrag)
-		{
-			return ButtonBase::onMouseMove();
-		}
-		return false;
+		ButtonBase::_mouseCancel(keyCode);
+		Object::_mouseCancel(keyCode);
 	}
 
-	bool ScrollArea::onMouseScroll(float x, float y)
+	bool ScrollArea::_mouseMove()
 	{
-		if (Object::onMouseScroll(x, y))
+		if (this->allowDrag)
 		{
-			return true;
+			return ButtonBase::_mouseMove();
 		}
+		return Object::_mouseMove();
+	}
+
+	bool ScrollArea::_mouseScroll(float x, float y)
+	{
 		bool result = false;
 		Container* parent = dynamic_cast<Container*>(this->parent);
 		if (parent != NULL && parent->isCursorInside())
@@ -408,22 +406,17 @@ namespace aprilui
 				result = true;
 			}
 		}
-		return result;
+		return (result || Object::_mouseScroll(x, y));
 	}
 
-	bool ScrollArea::onButtonDown(april::Button buttonCode)
+	bool ScrollArea::_buttonDown(april::Button buttonCode)
 	{
-		return Object::onButtonDown(buttonCode);
+		return (ButtonBase::_buttonDown(buttonCode) || Object::_buttonDown(buttonCode));
 	}
 
-	bool ScrollArea::onButtonUp(april::Button buttonCode)
+	bool ScrollArea::_buttonUp(april::Button buttonCode)
 	{
-		return Object::onButtonUp(buttonCode);
-	}
-	
-	void ScrollArea::mouseCancel()
-	{
-		Object::mouseCancel();
+		return (ButtonBase::_buttonUp(buttonCode) || Object::_buttonUp(buttonCode));
 	}
 	
 	// TODO - remove this temporary hack

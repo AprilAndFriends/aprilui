@@ -49,7 +49,7 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		void OnDraw();
+		void _draw();
 
 	};
 	

@@ -73,9 +73,9 @@ namespace aprilui
 		return ImageBox::trySetImageByName(name);
 	}
 
-	void ProgressCircle::OnDraw()
+	void ProgressCircle::_draw()
 	{
-		ImageBox::OnDraw();
+		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());

@@ -53,14 +53,11 @@ namespace aprilui
 		harray<PropertyDescription> getPropertyDescriptions();
 
 		void update(float timeDelta);
-		void OnDraw();
 
 		void notifyEvent(chstr type, EventArgs* args);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
-
-		bool onMouseMove();
 
 		virtual void addScrollValue(float value) = 0;
 		void addScrollValueForward(float multiplier = 1.0f);
@@ -121,6 +118,10 @@ namespace aprilui
 		virtual void _updateBar() = 0;
 		virtual void _adjustDragSpeed() = 0;
 		virtual bool _checkAreaSize() = 0;
+
+		void _draw();
+
+		bool _mouseMove();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
