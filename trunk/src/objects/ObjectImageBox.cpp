@@ -50,12 +50,12 @@ namespace aprilui
 			grect rect = image->getSrcRect();
 			if (this->rect.w == -1)
 			{
-				this->rect.w = rect.w * aprilui::getDefaultScale();
+				this->rect.w = rect.w;
 				this->center.x = rect.w * 0.5f;
 			}
 			if (this->rect.h == -1)
 			{
-				this->rect.h = rect.h * aprilui::getDefaultScale();
+				this->rect.h = rect.h;
 				this->center.y = this->rect.h * 0.5f;
 			}
 			this->imageName = image->getFullName();
@@ -108,7 +108,7 @@ namespace aprilui
 	{
 		if (this->image != NULL)
 		{
-			this->rect.setSize(this->image->getSrcRect().getSize() * aprilui::getDefaultScale());
+			this->rect.setSize(this->image->getSrcRect().getSize());
 			this->resetCenter();
 		}
 	}
