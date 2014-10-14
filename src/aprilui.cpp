@@ -35,32 +35,30 @@ namespace aprilui
 
 	hstr logTag = "aprilui";
 
-	bool registerLock = false;
-	hmap<hstr, Dataset*> gDatasets;
-	hmap<hstr, Object* (*)(chstr, grect)> gObjectFactories;
-	hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
-	float defaultScale = 1.0f;
-	Image* gCursor = NULL;
-	bool cursorVisible = true;
-	gvec2 cursorPosition;
-	bool limitCursorToViewport = false;
-	bool hoverEffectEnabled = true;
-	grect viewport;
-	bool debugEnabled = false;
-	hstr defaultTextsPath = "texts";
-	hstr defaultLocalization = "";
-	hstr localization = "";
-	harray<hstr> supportedLocalizations;
-	float textureIdleUnloadTime = 0.0f;
-	bool defaultManagedTextures = false;
-	april::Texture::LoadMode defaultTextureLoadMode = april::Texture::LOAD_IMMEDIATE;
-	hmap<hstr, float> extensionScales;
+	static bool registerLock = false;
+	static hmap<hstr, Dataset*> gDatasets;
+	static hmap<hstr, Object* (*)(chstr, grect)> gObjectFactories;
+	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
+	static Image* gCursor = NULL;
+	static bool cursorVisible = true;
+	static gvec2 cursorPosition;
+	static bool limitCursorToViewport = false;
+	static bool hoverEffectEnabled = true;
+	static grect viewport;
+	static bool debugEnabled = false;
+	static hstr defaultTextsPath = "texts";
+	static hstr defaultLocalization = "";
+	static hstr localization = "";
+	static harray<hstr> supportedLocalizations;
+	static float textureIdleUnloadTime = 0.0f;
+	static bool defaultManagedTextures = false;
+	static april::Texture::LoadMode defaultTextureLoadMode = april::Texture::LOAD_IMMEDIATE;
+	static hmap<hstr, float> extensionScales;
 
 	void init()
 	{
 		hlog::write(aprilui::logTag, "Initializing AprilUI.");
 		registerLock = false;
-		defaultScale = 1.0f;
 		cursorVisible = true;
 		limitCursorToViewport = true;
 		hoverEffectEnabled = true;
@@ -135,16 +133,6 @@ namespace aprilui
 	void setDebugEnabled(bool value)
 	{
 		debugEnabled = value;
-	}
-	
-	float getDefaultScale()
-	{
-		return defaultScale;
-	}
-	
-	void setDefaultScale(float value)
-	{
-		defaultScale = value;
 	}
 	
 	grect getViewport()

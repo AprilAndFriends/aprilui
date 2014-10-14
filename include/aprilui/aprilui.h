@@ -43,8 +43,6 @@ namespace aprilui
 	apriluiFnExport bool isDebugEnabled();
 	apriluiFnExport void setDebugEnabled(bool value);
 	
-	apriluiFnExport float getDefaultScale();
-	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport grect getViewport();
 	apriluiFnExport void setViewport(grect value);
 	apriluiFnExport bool isLimitCursorToViewport();
