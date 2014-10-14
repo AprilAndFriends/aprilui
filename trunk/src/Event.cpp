@@ -46,7 +46,7 @@ namespace aprilui
 	hstr Event::LocalizationChanged = "LocalizationChanged";
 	hstr Event::SubmitEditText = "SubmitEditText";
 	hstr Event::ScrollSkinChanged = "ScrollSkinChanged";
-	hstr Event::SetSliderValue = "SetSliderValue";
+	hstr Event::SetProgressValue = "SetProgressValue";
 	hstr Event::DelayExpired = "DelayExpired";
 
 	Event::Event()
@@ -85,7 +85,7 @@ namespace aprilui
 		SYSTEM_EVENT_CHECK(LocalizationChanged);
 		SYSTEM_EVENT_CHECK(SubmitEditText);
 		SYSTEM_EVENT_CHECK(ScrollSkinChanged);
-		SYSTEM_EVENT_CHECK(SetSliderValue);
+		SYSTEM_EVENT_CHECK(SetProgressValue);
 		SYSTEM_EVENT_CHECK(DelayExpired);
 		hlog::warn(aprilui::logTag, "There is no system event with name: " + type);
 		return false;

@@ -50,7 +50,7 @@ namespace aprilui
 		static hstr LocalizationChanged;
 		static hstr SubmitEditText;
 		static hstr ScrollSkinChanged;
-		static hstr SetSliderValue;
+		static hstr SetProgressValue;
 		static hstr DelayExpired;
 
 		Event();
