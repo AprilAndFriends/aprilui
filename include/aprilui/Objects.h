@@ -32,7 +32,6 @@
 #include "ObjectScrollBarButtonSlider.h"
 #include "ObjectScrollBarH.h"
 #include "ObjectScrollBarV.h"
-#include "ObjectSlider.h"
 #include "ObjectTextImageButton.h"
 #include "ObjectToggleButton.h"
 

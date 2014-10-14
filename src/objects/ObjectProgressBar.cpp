@@ -21,6 +21,8 @@ namespace aprilui
 	{
 		this->stretching = false;
 		this->direction = Right;
+		this->interactable = false;
+		this->pushed = false;
 	}
 
 	ProgressBar::~ProgressBar()
@@ -74,6 +76,7 @@ namespace aprilui
 		{
 			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::BOOL);
 			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::ENUM);
+			ProgressBar::_propertyDescriptions += PropertyDescription("interactable", PropertyDescription::BOOL);
 		}
 		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressBar::_propertyDescriptions);
 	}
@@ -81,6 +84,15 @@ namespace aprilui
 	bool ProgressBar::trySetImageByName(chstr name)
 	{
 		return ImageBox::trySetImageByName(name);
+	}
+
+	void ProgressBar::update(float timeDelta)
+	{
+		ImageBox::update(timeDelta);
+		if (this->interactable && this->pushed)
+		{
+			this->_updateInteractablePosition();
+		}
 	}
 
 	void ProgressBar::_draw()
@@ -125,6 +137,7 @@ namespace aprilui
 			size = rect.h * progress;
 			rect.y += rect.h - size;
 			rect.h = size;
+			break;
 		}
 		return rect;
 	}
@@ -139,6 +152,7 @@ namespace aprilui
 			if (this->direction == Down)	return "down";
 			if (this->direction == Up)		return "up";
 		}
+		if (name == "interactable")	return this->isInteractable();
 		hstr result = ProgressBase::getProperty(name);
 		if (result == "")
 		{
@@ -149,22 +163,88 @@ namespace aprilui
 
 	bool ProgressBar::setProperty(chstr name, chstr value)
 	{
-		if		(name == "stretching")	this->setStretching(value);
+		if		(name == "stretching")		this->setStretching(value);
 		else if (name == "direction")
 		{
-			if (value == "right")		this->setDirection(Right);
-			else if (value == "left")	this->setDirection(Left);
-			else if (value == "down")	this->setDirection(Down);
-			else if (value == "up")		this->setDirection(Up);
+			if (value == "right")			this->setDirection(Right);
+			else if (value == "left")		this->setDirection(Left);
+			else if (value == "down")		this->setDirection(Down);
+			else if (value == "up")			this->setDirection(Up);
 			else
 			{
 				hlog::warn(aprilui::logTag, "'direction=' does not support value '" + value + "'.");
 				return false;
 			}
 		}
+		else if (name == "interactable")	this->setInteractable(value);
 		else if (ProgressBase::setProperty(name, value)) { }
 		else return ImageBox::setProperty(name, value);
 		return true;
 	}
 	
+	bool ProgressBar::_mouseDown(april::Key keyCode)
+	{
+		if (this->interactable && this->isCursorInside())
+		{
+			this->pushed = true;
+			this->_updateInteractablePosition();
+			return true;
+		}
+		return ImageBox::_mouseDown(keyCode);
+	}
+
+	bool ProgressBar::_mouseUp(april::Key keyCode)
+	{
+		if (this->interactable && this->pushed && this->isCursorInside())
+		{
+			this->pushed = false;
+			return true;
+		}
+		this->pushed = false;
+		return ImageBox::_mouseUp(keyCode);
+	}
+
+	void ProgressBar::_mouseCancel(april::Key keyCode)
+	{
+		this->pushed = false;
+		ImageBox::_mouseCancel(keyCode);
+	}
+
+	bool ProgressBar::_mouseMove()
+	{
+		if (this->pushed)
+		{
+			this->_updateInteractablePosition();
+		}
+		return ImageBox::_mouseMove();
+	}
+
+	void ProgressBar::_updateInteractablePosition()
+	{
+		gvec2 position = this->transformToLocalSpace(aprilui::getCursorPosition());
+		float newProgress = 0.0f;
+		switch (this->direction)
+		{
+		case Right:
+			newProgress = position.x / this->rect.w;
+			break;
+		case Left:
+			newProgress = 1.0f - position.x / this->rect.w;
+			break;
+		case Down:
+			newProgress = position.y / this->rect.h;
+			break;
+		case Up:
+			newProgress = 1.0f - position.y / this->rect.h;
+			break;
+		}
+		newProgress = hclamp(newProgress, 0.0f, 1.0f);
+		if (this->progress != newProgress)
+		{
+			this->progress = newProgress;
+			this->progress = newProgress;
+			this->triggerEvent(Event::SetProgressValue);
+		}
+	}
+
 }

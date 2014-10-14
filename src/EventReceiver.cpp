@@ -69,7 +69,7 @@ namespace aprilui
 			EVENT_TYPE_CHECK_DEPRECATED(Event::LocalizationChanged, "onLocalizationChanged");
 			EVENT_TYPE_CHECK_DEPRECATED(Event::SubmitEditText, "Submit");
 			EVENT_TYPE_CHECK_DEPRECATED(Event::ScrollSkinChanged, "SkinChange");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::SetSliderValue, "Set");
+			EVENT_TYPE_CHECK_DEPRECATED(Event::SetProgressValue, "Set");
 			EVENT_TYPE_CHECK_DEPRECATED(Event::DelayExpired, "OnDelayEnd");
 			this->unregisterEvent(realType);
 			this->events[realType] = event;

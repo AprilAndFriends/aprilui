@@ -42,6 +42,7 @@ namespace aprilui
 		
 		HL_DEFINE_ISSET(stretching, Stretching);
 		HL_DEFINE_GETSET(Direction, direction, Direction);
+		HL_DEFINE_ISSET(interactable, Interactable);
 		Dataset* getDataset();
 		Image* getImage();
 		void setImage(Image* image);
@@ -53,16 +54,27 @@ namespace aprilui
 
 		bool trySetImageByName(chstr name);
 
+		void update(float timeDelta);
+
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 	protected:
 		bool stretching;
 		Direction direction;
+		bool interactable;
+		bool pushed;
 
 		grect _calcRectDirection(grect rect, float progress);
 		
 		void _draw();
+
+		bool _mouseDown(april::Key keyCode);
+		bool _mouseUp(april::Key keyCode);
+		void _mouseCancel(april::Key keyCode);
+		bool _mouseMove();
+
+		void _updateInteractablePosition();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
