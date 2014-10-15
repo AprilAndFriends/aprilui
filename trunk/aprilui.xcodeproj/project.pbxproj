@@ -29,7 +29,6 @@
 		7F38C6AF12096793002B5134 /* ObjectImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69512096793002B5134 /* ObjectImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6B012096793002B5134 /* ObjectLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69612096793002B5134 /* ObjectLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6B112096793002B5134 /* ObjectLabelBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69712096793002B5134 /* ObjectLabelBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F38C6B512096793002B5134 /* ObjectSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69B12096793002B5134 /* ObjectSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6B712096793002B5134 /* ObjectTextImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69D12096793002B5134 /* ObjectTextImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6B812096793002B5134 /* ObjectToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69E12096793002B5134 /* ObjectToggleButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6C9120967B9002B5134 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
@@ -39,7 +38,6 @@
 		7F38C6CF120967B9002B5134 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
 		7F38C6D0120967B9002B5134 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */; };
 		7F38C6D1120967B9002B5134 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */; };
-		7F38C6D5120967B9002B5134 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */; };
 		7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */; };
 		7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
 		7F38C728120967CC002B5134 /* AnimatorFrameAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */; };
@@ -143,7 +141,6 @@
 		D1522E98140F6A6B0012F290 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
 		D1522E99140F6A6B0012F290 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */; };
 		D1522E9A140F6A6B0012F290 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */; };
-		D1522E9B140F6A6B0012F290 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */; };
 		D1522E9D140F6A6B0012F290 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */; };
 		D1522E9E140F6A6B0012F290 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
 		D1522E9F140F6A6B0012F290 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
@@ -226,7 +223,6 @@
 		D1F27B48177A2FCA00E5C131 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
 		D1F27B49177A2FCA00E5C131 /* ObjectLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */; };
 		D1F27B4A177A2FCA00E5C131 /* ObjectLabelBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */; };
-		D1F27B4B177A2FCA00E5C131 /* ObjectSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */; };
 		D1F27B4D177A2FCA00E5C131 /* ObjectTextImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */; };
 		D1F27B4E177A2FCA00E5C131 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
 		D1F27B4F177A2FCA00E5C131 /* CallbackEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FF4F1BF12017ACA00F0BBB7 /* CallbackEvent.cpp */; };
@@ -267,7 +263,6 @@
 		7F38C69512096793002B5134 /* ObjectImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectImageButton.h; path = include/aprilui/ObjectImageButton.h; sourceTree = "<group>"; };
 		7F38C69612096793002B5134 /* ObjectLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectLabel.h; path = include/aprilui/ObjectLabel.h; sourceTree = "<group>"; };
 		7F38C69712096793002B5134 /* ObjectLabelBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectLabelBase.h; path = include/aprilui/ObjectLabelBase.h; sourceTree = "<group>"; };
-		7F38C69B12096793002B5134 /* ObjectSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectSlider.h; path = include/aprilui/ObjectSlider.h; sourceTree = "<group>"; };
 		7F38C69D12096793002B5134 /* ObjectTextImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectTextImageButton.h; path = include/aprilui/ObjectTextImageButton.h; sourceTree = "<group>"; };
 		7F38C69E12096793002B5134 /* ObjectToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectToggleButton.h; path = include/aprilui/ObjectToggleButton.h; sourceTree = "<group>"; };
 		7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectCallbackObject.cpp; sourceTree = "<group>"; };
@@ -277,7 +272,6 @@
 		7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectImageButton.cpp; sourceTree = "<group>"; };
 		7F38C6C0120967B9002B5134 /* ObjectLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectLabel.cpp; sourceTree = "<group>"; };
 		7F38C6C1120967B9002B5134 /* ObjectLabelBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectLabelBase.cpp; sourceTree = "<group>"; };
-		7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectSlider.cpp; sourceTree = "<group>"; };
 		7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectTextImageButton.cpp; sourceTree = "<group>"; };
 		7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectToggleButton.cpp; sourceTree = "<group>"; };
 		7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorFrameAnimation.cpp; sourceTree = "<group>"; };
@@ -503,7 +497,6 @@
 				D18CB6131902CE040071C391 /* ObjectScrollBarButtonBackward.cpp */,
 				D18CB6141902CE040071C391 /* ObjectScrollBarButtonForward.cpp */,
 				D18CB6151902CE040071C391 /* ObjectScrollBarButtonSlider.cpp */,
-				7F38C6C5120967B9002B5134 /* ObjectSlider.cpp */,
 				7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */,
 				7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */,
 				D140387B18EAF8150092608C /* ObjectProgressBase.cpp */,
@@ -618,7 +611,6 @@
 				D18CB6231902CE1C0071C391 /* ObjectScrollBarButtonBackward.h */,
 				D18CB6241902CE1C0071C391 /* ObjectScrollBarButtonForward.h */,
 				D18CB6251902CE1C0071C391 /* ObjectScrollBarButtonSlider.h */,
-				7F38C69B12096793002B5134 /* ObjectSlider.h */,
 				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
 				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
 				D140388318EAF8290092608C /* ObjectProgressBase.h */,
@@ -673,7 +665,6 @@
 				7F38C6AF12096793002B5134 /* ObjectImageButton.h in Headers */,
 				7F38C6B012096793002B5134 /* ObjectLabel.h in Headers */,
 				7F38C6B112096793002B5134 /* ObjectLabelBase.h in Headers */,
-				7F38C6B512096793002B5134 /* ObjectSlider.h in Headers */,
 				7F38C6B712096793002B5134 /* ObjectTextImageButton.h in Headers */,
 				7F38C6B812096793002B5134 /* ObjectToggleButton.h in Headers */,
 				7FB0C7B1120AE117005EA739 /* Object.h in Headers */,
@@ -831,7 +822,6 @@
 				7F38C6D0120967B9002B5134 /* ObjectLabel.cpp in Sources */,
 				7F38C6D1120967B9002B5134 /* ObjectLabelBase.cpp in Sources */,
 				D18CB61C1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */,
-				7F38C6D5120967B9002B5134 /* ObjectSlider.cpp in Sources */,
 				7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */,
 				7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */,
 				7F38C728120967CC002B5134 /* AnimatorFrameAnimation.cpp in Sources */,
@@ -922,7 +912,6 @@
 				D1228D2D19B5C56E003BD478 /* Event.cpp in Sources */,
 				D1522E99140F6A6B0012F290 /* ObjectLabel.cpp in Sources */,
 				D1522E9A140F6A6B0012F290 /* ObjectLabelBase.cpp in Sources */,
-				D1522E9B140F6A6B0012F290 /* ObjectSlider.cpp in Sources */,
 				D1522E9D140F6A6B0012F290 /* ObjectTextImageButton.cpp in Sources */,
 				D1522E9E140F6A6B0012F290 /* ObjectToggleButton.cpp in Sources */,
 				D1522E9F140F6A6B0012F290 /* CallbackEvent.cpp in Sources */,
@@ -985,7 +974,6 @@
 				D1228D2C19B5C56E003BD478 /* Event.cpp in Sources */,
 				D1F27B49177A2FCA00E5C131 /* ObjectLabel.cpp in Sources */,
 				D1F27B4A177A2FCA00E5C131 /* ObjectLabelBase.cpp in Sources */,
-				D1F27B4B177A2FCA00E5C131 /* ObjectSlider.cpp in Sources */,
 				D1F27B4D177A2FCA00E5C131 /* ObjectTextImageButton.cpp in Sources */,
 				D1F27B4E177A2FCA00E5C131 /* ObjectToggleButton.cpp in Sources */,
 				D1F27B4F177A2FCA00E5C131 /* CallbackEvent.cpp in Sources */,
