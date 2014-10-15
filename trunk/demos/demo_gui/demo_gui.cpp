@@ -71,7 +71,7 @@ void _hoverFinished(aprilui::EventArgs* args)
 class UpdateDelegate : public april::UpdateDelegate
 {
 public:
-	bool onUpdate(float timeSinceLastFrame)
+	bool onUpdate(float timeDelta)
 	{
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
@@ -80,13 +80,13 @@ public:
 		aprilui::ProgressBar* progressBar;
 		aprilui::ProgressCircle* progressCircle;
 		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_1");
-		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.2f, 1.25f));
+		progressBar->setProgress(hmodf(progressBar->getProgress() + timeDelta * 0.2f, 1.25f));
 		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_2");
-		progressBar->setProgress(hmodf(progressBar->getProgress() + timeSinceLastFrame * 0.25f, 1.25f));
+		progressBar->setProgress(hmodf(progressBar->getProgress() + timeDelta * 0.25f, 1.25f));
 		progressCircle = dataset->getObject<aprilui::ProgressCircle*>("progress_circle_1");
-		progressCircle->setProgress(hmodf(progressCircle->getProgress() + timeSinceLastFrame * 0.2f, 1.25f));
+		progressCircle->setProgress(hmodf(progressCircle->getProgress() + timeDelta * 0.2f, 1.25f));
 		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("%d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
-		dataset->update(timeSinceLastFrame);
+		dataset->update(timeDelta);
 		dataset->draw();
 		return true;
 	}

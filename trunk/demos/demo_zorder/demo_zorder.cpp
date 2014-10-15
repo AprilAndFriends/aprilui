@@ -50,7 +50,7 @@ aprilui::Dataset* dataset = NULL;
 class UpdateDelegate : public april::UpdateDelegate
 {
 public:
-	bool onUpdate(float timeSinceLastFrame)
+	bool onUpdate(float timeDelta)
 	{
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
@@ -58,7 +58,7 @@ public:
 		aprilui::processEvents();
 		dataset->getObject("obj0" + hstr(hrand(1, 8)))->setZOrder(hrand(100));
 		dataset->draw();
-		dataset->update(timeSinceLastFrame);
+		dataset->update(timeDelta);
 		return true;
 	}
 

@@ -52,16 +52,16 @@ aprilui::Dataset* dataset = NULL;
 class UpdateDelegate : public april::UpdateDelegate
 {
 public:
-	bool onUpdate(float timeSinceLastFrame)
+	bool onUpdate(float timeDelta)
 	{
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
 		aprilui::updateCursorPosition();
 		aprilui::processEvents();
 		aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
-		image->setScroll(image->getScroll() + SCROLL_SPEED * timeSinceLastFrame); // manual scrolling
+		image->setScroll(image->getScroll() + SCROLL_SPEED * timeDelta); // manual scrolling
 		dataset->draw();
-		dataset->update(timeSinceLastFrame);
+		dataset->update(timeDelta);
 		return true;
 	}
 
