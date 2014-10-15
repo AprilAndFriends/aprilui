@@ -48,7 +48,7 @@ aprilui::Dataset* dataset = NULL;
 class UpdateDelegate : public april::UpdateDelegate
 {
 public:
-	bool onUpdate(float timeSinceLastFrame)
+	bool onUpdate(float timeDelta)
 	{
 		aprilui::updateCursorPosition();
 		aprilui::processEvents();
@@ -57,7 +57,7 @@ public:
 		april::rendersys->drawFilledRect(viewport, april::Color::Grey);
 		april::rendersys->drawFilledRect(grect(0.0f, 0.0f, 100.0f, 75.0f), april::Color::Yellow);
 		dataset->draw();
-		dataset->update(timeSinceLastFrame);
+		dataset->update(timeDelta);
 		return true;
 	}
 
