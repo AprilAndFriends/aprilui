@@ -75,6 +75,9 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
+		bool onMouseDown(april::Key keyCode);
+		bool onMouseUp(april::Key keyCode);
+
 		// TODO - remove this temporary hack
 		void __stop();
 
@@ -94,8 +97,6 @@ namespace aprilui
 		void _adjustDragSpeed();
 		void _snapScrollOffset();
 
-		bool _mouseDown(april::Key keyCode);
-		bool _mouseUp(april::Key keyCode);
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
 		bool _mouseScroll(float x, float y);
