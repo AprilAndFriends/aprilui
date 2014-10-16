@@ -66,6 +66,10 @@ namespace aprilui
 
 	void TiledImage::draw(grect rect, april::Color color)
 	{
+		if (color.a == 0)
+		{
+			return;
+		}
 		float tileW = (this->tile.x > 0.0f ? rect.w / this->tile.x : -this->tile.x);
 		float tileH = (this->tile.y > 0.0f ? rect.h / this->tile.y : -this->tile.y);
 		float scrollX = hmodf(this->scroll.x, tileW) - tileW;

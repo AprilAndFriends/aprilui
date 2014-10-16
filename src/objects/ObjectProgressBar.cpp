@@ -12,6 +12,7 @@
 #include "Dataset.h"
 #include "Image.h"
 #include "ObjectProgressBar.h"
+#include "Texture.h"
 
 namespace aprilui
 {
@@ -106,7 +107,21 @@ namespace aprilui
 			grect srcRect = this->progressImage->getSrcRect();
 			if (!this->stretching)
 			{
-				this->progressImage->setSrcRect(this->_calcRectDirection(srcRect, progress));
+				// this switching of coordinates is required on rotated images
+				grect newSrcRect = srcRect;
+				if (this->progressImage->isRotated())
+				{
+					newSrcRect.x = srcRect.y;
+					newSrcRect.y = this->progressImage->getTexture()->getWidth() - (srcRect.x + srcRect.h);
+				}
+				newSrcRect = this->_calcRectDirection(newSrcRect, progress);
+				if (this->progressImage->isRotated())
+				{
+					float x = newSrcRect.x;
+					newSrcRect.x = this->progressImage->getTexture()->getWidth() - newSrcRect.h - newSrcRect.y;
+					newSrcRect.y = x;
+				}
+				this->progressImage->setSrcRect(newSrcRect);
 			}
 			this->progressImage->draw(this->_calcRectDirection(this->_getDrawRect(), progress), color);
 			this->progressImage->setSrcRect(srcRect);
