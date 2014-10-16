@@ -339,8 +339,9 @@ namespace aprilui
 		return true;
 	}
 
-	bool ScrollArea::_mouseDown(april::Key keyCode)
+	bool ScrollArea::onMouseDown(april::Key keyCode)
 	{
+		// has to override its children which is why onMouseDown() is overriden and not _mouseDown()
 		if (this->allowDrag)
 		{
 			this->dragging = true;
@@ -351,11 +352,12 @@ namespace aprilui
 				this->_clickPosition = aprilui::getCursorPosition();
 			}
 		}
-		return Object::_mouseDown(keyCode);
+		return Object::onMouseDown(keyCode);
 	}
 
-	bool ScrollArea::_mouseUp(april::Key keyCode)
+	bool ScrollArea::onMouseUp(april::Key keyCode)
 	{
+		// has to override its children which is why onMouseUp() is overriden and not _mouseUp()
 		if (this->allowDrag)
 		{
 			this->dragging = false;
@@ -365,7 +367,7 @@ namespace aprilui
 				return true;
 			}
 		}
-		return Object::_mouseUp(keyCode);
+		return Object::onMouseUp(keyCode);
 	}
 	
 	void ScrollArea::_mouseCancel(april::Key keyCode)
