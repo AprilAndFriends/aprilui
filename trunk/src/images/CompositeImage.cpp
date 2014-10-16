@@ -52,6 +52,10 @@ namespace aprilui
 	
 	void CompositeImage::draw(grect rect, april::Color color)
 	{
+		if (color.a == 0)
+		{
+			return;
+		}
 		gvec2 sf = rect.getSize() / this->srcRect.getSize();
 		grect drawRect;
 		foreach (ImageRef, it, this->images)

@@ -288,6 +288,10 @@ namespace aprilui
 		{
 			color *= this->color;
 		}
+		if (color.a == 0)
+		{
+			return;
+		}
 		this->_tVertices[0].x = this->_tVertices[2].x = rect.left();
 		this->_tVertices[0].y = this->_tVertices[1].y = rect.top();
 		this->_tVertices[1].x = this->_tVertices[3].x = rect.right();
@@ -316,6 +320,10 @@ namespace aprilui
 		if (this->color != april::Color::White)
 		{
 			color *= this->color;
+		}
+		if (color.a == 0)
+		{
+			return;
 		}
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getTexture());
