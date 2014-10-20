@@ -93,7 +93,7 @@ namespace aprilui
 		bool swapScrollWheels;
 		bool dragging;
 
-		virtual bool _checkHover();
+		aprilui::Object* _findHoverObject();
 		void _adjustDragSpeed();
 		void _snapScrollOffset();
 
@@ -112,6 +112,7 @@ namespace aprilui
 		gvec2 _lastScrollOffset;
 		gvec2 _dragSpeed;
 		gvec2 _dragTimer;
+		bool _overrideHoverMode;
 
 	};
 }

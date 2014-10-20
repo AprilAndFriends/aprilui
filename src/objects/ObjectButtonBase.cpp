@@ -35,7 +35,7 @@ namespace aprilui
 		this->_updateHover();
 	}
 
-	bool ButtonBase::_checkHover()
+	aprilui::Object* ButtonBase::_findHoverObject()
 	{
 		Object* root = NULL;
 		Dataset* dataset = this->getDataset();
@@ -44,7 +44,7 @@ namespace aprilui
 			int focusIndex = this->getFocusIndex();
 			if (focusIndex >= 0 && dataset->getFocusedObjectIndex() == focusIndex)
 			{
-				return true;
+				return dynamic_cast<Object*>(this);
 			}
 			root = dataset->getRoot();
 		}
@@ -59,16 +59,15 @@ namespace aprilui
 		}
 		if (root == NULL)
 		{
-			return this->isCursorInside();
+			return (this->isCursorInside() ? dynamic_cast<Object*>(this) : NULL);
 		}
-		Object* child = root->getChildUnderCursor();
-		return (child != NULL && child == dynamic_cast<Object*>(this));
+		return root->getChildUnderCursor();
 	}
 
 	void ButtonBase::_updateHover()
 	{
 		bool previousHovered = this->hovered;
-		this->hovered = this->_checkHover();
+		this->hovered = (this->_findHoverObject() == dynamic_cast<Object*>(this));
 		if (previousHovered != this->hovered)
 		{
 			this->triggerEvent(this->hovered ? Event::HoverStarted : Event::HoverFinished);
