@@ -38,6 +38,7 @@ namespace aprilui
 		this->swapScrollWheels = false;
 		this->dragging = false;
 		this->debugColor = april::Color(april::Color::Yellow, 32);
+		this->_overrideHoverMode = false;
 	}
 
 	ScrollArea::~ScrollArea()
@@ -252,9 +253,30 @@ namespace aprilui
 		}
 	}
 
-	bool ScrollArea::_checkHover()
+	aprilui::Object* ScrollArea::_findHoverObject()
 	{
-		return (!this->dragging ? ButtonBase::_checkHover() : this->isCursorInside());
+		if (this->dragging)
+		{
+			return (this->isCursorInside() ? this : NULL);
+		}
+		aprilui::Object* child = ButtonBase::_findHoverObject();
+		if (this->_overrideHoverMode && child != this && dynamic_cast<ScrollArea*>(child) == NULL)
+		{
+			aprilui::Object* parent = child->getParent();
+			while (parent != NULL)
+			{
+				if (parent == this)
+				{
+					return (this->isCursorInside() ? this : NULL);
+				}
+				if (dynamic_cast<ScrollArea*>(parent) != NULL && parent->getChildUnderCursor() == child)
+				{
+					return child;
+				}
+				parent = parent->getParent();
+			}
+		}
+		return child;
 	}
 
 	void ScrollArea::notifyEvent(chstr type, EventArgs* args)
@@ -342,11 +364,11 @@ namespace aprilui
 	bool ScrollArea::onMouseDown(april::Key keyCode)
 	{
 		// has to override its children which is why onMouseDown() is overriden and not _mouseDown()
-		if (this->allowDrag)
+		if (this->allowDrag && this->hitTest != HIT_TEST_DISABLED_RECURSIVE && this->isVisible() && this->isDerivedEnabled())
 		{
-			this->dragging = true;
+			this->_overrideHoverMode = true;
 			bool result = ButtonBase::_mouseDown(keyCode);
-			this->dragging = false;
+			this->_overrideHoverMode = false;
 			if (result)
 			{
 				this->_clickPosition = aprilui::getCursorPosition();
@@ -358,7 +380,7 @@ namespace aprilui
 	bool ScrollArea::onMouseUp(april::Key keyCode)
 	{
 		// has to override its children which is why onMouseUp() is overriden and not _mouseUp()
-		if (this->allowDrag)
+		if (this->allowDrag && this->hitTest != HIT_TEST_DISABLED_RECURSIVE && this->isVisible() && this->isDerivedEnabled())
 		{
 			this->dragging = false;
 			this->_adjustDragSpeed();

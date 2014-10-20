@@ -57,7 +57,7 @@ namespace aprilui
 		bool pushed;
 		
 		virtual void update(float timeDelta);
-		virtual bool _checkHover();
+		virtual aprilui::Object* _findHoverObject();
 		void _updateHover();
 
 		virtual bool _mouseDown(april::Key keyCode);
@@ -66,6 +66,8 @@ namespace aprilui
 		virtual bool _mouseMove();
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
+
+		DEPRECATED_ATTRIBUTE virtual bool _checkHover() { return (this->_findHoverObject() != NULL); }
 
 	};
 	
