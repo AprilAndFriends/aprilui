@@ -206,6 +206,10 @@ namespace aprilui
 		{
 			images += this->image;
 		}
+		if (this->normalImage != NULL)
+		{
+			images += this->normalImage;
+		}
 		if (this->pushedImage != NULL)
 		{
 			images += this->pushedImage;
