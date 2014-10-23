@@ -260,7 +260,7 @@ namespace aprilui
 			return (this->isCursorInside() ? this : NULL);
 		}
 		aprilui::Object* child = ButtonBase::_findHoverObject();
-		if (this->_overrideHoverMode && child != this && dynamic_cast<ScrollArea*>(child) == NULL)
+		if (this->_overrideHoverMode && child != this && dynamic_cast<ScrollArea*>(child) == NULL && child != NULL)
 		{
 			aprilui::Object* parent = child->getParent();
 			while (parent != NULL)
