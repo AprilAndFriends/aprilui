@@ -104,27 +104,13 @@ namespace aprilui
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
 		if (this->progressImage != NULL && progress > 0.0f)
 		{
-			grect srcRect = this->progressImage->getSrcRect();
+			grect clipRect = this->progressImage->getClipRect();
 			if (!this->stretching)
 			{
-				// this switching of coordinates is required on rotated images
-				grect newSrcRect = srcRect;
-				if (this->progressImage->isRotated())
-				{
-					newSrcRect.x = srcRect.y;
-					newSrcRect.y = this->progressImage->getTexture()->getWidth() - (srcRect.x + srcRect.h);
-				}
-				newSrcRect = this->_calcRectDirection(newSrcRect, progress);
-				if (this->progressImage->isRotated())
-				{
-					float x = newSrcRect.x;
-					newSrcRect.x = this->progressImage->getTexture()->getWidth() - newSrcRect.h - newSrcRect.y;
-					newSrcRect.y = x;
-				}
-				this->progressImage->setSrcRect(newSrcRect);
+				this->progressImage->setClipRect(this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress));
 			}
-			this->progressImage->draw(this->_calcRectDirection(this->_getDrawRect(), progress), color);
-			this->progressImage->setSrcRect(srcRect);
+			this->progressImage->draw(this->_getDrawRect(), color);
+			this->progressImage->setClipRect(clipRect);
 		}
 		if (this->maskImage != NULL)
 		{

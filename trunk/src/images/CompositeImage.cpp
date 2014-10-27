@@ -21,11 +21,9 @@ namespace aprilui
 {
 	CompositeImage::CompositeImage(chstr name, float w, float h) : Image(0, name, grect(0, 0, w, h))
 	{
-		
 	}
 	
-	CompositeImage::CompositeImage(chstr name, CompositeImage& base) :
-		Image(0, name, grect(0, 0, base.getSrcRect().getSize()))
+	CompositeImage::CompositeImage(chstr name, CompositeImage& base) : Image(0, name, grect(0, 0, base.getSrcRect().getSize()))
 	{
 		foreach (ImageRef, it, base.images)
 		{
@@ -67,7 +65,7 @@ namespace aprilui
 	
 	void CompositeImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
 	{
-		hlog::warn(aprilui::logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is currently not supported!");
+		hlog::warn(aprilui::logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}
 	
 }
