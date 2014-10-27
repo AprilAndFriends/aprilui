@@ -56,12 +56,28 @@ namespace aprilui
 		void setSrcWidth(float value);
 		HL_DEFINE_GET(float, srcRect.h, SrcHeight);
 		void setSrcHeight(float value);
-		inline gvec2 getPosition() { return this->srcRect.getPosition(); }
-		void setPosition(gvec2 value);
-		void setPosition(float x, float y);
-		inline gvec2 getSize() { return this->srcRect.getSize(); }
-		void setSize(gvec2 value);
-		void setSize(float x, float y);
+		inline gvec2 getSrcPosition() { return this->srcRect.getPosition(); }
+		void setSrcPosition(gvec2 value);
+		void setSrcPosition(float x, float y);
+		inline gvec2 getSrcSize() { return this->srcRect.getSize(); }
+		void setSrcSize(gvec2 value);
+		void setSrcSize(float x, float y);
+		HL_DEFINE_GET(grect, clipRect, ClipRect);
+		void setClipRect(grect value);
+		HL_DEFINE_GET(float, clipRect.x, ClipX);
+		void setClipX(float value);
+		HL_DEFINE_GET(float, clipRect.y, ClipY);
+		void setClipY(float value);
+		HL_DEFINE_GET(float, clipRect.w, ClipWidth);
+		void setClipWidth(float value);
+		HL_DEFINE_GET(float, clipRect.h, ClipHeight);
+		void setClipHeight(float value);
+		inline gvec2 getClipPosition() { return this->clipRect.getPosition(); }
+		void setClipPosition(gvec2 value);
+		void setClipPosition(float x, float y);
+		inline gvec2 getClipSize() { return this->clipRect.getSize(); }
+		void setClipSize(gvec2 value);
+		void setClipSize(float x, float y);
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		HL_DEFINE_ISSET(rotated, Rotated);
 		HL_DEFINE_ISSET(invertX, InvertX);
@@ -85,6 +101,7 @@ namespace aprilui
 		hstr name;
 		hstr imageName;
 		grect srcRect;
+		grect clipRect;
 		april::Color color;
 		april::BlendMode blendMode;
 		april::ColorMode colorMode;
@@ -96,6 +113,7 @@ namespace aprilui
 		bool _textureCoordinatesLoaded;
 		
 		void _tryLoadTexCoords();
+		grect _makeClippedSrcRect();
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

@@ -45,6 +45,7 @@ namespace aprilui
 		this->texture = other.texture;
 		this->name = name;
 		this->srcRect = other.srcRect;
+		this->clipRect = other.clipRect;
 		this->color = other.color;
 		this->blendMode = other.blendMode;
 		this->colorMode = other.colorMode;
@@ -76,6 +77,13 @@ namespace aprilui
 			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("clip_rect", PropertyDescription::GRECT);
+			Image::_propertyDescriptions += PropertyDescription("clip_position", PropertyDescription::GVEC2);
+			Image::_propertyDescriptions += PropertyDescription("clip_size", PropertyDescription::GVEC2);
+			Image::_propertyDescriptions += PropertyDescription("clip_x", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("clip_y", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("clip_w", PropertyDescription::FLOAT);
+			Image::_propertyDescriptions += PropertyDescription("clip_h", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::HEXCOLOR);
 			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::BOOL);
 			Image::_propertyDescriptions += PropertyDescription("invert_x", PropertyDescription::BOOL);
@@ -119,27 +127,81 @@ namespace aprilui
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	void Image::setPosition(gvec2 value)
+	void Image::setSrcPosition(gvec2 value)
 	{
 		this->srcRect.setPosition(value);
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	void Image::setPosition(float x, float y)
+	void Image::setSrcPosition(float x, float y)
 	{
 		this->srcRect.setPosition(x, y);
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	void Image::setSize(gvec2 value)
+	void Image::setSrcSize(gvec2 value)
 	{
 		this->srcRect.setSize(value);
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	void Image::setSize(float x, float y)
+	void Image::setSrcSize(float x, float y)
 	{
 		this->srcRect.setSize(x, y);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipRect(grect value)
+	{
+		this->clipRect = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipX(float value)
+	{
+		this->clipRect.x = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipY(float value)
+	{
+		this->clipRect.y = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipWidth(float value)
+	{
+		this->clipRect.w = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipHeight(float value)
+	{
+		this->clipRect.h = value;
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipPosition(gvec2 value)
+	{
+		this->clipRect.setPosition(value);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipPosition(float x, float y)
+	{
+		this->clipRect.setPosition(x, y);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipSize(gvec2 value)
+	{
+		this->clipRect.setSize(value);
+		this->_textureCoordinatesLoaded = false;
+	}
+
+	void Image::setClipSize(float x, float y)
+	{
+		this->clipRect.setSize(x, y);
 		this->_textureCoordinatesLoaded = false;
 	}
 
@@ -152,6 +214,13 @@ namespace aprilui
 		if (name == "y")					return this->getSrcRect().y;
 		if (name == "w")					return this->getSrcRect().w;
 		if (name == "h")					return this->getSrcRect().h;
+		if (name == "clip_rect")			return grect_to_hstr(this->getClipRect());
+		if (name == "clip_position")		return gvec2_to_hstr(this->getClipRect().getPosition());
+		if (name == "clip_size")			return gvec2_to_hstr(this->getClipRect().getSize());
+		if (name == "clip_x")				return this->getClipRect().x;
+		if (name == "clip_y")				return this->getClipRect().y;
+		if (name == "clip_w")				return this->getClipRect().w;
+		if (name == "clip_h")				return this->getClipRect().h;
 		if (name == "color")				return this->getColor().hex();
 		if (name == "rotated")				return this->isRotated();
 		if (name == "vertical")
@@ -205,7 +274,14 @@ namespace aprilui
 		else if	(name == "y")					this->setSrcY(value);
 		else if	(name == "w")					this->setSrcWidth(value);
 		else if	(name == "h")					this->setSrcHeight(value);
-		else if	(name == "color")				this->setColor(value);
+		else if (name == "clip_rect")			this->setClipRect(hstr_to_grect(value));
+		else if (name == "clip_position")		this->clipRect.setPosition(hstr_to_gvec2(value));
+		else if (name == "clip_size")			this->clipRect.setSize(hstr_to_gvec2(value));
+		else if (name == "clip_x")				this->setClipX(value);
+		else if (name == "clip_y")				this->setClipY(value);
+		else if (name == "clip_w")				this->setClipWidth(value);
+		else if (name == "clip_h")				this->setClipHeight(value);
+		else if (name == "color")				this->setColor(value);
 		else if	(name == "rotated")				this->setRotated(value);
 		else if	(name == "vertical")
 		{
@@ -253,22 +329,21 @@ namespace aprilui
 			this->_textureCoordinatesLoaded = true;
 			float iw = 1.0f / this->texture->getWidth();
 			float ih = 1.0f / this->texture->getHeight();
-
+			grect rect = this->_makeClippedSrcRect();
 			if (!this->rotated)
 			{
-				this->_tVertices[0].u = this->_tVertices[2].u = this->srcRect.left() * iw;
-				this->_tVertices[0].v = this->_tVertices[1].v = this->srcRect.top() * ih;
-				this->_tVertices[1].u = this->_tVertices[3].u = this->srcRect.right() * iw;
-				this->_tVertices[2].v = this->_tVertices[3].v = this->srcRect.bottom() * ih;
+				this->_tVertices[0].u = this->_tVertices[2].u = rect.left() * iw;
+				this->_tVertices[0].v = this->_tVertices[1].v = rect.top() * ih;
+				this->_tVertices[1].u = this->_tVertices[3].u = rect.right() * iw;
+				this->_tVertices[2].v = this->_tVertices[3].v = rect.bottom() * ih;
 			}
 			else
 			{
-				this->_tVertices[0].u = this->_tVertices[1].u = (this->srcRect.x + this->srcRect.h) * iw;
-				this->_tVertices[0].v = this->_tVertices[2].v = this->srcRect.y * ih;
-				this->_tVertices[1].v = this->_tVertices[3].v = (this->srcRect.y + this->srcRect.w) * ih;
-				this->_tVertices[2].u = this->_tVertices[3].u = this->srcRect.x * iw;
+				this->_tVertices[0].u = this->_tVertices[1].u = (rect.x + rect.h) * iw;
+				this->_tVertices[0].v = this->_tVertices[2].v = rect.y * ih;
+				this->_tVertices[1].v = this->_tVertices[3].v = (rect.y + rect.w) * ih;
+				this->_tVertices[2].u = this->_tVertices[3].u = rect.x * iw;
 			}
-
 			if (this->invertX)
 			{
 				hswap(this->_tVertices[0].u, this->_tVertices[1].u);
@@ -282,6 +357,21 @@ namespace aprilui
 		}
 	}
 
+	grect Image::_makeClippedSrcRect()
+	{
+		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
+		{
+			grect rect = this->clipRect;
+			if (this->rotated)
+			{
+				rect.x = this->srcRect.h - (this->clipRect.y + this->clipRect.h);
+				rect.y = this->clipRect.x;
+			}
+			return this->srcRect.clipped(this->clipRect + this->srcRect.getPosition());
+		}
+		return this->srcRect;
+	}
+
 	void Image::draw(grect rect, april::Color color)
 	{
 		if (this->color != april::Color::White)
@@ -292,15 +382,19 @@ namespace aprilui
 		{
 			return;
 		}
+		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
+		{
+			gvec2 sizeRatio = rect.getSize() / this->srcRect.getSize();
+			rect += this->clipRect.getPosition() * sizeRatio;
+			rect.setSize(this->clipRect.getSize() * sizeRatio);
+		}
 		this->_tVertices[0].x = this->_tVertices[2].x = rect.left();
 		this->_tVertices[0].y = this->_tVertices[1].y = rect.top();
 		this->_tVertices[1].x = this->_tVertices[3].x = rect.right();
 		this->_tVertices[2].y = this->_tVertices[3].y = rect.bottom();
-		
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getTexture());
 		this->_tryLoadTexCoords();
-		
 		april::rendersys->setTextureBlendMode(this->blendMode);
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
@@ -328,16 +422,15 @@ namespace aprilui
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getTexture());
 		this->_tryLoadTexCoords();
-
 		// texture coordinate scaling
 		float iw = 1.0f / this->texture->getWidth();
 		float ih = 1.0f / this->texture->getHeight();
+		grect rect = this->_makeClippedSrcRect();
 		foreach (april::TexturedVertex, it, vertices)
 		{
-			it->u = (this->srcRect.x + it->u * this->srcRect.w) * iw;
-			it->v = (this->srcRect.y + it->v * this->srcRect.h) * ih;
+			it->u = (rect.x + it->u * rect.w) * iw;
+			it->v = (rect.y + it->v * rect.h) * ih;
 		}
-
 		april::rendersys->setTextureBlendMode(this->blendMode);
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)

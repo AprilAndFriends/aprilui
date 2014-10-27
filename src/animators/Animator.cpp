@@ -142,7 +142,10 @@ namespace aprilui
 			}
 			break;
 		case Random:
-			result = hrandf(-this->speed * this->amplitude, this->speed * this->amplitude);
+			if (timeDelta > 0.0f)
+			{
+				result = hrandf(-this->speed * this->amplitude, this->speed * this->amplitude);
+			}
 			break;
 		case Hover:
 			if ((this->amplitude >= 0.0f) == this->parent->isCursorInside())
