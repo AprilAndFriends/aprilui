@@ -43,10 +43,10 @@ namespace aprilui
 
 	hstr TiledImage::getProperty(chstr name)
 	{
-		if (name == "tile")		return gvec2_to_hstr(this->getTile());
+		if (name == "tile")		return april::gvec2ToHstr(this->getTile());
 		if (name == "tile_w")	return this->getTileW();
 		if (name == "tile_h")	return this->getTileH();
-		if (name == "scroll")	return gvec2_to_hstr(this->getScroll());
+		if (name == "scroll")	return april::gvec2ToHstr(this->getScroll());
 		if (name == "scroll_x")	return this->getScrollX();
 		if (name == "scroll_y")	return this->getScrollY();
 		return Image::getProperty(name);
@@ -54,10 +54,10 @@ namespace aprilui
 
 	bool TiledImage::setProperty(chstr name, chstr value)
 	{
-		if		(name == "tile")		this->setTile(hstr_to_gvec2(value));
+		if		(name == "tile")		this->setTile(april::hstrToGvec2(value));
 		else if	(name == "tile_w")		this->setTileW(value);
 		else if (name == "tile_h")		this->setTileH(value);
-		else if	(name == "scroll")		this->setScroll(hstr_to_gvec2(value));
+		else if	(name == "scroll")		this->setScroll(april::hstrToGvec2(value));
 		else if (name == "scroll_x")	this->setScrollX(value);
 		else if	(name == "scroll_y")	this->setScrollY(value);
 		else return Image::setProperty(name, value);

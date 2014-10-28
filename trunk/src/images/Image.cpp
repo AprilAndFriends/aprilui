@@ -207,16 +207,16 @@ namespace aprilui
 
 	hstr Image::getProperty(chstr name)
 	{
-		if (name == "rect")					return grect_to_hstr(this->getSrcRect());
-		if (name == "position")				return gvec2_to_hstr(this->getSrcRect().getPosition());
-		if (name == "size")					return gvec2_to_hstr(this->getSrcRect().getSize());
+		if (name == "rect")					return april::grectToHstr(this->getSrcRect());
+		if (name == "position")				return april::gvec2ToHstr(this->getSrcRect().getPosition());
+		if (name == "size")					return april::gvec2ToHstr(this->getSrcRect().getSize());
 		if (name == "x")					return this->getSrcRect().x;
 		if (name == "y")					return this->getSrcRect().y;
 		if (name == "w")					return this->getSrcRect().w;
 		if (name == "h")					return this->getSrcRect().h;
-		if (name == "clip_rect")			return grect_to_hstr(this->getClipRect());
-		if (name == "clip_position")		return gvec2_to_hstr(this->getClipRect().getPosition());
-		if (name == "clip_size")			return gvec2_to_hstr(this->getClipRect().getSize());
+		if (name == "clip_rect")			return april::grectToHstr(this->getClipRect());
+		if (name == "clip_position")		return april::gvec2ToHstr(this->getClipRect().getPosition());
+		if (name == "clip_size")			return april::gvec2ToHstr(this->getClipRect().getSize());
 		if (name == "clip_x")				return this->getClipRect().x;
 		if (name == "clip_y")				return this->getClipRect().y;
 		if (name == "clip_w")				return this->getClipRect().w;
@@ -267,16 +267,16 @@ namespace aprilui
 	
 	bool Image::setProperty(chstr name, chstr value)
 	{
-		if		(name == "rect")				this->setSrcRect(hstr_to_grect(value));
-		else if	(name == "position")			this->srcRect.setPosition(hstr_to_gvec2(value));
-		else if	(name == "size")				this->srcRect.setSize(hstr_to_gvec2(value));
+		if		(name == "rect")				this->setSrcRect(april::hstrToGrect(value));
+		else if	(name == "position")			this->srcRect.setPosition(april::hstrToGvec2(value));
+		else if	(name == "size")				this->srcRect.setSize(april::hstrToGvec2(value));
 		else if	(name == "x")					this->setSrcX(value);
 		else if	(name == "y")					this->setSrcY(value);
 		else if	(name == "w")					this->setSrcWidth(value);
 		else if	(name == "h")					this->setSrcHeight(value);
-		else if (name == "clip_rect")			this->setClipRect(hstr_to_grect(value));
-		else if (name == "clip_position")		this->clipRect.setPosition(hstr_to_gvec2(value));
-		else if (name == "clip_size")			this->clipRect.setSize(hstr_to_gvec2(value));
+		else if (name == "clip_rect")			this->setClipRect(april::hstrToGrect(value));
+		else if (name == "clip_position")		this->clipRect.setPosition(april::hstrToGvec2(value));
+		else if (name == "clip_size")			this->clipRect.setSize(april::hstrToGvec2(value));
 		else if (name == "clip_x")				this->setClipX(value);
 		else if (name == "clip_y")				this->setClipY(value);
 		else if (name == "clip_w")				this->setClipWidth(value);

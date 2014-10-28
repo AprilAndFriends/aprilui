@@ -14,8 +14,6 @@
 #define APRILUI_UTIL_H
 
 #include <gtypes/Rectangle.h>
-#include <gtypes/Vector2.h>
-#include <hltypes/hstring.h>
 
 namespace hlxml
 {
@@ -24,14 +22,7 @@ namespace hlxml
 
 namespace aprilui
 {
-	static const float eTolerance = 0.0001f;
-
-	hstr gvec2_to_hstr(gvec2 vector);
-	hstr grect_to_hstr(grect rect);
-	gvec2 hstr_to_gvec2(chstr string);
-	grect hstr_to_grect(chstr string);
-
-	void read_rect_node(grect& rect, hlxml::Node* node, bool allowNoSize = false);
+	void readRectNode(grect& rect, hlxml::Node* node, bool allowNoSize = false);
 	
 }
 #endif
