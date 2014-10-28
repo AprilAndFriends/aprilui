@@ -62,15 +62,15 @@ namespace aprilui
 		foreach (ImageRef, it, this->images)
 		{
 			oldClipRect = (*it).image->getClipRect();
-			clipRect = grect(0.0f, 0.0f, (*it).rect.getSize()).clipped(this->clipRect - (*it).rect.getPosition());
-			cf = (*it).image->getSrcSize() / (*it).rect.getSize();
-			clipRect.set(clipRect.getPosition() * cf, clipRect.getSize() * cf);
-			(*it).image->setClipRect(clipRect);
-			if (clipRect.w > 0.0f && clipRect.h > 0.0f)
+			drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
+			if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 			{
-				drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
-				(*it).image->draw(drawRect, color);
+				clipRect = grect(0.0f, 0.0f, (*it).rect.getSize()).clipped(this->clipRect - (*it).rect.getPosition());
+				cf = (*it).image->getSrcSize() / (*it).rect.getSize();
+				clipRect.set(clipRect.getPosition() * cf, clipRect.getSize() * cf);
+				(*it).image->setClipRect(clipRect);
 			}
+			(*it).image->draw(drawRect, color);
 			(*it).image->setClipRect(oldClipRect);
 		}
 	}
