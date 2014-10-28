@@ -364,10 +364,10 @@ namespace aprilui
 			grect rect = this->clipRect;
 			if (this->rotated)
 			{
-				rect.x = this->srcRect.h - (this->clipRect.y + this->clipRect.h);
-				rect.y = this->clipRect.x;
+				hswap(rect.x, rect.y);
+				rect.x = this->srcRect.h - (rect.x + rect.h);
 			}
-			return this->srcRect.clipped(this->clipRect + this->srcRect.getPosition());
+			return this->srcRect.clipped(rect + this->srcRect.getPosition());
 		}
 		return this->srcRect;
 	}
