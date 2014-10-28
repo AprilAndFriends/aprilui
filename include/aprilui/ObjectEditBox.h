@@ -43,6 +43,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(char, passwordChar, PasswordChar);
 		HL_DEFINE_ISSET(multiLine, MultiLine);
 		HL_DEFINE_ISSET(selectable, Selectable);
+		HL_DEFINE_ISSET(disabledOffset, DisabledOffset);
 		HL_DEFINE_GET(hstr, filter, Filter);
 		void setFilter(chstr value);
 		HL_DEFINE_GETSET(april::Color, selectionColor, SelectionColor);
@@ -76,6 +77,7 @@ namespace aprilui
 		char passwordChar;
 		bool multiLine;
 		bool selectable;
+		bool disabledOffset;
 		bool spaceHack; // TODO - remove
 		hstr filter;
 		april::Color selectionColor;
