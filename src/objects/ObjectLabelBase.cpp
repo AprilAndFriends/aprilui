@@ -139,7 +139,7 @@ namespace aprilui
 			}
 			return effect;
 		}
-		if (name == "text_offset")		return gvec2_to_hstr(this->getTextOffset());
+		if (name == "text_offset")		return april::gvec2ToHstr(this->getTextOffset());
 		if (name == "text_offset_x")	return this->getTextOffsetX();
 		if (name == "text_offset_y")	return this->getTextOffsetY();
 		if (name == "background_color")	return this->getBackgroundColor().hex();
@@ -208,7 +208,7 @@ namespace aprilui
 				}
 			}
 		}
-		else if (name == "text_offset")			this->setTextOffset(hstr_to_gvec2(value));
+		else if (name == "text_offset")			this->setTextOffset(april::hstrToGvec2(value));
 		else if (name == "text_offset_x")		this->setTextOffsetX(value);
 		else if (name == "text_offset_y")		this->setTextOffsetY(value);
 		else if (name == "background_color")	this->setBackgroundColor(value);

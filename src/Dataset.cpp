@@ -340,11 +340,11 @@ namespace aprilui
 					{
 						throw ResourceExistsException(name, "Image", this);
 					}
-					aprilui::read_rect_node(rect, child);
+					aprilui::readRectNode(rect, child);
 					tile.set(1.0f, 1.0f);
 					if (child->pexists("tile"))
 					{
-						tile = hstr_to_gvec2(child->pstr("tile"));
+						tile = april::hstrToGvec2(child->pstr("tile"));
 					}
 					else
 					{
@@ -385,7 +385,7 @@ namespace aprilui
 		gvec2 size;
 		if (node->pexists("size"))
 		{
-			size = hstr_to_gvec2(node->pstr("size"));
+			size = april::hstrToGvec2(node->pstr("size"));
 		}
 		else
 		{
@@ -398,7 +398,7 @@ namespace aprilui
 			if (*child == "ImageRef")
 			{
 				refname = child->pstr("name");
-				aprilui::read_rect_node(rect, child);
+				aprilui::readRectNode(rect, child);
 				image->addImageRef(this->getImage(refname), rect);
 			}
 		}
@@ -441,7 +441,7 @@ namespace aprilui
 			gvec2 offset;
 			if (node->pexists("position"))
 			{
-				offset = hstr_to_gvec2(node->pstr("position"));
+				offset = april::hstrToGvec2(node->pstr("position"));
 			}
 			else
 			{
@@ -464,7 +464,7 @@ namespace aprilui
 			}
 			if (*node == "Object")
 			{
-				aprilui::read_rect_node(rect, node, true);
+				aprilui::readRectNode(rect, node, true);
 				rect += offset;
 			}
 		}
