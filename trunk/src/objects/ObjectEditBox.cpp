@@ -44,6 +44,7 @@ namespace aprilui
 		this->passwordChar = '\0';
 		this->multiLine = false;
 		this->selectable = false;
+		this->disabledOffset = false;
 		this->filter = "";
 		this->caretIndex = 0;
 		this->selectionCount = 0;
@@ -83,6 +84,7 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::INT);
 			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selection_color", PropertyDescription::HEXCOLOR);
 			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::BOOL);
 		}
@@ -376,7 +378,7 @@ namespace aprilui
 		this->caretRect += gvec2((float)this->renderOffsetX, (float)this->renderOffsetY) * fh;
 		// calculate render offset
 		int jumps = 0;
-		if (this->horzFormatting != atres::LEFT_WRAPPED && this->horzFormatting != atres::CENTER_WRAPPED &&
+		if (!this->disabledOffset && this->horzFormatting != atres::LEFT_WRAPPED && this->horzFormatting != atres::CENTER_WRAPPED &&
 			this->horzFormatting != atres::RIGHT_WRAPPED && this->horzFormatting != atres::JUSTIFIED)
 		{
 			if (atres::renderer->getTextWidth(this->font, this->text) > this->caretRect.w)
@@ -632,7 +634,7 @@ namespace aprilui
 		{
 			grect renderRect = this->caretRect - this->center;
 			renderRect.clip(drawRect);
-			if (renderRect.h > 0.0f)
+			if (renderRect.w > 0.0f && renderRect.h > 0.0f)
 			{
 				april::rendersys->drawRect(renderRect, drawColor * this->textColor);
 			}
@@ -840,6 +842,7 @@ namespace aprilui
 		}
 		if (name == "multi_line")		return this->isMultiLine();
 		if (name == "selectable")		return this->isSelectable();
+		if (name == "disabled_offset")	return this->isDisabledOffset();
 		if (name == "selection_color")	return this->getSelectionColor().hex();
 		if (name == "space_hack")		return this->spaceHack;
 		return Label::getProperty(name);
@@ -860,6 +863,7 @@ namespace aprilui
 		}
 		else if (name == "multi_line")		this->setMultiLine(value);
 		else if (name == "selectable")		this->setSelectable(value);
+		else if (name == "disabled_offset")	this->setDisabledOffset(value);
 		else if (name == "selection_color")	this->setSelectionColor(value);
 		else if (name == "space_hack")		this->spaceHack = (bool)value;
 		else return Label::setProperty(name, value);
