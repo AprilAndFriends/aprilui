@@ -43,6 +43,7 @@ namespace aprilui
 		if (BaseObject::_propertyDescriptions.size() == 0)
 		{
 			BaseObject::_propertyDescriptions += PropertyDescription("name", PropertyDescription::STRING);
+			BaseObject::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::STRING);
 			BaseObject::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::STRING);
 			BaseObject::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::BOOL);
 			BaseObject::_propertyDescriptions += PropertyDescription("zorder", PropertyDescription::INT);
@@ -223,6 +224,7 @@ namespace aprilui
 	hstr BaseObject::getProperty(chstr name)
 	{
 		if (name == "name")			return this->getName();
+		if (name == "tag")			return this->getTag();
 		if (name == "full_name")	return this->getFullName();
 		if (name == "enabled")		return this->isEnabled();
 		if (name == "zorder")		return this->getZOrder();
@@ -231,7 +233,8 @@ namespace aprilui
 	
 	bool BaseObject::setProperty(chstr name, chstr value)
 	{
-		if		(name == "enabled")	this->setEnabled(value);
+		if		(name == "tag")		this->setTag(value);
+		else if (name == "enabled")	this->setEnabled(value);
 		else if (name == "zorder")	this->setZOrder(value);
 		else return false;
 		return true;

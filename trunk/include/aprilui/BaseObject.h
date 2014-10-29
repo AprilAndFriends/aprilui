@@ -42,6 +42,7 @@ namespace aprilui
 		virtual inline hstr getClassName() const { return "BaseObject"; }
 
 		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GETSET(hstr, tag, Tag);
 		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(Object*, parent, Parent);
 		HL_DEFINE_IS(enabled, Enabled);
@@ -84,6 +85,7 @@ namespace aprilui
 
 	protected:
 		hstr name;
+		hstr tag;
 		Object* parent; // a BaseObject cannot be a parent
 		harray<Object*> childrenObjects;
 		harray<Animator*> childrenAnimators;
