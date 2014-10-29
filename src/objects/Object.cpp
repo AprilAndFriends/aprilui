@@ -592,11 +592,14 @@ namespace aprilui
 			this->clearChildUnderCursor();
 		}
 		BaseObject::update(timeDelta);
-		foreach (Animator*, it, this->dynamicAnimators)
+		// because this list could change during the update() call
+		harray<Animator*> animators = this->dynamicAnimators;
+		// first update the animators
+		foreach (Animator*, it, animators)
 		{
 			(*it)->update(timeDelta);
 		}
-		harray<Animator*> animators = this->dynamicAnimators;
+		animators = this->dynamicAnimators;
 		this->dynamicAnimators.clear();
 		foreach (Animator*, it, animators)
 		{

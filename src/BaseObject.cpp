@@ -197,11 +197,8 @@ namespace aprilui
 
 	void BaseObject::update(float timeDelta)
 	{
-		foreach (Object*, it, this->childrenObjects)
-		{
-			(*it)->update(timeDelta);
-		}
-		foreach (Animator*, it, this->childrenAnimators)
+		harray<BaseObject*> children = this->getChildren(); // because update() could change the Z order and thus the child order
+		foreach (BaseObject*, it, children)
 		{
 			(*it)->update(timeDelta);
 		}
