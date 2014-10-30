@@ -61,7 +61,7 @@ namespace aprilui
 		void setSrcPosition(float x, float y);
 		inline gvec2 getSrcSize() { return this->srcRect.getSize(); }
 		void setSrcSize(gvec2 value);
-		void setSrcSize(float x, float y);
+		void setSrcSize(float w, float h);
 		HL_DEFINE_GET(grect, clipRect, ClipRect);
 		void setClipRect(grect value);
 		HL_DEFINE_GET(float, clipRect.x, ClipX);
@@ -77,7 +77,7 @@ namespace aprilui
 		void setClipPosition(float x, float y);
 		inline gvec2 getClipSize() { return this->clipRect.getSize(); }
 		void setClipSize(gvec2 value);
-		void setClipSize(float x, float y);
+		void setClipSize(float w, float h);
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		HL_DEFINE_ISSET(rotated, Rotated);
 		HL_DEFINE_ISSET(invertX, InvertX);

@@ -36,6 +36,7 @@ namespace aprilui
 		CompositeImage(chstr name, CompositeImage& base);
 		~CompositeImage();
 		
+		HL_DEFINE_ISSET(restoreClipRects, RestoreClipRects);
 		inline const harray<ImageRef>& getImages() { return this->images; }
 		
 		void addImageRef(Image* image, grect rect);
@@ -45,6 +46,7 @@ namespace aprilui
 		void draw(harray<april::TexturedVertex> vertices, april::Color color);
 		
 	protected:
+		bool restoreClipRects;
 		harray<ImageRef> images;
 		
 	};
