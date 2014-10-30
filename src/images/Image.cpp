@@ -99,110 +99,164 @@ namespace aprilui
 
 	void Image::setSrcRect(grect value)
 	{
-		this->srcRect = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect != value)
+		{
+			this->srcRect = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setSrcX(float value)
 	{
-		this->srcRect.x = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.x != value)
+		{
+			this->srcRect.x = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setSrcY(float value)
 	{
-		this->srcRect.y = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.y != value)
+		{
+			this->srcRect.y = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setSrcWidth(float value)
 	{
-		this->srcRect.w = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.w != value)
+		{
+			this->srcRect.w = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setSrcHeight(float value)
 	{
-		this->srcRect.h = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.h != value)
+		{
+			this->srcRect.h = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setSrcPosition(gvec2 value)
 	{
-		this->srcRect.setPosition(value);
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.getPosition() != value)
+		{
+			this->srcRect.setPosition(value);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setSrcPosition(float x, float y)
 	{
-		this->srcRect.setPosition(x, y);
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.x != x || this->srcRect.y != y)
+		{
+			this->srcRect.setPosition(x, y);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setSrcSize(gvec2 value)
 	{
-		this->srcRect.setSize(value);
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.getSize() != value)
+		{
+			this->srcRect.setSize(value);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
-	void Image::setSrcSize(float x, float y)
+	void Image::setSrcSize(float w, float h)
 	{
-		this->srcRect.setSize(x, y);
-		this->_textureCoordinatesLoaded = false;
+		if (this->srcRect.w != w || this->srcRect.h != h)
+		{
+			this->srcRect.setSize(w, h);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipRect(grect value)
 	{
-		this->clipRect = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect != value)
+		{
+			this->clipRect = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipX(float value)
 	{
-		this->clipRect.x = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.x != value)
+		{
+			this->clipRect.x = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipY(float value)
 	{
-		this->clipRect.y = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.y != value)
+		{
+			this->clipRect.y = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipWidth(float value)
 	{
-		this->clipRect.w = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.w != value)
+		{
+			this->clipRect.w = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipHeight(float value)
 	{
-		this->clipRect.h = value;
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.h != value)
+		{
+			this->clipRect.h = value;
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipPosition(gvec2 value)
 	{
-		this->clipRect.setPosition(value);
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.getPosition() != value)
+		{
+			this->clipRect.setPosition(value);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipPosition(float x, float y)
 	{
-		this->clipRect.setPosition(x, y);
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.x != x || this->clipRect.y != y)
+		{
+			this->clipRect.setPosition(x, y);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	void Image::setClipSize(gvec2 value)
 	{
-		this->clipRect.setSize(value);
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.getSize() != value)
+		{
+			this->clipRect.setSize(value);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
-	void Image::setClipSize(float x, float y)
+	void Image::setClipSize(float w, float h)
 	{
-		this->clipRect.setSize(x, y);
-		this->_textureCoordinatesLoaded = false;
+		if (this->clipRect.w != w || this->clipRect.h != h)
+		{
+			this->clipRect.setSize(w, h);
+			this->_textureCoordinatesLoaded = false;
+		}
 	}
 
 	hstr Image::getProperty(chstr name)

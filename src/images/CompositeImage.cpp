@@ -19,7 +19,7 @@
 
 namespace aprilui
 {
-	CompositeImage::CompositeImage(chstr name, float w, float h) : Image(0, name, grect(0, 0, w, h))
+	CompositeImage::CompositeImage(chstr name, float w, float h) : Image(0, name, grect(0, 0, w, h)), restoreClipRects(true)
 	{
 	}
 	
@@ -55,13 +55,22 @@ namespace aprilui
 			return;
 		}
 		gvec2 sf = rect.getSize() / this->srcRect.getSize();
-		gvec2 cf;
 		grect drawRect;
-		grect oldClipRect;
-		grect clipRect;
-		foreach (ImageRef, it, this->images)
+		// using separate loops for performance reasons
+		if (this->clipRect.w == 0.0f || this->clipRect.h == 0.0f)
 		{
-			if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
+			foreach (ImageRef, it, this->images)
+			{
+				drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
+				(*it).image->draw(drawRect, color);
+			}
+		}
+		else
+		{
+			gvec2 cf;
+			grect oldClipRect;
+			grect clipRect;
+			foreach (ImageRef, it, this->images)
 			{
 				clipRect = grect(0.0f, 0.0f, (*it).rect.getSize()).clipped(this->clipRect - (*it).rect.getPosition());
 				cf = (*it).image->getSrcSize() / (*it).rect.getSize();
@@ -72,13 +81,11 @@ namespace aprilui
 					oldClipRect = (*it).image->getClipRect();
 					drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
 					(*it).image->draw(drawRect, color);
-					(*it).image->setClipRect(oldClipRect);
+					if (this->restoreClipRects)
+					{
+						(*it).image->setClipRect(oldClipRect);
+					}
 				}
-			}
-			else
-			{
-				drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
-				(*it).image->draw(drawRect, color);
 			}
 		}
 	}
