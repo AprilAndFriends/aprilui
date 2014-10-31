@@ -47,8 +47,8 @@ namespace aprilui
 		void update(float timeDelta);
 		void resetUnusedTime();
 
-		void load(bool ignoreDynamicLinks = false);
-		void loadAsync(bool ignoreDynamicLinks = false);
+		bool load(bool ignoreDynamicLinks = false);
+		bool loadAsync(bool ignoreDynamicLinks = false);
 		void unload();
 		void reload(chstr filename);
 		

@@ -111,12 +111,13 @@ namespace aprilui
 		}
 	}
 	
-	void Texture::load(bool ignoreDynamicLinks)
+	bool Texture::load(bool ignoreDynamicLinks)
 	{
+		bool result = true;
 		this->unusedTime = 0.0f;
 		if (!this->isLoaded())
 		{
-			this->texture->load();
+			result = this->texture->load();
 			if (loadListener != NULL)
 			{
 				(*loadListener)(this);
@@ -124,29 +125,29 @@ namespace aprilui
 		}
 		if (!ignoreDynamicLinks)
 		{
-			Texture* tex;
 			foreach (Texture*, it, this->links)
 			{
-				tex = *it;
-				tex->unusedTime = 0.0f;
-				if (!tex->isLoaded() && !tex->isLoadedAsync() && !tex->isAsyncLoadQueued())
+				(*it)->unusedTime = 0.0f;
+				if (!(*it)->isLoaded() && !(*it)->isLoadedAsync() && !(*it)->isAsyncLoadQueued())
 				{
-					tex->texture->loadAsync();
+					(*it)->texture->loadAsync();
 					if (loadListener != NULL)
 					{
-						(*loadListener)(tex);
+						(*loadListener)(*it);
 					}
 				}
 			}
 		}
+		return result;
 	}
 
-	void Texture::loadAsync(bool ignoreDynamicLinks)
+	bool Texture::loadAsync(bool ignoreDynamicLinks)
 	{
+		bool result = false;
 		this->unusedTime = 0.0f;
 		if (this->texture != NULL && !this->texture->isLoaded() && !this->texture->isLoadedAsync() && !this->texture->isAsyncLoadQueued())
 		{
-			this->texture->loadAsync();
+			result = this->texture->loadAsync();
 		}
 		if (!ignoreDynamicLinks)
 		{
@@ -159,6 +160,7 @@ namespace aprilui
 				}
 			}
 		}
+		return result;
 	}
 
 	void Texture::unload()
