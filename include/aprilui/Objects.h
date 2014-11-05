@@ -23,6 +23,7 @@
 #include "ObjectImageBox.h"
 #include "ObjectImageButton.h"
 #include "ObjectLabel.h"
+#include "ObjectOptionButton.h"
 #include "ObjectProgressBar.h"
 #include "ObjectProgressCircle.h"
 #include "ObjectScrollArea.h"

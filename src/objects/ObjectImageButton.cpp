@@ -202,10 +202,6 @@ namespace aprilui
 	harray<Image*> ImageButton::getUsedImages()
 	{
 		harray<Image*> images;
-		if (this->image != NULL)
-		{
-			images += this->image;
-		}
 		if (this->normalImage != NULL)
 		{
 			images += this->normalImage;
