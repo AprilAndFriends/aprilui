@@ -92,6 +92,7 @@ namespace aprilui
 	{
 		if (ToggleButton::_propertyDescriptions.size() == 0)
 		{
+			ToggleButton::_propertyDescriptions += PropertyDescription("toggled", PropertyDescription::BOOL);
 			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_image", PropertyDescription::STRING);
 			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_hover_image", PropertyDescription::STRING);
 			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_pushed_image", PropertyDescription::STRING);
@@ -146,28 +147,29 @@ namespace aprilui
 	
 	harray<Image*> ToggleButton::getUsedImages()
 	{
-		harray<Image*> images;
-		if (this->image != NULL)
+		harray<Image*> images = ImageButton::getUsedImages();
+		if (this->toggledNormalImage != NULL)
 		{
-			images += this->image;
+			images += this->toggledNormalImage;
 		}
-		if (this->pushedImage != NULL)
+		if (this->toggledPushedImage != NULL)
 		{
-			images += this->pushedImage;
+			images += this->toggledPushedImage;
 		}
-		if (this->hoverImage != NULL)
+		if (this->toggledHoverImage != NULL)
 		{
-			images += this->hoverImage;
+			images += this->toggledHoverImage;
 		}
-		if (this->disabledImage != NULL)
+		if (this->toggledDisabledImage != NULL)
 		{
-			images += this->disabledImage;
+			images += this->toggledDisabledImage;
 		}
 		return images;
 	}
+
 	void ToggleButton::toggle()
 	{
-		this->toggled = !this->toggled;
+		this->toggled ? this->turnOff() : this->turnOn();
 	}
 
 	void ToggleButton::turnOn()
@@ -230,6 +232,7 @@ namespace aprilui
 	
 	hstr ToggleButton::getProperty(chstr name)
 	{
+		if (name == "toggled")					return this->isToggled();
 		if (name == "toggled_image")			return this->getToggledNormalImageName();
 		if (name == "toggled_hover_image")		return this->getToggledHoverImageName();
 		if (name == "toggled_pushed_image")		return this->getToggledPushedImageName();
@@ -239,8 +242,9 @@ namespace aprilui
 
 	bool ToggleButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "toggled_image")			this->trySetToggledNormalImageByName(value);
-		else if	(name == "toggled_hover_image")		this->trySetToggledHoverImageByName(value);
+		if		(name == "toggled")					this->setToggled(value);
+		else if (name == "toggled_image")			this->trySetToggledNormalImageByName(value);
+		else if (name == "toggled_hover_image")		this->trySetToggledHoverImageByName(value);
 		else if	(name == "toggled_pushed_image")	this->trySetToggledPushedImageByName(value);
 		else if	(name == "toggled_disabled_image")	this->trySetToggledDisabledImageByName(value);
 		else return ImageButton::setProperty(name, value);
@@ -252,7 +256,7 @@ namespace aprilui
 		bool result = ImageButton::_mouseUp(keyCode);
 		if (result)
 		{
-			this->toggled = !this->toggled;
+			this->toggle();
 		}
 		return (result || ImageButton::_mouseUp(keyCode));
 	}

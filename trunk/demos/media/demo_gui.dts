@@ -104,6 +104,11 @@
 			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" x="0" y="0" w="128" h="16"/>
 			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" x="0" y="32" w="16" h="128"/>
 			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" x="20" y="20" w="64" h="64"/>
+			<Object type="ColoredQuad" color="000000" x="260" y="360" w="48" h="128">
+				<Object type="OptionButton" name="optionButton1" image="texture/test_red" toggled_image="texture/test_green" x="8" y="8" w="32" h="32" zorder="100" toggled="1"/>
+				<Object type="OptionButton" name="optionButton2" image="texture/test_red" toggled_image="texture/test_green" x="8" y="48" w="32" h="32" zorder="100"/>
+				<Object type="OptionButton" name="optionButton3" image="texture/test_red" toggled_image="texture/test_green" x="8" y="88" w="32" h="32" zorder="100"/>
+			</Object>
 		</Object>
 		<Object type="Label" name="keyboard_height" background_color="0000007F" anchors="" x="368" y="0" w="64" h="32"/>
 	</Object>

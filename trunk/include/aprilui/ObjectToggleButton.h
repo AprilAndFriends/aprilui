@@ -64,8 +64,8 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 		void toggle();
-		void turnOn();
-		void turnOff();
+		virtual void turnOn();
+		virtual void turnOff();
 		
 	protected:
 		bool toggled;
