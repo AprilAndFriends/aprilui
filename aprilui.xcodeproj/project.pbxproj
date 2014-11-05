@@ -104,6 +104,10 @@
 		D1228D2B19B5C56E003BD478 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1228D2A19B5C56E003BD478 /* Event.cpp */; };
 		D1228D2C19B5C56E003BD478 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1228D2A19B5C56E003BD478 /* Event.cpp */; };
 		D1228D2D19B5C56E003BD478 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1228D2A19B5C56E003BD478 /* Event.cpp */; };
+		D137B9401A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */; };
+		D137B9411A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */; };
+		D137B9421A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */; };
+		D137B9441A0A484200C4102E /* ObjectOptionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D137B9431A0A484200C4102E /* ObjectOptionButton.h */; };
 		D140387D18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
 		D140387E18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
 		D140387F18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
@@ -333,6 +337,8 @@
 		C98E1DBF14C823F200CB9F1C /* ObjectScrollBarH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarH.h; path = include/aprilui/ObjectScrollBarH.h; sourceTree = "<group>"; };
 		C98E1DC014C823F200CB9F1C /* ObjectScrollBarV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarV.h; path = include/aprilui/ObjectScrollBarV.h; sourceTree = "<group>"; };
 		D1228D2A19B5C56E003BD478 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Event.cpp; path = src/Event.cpp; sourceTree = "<group>"; };
+		D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectOptionButton.cpp; sourceTree = "<group>"; };
+		D137B9431A0A484200C4102E /* ObjectOptionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectOptionButton.h; path = include/aprilui/ObjectOptionButton.h; sourceTree = "<group>"; };
 		D140387B18EAF8150092608C /* ObjectProgressBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBase.cpp; sourceTree = "<group>"; };
 		D140387C18EAF8150092608C /* ObjectProgressCircle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressCircle.cpp; sourceTree = "<group>"; };
 		D140388318EAF8290092608C /* ObjectProgressBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBase.h; path = include/aprilui/ObjectProgressBase.h; sourceTree = "<group>"; };
@@ -499,6 +505,7 @@
 				D18CB6151902CE040071C391 /* ObjectScrollBarButtonSlider.cpp */,
 				7F38C6C7120967B9002B5134 /* ObjectTextImageButton.cpp */,
 				7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */,
+				D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */,
 				D140387B18EAF8150092608C /* ObjectProgressBase.cpp */,
 				D140387C18EAF8150092608C /* ObjectProgressCircle.cpp */,
 			);
@@ -613,6 +620,7 @@
 				D18CB6251902CE1C0071C391 /* ObjectScrollBarButtonSlider.h */,
 				7F38C69D12096793002B5134 /* ObjectTextImageButton.h */,
 				7F38C69E12096793002B5134 /* ObjectToggleButton.h */,
+				D137B9431A0A484200C4102E /* ObjectOptionButton.h */,
 				D140388318EAF8290092608C /* ObjectProgressBase.h */,
 				D140388418EAF8290092608C /* ObjectProgressCircle.h */,
 			);
@@ -650,6 +658,7 @@
 			files = (
 				7FC8041E11EC721E00851062 /* Animators.h in Headers */,
 				7FC8042111EC721E00851062 /* Dataset.h in Headers */,
+				D137B9441A0A484200C4102E /* ObjectOptionButton.h in Headers */,
 				7FC8042211EC721E00851062 /* Exception.h in Headers */,
 				7FC8042311EC721E00851062 /* Image.h in Headers */,
 				7FC8042411EC721E00851062 /* Objects.h in Headers */,
@@ -846,6 +855,7 @@
 				7F1B524612E4717500E958D8 /* AnimatorRedChanger.cpp in Sources */,
 				7F1B524812E4719E00E958D8 /* aprilui.cpp in Sources */,
 				7FDB98A0131BA9240064B968 /* AnimatorResizerX.cpp in Sources */,
+				D137B9401A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */,
 				D1228D2B19B5C56E003BD478 /* Event.cpp in Sources */,
 				7FDB98A1131BA9240064B968 /* AnimatorResizerY.cpp in Sources */,
 				7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */,
@@ -908,6 +918,7 @@
 				D1C0FC4519460B9100117F00 /* PropertyDescription.cpp in Sources */,
 				D1522E96140F6A6B0012F290 /* ObjectEditBox.cpp in Sources */,
 				D1522E97140F6A6B0012F290 /* ObjectImageBox.cpp in Sources */,
+				D137B9421A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */,
 				D1522E98140F6A6B0012F290 /* ObjectImageButton.cpp in Sources */,
 				D1228D2D19B5C56E003BD478 /* Event.cpp in Sources */,
 				D1522E99140F6A6B0012F290 /* ObjectLabel.cpp in Sources */,
@@ -970,6 +981,7 @@
 				D1C0FC4619460B9200117F00 /* PropertyDescription.cpp in Sources */,
 				D1F27B46177A2FCA00E5C131 /* ObjectEditBox.cpp in Sources */,
 				D1F27B47177A2FCA00E5C131 /* ObjectImageBox.cpp in Sources */,
+				D137B9411A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */,
 				D1F27B48177A2FCA00E5C131 /* ObjectImageButton.cpp in Sources */,
 				D1228D2C19B5C56E003BD478 /* Event.cpp in Sources */,
 				D1F27B49177A2FCA00E5C131 /* ObjectLabel.cpp in Sources */,
