@@ -153,7 +153,7 @@ namespace aprilui
 		}
 		Label::setText(newValue);
 		this->setCaretIndex(this->caretIndex);
-		this->setSelectionCount(this->selectionCount);
+		this->setSelectionCount(0);
 	}
 
 	void EditBox::setEmptyText(chstr value)
@@ -612,13 +612,11 @@ namespace aprilui
 		Object::_draw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
-
 		// background
 		if (this->backgroundColor.a > 0)
 		{
 			april::rendersys->drawFilledRect(drawRect, this->backgroundColor);
 		}
-
 		if (this->selectionCount != 0)
 		{
 			april::Color selectionColor = this->selectionColor;
@@ -635,21 +633,27 @@ namespace aprilui
 			}
 		}
 		LabelBase::_drawLabel(drawRect, drawColor);
-
 		// background outline
 		if (this->backgroundColor.a > 0)
 		{
 			april::rendersys->drawRect(drawRect, april::Color(this->textColor, this->backgroundColor.a));
 		}
-
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
 			grect renderRect = this->caretRect - this->center;
+			// make sure the carat is visible if the editbox is empty
+			if (this->text.size() == 0)
+			{
+				renderRect.x += 1.0f;
+			}
 			renderRect.clip(drawRect);
 			if (renderRect.w > 0.0f && renderRect.h > 0.0f)
 			{
-				april::rendersys->drawRect(renderRect, drawColor * this->textColor);
+				april::PlainVertex v[2];
+				v[0].set(renderRect.x, renderRect.y, 0);
+				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
+				april::rendersys->render(april::RO_LINE_LIST, v, 2);
 			}
 		}
 		this->text = text;
