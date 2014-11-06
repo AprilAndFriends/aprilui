@@ -612,7 +612,13 @@ namespace aprilui
 		Object::_draw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
-		LabelBase::_drawLabelBackground(drawRect, drawColor, april::Color(this->backgroundColor, (unsigned char)(alpha * disabledAlphaFactor)));
+
+		// background
+		if (this->backgroundColor.a > 0)
+		{
+			april::rendersys->drawFilledRect(drawRect, this->backgroundColor);
+		}
+
 		if (this->selectionCount != 0)
 		{
 			april::Color selectionColor = this->selectionColor;
@@ -629,6 +635,13 @@ namespace aprilui
 			}
 		}
 		LabelBase::_drawLabel(drawRect, drawColor);
+
+		// background outline
+		if (this->backgroundColor.a > 0)
+		{
+			april::rendersys->drawRect(drawRect, april::Color(this->textColor, this->backgroundColor.a));
+		}
+
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
