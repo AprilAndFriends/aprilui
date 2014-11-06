@@ -643,7 +643,7 @@ namespace aprilui
 		{
 			grect renderRect = this->caretRect - this->center;
 			// make sure the carat is visible if the editbox is empty
-			if (this->text.size() == 0)
+			if (this->caretIndex == 0)
 			{
 				renderRect.x += 1.0f;
 			}
