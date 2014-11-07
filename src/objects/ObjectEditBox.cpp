@@ -227,7 +227,12 @@ namespace aprilui
 			this->setCaretIndex(0);
 			return;
 		}
-		float fh = atres::renderer->getFont(this->font)->getLineHeight();
+		atres::Font* font = atres::renderer->getFont(this->font);
+		if (font == NULL)
+		{
+			return;
+		}
+		float fh = font->getLineHeight();
 		gvec2 position = this->_caretCursorPosition;
 		// full text
 		harray<atres::RenderLine> lines = MAKE_RENDER_LINES(this->text);
@@ -322,6 +327,10 @@ namespace aprilui
 		this->_caretDirty = false;
 		hstr leftText = this->text.utf8_substr(0, this->caretIndex);
 		atres::Font* font = atres::renderer->getFont(this->font);
+		if (font == NULL)
+		{
+			return;
+		}
 		float fh = font->getLineHeight();
 		float descender = font->getDescender();
 		float lh = fh + descender;
@@ -602,11 +611,14 @@ namespace aprilui
 			alpha = (unsigned char)(alpha * 0.75f);
 		}
 		atres::Font* font = atres::renderer->getFont(this->font);
-		float lh = font->getLineHeight() + font->getDescender();
-		if (this->multiLine && !this->_sizeProblemReported && this->rect.h < lh)
+		if (font != NULL)
 		{
-			hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.c_str(), (int)this->rect.h, (int)lh, this->font.c_str());
-			this->_sizeProblemReported = true;
+			float lh = font->getLineHeight() + font->getDescender();
+			if (this->multiLine && !this->_sizeProblemReported && this->rect.h < lh)
+			{
+				hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.c_str(), (int)this->rect.h, (int)lh, this->font.c_str());
+				this->_sizeProblemReported = true;
+			}
 		}
 		// not using Label::_draw() directly
 		Object::_draw();
@@ -836,7 +848,8 @@ namespace aprilui
 	{
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
-			if (atres::renderer->getFont(this->font)->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
+			atres::Font* font = atres::renderer->getFont(this->font);
+			if (font != NULL && font->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
 			{
 				this->_insertChar(charCode);
 			}
