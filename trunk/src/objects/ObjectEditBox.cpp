@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -81,6 +81,7 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::STRING);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text_color", PropertyDescription::HEXCOLOR);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::INT);
 			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
@@ -594,8 +595,7 @@ namespace aprilui
 			this->emptyText = this->emptyText.ltrim();
 		}
 		//////////////
-		april::Color drawColor = this->_getDrawColor();
-		grect drawRect = this->_getDrawRect();
+		april::Color color = this->color;
 		hstr text = this->text;
 		if (this->passwordChar != '\0' && this->text != "")
 		{
@@ -604,6 +604,7 @@ namespace aprilui
 		if (this->text == "" && this->dataset != NULL && this->dataset->getFocusedObject() != this)
 		{
 			this->text = this->emptyText;
+			this->color = this->emptyTextColor;
 		}
 		unsigned char alpha = this->backgroundColor.a;
 		if (this->pushed)
@@ -623,7 +624,9 @@ namespace aprilui
 		// not using Label::_draw() directly
 		Object::_draw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
+		april::Color drawColor = this->_getDrawColor();
 		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
+		grect drawRect = this->_getDrawRect();
 		// background
 		if (this->backgroundColor.a > 0)
 		{
@@ -669,6 +672,7 @@ namespace aprilui
 			}
 		}
 		this->text = text;
+		this->color = color;
 	}
 
 	void EditBox::_getBaseOffset(gvec2& offset, float& hf)
@@ -864,6 +868,7 @@ namespace aprilui
 		if (name == "filter")			return this->getFilter();
 		if (name == "empty_text")		return this->getEmptyText();
 		if (name == "empty_text_key")	return this->getEmptyTextKey();
+		if (name == "empty_text_color")	return this->getEmptyTextColor().hex();
 		if (name == "caret_index")		return this->getCaretIndex();
 		if (name == "cursor_index")
 		{
@@ -880,22 +885,23 @@ namespace aprilui
 	
 	bool EditBox::setProperty(chstr name, chstr value)
 	{
-		if		(name == "max_length")		this->setMaxLength(value);
-		else if	(name == "password_char")	this->setPasswordChar(value.c_str()[0]);
-		else if	(name == "filter")			this->setFilter(value);
-		else if	(name == "empty_text")		this->setEmptyText(value);
-		else if	(name == "empty_text_key")	this->setEmptyTextKey(value);
-		else if (name == "caret_index")		this->setCaretIndex(value);
+		if		(name == "max_length")			this->setMaxLength(value);
+		else if	(name == "password_char")		this->setPasswordChar(value.c_str()[0]);
+		else if	(name == "filter")				this->setFilter(value);
+		else if	(name == "empty_text")			this->setEmptyText(value);
+		else if	(name == "empty_text_key")		this->setEmptyTextKey(value);
+		else if (name == "empty_text_color")	this->setEmptyTextColor(value);
+		else if (name == "caret_index")			this->setCaretIndex(value);
 		else if (name == "cursor_index")
 		{
 			hlog::warn(aprilui::logTag, "'cursor_index=' is deprecated. Use 'caret_index=' instead."); // DEPRECATED
 			this->setCaretIndex(value);
 		}
-		else if (name == "multi_line")		this->setMultiLine(value);
-		else if (name == "selectable")		this->setSelectable(value);
-		else if (name == "disabled_offset")	this->setDisabledOffset(value);
-		else if (name == "selection_color")	this->setSelectionColor(value);
-		else if (name == "space_hack")		this->spaceHack = (bool)value;
+		else if (name == "multi_line")			this->setMultiLine(value);
+		else if (name == "selectable")			this->setSelectable(value);
+		else if (name == "disabled_offset")		this->setDisabledOffset(value);
+		else if (name == "selection_color")		this->setSelectionColor(value);
+		else if (name == "space_hack")			this->spaceHack = (bool)value;
 		else return Label::setProperty(name, value);
 		return true;
 	}

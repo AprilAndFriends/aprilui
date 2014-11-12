@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -34,6 +34,7 @@ namespace aprilui
 		void setEmptyText(chstr value);
 		HL_DEFINE_GET(hstr, emptyTextKey, EmptyTextKey);
 		void setEmptyTextKey(chstr value);
+		HL_DEFINE_GETSET(april::Color, emptyTextColor, EmptyTextColor);
 		HL_DEFINE_GET(int, caretIndex, CaretIndex);
 		void setCaretIndex(int value);
 		HL_DEFINE_GET(int, selectionCount, SelectionCount);
@@ -70,6 +71,7 @@ namespace aprilui
 	protected:
 		hstr emptyText;
 		hstr emptyTextKey;
+		april::Color emptyTextColor;
 		bool pushed;
 		int caretIndex;
 		int selectionCount;

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -30,8 +30,7 @@ namespace aprilui
 			Square,
 			Saw,
 			Triangle,
-			Random,
-			Hover,
+			Noise,
 			Custom
 		};
 
