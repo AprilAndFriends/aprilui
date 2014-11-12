@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -82,13 +82,18 @@ namespace aprilui
 			{
 				return;
 			}
-			this->notifyEvent(Event::DelayExpired, NULL);
+			this->notifyEvent(Event::AnimationDelayExpired, NULL);
 			this->timeDelta += this->delay;
 		}
+		bool expired = this->isExpired();
 		this->timer += this->timeDelta;
 		if (!heqf(this->acceleration, 0.0f, (float)HL_E_TOLERANCE))
 		{
 			this->speed += this->acceleration * this->timeDelta;
+		}
+		if (!expired && this->isExpired())
+		{
+			this->notifyEvent(Event::AnimationExpired, NULL);
 		}
 	}
 	
@@ -141,20 +146,10 @@ namespace aprilui
 				result = -(hmodf(time * this->speed - 0.25f, 1.0f) - 0.25f) * 4 * this->amplitude;
 			}
 			break;
-		case Random:
+		case Noise:
 			if (timeDelta > 0.0f)
 			{
 				result = hrandf(-this->speed * this->amplitude, this->speed * this->amplitude);
-			}
-			break;
-		case Hover:
-			if ((this->amplitude >= 0.0f) == this->parent->isCursorInside())
-			{
-				result = hmin(this->value - this->offset + timeDelta * this->speed, (float)habs(this->amplitude));
-			}
-			else
-			{
-				result = hmax(this->value - this->offset - timeDelta * this->speed, -(float)habs(this->amplitude));
 			}
 			break;
 		case Custom:
@@ -170,10 +165,6 @@ namespace aprilui
 		if (!this->enabled)
 		{
 			return false;
-		}
-		if (this->animationFunction == Hover)
-		{
-			return true;
 		}
 		if (this->delay > 0.0f)
 		{
@@ -191,10 +182,6 @@ namespace aprilui
 		if (!this->enabled)
 		{
 			return false;
-		}
-		if (this->animationFunction == Hover)
-		{
-			return true;
 		}
 		if (this->isExpired())
 		{
@@ -229,8 +216,7 @@ namespace aprilui
 			if (this->animationFunction == Square)		return "square";
 			if (this->animationFunction == Triangle)	return "triangle";
 			if (this->animationFunction == Linear)		return "linear";
-			if (this->animationFunction == Random)		return "random";
-			if (this->animationFunction == Hover)		return "hover";
+			if (this->animationFunction == Noise)		return "noise";
 			if (this->animationFunction == Custom)		return "custom";
 		}
 		if (name == "timer")			return this->getTimer();
@@ -258,12 +244,7 @@ namespace aprilui
 			else if	(value == "square")		this->setAnimationFunction(Square);
 			else if	(value == "triangle")	this->setAnimationFunction(Triangle);
 			else if	(value == "linear")		this->setAnimationFunction(Linear);
-			else if (value == "random")		this->setAnimationFunction(Random);
-			else if	(value == "hover")
-			{
-				hlog::warn(aprilui::logTag, "'hover' is deprecated. Use events instead."); // DEPRECATED
-				this->setAnimationFunction(Hover);
-			}
+			else if (value == "noise")		this->setAnimationFunction(Noise);
 			else if (value == "custom")		this->setAnimationFunction(Custom);
 			else
 			{
@@ -296,7 +277,7 @@ namespace aprilui
 	
 	void Animator::notifyEvent(chstr type, EventArgs* args)
 	{
-		if (type == Event::AttachedToObject || type == Event::DelayExpired && this->inheritValue)
+		if (type == Event::AttachedToObject || type == Event::AnimationDelayExpired && this->inheritValue)
 		{
 			this->value = this->offset = this->_getObjectValue();
 			if (this->useTarget)

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -21,7 +21,7 @@
 #define EVENT_TYPE_CHECK_DEPRECATED(newType, oldType) \
 	if (realType == oldType) \
 	{ \
-		hlog::warnf(aprilui::logTag, "The event '%s' is deprecated. Used '%s' instead.", oldType, newType.c_str()); \
+		hlog::warnf(aprilui::logTag, "The event '%s' is deprecated. Use '%s' instead.", oldType, newType.c_str()); \
 		realType = newType; \
 	}
 
@@ -70,7 +70,8 @@ namespace aprilui
 			EVENT_TYPE_CHECK_DEPRECATED(Event::SubmitEditText, "Submit");
 			EVENT_TYPE_CHECK_DEPRECATED(Event::ScrollSkinChanged, "SkinChange");
 			EVENT_TYPE_CHECK_DEPRECATED(Event::SetProgressValue, "Set");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::DelayExpired, "OnDelayEnd");
+			EVENT_TYPE_CHECK_DEPRECATED(Event::AnimationDelayExpired, "OnDelayEnd");
+			EVENT_TYPE_CHECK_DEPRECATED(Event::AnimationDelayExpired, "DelayExpired");
 			this->unregisterEvent(realType);
 			this->events[realType] = event;
 			// TODO - until here

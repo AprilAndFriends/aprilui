@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -33,10 +33,10 @@ namespace aprilui
 		static Object* createInstance(chstr name, grect rect);
 
 		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
-		HL_DEFINE_GET(april::Color, pushedTextColor, PushedTextColor);
-		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
 		void setHoverTextColor(april::Color value);
+		HL_DEFINE_GET(april::Color, pushedTextColor, PushedTextColor);
 		void setPushedTextColor(april::Color value);
+		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
 		void setDisabledTextColor(april::Color value);
 		Dataset* getDataset();
 

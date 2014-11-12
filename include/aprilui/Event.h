@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.4
+/// @version 3.5
 /// 
 /// @section LICENSE
 /// 
@@ -51,7 +51,8 @@ namespace aprilui
 		static hstr SubmitEditText;
 		static hstr ScrollSkinChanged;
 		static hstr SetProgressValue;
-		static hstr DelayExpired;
+		static hstr AnimationDelayExpired;
+		static hstr AnimationExpired;
 
 		Event();
 		virtual ~Event();
