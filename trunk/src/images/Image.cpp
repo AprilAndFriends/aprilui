@@ -376,7 +376,7 @@ namespace aprilui
 		return true;
 	}
 
-	void Image::_tryLoadTexCoords()
+	void Image::tryLoadTextureCoordinates()
 	{
 		if (!this->_textureCoordinatesLoaded && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)
 		{
@@ -386,27 +386,27 @@ namespace aprilui
 			grect rect = this->_makeClippedSrcRect();
 			if (!this->rotated)
 			{
-				this->_tVertices[0].u = this->_tVertices[2].u = rect.left() * iw;
-				this->_tVertices[0].v = this->_tVertices[1].v = rect.top() * ih;
-				this->_tVertices[1].u = this->_tVertices[3].u = rect.right() * iw;
-				this->_tVertices[2].v = this->_tVertices[3].v = rect.bottom() * ih;
+				this->vertices[0].u = this->vertices[2].u = rect.left() * iw;
+				this->vertices[0].v = this->vertices[1].v = rect.top() * ih;
+				this->vertices[1].u = this->vertices[3].u = rect.right() * iw;
+				this->vertices[2].v = this->vertices[3].v = rect.bottom() * ih;
 			}
 			else
 			{
-				this->_tVertices[0].u = this->_tVertices[1].u = (rect.x + rect.h) * iw;
-				this->_tVertices[0].v = this->_tVertices[2].v = rect.y * ih;
-				this->_tVertices[1].v = this->_tVertices[3].v = (rect.y + rect.w) * ih;
-				this->_tVertices[2].u = this->_tVertices[3].u = rect.x * iw;
+				this->vertices[0].u = this->vertices[1].u = (rect.x + rect.h) * iw;
+				this->vertices[0].v = this->vertices[2].v = rect.y * ih;
+				this->vertices[1].v = this->vertices[3].v = (rect.y + rect.w) * ih;
+				this->vertices[2].u = this->vertices[3].u = rect.x * iw;
 			}
 			if (this->invertX)
 			{
-				hswap(this->_tVertices[0].u, this->_tVertices[1].u);
-				hswap(this->_tVertices[2].u, this->_tVertices[3].u);
+				hswap(this->vertices[0].u, this->vertices[1].u);
+				hswap(this->vertices[2].u, this->vertices[3].u);
 			}
 			if (this->invertY)
 			{
-				hswap(this->_tVertices[0].v, this->_tVertices[2].v);
-				hswap(this->_tVertices[1].v, this->_tVertices[3].v);
+				hswap(this->vertices[0].v, this->vertices[2].v);
+				hswap(this->vertices[1].v, this->vertices[3].v);
 			}
 		}
 	}
@@ -442,22 +442,22 @@ namespace aprilui
 			rect += this->clipRect.getPosition() * sizeRatio;
 			rect.setSize(this->clipRect.getSize() * sizeRatio);
 		}
-		this->_tVertices[0].x = this->_tVertices[2].x = rect.left();
-		this->_tVertices[0].y = this->_tVertices[1].y = rect.top();
-		this->_tVertices[1].x = this->_tVertices[3].x = rect.right();
-		this->_tVertices[2].y = this->_tVertices[3].y = rect.bottom();
+		this->vertices[0].x = this->vertices[2].x = rect.left();
+		this->vertices[0].y = this->vertices[1].y = rect.top();
+		this->vertices[1].x = this->vertices[3].x = rect.right();
+		this->vertices[2].y = this->vertices[3].y = rect.bottom();
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getTexture());
-		this->_tryLoadTexCoords();
+		this->tryLoadTextureCoordinates();
 		april::rendersys->setTextureBlendMode(this->blendMode);
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->_tVertices, 4, color);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->vertices, 4, color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->_tVertices, 4);
+			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->vertices, 4);
 		}
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
@@ -475,7 +475,7 @@ namespace aprilui
 		}
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getTexture());
-		this->_tryLoadTexCoords();
+		this->tryLoadTextureCoordinates();
 		// texture coordinate scaling
 		float iw = 1.0f / this->texture->getWidth();
 		float ih = 1.0f / this->texture->getHeight();
