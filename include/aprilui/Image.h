@@ -86,11 +86,14 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
 		hstr getFullName();
-		
+		inline const april::TexturedVertex* getVertices() const { return this->vertices; } // use with care!
+
 		virtual harray<PropertyDescription> getPropertyDescriptions();
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
+
+		void tryLoadTextureCoordinates();
 
 		DEPRECATED_ATTRIBUTE inline bool isVertical() { return this->rotated; }
 		DEPRECATED_ATTRIBUTE inline void setVertical(bool value) { this->rotated = value; }
@@ -112,13 +115,12 @@ namespace aprilui
 
 		bool _textureCoordinatesLoaded;
 		
-		void _tryLoadTexCoords();
 		grect _makeClippedSrcRect();
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
-		april::TexturedVertex _tVertices[4];
+		april::TexturedVertex vertices[4];
 		
 	};
 
