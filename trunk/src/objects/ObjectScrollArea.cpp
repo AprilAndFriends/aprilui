@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.51
 /// 
 /// @section LICENSE
 /// 
@@ -171,7 +171,7 @@ namespace aprilui
 					this->_lastPosition = position;
 					foreach (Object*, it, this->childrenObjects)
 					{
-						(*it)->onMouseCancel(april::AK_LBUTTON);
+						(*it)->onMouseCancel(april::AK_NONE);
 					}
 				}
 				else

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.51
 /// 
 /// @section LICENSE
 /// 
@@ -15,12 +15,15 @@
 #include "Object.h"
 #include "ObjectButtonBase.h"
 
+// because the derived class' object has not been created yet in this class' constructor
+#define _THIS_OBJECT (this->_thisObject != NULL ? this->_thisObject : this->_thisObject = dynamic_cast<Object*>(this))
+
 namespace aprilui
 {
 	static harray<april::Key> allowedKeys;
 	static harray<april::Button> allowedButtons;
 
-	ButtonBase::ButtonBase()
+	ButtonBase::ButtonBase() : _thisObject(NULL)
 	{
 		this->hovered = false;
 		this->pushed = false;
@@ -44,7 +47,7 @@ namespace aprilui
 			int focusIndex = this->getFocusIndex();
 			if (focusIndex >= 0 && dataset->getFocusedObjectIndex() == focusIndex)
 			{
-				return dynamic_cast<Object*>(this);
+				return _THIS_OBJECT;
 			}
 			root = dataset->getRoot();
 		}
@@ -59,7 +62,7 @@ namespace aprilui
 		}
 		if (root == NULL)
 		{
-			return (this->isCursorInside() ? dynamic_cast<Object*>(this) : NULL);
+			return (this->isCursorInside() ? _THIS_OBJECT : NULL);
 		}
 		return root->getChildUnderCursor();
 	}
@@ -67,7 +70,16 @@ namespace aprilui
 	void ButtonBase::_updateHover()
 	{
 		bool previousHovered = this->hovered;
-		this->hovered = (this->_findHoverObject() == dynamic_cast<Object*>(this));
+		Object* thisObject = _THIS_OBJECT;
+		if (thisObject->isDerivedEnabled())
+		{
+			this->hovered = (this->_findHoverObject() == thisObject);
+		}
+		else
+		{
+			this->hovered = false;
+			this->pushed = false;
+		}
 		if (previousHovered != this->hovered)
 		{
 			this->triggerEvent(this->hovered ? Event::HoverStarted : Event::HoverFinished);
