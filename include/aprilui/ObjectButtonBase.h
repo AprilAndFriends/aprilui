@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.51
 /// 
 /// @section LICENSE
 /// 
@@ -68,6 +68,9 @@ namespace aprilui
 		virtual bool _buttonUp(april::Button buttonCode);
 
 		DEPRECATED_ATTRIBUTE virtual bool _checkHover() { return (this->_findHoverObject() != NULL); }
+
+	private:
+		Object* _thisObject; // used for internal optimization to avoid dynamic_cast
 
 	};
 	

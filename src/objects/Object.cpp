@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.51
 /// 
 /// @section LICENSE
 /// 
@@ -451,7 +451,7 @@ namespace aprilui
 		this->anchorTop = top;
 		this->anchorBottom = bottom;
 	}
-	
+
 	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot)
 	{
 		// recursive function that combines all the alpha from the parents (if any)
@@ -1248,7 +1248,7 @@ namespace aprilui
 			point *= current->getScale();
 			point.rotate(-current->getAngle());
 			point += center + current->getPosition();
-			current = (overrideRoot == NULL || overrideRoot != current ? dynamic_cast<Object*>(current->getParent()) : NULL);
+			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
 		}
 		return point;
 	}
