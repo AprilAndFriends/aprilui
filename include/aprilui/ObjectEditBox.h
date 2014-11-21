@@ -80,7 +80,6 @@ namespace aprilui
 		bool multiLine;
 		bool selectable;
 		bool disabledOffset;
-		bool spaceHack; // TODO - remove
 		hstr filter;
 		april::Color selectionColor;
 		grect caretRect;
