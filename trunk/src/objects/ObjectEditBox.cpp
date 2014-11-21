@@ -59,8 +59,6 @@ namespace aprilui
 		this->_sizeProblemReported = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
-		/// TODO - remove
-		this->spaceHack = false;
 	}
 
 	EditBox::~EditBox()
@@ -587,14 +585,6 @@ namespace aprilui
 
 	void EditBox::_draw()
 	{
-		//////////////
-		// TODO - remove this hack, fix it in ATRES
-		if (this->spaceHack)
-		{
-			this->text = this->text.ltrim();
-			this->emptyText = this->emptyText.ltrim();
-		}
-		//////////////
 		april::Color color = this->color;
 		hstr text = this->text;
 		if (this->passwordChar != '\0' && this->text != "")
@@ -879,7 +869,6 @@ namespace aprilui
 		if (name == "selectable")		return this->isSelectable();
 		if (name == "disabled_offset")	return this->isDisabledOffset();
 		if (name == "selection_color")	return this->getSelectionColor().hex();
-		if (name == "space_hack")		return this->spaceHack;
 		return Label::getProperty(name);
 	}
 	
@@ -901,7 +890,6 @@ namespace aprilui
 		else if (name == "selectable")			this->setSelectable(value);
 		else if (name == "disabled_offset")		this->setDisabledOffset(value);
 		else if (name == "selection_color")		this->setSelectionColor(value);
-		else if (name == "space_hack")			this->spaceHack = (bool)value;
 		else return Label::setProperty(name, value);
 		return true;
 	}
