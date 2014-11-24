@@ -26,11 +26,11 @@ namespace aprilui
 	class apriluiExport TextImageButton : public ImageButton, public LabelBase
 	{
 	public:
-		TextImageButton(chstr name, grect rect);
+		TextImageButton(chstr name);
 		~TextImageButton();
 		inline hstr getClassName() const { return "TextImageButton"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
 		void setHoverTextColor(april::Color value);

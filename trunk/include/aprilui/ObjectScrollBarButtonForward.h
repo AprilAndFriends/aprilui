@@ -25,11 +25,11 @@ namespace aprilui
 	class apriluiExport ScrollBarButtonForward : public ImageButton
 	{
 	public:
-		ScrollBarButtonForward(chstr name, grect rect);
+		ScrollBarButtonForward(chstr name);
 		~ScrollBarButtonForward();
 		inline hstr getClassName() const { return "ScrollBarButtonForward"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);
 

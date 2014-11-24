@@ -34,11 +34,11 @@ namespace aprilui
 			Up = 3
 		};
 
-		ProgressBar(chstr name, grect rect);
+		ProgressBar(chstr name);
 		~ProgressBar();
 		inline hstr getClassName() const { return "ProgressBar"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 		
 		HL_DEFINE_ISSET(stretching, Stretching);
 		HL_DEFINE_GETSET(Direction, direction, Direction);

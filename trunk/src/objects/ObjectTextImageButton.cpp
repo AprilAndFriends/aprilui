@@ -20,9 +20,9 @@ namespace aprilui
 {
 	harray<PropertyDescription> TextImageButton::_propertyDescriptions;
 
-	TextImageButton::TextImageButton(chstr name, grect rect) :
+	TextImageButton::TextImageButton(chstr name) :
 		LabelBase(),
-		ImageButton(name, rect)
+		ImageButton(name)
 	{
 		this->text = "TextImageButton: " + name;
 		this->pushedTextColor = april::Color::White * 0.2f;
@@ -37,9 +37,9 @@ namespace aprilui
 	{
 	}
 
-	Object* TextImageButton::createInstance(chstr name, grect rect)
+	Object* TextImageButton::createInstance(chstr name)
 	{
-		return new TextImageButton(name, rect);
+		return new TextImageButton(name);
 	}
 
 	Dataset* TextImageButton::getDataset()

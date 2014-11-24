@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	ColoredQuad::ColoredQuad(chstr name, grect rect) : Object(name, rect)
+	ColoredQuad::ColoredQuad(chstr name) : Object(name)
 	{
 	}
 
@@ -23,9 +23,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ColoredQuad::createInstance(chstr name, grect rect)
+	Object* ColoredQuad::createInstance(chstr name)
 	{
-		return new ColoredQuad(name, rect);
+		return new ColoredQuad(name);
 	}
 
 	void ColoredQuad::_draw()

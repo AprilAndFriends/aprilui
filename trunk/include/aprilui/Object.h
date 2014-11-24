@@ -49,12 +49,16 @@ namespace aprilui
 			HIT_TEST_DISABLED_RECURSIVE = 2
 		};
 
-		Object(chstr name, grect rect);
+		Object(chstr name);
 		~Object();
 		inline hstr getClassName() const { return "Object"; }
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);
+		void setRect(gvec2 position, gvec2 size);
+		void setRect(gvec2 position, float w, float h);
+		void setRect(float x, float y, gvec2 size);
+		void setRect(float x, float y, float w, float h);
 		HL_DEFINE_GETSET(float, rect.x, X);
 		HL_DEFINE_GETSET(float, rect.y, Y);
 		HL_DEFINE_GET(float, rect.w, Width);

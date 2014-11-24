@@ -24,11 +24,11 @@ namespace aprilui
 	class apriluiExport EditBox : public Label
 	{
 	public:
-		EditBox(chstr name, grect rect);
+		EditBox(chstr name);
 		~EditBox();
 		inline hstr getClassName() const { return "EditBox"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 		
 		HL_DEFINE_GET(hstr, emptyText, EmptyText);
 		void setEmptyText(chstr value);

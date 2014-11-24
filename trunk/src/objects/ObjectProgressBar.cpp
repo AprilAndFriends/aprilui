@@ -18,7 +18,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> ProgressBar::_propertyDescriptions;
 
-	ProgressBar::ProgressBar(chstr name, grect rect) : ImageBox(name, rect), ProgressBase()
+	ProgressBar::ProgressBar(chstr name) : ImageBox(name), ProgressBase()
 	{
 		this->stretching = false;
 		this->direction = Right;
@@ -30,9 +30,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ProgressBar::createInstance(chstr name, grect rect)
+	Object* ProgressBar::createInstance(chstr name)
 	{
-		return new ProgressBar(name, rect);
+		return new ProgressBar(name);
 	}
 
 	Dataset* ProgressBar::getDataset()

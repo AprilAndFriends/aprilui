@@ -464,7 +464,7 @@ namespace aprilui
 			}
 			if (*node == "Object")
 			{
-				aprilui::readRectNode(rect, node, true);
+				aprilui::readRectNode(rect, node);
 				rect += offset;
 			}
 		}
@@ -481,7 +481,7 @@ namespace aprilui
 		Animator* animator = NULL;
 		if (*node == "Object")
 		{
-			baseObject = object = aprilui::createObject(className, objectName, rect);
+			baseObject = object = aprilui::createObject(className, objectName);
 		}
 		else if (*node == "Animator")
 		{
@@ -508,6 +508,7 @@ namespace aprilui
 		baseObject->notifyEvent(Event::RegisteredInDataset, &args);
 		if (object != NULL)
 		{
+			object->setRect(rect);
 			this->objects[objectName] = object;
 			if (this->root == NULL)
 			{
@@ -532,7 +533,7 @@ namespace aprilui
 			name = prop->name();
 			if (name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
 			{
-				continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
+				continue; // TODO - might be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
 			}
 			baseObject->setProperty(name, prop->value());
 		}

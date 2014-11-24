@@ -17,7 +17,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> ImageButton::_propertyDescriptions;
 
-	ImageButton::ImageButton(chstr name, grect rect) : ImageBox(name, rect), ButtonBase()
+	ImageButton::ImageButton(chstr name) : ImageBox(name), ButtonBase()
 	{
 		this->normalImage = NULL;
 		this->pushedImage = NULL;
@@ -29,9 +29,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ImageButton::createInstance(chstr name, grect rect)
+	Object* ImageButton::createInstance(chstr name)
 	{
-		return new ImageButton(name, rect);
+		return new ImageButton(name);
 	}
 
 	hstr ImageButton::getName()

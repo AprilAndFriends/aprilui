@@ -16,13 +16,9 @@
 
 namespace aprilui
 {	
-	void readRectNode(grect& rect, hlxml::Node* node, bool allowNoSize)
+	void readRectNode(grect& rect, hlxml::Node* node)
 	{
 		rect.set(0.0f, 0.0f, 0.0f, 0.0f);
-		if (allowNoSize)
-		{
-			rect.setSize(-1.0f, -1.0f);
-		}
 		if (node->pexists("rect"))
 		{
 			rect = april::hstrToGrect(node->pstr("rect"));
@@ -35,19 +31,15 @@ namespace aprilui
 			}
 			else
 			{
-				rect.setPosition(node->pfloat("x"), node->pfloat("y"));
+				rect.setPosition(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
 			}
 			if (node->pexists("size"))
 			{
 				rect.setSize(april::hstrToGvec2(node->pstr("size")));
 			}
-			else if (!allowNoSize)
-			{
-				rect.setSize(node->pfloat("w"), node->pfloat("h"));
-			}
 			else
 			{
-				rect.setSize(node->pfloat("w", -1.0f), node->pfloat("h", -1.0f));
+				rect.setSize(node->pfloat("w", 0.0f), node->pfloat("h", 0.0f));
 			}
 		}
 	}

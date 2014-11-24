@@ -25,11 +25,11 @@ namespace aprilui
 	class apriluiExport ScrollBarButtonBackground : public ImageButton
 	{
 	public:
-		ScrollBarButtonBackground(chstr name, grect rect);
+		ScrollBarButtonBackground(chstr name);
 		~ScrollBarButtonBackground();
 		inline hstr getClassName() const { return "ScrollBarButtonBackground"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);
 

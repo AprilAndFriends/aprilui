@@ -24,11 +24,11 @@ namespace aprilui
 	class apriluiExport ToggleButton : public ImageButton
 	{
 	public:
-		ToggleButton(chstr name, grect rect);
+		ToggleButton(chstr name);
 		~ToggleButton();
 		inline hstr getClassName() const { return "ToggleButton"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		HL_DEFINE_ISSET(toggled, Toggled);
 		HL_DEFINE_GET(Image*, toggledNormalImage, ToggledNormalImage);

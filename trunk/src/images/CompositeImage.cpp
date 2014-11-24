@@ -72,7 +72,8 @@ namespace aprilui
 			grect clipRect;
 			foreach (ImageRef, it, this->images)
 			{
-				clipRect = grect(0.0f, 0.0f, (*it).rect.getSize()).clipped(this->clipRect - (*it).rect.getPosition());
+				clipRect.set(0.0f, 0.0f, (*it).rect.getSize());
+				clipRect.clip(this->clipRect - (*it).rect.getPosition());
 				cf = (*it).image->getSrcSize() / (*it).rect.getSize();
 				clipRect.set(clipRect.getPosition() * cf, clipRect.getSize() * cf);
 				if (clipRect.w > 0.0f && clipRect.h > 0.0f)

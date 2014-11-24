@@ -16,7 +16,7 @@
 
 namespace aprilui
 {
-	Label::Label(chstr name, grect rect) : Object(name, rect), LabelBase()
+	Label::Label(chstr name) : Object(name), LabelBase()
 	{
 		this->text = "Label: " + name;
 		this->debugColor = april::Color(april::Color::Aqua, 32);
@@ -26,9 +26,9 @@ namespace aprilui
 	{
 	}
 
-	Object* Label::createInstance(chstr name, grect rect)
+	Object* Label::createInstance(chstr name)
 	{
-		return new Label(name, rect);
+		return new Label(name);
 	}
 
 	Dataset* Label::getDataset()

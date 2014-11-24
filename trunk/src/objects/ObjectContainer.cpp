@@ -16,7 +16,7 @@
 
 namespace aprilui
 {
-	Container::Container(chstr name, grect rect) : Object(name, rect)
+	Container::Container(chstr name) : Object(name)
 	{
 		this->scrollArea = NULL;
 		this->scrollBarH = NULL;
@@ -28,9 +28,9 @@ namespace aprilui
 	{
 	}
 
-	Object* Container::createInstance(chstr name, grect rect)
+	Object* Container::createInstance(chstr name)
 	{
-		return new Container(name, rect);
+		return new Container(name);
 	}
 
 }

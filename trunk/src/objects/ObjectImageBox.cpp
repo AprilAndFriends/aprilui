@@ -18,7 +18,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> ImageBox::_propertyDescriptions;
 
-	ImageBox::ImageBox(chstr name, grect rect) : Object(name, rect)
+	ImageBox::ImageBox(chstr name) : Object(name)
 	{
 		this->image = NULL;
 		this->debugColor = april::Color::Clear;
@@ -28,9 +28,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ImageBox::createInstance(chstr name, grect rect)
+	Object* ImageBox::createInstance(chstr name)
 	{
-		return new ImageBox(name, rect);
+		return new ImageBox(name);
 	}
 
 	harray<PropertyDescription> ImageBox::getPropertyDescriptions()
@@ -48,12 +48,12 @@ namespace aprilui
 		if (image != NULL)
 		{
 			grect rect = image->getSrcRect();
-			if (this->rect.w == -1)
+			if (this->rect.w == 0.0f)
 			{
 				this->rect.w = rect.w;
 				this->center.x = rect.w * 0.5f;
 			}
-			if (this->rect.h == -1)
+			if (this->rect.h == 0.0f)
 			{
 				this->rect.h = rect.h;
 				this->center.y = this->rect.h * 0.5f;

@@ -34,11 +34,11 @@ namespace aprilui
 		friend class ScrollBarH;
 		friend class ScrollBarV;
 
-		Container(chstr name, grect rect);
+		Container(chstr name);
 		~Container();
 		inline hstr getClassName() const { return "Container"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 		
 	protected:
 		ScrollArea* scrollArea;

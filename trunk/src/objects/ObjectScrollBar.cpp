@@ -35,7 +35,7 @@ namespace aprilui
 
 	harray<PropertyDescription> ScrollBar::_propertyDescriptions;
 
-	ScrollBar::ScrollBar(chstr name, grect rect) : Object(name, rect)
+	ScrollBar::ScrollBar(chstr name) : Object(name)
 	{
 		this->gridSize = GridSize;
 		this->useFading = true;
@@ -279,22 +279,22 @@ namespace aprilui
 			{
 				if (this->_buttonBackgroundSkinned == NULL)
 				{
-					this->_buttonBackgroundSkinned = new ScrollBarButtonBackground(april::generateName("aprilui::ScrollButtonBackground"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->_buttonBackgroundSkinned = new ScrollBarButtonBackground(april::generateName("aprilui::ScrollButtonBackground"));
 					this->registerChild(this->_buttonBackgroundSkinned);
 				}
 				if (this->_buttonSliderSkinned == NULL)
 				{
-					this->_buttonSliderSkinned = new ScrollBarButtonSlider(april::generateName("aprilui::ScrollButtonSlider"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->_buttonSliderSkinned = new ScrollBarButtonSlider(april::generateName("aprilui::ScrollButtonSlider"));
 					this->registerChild(this->_buttonSliderSkinned);
 				}
 				if (this->_buttonForwardSkinned == NULL)
 				{
-					this->_buttonForwardSkinned = new ScrollBarButtonForward(april::generateName("aprilui::ScrollButtonForward"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->_buttonForwardSkinned = new ScrollBarButtonForward(april::generateName("aprilui::ScrollButtonForward"));
 					this->registerChild(this->_buttonForwardSkinned);
 				}
 				if (this->_buttonBackwardSkinned == NULL)
 				{
-					this->_buttonBackwardSkinned = new ScrollBarButtonBackward(april::generateName("aprilui::ScrollButtonBackward"), grect(0.0f, 0.0f, -1.0f, -1.0f));
+					this->_buttonBackwardSkinned = new ScrollBarButtonBackward(april::generateName("aprilui::ScrollButtonBackward"));
 					this->registerChild(this->_buttonBackwardSkinned);
 				}
 				this->_buttonBackgroundSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackground());

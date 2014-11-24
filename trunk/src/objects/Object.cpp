@@ -117,17 +117,8 @@ namespace aprilui
 
 	harray<PropertyDescription> Object::_propertyDescriptions;
 
-	Object::Object(chstr name, grect rect) : BaseObject(name)
+	Object::Object(chstr name) : BaseObject(name)
 	{
-		this->rect = rect;
-		if (this->rect.w != -1)
-		{
-			this->center.x = this->rect.w * 0.5f;
-		}
-		if (this->rect.h != -1)
-		{
-			this->center.y = this->rect.h* 0.5f;
-		}
 		this->scaleFactor.set(1.0f, 1.0f);
 		this->childUnderCursor = NULL;
 		this->checkedChildUnderCursor = false;
@@ -307,6 +298,10 @@ namespace aprilui
 		{
 			return;
 		}
+		if (this->rect.w <= 0.0f)
+		{
+			this->center.x = difference * 0.5f;
+		}
 		float width = 0.0f;
 		float height = 0.0f;
 		float differenceAlt = 0.0f;
@@ -359,6 +354,10 @@ namespace aprilui
 		{
 			return;
 		}
+		if (this->rect.h <= 0.0f)
+		{
+			this->center.y = difference * 0.5f;
+		}
 		float width = 0.0f;
 		float height = 0.0f;
 		float differenceAlt = 0.0f;
@@ -405,6 +404,46 @@ namespace aprilui
 		}
 	}
 
+	void Object::setRect(grect value)
+	{
+		this->_updateChildrenHorizontal(value.w - this->rect.w);
+		this->_updateChildrenVertical(value.h - this->rect.h);
+		this->rect = value;
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(gvec2 position, gvec2 size)
+	{
+		this->_updateChildrenHorizontal(size.x - this->rect.w);
+		this->_updateChildrenVertical(size.y - this->rect.h);
+		this->rect.set(position, size);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(gvec2 position, float w, float h)
+	{
+		this->_updateChildrenHorizontal(w - this->rect.w);
+		this->_updateChildrenVertical(h - this->rect.h);
+		this->rect.set(position, w, h);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(float x, float y, gvec2 size)
+	{
+		this->_updateChildrenHorizontal(size.x - this->rect.w);
+		this->_updateChildrenVertical(size.y - this->rect.h);
+		this->rect.set(x, y, size);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(float x, float y, float w, float h)
+	{
+		this->_updateChildrenHorizontal(w - this->rect.w);
+		this->_updateChildrenVertical(h - this->rect.h);
+		this->rect.set(x, y, w, h);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
 	void Object::setWidth(float value)
 	{
 		this->_updateChildrenHorizontal(value - this->rect.w);
@@ -431,16 +470,7 @@ namespace aprilui
 	{
 		this->_updateChildrenHorizontal(w - this->rect.w);
 		this->_updateChildrenVertical(h - this->rect.h);
-		this->rect.w = w;
-		this->rect.h = h;
-		this->notifyEvent(Event::Resized, NULL);
-	}
-
-	void Object::setRect(grect value)
-	{
-		this->_updateChildrenHorizontal(value.w - this->rect.w);
-		this->_updateChildrenVertical(value.h - this->rect.h);
-		this->rect = value;
+		this->rect.setSize(w, h);
 		this->notifyEvent(Event::Resized, NULL);
 	}
 

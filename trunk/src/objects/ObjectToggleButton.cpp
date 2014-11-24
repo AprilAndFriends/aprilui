@@ -26,7 +26,7 @@ namespace aprilui
 
 	harray<PropertyDescription> ToggleButton::_propertyDescriptions;
 
-	ToggleButton::ToggleButton(chstr name, grect rect) : ImageButton(name, rect)
+	ToggleButton::ToggleButton(chstr name) : ImageButton(name)
 	{
 		this->toggled = false;
 		this->toggledNormalImage = NULL;
@@ -39,9 +39,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ToggleButton::createInstance(chstr name, grect rect)
+	Object* ToggleButton::createInstance(chstr name)
 	{
-		return new ToggleButton(name, rect);
+		return new ToggleButton(name);
 	}
 
 	void ToggleButton::setToggledNormalImage(Image* image)

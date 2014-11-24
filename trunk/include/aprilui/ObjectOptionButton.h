@@ -25,11 +25,11 @@ namespace aprilui
 	class apriluiExport OptionButton : public ToggleButton
 	{
 	public:
-		OptionButton(chstr name, grect rect);
+		OptionButton(chstr name);
 		~OptionButton();
 		inline hstr getClassName() const { return "OptionButton"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		int getOptionCount();
 

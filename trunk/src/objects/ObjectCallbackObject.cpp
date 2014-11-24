@@ -13,7 +13,7 @@
 
 namespace aprilui
 {
-	CallbackObject::CallbackObject(chstr name, grect rect) : Object(name, rect)
+	CallbackObject::CallbackObject(chstr name) : Object(name)
 	{
 		this->drawCallback = NULL;
 		this->updateCallback = NULL;
@@ -23,9 +23,9 @@ namespace aprilui
 	{
 	}
 
-	Object* CallbackObject::createInstance(chstr name, grect rect)
+	Object* CallbackObject::createInstance(chstr name)
 	{
-		return new CallbackObject(name, rect);
+		return new CallbackObject(name);
 	}
 
 	void CallbackObject::_draw()

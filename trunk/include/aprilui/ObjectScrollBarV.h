@@ -24,11 +24,11 @@ namespace aprilui
 	class apriluiExport ScrollBarV : public ScrollBar
 	{
 	public:
-		ScrollBarV(chstr name, grect rect);
+		ScrollBarV(chstr name);
 		~ScrollBarV();
 		inline hstr getClassName() const { return "ScrollBarV"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);
 
