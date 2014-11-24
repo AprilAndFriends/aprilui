@@ -20,7 +20,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> ProgressCircle::_propertyDescriptions;
 
-	ProgressCircle::ProgressCircle(chstr name, grect rect) : ImageBox(name, rect), ProgressBase()
+	ProgressCircle::ProgressCircle(chstr name) : ImageBox(name), ProgressBase()
 	{
 		this->direction = Clockwise;
 	}
@@ -29,9 +29,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ProgressCircle::createInstance(chstr name, grect rect)
+	Object* ProgressCircle::createInstance(chstr name)
 	{
-		return new ProgressCircle(name, rect);
+		return new ProgressCircle(name);
 	}
 
 	Dataset* ProgressCircle::getDataset()

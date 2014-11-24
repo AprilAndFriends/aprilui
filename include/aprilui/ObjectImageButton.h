@@ -26,11 +26,11 @@ namespace aprilui
 	class apriluiExport ImageButton : public ImageBox, public ButtonBase
 	{
 	public:
-		ImageButton(chstr name, grect rect);
+		ImageButton(chstr name);
 		~ImageButton();
 		inline hstr getClassName() const { return "ImageButton"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 		
 		HL_DEFINE_GET(Image*, hoverImage, HoverImage);
 		HL_DEFINE_GET(Image*, pushedImage, PushedImage);

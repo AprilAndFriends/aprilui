@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	OptionButton::OptionButton(chstr name, grect rect) : ToggleButton(name, rect)
+	OptionButton::OptionButton(chstr name) : ToggleButton(name)
 	{
 	}
 
@@ -28,9 +28,9 @@ namespace aprilui
 	{
 	}
 
-	Object* OptionButton::createInstance(chstr name, grect rect)
+	Object* OptionButton::createInstance(chstr name)
 	{
-		return new OptionButton(name, rect);
+		return new OptionButton(name);
 	}
 
 	int OptionButton::getOptionCount()

@@ -22,7 +22,7 @@ namespace hlxml
 
 namespace aprilui
 {
-	void readRectNode(grect& rect, hlxml::Node* node, bool allowNoSize = false);
+	void readRectNode(grect& rect, hlxml::Node* node);
 	
 }
 #endif

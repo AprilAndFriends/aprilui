@@ -33,7 +33,7 @@ namespace aprilui
 	hstr ScrollBarH::SkinNameHBackwardHover = "left_hover";
 	hstr ScrollBarH::SkinNameHBackwardPushed = "left_pushed";
 
-	ScrollBarH::ScrollBarH(chstr name, grect rect) : ScrollBar(name, rect)
+	ScrollBarH::ScrollBarH(chstr name) : ScrollBar(name)
 	{
 	}
 
@@ -41,9 +41,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ScrollBarH::createInstance(chstr name, grect rect)
+	Object* ScrollBarH::createInstance(chstr name)
 	{
-		return new ScrollBarH(name, rect);
+		return new ScrollBarH(name);
 	}
 
 	grect ScrollBarH::_getBarDrawRect()

@@ -23,8 +23,8 @@
 #include "apriluiExport.h"
 #include "Event.h"
 
-#define APRILUI_REGISTER_OBJECT_TYPE(name) aprilui::registerObjectFactory(#name, &name::createInstance)
-#define APRILUI_REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(#name, &name::createInstance)
+#define APRILUI_REGISTER_OBJECT_TYPE(name) aprilui::registerObjectFactory(name("").getClassName(), &name::createInstance)
+#define APRILUI_REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(name("").getClassName(), &name::createInstance)
 
 namespace aprilui
 {
@@ -65,13 +65,13 @@ namespace aprilui
 	apriluiFnExport void setDefaultTextureLoadMode(april::Texture::LoadMode value);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
 
-	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect));
+	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr));
 	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));
 	apriluiFnExport bool hasObjectFactory(chstr typeName);
 	apriluiFnExport bool hasAnimatorFactory(chstr typeName);
 	apriluiFnExport void unregisterObjectFactory(chstr typeName);
 	apriluiFnExport void unregisterAnimatorFactory(chstr typeName);
-	apriluiFnExport Object* createObject(chstr type, chstr name, grect rect);
+	apriluiFnExport Object* createObject(chstr type, chstr name);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	
 	apriluiFnExport gvec2 transformWindowPoint(gvec2 pt);

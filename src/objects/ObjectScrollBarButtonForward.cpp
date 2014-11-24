@@ -18,7 +18,7 @@
 
 namespace aprilui
 {
-	ScrollBarButtonForward::ScrollBarButtonForward(chstr name, grect rect) : ImageButton(name, rect)
+	ScrollBarButtonForward::ScrollBarButtonForward(chstr name) : ImageButton(name)
 	{
 		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
@@ -27,9 +27,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ScrollBarButtonForward::createInstance(chstr name, grect rect)
+	Object* ScrollBarButtonForward::createInstance(chstr name)
 	{
-		return new ScrollBarButtonForward(name, rect);
+		return new ScrollBarButtonForward(name);
 	}
 
 	void ScrollBarButtonForward::notifyEvent(chstr type, EventArgs* args)

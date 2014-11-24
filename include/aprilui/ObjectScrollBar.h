@@ -38,10 +38,9 @@ namespace aprilui
 		friend class ScrollBarButtonForward;
 		friend class ScrollBarButtonSlider;
 
-		ScrollBar(chstr name, grect rect);
+		ScrollBar(chstr name);
 		~ScrollBar();
 		inline hstr getClassName() const { return "ScrollBar"; }
-
 
 		HL_DEFINE_GETSET(float, gridSize, GridSize);
 		HL_DEFINE_ISSET(useFading, UseFading);

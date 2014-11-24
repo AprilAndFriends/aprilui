@@ -26,11 +26,11 @@ namespace aprilui
 	class apriluiExport ImageBox : public Object
 	{
 	public:
-		ImageBox(chstr name, grect rect);
+		ImageBox(chstr name);
 		~ImageBox();
 		inline hstr getClassName() const { return "ImageBox"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 		
 		harray<PropertyDescription> getPropertyDescriptions();
 

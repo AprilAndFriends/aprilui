@@ -32,7 +32,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> EditBox::_propertyDescriptions;
 
-	EditBox::EditBox(chstr name, grect rect) : Label(name, rect)
+	EditBox::EditBox(chstr name) : Label(name)
 	{
 		this->text = "";
 		this->emptyText = "";
@@ -65,9 +65,9 @@ namespace aprilui
 	{
 	}
 
-	Object* EditBox::createInstance(chstr name, grect rect)
+	Object* EditBox::createInstance(chstr name)
 	{
-		return new EditBox(name, rect);
+		return new EditBox(name);
 	}
 
 	harray<PropertyDescription> EditBox::getPropertyDescriptions()

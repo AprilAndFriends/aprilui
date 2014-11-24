@@ -18,7 +18,7 @@
 
 namespace aprilui
 {
-	ScrollBarButtonBackground::ScrollBarButtonBackground(chstr name, grect rect) : ImageButton(name, rect)
+	ScrollBarButtonBackground::ScrollBarButtonBackground(chstr name) : ImageButton(name)
 	{
 		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
@@ -27,9 +27,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ScrollBarButtonBackground::createInstance(chstr name, grect rect)
+	Object* ScrollBarButtonBackground::createInstance(chstr name)
 	{
-		return new ScrollBarButtonBackground(name, rect);
+		return new ScrollBarButtonBackground(name);
 	}
 
 	void ScrollBarButtonBackground::notifyEvent(chstr type, EventArgs* args)

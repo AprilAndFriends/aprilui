@@ -37,7 +37,7 @@ namespace aprilui
 
 	static bool registerLock = false;
 	static hmap<hstr, Dataset*> gDatasets;
-	static hmap<hstr, Object* (*)(chstr, grect)> gObjectFactories;
+	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
 	static Image* gCursor = NULL;
 	static bool cursorVisible = true;
@@ -272,7 +272,7 @@ namespace aprilui
 		return gDatasets;
 	}
 	
-	void registerObjectFactory(chstr typeName, Object* (*factory)(chstr, grect))
+	void registerObjectFactory(chstr typeName, Object* (*factory)(chstr))
 	{
 		if (gObjectFactories.has_key(typeName))
 		{
@@ -318,11 +318,11 @@ namespace aprilui
 		return gAnimatorFactories.has_key(typeName);
 	}
 	
-	Object* createObject(chstr typeName, chstr name, grect rect)
+	Object* createObject(chstr typeName, chstr name)
 	{
 		if (gObjectFactories.has_key(typeName))
 		{
-			return (*gObjectFactories[typeName])(name, rect);
+			return (*gObjectFactories[typeName])(name);
 		}
 		return NULL;
 	}

@@ -28,7 +28,7 @@ namespace aprilui
 
 	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
 
-	ScrollArea::ScrollArea(chstr name, grect rect) : Object(name, rect), ButtonBase()
+	ScrollArea::ScrollArea(chstr name) : Object(name), ButtonBase()
 	{
 		this->clip = true;
 		this->allowDrag = false;
@@ -45,9 +45,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ScrollArea::createInstance(chstr name, grect rect)
+	Object* ScrollArea::createInstance(chstr name)
 	{
-		return new ScrollArea(name, rect);
+		return new ScrollArea(name);
 	}
 
 	hstr ScrollArea::getName()

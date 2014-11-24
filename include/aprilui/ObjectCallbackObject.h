@@ -24,11 +24,11 @@ namespace aprilui
 	class apriluiExport CallbackObject : public Object
 	{
 	public:
-		CallbackObject(chstr name, grect rect);
+		CallbackObject(chstr name);
 		~CallbackObject();
 		inline hstr getClassName() const { return "CallbackObject"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		inline void (*getDrawCallback())(CallbackObject*) { return this->drawCallback; }
 		inline void setDrawCallback(void (*value)(CallbackObject*)) { this->drawCallback = value; }

@@ -25,11 +25,11 @@ namespace aprilui
 	class apriluiExport ColoredQuad : public Object
 	{
 	public:
-		ColoredQuad(chstr name, grect rect);
+		ColoredQuad(chstr name);
 		~ColoredQuad();
 		inline hstr getClassName() const { return "ColoredQuad"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 	protected:
 		void _draw();

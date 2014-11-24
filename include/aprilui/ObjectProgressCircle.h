@@ -38,11 +38,11 @@ namespace aprilui
 			Counterclockwise270 = 7
 		};
 
-		ProgressCircle(chstr name, grect rect);
+		ProgressCircle(chstr name);
 		~ProgressCircle();
 		inline hstr getClassName() const { return "ProgressCircle"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 		
 		HL_DEFINE_GETSET(Direction, direction, Direction);
 		Dataset* getDataset();

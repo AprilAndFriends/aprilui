@@ -26,11 +26,11 @@ namespace aprilui
 	class apriluiExport Label : public Object, public LabelBase
 	{
 	public:
-		Label(chstr name, grect rect);
+		Label(chstr name);
 		~Label();
 		inline hstr getClassName() const { return "Label"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 		
 		Dataset* getDataset();
 		unsigned char getDerivedAlpha();

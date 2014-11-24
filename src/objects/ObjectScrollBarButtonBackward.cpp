@@ -18,7 +18,7 @@
 
 namespace aprilui
 {
-	ScrollBarButtonBackward::ScrollBarButtonBackward(chstr name, grect rect) : ImageButton(name, rect)
+	ScrollBarButtonBackward::ScrollBarButtonBackward(chstr name) : ImageButton(name)
 	{
 		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
@@ -27,9 +27,9 @@ namespace aprilui
 	{
 	}
 
-	Object* ScrollBarButtonBackward::createInstance(chstr name, grect rect)
+	Object* ScrollBarButtonBackward::createInstance(chstr name)
 	{
-		return new ScrollBarButtonBackward(name, rect);
+		return new ScrollBarButtonBackward(name);
 	}
 
 	void ScrollBarButtonBackward::notifyEvent(chstr type, EventArgs* args)

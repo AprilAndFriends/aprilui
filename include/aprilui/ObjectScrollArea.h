@@ -30,11 +30,11 @@ namespace aprilui
 		friend class ScrollBarH;
 		friend class ScrollBarV;
 
-		ScrollArea(chstr name, grect rect);
+		ScrollArea(chstr name);
 		~ScrollArea();
 		inline hstr getClassName() const { return "ScrollArea"; }
 
-		static Object* createInstance(chstr name, grect rect);
+		static Object* createInstance(chstr name);
 
 		HL_DEFINE_ISSET(allowDrag, AllowDrag);
 		HL_DEFINE_GETSET(float, inertia, Inertia);
