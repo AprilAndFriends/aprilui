@@ -71,6 +71,9 @@ namespace aprilui
 	apriluiFnExport bool hasAnimatorFactory(chstr typeName);
 	apriluiFnExport void unregisterObjectFactory(chstr typeName);
 	apriluiFnExport void unregisterAnimatorFactory(chstr typeName);
+	apriluiFnExport const hmap<hstr, Object* (*)(chstr)>& getObjectFactories();
+	apriluiFnExport const hmap<hstr, Animator* (*)(chstr)>& getAnimatorFactories();
+
 	apriluiFnExport Object* createObject(chstr type, chstr name);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	

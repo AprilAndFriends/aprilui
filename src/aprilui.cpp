@@ -310,6 +310,16 @@ namespace aprilui
 		gAnimatorFactories.remove_key(typeName);
 	}
 
+	const hmap<hstr, Object* (*)(chstr)>& getObjectFactories()
+	{
+		return gObjectFactories;
+	}
+
+	const hmap<hstr, Animator* (*)(chstr)>& getAnimatorFactories()
+	{
+		return gAnimatorFactories;
+	}
+
 	bool hasObjectFactory(chstr typeName)
 	{
 		return gObjectFactories.has_key(typeName);

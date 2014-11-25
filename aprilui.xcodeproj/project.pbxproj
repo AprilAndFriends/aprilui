@@ -107,7 +107,7 @@
 		D137B9401A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */; };
 		D137B9411A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */; };
 		D137B9421A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D137B93F1A0A482E00C4102E /* ObjectOptionButton.cpp */; };
-		D137B9441A0A484200C4102E /* ObjectOptionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D137B9431A0A484200C4102E /* ObjectOptionButton.h */; };
+		D137B9441A0A484200C4102E /* ObjectOptionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D137B9431A0A484200C4102E /* ObjectOptionButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D140387D18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
 		D140387E18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
 		D140387F18EAF8150092608C /* ObjectProgressBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D140387B18EAF8150092608C /* ObjectProgressBase.cpp */; };
@@ -152,6 +152,14 @@
 		D1522EA1140F6A6B0012F290 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC8042B11EC725B00851062 /* Exception.cpp */; };
 		D1688913149026EB004FD97F /* AnimatorTiledScrollerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE71147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp */; };
 		D1688914149026EB004FD97F /* AnimatorTiledScrollerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CDBE72147E3D45001F9A43 /* AnimatorTiledScrollerY.cpp */; };
+		D16DF42E1A24C955005D6371 /* ObjectListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16DF42C1A24C955005D6371 /* ObjectListBox.cpp */; };
+		D16DF42F1A24C955005D6371 /* ObjectListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16DF42C1A24C955005D6371 /* ObjectListBox.cpp */; };
+		D16DF4301A24C955005D6371 /* ObjectListBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16DF42C1A24C955005D6371 /* ObjectListBox.cpp */; };
+		D16DF4311A24C955005D6371 /* ObjectListBoxItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16DF42D1A24C955005D6371 /* ObjectListBoxItem.cpp */; };
+		D16DF4321A24C955005D6371 /* ObjectListBoxItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16DF42D1A24C955005D6371 /* ObjectListBoxItem.cpp */; };
+		D16DF4331A24C955005D6371 /* ObjectListBoxItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16DF42D1A24C955005D6371 /* ObjectListBoxItem.cpp */; };
+		D16DF4361A24C966005D6371 /* ObjectListBox.h in Headers */ = {isa = PBXBuildFile; fileRef = D16DF4341A24C966005D6371 /* ObjectListBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D16DF4371A24C966005D6371 /* ObjectListBoxItem.h in Headers */ = {isa = PBXBuildFile; fileRef = D16DF4351A24C966005D6371 /* ObjectListBoxItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D16E990D158BE53800C058CE /* EventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990B158BE53800C058CE /* EventReceiver.cpp */; };
 		D16E990E158BE53800C058CE /* EventReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990B158BE53800C058CE /* EventReceiver.cpp */; };
 		D16E990F158BE53800C058CE /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16E990C158BE53800C058CE /* Texture.cpp */; };
@@ -346,6 +354,10 @@
 		D1522E69140F6A040012F290 /* libaprilui.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaprilui.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1681BAC18D768BC0088FC68 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
 		D1681BAD18D768BC0088FC68 /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
+		D16DF42C1A24C955005D6371 /* ObjectListBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectListBox.cpp; sourceTree = "<group>"; };
+		D16DF42D1A24C955005D6371 /* ObjectListBoxItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectListBoxItem.cpp; sourceTree = "<group>"; };
+		D16DF4341A24C966005D6371 /* ObjectListBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectListBox.h; path = include/aprilui/ObjectListBox.h; sourceTree = "<group>"; };
+		D16DF4351A24C966005D6371 /* ObjectListBoxItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectListBoxItem.h; path = include/aprilui/ObjectListBoxItem.h; sourceTree = "<group>"; };
 		D16E990B158BE53800C058CE /* EventReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventReceiver.cpp; path = src/EventReceiver.cpp; sourceTree = "<group>"; };
 		D16E990C158BE53800C058CE /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = src/Texture.cpp; sourceTree = "<group>"; };
 		D16E9912158BE54D00C058CE /* EventReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventReceiver.h; path = include/aprilui/EventReceiver.h; sourceTree = "<group>"; };
@@ -484,6 +496,8 @@
 		7F6D548C1201B06200A2BDF6 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				D16DF42C1A24C955005D6371 /* ObjectListBox.cpp */,
+				D16DF42D1A24C955005D6371 /* ObjectListBoxItem.cpp */,
 				7FB0C7AE120AE107005EA739 /* Object.cpp */,
 				7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */,
 				7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */,
@@ -598,6 +612,8 @@
 		C942B3FE13278C5900C1D1E8 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				D16DF4341A24C966005D6371 /* ObjectListBox.h */,
+				D16DF4351A24C966005D6371 /* ObjectListBoxItem.h */,
 				7FB0C7B0120AE117005EA739 /* Object.h */,
 				7FC8041B11EC721E00851062 /* Objects.h */,
 				7FA3014512B647E200F71E5E /* ObjectButtonBase.h */,
@@ -658,7 +674,6 @@
 			files = (
 				7FC8041E11EC721E00851062 /* Animators.h in Headers */,
 				7FC8042111EC721E00851062 /* Dataset.h in Headers */,
-				D137B9441A0A484200C4102E /* ObjectOptionButton.h in Headers */,
 				7FC8042211EC721E00851062 /* Exception.h in Headers */,
 				7FC8042311EC721E00851062 /* Image.h in Headers */,
 				7FC8042411EC721E00851062 /* Objects.h in Headers */,
@@ -712,6 +727,9 @@
 				D18CB6281902CE1C0071C391 /* ObjectScrollBarButtonForward.h in Headers */,
 				D1C0FC4819460BA200117F00 /* PropertyDescription.h in Headers */,
 				D16ED2CA19ADECE8000B6218 /* BaseObject.h in Headers */,
+				D137B9441A0A484200C4102E /* ObjectOptionButton.h in Headers */,
+				D16DF4371A24C966005D6371 /* ObjectListBoxItem.h in Headers */,
+				D16DF4361A24C966005D6371 /* ObjectListBox.h in Headers */,
 				D18CB6291902CE1C0071C391 /* ObjectScrollBarButtonSlider.h in Headers */,
 				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
 				D140388618EAF8290092608C /* ObjectProgressCircle.h in Headers */,
@@ -832,6 +850,7 @@
 				7F38C6D1120967B9002B5134 /* ObjectLabelBase.cpp in Sources */,
 				D18CB61C1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */,
 				7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */,
+				D16DF42E1A24C955005D6371 /* ObjectListBox.cpp in Sources */,
 				7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */,
 				7F38C728120967CC002B5134 /* AnimatorFrameAnimation.cpp in Sources */,
 				7F38C72A120967CC002B5134 /* AnimatorRotator.cpp in Sources */,
@@ -858,6 +877,7 @@
 				D137B9401A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */,
 				D1228D2B19B5C56E003BD478 /* Event.cpp in Sources */,
 				7FDB98A1131BA9240064B968 /* AnimatorResizerY.cpp in Sources */,
+				D16DF4311A24C955005D6371 /* ObjectListBoxItem.cpp in Sources */,
 				7FDAF2F5131CF169006CBC59 /* AnimatorScalerX.cpp in Sources */,
 				7FDAF2F6131CF169006CBC59 /* AnimatorScalerY.cpp in Sources */,
 				D1CDBE73147E3D45001F9A43 /* AnimatorTiledScrollerX.cpp in Sources */,
@@ -895,6 +915,7 @@
 				D1522E80140F6A6B0012F290 /* Image.cpp in Sources */,
 				D1522E81140F6A6B0012F290 /* NullImage.cpp in Sources */,
 				D1522E82140F6A6B0012F290 /* TiledImage.cpp in Sources */,
+				D16DF4301A24C955005D6371 /* ObjectListBox.cpp in Sources */,
 				D1522E83140F6A6B0012F290 /* AnimatorScalerX.cpp in Sources */,
 				D1522E84140F6A6B0012F290 /* AnimatorScalerY.cpp in Sources */,
 				D1522E85140F6A6B0012F290 /* AnimatorResizerX.cpp in Sources */,
@@ -921,6 +942,7 @@
 				D137B9421A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */,
 				D1522E98140F6A6B0012F290 /* ObjectImageButton.cpp in Sources */,
 				D1228D2D19B5C56E003BD478 /* Event.cpp in Sources */,
+				D16DF4331A24C955005D6371 /* ObjectListBoxItem.cpp in Sources */,
 				D1522E99140F6A6B0012F290 /* ObjectLabel.cpp in Sources */,
 				D1522E9A140F6A6B0012F290 /* ObjectLabelBase.cpp in Sources */,
 				D1522E9D140F6A6B0012F290 /* ObjectTextImageButton.cpp in Sources */,
@@ -958,6 +980,7 @@
 				D1F27B31177A2FCA00E5C131 /* Image.cpp in Sources */,
 				D1F27B32177A2FCA00E5C131 /* NullImage.cpp in Sources */,
 				D1F27B33177A2FCA00E5C131 /* TiledImage.cpp in Sources */,
+				D16DF42F1A24C955005D6371 /* ObjectListBox.cpp in Sources */,
 				D1F27B34177A2FCA00E5C131 /* AnimatorScalerX.cpp in Sources */,
 				D1F27B35177A2FCA00E5C131 /* AnimatorScalerY.cpp in Sources */,
 				D1F27B36177A2FCA00E5C131 /* AnimatorResizerX.cpp in Sources */,
@@ -984,6 +1007,7 @@
 				D137B9411A0A482E00C4102E /* ObjectOptionButton.cpp in Sources */,
 				D1F27B48177A2FCA00E5C131 /* ObjectImageButton.cpp in Sources */,
 				D1228D2C19B5C56E003BD478 /* Event.cpp in Sources */,
+				D16DF4321A24C955005D6371 /* ObjectListBoxItem.cpp in Sources */,
 				D1F27B49177A2FCA00E5C131 /* ObjectLabel.cpp in Sources */,
 				D1F27B4A177A2FCA00E5C131 /* ObjectLabelBase.cpp in Sources */,
 				D1F27B4D177A2FCA00E5C131 /* ObjectTextImageButton.cpp in Sources */,
