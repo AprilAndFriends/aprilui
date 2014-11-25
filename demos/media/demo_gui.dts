@@ -5,112 +5,121 @@
 	<Include path="texture_gui.tex"/>
 	<Include path="transparency.tex"/>
 	
-	<Object type="Container" name="root" x="0" y="0" w="800" h="600">
-		<Object type="ImageBox" name="background" image="texture/test_tile1" x="0" y="0" w="800" h="600">
+	<Object type="Container" name="root" rect="0,0,800,600">
+		<Object type="ImageBox" name="background" image="texture/test_tile1" rect="0,0,800,600">
 			<Animator type="TiledScrollerX" periods="-1" amplitude="64"/>
 			<Animator type="TiledScrollerY" periods="-1" amplitude="-32"/>
-			<Object type="ColoredQuad" color="00FF00" x="64" y="32" w="32" h="32" angle="50">
-				<Object type="ColoredQuad" color="FFFF00" x="64" y="32" w="32" h="32"/>
+			<Object type="ColoredQuad" color="00FF00" rect="64,32,32,32" angle="50">
+				<Object type="ColoredQuad" color="FFFF00" rect="64,32,32,32"/>
 			</Object>
-			<Object type="ImageBox" name="background2" image="texture/test_tile2" color="FFFF00" x="600" y="504" w="200" h="96">
+			<Object type="ImageBox" name="background2" image="texture/test_tile2" color="FFFF00" rect="600,504,200,96">
 				<Animator type="TiledScrollerX" periods="-1" amplitude="-64"/>
 				<Animator type="TiledScrollerY" periods="-1" amplitude="32"/>
 			</Object>
 		</Object>
-		<Object type="Container" x="0" y="0" w="800" h="600">
-			<Object type="ImageButton" name="hoverImageButton" image="texture/test" x="32" y="96" w="128" h="64"/>
-			<Object type="ImageBox" name="coloredImageBox" image="texture/test" color="FF7F7F" x="32" y="128" w="128" h="64" zorder="100">
+		<Object type="Container" rect="0,0,800,600">
+			<Object type="ImageButton" name="hoverImageButton" image="texture/test" rect="32,96,128,64"/>
+			<Object type="ImageBox" name="coloredImageBox" image="texture/test" color="FF7F7F" rect="32,128,128,64" zorder="100">
 				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
 				<Animator type="MoverY" amplitude="100" speed="0.25"/>
 				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="1"/>
 			</Object>
-			<Object type="ColoredQuad" name="coloredQuad" color="007FFF" x="32" y="224" w="128" h="64">
+			<Object type="ColoredQuad" name="coloredQuad" color="007FFF" rect="32,224,128,64">
 				<Animator type="MoverX" function="noise" periods="-1" amplitude="4"/>
 				<Animator type="MoverY" function="noise" periods="-1" amplitude="4"/>
 			</Object>
-			<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" x="232" y="160" w="128" h="64" enabled="0">
+			<Object type="ImageButton" name="imageButton_disabled" image="texture/test" disabled_image="texture/test_grey" rect="232,160,128,64" enabled="0">
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
-			<Object type="EditBox" name="editBox" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="1" selection_color="009FFFBF" multi_line="1" font="Arial" horz_formatting="left" vert_formatting="top" x="260" y="240" w="192" h="64"/>
-			<Object type="ColoredQuad" color="007F00" x="32" y="320" w="192" h="160">
+			<Object type="EditBox" name="editBox" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="1" selection_color="009FFFBF" multi_line="1" font="Arial" horz_formatting="left" vert_formatting="top" rect="240,240,192,64"/>
+			<Object type="ColoredQuad" color="007F00" rect="32,320,192,160">
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
 				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
-				<Object type="Label" angle="-10" name="label" text="I [b:00FF00]am[/b] a [s 0000FF]label[/s]." effect="border:FF0000" x="0" y="64" w="192" h="32"/>
-				<Object type="TextImageButton" angle="-10" name="textButton" text="I am a button." hover_text_color="BFBFBF" pushed_text_color="7F7F7F" x="0" y="128" w="192" h="32"/>
+				<Object type="Label" angle="-10" name="label" text="I [b:00FF00]am[/b] a [s 0000FF]label[/s]." effect="border:FF0000" rect="0,64,192,32"/>
+				<Object type="TextImageButton" angle="-10" name="textButton" text="I am a button." hover_text_color="BFBFBF" pushed_text_color="7F7F7F" rect="0,128,192,32"/>
 			</Object>
-			<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" x="432" y="32" w="128" h="64">
+			<Object type="ImageBox" name="rotatedImageBox" image="transparency/test" angle="30" rect="432,32,128,64">
 				<Animator type="AlphaChanger" function="sine" periods="-1" amplitude="64" speed="1.05" offset="191"/>
 			</Object>
-			<Object type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" x="432" y="160" w="128" h="64" zorder="100">
+			<Object type="ImageButton" name="imageButton" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" rect="432,160,128,64" zorder="100">
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="1.0" offset="0.0" speed="0.5"/>
 				<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.1" offset="1.2" timer="0.25"/>
 			</Object>
-			<Object type="Container" name="recursive_rotation_example" x="432" y="272" w="64" h="64" zorder="100" angle="10" hit_test="disabled">
-				<Object type="TextImageButton" name="textImageButton" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" x="50" y="20" w="128" h="64" angle="10" center_x="-100" center_y="-100">
+			<Object type="Container" name="recursive_rotation_example" rect="380,272,64,64" zorder="100" angle="10" hit_test="disabled">
+				<Object type="TextImageButton" name="textImageButton" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" rect="50,20,128,64" angle="10" center="-100,-100">
 					<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="1" offset="191" timer="1.333333"/>
 					<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="1.2" offset="191" timer="0.6666667"/>
 					<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="1.4" offset="191"/>
 				</Object>
 			</Object>
-			<Object type="ToggleButton" name="toggleButton" image="texture/test_green" toggled_image="texture/test_hover_3" x="432" y="352" w="128" h="64" zorder="100">
+			<Object type="ToggleButton" name="toggleButton" image="texture/test_green" toggled_image="texture/test_hover_3" rect="400,352,128,64" zorder="100">
 				<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
 				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
 			</Object>
-			<Object type="Container" name="scrolltest_container" x="616" y="32" w="128" h="128">
+			<Object type="Container" name="scrolltest_container" rect="616,32,128,128">
 				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="1">
-					<Object type="ToggleButton" name="toggleButton_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" x="0" y="0" w="256" h="128" zorder="100"/>
-					<Object type="ToggleButton" name="toggleButton_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" x="0" y="128" w="256" h="128" zorder="100">
+					<Object type="ToggleButton" name="toggleButton_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,0,256,128" zorder="100"/>
+					<Object type="ToggleButton" name="toggleButton_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,128,256,128" zorder="100">
 						<Animator type="Rotator" periods="-1" speed="30"/>
 					</Object>
 				</Object>
-				<Object type="ScrollBarV" name="scroll_v" grid_size="32" x="128" y="0" w="16" h="128">
-					<Object type="ScrollBarButtonForward" image="texture/test_green" x="0" y="112" w="16" h="16"/>
-					<Object type="ScrollBarButtonBackward" image="texture/test_green" x="0" y="0" w="16" h="16"/>
-					<Object type="ScrollBarButtonBackground" image="texture/test_yellow" x="0" y="16" w="16" h="96"/>
-					<Object type="ScrollBarButtonSlider" image="texture/test_red" x="0" y="16" w="16" h="8"/>
+				<Object type="ScrollBarV" name="scroll_v" grid_size="32" rect="128,0,16,128">
+					<Object type="ScrollBarButtonForward" image="texture/test_green" rect="0,112,16,16"/>
+					<Object type="ScrollBarButtonBackward" image="texture/test_green" rect="0,0,16,16"/>
+					<Object type="ScrollBarButtonBackground" image="texture/test_yellow" rect="0,16,16,96"/>
+					<Object type="ScrollBarButtonSlider" image="texture/test_red" rect="0,16,16,8"/>
 				</Object>
-				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" grid_size="32" x="0" y="128" w="128" h="16"/>
+				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" grid_size="32" rect="0,128,128,16"/>
 			</Object>
-			<Object type="Container" name="slider_container" x="200" y="200" w="800" h="600">
-				<Object type="ProgressBar" name="progress_bar_slider" image="texture/test_blue" progress_image="texture/test_yellow" progress="0.5" direction="right" x="232" y="260" w="128" h="24" interactable="1">
+			<Object type="Container" name="slider_container" rect="200,200,800,600">
+				<Object type="ProgressBar" name="progress_bar_slider" image="texture/test_blue" progress_image="texture/test_yellow" progress="0.5" direction="right" interactable="1" rect="200,260,128,24">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="50"/>
 					<Animator type="ResizerY" function="sine" periods="-1" amplitude="8" timer="0.25"/>
 				</Object>
 			</Object>
-			<Object type="Container" x="232" y="16" w="128" h="128" hit_test="disabled_recursive">
-				<Object type="ColoredQuad" name="crazy_quad" color="6F6F6F" x="0" y="0" w="128" h="128" anchors="" center_x="96" center_y="32">
+			<Object type="ListBox" name="list_box" item_height="32" rect="600,200,180,110">
+				<Object type="ListBoxItem" name="list_box_item_0" text="Item 0" effect="border"/>
+				<Object type="ListBoxItem" name="list_box_item_1" text="Item 1" effect="border"/>
+				<Object type="ListBoxItem" name="list_box_item_2" text="Item 2" effect="border"/>
+				<Object type="ListBoxItem" name="list_box_item_3" text="Item 3" effect="border"/>
+				<Object type="ListBoxItem" name="list_box_item_4" text="Item 4" effect="border"/>
+				<Object type="ListBoxItem" name="list_box_item_5" text="Item 5" effect="border"/>
+				<Object type="ScrollBarV" name="list_box_scroll_v" rect="180,0,4,110"/>
+			</Object>
+			<Object type="Container" rect="232,16,128,128" hit_test="disabled_recursive">
+				<Object type="ColoredQuad" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" center="96,32">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>
 					<Animator type="ResizerY" function="sine" periods="-1" amplitude="32" timer="0.75"/>
 					
-					<Object type="ColoredQuad" color="FF00FF" anchors="left,right,top,bottom" x="40" y="40" w="48" h="48"/>
+					<Object type="ColoredQuad" color="FF00FF" anchors="left,right,top,bottom" rect="40,40,48,48"/>
 					
-					<Object type="ColoredQuad" color="FF0000" anchors="left,top" x="2" y="2" w="32" h="32"/>
-					<Object type="ColoredQuad" color="00FF00" anchors="top" x="48" y="2" w="32" h="32"/>
-					<Object type="ColoredQuad" color="0000FF" anchors="right,top" x="94" y="2" w="32" h="32"/>
-					<Object type="ColoredQuad" color="FFFF00" anchors="left" x="2" y="48" w="32" h="32"/>
-					<Object type="ColoredQuad" color="00FFFF" anchors="right" x="94" y="48" w="32" h="32"/>
-					<Object type="ColoredQuad" color="000000" anchors="left,bottom" x="2" y="94" w="32" h="32"/>
-					<Object type="ColoredQuad" color="7F7F7F" anchors="bottom" x="48" y="94" w="32" h="32"/>
-					<Object type="ColoredQuad" color="FFFFFF" anchors="right,bottom" x="94" y="94" w="32" h="32"/>
+					<Object type="ColoredQuad" color="FF0000" anchors="left,top" rect="2,2,32,32"/>
+					<Object type="ColoredQuad" color="00FF00" anchors="top" rect="48,2,32,32"/>
+					<Object type="ColoredQuad" color="0000FF" anchors="right,top" rect="94,2,32,32"/>
+					<Object type="ColoredQuad" color="FFFF00" anchors="left" rect="2,48,32,32"/>
+					<Object type="ColoredQuad" color="00FFFF" anchors="right" rect="94,48,32,32"/>
+					<Object type="ColoredQuad" color="000000" anchors="left,bottom" rect="2,94,32,32"/>
+					<Object type="ColoredQuad" color="7F7F7F" anchors="bottom" rect="48,94,32,32"/>
+					<Object type="ColoredQuad" color="FFFFFF" anchors="right,bottom" rect="94,94,32,32"/>
 				</Object>
 			</Object>
-			<Object type="ImageBox" name="custom_obj" image="texture/test_hover_4" angle="90" x="640" y="400" w="128" h="64">
+			<Object type="ImageBox" name="custom_obj" image="texture/test_hover_4" angle="90" rect="640,400,128,64">
 				<Animator type="Rotator" name="custom_animator" function="custom" periods="-1" amplitude="45" speed="0.3"/>
 			</Object>
-			<Object type="ColoredQuad" color="0000007F" x="0" y="504" w="600" h="96"/>
-			<Object type="Label" name="label_format_0" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="504" w="600" h="32"/>
-			<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" x="0" y="536" w="600" h="32"/>
-			<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" x="0" y="568" w="600" h="32"/>
-			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" x="0" y="0" w="128" h="16"/>
-			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" x="0" y="32" w="16" h="128"/>
-			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" x="20" y="20" w="64" h="64"/>
-			<Object type="ColoredQuad" color="000000" x="260" y="360" w="48" h="128">
-				<Object type="OptionButton" name="optionButton1" image="texture/test_red" toggled_image="texture/test_green" x="8" y="8" w="32" h="32" zorder="100" toggled="1"/>
-				<Object type="OptionButton" name="optionButton2" image="texture/test_red" toggled_image="texture/test_green" x="8" y="48" w="32" h="32" zorder="100"/>
-				<Object type="OptionButton" name="optionButton3" image="texture/test_red" toggled_image="texture/test_green" x="8" y="88" w="32" h="32" zorder="100"/>
+			<Object type="ColoredQuad" color="0000007F" rect="0,504,600,96"/>
+			<Object type="Label" name="label_format_0" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" rect="0,504,600,32"/>
+			<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" rect="0,536,600,32"/>
+			<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" rect="0,568,600,32"/>
+			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
+			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" rect="0,32,16,128"/>
+			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" rect="20,20,64,64"/>
+			<Object type="ColoredQuad" color="000000" rect="260,360,48,128">
+				<Object type="OptionButton" name="optionButton1" image="texture/test_red" toggled_image="texture/test_green" rect="8,8,32,32" zorder="100" toggled="1"/>
+				<Object type="OptionButton" name="optionButton2" image="texture/test_red" toggled_image="texture/test_green" rect="8,48,32,32" zorder="100"/>
+				<Object type="OptionButton" name="optionButton3" image="texture/test_red" toggled_image="texture/test_green" rect="8,88,32,32" zorder="100"/>
 			</Object>
 		</Object>
-		<Object type="Label" name="keyboard_height" background_color="0000007F" anchors="" x="368" y="0" w="64" h="32"/>
+		<Object type="Label" name="keyboard_height" background_color="0000007F" anchors="" rect="368,0,64,32"/>
 	</Object>
 	
 </Dataset>

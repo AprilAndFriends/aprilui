@@ -8,31 +8,34 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a color-quad object.
+/// Defines a list box item.
 
-#ifndef APRILUI_COLORED_QUAD_H
-#define APRILUI_COLORED_QUAD_H
+#ifndef APRILUI_LIST_BOX_ITEM_H
+#define APRILUI_LIST_BOX_ITEM_H
 
-#include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "Object.h"
+#include "ObjectLabel.h"
 
 namespace aprilui
 {
-	class apriluiExport ColoredQuad : public Object
+	class ListBox;
+
+	class apriluiExport ListBoxItem : public Label
 	{
 	public:
-		ColoredQuad(chstr name);
-		~ColoredQuad();
-		inline hstr getClassName() const { return "ColoredQuad"; }
+		friend class ListBox;
+
+		ListBoxItem(chstr name);
+		~ListBoxItem();
+		inline hstr getClassName() const { return "ListBoxItem"; }
 
 		static Object* createInstance(chstr name);
 
 	protected:
-		void _draw();
+		void notifyEvent(chstr type, EventArgs* args);
 
 	};
 }

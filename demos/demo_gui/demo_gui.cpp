@@ -97,7 +97,9 @@ class KeyboardDelegate : public april::KeyboardDelegate
 {
 	void onKeyDown(april::Key keyCode)
 	{
-		aprilui::Object* object;
+		aprilui::Object* object = NULL;
+		aprilui::ListBox* listBox = NULL;
+		aprilui::ListBoxItem* item = NULL;
 		switch (keyCode)
 		{
 		case april::AK_MENU:
@@ -105,7 +107,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			dataset->load();
 			dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 			break;
-		case april::AK_INSERT:
+		case april::AK_CONTROL:
 			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 			{
 				aprilui::Texture* texture = dataset->getTexture("texture");
@@ -122,6 +124,16 @@ class KeyboardDelegate : public april::KeyboardDelegate
 		case april::AK_M:
 			object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
 			object->setHeight(object->getHeight() + 128);
+			break;
+		case april::AK_INSERT:
+			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
+			item = listBox->createItem(listBox->getItemCount());
+			item->setText("Item " + hstr(listBox->getItemCount() - 1));
+			item->setFontEffect(atres::BORDER);
+			break;
+		case april::AK_DELETE:
+			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
+			listBox->deleteItem(listBox->getItemCount() - 1);
 			break;
 		case april::AK_D:
 			aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
