@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -39,6 +39,7 @@ namespace aprilui
 		this->useFontEffectColor = false;
 		this->fontEffectColor = april::Color::Black;
 		this->backgroundColor = april::Color::Clear;
+		this->backgroundBorder = true;
 	}
 
 	LabelBase::~LabelBase()
@@ -60,17 +61,20 @@ namespace aprilui
 			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::FLOAT);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::FLOAT);
 			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::HEXCOLOR);
+			LabelBase::_propertyDescriptions += PropertyDescription("background_border", PropertyDescription::BOOL);
 		}
 		return LabelBase::_propertyDescriptions;
 	}
 
 	void LabelBase::_drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor)
 	{
-		color *= this->textColor;
-		if (this->backgroundColor.a > 0)
+		if (backgroundColor.a > 0)
 		{
-			april::rendersys->drawFilledRect(rect, this->backgroundColor);
-			april::rendersys->drawRect(rect, april::Color(this->textColor, this->backgroundColor.a));
+			april::rendersys->drawFilledRect(rect, backgroundColor);
+			if (this->backgroundBorder)
+			{
+				april::rendersys->drawRect(rect, april::Color(color, backgroundColor.a));
+			}
 		}
 	}
 
@@ -107,9 +111,9 @@ namespace aprilui
 
 	hstr LabelBase::getProperty(chstr name)
 	{
-		if (name == "font")				return this->getFont();
-		if (name == "text")				return this->getText();
-		if (name == "text_key")			return this->getTextKey();
+		if (name == "font")					return this->getFont();
+		if (name == "text")					return this->getText();
+		if (name == "text_key")				return this->getTextKey();
 		if (name == "horz_formatting")
 		{
 			if (this->horzFormatting == atres::LEFT)			return "left";
@@ -126,7 +130,7 @@ namespace aprilui
 			if (this->vertFormatting == atres::CENTER)	return "center";
 			if (this->vertFormatting == atres::BOTTOM)	return "bottom";
 		}
-		if (name == "text_color")		return this->getTextColor().hex();
+		if (name == "text_color")			return this->getTextColor().hex();
 		if (name == "effect")
 		{
 			hstr effect = "";
@@ -139,10 +143,11 @@ namespace aprilui
 			}
 			return effect;
 		}
-		if (name == "text_offset")		return april::gvec2ToHstr(this->getTextOffset());
-		if (name == "text_offset_x")	return this->getTextOffsetX();
-		if (name == "text_offset_y")	return this->getTextOffsetY();
-		if (name == "background_color")	return this->getBackgroundColor().hex();
+		if (name == "text_offset")			return april::gvec2ToHstr(this->getTextOffset());
+		if (name == "text_offset_x")		return this->getTextOffsetX();
+		if (name == "text_offset_y")		return this->getTextOffsetY();
+		if (name == "background_color")		return this->getBackgroundColor().hex();
+		if (name == "background_border")	return this->isBackgroundBorder();
 		return "";
 	}
 	
@@ -212,6 +217,7 @@ namespace aprilui
 		else if (name == "text_offset_x")		this->setTextOffsetX(value);
 		else if (name == "text_offset_y")		this->setTextOffsetY(value);
 		else if (name == "background_color")	this->setBackgroundColor(value);
+		else if (name == "background_border")	this->setBackgroundBorder(value);
 		else return false;
 		return true;
 	}

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -104,13 +104,17 @@ namespace aprilui
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
 		if (this->progressImage != NULL && progress > 0.0f)
 		{
-			grect clipRect = this->progressImage->getClipRect();
-			if (!this->stretching)
+			if (this->stretching)
 			{
-				this->progressImage->setClipRect(this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress));
+				this->progressImage->draw(this->_calcRectDirection(this->_getDrawRect(), progress), color);
 			}
-			this->progressImage->draw(this->_getDrawRect(), color);
-			this->progressImage->setClipRect(clipRect);
+			else
+			{
+				grect clipRect = this->progressImage->getClipRect();
+				this->progressImage->setClipRect(this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress));
+				this->progressImage->draw(this->_getDrawRect(), color);
+				this->progressImage->setClipRect(clipRect);
+			}
 		}
 		if (this->maskImage != NULL)
 		{

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -52,6 +52,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(useFontEffectColor, UseFontEffectColor);
 		HL_DEFINE_GETSET(april::Color, fontEffectColor, FontEffectColor);
 		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
+		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 
 		virtual Dataset* getDataset() = 0;
 
@@ -83,6 +84,7 @@ namespace aprilui
 		bool useFontEffectColor;
 		april::Color fontEffectColor;
 		april::Color backgroundColor;
+		bool backgroundBorder;
 		
 		void _drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor);
 		void _drawLabel(grect rect, april::Color color);
