@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -23,6 +23,8 @@
 #include "ObjectImageBox.h"
 #include "ObjectImageButton.h"
 #include "ObjectLabel.h"
+#include "ObjectListBox.h"
+#include "ObjectListBoxItem.h"
 #include "ObjectOptionButton.h"
 #include "ObjectProgressBar.h"
 #include "ObjectProgressCircle.h"

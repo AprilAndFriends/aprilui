@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -83,6 +83,8 @@ namespace aprilui
 		APRILUI_REGISTER_OBJECT_TYPE(ImageBox);
 		APRILUI_REGISTER_OBJECT_TYPE(ImageButton);
 		APRILUI_REGISTER_OBJECT_TYPE(Label);
+		APRILUI_REGISTER_OBJECT_TYPE(ListBox);
+		APRILUI_REGISTER_OBJECT_TYPE(ListBoxItem);
 		APRILUI_REGISTER_OBJECT_TYPE(OptionButton);
 		APRILUI_REGISTER_OBJECT_TYPE(ProgressBar);
 		APRILUI_REGISTER_OBJECT_TYPE(ProgressCircle);

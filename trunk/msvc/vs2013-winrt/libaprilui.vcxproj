@@ -66,7 +66,9 @@
     <ClCompile Include="..\..\src\EventArgs.cpp" />
     <ClCompile Include="..\..\src\EventReceiver.cpp" />
     <ClCompile Include="..\..\src\Exception.cpp" />
-	<ClCompile Include="..\..\src\objects\ObjectOptionButton.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectListBox.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectListBoxItem.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectOptionButton.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectProgressBase.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectProgressCircle.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectScrollArea.cpp" />
@@ -104,8 +106,8 @@
     <ClCompile Include="..\..\src\images\Image.cpp" />
     <ClCompile Include="..\..\src\images\NullImage.cpp" />
     <ClCompile Include="..\..\src\images\TiledImage.cpp" />
-    <ClCompile Include="..\..\src\Texture.cpp" />
     <ClCompile Include="..\..\src\PropertyDescription.cpp" />
+    <ClCompile Include="..\..\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverX.h" />
@@ -120,7 +122,9 @@
     <ClInclude Include="..\..\include\aprilui\EventReceiver.h" />
     <ClInclude Include="..\..\include\aprilui\EventUtils.h" />
     <ClInclude Include="..\..\include\aprilui\MemberCallbackEvent.h" />
-	<ClInclude Include="..\..\include\aprilui\ObjectOptionButton.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectListBox.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectListBoxItem.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectOptionButton.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectProgressBase.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectProgressCircle.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollArea.h" />
@@ -131,6 +135,7 @@
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonSlider.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarH.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarV.h" />
+    <ClInclude Include="..\..\include\aprilui\PropertyDescription.h" />
     <ClInclude Include="..\..\include\aprilui\Texture.h" />
     <ClInclude Include="..\..\src\apriluiUtil.h" />
     <ClInclude Include="..\..\include\aprilui\Animators.h" />
@@ -169,7 +174,6 @@
     <ClInclude Include="..\..\include\aprilui\Image.h" />
     <ClInclude Include="..\..\include\aprilui\NullImage.h" />
     <ClInclude Include="..\..\include\aprilui\TiledImage.h" />
-    <ClInclude Include="..\..\include\aprilui\PropertyDescription.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\fileproperties.rc">

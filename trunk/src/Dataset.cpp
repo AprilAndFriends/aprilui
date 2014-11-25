@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.5
+/// @version 3.6
 /// 
 /// @section LICENSE
 /// 
@@ -503,12 +503,15 @@ namespace aprilui
 		{
 			throw hlxml::XMLUnknownClassException(className, node);
 		}
+		if (object != NULL)
+		{
+			object->setRect(rect);
+		}
 		baseObject->dataset = this;
 		EventArgs args(this);
 		baseObject->notifyEvent(Event::RegisteredInDataset, &args);
 		if (object != NULL)
 		{
-			object->setRect(rect);
 			this->objects[objectName] = object;
 			if (this->root == NULL)
 			{
