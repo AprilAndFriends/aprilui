@@ -41,10 +41,10 @@ namespace aprilui
 		HL_DEFINE_GET(Image*, normalImage, Image);
 		void setImage(Image* value);
 		hstr getName();
-		bool isCursorInside();
 		int getFocusIndex();
 		Object* getParent();
 		Dataset* getDataset();
+		bool isCursorInside();
 		void setHoverImage(Image* image);
 		void setPushedImage(Image* image);
 		void setDisabledImage(Image* name);

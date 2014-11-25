@@ -68,6 +68,11 @@ void _hoverFinished(aprilui::EventArgs* args)
 	hlog::write(LOG_TAG, "Mouse Hover finished: " + args->baseObject->getName());
 }
 
+void _selectedChanged(aprilui::EventArgs* args)
+{
+	hlog::writef(LOG_TAG, "Now selected: '%s'", args->string.c_str());
+}
+
 class UpdateDelegate : public april::UpdateDelegate
 {
 public:
@@ -127,7 +132,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			break;
 		case april::AK_INSERT:
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
-			item = listBox->createItem(listBox->getItemCount());
+			item = listBox->createItem(listBox->getItemCount(), "list_box_item_" + hstr(listBox->getItemCount()));
 			item->setText("Item " + hstr(listBox->getItemCount() - 1));
 			item->setFontEffect(atres::BORDER);
 			break;
@@ -267,9 +272,10 @@ void april_init(const harray<hstr>& args)
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
-		aprilui::Object* object = dataset->getObject("hoverImageButton");
+		aprilui::Object* object = dataset->getObject("hover_image_button");
 		object->registerEvent(aprilui::Event::HoverStarted, new aprilui::CallbackEvent(&_hoverStarted));
 		object->registerEvent(aprilui::Event::HoverFinished, new aprilui::CallbackEvent(&_hoverFinished));
+		dataset->getObject<aprilui::ListBox*>("list_box")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_selectedChanged));
 	}
 	catch (aprilui::_GenericException& e)
 	{

@@ -51,6 +51,7 @@ namespace aprilui
 		static hstr SubmitEditText;
 		static hstr ScrollSkinChanged;
 		static hstr SetProgressValue;
+		static hstr SelectedChanged;
 		static hstr AnimationDelayExpired;
 		static hstr AnimationExpired;
 

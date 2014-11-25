@@ -54,6 +54,11 @@ namespace aprilui
 		return ImageBox::getDataset();
 	}
 
+	bool ImageButton::isCursorInside()
+	{
+		return ImageBox::isCursorInside();
+	}
+
 	harray<PropertyDescription> ImageButton::getPropertyDescriptions()
 	{
 		if (ImageButton::_propertyDescriptions.size() == 0)
@@ -122,11 +127,6 @@ namespace aprilui
 			}
 		}
 		ImageBox::update(timeDelta);
-	}
-	
-	bool ImageButton::isCursorInside()
-	{
-		return ImageBox::isCursorInside();
 	}
 	
 	void ImageButton::setPushedImage(Image* image)

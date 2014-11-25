@@ -27,13 +27,10 @@ namespace aprilui
 		this->itemHeight = 32.0f;
 		this->evenColor.set(april::Color::Black, 128);
 		this->oddColor.set(april::Color::DarkGrey, 128);
-		this->selectedColor.set(april::Color::White, 128);
+		this->hoverColor.set(april::Color::White, 192);
+		this->pushedColor.set(april::Color::LightGrey, 192);
+		this->selectedColor.set(april::Color::Aqua, 192);
 		this->selectedIndex = -1;
-		// setup ScrollArea
-		this->registerChild(new ScrollArea(april::generateName("aprilui::ScrollArea"))); // sets this->scrollArea
-		this->scrollArea->setRect(this->rect);
-		this->scrollArea->setAnchors(true, true, true, false);
-		this->scrollArea->setVisible(false);
 	}
 
 	ListBox::~ListBox()
@@ -79,6 +76,7 @@ namespace aprilui
 			{
 				this->_updateItem(oldIndex);
 				this->_updateItem(this->selectedIndex);
+				this->triggerEvent(Event::SelectedChanged, (this->selectedIndex >= 0 ? this->items[this->selectedIndex]->getName() : hstr("")));
 			}
 		}
 	}
@@ -106,6 +104,15 @@ namespace aprilui
 		if (this->hoverColor != value)
 		{
 			this->hoverColor = value;
+			this->_updateItems();
+		}
+	}
+
+	void ListBox::setPushedColor(april::Color value)
+	{
+		if (this->pushedColor != value)
+		{
+			this->pushedColor = value;
 			this->_updateItems();
 		}
 	}
@@ -152,6 +159,8 @@ namespace aprilui
 			{
 				this->items[index]->setBackgroundColor(this->selectedColor);
 			}
+			this->items[index]->_hoverColor = this->hoverColor;
+			this->items[index]->_pushedColor = this->pushedColor;
 		}
 	}
 
@@ -165,7 +174,7 @@ namespace aprilui
 		}
 	}
 
-	ListBoxItem* ListBox::createItem(int index)
+	ListBoxItem* ListBox::createItem(int index, chstr name)
 	{
 		if (this->scrollArea == NULL)
 		{
@@ -173,12 +182,15 @@ namespace aprilui
 			return NULL;
 		}
 		index = hclamp(index, 0, this->items.size());
-		ListBoxItem* item = new ListBoxItem(april::generateName("aprilui::ListBoxItem"));
+		ListBoxItem* item = new ListBoxItem(name != "" ? name : april::generateName("aprilui::ListBoxItem"));
+		item->_listBox = this;
+		this->scrollArea->registerChild(item);
+		this->items.insert_at(index, item);
 		item->setRect(grect(0.0f, index * this->itemHeight, this->rect.w, this->itemHeight));
 		item->setAnchors(true, true, true, false);
 		item->setBackgroundBorder(false);
-		this->scrollArea->registerChild(item);
-		this->items.insert_at(index, item);
+		item->_hoverColor = this->hoverColor;
+		item->_pushedColor = this->pushedColor;
 		this->_updateItems();
 		this->_updateScrollArea();
 		return item;
@@ -193,6 +205,10 @@ namespace aprilui
 		}
 		this->scrollArea->unregisterChild(this->items[index]);
 		delete this->items.remove_at(index);
+		if (this->selectedIndex >= 0)
+		{
+			this->setSelectedIndex(this->items.size() > 0 ? hclamp(this->selectedIndex, 0, this->items.size() - 1) : -1); // has to refresh the display
+		}
 		this->_updateItems();
 		this->_updateScrollArea();
 		return true;
@@ -220,6 +236,21 @@ namespace aprilui
 		else if (name == "selected_color")	this->setSelectedColor(value);
 		else return Container::setProperty(name, value);
 		return true;
+	}
+
+	void ListBox::notifyEvent(chstr type, EventArgs* args)
+	{
+		Container::notifyEvent(type, args);
+		if (type == Event::RegisteredInDataset)
+		{
+			if (this->scrollArea == NULL)
+			{
+				this->registerChild(new ScrollArea(april::generateName("aprilui::ScrollArea"))); // sets this->scrollArea
+				this->scrollArea->setRect(this->rect);
+				this->scrollArea->setAnchors(true, true, true, false);
+				this->scrollArea->setVisible(false);
+			}
+		}
 	}
 
 }
