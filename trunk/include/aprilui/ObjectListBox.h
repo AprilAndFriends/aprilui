@@ -54,8 +54,9 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		ListBoxItem* createItem(int index, chstr name = "");
+		virtual ListBoxItem* createItem(int index, chstr name = "");
 		bool deleteItem(int index);
+		ListBoxItem* getItemAt(int index);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
