@@ -655,9 +655,11 @@ namespace aprilui
 			renderRect.clip(drawRect);
 			if (renderRect.w > 0.0f && renderRect.h > 0.0f)
 			{
-				april::PlainVertex v[2];
+				april::ColoredVertex v[2];
 				v[0].set(renderRect.x, renderRect.y, 0);
 				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
+				v[0].color = april::rendersys->getNativeColorUInt(this->textColor);
+				v[1].color = april::rendersys->getNativeColorUInt(this->textColor);
 				april::rendersys->render(april::RO_LINE_LIST, v, 2);
 			}
 		}
