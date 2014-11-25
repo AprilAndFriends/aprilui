@@ -45,24 +45,29 @@ namespace aprilui
 		void setOddColor(april::Color value);
 		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
 		void setHoverColor(april::Color value);
+		HL_DEFINE_GET(april::Color, pushedColor, PushedColor);
+		void setPushedColor(april::Color value);
 		HL_DEFINE_GET(april::Color, selectedColor, SelectedColor);
 		void setSelectedColor(april::Color value);
-		inline const harray<ListBoxItem*> getItems() { return this->items; }
+		HL_DEFINE_GET(harray<ListBoxItem*>, items, Items);
 		int getItemCount();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		ListBoxItem* createItem(int index);
+		ListBoxItem* createItem(int index, chstr name = "");
 		bool deleteItem(int index);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
+		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
 		float itemHeight;
 		april::Color evenColor;
 		april::Color oddColor;
 		april::Color hoverColor;
+		april::Color pushedColor;
 		april::Color selectedColor;
 		int selectedIndex;
 		harray<ListBoxItem*> items;
