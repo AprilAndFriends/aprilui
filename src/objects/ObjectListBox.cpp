@@ -214,6 +214,11 @@ namespace aprilui
 		return true;
 	}
 
+	ListBoxItem* ListBox::getItemAt(int index)
+	{
+		return (is_between_ie(index, 0, this->items.size()) ? this->items[index] : NULL);
+	}
+
 	hstr ListBox::getProperty(chstr name)
 	{
 		if (name == "item_height")		return this->getItemHeight();
