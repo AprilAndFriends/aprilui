@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.6
+/// @version 4.0
 /// 
 /// @section LICENSE
 /// 
@@ -8,7 +8,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a list box item.
+/// Defines a class for a list box item.
 
 #ifndef APRILUI_LIST_BOX_ITEM_H
 #define APRILUI_LIST_BOX_ITEM_H

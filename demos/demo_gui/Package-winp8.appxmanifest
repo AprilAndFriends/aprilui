@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="com.aprilui.demoGui" Publisher="CN=AprilUI" Version="3.2.0.0" />
+  <Identity Name="com.aprilui.demoGui" Publisher="CN=AprilUI" Version="4.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="C8C5C1E3-C423-4FDF-B043-EDDE22DA94E1" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>AprilUI Demo GUI</DisplayName>
