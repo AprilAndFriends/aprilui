@@ -22,11 +22,17 @@
 
 namespace aprilui
 {
+	class TreeViewExpander;
+	class TreeViewImage;
+	class TreeViewLabel;
 	class TreeViewNode;
 
 	class apriluiExport TreeView : public Container
 	{
 	public:
+		friend class TreeViewExpander;
+		friend class TreeViewImage;
+		friend class TreeViewLabel;
 		friend class TreeViewNode;
 
 		TreeView(chstr name);
@@ -35,11 +41,35 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
+		HL_DEFINE_GET(float, nodeHeight, NodeHeight);
+		void setNodeHeight(float value);
+		HL_DEFINE_GET(float, expanderWidth, ExpanderWidth);
+		void setExpanderWidth(float value);
+		HL_DEFINE_GET(float, imageWidth, ImageWidth);
+		void setImageWidth(float value);
+		HL_DEFINE_GET(float, spacingWidth, SpacingWidth);
+		void setSpacingWidth(float value);
+		HL_DEFINE_GET(float, spacingHeight, SpacingHeight);
+		void setSpacingHeight(float value);
+		int getNodeCount();
+
 		harray<PropertyDescription> getPropertyDescriptions();
 
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
+
+		void notifyEvent(chstr type, EventArgs* args);
+
 	protected:
-		TreeViewNode* rootNode;
+		float nodeHeight;
+		float expanderWidth;
+		float imageWidth;
+		float spacingWidth;
+		float spacingHeight;
+		harray<TreeViewNode*> rootNodes;
 		harray<TreeViewNode*> nodes;
+
+		void _updateDisplay();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

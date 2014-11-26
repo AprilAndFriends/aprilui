@@ -119,6 +119,9 @@
     <ClCompile Include="..\..\src\images\NullImage.cpp" />
     <ClCompile Include="..\..\src\images\TiledImage.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeView.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectTreeViewExpander.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectTreeViewImage.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectTreeViewLabel.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeViewNode.cpp" />
     <ClCompile Include="..\..\src\PropertyDescription.cpp" />
     <ClCompile Include="..\..\src\Texture.cpp" />
@@ -150,6 +153,9 @@
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarH.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarV.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectTreeView.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectTreeViewExpander.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectTreeViewImage.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectTreeViewLabel.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectTreeViewNode.h" />
     <ClInclude Include="..\..\include\aprilui\PropertyDescription.h" />
     <ClInclude Include="..\..\include\aprilui\Texture.h" />

@@ -66,7 +66,7 @@ namespace aprilui
 		if (this->itemHeight != value)
 		{
 			this->itemHeight = value;
-			this->_updateSystem();
+			this->_updateDisplay();
 		}
 	}
 
@@ -153,7 +153,7 @@ namespace aprilui
 		return this->items.size();
 	}
 
-	void ListBox::_updateSystem()
+	void ListBox::_updateDisplay()
 	{
 		this->_updateItems();
 		this->_updateScrollArea();

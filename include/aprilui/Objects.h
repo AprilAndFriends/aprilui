@@ -35,6 +35,11 @@
 #include "ObjectScrollBarButtonSlider.h"
 #include "ObjectScrollBarH.h"
 #include "ObjectScrollBarV.h"
+#include "ObjectTreeView.h"
+#include "ObjectTreeViewExpander.h"
+#include "ObjectTreeViewImage.h"
+#include "ObjectTreeViewLabel.h"
+#include "ObjectTreeViewNode.h"
 #include "ObjectTextImageButton.h"
 #include "ObjectToggleButton.h"
 

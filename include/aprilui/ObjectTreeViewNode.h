@@ -22,20 +22,39 @@
 namespace aprilui
 {
 	class TreeView;
+	class TreeViewExpander;
+	class TreeViewImage;
+	class TreeViewLabel;
 
 	class apriluiExport TreeViewNode : public Container
 	{
 	public:
 		friend class TreeView;
+		friend class TreeViewExpander;
+		friend class TreeViewImage;
+		friend class TreeViewLabel;
 
 		TreeViewNode(chstr name);
 		~TreeViewNode();
 		inline hstr getClassName() const { return "TreeViewNode"; }
 
+		/// @note A return value of -1 indicates a problem that there are no parent nodes and no TreeView to which this TreeViewNode was attached to.
+		int getDepth();
+
 		static Object* createInstance(chstr name);
+
+		void notifyEvent(chstr type, EventArgs* args);
+
+	protected:
+		int _updateDisplay(int offsetIndex);
 
 	private:
 		TreeView* _treeView;
+		TreeViewNode* _treeViewParentNode;
+		harray<TreeViewNode*> _treeViewNodes;
+		TreeViewExpander* _treeViewExpander;
+		TreeViewImage* _treeViewImage;
+		TreeViewLabel* _treeViewLabel;
 
 	};
 
