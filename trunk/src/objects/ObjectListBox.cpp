@@ -30,6 +30,8 @@ namespace aprilui
 		this->hoverColor.set(april::Color::White, 192);
 		this->pushedColor.set(april::Color::LightGrey, 192);
 		this->selectedColor.set(april::Color::Aqua, 192);
+		this->selectedHoverColor.set(april::Color::LightAqua, 192);
+		this->selectedPushedColor.set(april::Color::DarkAqua, 192);
 		this->selectedIndex = -1;
 	}
 
@@ -52,6 +54,8 @@ namespace aprilui
 			ListBox::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::HEXCOLOR);
 			ListBox::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::HEXCOLOR);
 			ListBox::_propertyDescriptions += PropertyDescription("selected_color", PropertyDescription::HEXCOLOR);
+			ListBox::_propertyDescriptions += PropertyDescription("selected_hover_color", PropertyDescription::HEXCOLOR);
+			ListBox::_propertyDescriptions += PropertyDescription("selected_pushed_color", PropertyDescription::HEXCOLOR);
 			ListBox::_propertyDescriptions += PropertyDescription("item_count", PropertyDescription::INT);
 		}
 		return (Container::getPropertyDescriptions() + ListBox::_propertyDescriptions);
@@ -76,7 +80,7 @@ namespace aprilui
 			{
 				this->_updateItem(oldIndex);
 				this->_updateItem(this->selectedIndex);
-				this->triggerEvent(Event::SelectedChanged, (this->selectedIndex >= 0 ? this->items[this->selectedIndex]->getName() : hstr("")));
+				this->triggerEvent(Event::SelectedChanged, hstr(this->selectedIndex));
 			}
 		}
 	}
@@ -126,6 +130,24 @@ namespace aprilui
 		}
 	}
 
+	void ListBox::setSelectedHoverColor(april::Color value)
+	{
+		if (this->selectedHoverColor != value)
+		{
+			this->selectedHoverColor = value;
+			this->_updateItems();
+		}
+	}
+
+	void ListBox::setSelectedPushedColor(april::Color value)
+	{
+		if (this->selectedPushedColor != value)
+		{
+			this->selectedPushedColor = value;
+			this->_updateItems();
+		}
+	}
+
 	int ListBox::getItemCount()
 	{
 		return this->items.size();
@@ -154,13 +176,15 @@ namespace aprilui
 			if (this->selectedIndex != index)
 			{
 				this->items[index]->setBackgroundColor(index % 2 == 0 ? this->evenColor : this->oddColor);
+				this->items[index]->_hoverColor = this->hoverColor;
+				this->items[index]->_pushedColor = this->pushedColor;
 			}
 			else
 			{
 				this->items[index]->setBackgroundColor(this->selectedColor);
+				this->items[index]->_hoverColor = this->selectedHoverColor;
+				this->items[index]->_pushedColor = this->selectedPushedColor;
 			}
-			this->items[index]->_hoverColor = this->hoverColor;
-			this->items[index]->_pushedColor = this->pushedColor;
 		}
 	}
 
@@ -221,24 +245,28 @@ namespace aprilui
 
 	hstr ListBox::getProperty(chstr name)
 	{
-		if (name == "item_height")		return this->getItemHeight();
-		if (name == "selected_index")	return this->getSelectedIndex();
-		if (name == "even_color")		return this->getEvenColor().hex();
-		if (name == "odd_color")		return this->getOddColor().hex();
-		if (name == "hover_color")		return this->getHoverColor().hex();
-		if (name == "selected_color")	return this->getSelectedColor().hex();
-		if (name == "item_count")		return this->getItemCount();
+		if (name == "item_height")				return this->getItemHeight();
+		if (name == "selected_index")			return this->getSelectedIndex();
+		if (name == "even_color")				return this->getEvenColor().hex();
+		if (name == "odd_color")				return this->getOddColor().hex();
+		if (name == "hover_color")				return this->getHoverColor().hex();
+		if (name == "selected_color")			return this->getSelectedColor().hex();
+		if (name == "selected_hover_color")		return this->getSelectedHoverColor().hex();
+		if (name == "selected_pushed_color")	return this->getSelectedPushedColor().hex();
+		if (name == "item_count")				return this->getItemCount();
 		return Container::getProperty(name);
 	}
 
 	bool ListBox::setProperty(chstr name, chstr value)
 	{
-		if (name == "item_height")			this->setItemHeight(value);
-		else if (name == "selected_index")	this->setSelectedIndex(value);
-		else if (name == "even_color")		this->setEvenColor(value);
-		else if (name == "odd_color")		this->setOddColor(value);
-		else if (name == "hover_color")		this->setHoverColor(value);
-		else if (name == "selected_color")	this->setSelectedColor(value);
+		if (name == "item_height")					this->setItemHeight(value);
+		else if (name == "selected_index")			this->setSelectedIndex(value);
+		else if (name == "even_color")				this->setEvenColor(value);
+		else if (name == "odd_color")				this->setOddColor(value);
+		else if (name == "hover_color")				this->setHoverColor(value);
+		else if (name == "selected_color")			this->setSelectedColor(value);
+		else if (name == "selected_hover_color")	this->setSelectedHoverColor(value);
+		else if (name == "selected_pushed_color")	this->setSelectedPushedColor(value);
 		else return Container::setProperty(name, value);
 		return true;
 	}

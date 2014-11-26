@@ -49,6 +49,10 @@ namespace aprilui
 		void setPushedColor(april::Color value);
 		HL_DEFINE_GET(april::Color, selectedColor, SelectedColor);
 		void setSelectedColor(april::Color value);
+		HL_DEFINE_GET(april::Color, selectedHoverColor, SelectedHoverColor);
+		void setSelectedHoverColor(april::Color value);
+		HL_DEFINE_GET(april::Color, selectedPushedColor, SelectedPushedColor);
+		void setSelectedPushedColor(april::Color value);
 		HL_DEFINE_GET(harray<ListBoxItem*>, items, Items);
 		int getItemCount();
 
@@ -70,6 +74,8 @@ namespace aprilui
 		april::Color hoverColor;
 		april::Color pushedColor;
 		april::Color selectedColor;
+		april::Color selectedHoverColor;
+		april::Color selectedPushedColor;
 		int selectedIndex;
 		harray<ListBoxItem*> items;
 
