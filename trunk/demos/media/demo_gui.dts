@@ -86,6 +86,43 @@
 				<Object type="ListBoxItem" name="list_box_item_5" text="Item 5" effect="border"/>
 				<Object type="ScrollBarV" name="list_box_scroll_v" rect="192,0,4,142"/>
 			</Object>
+			<Object type="TreeView" name="tree_view" node_height="32" spacing_width="4" rect="600,288,384,144">
+				<Object type="ColoredQuad" name="tree_view_back" color="0000007F" rect="0,0,384,144" zorder="-10"/>
+				<Object type="TreeViewNode" name="tree_view_node_0">
+					<Object type="TreeViewExpander" name="tree_view_node_0_expander" image="texture/test_green" toggled_image="texture/test_red" toggled="1"/>
+					<Object type="TreeViewImage" name="tree_view_node_0_image" image="texture/test"/>
+					<Object type="TreeViewLabel" name="tree_view_node_0_label" text="Node 0" effect="border" horz_formatting="left"/>
+					<Object type="TreeViewNode" name="tree_view_node_0_0">
+						<Object type="TreeViewExpander" name="tree_view_node_0_0_expander" image="texture/test_green" toggled_image="texture/test_red"/>
+						<Object type="TreeViewImage" name="tree_view_node_0_0_image" image="texture/test"/>
+						<Object type="TreeViewLabel" name="tree_view_node_0_0_label" text="Node 00" effect="border" horz_formatting="left"/>
+					</Object>
+					<Object type="TreeViewNode" name="tree_view_node_0_1">
+						<Object type="TreeViewExpander" name="tree_view_node_0_1_expander" image="texture/test_green" toggled_image="texture/test_red"/>
+						<Object type="TreeViewLabel" name="tree_view_node_0_1_label" text="Node 01" effect="border" horz_formatting="left"/>
+					</Object>
+				</Object>
+				<Object type="TreeViewNode" name="tree_view_node_1">
+					<Object type="TreeViewExpander" name="tree_view_node_1_expander" image="texture/test_green" toggled_image="texture/test_red"/>
+					<Object type="TreeViewImage" name="tree_view_node_1_image" image="texture/test"/>
+					<Object type="TreeViewLabel" name="tree_view_node_1_label" text="Node 1" effect="border" horz_formatting="left"/>
+					<Object type="TreeViewNode" name="tree_view_node_1_0">
+						<Object type="TreeViewExpander" name="tree_view_node_1_0_expander" image="texture/test_green" toggled_image="texture/test_red"/>
+						<Object type="TreeViewImage" name="tree_view_node_1_0_image" image="texture/test"/>
+						<Object type="TreeViewLabel" name="tree_view_node_1_0_label" text="Node 10" effect="border" horz_formatting="left"/>
+					</Object>
+					<Object type="TreeViewNode" name="tree_view_node_1_1">
+						<Object type="TreeViewExpander" name="tree_view_node_1_1_expander" image="texture/test_green" toggled_image="texture/test_red"/>
+						<Object type="TreeViewLabel" name="tree_view_node_1_1_label" text="Node 11" effect="border" horz_formatting="left"/>
+						<Object type="TreeViewNode" name="tree_view_node_1_1_0">
+							<Object type="TreeViewExpander" name="tree_view_node_1_1_0_expander" image="texture/test_green" toggled_image="texture/test_red"/>
+							<Object type="TreeViewImage" name="tree_view_node_1_1_0_image" image="texture/test"/>
+							<Object type="TreeViewLabel" name="tree_view_node_1_1_0_label" text="Node 110" effect="border" horz_formatting="left"/>
+						</Object>
+					</Object>
+				</Object>
+				<Object type="ScrollBarV" name="tree_view_scroll_v" rect="384,0,4,144"/>
+			</Object>
 			<Object type="Container" rect="232,16,128,128" hit_test="disabled_recursive">
 				<Object type="ColoredQuad" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" center="96,32">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>

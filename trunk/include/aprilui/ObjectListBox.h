@@ -79,7 +79,7 @@ namespace aprilui
 		int selectedIndex;
 		harray<ListBoxItem*> items;
 
-		void _updateSystem();
+		void _updateDisplay();
 		void _updateItems();
 		void _updateItem(int index);
 		void _updateScrollArea();

@@ -108,13 +108,13 @@ namespace aprilui
 				{
 					int itemCount = this->_listBox->getItemCount();
 					float itemHeight = this->_listBox->getItemHeight();
-					// reattach to other ScrollArea
+					// reattach to ScrollArea
 					this->_listBox->removeChild(this);
 					scrollArea->addChild(this);
 					scrollArea->setVisible(true);
 					// setup all properties
 					this->_listBox->items += this;
-					this->setRect(grect(0.0f, itemCount * itemHeight, this->_listBox->getWidth(), itemHeight));
+					this->setRect(0.0f, itemCount * itemHeight, this->_listBox->getWidth(), itemHeight);
 					this->setAnchors(true, true, true, false);
 					this->setBackgroundBorder(false);
 					this->_hoverColor = this->_listBox->hoverColor;
@@ -124,13 +124,13 @@ namespace aprilui
 				}
 				else
 				{
-					hlog::warnf(aprilui::logTag, "ListBoxItem '%s' cannot be reattached to ScrollArea of ListBox '%s', ScrollArea does not exist!", this->name.c_str(), this->parent->getName().c_str());
+					hlog::errorf(aprilui::logTag, "ListBoxItem '%s' cannot be reattached to ScrollArea of ListBox '%s', ScrollArea does not exist!", this->name.c_str(), this->parent->getName().c_str());
 				}
 			}
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
 			{
 				this->_listBox = NULL;
-				hlog::warnf(aprilui::logTag, "ListBoxItem '%s' not attached to object of class ListBox!", this->name.c_str());
+				hlog::errorf(aprilui::logTag, "ListBoxItem '%s' not attached to object of class ListBox!", this->name.c_str());
 			}
 		}
 	}
