@@ -8,33 +8,37 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a color-quad object.
+/// Defines a class for a tree view node.
 
-#ifndef APRILUI_COLORED_QUAD_H
-#define APRILUI_COLORED_QUAD_H
+#ifndef APRILUI_TREE_VIEW_NODE_H
+#define APRILUI_TREE_VIEW_NODE_H
 
-#include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "Object.h"
+#include "ObjectContainer.h"
 
 namespace aprilui
 {
-	class apriluiExport ColoredQuad : public Object
+	class TreeView;
+
+	class apriluiExport TreeViewNode : public Container
 	{
 	public:
-		ColoredQuad(chstr name);
-		~ColoredQuad();
-		inline hstr getClassName() const { return "ColoredQuad"; }
+		friend class TreeView;
+
+		TreeViewNode(chstr name);
+		~TreeViewNode();
+		inline hstr getClassName() const { return "TreeViewNode"; }
 
 		static Object* createInstance(chstr name);
 
-	protected:
-		void _draw();
+	private:
+		TreeView* _treeView;
 
 	};
+
 }
 
 #endif

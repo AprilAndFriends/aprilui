@@ -206,6 +206,12 @@
     <ClCompile Include="..\..\src\objects\ObjectListBoxItem.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectTreeView.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectTreeViewNode.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -398,6 +404,12 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectListBoxItem.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectTreeView.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectTreeViewNode.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
