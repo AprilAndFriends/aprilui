@@ -1182,7 +1182,7 @@ namespace aprilui
 		while (current != NULL)
 		{
 			sequence += current;
-			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
 		gvec2 center;
@@ -1233,7 +1233,7 @@ namespace aprilui
 		while (current != NULL)
 		{
 			sequence += current;
-			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
 		gvec2 center;
@@ -1268,7 +1268,7 @@ namespace aprilui
 				(*it).rotate(-angle);
 				(*it) += center + position;
 			}
-			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		return points;
 	}
@@ -1284,7 +1284,7 @@ namespace aprilui
 			point *= current->getScale();
 			point.rotate(-current->getAngle());
 			point += center + current->getPosition();
-			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		return point;
 	}
