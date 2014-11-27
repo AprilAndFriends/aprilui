@@ -77,7 +77,7 @@
 				</Object>
 				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" grid_size="32" rect="0,128,128,16"/>
 			</Object>
-			<Object type="ListBox" name="list_box" item_height="32" rect="600,32,192,142">
+			<Object type="ListBox" name="list_box" item_height="32" allow_drag="1" rect="600,32,192,142">
 				<Object type="ListBoxItem" name="list_box_item_0" text="Item 0" effect="border"/>
 				<Object type="ListBoxItem" name="list_box_item_1" text="Item 1" effect="border"/>
 				<Object type="ListBoxItem" name="list_box_item_2" text="Item 2" effect="border"/>
@@ -86,7 +86,7 @@
 				<Object type="ListBoxItem" name="list_box_item_5" text="Item 5" effect="border"/>
 				<Object type="ScrollBarV" name="list_box_scroll_v" rect="192,0,4,142"/>
 			</Object>
-			<Object type="TreeView" name="tree_view" node_height="32" spacing_width="4" rect="600,288,384,144">
+			<Object type="TreeView" name="tree_view" item_height="32" spacing_width="4" allow_drag="1" rect="600,288,384,144">
 				<Object type="ColoredQuad" name="tree_view_back" color="0000007F" rect="0,0,384,144" zorder="-10"/>
 				<Object type="TreeViewNode" name="tree_view_node_0">
 					<Object type="TreeViewExpander" name="tree_view_node_0_expander" image="texture/test_green" toggled_image="texture/test_red" toggled="1"/>

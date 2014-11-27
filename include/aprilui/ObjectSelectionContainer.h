@@ -1,0 +1,84 @@
+/// @file
+/// @version 4.0
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
+/// 
+/// @section DESCRIPTION
+/// 
+/// Defines a base class for all objects that contain selectable children.
+
+#ifndef APRILUI_SELECTION_BASE_H
+#define APRILUI_SELECTION_BASE_H
+
+#include <april/Keys.h>
+#include <hltypes/harray.h>
+#include <hltypes/hstring.h>
+
+#include "apriluiExport.h"
+
+namespace aprilui
+{
+	class ScrollArea;
+
+	class apriluiExport SelectionContainer
+	{
+	public:
+		SelectionContainer();
+		virtual ~SelectionContainer();
+
+		HL_DEFINE_GET(int, selectedIndex, SelectedIndex);
+		void setSelectedIndex(int value);
+		HL_DEFINE_GET(float, itemHeight, ItemHeight);
+		void setItemHeight(float value);
+		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
+		void setHoverColor(april::Color value);
+		HL_DEFINE_GET(april::Color, pushedColor, PushedColor);
+		void setPushedColor(april::Color value);
+		HL_DEFINE_GET(april::Color, selectedColor, SelectedColor);
+		void setSelectedColor(april::Color value);
+		HL_DEFINE_GET(april::Color, selectedHoverColor, SelectedHoverColor);
+		void setSelectedHoverColor(april::Color value);
+		HL_DEFINE_GET(april::Color, selectedPushedColor, SelectedPushedColor);
+		void setSelectedPushedColor(april::Color value);
+		HL_DEFINE_IS(allowDrag, AllowDrag);
+		void setAllowDrag(bool value);
+
+		virtual int getItemCount() = 0;
+
+		virtual harray<PropertyDescription> getPropertyDescriptions();
+
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
+
+		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
+
+	protected:
+		int selectedIndex;
+		float itemHeight;
+		april::Color hoverColor;
+		april::Color pushedColor;
+		april::Color selectedColor;
+		april::Color selectedHoverColor;
+		april::Color selectedPushedColor;
+		bool allowDrag;
+
+		virtual ScrollArea* _getInternalScrollArea() = 0;
+		virtual void _updateDisplay() = 0;
+		virtual void _updateItem(int index) = 0;
+
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
+	};
+	
+}
+
+#endif

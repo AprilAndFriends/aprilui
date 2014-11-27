@@ -19,12 +19,13 @@
 
 #include "apriluiExport.h"
 #include "ObjectContainer.h"
+#include "ObjectSelectionContainer.h"
 
 namespace aprilui
 {
 	class ListBoxItem;
 
-	class apriluiExport ListBox : public Container
+	class apriluiExport ListBox : public Container, public SelectionContainer
 	{
 	public:
 		friend class ListBoxItem;
@@ -35,24 +36,10 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		HL_DEFINE_GET(float, itemHeight, ItemHeight);
-		void setItemHeight(float value);
-		HL_DEFINE_GET(int, selectedIndex, SelectedIndex);
-		void setSelectedIndex(int value);
 		HL_DEFINE_GET(april::Color, evenColor, EvenColor);
 		void setEvenColor(april::Color value);
 		HL_DEFINE_GET(april::Color, oddColor, OddColor);
 		void setOddColor(april::Color value);
-		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
-		void setHoverColor(april::Color value);
-		HL_DEFINE_GET(april::Color, pushedColor, PushedColor);
-		void setPushedColor(april::Color value);
-		HL_DEFINE_GET(april::Color, selectedColor, SelectedColor);
-		void setSelectedColor(april::Color value);
-		HL_DEFINE_GET(april::Color, selectedHoverColor, SelectedHoverColor);
-		void setSelectedHoverColor(april::Color value);
-		HL_DEFINE_GET(april::Color, selectedPushedColor, SelectedPushedColor);
-		void setSelectedPushedColor(april::Color value);
 		HL_DEFINE_GET(harray<ListBoxItem*>, items, Items);
 		int getItemCount();
 
@@ -67,20 +54,20 @@ namespace aprilui
 
 		void notifyEvent(chstr type, EventArgs* args);
 
+		bool triggerEvent(chstr type, april::Key keyCode);
+		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
+		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, void* userData = NULL);
+
 	protected:
-		float itemHeight;
 		april::Color evenColor;
 		april::Color oddColor;
-		april::Color hoverColor;
-		april::Color pushedColor;
-		april::Color selectedColor;
-		april::Color selectedHoverColor;
-		april::Color selectedPushedColor;
-		int selectedIndex;
 		harray<ListBoxItem*> items;
 
+		ScrollArea* _getInternalScrollArea();
 		void _updateDisplay();
-		void _updateItems();
 		void _updateItem(int index);
 		void _updateScrollArea();
 

@@ -46,7 +46,7 @@ namespace aprilui
 					this->_treeViewNode->_treeViewLabel = this;
 					this->_treeView = this->_treeViewNode->_treeView;
 					float width = this->_treeView->getExpanderWidth() + this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth() * 2;
-					this->setRect(width, 0.0f, this->_treeView->getWidth() - width, this->_treeView->getNodeHeight());
+					this->setRect(width, 0.0f, this->_treeView->getWidth() - width, this->_treeView->getItemHeight());
 					this->setAnchors(true, true, true, false);
 					this->_treeView->_updateDisplay();
 				}

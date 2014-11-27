@@ -21,9 +21,8 @@ namespace aprilui
 {
 	harray<PropertyDescription> TreeView::_propertyDescriptions;
 
-	TreeView::TreeView(chstr name) : Container(name)
+	TreeView::TreeView(chstr name) : Container(name), SelectionContainer()
 	{
-		this->nodeHeight = 32.0f;
 		this->expanderWidth = 32.0f;
 		this->imageWidth = 32.0f;
 		this->spacingWidth = 0.0f;
@@ -44,23 +43,13 @@ namespace aprilui
 	{
 		if (TreeView::_propertyDescriptions.size() == 0)
 		{
-			TreeView::_propertyDescriptions += PropertyDescription("node_height", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("expander_width", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("image_width", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("connector_color", PropertyDescription::HEXCOLOR);
 		}
-		return (Container::getPropertyDescriptions() + TreeView::_propertyDescriptions);
-	}
-
-	void TreeView::setNodeHeight(float value)
-	{
-		if (this->nodeHeight != value)
-		{
-			this->nodeHeight = value;
-			this->_updateDisplay();
-		}
+		return (Container::getPropertyDescriptions() + SelectionContainer::getPropertyDescriptions() + TreeView::_propertyDescriptions);
 	}
 
 	void TreeView::setExpanderWidth(float value)
@@ -108,9 +97,14 @@ namespace aprilui
 		}
 	}
 
-	int TreeView::getNodeCount()
+	int TreeView::getItemCount()
 	{
 		return this->nodes.size();
+	}
+
+	ScrollArea* TreeView::_getInternalScrollArea()
+	{
+		return this->scrollArea;
 	}
 
 	void TreeView::_updateDisplay()
@@ -123,30 +117,39 @@ namespace aprilui
 		if (this->scrollArea != NULL)
 		{
 			float scrollOffsetY = this->scrollArea->getScrollOffsetY();
-			this->scrollArea->setHeight(offset * this->nodeHeight + (offset - 1) * this->spacingHeight);
+			this->scrollArea->setHeight(offset * this->itemHeight + (offset - 1) * this->spacingHeight);
 			this->scrollArea->setScrollOffsetY(scrollOffsetY);
 		}
 	}
 
+	void TreeView::_updateItem(int index)
+	{
+		// TODO
+	}
+
 	hstr TreeView::getProperty(chstr name)
 	{
-		if (name == "node_height")		return this->getNodeHeight();
 		if (name == "expander_width")	return this->getExpanderWidth();
 		if (name == "image_width")		return this->getImageWidth();
 		if (name == "spacing_width")	return this->getSpacingWidth();
 		if (name == "spacing_height")	return this->getSpacingHeight();
 		if (name == "connector_color")	return this->getConnectorColor().hex();
-		return Container::getProperty(name);
+		hstr result = SelectionContainer::getProperty(name);
+		if (result == "")
+		{
+			result = Container::getProperty(name);
+		}
+		return result;
 	}
 
 	bool TreeView::setProperty(chstr name, chstr value)
 	{
-		if (name == "node_height")			this->setNodeHeight(value);
-		else if (name == "expander_width")	this->setExpanderWidth(value);
+		if		(name == "expander_width")	this->setExpanderWidth(value);
 		else if (name == "image_width")		this->setImageWidth(value);
 		else if (name == "spacing_width")	this->setSpacingWidth(value);
 		else if (name == "spacing_height")	this->setSpacingHeight(value);
 		else if (name == "connector_color")	this->setConnectorColor(value);
+		else if (SelectionContainer::setProperty(name, value)) {}
 		else return Container::setProperty(name, value);
 		return true;
 	}
@@ -164,6 +167,36 @@ namespace aprilui
 				this->scrollArea->setVisible(false);
 			}
 		}
+	}
+
+	bool TreeView::triggerEvent(chstr type, april::Key keyCode)
+	{
+		return Container::triggerEvent(type, keyCode);
+	}
+
+	bool TreeView::triggerEvent(chstr type, april::Key keyCode, chstr string)
+	{
+		return Container::triggerEvent(type, keyCode, string);
+	}
+
+	bool TreeView::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool TreeView::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool TreeView::triggerEvent(chstr type, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, string, userData);
+	}
+
+	bool TreeView::triggerEvent(chstr type, void* userData)
+	{
+		return Container::triggerEvent(type, userData);
 	}
 
 }

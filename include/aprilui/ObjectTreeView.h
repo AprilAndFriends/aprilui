@@ -19,6 +19,7 @@
 
 #include "apriluiExport.h"
 #include "ObjectContainer.h"
+#include "ObjectSelectionContainer.h"
 
 namespace aprilui
 {
@@ -27,7 +28,7 @@ namespace aprilui
 	class TreeViewLabel;
 	class TreeViewNode;
 
-	class apriluiExport TreeView : public Container
+	class apriluiExport TreeView : public Container, public SelectionContainer
 	{
 	public:
 		friend class TreeViewExpander;
@@ -41,8 +42,6 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		HL_DEFINE_GET(float, nodeHeight, NodeHeight);
-		void setNodeHeight(float value);
 		HL_DEFINE_GET(float, expanderWidth, ExpanderWidth);
 		void setExpanderWidth(float value);
 		HL_DEFINE_GET(float, imageWidth, ImageWidth);
@@ -53,7 +52,7 @@ namespace aprilui
 		void setSpacingHeight(float value);
 		HL_DEFINE_GET(april::Color, connectorColor, ConnectorColor);
 		void setConnectorColor(april::Color value);
-		int getNodeCount();
+		int getItemCount();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
@@ -62,8 +61,14 @@ namespace aprilui
 
 		void notifyEvent(chstr type, EventArgs* args);
 
+		bool triggerEvent(chstr type, april::Key keyCode);
+		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
+		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, void* userData = NULL);
+
 	protected:
-		float nodeHeight;
 		float expanderWidth;
 		float imageWidth;
 		float spacingWidth;
@@ -72,7 +77,9 @@ namespace aprilui
 		harray<TreeViewNode*> rootNodes;
 		harray<TreeViewNode*> nodes;
 
+		ScrollArea* _getInternalScrollArea();
 		void _updateDisplay();
+		void _updateItem(int index);
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
