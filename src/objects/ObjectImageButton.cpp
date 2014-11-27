@@ -149,17 +149,38 @@ namespace aprilui
 
 	void ImageButton::setHoverImageByName(chstr name)
 	{
-		this->setHoverImage(this->dataset->getImage(name));
+		if (name == "")
+		{
+			this->hoverImage = NULL;
+		}
+		else
+		{
+			this->setHoverImage(this->dataset->getImage(name));
+		}
 	}
 
 	void ImageButton::setPushedImageByName(chstr name)
 	{
-		this->setPushedImage(this->dataset->getImage(name));
+		if (name == "")
+		{
+			this->pushedImage = NULL;
+		}
+		else
+		{
+			this->setPushedImage(this->dataset->getImage(name));
+		}
 	}
 
 	void ImageButton::setDisabledImageByName(chstr name)
 	{
-		this->setDisabledImage(this->dataset->getImage(name));
+		if (name == "")
+		{
+			this->disabledImage = NULL;
+		}
+		else
+		{
+			this->setDisabledImage(this->dataset->getImage(name));
+		}
 	}
 
 	bool ImageButton::trySetPushedImageByName(chstr name)
