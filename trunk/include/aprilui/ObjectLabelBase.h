@@ -35,7 +35,6 @@ namespace aprilui
 	public:
 		LabelBase();
 		virtual ~LabelBase();
-		inline hstr getClassName() const { return "LabelBase"; }
 
 		HL_DEFINE_GET(hstr, text, Text);
 		virtual void setText(chstr value);

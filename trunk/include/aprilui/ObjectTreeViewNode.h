@@ -39,7 +39,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "TreeViewNode"; }
 
 		/// @note A return value of -1 indicates a problem that there are no parent nodes and no TreeView to which this TreeViewNode was attached to.
-		int getDepth();
+		HL_DEFINE_GET(int, depth, Depth);
 		bool isExpanded();
 
 		static Object* createInstance(chstr name);
@@ -47,6 +47,8 @@ namespace aprilui
 		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
+		int depth;
+
 		void _draw();
 
 		int _updateDisplay(int offsetIndex);

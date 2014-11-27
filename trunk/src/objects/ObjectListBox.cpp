@@ -22,17 +22,10 @@ namespace aprilui
 {
 	harray<PropertyDescription> ListBox::_propertyDescriptions;
 
-	ListBox::ListBox(chstr name) : Container(name)
+	ListBox::ListBox(chstr name) : Container(name), SelectionContainer()
 	{
-		this->itemHeight = 32.0f;
 		this->evenColor.set(april::Color::Black, 128);
 		this->oddColor.set(april::Color::DarkGrey, 128);
-		this->hoverColor.set(april::Color::White, 192);
-		this->pushedColor.set(april::Color::LightGrey, 192);
-		this->selectedColor.set(april::Color::Aqua, 192);
-		this->selectedHoverColor.set(april::Color::LightAqua, 192);
-		this->selectedPushedColor.set(april::Color::DarkAqua, 192);
-		this->selectedIndex = -1;
 	}
 
 	ListBox::~ListBox()
@@ -48,41 +41,10 @@ namespace aprilui
 	{
 		if (ListBox::_propertyDescriptions.size() == 0)
 		{
-			ListBox::_propertyDescriptions += PropertyDescription("item_height", PropertyDescription::FLOAT);
-			ListBox::_propertyDescriptions += PropertyDescription("selected_index", PropertyDescription::INT);
 			ListBox::_propertyDescriptions += PropertyDescription("even_color", PropertyDescription::HEXCOLOR);
 			ListBox::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::HEXCOLOR);
-			ListBox::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::HEXCOLOR);
-			ListBox::_propertyDescriptions += PropertyDescription("selected_color", PropertyDescription::HEXCOLOR);
-			ListBox::_propertyDescriptions += PropertyDescription("selected_hover_color", PropertyDescription::HEXCOLOR);
-			ListBox::_propertyDescriptions += PropertyDescription("selected_pushed_color", PropertyDescription::HEXCOLOR);
-			ListBox::_propertyDescriptions += PropertyDescription("item_count", PropertyDescription::INT);
 		}
-		return (Container::getPropertyDescriptions() + ListBox::_propertyDescriptions);
-	}
-
-	void ListBox::setItemHeight(float value)
-	{
-		if (this->itemHeight != value)
-		{
-			this->itemHeight = value;
-			this->_updateDisplay();
-		}
-	}
-
-	void ListBox::setSelectedIndex(int value)
-	{
-		if (this->selectedIndex != value)
-		{
-			int oldIndex = this->selectedIndex;
-			this->selectedIndex = (value < this->items.size() ? value : -1);
-			if (this->selectedIndex != oldIndex)
-			{
-				this->_updateItem(oldIndex);
-				this->_updateItem(this->selectedIndex);
-				this->triggerEvent(Event::SelectedChanged, hstr(this->selectedIndex));
-			}
-		}
+		return (Container::getPropertyDescriptions() + SelectionContainer::getPropertyDescriptions() + ListBox::_propertyDescriptions);
 	}
 
 	void ListBox::setEvenColor(april::Color value)
@@ -90,7 +52,7 @@ namespace aprilui
 		if (this->evenColor != value)
 		{
 			this->evenColor = value;
-			this->_updateItems();
+			this->_updateDisplay();
 		}
 	}
 
@@ -99,52 +61,7 @@ namespace aprilui
 		if (this->oddColor != value)
 		{
 			this->oddColor = value;
-			this->_updateItems();
-		}
-	}
-
-	void ListBox::setHoverColor(april::Color value)
-	{
-		if (this->hoverColor != value)
-		{
-			this->hoverColor = value;
-			this->_updateItems();
-		}
-	}
-
-	void ListBox::setPushedColor(april::Color value)
-	{
-		if (this->pushedColor != value)
-		{
-			this->pushedColor = value;
-			this->_updateItems();
-		}
-	}
-
-	void ListBox::setSelectedColor(april::Color value)
-	{
-		if (this->selectedColor != value)
-		{
-			this->selectedColor = value;
-			this->_updateItems();
-		}
-	}
-
-	void ListBox::setSelectedHoverColor(april::Color value)
-	{
-		if (this->selectedHoverColor != value)
-		{
-			this->selectedHoverColor = value;
-			this->_updateItems();
-		}
-	}
-
-	void ListBox::setSelectedPushedColor(april::Color value)
-	{
-		if (this->selectedPushedColor != value)
-		{
-			this->selectedPushedColor = value;
-			this->_updateItems();
+			this->_updateDisplay();
 		}
 	}
 
@@ -153,18 +70,18 @@ namespace aprilui
 		return this->items.size();
 	}
 
-	void ListBox::_updateDisplay()
+	ScrollArea* ListBox::_getInternalScrollArea()
 	{
-		this->_updateItems();
-		this->_updateScrollArea();
+		return this->scrollArea;
 	}
 
-	void ListBox::_updateItems()
+	void ListBox::_updateDisplay()
 	{
 		for_iter (i, 0, this->items.size())
 		{
 			this->_updateItem(i);
 		}
+		this->_updateScrollArea();
 	}
 
 	void ListBox::_updateItem(int index)
@@ -210,13 +127,12 @@ namespace aprilui
 		item->_listBox = this;
 		this->scrollArea->registerChild(item);
 		this->items.insert_at(index, item);
-		item->setRect(grect(0.0f, index * this->itemHeight, this->rect.w, this->itemHeight));
+		item->setRect(0.0f, index * this->itemHeight, this->rect.w, this->itemHeight);
 		item->setAnchors(true, true, true, false);
 		item->setBackgroundBorder(false);
 		item->_hoverColor = this->hoverColor;
 		item->_pushedColor = this->pushedColor;
-		this->_updateItems();
-		this->_updateScrollArea();
+		this->_updateDisplay();
 		return item;
 	}
 
@@ -233,8 +149,7 @@ namespace aprilui
 		{
 			this->setSelectedIndex(this->items.size() > 0 ? hclamp(this->selectedIndex, 0, this->items.size() - 1) : -1); // has to refresh the display
 		}
-		this->_updateItems();
-		this->_updateScrollArea();
+		this->_updateDisplay();
 		return true;
 	}
 
@@ -245,28 +160,21 @@ namespace aprilui
 
 	hstr ListBox::getProperty(chstr name)
 	{
-		if (name == "item_height")				return this->getItemHeight();
-		if (name == "selected_index")			return this->getSelectedIndex();
-		if (name == "even_color")				return this->getEvenColor().hex();
-		if (name == "odd_color")				return this->getOddColor().hex();
-		if (name == "hover_color")				return this->getHoverColor().hex();
-		if (name == "selected_color")			return this->getSelectedColor().hex();
-		if (name == "selected_hover_color")		return this->getSelectedHoverColor().hex();
-		if (name == "selected_pushed_color")	return this->getSelectedPushedColor().hex();
-		if (name == "item_count")				return this->getItemCount();
-		return Container::getProperty(name);
+		if (name == "even_color")	return this->getEvenColor().hex();
+		if (name == "odd_color")	return this->getOddColor().hex();
+		hstr result = SelectionContainer::getProperty(name);
+		if (result == "")
+		{
+			result = Container::getProperty(name);
+		}
+		return result;
 	}
 
 	bool ListBox::setProperty(chstr name, chstr value)
 	{
-		if (name == "item_height")					this->setItemHeight(value);
-		else if (name == "selected_index")			this->setSelectedIndex(value);
-		else if (name == "even_color")				this->setEvenColor(value);
-		else if (name == "odd_color")				this->setOddColor(value);
-		else if (name == "hover_color")				this->setHoverColor(value);
-		else if (name == "selected_color")			this->setSelectedColor(value);
-		else if (name == "selected_hover_color")	this->setSelectedHoverColor(value);
-		else if (name == "selected_pushed_color")	this->setSelectedPushedColor(value);
+		if		(name == "even_color")	this->setEvenColor(value);
+		else if (name == "odd_color")	this->setOddColor(value);
+		else if (SelectionContainer::setProperty(name, value)) {}
 		else return Container::setProperty(name, value);
 		return true;
 	}
@@ -284,6 +192,36 @@ namespace aprilui
 				this->scrollArea->setVisible(false);
 			}
 		}
+	}
+
+	bool ListBox::triggerEvent(chstr type, april::Key keyCode)
+	{
+		return Container::triggerEvent(type, keyCode);
+	}
+
+	bool ListBox::triggerEvent(chstr type, april::Key keyCode, chstr string)
+	{
+		return Container::triggerEvent(type, keyCode, string);
+	}
+
+	bool ListBox::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool ListBox::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool ListBox::triggerEvent(chstr type, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, string, userData);
+	}
+
+	bool ListBox::triggerEvent(chstr type, void* userData)
+	{
+		return Container::triggerEvent(type, userData);
 	}
 
 }

@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\src\objects\ObjectLabel.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectLabelBase.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectProgressBar.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectSelectionContainer.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTextImageButton.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectToggleButton.cpp" />
     <ClCompile Include="..\..\src\images\CompositeImage.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarButtonSlider.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarH.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectScrollBarV.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectSelectionContainer.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectTreeView.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectTreeViewExpander.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectTreeViewImage.h" />

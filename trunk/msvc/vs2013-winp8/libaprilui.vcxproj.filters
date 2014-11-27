@@ -221,6 +221,9 @@
     <ClCompile Include="..\..\src\objects\ObjectTreeViewLabel.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectSelectionContainer.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -428,6 +431,9 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectTreeViewLabel.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectSelectionContainer.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>

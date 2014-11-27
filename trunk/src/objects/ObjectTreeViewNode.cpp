@@ -22,6 +22,7 @@ namespace aprilui
 {
 	TreeViewNode::TreeViewNode(chstr name) : Container(name)
 	{
+		this->depth = -1;
 		this->_treeView = NULL;
 		this->_treeViewExpander = NULL;
 		this->_treeViewImage = NULL;
@@ -37,15 +38,6 @@ namespace aprilui
 		return new TreeViewNode(name);
 	}
 
-	int TreeViewNode::getDepth()
-	{
-		if (this->_treeViewParentNode == NULL)
-		{
-			return (this->_treeView != NULL ? 0 : -1); // -1 indicates a problem
-		}
-		return (this->_treeViewParentNode->getDepth() + 1);
-	}
-
 	bool TreeViewNode::isExpanded()
 	{
 		return (this->_treeViewNodes.size() > 0 && this->_treeViewExpander != NULL && this->_treeViewExpander->isDerivedVisible() && this->_treeViewExpander->isToggled());
@@ -59,7 +51,7 @@ namespace aprilui
 			april::Color color = this->_treeView->getConnectorColor();
 			if (color.a > 0 && this->isExpanded())
 			{
-				float nodeHeight = this->_treeView->getNodeHeight();
+				float nodeHeight = this->_treeView->getItemHeight();
 				float expanderWidth = this->_treeView->getExpanderWidth();
 				float spacingHeight = this->_treeView->getSpacingHeight();
 				grect drawRect = this->_getDrawRect();
@@ -85,7 +77,7 @@ namespace aprilui
 		if (this->_treeView != NULL)
 		{
 			this->setX(this->_treeView->getExpanderWidth() + this->_treeView->getSpacingWidth());
-			this->setY(offsetIndex * (this->_treeView->getNodeHeight() + this->_treeView->getSpacingHeight()));
+			this->setY(offsetIndex * (this->_treeView->getItemHeight() + this->_treeView->getSpacingHeight()));
 			bool expanded = this->isExpanded();
 			if (expanded)
 			{
@@ -110,10 +102,12 @@ namespace aprilui
 			if (this->_treeViewImage != NULL)
 			{
 				this->_treeViewImage->setX(0.0f);
+				this->_treeViewImage->setHitTest(HIT_TEST_DISABLED);
 			}
 			if (this->_treeViewLabel != NULL)
 			{
 				this->_treeViewLabel->setX(this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth());
+				this->_treeViewLabel->setHitTest(HIT_TEST_DISABLED);
 			}
 		}
 		return offset;
@@ -147,9 +141,6 @@ namespace aprilui
 				ScrollArea* scrollArea = this->_treeView->_getScrollArea();
 				if (scrollArea != NULL)
 				{
-					int nodeCount = this->_treeView->getNodeCount();
-					float nodeHeight = this->_treeView->getNodeHeight();
-					float offset = 0.0f;
 					this->_treeView->nodes += this;
 					if (this->_treeViewParentNode == NULL)
 					{
@@ -157,15 +148,16 @@ namespace aprilui
 						this->_treeView->rootNodes += this;
 						this->_treeView->removeChild(this);
 						scrollArea->addChild(this);
+						this->depth = 0;
 					}
 					else
 					{
 						this->_treeViewParentNode->_treeViewNodes += this;
-						offset = this->_treeView->getExpanderWidth() + this->_treeView->getSpacingWidth();
+						this->depth = this->_treeViewParentNode->depth + 1;
 					}
 					scrollArea->setVisible(true);
 					// setup all properties
-					this->setSize(this->_treeView->getWidth(), nodeHeight);
+					this->setSize(this->_treeView->getWidth() - this->_treeView->getExpanderWidth() - this->_treeView->getSpacingWidth(), this->_treeView->getItemHeight());
 					this->setAnchors(true, true, true, false);
 					this->_treeView->_updateDisplay();
 				}

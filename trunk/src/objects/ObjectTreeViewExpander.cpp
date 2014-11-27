@@ -47,7 +47,7 @@ namespace aprilui
 					this->_treeViewNode = treeViewNode;
 					this->_treeViewNode->_treeViewExpander = this;
 					this->_treeView = this->_treeViewNode->_treeView;
-					this->setRect(0.0f, 0.0f, this->_treeView->getExpanderWidth(), this->_treeView->getNodeHeight());
+					this->setRect(0.0f, 0.0f, this->_treeView->getExpanderWidth(), this->_treeView->getItemHeight());
 					this->setAnchors(true, true, true, false);
 					this->registerEvent(Event::Click, new MemberCallbackEvent<TreeViewExpander>(&TreeViewExpander::_onClick, this));
 					this->_treeView->_updateDisplay();
