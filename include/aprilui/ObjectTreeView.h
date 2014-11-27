@@ -51,6 +51,8 @@ namespace aprilui
 		void setSpacingWidth(float value);
 		HL_DEFINE_GET(float, spacingHeight, SpacingHeight);
 		void setSpacingHeight(float value);
+		HL_DEFINE_GET(april::Color, connectorColor, ConnectorColor);
+		void setConnectorColor(april::Color value);
 		int getNodeCount();
 
 		harray<PropertyDescription> getPropertyDescriptions();
@@ -66,6 +68,7 @@ namespace aprilui
 		float imageWidth;
 		float spacingWidth;
 		float spacingHeight;
+		april::Color connectorColor;
 		harray<TreeViewNode*> rootNodes;
 		harray<TreeViewNode*> nodes;
 

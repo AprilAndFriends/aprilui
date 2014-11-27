@@ -28,6 +28,7 @@ namespace aprilui
 		this->imageWidth = 32.0f;
 		this->spacingWidth = 0.0f;
 		this->spacingHeight = 4.0f;
+		this->connectorColor.set(april::Color::White, 192);
 	}
 
 	TreeView::~TreeView()
@@ -48,6 +49,7 @@ namespace aprilui
 			TreeView::_propertyDescriptions += PropertyDescription("image_width", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::FLOAT);
+			TreeView::_propertyDescriptions += PropertyDescription("connector_color", PropertyDescription::HEXCOLOR);
 		}
 		return (Container::getPropertyDescriptions() + TreeView::_propertyDescriptions);
 	}
@@ -97,6 +99,15 @@ namespace aprilui
 		}
 	}
 
+	void TreeView::setConnectorColor(april::Color value)
+	{
+		if (this->connectorColor != value)
+		{
+			this->connectorColor = value;
+			this->_updateDisplay();
+		}
+	}
+
 	int TreeView::getNodeCount()
 	{
 		return this->nodes.size();
@@ -124,6 +135,7 @@ namespace aprilui
 		if (name == "image_width")		return this->getImageWidth();
 		if (name == "spacing_width")	return this->getSpacingWidth();
 		if (name == "spacing_height")	return this->getSpacingHeight();
+		if (name == "connector_color")	return this->getConnectorColor().hex();
 		return Container::getProperty(name);
 	}
 
@@ -134,6 +146,7 @@ namespace aprilui
 		else if (name == "image_width")		this->setImageWidth(value);
 		else if (name == "spacing_width")	this->setSpacingWidth(value);
 		else if (name == "spacing_height")	this->setSpacingHeight(value);
+		else if (name == "connector_color")	this->setConnectorColor(value);
 		else return Container::setProperty(name, value);
 		return true;
 	}

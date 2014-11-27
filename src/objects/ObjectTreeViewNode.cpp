@@ -46,51 +46,74 @@ namespace aprilui
 		return (this->_treeViewParentNode->getDepth() + 1);
 	}
 
+	bool TreeViewNode::isExpanded()
+	{
+		return (this->_treeViewNodes.size() > 0 && this->_treeViewExpander != NULL && this->_treeViewExpander->isDerivedVisible() && this->_treeViewExpander->isToggled());
+	}
+
+	void TreeViewNode::_draw()
+	{
+		Container::_draw();
+		if (this->_treeView != NULL)
+		{
+			april::Color color = this->_treeView->getConnectorColor();
+			if (color.a > 0 && this->isExpanded())
+			{
+				float nodeHeight = this->_treeView->getNodeHeight();
+				float expanderWidth = this->_treeView->getExpanderWidth();
+				float spacingHeight = this->_treeView->getSpacingHeight();
+				grect drawRect = this->_getDrawRect();
+				drawRect.x -= expanderWidth * 0.5f + 1.0f + this->_treeView->getSpacingWidth();
+				drawRect.y += nodeHeight + spacingHeight;
+				drawRect.setSize(2.0f, (nodeHeight + spacingHeight) * (this->_treeViewNodes.size() - 1) + nodeHeight * 0.5f + 1.0f);
+				april::rendersys->drawFilledRect(drawRect, color);
+				drawRect.x += 2.0f;
+				drawRect.y += nodeHeight * 0.5f - 1.0f;
+				drawRect.setSize(expanderWidth * 0.5f - 1.0f, 2.0f);
+				for_iter (i, 0, this->_treeViewNodes.size())
+				{
+					april::rendersys->drawFilledRect(drawRect, color);
+					drawRect.y += nodeHeight + spacingHeight;
+				}
+			}
+		}
+	}
+
 	int TreeViewNode::_updateDisplay(int offsetIndex)
 	{
 		int offset = 1;
 		if (this->_treeView != NULL)
 		{
+			this->setX(this->_treeView->getExpanderWidth() + this->_treeView->getSpacingWidth());
 			this->setY(offsetIndex * (this->_treeView->getNodeHeight() + this->_treeView->getSpacingHeight()));
-			if (this->_treeViewParentNode == NULL)
+			bool expanded = this->isExpanded();
+			if (expanded)
 			{
-				this->setX(0.0f);
+				foreach (TreeViewNode*, it, this->_treeViewNodes)
+				{
+					(*it)->setVisible(true);
+					offset += (*it)->_updateDisplay(offset);
+				}
 			}
 			else
 			{
-				this->setX(this->_treeView->getExpanderWidth() + this->_treeView->getSpacingWidth());
+				foreach (TreeViewNode*, it, this->_treeViewNodes)
+				{
+					(*it)->setVisible(false);
+				}
 			}
-			bool visible = false;
 			if (this->_treeViewExpander != NULL)
 			{
-				if (this->_treeViewNodes.size() > 0)
-				{
-					this->_treeViewExpander->setVisible(true);
-					if (this->_treeViewExpander->isToggled())
-					{
-						foreach (TreeViewNode*, it, this->_treeViewNodes)
-						{
-							offset += (*it)->_updateDisplay(offset);
-						}
-						visible = true;
-					}
-				}
-				else
-				{
-					this->_treeViewExpander->setVisible(false);
-				}
+				this->_treeViewExpander->setX(-this->_treeView->getExpanderWidth() - this->_treeView->getSpacingWidth());
+				this->_treeViewExpander->setVisible(this->_treeViewNodes.size() > 0);
 			}
 			if (this->_treeViewImage != NULL)
 			{
-				this->_treeViewImage->setX(this->_treeView->getExpanderWidth() + this->_treeView->getSpacingWidth());
+				this->_treeViewImage->setX(0.0f);
 			}
 			if (this->_treeViewLabel != NULL)
 			{
-				this->_treeViewLabel->setX(this->_treeView->getExpanderWidth() + this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth() * 2);
-			}
-			foreach (TreeViewNode*, it, this->_treeViewNodes)
-			{
-				(*it)->setVisible(visible);
+				this->_treeViewLabel->setX(this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth());
 			}
 		}
 		return offset;
