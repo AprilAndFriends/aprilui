@@ -281,7 +281,7 @@ namespace aprilui
 		{
 			this->triggerEvent(Event::MouseDown, keyCode);
 		}
-		return (result || Object::_mouseDown(keyCode));
+		return (result || ImageBox::_mouseDown(keyCode));
 	}
 
 	bool ImageButton::_mouseUp(april::Key keyCode)
@@ -296,7 +296,7 @@ namespace aprilui
 		{
 			this->triggerEvent(Event::Click, keyCode);
 		}
-		return (result || up || Object::_mouseUp(keyCode));
+		return (result || up || ImageBox::_mouseUp(keyCode));
 	}
 	
 	bool ImageButton::_mouseMove()
@@ -311,12 +311,12 @@ namespace aprilui
 		{
 			this->triggerEvent(Event::ButtonDown, buttonCode);
 		}
-		return (result || Object::_buttonDown(buttonCode));
+		return (result || ImageBox::_buttonDown(buttonCode));
 	}
 
 	bool ImageButton::_buttonUp(april::Button buttonCode)
 	{
-		if (Object::onButtonUp(buttonCode)) // not a mistake, ImageBox does handle a MouseUp even and this behavior has to be overriden (will be refactored)
+		if (ImageBox::onButtonUp(buttonCode))
 		{
 			return true;
 		}
@@ -330,7 +330,7 @@ namespace aprilui
 		{
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
-		return (result || up || Object::_buttonUp(buttonCode));
+		return (result || up || ImageBox::_buttonUp(buttonCode));
 	}
 	
 	void ImageButton::_mouseCancel(april::Key keyCode)

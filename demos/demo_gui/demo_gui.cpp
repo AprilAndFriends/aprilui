@@ -68,9 +68,14 @@ void _hoverFinished(aprilui::EventArgs* args)
 	hlog::write(LOG_TAG, "Mouse Hover finished: " + args->baseObject->getName());
 }
 
-void _selectedChanged(aprilui::EventArgs* args)
+void _listBoxSelectedChanged(aprilui::EventArgs* args)
 {
-	hlog::writef(LOG_TAG, "Now selected: '%s'", args->string.c_str());
+	hlog::writef(LOG_TAG, "ListBox selected: '%s'", args->string.c_str());
+}
+
+void _treeViewSelectedChanged(aprilui::EventArgs* args)
+{
+	hlog::writef(LOG_TAG, "TreeView selected: '%s'", args->string.c_str());
 }
 
 class UpdateDelegate : public april::UpdateDelegate
@@ -275,7 +280,8 @@ void april_init(const harray<hstr>& args)
 		aprilui::Object* object = dataset->getObject("hover_image_button");
 		object->registerEvent(aprilui::Event::HoverStarted, new aprilui::CallbackEvent(&_hoverStarted));
 		object->registerEvent(aprilui::Event::HoverFinished, new aprilui::CallbackEvent(&_hoverFinished));
-		dataset->getObject<aprilui::ListBox*>("list_box")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_selectedChanged));
+		dataset->getObject<aprilui::SelectionContainer*>("list_box")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_listBoxSelectedChanged));
+		dataset->getObject<aprilui::SelectionContainer*>("tree_view")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_treeViewSelectedChanged));
 	}
 	catch (aprilui::_GenericException& e)
 	{

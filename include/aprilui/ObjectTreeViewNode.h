@@ -17,6 +17,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "ObjectButtonBase.h"
 #include "ObjectContainer.h"
 
 namespace aprilui
@@ -26,7 +27,7 @@ namespace aprilui
 	class TreeViewImage;
 	class TreeViewLabel;
 
-	class apriluiExport TreeViewNode : public Container
+	class apriluiExport TreeViewNode : public Container, public ButtonBase
 	{
 	public:
 		friend class TreeView;
@@ -38,11 +39,27 @@ namespace aprilui
 		~TreeViewNode();
 		inline hstr getClassName() const { return "TreeViewNode"; }
 
+		static Object* createInstance(chstr name);
+
+		hstr getName();
+		int getFocusIndex();
+		Object* getParent();
+		Dataset* getDataset();
+		bool isCursorInside();
+		bool isSelected();
+
 		/// @note A return value of -1 indicates a problem that there are no parent nodes and no TreeView to which this TreeViewNode was attached to.
 		HL_DEFINE_GET(int, depth, Depth);
 		bool isExpanded();
 
-		static Object* createInstance(chstr name);
+		void update(float timeDelta);
+
+		bool triggerEvent(chstr type, april::Key keyCode);
+		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
+		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, void* userData = NULL);
 
 		void notifyEvent(chstr type, EventArgs* args);
 
@@ -52,6 +69,14 @@ namespace aprilui
 		void _draw();
 
 		int _updateDisplay(int offsetIndex);
+		void _setSelected();
+
+		bool _mouseDown(april::Key keyCode);
+		bool _mouseUp(april::Key keyCode);
+		void _mouseCancel(april::Key keyCode);
+		bool _mouseMove();
+		bool _buttonDown(april::Button buttonCode);
+		bool _buttonUp(april::Button buttonCode);
 
 	private:
 		TreeView* _treeView;

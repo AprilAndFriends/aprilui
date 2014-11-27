@@ -40,6 +40,7 @@ namespace aprilui
 		Object* getParent();
 		Dataset* getDataset();
 		bool isCursorInside();
+		bool isSelected();
 
 		void update(float timeDelta);
 

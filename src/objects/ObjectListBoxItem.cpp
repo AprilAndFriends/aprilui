@@ -58,6 +58,12 @@ namespace aprilui
 		return Label::isCursorInside();
 	}
 
+	bool ListBoxItem::isSelected()
+	{
+		return (this->_listBox != NULL && is_between_ie(this->_listBox->selectedIndex, 0, this->_listBox->items.size()) &&
+			this->_listBox->items[this->_listBox->selectedIndex] == this);
+	}
+
 	void ListBoxItem::update(float timeDelta)
 	{
 		ButtonBase::update(timeDelta);
@@ -201,7 +207,7 @@ namespace aprilui
 
 	bool ListBoxItem::_buttonUp(april::Button buttonCode)
 	{
-		if (Label::onButtonUp(buttonCode)) // not a mistake, ImageBox does handle a MouseUp even and this behavior has to be overriden (will be refactored)
+		if (Label::onButtonUp(buttonCode))
 		{
 			return true;
 		}
