@@ -52,6 +52,8 @@ namespace aprilui
 		static hstr ScrollSkinChanged;
 		static hstr SetProgressValue;
 		static hstr SelectedChanged;
+		static hstr NodeExpanded;
+		static hstr NodeCollapsed;
 		static hstr AnimationDelayExpired;
 		static hstr AnimationExpired;
 

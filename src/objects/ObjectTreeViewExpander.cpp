@@ -42,13 +42,13 @@ namespace aprilui
 			TreeViewNode* treeViewNode = dynamic_cast<TreeViewNode*>(this->parent);
 			if (treeViewNode != NULL)
 			{
-				if (this->_treeViewNode == NULL && treeViewNode->_treeViewExpander == NULL)
+				if (this->_treeViewNode == NULL && treeViewNode->expander == NULL)
 				{
 					this->_treeViewNode = treeViewNode;
-					this->_treeViewNode->_treeViewExpander = this;
+					this->_treeViewNode->expander = this;
 					this->_treeView = this->_treeViewNode->_treeView;
-					this->setRect(0.0f, 0.0f, this->_treeView->getExpanderWidth(), this->_treeView->getItemHeight());
-					this->setAnchors(true, true, true, false);
+					this->setSize(this->_treeView->getExpanderWidth(), this->_treeView->getItemHeight());
+					this->setAnchors(true, false, true, false);
 					this->registerEvent(Event::Click, new MemberCallbackEvent<TreeViewExpander>(&TreeViewExpander::_onClick, this));
 					this->_treeView->_updateDisplay();
 				}
@@ -72,6 +72,7 @@ namespace aprilui
 	{
 		if (this->_treeView != NULL)
 		{
+			this->triggerEvent(this->toggled ? Event::NodeExpanded : Event::NodeCollapsed, this->_treeViewNode->name);
 			this->_treeView->_updateDisplay();
 		}
 	}

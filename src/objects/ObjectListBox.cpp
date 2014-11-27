@@ -64,6 +64,11 @@ namespace aprilui
 		}
 	}
 
+	ListBoxItem* ListBox::getSelected()
+	{
+		return (is_between_ie(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
+	}
+
 	int ListBox::getItemCount()
 	{
 		return this->items.size();
@@ -86,13 +91,13 @@ namespace aprilui
 			this->items[index]->setHeight(this->itemHeight);
 			if (this->selectedIndex != index)
 			{
-				this->items[index]->setBackgroundColor(index % 2 == 0 ? this->evenColor : this->oddColor);
+				this->items[index]->_backColor = (index % 2 == 0 ? this->evenColor : this->oddColor);
 				this->items[index]->_hoverColor = this->hoverColor;
 				this->items[index]->_pushedColor = this->pushedColor;
 			}
 			else
 			{
-				this->items[index]->setBackgroundColor(this->selectedColor);
+				this->items[index]->_backColor = this->selectedColor;
 				this->items[index]->_hoverColor = this->selectedHoverColor;
 				this->items[index]->_pushedColor = this->selectedPushedColor;
 			}
@@ -106,6 +111,7 @@ namespace aprilui
 			float scrollOffsetY = this->scrollArea->getScrollOffsetY();
 			this->scrollArea->setHeight(this->items.size() * this->itemHeight);
 			this->scrollArea->setScrollOffsetY(scrollOffsetY);
+			this->scrollArea->setVisible(this->items.size() > 0);
 		}
 	}
 
@@ -116,16 +122,25 @@ namespace aprilui
 			hlog::errorf(aprilui::logTag, "Cannot create item at index '%d' in ListBox '%s', no internal ScrollArea is present!", index, this->name.c_str());
 			return NULL;
 		}
+		ListBoxItem* selected = this->getSelected();
+		this->setSelectedIndex(-1);
 		index = hclamp(index, 0, this->items.size());
 		ListBoxItem* item = new ListBoxItem(name != "" ? name : april::generateName("aprilui::ListBoxItem"));
-		item->_listBox = this;
-		this->scrollArea->registerChild(item);
+		//item->_listBox = this;
+		this->registerChild(item);
+		this->items -= item;
 		this->items.insert_at(index, item);
+		/*
 		item->setRect(0.0f, index * this->itemHeight, this->rect.w, this->itemHeight);
 		item->setAnchors(true, true, true, false);
 		item->setBackgroundBorder(false);
 		item->_hoverColor = this->hoverColor;
 		item->_pushedColor = this->pushedColor;
+		*/
+		if (selected != NULL)
+		{
+			this->setSelectedIndex(this->items.index_of(selected));
+		}
 		this->_updateDisplay();
 		return item;
 	}
@@ -137,11 +152,16 @@ namespace aprilui
 			hlog::warnf(aprilui::logTag, "Cannot delete item at index '%d' in ListBox '%s', it does not exist!", index, this->name.c_str());
 			return false;
 		}
-		this->scrollArea->unregisterChild(this->items[index]);
-		delete this->items.remove_at(index);
-		if (this->selectedIndex >= 0)
+		ListBoxItem* selected = this->getSelected();
+		this->setSelectedIndex(-1);
+		if (selected != NULL && selected == this->items[index])
 		{
-			this->setSelectedIndex(this->items.size() > 0 ? hclamp(this->selectedIndex, 0, this->items.size() - 1) : -1); // has to refresh the display
+			selected = this->items[hclamp(index - 1, 0, this->items.size() - 2)];
+		}
+		this->dataset->destroyObjects(this->items.remove_at(index));
+		if (selected != NULL)
+		{
+			this->setSelectedIndex(this->items.index_of(selected));
 		}
 		this->_updateDisplay();
 		return true;

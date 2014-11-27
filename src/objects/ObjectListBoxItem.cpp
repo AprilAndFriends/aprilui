@@ -20,6 +20,7 @@ namespace aprilui
 	ListBoxItem::ListBoxItem(chstr name) : Label(name), ButtonBase()
 	{
 		this->_listBox = NULL;
+		this->_backColor = april::Color::Clear;
 		this->_hoverColor.set(april::Color::White, 192);
 		this->_pushedColor.set(april::Color::LightGrey, 192);
 	}
@@ -117,7 +118,6 @@ namespace aprilui
 					// reattach to ScrollArea
 					this->_listBox->removeChild(this);
 					scrollArea->addChild(this);
-					scrollArea->setVisible(true);
 					// setup all properties
 					this->_listBox->items += this;
 					this->setRect(0.0f, itemCount * itemHeight, this->_listBox->getWidth(), itemHeight);
@@ -143,17 +143,36 @@ namespace aprilui
 
 	void ListBoxItem::_draw()
 	{
-		if (!this->hovered && !this->pushed)
+		april::Color drawColor = this->_getDrawColor();
+		if (this->_listBox != NULL)
 		{
-			Label::_draw();
+			april::Color color = this->_getCurrentBackgroundColor() * drawColor;
+			if (color.a > 0)
+			{
+				april::rendersys->drawFilledRect(this->_getDrawRect(), color);
+			}
 		}
-		else
+		Label::_draw();
+	}
+
+	april::Color ListBoxItem::_getCurrentBackgroundColor()
+	{
+		if (this->_listBox != NULL)
 		{
-			april::Color backgroundColor = this->backgroundColor;
-			this->backgroundColor = (!this->pushed ? this->_hoverColor : this->_pushedColor);
-			Label::_draw();
-			this->backgroundColor = backgroundColor;
+			if (this->pushed)
+			{
+				return (!this->isSelected() ? this->_listBox->getPushedColor() : this->_listBox->getSelectedPushedColor());
+			}
+			if (this->hovered)
+			{
+				return (!this->isSelected() ? this->_listBox->getHoverColor() : this->_listBox->getSelectedHoverColor());
+			}
+			if (this->isSelected())
+			{
+				return this->_listBox->getSelectedColor();
+			}
 		}
+		return this->_backColor;
 	}
 
 	void ListBoxItem::_setSelected()

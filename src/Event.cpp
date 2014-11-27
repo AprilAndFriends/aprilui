@@ -48,6 +48,8 @@ namespace aprilui
 	hstr Event::ScrollSkinChanged = "ScrollSkinChanged";
 	hstr Event::SetProgressValue = "SetProgressValue";
 	hstr Event::SelectedChanged = "SelectedChanged";
+	hstr Event::NodeExpanded = "NodeExpanded";
+	hstr Event::NodeCollapsed = "NodeCollapsed";
 	hstr Event::AnimationDelayExpired = "AnimationDelayExpired";
 	hstr Event::AnimationExpired = "AnimationExpired";
 
@@ -89,6 +91,8 @@ namespace aprilui
 		SYSTEM_EVENT_CHECK(ScrollSkinChanged);
 		SYSTEM_EVENT_CHECK(SetProgressValue);
 		SYSTEM_EVENT_CHECK(SelectedChanged);
+		SYSTEM_EVENT_CHECK(NodeExpanded);
+		SYSTEM_EVENT_CHECK(NodeCollapsed);
 		SYSTEM_EVENT_CHECK(AnimationDelayExpired);
 		SYSTEM_EVENT_CHECK(AnimationExpired);
 		hlog::warn(aprilui::logTag, "There is no system event with name: " + type);

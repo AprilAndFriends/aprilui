@@ -56,6 +56,7 @@ namespace aprilui
 	protected:
 		void _draw();
 
+		april::Color _getCurrentBackgroundColor();
 		void _setSelected();
 
 		bool _mouseDown(april::Key keyCode);
@@ -67,6 +68,7 @@ namespace aprilui
 
 	private:
 		ListBox* _listBox;
+		april::Color _backColor;
 		april::Color _hoverColor;
 		april::Color _pushedColor;
 
