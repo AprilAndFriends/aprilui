@@ -126,17 +126,9 @@ namespace aprilui
 		this->setSelectedIndex(-1);
 		index = hclamp(index, 0, this->items.size());
 		ListBoxItem* item = new ListBoxItem(name != "" ? name : april::generateName("aprilui::ListBoxItem"));
-		//item->_listBox = this;
 		this->registerChild(item);
 		this->items -= item;
 		this->items.insert_at(index, item);
-		/*
-		item->setRect(0.0f, index * this->itemHeight, this->rect.w, this->itemHeight);
-		item->setAnchors(true, true, true, false);
-		item->setBackgroundBorder(false);
-		item->_hoverColor = this->hoverColor;
-		item->_pushedColor = this->pushedColor;
-		*/
 		if (selected != NULL)
 		{
 			this->setSelectedIndex(this->items.index_of(selected));

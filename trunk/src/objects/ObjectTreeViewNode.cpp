@@ -97,22 +97,25 @@ namespace aprilui
 			april::Color color = this->_treeView->getConnectorColor() * drawColor;
 			if (color.a > 0 && this->isExpanded())
 			{
-				float nodeHeight = this->_treeView->getItemHeight();
+				float itemHeight = this->_treeView->getItemHeight();
 				float expanderWidth = this->_treeView->getExpanderWidth();
 				float spacingHeight = this->_treeView->getSpacingHeight();
 				grect drawRect = this->_getDrawRect();
-				drawRect.x -= expanderWidth * 0.5f + 1.0f + this->_treeView->getSpacingWidth();
-				drawRect.y += nodeHeight + spacingHeight;
-				drawRect.setSize(2.0f, (nodeHeight + spacingHeight) * (this->nodes.size() - 1) + nodeHeight * 0.5f + 1.0f);
-				april::rendersys->drawFilledRect(drawRect, color);
-				drawRect.x += 2.0f;
-				drawRect.y += nodeHeight * 0.5f - 1.0f;
-				drawRect.setSize(expanderWidth * 0.5f - 1.0f, 2.0f);
+				grect vertical(-expanderWidth * 0.5f - 1.0f - this->_treeView->getSpacingWidth(), itemHeight + spacingHeight, 2.0f, itemHeight * 0.5f + 1.0f);
+				vertical += drawRect.getPosition();
+				drawRect.set(vertical.x + 2.0f, vertical.y + itemHeight * 0.5f - 1.0f, expanderWidth * 0.5f - 1.0f, 2.0f);
+				float offset = 0;
 				for_iter (i, 0, this->nodes.size())
 				{
 					april::rendersys->drawFilledRect(drawRect, color);
-					drawRect.y += nodeHeight + spacingHeight;
+					float offset = (itemHeight + spacingHeight) * this->nodes[i]->_calcOffset();
+					drawRect.y += offset;
+					if (i < this->nodes.size() - 1)
+					{
+						vertical.h += offset;
+					}
 				}
+				april::rendersys->drawFilledRect(vertical, color);
 			}
 		}
 	}
@@ -154,6 +157,19 @@ namespace aprilui
 			{
 				this->label->setX(this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth());
 				this->label->setHitTest(HIT_TEST_DISABLED);
+			}
+		}
+		return offset;
+	}
+
+	int TreeViewNode::_calcOffset()
+	{
+		int offset = 1;
+		if (this->isExpanded())
+		{
+			foreach (TreeViewNode*, it, this->nodes)
+			{
+				offset += (*it)->_calcOffset();
 			}
 		}
 		return offset;

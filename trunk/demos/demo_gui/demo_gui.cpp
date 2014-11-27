@@ -164,6 +164,9 @@ class KeyboardDelegate : public april::KeyboardDelegate
 				treeView->deleteItem(indices);
 			}
 			break;
+		case april::AK_HOME:
+			dataset->getObject<aprilui::TreeView*>("tree_view")->deleteItem(indices);
+			break;
 		case april::AK_D:
 			aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
 			break;

@@ -203,16 +203,31 @@ namespace aprilui
 		}
 		TreeViewNode* selected = this->getSelected();
 		this->setSelectedIndex(-1);
-		if (selected != NULL && selected == node)
+		this->_deleteChildren(node);
+		this->items -= node;
+		int index = nodeIndices.last();
+		if (selected != NULL && !this->items.contains(selected)) // the currently selected object is one of the deleted objects, parent or previous should become selected
 		{
 			selected = NULL;
-			// TODO
-			//this->_findNode(nodeIndices, &selected);
+			if (nodeIndices.size() == 1)
+			{
+				if (this->nodes.size() > 1)
+				{
+					selected = this->nodes[hclamp(index - 1, 1, this->nodes.size() - 1)];
+				}
+			}
+			else if (node->_treeViewParentNode->nodes.size() > 1)
+			{
+				selected = node->_treeViewParentNode->nodes[hclamp(index - 1, 1, node->_treeViewParentNode->nodes.size() - 1)];
+			}
+			else
+			{
+				selected = node->_treeViewParentNode;
+			}
 		}
-		this->items -= node;
 		if (nodeIndices.size() == 1)
 		{
-			this->nodes.remove_at(nodeIndices.first());
+			this->nodes.remove_at(nodeIndices[0]);
 		}
 		else
 		{
@@ -225,6 +240,19 @@ namespace aprilui
 		}
 		this->_updateDisplay();
 		return true;
+	}
+
+	void TreeView::_deleteChildren(TreeViewNode* node)
+	{
+		if (node->nodes.size() > 0)
+		{
+			foreach (TreeViewNode*, it, node->nodes)
+			{
+				this->_deleteChildren(*it);
+			}
+			this->items -= node->nodes;
+			node->nodes.clear();
+		}
 	}
 
 	TreeViewNode* TreeView::getItemAt(harray<int> nodeIndices)
