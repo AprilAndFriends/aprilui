@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	TreeViewNode::TreeViewNode(chstr name) : Container(name)
+	TreeViewNode::TreeViewNode(chstr name) : Container(name), ButtonBase()
 	{
 		this->depth = -1;
 		this->_treeView = NULL;
@@ -38,9 +38,46 @@ namespace aprilui
 		return new TreeViewNode(name);
 	}
 
+	hstr TreeViewNode::getName()
+	{
+		return Container::getName();
+	}
+
+	int TreeViewNode::getFocusIndex()
+	{
+		return Container::getFocusIndex();
+	}
+
+	Object* TreeViewNode::getParent()
+	{
+		return Container::getParent();
+	}
+
+	Dataset* TreeViewNode::getDataset()
+	{
+		return Container::getDataset();
+	}
+
+	bool TreeViewNode::isCursorInside()
+	{
+		return Container::isCursorInside();
+	}
+
 	bool TreeViewNode::isExpanded()
 	{
 		return (this->_treeViewNodes.size() > 0 && this->_treeViewExpander != NULL && this->_treeViewExpander->isDerivedVisible() && this->_treeViewExpander->isToggled());
+	}
+
+	bool TreeViewNode::isSelected()
+	{
+		return (this->_treeView != NULL && is_between_ie(this->_treeView->selectedIndex, 0, this->_treeView->nodes.size()) &&
+			this->_treeView->nodes[this->_treeView->selectedIndex] == this);
+	}
+
+	void TreeViewNode::update(float timeDelta)
+	{
+		ButtonBase::update(timeDelta);
+		Container::update(timeDelta);
 	}
 
 	void TreeViewNode::_draw()
@@ -113,6 +150,36 @@ namespace aprilui
 		return offset;
 	}
 
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode)
+	{
+		return Container::triggerEvent(type, keyCode);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, chstr string)
+	{
+		return Container::triggerEvent(type, keyCode, string);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, string, userData);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, void* userData)
+	{
+		return Container::triggerEvent(type, userData);
+	}
+
 	void TreeViewNode::notifyEvent(chstr type, EventArgs* args)
 	{
 		Container::notifyEvent(type, args);
@@ -177,6 +244,81 @@ namespace aprilui
 				hlog::errorf(aprilui::logTag, "TreeViewNode '%s' not attached to object of class TreeView or TreeViewNode!", this->name.c_str());
 			}
 		}
+	}
+
+	void TreeViewNode::_setSelected()
+	{
+		if (this->_treeView != NULL)
+		{
+			this->_treeView->setSelectedIndex(this->_treeView->nodes.index_of(this));
+		}
+	}
+
+	bool TreeViewNode::_mouseDown(april::Key keyCode)
+	{
+		bool result = ButtonBase::_mouseDown(keyCode);
+		if (result)
+		{
+			this->triggerEvent(Event::MouseDown, keyCode);
+		}
+		return (result || Container::_mouseDown(keyCode));
+	}
+
+	bool TreeViewNode::_mouseUp(april::Key keyCode)
+	{
+		bool result = ButtonBase::_mouseUp(keyCode);
+		bool up = false;
+		if (this->hovered)
+		{
+			up = this->triggerEvent(Event::MouseUp, keyCode);
+		}
+		if (result)
+		{
+			this->_setSelected();
+			this->triggerEvent(Event::Click, keyCode);
+		}
+		return (result || up || Container::_mouseUp(keyCode));
+	}
+
+	bool TreeViewNode::_mouseMove()
+	{
+		return (ButtonBase::_mouseMove() || Container::_mouseMove());
+	}
+
+	bool TreeViewNode::_buttonDown(april::Button buttonCode)
+	{
+		bool result = ButtonBase::_buttonDown(buttonCode);
+		if (result)
+		{
+			this->triggerEvent(Event::ButtonDown, buttonCode);
+		}
+		return (result || Container::_buttonDown(buttonCode));
+	}
+
+	bool TreeViewNode::_buttonUp(april::Button buttonCode)
+	{
+		if (Container::onButtonUp(buttonCode))
+		{
+			return true;
+		}
+		bool result = ButtonBase::_buttonUp(buttonCode);
+		bool up = false;
+		if (this->hovered)
+		{
+			up = this->triggerEvent(Event::ButtonUp, buttonCode);
+		}
+		if (result)
+		{
+			this->_setSelected();
+			this->triggerEvent(Event::ButtonTrigger, buttonCode);
+		}
+		return (result || up || Container::_buttonUp(buttonCode));
+	}
+
+	void TreeViewNode::_mouseCancel(april::Key keyCode)
+	{
+		ButtonBase::_mouseCancel(keyCode);
+		Container::_mouseCancel(keyCode);
 	}
 
 }
