@@ -18,16 +18,16 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "ObjectContainer.h"
 
 namespace aprilui
 {
-	class ScrollArea;
-
-	class apriluiExport SelectionContainer
+	class apriluiExport SelectionContainer : public Container
 	{
 	public:
-		SelectionContainer();
+		SelectionContainer(chstr name);
 		virtual ~SelectionContainer();
+		inline hstr getClassName() { return "SelectionContainer"; }
 
 		HL_DEFINE_GET(int, selectedIndex, SelectedIndex);
 		void setSelectedIndex(int value);
@@ -53,12 +53,7 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
-		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
-		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
-		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
-		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL) = 0;
-		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
-		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
+		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
 		int selectedIndex;
@@ -70,7 +65,6 @@ namespace aprilui
 		april::Color selectedPushedColor;
 		bool allowDrag;
 
-		virtual ScrollArea* _getInternalScrollArea() = 0;
 		virtual void _updateDisplay() = 0;
 		virtual void _updateItem(int index) = 0;
 

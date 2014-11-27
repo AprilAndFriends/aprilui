@@ -18,14 +18,13 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "ObjectContainer.h"
 #include "ObjectSelectionContainer.h"
 
 namespace aprilui
 {
 	class ListBoxItem;
 
-	class apriluiExport ListBox : public Container, public SelectionContainer
+	class apriluiExport ListBox : public SelectionContainer
 	{
 	public:
 		friend class ListBoxItem;
@@ -52,21 +51,11 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
-		void notifyEvent(chstr type, EventArgs* args);
-
-		bool triggerEvent(chstr type, april::Key keyCode);
-		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
-		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
-		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
-		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
-		bool triggerEvent(chstr type, void* userData = NULL);
-
 	protected:
 		april::Color evenColor;
 		april::Color oddColor;
 		harray<ListBoxItem*> items;
 
-		ScrollArea* _getInternalScrollArea();
 		void _updateDisplay();
 		void _updateItem(int index);
 		void _updateScrollArea();
