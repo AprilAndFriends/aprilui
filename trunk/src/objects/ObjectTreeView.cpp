@@ -6,14 +6,19 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
+#include <april/aprilUtil.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
 #include "Dataset.h"
+#include "MemberCallbackEvent.h"
 #include "ObjectScrollArea.h"
 #include "ObjectTreeView.h"
+#include "ObjectTreeViewExpander.h"
+#include "ObjectTreeViewImage.h"
+#include "ObjectTreeViewLabel.h"
 #include "ObjectTreeViewNode.h"
 
 namespace aprilui
@@ -96,29 +101,178 @@ namespace aprilui
 		}
 	}
 
+	TreeViewNode* TreeView::getSelected()
+	{
+		return (is_between_ie(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
+	}
+
 	int TreeView::getItemCount()
 	{
-		return this->nodes.size();
+		return this->items.size();
+	}
+
+	bool TreeView::_findNode(harray<int> nodeIndices, TreeViewNode** node)
+	{
+		*node = NULL;
+		if (nodeIndices.size() == 0)
+		{
+			return true;
+		}
+		int index = nodeIndices.remove_first();
+		if (!is_between_ie(index, 0, this->nodes.size()))
+		{
+			return false;
+		}
+		*node = this->nodes[index];
+		while (nodeIndices.size() > 0)
+		{
+			index = nodeIndices.remove_first();
+			if (!is_between_ie(index, 0, (*node)->nodes.size()))
+			{
+				*node = NULL;
+				return false;
+			}
+			*node = (*node)->nodes[index];
+		}
+		return true;
+	}
+
+	TreeViewNode* TreeView::createItem(harray<int> nodeIndices, chstr name)
+	{
+		if (nodeIndices.size() == 0)
+		{
+			hlog::errorf(aprilui::logTag, "Cannot create node in TreeView '%s', no indices specified!", this->name.c_str());
+			return NULL;
+		}
+		if (this->scrollArea == NULL)
+		{
+			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', no internal ScrollArea is present!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			return NULL;
+		}
+		int index = nodeIndices.remove_last();
+		TreeViewNode* parent = NULL;
+		if (!this->_findNode(nodeIndices, &parent))
+		{
+			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			return NULL;
+		}
+		TreeViewNode* selected = this->getSelected();
+		this->setSelectedIndex(-1);
+		TreeViewNode* item = new TreeViewNode(name != "" ? name : april::generateName("aprilui::TreeViewNode"));
+		if (parent == NULL)
+		{
+			this->registerChild(item);
+			this->nodes -= item;
+			this->nodes.insert_at(index, item);
+		}
+		else
+		{
+			parent->registerChild(item);
+			parent->nodes -= item;
+			parent->nodes.insert_at(index, item);
+		}
+		if (this->expanderWidth > 0.0f)
+		{
+			item->registerChild(new TreeViewExpander(april::generateName("aprilui::TreeViewExpander")));
+		}
+		if (this->imageWidth > 0.0f)
+		{
+			item->registerChild(new TreeViewImage(april::generateName("aprilui::TreeViewImage")));
+		}
+		item->registerChild(new TreeViewLabel(april::generateName("aprilui::TreeViewLabel")));
+		if (selected != NULL)
+		{
+			this->setSelectedIndex(this->items.index_of(selected));
+		}
+		this->_updateDisplay();
+		return item;
+	}
+
+	bool TreeView::deleteItem(harray<int> nodeIndices)
+	{
+		if (nodeIndices.size() == 0)
+		{
+			hlog::errorf(aprilui::logTag, "Cannot delete node in TreeView '%s', no indices specified!", this->name.c_str());
+			return false;
+		}
+		TreeViewNode* node = NULL;
+		if (!this->_findNode(nodeIndices, &node))
+		{
+			hlog::errorf(aprilui::logTag, "Cannot delete node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			return false;
+		}
+		TreeViewNode* selected = this->getSelected();
+		this->setSelectedIndex(-1);
+		if (selected != NULL && selected == node)
+		{
+			selected = NULL;
+			// TODO
+			//this->_findNode(nodeIndices, &selected);
+		}
+		this->items -= node;
+		if (nodeIndices.size() == 1)
+		{
+			this->nodes.remove_at(nodeIndices.first());
+		}
+		else
+		{
+			node->_treeViewParentNode->nodes -= node;
+		}
+		this->dataset->destroyObjects(node);
+		if (selected != NULL)
+		{
+			this->setSelectedIndex(this->items.index_of(selected));
+		}
+		this->_updateDisplay();
+		return true;
+	}
+
+	TreeViewNode* TreeView::getItemAt(harray<int> nodeIndices)
+	{
+		if (nodeIndices.size() == 0)
+		{
+			hlog::errorf(aprilui::logTag, "Cannot get node in TreeView '%s', no indices specified!", this->name.c_str());
+			return NULL;
+		}
+		TreeViewNode* node = NULL;
+		this->_findNode(nodeIndices, &node);
+		return node;
 	}
 
 	void TreeView::_updateDisplay()
 	{
 		int offset = 0;
-		foreach (TreeViewNode*, it, this->rootNodes)
+		foreach (TreeViewNode*, it, this->nodes)
 		{
 			offset += (*it)->_updateDisplay(offset);
+		}
+		if (is_between_ie(this->selectedIndex, 0, this->items.size()))
+		{
+			if (!this->items[this->selectedIndex]->isDerivedVisible())
+			{
+				TreeViewNode* node = this->items[this->selectedIndex]->_treeViewParentNode;
+				while (node != NULL)
+				{
+					if (node->isDerivedVisible())
+					{
+						this->setSelectedIndex(this->items.index_of(node));
+						break;
+					}
+					node = node->_treeViewParentNode;
+				}
+			}
 		}
 		if (this->scrollArea != NULL)
 		{
 			float scrollOffsetY = this->scrollArea->getScrollOffsetY();
 			this->scrollArea->setHeight(offset * this->itemHeight + (offset - 1) * this->spacingHeight);
 			this->scrollArea->setScrollOffsetY(scrollOffsetY);
+			this->scrollArea->setVisible(this->items.size() > 0);
 		}
 	}
 
 	void TreeView::_updateItem(int index)
 	{
-		// TODO
 	}
 
 	hstr TreeView::getProperty(chstr name)

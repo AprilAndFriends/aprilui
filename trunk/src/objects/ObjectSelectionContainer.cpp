@@ -171,7 +171,7 @@ namespace aprilui
 				this->registerChild(new ScrollArea(april::generateName("aprilui::ScrollArea"))); // sets this->scrollArea
 				this->scrollArea->setRect(this->rect);
 				this->scrollArea->setAnchors(true, true, true, false);
-				this->scrollArea->setVisible(false);
+				this->scrollArea->setVisible(this->getItemCount() > 0);
 			}
 		}
 	}

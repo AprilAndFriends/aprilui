@@ -23,10 +23,10 @@ namespace aprilui
 	TreeViewNode::TreeViewNode(chstr name) : Container(name), ButtonBase()
 	{
 		this->depth = -1;
+		this->expander = NULL;
+		this->image = NULL;
+		this->label = NULL;
 		this->_treeView = NULL;
-		this->_treeViewExpander = NULL;
-		this->_treeViewImage = NULL;
-		this->_treeViewLabel = NULL;
 	}
 
 	TreeViewNode::~TreeViewNode()
@@ -65,13 +65,13 @@ namespace aprilui
 
 	bool TreeViewNode::isExpanded()
 	{
-		return (this->_treeViewNodes.size() > 0 && this->_treeViewExpander != NULL && this->_treeViewExpander->isDerivedVisible() && this->_treeViewExpander->isToggled());
+		return (this->nodes.size() > 0 && this->expander != NULL && this->expander->isDerivedVisible() && this->expander->isToggled());
 	}
 
 	bool TreeViewNode::isSelected()
 	{
-		return (this->_treeView != NULL && is_between_ie(this->_treeView->selectedIndex, 0, this->_treeView->nodes.size()) &&
-			this->_treeView->nodes[this->_treeView->selectedIndex] == this);
+		return (this->_treeView != NULL && is_between_ie(this->_treeView->selectedIndex, 0, this->_treeView->items.size()) &&
+			this->_treeView->items[this->_treeView->selectedIndex] == this);
 	}
 
 	void TreeViewNode::update(float timeDelta)
@@ -82,10 +82,19 @@ namespace aprilui
 
 	void TreeViewNode::_draw()
 	{
+		april::Color drawColor = this->_getDrawColor();
+		if (this->_treeView != NULL)
+		{
+			april::Color color = this->_getCurrentBackgroundColor() * drawColor;
+			if (color.a > 0)
+			{
+				april::rendersys->drawFilledRect(this->_getDrawRect(), color);
+			}
+		}
 		Container::_draw();
 		if (this->_treeView != NULL)
 		{
-			april::Color color = this->_treeView->getConnectorColor();
+			april::Color color = this->_treeView->getConnectorColor() * drawColor;
 			if (color.a > 0 && this->isExpanded())
 			{
 				float nodeHeight = this->_treeView->getItemHeight();
@@ -94,12 +103,12 @@ namespace aprilui
 				grect drawRect = this->_getDrawRect();
 				drawRect.x -= expanderWidth * 0.5f + 1.0f + this->_treeView->getSpacingWidth();
 				drawRect.y += nodeHeight + spacingHeight;
-				drawRect.setSize(2.0f, (nodeHeight + spacingHeight) * (this->_treeViewNodes.size() - 1) + nodeHeight * 0.5f + 1.0f);
+				drawRect.setSize(2.0f, (nodeHeight + spacingHeight) * (this->nodes.size() - 1) + nodeHeight * 0.5f + 1.0f);
 				april::rendersys->drawFilledRect(drawRect, color);
 				drawRect.x += 2.0f;
 				drawRect.y += nodeHeight * 0.5f - 1.0f;
 				drawRect.setSize(expanderWidth * 0.5f - 1.0f, 2.0f);
-				for_iter (i, 0, this->_treeViewNodes.size())
+				for_iter (i, 0, this->nodes.size())
 				{
 					april::rendersys->drawFilledRect(drawRect, color);
 					drawRect.y += nodeHeight + spacingHeight;
@@ -118,7 +127,7 @@ namespace aprilui
 			bool expanded = this->isExpanded();
 			if (expanded)
 			{
-				foreach (TreeViewNode*, it, this->_treeViewNodes)
+				foreach (TreeViewNode*, it, this->nodes)
 				{
 					(*it)->setVisible(true);
 					offset += (*it)->_updateDisplay(offset);
@@ -126,25 +135,25 @@ namespace aprilui
 			}
 			else
 			{
-				foreach (TreeViewNode*, it, this->_treeViewNodes)
+				foreach (TreeViewNode*, it, this->nodes)
 				{
 					(*it)->setVisible(false);
 				}
 			}
-			if (this->_treeViewExpander != NULL)
+			if (this->expander != NULL)
 			{
-				this->_treeViewExpander->setX(-this->_treeView->getExpanderWidth() - this->_treeView->getSpacingWidth());
-				this->_treeViewExpander->setVisible(this->_treeViewNodes.size() > 0);
+				this->expander->setX(-this->_treeView->getExpanderWidth() - this->_treeView->getSpacingWidth());
+				this->expander->setVisible(this->nodes.size() > 0);
 			}
-			if (this->_treeViewImage != NULL)
+			if (this->image != NULL)
 			{
-				this->_treeViewImage->setX(0.0f);
-				this->_treeViewImage->setHitTest(HIT_TEST_DISABLED);
+				this->image->setX(0.0f);
+				this->image->setHitTest(HIT_TEST_DISABLED);
 			}
-			if (this->_treeViewLabel != NULL)
+			if (this->label != NULL)
 			{
-				this->_treeViewLabel->setX(this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth());
-				this->_treeViewLabel->setHitTest(HIT_TEST_DISABLED);
+				this->label->setX(this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth());
+				this->label->setHitTest(HIT_TEST_DISABLED);
 			}
 		}
 		return offset;
@@ -208,21 +217,20 @@ namespace aprilui
 				ScrollArea* scrollArea = this->_treeView->_getScrollArea();
 				if (scrollArea != NULL)
 				{
-					this->_treeView->nodes += this;
+					this->_treeView->items += this;
 					if (this->_treeViewParentNode == NULL)
 					{
 						// reattach to ScrollArea
-						this->_treeView->rootNodes += this;
+						this->_treeView->nodes += this;
 						this->_treeView->removeChild(this);
 						scrollArea->addChild(this);
 						this->depth = 0;
 					}
 					else
 					{
-						this->_treeViewParentNode->_treeViewNodes += this;
+						this->_treeViewParentNode->nodes += this;
 						this->depth = this->_treeViewParentNode->depth + 1;
 					}
-					scrollArea->setVisible(true);
 					// setup all properties
 					this->setSize(this->_treeView->getWidth() - this->_treeView->getExpanderWidth() - this->_treeView->getSpacingWidth(), this->_treeView->getItemHeight());
 					this->setAnchors(true, true, true, false);
@@ -232,7 +240,7 @@ namespace aprilui
 				{
 					this->_treeView = NULL;
 					this->_treeViewParentNode = NULL;
-					this->_treeViewNodes.clear();
+					this->nodes.clear();
 					hlog::errorf(aprilui::logTag, "TreeViewNode '%s' cannot be reattached to ScrollArea of TreeView '%s', ScrollArea does not exist!", this->name.c_str(), this->parent->getName().c_str());
 				}
 			}
@@ -240,17 +248,37 @@ namespace aprilui
 			{
 				this->_treeView = NULL;
 				this->_treeViewParentNode = NULL;
-				this->_treeViewNodes.clear();
+				this->nodes.clear();
 				hlog::errorf(aprilui::logTag, "TreeViewNode '%s' not attached to object of class TreeView or TreeViewNode!", this->name.c_str());
 			}
 		}
+	}
+
+	april::Color TreeViewNode::_getCurrentBackgroundColor()
+	{
+		if (this->_treeView != NULL)
+		{
+			if (this->pushed)
+			{
+				return (!this->isSelected() ? this->_treeView->getPushedColor() : this->_treeView->getSelectedPushedColor());
+			}
+			if (this->hovered)
+			{
+				return (!this->isSelected() ? this->_treeView->getHoverColor() : this->_treeView->getSelectedHoverColor());
+			}
+			if (this->isSelected())
+			{
+				return this->_treeView->getSelectedColor();
+			}
+		}
+		return april::Color::Clear;
 	}
 
 	void TreeViewNode::_setSelected()
 	{
 		if (this->_treeView != NULL)
 		{
-			this->_treeView->setSelectedIndex(this->_treeView->nodes.index_of(this));
+			this->_treeView->setSelectedIndex(this->_treeView->items.index_of(this));
 		}
 	}
 

@@ -46,11 +46,14 @@ namespace aprilui
 		Object* getParent();
 		Dataset* getDataset();
 		bool isCursorInside();
-		bool isSelected();
 
-		/// @note A return value of -1 indicates a problem that there are no parent nodes and no TreeView to which this TreeViewNode was attached to.
 		HL_DEFINE_GET(int, depth, Depth);
+		HL_DEFINE_GET(harray<TreeViewNode*>, nodes, Nodes);
+		HL_DEFINE_GET(TreeViewExpander*, expander, Expander);
+		HL_DEFINE_GET(TreeViewImage*, image, Image);
+		HL_DEFINE_GET(TreeViewLabel*, label, Label);
 		bool isExpanded();
+		bool isSelected();
 
 		void update(float timeDelta);
 
@@ -65,10 +68,15 @@ namespace aprilui
 
 	protected:
 		int depth;
+		harray<TreeViewNode*> nodes;
+		TreeViewExpander* expander;
+		TreeViewImage* image;
+		TreeViewLabel* label;
 
 		void _draw();
 
 		int _updateDisplay(int offsetIndex);
+		april::Color _getCurrentBackgroundColor();
 		void _setSelected();
 
 		bool _mouseDown(april::Key keyCode);
@@ -81,10 +89,6 @@ namespace aprilui
 	private:
 		TreeView* _treeView;
 		TreeViewNode* _treeViewParentNode;
-		harray<TreeViewNode*> _treeViewNodes;
-		TreeViewExpander* _treeViewExpander;
-		TreeViewImage* _treeViewImage;
-		TreeViewLabel* _treeViewLabel;
 
 	};
 

@@ -109,7 +109,10 @@ class KeyboardDelegate : public april::KeyboardDelegate
 	{
 		aprilui::Object* object = NULL;
 		aprilui::ListBox* listBox = NULL;
-		aprilui::ListBoxItem* item = NULL;
+		aprilui::ListBoxItem* listBoxItem = NULL;
+		aprilui::TreeView* treeView = NULL;
+		aprilui::TreeViewNode* treeViewNode = NULL;
+		harray<int> indices = hstr("1,0").split(',').cast<int>();
 		switch (keyCode)
 		{
 		case april::AK_MENU:
@@ -137,13 +140,29 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			break;
 		case april::AK_INSERT:
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
-			item = listBox->createItem(listBox->getItemCount(), "list_box_item_" + hstr(listBox->getItemCount()));
-			item->setText("Item " + hstr(listBox->getItemCount() - 1));
-			item->setFontEffect(atres::BORDER);
+			listBoxItem = listBox->createItem(hrand(listBox->getItemCount()), april::generateName("item "));
+			listBoxItem->setText(listBoxItem->getName());
+			listBoxItem->setFontEffect(atres::BORDER);
 			break;
 		case april::AK_DELETE:
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
-			listBox->deleteItem(listBox->getItemCount() - 1);
+			listBox->deleteItem(hrand(listBox->getItemCount()));
+			break;
+		case april::AK_PRIOR:
+			treeView = dataset->getObject<aprilui::TreeView*>("tree_view");
+			indices += treeView->getItemAt(indices)->getNodes().size();
+			treeViewNode = treeView->createItem(indices, april::generateName("node "));
+			treeViewNode->getLabel()->setText(treeViewNode->getName());
+			treeViewNode->getLabel()->setFontEffect(atres::BORDER);
+			treeViewNode->getLabel()->setHorzFormatting(atres::LEFT);
+			break;
+		case april::AK_NEXT:
+			treeView = dataset->getObject<aprilui::TreeView*>("tree_view");
+			indices += treeView->getItemAt(indices)->getNodes().size() - 1;
+			if (indices.last() >= 0)
+			{
+				treeView->deleteItem(indices);
+			}
 			break;
 		case april::AK_D:
 			aprilui::setDebugEnabled(!aprilui::isDebugEnabled());

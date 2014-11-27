@@ -40,13 +40,13 @@ namespace aprilui
 			TreeViewNode* treeViewNode = dynamic_cast<TreeViewNode*>(this->parent);
 			if (treeViewNode != NULL)
 			{
-				if (this->_treeViewNode == NULL || treeViewNode->_treeViewLabel == NULL)
+				if (this->_treeViewNode == NULL || treeViewNode->label == NULL)
 				{
 					this->_treeViewNode = treeViewNode;
-					this->_treeViewNode->_treeViewLabel = this;
+					this->_treeViewNode->label = this;
 					this->_treeView = this->_treeViewNode->_treeView;
 					float width = this->_treeView->getExpanderWidth() + this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth() * 2;
-					this->setRect(width, 0.0f, this->_treeView->getWidth() - width, this->_treeView->getItemHeight());
+					this->setSize(this->_treeView->getWidth() - width, this->_treeView->getItemHeight());
 					this->setAnchors(true, true, true, false);
 					this->_treeView->_updateDisplay();
 				}
