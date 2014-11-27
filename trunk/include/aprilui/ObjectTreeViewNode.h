@@ -40,12 +40,15 @@ namespace aprilui
 
 		/// @note A return value of -1 indicates a problem that there are no parent nodes and no TreeView to which this TreeViewNode was attached to.
 		int getDepth();
+		bool isExpanded();
 
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
+		void _draw();
+
 		int _updateDisplay(int offsetIndex);
 
 	private:
