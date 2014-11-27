@@ -80,6 +80,7 @@ namespace aprilui
 		void _updateDisplay();
 		void _updateItem(int index);
 
+		void _deleteChildren(TreeViewNode* node);
 		bool _findNode(harray<int> nodeIndices, TreeViewNode** node);
 
 	private:

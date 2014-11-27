@@ -76,6 +76,7 @@ namespace aprilui
 		void _draw();
 
 		int _updateDisplay(int offsetIndex);
+		int _calcOffset();
 		april::Color _getCurrentBackgroundColor();
 		void _setSelected();
 
