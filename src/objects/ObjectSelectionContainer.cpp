@@ -6,6 +6,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
+#include <april/aprilUtil.h>
 #include <april/Keys.h>
 #include <april/Window.h>
 #include <hltypes/harray.h>
@@ -20,7 +21,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> SelectionContainer::_propertyDescriptions;
 
-	SelectionContainer::SelectionContainer()
+	SelectionContainer::SelectionContainer(chstr name) : Container(name)
 	{
 		this->selectedIndex = -1;
 		this->itemHeight = 32.0f;
@@ -50,7 +51,7 @@ namespace aprilui
 			SelectionContainer::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::BOOL);
 			SelectionContainer::_propertyDescriptions += PropertyDescription("item_count", PropertyDescription::INT);
 		}
-		return SelectionContainer::_propertyDescriptions;
+		return (Container::getPropertyDescriptions() + SelectionContainer::_propertyDescriptions);
 	}
 
 	void SelectionContainer::setSelectedIndex(int value)
@@ -127,10 +128,9 @@ namespace aprilui
 		if (this->allowDrag != value)
 		{
 			this->allowDrag = value;
-			ScrollArea* scrollArea = this->_getInternalScrollArea();
-			if (scrollArea != NULL)
+			if (this->scrollArea != NULL)
 			{
-				scrollArea->setAllowDrag(value);
+				this->scrollArea->setAllowDrag(value);
 			}
 		}
 	}
@@ -145,7 +145,7 @@ namespace aprilui
 		if (name == "selected_pushed_color")	return this->getSelectedPushedColor().hex();
 		if (name == "allow_drag")				return this->isAllowDrag();
 		if (name == "item_count")				return this->getItemCount();
-		return "";
+		return Container::getProperty(name);
 	}
 
 	bool SelectionContainer::setProperty(chstr name, chstr value)
@@ -157,8 +157,23 @@ namespace aprilui
 		else if (name == "selected_hover_color")	this->setSelectedHoverColor(value);
 		else if (name == "selected_pushed_color")	this->setSelectedPushedColor(value);
 		else if (name == "allow_drag")				this->setAllowDrag(value);
-		else return false;
+		else return Container::setProperty(name, value);
 		return true;
+	}
+
+	void SelectionContainer::notifyEvent(chstr type, EventArgs* args)
+	{
+		Container::notifyEvent(type, args);
+		if (type == Event::RegisteredInDataset)
+		{
+			if (this->scrollArea == NULL)
+			{
+				this->registerChild(new ScrollArea(april::generateName("aprilui::ScrollArea"))); // sets this->scrollArea
+				this->scrollArea->setRect(this->rect);
+				this->scrollArea->setAnchors(true, true, true, false);
+				this->scrollArea->setVisible(false);
+			}
+		}
 	}
 
 }

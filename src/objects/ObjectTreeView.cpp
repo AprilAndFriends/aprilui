@@ -6,7 +6,6 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#include <april/aprilUtil.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
@@ -21,7 +20,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> TreeView::_propertyDescriptions;
 
-	TreeView::TreeView(chstr name) : Container(name), SelectionContainer()
+	TreeView::TreeView(chstr name) : SelectionContainer(name)
 	{
 		this->expanderWidth = 32.0f;
 		this->imageWidth = 32.0f;
@@ -49,7 +48,7 @@ namespace aprilui
 			TreeView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::FLOAT);
 			TreeView::_propertyDescriptions += PropertyDescription("connector_color", PropertyDescription::HEXCOLOR);
 		}
-		return (Container::getPropertyDescriptions() + SelectionContainer::getPropertyDescriptions() + TreeView::_propertyDescriptions);
+		return (SelectionContainer::getPropertyDescriptions() + TreeView::_propertyDescriptions);
 	}
 
 	void TreeView::setExpanderWidth(float value)
@@ -102,11 +101,6 @@ namespace aprilui
 		return this->nodes.size();
 	}
 
-	ScrollArea* TreeView::_getInternalScrollArea()
-	{
-		return this->scrollArea;
-	}
-
 	void TreeView::_updateDisplay()
 	{
 		int offset = 0;
@@ -134,12 +128,7 @@ namespace aprilui
 		if (name == "spacing_width")	return this->getSpacingWidth();
 		if (name == "spacing_height")	return this->getSpacingHeight();
 		if (name == "connector_color")	return this->getConnectorColor().hex();
-		hstr result = SelectionContainer::getProperty(name);
-		if (result == "")
-		{
-			result = Container::getProperty(name);
-		}
-		return result;
+		return SelectionContainer::getProperty(name);
 	}
 
 	bool TreeView::setProperty(chstr name, chstr value)
@@ -149,54 +138,8 @@ namespace aprilui
 		else if (name == "spacing_width")	this->setSpacingWidth(value);
 		else if (name == "spacing_height")	this->setSpacingHeight(value);
 		else if (name == "connector_color")	this->setConnectorColor(value);
-		else if (SelectionContainer::setProperty(name, value)) {}
-		else return Container::setProperty(name, value);
+		else return SelectionContainer::setProperty(name, value);
 		return true;
-	}
-
-	void TreeView::notifyEvent(chstr type, EventArgs* args)
-	{
-		Container::notifyEvent(type, args);
-		if (type == Event::RegisteredInDataset)
-		{
-			if (this->scrollArea == NULL)
-			{
-				this->registerChild(new ScrollArea(april::generateName("aprilui::ScrollArea"))); // sets this->scrollArea
-				this->scrollArea->setRect(this->rect);
-				this->scrollArea->setAnchors(true, true, true, false);
-				this->scrollArea->setVisible(false);
-			}
-		}
-	}
-
-	bool TreeView::triggerEvent(chstr type, april::Key keyCode)
-	{
-		return Container::triggerEvent(type, keyCode);
-	}
-
-	bool TreeView::triggerEvent(chstr type, april::Key keyCode, chstr string)
-	{
-		return Container::triggerEvent(type, keyCode, string);
-	}
-
-	bool TreeView::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, keyCode, position, string, userData);
-	}
-
-	bool TreeView::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, buttonCode, string, userData);
-	}
-
-	bool TreeView::triggerEvent(chstr type, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, string, userData);
-	}
-
-	bool TreeView::triggerEvent(chstr type, void* userData)
-	{
-		return Container::triggerEvent(type, userData);
 	}
 
 }

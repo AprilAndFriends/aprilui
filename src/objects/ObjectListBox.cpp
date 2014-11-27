@@ -6,7 +6,6 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#include <april/aprilUtil.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
@@ -22,7 +21,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> ListBox::_propertyDescriptions;
 
-	ListBox::ListBox(chstr name) : Container(name), SelectionContainer()
+	ListBox::ListBox(chstr name) : SelectionContainer(name)
 	{
 		this->evenColor.set(april::Color::Black, 128);
 		this->oddColor.set(april::Color::DarkGrey, 128);
@@ -44,7 +43,7 @@ namespace aprilui
 			ListBox::_propertyDescriptions += PropertyDescription("even_color", PropertyDescription::HEXCOLOR);
 			ListBox::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::HEXCOLOR);
 		}
-		return (Container::getPropertyDescriptions() + SelectionContainer::getPropertyDescriptions() + ListBox::_propertyDescriptions);
+		return (SelectionContainer::getPropertyDescriptions() + ListBox::_propertyDescriptions);
 	}
 
 	void ListBox::setEvenColor(april::Color value)
@@ -68,11 +67,6 @@ namespace aprilui
 	int ListBox::getItemCount()
 	{
 		return this->items.size();
-	}
-
-	ScrollArea* ListBox::_getInternalScrollArea()
-	{
-		return this->scrollArea;
 	}
 
 	void ListBox::_updateDisplay()
@@ -162,66 +156,15 @@ namespace aprilui
 	{
 		if (name == "even_color")	return this->getEvenColor().hex();
 		if (name == "odd_color")	return this->getOddColor().hex();
-		hstr result = SelectionContainer::getProperty(name);
-		if (result == "")
-		{
-			result = Container::getProperty(name);
-		}
-		return result;
+		return SelectionContainer::getProperty(name);
 	}
 
 	bool ListBox::setProperty(chstr name, chstr value)
 	{
 		if		(name == "even_color")	this->setEvenColor(value);
 		else if (name == "odd_color")	this->setOddColor(value);
-		else if (SelectionContainer::setProperty(name, value)) {}
-		else return Container::setProperty(name, value);
+		else return SelectionContainer::setProperty(name, value);
 		return true;
-	}
-
-	void ListBox::notifyEvent(chstr type, EventArgs* args)
-	{
-		Container::notifyEvent(type, args);
-		if (type == Event::RegisteredInDataset)
-		{
-			if (this->scrollArea == NULL)
-			{
-				this->registerChild(new ScrollArea(april::generateName("aprilui::ScrollArea"))); // sets this->scrollArea
-				this->scrollArea->setRect(this->rect);
-				this->scrollArea->setAnchors(true, true, true, false);
-				this->scrollArea->setVisible(false);
-			}
-		}
-	}
-
-	bool ListBox::triggerEvent(chstr type, april::Key keyCode)
-	{
-		return Container::triggerEvent(type, keyCode);
-	}
-
-	bool ListBox::triggerEvent(chstr type, april::Key keyCode, chstr string)
-	{
-		return Container::triggerEvent(type, keyCode, string);
-	}
-
-	bool ListBox::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, keyCode, position, string, userData);
-	}
-
-	bool ListBox::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, buttonCode, string, userData);
-	}
-
-	bool ListBox::triggerEvent(chstr type, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, string, userData);
-	}
-
-	bool ListBox::triggerEvent(chstr type, void* userData)
-	{
-		return Container::triggerEvent(type, userData);
 	}
 
 }
