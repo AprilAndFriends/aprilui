@@ -26,10 +26,10 @@ namespace aprilui
 
 	class apriluiExport ProgressBase
 	{
+		APRILUI_CLONEABLE_ABSTRACT(ProgressBase);
 	public:
 		ProgressBase();
 		virtual ~ProgressBase();
-		inline hstr getClassName() const { return "ProgressBar"; }
 
 		HL_DEFINE_GET(Image*, progressImage, ProgressImage);
 		HL_DEFINE_GET(Image*, maskImage, MaskImage);

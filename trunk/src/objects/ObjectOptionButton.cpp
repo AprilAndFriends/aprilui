@@ -24,6 +24,10 @@ namespace aprilui
 	{
 	}
 
+	OptionButton::OptionButton(const OptionButton& other) : ToggleButton(other)
+	{
+	}
+
 	OptionButton::~OptionButton()
 	{
 	}
@@ -35,7 +39,7 @@ namespace aprilui
 
 	int OptionButton::getOptionCount()
 	{
-		return this->parent->getChildrenObjects().dyn_cast<OptionButton*>().size();
+		return (this->parent != NULL ? this->parent->getChildrenObjects().dyn_cast<OptionButton*>().size() : 0);
 	}
 
 	hstr OptionButton::getProperty(chstr name)

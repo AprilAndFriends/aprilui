@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		GreenChanger::GreenChanger(const GreenChanger& other) : Animator(other)
+		{
+		}
+
 		GreenChanger::~GreenChanger()
 		{
 		}

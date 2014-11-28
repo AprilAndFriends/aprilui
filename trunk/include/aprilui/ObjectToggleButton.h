@@ -23,6 +23,7 @@ namespace aprilui
 {
 	class apriluiExport ToggleButton : public ImageButton
 	{
+		APRILUI_CLONEABLE(ToggleButton);
 	public:
 		ToggleButton(chstr name);
 		~ToggleButton();

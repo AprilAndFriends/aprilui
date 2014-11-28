@@ -39,7 +39,27 @@ namespace aprilui
 		this->useTarget = false;
 		this->customFunction = NULL;
 	}
-	
+
+	Animator::Animator(const Animator& other) : BaseObject(other)
+	{
+		this->timeDelta = other.timeDelta;
+		this->value = other.value;
+		this->animationFunction = other.animationFunction;
+		this->timer = other.timer;
+		this->delay = other.delay;
+		this->periods = other.periods;
+		this->amplitude = other.amplitude;
+		this->speed = other.speed;
+		this->offset = other.offset;
+		this->acceleration = other.acceleration;
+		this->discreteStep = other.discreteStep;
+		this->reset = other.reset;
+		this->inheritValue = other.inheritValue;
+		this->target = other.target;
+		this->useTarget = other.useTarget;
+		this->customFunction = other.customFunction;
+	}
+
 	Animator::~Animator()
 	{
 	}

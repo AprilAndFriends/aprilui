@@ -34,6 +34,15 @@ namespace aprilui
 		this->connectorColor.set(april::Color::White, 192);
 	}
 
+	TreeView::TreeView(const TreeView& other) : SelectionContainer(other)
+	{
+		this->expanderWidth = other.expanderWidth;
+		this->imageWidth = other.imageWidth;
+		this->spacingWidth = other.spacingWidth;
+		this->spacingHeight = other.spacingHeight;
+		this->connectorColor = other.connectorColor;
+	}
+
 	TreeView::~TreeView()
 	{
 	}

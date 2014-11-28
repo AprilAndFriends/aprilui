@@ -26,6 +26,7 @@ namespace aprilui
 
 	class apriluiExport ListBox : public SelectionContainer
 	{
+		APRILUI_CLONEABLE(ListBox);
 	public:
 		friend class ListBoxItem;
 

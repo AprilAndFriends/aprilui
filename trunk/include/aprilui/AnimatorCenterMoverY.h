@@ -23,6 +23,7 @@ namespace aprilui
 	{
 		class apriluiExport CenterMoverY : public Animator
 		{
+			APRILUI_CLONEABLE(CenterMoverY);
 		public:
 			CenterMoverY(chstr name);
 			~CenterMoverY();

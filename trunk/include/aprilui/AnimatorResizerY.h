@@ -23,6 +23,7 @@ namespace aprilui
 	{
 		class apriluiExport ResizerY : public Animator
 		{
+			APRILUI_CLONEABLE(ResizerY);
 		public:
 			ResizerY(chstr name);
 			~ResizerY();

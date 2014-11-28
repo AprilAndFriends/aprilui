@@ -23,6 +23,7 @@ namespace aprilui
 	{
 		class apriluiExport Rotator : public Animator
 		{
+			APRILUI_CLONEABLE(Rotator);
 		public:
 			Rotator(chstr name);
 			~Rotator();

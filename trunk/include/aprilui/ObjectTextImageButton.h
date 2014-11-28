@@ -25,6 +25,7 @@ namespace aprilui
 {
 	class apriluiExport TextImageButton : public ImageButton, public LabelBase
 	{
+		APRILUI_CLONEABLE(TextImageButton);
 	public:
 		TextImageButton(chstr name);
 		~TextImageButton();

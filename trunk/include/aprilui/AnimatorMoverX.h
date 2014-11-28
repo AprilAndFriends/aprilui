@@ -23,6 +23,7 @@ namespace aprilui
 	{
 		class apriluiExport MoverX : public Animator
 		{
+			APRILUI_CLONEABLE(MoverX);
 		public:
 			MoverX(chstr name);
 			~MoverX();

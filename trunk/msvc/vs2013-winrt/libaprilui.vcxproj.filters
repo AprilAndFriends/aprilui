@@ -224,6 +224,9 @@
     <ClCompile Include="..\..\src\objects\ObjectSelectionContainer.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Cloneable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -435,6 +438,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectSelectionContainer.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\Cloneable.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

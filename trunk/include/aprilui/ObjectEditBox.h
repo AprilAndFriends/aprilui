@@ -23,6 +23,7 @@ namespace aprilui
 {
 	class apriluiExport EditBox : public Label
 	{
+		APRILUI_CLONEABLE(EditBox);
 	public:
 		EditBox(chstr name);
 		~EditBox();
@@ -72,17 +73,18 @@ namespace aprilui
 		hstr emptyText;
 		hstr emptyTextKey;
 		april::Color emptyTextColor;
-		bool pushed;
-		int caretIndex;
-		int selectionCount;
 		int maxLength;
 		char passwordChar;
-		bool multiLine;
-		bool selectable;
-		bool disabledOffset;
 		hstr filter;
+		bool multiLine;
+		int caretIndex;
+		bool selectable;
+		int selectionCount;
 		april::Color selectionColor;
+		bool disabledOffset;
+
 		grect caretRect;
+		bool pushed;
 		int renderOffsetX;
 		int renderOffsetY;
 

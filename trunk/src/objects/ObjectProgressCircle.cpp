@@ -25,6 +25,11 @@ namespace aprilui
 		this->direction = Clockwise;
 	}
 
+	ProgressCircle::ProgressCircle(const ProgressCircle& other) : ImageBox(other), ProgressBase(other)
+	{
+		this->direction = other.direction;
+	}
+
 	ProgressCircle::~ProgressCircle()
 	{
 	}

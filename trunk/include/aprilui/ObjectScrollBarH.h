@@ -21,9 +21,14 @@
 
 namespace aprilui
 {
+	class ScrollArea;
+
 	class apriluiExport ScrollBarH : public ScrollBar
 	{
+		APRILUI_CLONEABLE(ScrollBarH);
 	public:
+		friend class ScrollArea;
+
 		ScrollBarH(chstr name);
 		~ScrollBarH();
 		inline hstr getClassName() const { return "ScrollBarH"; }

@@ -25,6 +25,7 @@ namespace aprilui
 	{
 		class apriluiExport TiledScrollerX : public Animator
 		{
+			APRILUI_CLONEABLE(TiledScrollerX);
 		public:
 			TiledScrollerX(chstr name);
 			~TiledScrollerX();

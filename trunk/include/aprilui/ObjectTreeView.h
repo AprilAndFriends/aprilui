@@ -29,6 +29,7 @@ namespace aprilui
 
 	class apriluiExport TreeView : public SelectionContainer
 	{
+		APRILUI_CLONEABLE(TreeView);
 	public:
 		friend class TreeViewExpander;
 		friend class TreeViewImage;

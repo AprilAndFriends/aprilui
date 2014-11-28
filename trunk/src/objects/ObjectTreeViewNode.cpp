@@ -27,6 +27,17 @@ namespace aprilui
 		this->image = NULL;
 		this->label = NULL;
 		this->_treeView = NULL;
+		this->_treeViewParentNode = NULL;
+	}
+
+	TreeViewNode::TreeViewNode(const TreeViewNode& other) : Container(other), ButtonBase(other)
+	{
+		this->depth = -1;
+		this->expander = NULL;
+		this->image = NULL;
+		this->label = NULL;
+		this->_treeView = NULL;
+		this->_treeViewParentNode = NULL;
 	}
 
 	TreeViewNode::~TreeViewNode()
@@ -230,8 +241,7 @@ namespace aprilui
 			}
 			if (found)
 			{
-				ScrollArea* scrollArea = this->_treeView->_getScrollArea();
-				if (scrollArea != NULL)
+				if (this->_treeView->scrollArea != NULL)
 				{
 					this->_treeView->items += this;
 					if (this->_treeViewParentNode == NULL)
@@ -239,7 +249,7 @@ namespace aprilui
 						// reattach to ScrollArea
 						this->_treeView->nodes += this;
 						this->_treeView->removeChild(this);
-						scrollArea->addChild(this);
+						this->_treeView->scrollArea->addChild(this);
 						this->depth = 0;
 					}
 					else

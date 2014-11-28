@@ -28,6 +28,12 @@ namespace aprilui
 		this->hovered = false;
 		this->pushed = false;
 	}
+
+	ButtonBase::ButtonBase(const ButtonBase& other) : _thisObject(NULL)
+	{
+		this->hovered = other.hovered;
+		this->pushed = other.pushed;
+	}
 	
 	ButtonBase::~ButtonBase()
 	{

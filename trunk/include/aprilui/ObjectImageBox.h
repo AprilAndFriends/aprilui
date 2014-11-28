@@ -25,6 +25,7 @@ namespace aprilui
 	
 	class apriluiExport ImageBox : public Object
 	{
+		APRILUI_CLONEABLE(ImageBox);
 	public:
 		ImageBox(chstr name);
 		~ImageBox();

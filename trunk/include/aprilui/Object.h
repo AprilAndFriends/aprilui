@@ -39,6 +39,7 @@ namespace aprilui
 
 	class apriluiExport Object : public BaseObject
 	{
+		APRILUI_CLONEABLE(Object);
 	public:
 		friend class Dataset;
 
@@ -72,11 +73,6 @@ namespace aprilui
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
-		HL_DEFINE_GETSET(gvec2, scaleFactor, Scale)
-		inline void setScale(float x, float y) { this->scaleFactor.set(x, y); }
-		HL_DEFINE_GETSET(float, scaleFactor.x, ScaleX);
-		HL_DEFINE_GETSET(float, scaleFactor.y, ScaleY);
-
 		HL_DEFINE_GETSET(gvec2, center, Center);
 		inline void setCenter(float x, float y) { this->center.set(x, y); }
 		HL_DEFINE_GETSET(float, center.x, CenterX);
@@ -88,6 +84,15 @@ namespace aprilui
 		HL_DEFINE_GETSET(unsigned char, color.b, Blue);
 		HL_DEFINE_GETSET(unsigned char, color.a, Alpha);
 
+		inline bool isVisible() { return (this->visible && this->color.a > 0); }
+		HL_DEFINE_SET(bool, visible, Visible);
+		inline bool getVisibilityFlag() { return this->visible; }
+
+		HL_DEFINE_GETSET(gvec2, scaleFactor, Scale);
+		inline void setScale(float x, float y) { this->scaleFactor.set(x, y); }
+		HL_DEFINE_GETSET(float, scaleFactor.x, ScaleX);
+		HL_DEFINE_GETSET(float, scaleFactor.y, ScaleY);
+
 		HL_DEFINE_GETSET(float, angle, Angle);
 		HL_DEFINE_ISSET(anchorLeft, AnchorLeft);
 		HL_DEFINE_ISSET(anchorRight, AnchorRight);
@@ -97,11 +102,8 @@ namespace aprilui
 		HL_DEFINE_ISSET(retainAnchorAspect, RetainAnchorAspect);
 		HL_DEFINE_GETSET(HitTest, hitTest, HitTest);
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
-		inline bool isVisible() { return (this->visible && this->color.a > 0); }
-		HL_DEFINE_SET(bool, visible, Visible);
-		inline bool getVisibilityFlag() { return this->visible; }
-		HL_DEFINE_ISSET(clip, Clip);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
+		HL_DEFINE_ISSET(clip, Clip);
 		virtual HL_DEFINE_GET(int, focusIndex, FocusIndex);
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
@@ -273,25 +275,23 @@ namespace aprilui
 
 	protected:
 		grect rect;
-		gvec2 scaleFactor;
 		gvec2 center;
-		Object* childUnderCursor;
-		bool checkedChildUnderCursor;
-		harray<Animator*> dynamicAnimators;
-		bool visible;
-		float angle;
-		HitTest hitTest;
-		bool inheritAlpha;
 		april::Color color;
+		bool visible;
+		gvec2 scaleFactor;
+		float angle;
 		bool anchorLeft;
 		bool anchorRight;
 		bool anchorTop;
 		bool anchorBottom;
 		bool retainAnchorAspect;
+		HitTest hitTest;
 		bool clip;
+		bool inheritAlpha;
 		bool useDisabledAlpha;
 		int focusIndex;
 		CustomPointInsideCallback customPointInsideCallback;
+		harray<Animator*> dynamicAnimators;
 		april::Color debugColor;
 		
 		void _updateChildrenHorizontal(float difference);
@@ -321,6 +321,9 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+
+		Object* _childUnderCursor;
+		bool _checkedChildUnderCursor;
 
 	};
 	

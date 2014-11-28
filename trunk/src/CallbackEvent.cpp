@@ -15,6 +15,11 @@ namespace aprilui
 		this->callback = callback;
 	}
 
+	CallbackEvent::CallbackEvent(const CallbackEvent& other) : Event(other)
+	{
+		this->callback = other.callback;
+	}
+
 	CallbackEvent::~CallbackEvent()
 	{
 	}

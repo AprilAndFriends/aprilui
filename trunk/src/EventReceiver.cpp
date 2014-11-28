@@ -27,15 +27,33 @@
 
 namespace aprilui
 {
-	EventReceiver::EventReceiver()
+	EventReceiver::EventReceiver() : Cloneable()
 	{
 		this->dataset = NULL;
+	}
+
+	EventReceiver::EventReceiver(const EventReceiver& other) : Cloneable(other)
+	{
+		this->dataset = NULL;
+		foreachc_m (Event*, it, other.events)
+		{
+			this->events[it->first] = it->second->clone();
+		}
 	}
 	
 	EventReceiver::~EventReceiver()
 	{
+		foreach_m (Event*, it, this->events)
+		{
+			if (this->dataset != NULL)
+			{
+				this->dataset->removeCallbackFromQueue(it->second);
+			}
+			delete it->second;
+		}
+		this->events.clear();
 	}
-	
+
 	bool EventReceiver::registerEvent(chstr type, void(*callback)(EventArgs*))
 	{
 		CallbackEvent* event = new CallbackEvent(callback);

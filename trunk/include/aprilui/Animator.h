@@ -22,6 +22,7 @@ namespace aprilui
 {
 	class apriluiExport Animator : public BaseObject
 	{
+		APRILUI_CLONEABLE_ABSTRACT(Animator)
 	public:
 		enum AnimationFunction
 		{

@@ -19,6 +19,10 @@ namespace aprilui
 	{
 	}
 
+	ColoredQuad::ColoredQuad(const ColoredQuad& other) : Object(other)
+	{
+	}
+
 	ColoredQuad::~ColoredQuad()
 	{
 	}

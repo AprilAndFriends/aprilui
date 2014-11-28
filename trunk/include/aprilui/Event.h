@@ -16,13 +16,15 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Cloneable.h"
 
 namespace aprilui
 {
 	class EventArgs;
 
-	class apriluiExport Event
+	class apriluiExport Event : public Cloneable
 	{
+		APRILUI_CLONEABLE_ABSTRACT(Event);
 	public:
 		static hstr RegisteredInDataset;
 		static hstr UnregisteredFromDataset;

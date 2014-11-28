@@ -26,6 +26,14 @@ namespace aprilui
 		this->pushed = false;
 	}
 
+	ProgressBar::ProgressBar(const ProgressBar& other) : ImageBox(other), ProgressBase(other)
+	{
+		this->stretching = other.stretching;
+		this->direction = other.direction;
+		this->interactable = other.interactable;
+		this->pushed = false;
+	}
+
 	ProgressBar::~ProgressBar()
 	{
 	}

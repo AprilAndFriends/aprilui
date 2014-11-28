@@ -25,6 +25,10 @@ namespace aprilui
 		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
 
+	ScrollBarButtonSlider::ScrollBarButtonSlider(const ScrollBarButtonSlider& other) : ImageButton(other)
+	{
+	}
+
 	ScrollBarButtonSlider::~ScrollBarButtonSlider()
 	{
 	}

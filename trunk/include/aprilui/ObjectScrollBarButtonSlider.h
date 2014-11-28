@@ -24,6 +24,7 @@ namespace aprilui
 {
 	class apriluiExport ScrollBarButtonSlider : public ImageButton
 	{
+		APRILUI_CLONEABLE(ScrollBarButtonSlider);
 	public:
 		ScrollBarButtonSlider(chstr name);
 		~ScrollBarButtonSlider();

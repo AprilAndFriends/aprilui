@@ -24,6 +24,12 @@ namespace aprilui
 		this->debugColor = april::Color::Clear;
 	}
 
+	ImageBox::ImageBox(const ImageBox& other) : Object(other)
+	{
+		this->image = other.image;
+		this->imageName = other.imageName;
+	}
+
 	ImageBox::~ImageBox()
 	{
 	}
@@ -121,7 +127,7 @@ namespace aprilui
 
 	bool ImageBox::setProperty(chstr name, chstr value)
 	{
-		if (name == "image")	this->setImageByName(value);
+		if (name == "image")	this->trySetImageByName(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}

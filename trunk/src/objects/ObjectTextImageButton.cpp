@@ -20,9 +20,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> TextImageButton::_propertyDescriptions;
 
-	TextImageButton::TextImageButton(chstr name) :
-		LabelBase(),
-		ImageButton(name)
+	TextImageButton::TextImageButton(chstr name) : ImageButton(name), LabelBase()
 	{
 		this->text = "TextImageButton: " + name;
 		this->pushedTextColor = april::Color::White * 0.2f;
@@ -31,6 +29,16 @@ namespace aprilui
 		this->_useHoverTextColor = false;
 		this->_usePushedTextColor = false;
 		this->_useDisabledTextColor = false;
+	}
+
+	TextImageButton::TextImageButton(const TextImageButton& other) : ImageButton(other), LabelBase(other)
+	{
+		this->pushedTextColor = other.pushedTextColor;
+		this->hoverTextColor = other.hoverTextColor;
+		this->disabledTextColor = other.disabledTextColor;
+		this->_useHoverTextColor = other._useHoverTextColor;
+		this->_usePushedTextColor = other._usePushedTextColor;
+		this->_useDisabledTextColor = other._useDisabledTextColor;
 	}
 
 	TextImageButton::~TextImageButton()

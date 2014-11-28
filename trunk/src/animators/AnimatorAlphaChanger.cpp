@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		AlphaChanger::AlphaChanger(const AlphaChanger& other) : Animator(other)
+		{
+		}
+
 		AlphaChanger::~AlphaChanger()
 		{
 		}

@@ -22,6 +22,10 @@ namespace aprilui
 		this->debugColor = april::Color(april::Color::Aqua, 32);
 	}
 
+	Label::Label(const Label& other) : Object(other), LabelBase(other)
+	{
+	}
+
 	Label::~Label()
 	{
 	}

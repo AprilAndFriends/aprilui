@@ -49,8 +49,27 @@ namespace aprilui
 		this->_buttonSliderSkinned = NULL;
 		this->_buttonBackwardSkinned = NULL;
 		this->_buttonForwardSkinned = NULL;
-		this->_clickPosition.set(0.0f, 0.0f);
 		this->_retainTime = 0.0f;
+		this->_scrolling = false;
+	}
+
+	ScrollBar::ScrollBar(const ScrollBar& other) : Object(other)
+	{
+		this->skinName = other.skinName;
+		this->gridSize = other.gridSize;
+		this->useFading = other.useFading;
+		this->heightHide = other.heightHide;
+		this->useStretchedSlider = other.useStretchedSlider;
+		this->_buttonBackground = (other._buttonBackground != NULL ? other._buttonBackground->clone() : NULL);
+		this->_buttonSlider = (other._buttonSlider != NULL ? other._buttonSlider->clone() : NULL);
+		this->_buttonBackward = (other._buttonBackward != NULL ? other._buttonBackward->clone() : NULL);
+		this->_buttonForward = (other._buttonForward != NULL ? other._buttonForward->clone() : NULL);
+		this->_buttonBackgroundSkinned = (other._buttonBackgroundSkinned != NULL ? other._buttonBackgroundSkinned->clone() : NULL);
+		this->_buttonSliderSkinned = (other._buttonSliderSkinned != NULL ? other._buttonSliderSkinned->clone() : NULL);
+		this->_buttonBackwardSkinned = (other._buttonBackwardSkinned != NULL ? other._buttonBackwardSkinned->clone() : NULL);
+		this->_buttonForwardSkinned = (other._buttonForwardSkinned != NULL ? other._buttonForwardSkinned->clone() : NULL);
+		this->_retainTime = 0.0f;
+		this->_scrolling = false;
 	}
 
 	ScrollBar::~ScrollBar()
@@ -199,13 +218,9 @@ namespace aprilui
 		if (this->skinName == "")
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
-			if (parent != NULL)
+			if (parent != NULL && parent->scrollArea != NULL && this->_retainTime > 0.0f)
 			{
-				ScrollArea* area = parent->_getScrollArea();
-				if (area != NULL && this->_retainTime > 0.0f)
-				{
-					this->_retainTime -= timeDelta;
-				}
+				this->_retainTime -= timeDelta;
 			}
 		}
 	}
@@ -213,21 +228,17 @@ namespace aprilui
 	void ScrollBar::_initAreaDragging()
 	{
 		Container* parent = dynamic_cast<Container*>(this->parent);
-		if (parent != NULL)
+		if (parent != NULL && parent->scrollArea != NULL)
 		{
-			ScrollArea* area = parent->_getScrollArea();
-			if (area != NULL)
+			if (parent->scrollArea->_dragSpeed.x == 0.0f)
 			{
-				if (area->_dragSpeed.x == 0.0f)
-				{
-					area->_lastScrollOffset.x = area->getScrollOffsetX();
-					area->_dragTimer.x = 0.0f;
-				}
-				if (area->_dragSpeed.y == 0.0f)
-				{
-					area->_lastScrollOffset.y = area->getScrollOffsetY();
-					area->_dragTimer.y = 0.0f;
-				}
+				parent->scrollArea->_lastScrollOffset.x = parent->scrollArea->getScrollOffsetX();
+				parent->scrollArea->_dragTimer.x = 0.0f;
+			}
+			if (parent->scrollArea->_dragSpeed.y == 0.0f)
+			{
+				parent->scrollArea->_lastScrollOffset.y = parent->scrollArea->getScrollOffsetY();
+				parent->scrollArea->_dragTimer.y = 0.0f;
 			}
 		}
 	}
@@ -238,25 +249,21 @@ namespace aprilui
 		if (this->skinName == "")
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
-			if (parent != NULL)
+			if (parent != NULL && parent->scrollArea != NULL)
 			{
-				ScrollArea* area = parent->_getScrollArea();
-				if (area != NULL)
+				if (parent->scrollArea->isDragging() || parent->scrollArea->isScrolling())
 				{
-					if (area->isDragging() || area->isScrolling())
+					this->_retainTime = RETAIN_TIME;
+				}
+				if ((!this->useFading || this->_retainTime > 0.0f) &&
+					(!this->heightHide || this->_checkAreaSize()))
+				{
+					april::Color color = this->_getDrawColor();
+					if (this->useFading && this->_retainTime < FADE_OUT_TIME)
 					{
-						this->_retainTime = RETAIN_TIME;
+						color.a = (unsigned char)hclamp(color.a * this->_retainTime / FADE_OUT_TIME, 0.0f, 255.0f);
 					}
-					if ((!this->useFading || this->_retainTime > 0.0f) &&
-						(!this->heightHide || this->_checkAreaSize()))
-					{
-						april::Color color = this->_getDrawColor();
-						if (this->useFading && this->_retainTime < FADE_OUT_TIME)
-						{
-							color.a = (unsigned char)hclamp(color.a * this->_retainTime / FADE_OUT_TIME, 0.0f, 255.0f);
-						}
-						april::rendersys->drawFilledRect(this->_getBarDrawRect(), color);
-					}
+					april::rendersys->drawFilledRect(this->_getBarDrawRect(), color);
 				}
 			}
 		}

@@ -35,6 +35,19 @@ namespace aprilui
 		this->toggledDisabledImage = NULL;
 	}
 
+	ToggleButton::ToggleButton(const ToggleButton& other) : ImageButton(other)
+	{
+		this->toggled = other.toggled;
+		this->toggledNormalImage = other.toggledNormalImage;
+		this->toggledNormalImageName = other.toggledNormalImageName;
+		this->toggledHoverImage = other.toggledHoverImage;
+		this->toggledHoverImageName = other.toggledHoverImageName;
+		this->toggledPushedImage = other.toggledPushedImage;
+		this->toggledPushedImageName = other.toggledPushedImageName;
+		this->toggledDisabledImage = other.toggledDisabledImage;
+		this->toggledDisabledImageName = other.toggledDisabledImageName;
+	}
+
 	ToggleButton::~ToggleButton()
 	{
 	}

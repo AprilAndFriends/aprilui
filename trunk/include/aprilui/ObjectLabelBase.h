@@ -32,6 +32,7 @@ namespace aprilui
 
 	class apriluiExport LabelBase
 	{
+		APRILUI_CLONEABLE_ABSTRACT(LabelBase)
 	public:
 		LabelBase();
 		virtual ~LabelBase();

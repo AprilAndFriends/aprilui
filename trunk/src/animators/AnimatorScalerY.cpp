@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		ScalerY::ScalerY(const ScalerY& other) : Animator(other)
+		{
+		}
+
 		ScalerY::~ScalerY()
 		{
 		}

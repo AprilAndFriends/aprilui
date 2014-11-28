@@ -23,6 +23,12 @@ namespace aprilui
 		this->_treeViewNode = NULL;
 	}
 
+	TreeViewLabel::TreeViewLabel(const TreeViewLabel& other) : Label(other)
+	{
+		this->_treeView = NULL;
+		this->_treeViewNode = NULL;
+	}
+
 	TreeViewLabel::~TreeViewLabel()
 	{
 	}
