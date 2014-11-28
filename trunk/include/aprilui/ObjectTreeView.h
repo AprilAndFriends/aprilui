@@ -57,6 +57,7 @@ namespace aprilui
 		/// @note These are not necessarily in the same order as they are organized within the TreeView.
 		HL_DEFINE_GET(harray<TreeViewNode*>, items, Items);
 		TreeViewNode* getSelected();
+		void setSelected(harray<int> nodeIndices);
 		int getItemCount();
 
 		harray<PropertyDescription> getPropertyDescriptions();
