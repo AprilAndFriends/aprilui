@@ -26,6 +26,7 @@ namespace aprilui
 
 	class apriluiExport TreeViewExpander : public ToggleButton
 	{
+		APRILUI_CLONEABLE(TreeViewExpander);
 	public:
 		friend class TreeView;
 		friend class TreeViewNode;

@@ -41,6 +41,17 @@ namespace aprilui
 		this->_overrideHoverMode = false;
 	}
 
+	ScrollArea::ScrollArea(const ScrollArea& other) : Object(other), ButtonBase(other)
+	{
+		this->allowDrag = other.allowDrag;
+		this->inertia = other.inertia;
+		this->dragThreshold = other.dragThreshold;
+		this->dragMaxSpeed = other.dragMaxSpeed;
+		this->swapScrollWheels = other.swapScrollWheels;
+		this->dragging = false;
+		this->_overrideHoverMode = false;
+	}
+
 	ScrollArea::~ScrollArea()
 	{
 	}
@@ -287,7 +298,7 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
 			{
-				parent->_setScrollArea(this);
+				parent->scrollArea = this;
 			}
 		}
 		else if (type == Event::DetachedFromObject)
@@ -295,7 +306,7 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
 			{
-				parent->_setScrollArea(NULL);
+				parent->scrollArea = NULL;
 			}
 		}
 		else if (type == Event::Resized)
@@ -417,16 +428,14 @@ namespace aprilui
 			{
 				hswap(x, y);
 			}
-			ScrollBar* barV = parent->_getScrollBarV();
-			if (barV != NULL)
+			if (parent->scrollBarV != NULL)
 			{
-				barV->addScrollValue(barV->_calcScrollMove(x, y));
+				parent->scrollBarV->addScrollValue(parent->scrollBarV->_calcScrollMove(x, y));
 				result = true;
 			}
-			ScrollBar* barH = parent->_getScrollBarH();
-			if (barH != NULL)
+			if (parent->scrollBarH != NULL)
 			{
-				barH->addScrollValue(barH->_calcScrollMove(x, y));
+				parent->scrollBarH->addScrollValue(parent->scrollBarH->_calcScrollMove(x, y));
 				result = true;
 			}
 		}
@@ -461,15 +470,13 @@ namespace aprilui
 		{
 			return;
 		}
-		ScrollBar* scrollBarH = parent->_getScrollBarH();
-		if (scrollBarH != NULL)
+		if (parent->scrollBarH != NULL)
 		{
-			scrollBarH->_adjustDragSpeed();
+			parent->scrollBarH->_adjustDragSpeed();
 		}
-		ScrollBar* scrollBarV = parent->_getScrollBarV();
-		if (scrollBarV != NULL)
+		if (parent->scrollBarV != NULL)
 		{
-			scrollBarV->_adjustDragSpeed();
+			parent->scrollBarV->_adjustDragSpeed();
 		}
 	}
 	

@@ -25,6 +25,7 @@ namespace aprilui
 {
 	class apriluiExport ProgressBar : public ImageBox, public ProgressBase
 	{
+		APRILUI_CLONEABLE(ProgressBar);
 	public:
 		enum Direction
 		{

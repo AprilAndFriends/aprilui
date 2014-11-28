@@ -23,6 +23,7 @@ namespace aprilui
 	{
 		class apriluiExport FrameAnimation : public Animator
 		{
+			APRILUI_CLONEABLE(FrameAnimation);
 		public:
 			FrameAnimation(chstr name);
 			~FrameAnimation();

@@ -23,6 +23,12 @@ namespace aprilui
 		this->_treeViewNode = NULL;
 	}
 
+	TreeViewImage::TreeViewImage(const TreeViewImage& other) : ImageBox(other)
+	{
+		this->_treeView = NULL;
+		this->_treeViewNode = NULL;
+	}
+
 	TreeViewImage::~TreeViewImage()
 	{
 	}

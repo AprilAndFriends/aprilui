@@ -28,6 +28,7 @@ namespace aprilui
 
 	class apriluiExport Container : public Object
 	{
+		APRILUI_CLONEABLE(Container);
 	public:
 		friend class ScrollArea;
 		friend class ScrollBar;
@@ -44,13 +45,6 @@ namespace aprilui
 		ScrollArea* scrollArea;
 		ScrollBarH* scrollBarH;
 		ScrollBarV* scrollBarV;
-
-		inline ScrollArea* _getScrollArea() { return this->scrollArea; }
-		inline void _setScrollArea(ScrollArea* value) { this->scrollArea = value; }
-		inline ScrollBarH* _getScrollBarH() { return this->scrollBarH; }
-		inline void _setScrollBarH(ScrollBarH* value) { this->scrollBarH = value; }
-		inline ScrollBarV* _getScrollBarV() { return this->scrollBarV; }
-		inline void _setScrollBarV(ScrollBarV* value) { this->scrollBarV = value; }
 
 	};
 }

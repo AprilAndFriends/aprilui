@@ -24,6 +24,14 @@ namespace aprilui
 		this->debugColor = april::Color(april::Color::Orange, 32);
 	}
 
+	Container::Container(const Container& other) : Object(other)
+	{
+		this->scrollArea = NULL;
+		this->scrollBarH = NULL;
+		this->scrollBarV = NULL;
+		this->debugColor = other.debugColor;
+	}
+
 	Container::~Container()
 	{
 	}

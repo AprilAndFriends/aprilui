@@ -25,6 +25,14 @@ namespace aprilui
 		this->_pushedColor.set(april::Color::LightGrey, 192);
 	}
 
+	ListBoxItem::ListBoxItem(const ListBoxItem& other) : Label(other), ButtonBase(other)
+	{
+		this->_listBox = NULL;
+		this->_backColor = other._backColor;
+		this->_hoverColor = other._hoverColor;
+		this->_pushedColor = other._pushedColor;
+	}
+
 	ListBoxItem::~ListBoxItem()
 	{
 	}
@@ -110,14 +118,13 @@ namespace aprilui
 			if (listBox != NULL)
 			{
 				this->_listBox = listBox;
-				ScrollArea* scrollArea = this->_listBox->_getScrollArea();
-				if (scrollArea != NULL)
+				if (this->_listBox->scrollArea != NULL)
 				{
 					int itemCount = this->_listBox->getItemCount();
 					float itemHeight = this->_listBox->getItemHeight();
 					// reattach to ScrollArea
 					this->_listBox->removeChild(this);
-					scrollArea->addChild(this);
+					this->_listBox->scrollArea->addChild(this);
 					// setup all properties
 					this->_listBox->items += this;
 					this->setRect(0.0f, itemCount * itemHeight, this->_listBox->getWidth(), itemHeight);

@@ -19,6 +19,12 @@ namespace aprilui
 		this->updateCallback = NULL;
 	}
 
+	CallbackObject::CallbackObject(const CallbackObject& other) : Object(other)
+	{
+		this->drawCallback = other.drawCallback;
+		this->updateCallback = other.updateCallback;
+	}
+
 	CallbackObject::~CallbackObject()
 	{
 	}

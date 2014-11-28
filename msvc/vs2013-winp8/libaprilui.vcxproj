@@ -61,6 +61,7 @@
     <ClCompile Include="..\..\src\aprilui.cpp" />
     <ClCompile Include="..\..\src\BaseObject.cpp" />
     <ClCompile Include="..\..\src\CallbackEvent.cpp" />
+    <ClCompile Include="..\..\src\Cloneable.cpp" />
     <ClCompile Include="..\..\src\Dataset.cpp" />
     <ClCompile Include="..\..\src\Event.cpp" />
     <ClCompile Include="..\..\src\EventArgs.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="..\..\include\aprilui\AnimatorTiledScrollerX.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorTiledScrollerY.h" />
     <ClInclude Include="..\..\include\aprilui\BaseObject.h" />
+    <ClInclude Include="..\..\include\aprilui\Cloneable.h" />
     <ClInclude Include="..\..\include\aprilui\EventReceiver.h" />
     <ClInclude Include="..\..\include\aprilui\EventUtils.h" />
     <ClInclude Include="..\..\include\aprilui\MemberCallbackEvent.h" />

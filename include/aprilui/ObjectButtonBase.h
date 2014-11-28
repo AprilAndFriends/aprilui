@@ -18,6 +18,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Cloneable.h"
 
 namespace aprilui
 {
@@ -26,6 +27,7 @@ namespace aprilui
 
 	class apriluiExport ButtonBase
 	{
+		APRILUI_CLONEABLE_ABSTRACT(ButtonBase);
 	public:
 		ButtonBase();
 		virtual ~ButtonBase();

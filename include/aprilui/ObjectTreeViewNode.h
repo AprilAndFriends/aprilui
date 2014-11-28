@@ -29,6 +29,7 @@ namespace aprilui
 
 	class apriluiExport TreeViewNode : public Container, public ButtonBase
 	{
+		APRILUI_CLONEABLE(TreeViewNode);
 	public:
 		friend class TreeView;
 		friend class TreeViewExpander;

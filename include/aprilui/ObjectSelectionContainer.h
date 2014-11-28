@@ -24,6 +24,7 @@ namespace aprilui
 {
 	class apriluiExport SelectionContainer : public Container
 	{
+		APRILUI_CLONEABLE_ABSTRACT(SelectionContainer);
 	public:
 		SelectionContainer(chstr name);
 		virtual ~SelectionContainer();

@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		Rotator::Rotator(const Rotator& other) : Animator(other)
+		{
+		}
+
 		Rotator::~Rotator()
 		{
 		}

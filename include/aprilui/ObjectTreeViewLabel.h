@@ -26,6 +26,7 @@ namespace aprilui
 
 	class apriluiExport TreeViewLabel : public Label
 	{
+		APRILUI_CLONEABLE(TreeViewLabel);
 	public:
 		friend class TreeView;
 		friend class TreeViewNode;

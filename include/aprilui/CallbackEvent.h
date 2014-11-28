@@ -21,6 +21,7 @@ namespace aprilui
 	
 	class apriluiExport CallbackEvent : public Event
 	{
+		APRILUI_CLONEABLE(CallbackEvent);
 	public:
 		CallbackEvent(void (*callback)(EventArgs*));
 		~CallbackEvent();

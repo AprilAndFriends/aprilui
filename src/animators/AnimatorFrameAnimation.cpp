@@ -27,6 +27,13 @@ namespace aprilui
 			this->frameCount = 0;
 		}
 
+		FrameAnimation::FrameAnimation(const FrameAnimation& other) : Animator(other)
+		{
+			this->imageBaseName = other.imageBaseName;
+			this->firstFrame = other.firstFrame;
+			this->frameCount = other.frameCount;
+		}
+
 		FrameAnimation::~FrameAnimation()
 		{
 		}

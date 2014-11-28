@@ -25,6 +25,7 @@ namespace aprilui
 {
 	class apriluiExport ScrollArea : public Object, public ButtonBase
 	{
+		APRILUI_CLONEABLE(ScrollArea);
 	public:
 		friend class ScrollBar;
 		friend class ScrollBarH;

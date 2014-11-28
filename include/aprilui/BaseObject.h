@@ -33,6 +33,7 @@ namespace aprilui
 
 	class apriluiExport BaseObject : public EventReceiver
 	{
+		APRILUI_CLONEABLE(BaseObject);
 	public:
 		friend class Dataset;
 		friend class Object;

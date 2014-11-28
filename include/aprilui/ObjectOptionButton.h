@@ -24,6 +24,7 @@ namespace aprilui
 {
 	class apriluiExport OptionButton : public ToggleButton
 	{
+		APRILUI_CLONEABLE(OptionButton);
 	public:
 		OptionButton(chstr name);
 		~OptionButton();

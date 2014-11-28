@@ -25,6 +25,7 @@ namespace aprilui
 {
 	class apriluiExport ImageButton : public ImageBox, public ButtonBase
 	{
+		APRILUI_CLONEABLE(ImageButton);
 	public:
 		ImageButton(chstr name);
 		~ImageButton();

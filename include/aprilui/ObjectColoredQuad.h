@@ -24,6 +24,7 @@ namespace aprilui
 {
 	class apriluiExport ColoredQuad : public Object
 	{
+		APRILUI_CLONEABLE(ColoredQuad);
 	public:
 		ColoredQuad(chstr name);
 		~ColoredQuad();

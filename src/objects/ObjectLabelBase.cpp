@@ -42,6 +42,23 @@ namespace aprilui
 		this->backgroundBorder = true;
 	}
 
+	LabelBase::LabelBase(const LabelBase& other)
+	{
+		this->text = other.text;
+		this->textKey = other.textKey;
+		this->font = other.font;
+		this->textFormatting = other.textFormatting;
+		this->textColor = other.textColor;
+		this->textOffset = other.textOffset;
+		this->horzFormatting = other.horzFormatting;
+		this->vertFormatting = other.vertFormatting;
+		this->fontEffect = other.fontEffect;
+		this->useFontEffectColor = other.useFontEffectColor;
+		this->fontEffectColor = other.fontEffectColor;
+		this->backgroundColor = other.backgroundColor;
+		this->backgroundBorder = other.backgroundBorder;
+	}
+
 	LabelBase::~LabelBase()
 	{
 	}

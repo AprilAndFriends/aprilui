@@ -20,6 +20,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Cloneable.h"
 #include "Event.h"
 
 namespace aprilui
@@ -27,8 +28,9 @@ namespace aprilui
 	class Dataset;
 	class EventArgs;
 
-	class apriluiExport EventReceiver
+	class apriluiExport EventReceiver : public Cloneable
 	{
+		APRILUI_CLONEABLE(EventReceiver);
 	public:
 		EventReceiver();
 		virtual ~EventReceiver();

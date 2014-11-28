@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		ResizerY::ResizerY(const ResizerY& other) : Animator(other)
+		{
+		}
+
 		ResizerY::~ResizerY()
 		{
 		}

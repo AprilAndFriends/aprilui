@@ -26,6 +26,7 @@ namespace aprilui
 
 	class apriluiExport TreeViewImage : public ImageBox
 	{
+		APRILUI_CLONEABLE(TreeViewImage);
 	public:
 		friend class TreeView;
 		friend class TreeViewNode;

@@ -30,6 +30,12 @@ namespace aprilui
 			this->function = function;
 		}
 
+		inline MemberCallbackEvent(const MemberCallbackEvent& other) : Event(other)
+		{
+			this->object = other.object;
+			this->function = other.function;
+		}
+
 		inline ~MemberCallbackEvent()
 		{
 		}
@@ -42,6 +48,8 @@ namespace aprilui
 	protected:
 		T* object;
 		void (T::*function)(EventArgs*);
+
+		inline MemberCallbackEvent<T>* clone() const { return new MemberCallbackEvent<T>(*this); }
 
 	};
 

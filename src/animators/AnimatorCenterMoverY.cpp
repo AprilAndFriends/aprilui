@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		CenterMoverY::CenterMoverY(const CenterMoverY& other) : Animator(other)
+		{
+		}
+
 		CenterMoverY::~CenterMoverY()
 		{
 		}

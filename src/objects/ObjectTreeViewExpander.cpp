@@ -25,6 +25,12 @@ namespace aprilui
 		this->_treeViewNode = NULL;
 	}
 
+	TreeViewExpander::TreeViewExpander(const TreeViewExpander& other) : ToggleButton(other)
+	{
+		this->_treeView = NULL;
+		this->_treeViewNode = NULL;
+	}
+
 	TreeViewExpander::~TreeViewExpander()
 	{
 	}

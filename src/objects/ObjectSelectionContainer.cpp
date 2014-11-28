@@ -32,7 +32,19 @@ namespace aprilui
 		this->selectedPushedColor.set(april::Color::DarkAqua, 192);
 		this->allowDrag = false;
 	}
-	
+
+	SelectionContainer::SelectionContainer(const SelectionContainer& other) : Container(other)
+	{
+		this->selectedIndex = -1; // a cloned SelectionContainer has no children
+		this->itemHeight = other.itemHeight;
+		this->hoverColor = other.hoverColor;
+		this->pushedColor = other.pushedColor;
+		this->selectedColor = other.selectedColor;
+		this->selectedHoverColor = other.selectedHoverColor;
+		this->selectedPushedColor = other.selectedPushedColor;
+		this->allowDrag = other.allowDrag;
+	}
+
 	SelectionContainer::~SelectionContainer()
 	{
 	}

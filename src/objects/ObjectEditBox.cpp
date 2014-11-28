@@ -35,21 +35,25 @@ namespace aprilui
 	EditBox::EditBox(chstr name) : Label(name)
 	{
 		this->text = "";
-		this->emptyText = "";
-		this->emptyTextKey = "";
 		this->horzFormatting = atres::LEFT;
 		this->textFormatting = false;
-		this->pushed = false;
+		this->backgroundColor = april::Color::Black;
+		// this class' properties
+		this->emptyText = "";
+		this->emptyTextKey = "";
+		this->emptyTextColor = april::Color::White;
 		this->maxLength = 0;
 		this->passwordChar = '\0';
-		this->multiLine = false;
-		this->selectable = false;
-		this->disabledOffset = false;
 		this->filter = "";
 		this->caretIndex = 0;
+		this->multiLine = false;
+		this->selectable = false;
 		this->selectionCount = 0;
-		this->backgroundColor = april::Color::Black;
 		this->selectionColor = april::Color::Grey;
+		this->disabledOffset = false;
+		this->pushed = false;
+		this->renderOffsetX = 0;
+		this->renderOffsetY = 0;
 		this->_ctrlMode = false;
 		this->_shiftMode = false;
 		this->_blinkTimer = 0.0f;
@@ -57,8 +61,32 @@ namespace aprilui
 		this->_caretDirty = true; // calculates initial value
 		this->_selectionDirty = true; // calculates initial value
 		this->_sizeProblemReported = false;
+	}
+
+	EditBox::EditBox(const EditBox& other) : Label(other)
+	{
+		this->emptyText = other.emptyText;
+		this->emptyTextKey = other.emptyTextKey;
+		this->emptyTextColor = other.emptyTextColor;
+		this->maxLength = other.maxLength;
+		this->passwordChar = other.passwordChar;
+		this->filter = other.filter;
+		this->caretIndex = other.caretIndex;
+		this->multiLine = other.multiLine;
+		this->selectable = other.selectable;
+		this->selectionCount = other.selectionCount;
+		this->selectionColor = other.selectionColor;
+		this->disabledOffset = other.disabledOffset;
+		this->pushed = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
+		this->_ctrlMode = false;
+		this->_shiftMode = false;
+		this->_blinkTimer = 0.0f;
+		this->_caretPositionDirty = true; // calculates initial value
+		this->_caretDirty = true; // calculates initial value
+		this->_selectionDirty = true; // calculates initial value
+		this->_sizeProblemReported = false;
 	}
 
 	EditBox::~EditBox()
@@ -855,12 +883,12 @@ namespace aprilui
 
 	hstr EditBox::getProperty(chstr name)
 	{
-		if (name == "max_length")		return this->getMaxLength();
-		if (name == "password_char")	return this->getPasswordChar();
-		if (name == "filter")			return this->getFilter();
 		if (name == "empty_text")		return this->getEmptyText();
 		if (name == "empty_text_key")	return this->getEmptyTextKey();
 		if (name == "empty_text_color")	return this->getEmptyTextColor().hex();
+		if (name == "max_length")		return this->getMaxLength();
+		if (name == "password_char")	return this->getPasswordChar();
+		if (name == "filter")			return this->getFilter();
 		if (name == "caret_index")		return this->getCaretIndex();
 		if (name == "cursor_index")
 		{
@@ -869,19 +897,20 @@ namespace aprilui
 		}
 		if (name == "multi_line")		return this->isMultiLine();
 		if (name == "selectable")		return this->isSelectable();
-		if (name == "disabled_offset")	return this->isDisabledOffset();
+		if (name == "selection_count")	return this->getSelectionCount();
 		if (name == "selection_color")	return this->getSelectionColor().hex();
+		if (name == "disabled_offset")	return this->isDisabledOffset();
 		return Label::getProperty(name);
 	}
 	
 	bool EditBox::setProperty(chstr name, chstr value)
 	{
-		if		(name == "max_length")			this->setMaxLength(value);
-		else if	(name == "password_char")		this->setPasswordChar(value.c_str()[0]);
-		else if	(name == "filter")				this->setFilter(value);
-		else if	(name == "empty_text")			this->setEmptyText(value);
+		if		(name == "empty_text")			this->setEmptyText(value);
 		else if	(name == "empty_text_key")		this->setEmptyTextKey(value);
 		else if (name == "empty_text_color")	this->setEmptyTextColor(value);
+		else if (name == "max_length")			this->setMaxLength(value);
+		else if (name == "password_char")		this->setPasswordChar(value.c_str()[0]);
+		else if (name == "filter")				this->setFilter(value);
 		else if (name == "caret_index")			this->setCaretIndex(value);
 		else if (name == "cursor_index")
 		{
@@ -890,8 +919,9 @@ namespace aprilui
 		}
 		else if (name == "multi_line")			this->setMultiLine(value);
 		else if (name == "selectable")			this->setSelectable(value);
-		else if (name == "disabled_offset")		this->setDisabledOffset(value);
+		else if (name == "selection_count")		this->setSelectionCount(value);
 		else if (name == "selection_color")		this->setSelectionColor(value);
+		else if (name == "disabled_offset")		this->setDisabledOffset(value);
 		else return Label::setProperty(name, value);
 		return true;
 	}

@@ -22,6 +22,10 @@ namespace aprilui
 		{
 		}
 
+		TiledScrollerY::TiledScrollerY(const TiledScrollerY& other) : Animator(other)
+		{
+		}
+
 		TiledScrollerY::~TiledScrollerY()
 		{
 		}

@@ -27,6 +27,12 @@ namespace aprilui
 		this->oddColor.set(april::Color::DarkGrey, 128);
 	}
 
+	ListBox::ListBox(const ListBox& other) : SelectionContainer(other)
+	{
+		this->evenColor = other.evenColor;
+		this->oddColor = other.oddColor;
+	}
+
 	ListBox::~ListBox()
 	{
 	}

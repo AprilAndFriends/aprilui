@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		RedChanger::RedChanger(const RedChanger& other) : Animator(other)
+		{
+		}
+
 		RedChanger::~RedChanger()
 		{
 		}

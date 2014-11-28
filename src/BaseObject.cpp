@@ -34,8 +34,26 @@ namespace aprilui
 		this->zOrder = 0;
 	}
 
+	BaseObject::BaseObject(const BaseObject& other) : EventReceiver(other)
+	{
+		this->name = other.name;
+		this->tag = other.tag;
+		this->parent = NULL;
+		this->enabled = other.enabled;
+		this->zOrder = other.zOrder;
+	}
+
 	BaseObject::~BaseObject()
 	{
+		foreach_m (Event*, it, this->events)
+		{
+			if (this->dataset != NULL)
+			{
+				this->dataset->removeCallbackFromQueue(it->second);
+			}
+			delete it->second;
+		}
+		this->events.clear();
 	}
 	
 	harray<PropertyDescription> BaseObject::getPropertyDescriptions()

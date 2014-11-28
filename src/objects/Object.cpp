@@ -119,37 +119,56 @@ namespace aprilui
 
 	Object::Object(chstr name) : BaseObject(name)
 	{
-		this->scaleFactor.set(1.0f, 1.0f);
-		this->childUnderCursor = NULL;
-		this->checkedChildUnderCursor = false;
-		this->enabled = true;
+		this->color = april::Color::White;
 		this->visible = true;
+		this->scaleFactor.set(1.0f, 1.0f);
 		this->angle = 0.0f;
-		this->hitTest = HIT_TEST_ENABLED;
-		this->inheritAlpha = true;
 		this->anchorLeft = true;
 		this->anchorRight = false;
 		this->anchorTop = true;
 		this->anchorBottom = false;
 		this->retainAnchorAspect = false;
-		this->focusIndex = -1;
+		this->hitTest = HIT_TEST_ENABLED;
 		this->clip = false;
+		this->inheritAlpha = true;
 		this->useDisabledAlpha = true;
+		this->focusIndex = -1;
 		this->customPointInsideCallback = NULL;
 		this->debugColor = april::Color(april::Color::Black, 32);
+		this->_childUnderCursor = NULL;
+		this->_checkedChildUnderCursor = false;
+	}
+
+	Object::Object(const Object& other) : BaseObject(other)
+	{
+		this->rect = other.rect;
+		this->center = other.center;
+		this->color = other.color;
+		this->visible = other.visible;
+		this->scaleFactor = other.scaleFactor;
+		this->angle = other.angle;
+		this->anchorLeft = other.anchorLeft;
+		this->anchorRight = other.anchorRight;
+		this->anchorTop = other.anchorTop;
+		this->anchorBottom = other.anchorBottom;
+		this->retainAnchorAspect = other.retainAnchorAspect;
+		this->hitTest = other.hitTest;
+		this->clip = other.clip;
+		this->inheritAlpha = other.inheritAlpha;
+		this->useDisabledAlpha = other.useDisabledAlpha;
+		this->focusIndex = other.focusIndex;
+		this->customPointInsideCallback = other.customPointInsideCallback;
+		this->debugColor = other.debugColor;
+		foreachc (Animator*, it, other.dynamicAnimators)
+		{
+			this->dynamicAnimators += (*it)->clone();
+		}
+		this->_childUnderCursor = NULL;
+		this->_checkedChildUnderCursor = false;
 	}
 
 	Object::~Object()
 	{
-		foreach_m (Event*, it, this->events)
-		{
-			if (this->dataset != NULL)
-			{
-				this->dataset->removeCallbackFromQueue(it->second);
-			}
-			delete it->second;
-		}
-		this->events.clear();
 		foreach (Animator*, it, this->dynamicAnimators)
 		{
 			delete (*it);
@@ -623,7 +642,7 @@ namespace aprilui
 	
 	void Object::update(float timeDelta)
 	{
-		if (this->checkedChildUnderCursor)
+		if (this->_checkedChildUnderCursor)
 		{
 			this->clearChildUnderCursor();
 		}
@@ -1161,18 +1180,18 @@ namespace aprilui
 	
 	Object* Object::getChildUnderCursor()
 	{
-		if (!this->checkedChildUnderCursor)
+		if (!this->_checkedChildUnderCursor)
 		{
-			this->childUnderCursor = this->getChildUnderPoint(aprilui::getCursorPosition());
-			this->checkedChildUnderCursor = true;
+			this->_childUnderCursor = this->getChildUnderPoint(aprilui::getCursorPosition());
+			this->_checkedChildUnderCursor = true;
 		}
-		return this->childUnderCursor;
+		return this->_childUnderCursor;
 	}
 	
 	void Object::clearChildUnderCursor()
 	{
-		this->childUnderCursor = NULL;
-		this->checkedChildUnderCursor = false;
+		this->_childUnderCursor = NULL;
+		this->_checkedChildUnderCursor = false;
 	}
 	
 	harray<gvec2> Object::transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot)

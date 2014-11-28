@@ -26,6 +26,7 @@ namespace aprilui
 
 	class apriluiExport ListBoxItem : public Label, public ButtonBase
 	{
+		APRILUI_CLONEABLE(ListBoxItem);
 	public:
 		friend class ListBox;
 

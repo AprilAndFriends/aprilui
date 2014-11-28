@@ -25,6 +25,7 @@ namespace aprilui
 {
 	class apriluiExport Label : public Object, public LabelBase
 	{
+		APRILUI_CLONEABLE(Label);
 	public:
 		Label(chstr name);
 		~Label();

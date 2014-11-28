@@ -25,6 +25,18 @@ namespace aprilui
 		this->disabledImage = NULL;
 	}
 
+	ImageButton::ImageButton(const ImageButton& other) : ImageBox(other), ButtonBase(other)
+	{
+		this->normalImage = other.normalImage;
+		this->pushedImage = other.pushedImage;
+		this->hoverImage = other.hoverImage;
+		this->disabledImage = other.disabledImage;
+		this->normalImageName = other.normalImageName;
+		this->hoverImageName = other.hoverImageName;
+		this->pushedImageName = other.pushedImageName;
+		this->disabledImageName = other.disabledImageName;
+	}
+
 	ImageButton::~ImageButton()
 	{
 	}
@@ -287,9 +299,9 @@ namespace aprilui
 
 	bool ImageButton::setProperty(chstr name, chstr value)
 	{
-		if		(name == "pushed_image")	this->setPushedImageByName(value);
-		else if	(name == "hover_image")		this->setHoverImageByName(value);
-		else if	(name == "disabled_image")	this->setDisabledImageByName(value);
+		if		(name == "pushed_image")	this->trySetPushedImageByName(value);
+		else if	(name == "hover_image")		this->trySetHoverImageByName(value);
+		else if	(name == "disabled_image")	this->trySetDisabledImageByName(value);
 		else if (ButtonBase::setProperty(name, value)) { }
 		else return ImageBox::setProperty(name, value);
 		return true;

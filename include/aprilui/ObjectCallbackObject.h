@@ -23,6 +23,7 @@ namespace aprilui
 {
 	class apriluiExport CallbackObject : public Object
 	{
+		APRILUI_CLONEABLE(CallbackObject);
 	public:
 		CallbackObject(chstr name);
 		~CallbackObject();

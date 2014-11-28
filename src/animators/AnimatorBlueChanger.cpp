@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		BlueChanger::BlueChanger(const BlueChanger& other) : Animator(other)
+		{
+		}
+
 		BlueChanger::~BlueChanger()
 		{
 		}

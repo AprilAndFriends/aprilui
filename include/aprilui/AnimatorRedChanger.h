@@ -23,6 +23,7 @@ namespace aprilui
 	{
 		class apriluiExport RedChanger : public Animator
 		{
+			APRILUI_CLONEABLE(RedChanger);
 		public:
 			RedChanger(chstr name);
 			~RedChanger();

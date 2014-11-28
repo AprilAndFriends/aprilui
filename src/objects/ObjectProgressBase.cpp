@@ -24,6 +24,15 @@ namespace aprilui
 		this->progress = 1.0f;
 	}
 
+	ProgressBase::ProgressBase(const ProgressBase& other)
+	{
+		this->progressImage = other.progressImage;
+		this->progressImageName = other.progressImageName;
+		this->maskImage = other.maskImage;
+		this->maskImageName = other.maskImageName;
+		this->progress = other.progress;
+	}
+
 	ProgressBase::~ProgressBase()
 	{
 	}
@@ -107,8 +116,8 @@ namespace aprilui
 
 	bool ProgressBase::setProperty(chstr name, chstr value)
 	{
-		if		(name == "progress_image")	this->setProgressImageByName(value);
-		else if (name == "mask_image")		this->setMaskImageByName(value);
+		if		(name == "progress_image")	this->trySetProgressImageByName(value);
+		else if (name == "mask_image")		this->trySetMaskImageByName(value);
 		else if (name == "progress")		this->setProgress(value);
 		else return false;
 		return true;

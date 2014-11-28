@@ -23,6 +23,7 @@ namespace aprilui
 	{
 		class apriluiExport ScalerY : public Animator
 		{
+			APRILUI_CLONEABLE(ScalerY);
 		public:
 			ScalerY(chstr name);
 			~ScalerY();

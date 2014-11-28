@@ -31,6 +31,7 @@ namespace aprilui
 
 	class apriluiExport ScrollBar : public Object
 	{
+		APRILUI_CLONEABLE_ABSTRACT(ScrollBar);
 	public:
 		friend class ScrollArea;
 		friend class ScrollBarButtonBackground;
@@ -71,7 +72,6 @@ namespace aprilui
 		bool useFading;
 		bool heightHide;
 		bool useStretchedSlider;
-		float _retainTime;
 		ScrollBarButtonBackground* _buttonBackground;
 		ScrollBarButtonSlider* _buttonSlider;
 		ScrollBarButtonForward* _buttonForward;
@@ -126,6 +126,7 @@ namespace aprilui
 		static harray<PropertyDescription> _propertyDescriptions;
 
 		gvec2 _clickPosition;
+		float _retainTime;
 		bool _scrolling;
 
 	};

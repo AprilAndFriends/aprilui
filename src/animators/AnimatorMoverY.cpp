@@ -19,6 +19,10 @@ namespace aprilui
 		{
 		}
 
+		MoverY::MoverY(const MoverY& other) : Animator(other)
+		{
+		}
+
 		MoverY::~MoverY()
 		{
 		}
