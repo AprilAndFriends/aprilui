@@ -106,6 +106,22 @@ namespace aprilui
 		return (is_between_ie(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
 	}
 
+	void TreeView::setSelected(harray<int> nodeIndices)
+	{
+		if (nodeIndices.size() == 0)
+		{
+			hlog::errorf(aprilui::logTag, "Cannot get node in TreeView '%s', no indices specified!", this->name.c_str());
+			return;
+		}
+		TreeViewNode* node = NULL;
+		if (!this->_findNode(nodeIndices, &node))
+		{
+			hlog::errorf(aprilui::logTag, "Cannot select node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			return;
+		}
+		this->setSelectedIndex(this->items.index_of(node));
+	}
+
 	int TreeView::getItemCount()
 	{
 		return this->items.size();
