@@ -25,7 +25,7 @@ protected: \
 
 #define APRILUI_CLONEABLE_ABSTRACT(type) \
 public: \
-	virtual inline type* clone() const = 0; \
+	virtual type* clone() const = 0; \
 protected: \
 	type(const type& other);
 
