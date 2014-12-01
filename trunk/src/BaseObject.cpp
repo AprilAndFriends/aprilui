@@ -86,7 +86,7 @@ namespace aprilui
 	{
 		if (this->dataset != NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot set name of object '%s', it is already registered in a dataset!");
+			hlog::errorf(aprilui::logTag, "Cannot set name of object '%s', it is already registered in a dataset!", this->name.c_str());
 			return;
 		}
 		this->name = value;
