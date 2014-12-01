@@ -363,7 +363,7 @@ namespace aprilui
 					foreach_xmlproperty (prop, child)
 					{
 						name = prop->name();
-						if (name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
+						if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
 						{
 							continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
 						}
