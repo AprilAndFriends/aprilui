@@ -43,6 +43,7 @@ namespace aprilui
 		virtual inline hstr getClassName() const { return "BaseObject"; }
 
 		HL_DEFINE_GET(hstr, name, Name);
+		void setName(chstr value);
 		HL_DEFINE_GETSET(hstr, tag, Tag);
 		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(Object*, parent, Parent);
