@@ -97,13 +97,14 @@ namespace aprilui
 		aprilui::Object* _findHoverObject();
 		void _adjustDragSpeed();
 		void _snapScrollOffset();
+		bool _isScrollableScrollArea(aprilui::Object* object);
 
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
 		bool _mouseScroll(float x, float y);
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
-		
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 

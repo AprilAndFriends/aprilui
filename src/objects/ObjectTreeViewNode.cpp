@@ -115,11 +115,11 @@ namespace aprilui
 				grect vertical(-expanderWidth * 0.5f - 1.0f - this->_treeView->getSpacingWidth(), itemHeight + spacingHeight, 2.0f, itemHeight * 0.5f + 1.0f);
 				vertical += drawRect.getPosition();
 				drawRect.set(vertical.x + 2.0f, vertical.y + itemHeight * 0.5f - 1.0f, expanderWidth * 0.5f - 1.0f, 2.0f);
-				float offset = 0;
+				float offset = 0.0f;
 				for_iter (i, 0, this->nodes.size())
 				{
 					april::rendersys->drawFilledRect(drawRect, color);
-					float offset = (itemHeight + spacingHeight) * this->nodes[i]->_calcOffset();
+					offset = (itemHeight + spacingHeight) * this->nodes[i]->_calcOffset();
 					drawRect.y += offset;
 					if (i < this->nodes.size() - 1)
 					{
