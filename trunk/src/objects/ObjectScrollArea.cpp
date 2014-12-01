@@ -175,7 +175,7 @@ namespace aprilui
 			if (this->pushed)
 			{
 				if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
-					!heqf(this->_clickPosition.x, position.x, this->dragThreshold) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold)))
+					!heqf(this->_clickPosition.x, position.x, this->dragThreshold) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold)) && this->isScrollable())
 				{
 					this->dragging = true;
 					this->_clickScrollOffset = this->getScrollOffset();
@@ -264,6 +264,12 @@ namespace aprilui
 		}
 	}
 
+    bool ScrollArea::_isScrollableScrollArea(aprilui::Object* object)
+    {
+        ScrollArea* scrollArea = dynamic_cast<ScrollArea*>(object);
+		return (scrollArea != NULL && scrollArea->isScrollable());
+	}
+    
 	aprilui::Object* ScrollArea::_findHoverObject()
 	{
 		if (this->dragging)
@@ -271,7 +277,7 @@ namespace aprilui
 			return (this->isCursorInside() ? this : NULL);
 		}
 		aprilui::Object* child = ButtonBase::_findHoverObject();
-		if (this->_overrideHoverMode && child != this && dynamic_cast<ScrollArea*>(child) == NULL && child != NULL)
+		if (this->_overrideHoverMode && child != this && !this->_isScrollableScrollArea(child) && child != NULL)
 		{
 			aprilui::Object* parent = child->getParent();
 			while (parent != NULL)
@@ -280,7 +286,7 @@ namespace aprilui
 				{
 					return (this->isCursorInside() ? this : NULL);
 				}
-				if (dynamic_cast<ScrollArea*>(parent) != NULL && parent->getChildUnderCursor() == child)
+                if (this->_isScrollableScrollArea(parent) && parent->getChildUnderCursor() == child)
 				{
 					return child;
 				}
