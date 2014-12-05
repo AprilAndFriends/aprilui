@@ -133,7 +133,7 @@ namespace aprilui
 				april::TexturedVertex vertex;
 				p0 = bottomRight;
 				p1 = topRight;
-				if (progress > 0.125f)
+				if (progress >= 0.125f)
 				{
 					vertex = MAKE_VERTEX(topRight);
 					vertices += vertex;
@@ -142,7 +142,7 @@ namespace aprilui
 					p0 = topRight;
 					p1 = topLeft;
 				}
-				if (progress > 0.375f)
+				if (progress >= 0.375f)
 				{
 					vertex = MAKE_VERTEX(topLeft);
 					vertices += vertex;
@@ -151,7 +151,7 @@ namespace aprilui
 					p0 = topLeft;
 					p1 = bottomLeft;
 				}
-				if (progress > 0.625f)
+				if (progress >= 0.625f)
 				{
 					vertex = MAKE_VERTEX(bottomLeft);
 					vertices += vertex;
@@ -160,7 +160,7 @@ namespace aprilui
 					p0 = bottomLeft;
 					p1 = bottomRight;
 				}
-				if (progress > 0.875f)
+				if (progress >= 0.875f)
 				{
 					vertex = MAKE_VERTEX(bottomRight);
 					vertices += vertex;
