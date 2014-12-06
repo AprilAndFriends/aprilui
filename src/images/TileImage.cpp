@@ -12,36 +12,36 @@
 
 #include "apriluiUtil.h"
 #include "Texture.h"
-#include "TiledImage.h"
+#include "TileImage.h"
 
 namespace aprilui
 {
-	harray<PropertyDescription> TiledImage::_propertyDescriptions;
+	harray<PropertyDescription> TileImage::_propertyDescriptions;
 
-	TiledImage::TiledImage(Texture* texture, chstr name, grect source, float tileW, float tileH) : Image(texture, name, source)
+	TileImage::TileImage(Texture* texture, chstr name, grect source, float tileW, float tileH) : Image(texture, name, source)
 	{
 		this->tile.set(tileW, tileH);
 	}
 
-	TiledImage::~TiledImage()
+	TileImage::~TileImage()
 	{
 	}
 
-	harray<PropertyDescription> TiledImage::getPropertyDescriptions()
+	harray<PropertyDescription> TileImage::getPropertyDescriptions()
 	{
-		if (TiledImage::_propertyDescriptions.size() == 0)
+		if (TileImage::_propertyDescriptions.size() == 0)
 		{
-			TiledImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::GVEC2);
-			TiledImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::FLOAT);
-			TiledImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::FLOAT);
-			TiledImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::GVEC2);
-			TiledImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::FLOAT);
-			TiledImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::FLOAT);
+			TileImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::GVEC2);
+			TileImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::FLOAT);
+			TileImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::FLOAT);
+			TileImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::GVEC2);
+			TileImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::FLOAT);
+			TileImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::FLOAT);
 		}
-		return (Image::getPropertyDescriptions() + TiledImage::_propertyDescriptions);
+		return (Image::getPropertyDescriptions() + TileImage::_propertyDescriptions);
 	}
 
-	hstr TiledImage::getProperty(chstr name)
+	hstr TileImage::getProperty(chstr name)
 	{
 		if (name == "tile")		return april::gvec2ToHstr(this->getTile());
 		if (name == "tile_w")	return this->getTileW();
@@ -52,7 +52,7 @@ namespace aprilui
 		return Image::getProperty(name);
 	}
 
-	bool TiledImage::setProperty(chstr name, chstr value)
+	bool TileImage::setProperty(chstr name, chstr value)
 	{
 		if		(name == "tile")		this->setTile(april::hstrToGvec2(value));
 		else if	(name == "tile_w")		this->setTileW(value);
@@ -64,7 +64,7 @@ namespace aprilui
 		return true;
 	}
 
-	void TiledImage::draw(grect rect, april::Color color)
+	void TileImage::draw(grect rect, april::Color color)
 	{
 		if (color.a == 0)
 		{
@@ -122,7 +122,7 @@ namespace aprilui
 		}
 	}
 
-	int TiledImage::_drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture)
+	int TileImage::_drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture)
 	{
 		int clipped = 0;
 		float difference;

@@ -56,8 +56,8 @@
     <ClCompile Include="..\..\src\animators\AnimatorResizerY.cpp" />
     <ClCompile Include="..\..\src\animators\AnimatorScalerX.cpp" />
     <ClCompile Include="..\..\src\animators\AnimatorScalerY.cpp" />
-    <ClCompile Include="..\..\src\animators\AnimatorTiledScrollerX.cpp" />
-    <ClCompile Include="..\..\src\animators\AnimatorTiledScrollerY.cpp" />
+    <ClCompile Include="..\..\src\animators\AnimatorTileScrollerX.cpp" />
+    <ClCompile Include="..\..\src\animators\AnimatorTileScrollerY.cpp" />
     <ClCompile Include="..\..\src\aprilui.cpp" />
     <ClCompile Include="..\..\src\BaseObject.cpp" />
     <ClCompile Include="..\..\src\CallbackEvent.cpp" />
@@ -67,6 +67,9 @@
     <ClCompile Include="..\..\src\EventArgs.cpp" />
     <ClCompile Include="..\..\src\EventReceiver.cpp" />
     <ClCompile Include="..\..\src\Exception.cpp" />
+    <ClCompile Include="..\..\src\images\BaseImage.cpp" />
+    <ClCompile Include="..\..\src\images\SkinImage.cpp" />
+    <ClCompile Include="..\..\src\images\TileImage.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectListBox.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectListBoxItem.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectOptionButton.cpp" />
@@ -107,7 +110,6 @@
     <ClCompile Include="..\..\src\images\CompositeImage.cpp" />
     <ClCompile Include="..\..\src\images\Image.cpp" />
     <ClCompile Include="..\..\src\images\NullImage.cpp" />
-    <ClCompile Include="..\..\src\images\TiledImage.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeView.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeViewExpander.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeViewImage.cpp" />
@@ -123,8 +125,9 @@
     <ClInclude Include="..\..\include\aprilui\AnimatorResizerY.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorScalerX.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorScalerY.h" />
-    <ClInclude Include="..\..\include\aprilui\AnimatorTiledScrollerX.h" />
-    <ClInclude Include="..\..\include\aprilui\AnimatorTiledScrollerY.h" />
+    <ClInclude Include="..\..\include\aprilui\AnimatorTileScrollerX.h" />
+    <ClInclude Include="..\..\include\aprilui\AnimatorTileScrollerY.h" />
+    <ClInclude Include="..\..\include\aprilui\BaseImage.h" />
     <ClInclude Include="..\..\include\aprilui\BaseObject.h" />
     <ClInclude Include="..\..\include\aprilui\Cloneable.h" />
     <ClInclude Include="..\..\include\aprilui\EventReceiver.h" />
@@ -150,7 +153,9 @@
     <ClInclude Include="..\..\include\aprilui\ObjectTreeViewLabel.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectTreeViewNode.h" />
     <ClInclude Include="..\..\include\aprilui\PropertyDescription.h" />
+    <ClInclude Include="..\..\include\aprilui\SkinImage.h" />
     <ClInclude Include="..\..\include\aprilui\Texture.h" />
+    <ClInclude Include="..\..\include\aprilui\TileImage.h" />
     <ClInclude Include="..\..\src\apriluiUtil.h" />
     <ClInclude Include="..\..\include\aprilui\Animators.h" />
     <ClInclude Include="..\..\include\aprilui\aprilui.h" />
@@ -187,7 +192,6 @@
     <ClInclude Include="..\..\include\aprilui\CompositeImage.h" />
     <ClInclude Include="..\..\include\aprilui\Image.h" />
     <ClInclude Include="..\..\include\aprilui\NullImage.h" />
-    <ClInclude Include="..\..\include\aprilui\TiledImage.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\fileproperties.rc">

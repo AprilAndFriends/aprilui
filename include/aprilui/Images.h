@@ -16,6 +16,7 @@
 #include "Image.h"
 #include "CompositeImage.h"
 #include "NullImage.h"
-#include "TiledImage.h"
+#include "SkinImage.h"
+#include "TileImage.h"
 
 #endif

@@ -7,14 +7,14 @@
 	
 	<Object type="Container" name="root" rect="0,0,1024,768">
 		<Object type="ImageBox" name="background" image="texture/test_tile1" rect="0,0,1024,768">
-			<Animator type="TiledScrollerX" periods="-1" amplitude="64"/>
-			<Animator type="TiledScrollerY" periods="-1" amplitude="-32"/>
+			<Animator type="TileScrollerX" periods="-1" amplitude="64"/>
+			<Animator type="TileScrollerY" periods="-1" amplitude="-32"/>
 			<Object type="ColoredQuad" color="00FF00" rect="64,32,32,32" angle="50">
 				<Object type="ColoredQuad" color="FFFF00" rect="64,32,32,32"/>
 			</Object>
 			<Object type="ImageBox" name="background_2" image="texture/test_tile2" color="FFFF00" rect="700,672,324,96">
-				<Animator type="TiledScrollerX" periods="-1" amplitude="-64"/>
-				<Animator type="TiledScrollerY" periods="-1" amplitude="32"/>
+				<Animator type="TileScrollerX" periods="-1" amplitude="-64"/>
+				<Animator type="TileScrollerY" periods="-1" amplitude="32"/>
 			</Object>
 		</Object>
 		<Object type="Container" rect="0,0,1024,768">
@@ -149,6 +149,7 @@
 				<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" rect="0,32,700,32"/>
 				<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" rect="0,64,700,32"/>
 			</Object>
+			<Object type="ImageBox" name="skinned_image" image="skin_image/test" rect="260,528,192,64"/>
 			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
 			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" rect="0,32,16,128"/>
 			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" rect="20,20,64,64"/>

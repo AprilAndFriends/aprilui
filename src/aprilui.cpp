@@ -115,8 +115,8 @@ namespace aprilui
 		REGISTER_ANIMATOR_TYPE(Rotator);
 		REGISTER_ANIMATOR_TYPE(ScalerX);
 		REGISTER_ANIMATOR_TYPE(ScalerY);
-		REGISTER_ANIMATOR_TYPE(TiledScrollerX);
-		REGISTER_ANIMATOR_TYPE(TiledScrollerY);
+		REGISTER_ANIMATOR_TYPE(TileScrollerX);
+		REGISTER_ANIMATOR_TYPE(TileScrollerY);
 	}
 	
 	void destroy()
@@ -350,6 +350,23 @@ namespace aprilui
 		{
 			return (*gAnimatorFactories[typeName])(name);
 		}
+		hstr switchedTypeName = typeName;
+		// DEPRECATED start
+		if (switchedTypeName == "TiledScrollerX")
+		{
+			hlog::warn(aprilui::logTag, "'TiledScrollerX' is deprecated. Use 'TileScrollerX' instead.");
+			switchedTypeName = "TileScrollerX";
+		}
+		else if (switchedTypeName == "TiledScrollerY")
+		{
+			hlog::warn(aprilui::logTag, "'TiledScrollerY' is deprecated. Use 'TileScrollerY' instead.");
+			switchedTypeName = "TileScrollerY";
+		}
+		if (gAnimatorFactories.has_key(switchedTypeName))
+		{
+			return (*gAnimatorFactories[switchedTypeName])(name);
+		}
+		// DEPRECATED end
 		return NULL;
 	}
 	

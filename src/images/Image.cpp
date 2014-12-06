@@ -322,8 +322,8 @@ namespace aprilui
 	bool Image::setProperty(chstr name, chstr value)
 	{
 		if		(name == "rect")				this->setSrcRect(april::hstrToGrect(value));
-		else if	(name == "position")			this->srcRect.setPosition(april::hstrToGvec2(value));
-		else if	(name == "size")				this->srcRect.setSize(april::hstrToGvec2(value));
+		else if	(name == "position")			this->setSrcPosition(april::hstrToGvec2(value));
+		else if	(name == "size")				this->setSrcSize(april::hstrToGvec2(value));
 		else if	(name == "x")					this->setSrcX(value);
 		else if	(name == "y")					this->setSrcY(value);
 		else if	(name == "w")					this->setSrcWidth(value);

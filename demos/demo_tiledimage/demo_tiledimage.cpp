@@ -22,7 +22,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
-#define __APRIL_SINGLE_INSTANCE_NAME "demo_tiledimage"
+#define __APRIL_SINGLE_INSTANCE_NAME "demo_tileimage"
 
 #include <april/april.h>
 #include <april/Cursor.h>
@@ -34,13 +34,13 @@
 #include <aprilui/aprilui.h>
 #include <aprilui/Dataset.h>
 #include <aprilui/Objects.h>
-#include <aprilui/TiledImage.h>
+#include <aprilui/TileImage.h>
 #include <atres/atres.h>
 #include <atres/Renderer.h>
 #include <atres/atres.h>
 #include <gtypes/Vector2.h>
 
-#define LOG_TAG "demo_tiledimage"
+#define LOG_TAG "demo_tileimage"
 #define SCROLL_SPEED gvec2(50.0f, -50.0f)
 
 grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
@@ -58,7 +58,7 @@ public:
 		april::rendersys->setOrthoProjection(viewport);
 		aprilui::updateCursorPosition();
 		aprilui::processEvents();
-		aprilui::TiledImage* image = (aprilui::TiledImage*)dataset->getImage("texture/tiled");
+		aprilui::TileImage* image = (aprilui::TileImage*)dataset->getImage("texture/tile");
 		image->setScroll(image->getScroll() + SCROLL_SPEED * timeDelta); // manual scrolling
 		dataset->draw();
 		dataset->update(timeDelta);
@@ -134,7 +134,7 @@ void april_init(const harray<hstr>& args)
 		april::window->setCursor(cursor);
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
-		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tiledimage.dts");
+		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tileimage.dts");
 		dataset->load();
 	}
 	catch (aprilui::_GenericException& e)
