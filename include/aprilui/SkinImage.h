@@ -56,7 +56,7 @@ namespace aprilui
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
-		gvec2 _lastDrawSize;
+		grect _lastDrawRect;
 		bool _skinCoordinatesCalculated;
 		harray<april::TexturedVertex> vertices;
 
