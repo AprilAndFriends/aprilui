@@ -172,12 +172,10 @@ namespace aprilui
 		{
 			return;
 		}
-		bool left = (this->skinRect.x > 0.0f);
-		bool hcenter = (rect.w > this->srcRect.w - this->skinRect.w);
-		bool right = (this->srcRect.w > this->skinRect.right());
-		bool top = (this->skinRect.y > 0.0f);
-		bool vcenter = (rect.h > this->srcRect.h - this->skinRect.h);
-		bool bottom = (this->srcRect.h > this->skinRect.bottom());
+		if (!this->_textureCoordinatesLoaded)
+		{
+			this->_skinCoordinatesCalculated = true;
+		}
 		if (this->texture != NULL)
 		{
 			this->texture->load();
@@ -186,51 +184,59 @@ namespace aprilui
 		april::rendersys->setTextureBlendMode(this->blendMode);
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		this->tryLoadTextureCoordinates();
-		gvec2 pos[4];
-		pos[0] = rect.getPosition();
-		pos[3] = rect.getBottomRight();
-		pos[1] = pos[0] + this->skinRect.getPosition();
-		pos[2] = pos[0] + rect.getSize() - (this->srcRect.getSize() - this->skinRect.getBottomRight());
-		gvec2 uv[4];
-		uv[0].set(Image::vertices[0].u, Image::vertices[0].v);
-		uv[3].set(Image::vertices[3].u, Image::vertices[3].v);
-		uv[1] = uv[0] + this->skinRect.getPosition() / this->srcRect.getSize() * (uv[3] - uv[0]);
-		uv[2] = uv[1] + this->skinRect.getSize() / this->srcRect.getSize() * (uv[3] - uv[0]);
-		april::TexturedVertex v[16];
-		for_iter (j, 0, 4)
+		if (this->_lastDrawRect != rect || !this->_skinCoordinatesCalculated)
 		{
-			for_iter (i, 0, 4)
+			this->_lastDrawRect = rect;
+			this->_skinCoordinatesCalculated = true;
+			this->vertices.clear();
+			gvec2 pos[4];
+			pos[0] = rect.getPosition();
+			pos[3] = rect.getBottomRight();
+			pos[1] = pos[0] + this->skinRect.getPosition();
+			pos[2] = pos[0] + rect.getSize() - (this->srcRect.getSize() - this->skinRect.getBottomRight());
+			gvec2 uv[4];
+			uv[0].set(Image::vertices[0].u, Image::vertices[0].v);
+			uv[3].set(Image::vertices[3].u, Image::vertices[3].v);
+			uv[1] = uv[0] + this->skinRect.getPosition() / this->srcRect.getSize() * (uv[3] - uv[0]);
+			uv[2] = uv[1] + this->skinRect.getSize() / this->srcRect.getSize() * (uv[3] - uv[0]);
+			april::TexturedVertex v[16];
+			for_iter (j, 0, 4)
 			{
-				v[i + j * 4].x = pos[i].x;	v[i + j * 4].y = pos[j].y;
-				v[i + j * 4].u = uv[i].x;	v[i + j * 4].v = uv[j].y;
+				for_iter (i, 0, 4)
+				{
+					v[i + j * 4].x = pos[i].x;	v[i + j * 4].y = pos[j].y;
+					v[i + j * 4].u = uv[i].x;	v[i + j * 4].v = uv[j].y;
+				}
 			}
-		}
-		this->vertices.clear();
-		if (top)
-		{
-			ADD_VERTICES(left, 0, 1, 4, 5);
-			ADD_VERTICES(hcenter, 1, 2, 5, 6);
-			ADD_VERTICES(right, 2, 3, 6, 7);
-		}
-		if (vcenter)
-		{
-			ADD_VERTICES(left, 4, 5, 8, 9);
-			ADD_VERTICES(hcenter, 5, 6, 9, 10);
-			ADD_VERTICES(right, 6, 7, 10, 11);
-		}
-		if (bottom)
-		{
-			ADD_VERTICES(left, 8, 9, 12, 13);
-			ADD_VERTICES(hcenter, 9, 10, 13, 14);
-			ADD_VERTICES(right, 10, 11, 14, 15);
+			bool left = (this->skinRect.x > 0.0f);
+			bool hcenter = (rect.w > this->srcRect.w - this->skinRect.w);
+			bool right = (this->srcRect.w > this->skinRect.right());
+			if (this->skinRect.y > 0.0f)
+			{
+				ADD_VERTICES(left, 0, 1, 4, 5);
+				ADD_VERTICES(hcenter, 1, 2, 5, 6);
+				ADD_VERTICES(right, 2, 3, 6, 7);
+			}
+			if (rect.h > this->srcRect.h - this->skinRect.h)
+			{
+				ADD_VERTICES(left, 4, 5, 8, 9);
+				ADD_VERTICES(hcenter, 5, 6, 9, 10);
+				ADD_VERTICES(right, 6, 7, 10, 11);
+			}
+			if (this->srcRect.h > this->skinRect.bottom())
+			{
+				ADD_VERTICES(left, 8, 9, 12, 13);
+				ADD_VERTICES(hcenter, 9, 10, 13, 14);
+				ADD_VERTICES(right, 10, 11, 14, 15);
+			}
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, &this->vertices[0], this->vertices.size(), color);
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->vertices[0], this->vertices.size(), color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, &this->vertices[0], this->vertices.size());
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->vertices[0], this->vertices.size());
 		}
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
