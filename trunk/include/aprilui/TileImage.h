@@ -8,10 +8,10 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a special image that can be rendered tiled.
+/// Defines a special image that can be rendered in tiles.
 
-#ifndef APRILUI_TILED_IMAGE_H
-#define APRILUI_TILED_IMAGE_H
+#ifndef APRILUI_TILE_IMAGE_H
+#define APRILUI_TILE_IMAGE_H
 
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
@@ -23,11 +23,11 @@
 
 namespace aprilui
 {
-	class apriluiExport TiledImage : public Image
+	class apriluiExport TileImage : public Image
 	{
 	public:
-		TiledImage(Texture* texture, chstr name, grect source, float tileW, float tileH);
-		~TiledImage();
+		TileImage(Texture* texture, chstr name, grect source, float tileW, float tileH);
+		~TileImage();
 		
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
 		inline void setTile(float w, float h) { this->tile.set(w, h); }
@@ -55,6 +55,8 @@ namespace aprilui
 		static harray<PropertyDescription> _propertyDescriptions;
 
 	};
+
+	DEPRECATED_ATTRIBUTE typedef TileImage TiledImage;
 	
 }
 #endif

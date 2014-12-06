@@ -8,10 +8,10 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines an animator that can scroll tiled images vertically.
+/// Defines an animator that can scroll TileImages horizontally.
 
-#ifndef APRILUI_TILED_SCROLLER_Y_H
-#define APRILUI_TILED_SCROLLER_Y_H
+#ifndef APRILUI_TILE_SCROLLER_X_H
+#define APRILUI_TILE_SCROLLER_X_H
 
 #include <hltypes/hstring.h>
 
@@ -19,17 +19,17 @@
 
 namespace aprilui
 {
-	class TiledImage;
+	class TileImage;
 
 	namespace Animators
 	{
-		class apriluiExport TiledScrollerY : public Animator
+		class apriluiExport TileScrollerX : public Animator
 		{
-			APRILUI_CLONEABLE(TiledScrollerY);
+			APRILUI_CLONEABLE(TileScrollerX);
 		public:
-			TiledScrollerY(chstr name);
-			~TiledScrollerY();
-			inline hstr getClassName() const { return "TiledScrollerY"; }
+			TileScrollerX(chstr name);
+			~TileScrollerX();
+			inline hstr getClassName() const { return "TileScrollerX"; }
 
 			static Animator* createInstance(chstr name);
 			
@@ -38,9 +38,12 @@ namespace aprilui
 		protected:
 			float _getObjectValue();
 			void _setObjectValue(float value);
-			TiledImage* _getParentsTiledImage();
+			TileImage* _getParentsTileImage();
 			
 		};
+
+		DEPRECATED_ATTRIBUTE typedef TileScrollerX TiledScrollerX;
+
 	}
 }
 

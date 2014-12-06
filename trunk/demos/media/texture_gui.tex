@@ -2,42 +2,46 @@
 <Textures>
 
 	<Texture filename="texture" managed="1" load_mode="on_demand" wrap="1">
-		<Image name="test" x="0" y="0" w="512" h="512"/>
-		<Image name="test_blue_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7F7FFF7F"/>
-		<Image name="test_orange_add" x="0" y="0" w="512" h="512" blend_mode="add" color="FFBF7FBF"/>
-		<Image name="test_grey" x="0" y="0" w="512" h="512" color="7F7F7F"/>
-		<Image name="test_green" x="0" y="0" w="512" h="512" color="7FFF7F"/>
-		<Image name="test_green_add" x="0" y="0" w="512" h="512" blend_mode="add" color="7FFF7FFF"/>
-		<Image name="test_blue" x="0" y="0" w="512" h="512" color="7F7FFF"/>
-		<Image name="test_yellow" x="0" y="0" w="512" h="512" color="FFFF7F"/>
-		<Image name="test_red" x="0" y="0" w="512" h="512" color="FF7F7F"/>
-		<Image name="test_tile1" x="0" y="0" w="512" h="512" tile_w="-128" tile_h="-128"/>
-		<Image name="test_tile2" x="0" y="0" w="512" h="512" tile_w="2" tile_h="2"/>
+		<Image name="test" rect="0,0,512,512"/>
+		<Image name="test_blue_add" rect="0,0,512,512" blend_mode="add" color="7F7FFF7F"/>
+		<Image name="test_orange_add" rect="0,0,512,512" blend_mode="add" color="FFBF7FBF"/>
+		<Image name="test_grey" rect="0,0,512,512" color="7F7F7F"/>
+		<Image name="test_green" rect="0,0,512,512" color="7FFF7F"/>
+		<Image name="test_green_add" rect="0,0,512,512" blend_mode="add" color="7FFF7FFF"/>
+		<Image name="test_blue" rect="0,0,512,512" color="7F7FFF"/>
+		<Image name="test_yellow" rect="0,0,512,512" color="FFFF7F"/>
+		<Image name="test_red" rect="0,0,512,512" color="FF7F7F"/>
+		<Image name="test_tile1" rect="0,0,512,512" tile="-128,-128"/>
+		<Image name="test_tile2" rect="0,0,512,512" tile="2,2"/>
+	</Texture>
+	
+	<Texture filename="skin_image" managed="1" load_mode="on_demand">
+		<SkinImage name="test" rect="0,0,64,64" skin_rect="16,16,32,32"/>
 	</Texture>
 	
 	<Texture filename="circle" managed="1" load_mode="on_demand">
-		<Image name="test_red" x="0" y="0" w="64" h="64" color="FF7F7F"/>
-		<Image name="test_green" x="0" y="0" w="64" h="64" color="7FFF7F"/>
+		<Image name="test_red" rect="0,0,64,64" color="FF7F7F"/>
+		<Image name="test_green" rect="0,0,64,64" color="7FFF7F"/>
 	</Texture>
 	
-	<CompositeImage name="texture/test_hover" w="512" h="512">
-		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_blue_add" x="0" y="0" w="512" h="512"/>
+	<CompositeImage name="texture/test_hover" size="512,512">
+		<ImageRef name="texture/test" rect="0,0,512,512"/>
+		<ImageRef name="texture/test_blue_add" rect="0,0,512,512"/>
 	</CompositeImage>
 	
-	<CompositeImage name="texture/test_hover_2" w="512" h="512">
-		<ImageRef name="texture/test" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_orange_add" x="0" y="0" w="512" h="512"/>
+	<CompositeImage name="texture/test_hover_2" size="512,512">
+		<ImageRef name="texture/test" rect="0,0,512,512"/>
+		<ImageRef name="texture/test_orange_add" rect="0,0,512,512"/>
 	</CompositeImage>
 	
-	<CompositeImage name="texture/test_hover_3" w="512" h="512">
-		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_orange_add" x="128" y="128" w="384" h="384"/>
+	<CompositeImage name="texture/test_hover_3" size="512,512">
+		<ImageRef name="texture/test_grey" rect="0,0,512,512"/>
+		<ImageRef name="texture/test_orange_add" rect="128,128,384,384"/>
 	</CompositeImage>
 	
-	<CompositeImage name="texture/test_hover_4" w="512" h="512">
-		<ImageRef name="texture/test_grey" x="0" y="0" w="512" h="512"/>
-		<ImageRef name="texture/test_green_add" x="0" y="0" w="512" h="512"/>
+	<CompositeImage name="texture/test_hover_4" size="512,512">
+		<ImageRef name="texture/test_grey" rect="0,0,512,512"/>
+		<ImageRef name="texture/test_green_add" rect="0,0,512,512"/>
 	</CompositeImage>
 	
 </Textures>

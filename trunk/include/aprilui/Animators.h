@@ -27,7 +27,7 @@
 #include "AnimatorResizerY.h"
 #include "AnimatorScalerX.h"
 #include "AnimatorScalerY.h"
-#include "AnimatorTiledScrollerX.h"
-#include "AnimatorTiledScrollerY.h"
+#include "AnimatorTileScrollerX.h"
+#include "AnimatorTileScrollerY.h"
 
 #endif

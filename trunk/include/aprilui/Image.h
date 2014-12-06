@@ -8,7 +8,7 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a base class for all special image classes and a basic image class.
+/// Defines a class for normal image definitions.
 
 #ifndef APRILUI_IMAGE_H
 #define APRILUI_IMAGE_H
@@ -22,23 +22,22 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "BaseImage.h"
 #include "PropertyDescription.h"
-
-#define APRILUI_IMAGE_NAME_NULL "null"
 
 namespace aprilui
 {
 	class Dataset;
 	class Texture;
 	
-	class apriluiExport Image
+	class apriluiExport Image : public BaseImage
 	{
 	public:
 		friend class Dataset;
 
 		Image(Texture* texture, chstr name, grect source);
 		Image(Image& other, chstr name);
-		virtual ~Image();
+		~Image();
 		
 		virtual void draw(grect rect, april::Color color = april::Color::White);
 		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White);
@@ -112,6 +111,7 @@ namespace aprilui
 		bool rotated;
 		bool invertX;
 		bool invertY;
+		april::TexturedVertex vertices[4];
 
 		bool _textureCoordinatesLoaded;
 		
@@ -120,8 +120,6 @@ namespace aprilui
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
-		april::TexturedVertex vertices[4];
-		
 	};
 
 }

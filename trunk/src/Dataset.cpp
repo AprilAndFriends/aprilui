@@ -352,7 +352,8 @@ namespace aprilui
 					}
 					if (tile.x != 1.0f || tile.y != 1.0f)
 					{
-						image = new TiledImage(texture, name, rect, tile.x, tile.y);
+						//hlog::warn(aprilui::logTag, "Using 'tile', 'tile_w' and 'tile_h' is deprecated. Use 'TileImage' instead."); // DEPRECATED
+						image = new TileImage(texture, name, rect, tile.x, tile.y);
 					}
 					else
 					{
@@ -361,6 +362,27 @@ namespace aprilui
 					this->images[name] = image;
 					image->dataset = this;
 					foreach_xmlproperty (prop, child)
+					{
+						name = prop->name();
+						if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
+						{
+							continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
+						}
+						image->setProperty(name, prop->value());
+					}
+				}
+				else if (*child == "SkinImage")
+				{
+					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
+					if (this->images.has_key(name))
+					{
+						throw ResourceExistsException(name, "Image", this);
+					}
+					aprilui::readRectNode(rect, child);
+					image = new SkinImage(texture, name, rect);
+					this->images[name] = image;
+					image->dataset = this;
+					foreach_xmlproperty(prop, child)
 					{
 						name = prop->name();
 						if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
@@ -400,6 +422,10 @@ namespace aprilui
 				refname = child->pstr("name");
 				aprilui::readRectNode(rect, child);
 				image->addImageRef(this->getImage(refname), rect);
+			}
+			else
+			{
+				hlog::warnf(aprilui::logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->getValue().c_str(), name.c_str());
 			}
 		}
 		this->images[name] = image;
