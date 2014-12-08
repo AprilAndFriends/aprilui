@@ -3,6 +3,7 @@
 	
 	<Include path="scroll_skin.tex"/>
 	<Include path="texture_gui.tex"/>
+	<Include path="skin_image.tex"/>
 	<Include path="transparency.tex"/>
 	
 	<Object type="Container" name="root" rect="0,0,1024,768">
