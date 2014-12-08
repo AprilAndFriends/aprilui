@@ -197,15 +197,33 @@ namespace aprilui
 			gvec2 uv[4];
 			uv[0].set(Image::vertices[0].u, Image::vertices[0].v);
 			uv[3].set(Image::vertices[3].u, Image::vertices[3].v);
-			uv[1] = uv[0] + this->skinRect.getPosition() / this->srcRect.getSize() * (uv[3] - uv[0]);
-			uv[2] = uv[1] + this->skinRect.getSize() / this->srcRect.getSize() * (uv[3] - uv[0]);
+			grect skinRect = this->skinRect;
+			gvec2 srcSize = this->srcRect.getSize();
+			if (this->rotated)
+			{
+				hswap(uv[0].x, uv[3].x); // undoes modified Image::vertices
+				float y = skinRect.y;
+				skinRect.y = skinRect.x;
+				skinRect.x = srcSize.y - skinRect.h - y;
+				hswap(skinRect.w, skinRect.h);
+				hswap(srcSize.x, srcSize.y);
+			}
+			uv[1] = uv[0] + skinRect.getPosition() / srcSize * (uv[3] - uv[0]);
+			uv[2] = uv[1] + skinRect.getSize() / srcSize * (uv[3] - uv[0]);
 			april::TexturedVertex v[16];
 			for_iter (j, 0, 4)
 			{
 				for_iter (i, 0, 4)
 				{
 					v[i + j * 4].x = pos[i].x;	v[i + j * 4].y = pos[j].y;
-					v[i + j * 4].u = uv[i].x;	v[i + j * 4].v = uv[j].y;
+					if (!this->rotated)
+					{
+						v[i + j * 4].u = uv[i].x;		v[i + j * 4].v = uv[j].y;
+					}
+					else
+					{
+						v[i + j * 4].u = uv[3 - j].x;	v[i + j * 4].v = uv[i].y;
+					}
 				}
 			}
 			bool left = (this->skinRect.x > 0.0f);
