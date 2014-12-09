@@ -282,16 +282,14 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'vertical' is deprecated. Use 'rotated' instead."); // DEPRECATED
 			return this->isRotated();
 		}
-		if (name == "invert_x")				return this->isInvertX();
-		if (name == "invertx")
+		if (name == "invert_x" || name == "invertx")
 		{
-			hlog::warn(aprilui::logTag, "'invertx' is deprecated. Use 'invert_x' instead."); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'" + name + "' is deprecated. Use 'Object.scale_x' instead."); // DEPRECATED
 			return this->isInvertX();
 		}
-		if (name == "invert_y")				return this->isInvertY();
-		if (name == "inverty")
+		if (name == "invert_y" || name == "inverty")
 		{
-			hlog::warn(aprilui::logTag, "'inverty' is deprecated. Use 'invert_y' instead."); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'" + name + "' is deprecated. Use 'Object.scale_y' instead."); // DEPRECATED
 			return this->isInvertY();
 		}
 		if (name == "blend_mode")
@@ -342,16 +340,14 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'vertical=' is deprecated. Use 'rotated=' instead."); // DEPRECATED
 			this->setRotated(value);
 		}
-		else if	(name == "invert_x")			this->setInvertX(value);
-		else if	(name == "invertx")
+		else if	(name == "invert_x" || name == "invertx")
 		{
-			hlog::warn(aprilui::logTag, "'invertx=' is deprecated. Use 'invert_x=' instead."); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'" + name + "=' is deprecated. Use 'Object.scale_x=' instead."); // DEPRECATED
 			this->setInvertX(value);
 		}
-		else if	(name == "invert_y")			this->setInvertY(value);
-		else if	(name == "inverty")
+		else if (name == "invert_y" || name == "inverty")
 		{
-			hlog::warn(aprilui::logTag, "'inverty=' is deprecated. Use 'invert_y=' instead."); // DEPRECATED
+			hlog::warn(aprilui::logTag, "'"+ name + "=' is deprecated. Use 'Object.scale_y=' instead."); // DEPRECATED
 			this->setInvertY(value);
 		}
 		else if	(name == "blend_mode")
