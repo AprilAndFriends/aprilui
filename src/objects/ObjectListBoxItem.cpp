@@ -216,6 +216,12 @@ namespace aprilui
 		return (result || up || Label::_mouseUp(keyCode));
 	}
 
+	void ListBoxItem::_mouseCancel(april::Key keyCode)
+	{
+		ButtonBase::_mouseCancel(keyCode);
+		Label::_mouseCancel(keyCode);
+	}
+
 	bool ListBoxItem::_mouseMove()
 	{
 		return (ButtonBase::_mouseMove() || Label::_mouseMove());
@@ -249,12 +255,6 @@ namespace aprilui
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (result || up || Label::_buttonUp(buttonCode));
-	}
-
-	void ListBoxItem::_mouseCancel(april::Key keyCode)
-	{
-		ButtonBase::_mouseCancel(keyCode);
-		Label::_mouseCancel(keyCode);
 	}
 
 }
