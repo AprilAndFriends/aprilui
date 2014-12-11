@@ -32,7 +32,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> EditBox::_propertyDescriptions;
 
-	EditBox::EditBox(chstr name) : Label(name)
+	EditBox::EditBox(chstr name) : Label(name), ButtonBase()
 	{
 		this->text = "";
 		this->horzFormatting = atres::LEFT;
@@ -51,7 +51,6 @@ namespace aprilui
 		this->selectionCount = 0;
 		this->selectionColor = april::Color::Grey;
 		this->disabledOffset = false;
-		this->pushed = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
 		this->_ctrlMode = false;
@@ -63,7 +62,7 @@ namespace aprilui
 		this->_sizeProblemReported = false;
 	}
 
-	EditBox::EditBox(const EditBox& other) : Label(other)
+	EditBox::EditBox(const EditBox& other) : Label(other), ButtonBase(other)
 	{
 		this->emptyText = other.emptyText;
 		this->emptyTextKey = other.emptyTextKey;
@@ -78,7 +77,6 @@ namespace aprilui
 		this->selectionCount = other.selectionCount;
 		this->selectionColor = other.selectionColor;
 		this->disabledOffset = other.disabledOffset;
-		this->pushed = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
 		this->_ctrlMode = false;
@@ -120,6 +118,31 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::BOOL);
 		}
 		return (Label::getPropertyDescriptions() + EditBox::_propertyDescriptions);
+	}
+
+	hstr EditBox::getName()
+	{
+		return Label::getName();
+	}
+
+	int EditBox::getFocusIndex()
+	{
+		return Label::getFocusIndex();
+	}
+
+	Object* EditBox::getParent()
+	{
+		return Label::getParent();
+	}
+
+	Dataset* EditBox::getDataset()
+	{
+		return Label::getDataset();
+	}
+
+	bool EditBox::isCursorInside()
+	{
+		return Label::isCursorInside();
 	}
 
 	void EditBox::setCaretIndex(int value)
@@ -726,6 +749,36 @@ namespace aprilui
 		offset.y = (h2 * 2 - fh) * hf;
 	}
 
+	bool EditBox::triggerEvent(chstr type, april::Key keyCode)
+	{
+		return Label::triggerEvent(type, keyCode);
+	}
+
+	bool EditBox::triggerEvent(chstr type, april::Key keyCode, chstr string)
+	{
+		return Label::triggerEvent(type, keyCode, string);
+	}
+
+	bool EditBox::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Label::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool EditBox::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Label::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool EditBox::triggerEvent(chstr type, chstr string, void* userData)
+	{
+		return Label::triggerEvent(type, string, userData);
+	}
+
+	bool EditBox::triggerEvent(chstr type, void* userData)
+	{
+		return Label::triggerEvent(type, userData);
+	}
+
 	void EditBox::notifyEvent(chstr type, EventArgs* args)
 	{
 		if (type == Event::LocalizationChanged)
@@ -747,38 +800,50 @@ namespace aprilui
 	
 	bool EditBox::_mouseDown(april::Key keyCode)
 	{
-		if (this->isCursorInside())
+		bool result = ButtonBase::_mouseDown(keyCode);
+		if (result)
 		{
 			this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
 			this->setSelectionCount(0);
 			this->setFocused(true);
-			this->pushed = true;
 			this->_updateCaretRect();
 			this->_updateCaret();
 			this->_updateSelection();
-			return true;
+			this->triggerEvent(Event::MouseDown, keyCode);
 		}
-		this->setSelectionCount(0);
-		return Label::_mouseDown(keyCode);
+		else
+		{
+			this->setSelectionCount(0);
+		}
+		return (result || Label::_mouseDown(keyCode));
 	}
 
 	bool EditBox::_mouseUp(april::Key keyCode)
 	{
-		if (this->pushed && this->isCursorInside())
+		bool result = ButtonBase::_mouseUp(keyCode);
+		bool up = false;
+		if (this->hovered)
 		{
-			this->pushed = false;
+			up = this->triggerEvent(Event::MouseUp, keyCode);
+		}
+		if (result)
+		{
 			// some OSes will disable the keyboard if it is shown before a mouse-up event
 			april::window->beginKeyboardHandling();
-			return true;
+			this->triggerEvent(Event::Click, keyCode);
 		}
-		this->pushed = false;
-		return Label::_mouseUp(keyCode);
+		return (result || up || Label::_mouseUp(keyCode));
 	}
 
 	void EditBox::_mouseCancel(april::Key keyCode)
 	{
-		this->pushed = false;
+		ButtonBase::_mouseCancel(keyCode);
 		Label::_mouseCancel(keyCode);
+	}
+
+	bool EditBox::_mouseMove()
+	{
+		return (ButtonBase::_mouseMove() || Label::_mouseMove());
 	}
 
 	bool EditBox::_keyDown(april::Key keyCode)
@@ -884,6 +949,35 @@ namespace aprilui
 			}
 		}
 		return Label::_char(charCode);
+	}
+
+	bool EditBox::_buttonDown(april::Button buttonCode)
+	{
+		bool result = ButtonBase::_buttonDown(buttonCode);
+		if (result)
+		{
+			this->triggerEvent(Event::ButtonDown, buttonCode);
+		}
+		return (result || Label::_buttonDown(buttonCode));
+	}
+
+	bool EditBox::_buttonUp(april::Button buttonCode)
+	{
+		if (Label::onButtonUp(buttonCode))
+		{
+			return true;
+		}
+		bool result = ButtonBase::_buttonUp(buttonCode);
+		bool up = false;
+		if (this->hovered)
+		{
+			up = this->triggerEvent(Event::ButtonUp, buttonCode);
+		}
+		if (result)
+		{
+			this->triggerEvent(Event::ButtonTrigger, buttonCode);
+		}
+		return (result || up || Label::_buttonUp(buttonCode));
 	}
 
 	hstr EditBox::getProperty(chstr name)

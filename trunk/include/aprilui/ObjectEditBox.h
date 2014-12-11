@@ -17,11 +17,12 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "ObjectButtonBase.h"
 #include "ObjectLabel.h"
 
 namespace aprilui
 {
-	class apriluiExport EditBox : public Label
+	class apriluiExport EditBox : public Label, public ButtonBase
 	{
 		APRILUI_CLONEABLE(EditBox);
 	public:
@@ -31,6 +32,12 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 		
+		hstr getName();
+		int getFocusIndex();
+		Object* getParent();
+		Dataset* getDataset();
+		bool isCursorInside();
+
 		HL_DEFINE_GET(hstr, emptyText, EmptyText);
 		void setEmptyText(chstr value);
 		HL_DEFINE_GET(hstr, emptyTextKey, EmptyTextKey);
@@ -63,6 +70,13 @@ namespace aprilui
 
 		void update(float time);
 
+		bool triggerEvent(chstr type, april::Key keyCode);
+		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
+		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, void* userData = NULL);
+
 		void notifyEvent(chstr type, EventArgs* args);
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
@@ -88,7 +102,6 @@ namespace aprilui
 		bool disabledOffset;
 
 		grect caretRect;
-		bool pushed;
 		int renderOffsetX;
 		int renderOffsetY;
 
@@ -119,9 +132,12 @@ namespace aprilui
 		bool _mouseDown(april::Key keyCode);
 		bool _mouseUp(april::Key keyCode);
 		void _mouseCancel(april::Key keyCode);
+		bool _mouseMove();
 		bool _keyDown(april::Key keyCode);
 		bool _keyUp(april::Key keyCode);
 		bool _char(unsigned int charCode);
+		bool _buttonDown(april::Button buttonCode);
+		bool _buttonUp(april::Button buttonCode);
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

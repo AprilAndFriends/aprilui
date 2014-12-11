@@ -334,6 +334,12 @@ namespace aprilui
 		return (result || up || Container::_mouseUp(keyCode));
 	}
 
+	void TreeViewNode::_mouseCancel(april::Key keyCode)
+	{
+		ButtonBase::_mouseCancel(keyCode);
+		Container::_mouseCancel(keyCode);
+	}
+
 	bool TreeViewNode::_mouseMove()
 	{
 		return (ButtonBase::_mouseMove() || Container::_mouseMove());
@@ -367,12 +373,6 @@ namespace aprilui
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (result || up || Container::_buttonUp(buttonCode));
-	}
-
-	void TreeViewNode::_mouseCancel(april::Key keyCode)
-	{
-		ButtonBase::_mouseCancel(keyCode);
-		Container::_mouseCancel(keyCode);
 	}
 
 }
