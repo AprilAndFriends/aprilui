@@ -72,6 +72,7 @@ namespace aprilui
 		this->passwordChar = other.passwordChar;
 		this->filter = other.filter;
 		this->caretIndex = other.caretIndex;
+		this->caretOffset = other.caretOffset;
 		this->multiLine = other.multiLine;
 		this->selectable = other.selectable;
 		this->selectionCount = other.selectionCount;
@@ -109,8 +110,11 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_color", PropertyDescription::HEXCOLOR);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::INT);
-			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_offset", PropertyDescription::GVEC2);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_x", PropertyDescription::FLOAT);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_y", PropertyDescription::FLOAT);
 			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selection_color", PropertyDescription::HEXCOLOR);
 			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::BOOL);
@@ -657,7 +661,7 @@ namespace aprilui
 			harray<grect> selectionRects = this->_selectionRects;
 			foreach (grect, it, selectionRects)
 			{
-				(*it) += drawRect.getPosition();
+				(*it) += drawRect.getPosition() + this->caretOffset;
 				(*it).clip(drawRect);
 				if ((*it).w > 0.0f && (*it).h > 0.0f)
 				{
@@ -674,7 +678,7 @@ namespace aprilui
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
-			grect renderRect = this->caretRect - this->center;
+			grect renderRect = this->caretRect - this->center + this->caretOffset;
 			// make sure the carat is visible if the editbox is empty
 			if (this->caretIndex == 0)
 			{
@@ -683,6 +687,7 @@ namespace aprilui
 			renderRect.clip(drawRect);
 			if (renderRect.w > 0.0f && renderRect.h > 0.0f)
 			{
+				renderRect;
 				april::ColoredVertex v[2];
 				v[0].set(renderRect.x, renderRect.y, 0);
 				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
@@ -895,6 +900,9 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'cursor_index' is deprecated. Use 'caret_index' instead."); // DEPRECATED
 			return this->getCaretIndex();
 		}
+		if (name == "caret_offset")		return april::gvec2ToHstr(this->getCaretOffset());
+		if (name == "caret_offset_x")	return this->getCaretOffsetX();
+		if (name == "caret_offset_y")	return this->getCaretOffsetY();
 		if (name == "multi_line")		return this->isMultiLine();
 		if (name == "selectable")		return this->isSelectable();
 		if (name == "selection_count")	return this->getSelectionCount();
@@ -917,6 +925,9 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'cursor_index=' is deprecated. Use 'caret_index=' instead."); // DEPRECATED
 			this->setCaretIndex(value);
 		}
+		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));
+		else if (name == "caret_offset_x")		this->setCaretOffsetX(value);
+		else if (name == "caret_offset_y")		this->setCaretOffsetY(value);
 		else if (name == "multi_line")			this->setMultiLine(value);
 		else if (name == "selectable")			this->setSelectable(value);
 		else if (name == "selection_count")		this->setSelectionCount(value);
