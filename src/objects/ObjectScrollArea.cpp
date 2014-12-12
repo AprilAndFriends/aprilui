@@ -172,7 +172,6 @@ namespace aprilui
 		{
 			ButtonBase::update(timeDelta);
 			gvec2 position = aprilui::getCursorPosition();
-			position.set(((int)(position.x / 8)) * 8.0f, ((int)(position.y / 8)) * 8.0f);
 			if (this->pushed)
 			{
 				if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
