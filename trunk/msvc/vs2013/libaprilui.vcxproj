@@ -82,6 +82,10 @@
     <ClCompile Include="..\..\src\images\BaseImage.cpp" />
     <ClCompile Include="..\..\src\images\SkinImage.cpp" />
     <ClCompile Include="..\..\src\images\TileImage.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectGridView.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectGridViewCell.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectGridViewRow.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectGridViewRowTemplate.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectListBox.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectListBoxItem.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectOptionButton.cpp" />
@@ -145,6 +149,10 @@
     <ClInclude Include="..\..\include\aprilui\EventReceiver.h" />
     <ClInclude Include="..\..\include\aprilui\EventUtils.h" />
     <ClInclude Include="..\..\include\aprilui\MemberCallbackEvent.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectGridView.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectGridViewCell.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectGridViewRow.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectGridViewRowTemplate.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectListBox.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectListBoxItem.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectOptionButton.h" />
