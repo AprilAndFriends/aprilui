@@ -710,7 +710,6 @@ namespace aprilui
 			renderRect.clip(drawRect);
 			if (renderRect.w > 0.0f && renderRect.h > 0.0f)
 			{
-				renderRect;
 				april::ColoredVertex v[2];
 				v[0].set(renderRect.x, renderRect.y, 0);
 				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
