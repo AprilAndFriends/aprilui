@@ -78,6 +78,11 @@ void _treeViewSelectedChanged(aprilui::EventArgs* args)
 	hlog::writef(LOG_TAG, "TreeView selected: '%s'", args->string.c_str());
 }
 
+void _gridViewSelectedChanged(aprilui::EventArgs* args)
+{
+	hlog::writef(LOG_TAG, "GridView selected: '%s'", args->string.c_str());
+}
+
 class UpdateDelegate : public april::UpdateDelegate
 {
 public:
@@ -308,6 +313,7 @@ void april_init(const harray<hstr>& args)
 		object->registerEvent(aprilui::Event::HoverFinished, new aprilui::CallbackEvent(&_hoverFinished));
 		dataset->getObject<aprilui::SelectionContainer*>("list_box")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_listBoxSelectedChanged));
 		dataset->getObject<aprilui::SelectionContainer*>("tree_view")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_treeViewSelectedChanged));
+		dataset->getObject<aprilui::SelectionContainer*>("grid_view")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_gridViewSelectedChanged));
 	}
 	catch (aprilui::_GenericException& e)
 	{

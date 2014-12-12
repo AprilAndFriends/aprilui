@@ -16,17 +16,20 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "ObjectButtonBase.h"
 #include "ObjectContainer.h"
 
 namespace aprilui
 {
 	class GridView;
+	class GridViewRow;
 
-	class apriluiExport GridViewCell : public Container
+	class apriluiExport GridViewCell : public Container, public ButtonBase
 	{
 		APRILUI_CLONEABLE(GridViewCell);
 	public:
 		friend class GridView;
+		friend class GridViewRow;
 
 		GridViewCell(chstr name);
 		~GridViewCell();
@@ -34,8 +37,54 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
+		hstr getName();
+		int getFocusIndex();
+		Object* getParent();
+		Dataset* getDataset();
+		bool isCursorInside();
+
+		HL_DEFINE_ISSET(selectable, Selectable);
+		bool isSelected();
+
+		harray<PropertyDescription> getPropertyDescriptions();
+
+		void update(float timeDelta);
+
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
+
+		bool triggerEvent(chstr type, april::Key keyCode);
+		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
+		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
+		bool triggerEvent(chstr type, void* userData = NULL);
+
+		void notifyEvent(chstr type, EventArgs* args);
+
+	protected:
+		bool selectable;
+
+		void _draw();
+
+		april::Color _getCurrentBackgroundColor();
+		void _setSelected();
+
+		bool _mouseDown(april::Key keyCode);
+		bool _mouseUp(april::Key keyCode);
+		void _mouseCancel(april::Key keyCode);
+		bool _mouseMove();
+		bool _buttonDown(april::Button buttonCode);
+		bool _buttonUp(april::Button buttonCode);
+
 	private:
 		GridView* _gridView;
+		GridViewRow* _gridViewRow;
+		april::Color _backColor;
+		april::Color _hoverColor;
+		april::Color _pushedColor;
+
+		static harray<PropertyDescription> _propertyDescriptions;
 
 	};
 

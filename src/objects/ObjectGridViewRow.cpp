@@ -10,10 +10,14 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "ObjectGridView.h"
 #include "ObjectGridViewRow.h"
+#include "ObjectGridViewRowTemplate.h"
+#include "ObjectScrollArea.h"
 
 namespace aprilui
 {
+	// TODO - implement use_template parameter
 	GridViewRow::GridViewRow(chstr name) : Container(name)
 	{
 		this->_gridView = NULL;
@@ -31,6 +35,42 @@ namespace aprilui
 	Object* GridViewRow::createInstance(chstr name)
 	{
 		return new GridViewRow(name);
+	}
+
+	void GridViewRow::notifyEvent(chstr type, EventArgs* args)
+	{
+		Container::notifyEvent(type, args);
+		if (type == Event::AttachedToObject)
+		{
+			GridView* gridView = dynamic_cast<GridView*>(this->parent);
+			if (gridView != NULL)
+			{
+				this->_gridView = gridView;
+				if (this->_gridView->scrollArea != NULL)
+				{
+					int itemCount = this->_gridView->getItemCount();
+					float itemHeight = this->_gridView->getItemHeight();
+					// reattach to ScrollArea
+					this->_gridView->removeChild(this);
+					this->_gridView->scrollArea->addChild(this);
+					// setup all properties
+					this->_gridView->items += this;
+					this->setRect(0.0f, itemCount * (itemHeight + this->_gridView->getSpacingHeight()), this->_gridView->getWidth(), itemHeight);
+					this->setAnchors(true, true, true, false);
+					this->_gridView->_updateItem(itemCount);
+					this->_gridView->_updateScrollArea();
+				}
+				else
+				{
+					hlog::errorf(aprilui::logTag, "GridViewRow '%s' cannot be reattached to ScrollArea of GridView '%s', ScrollArea does not exist!", this->name.c_str(), this->parent->getName().c_str());
+				}
+			}
+			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
+			{
+				this->_gridView = NULL;
+				hlog::errorf(aprilui::logTag, "GridViewRow '%s' not attached to object of class GridView!", this->name.c_str());
+			}
+		}
 	}
 
 }
