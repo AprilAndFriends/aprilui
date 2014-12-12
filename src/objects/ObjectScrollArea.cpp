@@ -172,6 +172,7 @@ namespace aprilui
 		{
 			ButtonBase::update(timeDelta);
 			gvec2 position = aprilui::getCursorPosition();
+			position.set(((int)(position.x / 8)) * 8.0f, ((int)(position.y / 8)) * 8.0f);
 			if (this->pushed)
 			{
 				if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
@@ -193,6 +194,11 @@ namespace aprilui
 			}
 			if (this->dragging)
 			{
+				// some devices have a bad digitizer so this serves as special hack to smoothen the dragging movement on the scroll-area
+				if (april::window->getInputMode() == april::Window::TOUCH && this->_lastPosition != position)
+				{
+					position = this->_lastPosition + (position - this->_lastPosition) * 0.5f;
+				}
 				this->setScrollOffset(this->_clickScrollOffset + (this->_clickPosition - position) / this->getDerivedScale());
 				this->_dragSpeed = (position - this->_lastPosition) / timeDelta;
 				if (this->dragMaxSpeed > 0.0f)
