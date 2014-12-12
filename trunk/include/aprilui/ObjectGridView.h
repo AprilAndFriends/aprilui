@@ -43,6 +43,11 @@ namespace aprilui
 		void setEvenColor(april::Color value);
 		HL_DEFINE_GET(april::Color, oddColor, OddColor);
 		void setOddColor(april::Color value);
+		HL_DEFINE_GET(float, spacingWidth, SpacingWidth);
+		void setSpacingWidth(float value);
+		HL_DEFINE_GET(float, spacingHeight, SpacingHeight);
+		void setSpacingHeight(float value);
+		HL_DEFINE_GET(GridViewRowTemplate*, rowTemplate, RowTemplate);
 		HL_DEFINE_GET(harray<GridViewRow*>, items, Items);
 		GridViewRow* getSelected();
 		int getItemCount();
@@ -61,7 +66,11 @@ namespace aprilui
 	protected:
 		april::Color evenColor;
 		april::Color oddColor;
+		float spacingWidth;
+		float spacingHeight;
+		GridViewRowTemplate* rowTemplate;
 		harray<GridViewRow*> items;
+		harray<GridViewCell*> cells;
 
 		void _updateDisplay();
 		void _updateItem(int index);

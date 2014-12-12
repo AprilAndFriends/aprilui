@@ -13,6 +13,7 @@
 #include "aprilui.h"
 #include "Dataset.h"
 #include "ObjectGridView.h"
+#include "ObjectGridViewCell.h"
 #include "ObjectGridViewRow.h"
 #include "ObjectScrollArea.h"
 #include "ObjectScrollBarV.h"
@@ -25,12 +26,19 @@ namespace aprilui
 	{
 		this->evenColor.set(april::Color::Black, 128);
 		this->oddColor.set(april::Color::DarkGrey, 128);
+		this->spacingWidth = 4.0f;
+		this->spacingHeight = 4.0f;
+		this->rowTemplate = NULL;
 	}
 
 	GridView::GridView(const GridView& other) : SelectionContainer(other)
 	{
 		this->evenColor = other.evenColor;
 		this->oddColor = other.oddColor;
+		this->spacingWidth = other.spacingWidth;
+		this->spacingHeight = other.spacingHeight;
+		// TODO - might want to clone this
+		this->rowTemplate = NULL;
 	}
 
 	GridView::~GridView()
@@ -48,6 +56,8 @@ namespace aprilui
 		{
 			GridView::_propertyDescriptions += PropertyDescription("even_color", PropertyDescription::HEXCOLOR);
 			GridView::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::HEXCOLOR);
+			GridView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::FLOAT);
+			GridView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::FLOAT);
 		}
 		return (SelectionContainer::getPropertyDescriptions() + GridView::_propertyDescriptions);
 	}
@@ -66,6 +76,24 @@ namespace aprilui
 		if (this->oddColor != value)
 		{
 			this->oddColor = value;
+			this->_updateDisplay();
+		}
+	}
+
+	void GridView::setSpacingWidth(float value)
+	{
+		if (this->spacingWidth != value)
+		{
+			this->spacingWidth = value;
+			this->_updateDisplay();
+		}
+	}
+
+	void GridView::setSpacingHeight(float value)
+	{
+		if (this->spacingHeight != value)
+		{
+			this->spacingHeight = value;
 			this->_updateDisplay();
 		}
 	}
@@ -93,20 +121,21 @@ namespace aprilui
 	{
 		if (is_between_ie(index, 0, this->items.size()))
 		{
-			this->items[index]->setY(index * this->itemHeight);
+			this->items[index]->setY(index * (this->itemHeight + this->spacingHeight));
 			this->items[index]->setHeight(this->itemHeight);
+			// TODO
 			/*
 			if (this->selectedIndex != index)
 			{
-				this->items[index]->_backColor = (index % 2 == 0 ? this->evenColor : this->oddColor);
-				this->items[index]->_hoverColor = this->hoverColor;
-				this->items[index]->_pushedColor = this->pushedColor;
+				this->cells[index]->_backColor = (index % 2 == 0 ? this->evenColor : this->oddColor);
+				this->cells[index]->_hoverColor = this->hoverColor;
+				this->cells[index]->_pushedColor = this->pushedColor;
 			}
 			else
 			{
-				this->items[index]->_backColor = this->selectedColor;
-				this->items[index]->_hoverColor = this->selectedHoverColor;
-				this->items[index]->_pushedColor = this->selectedPushedColor;
+				this->cells[index]->_backColor = this->selectedColor;
+				this->cells[index]->_hoverColor = this->selectedHoverColor;
+				this->cells[index]->_pushedColor = this->selectedPushedColor;
 			}
 			*/
 		}
@@ -117,7 +146,7 @@ namespace aprilui
 		if (this->scrollArea != NULL)
 		{
 			float scrollOffsetY = this->scrollArea->getScrollOffsetY();
-			this->scrollArea->setHeight(this->items.size() * this->itemHeight);
+			this->scrollArea->setHeight(this->items.size() * this->itemHeight + (this->items.size() - 1) * this->spacingHeight);
 			this->scrollArea->setScrollOffsetY(scrollOffsetY);
 			this->scrollArea->setVisible(this->items.size() > 0);
 		}
@@ -176,15 +205,19 @@ namespace aprilui
 
 	hstr GridView::getProperty(chstr name)
 	{
-		if (name == "even_color")	return this->getEvenColor().hex();
-		if (name == "odd_color")	return this->getOddColor().hex();
+		if (name == "even_color")		return this->getEvenColor().hex();
+		if (name == "odd_color")		return this->getOddColor().hex();
+		if (name == "spacing_width")	return this->getSpacingWidth();
+		if (name == "spacing_height")	return this->getSpacingHeight();
 		return SelectionContainer::getProperty(name);
 	}
 
 	bool GridView::setProperty(chstr name, chstr value)
 	{
-		if		(name == "even_color")	this->setEvenColor(value);
-		else if (name == "odd_color")	this->setOddColor(value);
+		if		(name == "even_color")		this->setEvenColor(value);
+		else if (name == "odd_color")		this->setOddColor(value);
+		else if (name == "spacing_width")	this->setSpacingWidth(value);
+		else if (name == "spacing_height")	this->setSpacingHeight(value);
 		else return SelectionContainer::setProperty(name, value);
 		return true;
 	}

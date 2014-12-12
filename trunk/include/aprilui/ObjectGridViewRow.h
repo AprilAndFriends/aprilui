@@ -21,12 +21,14 @@
 namespace aprilui
 {
 	class GridView;
+	class GridViewCell;
 
 	class apriluiExport GridViewRow : public Container
 	{
 		APRILUI_CLONEABLE(GridViewRow);
 	public:
 		friend class GridView;
+		friend class GridViewCell;
 
 		GridViewRow(chstr name);
 		~GridViewRow();
@@ -34,8 +36,11 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-	private:
+		void notifyEvent(chstr type, EventArgs* args);
+
+	protected:
 		GridView* _gridView;
+		harray<GridViewCell*> _gridViewCells;
 
 	};
 

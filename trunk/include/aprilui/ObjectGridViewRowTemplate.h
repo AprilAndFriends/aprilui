@@ -16,17 +16,19 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "ObjectContainer.h"
+#include "ObjectGridViewRow.h"
 
 namespace aprilui
 {
 	class GridView;
+	class GridViewCell;
 
-	class apriluiExport GridViewRowTemplate : public Container
+	class apriluiExport GridViewRowTemplate : public GridViewRow
 	{
 		APRILUI_CLONEABLE(GridViewRowTemplate);
 	public:
 		friend class GridView;
+		friend class GridViewCell;
 
 		GridViewRowTemplate(chstr name);
 		~GridViewRowTemplate();
@@ -34,8 +36,12 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-	private:
-		GridView* _gridView;
+		void update(float timeDelta);
+
+		void notifyEvent(chstr type, EventArgs* args);
+
+	protected:
+		void _draw();
 
 	};
 
