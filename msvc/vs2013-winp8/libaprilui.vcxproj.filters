@@ -233,6 +233,18 @@
     <ClCompile Include="..\..\src\images\TileImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectGridView.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectGridViewCell.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectGridViewRow.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectGridViewRowTemplate.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -453,6 +465,18 @@
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\TileImage.h">
       <Filter>Header Files\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectGridView.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectGridViewCell.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectGridViewRow.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectGridViewRowTemplate.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
