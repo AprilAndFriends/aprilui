@@ -379,7 +379,12 @@ namespace aprilui
 			return;
 		}
 		this->_caretDirty = false;
-		hstr leftText = this->text.utf8_substr(0, this->caretIndex);
+		hstr text = this->text;
+		if (this->passwordChar != '\0' && this->text != "")
+		{
+			text = hstr(this->passwordChar, this->text.utf8_size());
+		}
+		hstr leftText = text.utf8_substr(0, this->caretIndex);
 		atres::Font* font = atres::renderer->getFont(this->font);
 		if (font == NULL)
 		{
