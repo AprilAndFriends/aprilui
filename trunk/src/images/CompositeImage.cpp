@@ -78,8 +78,8 @@ namespace aprilui
 				clipRect.set(clipRect.getPosition() * cf, clipRect.getSize() * cf);
 				if (clipRect.w > 0.0f && clipRect.h > 0.0f)
 				{
-					(*it).image->setClipRect(clipRect);
 					oldClipRect = (*it).image->getClipRect();
+					(*it).image->setClipRect(clipRect);
 					drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
 					(*it).image->draw(drawRect, color);
 					if (this->restoreClipRects)
