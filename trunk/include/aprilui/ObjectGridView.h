@@ -73,6 +73,7 @@ namespace aprilui
 		harray<GridViewCell*> cells;
 
 		void _updateDisplay();
+		void _updateRow(int index);
 		void _updateItem(int index);
 		void _updateScrollArea();
 

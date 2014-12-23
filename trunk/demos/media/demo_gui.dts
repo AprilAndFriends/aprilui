@@ -124,32 +124,41 @@
 				</Object>
 				<Object type="ScrollBarV" name="tree_view_scroll_v" rect="384,0,4,144"/>
 			</Object>
-			<Object type="GridView" name="grid_view" item_height="32" allow_drag="1" rect="600,448,196,142">
+			<Object type="GridView" name="grid_view" item_height="32" allow_drag="1" rect="600,448,200,142">
 				<Object type="GridViewRowTemplate">
-					<Object type="GridViewCell" size="160,32">
-						<Object type="Label" text="Item 1" effect="border" rect="0,0,160,32"/>
+					<Object type="GridViewCell" size="80,32">
+						<Object type="Label" text="Item 1" effect="border" rect="0,0,80,32"/>
+					</Object>
+					<Object type="GridViewCell" size="80,32">
+						<Object type="Label" text="Item 2" effect="border" rect="0,0,80,32"/>
 					</Object>
 					<Object type="GridViewCell" size="32,32">
 						<Object type="ToggleButton" image="texture/test_red" toggled_image="texture/test_green" rect="0,0,32,32"/>
 					</Object>
 				</Object>
 				<Object type="GridViewRow">
-					<Object type="GridViewCell" size="160,32">
-						<Object type="Label" text="Item 1" effect="border" rect="0,0,160,32"/>
+					<Object type="GridViewCell" size="80,32">
+						<Object type="Label" text="Item 1" effect="border" rect="0,0,80,32"/>
+					</Object>
+					<Object type="GridViewCell" size="80,32">
+						<Object type="Label" text="Item 2" effect="border" rect="0,0,80,32"/>
 					</Object>
 					<Object type="GridViewCell" size="32,32">
 						<Object type="ToggleButton" image="texture/test_red" toggled_image="texture/test_green" rect="0,0,32,32"/>
 					</Object>
 				</Object>
 				<Object type="GridViewRow">
-					<Object type="GridViewCell" size="160,32">
-						<Object type="Label" text="Item 1" effect="border" rect="0,0,160,32"/>
+					<Object type="GridViewCell" size="80,32">
+						<Object type="Label" text="Item 1" effect="border" rect="0,0,80,32"/>
+					</Object>
+					<Object type="GridViewCell" size="80,32">
+						<Object type="Label" text="Item 2" effect="border" rect="0,0,80,32"/>
 					</Object>
 					<Object type="GridViewCell" size="32,32">
 						<Object type="ToggleButton" image="texture/test_red" toggled_image="texture/test_green" rect="0,0,32,32"/>
 					</Object>
 				</Object>
-				<Object type="ScrollBarV" name="grid_view_scroll_v" rect="196,0,4,142"/>
+				<Object type="ScrollBarV" name="grid_view_scroll_v" rect="200,0,4,142"/>
 			</Object>
 			<Object type="Container" rect="232,16,128,128" hit_test="disabled_recursive">
 				<Object type="ColoredQuad" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" center="96,32">
