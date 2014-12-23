@@ -39,38 +39,33 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		HL_DEFINE_GET(april::Color, evenColor, EvenColor);
-		void setEvenColor(april::Color value);
-		HL_DEFINE_GET(april::Color, oddColor, OddColor);
-		void setOddColor(april::Color value);
 		HL_DEFINE_GET(float, spacingWidth, SpacingWidth);
 		void setSpacingWidth(float value);
 		HL_DEFINE_GET(float, spacingHeight, SpacingHeight);
 		void setSpacingHeight(float value);
 		HL_DEFINE_GET(GridViewRowTemplate*, rowTemplate, RowTemplate);
-		HL_DEFINE_GET(harray<GridViewRow*>, items, Items);
-		GridViewRow* getSelected();
+		HL_DEFINE_GET(harray<GridViewRow*>, rows, Rows);
+		HL_DEFINE_GET(harray<GridViewCell*>, items, Items);
+		GridViewCell* getSelected();
+		int getRowCount();
 		int getItemCount();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		/*
-		virtual GridViewRow* createItem(int index, chstr name = "");
-		bool deleteItem(int index);
-		GridViewRow* getItemAt(int index);
-		*/
+		virtual GridViewRow* createRow(int index, chstr name = "");
+		bool deleteRow(int index);
+		GridViewRow* getRowAt(int index);
+		GridViewCell* getItemAt(int index);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		april::Color evenColor;
-		april::Color oddColor;
 		float spacingWidth;
 		float spacingHeight;
 		GridViewRowTemplate* rowTemplate;
-		harray<GridViewRow*> items;
-		harray<GridViewCell*> cells;
+		harray<GridViewRow*> rows;
+		harray<GridViewCell*> items;
 
 		void _updateDisplay();
 		void _updateRow(int index);

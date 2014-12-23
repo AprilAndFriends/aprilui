@@ -154,7 +154,7 @@ namespace aprilui
 		this->setSelectedIndex(-1);
 		if (selected != NULL && selected == this->items[index])
 		{
-			selected = this->items[hclamp(index - 1, 0, this->items.size() - 2)];
+			selected = this->items[hclamp(index + 1, 0, this->items.size() - 2)];
 		}
 		this->dataset->destroyObjects(this->items.remove_at(index));
 		if (selected != NULL)

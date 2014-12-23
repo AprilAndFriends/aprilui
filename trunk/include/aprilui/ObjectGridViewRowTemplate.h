@@ -43,6 +43,8 @@ namespace aprilui
 	protected:
 		void _draw();
 
+		GridViewRow* _createRow(chstr name);
+
 	};
 
 }

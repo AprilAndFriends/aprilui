@@ -22,6 +22,7 @@ namespace aprilui
 {
 	class GridView;
 	class GridViewCell;
+	class GridViewRowTemplate;
 
 	class apriluiExport GridViewRow : public Container
 	{
@@ -29,12 +30,15 @@ namespace aprilui
 	public:
 		friend class GridView;
 		friend class GridViewCell;
+		friend class GridViewRowTemplate;
 
 		GridViewRow(chstr name);
 		~GridViewRow();
 		inline hstr getClassName() const { return "GridViewRow"; }
 
 		static Object* createInstance(chstr name);
+
+		HL_DEFINE_GET(harray<GridViewCell*>, _gridViewCells, Cells);
 
 		void notifyEvent(chstr type, EventArgs* args);
 

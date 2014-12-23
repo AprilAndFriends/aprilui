@@ -55,7 +55,7 @@ namespace aprilui
 		}
 		this->events.clear();
 	}
-	
+
 	harray<PropertyDescription> BaseObject::getPropertyDescriptions()
 	{
 		if (BaseObject::_propertyDescriptions.size() == 0)

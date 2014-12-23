@@ -124,7 +124,8 @@
 				</Object>
 				<Object type="ScrollBarV" name="tree_view_scroll_v" rect="384,0,4,144"/>
 			</Object>
-			<Object type="GridView" name="grid_view" item_height="32" allow_drag="1" rect="600,448,200,142">
+			<Object type="GridView" name="grid_view" item_height="32" allow_drag="1" rect="600,448,200,160">
+				<Object type="ColoredQuad" name="grid_view_back" color="0000007F" rect="0,0,200,160" zorder="-10"/>
 				<Object type="GridViewRowTemplate">
 					<Object type="GridViewCell" size="80,32">
 						<Object type="Label" text="Item 1" effect="border" rect="0,0,80,32"/>

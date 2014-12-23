@@ -6,10 +6,12 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
+#include <april/aprilUtil.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "Dataset.h"
 #include "ObjectGridView.h"
 #include "ObjectGridViewRowTemplate.h"
 #include "ObjectScrollArea.h"
@@ -45,6 +47,26 @@ namespace aprilui
 	void GridViewRowTemplate::_draw()
 	{
 		// this object and its children are not drawn
+	}
+
+	GridViewRow* GridViewRowTemplate::_createRow(chstr name)
+	{
+		GridViewRow* row = GridViewRow::clone(); // clones only the superclass which is GridViewRow
+		row->setName(name);
+		this->_gridView->addChild(row);
+		row->setEnabled(true);
+		row->setVisible(true);
+		row->_cloneChildren(this->childrenObjects, this->childrenAnimators);
+		harray<BaseObject*> objects = row->getDescendants();
+		foreach (BaseObject*, it, objects)
+		{
+			(*it)->setName(april::generateName(name + "_"));
+		}
+		if (this->dataset != NULL)
+		{
+			this->dataset->registerObjects(row);
+		}
+		return row;
 	}
 
 	void GridViewRowTemplate::notifyEvent(chstr type, EventArgs* args)
