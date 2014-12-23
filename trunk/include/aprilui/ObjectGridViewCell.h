@@ -69,6 +69,7 @@ namespace aprilui
 
 		april::Color _getCurrentBackgroundColor();
 		void _setSelected();
+		aprilui::Object* _findHoverObject();
 
 		bool _mouseDown(april::Key keyCode);
 		bool _mouseUp(april::Key keyCode);
