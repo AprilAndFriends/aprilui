@@ -48,13 +48,13 @@ namespace aprilui
 				this->_gridView = gridView;
 				if (this->_gridView->scrollArea != NULL)
 				{
-					int itemCount = this->_gridView->items.size();
+					int itemCount = this->_gridView->rows.size();
 					float itemHeight = this->_gridView->getItemHeight();
 					// reattach to ScrollArea
 					this->_gridView->removeChild(this);
 					this->_gridView->scrollArea->addChild(this);
 					// setup all properties
-					this->_gridView->items += this;
+					this->_gridView->rows += this;
 					this->setRect(0.0f, itemCount * (itemHeight + this->_gridView->getSpacingHeight()), this->_gridView->getWidth(), itemHeight);
 					this->setAnchors(true, true, true, false);
 					this->_gridView->_updateRow(itemCount);

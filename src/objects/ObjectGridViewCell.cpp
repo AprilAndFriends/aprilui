@@ -78,8 +78,8 @@ namespace aprilui
 
 	bool GridViewCell::isSelected()
 	{
-		return (this->_gridView != NULL && is_between_ie(this->_gridView->selectedIndex, 0, this->_gridView->cells.size()) &&
-			this->_gridView->cells[this->_gridView->selectedIndex] == this);
+		return (this->_gridView != NULL && is_between_ie(this->_gridView->selectedIndex, 0, this->_gridView->items.size()) &&
+			this->_gridView->items[this->_gridView->selectedIndex] == this);
 	}
 
 	void GridViewCell::update(float timeDelta)
@@ -149,7 +149,6 @@ namespace aprilui
 			GridViewRow* gridViewRow = dynamic_cast<GridViewRow*>(this->parent);
 			if (gridViewRow != NULL)
 			{
-				//float itemHeight = this->_gridView->getItemHeight();
 				this->_gridViewRow = gridViewRow;
 				this->_gridView = gridViewRow->_gridView;
 				this->_gridViewRow->_gridViewCells += this;
@@ -159,8 +158,8 @@ namespace aprilui
 				this->setAnchors(true, true, true, false);
 				if (dynamic_cast<GridViewRowTemplate*>(gridViewRow) == NULL)
 				{
-					int cellsCount = this->_gridView->cells.size();
-					this->_gridView->cells += this;
+					int cellsCount = this->_gridView->items.size();
+					this->_gridView->items += this;
 					this->_gridView->_updateItem(cellsCount);
 				}
 			}
@@ -198,7 +197,7 @@ namespace aprilui
 		if (this->_gridView != NULL && this->_gridViewRow != NULL)
 		{
 			this->_gridView->setSelectedIndex(this->_gridViewRow->_gridViewCells.index_of(this) +
-				this->_gridView->items.index_of(this->_gridViewRow) * this->_gridView->rowTemplate->_gridViewCells.size());
+				this->_gridView->rows.index_of(this->_gridViewRow) * this->_gridView->rowTemplate->_gridViewCells.size());
 		}
 	}
 

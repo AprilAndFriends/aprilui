@@ -180,6 +180,29 @@ namespace aprilui
 		}
 	}
 	
+	// when cloning a tree, cloned children first have to be attached to the clone, before they start creating their own clones
+	Object* Object::cloneTree()
+	{
+		Object* cloned = this->clone();
+		cloned->_cloneChildren(this->childrenObjects, this->childrenAnimators);
+		return cloned;
+	}
+
+	void Object::_cloneChildren(harray<Object*>& objects, harray<Animator*>& animators)
+	{
+		Object* object = NULL;
+		foreach (Object*, it, objects)
+		{
+			object = (*it)->clone();
+			this->addChild(object);
+			object->_cloneChildren((*it)->childrenObjects, (*it)->childrenAnimators);
+		}
+		foreach (Animator*, it, animators)
+		{
+			this->addChild((*it)->clone());
+		}
+	}
+
 	harray<PropertyDescription> Object::getPropertyDescriptions()
 	{
 		if (Object::_propertyDescriptions.size() == 0)

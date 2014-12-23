@@ -238,12 +238,12 @@ namespace aprilui
 			{
 				if (this->nodes.size() > 1)
 				{
-					selected = this->nodes[hclamp(index - 1, 1, this->nodes.size() - 1)];
+					selected = this->nodes[hclamp(index - 1, 0, this->nodes.size() - 1)];
 				}
 			}
 			else if (node->_treeViewParentNode->nodes.size() > 1)
 			{
-				selected = node->_treeViewParentNode->nodes[hclamp(index - 1, 1, node->_treeViewParentNode->nodes.size() - 1)];
+				selected = node->_treeViewParentNode->nodes[hclamp(index - 1, 0, node->_treeViewParentNode->nodes.size() - 1)];
 			}
 			else
 			{

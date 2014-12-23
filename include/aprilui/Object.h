@@ -53,6 +53,7 @@ namespace aprilui
 		Object(chstr name);
 		~Object();
 		inline hstr getClassName() const { return "Object"; }
+		Object* cloneTree();
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);
@@ -296,7 +297,8 @@ namespace aprilui
 		
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
-		
+		void _cloneChildren(harray<Object*>& objects, harray<Animator*>& animators);
+
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool _isDerivedHitTestEnabled();
 		grect _getDrawRect();

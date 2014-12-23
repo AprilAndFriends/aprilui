@@ -81,7 +81,6 @@ namespace aprilui
 	private:
 		GridView* _gridView;
 		GridViewRow* _gridViewRow;
-		april::Color _backColor;
 		april::Color _hoverColor;
 		april::Color _pushedColor;
 

@@ -117,6 +117,8 @@ class KeyboardDelegate : public april::KeyboardDelegate
 		aprilui::ListBoxItem* listBoxItem = NULL;
 		aprilui::TreeView* treeView = NULL;
 		aprilui::TreeViewNode* treeViewNode = NULL;
+		aprilui::GridView* gridView = NULL;
+		aprilui::GridViewRow* gridViewRow = NULL;
 		harray<int> indices = hstr("1,0").split(',').cast<int>();
 		switch (keyCode)
 		{
@@ -153,7 +155,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
 			listBox->deleteItem(hrand(listBox->getItemCount()));
 			break;
-		case april::AK_PRIOR:
+		case april::AK_HOME:
 			treeView = dataset->getObject<aprilui::TreeView*>("tree_view");
 			indices += treeView->getItemAt(indices)->getNodes().size();
 			treeViewNode = treeView->createItem(indices, april::generateName("node "));
@@ -161,7 +163,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			treeViewNode->getLabel()->setFontEffect(atres::BORDER);
 			treeViewNode->getLabel()->setHorzFormatting(atres::LEFT);
 			break;
-		case april::AK_NEXT:
+		case april::AK_END:
 			treeView = dataset->getObject<aprilui::TreeView*>("tree_view");
 			treeViewNode = treeView->getItemAt(indices);
 			if (treeViewNode != NULL)
@@ -173,8 +175,14 @@ class KeyboardDelegate : public april::KeyboardDelegate
 				}
 			}
 			break;
-		case april::AK_HOME:
-			dataset->getObject<aprilui::TreeView*>("tree_view")->deleteItem(indices);
+		case april::AK_PRIOR:
+			gridView = dataset->getObject<aprilui::GridView*>("grid_view");
+			gridViewRow = gridView->createRow(hrand(gridView->getRowCount() + 1), april::generateName("row "));
+			break;
+		case april::AK_NEXT:
+			gridView = dataset->getObject<aprilui::GridView*>("grid_view");
+			gridView->deleteRow(hrand(gridView->getRowCount()));
+			gridView->deleteRow(hmax(gridView->getRowCount() - 2, 0));
 			break;
 		case april::AK_D:
 			aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
