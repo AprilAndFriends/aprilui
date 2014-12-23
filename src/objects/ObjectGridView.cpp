@@ -15,6 +15,7 @@
 #include "ObjectGridView.h"
 #include "ObjectGridViewCell.h"
 #include "ObjectGridViewRow.h"
+#include "ObjectGridViewRowTemplate.h"
 #include "ObjectScrollArea.h"
 #include "ObjectScrollBarV.h"
 
@@ -105,26 +106,31 @@ namespace aprilui
 
 	int GridView::getItemCount()
 	{
-		return this->items.size();
+		return this->cells.size();
 	}
 
 	void GridView::_updateDisplay()
 	{
-		for_iter (i, 0, this->items.size())
+		for_iter (i, 0, this->cells.size())
 		{
 			this->_updateItem(i);
 		}
 		this->_updateScrollArea();
 	}
 
-	void GridView::_updateItem(int index)
+	void GridView::_updateRow(int index)
 	{
 		if (is_between_ie(index, 0, this->items.size()))
 		{
 			this->items[index]->setY(index * (this->itemHeight + this->spacingHeight));
 			this->items[index]->setHeight(this->itemHeight);
-			// TODO
-			/*
+		}
+	}
+
+	void GridView::_updateItem(int index)
+	{
+		if (is_between_ie(index, 0, this->cells.size()))
+		{
 			if (this->selectedIndex != index)
 			{
 				this->cells[index]->_backColor = (index % 2 == 0 ? this->evenColor : this->oddColor);
@@ -137,7 +143,6 @@ namespace aprilui
 				this->cells[index]->_hoverColor = this->selectedHoverColor;
 				this->cells[index]->_pushedColor = this->selectedPushedColor;
 			}
-			*/
 		}
 	}
 
