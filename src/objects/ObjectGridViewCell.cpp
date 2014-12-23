@@ -30,7 +30,7 @@ namespace aprilui
 	GridViewCell::GridViewCell(const GridViewCell& other) : Container(other)
 	{
 		this->_gridView = NULL;
-		this->selectable = true;
+		this->selectable = other.selectable;
 	}
 
 	GridViewCell::~GridViewCell()
@@ -103,6 +103,15 @@ namespace aprilui
 			}
 		}
 		Container::_draw();
+	}
+
+	aprilui::Object* GridViewCell::_findHoverObject()
+	{
+		if (this->selectable)
+		{
+			return (this->isCursorInside() ? this : NULL);
+		}
+		return ButtonBase::_findHoverObject();
 	}
 
 	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode)
