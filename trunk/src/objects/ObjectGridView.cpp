@@ -78,7 +78,7 @@ namespace aprilui
 
 	GridViewCell* GridView::getSelected()
 	{
-		return (is_between_ie(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
+		return (is_between_ie(this->selectedIndex, 0, this->cells.size()) ? this->cells[this->selectedIndex] : NULL);
 	}
 
 	int GridView::getRowCount()
@@ -86,9 +86,14 @@ namespace aprilui
 		return this->rows.size();
 	}
 
+	int GridView::getCellCount()
+	{
+		return this->cells.size();
+	}
+
 	int GridView::getItemCount()
 	{
-		return this->items.size();
+		return this->cells.size();
 	}
 
 	void GridView::_updateDisplay()
@@ -116,17 +121,17 @@ namespace aprilui
 
 	void GridView::_updateItem(int index)
 	{
-		if (is_between_ie(index, 0, this->items.size()))
+		if (is_between_ie(index, 0, this->cells.size()))
 		{
 			if (this->selectedIndex != index)
 			{
-				this->items[index]->_hoverColor = this->hoverColor;
-				this->items[index]->_pushedColor = this->pushedColor;
+				this->cells[index]->_hoverColor = this->hoverColor;
+				this->cells[index]->_pushedColor = this->pushedColor;
 			}
 			else
 			{
-				this->items[index]->_hoverColor = this->selectedHoverColor;
-				this->items[index]->_pushedColor = this->selectedPushedColor;
+				this->cells[index]->_hoverColor = this->selectedHoverColor;
+				this->cells[index]->_pushedColor = this->selectedPushedColor;
 			}
 		}
 	}
@@ -161,12 +166,12 @@ namespace aprilui
 		this->rows -= row;
 		int rowsCount = this->rows.size();
 		this->rows.insert_at(index, row);
-		int itemsCount = this->rowTemplate->_gridViewCells.size();
-		// reordering items/cells
-		this->items = this->items(0, index * itemsCount) + this->items(rowsCount * itemsCount, itemsCount) + this->items(index * itemsCount, (rowsCount - index) * itemsCount);
+		int cellsCount = this->rowTemplate->_gridViewCells.size();
+		// reordering cells/cells
+		this->cells = this->cells(0, index * cellsCount) + this->cells(rowsCount * cellsCount, cellsCount) + this->cells(index * cellsCount, (rowsCount - index) * cellsCount);
 		if (selected != NULL)
 		{
-			this->setSelectedIndex(this->items.index_of(selected));
+			this->setSelectedIndex(this->cells.index_of(selected));
 		}
 		this->_updateDisplay();
 		return row;
@@ -183,7 +188,7 @@ namespace aprilui
 		this->setSelectedIndex(-1);
 		if (selected != NULL && selected->_gridViewRow == this->rows[index])
 		{
-			int cellIndex = this->items.index_of(selected);
+			int cellIndex = this->cells.index_of(selected);
 			int columnCount = this->rowTemplate->_gridViewCells.size();
 			if (this->rows.size() == 1)
 			{
@@ -191,19 +196,19 @@ namespace aprilui
 			}
 			else if (index == this->rows.size() - 1)
 			{
-				selected = this->items[hclamp(cellIndex - columnCount, 0, this->items.size() - 2)];
+				selected = this->cells[hclamp(cellIndex - columnCount, 0, this->cells.size() - 2)];
 			}
 			else
 			{
-				selected = this->items[hclamp(cellIndex + columnCount, 0, this->items.size() - 2)];
+				selected = this->cells[hclamp(cellIndex + columnCount, 0, this->cells.size() - 2)];
 			}
 		}
 		GridViewRow* row = this->rows.remove_at(index);
-		this->items -= row->_gridViewCells;
+		this->cells -= row->_gridViewCells;
 		this->dataset->destroyObjects(row);
 		if (selected != NULL)
 		{
-			this->setSelectedIndex(this->items.index_of(selected));
+			this->setSelectedIndex(this->cells.index_of(selected));
 		}
 		this->_updateDisplay();
 		return true;
@@ -216,7 +221,7 @@ namespace aprilui
 
 	GridViewCell* GridView::getItemAt(int index)
 	{
-		return (is_between_ie(index, 0, this->items.size()) ? this->items[index] : NULL);
+		return (is_between_ie(index, 0, this->cells.size()) ? this->cells[index] : NULL);
 	}
 
 	hstr GridView::getProperty(chstr name)

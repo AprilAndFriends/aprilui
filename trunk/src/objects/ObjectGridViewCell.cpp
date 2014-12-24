@@ -23,14 +23,14 @@ namespace aprilui
 
 	GridViewCell::GridViewCell(chstr name) : Container(name)
 	{
-		this->_gridView = NULL;
 		this->selectable = true;
+		this->_gridView = NULL;
 	}
 
 	GridViewCell::GridViewCell(const GridViewCell& other) : Container(other)
 	{
-		this->_gridView = NULL;
 		this->selectable = other.selectable;
+		this->_gridView = NULL;
 	}
 
 	GridViewCell::~GridViewCell()
@@ -78,8 +78,8 @@ namespace aprilui
 
 	bool GridViewCell::isSelected()
 	{
-		return (this->_gridView != NULL && is_between_ie(this->_gridView->selectedIndex, 0, this->_gridView->items.size()) &&
-			this->_gridView->items[this->_gridView->selectedIndex] == this);
+		return (this->_gridView != NULL && is_between_ie(this->_gridView->selectedIndex, 0, this->_gridView->cells.size()) &&
+			this->_gridView->cells[this->_gridView->selectedIndex] == this);
 	}
 
 	void GridViewCell::update(float timeDelta)
@@ -158,8 +158,8 @@ namespace aprilui
 				this->setAnchors(true, true, true, false);
 				if (dynamic_cast<GridViewRowTemplate*>(gridViewRow) == NULL)
 				{
-					int cellsCount = this->_gridView->items.size();
-					this->_gridView->items += this;
+					int cellsCount = this->_gridView->cells.size();
+					this->_gridView->cells += this;
 					this->_gridView->_updateItem(cellsCount);
 				}
 			}
@@ -270,14 +270,13 @@ namespace aprilui
 
 	hstr GridViewCell::getProperty(chstr name)
 	{
-		// TODO - implement use_template parameter
 		if (name == "selectable")	return this->isSelectable();
 		return Container::getProperty(name);
 	}
 
 	bool GridViewCell::setProperty(chstr name, chstr value)
 	{
-		if (name == "selectable")	this->setSelectable(value);
+		if		(name == "selectable")		this->setSelectable(value);
 		else return Container::setProperty(name, value);
 		return true;
 	}

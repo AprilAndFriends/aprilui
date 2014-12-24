@@ -17,7 +17,6 @@
 
 namespace aprilui
 {
-	// TODO - implement use_template parameter
 	GridViewRow::GridViewRow(chstr name) : Container(name)
 	{
 		this->_gridView = NULL;
