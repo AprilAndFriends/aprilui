@@ -45,9 +45,10 @@ namespace aprilui
 		void setSpacingHeight(float value);
 		HL_DEFINE_GET(GridViewRowTemplate*, rowTemplate, RowTemplate);
 		HL_DEFINE_GET(harray<GridViewRow*>, rows, Rows);
-		HL_DEFINE_GET(harray<GridViewCell*>, items, Items);
+		HL_DEFINE_GET(harray<GridViewCell*>, cells, Cells);
 		GridViewCell* getSelected();
 		int getRowCount();
+		int getCellCount();
 		int getItemCount();
 
 		harray<PropertyDescription> getPropertyDescriptions();
@@ -65,7 +66,7 @@ namespace aprilui
 		float spacingHeight;
 		GridViewRowTemplate* rowTemplate;
 		harray<GridViewRow*> rows;
-		harray<GridViewCell*> items;
+		harray<GridViewCell*> cells;
 
 		void _updateDisplay();
 		void _updateRow(int index);
