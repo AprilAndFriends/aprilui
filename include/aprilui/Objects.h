@@ -48,4 +48,7 @@
 #include "ObjectTextImageButton.h"
 #include "ObjectToggleButton.h"
 
+// DEPRECATED
+#include "ObjectColoredQuad.h"
+
 #endif
