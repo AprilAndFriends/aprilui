@@ -24,10 +24,9 @@ namespace aprilui
 {
 	harray<PropertyDescription> Image::_propertyDescriptions;
 
-	Image::Image(Texture* texture, chstr name, grect source)
+	Image::Image(Texture* texture, chstr name, grect source) : BaseImage(name)
 	{
 		this->texture = texture;
-		this->name = name;
 		this->srcRect = source;
 		this->color = april::Color::White;
 		this->blendMode = april::BM_DEFAULT;
@@ -36,16 +35,12 @@ namespace aprilui
 		this->rotated = false;
 		this->invertX = false;
 		this->invertY = false;
-		this->_textureCoordinatesLoaded = false;
-		this->dataset = NULL;
 	}
 
-	Image::Image(Image& other, chstr name)
+	Image::Image(Image& other, chstr name) : BaseImage(other, name)
 	{
 		this->texture = other.texture;
-		this->name = name;
 		this->srcRect = other.srcRect;
-		this->clipRect = other.clipRect;
 		this->color = other.color;
 		this->blendMode = other.blendMode;
 		this->colorMode = other.colorMode;
@@ -53,17 +48,10 @@ namespace aprilui
 		this->rotated = other.rotated;
 		this->invertX = other.invertX;
 		this->invertY = other.invertY;
-		this->_textureCoordinatesLoaded = false;
-		this->dataset = NULL;
 	}
 	
 	Image::~Image()
 	{
-	}
-	
-	hstr Image::getFullName()
-	{
-		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 	
 	harray<PropertyDescription> Image::getPropertyDescriptions()
@@ -77,24 +65,14 @@ namespace aprilui
 			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("clip_rect", PropertyDescription::GRECT);
-			Image::_propertyDescriptions += PropertyDescription("clip_position", PropertyDescription::GVEC2);
-			Image::_propertyDescriptions += PropertyDescription("clip_size", PropertyDescription::GVEC2);
-			Image::_propertyDescriptions += PropertyDescription("clip_x", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("clip_y", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("clip_w", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("clip_h", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::HEXCOLOR);
 			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::BOOL);
-			Image::_propertyDescriptions += PropertyDescription("invert_x", PropertyDescription::BOOL);
-			Image::_propertyDescriptions += PropertyDescription("invert_y", PropertyDescription::BOOL);
 			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::ENUM);
 			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::ENUM);
 			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::STRING);
-			Image::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::STRING);
 		}
-		return Image::_propertyDescriptions;
+		return (Image::_propertyDescriptions + BaseImage::getPropertyDescriptions());
 	}
 
 	void Image::setSrcRect(grect value)
@@ -178,87 +156,6 @@ namespace aprilui
 		}
 	}
 
-	void Image::setClipRect(grect value)
-	{
-		if (this->clipRect != value)
-		{
-			this->clipRect = value;
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipX(float value)
-	{
-		if (this->clipRect.x != value)
-		{
-			this->clipRect.x = value;
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipY(float value)
-	{
-		if (this->clipRect.y != value)
-		{
-			this->clipRect.y = value;
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipWidth(float value)
-	{
-		if (this->clipRect.w != value)
-		{
-			this->clipRect.w = value;
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipHeight(float value)
-	{
-		if (this->clipRect.h != value)
-		{
-			this->clipRect.h = value;
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipPosition(gvec2 value)
-	{
-		if (this->clipRect.getPosition() != value)
-		{
-			this->clipRect.setPosition(value);
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipPosition(float x, float y)
-	{
-		if (this->clipRect.x != x || this->clipRect.y != y)
-		{
-			this->clipRect.setPosition(x, y);
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipSize(gvec2 value)
-	{
-		if (this->clipRect.getSize() != value)
-		{
-			this->clipRect.setSize(value);
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
-	void Image::setClipSize(float w, float h)
-	{
-		if (this->clipRect.w != w || this->clipRect.h != h)
-		{
-			this->clipRect.setSize(w, h);
-			this->_textureCoordinatesLoaded = false;
-		}
-	}
-
 	hstr Image::getProperty(chstr name)
 	{
 		if (name == "rect")					return april::grectToHstr(this->getSrcRect());
@@ -268,13 +165,6 @@ namespace aprilui
 		if (name == "y")					return this->getSrcRect().y;
 		if (name == "w")					return this->getSrcRect().w;
 		if (name == "h")					return this->getSrcRect().h;
-		if (name == "clip_rect")			return april::grectToHstr(this->getClipRect());
-		if (name == "clip_position")		return april::gvec2ToHstr(this->getClipRect().getPosition());
-		if (name == "clip_size")			return april::gvec2ToHstr(this->getClipRect().getSize());
-		if (name == "clip_x")				return this->getClipRect().x;
-		if (name == "clip_y")				return this->getClipRect().y;
-		if (name == "clip_w")				return this->getClipRect().w;
-		if (name == "clip_h")				return this->getClipRect().h;
 		if (name == "color")				return this->getColor().hex();
 		if (name == "rotated")				return this->isRotated();
 		if (name == "vertical")
@@ -314,7 +204,7 @@ namespace aprilui
 		{
 			return (this->dataset != NULL ? this->dataset->getName() : "");
 		}
-		return "";
+		return BaseImage::getProperty(name);
 	}
 	
 	bool Image::setProperty(chstr name, chstr value)
@@ -326,13 +216,6 @@ namespace aprilui
 		else if	(name == "y")					this->setSrcY(value);
 		else if	(name == "w")					this->setSrcWidth(value);
 		else if	(name == "h")					this->setSrcHeight(value);
-		else if (name == "clip_rect")			this->setClipRect(april::hstrToGrect(value));
-		else if (name == "clip_position")		this->clipRect.setPosition(april::hstrToGvec2(value));
-		else if (name == "clip_size")			this->clipRect.setSize(april::hstrToGvec2(value));
-		else if (name == "clip_x")				this->setClipX(value);
-		else if (name == "clip_y")				this->setClipY(value);
-		else if (name == "clip_w")				this->setClipWidth(value);
-		else if (name == "clip_h")				this->setClipHeight(value);
 		else if (name == "color")				this->setColor(value);
 		else if	(name == "rotated")				this->setRotated(value);
 		else if	(name == "vertical")
@@ -368,7 +251,7 @@ namespace aprilui
 			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.c_str(), name.c_str(), this->name.c_str());
 		}
 		else if	(name == "color_mode_factor")	this->setColorModeFactor(value);
-		else return false;
+		else return BaseImage::setProperty(name, value);
 		return true;
 	}
 

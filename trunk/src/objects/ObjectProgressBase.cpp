@@ -9,6 +9,7 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
+#include "BaseImage.h"
 #include "Dataset.h"
 #include "Image.h"
 #include "ObjectProgressBase.h"
@@ -37,13 +38,13 @@ namespace aprilui
 	{
 	}
 
-	void ProgressBase::setProgressImage(Image* image)
+	void ProgressBase::setProgressImage(BaseImage* image)
 	{
 		this->progressImage = image;
 		this->progressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ProgressBase::setMaskImage(Image* image)
+	void ProgressBase::setMaskImage(BaseImage* image)
 	{
 		this->maskImage = image;
 		this->maskImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
@@ -59,9 +60,9 @@ namespace aprilui
 		this->setMaskImage(this->getDataset()->getImage(name));
 	}
 
-	harray<Image*> ProgressBase::getUsedImages()
+	harray<BaseImage*> ProgressBase::getUsedImages()
 	{
-		harray<Image*> images;
+		harray<BaseImage*> images;
 		if (this->progressImage != NULL)
 		{
 			images += this->progressImage;
@@ -70,7 +71,7 @@ namespace aprilui
 		{
 			images += this->maskImage;
 		}
-		return images;
+		return images.removed_duplicates();
 	}
 
 	harray<PropertyDescription> ProgressBase::getPropertyDescriptions()

@@ -47,8 +47,8 @@ namespace aprilui
 		
 		HL_DEFINE_GETSET(Direction, direction, Direction);
 		Dataset* getDataset();
-		Image* getImage();
-		void setImage(Image* image);
+		BaseImage* getImage();
+		void setImage(BaseImage* image);
 		hstr getImageName();
 		void setImageByName(chstr name);
 

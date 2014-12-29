@@ -22,7 +22,7 @@
 namespace aprilui
 {
 	class Dataset;
-	class Image;
+	class BaseImage;
 
 	class apriluiExport ProgressBase
 	{
@@ -31,20 +31,20 @@ namespace aprilui
 		ProgressBase();
 		virtual ~ProgressBase();
 
-		HL_DEFINE_GET(Image*, progressImage, ProgressImage);
-		HL_DEFINE_GET(Image*, maskImage, MaskImage);
+		HL_DEFINE_GET(BaseImage*, progressImage, ProgressImage);
+		HL_DEFINE_GET(BaseImage*, maskImage, MaskImage);
 		HL_DEFINE_GET(hstr, progressImageName, ProgressImageName);
 		HL_DEFINE_GET(hstr, maskImageName, MaskImageName);
 		HL_DEFINE_GETSET(float, progress, Progress);
-		void setProgressImage(Image* image);
-		void setMaskImage(Image* image);
+		void setProgressImage(BaseImage* image);
+		void setMaskImage(BaseImage* image);
 		void setProgressImageByName(chstr name);
 		void setMaskImageByName(chstr name);
-		harray<Image*> getUsedImages();
+		harray<BaseImage*> getUsedImages();
 
 		virtual Dataset* getDataset() = 0;
-		virtual Image* getImage() = 0;
-		virtual void setImage(Image* image) = 0;
+		virtual BaseImage* getImage() = 0;
+		virtual void setImage(BaseImage* image) = 0;
 		virtual hstr getImageName() = 0;
 		virtual void setImageByName(chstr name) = 0;
 
@@ -59,9 +59,9 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		Image* progressImage;
+		BaseImage* progressImage;
 		hstr progressImageName;
-		Image* maskImage;
+		BaseImage* maskImage;
 		hstr maskImageName;
 		float progress;
 		

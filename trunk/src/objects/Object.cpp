@@ -20,6 +20,7 @@
 #include "Animators.h"
 #include "aprilui.h"
 #include "apriluiUtil.h"
+#include "BaseImage.h"
 #include "CallbackEvent.h"
 #include "Dataset.h"
 #include "Event.h"
@@ -1402,10 +1403,9 @@ namespace aprilui
 		return angle;
 	}
 	
-	harray<Image*> Object::getUsedImages()
+	harray<BaseImage*> Object::getUsedImages()
 	{
-		harray<Image*> array;
-		return array;
+		return harray<BaseImage*>();
 	}
 	
 	grect Object::_getDrawRect()

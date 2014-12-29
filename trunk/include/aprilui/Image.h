@@ -27,14 +27,11 @@
 
 namespace aprilui
 {
-	class Dataset;
 	class Texture;
 	
 	class apriluiExport Image : public BaseImage
 	{
 	public:
-		friend class Dataset;
-
 		Image(Texture* texture, chstr name, grect source);
 		Image(Image& other, chstr name);
 		~Image();
@@ -42,9 +39,7 @@ namespace aprilui
 		virtual void draw(grect rect, april::Color color = april::Color::White);
 		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White);
 		
-		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(Texture*, texture, Texture);
-		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(grect, srcRect, SrcRect);
 		void setSrcRect(grect value);
 		HL_DEFINE_GET(float, srcRect.x, SrcX);
@@ -61,22 +56,6 @@ namespace aprilui
 		inline gvec2 getSrcSize() { return this->srcRect.getSize(); }
 		void setSrcSize(gvec2 value);
 		void setSrcSize(float w, float h);
-		HL_DEFINE_GET(grect, clipRect, ClipRect);
-		void setClipRect(grect value);
-		HL_DEFINE_GET(float, clipRect.x, ClipX);
-		void setClipX(float value);
-		HL_DEFINE_GET(float, clipRect.y, ClipY);
-		void setClipY(float value);
-		HL_DEFINE_GET(float, clipRect.w, ClipWidth);
-		void setClipWidth(float value);
-		HL_DEFINE_GET(float, clipRect.h, ClipHeight);
-		void setClipHeight(float value);
-		inline gvec2 getClipPosition() { return this->clipRect.getPosition(); }
-		void setClipPosition(gvec2 value);
-		void setClipPosition(float x, float y);
-		inline gvec2 getClipSize() { return this->clipRect.getSize(); }
-		void setClipSize(gvec2 value);
-		void setClipSize(float w, float h);
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		HL_DEFINE_ISSET(rotated, Rotated);
 		HL_DEFINE_ISSET(invertX, InvertX);
@@ -84,13 +63,12 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
-		hstr getFullName();
 		inline const april::TexturedVertex* getVertices() const { return this->vertices; } // use with care!
 
-		virtual harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions();
 
-		virtual hstr getProperty(chstr name);
-		virtual bool setProperty(chstr name, chstr value);
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
 
 		void tryLoadTextureCoordinates();
 
@@ -98,12 +76,8 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE inline void setVertical(bool value) { this->rotated = value; }
 		
 	protected:
-		Dataset* dataset;
 		Texture* texture;
-		hstr name;
-		hstr imageName;
 		grect srcRect;
-		grect clipRect;
 		april::Color color;
 		april::BlendMode blendMode;
 		april::ColorMode colorMode;
@@ -113,8 +87,6 @@ namespace aprilui
 		bool invertY;
 		april::TexturedVertex vertices[4];
 
-		bool _textureCoordinatesLoaded;
-		
 		grect _makeClippedSrcRect();
 		
 	private:

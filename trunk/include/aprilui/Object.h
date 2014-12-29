@@ -30,7 +30,7 @@
 namespace aprilui
 {
 	class Dataset;
-	class Image;
+	class BaseImage;
 	class Event;
 	class EventArgs;
 	class Object;
@@ -117,7 +117,7 @@ namespace aprilui
 		bool isCursorInside();
 		Object* getChildUnderCursor();
 
-		virtual harray<Image*> getUsedImages();
+		virtual harray<BaseImage*> getUsedImages();
 		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 
 		void addChild(BaseObject* object);

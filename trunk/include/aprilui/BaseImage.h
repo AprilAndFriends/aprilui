@@ -17,23 +17,71 @@
 #include <april/Color.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
+#include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "PropertyDescription.h"
 
 #define APRILUI_IMAGE_NAME_NULL "null"
 
 namespace aprilui
 {
-	// TODO
+	class Dataset;
+
 	class apriluiExport BaseImage
 	{
 	public:
-		BaseImage();
+		friend class Dataset;
+
+		BaseImage(chstr name);
+		BaseImage(BaseImage& other, chstr name);
 		virtual ~BaseImage();
 		
+		HL_DEFINE_GET(hstr, name, Name);
+		HL_DEFINE_GET(Dataset*, dataset, Dataset);
+		HL_DEFINE_GET(grect, clipRect, ClipRect);
+		void setClipRect(grect value);
+		HL_DEFINE_GET(float, clipRect.x, ClipX);
+		void setClipX(float value);
+		HL_DEFINE_GET(float, clipRect.y, ClipY);
+		void setClipY(float value);
+		HL_DEFINE_GET(float, clipRect.w, ClipWidth);
+		void setClipWidth(float value);
+		HL_DEFINE_GET(float, clipRect.h, ClipHeight);
+		void setClipHeight(float value);
+		inline gvec2 getClipPosition() { return this->clipRect.getPosition(); }
+		void setClipPosition(gvec2 value);
+		void setClipPosition(float x, float y);
+		inline gvec2 getClipSize() { return this->clipRect.getSize(); }
+		void setClipSize(gvec2 value);
+		void setClipSize(float w, float h);
+		hstr getFullName();
+
+		virtual gvec2 getSrcSize() = 0;
+		virtual void setSrcSize(gvec2 value) = 0;
+		virtual float getSrcWidth() = 0;
+		virtual void setSrcWidth(float value) = 0;
+		virtual float getSrcHeight() = 0;
+		virtual void setSrcHeight(float value) = 0;
+
+		virtual harray<PropertyDescription> getPropertyDescriptions();
+
+		virtual hstr getProperty(chstr name);
+		virtual bool setProperty(chstr name, chstr value);
+
 		virtual void draw(grect rect, april::Color color = april::Color::White) = 0;
 		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White) = 0;
-		
+
+	protected:
+		hstr name;
+		Dataset* dataset;
+		grect clipRect;
+
+		bool _textureCoordinatesLoaded;
+
+	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 
 }

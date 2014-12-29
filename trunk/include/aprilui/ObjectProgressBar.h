@@ -17,12 +17,13 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "Image.h"
 #include "ObjectImageBox.h"
 #include "ObjectProgressBase.h"
 
 namespace aprilui
 {
+	class BaseImage;
+
 	class apriluiExport ProgressBar : public ImageBox, public ProgressBase
 	{
 		APRILUI_CLONEABLE(ProgressBar);
@@ -45,11 +46,11 @@ namespace aprilui
 		HL_DEFINE_GETSET(Direction, direction, Direction);
 		HL_DEFINE_ISSET(interactable, Interactable);
 		Dataset* getDataset();
-		Image* getImage();
-		void setImage(Image* image);
+		BaseImage* getImage();
+		void setImage(BaseImage* image);
 		hstr getImageName();
 		void setImageByName(chstr name);
-		harray<Image*> getUsedImages();
+		harray<BaseImage*> getUsedImages();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 

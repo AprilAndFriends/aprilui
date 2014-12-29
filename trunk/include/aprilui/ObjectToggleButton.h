@@ -32,18 +32,18 @@ namespace aprilui
 		static Object* createInstance(chstr name);
 
 		HL_DEFINE_ISSET(toggled, Toggled);
-		HL_DEFINE_GET(Image*, toggledNormalImage, ToggledNormalImage);
-		HL_DEFINE_GET(Image*, toggledHoverImage, ToggledHoverImage);
-		HL_DEFINE_GET(Image*, toggledPushedImage, ToggledPushedImage);
-		HL_DEFINE_GET(Image*, toggledDisabledImage, ToggledDisabledImage);
+		HL_DEFINE_GET(BaseImage*, toggledNormalImage, ToggledNormalImage);
+		HL_DEFINE_GET(BaseImage*, toggledHoverImage, ToggledHoverImage);
+		HL_DEFINE_GET(BaseImage*, toggledPushedImage, ToggledPushedImage);
+		HL_DEFINE_GET(BaseImage*, toggledDisabledImage, ToggledDisabledImage);
 		HL_DEFINE_GET(hstr, toggledNormalImageName, ToggledNormalImageName);
 		HL_DEFINE_GET(hstr, toggledHoverImageName, ToggledHoverImageName);
 		HL_DEFINE_GET(hstr, toggledPushedImageName, ToggledPushedImageName);
 		HL_DEFINE_GET(hstr, toggledDisabledImageName, ToggledDisabledImageName);
-		void setToggledNormalImage(Image* image);
-		void setToggledHoverImage(Image* image);
-		void setToggledPushedImage(Image* image);
-		void setToggledDisabledImage(Image* image);
+		void setToggledNormalImage(BaseImage* image);
+		void setToggledHoverImage(BaseImage* image);
+		void setToggledPushedImage(BaseImage* image);
+		void setToggledDisabledImage(BaseImage* image);
 		void setToggledNormalImageByName(chstr name);
 		void setToggledHoverImageByName(chstr name);
 		void setToggledPushedImageByName(chstr name);
@@ -57,7 +57,7 @@ namespace aprilui
 		bool trySetToggledPushedImageByName(chstr name);
 		bool trySetToggledDisabledImageByName(chstr name);
 		
-		harray<Image*> getUsedImages();
+		harray<BaseImage*> getUsedImages();
 
 		void update(float timeDelta);
 
@@ -70,10 +70,10 @@ namespace aprilui
 		
 	protected:
 		bool toggled;
-		Image* toggledNormalImage;
-		Image* toggledHoverImage;
-		Image* toggledPushedImage;
-		Image* toggledDisabledImage;
+		BaseImage* toggledNormalImage;
+		BaseImage* toggledHoverImage;
+		BaseImage* toggledPushedImage;
+		BaseImage* toggledDisabledImage;
 		hstr toggledNormalImageName;
 		hstr toggledHoverImageName;
 		hstr toggledPushedImageName;

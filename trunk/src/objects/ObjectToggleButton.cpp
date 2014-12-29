@@ -10,19 +10,19 @@
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
 
+#include "BaseImage.h"
 #include "Dataset.h"
 #include "Event.h"
 #include "EventArgs.h"
-#include "Image.h"
 #include "ObjectToggleButton.h"
 
 namespace aprilui
 {
 	// small optimization
-	static Image* tempNormalImage = NULL;
-	static Image* tempHoverImage = NULL;
-	static Image* tempPushedImage = NULL;
-	static Image* tempDisabledImage = NULL;
+	static BaseImage* tempNormalImage = NULL;
+	static BaseImage* tempHoverImage = NULL;
+	static BaseImage* tempPushedImage = NULL;
+	static BaseImage* tempDisabledImage = NULL;
 
 	harray<PropertyDescription> ToggleButton::_propertyDescriptions;
 
@@ -57,25 +57,25 @@ namespace aprilui
 		return new ToggleButton(name);
 	}
 
-	void ToggleButton::setToggledNormalImage(Image* image)
+	void ToggleButton::setToggledNormalImage(BaseImage* image)
 	{
 		this->toggledNormalImage = image;
 		this->toggledNormalImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ToggleButton::setToggledHoverImage(Image* image)
+	void ToggleButton::setToggledHoverImage(BaseImage* image)
 	{
 		this->toggledHoverImage = image;
 		this->toggledHoverImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ToggleButton::setToggledPushedImage(Image* image)
+	void ToggleButton::setToggledPushedImage(BaseImage* image)
 	{
 		this->toggledPushedImage = image;
 		this->toggledPushedImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ToggleButton::setToggledDisabledImage(Image* image)
+	void ToggleButton::setToggledDisabledImage(BaseImage* image)
 	{
 		this->toggledDisabledImage = image;
 		this->toggledDisabledImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
@@ -158,9 +158,9 @@ namespace aprilui
 		return false;
 	}
 	
-	harray<Image*> ToggleButton::getUsedImages()
+	harray<BaseImage*> ToggleButton::getUsedImages()
 	{
-		harray<Image*> images = ImageButton::getUsedImages();
+		harray<BaseImage*> images = ImageButton::getUsedImages();
 		if (this->toggledNormalImage != NULL)
 		{
 			images += this->toggledNormalImage;
@@ -177,7 +177,7 @@ namespace aprilui
 		{
 			images += this->toggledDisabledImage;
 		}
-		return images;
+		return images.removed_duplicates();
 	}
 
 	void ToggleButton::toggle()

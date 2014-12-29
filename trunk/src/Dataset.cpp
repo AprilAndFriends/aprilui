@@ -26,6 +26,7 @@
 #include "Animators.h"
 #include "aprilui.h"
 #include "apriluiUtil.h"
+#include "BaseImage.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Images.h"
@@ -208,7 +209,7 @@ namespace aprilui
 		delete texture;
 	}
 	
-	void Dataset::_destroyImage(Image* image)
+	void Dataset::_destroyImage(BaseImage* image)
 	{
 		hstr name = image->getName();
 		if (!this->images.has_key(name))
@@ -321,43 +322,58 @@ namespace aprilui
 			{
 				throw ResourceExistsException(filename, "Texture", this);
 			}
-			Image* img = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
-			this->images[textureName] = img;
-			img->dataset = this;
+			BaseImage* image = new Image(texture, filename, grect(0.0f, 0.0f, (float)texture->getWidth(), (float)texture->getHeight()));
+			this->images[textureName] = image;
+			image->dataset = this;
 		}
 		else
 		{
-			Image* image = NULL;
+			BaseImage* image = NULL;
 			hstr name;
 			grect rect;
-			gvec2 tile;
 			foreach_xmlnode (child, node)
 			{
-				if (*child == "Image")
+				if (*child == "Image" && (child->pexists("tile") || child->pexists("tile_w") || child->pexists("tile_h"))) // DEPRECATED (this entire block)
 				{
+					hlog::warn(aprilui::logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (this->images.has_key(name))
 					{
 						throw ResourceExistsException(name, "Image", this);
 					}
 					aprilui::readRectNode(rect, child);
-					tile.set(1.0f, 1.0f);
+					gvec2 tile;
 					if (child->pexists("tile"))
 					{
 						tile = april::hstrToGvec2(child->pstr("tile"));
 					}
 					else
 					{
-						tile.set(child->pfloat("tile_w", 1.0f), child->pfloat("tile_h", 1.0f));
+						tile.set(child->pfloat("tile_w", 0.0f), child->pfloat("tile_h", 0.0f));
 					}
-					if (tile.x != 1.0f || tile.y != 1.0f)
+					TileImage* tileImage = new TileImage(texture, name, rect);
+					image = tileImage;
+					if (tile.x < 0.0f)
 					{
-						//hlog::warn(aprilui::logTag, "Using 'tile', 'tile_w' and 'tile_h' is deprecated. Use 'TileImage' instead."); // DEPRECATED
-						image = new TileImage(texture, name, rect, tile.x, tile.y);
+						tileImage->setTileW(-tile.x);
 					}
-					else
+					else if (tile.x > 0.0f)
 					{
-						image = new Image(texture, name, rect);	
+						tileImage->setTileW(tile.x);
+						tileImage->setUseTileCount(true);
+					}
+					if (tile.y < 0.0f)
+					{
+						tileImage->setTileH(-tile.y);
+					}
+					else if (tile.y > 0.0f)
+					{
+						tileImage->setTileH(tile.y);
+						tileImage->setUseTileCount(true);
+					}
+					if (hsgn(tile.x) != hsgn(tile.y))
+					{
+						hlog::warn(aprilui::logTag, "'tile_w' and 'tile_h' have to be either both positive or negative!");
 					}
 					this->images[name] = image;
 					image->dataset = this;
@@ -371,7 +387,7 @@ namespace aprilui
 						image->setProperty(name, prop->value());
 					}
 				}
-				else if (*child == "SkinImage")
+				else
 				{
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (this->images.has_key(name))
@@ -379,10 +395,26 @@ namespace aprilui
 						throw ResourceExistsException(name, "Image", this);
 					}
 					aprilui::readRectNode(rect, child);
-					image = new SkinImage(texture, name, rect);
+					if (*child == "Image")
+					{
+						image = new Image(texture, name, rect);
+					}
+					else if (*child == "TileImage")
+					{
+						image = new TileImage(texture, name, rect);
+					}
+					else if (*child == "SkinImage")
+					{
+						image = new SkinImage(texture, name, rect);
+					}
+					else
+					{
+						throw hlxml::XMLUnknownClassException(child->getValue(), child);
+						continue;
+					}
 					this->images[name] = image;
 					image->dataset = this;
-					foreach_xmlproperty(prop, child)
+					foreach_xmlproperty (prop, child)
 					{
 						name = prop->name();
 						if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
@@ -413,7 +445,7 @@ namespace aprilui
 		{
 			size.set(node->pfloat("w"), node->pfloat("h"));
 		}
-		CompositeImage* image = new CompositeImage(name, size.x, size.y);
+		CompositeImage* image = new CompositeImage(name, size);
 		grect rect;
 		foreach_xmlnode (child, node)
 		{
@@ -809,7 +841,7 @@ namespace aprilui
 			delete it->second;
 		}
 		this->objects.clear();
-		foreach_m (Image*, it, this->images)
+		foreach_m (BaseImage*, it, this->images)
 		{
 			delete it->second;
 		}
@@ -897,7 +929,7 @@ namespace aprilui
 		root->dataset = NULL;
 	}
 	
-	void Dataset::registerImage(Image* image)
+	void Dataset::registerImage(BaseImage* image)
 	{
 		hstr name = image->getName();
 		if (this->images.has_key(name))
@@ -908,7 +940,7 @@ namespace aprilui
 		image->dataset = this;
 	}
 	
-	void Dataset::unregisterImage(Image* image)
+	void Dataset::unregisterImage(BaseImage* image)
 	{
 		hstr name = image->getName();
 		if (!this->images.has_key(name))
@@ -1090,9 +1122,9 @@ namespace aprilui
 		return this->textures[name];
 	}
 	
-	Image* Dataset::getImage(chstr name)
+	BaseImage* Dataset::getImage(chstr name)
 	{
-		Image* image = NULL;
+		BaseImage* image = NULL;
 		if (name == APRILUI_IMAGE_NAME_NULL)
 		{
 			return this->nullImage;

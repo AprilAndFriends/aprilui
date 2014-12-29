@@ -31,8 +31,7 @@ namespace hlxml
 
 namespace aprilui
 {
-	#define REGISTER_CALLBACK(dataDict, fn) dataDict->registerCallback(#fn, fn)
-	
+	class BaseImage;
 	class BaseObject;
 	class Event;
 	class EventArgs;
@@ -57,7 +56,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(Object*, root, Root);
 		inline hmap<hstr, Object*>& getObjects() { return this->objects; }
 		inline hmap<hstr, Animator*>& getAnimators() { return this->animators; }
-		inline hmap<hstr, Image*>& getImages() { return this->images; }
+		inline hmap<hstr, BaseImage*>& getImages() { return this->images; }
 		inline hmap<hstr, Texture*>& getTextures() { return this->textures; }
 		inline hmap<hstr, hstr>& getTexts() { return this->texts; }
 		hmap<hstr, BaseObject*> getAllObjects();
@@ -69,8 +68,8 @@ namespace aprilui
 		void unload();
 		void registerObjects(BaseObject* root);
 		void unregisterObjects(BaseObject* root);
-		void registerImage(Image* image);
-		void unregisterImage(Image* image);
+		void registerImage(BaseImage* image);
+		void unregisterImage(BaseImage* image);
 		void registerTexture(Texture* texture);
 		void unregisterTexture(Texture* texture);
 		
@@ -103,10 +102,10 @@ namespace aprilui
 		virtual void update(float timeDelta);
 		void draw();
 		
-		void _destroyTexture(chstr tex);
-		void _destroyImage(chstr img);
-		void _destroyTexture(Texture* tex);
-		void _destroyImage(Image* img);
+		void _destroyTexture(chstr name);
+		void _destroyImage(chstr name);
+		void _destroyTexture(Texture* texture);
+		void _destroyImage(BaseImage* image);
 		
 		void destroyObjects(chstr rootName);
 		void destroyObjects(BaseObject* root);
@@ -124,7 +123,7 @@ namespace aprilui
 		bool onButtonUp(april::Button buttonCode);
 		
 		virtual Texture* getTexture(chstr name);
-		virtual Image* getImage(chstr name);
+		virtual BaseImage* getImage(chstr name);
 		virtual hstr getTextEntry(chstr textKey);
 		virtual bool hasTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
@@ -227,7 +226,7 @@ namespace aprilui
 		hmap<hstr, Object*> objects;
 		hmap<hstr, Animator*> animators;
 		hmap<hstr, Texture*> textures;
-		hmap<hstr, Image*> images;
+		hmap<hstr, BaseImage*> images;
 		hmap<hstr, hstr> texts;
 		NullImage* nullImage;
 		harray<QueuedCallback> callbackQueue;
