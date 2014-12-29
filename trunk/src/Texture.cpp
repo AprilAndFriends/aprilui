@@ -184,7 +184,7 @@ namespace aprilui
 			this->texture = april::rendersys->createTextureFromResource(filename, april::Texture::TYPE_IMMUTABLE, this->loadMode);
 			if (this->texture == NULL)
 			{
-				throw file_could_not_open(filename);
+				throw ResourceFileCouldNotOpenException(filename);
 			}
 			this->filename = this->texture->getFilename();
 			this->texture->setFilter(this->filter);
