@@ -86,7 +86,10 @@
     <ClCompile Include="..\..\src\objects\ObjectCallbackObject.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\objects\ObjectColoredQuad.cpp">
+    <ClCompile Include="..\..\src\objects\ObjectFilledRect.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectRect.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\objects\ObjectContainer.cpp">
@@ -314,6 +317,12 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectColoredQuad.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectFilledRect.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectRect.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectContainer.h">

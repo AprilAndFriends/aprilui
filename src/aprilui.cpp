@@ -77,9 +77,9 @@ namespace aprilui
 		ButtonBase::setAllowedButtons(allowedButtons);
 
 		APRILUI_REGISTER_OBJECT_TYPE(CallbackObject);
-		APRILUI_REGISTER_OBJECT_TYPE(ColoredQuad);
 		APRILUI_REGISTER_OBJECT_TYPE(Container);
 		APRILUI_REGISTER_OBJECT_TYPE(EditBox);
+		APRILUI_REGISTER_OBJECT_TYPE(FilledRect);
 		APRILUI_REGISTER_OBJECT_TYPE(GridView);
 		APRILUI_REGISTER_OBJECT_TYPE(GridViewCell);
 		APRILUI_REGISTER_OBJECT_TYPE(GridViewRow);
@@ -92,6 +92,7 @@ namespace aprilui
 		APRILUI_REGISTER_OBJECT_TYPE(OptionButton);
 		APRILUI_REGISTER_OBJECT_TYPE(ProgressBar);
 		APRILUI_REGISTER_OBJECT_TYPE(ProgressCircle);
+		APRILUI_REGISTER_OBJECT_TYPE(Rect);
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollArea);
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollBarButtonBackground);
 		APRILUI_REGISTER_OBJECT_TYPE(ScrollBarButtonBackward);
@@ -345,6 +346,18 @@ namespace aprilui
 		{
 			return (*gObjectFactories[typeName])(name);
 		}
+		hstr switchedTypeName = typeName;
+		// DEPRECATED start
+		if (switchedTypeName == "ColoredQuad")
+		{
+			hlog::warn(aprilui::logTag, "'ColoredQuad' is deprecated. Use 'FilledRect' instead.");
+			switchedTypeName = "FilledRect";
+		}
+		if (gObjectFactories.has_key(switchedTypeName))
+		{
+			return (*gObjectFactories[switchedTypeName])(name);
+		}
+		// DEPRECATED end
 		return NULL;
 	}
 	

@@ -10,8 +10,8 @@
 		<Object type="ImageBox" name="background" image="texture/test_tile1" rect="0,0,1024,768">
 			<Animator type="TileScrollerX" periods="-1" amplitude="64"/>
 			<Animator type="TileScrollerY" periods="-1" amplitude="-32"/>
-			<Object type="ColoredQuad" color="00FF00" rect="64,32,32,32" angle="50">
-				<Object type="ColoredQuad" color="FFFF00" rect="64,32,32,32"/>
+			<Object type="FilledRect" color="00FF00" rect="64,32,32,32" angle="50">
+				<Object type="FilledRect" color="FFFF00" rect="64,32,32,32"/>
 			</Object>
 			<Object type="ImageBox" name="background_2" image="texture/test_tile2" color="FFFF00" rect="700,672,324,96">
 				<Animator type="TileScrollerX" periods="-1" amplitude="-64"/>
@@ -25,7 +25,7 @@
 				<Animator type="MoverY" amplitude="100" speed="0.25"/>
 				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="1"/>
 			</Object>
-			<Object type="ColoredQuad" name="colored_quad" color="007FFF" rect="32,224,128,64">
+			<Object type="FilledRect" name="colored_quad" color="007FFF" rect="32,224,128,64">
 				<Animator type="MoverX" function="noise" periods="-1" amplitude="4"/>
 				<Animator type="MoverY" function="noise" periods="-1" amplitude="4"/>
 			</Object>
@@ -33,7 +33,7 @@
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
 			<Object type="EditBox" name="edit_box" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="1" selection_color="009FFFBF" multi_line="1" font="Arial" horz_formatting="left" vert_formatting="top" rect="600,200,192,64"/>
-			<Object type="ColoredQuad" color="007F00" rect="32,320,192,160">
+			<Object type="FilledRect" color="007F00" rect="32,320,192,160">
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
 				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
 				<Object type="Label" angle="-10" name="label" text="I [b:00FF00]am[/b] a [s 0000FF]label[/s]." effect="border:FF0000" rect="0,64,192,32"/>
@@ -88,7 +88,7 @@
 				<Object type="ScrollBarV" name="list_box_scroll_v" rect="192,0,4,142"/>
 			</Object>
 			<Object type="TreeView" name="tree_view" item_height="32" spacing_width="4" allow_drag="1" rect="600,288,384,144">
-				<Object type="ColoredQuad" name="tree_view_back" color="0000007F" rect="0,0,384,144" zorder="-10"/>
+				<Object type="FilledRect" name="tree_view_back" color="0000007F" rect="0,0,384,144" zorder="-10"/>
 				<Object type="TreeViewNode" name="tree_view_node_0">
 					<Object type="TreeViewExpander" name="tree_view_node_0_expander" image="texture/test_green" toggled_image="texture/test_red" toggled="1"/>
 					<Object type="TreeViewImage" name="tree_view_node_0_image" image="texture/test"/>
@@ -125,7 +125,7 @@
 				<Object type="ScrollBarV" name="tree_view_scroll_v" rect="384,0,4,144"/>
 			</Object>
 			<Object type="GridView" name="grid_view" item_height="32" allow_drag="1" rect="600,448,200,160">
-				<Object type="ColoredQuad" name="grid_view_back" color="0000007F" rect="0,0,200,160" zorder="-10"/>
+				<Object type="FilledRect" name="grid_view_back" color="0000007F" rect="0,0,200,160" zorder="-10"/>
 				<Object type="GridViewRowTemplate">
 					<Object type="GridViewCell" size="80,32">
 						<Object type="Label" text="Item 1" effect="border" rect="0,0,80,32"/>
@@ -162,27 +162,27 @@
 				<Object type="ScrollBarV" name="grid_view_scroll_v" rect="200,0,4,142"/>
 			</Object>
 			<Object type="Container" rect="232,16,128,128" hit_test="disabled_recursive">
-				<Object type="ColoredQuad" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" center="96,32">
+				<Object type="FilledRect" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" center="96,32">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>
 					<Animator type="ResizerY" function="sine" periods="-1" amplitude="32" timer="0.75"/>
 					
-					<Object type="ColoredQuad" color="FF00FF" anchors="left,right,top,bottom" rect="40,40,48,48"/>
+					<Object type="FilledRect" color="FF00FF" anchors="left,right,top,bottom" rect="40,40,48,48"/>
 					
-					<Object type="ColoredQuad" color="FF0000" anchors="left,top" rect="2,2,32,32"/>
-					<Object type="ColoredQuad" color="00FF00" anchors="top" rect="48,2,32,32"/>
-					<Object type="ColoredQuad" color="0000FF" anchors="right,top" rect="94,2,32,32"/>
-					<Object type="ColoredQuad" color="FFFF00" anchors="left" rect="2,48,32,32"/>
-					<Object type="ColoredQuad" color="00FFFF" anchors="right" rect="94,48,32,32"/>
-					<Object type="ColoredQuad" color="000000" anchors="left,bottom" rect="2,94,32,32"/>
-					<Object type="ColoredQuad" color="7F7F7F" anchors="bottom" rect="48,94,32,32"/>
-					<Object type="ColoredQuad" color="FFFFFF" anchors="right,bottom" rect="94,94,32,32"/>
+					<Object type="FilledRect" color="FF0000" anchors="left,top" rect="2,2,32,32"/>
+					<Object type="FilledRect" color="00FF00" anchors="top" rect="48,2,32,32"/>
+					<Object type="Rect" color="0000FF" anchors="right,top" rect="94,2,32,32"/>
+					<Object type="FilledRect" color="FFFF00" anchors="left" rect="2,48,32,32"/>
+					<Object type="Rect" color="00FFFF" anchors="right" rect="94,48,32,32"/>
+					<Object type="FilledRect" color="000000" anchors="left,bottom" rect="2,94,32,32"/>
+					<Object type="FilledRect" color="7F7F7F" anchors="bottom" rect="48,94,32,32"/>
+					<Object type="Rect" color="FFFFFF" anchors="right,bottom" rect="94,94,32,32"/>
 				</Object>
 			</Object>
 			<Object type="ImageBox" name="custom_obj" image="texture/test_hover_4" angle="90" rect="340,380,128,64">
 				<Animator type="Rotator" name="custom_animator" function="custom" periods="-1" amplitude="45" speed="0.3"/>
 			</Object>
 			<Object type="Container" rect="0,672,700,96">
-				<Object type="ColoredQuad" color="0000007F" rect="0,0,700,96"/>
+				<Object type="FilledRect" color="0000007F" rect="0,0,700,96"/>
 				<Object type="Label" name="label_format_0" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" rect="0,0,700,32"/>
 				<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" rect="0,32,700,32"/>
 				<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" rect="0,64,700,32"/>
@@ -191,7 +191,7 @@
 			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
 			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" rect="0,32,16,128"/>
 			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" rect="20,20,64,64"/>
-			<Object type="ColoredQuad" color="000000" rect="260,360,48,128">
+			<Object type="FilledRect" color="000000" rect="260,360,48,128">
 				<Object type="OptionButton" name="option_button_1" image="texture/test_red" toggled_image="texture/test_green" rect="8,8,32,32" zorder="100" toggled="1"/>
 				<Object type="OptionButton" name="option_button_2" image="texture/test_red" toggled_image="texture/test_green" rect="8,48,32,32" zorder="100"/>
 				<Object type="OptionButton" name="option_button_3" image="texture/test_red" toggled_image="texture/test_green" rect="8,88,32,32" zorder="100"/>

@@ -11,30 +11,30 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
-#include "ObjectColoredQuad.h"
+#include "ObjectRect.h"
 
 namespace aprilui
 {
-	ColoredQuad::ColoredQuad(chstr name) : Object(name)
+	Rect::Rect(chstr name) : Object(name)
 	{
 	}
 
-	ColoredQuad::ColoredQuad(const ColoredQuad& other) : Object(other)
+	Rect::Rect(const Rect& other) : Object(other)
 	{
 	}
 
-	ColoredQuad::~ColoredQuad()
+	Rect::~Rect()
 	{
 	}
 
-	Object* ColoredQuad::createInstance(chstr name)
+	Object* Rect::createInstance(chstr name)
 	{
-		return new ColoredQuad(name);
+		return new Rect(name);
 	}
 
-	void ColoredQuad::_draw()
+	void Rect::_draw()
 	{
-		april::rendersys->drawFilledRect(this->_getDrawRect(), this->_getDrawColor());
+		april::rendersys->drawRect(this->_getDrawRect(), this->_getDrawColor());
 	}
 	
 }
