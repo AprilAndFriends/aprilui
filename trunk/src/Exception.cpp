@@ -11,85 +11,64 @@
 
 namespace aprilui
 {
-	_GenericException::_GenericException(chstr errorText, chstr type, const char* file, int line) : 
-					   hltypes::exception(errorText, file, line)
+	_ObjectExistsException::_ObjectExistsException(chstr type, chstr name, chstr filename, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage(type + " already exists: " + name + " in " + filename, file, line);
 	}
-	_GenericException::~_GenericException() { }
 
-	_ResourceExistsException::_ResourceExistsException(chstr objectName, chstr className,
-													   Dataset* dict, const char* file, int line) :
-							  _GenericException(className + " already exists: " + objectName + " in dataset " + dict->getName(),
-								  "ResourceExistsException", file, line)
+	_ObjectNotExistsException::_ObjectNotExistsException(chstr type, chstr name, chstr filename, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage(type + " doesn't exist: " + name + " in " + filename, file, line);
 	}
-	_ResourceExistsException::~_ResourceExistsException() { }
 
-	_ResourceNotExistsException::_ResourceNotExistsException(chstr objectName, chstr className,
-															 Dataset* dict, const char* file, int line) :
-								 _GenericException(className + " doesn't exist: '" + objectName + "' in dataset '" + dict->getName() + "'",
-									 "ResourceNotExistsException", file, line)
+	_FontExistsException::_FontExistsException(chstr fontname, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage("Unable to add new font, it already exists: " + fontname, file, line);
 	}
-	_ResourceNotExistsException::~_ResourceNotExistsException() { }
 
-	_InvalidObjectTypeCast::_InvalidObjectTypeCast(chstr errorText, const char* file, int line) : _GenericException(errorText, "InvalidObjectTypeCast", file, line) { }
+	_FontNotExistsException::_FontNotExistsException(chstr fontname, const char* file, int line) :
+		hexception("", file, line)
+	{
+		this->_setInternalMessage("Font doesn't exist: " + fontname, file, line);
+	}
+
+	_InvalidObjectTypeCast::_InvalidObjectTypeCast(chstr type, chstr objectName, chstr datasetName, const char* file, int line) :
+		hexception("", file, line)
+	{
+		this->_setInternalMessage(hsprintf("%s '%s' found in dataset '%s' but dynamic cast failed.", type.c_str(), objectName.c_str(), datasetName.c_str()), file, line);
+	}
 	
-	_InvalidObjectTypeCast::~_InvalidObjectTypeCast() { }
-	
-	_ObjectHasParentException::_ObjectHasParentException(chstr child, chstr parent,
-														 const char* file, int line) :
-							   _GenericException("Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent",
-								   "ObjectHasParentException", file, line)
+	_ObjectHasParentException::_ObjectHasParentException(chstr child, chstr parent, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage("Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent.", file, line);
 	}
-	_ObjectHasParentException::~_ObjectHasParentException() { }
 
-	_ObjectWithoutParentException::_ObjectWithoutParentException(chstr child,
-																 const char* file, int line) :
-								   _GenericException("Cannot detach object '" + child + "', object has no parent",
-									   "ObjectWihoutParentException", file, line)
+	_ObjectWithoutParentException::_ObjectWithoutParentException(chstr child, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage("Cannot detach object '" + child + "', object has no parent.", file, line);
 	}
-	_ObjectWithoutParentException::~_ObjectWithoutParentException() { }
 
-	_ObjectNotChildException::_ObjectNotChildException(chstr child, chstr parent,
-													   const char* file, int line) :
-							  _GenericException("Cannot detach object '" + child + "' from object '" + parent + "', object is not a child", "ObjectNotChildException", file, line)
+	_ObjectNotChildException::_ObjectNotChildException(chstr child, chstr parent, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage("Cannot detach object '" + child + "' from object '" + parent + "', object is not a child.", file, line);
 	}
-	_ObjectNotChildException::~_ObjectNotChildException() { }
 
-	_ObjectFactoryExistsException::_ObjectFactoryExistsException(chstr name,
-																 const char* file, int line) :
-	_GenericException("Object factory named '" + name + "' already exists",
-					  "ObjectFactoryExistsException", file, line)
+	_ObjectFactoryExistsException::_ObjectFactoryExistsException(chstr type, chstr name, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage(type + " factory named '" + name + "' already exists.", file, line);
 	}
-	_ObjectFactoryExistsException::~_ObjectFactoryExistsException() { }
 
-	_ObjectFactoryNotExistsException::_ObjectFactoryNotExistsException(chstr name,
-																 const char* file, int line) :
-	_GenericException("Object factory named '" + name + "' doesn't exists",
-					  "ObjectFactoryNotExistsException", file, line)
+	_ObjectFactoryNotExistsException::_ObjectFactoryNotExistsException(chstr type, chstr name, const char* file, int line) :
+		hexception("", file, line)
 	{
+		this->_setInternalMessage(type + " factory named '" + name + "' doesn't exists.", file, line);
 	}
-	_ObjectFactoryNotExistsException::~_ObjectFactoryNotExistsException() { }
-
-	_AnimatorFactoryExistsException::_AnimatorFactoryExistsException(chstr name,
-																	 const char* file, int line) :
-	_GenericException("Animator factory named '" + name + "' already exists",
-					  "AnimatorFactoryExistsException", file, line)
-	{
-	}
-	_AnimatorFactoryNotExistsException::~_AnimatorFactoryNotExistsException() { }
-
-	_AnimatorFactoryNotExistsException::_AnimatorFactoryNotExistsException(chstr name,
-																	 const char* file, int line) :
-	_GenericException("Animator factory named '" + name + "' doesn't exist",
-					  "AnimatorFactoryNotExistsException", file, line)
-	{
-	}
-	_AnimatorFactoryExistsException::~_AnimatorFactoryExistsException() { }
 
 }

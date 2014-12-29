@@ -167,7 +167,7 @@ namespace aprilui
 				dataset->destroyObjects(root);
 				return;
 			}
-			throw ResourceNotExistsException(root->getName(), "Object", this);
+			throw ObjectNotExistsException("Object", root->getName(), this->name);
 		}
 		harray<BaseObject*> children = root->getChildren();
 		foreach (BaseObject*, it, children)
@@ -203,7 +203,7 @@ namespace aprilui
 		hstr filename = texture->getFilename();
 		if (!this->textures.has_key(filename))
 		{
-			throw ResourceNotExistsException(filename, "Texture", this);
+			throw ObjectNotExistsException("Texture", filename, this->name);
 		}
 		this->textures.remove_key(filename);
 		delete texture;
@@ -214,7 +214,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (!this->images.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "Image", this);
+			throw ObjectNotExistsException("Image", name, this->name);
 		}
 		this->images.remove_key(name);
 		delete image;
@@ -224,7 +224,7 @@ namespace aprilui
 	{
 		if (!this->textures.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "Texture", this);
+			throw ObjectNotExistsException("Texture", name, this->name);
 		}
 		delete this->textures[name];
 		this->textures.remove_key(name);
@@ -234,7 +234,7 @@ namespace aprilui
 	{
 		if (!this->images.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "Image", this);
+			throw ObjectNotExistsException("Image", name, this->name);
 		}
 		delete this->images[name];
 		this->images.remove_key(name);
@@ -262,7 +262,7 @@ namespace aprilui
 		hstr textureName = hrdir::basename(filename);
 		if (this->textures.has_key(textureName))
 		{
-			throw ObjectExistsException(textureName, filename);
+			throw ObjectExistsException("Texture", textureName, this->name);
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool managed = node->pbool("managed", aprilui::isDefaultManagedTextures());
@@ -290,13 +290,13 @@ namespace aprilui
 			else if (mode == "on_demand")		loadMode = april::Texture::LOAD_ON_DEMAND;
 			else if (mode == "async")			loadMode = april::Texture::LOAD_ASYNC;
 			else if (mode == "async_on_demand")	loadMode = april::Texture::LOAD_ASYNC_ON_DEMAND;
-			else throw hl_exception("load_mode '" + mode + "' not supported");
+			else throw Exception("load_mode '" + mode + "' not supported");
 		}
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
 		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, loadMode);
 		if (aprilTexture == NULL)
 		{
-			throw file_could_not_open(locpath);
+			throw FileCouldNotOpenException(locpath);
 		}
 		Texture* texture = new Texture(filepath, aprilTexture, managed);
 		if (node->pexists("filter"))
@@ -304,7 +304,7 @@ namespace aprilui
 			hstr filter = node->pstr("filter");
 			if		(filter == "linear")	texture->setFilter(april::Texture::FILTER_LINEAR);
 			else if	(filter == "nearest")	texture->setFilter(april::Texture::FILTER_NEAREST);
-			else throw hl_exception("texture filter '" + filter + "' not supported");
+			else throw Exception("texture filter '" + filter + "' not supported");
 		}
 		if (node->pbool("wrap", false))
 		{
@@ -320,7 +320,7 @@ namespace aprilui
 		{
 			if (this->images.has_key(textureName))
 			{
-				throw ResourceExistsException(filename, "Texture", this);
+				throw ObjectExistsException("Texture", filename, this->name);
 			}
 			BaseImage* image = new Image(texture, filename, grect(0.0f, 0.0f, (float)texture->getWidth(), (float)texture->getHeight()));
 			this->images[textureName] = image;
@@ -339,7 +339,7 @@ namespace aprilui
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (this->images.has_key(name))
 					{
-						throw ResourceExistsException(name, "Image", this);
+						throw ObjectExistsException("Image", name, this->name);
 					}
 					aprilui::readRectNode(rect, child);
 					gvec2 tile;
@@ -392,7 +392,7 @@ namespace aprilui
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (this->images.has_key(name))
 					{
-						throw ResourceExistsException(name, "Image", this);
+						throw ObjectExistsException("Image", name, this->name);
 					}
 					aprilui::readRectNode(rect, child);
 					if (*child == "Image")
@@ -409,8 +409,7 @@ namespace aprilui
 					}
 					else
 					{
-						throw hlxml::XMLUnknownClassException(child->getValue(), child);
-						continue;
+						throw XMLUnknownClassException(child->getValue(), child);
 					}
 					this->images[name] = image;
 					image->dataset = this;
@@ -434,7 +433,7 @@ namespace aprilui
 		hstr refname;
 		if (this->images.has_key(name))
 		{
-			throw ResourceExistsException(name, "CompositeImage", this);
+			throw ObjectExistsException("CompositeImage", name, this->name);
 		}
 		gvec2 size;
 		if (node->pexists("size"))
@@ -532,7 +531,7 @@ namespace aprilui
 		}
 		if (this->objects.has_key(objectName))
 		{
-			throw ResourceExistsException(objectName, "Object", this);
+			throw ObjectExistsException("Object", objectName, this->name);
 		}
 		BaseObject* baseObject = NULL;
 		Object* object = NULL;
@@ -559,7 +558,7 @@ namespace aprilui
 		}
 		if (baseObject == NULL)
 		{
-			throw hlxml::XMLUnknownClassException(className, node);
+			throw XMLUnknownClassException(className, node);
 		}
 		if (object != NULL)
 		{
@@ -734,9 +733,9 @@ namespace aprilui
 				this->readFile(this->filename);
 				this->_closeDocuments(); // safe not to throw an exception
 			}
-			catch (hltypes::exception& e)
+			catch (hexception& e)
 			{
-				hlog::error(aprilui::logTag, e.message());
+				hlog::error(aprilui::logTag, e.getMessage());
 				this->_closeDocuments(); // safe not to throw an exception
 				throw e;
 			}
@@ -820,7 +819,7 @@ namespace aprilui
 	{
 		if (!this->loaded)
 		{
-			throw GenericException("Unable to unload dataset '" + this->getName() + "', data not loaded!");
+			throw Exception("Unable to unload dataset '" + this->getName() + "', data not loaded!");
 		}
 		foreach_m (Animator*, it, this->animators)
 		{
@@ -872,7 +871,7 @@ namespace aprilui
 			name = (*it)->getName();
 			if (this->objects.has_key(name) || this->animators.has_key(name))
 			{
-				throw ResourceExistsException(name, "Object", this);
+				throw ObjectExistsException("Object", name, this->name);
 			}
 			object = dynamic_cast<Object*>(*it);
 			if (object != NULL)
@@ -906,7 +905,7 @@ namespace aprilui
 				dataset->unregisterObjects(root);
 				return;
 			}
-			throw ResourceNotExistsException(root->getName(), "Object", this);
+			throw ObjectNotExistsException("Object", root->getName(), this->name);
 		}
 		harray<BaseObject*> children = root->getChildren();
 		foreach (BaseObject*, it, children)
@@ -934,7 +933,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (this->images.has_key(name))
 		{
-			throw ResourceExistsException(name, "Image", this);
+			throw ObjectExistsException("Image", name, this->name);
 		}
 		this->images[name] = image;
 		image->dataset = this;
@@ -945,7 +944,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (!this->images.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "Image", this);
+			throw ObjectNotExistsException("Image", name, this->name);
 		}
 		this->images.remove_key(name);
 		image->dataset = NULL;
@@ -956,7 +955,7 @@ namespace aprilui
 		hstr name = texture->getFilename();
 		if (this->textures.has_key(name))
 		{
-			throw ResourceExistsException(name, "Texture", this);
+			throw ObjectExistsException("Texture", name, this->name);
 		}
 		this->textures[name] = texture;
 	}
@@ -966,7 +965,7 @@ namespace aprilui
 		hstr name = texture->getFilename();
 		if (!this->textures.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "Texture", this);
+			throw ObjectNotExistsException("Texture", name, this->name);
 		}
 		this->textures.remove_key(name);
 	}
@@ -1016,7 +1015,7 @@ namespace aprilui
 		{
 			if (!this->objects.has_key(name))
 			{
-				throw ResourceNotExistsException(name, "Object", this);
+				throw ObjectNotExistsException("Object", name, this->name);
 			}
 			return this->objects[name];
 		}
@@ -1025,9 +1024,9 @@ namespace aprilui
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
 		}
-		catch (_GenericException&)
+		catch (hexception&)
 		{
-			throw ResourceNotExistsException(name, "Object", this);
+			throw ObjectNotExistsException("Object", name, this->name);
 		}
 		return dataset->getObject(name(dot + 1, -1));
 	}
@@ -1039,7 +1038,7 @@ namespace aprilui
 		{
 			if (!this->animators.has_key(name))
 			{
-				throw ResourceNotExistsException(name, "Animator", this);
+				throw ObjectNotExistsException("Animator", name, this->name);
 			}
 			return this->animators[name];
 		}
@@ -1048,9 +1047,9 @@ namespace aprilui
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
 		}
-		catch (_GenericException&)
+		catch (hexception&)
 		{
-			throw ResourceNotExistsException(name, "Animator", this);
+			throw ObjectNotExistsException("Animator", name, this->name);
 		}
 		return dataset->getAnimator(name(dot + 1, -1));
 	}
@@ -1087,7 +1086,7 @@ namespace aprilui
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
 		}
-		catch (_GenericException&)
+		catch (hexception&)
 		{
 			return NULL;
 		}
@@ -1106,7 +1105,7 @@ namespace aprilui
 		{
 			dataset = aprilui::getDatasetByName(name(0, dot));
 		}
-		catch (_GenericException&)
+		catch (hexception&)
 		{
 			return NULL;
 		}
@@ -1117,7 +1116,7 @@ namespace aprilui
 	{
 		if (!this->textures.has_key(name))
 		{
-			throw ResourceNotExistsException(name, "Texture", this);
+			throw ObjectNotExistsException("Texture", name, this->name);
 		}
 		return this->textures[name];
 	}
@@ -1138,16 +1137,16 @@ namespace aprilui
 			int dot = name.find('.');
 			if (dot < 0)
 			{
-				throw ResourceNotExistsException(name, "Image", this);
+				throw ObjectNotExistsException("Image", name, this->name);
 			}
 			Dataset* dataset;
 			try
 			{
 				dataset = aprilui::getDatasetByName(name(0, dot));
 			}
-			catch (_GenericException&)
+			catch (hexception&)
 			{
-				throw ResourceNotExistsException(name, "Image", this);
+				throw ObjectNotExistsException("Image", name, this->name);
 			}
 			image = dataset->getImage(name(dot + 1, -1));
 		}

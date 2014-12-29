@@ -22,143 +22,63 @@
 namespace aprilui
 {
 	class Dataset;
-	
-	class apriluiExport _GenericException : public hltypes::exception
-	{
-	protected:
-		hstr type;
-	public:
-		_GenericException(chstr errorText, chstr type = "", const char* file = "", int line = 0);
-		~_GenericException();
 
-		HL_DEFINE_GET(hstr, type, Type);
-	};
-
-	#define GenericException(msg) _GenericException(msg, "GenericException", __FILE__, __LINE__)
-
-	#define exception_cls(name) class apriluiExport name : public _GenericException \
+#define _EXCEPTION_CLASS_1(classe, arg0) \
+	class apriluiExport _ ## classe : public hexception \
 	{ \
 	public: \
-		inline name(chstr errorText, chstr type = "", const char* file = "", int line = 0) : \
-		  _GenericException(errorText, type, file, line) { } \
-		inline ~name() { } \
-	}
-
-	exception_cls(_ObjectExistsException);
-	#define ObjectExistsException(name, filename) _ObjectExistsException("Object already exists: " + name + " in " + filename, "ObjectExistsException", __FILE__, __LINE__)
-
-	exception_cls(_ObjectNotExistsException);
-	#define ObjectNotExistsException(name, filename) _ObjectNotExistsException("Object doesn't exist: " + name + " in " + filename, "ObjectNotExistsException", __FILE__, __LINE__)
-
-	exception_cls(_FontExistsException);
-	#define FontExistsException(fontname) _FontExistsException("Unable to add new font, it already exists: " + fontname, "FontExistsException", __FILE__, __LINE__)
-
-	exception_cls(_FontNotExistsException);
-	#define FontNotExistsException(fontname) _FontNotExistsException("Font doesn't exist: " + fontname, "FontNotExistsException", __FILE__, __LINE__)
-
-	//---------------------------------------------------------------------------------------------------------
-
-	class apriluiExport _ResourceExistsException : public _GenericException
-	{
-	public:
-		_ResourceExistsException(chstr objectName, chstr className, Dataset* dict, const char* file = "", int line = 0);
-		~_ResourceExistsException();
-	};
-	
-	class apriluiExport _ResourceNotExistsException : public _GenericException
-	{
-	public:
-		_ResourceNotExistsException(chstr objectName, chstr className, Dataset* dict, const char* file = "", int line = 0);
-		~_ResourceNotExistsException();
+		_ ## classe(chstr arg0, const char* file, int line); \
+		inline ~_ ## classe() { } \
+		inline hstr getType() { return #classe; } \
 	};
 
-	class apriluiExport _InvalidObjectTypeCast : public _GenericException
-	{
-	public:
-		_InvalidObjectTypeCast(chstr errorText, const char* file = "", int line = 0);
-		~_InvalidObjectTypeCast();
-	};
-	
-	#define ResourceExistsException(name, cls, data) _ResourceExistsException(name, cls, data, __FILE__, __LINE__)
-	#define ResourceNotExistsException(name, cls, data) _ResourceNotExistsException(name, cls, data, __FILE__, __LINE__)
-	#define InvalidObjectTypeCast(errorText) _InvalidObjectTypeCast(errorText, __FILE__, __LINE__)
-
-	//---------------------------------------------------------------------------------------------------------
-
-	class apriluiExport _ObjectHasParentException : public _GenericException
-	{
-	public:
-		_ObjectHasParentException(chstr child, chstr parent, const char* file = "", int line = 0);
-		~_ObjectHasParentException();
+#define _EXCEPTION_CLASS_2(classe, arg0, arg1) \
+	class apriluiExport _ ## classe : public hexception \
+	{ \
+	public: \
+		_ ## classe(chstr arg0, chstr arg1, const char* file, int line); \
+		inline ~_ ## classe() { } \
+		inline hstr getType() { return #classe; } \
 	};
 
+#define _EXCEPTION_CLASS_3(classe, arg0, arg1, arg2) \
+	class apriluiExport _ ## classe : public hexception \
+	{ \
+	public: \
+		_ ## classe(chstr arg0, chstr arg1, chstr arg2, const char* file, int line); \
+		inline ~_ ## classe() { } \
+		inline hstr getType() { return #classe; } \
+	};
+
+	_EXCEPTION_CLASS_3(ObjectExistsException, type, name, filename);
+	#define ObjectExistsException(type, name, filename) _ObjectExistsException(type, name, filename, __FILE__, __LINE__)
+
+	_EXCEPTION_CLASS_3(ObjectNotExistsException, type, name, filename);
+	#define ObjectNotExistsException(type, name, filename) _ObjectNotExistsException(type, name, filename, __FILE__, __LINE__)
+
+	_EXCEPTION_CLASS_1(FontExistsException, fontname);
+	#define FontExistsException(fontname) _FontExistsException(fontname, __FILE__, __LINE__)
+
+	_EXCEPTION_CLASS_1(FontNotExistsException, fontname);
+	#define FontNotExistsException(fontname) _FontNotExistsException(fontname, __FILE__, __LINE__)
+
+	_EXCEPTION_CLASS_3(InvalidObjectTypeCast, type, objectName, datasetName);
+	#define InvalidObjectTypeCast(type, objectName, datasetName) _InvalidObjectTypeCast(type, objectName, datasetName, __FILE__, __LINE__)
+
+	_EXCEPTION_CLASS_2(ObjectHasParentException, child, parent);
 	#define ObjectHasParentException(child, parent) _ObjectHasParentException(child, parent, __FILE__, __LINE__)
 
-	//---------------------------------------------------------------------------------------------------------
-
-	class apriluiExport _ObjectWithoutParentException : public _GenericException
-	{
-	public:
-		_ObjectWithoutParentException(chstr child, const char* file = "", int line = 0);
-		~_ObjectWithoutParentException();
-	};
-
+	_EXCEPTION_CLASS_1(ObjectWithoutParentException, child);
 	#define ObjectWithoutParentException(child) _ObjectWithoutParentException(child, __FILE__, __LINE__)
 
-	//---------------------------------------------------------------------------------------------------------
-
-	class apriluiExport _ObjectNotChildException : public _GenericException
-	{
-	public:
-		_ObjectNotChildException(chstr child, chstr parent, const char* file = "", int line = 0);
-		~_ObjectNotChildException();
-	};
-
+	_EXCEPTION_CLASS_2(ObjectNotChildException, child, parent);
 	#define ObjectNotChildException(child, parent) _ObjectNotChildException(child, parent, __FILE__, __LINE__)
 
-	//---------------------------------------------------------------------------------------------------------
-	
-	class apriluiExport _ObjectFactoryExistsException : public _GenericException
-	{
-	public:
-		_ObjectFactoryExistsException(chstr name, const char* file = "", int line = 0);
-		~_ObjectFactoryExistsException();
-	};
-	
-	#define ObjectFactoryExistsException(name) _ObjectFactoryExistsException(name, __FILE__, __LINE__)
+	_EXCEPTION_CLASS_2(ObjectFactoryExistsException, type, name);
+	#define ObjectFactoryExistsException(type, name) _ObjectFactoryExistsException(type, name, __FILE__, __LINE__)
 
-	//---------------------------------------------------------------------------------------------------------
-	
-	class apriluiExport _ObjectFactoryNotExistsException : public _GenericException
-	{
-	public:
-		_ObjectFactoryNotExistsException(chstr name, const char* file = "", int line = 0);
-		~_ObjectFactoryNotExistsException();
-	};
-	
-	#define ObjectFactoryNotExistsException(name) _ObjectFactoryNotExistsException(name, __FILE__, __LINE__)
-
-	//---------------------------------------------------------------------------------------------------------
-
-	class apriluiExport _AnimatorFactoryExistsException : public _GenericException
-	{
-	public:
-		_AnimatorFactoryExistsException(chstr name, const char* file = "", int line = 0);
-		~_AnimatorFactoryExistsException();
-	};
-
-	#define AnimatorFactoryExistsException(name) _AnimatorFactoryExistsException(name, __FILE__, __LINE__)
-
-	//---------------------------------------------------------------------------------------------------------
-	
-	class apriluiExport _AnimatorFactoryNotExistsException : public _GenericException
-	{
-	public:
-		_AnimatorFactoryNotExistsException(chstr name, const char* file = "", int line = 0);
-		~_AnimatorFactoryNotExistsException();
-	};
-	
-	#define AnimatorFactoryNotExistsException(name) _AnimatorFactoryNotExistsException(name, __FILE__, __LINE__)
+	_EXCEPTION_CLASS_2(ObjectFactoryNotExistsException, type, name);
+	#define ObjectFactoryNotExistsException(type, name) _ObjectFactoryNotExistsException(type, name, __FILE__, __LINE__)
 
 }
 

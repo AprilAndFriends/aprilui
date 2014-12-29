@@ -288,7 +288,7 @@ namespace aprilui
 	{
 		if (gObjectFactories.has_key(typeName))
 		{
-			throw ObjectFactoryExistsException(typeName);
+			throw ObjectFactoryExistsException("Object", typeName);
 		}
 		gObjectFactories[typeName] = factory;
 	}
@@ -297,7 +297,7 @@ namespace aprilui
 	{
 		if (gAnimatorFactories.has_key(typeName))
 		{
-			throw AnimatorFactoryExistsException(typeName);
+			throw ObjectFactoryNotExistsException("Animator", typeName);
 		}
 		gAnimatorFactories[typeName] = factory;
 	}
@@ -306,7 +306,7 @@ namespace aprilui
 	{
 		if (!gObjectFactories.has_key(typeName))
 		{
-			throw ObjectFactoryNotExistsException(typeName);
+			throw ObjectFactoryNotExistsException("Object", typeName);
 		}
 		gObjectFactories.remove_key(typeName);
 	}
@@ -315,7 +315,7 @@ namespace aprilui
 	{
 		if (!gAnimatorFactories.has_key(typeName))
 		{
-			throw AnimatorFactoryNotExistsException(typeName);
+			throw ObjectFactoryNotExistsException("Animator", typeName);
 		}
 		gAnimatorFactories.remove_key(typeName);
 	}
@@ -441,7 +441,7 @@ namespace aprilui
 	{
 		if (!gDatasets.has_key(name))
 		{
-			throw GenericException("Dataset '" + name + "' doesn't exist!");
+			throw Exception("Dataset '" + name + "' doesn't exist!");
 		}
 		return gDatasets[name];
 	}
@@ -452,7 +452,7 @@ namespace aprilui
 		{
 			if (gDatasets.has_key(name))
 			{
-				throw GenericException("Unable to register dataset '" + name + "', another dataset with the same name exists!");
+				throw Exception("Unable to register dataset '" + name + "', another dataset with the same name exists!");
 			}
 			gDatasets[name] = dataset;
 		}
