@@ -18,9 +18,10 @@ namespace aprilui
 {
 	harray<PropertyDescription> TileImage::_propertyDescriptions;
 
-	TileImage::TileImage(Texture* texture, chstr name, grect source, float tileW, float tileH) : Image(texture, name, source)
+	TileImage::TileImage(Texture* texture, chstr name, grect source) : Image(texture, name, source)
 	{
-		this->tile.set(tileW, tileH);
+		this->tile = source.getSize();
+		this->useTileCount = false;
 	}
 
 	TileImage::~TileImage()
@@ -37,29 +38,32 @@ namespace aprilui
 			TileImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::GVEC2);
 			TileImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::FLOAT);
 			TileImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::FLOAT);
+			TileImage::_propertyDescriptions += PropertyDescription("use_tile_count", PropertyDescription::BOOL);
 		}
 		return (Image::getPropertyDescriptions() + TileImage::_propertyDescriptions);
 	}
 
 	hstr TileImage::getProperty(chstr name)
 	{
-		if (name == "tile")		return april::gvec2ToHstr(this->getTile());
-		if (name == "tile_w")	return this->getTileW();
-		if (name == "tile_h")	return this->getTileH();
-		if (name == "scroll")	return april::gvec2ToHstr(this->getScroll());
-		if (name == "scroll_x")	return this->getScrollX();
-		if (name == "scroll_y")	return this->getScrollY();
+		if (name == "tile")				return april::gvec2ToHstr(this->getTile());
+		if (name == "tile_w")			return this->getTileW();
+		if (name == "tile_h")			return this->getTileH();
+		if (name == "scroll")			return april::gvec2ToHstr(this->getScroll());
+		if (name == "scroll_x")			return this->getScrollX();
+		if (name == "scroll_y")			return this->getScrollY();
+		if (name == "use_tile_count")	return this->isUseTileCount();
 		return Image::getProperty(name);
 	}
 
 	bool TileImage::setProperty(chstr name, chstr value)
 	{
-		if		(name == "tile")		this->setTile(april::hstrToGvec2(value));
-		else if	(name == "tile_w")		this->setTileW(value);
-		else if (name == "tile_h")		this->setTileH(value);
-		else if	(name == "scroll")		this->setScroll(april::hstrToGvec2(value));
-		else if (name == "scroll_x")	this->setScrollX(value);
-		else if	(name == "scroll_y")	this->setScrollY(value);
+		if		(name == "tile")			this->setTile(april::hstrToGvec2(value));
+		else if	(name == "tile_w")			this->setTileW(value);
+		else if (name == "tile_h")			this->setTileH(value);
+		else if	(name == "scroll")			this->setScroll(april::hstrToGvec2(value));
+		else if (name == "scroll_x")		this->setScrollX(value);
+		else if	(name == "scroll_y")		this->setScrollY(value);
+		else if (name == "use_tile_count")	this->setUseTileCount(value);
 		else return Image::setProperty(name, value);
 		return true;
 	}
@@ -70,12 +74,16 @@ namespace aprilui
 		{
 			return;
 		}
-		float tileW = (this->tile.x > 0.0f ? rect.w / this->tile.x : -this->tile.x);
-		float tileH = (this->tile.y > 0.0f ? rect.h / this->tile.y : -this->tile.y);
-		float scrollX = hmodf(this->scroll.x, tileW) - tileW;
-		float scrollY = hmodf(this->scroll.y, tileH) - tileH;
-		int countX = (int)ceil((rect.w - scrollX) / tileW);
-		int countY = (int)ceil((rect.h - scrollY) / tileH);
+		gvec2 tile = this->tile;
+		if (this->useTileCount)
+		{
+			tile = rect.getSize() / this->tile;
+		}
+		gvec2 scroll;
+		scroll.x = hmodf(this->scroll.x, tile.x) - tile.x;
+		scroll.y = hmodf(this->scroll.y, tile.y) - tile.y;
+		int countX = (int)ceil((rect.w - scroll.x) / tile.x);
+		int countY = (int)ceil((rect.h - scroll.y) / tile.y);
 		int i;
 		int j;
 		int minX = 0;
@@ -92,7 +100,7 @@ namespace aprilui
 		{
 			for_iterx (i, 0, countX)
 			{
-				clipped = this->_drawTile(rect, grect(rect.x + scrollX + i * tileW, rect.y + scrollY + j * tileH, tileW, tileH), color, fullTexture);
+				clipped = this->_drawTile(rect, grect(rect.getPosition() + scroll + gvec2((float)i, (float)j) * tile, tile), color, fullTexture);
 				if ((clipped & 0x0010) != 0x0)
 				{
 					minX = i + 1;
@@ -117,7 +125,7 @@ namespace aprilui
 			this->srcRect.w *= (maxX - minX);
 			this->srcRect.h *= (maxY - minY);
 			this->_textureCoordinatesLoaded = false; // srcRect has been changed
-			Image::draw(grect(rect.x + scrollX + minX * tileW, rect.y + scrollY + minY * tileH, (maxX - minX) * tileW, (maxY - minY) * tileH), color);
+			Image::draw(grect(rect.getPosition() + scroll + gvec2((float)minX, (float)minY) * tile, gvec2((float)(maxX - minX), (float)(maxY - minY)) * tile), color);
 			this->srcRect = src;
 		}
 	}
@@ -125,8 +133,8 @@ namespace aprilui
 	int TileImage::_drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture)
 	{
 		int clipped = 0;
-		float difference;
-		float srcDifference;
+		float difference = 0.0f;
+		float srcDifference = 0.0f;
 		grect src = this->srcRect;
 		if (tileRect.x <= rect.x)
 		{

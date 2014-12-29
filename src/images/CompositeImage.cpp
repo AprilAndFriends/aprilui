@@ -16,31 +16,38 @@
 
 #include "aprilui.h"
 #include "CompositeImage.h"
+#include "Image.h"
 
 namespace aprilui
 {
-	CompositeImage::CompositeImage(chstr name, float w, float h) : Image(0, name, grect(0, 0, w, h)), restoreClipRects(true)
+	CompositeImage::CompositeImage(chstr name, gvec2 size) : BaseImage(name), restoreClipRects(true)
 	{
+		this->size = size;
 	}
 	
-	CompositeImage::CompositeImage(chstr name, CompositeImage& base) : Image(0, name, grect(0, 0, base.getSrcRect().getSize()))
+	CompositeImage::CompositeImage(chstr name, CompositeImage& other) : BaseImage(other, name)
 	{
-		foreach (ImageRef, it, base.images)
-		{
-			this->addImageRef((*it).image, (*it).rect);
-		}
+		this->size = other.size;
+		this->images = other.images;
+		this->clipRect = other.clipRect;
+		this->restoreClipRects = other.restoreClipRects;
 	}
-	
+
+	CompositeImage::CompositeImage(CompositeImage& other, chstr name) : BaseImage(other, name)
+	{
+		this->size = other.size;
+		this->images = other.images;
+		this->clipRect = other.clipRect;
+		this->restoreClipRects = other.restoreClipRects;
+	}
+
 	CompositeImage::~CompositeImage()
 	{
 	}
 
-	void CompositeImage::addImageRef(Image* image, grect rect)
+	void CompositeImage::addImageRef(BaseImage* image, grect rect)
 	{
-		ImageRef reference;
-		reference.image = image;
-		reference.rect = rect;
-		this->images += reference;
+		this->images += ImageRef(image, rect);
 	}
 	
 	void CompositeImage::clearImages()
@@ -54,15 +61,15 @@ namespace aprilui
 		{
 			return;
 		}
-		gvec2 sf = rect.getSize() / this->srcRect.getSize();
+		gvec2 sf = rect.getSize() / this->size;
 		grect drawRect;
 		// using separate loops for performance reasons
 		if (this->clipRect.w == 0.0f || this->clipRect.h == 0.0f)
 		{
 			foreach (ImageRef, it, this->images)
 			{
-				drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
-				(*it).image->draw(drawRect, color);
+				drawRect.set(rect.getPosition() + (*it).second.getPosition() * sf, (*it).second.getSize() * sf);
+				(*it).first->draw(drawRect, color);
 			}
 		}
 		else
@@ -72,19 +79,19 @@ namespace aprilui
 			grect clipRect;
 			foreach (ImageRef, it, this->images)
 			{
-				clipRect.set(0.0f, 0.0f, (*it).rect.getSize());
-				clipRect.clip(this->clipRect - (*it).rect.getPosition());
-				cf = (*it).image->getSrcSize() / (*it).rect.getSize();
+				clipRect.set(0.0f, 0.0f, (*it).second.getSize());
+				clipRect.clip(this->clipRect - (*it).second.getPosition());
+				cf = (*it).first->getSrcSize() / (*it).second.getSize();
 				clipRect.set(clipRect.getPosition() * cf, clipRect.getSize() * cf);
 				if (clipRect.w > 0.0f && clipRect.h > 0.0f)
 				{
-					oldClipRect = (*it).image->getClipRect();
-					(*it).image->setClipRect(clipRect);
-					drawRect.set(rect.getPosition() + (*it).rect.getPosition() * sf, (*it).rect.getSize() * sf);
-					(*it).image->draw(drawRect, color);
+					oldClipRect = (*it).first->getClipRect();
+					(*it).first->setClipRect(clipRect);
+					drawRect.set(rect.getPosition() + (*it).second.getPosition() * sf, (*it).second.getSize() * sf);
+					(*it).first->draw(drawRect, color);
 					if (this->restoreClipRects)
 					{
-						(*it).image->setClipRect(oldClipRect);
+						(*it).first->setClipRect(oldClipRect);
 					}
 				}
 			}

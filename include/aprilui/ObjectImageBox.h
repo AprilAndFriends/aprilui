@@ -21,7 +21,7 @@
 
 namespace aprilui
 {
-	class Image;
+	class BaseImage;
 	
 	class apriluiExport ImageBox : public Object
 	{
@@ -35,12 +35,12 @@ namespace aprilui
 		
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		virtual HL_DEFINE_GET(Image*, image, Image);
-		virtual void setImage(Image* value);
+		virtual HL_DEFINE_GET(BaseImage*, image, Image);
+		virtual void setImage(BaseImage* value);
 		virtual HL_DEFINE_GET(hstr, imageName, ImageName);
 		virtual void setImageByName(chstr name);
 		
-		virtual harray<Image*> getUsedImages();
+		harray<BaseImage*> getUsedImages();
 
 		/// @brief Optimized version.
 		virtual bool trySetImageByName(chstr name);
@@ -51,7 +51,7 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		Image* image;
+		BaseImage* image;
 		hstr imageName;
 		
 		void _draw();

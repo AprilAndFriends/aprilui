@@ -10,8 +10,8 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
+#include "BaseImage.h"
 #include "Dataset.h"
-#include "Image.h"
 #include "ObjectProgressCircle.h"
 
 #define MAKE_VERTEX(vec2) april::TexturedVertex(rect.x + (vec2).x * rect.w, rect.y + (vec2).y * rect.h, 0.0f, (vec2).x, (vec2).y)
@@ -44,12 +44,12 @@ namespace aprilui
 		return ImageBox::getDataset();
 	}
 
-	Image* ProgressCircle::getImage()
+	BaseImage* ProgressCircle::getImage()
 	{
 		return ImageBox::getImage();
 	}
 
-	void ProgressCircle::setImage(Image* image)
+	void ProgressCircle::setImage(BaseImage* image)
 	{
 		ImageBox::setImage(image);
 	}

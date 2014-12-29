@@ -26,7 +26,7 @@ namespace aprilui
 	class apriluiExport TileImage : public Image
 	{
 	public:
-		TileImage(Texture* texture, chstr name, grect source, float tileW, float tileH);
+		TileImage(Texture* texture, chstr name, grect source);
 		~TileImage();
 		
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
@@ -37,6 +37,7 @@ namespace aprilui
 		inline void setScroll(float x, float y) { this->scroll.set(x, y); }
 		HL_DEFINE_GETSET(float, scroll.x, ScrollX);
 		HL_DEFINE_GETSET(float, scroll.y, ScrollY);
+		HL_DEFINE_ISSET(useTileCount, UseTileCount);
 
 		harray<PropertyDescription> getPropertyDescriptions();
 		
@@ -48,6 +49,7 @@ namespace aprilui
 	protected:
 		gvec2 tile;
 		gvec2 scroll;
+		bool useTileCount;
 
 		int _drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture);
 		

@@ -29,8 +29,8 @@
 namespace aprilui
 {
 	class Animator;
+	class BaseImage;
 	class Dataset;
-	class Image;
 	class Object;
 
 	static const char SeparatorParameter = ',';
@@ -81,7 +81,7 @@ namespace aprilui
 	apriluiFnExport void updateCursorPosition();
 	apriluiFnExport gvec2 getCursorPosition();
 	apriluiFnExport void setCursorPosition(gvec2 position);
-	apriluiFnExport void setCursorImage(Image* image);
+	apriluiFnExport void setCursorImage(BaseImage* image);
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
 	apriluiFnExport void drawCursor();

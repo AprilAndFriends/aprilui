@@ -33,22 +33,22 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 		
-		HL_DEFINE_GET(Image*, hoverImage, HoverImage);
-		HL_DEFINE_GET(Image*, pushedImage, PushedImage);
-		HL_DEFINE_GET(Image*, disabledImage, DisabledImage);
+		HL_DEFINE_GET(BaseImage*, hoverImage, HoverImage);
+		HL_DEFINE_GET(BaseImage*, pushedImage, PushedImage);
+		HL_DEFINE_GET(BaseImage*, disabledImage, DisabledImage);
 		HL_DEFINE_GET(hstr, hoverImageName, HoverImageName);
 		HL_DEFINE_GET(hstr, pushedImageName, PushedImageName);
 		HL_DEFINE_GET(hstr, disabledImageName, DisabledImageName);
-		HL_DEFINE_GET(Image*, normalImage, Image);
-		void setImage(Image* value);
+		HL_DEFINE_GET(BaseImage*, normalImage, Image);
+		void setImage(BaseImage* value);
 		hstr getName();
 		int getFocusIndex();
 		Object* getParent();
 		Dataset* getDataset();
 		bool isCursorInside();
-		void setHoverImage(Image* image);
-		void setPushedImage(Image* image);
-		void setDisabledImage(Image* name);
+		void setHoverImage(BaseImage* image);
+		void setPushedImage(BaseImage* image);
+		void setDisabledImage(BaseImage* name);
 		void setHoverImageByName(chstr name);
 		void setPushedImageByName(chstr name);
 		void setDisabledImageByName(chstr name);
@@ -62,7 +62,7 @@ namespace aprilui
 		/// @brief Optimized version.
 		bool trySetDisabledImageByName(chstr name);
 		
-		harray<Image*> getUsedImages();
+		harray<BaseImage*> getUsedImages();
 
 		void update(float timeDelta);
 
@@ -77,10 +77,10 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 	protected:
-		Image* normalImage;
-		Image* hoverImage;
-		Image* pushedImage;
-		Image* disabledImage;
+		BaseImage* normalImage;
+		BaseImage* hoverImage;
+		BaseImage* pushedImage;
+		BaseImage* disabledImage;
 		hstr normalImageName;
 		hstr hoverImageName;
 		hstr pushedImageName;

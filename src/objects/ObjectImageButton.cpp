@@ -9,6 +9,7 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
+#include "BaseImage.h"
 #include "Dataset.h"
 #include "Image.h"
 #include "ObjectImageButton.h"
@@ -102,10 +103,14 @@ namespace aprilui
 		// the same thing for a hover image fallback solution
 		if (enabled && this->hovered && !this->pushed && this->hoverImage == NULL && aprilui::isHoverEffectEnabled())
 		{
-			april::BlendMode blendMode = this->image->getBlendMode();
-			this->image->setBlendMode(april::BM_ADD);
-			this->image->draw(rect, april::Color(this->_getDrawColor(), this->getDerivedAlpha() / 4));
-			this->image->setBlendMode(blendMode);
+			Image* blendableImage = dynamic_cast<Image*>(this->image);
+			if (blendableImage != NULL)
+			{
+				april::BlendMode blendMode = blendableImage->getBlendMode();
+				blendableImage->setBlendMode(april::BM_ADD);
+				blendableImage->draw(rect, april::Color(this->_getDrawColor(), this->getDerivedAlpha() / 4));
+				blendableImage->setBlendMode(blendMode);
+			}
 		}
 	}
 
@@ -141,19 +146,19 @@ namespace aprilui
 		ImageBox::update(timeDelta);
 	}
 	
-	void ImageButton::setPushedImage(Image* image)
+	void ImageButton::setPushedImage(BaseImage* image)
 	{
 		this->pushedImage = image;
 		this->pushedImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ImageButton::setHoverImage(Image* image)
+	void ImageButton::setHoverImage(BaseImage* image)
 	{
 		this->hoverImage = image;
 		this->hoverImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
-	void ImageButton::setDisabledImage(Image* image)
+	void ImageButton::setDisabledImage(BaseImage* image)
 	{
 		this->disabledImage = image;
 		this->disabledImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
@@ -225,16 +230,16 @@ namespace aprilui
 		return false;
 	}
 	
-	void ImageButton::setImage(Image* image)
+	void ImageButton::setImage(BaseImage* image)
 	{
 		ImageBox::setImage(image);
 		this->normalImage = this->image;
 		this->normalImageName = this->imageName;
 	}
 	
-	harray<Image*> ImageButton::getUsedImages()
+	harray<BaseImage*> ImageButton::getUsedImages()
 	{
-		harray<Image*> images;
+		harray<BaseImage*> images = ImageBox::getUsedImages();
 		if (this->normalImage != NULL)
 		{
 			images += this->normalImage;
@@ -251,7 +256,7 @@ namespace aprilui
 		{
 			images += this->disabledImage;
 		}
-		return images;
+		return images.removed_duplicates();
 	}
 	
 	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)

@@ -39,7 +39,7 @@ namespace aprilui
 	static hmap<hstr, Dataset*> gDatasets;
 	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
-	static Image* gCursor = NULL;
+	static BaseImage* gCursor = NULL;
 	static bool cursorVisible = true;
 	static gvec2 cursorPosition;
 	static bool limitCursorToViewport = false;
@@ -401,7 +401,7 @@ namespace aprilui
 		return cursorPosition;
 	}
 	
-	void setCursorImage(Image* image)
+	void setCursorImage(BaseImage* image)
 	{
 		gCursor = image;
 	}
@@ -420,7 +420,7 @@ namespace aprilui
 	{
 		if (gCursor != NULL && cursorVisible)
 		{
-			gCursor->draw(grect(getCursorPosition(), gCursor->getSrcRect().getSize()));
+			gCursor->draw(grect(getCursorPosition(), gCursor->getSrcSize()));
 		}
 	}
 	

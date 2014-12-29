@@ -10,8 +10,8 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "BaseImage.h"
 #include "Dataset.h"
-#include "Image.h"
 #include "ObjectImageBox.h"
 
 namespace aprilui
@@ -48,21 +48,21 @@ namespace aprilui
 		return (Object::getPropertyDescriptions() + ImageBox::_propertyDescriptions);
 	}
 
-	void ImageBox::setImage(Image* image)
+	void ImageBox::setImage(BaseImage* image)
 	{
 		this->image = image;
 		if (image != NULL)
 		{
-			grect rect = image->getSrcRect();
+			gvec2 size = image->getSrcSize();
 			if (this->rect.w == 0.0f)
 			{
-				this->rect.w = rect.w;
-				this->center.x = rect.w * 0.5f;
+				this->rect.w = size.x;
+				this->center.x = size.x * 0.5f;
 			}
 			if (this->rect.h == 0.0f)
 			{
-				this->rect.h = rect.h;
-				this->center.y = this->rect.h * 0.5f;
+				this->rect.h = size.y;
+				this->center.y = size.y * 0.5f;
 			}
 			this->imageName = image->getFullName();
 		}
@@ -88,14 +88,14 @@ namespace aprilui
 		return false;
 	}
 	
-	harray<Image*> ImageBox::getUsedImages()
+	harray<BaseImage*> ImageBox::getUsedImages()
 	{
-		harray<Image*> images;
+		harray<BaseImage*> images = Object::getUsedImages();
 		if (this->image != NULL)
 		{
 			images += this->image;
 		}
-		return images;
+		return images.removed_duplicates();
 	}
 	
 	void ImageBox::_draw()
@@ -114,7 +114,7 @@ namespace aprilui
 	{
 		if (this->image != NULL)
 		{
-			this->rect.setSize(this->image->getSrcRect().getSize());
+			this->rect.setSize(this->image->getSrcSize());
 			this->resetCenter();
 		}
 	}

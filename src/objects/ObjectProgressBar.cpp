@@ -9,6 +9,7 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
+#include "BaseImage.h"
 #include "Dataset.h"
 #include "Image.h"
 #include "ObjectProgressBar.h"
@@ -48,12 +49,12 @@ namespace aprilui
 		return ImageBox::getDataset();
 	}
 
-	Image* ProgressBar::getImage()
+	BaseImage* ProgressBar::getImage()
 	{
 		return ImageBox::getImage();
 	}
 
-	void ProgressBar::setImage(Image* image)
+	void ProgressBar::setImage(BaseImage* image)
 	{
 		ImageBox::setImage(image);
 	}
@@ -68,15 +69,9 @@ namespace aprilui
 		ImageBox::setImageByName(name);
 	}
 	
-	harray<Image*> ProgressBar::getUsedImages()
+	harray<BaseImage*> ProgressBar::getUsedImages()
 	{
-		harray<Image*> progressBarImages = ProgressBase::getUsedImages(), imageBoxImages = ImageBox::getUsedImages();
-		foreach (Image*, it, imageBoxImages)
-		{
-			if (!progressBarImages.contains(*it)) progressBarImages += *it;
-		}
-		
-		return progressBarImages;
+		return (ProgressBase::getUsedImages() + ImageBox::getUsedImages()).removed_duplicates();
 	}
 
 	harray<PropertyDescription> ProgressBar::getPropertyDescriptions()
