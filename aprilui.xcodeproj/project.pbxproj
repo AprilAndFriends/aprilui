@@ -32,7 +32,6 @@
 		7F38C6B712096793002B5134 /* ObjectTextImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69D12096793002B5134 /* ObjectTextImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6B812096793002B5134 /* ObjectToggleButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69E12096793002B5134 /* ObjectToggleButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6C9120967B9002B5134 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
-		7F38C6CB120967B9002B5134 /* ObjectColoredQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */; };
 		7F38C6CD120967B9002B5134 /* ObjectEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */; };
 		7F38C6CE120967B9002B5134 /* ObjectImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */; };
 		7F38C6CF120967B9002B5134 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
@@ -200,7 +199,6 @@
 		D1522E92140F6A6B0012F290 /* ObjectButtonBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */; };
 		D1522E93140F6A6B0012F290 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB0C7AE120AE107005EA739 /* Object.cpp */; };
 		D1522E94140F6A6B0012F290 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
-		D1522E95140F6A6B0012F290 /* ObjectColoredQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */; };
 		D1522E96140F6A6B0012F290 /* ObjectEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */; };
 		D1522E97140F6A6B0012F290 /* ObjectImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */; };
 		D1522E98140F6A6B0012F290 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
@@ -246,6 +244,14 @@
 		D18CB6281902CE1C0071C391 /* ObjectScrollBarButtonForward.h in Headers */ = {isa = PBXBuildFile; fileRef = D18CB6241902CE1C0071C391 /* ObjectScrollBarButtonForward.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D18CB6291902CE1C0071C391 /* ObjectScrollBarButtonSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = D18CB6251902CE1C0071C391 /* ObjectScrollBarButtonSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1981D36140F913B0057C3AF /* hlxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1981D35140F913B0057C3AF /* hlxml.framework */; };
+		D1B0612F1A51824B0062D851 /* ObjectFilledRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B0612D1A51824B0062D851 /* ObjectFilledRect.cpp */; };
+		D1B061301A51824B0062D851 /* ObjectFilledRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B0612D1A51824B0062D851 /* ObjectFilledRect.cpp */; };
+		D1B061311A51824B0062D851 /* ObjectFilledRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B0612D1A51824B0062D851 /* ObjectFilledRect.cpp */; };
+		D1B061321A51824B0062D851 /* ObjectRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B0612E1A51824B0062D851 /* ObjectRect.cpp */; };
+		D1B061331A51824B0062D851 /* ObjectRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B0612E1A51824B0062D851 /* ObjectRect.cpp */; };
+		D1B061341A51824B0062D851 /* ObjectRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B0612E1A51824B0062D851 /* ObjectRect.cpp */; };
+		D1B061371A5182600062D851 /* ObjectFilledRect.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B061351A5182600062D851 /* ObjectFilledRect.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1B061381A5182600062D851 /* ObjectRect.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B061361A5182600062D851 /* ObjectRect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
 		D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
 		D1BA0FC716BFD81F0085EE2B /* ObjectProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -281,7 +287,6 @@
 		D1F27B42177A2FCA00E5C131 /* ObjectButtonBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */; };
 		D1F27B43177A2FCA00E5C131 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB0C7AE120AE107005EA739 /* Object.cpp */; };
 		D1F27B44177A2FCA00E5C131 /* ObjectCallbackObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */; };
-		D1F27B45177A2FCA00E5C131 /* ObjectColoredQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */; };
 		D1F27B46177A2FCA00E5C131 /* ObjectEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */; };
 		D1F27B47177A2FCA00E5C131 /* ObjectImageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */; };
 		D1F27B48177A2FCA00E5C131 /* ObjectImageButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */; };
@@ -330,7 +335,6 @@
 		7F38C69D12096793002B5134 /* ObjectTextImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectTextImageButton.h; path = include/aprilui/ObjectTextImageButton.h; sourceTree = "<group>"; };
 		7F38C69E12096793002B5134 /* ObjectToggleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectToggleButton.h; path = include/aprilui/ObjectToggleButton.h; sourceTree = "<group>"; };
 		7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectCallbackObject.cpp; sourceTree = "<group>"; };
-		7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectColoredQuad.cpp; sourceTree = "<group>"; };
 		7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectEditBox.cpp; sourceTree = "<group>"; };
 		7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectImageBox.cpp; sourceTree = "<group>"; };
 		7F38C6BF120967B9002B5134 /* ObjectImageButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectImageButton.cpp; sourceTree = "<group>"; };
@@ -455,6 +459,10 @@
 		D18CB6241902CE1C0071C391 /* ObjectScrollBarButtonForward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarButtonForward.h; path = include/aprilui/ObjectScrollBarButtonForward.h; sourceTree = SOURCE_ROOT; };
 		D18CB6251902CE1C0071C391 /* ObjectScrollBarButtonSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectScrollBarButtonSlider.h; path = include/aprilui/ObjectScrollBarButtonSlider.h; sourceTree = SOURCE_ROOT; };
 		D1981D35140F913B0057C3AF /* hlxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hlxml.framework; path = ../hltypes/hlxml/build/Release/hlxml.framework; sourceTree = "<group>"; };
+		D1B0612D1A51824B0062D851 /* ObjectFilledRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFilledRect.cpp; sourceTree = "<group>"; };
+		D1B0612E1A51824B0062D851 /* ObjectRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectRect.cpp; sourceTree = "<group>"; };
+		D1B061351A5182600062D851 /* ObjectFilledRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFilledRect.h; path = include/aprilui/ObjectFilledRect.h; sourceTree = "<group>"; };
+		D1B061361A5182600062D851 /* ObjectRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectRect.h; path = include/aprilui/ObjectRect.h; sourceTree = "<group>"; };
 		D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBar.cpp; sourceTree = "<group>"; };
 		D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBar.h; path = include/aprilui/ObjectProgressBar.h; sourceTree = "<group>"; };
 		D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyDescription.cpp; path = src/PropertyDescription.cpp; sourceTree = "<group>"; };
@@ -574,6 +582,8 @@
 		7F6D548C1201B06200A2BDF6 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				D1B0612D1A51824B0062D851 /* ObjectFilledRect.cpp */,
+				D1B0612E1A51824B0062D851 /* ObjectRect.cpp */,
 				D146B5241A273A5200002ED6 /* ObjectSelectionContainer.cpp */,
 				D146B4AC1A2711E400002ED6 /* ObjectTreeView.cpp */,
 				D146B4AD1A2711E400002ED6 /* ObjectTreeViewExpander.cpp */,
@@ -585,7 +595,6 @@
 				7FB0C7AE120AE107005EA739 /* Object.cpp */,
 				7FA3013912B647AF00F71E5E /* ObjectButtonBase.cpp */,
 				7F38C6B9120967B9002B5134 /* ObjectCallbackObject.cpp */,
-				7F38C6BB120967B9002B5134 /* ObjectColoredQuad.cpp */,
 				7F38C6BD120967B9002B5134 /* ObjectEditBox.cpp */,
 				7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */,
 				7F38C6BE120967B9002B5134 /* ObjectImageBox.cpp */,
@@ -679,6 +688,8 @@
 		C942B3F113278C3300C1D1E8 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
+				D1B061351A5182600062D851 /* ObjectFilledRect.h */,
+				D1B061361A5182600062D851 /* ObjectRect.h */,
 				D12C448F1A3583470025EBF5 /* AnimatorTileScrollerX.h */,
 				D12C44901A3583470025EBF5 /* AnimatorTileScrollerY.h */,
 				7F33B207120FE2D5004B5E89 /* Animator.h */,
@@ -846,6 +857,8 @@
 				D1147B521A3B49B500C592A4 /* ObjectGridViewCell.h in Headers */,
 				D1147B511A3B49B500C592A4 /* ObjectGridView.h in Headers */,
 				D1147B541A3B49B500C592A4 /* ObjectGridViewRowTemplate.h in Headers */,
+				D1B061371A5182600062D851 /* ObjectFilledRect.h in Headers */,
+				D1B061381A5182600062D851 /* ObjectRect.h in Headers */,
 				D12C44981A3583470025EBF5 /* TileImage.h in Headers */,
 				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
 				D12E061C1A2B79BC005ABA52 /* Cloneable.h in Headers */,
@@ -960,7 +973,6 @@
 				7FF4F1D012017ACA00F0BBB7 /* CallbackEvent.cpp in Sources */,
 				7F38C6C9120967B9002B5134 /* ObjectCallbackObject.cpp in Sources */,
 				D12C44861A35831C0025EBF5 /* BaseImage.cpp in Sources */,
-				7F38C6CB120967B9002B5134 /* ObjectColoredQuad.cpp in Sources */,
 				7F38C6CD120967B9002B5134 /* ObjectEditBox.cpp in Sources */,
 				7F38C6CE120967B9002B5134 /* ObjectImageBox.cpp in Sources */,
 				D1147B4A1A3B499C00C592A4 /* ObjectGridViewRowTemplate.cpp in Sources */,
@@ -973,6 +985,7 @@
 				7F38C6D7120967B9002B5134 /* ObjectTextImageButton.cpp in Sources */,
 				D16DF42E1A24C955005D6371 /* ObjectListBox.cpp in Sources */,
 				7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */,
+				D1B0612F1A51824B0062D851 /* ObjectFilledRect.cpp in Sources */,
 				7F38C728120967CC002B5134 /* AnimatorFrameAnimation.cpp in Sources */,
 				D146B4B71A2711E400002ED6 /* ObjectTreeViewImage.cpp in Sources */,
 				D12C44801A3583090025EBF5 /* AnimatorTileScrollerY.cpp in Sources */,
@@ -1019,6 +1032,7 @@
 				C98E1DBA14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */,
 				C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */,
 				D1147B471A3B499C00C592A4 /* ObjectGridViewRow.cpp in Sources */,
+				D1B061321A51824B0062D851 /* ObjectRect.cpp in Sources */,
 				D18CB6161902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
 				D16E990D158BE53800C058CE /* EventReceiver.cpp in Sources */,
 				D16E990F158BE53800C058CE /* Texture.cpp in Sources */,
@@ -1051,6 +1065,7 @@
 				D1522E84140F6A6B0012F290 /* AnimatorScalerY.cpp in Sources */,
 				D146B4B91A2711E400002ED6 /* ObjectTreeViewImage.cpp in Sources */,
 				D12C44821A3583090025EBF5 /* AnimatorTileScrollerY.cpp in Sources */,
+				D1B061311A51824B0062D851 /* ObjectFilledRect.cpp in Sources */,
 				D1522E85140F6A6B0012F290 /* AnimatorResizerX.cpp in Sources */,
 				D1522E86140F6A6B0012F290 /* AnimatorResizerY.cpp in Sources */,
 				D12C448B1A35831C0025EBF5 /* SkinImage.cpp in Sources */,
@@ -1069,7 +1084,6 @@
 				D1522E92140F6A6B0012F290 /* ObjectButtonBase.cpp in Sources */,
 				D1522E93140F6A6B0012F290 /* Object.cpp in Sources */,
 				D1522E94140F6A6B0012F290 /* ObjectCallbackObject.cpp in Sources */,
-				D1522E95140F6A6B0012F290 /* ObjectColoredQuad.cpp in Sources */,
 				D1147B461A3B499C00C592A4 /* ObjectGridViewCell.cpp in Sources */,
 				D1C0FC4519460B9100117F00 /* PropertyDescription.cpp in Sources */,
 				D146B4B31A2711E400002ED6 /* ObjectTreeView.cpp in Sources */,
@@ -1097,6 +1111,7 @@
 				C98E1DB714C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */,
 				C98E1DB914C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */,
 				D1147B491A3B499C00C592A4 /* ObjectGridViewRow.cpp in Sources */,
+				D1B061341A51824B0062D851 /* ObjectRect.cpp in Sources */,
 				C98E1DBB14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */,
 				C93D4A7514F288D30097AB06 /* apriluiUtil.cpp in Sources */,
 				D16E990E158BE53800C058CE /* EventReceiver.cpp in Sources */,
@@ -1129,6 +1144,7 @@
 				D1F27B35177A2FCA00E5C131 /* AnimatorScalerY.cpp in Sources */,
 				D146B4B81A2711E400002ED6 /* ObjectTreeViewImage.cpp in Sources */,
 				D12C44811A3583090025EBF5 /* AnimatorTileScrollerY.cpp in Sources */,
+				D1B061301A51824B0062D851 /* ObjectFilledRect.cpp in Sources */,
 				D1F27B36177A2FCA00E5C131 /* AnimatorResizerX.cpp in Sources */,
 				D1F27B37177A2FCA00E5C131 /* AnimatorResizerY.cpp in Sources */,
 				D12C448A1A35831C0025EBF5 /* SkinImage.cpp in Sources */,
@@ -1147,7 +1163,6 @@
 				D1F27B42177A2FCA00E5C131 /* ObjectButtonBase.cpp in Sources */,
 				D1F27B43177A2FCA00E5C131 /* Object.cpp in Sources */,
 				D1F27B44177A2FCA00E5C131 /* ObjectCallbackObject.cpp in Sources */,
-				D1F27B45177A2FCA00E5C131 /* ObjectColoredQuad.cpp in Sources */,
 				D1147B451A3B499C00C592A4 /* ObjectGridViewCell.cpp in Sources */,
 				D1C0FC4619460B9200117F00 /* PropertyDescription.cpp in Sources */,
 				D146B4B21A2711E400002ED6 /* ObjectTreeView.cpp in Sources */,
@@ -1175,6 +1190,7 @@
 				D1F27B53177A2FCA00E5C131 /* ObjectScrollBar.cpp in Sources */,
 				D1F27B54177A2FCA00E5C131 /* ObjectScrollBarH.cpp in Sources */,
 				D1147B481A3B499C00C592A4 /* ObjectGridViewRow.cpp in Sources */,
+				D1B061331A51824B0062D851 /* ObjectRect.cpp in Sources */,
 				D1F27B55177A2FCA00E5C131 /* ObjectScrollBarV.cpp in Sources */,
 				D1F27B56177A2FCA00E5C131 /* apriluiUtil.cpp in Sources */,
 				D1F27B57177A2FCA00E5C131 /* EventReceiver.cpp in Sources */,
