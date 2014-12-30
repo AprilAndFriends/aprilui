@@ -72,7 +72,7 @@ namespace aprilui
 
 	ListBoxItem* ListBox::getSelected()
 	{
-		return (is_between_ie(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
+		return (hbetweenIE(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
 	}
 
 	int ListBox::getItemCount()
@@ -91,7 +91,7 @@ namespace aprilui
 
 	void ListBox::_updateItem(int index)
 	{
-		if (is_between_ie(index, 0, this->items.size()))
+		if (hbetweenIE(index, 0, this->items.size()))
 		{
 			this->items[index]->setY(index * this->itemHeight);
 			this->items[index]->setHeight(this->itemHeight);
@@ -145,7 +145,7 @@ namespace aprilui
 
 	bool ListBox::deleteItem(int index)
 	{
-		if (!is_between_ie(index, 0, this->items.size()))
+		if (!hbetweenIE(index, 0, this->items.size()))
 		{
 			hlog::warnf(aprilui::logTag, "Cannot delete item at index '%d' in ListBox '%s', it does not exist!", index, this->name.c_str());
 			return false;
@@ -167,7 +167,7 @@ namespace aprilui
 
 	ListBoxItem* ListBox::getItemAt(int index)
 	{
-		return (is_between_ie(index, 0, this->items.size()) ? this->items[index] : NULL);
+		return (hbetweenIE(index, 0, this->items.size()) ? this->items[index] : NULL);
 	}
 
 	hstr ListBox::getProperty(chstr name)

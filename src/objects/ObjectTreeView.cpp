@@ -112,7 +112,7 @@ namespace aprilui
 
 	TreeViewNode* TreeView::getSelected()
 	{
-		return (is_between_ie(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
+		return (hbetweenIE(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
 	}
 
 	void TreeView::setSelected(harray<int> nodeIndices)
@@ -144,7 +144,7 @@ namespace aprilui
 			return true;
 		}
 		int index = nodeIndices.remove_first();
-		if (!is_between_ie(index, 0, this->nodes.size()))
+		if (!hbetweenIE(index, 0, this->nodes.size()))
 		{
 			return false;
 		}
@@ -152,7 +152,7 @@ namespace aprilui
 		while (nodeIndices.size() > 0)
 		{
 			index = nodeIndices.remove_first();
-			if (!is_between_ie(index, 0, (*node)->nodes.size()))
+			if (!hbetweenIE(index, 0, (*node)->nodes.size()))
 			{
 				*node = NULL;
 				return false;
@@ -299,7 +299,7 @@ namespace aprilui
 		{
 			offset += (*it)->_updateDisplay(offset);
 		}
-		if (is_between_ie(this->selectedIndex, 0, this->items.size()))
+		if (hbetweenIE(this->selectedIndex, 0, this->items.size()))
 		{
 			if (!this->items[this->selectedIndex]->isDerivedVisible())
 			{

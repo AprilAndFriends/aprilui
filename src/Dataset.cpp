@@ -778,7 +778,7 @@ namespace aprilui
 			if (firstLine.size() > 0)
 			{
 				int i = 0;
-				while (i < firstLine.size() && !is_between_ii((int)firstLine[i], 0, 127))
+				while (i < firstLine.size() && !hbetweenII((int)firstLine[i], 0, 127))
 				{
 					++i;
 				}

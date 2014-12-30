@@ -81,7 +81,7 @@ namespace aprilui
 
 	bool TreeViewNode::isSelected()
 	{
-		return (this->_treeView != NULL && is_between_ie(this->_treeView->selectedIndex, 0, this->_treeView->items.size()) &&
+		return (this->_treeView != NULL && hbetweenIE(this->_treeView->selectedIndex, 0, this->_treeView->items.size()) &&
 			this->_treeView->items[this->_treeView->selectedIndex] == this);
 	}
 
