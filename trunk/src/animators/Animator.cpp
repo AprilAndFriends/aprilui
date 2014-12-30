@@ -157,7 +157,7 @@ namespace aprilui
 			break;
 		case Triangle:
 			result = hmodf(time * this->speed, 1.0f);
-			if (!is_between_ie(result, 0.25f, 0.75f))
+			if (!hbetweenIE(result, 0.25f, 0.75f))
 			{
 				result = (hmodf(time * this->speed + 0.5f, 1.0f) - 0.5f) * 4 * this->amplitude;
 			}

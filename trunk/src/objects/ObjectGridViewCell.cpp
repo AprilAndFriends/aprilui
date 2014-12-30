@@ -78,7 +78,7 @@ namespace aprilui
 
 	bool GridViewCell::isSelected()
 	{
-		return (this->_gridView != NULL && is_between_ie(this->_gridView->selectedIndex, 0, this->_gridView->cells.size()) &&
+		return (this->_gridView != NULL && hbetweenIE(this->_gridView->selectedIndex, 0, this->_gridView->cells.size()) &&
 			this->_gridView->cells[this->_gridView->selectedIndex] == this);
 	}
 

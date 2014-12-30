@@ -78,7 +78,7 @@ namespace aprilui
 
 	GridViewCell* GridView::getSelected()
 	{
-		return (is_between_ie(this->selectedIndex, 0, this->cells.size()) ? this->cells[this->selectedIndex] : NULL);
+		return (hbetweenIE(this->selectedIndex, 0, this->cells.size()) ? this->cells[this->selectedIndex] : NULL);
 	}
 
 	int GridView::getRowCount()
@@ -107,7 +107,7 @@ namespace aprilui
 
 	void GridView::_updateRow(int index)
 	{
-		if (is_between_ie(index, 0, this->rows.size()))
+		if (hbetweenIE(index, 0, this->rows.size()))
 		{
 			this->rows[index]->setY(index * (this->itemHeight + this->spacingHeight));
 			this->rows[index]->setHeight(this->itemHeight);
@@ -121,7 +121,7 @@ namespace aprilui
 
 	void GridView::_updateItem(int index)
 	{
-		if (is_between_ie(index, 0, this->cells.size()))
+		if (hbetweenIE(index, 0, this->cells.size()))
 		{
 			if (this->selectedIndex != index)
 			{
@@ -179,7 +179,7 @@ namespace aprilui
 
 	bool GridView::deleteRow(int index)
 	{
-		if (!is_between_ie(index, 0, this->rows.size()))
+		if (!hbetweenIE(index, 0, this->rows.size()))
 		{
 			hlog::warnf(aprilui::logTag, "Cannot delete row at index '%d' in GridView '%s', it does not exist!", index, this->name.c_str());
 			return false;
@@ -216,12 +216,12 @@ namespace aprilui
 
 	GridViewRow* GridView::getRowAt(int index)
 	{
-		return (is_between_ie(index, 0, this->rows.size()) ? this->rows[index] : NULL);
+		return (hbetweenIE(index, 0, this->rows.size()) ? this->rows[index] : NULL);
 	}
 
 	GridViewCell* GridView::getItemAt(int index)
 	{
-		return (is_between_ie(index, 0, this->cells.size()) ? this->cells[index] : NULL);
+		return (hbetweenIE(index, 0, this->cells.size()) ? this->cells[index] : NULL);
 	}
 
 	hstr GridView::getProperty(chstr name)

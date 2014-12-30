@@ -69,7 +69,7 @@ namespace aprilui
 
 	bool ListBoxItem::isSelected()
 	{
-		return (this->_listBox != NULL && is_between_ie(this->_listBox->selectedIndex, 0, this->_listBox->items.size()) &&
+		return (this->_listBox != NULL && hbetweenIE(this->_listBox->selectedIndex, 0, this->_listBox->items.size()) &&
 			this->_listBox->items[this->_listBox->selectedIndex] == this);
 	}
 
