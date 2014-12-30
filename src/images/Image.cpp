@@ -198,7 +198,7 @@ namespace aprilui
 		if (name == "color_mode_factor")	return this->getColorModeFactor();
 		if (name == "texture")
 		{
-			return (this->texture != NULL ? hdir::basename(this->texture->getOriginalFilename()) : "");
+			return (this->texture != NULL ? hdir::baseName(this->texture->getOriginalFilename()) : "");
 		}
 		if (name == "dataset")
 		{
