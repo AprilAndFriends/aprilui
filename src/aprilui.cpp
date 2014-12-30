@@ -286,7 +286,7 @@ namespace aprilui
 	
 	void registerObjectFactory(chstr typeName, Object* (*factory)(chstr))
 	{
-		if (gObjectFactories.has_key(typeName))
+		if (gObjectFactories.hasKey(typeName))
 		{
 			throw ObjectFactoryExistsException("Object", typeName);
 		}
@@ -295,7 +295,7 @@ namespace aprilui
 	
 	void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr))
 	{
-		if (gAnimatorFactories.has_key(typeName))
+		if (gAnimatorFactories.hasKey(typeName))
 		{
 			throw ObjectFactoryNotExistsException("Animator", typeName);
 		}
@@ -304,20 +304,20 @@ namespace aprilui
 	
 	void unregisterObjectFactory(chstr typeName)
 	{
-		if (!gObjectFactories.has_key(typeName))
+		if (!gObjectFactories.hasKey(typeName))
 		{
 			throw ObjectFactoryNotExistsException("Object", typeName);
 		}
-		gObjectFactories.remove_key(typeName);
+		gObjectFactories.removeKey(typeName);
 	}
 	
 	void unregisterAnimatorFactory(chstr typeName)
 	{
-		if (!gAnimatorFactories.has_key(typeName))
+		if (!gAnimatorFactories.hasKey(typeName))
 		{
 			throw ObjectFactoryNotExistsException("Animator", typeName);
 		}
-		gAnimatorFactories.remove_key(typeName);
+		gAnimatorFactories.removeKey(typeName);
 	}
 
 	const hmap<hstr, Object* (*)(chstr)>& getObjectFactories()
@@ -332,17 +332,17 @@ namespace aprilui
 
 	bool hasObjectFactory(chstr typeName)
 	{
-		return gObjectFactories.has_key(typeName);
+		return gObjectFactories.hasKey(typeName);
 	}
 	
 	bool hasAnimatorFactory(chstr typeName)
 	{
-		return gAnimatorFactories.has_key(typeName);
+		return gAnimatorFactories.hasKey(typeName);
 	}
 	
 	Object* createObject(chstr typeName, chstr name)
 	{
-		if (gObjectFactories.has_key(typeName))
+		if (gObjectFactories.hasKey(typeName))
 		{
 			return (*gObjectFactories[typeName])(name);
 		}
@@ -353,7 +353,7 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'ColoredQuad' is deprecated. Use 'FilledRect' instead.");
 			switchedTypeName = "FilledRect";
 		}
-		if (gObjectFactories.has_key(switchedTypeName))
+		if (gObjectFactories.hasKey(switchedTypeName))
 		{
 			return (*gObjectFactories[switchedTypeName])(name);
 		}
@@ -363,7 +363,7 @@ namespace aprilui
 	
 	Animator* createAnimator(chstr typeName, chstr name)
 	{
-		if (gAnimatorFactories.has_key(typeName))
+		if (gAnimatorFactories.hasKey(typeName))
 		{
 			return (*gAnimatorFactories[typeName])(name);
 		}
@@ -379,7 +379,7 @@ namespace aprilui
 			hlog::warn(aprilui::logTag, "'TiledScrollerY' is deprecated. Use 'TileScrollerY' instead.");
 			switchedTypeName = "TileScrollerY";
 		}
-		if (gAnimatorFactories.has_key(switchedTypeName))
+		if (gAnimatorFactories.hasKey(switchedTypeName))
 		{
 			return (*gAnimatorFactories[switchedTypeName])(name);
 		}
@@ -439,7 +439,7 @@ namespace aprilui
 	
 	Dataset* getDatasetByName(chstr name)
 	{
-		if (!gDatasets.has_key(name))
+		if (!gDatasets.hasKey(name))
 		{
 			throw Exception("Dataset '" + name + "' doesn't exist!");
 		}
@@ -450,7 +450,7 @@ namespace aprilui
 	{
 		if (!registerLock)
 		{
-			if (gDatasets.has_key(name))
+			if (gDatasets.hasKey(name))
 			{
 				throw Exception("Unable to register dataset '" + name + "', another dataset with the same name exists!");
 			}
@@ -462,7 +462,7 @@ namespace aprilui
 	{
 		if (!registerLock)
 		{
-			gDatasets.remove_key(name);
+			gDatasets.removeKey(name);
 		}
 	}
 	
@@ -578,7 +578,7 @@ namespace aprilui
 	
 	float getTextureExtensionScale(chstr extension)
 	{
-		return (extensionScales.has_key(extension) ? extensionScales[extension] : 1.0f);
+		return (extensionScales.hasKey(extension) ? extensionScales[extension] : 1.0f);
 	}
 	
 	float findTextureExtensionScale(chstr filename)

@@ -83,12 +83,12 @@ namespace aprilui
 		template <class T>
 		inline hmap<hstr, T> getObjectsByType()
 		{
-			return this->objects.dyn_cast_value<hstr, T>();
+			return this->objects.dynamicCastValues<hstr, T>();
 		}
 		template <class T>
 		inline hmap<hstr, T> getAnimatorsByType()
 		{
-			return this->animators.dyn_cast_value<hstr, T>();
+			return this->animators.dynamicCastValues<hstr, T>();
 		}
 
 		void updateTextures(float timeDelta);
