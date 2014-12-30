@@ -49,7 +49,7 @@ namespace aprilui
 		this->nullImage = NULL;
 		if (this->name == "")
 		{
-			this->name = hrdir::baseName(hresource::no_extension(this->filename));
+			this->name = hrdir::baseName(hresource::withoutExtension(this->filename));
 		}
 		this->nullImage = new NullImage();
 		this->nullImage->dataset = this;
@@ -141,7 +141,7 @@ namespace aprilui
 	{
 		if (name != "" && useNameBasePath)
 		{
-			hstr newFilename = name + "." + hresource::extension_of(filename);
+			hstr newFilename = name + "." + hresource::extensionOf(filename);
 			if (filename.ends_with(newFilename))
 			{
 				return hrdir::normalize(filename.replace(newFilename, ""));
@@ -767,7 +767,7 @@ namespace aprilui
 		foreach (hstr, it, files)
 		{
 			f.open(*it);
-			lines = f.read_lines();
+			lines = f.readLines();
 			f.close();
 			if (lines.size() == 0)
 			{
