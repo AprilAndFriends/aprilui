@@ -100,7 +100,7 @@ namespace aprilui
 
 	bool EventReceiver::unregisterEvent(chstr type)
 	{
-		if (this->events.has_key(type))
+		if (this->events.hasKey(type))
 		{
 			Event* event = this->events[type];
 			if (this->dataset != NULL)
@@ -108,7 +108,7 @@ namespace aprilui
 				this->dataset->removeCallbackFromQueue(event);
 			}
 			delete event;
-			this->events.remove_key(type);
+			this->events.removeKey(type);
 			return true;
 		}
 		return false;
@@ -116,7 +116,7 @@ namespace aprilui
 
 	bool EventReceiver::isEventRegistered(chstr type)
 	{
-		return this->events.has_key(type);
+		return this->events.hasKey(type);
 	}
 
 	void EventReceiver::notifyEvent(chstr type, EventArgs* args)
@@ -125,7 +125,7 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode)
 	{
-		if (this->events.has_key(type))
+		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(this, keyCode, aprilui::getCursorPosition(), "", NULL));
 			return true;
@@ -135,7 +135,7 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode, chstr string)
 	{
-		if (this->events.has_key(type))
+		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(this, keyCode, aprilui::getCursorPosition(), string, NULL));
 			return true;
@@ -145,7 +145,7 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
 	{
-		if (this->events.has_key(type))
+		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(this, keyCode, position, string, userData));
 			return true;
@@ -155,7 +155,7 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
 	{
-		if (this->events.has_key(type))
+		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(this, buttonCode, string, userData));
 			return true;
@@ -165,7 +165,7 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, chstr string, void* userData)
 	{
-		if (this->events.has_key(type))
+		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(this, string, userData));
 			return true;
@@ -175,7 +175,7 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, void* userData)
 	{
-		if (this->events.has_key(type))
+		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(this, userData));
 			return true;

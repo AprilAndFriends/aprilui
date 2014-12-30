@@ -157,7 +157,7 @@ namespace aprilui
 	
 	void Dataset::destroyObjects(BaseObject* root)
 	{
-		if (!this->objects.has_key(root->getName()) && !this->animators.has_key(root->getName()))
+		if (!this->objects.hasKey(root->getName()) && !this->animators.hasKey(root->getName()))
 		{
 			// this object could be from another dataset, so check that first.
 			Dataset* dataset = root->getDataset();
@@ -185,14 +185,14 @@ namespace aprilui
 			{
 				object->setFocused(false);
 			}
-			this->objects.remove_key(root->getName());
+			this->objects.removeKey(root->getName());
 		}
 		else
 		{
 			Animator* animator = dynamic_cast<Animator*>(root);
 			if (animator != NULL)
 			{
-				this->animators.remove_key(root->getName());
+				this->animators.removeKey(root->getName());
 			}
 		}
 		delete root;
@@ -201,43 +201,43 @@ namespace aprilui
 	void Dataset::_destroyTexture(Texture* texture)
 	{
 		hstr filename = texture->getFilename();
-		if (!this->textures.has_key(filename))
+		if (!this->textures.hasKey(filename))
 		{
 			throw ObjectNotExistsException("Texture", filename, this->name);
 		}
-		this->textures.remove_key(filename);
+		this->textures.removeKey(filename);
 		delete texture;
 	}
 	
 	void Dataset::_destroyImage(BaseImage* image)
 	{
 		hstr name = image->getName();
-		if (!this->images.has_key(name))
+		if (!this->images.hasKey(name))
 		{
 			throw ObjectNotExistsException("Image", name, this->name);
 		}
-		this->images.remove_key(name);
+		this->images.removeKey(name);
 		delete image;
 	}
 	
 	void Dataset::_destroyTexture(chstr name)
 	{
-		if (!this->textures.has_key(name))
+		if (!this->textures.hasKey(name))
 		{
 			throw ObjectNotExistsException("Texture", name, this->name);
 		}
 		delete this->textures[name];
-		this->textures.remove_key(name);
+		this->textures.removeKey(name);
 	}
 	
 	void Dataset::_destroyImage(chstr name)
 	{
-		if (!this->images.has_key(name))
+		if (!this->images.hasKey(name))
 		{
 			throw ObjectNotExistsException("Image", name, this->name);
 		}
 		delete this->images[name];
-		this->images.remove_key(name);
+		this->images.removeKey(name);
 	}
 
 	hstr Dataset::_makeLocalizedTextureName(chstr filename)
@@ -260,7 +260,7 @@ namespace aprilui
 		hstr filename = hrdir::normalize(node->pstr("filename"));
 		hstr filepath = hrdir::normalize(hrdir::joinPath(this->filePath, filename, false));
 		hstr textureName = hrdir::baseName(filename);
-		if (this->textures.has_key(textureName))
+		if (this->textures.hasKey(textureName))
 		{
 			throw ObjectExistsException("Texture", textureName, this->name);
 		}
@@ -318,7 +318,7 @@ namespace aprilui
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
 		{
-			if (this->images.has_key(textureName))
+			if (this->images.hasKey(textureName))
 			{
 				throw ObjectExistsException("Texture", filename, this->name);
 			}
@@ -337,7 +337,7 @@ namespace aprilui
 				{
 					hlog::warn(aprilui::logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
-					if (this->images.has_key(name))
+					if (this->images.hasKey(name))
 					{
 						throw ObjectExistsException("Image", name, this->name);
 					}
@@ -390,7 +390,7 @@ namespace aprilui
 				else
 				{
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
-					if (this->images.has_key(name))
+					if (this->images.hasKey(name))
 					{
 						throw ObjectExistsException("Image", name, this->name);
 					}
@@ -431,7 +431,7 @@ namespace aprilui
 	{
 		hstr name = node->pstr("name");
 		hstr refname;
-		if (this->images.has_key(name))
+		if (this->images.hasKey(name))
 		{
 			throw ObjectExistsException("CompositeImage", name, this->name);
 		}
@@ -529,7 +529,7 @@ namespace aprilui
 		{
 			return NULL;
 		}
-		if (this->objects.has_key(objectName))
+		if (this->objects.hasKey(objectName))
 		{
 			throw ObjectExistsException("Object", objectName, this->name);
 		}
@@ -683,7 +683,7 @@ namespace aprilui
 	
 	hlxml::Document* Dataset::_openDocument(chstr filename)
 	{
-		hlxml::Document* document = this->includeDocuments.try_get_by_key(filename, NULL);
+		hlxml::Document* document = this->includeDocuments.tryGet(filename, NULL);
 		if (document == NULL)
 		{
 			document = new hlxml::Document(filename);
@@ -869,7 +869,7 @@ namespace aprilui
 		foreach (BaseObject*, it, objects)
 		{
 			name = (*it)->getName();
-			if (this->objects.has_key(name) || this->animators.has_key(name))
+			if (this->objects.hasKey(name) || this->animators.hasKey(name))
 			{
 				throw ObjectExistsException("Object", name, this->name);
 			}
@@ -893,8 +893,8 @@ namespace aprilui
 	
 	void Dataset::unregisterObjects(BaseObject* root)
 	{
-		bool hasObject = this->objects.has_key(root->getName());
-		bool hasAnimator = this->animators.has_key(root->getName());
+		bool hasObject = this->objects.hasKey(root->getName());
+		bool hasAnimator = this->animators.hasKey(root->getName());
 		if (!hasObject && !hasAnimator)
 		{
 			// this object could be from another dataset, so check that first.
@@ -919,11 +919,11 @@ namespace aprilui
 			{
 				focusedRoot->setFocused(false);
 			}
-			this->objects.remove_key(root->getName());
+			this->objects.removeKey(root->getName());
 		}
 		else if (hasAnimator)
 		{
-			this->animators.remove_key(root->getName());
+			this->animators.removeKey(root->getName());
 		}
 		root->dataset = NULL;
 	}
@@ -931,7 +931,7 @@ namespace aprilui
 	void Dataset::registerImage(BaseImage* image)
 	{
 		hstr name = image->getName();
-		if (this->images.has_key(name))
+		if (this->images.hasKey(name))
 		{
 			throw ObjectExistsException("Image", name, this->name);
 		}
@@ -942,18 +942,18 @@ namespace aprilui
 	void Dataset::unregisterImage(BaseImage* image)
 	{
 		hstr name = image->getName();
-		if (!this->images.has_key(name))
+		if (!this->images.hasKey(name))
 		{
 			throw ObjectNotExistsException("Image", name, this->name);
 		}
-		this->images.remove_key(name);
+		this->images.removeKey(name);
 		image->dataset = NULL;
 	}
 	
 	void Dataset::registerTexture(Texture* texture)
 	{
 		hstr name = texture->getFilename();
-		if (this->textures.has_key(name))
+		if (this->textures.hasKey(name))
 		{
 			throw ObjectExistsException("Texture", name, this->name);
 		}
@@ -963,11 +963,11 @@ namespace aprilui
 	void Dataset::unregisterTexture(Texture* texture)
 	{
 		hstr name = texture->getFilename();
-		if (!this->textures.has_key(name))
+		if (!this->textures.hasKey(name))
 		{
 			throw ObjectNotExistsException("Texture", name, this->name);
 		}
-		this->textures.remove_key(name);
+		this->textures.removeKey(name);
 	}
 	
 	bool Dataset::isAnimated()
@@ -1013,7 +1013,7 @@ namespace aprilui
 		int dot = name.find('.');
 		if (dot < 0)
 		{
-			if (!this->objects.has_key(name))
+			if (!this->objects.hasKey(name))
 			{
 				throw ObjectNotExistsException("Object", name, this->name);
 			}
@@ -1036,7 +1036,7 @@ namespace aprilui
 		int dot = name.find('.');
 		if (dot < 0)
 		{
-			if (!this->animators.has_key(name))
+			if (!this->animators.hasKey(name))
 			{
 				throw ObjectNotExistsException("Animator", name, this->name);
 			}
@@ -1066,12 +1066,12 @@ namespace aprilui
 	
 	bool Dataset::hasImage(chstr name)
 	{
-		return this->images.has_key(name);
+		return this->images.hasKey(name);
 	}
 	
 	bool Dataset::hasTexture(chstr name)
 	{
-		return this->textures.has_key(name);
+		return this->textures.hasKey(name);
 	}
 	
 	Object* Dataset::tryGetObject(chstr name)
@@ -1079,7 +1079,7 @@ namespace aprilui
 		int dot = name.find('.');
 		if (dot < 0)
 		{
-			return this->objects.try_get_by_key(name, NULL);
+			return this->objects.tryGet(name, NULL);
 		}
 		Dataset* dataset = NULL;
 		try
@@ -1098,7 +1098,7 @@ namespace aprilui
 		int dot = name.find('.');
 		if (dot < 0)
 		{
-			return this->animators.try_get_by_key(name, NULL);
+			return this->animators.tryGet(name, NULL);
 		}
 		Dataset* dataset = NULL;
 		try
@@ -1114,7 +1114,7 @@ namespace aprilui
 
 	Texture* Dataset::getTexture(chstr name)
 	{
-		if (!this->textures.has_key(name))
+		if (!this->textures.hasKey(name))
 		{
 			throw ObjectNotExistsException("Texture", name, this->name);
 		}
@@ -1128,7 +1128,7 @@ namespace aprilui
 		{
 			return this->nullImage;
 		}
-		if (this->images.has_key(name))
+		if (this->images.hasKey(name))
 		{
 			image = this->images[name];
 		}
@@ -1158,7 +1158,7 @@ namespace aprilui
 		int dot = textKey.find('.');
 		if (dot < 0)
 		{
-			if (!this->texts.has_key(textKey))
+			if (!this->texts.hasKey(textKey))
 			{
 				if (text != NULL)
 				{
@@ -1210,7 +1210,7 @@ namespace aprilui
 	
 	void Dataset::triggerCallback(chstr name)
 	{
-		if (this->callbacks.has_key(name))
+		if (this->callbacks.hasKey(name))
 		{
 			(*this->callbacks[name])();
 		}
