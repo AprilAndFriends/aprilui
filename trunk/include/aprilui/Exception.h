@@ -13,7 +13,7 @@
 #ifndef APRILUI_EXCEPTION_H
 #define APRILUI_EXCEPTION_H
 
-#include <hltypes/exception.h>
+#include <hltypes/hexception.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hltypesUtil.h>
 
