@@ -49,7 +49,7 @@ namespace aprilui
 		this->nullImage = NULL;
 		if (this->name == "")
 		{
-			this->name = hrdir::basename(hresource::no_extension(this->filename));
+			this->name = hrdir::baseName(hresource::no_extension(this->filename));
 		}
 		this->nullImage = new NullImage();
 		this->nullImage->dataset = this;
@@ -147,7 +147,7 @@ namespace aprilui
 				return hrdir::normalize(filename.replace(newFilename, ""));
 			}
 		}
-		return hrdir::normalize(hrdir::basedir(filename));
+		return hrdir::normalize(hrdir::baseDir(filename));
 	}
 	
 	void Dataset::destroyObjects(chstr rootName)
@@ -245,7 +245,7 @@ namespace aprilui
 		hstr localization = aprilui::getLocalization();
 		if (localization != "")
 		{
-			hstr locpath = hrdir::join_path(hrdir::join_path(hrdir::basedir(filename), localization), hrdir::basename(filename));
+			hstr locpath = hrdir::joinPath(hrdir::joinPath(hrdir::baseDir(filename), localization), hrdir::baseName(filename));
 			locpath = april::rendersys->findTextureResource(locpath);
 			if (locpath != "")
 			{
@@ -258,8 +258,8 @@ namespace aprilui
 	void Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
-		hstr filepath = hrdir::normalize(hrdir::join_path(this->filePath, filename, false));
-		hstr textureName = hrdir::basename(filename);
+		hstr filepath = hrdir::normalize(hrdir::joinPath(this->filePath, filename, false));
+		hstr textureName = hrdir::baseName(filename);
 		if (this->textures.has_key(textureName))
 		{
 			throw ObjectExistsException("Texture", textureName, this->name);
@@ -504,7 +504,7 @@ namespace aprilui
 			{
 				offset.set(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
 			}
-			this->parseObjectInclude(hrdir::join_path(this->filePath, node->pstr("path"), false), parent,
+			this->parseObjectInclude(hrdir::joinPath(this->filePath, node->pstr("path"), false), parent,
 				node->pstr("name_prefix", "") + namePrefix, nameSuffix + node->pstr("name_suffix", ""), offset);
 			return NULL;
 		}
@@ -631,7 +631,7 @@ namespace aprilui
 			this->filePath = originalFilePath;
 			return;
 		}
-		hstr extension = hrdir::basename(path).replace("*", "");
+		hstr extension = hrdir::baseName(path).replace("*", "");
 		harray<hstr> contents = hrdir::files(this->filePath, true).sorted();
 		foreach (hstr, it, contents)
 		{
@@ -666,17 +666,17 @@ namespace aprilui
 			this->parseObjectIncludeFile(path, parent, namePrefix, nameSuffix, offset);
 			return;
 		}
-		hstr basedir = hrdir::basedir(path);
-		hstr filename = path(basedir.size() + 1, -1);
+		hstr baseDir = hrdir::baseDir(path);
+		hstr filename = path(baseDir.size() + 1, -1);
 		hstr left;
 		hstr right;
 		filename.split("*", left, right);
-		harray<hstr> contents = hrdir::files(basedir).sorted();
+		harray<hstr> contents = hrdir::files(baseDir).sorted();
 		foreach (hstr, it, contents)
 		{
 			if ((*it).starts_with(left) && (*it).ends_with(right))
 			{
-				this->parseObjectIncludeFile(hrdir::join_path(basedir, (*it), false), parent, "", "", gvec2());
+				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, "", "", gvec2());
 			}
 		}
 	}
@@ -714,7 +714,7 @@ namespace aprilui
 			if		(*node == "Texture")		parseTexture(node);
 			else if	(*node == "CompositeImage")	parseCompositeImage(node);
 			else if	(*node == "Object")			parseObject(node);
-			else if	(*node == "Include")		parseGlobalInclude(hrdir::join_path(hrdir::basedir(path), node->pstr("path"), false));
+			else if	(*node == "Include")		parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
 			else if	(*node == "TextureGroup")	parseTextureGroup(node);
 			else
 			{
@@ -746,11 +746,11 @@ namespace aprilui
 
 	hstr Dataset::_makeTextsPath()
 	{
-		hstr filepathPrefix = hrdir::join_path(this->filePath, (this->textsPath != "" ? this->textsPath : aprilui::getDefaultTextsPath()), false);
-		hstr filepath = hrdir::normalize(hrdir::join_path(filepathPrefix, aprilui::getLocalization(), false));
+		hstr filepathPrefix = hrdir::joinPath(this->filePath, (this->textsPath != "" ? this->textsPath : aprilui::getDefaultTextsPath()), false);
+		hstr filepath = hrdir::normalize(hrdir::joinPath(filepathPrefix, aprilui::getLocalization(), false));
 		if (!hrdir::exists(filepath))
 		{
-			filepath = hrdir::normalize(hrdir::join_path(filepathPrefix, aprilui::getDefaultLocalization(), false));
+			filepath = hrdir::normalize(hrdir::joinPath(filepathPrefix, aprilui::getDefaultLocalization(), false));
 		}
 		return filepath;
 	}
