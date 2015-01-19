@@ -144,7 +144,7 @@ namespace aprilui
 			T object = dynamic_cast<T>(this->getObject(name));
 			if (object == NULL)
 			{
-				throw InvalidObjectTypeCast("Object", name, this->getName());
+				_throwInvalidObjectTypeCast("Object", name, this->getName());
 			}
 			return object;
 		}
@@ -175,7 +175,7 @@ namespace aprilui
 			T animator = dynamic_cast<T>(this->getAnimator(name));
 			if (animator == NULL)
 			{
-				throw InvalidObjectTypeCast("Animator", name, this->getName());
+				_throwInvalidObjectTypeCast("Animator", name, this->getName());
 			}
 			return animator;
 		}
@@ -263,7 +263,8 @@ namespace aprilui
 		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
 		bool _getCompositeTextKeyFormatIndexes(ustr format, harray<int>& indexes);
 		harray<ustr> _getArgEntries(ustr string);
-
+		///! this function is here to silence linker warnings on LLVM compiler...
+		void _throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName);
 	};
 
 }
