@@ -1674,4 +1674,8 @@ namespace aprilui
 		return result;
 	}
 
+	void Dataset::_throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName)
+	{
+		throw InvalidObjectTypeCast(typeName, objName, datasetName);
+	}
 }
