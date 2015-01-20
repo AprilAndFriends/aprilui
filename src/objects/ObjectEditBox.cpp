@@ -189,9 +189,9 @@ namespace aprilui
 		if (newValue.size() > 0 && this->filter.size() > 0)
 		{
 			std::basic_string<unsigned int> ustr = newValue.u_str();
-			harray<unsigned int> uText(ustr.c_str(), ustr.size());
+			harray<unsigned int> uText(ustr.c_str(), (int)ustr.size());
 			ustr = this->filter.u_str();
-			harray<unsigned int> uFilter(ustr.c_str(), ustr.size());
+			harray<unsigned int> uFilter(ustr.c_str(), (int)ustr.size());
 			uFilter |= '\n'; // this is for multiline
 			uText &= uFilter; // intersect, remove from first all that are not in second
 			newValue = hstr::from_unicode(uText);
