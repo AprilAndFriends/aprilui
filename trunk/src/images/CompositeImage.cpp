@@ -20,6 +20,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> CompositeImage::_propertyDescriptions;
+
 	CompositeImage::CompositeImage(chstr name, gvec2 size) : BaseImage(name), restoreClipRects(true)
 	{
 		this->size = size;
@@ -43,6 +45,15 @@ namespace aprilui
 
 	CompositeImage::~CompositeImage()
 	{
+	}
+
+	harray<PropertyDescription> CompositeImage::getPropertyDescriptions()
+	{
+		if (CompositeImage::_propertyDescriptions.size() == 0)
+		{
+			CompositeImage::_propertyDescriptions += PropertyDescription("restore_clip_rects", PropertyDescription::BOOL);
+		}
+		return (CompositeImage::_propertyDescriptions + BaseImage::getPropertyDescriptions());
 	}
 
 	void CompositeImage::addImageRef(BaseImage* image, grect rect)
@@ -103,4 +114,17 @@ namespace aprilui
 		hlog::warn(aprilui::logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}
 	
+	hstr CompositeImage::getProperty(chstr name)
+	{
+		if (name == "restore_clip_rects")	return this->isRestoreClipRects();
+		return BaseImage::getProperty(name);
+	}
+	
+	bool CompositeImage::setProperty(chstr name, chstr value)
+	{
+		if		(name == "restore_clip_rects")	this->setRestoreClipRects(value);
+		else return BaseImage::setProperty(name, value);
+		return true;
+	}
+
 }

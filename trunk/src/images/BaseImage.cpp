@@ -44,6 +44,9 @@ namespace aprilui
 			BaseImage::_propertyDescriptions += PropertyDescription("name", PropertyDescription::STRING);
 			BaseImage::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::STRING);
 			BaseImage::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::STRING);
+			BaseImage::_propertyDescriptions += PropertyDescription("size", PropertyDescription::GVEC2);
+			BaseImage::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
+			BaseImage::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
 			BaseImage::_propertyDescriptions += PropertyDescription("clip_rect", PropertyDescription::GRECT);
 			BaseImage::_propertyDescriptions += PropertyDescription("clip_position", PropertyDescription::GVEC2);
 			BaseImage::_propertyDescriptions += PropertyDescription("clip_size", PropertyDescription::GVEC2);
@@ -144,6 +147,9 @@ namespace aprilui
 		{
 			return (this->dataset != NULL ? this->dataset->getName() : "");
 		}
+		if (name == "size")				return april::gvec2ToHstr(this->getSrcSize());
+		if (name == "w")				return this->getSrcWidth();
+		if (name == "h")				return this->getSrcHeight();
 		if (name == "clip_rect")		return april::grectToHstr(this->getClipRect());
 		if (name == "clip_position")	return april::gvec2ToHstr(this->getClipRect().getPosition());
 		if (name == "clip_size")		return april::gvec2ToHstr(this->getClipRect().getSize());
@@ -156,7 +162,10 @@ namespace aprilui
 
 	bool BaseImage::setProperty(chstr name, chstr value)
 	{
-		if		(name == "clip_rect")		this->setClipRect(april::hstrToGrect(value));
+		if		(name == "size")			this->setSrcSize(april::hstrToGvec2(value));
+		else if	(name == "w")				this->setSrcWidth(value);
+		else if	(name == "h")				this->setSrcHeight(value);
+		else if (name == "clip_rect")		this->setClipRect(april::hstrToGrect(value));
 		else if (name == "clip_position")	this->clipRect.setPosition(april::hstrToGvec2(value));
 		else if (name == "clip_size")		this->clipRect.setSize(april::hstrToGvec2(value));
 		else if (name == "clip_x")			this->setClipX(value);
