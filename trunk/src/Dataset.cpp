@@ -1010,7 +1010,7 @@ namespace aprilui
 	
 	Object* Dataset::getObject(chstr name)
 	{
-		int dot = name.find('.');
+		int dot = (int)name.find('.');
 		if (dot < 0)
 		{
 			if (!this->objects.hasKey(name))
@@ -1033,7 +1033,7 @@ namespace aprilui
 
 	Animator* Dataset::getAnimator(chstr name)
 	{
-		int dot = name.find('.');
+		int dot = (int)name.find('.');
 		if (dot < 0)
 		{
 			if (!this->animators.hasKey(name))
@@ -1076,7 +1076,7 @@ namespace aprilui
 	
 	Object* Dataset::tryGetObject(chstr name)
 	{
-		int dot = name.find('.');
+		int dot = (int)name.find('.');
 		if (dot < 0)
 		{
 			return this->objects.tryGet(name, NULL);
@@ -1095,7 +1095,7 @@ namespace aprilui
 
 	Animator* Dataset::tryGetAnimator(chstr name)
 	{
-		int dot = name.find('.');
+		int dot = (int)name.find('.');
 		if (dot < 0)
 		{
 			return this->animators.tryGet(name, NULL);
@@ -1134,7 +1134,7 @@ namespace aprilui
 		}
 		if (image == NULL)
 		{
-			int dot = name.find('.');
+			int dot = (int)name.find('.');
 			if (dot < 0)
 			{
 				throw ObjectNotExistsException("Image", name, this->name);
@@ -1155,7 +1155,7 @@ namespace aprilui
 
 	bool Dataset::_findTextEntry(chstr textKey, hstr* text)
 	{
-		int dot = textKey.find('.');
+		int dot = (int)textKey.find('.');
 		if (dot < 0)
 		{
 			if (!this->texts.hasKey(textKey))
@@ -1421,7 +1421,7 @@ namespace aprilui
 			}
 			return this->getTextEntry(key);
 		}
-		int index = chars.find_first_of('}');
+		int index = (int)chars.find_first_of('}');
 		if (index < 0)
 		{
 			hlog::errorf(aprilui::logTag, "Could not parse formatted key '%s'.", key.c_str());
@@ -1443,7 +1443,7 @@ namespace aprilui
 			if (argString.size() > 0)
 			{
 				cstr = argString.c_str();
-				int i = argString.size() - 1;
+				int i = (int)argString.size() - 1;
 				while (i >= 0 && cstr[i] == ' ')
 				{
 					--i;
@@ -1481,8 +1481,8 @@ namespace aprilui
 		int closeIndex;
 		while (argString.size() > 0)
 		{
-			openIndex = argString.find_first_of('{');
-			closeIndex = argString.find_first_of('}');
+			openIndex = (int)argString.find_first_of('{');
+			closeIndex = (int)argString.find_first_of('}');
 			if (openIndex < 0 && closeIndex < 0)
 			{
 				args += this->_getArgEntries(argString);
@@ -1518,7 +1518,7 @@ namespace aprilui
 		harray<int> indexes;
 		while (format.size() > 0)
 		{
-			index = format.find_first_of('%');
+			index = (int)format.find_first_of('%');
 			if (index < 0)
 			{
 				preprocessedFormat += format;
@@ -1600,14 +1600,14 @@ namespace aprilui
 			format = format.substr((*it) + 2, format.size() - (*it) - 2);
 		}
 		preResult += format;
-		int index = preResult.find_first_of('%');
+		int index = (int)preResult.find_first_of('%');
 		while (index >= 0 && index < (int)preResult.size() - 1)
 		{
 			if (preResult[index + 1] == '%')
 			{
 				preResult.erase(index + 1, 1);
 			}
-			index = preResult.find_first_of('%', index + 1);
+			index = (int)preResult.find_first_of('%', index + 1);
 		}
 		result = hstr::from_unicode(preResult.c_str());
 		return true;
@@ -1621,7 +1621,7 @@ namespace aprilui
 		int currentIndex = 0;
 		while (format.size() > 0)
 		{
-			index = format.find_first_of('%');
+			index = (int)format.find_first_of('%');
 			if (index < 0)
 			{
 				break;
@@ -1656,7 +1656,7 @@ namespace aprilui
 		int index;
 		while (true)
 		{
-			index = string.find_first_of(' ');
+			index = (int)string.find_first_of(' ');
 			if (index < 0)
 			{
 				break;
