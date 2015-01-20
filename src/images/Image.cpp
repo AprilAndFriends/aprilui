@@ -60,11 +60,8 @@ namespace aprilui
 		{
 			Image::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::GRECT);
 			Image::_propertyDescriptions += PropertyDescription("position", PropertyDescription::GVEC2);
-			Image::_propertyDescriptions += PropertyDescription("size", PropertyDescription::GVEC2);
 			Image::_propertyDescriptions += PropertyDescription("x", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
 			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::HEXCOLOR);
 			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::BOOL);
 			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::ENUM);
@@ -160,11 +157,8 @@ namespace aprilui
 	{
 		if (name == "rect")					return april::grectToHstr(this->getSrcRect());
 		if (name == "position")				return april::gvec2ToHstr(this->getSrcRect().getPosition());
-		if (name == "size")					return april::gvec2ToHstr(this->getSrcRect().getSize());
 		if (name == "x")					return this->getSrcRect().x;
 		if (name == "y")					return this->getSrcRect().y;
-		if (name == "w")					return this->getSrcRect().w;
-		if (name == "h")					return this->getSrcRect().h;
 		if (name == "color")				return this->getColor().hex();
 		if (name == "rotated")				return this->isRotated();
 		if (name == "vertical")
@@ -200,10 +194,6 @@ namespace aprilui
 		{
 			return (this->texture != NULL ? hdir::baseName(this->texture->getOriginalFilename()) : "");
 		}
-		if (name == "dataset")
-		{
-			return (this->dataset != NULL ? this->dataset->getName() : "");
-		}
 		return BaseImage::getProperty(name);
 	}
 	
@@ -211,11 +201,8 @@ namespace aprilui
 	{
 		if		(name == "rect")				this->setSrcRect(april::hstrToGrect(value));
 		else if	(name == "position")			this->setSrcPosition(april::hstrToGvec2(value));
-		else if	(name == "size")				this->setSrcSize(april::hstrToGvec2(value));
 		else if	(name == "x")					this->setSrcX(value);
 		else if	(name == "y")					this->setSrcY(value);
-		else if	(name == "w")					this->setSrcWidth(value);
-		else if	(name == "h")					this->setSrcHeight(value);
 		else if (name == "color")				this->setColor(value);
 		else if	(name == "rotated")				this->setRotated(value);
 		else if	(name == "vertical")
