@@ -176,7 +176,7 @@ namespace aprilui
 		}
 		if (root->getParent() != NULL)
 		{
-			root->detach();
+			root->getParent()->removeChild(root);
 		}
 		Object* object = dynamic_cast<Object*>(root);
 		if (object != NULL)
@@ -825,7 +825,7 @@ namespace aprilui
 		{
 			if (it->second->getParent() != NULL)
 			{
-				it->second->detach();
+				it->second->getParent()->removeChild(it->second);
 			}
 			delete it->second;
 		}
@@ -834,7 +834,7 @@ namespace aprilui
 		{
 			if (it->second->getParent() != NULL)
 			{
-				it->second->detach();
+				it->second->getParent()->removeChild(it->second);
 			}
 			it->second->removeChildren(false);
 			delete it->second;
