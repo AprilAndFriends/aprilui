@@ -77,13 +77,14 @@ namespace aprilui
 		bool isAncestor(BaseObject* obj);
 		BaseObject* findChildByName(chstr name);
 		BaseObject* findDescendantByName(chstr name);
-		void attach(Object* object);
-		void detach();
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
 		virtual void update(float timeDelta);
+
+		DEPRECATED_ATTRIBUTE void attach(Object* object);
+		DEPRECATED_ATTRIBUTE void detach();
 
 	protected:
 		hstr name;
