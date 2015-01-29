@@ -137,7 +137,7 @@ void april_init(const harray<hstr>& args)
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_tileimage.dts");
 		dataset->load();
 	}
-	catch (aprilui::_GenericException& e)
+	catch (hexception& e)
 	{
 		printf("%s\n", e.getType().c_str());
 	}
@@ -154,7 +154,7 @@ void april_destroy()
 		atres::destroy();
 		april::destroy();
 	}
-	catch (aprilui::_GenericException& e)
+	catch (hexception& e)
 	{
 		printf("%s\n", e.getType().c_str());
 	}

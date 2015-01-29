@@ -322,9 +322,9 @@ void april_init(const harray<hstr>& args)
 		dataset->getObject<aprilui::SelectionContainer*>("tree_view")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_treeViewSelectedChanged));
 		dataset->getObject<aprilui::SelectionContainer*>("grid_view")->registerEvent(aprilui::Event::SelectedChanged, new aprilui::CallbackEvent(&_gridViewSelectedChanged));
 	}
-	catch (aprilui::_GenericException& e)
+	catch (hexception& e)
 	{
-		printf("%s\n", e.getErrorText().c_str());
+		printf("%s\n", e.getMessage().c_str());
 	}
 }
 
@@ -339,9 +339,9 @@ void april_destroy()
 		atres::destroy();
 		april::destroy();
 	}
-	catch (aprilui::_GenericException& e)
+	catch (hexception& e)
 	{
-		printf("%s\n", e.getErrorText().c_str());
+		printf("%s\n", e.getMessage().c_str());
 	}
 	delete updateDelegate;
 	updateDelegate = NULL;
