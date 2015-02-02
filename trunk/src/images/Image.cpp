@@ -312,7 +312,7 @@ namespace aprilui
 		this->vertices[0].y = this->vertices[1].y = rect.top();
 		this->vertices[1].x = this->vertices[3].x = rect.right();
 		this->vertices[2].y = this->vertices[3].y = rect.bottom();
-		if (this->texture != NULL)
+		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
 			this->texture->load();
 		}

@@ -50,9 +50,11 @@ namespace aprilui
 		gvec2 tile;
 		gvec2 scroll;
 		bool useTileCount;
+		harray<april::TexturedVertex> tileVertices;
+		gvec2 _lastScroll;
 
-		int _drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture);
-		
+		void _createVertices(grect rect);
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
