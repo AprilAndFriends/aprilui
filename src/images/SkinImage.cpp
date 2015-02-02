@@ -176,7 +176,7 @@ namespace aprilui
 		{
 			this->_skinCoordinatesCalculated = true;
 		}
-		if (this->texture != NULL)
+		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
 			this->texture->load();
 		}

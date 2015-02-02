@@ -68,117 +68,124 @@ namespace aprilui
 		return true;
 	}
 
-	void TileImage::draw(grect rect, april::Color color)
+	void TileImage::_createVertices(grect rect)
 	{
-		if (color.a == 0)
-		{
-			return;
-		}
-		gvec2 tile = this->tile;
+		this->tileVertices.clear();
+		gvec2 positions[2] = { rect.getTopLeft(), rect.getBottomRight() };
+		gvec2 tileSize = this->tile;
+		april::TexturedVertex v;
 		if (this->useTileCount)
 		{
-			tile = rect.getSize() / this->tile;
+			tileSize = rect.getSize() / tileSize;
 		}
-		gvec2 scroll;
-		scroll.x = hmodf(this->scroll.x, tile.x) - tile.x;
-		scroll.y = hmodf(this->scroll.y, tile.y) - tile.y;
-		int countX = (int)ceil((rect.w - scroll.x) / tile.x);
-		int countY = (int)ceil((rect.h - scroll.y) / tile.y);
-		int i;
-		int j;
-		int minX = 0;
-		int maxX = countX - 1;
-		int minY = 0;
-		int maxY = countY - 1;
-		int clipped;
 		april::Texture* renderTexture = this->texture->getTexture();
 		bool fullTexture = (this->texture->isValid() && renderTexture->isLoaded() &&
 			renderTexture->getAddressMode() == april::Texture::ADDRESS_WRAP &&
 			this->srcRect == grect(0.0f, 0.0f, (float)this->texture->getWidth(), (float)this->texture->getHeight()));
-		// TODO - this can be optimized further by rendering corners separately, then the edges in one call and finally the center piece in one call
-		for_iterx (j, 0, countY)
+		if (fullTexture)
 		{
-			for_iterx (i, 0, countX)
+			gvec2 offset = this->scroll / this->srcRect.getSize();
+			tileSize += offset;
+			v.x = positions[0].x;	v.y = positions[0].y;	v.u = offset.x;		v.v = offset.y;	this->tileVertices += v;
+			v.x = positions[1].x;	v.y = positions[0].y;	v.u = tileSize.x;	v.v = offset.y;	this->tileVertices += v;
+			v.x = positions[0].x;	v.y = positions[1].y;	v.u = offset.x;		v.v = tileSize.y;	this->tileVertices += v;
+			this->tileVertices += this->tileVertices(-2, 2);
+			v.x = positions[1].x;	v.y = positions[1].y;	v.u = tileSize.x;	v.v = tileSize.y;	this->tileVertices += v;
+		}
+		else
+		{
+			gvec2 invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
+			grect invSrc(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
+			gvec2 srcFactor = invSrc.getSize() / tileSize;
+			gvec2 srcs[2] = { invSrc.getTopLeft(), invSrc.getBottomRight() };
+			gvec2 scroll;
+			scroll.x = hmodf(this->scroll.x, tileSize.x) - tileSize.x;
+			scroll.y = hmodf(this->scroll.y, tileSize.y) - tileSize.y;
+			int countX = (int)ceil((rect.w - scroll.x) / tileSize.x);
+			int countY = (int)ceil((rect.h - scroll.y) / tileSize.y);
+			float difference = 0.0f;
+			int i;
+			int j;
+			for_iterx (j, 0, countY)
 			{
-				clipped = this->_drawTile(rect, grect(rect.getPosition() + scroll + gvec2((float)i, (float)j) * tile, tile), color, fullTexture);
-				if ((clipped & 0x0010) != 0x0)
+				for_iterx (i, 0, countX)
 				{
-					minX = i + 1;
-				}
-				if ((clipped & 0x0100) != 0x0)
-				{
-					maxX = i;
-				}
-				if ((clipped & 0x0001) != 0x0)
-				{
-					minY = j + 1;
-				}
-				if ((clipped & 0x1000) != 0x0)
-				{
-					maxY = j;
+					positions[0] = rect.getPosition() + scroll + gvec2((float)i, (float)j) * tileSize;
+					positions[1] = positions[0] + tileSize;
+					srcs[0] = invSrc.getTopLeft();
+					srcs[1] = invSrc.getBottomRight();
+					difference = rect.x - positions[0].x;
+					if (difference > 0.0f)
+					{
+						srcs[0].x += difference * srcFactor.x;
+						positions[0].x += difference;
+					}
+					difference = positions[1].x - (rect.x + rect.w);
+					if (difference < 0.0f)
+					{
+						srcs[1].x -= difference * srcFactor.x;
+						positions[1].x -= difference;
+					}
+					difference = rect.y - positions[0].y;
+					if (difference > 0.0f)
+					{
+						srcs[0].y += difference * srcFactor.y;
+						positions[0].y += difference;
+					}
+					difference = positions[1].y - (rect.y + rect.h);
+					if (difference < 0.0f)
+					{
+						srcs[1].y -= difference * srcFactor.y;
+						positions[1].y -= difference;
+					}
+					v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
+					v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
+					v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
+					this->tileVertices += this->tileVertices(-2, 2);
+					v.x = positions[1].x;	v.y = positions[1].y;	v.u = srcs[1].x;	v.v = srcs[1].y;	this->tileVertices += v;
 				}
 			}
 		}
-		if (fullTexture && minX < maxX && minY < maxY)
-		{
-			grect src = this->srcRect;
-			this->srcRect.w *= (maxX - minX);
-			this->srcRect.h *= (maxY - minY);
-			this->_textureCoordinatesLoaded = false; // srcRect has been changed
-			Image::draw(grect(rect.getPosition() + scroll + gvec2((float)minX, (float)minY) * tile, gvec2((float)(maxX - minX), (float)(maxY - minY)) * tile), color);
-			this->srcRect = src;
-		}
 	}
 
-	int TileImage::_drawTile(grect rect, grect tileRect, april::Color color, bool fullTexture)
+	void TileImage::draw(grect rect, april::Color color)
 	{
-		int clipped = 0;
-		float difference = 0.0f;
-		float srcDifference = 0.0f;
-		grect src = this->srcRect;
-		if (tileRect.x <= rect.x)
+		if (this->color != april::Color::White)
 		{
-			difference = rect.x - tileRect.x;
-			srcDifference = src.w * difference / tileRect.w;
-			this->srcRect.x += srcDifference;
-			this->srcRect.w -= srcDifference;
-			tileRect.x += difference;
-			tileRect.w -= difference;
-			clipped |= 0x0010;
+			color *= this->color;
 		}
-		if (tileRect.x + tileRect.w >= rect.x + rect.w)
+		if (color.a == 0)
 		{
-			difference = tileRect.x + tileRect.w - (rect.x + rect.w);
-			srcDifference = src.w * difference / tileRect.w;
-			this->srcRect.w -= srcDifference;
-			tileRect.w -= difference;
-			clipped |= 0x0100;
+			return;
 		}
-		if (tileRect.y <= rect.y)
+		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
-			difference = rect.y - tileRect.y;
-			srcDifference = src.h * difference / tileRect.h;
-			this->srcRect.y += srcDifference;
-			this->srcRect.h -= srcDifference;
-			tileRect.y += difference;
-			tileRect.h -= difference;
-			clipped |= 0x0001;
+			this->texture->load();
 		}
-		if (tileRect.y + tileRect.h >= rect.y + rect.h)
+		april::rendersys->setTexture(this->texture->getTexture());
+		bool recreateVertices = !this->_textureCoordinatesLoaded;
+		this->tryLoadTextureCoordinates();
+		if (recreateVertices || this->_lastScroll != this->scroll)
 		{
-			difference = tileRect.y + tileRect.h - (rect.y + rect.h);
-			srcDifference = src.h * difference / tileRect.h;
-			this->srcRect.h -= srcDifference;
-			tileRect.h -= difference;
-			clipped |= 0x1000;
+			this->_createVertices(rect);
+			this->_lastScroll = this->scroll;
 		}
-		if (!fullTexture || clipped != 0)
+		april::rendersys->setTextureBlendMode(this->blendMode);
+		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
+		if (this->tileVertices.size() == 0)
 		{
-			this->_textureCoordinatesLoaded = false; // srcRect has been changed
-			Image::draw(tileRect, color);
+			return;
 		}
-		this->srcRect = src;
-		return (fullTexture ? clipped : 0);
+		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
+		{
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->tileVertices[0], this->tileVertices.size(), color);
+		}
+		else
+		{
+			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->tileVertices[0], this->tileVertices.size());
+		}
+		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
 	}
 
 }
