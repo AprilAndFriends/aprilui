@@ -95,15 +95,15 @@ namespace aprilui
 		else
 		{
 			gvec2 invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
-			grect invSrc(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
-			gvec2 srcFactor = invSrc.getSize() / tileSize;
-			gvec2 srcs[2] = { invSrc.getTopLeft(), invSrc.getBottomRight() };
+			grect invSrcRect(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
+			gvec2 srcFactor = invSrcRect.getSize() / tileSize;
+			gvec2 srcs[2];
+			float difference = 0.0f;
 			gvec2 scroll;
 			scroll.x = hmodf(this->scroll.x, tileSize.x) - tileSize.x;
 			scroll.y = hmodf(this->scroll.y, tileSize.y) - tileSize.y;
-			int countX = (int)ceil((rect.w - scroll.x) / tileSize.x);
-			int countY = (int)ceil((rect.h - scroll.y) / tileSize.y);
-			float difference = 0.0f;
+			int countX = hceil((rect.w - scroll.x) / tileSize.x);
+			int countY = hceil((rect.h - scroll.y) / tileSize.y);
 			int i;
 			int j;
 			for_iterx (j, 0, countY)
@@ -112,8 +112,8 @@ namespace aprilui
 				{
 					positions[0] = rect.getPosition() + scroll + gvec2((float)i, (float)j) * tileSize;
 					positions[1] = positions[0] + tileSize;
-					srcs[0] = invSrc.getTopLeft();
-					srcs[1] = invSrc.getBottomRight();
+					srcs[0] = invSrcRect.getTopLeft();
+					srcs[1] = invSrcRect.getBottomRight();
 					difference = rect.x - positions[0].x;
 					if (difference > 0.0f)
 					{
@@ -121,7 +121,7 @@ namespace aprilui
 						positions[0].x += difference;
 					}
 					difference = positions[1].x - (rect.x + rect.w);
-					if (difference < 0.0f)
+					if (difference > 0.0f)
 					{
 						srcs[1].x -= difference * srcFactor.x;
 						positions[1].x -= difference;
@@ -133,7 +133,7 @@ namespace aprilui
 						positions[0].y += difference;
 					}
 					difference = positions[1].y - (rect.y + rect.h);
-					if (difference < 0.0f)
+					if (difference > 0.0f)
 					{
 						srcs[1].y -= difference * srcFactor.y;
 						positions[1].y -= difference;
