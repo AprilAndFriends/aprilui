@@ -50,12 +50,12 @@ namespace aprilui
 		Object::_draw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
 		april::Color color = this->_getDrawColor();
-		color.a = (unsigned char)(color.a * disabledAlphaFactor);
 		april::Color backgroundColor = this->backgroundColor;
-		backgroundColor.a = (unsigned char)(backgroundColor.a * disabledAlphaFactor);
+		backgroundColor.a = (unsigned char)(backgroundColor.a * color.a_f() * disabledAlphaFactor);
+		color.a = (unsigned char)(color.a * disabledAlphaFactor);
 		grect drawRect = this->_getDrawRect();
-		LabelBase::_drawLabelBackground(drawRect, color, backgroundColor);
-		LabelBase::_drawLabel(drawRect, color);
+		this->_drawLabelBackground(drawRect, color, backgroundColor);
+		this->_drawLabel(drawRect, color);
 	}
 
 	void Label::notifyEvent(chstr type, EventArgs* args)
