@@ -671,17 +671,17 @@ namespace aprilui
 				this->_sizeProblemReported = true;
 			}
 		}
-		// not using Label::_draw() directly
+		// not using Label::_draw() directly, because the selection needs to be drawn inbetween the background and border
 		Object::_draw();
 		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
-		april::Color drawColor = this->_getDrawColor();
-		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
 		grect drawRect = this->_getDrawRect();
+		april::Color drawColor = this->_getDrawColor();
+		april::Color backgroundColor = this->backgroundColor;
+		backgroundColor.a = (unsigned char)(backgroundColor.a * drawColor.a_f() * disabledAlphaFactor);
+		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
 		// background
-		if (this->backgroundColor.a > 0)
-		{
-			april::rendersys->drawFilledRect(drawRect, this->backgroundColor);
-		}
+		this->_drawLabelBackground(drawRect, drawColor, backgroundColor);
+		// selection
 		if (this->selectionCount != 0)
 		{
 			april::Color selectionColor = this->selectionColor;
@@ -697,12 +697,8 @@ namespace aprilui
 				}
 			}
 		}
-		LabelBase::_drawLabel(drawRect, drawColor);
-		// background outline
-		if (this->backgroundColor.a > 0)
-		{
-			april::rendersys->drawRect(drawRect, april::Color(this->textColor, this->backgroundColor.a));
-		}
+		// border and normal label text
+		this->_drawLabel(drawRect, drawColor);
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
