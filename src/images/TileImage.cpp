@@ -74,10 +74,6 @@ namespace aprilui
 		gvec2 positions[2] = { rect.getTopLeft(), rect.getBottomRight() };
 		gvec2 tileSize = this->tile;
 		april::TexturedVertex v;
-		if (this->useTileCount)
-		{
-			tileSize = rect.getSize() / tileSize;
-		}
 		april::Texture* renderTexture = this->texture->getTexture();
 		bool fullTexture = (this->texture->isValid() && renderTexture->isLoaded() &&
 			renderTexture->getAddressMode() == april::Texture::ADDRESS_WRAP &&
@@ -85,6 +81,10 @@ namespace aprilui
 		if (fullTexture)
 		{
 			gvec2 offset = this->scroll / this->srcRect.getSize();
+			if (!this->useTileCount) // since tileSize is used here for the source coordinates
+			{
+				tileSize = rect.getSize() / tileSize;
+			}
 			tileSize += offset;
 			v.x = positions[0].x;	v.y = positions[0].y;	v.u = offset.x;		v.v = offset.y;	this->tileVertices += v;
 			v.x = positions[1].x;	v.y = positions[0].y;	v.u = tileSize.x;	v.v = offset.y;	this->tileVertices += v;
@@ -94,6 +94,10 @@ namespace aprilui
 		}
 		else
 		{
+			if (this->useTileCount)
+			{
+				tileSize = rect.getSize() / tileSize;
+			}
 			gvec2 invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
 			grect invSrcRect(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
 			gvec2 srcFactor = invSrcRect.getSize() / tileSize;
