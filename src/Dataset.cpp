@@ -1454,8 +1454,8 @@ namespace aprilui
 		// trimming finished
 		if (!this->_processCompositeTextKeyArgs(uArgString, uArgs))
 		{
-			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), uFormat.size()));
-			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), uArgString.size()));
+			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
+			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
 			hlog::writef(aprilui::logTag, "- while processing args: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
@@ -1463,16 +1463,16 @@ namespace aprilui
 		harray<ustr> uPreprocessedArgs;
 		if (!this->_preprocessCompositeTextKeyFormat(uFormat, uArgs, uPreprocessedFormat, uPreprocessedArgs))
 		{
-			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), uFormat.size()));
-			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), uArgString.size()));
+			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
+			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
 			hlog::writef(aprilui::logTag, "- while preprocessing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		hstr result;
 		if (!this->_processCompositeTextKeyFormat(uPreprocessedFormat, uPreprocessedArgs, result))
 		{
-			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), uFormat.size()));
-			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), uArgString.size()));
+			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
+			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
 			hlog::writef(aprilui::logTag, "- while processing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
