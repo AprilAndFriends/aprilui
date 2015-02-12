@@ -217,7 +217,7 @@ namespace aprilui
 				}
 				if (values.size() > 1)
 				{
-					if (values[1].is_hex() && (values[1].size() == 6 || values[1].size() == 8))
+					if (values[1].isHex() && (values[1].size() == 6 || values[1].size() == 8))
 					{
 						this->setUseFontEffectColor(true);
 						this->setFontEffectColor(values[1]);

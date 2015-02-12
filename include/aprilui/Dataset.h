@@ -257,12 +257,12 @@ namespace aprilui
 		typedef std::basic_string<unsigned int> ustr;
 		
 		hstr _parseCompositeTextKey(chstr key);
-		bool _processCompositeTextKeyArgs(ustr argString, harray<ustr>& args);
-		bool _preprocessCompositeTextKeyFormat(ustr format, harray<ustr> args, ustr& preprocessedFormat, harray<ustr>& preprocessedArgs);
-		bool _processCompositeTextKeyFormat(ustr format, harray<ustr> args, hstr& result);
+		bool _processCompositeTextKeyArgs(ustr uArgString, harray<ustr>& uArgs);
+		bool _preprocessCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, ustr& uPreprocessedFormat, harray<ustr>& uPreprocessedArgs);
+		bool _processCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, hstr& result);
 		/// @note The returned indexes count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
-		bool _getCompositeTextKeyFormatIndexes(ustr format, harray<int>& indexes);
-		harray<ustr> _getArgEntries(ustr string);
+		bool _getCompositeTextKeyFormatIndexes(ustr uFormat, harray<int>& indexes);
+		harray<ustr> _getArgEntries(ustr uString);
 		///! this function is here to silence linker warnings on LLVM compiler...
 		void _throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName);
 	};

@@ -1148,7 +1148,7 @@ namespace aprilui
 		else if	(name == "retain_anchor_aspect")	this->setRetainAnchorAspect(value);
 		else if	(name == "anchors")
 		{
-			harray<hstr> anchors = value.replace(" ", "").lower().split(",", -1, true);
+			harray<hstr> anchors = value.replaced(" ", "").lowered().split(",", -1, true);
 			this->setAnchorLeft(anchors.contains("left"));
 			this->setAnchorRight(anchors.contains("right"));
 			this->setAnchorTop(anchors.contains("top"));

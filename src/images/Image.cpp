@@ -227,7 +227,7 @@ namespace aprilui
 			else if	(value == "add")		this->setBlendMode(april::BM_ADD);
 			else if	(value == "subtract")	this->setBlendMode(april::BM_SUBTRACT);
 			else if	(value == "overwrite")	this->setBlendMode(april::BM_OVERWRITE);
-			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.c_str(), name.c_str(), this->name.c_str());
+			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
 		}
 		else if	(name == "color_mode")
 		{
@@ -235,7 +235,7 @@ namespace aprilui
 			else if	(value == "multiply")	this->setColorMode(april::CM_MULTIPLY);
 			else if	(value == "lerp")		this->setColorMode(april::CM_LERP);
 			else if	(value == "alpha_map")	this->setColorMode(april::CM_ALPHA_MAP);
-			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.c_str(), name.c_str(), this->name.c_str());
+			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
 		}
 		else if	(name == "color_mode_factor")	this->setColorModeFactor(value);
 		else return BaseImage::setProperty(name, value);

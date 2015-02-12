@@ -61,13 +61,13 @@ namespace aprilui
 				}
 				else
 				{
-					hlog::errorf(aprilui::logTag, "GridViewRow '%s' cannot be reattached to ScrollArea of GridView '%s', ScrollArea does not exist!", this->name.c_str(), this->parent->getName().c_str());
+					hlog::errorf(aprilui::logTag, "GridViewRow '%s' cannot be reattached to ScrollArea of GridView '%s', ScrollArea does not exist!", this->name.cStr(), this->parent->getName().cStr());
 				}
 			}
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
 			{
 				this->_gridView = NULL;
-				hlog::errorf(aprilui::logTag, "GridViewRow '%s' not attached to object of class GridView!", this->name.c_str());
+				hlog::errorf(aprilui::logTag, "GridViewRow '%s' not attached to object of class GridView!", this->name.cStr());
 			}
 		}
 	}

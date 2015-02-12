@@ -151,12 +151,12 @@ namespace aprilui
 	{
 		if (this->scrollArea == NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create row at index '%d' in GridView '%s', no internal ScrollArea is present!", index, this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot create row at index '%d' in GridView '%s', no internal ScrollArea is present!", index, this->name.cStr());
 			return NULL;
 		}
 		if (this->rowTemplate == NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create row at index '%d' in GridView '%s', no RowTemplate defined!", index, this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot create row at index '%d' in GridView '%s', no RowTemplate defined!", index, this->name.cStr());
 			return NULL;
 		}
 		GridViewCell* selected = this->getSelected();
@@ -181,7 +181,7 @@ namespace aprilui
 	{
 		if (!hbetweenIE(index, 0, this->rows.size()))
 		{
-			hlog::warnf(aprilui::logTag, "Cannot delete row at index '%d' in GridView '%s', it does not exist!", index, this->name.c_str());
+			hlog::warnf(aprilui::logTag, "Cannot delete row at index '%d' in GridView '%s', it does not exist!", index, this->name.cStr());
 			return false;
 		}
 		GridViewCell* selected = this->getSelected();

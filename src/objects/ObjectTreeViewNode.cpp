@@ -267,7 +267,7 @@ namespace aprilui
 					this->_treeView = NULL;
 					this->_treeViewParentNode = NULL;
 					this->nodes.clear();
-					hlog::errorf(aprilui::logTag, "TreeViewNode '%s' cannot be reattached to ScrollArea of TreeView '%s', ScrollArea does not exist!", this->name.c_str(), this->parent->getName().c_str());
+					hlog::errorf(aprilui::logTag, "TreeViewNode '%s' cannot be reattached to ScrollArea of TreeView '%s', ScrollArea does not exist!", this->name.cStr(), this->parent->getName().cStr());
 				}
 			}
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
@@ -275,7 +275,7 @@ namespace aprilui
 				this->_treeView = NULL;
 				this->_treeViewParentNode = NULL;
 				this->nodes.clear();
-				hlog::errorf(aprilui::logTag, "TreeViewNode '%s' not attached to object of class TreeView or TreeViewNode!", this->name.c_str());
+				hlog::errorf(aprilui::logTag, "TreeViewNode '%s' not attached to object of class TreeView or TreeViewNode!", this->name.cStr());
 			}
 		}
 	}
