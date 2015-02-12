@@ -13,7 +13,7 @@
 #include "Event.h"
 
 #define SYSTEM_EVENT_CHECK(checkType) \
-	if (type == checkType || !caseSensitive && type.lower() == checkType.lower()) \
+	if (type == checkType || !caseSensitive && type.lowered() == checkType.lowered()) \
 	{ \
 		return true; \
 	}

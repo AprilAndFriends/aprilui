@@ -142,9 +142,9 @@ namespace aprilui
 		if (name != "" && useNameBasePath)
 		{
 			hstr newFilename = name + "." + hresource::extensionOf(filename);
-			if (filename.ends_with(newFilename))
+			if (filename.endsWith(newFilename))
 			{
-				return hrdir::normalize(filename.replace(newFilename, ""));
+				return hrdir::normalize(filename.replaced(newFilename, ""));
 			}
 		}
 		return hrdir::normalize(hrdir::baseDir(filename));
@@ -163,7 +163,7 @@ namespace aprilui
 			Dataset* dataset = root->getDataset();
 			if (dataset != this)
 			{
-				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().c_str(), root->getFullName().c_str());
+				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().cStr(), root->getFullName().cStr());
 				dataset->destroyObjects(root);
 				return;
 			}
@@ -456,7 +456,7 @@ namespace aprilui
 			}
 			else
 			{
-				hlog::warnf(aprilui::logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->getValue().c_str(), name.c_str());
+				hlog::warnf(aprilui::logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->getValue().cStr(), name.cStr());
 			}
 		}
 		this->images[name] = image;
@@ -631,11 +631,11 @@ namespace aprilui
 			this->filePath = originalFilePath;
 			return;
 		}
-		hstr extension = hrdir::baseName(path).replace("*", "");
+		hstr extension = hrdir::baseName(path).replaced("*", "");
 		harray<hstr> contents = hrdir::files(this->filePath, true).sorted();
 		foreach (hstr, it, contents)
 		{
-			if ((*it).ends_with(extension))
+			if ((*it).endsWith(extension))
 			{
 				this->readFile((*it));
 			}
@@ -674,7 +674,7 @@ namespace aprilui
 		harray<hstr> contents = hrdir::files(baseDir).sorted();
 		foreach (hstr, it, contents)
 		{
-			if ((*it).starts_with(left) && (*it).ends_with(right))
+			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
 				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, "", "", gvec2());
 			}
@@ -796,7 +796,7 @@ namespace aprilui
 					}
 					else
 					{
-						key = (*it2).split("#").first().trim(' ');
+						key = (*it2).split("#").first().trimmed(' ');
 					}
 				}
 				else if ((*it2) == "}")
@@ -901,7 +901,7 @@ namespace aprilui
 			Dataset* dataset = root->getDataset();
 			if (dataset != this)
 			{
-				hlog::writef(logTag, "Dataset '%s' unregistering object from another dataset: '%s'", this->getName().c_str(), root->getFullName().c_str());
+				hlog::writef(logTag, "Dataset '%s' unregistering object from another dataset: '%s'", this->getName().cStr(), root->getFullName().cStr());
 				dataset->unregisterObjects(root);
 				return;
 			}
@@ -1406,86 +1406,92 @@ namespace aprilui
 	
 	hstr Dataset::_parseCompositeTextKey(chstr key)
 	{
-		ustr chars = key.u_str();
-		if (chars.size() == 0 || chars[0] != '{')
+		ustr uChars = key.uStr();
+		if (uChars.size() == 0 || uChars[0] != '{')
 		{
-			if ((int)chars.find_first_of('{') >= 0 || (int)chars.find_first_of('}') >= 0)
+			if ((int)uChars.find_first_of('{') >= 0 || (int)uChars.find_first_of('}') >= 0)
 			{
-				hstr text = hsprintf("Malformed formatted text key '%s'!", key.c_str());
+				hstr text = hsprintf("Malformed formatted text key '%s'!", key.cStr());
 				hlog::error(aprilui::logTag, text);
 				return text;
 			}
 			if (!this->hasTextEntry(key))
 			{
-				hlog::warnf(aprilui::logTag, "Text key '%s' does not exist!", key.c_str());
+				hlog::warnf(aprilui::logTag, "Text key '%s' does not exist!", key.cStr());
 			}
 			return this->getTextEntry(key);
 		}
-		int index = (int)chars.find_first_of('}');
+		int index = (int)uChars.find_first_of('}');
 		if (index < 0)
 		{
-			hlog::errorf(aprilui::logTag, "Could not parse formatted key '%s'.", key.c_str());
+			hlog::errorf(aprilui::logTag, "Could not parse formatted key '%s'.", key.cStr());
 			return key;
 		}
-		harray<ustr> args;
-		ustr format = chars.substr(1, index - 1);
-		ustr argString = chars.substr(index + 1, chars.size() - index - 1);
+		harray<ustr> uArgs;
+		ustr uFormat = uChars.substr(1, index - 1);
+		ustr uArgString = uChars.substr(index + 1, uChars.size() - index - 1);
 		// trimming
-		if (argString.size() > 0)
+		if (uArgString.size() > 0)
 		{
-			const unsigned int* cstr = argString.c_str();
-			while (cstr[0] == ' ')
+			const unsigned int* ucstr = uArgString.c_str();
+			while (ucstr[0] == ' ')
 			{
-				++cstr;
+				++ucstr;
 			}
-			argString = cstr;
+			uArgString = ucstr;
 			// r-trimming
-			if (argString.size() > 0)
+			if (uArgString.size() > 0)
 			{
-				cstr = argString.c_str();
-				int i = (int)argString.size() - 1;
-				while (i >= 0 && cstr[i] == ' ')
+				ucstr = uArgString.c_str();
+				int i = (int)uArgString.size() - 1;
+				while (i >= 0 && ucstr[i] == ' ')
 				{
 					--i;
 				}
-				argString = argString.substr(0, i + 1);
+				uArgString = uArgString.substr(0, i + 1);
 			}
 		}
 		// trimming finished
-		if (!this->_processCompositeTextKeyArgs(argString, args))
+		if (!this->_processCompositeTextKeyArgs(uArgString, uArgs))
 		{
-			hlog::writef(aprilui::logTag, "- while processing args: '%s' with args '%s'.", format.c_str(), argString.c_str());
+			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), uFormat.size()));
+			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), uArgString.size()));
+			hlog::writef(aprilui::logTag, "- while processing args: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
-		ustr preprocessedFormat;
-		harray<ustr> preprocessedArgs;
-		if (!this->_preprocessCompositeTextKeyFormat(format, args, preprocessedFormat, preprocessedArgs))
+		ustr uPreprocessedFormat;
+		harray<ustr> uPreprocessedArgs;
+		if (!this->_preprocessCompositeTextKeyFormat(uFormat, uArgs, uPreprocessedFormat, uPreprocessedArgs))
 		{
-			hlog::writef(aprilui::logTag, "- while preprocessing format: '%s' with args '%s'.", format.c_str(), argString.c_str());
+			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), uFormat.size()));
+			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), uArgString.size()));
+			hlog::writef(aprilui::logTag, "- while preprocessing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		hstr result;
-		if (!this->_processCompositeTextKeyFormat(preprocessedFormat, preprocessedArgs, result))
+		if (!this->_processCompositeTextKeyFormat(uPreprocessedFormat, uPreprocessedArgs, result))
 		{
-			hlog::writef(aprilui::logTag, "- while processing format: '%s' with args '%s'.", format.c_str(), argString.c_str());
+			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), uFormat.size()));
+			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), uArgString.size()));
+			hlog::writef(aprilui::logTag, "- while processing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		return result;
 	}
 
-	bool Dataset::_processCompositeTextKeyArgs(ustr argString, harray<ustr>& args)
+	bool Dataset::_processCompositeTextKeyArgs(ustr uArgString, harray<ustr>& uArgs)
 	{
-		args.clear();
+		uArgs.clear();
 		// splittings args
 		int openIndex;
 		int closeIndex;
-		while (argString.size() > 0)
+		while (uArgString.size() > 0)
 		{
-			openIndex = (int)argString.find_first_of('{');
-			closeIndex = (int)argString.find_first_of('}');
+			openIndex = (int)uArgString.find_first_of('{');
+			closeIndex = (int)uArgString.find_first_of('}');
 			if (openIndex < 0 && closeIndex < 0)
 			{
-				args += this->_getArgEntries(argString);
+				uArgs += this->_getArgEntries(uArgString);
 				break;
 			}
 			if (openIndex < 0 || closeIndex < 0)
@@ -1499,177 +1505,177 @@ namespace aprilui
 				return false;
 			}
 			// getting all args before the {
-			args += this->_getArgEntries(argString.substr(0, openIndex));
+			uArgs += this->_getArgEntries(uArgString.substr(0, openIndex));
 			// getting args inside of {}
-			args += argString.substr(openIndex + 1, closeIndex - openIndex - 1);
+			uArgs += uArgString.substr(openIndex + 1, closeIndex - openIndex - 1);
 			// rest of the args
-			argString = argString.substr(closeIndex + 1, argString.size() - closeIndex - 1);
+			uArgString = uArgString.substr(closeIndex + 1, uArgString.size() - closeIndex - 1);
 		}
 		return true;
 	}
 
-	bool Dataset::_preprocessCompositeTextKeyFormat(ustr format, harray<ustr> args, ustr& preprocessedFormat, harray<ustr>& preprocessedArgs)
+	bool Dataset::_preprocessCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, ustr& uPreprocessedFormat, harray<ustr>& uPreprocessedArgs)
 	{
-		preprocessedFormat.clear();
-		preprocessedArgs.clear();
+		uPreprocessedFormat.clear();
+		uPreprocessedArgs.clear();
 		// preprocessing of format string and args
 		int index;
-		ustr arg;
+		ustr uArg;
 		harray<int> indexes;
-		while (format.size() > 0)
+		while (uFormat.size() > 0)
 		{
-			index = (int)format.find_first_of('%');
+			index = (int)uFormat.find_first_of('%');
 			if (index < 0)
 			{
-				preprocessedFormat += format;
+				uPreprocessedFormat += uFormat;
 				break;
 			}
-			if (index >= (int)format.size() - 1)
+			if (index >= (int)uFormat.size() - 1)
 			{
 				hlog::error(aprilui::logTag, "Last character is '%'!");
 				return false;
 			}
-			if (format[index + 1] == '%') // escaped "%", continue processing
+			if (uFormat[index + 1] == '%') // escaped "%", continue processing
 			{
-				preprocessedFormat += format.substr(0, index + 2);
-				format = format.substr(index + 2, format.size() - index - 2);
+				uPreprocessedFormat += uFormat.substr(0, index + 2);
+				uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
 				continue;
 			}
-			if (format[index + 1] == 's') // %s, not processing that now
+			if (uFormat[index + 1] == 's') // %s, not processing that now
 			{
-				if (args.size() == 0)
+				if (uArgs.size() == 0)
 				{
 					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
-				preprocessedFormat += format.substr(0, index + 2);
-				format = format.substr(index + 2, format.size() - index - 2);
-				preprocessedArgs += args.remove_first();
+				uPreprocessedFormat += uFormat.substr(0, index + 2);
+				uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
+				uPreprocessedArgs += uArgs.remove_first();
 				continue;
 			}
-			if (format[index + 1] == 'f')
+			if (uFormat[index + 1] == 'f')
 			{
-				if (args.size() == 0)
+				if (uArgs.size() == 0)
 				{
 					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
-				arg = args.remove_first();
-				preprocessedFormat += format.substr(0, index) + arg;
-				format = format.substr(index + 2, format.size() - index - 2);
-				if (!this->_getCompositeTextKeyFormatIndexes(arg, indexes))
+				uArg = uArgs.remove_first();
+				uPreprocessedFormat += uFormat.substr(0, index) + uArg;
+				uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
+				if (!this->_getCompositeTextKeyFormatIndexes(uArg, indexes))
 				{
 					return false;
 				}
-				if (indexes.size() > args.size())
+				if (indexes.size() > uArgs.size())
 				{
 					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
-				preprocessedArgs += args.remove_first(indexes.size());
+				uPreprocessedArgs += uArgs.remove_first(indexes.size());
 			}
 		}
-		preprocessedArgs += args; // remaining args
+		uPreprocessedArgs += uArgs; // remaining args
 		return true;
 	}
 
-	bool Dataset::_processCompositeTextKeyFormat(ustr format, harray<ustr> args, hstr& result)
+	bool Dataset::_processCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, hstr& result)
 	{
 		result = "";
-		ustr preResult;
+		ustr uResult;
 		// preprocessing of format string and args
 		harray<int> indexes;
-		if (!this->_getCompositeTextKeyFormatIndexes(format, indexes))
+		if (!this->_getCompositeTextKeyFormatIndexes(uFormat, indexes))
 		{
 			return false;
 		}
-		if (args.size() < indexes.size())
+		if (uArgs.size() < indexes.size())
 		{
 			hlog::error(aprilui::logTag, "Not enough args!");
 			return false;
 		}
-		if (indexes.size() > args.size())
+		if (indexes.size() > uArgs.size())
 		{
 			hlog::error(aprilui::logTag, "Too many args!");
 			return false;
 		}
 		foreach (int, it, indexes)
 		{
-			preResult += format.substr(0, (*it));
-			preResult += args.remove_first();
-			format = format.substr((*it) + 2, format.size() - (*it) - 2);
+			uResult += uFormat.substr(0, (*it));
+			uResult += uArgs.remove_first();
+			uFormat = uFormat.substr((*it) + 2, uFormat.size() - (*it) - 2);
 		}
-		preResult += format;
-		int index = (int)preResult.find_first_of('%');
-		while (index >= 0 && index < (int)preResult.size() - 1)
+		uResult += uFormat;
+		int index = (int)uResult.find_first_of('%');
+		while (index >= 0 && index < (int)uResult.size() - 1)
 		{
-			if (preResult[index + 1] == '%')
+			if (uResult[index + 1] == '%')
 			{
-				preResult.erase(index + 1, 1);
+				uResult.erase(index + 1, 1);
 			}
-			index = (int)preResult.find_first_of('%', index + 1);
+			index = (int)uResult.find_first_of('%', index + 1);
 		}
-		result = hstr::from_unicode(preResult.c_str());
+		result = hstr::fromUnicode(uResult.c_str());
 		return true;
 	}
 
-	bool Dataset::_getCompositeTextKeyFormatIndexes(ustr format, harray<int>& indexes)
+	bool Dataset::_getCompositeTextKeyFormatIndexes(ustr uFormat, harray<int>& indexes)
 	{
 		indexes.clear();
 		// finding formatting indexes
 		int index;
 		int currentIndex = 0;
-		while (format.size() > 0)
+		while (uFormat.size() > 0)
 		{
-			index = (int)format.find_first_of('%');
+			index = (int)uFormat.find_first_of('%');
 			if (index < 0)
 			{
 				break;
 			}
-			if (index >= (int)format.size() - 1)
+			if (index >= (int)uFormat.size() - 1)
 			{
 				hlog::error(aprilui::logTag, "Last character is '%'!");
 				return false;
 			}
-			if (format[index + 1] == '%') // escaped "%", use just one "%".
+			if (uFormat[index + 1] == '%') // escaped "%", use just one "%".
 			{
-				format = format.substr(index + 2, format.size() - index - 2);
+				uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
 				currentIndex += index + 2;
 				continue;
 			}
-			if (format[index + 1] != 's')
+			if (uFormat[index + 1] != 's')
 			{
-				hlog::errorf(aprilui::logTag, "Unsupported formatting '%%%c'!", format[index + 1]);
+				hlog::errorf(aprilui::logTag, "Unsupported formatting '%%%c'!", uFormat[index + 1]);
 				return false;
 			}
 			indexes += currentIndex + index;
-			format = format.substr(index + 2, format.size() - index - 2);
+			uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
 			currentIndex = 0;
 		}
 		return true;
 	}
 
 
-	harray<Dataset::ustr> Dataset::_getArgEntries(ustr string)
+	harray<Dataset::ustr> Dataset::_getArgEntries(ustr uString)
 	{
 		harray<hstr> keys;
 		int index;
 		while (true)
 		{
-			index = (int)string.find_first_of(' ');
+			index = (int)uString.find_first_of(' ');
 			if (index < 0)
 			{
 				break;
 			}
-			keys += hstr::from_unicode(string.substr(0, index).c_str());
-			string = string.substr(index + 1);
+			keys += hstr::fromUnicode(uString.substr(0, index).c_str());
+			uString = uString.substr(index + 1);
 		}
-		keys += hstr::from_unicode(string.c_str());
+		keys += hstr::fromUnicode(uString.c_str());
 		keys.remove_all("");
 		harray<ustr> result;
 		foreach (hstr, it, keys)
 		{
-			result += this->getTextEntry(*it).u_str();
+			result += this->getTextEntry(*it).uStr();
 		}
 		return result;
 	}

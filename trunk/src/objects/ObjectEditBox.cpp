@@ -147,7 +147,7 @@ namespace aprilui
 
 	void EditBox::setCaretIndex(int value)
 	{
-		int newCaretIndex = hclamp(value, 0, this->text.utf8_size());
+		int newCaretIndex = hclamp(value, 0, this->text.utf8Size());
 		if (this->caretIndex != newCaretIndex)
 		{
 			this->caretIndex = newCaretIndex;
@@ -159,7 +159,7 @@ namespace aprilui
 
 	void EditBox::setSelectionCount(int value)
 	{
-		int newSelectionCount = (this->selectable ? hclamp(value, -this->caretIndex, this->text.utf8_size() - this->caretIndex) : 0);
+		int newSelectionCount = (this->selectable ? hclamp(value, -this->caretIndex, this->text.utf8Size() - this->caretIndex) : 0);
 		if (this->selectionCount != newSelectionCount)
 		{
 			this->selectionCount = newSelectionCount;
@@ -170,9 +170,9 @@ namespace aprilui
 	void EditBox::setMaxLength(int value)
 	{
 		this->maxLength = value;
-		if (this->maxLength > 0 && this->text.utf8_size() > this->maxLength)
+		if (this->maxLength > 0 && this->text.utf8Size() > this->maxLength)
 		{
-			this->text = this->text.utf8_substr(0, this->maxLength);
+			this->text = this->text.utf8SubString(0, this->maxLength);
 			this->setCaretIndex(this->caretIndex);
 		}
 	}
@@ -188,17 +188,17 @@ namespace aprilui
 		hstr newValue = value;
 		if (newValue.size() > 0 && this->filter.size() > 0)
 		{
-			std::basic_string<unsigned int> ustr = newValue.u_str();
+			std::basic_string<unsigned int> ustr = newValue.uStr();
 			harray<unsigned int> uText(ustr.c_str(), (int)ustr.size());
-			ustr = this->filter.u_str();
+			ustr = this->filter.uStr();
 			harray<unsigned int> uFilter(ustr.c_str(), (int)ustr.size());
 			uFilter |= '\n'; // this is for multiline
 			uText &= uFilter; // intersect, remove from first all that are not in second
-			newValue = hstr::from_unicode(uText);
+			newValue = hstr::fromUnicode(uText);
 		}
-		if (this->maxLength > 0 && newValue.utf8_size() > this->maxLength)
+		if (this->maxLength > 0 && newValue.utf8Size() > this->maxLength)
 		{
-			newValue = newValue.utf8_substr(0, this->maxLength);
+			newValue = newValue.utf8SubString(0, this->maxLength);
 		}
 		if (this->text != newValue) // a text change has to trigger a recalculation
 		{
@@ -234,7 +234,7 @@ namespace aprilui
 
 	hstr EditBox::getSelectedText()
 	{
-		return (this->selectionCount != 0 ? this->text.utf8_substr(hmin(this->caretIndex, this->caretIndex + this->selectionCount), habs(this->selectionCount)) : hstr(""));
+		return (this->selectionCount != 0 ? this->text.utf8SubString(hmin(this->caretIndex, this->caretIndex + this->selectionCount), habs(this->selectionCount)) : hstr(""));
 	}
 
 	void EditBox::setCaretIndexAt(gvec2 position)
@@ -369,7 +369,7 @@ namespace aprilui
 				offsetIndex = 0;
 			}
 		}
-		this->setCaretIndex(this->text(0, offsetIndex).utf8_size());
+		this->setCaretIndex(this->text(0, offsetIndex).utf8Size());
 	}
 
 	void EditBox::_updateCaret()
@@ -382,9 +382,9 @@ namespace aprilui
 		hstr text = this->text;
 		if (this->passwordChar != '\0' && this->text != "")
 		{
-			text = hstr(this->passwordChar, this->text.utf8_size());
+			text = hstr(this->passwordChar, this->text.utf8Size());
 		}
-		hstr leftText = text.utf8_substr(0, this->caretIndex);
+		hstr leftText = text.utf8SubString(0, this->caretIndex);
 		atres::Font* font = atres::renderer->getFont(this->font);
 		if (font == NULL)
 		{
@@ -568,8 +568,8 @@ namespace aprilui
 		this->_getBaseOffset(base, hf);
 		float yOffset = hf * (this->rect.h - CHECK_RECT_HEIGHT);
 		// vars
-		hstr textStart = this->text.utf8_substr(0, hmin(this->caretIndex, this->caretIndex + this->selectionCount));
-		hstr textEnd = this->text.utf8_substr(0, hmax(this->caretIndex, this->caretIndex + this->selectionCount));
+		hstr textStart = this->text.utf8SubString(0, hmin(this->caretIndex, this->caretIndex + this->selectionCount));
+		hstr textEnd = this->text.utf8SubString(0, hmax(this->caretIndex, this->caretIndex + this->selectionCount));
 		harray<atres::RenderLine> linesStart;
 		harray<atres::RenderLine> linesEnd;
 		gvec2 positionStart;
@@ -649,7 +649,7 @@ namespace aprilui
 		hstr text = this->text;
 		if (this->passwordChar != '\0' && this->text != "")
 		{
-			this->text = hstr(this->passwordChar, this->text.utf8_size());
+			this->text = hstr(this->passwordChar, this->text.utf8Size());
 		}
 		if (this->text == "" && this->dataset != NULL && this->dataset->getFocusedObject() != this)
 		{
@@ -667,7 +667,7 @@ namespace aprilui
 			float lh = font->getLineHeight() + font->getDescender();
 			if (this->multiLine && !this->_sizeProblemReported && this->rect.h < lh)
 			{
-				hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.c_str(), (int)this->rect.h, (int)lh, this->font.c_str());
+				hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.cStr(), (int)this->rect.h, (int)lh, this->font.cStr());
 				this->_sizeProblemReported = true;
 			}
 		}
@@ -899,7 +899,7 @@ namespace aprilui
 				if (this->_ctrlMode)
 				{
 					this->_caretMoveEnd();
-					this->setSelectionCount(-this->text.utf8_size());
+					this->setSelectionCount(-this->text.utf8Size());
 				}
 				break;
 #endif
@@ -943,7 +943,7 @@ namespace aprilui
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
 			atres::Font* font = atres::renderer->getFont(this->font);
-			if (font != NULL && font->hasChar(charCode) && (this->filter.size() == 0 || this->filter.u_str().find_first_of(charCode) != std::string::npos))
+			if (font != NULL && font->hasChar(charCode) && (this->filter.size() == 0 || this->filter.uStr().find_first_of(charCode) != std::string::npos))
 			{
 				this->_insertChar(charCode);
 			}
@@ -1011,7 +1011,7 @@ namespace aprilui
 		else if	(name == "empty_text_key")		this->setEmptyTextKey(value);
 		else if (name == "empty_text_color")	this->setEmptyTextColor(value);
 		else if (name == "max_length")			this->setMaxLength(value);
-		else if (name == "password_char")		this->setPasswordChar(value.c_str()[0]);
+		else if (name == "password_char")		this->setPasswordChar(value.cStr()[0]);
 		else if (name == "filter")				this->setFilter(value);
 		else if (name == "caret_index")			this->setCaretIndex(value);
 		else if (name == "cursor_index")
@@ -1046,7 +1046,7 @@ namespace aprilui
 	void EditBox::_caretMoveEnd()
 	{
 		int index = this->caretIndex;
-		this->setCaretIndex(this->text.utf8_size());
+		this->setCaretIndex(this->text.utf8Size());
 		this->_updateSelectionCount(index);
 	}
 
@@ -1079,7 +1079,7 @@ namespace aprilui
 	void EditBox::_caretMoveDown()
 	{
 		int index = this->caretIndex;
-		if (this->caretIndex < this->text.utf8_size())
+		if (this->caretIndex < this->text.utf8Size())
 		{
 			this->_updateCaretRect();
 			this->setCaretIndexAt(gvec2(this->caretRect.x, this->caretRect.y + atres::renderer->getFont(this->font)->getLineHeight() * 1.5f));
@@ -1096,7 +1096,7 @@ namespace aprilui
 		bool newLine = false;
 		while (newCaretIndex > 0)
 		{
-			c = this->text.first_unicode_char(newCaretIndex - 1);
+			c = this->text.firstUnicodeChar(newCaretIndex - 1);
 			if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
 			{
 				break;
@@ -1117,7 +1117,7 @@ namespace aprilui
 		{
 			while (newCaretIndex > 0)
 			{
-				c = this->text.first_unicode_char(newCaretIndex - 1);
+				c = this->text.firstUnicodeChar(newCaretIndex - 1);
 				if (c == UNICODE_CHAR_SPACE || c == UNICODE_CHAR_NEWLINE)
 				{
 					break;
@@ -1133,13 +1133,13 @@ namespace aprilui
 	void EditBox::_caretMoveRightWord()
 	{
 		int newCaretIndex = this->caretIndex;
-		int size = this->text.utf8_size();
+		int size = this->text.utf8Size();
 		unsigned char c = 0;
 		bool first = true;
 		bool newLine = false;
 		while (newCaretIndex < size)
 		{
-			c = this->text.first_unicode_char(newCaretIndex);
+			c = this->text.firstUnicodeChar(newCaretIndex);
 			if (c == UNICODE_CHAR_SPACE)
 			{
 				break;
@@ -1160,7 +1160,7 @@ namespace aprilui
 		{
 			while (newCaretIndex < size)
 			{
-				c = this->text.first_unicode_char(newCaretIndex);
+				c = this->text.firstUnicodeChar(newCaretIndex);
 				if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
 				{
 					break;
@@ -1182,13 +1182,13 @@ namespace aprilui
 			hstr left;
 			if (newCaretIndex > count)
 			{
-				left = this->text.utf8_substr(0, newCaretIndex - count);
+				left = this->text.utf8SubString(0, newCaretIndex - count);
 			}
 			hstr right;
-			int size = this->text.utf8_size();
+			int size = this->text.utf8Size();
 			if (newCaretIndex < size)
 			{
-				right = this->text.utf8_substr(newCaretIndex, size - newCaretIndex);
+				right = this->text.utf8SubString(newCaretIndex, size - newCaretIndex);
 			}
 			newCaretIndex -= count;
 			this->text = left + right;
@@ -1201,7 +1201,7 @@ namespace aprilui
 	void EditBox::_deleteRight(int count)
 	{
 		int newCaretIndex = this->caretIndex;
-		count = hmin(count, this->text.utf8_size() - newCaretIndex);
+		count = hmin(count, this->text.utf8Size() - newCaretIndex);
 		newCaretIndex += count;
 		this->setCaretIndex(newCaretIndex);
 		this->setSelectionCount(0);
@@ -1211,11 +1211,11 @@ namespace aprilui
 	void EditBox::_deleteLeftWord()
 	{
 		int index = this->caretIndex;
-		while (index > 0 && this->text.first_unicode_char(index - 1) == UNICODE_CHAR_SPACE)
+		while (index > 0 && this->text.firstUnicodeChar(index - 1) == UNICODE_CHAR_SPACE)
 		{
 			--index;
 		}
-		while (index > 0 && this->text.first_unicode_char(index - 1) != UNICODE_CHAR_SPACE)
+		while (index > 0 && this->text.firstUnicodeChar(index - 1) != UNICODE_CHAR_SPACE)
 		{
 			--index;
 		}
@@ -1228,12 +1228,12 @@ namespace aprilui
 	void EditBox::_deleteRightWord()
 	{
 		int index = this->caretIndex;
-		int size = this->text.utf8_size();
-		while (index < size && this->text.first_unicode_char(index) != UNICODE_CHAR_SPACE)
+		int size = this->text.utf8Size();
+		while (index < size && this->text.firstUnicodeChar(index) != UNICODE_CHAR_SPACE)
 		{
 			++index;
 		}
-		while (index < size && this->text.first_unicode_char(index) == UNICODE_CHAR_SPACE)
+		while (index < size && this->text.firstUnicodeChar(index) == UNICODE_CHAR_SPACE)
 		{
 			++index;
 		}
@@ -1267,7 +1267,7 @@ namespace aprilui
 			return;
 		}
 		this->_deleteSelected();
-		int size = this->text.utf8_size();
+		int size = this->text.utf8Size();
 		if (this->maxLength > 0 && size >= this->maxLength)
 		{
 			return;
@@ -1275,14 +1275,14 @@ namespace aprilui
 		hstr left;
 		if (this->caretIndex > 0)
 		{
-			left = this->text.utf8_substr(0, this->caretIndex);
+			left = this->text.utf8SubString(0, this->caretIndex);
 		}
 		hstr right;
 		if (this->caretIndex < size)
 		{
-			right = this->text.utf8_substr(this->caretIndex, size - this->caretIndex);
+			right = this->text.utf8SubString(this->caretIndex, size - this->caretIndex);
 		}
-		this->text = (left + hstr::from_unicode(charCode)) + right;
+		this->text = (left + hstr::fromUnicode(charCode)) + right;
 		this->setCaretIndex(this->caretIndex + 1);
 	}
 	

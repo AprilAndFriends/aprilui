@@ -119,13 +119,13 @@ namespace aprilui
 	{
 		if (nodeIndices.size() == 0)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot get node in TreeView '%s', no indices specified!", this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot get node in TreeView '%s', no indices specified!", this->name.cStr());
 			return;
 		}
 		TreeViewNode* node = NULL;
 		if (!this->_findNode(nodeIndices, &node))
 		{
-			hlog::errorf(aprilui::logTag, "Cannot select node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot select node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
 			return;
 		}
 		this->setSelectedIndex(this->items.index_of(node));
@@ -166,19 +166,19 @@ namespace aprilui
 	{
 		if (nodeIndices.size() == 0)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create node in TreeView '%s', no indices specified!", this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot create node in TreeView '%s', no indices specified!", this->name.cStr());
 			return NULL;
 		}
 		if (this->scrollArea == NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', no internal ScrollArea is present!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', no internal ScrollArea is present!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
 			return NULL;
 		}
 		int index = nodeIndices.remove_last();
 		TreeViewNode* parent = NULL;
 		if (!this->_findNode(nodeIndices, &parent))
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
 			return NULL;
 		}
 		TreeViewNode* selected = this->getSelected();
@@ -217,13 +217,13 @@ namespace aprilui
 	{
 		if (nodeIndices.size() == 0)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot delete node in TreeView '%s', no indices specified!", this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot delete node in TreeView '%s', no indices specified!", this->name.cStr());
 			return false;
 		}
 		TreeViewNode* node = NULL;
 		if (!this->_findNode(nodeIndices, &node))
 		{
-			hlog::errorf(aprilui::logTag, "Cannot delete node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').c_str(), this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot delete node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
 			return false;
 		}
 		TreeViewNode* selected = this->getSelected();
@@ -284,7 +284,7 @@ namespace aprilui
 	{
 		if (nodeIndices.size() == 0)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot get node in TreeView '%s', no indices specified!", this->name.c_str());
+			hlog::errorf(aprilui::logTag, "Cannot get node in TreeView '%s', no indices specified!", this->name.cStr());
 			return NULL;
 		}
 		TreeViewNode* node = NULL;

@@ -211,7 +211,7 @@ namespace aprilui
 			value != defaultLocalization)
 		{
 			hlog::warnf(aprilui::logTag, "Localization '%s' not supported, defaulting back to '%s'.",
-				value.c_str(), defaultLocalization.c_str());
+				value.cStr(), defaultLocalization.cStr());
 			localization = defaultLocalization;
 		}
 		else
@@ -586,7 +586,7 @@ namespace aprilui
 		harray<hstr> extensions = april::getTextureExtensions();
 		foreach (hstr, it, extensions)
 		{
-			if (filename.ends_with(*it))
+			if (filename.endsWith(*it))
 			{
 				return getTextureExtensionScale(*it);
 			}

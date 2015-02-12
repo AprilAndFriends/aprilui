@@ -137,13 +137,13 @@ namespace aprilui
 				}
 				else
 				{
-					hlog::errorf(aprilui::logTag, "ListBoxItem '%s' cannot be reattached to ScrollArea of ListBox '%s', ScrollArea does not exist!", this->name.c_str(), this->parent->getName().c_str());
+					hlog::errorf(aprilui::logTag, "ListBoxItem '%s' cannot be reattached to ScrollArea of ListBox '%s', ScrollArea does not exist!", this->name.cStr(), this->parent->getName().cStr());
 				}
 			}
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
 			{
 				this->_listBox = NULL;
-				hlog::errorf(aprilui::logTag, "ListBoxItem '%s' not attached to object of class ListBox!", this->name.c_str());
+				hlog::errorf(aprilui::logTag, "ListBoxItem '%s' not attached to object of class ListBox!", this->name.cStr());
 			}
 		}
 	}
