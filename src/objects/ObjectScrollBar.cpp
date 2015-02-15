@@ -215,7 +215,7 @@ namespace aprilui
 	{
 		Object::update(timeDelta);
 		this->_updateBar();
-		if (this->skinName == "")
+		if (this->skinName == "" && this->_buttonSlider == NULL)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL && parent->scrollArea != NULL && this->_retainTime > 0.0f)
@@ -246,7 +246,7 @@ namespace aprilui
 	void ScrollBar::_draw()
 	{
 		Object::_draw();
-		if (this->skinName == "")
+		if (this->skinName == "" && this->_buttonSlider == NULL)
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL && parent->scrollArea != NULL)
