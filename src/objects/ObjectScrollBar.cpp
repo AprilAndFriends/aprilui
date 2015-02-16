@@ -41,6 +41,7 @@ namespace aprilui
 		this->useFading = true;
 		this->heightHide = true;
 		this->useStretchedSlider = true;
+		this->disabledWhileScrolling = false;
 		this->_buttonBackground = NULL;
 		this->_buttonSlider = NULL;
 		this->_buttonBackward = NULL;
@@ -60,6 +61,7 @@ namespace aprilui
 		this->useFading = other.useFading;
 		this->heightHide = other.heightHide;
 		this->useStretchedSlider = other.useStretchedSlider;
+		this->disabledWhileScrolling = other.disabledWhileScrolling;
 		this->_buttonBackground = (other._buttonBackground != NULL ? other._buttonBackground->clone() : NULL);
 		this->_buttonSlider = (other._buttonSlider != NULL ? other._buttonSlider->clone() : NULL);
 		this->_buttonBackward = (other._buttonBackward != NULL ? other._buttonBackward->clone() : NULL);
@@ -91,6 +93,7 @@ namespace aprilui
 			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::BOOL);
 			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::BOOL);
 			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("disabled_while_scrolling", PropertyDescription::BOOL);
 		}
 		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
 	}
@@ -359,21 +362,23 @@ namespace aprilui
 
 	hstr ScrollBar::getProperty(chstr name)
 	{
-		if (name == "skin")					return this->getSkinName();
-		if (name == "grid_size")			return this->getGridSize();
-		if (name == "use_fading")			return this->isUseFading();
-		if (name == "height_hide")			return this->isHeightHide();
-		if (name == "use_stretched_slider")	return this->isUseStretchedSlider();
+		if (name == "skin")						return this->getSkinName();
+		if (name == "grid_size")				return this->getGridSize();
+		if (name == "use_fading")				return this->isUseFading();
+		if (name == "height_hide")				return this->isHeightHide();
+		if (name == "use_stretched_slider")		return this->isUseStretchedSlider();
+		if (name == "disabled_while_scrolling")	return this->isDisabledWhileScrolling();
 		return Object::getProperty(name);
 	}
 
 	bool ScrollBar::setProperty(chstr name, chstr value)
 	{
-		if		(name == "skin")					this->setSkinName(value);
-		else if	(name == "grid_size")				this->setGridSize(value);
-		else if	(name == "use_fading")				this->setUseFading(value);
-		else if	(name == "height_hide")				this->setHeightHide(value);
-		else if	(name == "use_stretched_slider")	this->setUseStretchedSlider(value);
+		if		(name == "skin")						this->setSkinName(value);
+		else if	(name == "grid_size")					this->setGridSize(value);
+		else if	(name == "use_fading")					this->setUseFading(value);
+		else if	(name == "height_hide")					this->setHeightHide(value);
+		else if	(name == "use_stretched_slider")		this->setUseStretchedSlider(value);
+		else if	(name == "disabled_while_scrolling")	this->setDisabledWhileScrolling(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}
@@ -393,14 +398,38 @@ namespace aprilui
 		return Object::_mouseMove();
 	}
 
+	bool ScrollBar::_canAddScrollValue()
+	{
+		if (!this->disabledWhileScrolling)
+		{
+			return true;
+		}
+		Container* parent = dynamic_cast<Container*>(this->parent);
+		return (parent != NULL && !parent->scrollArea->isScrolling());
+	}
+
+	void ScrollBar::addScrollValueBackground(float value)
+	{
+		if (this->_canAddScrollValue())
+		{
+			this->addScrollValue(value);
+		}
+	}
+
 	void ScrollBar::addScrollValueBackward(float multiplier)
 	{
-		this->addScrollValue(-hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+		if (this->_canAddScrollValue())
+		{
+			this->addScrollValue(-hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+		}
 	}
 
 	void ScrollBar::addScrollValueForward(float multiplier)
 	{
-		this->addScrollValue(hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+		if (this->_canAddScrollValue())
+		{
+			this->addScrollValue(hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+		}
 	}
 
 }
