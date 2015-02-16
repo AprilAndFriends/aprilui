@@ -12,6 +12,7 @@
 
 #include "aprilui.h"
 #include "CallbackEvent.h"
+#include "ObjectContainer.h"
 #include "EventArgs.h"
 #include "ObjectScrollBar.h"
 #include "ObjectScrollBarButtonBackground.h"
@@ -65,7 +66,7 @@ namespace aprilui
 			if (scrollBar != NULL)
 			{
 				gvec2 position = args->object->transformToLocalSpace(aprilui::getCursorPosition());
-				scrollBar->addScrollValue(scrollBar->_calcScrollJump(position.x, position.y, args->object->getSize()));
+				scrollBar->addScrollValueBackground(scrollBar->_calcScrollJump(position.x, position.y, args->object->getSize()));
 			}
 		}
 	}

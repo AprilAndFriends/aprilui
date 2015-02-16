@@ -47,6 +47,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(useFading, UseFading);
 		HL_DEFINE_ISSET(heightHide, HeightHide);
 		HL_DEFINE_ISSET(useStretchedSlider, UseStretchedSlider);
+		HL_DEFINE_ISSET(disabledWhileScrolling, DisabledWhileScrolling);
 		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
 
@@ -60,6 +61,7 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 
 		virtual void addScrollValue(float value) = 0;
+		void addScrollValueBackground(float value);
 		void addScrollValueForward(float multiplier = 1.0f);
 		void addScrollValueBackward(float multiplier = 1.0f);
 
@@ -72,6 +74,7 @@ namespace aprilui
 		bool useFading;
 		bool heightHide;
 		bool useStretchedSlider;
+		bool disabledWhileScrolling;
 		ScrollBarButtonBackground* _buttonBackground;
 		ScrollBarButtonSlider* _buttonSlider;
 		ScrollBarButtonForward* _buttonForward;
@@ -95,6 +98,7 @@ namespace aprilui
 		void _unsetButtonBackward(ScrollBarButtonBackward* button);
 
 		void _initAreaDragging();
+		bool _canAddScrollValue();
 
 		virtual hstr _getSkinNameBackground() = 0;
 		virtual hstr _getSkinNameSliderNormal() = 0;

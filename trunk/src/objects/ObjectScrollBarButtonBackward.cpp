@@ -12,6 +12,7 @@
 
 #include "aprilui.h"
 #include "CallbackEvent.h"
+#include "ObjectContainer.h"
 #include "EventArgs.h"
 #include "ObjectScrollBar.h"
 #include "ObjectScrollBarButtonBackward.h"
