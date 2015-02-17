@@ -1010,7 +1010,7 @@ namespace aprilui
 	
 	Object* Dataset::getObject(chstr name)
 	{
-		int dot = (int)name.find('.');
+		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
 			if (!this->objects.hasKey(name))
@@ -1033,7 +1033,7 @@ namespace aprilui
 
 	Animator* Dataset::getAnimator(chstr name)
 	{
-		int dot = (int)name.find('.');
+		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
 			if (!this->animators.hasKey(name))
@@ -1076,7 +1076,7 @@ namespace aprilui
 	
 	Object* Dataset::tryGetObject(chstr name)
 	{
-		int dot = (int)name.find('.');
+		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
 			return this->objects.tryGet(name, NULL);
@@ -1095,7 +1095,7 @@ namespace aprilui
 
 	Animator* Dataset::tryGetAnimator(chstr name)
 	{
-		int dot = (int)name.find('.');
+		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
 			return this->animators.tryGet(name, NULL);
@@ -1134,7 +1134,7 @@ namespace aprilui
 		}
 		if (image == NULL)
 		{
-			int dot = (int)name.find('.');
+			int dot = name.indexOf('.');
 			if (dot < 0)
 			{
 				throw ObjectNotExistsException("Image", name, this->name);
@@ -1155,7 +1155,7 @@ namespace aprilui
 
 	bool Dataset::_findTextEntry(chstr textKey, hstr* text)
 	{
-		int dot = (int)textKey.find('.');
+		int dot = textKey.indexOf('.');
 		if (dot < 0)
 		{
 			if (!this->texts.hasKey(textKey))
