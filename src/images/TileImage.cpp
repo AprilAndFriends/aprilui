@@ -246,10 +246,11 @@ namespace aprilui
 		april::rendersys->setTexture(this->texture->getTexture());
 		bool recreateVertices = !this->_textureCoordinatesLoaded;
 		this->tryLoadTextureCoordinates();
-		if (recreateVertices || this->_lastScroll != this->scroll)
+		if (recreateVertices || this->_lastScroll != this->scroll || this->_lastRect != rect)
 		{
 			this->_createVertices(rect);
 			this->_lastScroll = this->scroll;
+			this->_lastRect = rect;
 		}
 		april::rendersys->setTextureBlendMode(this->blendMode);
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);

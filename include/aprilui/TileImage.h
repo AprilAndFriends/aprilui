@@ -52,6 +52,7 @@ namespace aprilui
 		bool useTileCount;
 		harray<april::TexturedVertex> tileVertices;
 		gvec2 _lastScroll;
+		grect _lastRect;
 
 		void _createVertices(grect rect);
 
