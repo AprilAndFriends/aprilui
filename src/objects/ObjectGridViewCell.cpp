@@ -250,7 +250,7 @@ namespace aprilui
 
 	bool GridViewCell::_buttonUp(april::Button buttonCode)
 	{
-		if (Container::onButtonUp(buttonCode))
+		if (Container::_buttonUp(buttonCode))
 		{
 			return true;
 		}
