@@ -354,7 +354,7 @@ namespace aprilui
 
 	bool ImageButton::_buttonUp(april::Button buttonCode)
 	{
-		if (ImageBox::onButtonUp(buttonCode))
+		if (ImageBox::_buttonUp(buttonCode))
 		{
 			return true;
 		}

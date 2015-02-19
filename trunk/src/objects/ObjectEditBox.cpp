@@ -963,7 +963,7 @@ namespace aprilui
 
 	bool EditBox::_buttonUp(april::Button buttonCode)
 	{
-		if (Label::onButtonUp(buttonCode))
+		if (Label::_buttonUp(buttonCode))
 		{
 			return true;
 		}

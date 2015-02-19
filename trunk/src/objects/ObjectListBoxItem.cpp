@@ -239,7 +239,7 @@ namespace aprilui
 
 	bool ListBoxItem::_buttonUp(april::Button buttonCode)
 	{
-		if (Label::onButtonUp(buttonCode))
+		if (Label::_buttonUp(buttonCode))
 		{
 			return true;
 		}
