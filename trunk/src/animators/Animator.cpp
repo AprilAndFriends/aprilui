@@ -173,10 +173,12 @@ namespace aprilui
 			}
 			break;
 		case Custom:
-			result = (this->customFunction != NULL ? this->customFunction(this, time) : this->value);
+			if (this->customFunction != NULL)
+			{
+				result = this->customFunction(this, time);
+			}
 			break;
 		}
-		
 		return (this->discreteStep != 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
 	}
 	
