@@ -286,7 +286,11 @@ namespace aprilui
 		if (node->pexists("load_mode"))
 		{
 			hstr mode = node->pstr("load_mode");
-			if (mode == "immediate")			loadMode = april::Texture::LOAD_IMMEDIATE;
+			if (mode == "immediate")
+			{
+				hlog::warn(aprilui::logTag, "'load_mode=\"immediate\"' is deprecated. Defaulting to 'load_mode=\"async\"'."); // DEPRECATED
+				loadMode = april::Texture::LOAD_ASYNC;
+			}
 			else if (mode == "on_demand")		loadMode = april::Texture::LOAD_ON_DEMAND;
 			else if (mode == "async")			loadMode = april::Texture::LOAD_ASYNC;
 			else if (mode == "async_on_demand")	loadMode = april::Texture::LOAD_ASYNC_ON_DEMAND;

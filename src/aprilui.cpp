@@ -52,7 +52,7 @@ namespace aprilui
 	static harray<hstr> supportedLocalizations;
 	static float textureIdleUnloadTime = 0.0f;
 	static bool defaultManagedTextures = false;
-	static april::Texture::LoadMode defaultTextureLoadMode = april::Texture::LOAD_IMMEDIATE;
+	static april::Texture::LoadMode defaultTextureLoadMode = april::Texture::LOAD_ASYNC;
 	static hmap<hstr, float> extensionScales;
 
 	void init()
@@ -67,7 +67,7 @@ namespace aprilui
 		localization = "";
 		textureIdleUnloadTime = 0.0f;
 		defaultManagedTextures = false;
-		defaultTextureLoadMode = april::Texture::LOAD_IMMEDIATE;
+		defaultTextureLoadMode = april::Texture::LOAD_ASYNC;
 		viewport.setSize(april::window->getSize());
 		harray<april::Key> allowedKeys;
 		allowedKeys += april::AK_LBUTTON;
@@ -276,6 +276,11 @@ namespace aprilui
 
 	void setDefaultTextureLoadMode(april::Texture::LoadMode value)
 	{
+		if (value == april::Texture::LOAD_IMMEDIATE)
+		{
+			hlog::warn(aprilui::logTag, "'setDefaultTextureLoadMode' with 'april::Texture::LOAD_IMMEDIATE' is deprecated. Defaulting to 'april::Texture::LOAD_ASYNC'"); // DEPRECATED
+			value = april::Texture::LOAD_ASYNC;
+		}
 		defaultTextureLoadMode = value;
 	}
 
