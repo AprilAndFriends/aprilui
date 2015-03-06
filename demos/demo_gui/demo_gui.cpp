@@ -70,17 +70,17 @@ void _hoverFinished(aprilui::EventArgs* args)
 
 void _listBoxSelectedChanged(aprilui::EventArgs* args)
 {
-	hlog::writef(LOG_TAG, "ListBox selected: '%s'", args->string.c_str());
+	hlog::writef(LOG_TAG, "ListBox selected: '%s'", args->string.cStr());
 }
 
 void _treeViewSelectedChanged(aprilui::EventArgs* args)
 {
-	hlog::writef(LOG_TAG, "TreeView selected: '%s'", args->string.c_str());
+	hlog::writef(LOG_TAG, "TreeView selected: '%s'", args->string.cStr());
 }
 
 void _gridViewSelectedChanged(aprilui::EventArgs* args)
 {
-	hlog::writef(LOG_TAG, "GridView selected: '%s'", args->string.c_str());
+	hlog::writef(LOG_TAG, "GridView selected: '%s'", args->string.cStr());
 }
 
 class UpdateDelegate : public april::UpdateDelegate
@@ -324,7 +324,7 @@ void april_init(const harray<hstr>& args)
 	}
 	catch (hexception& e)
 	{
-		printf("%s\n", e.getMessage().c_str());
+		hlog::error(LOG_TAG, e.getMessage().cStr());
 	}
 }
 
@@ -341,7 +341,7 @@ void april_destroy()
 	}
 	catch (hexception& e)
 	{
-		printf("%s\n", e.getMessage().c_str());
+		hlog::error(LOG_TAG, e.getMessage().cStr());
 	}
 	delete updateDelegate;
 	updateDelegate = NULL;

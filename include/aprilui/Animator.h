@@ -49,6 +49,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, amplitude, Amplitude);
 		HL_DEFINE_GETSET(float, speed, Speed);
 		HL_DEFINE_GETSET(float, offset, Offset);
+		HL_DEFINE_GETSET(float, multiplier, Multiplier);
 		HL_DEFINE_GETSET(float, acceleration, Acceleration);
 		HL_DEFINE_GETSET(int, discreteStep, DiscreteStep);
 		HL_DEFINE_ISSET(reset, Reset);
@@ -82,6 +83,7 @@ namespace aprilui
 		float amplitude;
 		float speed;
 		float offset;
+		float multiplier;
 		float acceleration;
 		int discreteStep;
 		bool reset;

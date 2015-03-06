@@ -31,6 +31,7 @@ namespace aprilui
 		this->amplitude = 0.5f;
 		this->speed = 1.0f;
 		this->offset = 0.0f;
+		this->multiplier = 0.0f;
 		this->acceleration = 0.0f;
 		this->discreteStep = 0;
 		this->reset = false;
@@ -51,6 +52,7 @@ namespace aprilui
 		this->amplitude = other.amplitude;
 		this->speed = other.speed;
 		this->offset = other.offset;
+		this->multiplier = other.multiplier;
 		this->acceleration = other.acceleration;
 		this->discreteStep = other.discreteStep;
 		this->reset = other.reset;
@@ -77,6 +79,7 @@ namespace aprilui
 			Animator::_propertyDescriptions += PropertyDescription("peak_to_peak", PropertyDescription::FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("speed", PropertyDescription::FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("offset", PropertyDescription::FLOAT);
+			Animator::_propertyDescriptions += PropertyDescription("multiplier", PropertyDescription::FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("acceleration", PropertyDescription::FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("discrete_step", PropertyDescription::INT);
 			Animator::_propertyDescriptions += PropertyDescription("reset", PropertyDescription::BOOL);
@@ -179,7 +182,11 @@ namespace aprilui
 			}
 			break;
 		}
-		return (this->discreteStep != 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
+		if (this->discreteStep != 0)
+		{
+			return (hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep);
+		}
+		return (result * (1.0f + time * habs(this->speed) * this->multiplier) + this->offset);
 	}
 	
 	bool Animator::isAnimated()
@@ -248,6 +255,7 @@ namespace aprilui
 		if (name == "peak_to_peak")		return (2 * this->getAmplitude());
 		if (name == "speed")			return this->getSpeed();
 		if (name == "offset")			return this->getOffset();
+		if (name == "multiplier")		return this->getMultiplier();
 		if (name == "acceleration")		return this->getAcceleration();
 		if (name == "discrete_step")	return this->getDiscreteStep();
 		if (name == "reset")			return this->isReset();
@@ -281,6 +289,7 @@ namespace aprilui
 		else if	(name == "peak_to_peak")	this->setAmplitude((float)value * 0.5f);
 		else if	(name == "speed")			this->setSpeed(value);
 		else if	(name == "offset")			this->setOffset(value);
+		else if	(name == "multiplier")		this->setMultiplier(value);
 		else if	(name == "acceleration")	this->setAcceleration(value);
 		else if	(name == "discrete_step")	this->setDiscreteStep(value);
 		else if	(name == "reset")			this->setReset(value);
