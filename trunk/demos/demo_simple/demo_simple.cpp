@@ -135,7 +135,7 @@ void april_init(const harray<hstr>& args)
 	}
 	catch (hexception& e)
 	{
-		printf("%s\n", e.getType().c_str());
+		hlog::error(LOG_TAG, e.getMessage().cStr());
 	}
 }
 
@@ -152,7 +152,7 @@ void april_destroy()
 	}
 	catch (hexception& e)
 	{
-		printf("%s\n", e.getType().c_str());
+		hlog::error(LOG_TAG, e.getMessage().cStr());
 	}
 	delete updateDelegate;
 	updateDelegate = NULL;
