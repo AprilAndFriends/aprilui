@@ -141,10 +141,22 @@ namespace aprilui
 	{
 		if (name != "" && useNameBasePath)
 		{
-			hstr newFilename = name + "." + hresource::extensionOf(filename);
-			if (filename.endsWith(newFilename))
+			if (name.contains("/"))
 			{
-				return hrdir::normalize(filename.replaced(newFilename, ""));
+				hstr namePath = hrdir::baseDir(name);
+				hstr newFilename = hrdir::baseDir(filename);
+				if (newFilename.endsWith(namePath))
+				{
+					return hrdir::normalize(newFilename.replaced(namePath, ""));
+				}
+			}
+			else
+			{
+				hstr namePath = name + "." + hresource::extensionOf(filename);
+				if (filename.endsWith(namePath))
+				{
+					return hrdir::normalize(filename.replaced(namePath, ""));
+				}
 			}
 		}
 		return hrdir::normalize(hrdir::baseDir(filename));
