@@ -20,6 +20,8 @@
 			<!-- human readable name (for GUI) -->
 			<displayName>AprilUI Texture Definition</displayName>
 
+			<hasSeparateAutoSDFiles>last</hasSeparateAutoSDFiles>
+
 			<!-- file extension for the file -->
 			<fileExtension>tex</fileExtension>
 
