@@ -231,7 +231,7 @@ namespace aprilui
 		this->_deleteChildren(node);
 		this->items -= node;
 		int index = nodeIndices.last();
-		if (selected != NULL && !this->items.contains(selected)) // the currently selected object is one of the deleted objects, parent or previous should become selected
+		if (selected != NULL && !this->items.has(selected)) // the currently selected object is one of the deleted objects, parent or previous should become selected
 		{
 			selected = NULL;
 			if (nodeIndices.size() == 1)

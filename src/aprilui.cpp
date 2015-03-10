@@ -207,7 +207,7 @@ namespace aprilui
 	{
 		hlog::write(aprilui::logTag, "Setting localization to: " + value);
 		hstr previousLocalization = localization;
-		if (supportedLocalizations.size() > 0 && !supportedLocalizations.contains(value) &&
+		if (supportedLocalizations.size() > 0 && !supportedLocalizations.has(value) &&
 			value != defaultLocalization)
 		{
 			hlog::warnf(aprilui::logTag, "Localization '%s' not supported, defaulting back to '%s'.",
