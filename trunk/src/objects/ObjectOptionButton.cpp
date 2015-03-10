@@ -39,7 +39,7 @@ namespace aprilui
 
 	int OptionButton::getOptionCount()
 	{
-		return (this->parent != NULL ? this->parent->getChildrenObjects().dyn_cast<OptionButton*>().size() : 0);
+		return (this->parent != NULL ? this->parent->getChildrenObjects().dynamicCast<OptionButton*>().size() : 0);
 	}
 
 	hstr OptionButton::getProperty(chstr name)
@@ -52,7 +52,7 @@ namespace aprilui
 	{
 		if (this->parent != NULL)
 		{
-			harray<OptionButton*> children = this->parent->getChildrenObjects().dyn_cast<OptionButton*>() - this;
+			harray<OptionButton*> children = this->parent->getChildrenObjects().dynamicCast<OptionButton*>() - this;
 			foreach (OptionButton*, it, children)
 			{
 				(*it)->toggled = false;

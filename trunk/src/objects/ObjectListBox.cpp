@@ -134,10 +134,10 @@ namespace aprilui
 		ListBoxItem* item = new ListBoxItem(name != "" ? name : april::generateName("aprilui::ListBoxItem"));
 		this->registerChild(item);
 		this->items -= item;
-		this->items.insert_at(index, item);
+		this->items.insertAt(index, item);
 		if (selected != NULL)
 		{
-			this->setSelectedIndex(this->items.index_of(selected));
+			this->setSelectedIndex(this->items.indexOf(selected));
 		}
 		this->_updateDisplay();
 		return item;
@@ -156,10 +156,10 @@ namespace aprilui
 		{
 			selected = this->items[hclamp(index + 1, 0, this->items.size() - 2)];
 		}
-		this->dataset->destroyObjects(this->items.remove_at(index));
+		this->dataset->destroyObjects(this->items.removeAt(index));
 		if (selected != NULL)
 		{
-			this->setSelectedIndex(this->items.index_of(selected));
+			this->setSelectedIndex(this->items.indexOf(selected));
 		}
 		this->_updateDisplay();
 		return true;

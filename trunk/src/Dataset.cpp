@@ -820,7 +820,7 @@ namespace aprilui
 					keyMode = true;
 					if (key != "")
 					{
-						this->texts[key] = values.join('\n');
+						this->texts[key] = values.joined('\n');
 					}
 				}
 				else
@@ -1308,7 +1308,7 @@ namespace aprilui
 		QueuedCallback callback;
 		while (this->callbackQueue.size() > 0)
 		{
-			callback = this->callbackQueue.remove_first();
+			callback = this->callbackQueue.removeFirst();
 			callback.event->execute(callback.args);
 			delete callback.args; // deleting only args because event is a pointer to object's events which get deleted by the owning object, while args are allocated by the callback queue.
 		}
@@ -1341,7 +1341,7 @@ namespace aprilui
 		removeList.reverse();
 		foreach (int, it, removeList)
 		{
-			delete this->callbackQueue.remove_at(*it).args;
+			delete this->callbackQueue.removeAt(*it).args;
 		}
 	}
 	
@@ -1566,7 +1566,7 @@ namespace aprilui
 				}
 				uPreprocessedFormat += uFormat.substr(0, index + 2);
 				uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
-				uPreprocessedArgs += uArgs.remove_first();
+				uPreprocessedArgs += uArgs.removeFirst();
 				continue;
 			}
 			if (uFormat[index + 1] == 'f')
@@ -1576,7 +1576,7 @@ namespace aprilui
 					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
-				uArg = uArgs.remove_first();
+				uArg = uArgs.removeFirst();
 				uPreprocessedFormat += uFormat.substr(0, index) + uArg;
 				uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
 				if (!this->_getCompositeTextKeyFormatIndexes(uArg, indexes))
@@ -1588,7 +1588,7 @@ namespace aprilui
 					hlog::error(aprilui::logTag, "Not enough args!");
 					return false;
 				}
-				uPreprocessedArgs += uArgs.remove_first(indexes.size());
+				uPreprocessedArgs += uArgs.removeFirst(indexes.size());
 			}
 		}
 		uPreprocessedArgs += uArgs; // remaining args
@@ -1618,7 +1618,7 @@ namespace aprilui
 		foreach (int, it, indexes)
 		{
 			uResult += uFormat.substr(0, (*it));
-			uResult += uArgs.remove_first();
+			uResult += uArgs.removeFirst();
 			uFormat = uFormat.substr((*it) + 2, uFormat.size() - (*it) - 2);
 		}
 		uResult += uFormat;
@@ -1687,7 +1687,7 @@ namespace aprilui
 			uString = uString.substr(index + 1);
 		}
 		keys += hstr::fromUnicode(uString.c_str());
-		keys.remove_all("");
+		keys.removeAll("");
 		harray<ustr> result;
 		foreach (hstr, it, keys)
 		{

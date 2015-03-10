@@ -71,7 +71,7 @@ namespace aprilui
 		{
 			images += this->maskImage;
 		}
-		return images.removed_duplicates();
+		return images.removedDuplicates();
 	}
 
 	harray<PropertyDescription> ProgressBase::getPropertyDescriptions()

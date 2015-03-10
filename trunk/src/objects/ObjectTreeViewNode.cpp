@@ -304,7 +304,7 @@ namespace aprilui
 	{
 		if (this->_treeView != NULL)
 		{
-			this->_treeView->setSelectedIndex(this->_treeView->items.index_of(this));
+			this->_treeView->setSelectedIndex(this->_treeView->items.indexOf(this));
 		}
 	}
 

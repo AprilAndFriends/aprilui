@@ -37,7 +37,7 @@
 		if (removeAnimator ## name != NULL) \
 		{ \
 			delete removeAnimator ## name; \
-			this->dynamicAnimators.remove_at(i ## name); \
+			this->dynamicAnimators.removeAt(i ## name); \
 		} \
 		else \
 		{ \
@@ -1153,13 +1153,13 @@ namespace aprilui
 			this->setAnchorRight(anchors.contains("right"));
 			this->setAnchorTop(anchors.contains("top"));
 			this->setAnchorBottom(anchors.contains("bottom"));
-			anchors.remove_all("left");
-			anchors.remove_all("right");
-			anchors.remove_all("top");
-			anchors.remove_all("bottom");
+			anchors.removeAll("left");
+			anchors.removeAll("right");
+			anchors.removeAll("top");
+			anchors.removeAll("bottom");
 			if (anchors.size() > 0)
 			{
-				hlog::warn(aprilui::logTag, "'anchors=' does not support values '" + anchors.join(",") + "'.");
+				hlog::warn(aprilui::logTag, "'anchors=' does not support values '" + anchors.joined(",") + "'.");
 				return false;
 			}
 		}
@@ -1337,11 +1337,11 @@ namespace aprilui
 		gvec2 max;
 		gvec2 min;
 		harray<gvec2> corners = this->getDerivedCorners(overrideRoot);
-		min = max = corners.remove_first(); // guaranteed to return 4 corner points previously
+		min = max = corners.removeFirst(); // guaranteed to return 4 corner points previously
 		gvec2 corner;
 		while (corners.size() > 0)
 		{
-			corner = corners.remove_first();
+			corner = corners.removeFirst();
 			max.x = hmax(max.x, corner.x);
 			max.y = hmax(max.y, corner.y);
 			min.x = hmin(min.x, corner.x);
