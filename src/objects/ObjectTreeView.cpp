@@ -125,10 +125,10 @@ namespace aprilui
 		TreeViewNode* node = NULL;
 		if (!this->_findNode(nodeIndices, &node))
 		{
-			hlog::errorf(aprilui::logTag, "Cannot select node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
+			hlog::errorf(aprilui::logTag, "Cannot select node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().joined(',').cStr(), this->name.cStr());
 			return;
 		}
-		this->setSelectedIndex(this->items.index_of(node));
+		this->setSelectedIndex(this->items.indexOf(node));
 	}
 
 	int TreeView::getItemCount()
@@ -143,7 +143,7 @@ namespace aprilui
 		{
 			return true;
 		}
-		int index = nodeIndices.remove_first();
+		int index = nodeIndices.removeFirst();
 		if (!hbetweenIE(index, 0, this->nodes.size()))
 		{
 			return false;
@@ -151,7 +151,7 @@ namespace aprilui
 		*node = this->nodes[index];
 		while (nodeIndices.size() > 0)
 		{
-			index = nodeIndices.remove_first();
+			index = nodeIndices.removeFirst();
 			if (!hbetweenIE(index, 0, (*node)->nodes.size()))
 			{
 				*node = NULL;
@@ -171,14 +171,14 @@ namespace aprilui
 		}
 		if (this->scrollArea == NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', no internal ScrollArea is present!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
+			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', no internal ScrollArea is present!", nodeIndices.cast<hstr>().joined(',').cStr(), this->name.cStr());
 			return NULL;
 		}
-		int index = nodeIndices.remove_last();
+		int index = nodeIndices.removeLast();
 		TreeViewNode* parent = NULL;
 		if (!this->_findNode(nodeIndices, &parent))
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
+			hlog::errorf(aprilui::logTag, "Cannot create node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().joined(',').cStr(), this->name.cStr());
 			return NULL;
 		}
 		TreeViewNode* selected = this->getSelected();
@@ -188,13 +188,13 @@ namespace aprilui
 		{
 			this->registerChild(item);
 			this->nodes -= item;
-			this->nodes.insert_at(index, item);
+			this->nodes.insertAt(index, item);
 		}
 		else
 		{
 			parent->registerChild(item);
 			parent->nodes -= item;
-			parent->nodes.insert_at(index, item);
+			parent->nodes.insertAt(index, item);
 		}
 		if (this->expanderWidth > 0.0f)
 		{
@@ -207,7 +207,7 @@ namespace aprilui
 		item->registerChild(new TreeViewLabel(april::generateName("aprilui::TreeViewLabel")));
 		if (selected != NULL)
 		{
-			this->setSelectedIndex(this->items.index_of(selected));
+			this->setSelectedIndex(this->items.indexOf(selected));
 		}
 		this->_updateDisplay();
 		return item;
@@ -223,7 +223,7 @@ namespace aprilui
 		TreeViewNode* node = NULL;
 		if (!this->_findNode(nodeIndices, &node))
 		{
-			hlog::errorf(aprilui::logTag, "Cannot delete node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().join(',').cStr(), this->name.cStr());
+			hlog::errorf(aprilui::logTag, "Cannot delete node with indices '%s' in TreeView '%s', one or more indices are out of bounds!", nodeIndices.cast<hstr>().joined(',').cStr(), this->name.cStr());
 			return false;
 		}
 		TreeViewNode* selected = this->getSelected();
@@ -252,7 +252,7 @@ namespace aprilui
 		}
 		if (nodeIndices.size() == 1)
 		{
-			this->nodes.remove_at(nodeIndices[0]);
+			this->nodes.removeAt(nodeIndices[0]);
 		}
 		else
 		{
@@ -261,7 +261,7 @@ namespace aprilui
 		this->dataset->destroyObjects(node);
 		if (selected != NULL)
 		{
-			this->setSelectedIndex(this->items.index_of(selected));
+			this->setSelectedIndex(this->items.indexOf(selected));
 		}
 		this->_updateDisplay();
 		return true;
@@ -308,7 +308,7 @@ namespace aprilui
 				{
 					if (node->isDerivedVisible())
 					{
-						this->setSelectedIndex(this->items.index_of(node));
+						this->setSelectedIndex(this->items.indexOf(node));
 						break;
 					}
 					node = node->_treeViewParentNode;

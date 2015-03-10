@@ -177,7 +177,7 @@ namespace aprilui
 		{
 			images += this->toggledDisabledImage;
 		}
-		return images.removed_duplicates();
+		return images.removedDuplicates();
 	}
 
 	void ToggleButton::toggle()

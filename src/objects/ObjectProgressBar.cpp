@@ -71,7 +71,7 @@ namespace aprilui
 	
 	harray<BaseImage*> ProgressBar::getUsedImages()
 	{
-		return (ProgressBase::getUsedImages() + ImageBox::getUsedImages()).removed_duplicates();
+		return (ProgressBase::getUsedImages() + ImageBox::getUsedImages()).removedDuplicates();
 	}
 
 	harray<PropertyDescription> ProgressBar::getPropertyDescriptions()

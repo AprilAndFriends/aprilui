@@ -95,7 +95,7 @@ namespace aprilui
 		{
 			images += this->image;
 		}
-		return images.removed_duplicates();
+		return images.removedDuplicates();
 	}
 	
 	void ImageBox::_draw()

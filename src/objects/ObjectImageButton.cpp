@@ -256,7 +256,7 @@ namespace aprilui
 		{
 			images += this->disabledImage;
 		}
-		return images.removed_duplicates();
+		return images.removedDuplicates();
 	}
 	
 	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)

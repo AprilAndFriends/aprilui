@@ -186,7 +186,7 @@ namespace aprilui
 	{
 		if (this->_listBox != NULL)
 		{
-			this->_listBox->setSelectedIndex(this->_listBox->items.index_of(this));
+			this->_listBox->setSelectedIndex(this->_listBox->items.indexOf(this));
 		}
 	}
 

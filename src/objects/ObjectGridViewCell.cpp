@@ -196,8 +196,8 @@ namespace aprilui
 	{
 		if (this->_gridView != NULL && this->_gridViewRow != NULL)
 		{
-			this->_gridView->setSelectedIndex(this->_gridViewRow->_gridViewCells.index_of(this) +
-				this->_gridView->rows.index_of(this->_gridViewRow) * this->_gridView->rowTemplate->_gridViewCells.size());
+			this->_gridView->setSelectedIndex(this->_gridViewRow->_gridViewCells.indexOf(this) +
+				this->_gridView->rows.indexOf(this->_gridViewRow) * this->_gridView->rowTemplate->_gridViewCells.size());
 		}
 	}
 
