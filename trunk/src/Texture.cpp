@@ -196,7 +196,7 @@ namespace aprilui
 
 	void Texture::addLink(Texture* link)
 	{
-		if (!this->links.contains(link))
+		if (!this->links.has(link))
 		{
 			this->links += link;
 			link->addLink(this);
@@ -205,7 +205,7 @@ namespace aprilui
 	
 	void Texture::removeLink(Texture* link)
 	{
-		if (this->links.contains(link))
+		if (this->links.has(link))
 		{
 			this->links -= link;
 		}

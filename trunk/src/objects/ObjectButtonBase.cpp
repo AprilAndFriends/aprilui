@@ -94,7 +94,7 @@ namespace aprilui
 
 	bool ButtonBase::_mouseDown(april::Key keyCode)
 	{
-		if (!allowedKeys.contains(keyCode))
+		if (!allowedKeys.has(keyCode))
 		{
 			return false;
 		}
@@ -109,7 +109,7 @@ namespace aprilui
 
 	bool ButtonBase::_mouseUp(april::Key keyCode)
 	{
-		if (!allowedKeys.contains(keyCode))
+		if (!allowedKeys.has(keyCode))
 		{
 			return false;
 		}
@@ -137,7 +137,7 @@ namespace aprilui
 
 	bool ButtonBase::_buttonDown(april::Button buttonCode)
 	{
-		if (!allowedButtons.contains(buttonCode))
+		if (!allowedButtons.has(buttonCode))
 		{
 			return false;
 		}
@@ -152,7 +152,7 @@ namespace aprilui
 
 	bool ButtonBase::_buttonUp(april::Button buttonCode)
 	{
-		if (!allowedButtons.contains(buttonCode))
+		if (!allowedButtons.has(buttonCode))
 		{
 			return false;
 		}

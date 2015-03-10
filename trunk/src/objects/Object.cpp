@@ -1149,10 +1149,10 @@ namespace aprilui
 		else if	(name == "anchors")
 		{
 			harray<hstr> anchors = value.replaced(" ", "").lowered().split(",", -1, true);
-			this->setAnchorLeft(anchors.contains("left"));
-			this->setAnchorRight(anchors.contains("right"));
-			this->setAnchorTop(anchors.contains("top"));
-			this->setAnchorBottom(anchors.contains("bottom"));
+			this->setAnchorLeft(anchors.has("left"));
+			this->setAnchorRight(anchors.has("right"));
+			this->setAnchorTop(anchors.has("top"));
+			this->setAnchorBottom(anchors.has("bottom"));
 			anchors.removeAll("left");
 			anchors.removeAll("right");
 			anchors.removeAll("top");
