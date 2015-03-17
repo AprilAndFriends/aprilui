@@ -271,6 +271,8 @@ namespace aprilui
 		void moveCenterStop();
 		void fadeColorStop();
 
+		void stopAllAnimations();
+
 		DEPRECATED_ATTRIBUTE bool isClickThrough();
 		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED); }
 
