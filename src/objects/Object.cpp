@@ -1873,5 +1873,14 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(BlueChanger);
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
 	}
+
+	void Object::stopAllAnimations()
+	{
+		foreach (Animator*, it, this->dynamicAnimators)
+		{
+			delete (*it);
+		}
+		this->dynamicAnimators.clear();
+	}
 	
 }
