@@ -32,6 +32,16 @@ namespace aprilui
 	{
 	}
 	
+	void BaseImage::setName(chstr value)
+	{
+		if (this->dataset != NULL)
+		{
+			hlog::errorf(aprilui::logTag, "Cannot set name of image '%s', it is already registered in a dataset!", this->name.cStr());
+			return;
+		}
+		this->name = value;
+	}
+
 	hstr BaseImage::getFullName()
 	{
 		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
@@ -162,7 +172,8 @@ namespace aprilui
 
 	bool BaseImage::setProperty(chstr name, chstr value)
 	{
-		if		(name == "size")			this->setSrcSize(april::hstrToGvec2(value));
+		if		(name == "name")			this->setName(value);
+		else if	(name == "size")			this->setSrcSize(april::hstrToGvec2(value));
 		else if	(name == "w")				this->setSrcWidth(value);
 		else if	(name == "h")				this->setSrcHeight(value);
 		else if (name == "clip_rect")		this->setClipRect(april::hstrToGrect(value));
