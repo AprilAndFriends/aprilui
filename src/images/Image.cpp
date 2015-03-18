@@ -37,7 +37,8 @@ namespace aprilui
 		this->invertY = false;
 	}
 
-	Image::Image(Image& other, chstr name) : BaseImage(other, name)
+	// DEPRECATED
+	Image::Image(const Image& other, chstr name) : BaseImage(other)
 	{
 		this->texture = other.texture;
 		this->srcRect = other.srcRect;
@@ -48,8 +49,29 @@ namespace aprilui
 		this->rotated = other.rotated;
 		this->invertX = other.invertX;
 		this->invertY = other.invertY;
+		for_iter (i, 0, 4)
+		{
+			this->vertices[i] = other.vertices[i];
+		}
 	}
 	
+	Image::Image(const Image& other) : BaseImage(other)
+	{
+		this->texture = other.texture;
+		this->srcRect = other.srcRect;
+		this->color = other.color;
+		this->blendMode = other.blendMode;
+		this->colorMode = other.colorMode;
+		this->colorModeFactor = other.colorModeFactor;
+		this->rotated = other.rotated;
+		this->invertX = other.invertX;
+		this->invertY = other.invertY;
+		for_iter (i, 0, 4)
+		{
+			this->vertices[i] = other.vertices[i];
+		}
+	}
+
 	Image::~Image()
 	{
 	}
@@ -358,11 +380,11 @@ namespace aprilui
 		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &vertices[0], vertices.size(), color);
+			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)vertices, vertices.size(), color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &vertices[0], vertices.size());
+			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)vertices, vertices.size());
 		}
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		april::rendersys->setTextureColorMode(april::CM_DEFAULT);

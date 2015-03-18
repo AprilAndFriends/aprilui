@@ -25,12 +25,13 @@ namespace aprilui
 {
 	class apriluiExport CompositeImage : public BaseImage
 	{
+		APRILUI_CLONEABLE(CompositeImage);
 	public:
 		typedef std::pair<BaseImage*, grect> ImageRef;
 
 		CompositeImage(chstr name, gvec2 size);
-		DEPRECATED_ATTRIBUTE CompositeImage(chstr name, CompositeImage& base);
-		CompositeImage(CompositeImage& other, chstr name);
+		DEPRECATED_ATTRIBUTE CompositeImage(chstr name, const CompositeImage& other);
+		DEPRECATED_ATTRIBUTE CompositeImage(const CompositeImage& other, chstr name);
 		~CompositeImage();
 		
 		HL_DEFINE_GETSET(gvec2, size, SrcSize);

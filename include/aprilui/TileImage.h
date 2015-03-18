@@ -25,6 +25,7 @@ namespace aprilui
 {
 	class apriluiExport TileImage : public Image
 	{
+		APRILUI_CLONEABLE(TileImage);
 	public:
 		TileImage(Texture* texture, chstr name, grect source);
 		~TileImage();

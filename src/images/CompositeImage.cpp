@@ -27,19 +27,29 @@ namespace aprilui
 		this->size = size;
 	}
 	
-	CompositeImage::CompositeImage(chstr name, CompositeImage& other) : BaseImage(other, name)
+	// DEPRECATED
+	CompositeImage::CompositeImage(chstr name, const CompositeImage& other) : BaseImage(other)
 	{
+		this->name = name;
 		this->size = other.size;
 		this->images = other.images;
-		this->clipRect = other.clipRect;
 		this->restoreClipRects = other.restoreClipRects;
 	}
 
-	CompositeImage::CompositeImage(CompositeImage& other, chstr name) : BaseImage(other, name)
+	// DEPRECATED
+	// DERPECATED_ATTRIBUTE
+	CompositeImage::CompositeImage(const CompositeImage& other, chstr name) : BaseImage(other)
+	{
+		this->name = name;
+		this->size = other.size;
+		this->images = other.images;
+		this->restoreClipRects = other.restoreClipRects;
+	}
+
+	CompositeImage::CompositeImage(const CompositeImage& other) : BaseImage(other)
 	{
 		this->size = other.size;
 		this->images = other.images;
-		this->clipRect = other.clipRect;
 		this->restoreClipRects = other.restoreClipRects;
 	}
 

@@ -31,9 +31,10 @@ namespace aprilui
 	
 	class apriluiExport Image : public BaseImage
 	{
+		APRILUI_CLONEABLE(Image);
 	public:
 		Image(Texture* texture, chstr name, grect source);
-		Image(Image& other, chstr name);
+		DEPRECATED_ATTRIBUTE Image(const Image& other, chstr name);
 		~Image();
 		
 		virtual void draw(grect rect, april::Color color = april::Color::White);

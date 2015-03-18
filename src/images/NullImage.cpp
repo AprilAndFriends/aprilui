@@ -15,7 +15,11 @@ namespace aprilui
 	NullImage::NullImage() : Image(0, APRILUI_IMAGE_NAME_NULL, grect())
 	{
 	}
-	
+
+	NullImage::NullImage(const NullImage& other) : Image(other)
+	{
+	}
+
 	NullImage::~NullImage()
 	{
 	}
