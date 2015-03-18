@@ -24,6 +24,16 @@ namespace aprilui
 		this->useTileCount = false;
 	}
 
+	TileImage::TileImage(const TileImage& other) : Image(other)
+	{
+		this->tile = other.tile;
+		this->scroll = other.scroll;
+		this->useTileCount = other.useTileCount;
+		this->tileVertices = other.tileVertices;
+		this->_lastScroll = other._lastScroll;
+		this->_lastRect = other._lastRect;
+	}
+
 	TileImage::~TileImage()
 	{
 	}
@@ -260,11 +270,11 @@ namespace aprilui
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->tileVertices[0], this->tileVertices.size(), color);
+			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size(), color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->tileVertices[0], this->tileVertices.size());
+			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size());
 		}
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		april::rendersys->setTextureColorMode(april::CM_DEFAULT);

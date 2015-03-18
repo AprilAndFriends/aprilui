@@ -20,6 +20,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Cloneable.h"
 #include "PropertyDescription.h"
 
 #define APRILUI_IMAGE_NAME_NULL "null"
@@ -28,14 +29,14 @@ namespace aprilui
 {
 	class Dataset;
 
-	class apriluiExport BaseImage
+	class apriluiExport BaseImage : public Cloneable
 	{
+		APRILUI_CLONEABLE_ABSTRACT(BaseImage);
 	public:
 		friend class Dataset;
 
 		BaseImage(chstr name);
-		BaseImage(BaseImage& other, chstr name);
-		virtual ~BaseImage();
+		~BaseImage();
 		
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);

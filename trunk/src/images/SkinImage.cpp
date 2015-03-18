@@ -20,12 +20,12 @@
 #define ADD_VERTICES(condition, index0, index1, index2, index3) \
 	if (condition) \
 	{ \
-		this->vertices += v[index0]; \
-		this->vertices += v[index1]; \
-		this->vertices += v[index2]; \
-		this->vertices += v[index1]; \
-		this->vertices += v[index2]; \
-		this->vertices += v[index3]; \
+		this->_vertices += v[index0]; \
+		this->_vertices += v[index1]; \
+		this->_vertices += v[index2]; \
+		this->_vertices += v[index1]; \
+		this->_vertices += v[index2]; \
+		this->_vertices += v[index3]; \
 	}
 
 namespace aprilui
@@ -36,7 +36,15 @@ namespace aprilui
 	{
 		this->_skinCoordinatesCalculated = false;
 	}
-	
+
+	SkinImage::SkinImage(const SkinImage& other) : Image(other)
+	{
+		this->skinRect = other.skinRect;
+		this->_lastDrawRect = other._lastDrawRect;
+		this->_skinCoordinatesCalculated = other._skinCoordinatesCalculated;
+		this->_vertices = other._vertices;
+	}
+
 	SkinImage::~SkinImage()
 	{
 	}
@@ -188,7 +196,7 @@ namespace aprilui
 		{
 			this->_lastDrawRect = rect;
 			this->_skinCoordinatesCalculated = true;
-			this->vertices.clear();
+			this->_vertices.clear();
 			gvec2 pos[4];
 			pos[0] = rect.getPosition();
 			pos[3] = rect.getBottomRight();
@@ -250,11 +258,11 @@ namespace aprilui
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->vertices[0], this->vertices.size(), color);
+			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, &this->vertices[0], this->vertices.size());
+			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size());
 		}
 		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
 		april::rendersys->setTextureColorMode(april::CM_DEFAULT);

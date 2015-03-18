@@ -13,19 +13,19 @@ namespace aprilui
 {
 	harray<PropertyDescription> BaseImage::_propertyDescriptions;
 
-	BaseImage::BaseImage(chstr name)
+	BaseImage::BaseImage(chstr name) : Cloneable()
 	{
 		this->name = name;
 		this->dataset = NULL;
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	BaseImage::BaseImage(BaseImage& other, chstr name)
+	BaseImage::BaseImage(const BaseImage& other) : Cloneable(other)
 	{
-		this->name = name;
+		this->name = other.name;
 		this->dataset = NULL;
 		this->clipRect = other.clipRect;
-		this->_textureCoordinatesLoaded = false;
+		this->_textureCoordinatesLoaded = other._textureCoordinatesLoaded;
 	}
 
 	BaseImage::~BaseImage()

@@ -21,6 +21,7 @@ namespace aprilui
 {
 	class apriluiExport SkinImage : public Image
 	{
+		APRILUI_CLONEABLE(SkinImage);
 	public:
 		SkinImage(Texture* texture, chstr name, grect source);
 		~SkinImage();
@@ -58,7 +59,7 @@ namespace aprilui
 
 		grect _lastDrawRect;
 		bool _skinCoordinatesCalculated;
-		harray<april::TexturedVertex> vertices;
+		harray<april::TexturedVertex> _vertices;
 
 	};
 

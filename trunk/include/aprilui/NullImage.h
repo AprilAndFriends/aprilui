@@ -21,6 +21,7 @@ namespace aprilui
 {
 	class apriluiExport NullImage : public Image
 	{
+		APRILUI_CLONEABLE(NullImage);
 	public:
 		NullImage();
 		~NullImage();
