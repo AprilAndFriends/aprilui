@@ -38,6 +38,7 @@ namespace aprilui
 		virtual ~BaseImage();
 		
 		HL_DEFINE_GET(hstr, name, Name);
+		void setName(chstr value);
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(grect, clipRect, ClipRect);
 		void setClipRect(grect value);
