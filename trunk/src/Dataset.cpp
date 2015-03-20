@@ -724,6 +724,10 @@ namespace aprilui
 		hlog::write(aprilui::logTag, "Parsing dataset file: " + path);
 		hlxml::Document doc(path);
 		hlxml::Node* current = doc.root();
+		if (current == NULL)
+		{
+			throw Exception("Unable to parse Xml file '" + filename + "', no root node found!");
+		}
 		this->parseExternalXMLNode(current);
 		foreach_xmlnode (node, current)
 		{
