@@ -96,20 +96,20 @@ namespace aprilui
 
 	hstr Label::getProperty(chstr name)
 	{
-		hstr result = Object::getProperty(name);
+		hstr result = LabelBase::getProperty(name);
 		if (result == "")
 		{
-			result = LabelBase::getProperty(name);
+			result = Object::getProperty(name);
 		}
 		return result;
 	}
 
 	bool Label::setProperty(chstr name, chstr value)
 	{
-		if (Object::setProperty(name, value))
+		if (LabelBase::setProperty(name, value))
 		{
 			return true;
 		}
-		return LabelBase::setProperty(name, value);
+		return Object::setProperty(name, value);
 	}
 }

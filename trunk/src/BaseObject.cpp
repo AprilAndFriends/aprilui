@@ -259,6 +259,10 @@ namespace aprilui
 		if (name == "full_name")	return this->getFullName();
 		if (name == "enabled")		return this->isEnabled();
 		if (name == "zorder")		return this->getZOrder();
+		if (name != "type")
+		{
+			hlog::errorf(aprilui::logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
+		}
 		return "";
 	}
 	
@@ -268,7 +272,14 @@ namespace aprilui
 		else if (name == "tag")		this->setTag(value);
 		else if (name == "enabled")	this->setEnabled(value);
 		else if (name == "zorder")	this->setZOrder(value);
-		else return false;
+		else
+		{
+			if (name != "type")
+			{
+				hlog::errorf(aprilui::logTag, "Could not set property '%s' to '%s' in '%s'!", name.cStr(), value.cStr(), this->name.cStr());
+			}
+			return false;
+		}
 		return true;
 	}
 	
