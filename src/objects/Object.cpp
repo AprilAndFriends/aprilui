@@ -1149,14 +1149,16 @@ namespace aprilui
 		else if	(name == "anchors")
 		{
 			harray<hstr> anchors = value.replaced(" ", "").lowered().split(",", -1, true);
-			this->setAnchorLeft(anchors.has("left"));
-			this->setAnchorRight(anchors.has("right"));
-			this->setAnchorTop(anchors.has("top"));
-			this->setAnchorBottom(anchors.has("bottom"));
+			this->setAnchorLeft(anchors.has("all") || anchors.has("left"));
+			this->setAnchorRight(anchors.has("all") || anchors.has("right"));
+			this->setAnchorTop(anchors.has("all") || anchors.has("top"));
+			this->setAnchorBottom(anchors.has("all") || anchors.has("bottom"));
 			anchors.removeAll("left");
 			anchors.removeAll("right");
 			anchors.removeAll("top");
 			anchors.removeAll("bottom");
+			anchors.removeAll("none");
+			anchors.removeAll("all");
 			if (anchors.size() > 0)
 			{
 				hlog::warn(aprilui::logTag, "'anchors=' does not support values '" + anchors.joined(",") + "'.");
