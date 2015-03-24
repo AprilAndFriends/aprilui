@@ -5,4 +5,7 @@
 		<Image name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{% if sprite.rotated %}{{sprite.frameRect.height}},{{sprite.frameRect.width}}{% else %}{{sprite.frameRect.width}},{{sprite.frameRect.height}}{% endif %}"{% if sprite.rotated %} rotated="true"{% endif %}/>{% endfor %}
 	</Texture>
 	
+<!--
+{{smartUpdateKey}}
+-->
 </Textures>
