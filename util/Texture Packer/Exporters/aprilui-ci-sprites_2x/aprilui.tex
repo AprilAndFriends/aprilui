@@ -6,5 +6,8 @@
 	</Texture>
 	{% for sprite in allSprites %}
 	<CompositeImage name="{{texture.trimmedName}}/{{sprite.trimmedName}}" size="{{sprite.untrimmedSize.width|hdscales}},{{sprite.untrimmedSize.height|hdscales}}"><ImageRef name="{{texture.trimmedName}}/_{{sprite.trimmedName}}" rect="{{sprite.sourceRect.x|hdscales}},{{sprite.sourceRect.y|hdscales}},{{sprite.sourceRect.width|hdscales}},{{sprite.sourceRect.height|hdscales}}"/></CompositeImage>{% endfor %}
-	
+
+<!--
+{{smartUpdateKey}}
+-->
 </Textures>
