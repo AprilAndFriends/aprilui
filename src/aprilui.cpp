@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.01
 /// 
 /// @section LICENSE
 /// 
@@ -53,6 +53,7 @@ namespace aprilui
 	static float textureIdleUnloadTime = 0.0f;
 	static bool defaultManagedTextures = false;
 	static april::Texture::LoadMode defaultTextureLoadMode = april::Texture::LOAD_ASYNC;
+	static bool useKeyboardAutoOffset = false;
 	static hmap<hstr, float> extensionScales;
 
 	void init()
@@ -282,6 +283,16 @@ namespace aprilui
 			value = april::Texture::LOAD_ASYNC;
 		}
 		defaultTextureLoadMode = value;
+	}
+
+	bool isUseKeyboardAutoOffset()
+	{
+		return useKeyboardAutoOffset;
+	}
+
+	void setUseKeyboardAutoOffset(bool value)
+	{
+		useKeyboardAutoOffset = value;
 	}
 
 	hmap<hstr, Dataset*> getDatasets()

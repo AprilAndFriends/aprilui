@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.01
 /// 
 /// @section LICENSE
 /// 
@@ -63,6 +63,8 @@ namespace aprilui
 	apriluiFnExport void setDefaultManagedTextures(bool value);
 	apriluiFnExport april::Texture::LoadMode getDefaultTextureLoadMode();
 	apriluiFnExport void setDefaultTextureLoadMode(april::Texture::LoadMode value);
+	apriluiFnExport bool isUseKeyboardAutoOffset();
+	apriluiFnExport void setUseKeyboardAutoOffset(bool value);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr));

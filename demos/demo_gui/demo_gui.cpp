@@ -312,6 +312,7 @@ void april_init(const harray<hstr>& args)
 		atres::renderer->registerFont(new atres::FontBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
+		aprilui::setUseKeyboardAutoOffset(true);
 		dataset = new aprilui::Dataset(RESOURCE_PATH "demo_gui.dts");
 		dataset->load();
 		dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
