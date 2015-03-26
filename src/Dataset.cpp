@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.01
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -762,6 +762,7 @@ namespace aprilui
 		}
 		this->loaded = true;
 		this->update(0.0f);
+		this->triggerEvent(aprilui::Event::DatasetLoaded);
 	}
 
 	hstr Dataset::_makeTextsPath()
@@ -875,6 +876,7 @@ namespace aprilui
 		this->root = NULL;
 		this->focusedObject = NULL;
 		this->loaded = false;
+		this->triggerEvent(aprilui::Event::DatasetUnloaded);
 	}
 	
 	void Dataset::registerObjects(BaseObject* root)

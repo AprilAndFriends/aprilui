@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -92,14 +92,13 @@ public:
 		april::rendersys->setOrthoProjection(viewport);
 		aprilui::updateCursorPosition();
 		aprilui::processEvents();
-		aprilui::ProgressBar* progressBar;
-		aprilui::ProgressCircle* progressCircle;
-		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_1");
-		progressBar->setProgress(hmodf(progressBar->getProgress() + timeDelta * 0.2f, 1.25f));
-		progressBar = dataset->getObject<aprilui::ProgressBar*>("progress_bar_2");
-		progressBar->setProgress(hmodf(progressBar->getProgress() + timeDelta * 0.25f, 1.25f));
-		progressCircle = dataset->getObject<aprilui::ProgressCircle*>("progress_circle_1");
-		progressCircle->setProgress(hmodf(progressCircle->getProgress() + timeDelta * 0.2f, 1.25f));
+		aprilui::ProgressBase* progressObject = NULL;
+		progressObject = dataset->getObject<aprilui::ProgressBase*>("progress_bar_1");
+		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.25f));
+		progressObject = dataset->getObject<aprilui::ProgressBase*>("progress_bar_2");
+		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.25f, 1.25f));
+		progressObject = dataset->getObject<aprilui::ProgressBase*>("progress_circle_1");
+		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.25f));
 		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("%d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
 		dataset->update(timeDelta);
 		dataset->draw();

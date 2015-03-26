@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -20,6 +20,8 @@
 
 namespace aprilui
 {
+	hstr Event::DatasetLoaded = "DatasetLoaded";
+	hstr Event::DatasetUnloaded = "DatasetUnloaded";
 	hstr Event::RegisteredInDataset = "RegisteredInDataset";
 	hstr Event::UnregisteredFromDataset = "UnregisteredFromDataset";
 	hstr Event::AttachedToObject = "AttachedToObject";
@@ -67,6 +69,8 @@ namespace aprilui
 
 	bool Event::isSystemEvent(chstr type, bool caseSensitive)
 	{
+		SYSTEM_EVENT_CHECK(DatasetLoaded);
+		SYSTEM_EVENT_CHECK(DatasetUnloaded);
 		SYSTEM_EVENT_CHECK(RegisteredInDataset);
 		SYSTEM_EVENT_CHECK(UnregisteredFromDataset);
 		SYSTEM_EVENT_CHECK(AttachedToObject);

@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -303,13 +303,19 @@ namespace aprilui
 	{
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
-			grect rect = this->clipRect;
 			if (this->rotated)
 			{
+				grect rect = this->clipRect;
+				grect srcRect = this->srcRect;
 				hswap(rect.x, rect.y);
-				rect.x = this->srcRect.h - (rect.x + rect.h);
+				hswap(rect.w, rect.h);
+				hswap(srcRect.w, srcRect.h);
+				rect.x = srcRect.w - (rect.x + rect.w);
+				srcRect.clip(rect + srcRect.getPosition());
+				hswap(srcRect.w, srcRect.h);
+				return srcRect;
 			}
-			return this->srcRect.clipped(rect + this->srcRect.getPosition());
+			return this->srcRect.clipped(this->clipRect + this->srcRect.getPosition());
 		}
 		return this->srcRect;
 	}

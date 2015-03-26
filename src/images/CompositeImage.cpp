@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -37,7 +37,6 @@ namespace aprilui
 	}
 
 	// DEPRECATED
-	// DERPECATED_ATTRIBUTE
 	CompositeImage::CompositeImage(const CompositeImage& other, chstr name) : BaseImage(other)
 	{
 		this->name = name;
