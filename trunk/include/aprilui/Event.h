@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -26,6 +26,8 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE_ABSTRACT(Event);
 	public:
+		static hstr DatasetLoaded;
+		static hstr DatasetUnloaded;
 		static hstr RegisteredInDataset;
 		static hstr UnregisteredFromDataset;
 		static hstr AttachedToObject;
