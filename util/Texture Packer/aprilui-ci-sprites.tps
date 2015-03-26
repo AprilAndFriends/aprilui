@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>aprilui-ci-sprites</string>
         <key>textureFileName</key>
-        <filename>C:/aprilui-ci-sprites.png</filename>
+        <filename>C:/_NAME_.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -127,7 +127,7 @@
             <key>apriluitex</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>C:/aprilui-ci-sprites.tex</filename>
+                <filename>C:/_NAME_{v}.tex</filename>
             </struct>
             <key>java</key>
             <struct type="DataFile">
@@ -136,9 +136,9 @@
             </struct>
         </map>
         <key>multiPack</key>
-        <true/>
-        <key>forceIdenticalLayout</key>
         <false/>
+        <key>forceIdenticalLayout</key>
+        <true/>
         <key>outputFormat</key>
         <enum type="SettingsBase::OutputFormat">RGBA8888</enum>
         <key>contentProtection</key>
@@ -157,7 +157,7 @@
             <key>scale</key>
             <double>1</double>
             <key>scaleMode</key>
-            <enum type="ScaleMode">Fast</enum>
+            <enum type="ScaleMode">Smooth</enum>
             <key>innerPadding</key>
             <uint>0</uint>
             <key>extrude</key>

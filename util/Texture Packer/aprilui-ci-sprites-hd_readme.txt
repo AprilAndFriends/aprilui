@@ -1,0 +1,1 @@
+Does the same as CI-Sprites, but also includes HD generation like Basic-HD.

@@ -11,6 +11,23 @@
                 <key>scale</key>
                 <double>1</double>
                 <key>extension</key>
+                <string>.hd</string>
+                <key>spriteFilter</key>
+                <string></string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>2048</int>
+                    <key>height</key>
+                    <int>2048</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>0.5</double>
+                <key>extension</key>
                 <string></string>
                 <key>spriteFilter</key>
                 <string></string>
@@ -19,9 +36,26 @@
                 <key>maxTextureSize</key>
                 <QSize>
                     <key>width</key>
-                    <int>-1</int>
+                    <int>1024</int>
                     <key>height</key>
-                    <int>-1</int>
+                    <int>1024</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>0.25</double>
+                <key>extension</key>
+                <string>.ld</string>
+                <key>spriteFilter</key>
+                <string></string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>512</int>
+                    <key>height</key>
+                    <int>512</int>
                 </QSize>
             </struct>
         </array>
@@ -34,9 +68,9 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>aprilui-basic-2x</string>
+        <string>aprilui-ci-sprites</string>
         <key>textureFileName</key>
-        <filename>C:/aprilui-basic_2x.png</filename>
+        <filename>C:/_NAME_{v}.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -127,7 +161,7 @@
             <key>apriluitex</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>C:/aprilui-basic_2x.tex</filename>
+                <filename>C:/_NAME_{v}.tex</filename>
             </struct>
             <key>java</key>
             <struct type="DataFile">
@@ -138,7 +172,7 @@
         <key>multiPack</key>
         <false/>
         <key>forceIdenticalLayout</key>
-        <false/>
+        <true/>
         <key>outputFormat</key>
         <enum type="SettingsBase::OutputFormat">RGBA8888</enum>
         <key>contentProtection</key>
@@ -157,7 +191,7 @@
             <key>scale</key>
             <double>1</double>
             <key>scaleMode</key>
-            <enum type="ScaleMode">Fast</enum>
+            <enum type="ScaleMode">Smooth</enum>
             <key>innerPadding</key>
             <uint>0</uint>
             <key>extrude</key>
@@ -165,7 +199,7 @@
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">None</enum>
+            <enum type="SpriteSettings::TrimMode">Trim</enum>
             <key>heuristicMask</key>
             <false/>
         </struct>
