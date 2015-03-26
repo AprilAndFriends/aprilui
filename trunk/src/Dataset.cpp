@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.01
 /// 
 /// @section LICENSE
 /// 
@@ -1240,7 +1240,39 @@ namespace aprilui
 	{
 		if (this->root != NULL)
 		{
+			gmat4 modelviewMatrix = april::rendersys->getModelviewMatrix();
+			gmat4 projectionMatrix = april::rendersys->getProjectionMatrix();
+			grect orthoProjection = april::rendersys->getOrthoProjection();
+			grect viewport = aprilui::getViewport();
+			bool keyboardVisible = (aprilui::isUseKeyboardAutoOffset() && april::window->isVirtualKeyboardVisible());
+			if (keyboardVisible)
+			{
+				float viewportHeight = aprilui::getViewport().h;
+				float visibleHeight = (float)(int)(viewportHeight * (1.0f - april::window->getVirtualKeyboardHeightRatio()));
+				float keyboardHeight = viewportHeight - visibleHeight;
+				if (this->focusedObject != NULL)
+				{
+					grect rect = this->focusedObject->getBoundingRect();
+					float h = (float)(int)(rect.y + rect.h * 0.5f);
+					aprilui::EditBox* editbox = dynamic_cast<aprilui::EditBox*>(this->focusedObject);
+					if (editbox != NULL)
+					{
+						h = editbox->getDerivedPoint(editbox->getCaretRect().getPosition()).y;
+					}
+					grect newViewport = viewport;
+					newViewport.y = hclamp(-h + (float)(int)(visibleHeight * 0.5f), -keyboardHeight, 0.0f);
+					april::rendersys->setOrthoProjection(newViewport);
+					aprilui::setViewport(newViewport);
+				}
+			}
 			this->root->draw();
+			if (keyboardVisible)
+			{
+				april::rendersys->setOrthoProjection(orthoProjection);
+				april::rendersys->setProjectionMatrix(projectionMatrix);
+				april::rendersys->setModelviewMatrix(modelviewMatrix);
+				aprilui::setViewport(viewport);
+			}
 		}
 	}
 	
