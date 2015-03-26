@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.01
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -79,7 +79,8 @@ namespace aprilui
 	apriluiFnExport Object* createObject(chstr type, chstr name);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	
-	apriluiFnExport gvec2 transformWindowPoint(gvec2 pt);
+	apriluiFnExport gvec2 transformWindowPoint(gvec2 point);
+	apriluiFnExport void updateViewportPosition(grect newViewport, bool updateOrthoProjection = true);
 	apriluiFnExport void updateCursorPosition();
 	apriluiFnExport gvec2 getCursorPosition();
 	apriluiFnExport void setCursorPosition(gvec2 position);

@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.01
+/// @version 4.02
 /// 
 /// @section LICENSE
 /// 
@@ -413,6 +413,47 @@ namespace aprilui
 			point.y = hclamp(point.y, 0.0f, viewport.h - 1);
 		}
 		return point;
+	}
+
+	void updateViewportPosition(grect newViewport, bool updateOrthoProjection)
+	{
+		viewport = newViewport;
+		bool keyboardVisible = (useKeyboardAutoOffset && april::window->isVirtualKeyboardVisible());
+		if (!keyboardVisible)
+		{
+			if (updateOrthoProjection)
+			{
+				april::rendersys->setOrthoProjection(viewport);
+			}
+			return;
+		}
+		float viewportHeight = viewport.h;
+		float visibleHeight = (float)(int)(viewportHeight * (1.0f - april::window->getVirtualKeyboardHeightRatio()));
+		float keyboardHeight = viewportHeight - visibleHeight;
+		aprilui::Object* object = NULL;
+		aprilui::EditBox* editbox = NULL;
+		grect rect;
+		float h = 0.0f;
+		foreach_m (Dataset*, it, gDatasets)
+		{
+			object = it->second->getFocusedObject();
+			if (object != NULL)
+			{
+				rect = object->getBoundingRect();
+				h = (float)(int)(rect.y + rect.h * 0.5f);
+				editbox = dynamic_cast<aprilui::EditBox*>(object);
+				if (editbox != NULL)
+				{
+					h = editbox->getDerivedPoint(editbox->getCaretRect().getPosition()).y;
+				}
+				viewport.y = hclamp(-h + (float)(int)(visibleHeight * 0.5f), -keyboardHeight, 0.0f);
+				break;
+			}
+		}
+		if (updateOrthoProjection)
+		{
+			april::rendersys->setOrthoProjection(viewport);
+		}
 	}
 	
 	void updateCursorPosition()
