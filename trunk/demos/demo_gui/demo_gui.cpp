@@ -94,11 +94,9 @@ public:
 		aprilui::processEvents();
 		aprilui::ProgressBase* progressObject = NULL;
 		progressObject = dataset->getObject<aprilui::ProgressBase*>("progress_bar_1");
-		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.25f));
-		progressObject = dataset->getObject<aprilui::ProgressBase*>("progress_bar_2");
-		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.25f, 1.25f));
+		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.2f));
 		progressObject = dataset->getObject<aprilui::ProgressBase*>("progress_circle_1");
-		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.25f));
+		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.2f));
 		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("%d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
 		dataset->update(timeDelta);
 		dataset->draw();

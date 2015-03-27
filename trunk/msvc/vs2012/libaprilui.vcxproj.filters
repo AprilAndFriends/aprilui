@@ -248,6 +248,9 @@
     <ClCompile Include="..\..\src\objects\ObjectGridViewRowTemplate.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\animators\AnimatorProgressChanger.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -486,6 +489,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectGridViewRowTemplate.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\AnimatorProgressChanger.h">
+      <Filter>Header Files\Animators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
