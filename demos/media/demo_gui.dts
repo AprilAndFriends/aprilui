@@ -189,7 +189,9 @@
 			</Object>
 			<Object type="ImageBox" name="skinned_image" image="skin_image/test" rect="260,528,192,64"/>
 			<Object type="ProgressBar" name="progress_bar_1" image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
-			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" rect="0,32,16,128"/>
+			<Object type="ProgressBar" name="progress_bar_2" image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" rect="0,32,16,128">
+				<Animator type="ProgressChanger" name="progress_animator" function="sine" periods="-1" offset="0.625" amplitude="0.625" speed="0.25" timer="2"/>
+			</Object>
 			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" rect="20,20,64,64"/>
 			<Object type="FilledRect" color="000000" rect="260,360,48,128">
 				<Object type="OptionButton" name="option_button_1" image="texture/test_red" toggled_image="texture/test_green" rect="8,8,32,32" zorder="100" toggled="1"/>

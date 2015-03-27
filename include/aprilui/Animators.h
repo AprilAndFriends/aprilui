@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.03
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@
 #include "AnimatorGreenChanger.h"
 #include "AnimatorMoverX.h"
 #include "AnimatorMoverY.h"
+#include "AnimatorProgressChanger.h"
 #include "AnimatorRedChanger.h"
 #include "AnimatorRotator.h"
 #include "AnimatorResizerX.h"
