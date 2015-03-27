@@ -252,6 +252,10 @@
 		D1B061341A51824B0062D851 /* ObjectRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B0612E1A51824B0062D851 /* ObjectRect.cpp */; };
 		D1B061371A5182600062D851 /* ObjectFilledRect.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B061351A5182600062D851 /* ObjectFilledRect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1B061381A5182600062D851 /* ObjectRect.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B061361A5182600062D851 /* ObjectRect.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1B5F3AD1AC5601D00B667A1 /* AnimatorProgressChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B5F3AC1AC5601D00B667A1 /* AnimatorProgressChanger.cpp */; };
+		D1B5F3AE1AC5601D00B667A1 /* AnimatorProgressChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B5F3AC1AC5601D00B667A1 /* AnimatorProgressChanger.cpp */; };
+		D1B5F3AF1AC5601D00B667A1 /* AnimatorProgressChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1B5F3AC1AC5601D00B667A1 /* AnimatorProgressChanger.cpp */; };
+		D1B5F3B11AC5602C00B667A1 /* AnimatorProgressChanger.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B5F3B01AC5602C00B667A1 /* AnimatorProgressChanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1BA0FC416BFD80E0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
 		D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */; };
 		D1BA0FC716BFD81F0085EE2B /* ObjectProgressBar.h in Headers */ = {isa = PBXBuildFile; fileRef = D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -463,6 +467,8 @@
 		D1B0612E1A51824B0062D851 /* ObjectRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectRect.cpp; sourceTree = "<group>"; };
 		D1B061351A5182600062D851 /* ObjectFilledRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFilledRect.h; path = include/aprilui/ObjectFilledRect.h; sourceTree = "<group>"; };
 		D1B061361A5182600062D851 /* ObjectRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectRect.h; path = include/aprilui/ObjectRect.h; sourceTree = "<group>"; };
+		D1B5F3AC1AC5601D00B667A1 /* AnimatorProgressChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorProgressChanger.cpp; sourceTree = "<group>"; };
+		D1B5F3B01AC5602C00B667A1 /* AnimatorProgressChanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorProgressChanger.h; path = include/aprilui/AnimatorProgressChanger.h; sourceTree = "<group>"; };
 		D1BA0FC316BFD80E0085EE2B /* ObjectProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectProgressBar.cpp; sourceTree = "<group>"; };
 		D1BA0FC616BFD81F0085EE2B /* ObjectProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectProgressBar.h; path = include/aprilui/ObjectProgressBar.h; sourceTree = "<group>"; };
 		D1C0FC4319460B8B00117F00 /* PropertyDescription.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PropertyDescription.cpp; path = src/PropertyDescription.cpp; sourceTree = "<group>"; };
@@ -557,6 +563,7 @@
 		7F6D54811201B06200A2BDF6 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
+				D1B5F3AC1AC5601D00B667A1 /* AnimatorProgressChanger.cpp */,
 				D12C447B1A3583090025EBF5 /* AnimatorTileScrollerX.cpp */,
 				D12C447C1A3583090025EBF5 /* AnimatorTileScrollerY.cpp */,
 				7F33B1FF120FE16F004B5E89 /* Animator.cpp */,
@@ -688,6 +695,7 @@
 		C942B3F113278C3300C1D1E8 /* Animators */ = {
 			isa = PBXGroup;
 			children = (
+				D1B5F3B01AC5602C00B667A1 /* AnimatorProgressChanger.h */,
 				D1B061351A5182600062D851 /* ObjectFilledRect.h */,
 				D1B061361A5182600062D851 /* ObjectRect.h */,
 				D12C448F1A3583470025EBF5 /* AnimatorTileScrollerX.h */,
@@ -858,6 +866,7 @@
 				D1147B511A3B49B500C592A4 /* ObjectGridView.h in Headers */,
 				D1147B541A3B49B500C592A4 /* ObjectGridViewRowTemplate.h in Headers */,
 				D1B061371A5182600062D851 /* ObjectFilledRect.h in Headers */,
+				D1B5F3B11AC5602C00B667A1 /* AnimatorProgressChanger.h in Headers */,
 				D1B061381A5182600062D851 /* ObjectRect.h in Headers */,
 				D12C44981A3583470025EBF5 /* TileImage.h in Headers */,
 				D16E9914158BE54D00C058CE /* EventReceiver.h in Headers */,
@@ -1029,6 +1038,7 @@
 				D18CB6191902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */,
 				C98E1DB614C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */,
 				C98E1DB814C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */,
+				D1B5F3AD1AC5601D00B667A1 /* AnimatorProgressChanger.cpp in Sources */,
 				C98E1DBA14C823D300CB9F1C /* ObjectScrollBarV.cpp in Sources */,
 				C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */,
 				D1147B471A3B499C00C592A4 /* ObjectGridViewRow.cpp in Sources */,
@@ -1108,6 +1118,7 @@
 				D18CB61E1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */,
 				D1522EA1140F6A6B0012F290 /* Exception.cpp in Sources */,
 				C98E1DB514C823D300CB9F1C /* ObjectScrollArea.cpp in Sources */,
+				D1B5F3AF1AC5601D00B667A1 /* AnimatorProgressChanger.cpp in Sources */,
 				C98E1DB714C823D300CB9F1C /* ObjectScrollBar.cpp in Sources */,
 				C98E1DB914C823D300CB9F1C /* ObjectScrollBarH.cpp in Sources */,
 				D1147B491A3B499C00C592A4 /* ObjectGridViewRow.cpp in Sources */,
@@ -1187,6 +1198,7 @@
 				D18CB61D1902CE040071C391 /* ObjectScrollBarButtonForward.cpp in Sources */,
 				D1F27B51177A2FCA00E5C131 /* Exception.cpp in Sources */,
 				D1F27B52177A2FCA00E5C131 /* ObjectScrollArea.cpp in Sources */,
+				D1B5F3AE1AC5601D00B667A1 /* AnimatorProgressChanger.cpp in Sources */,
 				D1F27B53177A2FCA00E5C131 /* ObjectScrollBar.cpp in Sources */,
 				D1F27B54177A2FCA00E5C131 /* ObjectScrollBarH.cpp in Sources */,
 				D1147B481A3B499C00C592A4 /* ObjectGridViewRow.cpp in Sources */,
