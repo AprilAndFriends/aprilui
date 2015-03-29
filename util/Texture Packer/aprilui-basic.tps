@@ -127,7 +127,7 @@
             <key>apriluitex</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>C:/_NAME_{v}.tex</filename>
+                <filename>C:/_NAME_.tex</filename>
             </struct>
             <key>java</key>
             <struct type="DataFile">
