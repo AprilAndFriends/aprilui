@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.03
 /// 
 /// @section LICENSE
 /// 
@@ -62,6 +62,11 @@ namespace aprilui
 	void ProgressCircle::setImageByName(chstr name)
 	{
 		ImageBox::setImageByName(name);
+	}
+
+	harray<BaseImage*> ProgressCircle::getUsedImages()
+	{
+		return (ProgressBase::getUsedImages() + ImageBox::getUsedImages()).removedDuplicates();
 	}
 
 	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions()
