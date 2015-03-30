@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.03
 /// 
 /// @section LICENSE
 /// 
@@ -51,6 +51,7 @@ namespace aprilui
 		void setImage(BaseImage* image);
 		hstr getImageName();
 		void setImageByName(chstr name);
+		harray<BaseImage*> getUsedImages();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
