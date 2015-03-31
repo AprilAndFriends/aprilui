@@ -26,23 +26,6 @@
             </struct>
             <struct type="AutoSDSettings">
                 <key>scale</key>
-                <double>0.5</double>
-                <key>extension</key>
-                <string></string>
-                <key>spriteFilter</key>
-                <string></string>
-                <key>acceptFractionalValues</key>
-                <false/>
-                <key>maxTextureSize</key>
-                <QSize>
-                    <key>width</key>
-                    <int>1024</int>
-                    <key>height</key>
-                    <int>1024</int>
-                </QSize>
-            </struct>
-            <struct type="AutoSDSettings">
-                <key>scale</key>
                 <double>0.25</double>
                 <key>extension</key>
                 <string>.ld</string>
@@ -56,6 +39,23 @@
                     <int>512</int>
                     <key>height</key>
                     <int>512</int>
+                </QSize>
+            </struct>
+            <struct type="AutoSDSettings">
+                <key>scale</key>
+                <double>0.5</double>
+                <key>extension</key>
+                <string></string>
+                <key>spriteFilter</key>
+                <string></string>
+                <key>acceptFractionalValues</key>
+                <false/>
+                <key>maxTextureSize</key>
+                <QSize>
+                    <key>width</key>
+                    <int>1024</int>
+                    <key>height</key>
+                    <int>1024</int>
                 </QSize>
             </struct>
         </array>
