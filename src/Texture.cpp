@@ -20,6 +20,10 @@ namespace aprilui
 	{
 		this->originalFilename = filename;
 		this->filename = texture->getFilename();
+		if (this->filename == "")
+		{
+			this->filename = this->originalFilename;
+		}
 		this->texture = texture;
 		this->loadMode = texture->getLoadMode();
 		this->managed = managed;
