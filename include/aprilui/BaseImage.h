@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.04
 /// 
 /// @section LICENSE
 /// 
@@ -40,6 +40,7 @@ namespace aprilui
 		
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);
+		HL_DEFINE_GETSET(hstr, tag, Tag);
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(grect, clipRect, ClipRect);
 		void setClipRect(grect value);
@@ -76,6 +77,7 @@ namespace aprilui
 
 	protected:
 		hstr name;
+		hstr tag;
 		Dataset* dataset;
 		grect clipRect;
 
