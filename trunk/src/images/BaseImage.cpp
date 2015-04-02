@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.02
+/// @version 4.04
 /// 
 /// @section LICENSE
 /// 
@@ -23,6 +23,7 @@ namespace aprilui
 	BaseImage::BaseImage(const BaseImage& other) : Cloneable(other)
 	{
 		this->name = other.name;
+		this->tag = other.tag;
 		this->dataset = NULL;
 		this->clipRect = other.clipRect;
 		this->_textureCoordinatesLoaded = other._textureCoordinatesLoaded;
@@ -32,27 +33,13 @@ namespace aprilui
 	{
 	}
 	
-	void BaseImage::setName(chstr value)
-	{
-		if (this->dataset != NULL)
-		{
-			hlog::errorf(aprilui::logTag, "Cannot set name of image '%s', it is already registered in a dataset!", this->name.cStr());
-			return;
-		}
-		this->name = value;
-	}
-
-	hstr BaseImage::getFullName()
-	{
-		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
-	}
-
 	harray<PropertyDescription> BaseImage::getPropertyDescriptions()
 	{
 		if (BaseImage::_propertyDescriptions.size() == 0)
 		{
 			BaseImage::_propertyDescriptions += PropertyDescription("name", PropertyDescription::STRING);
 			BaseImage::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::STRING);
+			BaseImage::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::STRING);
 			BaseImage::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::STRING);
 			BaseImage::_propertyDescriptions += PropertyDescription("size", PropertyDescription::GVEC2);
 			BaseImage::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
@@ -66,6 +53,21 @@ namespace aprilui
 			BaseImage::_propertyDescriptions += PropertyDescription("clip_h", PropertyDescription::FLOAT);
 		}
 		return BaseImage::_propertyDescriptions;
+	}
+
+	void BaseImage::setName(chstr value)
+	{
+		if (this->dataset != NULL)
+		{
+			hlog::errorf(aprilui::logTag, "Cannot set name of image '%s', it is already registered in a dataset!", this->name.cStr());
+			return;
+		}
+		this->name = value;
+	}
+
+	hstr BaseImage::getFullName()
+	{
+		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 
 	void BaseImage::setClipRect(grect value)
@@ -153,6 +155,7 @@ namespace aprilui
 	{
 		if (name == "name")				return this->getName();
 		if (name == "full_name")		return this->getFullName();
+		if (name == "tag")				return this->getTag();
 		if (name == "dataset")
 		{
 			return (this->dataset != NULL ? this->dataset->getName() : "");
@@ -173,7 +176,8 @@ namespace aprilui
 	bool BaseImage::setProperty(chstr name, chstr value)
 	{
 		if		(name == "name")			this->setName(value);
-		else if	(name == "size")			this->setSrcSize(april::hstrToGvec2(value));
+		else if (name == "tag")				this->setTag(value);
+		else if (name == "size")			this->setSrcSize(april::hstrToGvec2(value));
 		else if	(name == "w")				this->setSrcWidth(value);
 		else if	(name == "h")				this->setSrcHeight(value);
 		else if (name == "clip_rect")		this->setClipRect(april::hstrToGrect(value));
