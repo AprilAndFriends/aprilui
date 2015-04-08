@@ -35,7 +35,7 @@ namespace aprilui
 
 	static const char SeparatorParameter = ',';
 	
-	extern hstr logTag;
+	extern apriluiFnExport hstr logTag;
 
 	apriluiFnExport void init();
 	apriluiFnExport void destroy();
