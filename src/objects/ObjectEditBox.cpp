@@ -341,7 +341,7 @@ namespace aprilui
 							float ow = word->rect.x;
 							offsetIndex = word->start;
 							float cw = 0.0f;
-							foreach(float, it, word->charWidths)
+							foreach (float, it, word->charWidths)
 							{
 								cw = (*it) * 0.5f;
 								if (hbetweenIE(position.x, ow, ow + cw))
