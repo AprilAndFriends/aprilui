@@ -34,7 +34,10 @@ namespace aprilui
 
 	void Rect::_draw()
 	{
-		april::rendersys->drawRect(this->_getDrawRect(), this->_getDrawColor());
+		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
+		april::Color drawColor = this->_getDrawColor();
+		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
+		april::rendersys->drawRect(this->_getDrawRect(), drawColor);
 	}
 	
 }
