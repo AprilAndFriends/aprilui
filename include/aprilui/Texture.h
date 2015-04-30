@@ -25,7 +25,7 @@ namespace aprilui
 	{
 	public:
 		Texture(chstr filename, april::Texture* texture, bool managed = false);
-		~Texture();
+		virtual ~Texture();
 
 		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);
 		HL_DEFINE_GET(hstr, filename, Filename);
@@ -47,10 +47,10 @@ namespace aprilui
 		void update(float timeDelta);
 		void resetUnusedTime();
 
-		bool load(bool ignoreDynamicLinks = false);
-		bool loadAsync(bool ignoreDynamicLinks = false);
-		void unload();
-		void reload(chstr filename);
+		virtual bool load(bool ignoreDynamicLinks = false);
+		virtual bool loadAsync(bool ignoreDynamicLinks = false);
+		virtual void unload();
+		virtual void reload(chstr filename);
 		
 		void addLink(Texture* link);
 		void removeLink(Texture* link);
