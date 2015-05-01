@@ -30,14 +30,14 @@
 
 namespace aprilui
 {
-	float ScrollBar::ScrollDistance = 32.0f;
-	float ScrollBar::GridSize = 0.0f;
+	float ScrollBar::defaultScrollDistance = 32.0f;
+	float ScrollBar::defaultGridSize = 0.0f;
 
 	harray<PropertyDescription> ScrollBar::_propertyDescriptions;
 
 	ScrollBar::ScrollBar(chstr name) : Object(name)
 	{
-		this->gridSize = GridSize;
+		this->gridSize = ScrollBar::defaultGridSize;
 		this->useFading = true;
 		this->heightHide = true;
 		this->useStretchedSlider = true;
@@ -420,7 +420,7 @@ namespace aprilui
 	{
 		if (this->_canAddScrollValue())
 		{
-			this->addScrollValue(-hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+			this->addScrollValue(-hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::defaultScrollDistance) * multiplier)));
 		}
 	}
 
@@ -428,7 +428,7 @@ namespace aprilui
 	{
 		if (this->_canAddScrollValue())
 		{
-			this->addScrollValue(hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::ScrollDistance) * multiplier)));
+			this->addScrollValue(hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::defaultScrollDistance) * multiplier)));
 		}
 	}
 

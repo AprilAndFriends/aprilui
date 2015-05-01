@@ -82,9 +82,9 @@ namespace aprilui
 		// TODO - remove this temporary hack
 		void __stop();
 
-		static float Inertia;
-		static float DragThreshold;
-		static float DragMaxSpeed;
+		static float defaultInertia;
+		static float defaultDragThreshold;
+		static float defaultDragMaxSpeed;
 
 	protected:
 		bool allowDrag;

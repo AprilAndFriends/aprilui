@@ -50,9 +50,9 @@ namespace aprilui
 		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
 
-		static void setAllowedKeys(harray<april::Key> keys);
-		static void setAllowedButtons(harray<april::Button> buttons);
-		
+		static harray<april::Key> allowedKeys;
+		static harray<april::Button> allowedButtons;
+
 	protected:
 		bool hovered;
 		bool pushed;
