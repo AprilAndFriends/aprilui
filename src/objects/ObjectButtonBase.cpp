@@ -20,9 +20,6 @@
 
 namespace aprilui
 {
-	static harray<april::Key> allowedKeys;
-	static harray<april::Button> allowedButtons;
-
 	ButtonBase::ButtonBase() : _thisObject(NULL)
 	{
 		this->hovered = false;
@@ -174,16 +171,6 @@ namespace aprilui
 	bool ButtonBase::setProperty(chstr name, chstr value)
 	{
 		return false;
-	}
-	
-	void ButtonBase::setAllowedKeys(harray<april::Key> keys)
-	{
-		allowedKeys = keys;
-	}
-	
-	void ButtonBase::setAllowedButtons(harray<april::Button> buttons)
-	{
-		allowedButtons = buttons;
 	}
 	
 }

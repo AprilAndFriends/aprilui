@@ -22,16 +22,16 @@
 
 namespace aprilui
 {
-	hstr ScrollBarH::SkinNameHBackground = "h_background";
-	hstr ScrollBarH::SkinNameHSliderNormal = "h_slider_normal";
-	hstr ScrollBarH::SkinNameHSliderHover = "h_slider_hover";
-	hstr ScrollBarH::SkinNameHSliderPushed = "h_slider_pushed";
-	hstr ScrollBarH::SkinNameHForwardNormal = "right_normal";
-	hstr ScrollBarH::SkinNameHForwardHover = "right_hover";
-	hstr ScrollBarH::SkinNameHForwardPushed = "right_pushed";
-	hstr ScrollBarH::SkinNameHBackwardNormal = "left_normal";
-	hstr ScrollBarH::SkinNameHBackwardHover = "left_hover";
-	hstr ScrollBarH::SkinNameHBackwardPushed = "left_pushed";
+	hstr ScrollBarH::skinNameHBackground = "h_background";
+	hstr ScrollBarH::skinNameHSliderNormal = "h_slider_normal";
+	hstr ScrollBarH::skinNameHSliderHover = "h_slider_hover";
+	hstr ScrollBarH::skinNameHSliderPushed = "h_slider_pushed";
+	hstr ScrollBarH::skinNameHForwardNormal = "right_normal";
+	hstr ScrollBarH::skinNameHForwardHover = "right_hover";
+	hstr ScrollBarH::skinNameHForwardPushed = "right_pushed";
+	hstr ScrollBarH::skinNameHBackwardNormal = "left_normal";
+	hstr ScrollBarH::skinNameHBackwardHover = "left_hover";
+	hstr ScrollBarH::skinNameHBackwardPushed = "left_pushed";
 
 	ScrollBarH::ScrollBarH(chstr name) : ScrollBar(name)
 	{
@@ -131,7 +131,7 @@ namespace aprilui
 
 	float ScrollBarH::_calcScrollMove(float x, float y)
 	{
-		return hroundf(x * ScrollBar::ScrollDistance);
+		return hroundf(x * ScrollBar::defaultScrollDistance);
 	}
 
 	void ScrollBarH::notifyEvent(chstr type, EventArgs* args)

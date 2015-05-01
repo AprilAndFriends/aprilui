@@ -22,9 +22,9 @@
 
 namespace aprilui
 {
-	float ScrollArea::DragThreshold = 16.0f;
-	float ScrollArea::Inertia = 2000.0f;
-	float ScrollArea::DragMaxSpeed = 0.0f;
+	float ScrollArea::defaultInertia = 2000.0f;
+	float ScrollArea::defaultDragThreshold = 16.0f;
+	float ScrollArea::defaultDragMaxSpeed = 0.0f;
 
 	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
 
@@ -32,9 +32,9 @@ namespace aprilui
 	{
 		this->clip = true;
 		this->allowDrag = false;
-		this->inertia = Inertia;
-		this->dragThreshold = DragThreshold;
-		this->dragMaxSpeed = DragMaxSpeed;
+		this->inertia = ScrollArea::defaultInertia;
+		this->dragThreshold = ScrollArea::defaultDragThreshold;
+		this->dragMaxSpeed = ScrollArea::defaultDragMaxSpeed;
 		this->swapScrollWheels = false;
 		this->dragging = false;
 		this->debugColor = april::Color(april::Color::Yellow, 32);

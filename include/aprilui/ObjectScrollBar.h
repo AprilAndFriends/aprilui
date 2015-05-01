@@ -65,8 +65,8 @@ namespace aprilui
 		void addScrollValueForward(float multiplier = 1.0f);
 		void addScrollValueBackward(float multiplier = 1.0f);
 
-		static float ScrollDistance;
-		static float GridSize;
+		static float defaultScrollDistance;
+		static float defaultGridSize;
 
 	protected:
 		hstr skinName;

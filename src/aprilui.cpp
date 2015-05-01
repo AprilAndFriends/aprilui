@@ -70,12 +70,10 @@ namespace aprilui
 		defaultManagedTextures = false;
 		defaultTextureLoadMode = april::Texture::LOAD_ASYNC;
 		viewport.setSize(april::window->getSize());
-		harray<april::Key> allowedKeys;
-		allowedKeys += april::AK_LBUTTON;
-		ButtonBase::setAllowedKeys(allowedKeys);
-		harray<april::Button> allowedButtons;
-		allowedButtons += april::AB_A;
-		ButtonBase::setAllowedButtons(allowedButtons);
+		ButtonBase::allowedKeys.clear();
+		ButtonBase::allowedKeys += april::AK_LBUTTON;
+		ButtonBase::allowedButtons.clear();
+		ButtonBase::allowedButtons += april::AB_A;
 
 		APRILUI_REGISTER_OBJECT_TYPE(CallbackObject);
 		APRILUI_REGISTER_OBJECT_TYPE(Container);
