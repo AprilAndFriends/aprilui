@@ -20,6 +20,9 @@
 
 namespace aprilui
 {
+	harray<april::Key> ButtonBase::allowedKeys;
+	harray<april::Button> ButtonBase::allowedButtons;
+
 	ButtonBase::ButtonBase() : _thisObject(NULL)
 	{
 		this->hovered = false;
