@@ -65,6 +65,8 @@ namespace aprilui
 
 		void update(float timeDelta);
 
+		void stopScrolling();
+
 		void notifyEvent(chstr type, EventArgs* args);
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
@@ -79,12 +81,11 @@ namespace aprilui
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
 
-		// TODO - remove this temporary hack
-		void __stop();
-
 		static float defaultInertia;
 		static float defaultDragThreshold;
 		static float defaultDragMaxSpeed;
+
+		DEPRECATED_ATTRIBUTE void __stop() { return this->stopScrolling(); }
 
 	protected:
 		bool allowDrag;
