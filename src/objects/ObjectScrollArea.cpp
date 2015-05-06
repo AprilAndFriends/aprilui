@@ -269,7 +269,15 @@ namespace aprilui
 		}
 	}
 
-    bool ScrollArea::_isScrollableScrollArea(aprilui::Object* object)
+	void ScrollArea::stopScrolling()
+	{
+		this->dragging = false;
+		this->pushed = false;
+		this->_dragSpeed.set(0.0f, 0.0f);
+		this->_dragTimer.set(0.0f, 0.0f);
+	}
+
+	bool ScrollArea::_isScrollableScrollArea(aprilui::Object* object)
     {
         ScrollArea* scrollArea = dynamic_cast<ScrollArea*>(object);
 		return (scrollArea != NULL && scrollArea->isScrollable());
@@ -461,15 +469,6 @@ namespace aprilui
 	bool ScrollArea::_buttonUp(april::Button buttonCode)
 	{
 		return (ButtonBase::_buttonUp(buttonCode) || Object::_buttonUp(buttonCode));
-	}
-	
-	// TODO - remove this temporary hack
-	void ScrollArea::__stop()
-	{
-		this->dragging = false;
-		this->pushed = false;
-		this->_dragSpeed.set(0.0f, 0.0f);
-		this->_dragTimer.set(0.0f, 0.0f);
 	}
 	
 	void ScrollArea::_adjustDragSpeed()
