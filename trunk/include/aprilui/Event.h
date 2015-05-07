@@ -44,6 +44,7 @@ namespace aprilui
 		static hstr ButtonUp;
 		static hstr ButtonTrigger;
 		static hstr EnabledChanged;
+		static hstr AwakeChanged;
 		static hstr Resized;
 		static hstr FocusGained;
 		static hstr FocusLost;

@@ -105,7 +105,7 @@ namespace aprilui
 			Animator::notifyEvent(type, args);
 		}
 
-		void FrameAnimation::update(float timeDelta)
+		void FrameAnimation::_update(float timeDelta)
 		{
 			if (this->_checkUpdate(timeDelta))
 			{

@@ -43,8 +43,6 @@ namespace aprilui
 		bool isCursorInside();
 		bool isSelected();
 
-		void update(float timeDelta);
-
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
@@ -55,6 +53,7 @@ namespace aprilui
 		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
+		void _update(float timeDelta);
 		void _draw();
 
 		april::Color _getCurrentBackgroundColor();

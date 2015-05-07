@@ -214,9 +214,9 @@ namespace aprilui
 		}
 	}
 
-	void ScrollBar::update(float timeDelta)
+	void ScrollBar::_update(float timeDelta)
 	{
-		Object::update(timeDelta);
+		Object::_update(timeDelta);
 		this->_updateBar();
 		if (this->skinName == "" && this->_buttonSlider == NULL)
 		{

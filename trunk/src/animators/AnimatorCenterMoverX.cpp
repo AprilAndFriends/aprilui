@@ -42,7 +42,7 @@ namespace aprilui
 			this->parent->setCenterX(value);
 		}
 
-		void CenterMoverX::update(float timeDelta)
+		void CenterMoverX::_update(float timeDelta)
 		{
 			this->_valueUpdateSimple(timeDelta);
 		}

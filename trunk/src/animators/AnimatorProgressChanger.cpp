@@ -57,7 +57,7 @@ namespace aprilui
 			progressObject->setProgress(value);
 		}
 
-		void ProgressChanger::update(float timeDelta)
+		void ProgressChanger::_update(float timeDelta)
 		{
 			this->_valueUpdateSimple(timeDelta);
 		}

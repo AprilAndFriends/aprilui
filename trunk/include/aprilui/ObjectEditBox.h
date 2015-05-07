@@ -68,8 +68,6 @@ namespace aprilui
 		
 		void setCaretIndexAt(gvec2 position);
 
-		void update(float time);
-
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
@@ -109,6 +107,7 @@ namespace aprilui
 		void _updateCaret();
 		void _updateSelection();
 		
+		void _update(float timeDelta);
 		void _draw();
 
 		void _getBaseOffset(gvec2& offset, float& hf);

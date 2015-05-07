@@ -43,8 +43,6 @@ namespace aprilui
 
 			void notifyEvent(chstr type, EventArgs* args);
 			
-			void update(float timeDelta);
-			
 		protected:
 			hstr imageBaseName;
 			int firstFrame;
@@ -52,6 +50,8 @@ namespace aprilui
 			
 			inline float _getObjectValue() { return 0.0f; }
 			inline void _setObjectValue(float value) { }
+
+			void _update(float timeDelta);
 
 		private:
 			static harray<PropertyDescription> _propertyDescriptions;

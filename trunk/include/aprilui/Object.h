@@ -166,7 +166,6 @@ namespace aprilui
 		virtual bool onButtonDown(april::Button buttonCode);
 		virtual bool onButtonUp(april::Button buttonCode);
 
-		void update(float timeDelta);
 		void draw();
 		
 		void resetCenter();
@@ -307,6 +306,7 @@ namespace aprilui
 		april::Color _getDrawColor();
 		float _getDisabledAlphaFactor();
 
+		void _update(float timeDelta);
 		virtual void _draw();
 		virtual void _drawDebug();
 

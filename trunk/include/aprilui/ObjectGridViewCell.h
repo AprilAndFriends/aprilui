@@ -48,8 +48,6 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		void update(float timeDelta);
-
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
@@ -65,6 +63,7 @@ namespace aprilui
 	protected:
 		bool selectable;
 
+		void _update(float timeDelta);
 		void _draw();
 
 		april::Color _getCurrentBackgroundColor();

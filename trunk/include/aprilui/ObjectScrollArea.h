@@ -63,8 +63,6 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		void update(float timeDelta);
-
 		void stopScrolling();
 
 		void notifyEvent(chstr type, EventArgs* args);
@@ -99,6 +97,8 @@ namespace aprilui
 		void _adjustDragSpeed();
 		void _snapScrollOffset();
 		bool _isScrollableScrollArea(aprilui::Object* object);
+
+		void _update(float timeDelta);
 
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();

@@ -664,13 +664,13 @@ namespace aprilui
 		april::rendersys->setModelviewMatrix(originalMatrix);
 	}
 	
-	void Object::update(float timeDelta)
+	void Object::_update(float timeDelta)
 	{
 		if (this->_checkedChildUnderCursor)
 		{
 			this->clearChildUnderCursor();
 		}
-		BaseObject::update(timeDelta);
+		BaseObject::_update(timeDelta);
 		// because this list could change during the update() call
 		harray<Animator*> animators = this->dynamicAnimators;
 		// first update the animators

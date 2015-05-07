@@ -114,9 +114,9 @@ namespace aprilui
 		}
 	}
 
-	void ImageButton::update(float timeDelta)
+	void ImageButton::_update(float timeDelta)
 	{
-		ButtonBase::update(timeDelta);
+		ButtonBase::_update(timeDelta);
 		this->image = this->normalImage;
 		if (this->image == NULL)
 		{
@@ -143,7 +143,7 @@ namespace aprilui
 				this->image = this->hoverImage;
 			}
 		}
-		ImageBox::update(timeDelta);
+		ImageBox::_update(timeDelta);
 	}
 	
 	void ImageButton::setPushedImage(BaseImage* image)

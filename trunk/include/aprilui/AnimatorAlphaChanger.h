@@ -31,12 +31,12 @@ namespace aprilui
 
 			static Animator* createInstance(chstr name);
 			
-			void update(float timeDelta);
-
 		protected:
 			float _getObjectValue();
 			void _setObjectValue(float value);
 			
+			void _update(float timeDelta);
+
 		};
 	}
 }

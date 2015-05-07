@@ -39,7 +39,7 @@ namespace aprilui
 		return new GridViewRowTemplate(name);
 	}
 
-	void GridViewRowTemplate::update(float timeDelta)
+	void GridViewRowTemplate::_update(float timeDelta)
 	{
 		// this object and its children do not update
 	}

@@ -69,7 +69,7 @@ namespace aprilui
 			return image;
 		}
 
-		void TileScrollerX::update(float timeDelta)
+		void TileScrollerX::_update(float timeDelta)
 		{
 			this->_valueUpdateSimple(timeDelta);
 		}

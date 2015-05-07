@@ -42,7 +42,7 @@ namespace aprilui
 			this->parent->setX(value);
 		}
 
-		void MoverX::update(float timeDelta)
+		void MoverX::_update(float timeDelta)
 		{
 			this->_valueUpdateSimple(timeDelta);
 		}

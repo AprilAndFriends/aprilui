@@ -56,8 +56,6 @@ namespace aprilui
 		bool isExpanded();
 		bool isSelected();
 
-		void update(float timeDelta);
-
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
@@ -74,6 +72,7 @@ namespace aprilui
 		TreeViewImage* image;
 		TreeViewLabel* label;
 
+		void _update(float timeDelta);
 		void _draw();
 
 		int _updateDisplay(int offsetIndex);

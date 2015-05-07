@@ -33,13 +33,13 @@ namespace aprilui
 
 			static Animator* createInstance(chstr name);
 			
-			void update(float timeDelta);
-			
 		protected:
 			float _getObjectValue();
 			void _setObjectValue(float value);
 			TileImage* _getParentsTileImage();
 			
+			void _update(float timeDelta);
+
 		};
 
 		DEPRECATED_ATTRIBUTE typedef TileScrollerY TiledScrollerY;
