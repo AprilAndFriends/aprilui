@@ -90,9 +90,9 @@ namespace aprilui
 		return ImageBox::trySetImageByName(name);
 	}
 
-	void ProgressBar::update(float timeDelta)
+	void ProgressBar::_update(float timeDelta)
 	{
-		ImageBox::update(timeDelta);
+		ImageBox::_update(timeDelta);
 		if (this->interactable && this->pushed)
 		{
 			this->_updateInteractablePosition();

@@ -219,7 +219,7 @@ namespace aprilui
 		}
 	}
 
-	void ToggleButton::update(float timeDelta)
+	void ToggleButton::_update(float timeDelta)
 	{
 		if (this->toggled)
 		{
@@ -231,7 +231,7 @@ namespace aprilui
 			this->hoverImage = this->toggledHoverImage;
 			this->pushedImage = this->toggledPushedImage;
 			this->disabledImage = this->toggledDisabledImage;
-			ImageButton::update(timeDelta);
+			ImageButton::_update(timeDelta);
 			this->normalImage = tempNormalImage;
 			this->hoverImage = tempHoverImage;
 			this->pushedImage = tempPushedImage;
@@ -239,7 +239,7 @@ namespace aprilui
 		}
 		else
 		{
-			ImageButton::update(timeDelta);
+			ImageButton::_update(timeDelta);
 		}
 	}
 	

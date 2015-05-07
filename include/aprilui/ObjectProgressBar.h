@@ -56,8 +56,6 @@ namespace aprilui
 
 		bool trySetImageByName(chstr name);
 
-		void update(float timeDelta);
-
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
@@ -69,6 +67,7 @@ namespace aprilui
 
 		grect _calcRectDirection(grect rect, float progress);
 		
+		void _update(float timeDelta);
 		void _draw();
 
 		bool _mouseDown(april::Key keyCode);

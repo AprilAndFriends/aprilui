@@ -42,7 +42,7 @@ namespace aprilui
 			this->parent->setGreen((unsigned char)value);
 		}
 
-		void GreenChanger::update(float timeDelta)
+		void GreenChanger::_update(float timeDelta)
 		{
 			this->_valueUpdateUChar(timeDelta);
 		}

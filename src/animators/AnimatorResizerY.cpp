@@ -42,7 +42,7 @@ namespace aprilui
 			this->parent->setHeight(value);
 		}
 
-		void ResizerY::update(float timeDelta)
+		void ResizerY::_update(float timeDelta)
 		{
 			this->_valueUpdateSimple(timeDelta);
 		}

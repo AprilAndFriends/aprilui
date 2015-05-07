@@ -246,9 +246,9 @@ namespace aprilui
 		}
 	}
 
-	void EditBox::update(float time)
+	void EditBox::_update(float time)
 	{
-		Label::update(time);
+		Label::_update(time);
 		if (!this->pushed)
 		{
 			this->_blinkTimer += time * 2;

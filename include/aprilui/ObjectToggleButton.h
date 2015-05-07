@@ -59,8 +59,6 @@ namespace aprilui
 		
 		harray<BaseImage*> getUsedImages();
 
-		void update(float timeDelta);
-
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
@@ -79,6 +77,7 @@ namespace aprilui
 		hstr toggledPushedImageName;
 		hstr toggledDisabledImageName;
 
+		void _update(float timeDelta);
 		void _draw();
 		
 		bool _mouseUp(april::Key keyCode);

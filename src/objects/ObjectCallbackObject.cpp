@@ -42,12 +42,12 @@ namespace aprilui
 		}
 	}
 
-	void CallbackObject::update(float timeDelta)
+	void CallbackObject::_update(float timeDelta)
 	{
 		if (this->updateCallback != NULL)
 		{
 			(*this->updateCallback)(timeDelta);
 		}
-		Object::update(timeDelta);
+		Object::_update(timeDelta);
 	}
 }

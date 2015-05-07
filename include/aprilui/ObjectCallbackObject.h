@@ -35,12 +35,11 @@ namespace aprilui
 		inline void setDrawCallback(void (*value)(CallbackObject*)) { this->drawCallback = value; }
 		inline void setUpdateCallback(void (*value)(float)) { this->updateCallback = value; }
 		
-		void update(float timeDelta);
-
 	protected:
 		void (*drawCallback)(CallbackObject*);
 		void (*updateCallback)(float);
 
+		void _update(float timeDelta);
 		void _draw();
 
 	};

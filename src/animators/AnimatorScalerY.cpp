@@ -42,7 +42,7 @@ namespace aprilui
 			this->parent->setScaleY(value);
 		}
 
-		void ScalerY::update(float timeDelta)
+		void ScalerY::_update(float timeDelta)
 		{
 			this->_valueUpdateSimple(timeDelta);
 		}

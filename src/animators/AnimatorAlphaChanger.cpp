@@ -42,7 +42,7 @@ namespace aprilui
 			this->parent->setAlpha((unsigned char)value);
 		}
 
-		void AlphaChanger::update(float timeDelta)
+		void AlphaChanger::_update(float timeDelta)
 		{
 			this->_valueUpdateUChar(timeDelta);
 		}

@@ -64,8 +64,6 @@ namespace aprilui
 		
 		harray<BaseImage*> getUsedImages();
 
-		void update(float timeDelta);
-
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
@@ -86,6 +84,7 @@ namespace aprilui
 		hstr pushedImageName;
 		hstr disabledImageName;
 		
+		void _update(float timeDelta);
 		void _draw();
 		
 		bool _mouseDown(april::Key keyCode);

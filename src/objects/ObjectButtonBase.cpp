@@ -39,7 +39,7 @@ namespace aprilui
 	{
 	}
 	
-	void ButtonBase::update(float timeDelta)
+	void ButtonBase::_update(float timeDelta)
 	{
 		this->_updateHover();
 	}

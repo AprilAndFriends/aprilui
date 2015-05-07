@@ -165,12 +165,12 @@ namespace aprilui
 		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
 	}
 
-	void ScrollArea::update(float timeDelta)
+	void ScrollArea::_update(float timeDelta)
 	{
-		Object::update(timeDelta);
+		Object::_update(timeDelta);
 		if (this->allowDrag && this->parent != NULL)
 		{
-			ButtonBase::update(timeDelta);
+			ButtonBase::_update(timeDelta);
 			gvec2 position = aprilui::getCursorPosition();
 			if (this->pushed)
 			{

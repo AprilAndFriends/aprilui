@@ -82,10 +82,10 @@ namespace aprilui
 			this->_gridView->cells[this->_gridView->selectedIndex] == this);
 	}
 
-	void GridViewCell::update(float timeDelta)
+	void GridViewCell::_update(float timeDelta)
 	{
-		ButtonBase::update(timeDelta);
-		Container::update(timeDelta);
+		ButtonBase::_update(timeDelta);
+		Container::_update(timeDelta);
 	}
 
 	void GridViewCell::_draw()

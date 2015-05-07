@@ -49,6 +49,8 @@ namespace aprilui
 		HL_DEFINE_GET(Object*, parent, Parent);
 		HL_DEFINE_IS(enabled, Enabled);
 		void setEnabled(bool value);
+		HL_DEFINE_IS(awake, Awake);
+		void setAwake(bool value);
 		HL_DEFINE_GET(int, zOrder, ZOrder);
 		void setZOrder(int zorder);
 
@@ -63,6 +65,7 @@ namespace aprilui
 		harray<BaseObject*> getDescendants();
 
 		bool isDerivedEnabled();
+		bool isDerivedAwake();
 
 		virtual harray<PropertyDescription> getPropertyDescriptions();
 		bool hasProperty(chstr name);
@@ -81,7 +84,7 @@ namespace aprilui
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
-		virtual void update(float timeDelta);
+		void update(float timeDelta);
 
 		DEPRECATED_ATTRIBUTE void attach(Object* object);
 		DEPRECATED_ATTRIBUTE void detach();
@@ -93,8 +96,10 @@ namespace aprilui
 		harray<Object*> childrenObjects;
 		harray<Animator*> childrenAnimators;
 		bool enabled;
+		bool awake;
 		int zOrder;
 
+		virtual void _update(float timeDelta);
 		void _sortChildren();
 
 	private:

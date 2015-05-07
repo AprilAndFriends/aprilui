@@ -31,6 +31,7 @@ namespace aprilui
 		this->name = name;
 		this->parent = NULL;
 		this->enabled = true;
+		this->awake = true;
 		this->zOrder = 0;
 	}
 
@@ -40,6 +41,7 @@ namespace aprilui
 		this->tag = other.tag;
 		this->parent = NULL;
 		this->enabled = other.enabled;
+		this->awake = other.awake;
 		this->zOrder = other.zOrder;
 	}
 
@@ -64,6 +66,7 @@ namespace aprilui
 			BaseObject::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::STRING);
 			BaseObject::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::STRING);
 			BaseObject::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::BOOL);
+			BaseObject::_propertyDescriptions += PropertyDescription("awake", PropertyDescription::BOOL);
 			BaseObject::_propertyDescriptions += PropertyDescription("zorder", PropertyDescription::INT);
 		}
 		return BaseObject::_propertyDescriptions;
@@ -225,6 +228,14 @@ namespace aprilui
 
 	void BaseObject::update(float timeDelta)
 	{
+		if (this->awake)
+		{
+			this->_update(timeDelta);
+		}
+	}
+
+	void BaseObject::_update(float timeDelta)
+	{
 		// because update() could change the Z order and thus the child order
 		harray<Object*> objects = this->childrenObjects;
 		harray<Animator*> animators = this->childrenAnimators;
@@ -245,10 +256,19 @@ namespace aprilui
 	
 	void BaseObject::setEnabled(bool value)
 	{
-		if (value != this->enabled)
+		if (this->enabled != value)
 		{
 			this->enabled = value;
 			this->notifyEvent(Event::EnabledChanged, NULL);
+		}
+	}
+
+	void BaseObject::setAwake(bool value)
+	{
+		if (this->awake != value)
+		{
+			this->awake = value;
+			this->notifyEvent(Event::AwakeChanged, NULL);
 		}
 	}
 
@@ -258,6 +278,7 @@ namespace aprilui
 		if (name == "tag")			return this->getTag();
 		if (name == "full_name")	return this->getFullName();
 		if (name == "enabled")		return this->isEnabled();
+		if (name == "awake")		return this->isAwake();
 		if (name == "zorder")		return this->getZOrder();
 		if (name != "type" && !this->hasProperty(name))
 		{
@@ -271,6 +292,7 @@ namespace aprilui
 		if		(name == "name")	this->setName(value);
 		else if (name == "tag")		this->setTag(value);
 		else if (name == "enabled")	this->setEnabled(value);
+		else if (name == "awake")	this->setAwake(value);
 		else if (name == "zorder")	this->setZOrder(value);
 		else
 		{

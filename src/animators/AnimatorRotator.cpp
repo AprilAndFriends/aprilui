@@ -42,7 +42,7 @@ namespace aprilui
 			this->parent->setAngle(value);
 		}
 
-		void Rotator::update(float timeDelta)
+		void Rotator::_update(float timeDelta)
 		{
 			this->_valueUpdateSimple(timeDelta);
 		}

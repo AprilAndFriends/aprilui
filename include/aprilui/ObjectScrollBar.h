@@ -53,8 +53,6 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		void update(float timeDelta);
-
 		void notifyEvent(chstr type, EventArgs* args);
 
 		hstr getProperty(chstr name);
@@ -122,6 +120,7 @@ namespace aprilui
 		virtual void _adjustDragSpeed() = 0;
 		virtual bool _checkAreaSize() = 0;
 
+		void _update(float timeDelta);
 		void _draw();
 
 		bool _mouseMove();

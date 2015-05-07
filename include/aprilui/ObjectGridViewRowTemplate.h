@@ -36,11 +36,10 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		void update(float timeDelta);
-
 		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
+		void _update(float timeDelta);
 		void _draw();
 
 		GridViewRow* _createRow(chstr name);

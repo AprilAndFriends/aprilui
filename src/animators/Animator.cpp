@@ -90,10 +90,10 @@ namespace aprilui
 		return (BaseObject::getPropertyDescriptions() + Animator::_propertyDescriptions);
 	}
 
-	void Animator::update(float timeDelta)
+	void Animator::_update(float timeDelta)
 	{
 		this->timeDelta = timeDelta;
-		BaseObject::update(this->timeDelta);
+		BaseObject::_update(this->timeDelta);
 		if (!this->enabled)
 		{
 			return;
@@ -124,7 +124,7 @@ namespace aprilui
 	{
 		float delay = this->delay;
 		bool animated = this->isAnimated();
-		Animator::update(timeDelta);
+		Animator::_update(timeDelta);
 		return (animated || this->isAnimated() || delay > 0.0f && this->delay <= 0.0f);
 	}
 	

@@ -71,8 +71,6 @@ namespace aprilui
 
 		void notifyEvent(chstr type, EventArgs* args);
 		
-		void update(float timeDelta);
-		
 	protected:
 		float timeDelta;
 		float value;
@@ -92,6 +90,8 @@ namespace aprilui
 		bool useTarget;
 		float (*customFunction)(Animator*, float);
 		
+		void _update(float timeDelta);
+
 		float _calculateValue(float timeDelta);
 		bool _checkUpdate(float timeDelta);
 

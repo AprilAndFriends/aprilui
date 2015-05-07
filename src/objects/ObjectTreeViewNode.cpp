@@ -85,10 +85,10 @@ namespace aprilui
 			this->_treeView->items[this->_treeView->selectedIndex] == this);
 	}
 
-	void TreeViewNode::update(float timeDelta)
+	void TreeViewNode::_update(float timeDelta)
 	{
-		ButtonBase::update(timeDelta);
-		Container::update(timeDelta);
+		ButtonBase::_update(timeDelta);
+		Container::_update(timeDelta);
 	}
 
 	void TreeViewNode::_draw()

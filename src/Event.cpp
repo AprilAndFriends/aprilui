@@ -38,6 +38,7 @@ namespace aprilui
 	hstr Event::ButtonUp = "ButtonUp";
 	hstr Event::ButtonTrigger = "ButtonTrigger";
 	hstr Event::EnabledChanged = "EnabledChanged";
+	hstr Event::AwakeChanged = "AwakeChanged";
 	hstr Event::Resized = "Resized";
 	hstr Event::FocusGained = "FocusGained";
 	hstr Event::FocusLost = "FocusLost";
@@ -87,6 +88,7 @@ namespace aprilui
 		SYSTEM_EVENT_CHECK(ButtonUp);
 		SYSTEM_EVENT_CHECK(ButtonTrigger);
 		SYSTEM_EVENT_CHECK(EnabledChanged);
+		SYSTEM_EVENT_CHECK(AwakeChanged);
 		SYSTEM_EVENT_CHECK(Resized);
 		SYSTEM_EVENT_CHECK(FocusGained);
 		SYSTEM_EVENT_CHECK(FocusLost);

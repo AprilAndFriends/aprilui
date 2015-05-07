@@ -73,10 +73,10 @@ namespace aprilui
 			this->_listBox->items[this->_listBox->selectedIndex] == this);
 	}
 
-	void ListBoxItem::update(float timeDelta)
+	void ListBoxItem::_update(float timeDelta)
 	{
-		ButtonBase::update(timeDelta);
-		Label::update(timeDelta);
+		ButtonBase::_update(timeDelta);
+		Label::_update(timeDelta);
 	}
 
 	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode)
