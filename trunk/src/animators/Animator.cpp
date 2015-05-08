@@ -232,7 +232,7 @@ namespace aprilui
 		}
 		else
 		{
-			hlog::warn(aprilui::logTag, "Cannot set \"time\" to 0 or less.");
+			hlog::warn(logTag, "Cannot set \"time\" to 0 or less.");
 		}
 	}
 	
@@ -278,7 +278,7 @@ namespace aprilui
 			else if (value == "custom")		this->setAnimationFunction(Custom);
 			else
 			{
-				hlog::warn(aprilui::logTag, "'function=' does not support value '" + value + "'.");
+				hlog::warn(logTag, "'function=' does not support value '" + value + "'.");
 				return false;
 			}
 		}

@@ -105,7 +105,7 @@ namespace aprilui
 		SYSTEM_EVENT_CHECK(NodeCollapsed);
 		SYSTEM_EVENT_CHECK(AnimationDelayExpired);
 		SYSTEM_EVENT_CHECK(AnimationExpired);
-		hlog::warn(aprilui::logTag, "There is no system event with name: " + type);
+		hlog::warn(logTag, "There is no system event with name: " + type);
 		return false;
 	}
 

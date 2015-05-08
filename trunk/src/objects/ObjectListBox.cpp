@@ -125,7 +125,7 @@ namespace aprilui
 	{
 		if (this->scrollArea == NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot create item at index '%d' in ListBox '%s', no internal ScrollArea is present!", index, this->name.cStr());
+			hlog::errorf(logTag, "Cannot create item at index '%d' in ListBox '%s', no internal ScrollArea is present!", index, this->name.cStr());
 			return NULL;
 		}
 		ListBoxItem* selected = this->getSelected();
@@ -147,7 +147,7 @@ namespace aprilui
 	{
 		if (!hbetweenIE(index, 0, this->items.size()))
 		{
-			hlog::warnf(aprilui::logTag, "Cannot delete item at index '%d' in ListBox '%s', it does not exist!", index, this->name.cStr());
+			hlog::warnf(logTag, "Cannot delete item at index '%d' in ListBox '%s', it does not exist!", index, this->name.cStr());
 			return false;
 		}
 		ListBoxItem* selected = this->getSelected();

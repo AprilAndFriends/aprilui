@@ -101,7 +101,7 @@ namespace aprilui
 			}
 		}
 #ifdef _DEBUG
-		hlog::warnf(aprilui::logTag, "Object with Focus Index '%d' does not exist, is not visible or is not enabled!", value);
+		hlog::warnf(logTag, "Object with Focus Index '%d' does not exist, is not visible or is not enabled!", value);
 #endif
 		return false;
 	}
@@ -282,7 +282,7 @@ namespace aprilui
 		// DEPRECATED
 		if (node->pexists("dynamic_load"))
 		{
-			hlog::warn(aprilui::logTag, "'dynamic_load' is deprecated. Use 'managed' and 'load_mode' instead.");
+			hlog::warn(logTag, "'dynamic_load' is deprecated. Use 'managed' and 'load_mode' instead.");
 			bool dynamicLoad = node->pbool("dynamic_load");
 			if (dynamicLoad)
 			{
@@ -300,7 +300,7 @@ namespace aprilui
 			hstr mode = node->pstr("load_mode");
 			if (mode == "immediate")
 			{
-				hlog::warn(aprilui::logTag, "'load_mode=\"immediate\"' is deprecated. Defaulting to 'load_mode=\"async\"'."); // DEPRECATED
+				hlog::warn(logTag, "'load_mode=\"immediate\"' is deprecated. Defaulting to 'load_mode=\"async\"'."); // DEPRECATED
 				loadMode = april::Texture::LOAD_ASYNC;
 			}
 			else if (mode == "on_demand")		loadMode = april::Texture::LOAD_ON_DEMAND;
@@ -351,7 +351,7 @@ namespace aprilui
 			{
 				if (*child == "Image" && (child->pexists("tile") || child->pexists("tile_w") || child->pexists("tile_h"))) // DEPRECATED (this entire block)
 				{
-					hlog::warn(aprilui::logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
+					hlog::warn(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (this->images.hasKey(name))
 					{
@@ -389,7 +389,7 @@ namespace aprilui
 					}
 					if (hsgn(tile.x) != hsgn(tile.y))
 					{
-						hlog::warn(aprilui::logTag, "'tile_w' and 'tile_h' have to be either both positive or negative!");
+						hlog::warn(logTag, "'tile_w' and 'tile_h' have to be either both positive or negative!");
 					}
 					this->images[name] = image;
 					image->dataset = this;
@@ -472,7 +472,7 @@ namespace aprilui
 			}
 			else
 			{
-				hlog::warnf(aprilui::logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->getValue().cStr(), name.cStr());
+				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->getValue().cStr(), name.cStr());
 			}
 		}
 		this->images[name] = image;
@@ -663,7 +663,7 @@ namespace aprilui
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
-		hlog::write(aprilui::logTag, "Parsing object include file: " + path);
+		hlog::write(logTag, "Parsing object include file: " + path);
 		hlxml::Document* doc = this->_openDocument(path);
 		hlxml::Node* current = doc->root();
 		foreach_xmlnode (node, current)
@@ -721,7 +721,7 @@ namespace aprilui
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
-		hlog::write(aprilui::logTag, "Parsing dataset file: " + path);
+		hlog::write(logTag, "Parsing dataset file: " + path);
 		hlxml::Document doc(path);
 		hlxml::Node* current = doc.root();
 		if (current == NULL)
@@ -755,7 +755,7 @@ namespace aprilui
 			}
 			catch (hexception& e)
 			{
-				hlog::error(aprilui::logTag, e.getMessage());
+				hlog::error(logTag, e.getMessage());
 				this->_closeDocuments(); // safe not to throw an exception
 				throw e;
 			}
@@ -778,7 +778,7 @@ namespace aprilui
 	
 	void Dataset::_loadTexts(chstr path)
 	{
-		hlog::write(aprilui::logTag, "Loading texts: " + path);
+		hlog::write(logTag, "Loading texts: " + path);
 		harray<hstr> files = hrdir::files(path, true);
 		harray<hstr> lines;
 		harray<hstr> values;
@@ -1434,19 +1434,19 @@ namespace aprilui
 			if ((int)uChars.find_first_of('{') >= 0 || (int)uChars.find_first_of('}') >= 0)
 			{
 				hstr text = hsprintf("Malformed formatted text key '%s'!", key.cStr());
-				hlog::error(aprilui::logTag, text);
+				hlog::error(logTag, text);
 				return text;
 			}
 			if (!this->hasTextEntry(key))
 			{
-				hlog::warnf(aprilui::logTag, "Text key '%s' does not exist!", key.cStr());
+				hlog::warnf(logTag, "Text key '%s' does not exist!", key.cStr());
 			}
 			return this->getTextEntry(key);
 		}
 		int index = (int)uChars.find_first_of('}');
 		if (index < 0)
 		{
-			hlog::errorf(aprilui::logTag, "Could not parse formatted key '%s'.", key.cStr());
+			hlog::errorf(logTag, "Could not parse formatted key '%s'.", key.cStr());
 			return key;
 		}
 		harray<ustr> uArgs;
@@ -1478,7 +1478,7 @@ namespace aprilui
 		{
 			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
 			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
-			hlog::writef(aprilui::logTag, "- while processing args: '%s' with args '%s'.", format.cStr(), argString.cStr());
+			hlog::writef(logTag, "- while processing args: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		ustr uPreprocessedFormat;
@@ -1487,7 +1487,7 @@ namespace aprilui
 		{
 			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
 			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
-			hlog::writef(aprilui::logTag, "- while preprocessing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
+			hlog::writef(logTag, "- while preprocessing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		hstr result;
@@ -1495,7 +1495,7 @@ namespace aprilui
 		{
 			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
 			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
-			hlog::writef(aprilui::logTag, "- while processing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
+			hlog::writef(logTag, "- while processing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		return result;
@@ -1518,12 +1518,12 @@ namespace aprilui
 			}
 			if (openIndex < 0 || closeIndex < 0)
 			{
-				hlog::error(aprilui::logTag, "'{' without '}' or '}' without '{'.");
+				hlog::error(logTag, "'{' without '}' or '}' without '{'.");
 				return false;
 			}
 			if (closeIndex < openIndex)
 			{
-				hlog::error(aprilui::logTag, "'}' before '{'.");
+				hlog::error(logTag, "'}' before '{'.");
 				return false;
 			}
 			// getting all args before the {
@@ -1554,7 +1554,7 @@ namespace aprilui
 			}
 			if (index >= (int)uFormat.size() - 1)
 			{
-				hlog::error(aprilui::logTag, "Last character is '%'!");
+				hlog::error(logTag, "Last character is '%'!");
 				return false;
 			}
 			if (uFormat[index + 1] == '%') // escaped "%", continue processing
@@ -1567,7 +1567,7 @@ namespace aprilui
 			{
 				if (uArgs.size() == 0)
 				{
-					hlog::error(aprilui::logTag, "Not enough args!");
+					hlog::error(logTag, "Not enough args!");
 					return false;
 				}
 				uPreprocessedFormat += uFormat.substr(0, index + 2);
@@ -1579,7 +1579,7 @@ namespace aprilui
 			{
 				if (uArgs.size() == 0)
 				{
-					hlog::error(aprilui::logTag, "Not enough args!");
+					hlog::error(logTag, "Not enough args!");
 					return false;
 				}
 				uArg = uArgs.removeFirst();
@@ -1591,7 +1591,7 @@ namespace aprilui
 				}
 				if (indexes.size() > uArgs.size())
 				{
-					hlog::error(aprilui::logTag, "Not enough args!");
+					hlog::error(logTag, "Not enough args!");
 					return false;
 				}
 				uPreprocessedArgs += uArgs.removeFirst(indexes.size());
@@ -1613,12 +1613,12 @@ namespace aprilui
 		}
 		if (uArgs.size() < indexes.size())
 		{
-			hlog::error(aprilui::logTag, "Not enough args!");
+			hlog::error(logTag, "Not enough args!");
 			return false;
 		}
 		if (indexes.size() > uArgs.size())
 		{
-			hlog::error(aprilui::logTag, "Too many args!");
+			hlog::error(logTag, "Too many args!");
 			return false;
 		}
 		foreach (int, it, indexes)
@@ -1656,7 +1656,7 @@ namespace aprilui
 			}
 			if (index >= (int)uFormat.size() - 1)
 			{
-				hlog::error(aprilui::logTag, "Last character is '%'!");
+				hlog::error(logTag, "Last character is '%'!");
 				return false;
 			}
 			if (uFormat[index + 1] == '%') // escaped "%", use just one "%".
@@ -1667,7 +1667,7 @@ namespace aprilui
 			}
 			if (uFormat[index + 1] != 's')
 			{
-				hlog::errorf(aprilui::logTag, "Unsupported formatting '%%%c'!", uFormat[index + 1]);
+				hlog::errorf(logTag, "Unsupported formatting '%%%c'!", uFormat[index + 1]);
 				return false;
 			}
 			indexes += currentIndex + index;

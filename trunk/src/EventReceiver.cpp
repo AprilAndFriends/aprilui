@@ -21,7 +21,7 @@
 #define EVENT_TYPE_CHECK_DEPRECATED(newType, oldType) \
 	if (realType == oldType) \
 	{ \
-		hlog::warnf(aprilui::logTag, "The event '%s' is deprecated. Use '%s' instead.", oldType, newType.cStr()); \
+		hlog::warnf(logTag, "The event '%s' is deprecated. Use '%s' instead.", oldType, newType.cStr()); \
 		realType = newType; \
 	}
 

@@ -86,7 +86,7 @@ namespace aprilui
 			else if (name == "frame_count")		this->setFrameCount(value);
 			else if (name == "inherit_value")
 			{
-				hlog::warn(aprilui::logTag, "Animators::FrameAnimation does not support 'inherit_value'!");
+				hlog::warn(logTag, "Animators::FrameAnimation does not support 'inherit_value'!");
 			}
 			else return Animator::setProperty(name, value);
 			return true;
@@ -112,7 +112,7 @@ namespace aprilui
 				ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);
 				if (imageBox == NULL)
 				{
-					hlog::error(aprilui::logTag, "Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
+					hlog::error(logTag, "Animators::FrameAnimation: parent object not a subclass of Objects::ImageBox!");
 					return;
 				}
 				this->value = this->_calculateValue(this->timeDelta);

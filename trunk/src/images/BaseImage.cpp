@@ -59,7 +59,7 @@ namespace aprilui
 	{
 		if (this->dataset != NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot set name of image '%s', it is already registered in a dataset!", this->name.cStr());
+			hlog::errorf(logTag, "Cannot set name of image '%s', it is already registered in a dataset!", this->name.cStr());
 			return;
 		}
 		this->name = value;

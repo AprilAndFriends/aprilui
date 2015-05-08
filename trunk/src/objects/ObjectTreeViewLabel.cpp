@@ -60,14 +60,14 @@ namespace aprilui
 				{
 					this->_treeView = NULL;
 					this->_treeViewNode = NULL;
-					hlog::errorf(aprilui::logTag, "TreeViewLabel '%s' cannot be assigned to TreeViewNode '%s', it already exist!", this->name.cStr(), this->parent->getName().cStr());
+					hlog::errorf(logTag, "TreeViewLabel '%s' cannot be assigned to TreeViewNode '%s', it already exist!", this->name.cStr(), this->parent->getName().cStr());
 				}
 			}
 			else if (this->parent != NULL)
 			{
 				this->_treeView = NULL;
 				this->_treeViewNode = NULL;
-				hlog::errorf(aprilui::logTag, "TreeViewLabel '%s' not attached to object of class TreeViewNode!", this->name.cStr());
+				hlog::errorf(logTag, "TreeViewLabel '%s' not attached to object of class TreeViewNode!", this->name.cStr());
 			}
 		}
 	}

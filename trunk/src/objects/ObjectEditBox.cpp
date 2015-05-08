@@ -667,7 +667,7 @@ namespace aprilui
 			float lh = font->getLineHeight() + font->getDescender();
 			if (this->multiLine && !this->_sizeProblemReported && this->rect.h < lh)
 			{
-				hlog::warnf(aprilui::logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.cStr(), (int)this->rect.h, (int)lh, this->font.cStr());
+				hlog::warnf(logTag, "EditBox '%s' height (%d) is smaller than the minimum needed line height (%d) for the given font '%s' when using multi-line!", this->name.cStr(), (int)this->rect.h, (int)lh, this->font.cStr());
 				this->_sizeProblemReported = true;
 			}
 		}
@@ -991,7 +991,7 @@ namespace aprilui
 		if (name == "caret_index")		return this->getCaretIndex();
 		if (name == "cursor_index")
 		{
-			hlog::warn(aprilui::logTag, "'cursor_index' is deprecated. Use 'caret_index' instead."); // DEPRECATED
+			hlog::warn(logTag, "'cursor_index' is deprecated. Use 'caret_index' instead."); // DEPRECATED
 			return this->getCaretIndex();
 		}
 		if (name == "caret_offset")		return april::gvec2ToHstr(this->getCaretOffset());
@@ -1016,7 +1016,7 @@ namespace aprilui
 		else if (name == "caret_index")			this->setCaretIndex(value);
 		else if (name == "cursor_index")
 		{
-			hlog::warn(aprilui::logTag, "'cursor_index=' is deprecated. Use 'caret_index=' instead."); // DEPRECATED
+			hlog::warn(logTag, "'cursor_index=' is deprecated. Use 'caret_index=' instead."); // DEPRECATED
 			this->setCaretIndex(value);
 		}
 		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));

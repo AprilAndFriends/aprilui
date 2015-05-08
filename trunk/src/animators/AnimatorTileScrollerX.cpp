@@ -56,14 +56,14 @@ namespace aprilui
 			ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);
 			if (imageBox == NULL)
 			{
-				hlog::errorf(aprilui::logTag, "Animators::TileScrollerX: parent object '%s' not a subclass of Objects::ImageBox!", parentName.cStr());
+				hlog::errorf(logTag, "Animators::TileScrollerX: parent object '%s' not a subclass of Objects::ImageBox!", parentName.cStr());
 				return NULL;
 			}
 			hstr imageName = (imageBox->getImage() != NULL ? imageBox->getImage()->getName() : "null");
 			TileImage* image = dynamic_cast<TileImage*>(imageBox->getImage());
 			if (image == NULL)
 			{
-				hlog::errorf(aprilui::logTag, "Animators::TileScrollerX: Image '%s' in ImageBox '%s' not a subclass of TileImage!", imageName.cStr(), parentName.cStr());
+				hlog::errorf(logTag, "Animators::TileScrollerX: Image '%s' in ImageBox '%s' not a subclass of TileImage!", imageName.cStr(), parentName.cStr());
 				return NULL;
 			}
 			return image;

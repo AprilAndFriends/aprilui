@@ -89,7 +89,7 @@ namespace aprilui
 	{
 		if (this->dataset != NULL)
 		{
-			hlog::errorf(aprilui::logTag, "Cannot set name of object '%s', it is already registered in a dataset!", this->name.cStr());
+			hlog::errorf(logTag, "Cannot set name of object '%s', it is already registered in a dataset!", this->name.cStr());
 			return;
 		}
 		this->name = value;
@@ -282,7 +282,7 @@ namespace aprilui
 		if (name == "zorder")		return this->getZOrder();
 		if (name != "type" && !this->hasProperty(name))
 		{
-			hlog::errorf(aprilui::logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
+			hlog::errorf(logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
 		}
 		return "";
 	}
@@ -298,7 +298,7 @@ namespace aprilui
 		{
 			if (name != "type" && !this->hasProperty(name))
 			{
-				hlog::errorf(aprilui::logTag, "Could not set property '%s' to '%s' in '%s'!", name.cStr(), value.cStr(), this->name.cStr());
+				hlog::errorf(logTag, "Could not set property '%s' to '%s' in '%s'!", name.cStr(), value.cStr(), this->name.cStr());
 			}
 			return false;
 		}

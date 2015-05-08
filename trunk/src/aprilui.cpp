@@ -58,7 +58,7 @@ namespace aprilui
 
 	void init()
 	{
-		hlog::write(aprilui::logTag, "Initializing AprilUI.");
+		hlog::write(logTag, "Initializing AprilUI.");
 		registerLock = false;
 		cursorVisible = true;
 		limitCursorToViewport = true;
@@ -126,7 +126,7 @@ namespace aprilui
 	
 	void destroy()
 	{
-		hlog::write(aprilui::logTag, "Destroying AprilUI.");
+		hlog::write(logTag, "Destroying AprilUI.");
 		registerLock = true;
 		foreach_m (Dataset*, it, gDatasets)
 		{
@@ -205,12 +205,12 @@ namespace aprilui
 	
 	void setLocalization(chstr value)
 	{
-		hlog::write(aprilui::logTag, "Setting localization to: " + value);
+		hlog::write(logTag, "Setting localization to: " + value);
 		hstr previousLocalization = localization;
 		if (supportedLocalizations.size() > 0 && !supportedLocalizations.has(value) &&
 			value != defaultLocalization)
 		{
-			hlog::warnf(aprilui::logTag, "Localization '%s' not supported, defaulting back to '%s'.",
+			hlog::warnf(logTag, "Localization '%s' not supported, defaulting back to '%s'.",
 				value.cStr(), defaultLocalization.cStr());
 			localization = defaultLocalization;
 		}
@@ -278,7 +278,7 @@ namespace aprilui
 	{
 		if (value == april::Texture::LOAD_IMMEDIATE)
 		{
-			hlog::warn(aprilui::logTag, "'setDefaultTextureLoadMode' with 'april::Texture::LOAD_IMMEDIATE' is deprecated. Defaulting to 'april::Texture::LOAD_ASYNC'"); // DEPRECATED
+			hlog::warn(logTag, "'setDefaultTextureLoadMode' with 'april::Texture::LOAD_IMMEDIATE' is deprecated. Defaulting to 'april::Texture::LOAD_ASYNC'"); // DEPRECATED
 			value = april::Texture::LOAD_ASYNC;
 		}
 		defaultTextureLoadMode = value;
@@ -365,7 +365,7 @@ namespace aprilui
 		// DEPRECATED start
 		if (switchedTypeName == "ColoredQuad")
 		{
-			hlog::warn(aprilui::logTag, "'ColoredQuad' is deprecated. Use 'FilledRect' instead.");
+			hlog::warn(logTag, "'ColoredQuad' is deprecated. Use 'FilledRect' instead.");
 			switchedTypeName = "FilledRect";
 		}
 		if (gObjectFactories.hasKey(switchedTypeName))
@@ -386,12 +386,12 @@ namespace aprilui
 		// DEPRECATED start
 		if (switchedTypeName == "TiledScrollerX")
 		{
-			hlog::warn(aprilui::logTag, "'TiledScrollerX' is deprecated. Use 'TileScrollerX' instead.");
+			hlog::warn(logTag, "'TiledScrollerX' is deprecated. Use 'TileScrollerX' instead.");
 			switchedTypeName = "TileScrollerX";
 		}
 		else if (switchedTypeName == "TiledScrollerY")
 		{
-			hlog::warn(aprilui::logTag, "'TiledScrollerY' is deprecated. Use 'TileScrollerY' instead.");
+			hlog::warn(logTag, "'TiledScrollerY' is deprecated. Use 'TileScrollerY' instead.");
 			switchedTypeName = "TileScrollerY";
 		}
 		if (gAnimatorFactories.hasKey(switchedTypeName))
@@ -574,7 +574,7 @@ namespace aprilui
 	{
 		if (prefixes.size() != scales.size())
 		{
-			hlog::warn(aprilui::logTag, "setTextureExtensionPrefixes() called with unmatching 'prefixes' and 'scales' sizes.");
+			hlog::warn(logTag, "setTextureExtensionPrefixes() called with unmatching 'prefixes' and 'scales' sizes.");
 			return false;
 		}
 		harray<hstr> currentExtensions = april::getTextureExtensions();

@@ -270,7 +270,7 @@ namespace aprilui
 
 	void SkinImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
 	{
-		hlog::warn(aprilui::logTag, "SkinImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
+		hlog::warn(logTag, "SkinImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}
 
 }

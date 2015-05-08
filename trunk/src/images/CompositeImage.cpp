@@ -120,7 +120,7 @@ namespace aprilui
 	
 	void CompositeImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
 	{
-		hlog::warn(aprilui::logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
+		hlog::warn(logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}
 	
 	hstr CompositeImage::getProperty(chstr name)
