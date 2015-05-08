@@ -180,7 +180,7 @@ namespace aprilui
 			else if (value == "up")			this->setDirection(Up);
 			else
 			{
-				hlog::warn(aprilui::logTag, "'direction=' does not support value '" + value + "'.");
+				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");
 				return false;
 			}
 		}

@@ -185,17 +185,17 @@ namespace aprilui
 		if (name == "rotated")				return this->isRotated();
 		if (name == "vertical")
 		{
-			hlog::warn(aprilui::logTag, "'vertical' is deprecated. Use 'rotated' instead."); // DEPRECATED
+			hlog::warn(logTag, "'vertical' is deprecated. Use 'rotated' instead."); // DEPRECATED
 			return this->isRotated();
 		}
 		if (name == "invert_x" || name == "invertx")
 		{
-			hlog::warn(aprilui::logTag, "'" + name + "' is deprecated. Use 'Object.scale_x' instead."); // DEPRECATED
+			hlog::warn(logTag, "'" + name + "' is deprecated. Use 'Object.scale_x' instead."); // DEPRECATED
 			return this->isInvertX();
 		}
 		if (name == "invert_y" || name == "inverty")
 		{
-			hlog::warn(aprilui::logTag, "'" + name + "' is deprecated. Use 'Object.scale_y' instead."); // DEPRECATED
+			hlog::warn(logTag, "'" + name + "' is deprecated. Use 'Object.scale_y' instead."); // DEPRECATED
 			return this->isInvertY();
 		}
 		if (name == "blend_mode")
@@ -229,17 +229,17 @@ namespace aprilui
 		else if	(name == "rotated")				this->setRotated(value);
 		else if	(name == "vertical")
 		{
-			hlog::warn(aprilui::logTag, "'vertical=' is deprecated. Use 'rotated=' instead."); // DEPRECATED
+			hlog::warn(logTag, "'vertical=' is deprecated. Use 'rotated=' instead."); // DEPRECATED
 			this->setRotated(value);
 		}
 		else if	(name == "invert_x" || name == "invertx")
 		{
-			hlog::warn(aprilui::logTag, "'" + name + "=' is deprecated. Use 'Object.scale_x=' instead."); // DEPRECATED
+			hlog::warn(logTag, "'" + name + "=' is deprecated. Use 'Object.scale_x=' instead."); // DEPRECATED
 			this->setInvertX(value);
 		}
 		else if (name == "invert_y" || name == "inverty")
 		{
-			hlog::warn(aprilui::logTag, "'"+ name + "=' is deprecated. Use 'Object.scale_y=' instead."); // DEPRECATED
+			hlog::warn(logTag, "'"+ name + "=' is deprecated. Use 'Object.scale_y=' instead."); // DEPRECATED
 			this->setInvertY(value);
 		}
 		else if	(name == "blend_mode")
@@ -249,7 +249,7 @@ namespace aprilui
 			else if	(value == "add")		this->setBlendMode(april::BM_ADD);
 			else if	(value == "subtract")	this->setBlendMode(april::BM_SUBTRACT);
 			else if	(value == "overwrite")	this->setBlendMode(april::BM_OVERWRITE);
-			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
+			else hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
 		}
 		else if	(name == "color_mode")
 		{
@@ -257,7 +257,7 @@ namespace aprilui
 			else if	(value == "multiply")	this->setColorMode(april::CM_MULTIPLY);
 			else if	(value == "lerp")		this->setColorMode(april::CM_LERP);
 			else if	(value == "alpha_map")	this->setColorMode(april::CM_ALPHA_MAP);
-			else hlog::warnf(aprilui::logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
+			else hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
 		}
 		else if	(name == "color_mode_factor")	this->setColorModeFactor(value);
 		else return BaseImage::setProperty(name, value);

@@ -64,7 +64,7 @@ namespace aprilui
 	void OptionButton::turnOff()
 	{
 		// turning off manually is forbidden as one button always has to be on
-		hlog::debugf(aprilui::logTag, "Turning off option button '%s' manually is forbidden.", this->name.cStr());
+		hlog::debugf(logTag, "Turning off option button '%s' manually is forbidden.", this->name.cStr());
 	}
 		
 }

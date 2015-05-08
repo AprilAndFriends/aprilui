@@ -40,7 +40,7 @@ namespace aprilui
 			ProgressBase* progressObject = dynamic_cast<ProgressBase*>(this->parent);
 			if (progressObject == NULL)
 			{
-				hlog::errorf(aprilui::logTag, "Animators::ProgressChanger: parent object '%s' not a subclass of Objects::ProgressBase!", (this->parent != NULL ? this->parent->getName() : "null").cStr());
+				hlog::errorf(logTag, "Animators::ProgressChanger: parent object '%s' not a subclass of Objects::ProgressBase!", (this->parent != NULL ? this->parent->getName() : "null").cStr());
 				return 0.0f;
 			}
 			return progressObject->getProgress();
@@ -51,7 +51,7 @@ namespace aprilui
 			ProgressBase* progressObject = dynamic_cast<ProgressBase*>(this->parent);
 			if (progressObject == NULL)
 			{
-				hlog::errorf(aprilui::logTag, "Animators::ProgressChanger: parent object '%s' not a subclass of Objects::ProgressBase!", (this->parent != NULL ? this->parent->getName() : "null").cStr());
+				hlog::errorf(logTag, "Animators::ProgressChanger: parent object '%s' not a subclass of Objects::ProgressBase!", (this->parent != NULL ? this->parent->getName() : "null").cStr());
 				return;
 			}
 			progressObject->setProgress(value);

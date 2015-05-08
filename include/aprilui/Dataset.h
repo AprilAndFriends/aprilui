@@ -159,7 +159,7 @@ namespace aprilui
 			T object = dynamic_cast<T>(this->tryGetObject(name));
 			if (object == NULL)
 			{
-				hlog::warn(aprilui::logTag, "Dynamic cast in getObject<T> failed, object: " + name);
+				hlog::warn(logTag, "Dynamic cast in getObject<T> failed, object: " + name);
 			}
 			return object;
 		}
@@ -190,7 +190,7 @@ namespace aprilui
 			T animator = dynamic_cast<T>(this->tryGetAnimator(name));
 			if (animator == NULL)
 			{
-				hlog::warn(aprilui::logTag, "Dynamic cast in getAnimator<T> failed, animator: " + name);
+				hlog::warn(logTag, "Dynamic cast in getAnimator<T> failed, animator: " + name);
 			}
 			return animator;
 		}

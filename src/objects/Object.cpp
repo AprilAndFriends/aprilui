@@ -111,7 +111,7 @@ namespace aprilui
 		}
 		if (this->hitTest == HIT_TEST_DISABLED)
 		{
-			hlog::warn(aprilui::logTag, "'hitTest' value is 'HIT_TEST_DISABLED', but accessing isClickThrough(), defaulting to false!");
+			hlog::warn(logTag, "'hitTest' value is 'HIT_TEST_DISABLED', but accessing isClickThrough(), defaulting to false!");
 		}
 		return false;
 	}
@@ -1068,7 +1068,7 @@ namespace aprilui
 		}
 		if (name == "click_through")
 		{
-			hlog::warn(aprilui::logTag, "'click_through' is deprecated. Use 'hit_test' instead."); // DEPRECATED
+			hlog::warn(logTag, "'click_through' is deprecated. Use 'hit_test' instead."); // DEPRECATED
 			return (this->getHitTest() == HIT_TEST_DISABLED_RECURSIVE);
 		}
 		if (name == "inherit_alpha")		return this->isInheritAlpha();
@@ -1112,7 +1112,7 @@ namespace aprilui
 			else if (value == "disabled_recursive")	this->setHitTest(HIT_TEST_DISABLED_RECURSIVE);
 			else
 			{
-				hlog::warn(aprilui::logTag, "'hit_test=' does not support value '" + value + "'.");
+				hlog::warn(logTag, "'hit_test=' does not support value '" + value + "'.");
 				return false;
 			}
 		}
@@ -1120,11 +1120,11 @@ namespace aprilui
 		{
 			if (value)
 			{
-				hlog::warn(aprilui::logTag, "'click_through=\"1\"' is deprecated. Use 'hit_test=\"disabled_recursive\"' instead."); // DEPRECATED
+				hlog::warn(logTag, "'click_through=\"1\"' is deprecated. Use 'hit_test=\"disabled_recursive\"' instead."); // DEPRECATED
 			}
 			else
 			{
-				hlog::warn(aprilui::logTag, "'click_through=\"0\"' is deprecated. Use 'hit_test=\"enabled\"' instead."); // DEPRECATED
+				hlog::warn(logTag, "'click_through=\"0\"' is deprecated. Use 'hit_test=\"enabled\"' instead."); // DEPRECATED
 			}
 			this->setHitTest(value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED);
 		}
@@ -1161,7 +1161,7 @@ namespace aprilui
 			anchors.removeAll("all");
 			if (anchors.size() > 0)
 			{
-				hlog::warn(aprilui::logTag, "'anchors=' does not support values '" + anchors.joined(",") + "'.");
+				hlog::warn(logTag, "'anchors=' does not support values '" + anchors.joined(",") + "'.");
 				return false;
 			}
 		}

@@ -280,7 +280,7 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent == NULL)
 			{
-				hlog::warnf(aprilui::logTag, "ScrollBar '%s' not attached to object of class Container!", this->name.cStr());
+				hlog::warnf(logTag, "ScrollBar '%s' not attached to object of class Container!", this->name.cStr());
 			}
 		}
 		else if (type == Event::ScrollSkinChanged)

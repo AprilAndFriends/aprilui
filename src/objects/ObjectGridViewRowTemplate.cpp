@@ -83,7 +83,7 @@ namespace aprilui
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
 			{
 				this->_gridView = NULL;
-				hlog::errorf(aprilui::logTag, "GridViewRowTemplate '%s' not attached to object of class GridView!", this->name.cStr());
+				hlog::errorf(logTag, "GridViewRowTemplate '%s' not attached to object of class GridView!", this->name.cStr());
 			}
 		}
 	}

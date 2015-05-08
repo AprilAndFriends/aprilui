@@ -223,7 +223,7 @@ namespace aprilui
 			else if (value == "counterclockwise270")	this->setDirection(Counterclockwise270);
 			else
 			{
-				hlog::warn(aprilui::logTag, "'direction=' does not support value '" + value + "'.");
+				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");
 				return false;
 			}
 		}

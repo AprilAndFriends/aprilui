@@ -167,7 +167,7 @@ namespace aprilui
 			{
 				this->_gridView = NULL;
 				this->_gridViewRow = NULL;
-				hlog::errorf(aprilui::logTag, "GridViewCell '%s' not attached to object of class GridViewRow!", this->name.cStr());
+				hlog::errorf(logTag, "GridViewCell '%s' not attached to object of class GridViewRow!", this->name.cStr());
 			}
 		}
 	}
