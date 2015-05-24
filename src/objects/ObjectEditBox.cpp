@@ -101,21 +101,21 @@ namespace aprilui
 	{
 		if (EditBox::_propertyDescriptions.size() == 0)
 		{
-			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::INT);
-			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::CHAR);
-			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_color", PropertyDescription::HEXCOLOR);
+			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::INT);
+			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::CHAR);
+			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::STRING);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::INT);
-			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
-			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_offset", PropertyDescription::GVEC2);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_x", PropertyDescription::FLOAT);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_y", PropertyDescription::FLOAT);
-			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("selection_count", PropertyDescription::INT);
 			EditBox::_propertyDescriptions += PropertyDescription("selection_color", PropertyDescription::HEXCOLOR);
-			EditBox::_propertyDescriptions += PropertyDescription("space_hack", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::BOOL);
 		}
 		return (Label::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}
