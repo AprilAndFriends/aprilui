@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.03
+/// @version 4.05
 /// 
 /// @section LICENSE
 /// 
@@ -30,5 +30,6 @@
 #include "AnimatorScalerY.h"
 #include "AnimatorTileScrollerX.h"
 #include "AnimatorTileScrollerY.h"
+#include "AnimatorZOrderChanger.h"
 
 #endif

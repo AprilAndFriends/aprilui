@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.02
+/// @version 4.05
 /// 
 /// @section LICENSE
 /// 
@@ -122,6 +122,7 @@ namespace aprilui
 		REGISTER_ANIMATOR_TYPE(ScalerY);
 		REGISTER_ANIMATOR_TYPE(TileScrollerX);
 		REGISTER_ANIMATOR_TYPE(TileScrollerY);
+		REGISTER_ANIMATOR_TYPE(ZOrderChanger);
 	}
 	
 	void destroy()

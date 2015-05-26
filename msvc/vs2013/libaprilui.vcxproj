@@ -71,6 +71,7 @@
     <ClCompile Include="..\..\src\animators\AnimatorScalerY.cpp" />
     <ClCompile Include="..\..\src\animators\AnimatorTileScrollerX.cpp" />
     <ClCompile Include="..\..\src\animators\AnimatorTileScrollerY.cpp" />
+    <ClCompile Include="..\..\src\animators\AnimatorZOrderChanger.cpp" />
     <ClCompile Include="..\..\src\aprilui.cpp" />
     <ClCompile Include="..\..\src\BaseObject.cpp" />
     <ClCompile Include="..\..\src\CallbackEvent.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="..\..\include\aprilui\AnimatorScalerY.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorTileScrollerX.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorTileScrollerY.h" />
+    <ClInclude Include="..\..\include\aprilui\AnimatorZOrderChanger.h" />
     <ClInclude Include="..\..\include\aprilui\BaseImage.h" />
     <ClInclude Include="..\..\include\aprilui\BaseObject.h" />
     <ClInclude Include="..\..\include\aprilui\Cloneable.h" />

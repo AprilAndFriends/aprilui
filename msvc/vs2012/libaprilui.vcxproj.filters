@@ -251,6 +251,9 @@
     <ClCompile Include="..\..\src\animators\AnimatorProgressChanger.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\animators\AnimatorZOrderChanger.cpp">
+      <Filter>Source Files\Animators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -491,6 +494,9 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\AnimatorProgressChanger.h">
+      <Filter>Header Files\Animators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\AnimatorZOrderChanger.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
   </ItemGroup>
