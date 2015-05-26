@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.05
 /// 
 /// @section LICENSE
 /// 
@@ -1521,6 +1521,13 @@ namespace aprilui
 		return animatorAlphaChanger;
 	}
 
+	Animator* Object::changeZOrder(int z, float speed)
+	{
+		REMOVE_EXISTING_ANIMATORS(ZOrderChanger);
+		CREATE_DYNAMIC_ANIMATOR(ZOrderChanger, (float)this->zOrder, (float)z, speed);
+		return animatorZOrderChanger;
+	}
+
 	void Object::move(float x, float y, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
@@ -1622,6 +1629,7 @@ namespace aprilui
 	DEFINE_ANIMATOR_F(fadeRed, RedChanger);
 	DEFINE_ANIMATOR_F(fadeGreen, GreenChanger);
 	DEFINE_ANIMATOR_F(fadeBlue, BlueChanger);
+	DEFINE_ANIMATOR_F(changeZOrder, ZOrderChanger);
 	
 	Animator* Object::moveXQueue(float x, float speed, float delay)
 	{
@@ -1701,6 +1709,12 @@ namespace aprilui
 		return animatorAlphaChanger;
 	}
 
+	Animator* Object::changeZOrderQueue(int z, float speed, float delay)
+	{
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(ZOrderChanger, (float)this->zOrder, (float)z, speed, delay);
+		return animatorZOrderChanger;
+	}
+
 	void Object::moveQueue(float x, float y, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->rect.x, x, speed, delay);
@@ -1778,6 +1792,7 @@ namespace aprilui
 	DEFINE_ANIMATOR_F_DELAYED(fadeRed, RedChanger);
 	DEFINE_ANIMATOR_F_DELAYED(fadeGreen, GreenChanger);
 	DEFINE_ANIMATOR_F_DELAYED(fadeBlue, BlueChanger);
+	DEFINE_ANIMATOR_F_DELAYED(changeZOrder, ZOrderChanger);
 	
 	void Object::moveXStop()
 	{
@@ -1842,6 +1857,11 @@ namespace aprilui
 	void Object::fadeAlphaStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
+	}
+
+	void Object::changeZOrderStop()
+	{
+		REMOVE_EXISTING_ANIMATORS(ZOrderChanger);
 	}
 
 	void Object::moveStop()
