@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.05
 /// 
 /// @section LICENSE
 /// 
@@ -188,6 +188,7 @@ namespace aprilui
 		Animator* fadeGreen(unsigned char g, float speed);
 		Animator* fadeBlue(unsigned char b, float speed);
 		Animator* fadeAlpha(unsigned char a, float speed);
+		Animator* changeZOrder(int z, float speed);
 		void move(float x, float y, float speed);
 		void move(gvec2 position, float speed);
 		void scale(float x, float y, float speed);
@@ -212,6 +213,7 @@ namespace aprilui
 		Animator* fadeGreenF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
 		Animator* fadeBlueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
 		Animator* fadeAlphaF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
+		Animator* changeZOrderF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength);
 		
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
@@ -226,6 +228,7 @@ namespace aprilui
 		Animator* fadeGreenQueue(unsigned char g, float speed, float delay = 0.0f);
 		Animator* fadeBlueQueue(unsigned char b, float speed, float delay = 0.0f);
 		Animator* fadeAlphaQueue(unsigned char a, float speed, float delay = 0.0f);
+		Animator* changeZOrderQueue(int z, float speed, float delay = 0.0f);
 		void moveQueue(float x, float y, float speed, float delay = 0.0f);
 		void moveQueue(gvec2 position, float speed, float delay = 0.0f);
 		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
@@ -250,6 +253,7 @@ namespace aprilui
 		Animator* fadeGreenQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		Animator* fadeBlueQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		Animator* fadeAlphaQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
+		Animator* changeZOrderQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay = 0.0f);
 		
 		void moveXStop();
 		void moveYStop();
@@ -264,6 +268,7 @@ namespace aprilui
 		void fadeGreenStop();
 		void fadeBlueStop();
 		void fadeAlphaStop();
+		void changeZOrderStop();
 		void moveStop();
 		void scaleStop();
 		void resizeStop();
