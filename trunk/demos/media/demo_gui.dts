@@ -20,10 +20,11 @@
 		</Object>
 		<Object type="Container" rect="0,0,1024,768">
 			<Object type="ImageButton" name="hover_image_button" image="texture/test" rect="32,96,128,64"/>
-			<Object type="ImageBox" name="colored_image_box" image="texture/test" color="FF7F7F" rect="32,128,128,64" zorder="100">
+			<Object type="ImageBox" name="colored_image_box" image="texture/test" color="FF7F7F" rect="32,128,128,64">
 				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
 				<Animator type="MoverY" amplitude="100" speed="0.25"/>
 				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="1"/>
+				<Animator type="ZOrderChanger" function="sine" periods="-1" amplitude="50"/>
 			</Object>
 			<Object type="FilledRect" name="colored_quad" color="007FFF" rect="32,224,128,64">
 				<Animator type="MoverX" function="noise" periods="-1" amplitude="4"/>
