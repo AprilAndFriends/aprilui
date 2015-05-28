@@ -87,17 +87,17 @@
 	}
 
 #define DEFINE_ANIMATOR_F(functionName, animatorName) \
-	Animator* Object::functionName ## F(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength) \
+	Animator* Object::functionName ## F(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods) \
 	{ \
 		REMOVE_EXISTING_ANIMATORS(animatorName); \
-		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, periodStart, periodLength); \
+		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods); \
 		return animator ## animatorName; \
 	}
 
 #define DEFINE_ANIMATOR_F_DELAYED(functionName, animatorName) \
-	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float periodStart, float periodLength, float delay) \
+	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay) \
 	{ \
-		CREATE_DELAYED_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, periodStart, periodLength, delay); \
+		CREATE_DELAYED_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods, delay); \
 		return animator ## animatorName; \
 	}
 
