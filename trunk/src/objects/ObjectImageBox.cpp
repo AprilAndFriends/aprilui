@@ -131,4 +131,5 @@ namespace aprilui
 		else return Object::setProperty(name, value);
 		return true;
 	}
+
 }
