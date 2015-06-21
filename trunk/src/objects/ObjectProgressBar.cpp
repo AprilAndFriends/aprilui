@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.06
 /// 
 /// @section LICENSE
 /// 
@@ -105,17 +105,37 @@ namespace aprilui
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		if (this->progressImage != NULL && progress > 0.0f)
+		grect drawRect = this->_getDrawRect();
+		grect rect;
+		if (this->antiProgressImage != NULL && progress < 1.0f)
 		{
+			Direction antiDirection = (Direction)((int)DirectionMax - (int)this->direction);
+			float antiProgress = 1.0f - progress;
 			if (this->stretching)
 			{
-				this->progressImage->draw(this->_calcRectDirection(this->_getDrawRect(), progress), color);
+				this->antiProgressImage->draw(this->_calcRectDirection(drawRect, antiProgress, antiDirection), color);
 			}
 			else
 			{
 				grect clipRect = this->progressImage->getClipRect();
-				this->progressImage->setClipRect(this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress));
-				this->progressImage->draw(this->_getDrawRect(), color);
+				rect = this->_calcRectDirection(grect(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
+				this->antiProgressImage->setClipRect(rect);
+				this->antiProgressImage->draw(drawRect, color);
+				this->antiProgressImage->setClipRect(clipRect);
+			}
+		}
+		if (this->progressImage != NULL && progress > 0.0f)
+		{
+			if (this->stretching)
+			{
+				this->progressImage->draw(this->_calcRectDirection(drawRect, progress, this->direction), color);
+			}
+			else
+			{
+				grect clipRect = this->progressImage->getClipRect();
+				rect = this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress, this->direction);
+				this->progressImage->setClipRect(rect);
+				this->progressImage->draw(drawRect, color);
 				this->progressImage->setClipRect(clipRect);
 			}
 		}
@@ -125,10 +145,10 @@ namespace aprilui
 		}
 	}
 
-	grect ProgressBar::_calcRectDirection(grect rect, float progress)
+	grect ProgressBar::_calcRectDirection(grect rect, float progress, Direction direction)
 	{
 		float size = 0.0f;
-		switch (this->direction)
+		switch (direction)
 		{
 		case Right:
 			rect.w *= progress;
@@ -145,6 +165,8 @@ namespace aprilui
 			size = rect.h * progress;
 			rect.y += rect.h - size;
 			rect.h = size;
+			break;
+		default:
 			break;
 		}
 		return rect;
@@ -244,6 +266,8 @@ namespace aprilui
 			break;
 		case Up:
 			newProgress = 1.0f - position.y / this->rect.h;
+			break;
+		default:
 			break;
 		}
 		newProgress = hclamp(newProgress, 0.0f, 1.0f);

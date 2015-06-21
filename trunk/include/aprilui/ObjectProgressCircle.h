@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.03
+/// @version 4.06
 /// 
 /// @section LICENSE
 /// 
@@ -29,14 +29,15 @@ namespace aprilui
 	public:
 		enum Direction
 		{
-			Clockwise = 0,
-			Clockwise90 = 1,
-			Clockwise180 = 2,
-			Clockwise270 = 3,
-			Counterclockwise = 4,
-			Counterclockwise90 = 5,
-			Counterclockwise180 = 6,
-			Counterclockwise270 = 7
+			Clockwise270 = 2,
+			Clockwise180 = 4,
+			Clockwise = 6,
+			Clockwise90 = 8,
+			Counterclockwise270 = 20,
+			Counterclockwise180 = 40,
+			Counterclockwise = 60,
+			Counterclockwise90 = 80,
+			DirectionLimit = 10, // used for calculation
 		};
 
 		ProgressCircle(chstr name);
@@ -64,6 +65,7 @@ namespace aprilui
 		Direction direction;
 		
 		void _draw();
+		harray<april::TexturedVertex> _calcVertices(grect rect, float progress, Direction direction);
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.06
 /// 
 /// @section LICENSE
 /// 
@@ -32,13 +32,17 @@ namespace aprilui
 		virtual ~ProgressBase();
 
 		HL_DEFINE_GET(BaseImage*, progressImage, ProgressImage);
+		HL_DEFINE_GET(BaseImage*, antiProgressImage, AntiProgressImage);
 		HL_DEFINE_GET(BaseImage*, maskImage, MaskImage);
 		HL_DEFINE_GET(hstr, progressImageName, ProgressImageName);
+		HL_DEFINE_GET(hstr, antiProgressImageName, AntiProgressImageName);
 		HL_DEFINE_GET(hstr, maskImageName, MaskImageName);
 		HL_DEFINE_GETSET(float, progress, Progress);
 		void setProgressImage(BaseImage* image);
+		void setAntiProgressImage(BaseImage* image);
 		void setMaskImage(BaseImage* image);
 		void setProgressImageByName(chstr name);
+		void setAntiProgressImageByName(chstr name);
 		void setMaskImageByName(chstr name);
 		harray<BaseImage*> getUsedImages();
 
@@ -52,6 +56,7 @@ namespace aprilui
 
 		/// @brief Optimized version.
 		bool trySetProgressImageByName(chstr name);
+		bool trySetAntiProgressImageByName(chstr name);
 		bool trySetMaskImageByName(chstr name);
 		virtual bool trySetImageByName(chstr name) = 0;
 		
@@ -61,6 +66,8 @@ namespace aprilui
 	protected:
 		BaseImage* progressImage;
 		hstr progressImageName;
+		BaseImage* antiProgressImage;
+		hstr antiProgressImageName;
 		BaseImage* maskImage;
 		hstr maskImageName;
 		float progress;

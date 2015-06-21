@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.06
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@ namespace aprilui
 	ProgressBase::ProgressBase()
 	{
 		this->progressImage = NULL;
+		this->antiProgressImage = NULL;
 		this->maskImage = NULL;
 		this->progress = 1.0f;
 	}
@@ -29,6 +30,8 @@ namespace aprilui
 	{
 		this->progressImage = other.progressImage;
 		this->progressImageName = other.progressImageName;
+		this->antiProgressImage = other.antiProgressImage;
+		this->antiProgressImageName = other.antiProgressImageName;
 		this->maskImage = other.maskImage;
 		this->maskImageName = other.maskImageName;
 		this->progress = other.progress;
@@ -44,6 +47,12 @@ namespace aprilui
 		this->progressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
 	}
 
+	void ProgressBase::setAntiProgressImage(BaseImage* image)
+	{
+		this->antiProgressImage = image;
+		this->antiProgressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+	}
+
 	void ProgressBase::setMaskImage(BaseImage* image)
 	{
 		this->maskImage = image;
@@ -53,6 +62,11 @@ namespace aprilui
 	void ProgressBase::setProgressImageByName(chstr name)
 	{
 		this->setProgressImage(this->getDataset()->getImage(name));
+	}
+
+	void ProgressBase::setAntiProgressImageByName(chstr name)
+	{
+		this->setAntiProgressImage(this->getDataset()->getImage(name));
 	}
 
 	void ProgressBase::setMaskImageByName(chstr name)
@@ -67,6 +81,10 @@ namespace aprilui
 		{
 			images += this->progressImage;
 		}
+		if (this->antiProgressImage != NULL)
+		{
+			images += this->antiProgressImage;
+		}
 		if (this->maskImage != NULL)
 		{
 			images += this->maskImage;
@@ -79,6 +97,7 @@ namespace aprilui
 		if (ProgressBase::_propertyDescriptions.size() == 0)
 		{
 			ProgressBase::_propertyDescriptions += PropertyDescription("progress_image", PropertyDescription::STRING);
+			ProgressBase::_propertyDescriptions += PropertyDescription("anti_progress_image", PropertyDescription::STRING);
 			ProgressBase::_propertyDescriptions += PropertyDescription("mask_image", PropertyDescription::STRING);
 			ProgressBase::_propertyDescriptions += PropertyDescription("progress", PropertyDescription::FLOAT);
 		}
@@ -96,6 +115,17 @@ namespace aprilui
 		return false;
 	}
 	
+	bool ProgressBase::trySetAntiProgressImageByName(chstr name)
+	{
+		if (this->antiProgressImageName != name)
+		{
+			// using c/p code because of performance reasons
+			this->setAntiProgressImage(this->getDataset()->getImage(name));
+			return true;
+		}
+		return false;
+	}
+
 	bool ProgressBase::trySetMaskImageByName(chstr name)
 	{
 		if (this->maskImageName != name)
@@ -109,17 +139,19 @@ namespace aprilui
 	
 	hstr ProgressBase::getProperty(chstr name)
 	{
-		if (name == "progress_image")	return this->getProgressImageName();
-		if (name == "mask_image")		return this->getMaskImageName();
-		if (name == "progress")			return this->getProgress();
+		if (name == "progress_image")		return this->getProgressImageName();
+		if (name == "anti_progress_image")	return this->getAntiProgressImageName();
+		if (name == "mask_image")			return this->getMaskImageName();
+		if (name == "progress")				return this->getProgress();
 		return "";
 	}
 
 	bool ProgressBase::setProperty(chstr name, chstr value)
 	{
-		if		(name == "progress_image")	this->trySetProgressImageByName(value);
-		else if (name == "mask_image")		this->trySetMaskImageByName(value);
-		else if (name == "progress")		this->setProgress(value);
+		if		(name == "progress_image")		this->trySetProgressImageByName(value);
+		else if (name == "anti_progress_image")	this->trySetAntiProgressImageByName(value);
+		else if (name == "mask_image")			this->trySetMaskImageByName(value);
+		else if (name == "progress")			this->setProgress(value);
 		else return false;
 		return true;
 	}
