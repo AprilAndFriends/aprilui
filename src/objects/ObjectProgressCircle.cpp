@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.03
+/// @version 4.06
 /// 
 /// @section LICENSE
 /// 
@@ -89,103 +89,121 @@ namespace aprilui
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		april::Color color = this->_getDrawColor();
 		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
+		grect rect = this->_getDrawRect();
+		if (this->antiProgressImage != NULL)
+		{
+			if (progress == 0.0f)
+			{
+				this->antiProgressImage->draw(rect, color);
+			}
+			else if (progress < 1.0f)
+			{
+				Direction antiDirection = (Direction)((int)this->direction < (int)DirectionLimit ? (int)this->direction * 10 : (int)this->direction / 10);
+				this->antiProgressImage->draw(this->_calcVertices(rect, 1.0f - progress, antiDirection), color);
+			}
+		}
 		if (this->progressImage != NULL)
 		{
-			grect rect = this->_getDrawRect();
 			if (progress == 1.0f)
 			{
 				this->progressImage->draw(rect, color);
 			}
 			else if (progress > 0.0f)
 			{
-				gvec2 p0;
-				gvec2 p1;
-				gvec2 splitCenter;
-				gvec2 topLeft;
-				gvec2 topRight;
-				gvec2 bottomLeft;
-				gvec2 bottomRight;
-				switch (this->direction)
-				{
-				case Clockwise:
-					splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 1.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(1.0f, 0.0f);
-					break;
-				case Clockwise90:
-					splitCenter.set(0.5f, 0.0f);	topLeft.set(1.0f, 1.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(0.0f, 0.0f);
-					break;
-				case Clockwise180:
-					splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 0.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(0.0f, 1.0f);
-					break;
-				case Clockwise270:
-					splitCenter.set(0.5f, 1.0f);	topLeft.set(0.0f, 0.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(1.0f, 1.0f);
-					break;
-				case Counterclockwise:
-					splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 0.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(1.0f, 1.0f);
-					break;
-				case Counterclockwise90:
-					splitCenter.set(0.5f, 0.0f);	topLeft.set(0.0f, 1.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(1.0f, 0.0f);
-					break;
-				case Counterclockwise180:
-					splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 1.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(0.0f, 0.0f);
-					break;
-				case Counterclockwise270:
-					splitCenter.set(0.5f, 1.0f);	topLeft.set(1.0f, 0.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(0.0f, 1.0f);
-					break;
-				}
-				harray<april::TexturedVertex> vertices;
-				vertices += MAKE_VERTEX(gvec2(0.5f, 0.5f));
-				vertices += MAKE_VERTEX(splitCenter);
-				april::TexturedVertex vertex;
-				p0 = bottomRight;
-				p1 = topRight;
-				if (progress >= 0.125f)
-				{
-					vertex = MAKE_VERTEX(topRight);
-					vertices += vertex;
-					vertices += vertices.first();
-					vertices += vertex;
-					p0 = topRight;
-					p1 = topLeft;
-				}
-				if (progress >= 0.375f)
-				{
-					vertex = MAKE_VERTEX(topLeft);
-					vertices += vertex;
-					vertices += vertices.first();
-					vertices += vertex;
-					p0 = topLeft;
-					p1 = bottomLeft;
-				}
-				if (progress >= 0.625f)
-				{
-					vertex = MAKE_VERTEX(bottomLeft);
-					vertices += vertex;
-					vertices += vertices.first();
-					vertices += vertex;
-					p0 = bottomLeft;
-					p1 = bottomRight;
-				}
-				if (progress >= 0.875f)
-				{
-					vertex = MAKE_VERTEX(bottomRight);
-					vertices += vertex;
-					vertices += vertices.first();
-					vertices += vertex;
-					p0 = bottomRight;
-					p1 = topRight;
-				}
-				double angle = hmodf(progress * 360.0f + 45.0f, 90.0f) - 45.0f;
-				// angle will always be between -45° and 45° so there is no risk here
-				float ratio = (float)dtan(angle) * 0.5f + 0.5f;
-				p0 += (p1 - p0) * ratio;
-				vertices += MAKE_VERTEX(p0);
-				this->progressImage->draw(vertices, color);
+				this->progressImage->draw(this->_calcVertices(rect, progress, this->direction), color);
 			}
 		}
 		if (this->maskImage != NULL)
 		{
-			this->maskImage->draw(this->_getDrawRect(), color);
+			this->maskImage->draw(rect, color);
 		}
+	}
+
+	harray<april::TexturedVertex> ProgressCircle::_calcVertices(grect rect, float progress, Direction direction)
+	{
+		harray<april::TexturedVertex> result;
+		gvec2 splitCenter;
+		gvec2 topLeft;
+		gvec2 topRight;
+		gvec2 bottomLeft;
+		gvec2 bottomRight;
+		switch (direction)
+		{
+		case Clockwise:
+			splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 1.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(1.0f, 0.0f);
+			break;
+		case Clockwise90:
+			splitCenter.set(0.5f, 0.0f);	topLeft.set(1.0f, 1.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(0.0f, 0.0f);
+			break;
+		case Clockwise180:
+			splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 0.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(0.0f, 1.0f);
+			break;
+		case Clockwise270:
+			splitCenter.set(0.5f, 1.0f);	topLeft.set(0.0f, 0.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(1.0f, 1.0f);
+			break;
+		case Counterclockwise:
+			splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 0.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(1.0f, 1.0f);
+			break;
+		case Counterclockwise90:
+			splitCenter.set(0.5f, 0.0f);	topLeft.set(0.0f, 1.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(1.0f, 0.0f);
+			break;
+		case Counterclockwise180:
+			splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 1.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(0.0f, 0.0f);
+			break;
+		case Counterclockwise270:
+			splitCenter.set(0.5f, 1.0f);	topLeft.set(1.0f, 0.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(0.0f, 1.0f);
+			break;
+		default:
+			break;
+		}
+		harray<april::TexturedVertex> vertices;
+		result += MAKE_VERTEX(gvec2(0.5f, 0.5f));
+		result += MAKE_VERTEX(splitCenter);
+		april::TexturedVertex vertex;
+		gvec2 p0 = bottomRight;
+		gvec2 p1 = topRight;
+		if (progress >= 0.125f)
+		{
+			vertex = MAKE_VERTEX(topRight);
+			result += vertex;
+			result += result.first();
+			result += vertex;
+			p0 = topRight;
+			p1 = topLeft;
+		}
+		if (progress >= 0.375f)
+		{
+			vertex = MAKE_VERTEX(topLeft);
+			result += vertex;
+			result += result.first();
+			result += vertex;
+			p0 = topLeft;
+			p1 = bottomLeft;
+		}
+		if (progress >= 0.625f)
+		{
+			vertex = MAKE_VERTEX(bottomLeft);
+			result += vertex;
+			result += result.first();
+			result += vertex;
+			p0 = bottomLeft;
+			p1 = bottomRight;
+		}
+		if (progress >= 0.875f)
+		{
+			vertex = MAKE_VERTEX(bottomRight);
+			result += vertex;
+			result += result.first();
+			result += vertex;
+			p0 = bottomRight;
+			p1 = topRight;
+		}
+		double angle = hmodf(progress * 360.0f + 45.0f, 90.0f) - 45.0f;
+		// angle will always be between -45° and 45° so there is no tan() risk here
+		float ratio = (float)dtan(angle) * 0.5f + 0.5f;
+		p0 += (p1 - p0) * ratio;
+		result += MAKE_VERTEX(p0);
+		return result;
 	}
 
 	hstr ProgressCircle::getProperty(chstr name)

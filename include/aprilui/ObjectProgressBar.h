@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.06
 /// 
 /// @section LICENSE
 /// 
@@ -30,10 +30,11 @@ namespace aprilui
 	public:
 		enum Direction
 		{
-			Right = 0,
-			Left = 1,
 			Down = 2,
-			Up = 3
+			Left = 4,
+			Right = 6,
+			Up = 8,
+			DirectionMax = 10 // used for calculation
 		};
 
 		ProgressBar(chstr name);
@@ -65,7 +66,7 @@ namespace aprilui
 		bool interactable;
 		bool pushed;
 
-		grect _calcRectDirection(grect rect, float progress);
+		grect _calcRectDirection(grect rect, float progress, Direction direction);
 		
 		void _update(float timeDelta);
 		void _draw();
