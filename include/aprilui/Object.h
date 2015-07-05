@@ -200,21 +200,6 @@ namespace aprilui
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
 		void fadeColor(april::Color color, float speed);
 		
-		Animator* moveXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* moveYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* scaleXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* scaleYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* resizeXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* resizeYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* rotateF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* moveCenterXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* moveCenterYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* fadeRedF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* fadeGreenF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* fadeBlueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* fadeAlphaF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		Animator* changeZOrderF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
 		Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f);
@@ -240,21 +225,21 @@ namespace aprilui
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
 
-		Animator* moveXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* moveYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* scaleXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* scaleYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* resizeXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* resizeYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* rotateQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* moveCenterXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* moveCenterYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* fadeRedQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* fadeGreenQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* fadeBlueQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* fadeAlphaQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		Animator* changeZOrderQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		
+		Animator* animateX(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateY(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateScaleX(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateScaleY(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateWidth(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateHeight(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateAngle(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateCenterX(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateCenterY(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateRed(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateGreen(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateBlue(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateAlpha(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animateZOrder(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+
 		void moveXStop();
 		void moveYStop();
 		void scaleXStop();
@@ -279,6 +264,36 @@ namespace aprilui
 
 		DEPRECATED_ATTRIBUTE bool isClickThrough();
 		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED); }
+
+		DEPRECATED_ATTRIBUTE Animator* moveXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* moveYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* scaleXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* scaleYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* resizeXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* resizeYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* rotateF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* moveCenterXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* moveCenterYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* fadeRedF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* fadeGreenF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* fadeBlueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* fadeAlphaF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* changeZOrderF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+
+		DEPRECATED_ATTRIBUTE Animator* moveXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* moveYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* scaleXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* scaleYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* resizeXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* resizeYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* rotateQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* moveCenterXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* moveCenterYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* fadeRedQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* fadeGreenQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* fadeBlueQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* fadeAlphaQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* changeZOrderQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
 
 	protected:
 		grect rect;

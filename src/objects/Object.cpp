@@ -67,25 +67,52 @@
 		animator ## type->setDelay(delay); \
 	}
 
-#define CREATE_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength) \
-	CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength, 0.0f);
+#define DEFINE_DYNAMIC_ANIMATE(functionName, type) \
+	Animator* Object::functionName(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay) \
+	{ \
+		Animator* animator ## type = new Animators::type(april::generateName("dynamic_animator_")); \
+		this->dynamicAnimators += animator ## type; \
+		animator ## type->parent = this; \
+		animator ## type->setOffset(offset); \
+		animator ## type->setAmplitude(amplitude); \
+		animator ## type->setAnimationFunction(function); \
+		if (durationPeriods >= 0.0f) \
+		{ \
+			animator ## type->setSpeed(speed * durationPeriods); \
+			animator ## type->setPeriods(startPeriods + durationPeriods); \
+			animator ## type->setTimer(startPeriods / (speed * durationPeriods)); \
+		} \
+		else \
+		{ \
+			animator ## type->setSpeed(speed); \
+			animator ## type->setPeriods(-1.0f); \
+			animator ## type->setTimer(startPeriods / speed); \
+		} \
+		animator ## type->setDelay(delay); \
+		animator ## type->update(0.0f); \
+		return animator ## type; \
+	}
 
-#define CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, periodStart, periodLength, delay) \
+// DEPRECATED
+#define CREATE_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, startPeriods, durationPeriods) \
+	CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, startPeriods, durationPeriods, 0.0f);
+// DEPRECATED
+#define CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, startPeriods, durationPeriods, delay) \
 	Animator* animator ## type = new Animators::type(april::generateName("dynamic_animator_")); \
 	this->dynamicAnimators += animator ## type; \
 	animator ## type->parent = this; \
 	animator ## type->setOffset(offset); \
 	animator ## type->setAmplitude(amplitude); \
 	animator ## type->setAnimationFunction(function); \
-	animator ## type->setSpeed(speed * periodLength); \
-	animator ## type->setPeriods(periodStart + periodLength); \
-	animator ## type->setTimer(periodStart / (speed * periodLength)); \
+	animator ## type->setSpeed(speed * durationPeriods); \
+	animator ## type->setPeriods(startPeriods + durationPeriods); \
+	animator ## type->setTimer(startPeriods / (speed * durationPeriods)); \
 	if (delay > 0.0f) \
 	{ \
 		animator ## type->setInheritValue(true); \
 		animator ## type->setDelay(delay); \
 	}
-
+// DEPRECATED
 #define DEFINE_ANIMATOR_F(functionName, animatorName) \
 	Animator* Object::functionName ## F(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods) \
 	{ \
@@ -93,11 +120,11 @@
 		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods); \
 		return animator ## animatorName; \
 	}
-
+// DEPRECATED
 #define DEFINE_ANIMATOR_F_DELAYED(functionName, animatorName) \
 	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay) \
 	{ \
-		CREATE_DELAYED_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods, delay); \
+		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods); \
 		return animator ## animatorName; \
 	}
 
@@ -115,6 +142,36 @@ namespace aprilui
 		}
 		return false;
 	}
+
+	DEFINE_ANIMATOR_F(moveX, MoverX); // DEPRECATED
+	DEFINE_ANIMATOR_F(moveY, MoverY); // DEPRECATED
+	DEFINE_ANIMATOR_F(scaleX, ScalerX); // DEPRECATED
+	DEFINE_ANIMATOR_F(scaleY, ScalerY); // DEPRECATED
+	DEFINE_ANIMATOR_F(resizeX, ResizerX); // DEPRECATED
+	DEFINE_ANIMATOR_F(resizeY, ResizerY); // DEPRECATED
+	DEFINE_ANIMATOR_F(rotate, Rotator); // DEPRECATED
+	DEFINE_ANIMATOR_F(moveCenterX, CenterMoverX); // DEPRECATED
+	DEFINE_ANIMATOR_F(moveCenterY, CenterMoverY); // DEPRECATED
+	DEFINE_ANIMATOR_F(fadeAlpha, AlphaChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F(fadeRed, RedChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F(fadeGreen, GreenChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F(fadeBlue, BlueChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F(changeZOrder, ZOrderChanger); // DEPRECATED
+
+	DEFINE_ANIMATOR_F_DELAYED(moveX, MoverX); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(moveY, MoverY); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(scaleX, ScalerX); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(scaleY, ScalerY); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(resizeX, ResizerX); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(resizeY, ResizerY); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(rotate, Rotator); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(moveCenterX, CenterMoverX); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(moveCenterY, CenterMoverY); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(fadeAlpha, AlphaChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(fadeRed, RedChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(fadeGreen, GreenChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(fadeBlue, BlueChanger); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(changeZOrder, ZOrderChanger); // DEPRECATED
 
 	harray<PropertyDescription> Object::_propertyDescriptions;
 
@@ -1616,21 +1673,6 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)color.a, speed);
 	}
 
-	DEFINE_ANIMATOR_F(moveX, MoverX);
-	DEFINE_ANIMATOR_F(moveY, MoverY);
-	DEFINE_ANIMATOR_F(scaleX, ScalerX);
-	DEFINE_ANIMATOR_F(scaleY, ScalerY);
-	DEFINE_ANIMATOR_F(resizeX, ResizerX);
-	DEFINE_ANIMATOR_F(resizeY, ResizerY);
-	DEFINE_ANIMATOR_F(rotate, Rotator);
-	DEFINE_ANIMATOR_F(moveCenterX, CenterMoverX);
-	DEFINE_ANIMATOR_F(moveCenterY, CenterMoverY);
-	DEFINE_ANIMATOR_F(fadeAlpha, AlphaChanger);
-	DEFINE_ANIMATOR_F(fadeRed, RedChanger);
-	DEFINE_ANIMATOR_F(fadeGreen, GreenChanger);
-	DEFINE_ANIMATOR_F(fadeBlue, BlueChanger);
-	DEFINE_ANIMATOR_F(changeZOrder, ZOrderChanger);
-	
 	Animator* Object::moveXQueue(float x, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->rect.x, x, speed, delay);
@@ -1779,21 +1821,21 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)color.a, speed, delay);
 	}
 	
-	DEFINE_ANIMATOR_F_DELAYED(moveX, MoverX);
-	DEFINE_ANIMATOR_F_DELAYED(moveY, MoverY);
-	DEFINE_ANIMATOR_F_DELAYED(scaleX, ScalerX);
-	DEFINE_ANIMATOR_F_DELAYED(scaleY, ScalerY);
-	DEFINE_ANIMATOR_F_DELAYED(resizeX, ResizerX);
-	DEFINE_ANIMATOR_F_DELAYED(resizeY, ResizerY);
-	DEFINE_ANIMATOR_F_DELAYED(rotate, Rotator);
-	DEFINE_ANIMATOR_F_DELAYED(moveCenterX, CenterMoverX);
-	DEFINE_ANIMATOR_F_DELAYED(moveCenterY, CenterMoverY);
-	DEFINE_ANIMATOR_F_DELAYED(fadeAlpha, AlphaChanger);
-	DEFINE_ANIMATOR_F_DELAYED(fadeRed, RedChanger);
-	DEFINE_ANIMATOR_F_DELAYED(fadeGreen, GreenChanger);
-	DEFINE_ANIMATOR_F_DELAYED(fadeBlue, BlueChanger);
-	DEFINE_ANIMATOR_F_DELAYED(changeZOrder, ZOrderChanger);
-	
+	DEFINE_DYNAMIC_ANIMATE(animateX, MoverX);
+	DEFINE_DYNAMIC_ANIMATE(animateY, MoverY);
+	DEFINE_DYNAMIC_ANIMATE(animateScaleX, ScalerX);
+	DEFINE_DYNAMIC_ANIMATE(animateScaleY, ScalerY);
+	DEFINE_DYNAMIC_ANIMATE(animateWidth, ResizerX);
+	DEFINE_DYNAMIC_ANIMATE(animateHeight, ResizerY);
+	DEFINE_DYNAMIC_ANIMATE(animateAngle, Rotator);
+	DEFINE_DYNAMIC_ANIMATE(animateCenterX, CenterMoverX);
+	DEFINE_DYNAMIC_ANIMATE(animateCenterY, CenterMoverY);
+	DEFINE_DYNAMIC_ANIMATE(animateAlpha, AlphaChanger);
+	DEFINE_DYNAMIC_ANIMATE(animateRed, RedChanger);
+	DEFINE_DYNAMIC_ANIMATE(animateGreen, GreenChanger);
+	DEFINE_DYNAMIC_ANIMATE(animateBlue, BlueChanger);
+	DEFINE_DYNAMIC_ANIMATE(animateZOrder, ZOrderChanger);
+
 	void Object::moveXStop()
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
