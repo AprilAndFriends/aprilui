@@ -89,7 +89,6 @@
 			animator ## type->setTimer(startPeriods / speed); \
 		} \
 		animator ## type->setDelay(delay); \
-		animator ## type->update(0.0f); \
 		return animator ## type; \
 	}
 
