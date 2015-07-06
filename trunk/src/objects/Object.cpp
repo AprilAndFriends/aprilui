@@ -172,6 +172,21 @@ namespace aprilui
 	DEFINE_ANIMATOR_F_DELAYED(fadeBlue, BlueChanger); // DEPRECATED
 	DEFINE_ANIMATOR_F_DELAYED(changeZOrder, ZOrderChanger); // DEPRECATED
 
+	static Animator* _map_clonedAnimators(Animator* animator)
+	{
+		return animator->clone();
+	}
+	
+	static bool _filter_isAnimated(Animator* animator)
+	{
+		return animator->isAnimated();
+	}
+
+	static bool _filter_isWaitingAnimation(Animator* animator)
+	{
+		return animator->isWaitingAnimation();
+	}
+
 	harray<PropertyDescription> Object::_propertyDescriptions;
 
 	Object::Object(chstr name) : BaseObject(name)
@@ -216,10 +231,7 @@ namespace aprilui
 		this->focusIndex = other.focusIndex;
 		this->customPointInsideCallback = other.customPointInsideCallback;
 		this->debugColor = other.debugColor;
-		foreachc (Animator*, it, other.dynamicAnimators)
-		{
-			this->dynamicAnimators += (*it)->clone();
-		}
+		this->dynamicAnimators = other.dynamicAnimators.mapped(&_map_clonedAnimators);
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -618,40 +630,12 @@ namespace aprilui
 
 	bool Object::isAnimated()
 	{
-		foreach (Animator*, it, this->dynamicAnimators)
-		{
-			if ((*it)->isAnimated())
-			{
-				return true;
-			}
-		}
-		foreach (Animator*, it, this->childrenAnimators)
-		{
-			if ((*it)->isAnimated())
-			{
-				return true;
-			}
-		}
-		return false;
+		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_filter_isAnimated);
 	}
 
 	bool Object::isWaitingAnimation()
 	{
-		foreach (Animator*, it, this->dynamicAnimators)
-		{
-			if ((*it)->isWaitingAnimation())
-			{
-				return true;
-			}
-		}
-		foreach (Animator*, it, this->childrenAnimators)
-		{
-			if ((*it)->isWaitingAnimation())
-			{
-				return true;
-			}
-		}
-		return false;
+		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_filter_isWaitingAnimation);
 	}
 
 	bool Object::hasDynamicAnimation()
