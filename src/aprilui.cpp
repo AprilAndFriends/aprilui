@@ -35,7 +35,7 @@ namespace aprilui
 
 	static bool _filter_defaultExtensions(hstr extension)
 	{
-		return (extension.count('.') == 0); // extension not using a prefix
+		return (extension.count('.') <= 1); // extension not using a prefix
 	}
 
 	hstr logTag = "aprilui";
