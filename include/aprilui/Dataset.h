@@ -36,7 +36,6 @@ namespace aprilui
 	class Event;
 	class EventArgs;
 	class Image;
-	class NullImage;
 	class Object;
 	class Texture;
 	
@@ -230,7 +229,6 @@ namespace aprilui
 		hmap<hstr, Texture*> textures;
 		hmap<hstr, BaseImage*> images;
 		hmap<hstr, hstr> texts;
-		NullImage* nullImage;
 		harray<QueuedCallback> callbackQueue;
 		hmap<hstr, void (*)()> callbacks;
 		hmap<hstr, hlxml::Document*> includeDocuments;

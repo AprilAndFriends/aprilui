@@ -117,7 +117,7 @@ namespace aprilui
 		bool isCursorInside();
 		Object* getChildUnderCursor();
 
-		virtual harray<BaseImage*> getUsedImages();
+		harray<BaseImage*> getUsedImages();
 		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
 
 		void addChild(BaseObject* object);
@@ -325,6 +325,7 @@ namespace aprilui
 		grect _getDrawRect();
 		april::Color _getDrawColor();
 		float _getDisabledAlphaFactor();
+		virtual harray<BaseImage*> _getUsedImages();
 
 		void _update(float timeDelta);
 		virtual void _draw();

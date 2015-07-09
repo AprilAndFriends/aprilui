@@ -40,8 +40,6 @@ namespace aprilui
 		virtual HL_DEFINE_GET(hstr, imageName, ImageName);
 		virtual void setImageByName(chstr name);
 		
-		harray<BaseImage*> getUsedImages();
-
 		/// @brief Optimized version.
 		virtual bool trySetImageByName(chstr name);
 
@@ -54,6 +52,8 @@ namespace aprilui
 		BaseImage* image;
 		hstr imageName;
 		
+		harray<BaseImage*> _getUsedImages();
+
 		void _draw();
 		
 	private:

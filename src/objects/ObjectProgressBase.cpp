@@ -44,52 +44,43 @@ namespace aprilui
 	void ProgressBase::setProgressImage(BaseImage* image)
 	{
 		this->progressImage = image;
-		this->progressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->progressImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ProgressBase::setAntiProgressImage(BaseImage* image)
 	{
 		this->antiProgressImage = image;
-		this->antiProgressImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->antiProgressImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ProgressBase::setMaskImage(BaseImage* image)
 	{
 		this->maskImage = image;
-		this->maskImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->maskImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ProgressBase::setProgressImageByName(chstr name)
 	{
-		this->setProgressImage(this->getDataset()->getImage(name));
+		this->setProgressImage(name != "" ? this->getDataset()->getImage(name) : NULL);
 	}
 
 	void ProgressBase::setAntiProgressImageByName(chstr name)
 	{
-		this->setAntiProgressImage(this->getDataset()->getImage(name));
+		this->setAntiProgressImage(name != "" ? this->getDataset()->getImage(name) : NULL);
 	}
 
 	void ProgressBase::setMaskImageByName(chstr name)
 	{
-		this->setMaskImage(this->getDataset()->getImage(name));
+		this->setMaskImage(name != "" ? this->getDataset()->getImage(name) : NULL);
 	}
 
-	harray<BaseImage*> ProgressBase::getUsedImages()
+	harray<BaseImage*> ProgressBase::_getUsedImages()
 	{
 		harray<BaseImage*> images;
-		if (this->progressImage != NULL)
-		{
-			images += this->progressImage;
-		}
-		if (this->antiProgressImage != NULL)
-		{
-			images += this->antiProgressImage;
-		}
-		if (this->maskImage != NULL)
-		{
-			images += this->maskImage;
-		}
-		return images.removedDuplicates();
+		images += this->progressImage;
+		images += this->antiProgressImage;
+		images += this->maskImage;
+		return images;
 	}
 
 	harray<PropertyDescription> ProgressBase::getPropertyDescriptions()
@@ -108,8 +99,7 @@ namespace aprilui
 	{
 		if (this->progressImageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setProgressImage(this->getDataset()->getImage(name));
+			this->setProgressImageByName(name);
 			return true;
 		}
 		return false;
@@ -119,8 +109,7 @@ namespace aprilui
 	{
 		if (this->antiProgressImageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setAntiProgressImage(this->getDataset()->getImage(name));
+			this->setAntiProgressImageByName(name);
 			return true;
 		}
 		return false;
@@ -130,8 +119,7 @@ namespace aprilui
 	{
 		if (this->maskImageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setMaskImage(this->getDataset()->getImage(name));
+			this->setMaskImageByName(name);
 			return true;
 		}
 		return false;

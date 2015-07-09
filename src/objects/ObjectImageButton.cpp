@@ -118,10 +118,6 @@ namespace aprilui
 	{
 		ButtonBase::_update(timeDelta);
 		this->image = this->normalImage;
-		if (this->image == NULL)
-		{
-			this->image = this->dataset->getImage(APRILUI_IMAGE_NAME_NULL);
-		}
 		if (!this->isDerivedEnabled())
 		{
 			if (this->disabledImage != NULL)
@@ -149,55 +145,34 @@ namespace aprilui
 	void ImageButton::setPushedImage(BaseImage* image)
 	{
 		this->pushedImage = image;
-		this->pushedImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->pushedImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ImageButton::setHoverImage(BaseImage* image)
 	{
 		this->hoverImage = image;
-		this->hoverImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->hoverImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ImageButton::setDisabledImage(BaseImage* image)
 	{
 		this->disabledImage = image;
-		this->disabledImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->disabledImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ImageButton::setHoverImageByName(chstr name)
 	{
-		if (name == "")
-		{
-			this->hoverImage = NULL;
-		}
-		else
-		{
-			this->setHoverImage(this->dataset->getImage(name));
-		}
+		this->setHoverImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	void ImageButton::setPushedImageByName(chstr name)
 	{
-		if (name == "")
-		{
-			this->pushedImage = NULL;
-		}
-		else
-		{
-			this->setPushedImage(this->dataset->getImage(name));
-		}
+		this->setPushedImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	void ImageButton::setDisabledImageByName(chstr name)
 	{
-		if (name == "")
-		{
-			this->disabledImage = NULL;
-		}
-		else
-		{
-			this->setDisabledImage(this->dataset->getImage(name));
-		}
+		this->setDisabledImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	bool ImageButton::trySetPushedImageByName(chstr name)
@@ -237,26 +212,14 @@ namespace aprilui
 		this->normalImageName = this->imageName;
 	}
 	
-	harray<BaseImage*> ImageButton::getUsedImages()
+	harray<BaseImage*> ImageButton::_getUsedImages()
 	{
-		harray<BaseImage*> images = ImageBox::getUsedImages();
-		if (this->normalImage != NULL)
-		{
-			images += this->normalImage;
-		}
-		if (this->pushedImage != NULL)
-		{
-			images += this->pushedImage;
-		}
-		if (this->hoverImage != NULL)
-		{
-			images += this->hoverImage;
-		}
-		if (this->disabledImage != NULL)
-		{
-			images += this->disabledImage;
-		}
-		return images.removedDuplicates();
+		harray<BaseImage*> images = ImageBox::_getUsedImages();
+		images += this->normalImage;
+		images += this->pushedImage;
+		images += this->hoverImage;
+		images += this->disabledImage;
+		return images;
 	}
 	
 	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)

@@ -62,8 +62,6 @@ namespace aprilui
 		/// @brief Optimized version.
 		bool trySetDisabledImageByName(chstr name);
 		
-		harray<BaseImage*> getUsedImages();
-
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
@@ -84,6 +82,8 @@ namespace aprilui
 		hstr pushedImageName;
 		hstr disabledImageName;
 		
+		harray<BaseImage*> _getUsedImages();
+
 		void _update(float timeDelta);
 		void _draw();
 		

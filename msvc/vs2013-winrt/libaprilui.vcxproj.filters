@@ -125,9 +125,6 @@
     <ClCompile Include="..\..\src\images\Image.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\images\NullImage.cpp">
-      <Filter>Source Files\Images</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\animators\AnimatorResizerX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
@@ -362,9 +359,6 @@
       <Filter>Header Files\Images</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\Image.h">
-      <Filter>Header Files\Images</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\aprilui\NullImage.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\EventUtils.h">
