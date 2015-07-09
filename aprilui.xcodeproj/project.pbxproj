@@ -46,7 +46,6 @@
 		7F7A4A98129D217700E0ED12 /* CompositeImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A91129D217700E0ED12 /* CompositeImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F7A4AA7129D21A300E0ED12 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
 		7F7A4AA8129D21A300E0ED12 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA2129D21A300E0ED12 /* Image.cpp */; };
-		7F7A4AA9129D21A300E0ED12 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */; };
 		7F7A4AAC129D21BD00E0ED12 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
 		7FA3013312B647A000F71E5E /* AnimatorAlphaChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */; };
 		7FA3013512B647A000F71E5E /* AnimatorMoverX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */; };
@@ -181,7 +180,6 @@
 		D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
 		D1522E7F140F6A6B0012F290 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
 		D1522E80140F6A6B0012F290 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA2129D21A300E0ED12 /* Image.cpp */; };
-		D1522E81140F6A6B0012F290 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */; };
 		D1522E83140F6A6B0012F290 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */; };
 		D1522E84140F6A6B0012F290 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */; };
 		D1522E85140F6A6B0012F290 /* AnimatorResizerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */; };
@@ -273,7 +271,6 @@
 		D1F27B2D177A2FCA00E5C131 /* EventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */; };
 		D1F27B30177A2FCA00E5C131 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
 		D1F27B31177A2FCA00E5C131 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA2129D21A300E0ED12 /* Image.cpp */; };
-		D1F27B32177A2FCA00E5C131 /* NullImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */; };
 		D1F27B34177A2FCA00E5C131 /* AnimatorScalerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F3131CF169006CBC59 /* AnimatorScalerX.cpp */; };
 		D1F27B35177A2FCA00E5C131 /* AnimatorScalerY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDAF2F4131CF169006CBC59 /* AnimatorScalerY.cpp */; };
 		D1F27B36177A2FCA00E5C131 /* AnimatorResizerX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FDB989E131BA9240064B968 /* AnimatorResizerX.cpp */; };
@@ -357,7 +354,6 @@
 		7F7A4A91129D217700E0ED12 /* CompositeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompositeImage.h; path = include/aprilui/CompositeImage.h; sourceTree = "<group>"; };
 		7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompositeImage.cpp; sourceTree = "<group>"; };
 		7F7A4AA2129D21A300E0ED12 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
-		7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullImage.cpp; sourceTree = "<group>"; };
 		7F7A4AAB129D21BD00E0ED12 /* EventArgs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventArgs.cpp; path = src/EventArgs.cpp; sourceTree = "<group>"; };
 		7FA3012D12B647A000F71E5E /* AnimatorAlphaChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorAlphaChanger.cpp; sourceTree = "<group>"; };
 		7FA3012F12B647A000F71E5E /* AnimatorMoverX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorMoverX.cpp; sourceTree = "<group>"; };
@@ -646,7 +642,6 @@
 				D12C44841A35831C0025EBF5 /* SkinImage.cpp */,
 				D12C44851A35831C0025EBF5 /* TileImage.cpp */,
 				7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */,
-				7F7A4AA3129D21A300E0ED12 /* NullImage.cpp */,
 			);
 			name = Images;
 			path = src/images;
@@ -1014,7 +1009,6 @@
 				7F33B200120FE16F004B5E89 /* Animator.cpp in Sources */,
 				7F7A4AA7129D21A300E0ED12 /* CompositeImage.cpp in Sources */,
 				7F7A4AA8129D21A300E0ED12 /* Image.cpp in Sources */,
-				7F7A4AA9129D21A300E0ED12 /* NullImage.cpp in Sources */,
 				D140387D18EAF8150092608C /* ObjectProgressBase.cpp in Sources */,
 				7F7A4AAC129D21BD00E0ED12 /* EventArgs.cpp in Sources */,
 				7FA3013312B647A000F71E5E /* AnimatorAlphaChanger.cpp in Sources */,
@@ -1077,7 +1071,6 @@
 				D1522E7F140F6A6B0012F290 /* CompositeImage.cpp in Sources */,
 				D1147B4C1A3B499C00C592A4 /* ObjectGridViewRowTemplate.cpp in Sources */,
 				D1522E80140F6A6B0012F290 /* Image.cpp in Sources */,
-				D1522E81140F6A6B0012F290 /* NullImage.cpp in Sources */,
 				D12C448E1A35831C0025EBF5 /* TileImage.cpp in Sources */,
 				D1147B431A3B499C00C592A4 /* ObjectGridView.cpp in Sources */,
 				D16DF4301A24C955005D6371 /* ObjectListBox.cpp in Sources */,
@@ -1158,7 +1151,6 @@
 				D1F27B30177A2FCA00E5C131 /* CompositeImage.cpp in Sources */,
 				D1147B4B1A3B499C00C592A4 /* ObjectGridViewRowTemplate.cpp in Sources */,
 				D1F27B31177A2FCA00E5C131 /* Image.cpp in Sources */,
-				D1F27B32177A2FCA00E5C131 /* NullImage.cpp in Sources */,
 				D12C448D1A35831C0025EBF5 /* TileImage.cpp in Sources */,
 				D1147B421A3B499C00C592A4 /* ObjectGridView.cpp in Sources */,
 				D16DF42F1A24C955005D6371 /* ObjectListBox.cpp in Sources */,
