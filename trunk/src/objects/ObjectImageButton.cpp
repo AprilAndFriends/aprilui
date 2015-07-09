@@ -96,20 +96,26 @@ namespace aprilui
 		// so why bother providing a pushed image when this can work. also it covers situations where people forget to set a pushed image
 		if (this->pushed && this->pushedImage == NULL && this->isCursorInside())
 		{
-			this->image->draw(rect, april::Color(this->_getDrawColor() * 0.75f, this->getDerivedAlpha()));
+			if (this->image != NULL)
+			{
+				this->image->draw(rect, april::Color(this->_getDrawColor() * 0.75f, this->getDerivedAlpha()));
+			}
 			return;
 		}
 		ImageBox::_draw();
 		// the same thing for a hover image fallback solution
 		if (enabled && this->hovered && !this->pushed && this->hoverImage == NULL && aprilui::isHoverEffectEnabled())
 		{
-			Image* blendableImage = dynamic_cast<Image*>(this->image);
-			if (blendableImage != NULL)
+			if (this->image != NULL)
 			{
-				april::BlendMode blendMode = blendableImage->getBlendMode();
-				blendableImage->setBlendMode(april::BM_ADD);
-				blendableImage->draw(rect, april::Color(this->_getDrawColor(), this->getDerivedAlpha() / 4));
-				blendableImage->setBlendMode(blendMode);
+				Image* blendableImage = dynamic_cast<Image*>(this->image);
+				if (blendableImage != NULL)
+				{
+					april::BlendMode blendMode = blendableImage->getBlendMode();
+					blendableImage->setBlendMode(april::BM_ADD);
+					blendableImage->draw(rect, april::Color(this->_getDrawColor(), this->getDerivedAlpha() / 4));
+					blendableImage->setBlendMode(blendMode);
+				}
 			}
 		}
 	}
