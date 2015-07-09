@@ -128,7 +128,6 @@
     <ClCompile Include="..\..\src\objects\ObjectToggleButton.cpp" />
     <ClCompile Include="..\..\src\images\CompositeImage.cpp" />
     <ClCompile Include="..\..\src\images\Image.cpp" />
-    <ClCompile Include="..\..\src\images\NullImage.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeView.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeViewExpander.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeViewImage.cpp" />
@@ -218,7 +217,6 @@
     <ClInclude Include="..\..\include\aprilui\ObjectToggleButton.h" />
     <ClInclude Include="..\..\include\aprilui\CompositeImage.h" />
     <ClInclude Include="..\..\include\aprilui\Image.h" />
-    <ClInclude Include="..\..\include\aprilui\NullImage.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\fileproperties.rc">

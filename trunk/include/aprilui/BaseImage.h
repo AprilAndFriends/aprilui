@@ -23,8 +23,6 @@
 #include "Cloneable.h"
 #include "PropertyDescription.h"
 
-#define APRILUI_IMAGE_NAME_NULL "null"
-
 namespace aprilui
 {
 	class Dataset;

@@ -46,20 +46,16 @@ namespace aprilui
 		this->filename = hrdir::normalize(filename);
 		this->filePath = this->_makeFilePath(this->filename, name, useNameBasePath);
 		this->name = name;
-		this->nullImage = NULL;
 		if (this->name == "")
 		{
 			this->name = hrdir::baseName(hresource::withoutExtension(this->filename));
 		}
-		this->nullImage = new NullImage();
-		this->nullImage->dataset = this;
 		this->loaded = false;
 		aprilui::_registerDataset(this->name, this);
 	}
 	
 	Dataset::~Dataset()
 	{
-		delete this->nullImage;
 		aprilui::_unregisterDataset(this->name, this);
 		if (this->isLoaded())
 		{
@@ -1146,9 +1142,10 @@ namespace aprilui
 	BaseImage* Dataset::getImage(chstr name)
 	{
 		BaseImage* image = NULL;
-		if (name == APRILUI_IMAGE_NAME_NULL)
+		if (name == "null") // DEPRECATED
 		{
-			return this->nullImage;
+			hlog::warn(logTag, "The 'null' image name has been deprecated. Use an empty string instead to define 'no image'.");
+			return NULL;
 		}
 		if (this->images.hasKey(name))
 		{

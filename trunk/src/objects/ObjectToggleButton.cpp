@@ -60,45 +60,45 @@ namespace aprilui
 	void ToggleButton::setToggledNormalImage(BaseImage* image)
 	{
 		this->toggledNormalImage = image;
-		this->toggledNormalImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->toggledNormalImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ToggleButton::setToggledHoverImage(BaseImage* image)
 	{
 		this->toggledHoverImage = image;
-		this->toggledHoverImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->toggledHoverImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ToggleButton::setToggledPushedImage(BaseImage* image)
 	{
 		this->toggledPushedImage = image;
-		this->toggledPushedImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->toggledPushedImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ToggleButton::setToggledDisabledImage(BaseImage* image)
 	{
 		this->toggledDisabledImage = image;
-		this->toggledDisabledImageName = (image != NULL ? image->getFullName() : APRILUI_IMAGE_NAME_NULL);
+		this->toggledDisabledImageName = (image != NULL ? image->getFullName() : "");
 	}
 
 	void ToggleButton::setToggledNormalImageByName(chstr name)
 	{
-		this->setToggledNormalImage(this->dataset->getImage(name));
+		this->setToggledNormalImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	void ToggleButton::setToggledHoverImageByName(chstr name)
 	{
-		this->setToggledHoverImage(this->dataset->getImage(name));
+		this->setToggledHoverImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	void ToggleButton::setToggledPushedImageByName(chstr name)
 	{
-		this->setToggledPushedImage(this->dataset->getImage(name));
+		this->setToggledPushedImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	void ToggleButton::setToggledDisabledImageByName(chstr name)
 	{
-		this->setToggledDisabledImage(this->dataset->getImage(name));
+		this->setToggledDisabledImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	harray<PropertyDescription> ToggleButton::getPropertyDescriptions()
@@ -118,8 +118,7 @@ namespace aprilui
 	{
 		if (this->toggledHoverImageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setToggledNormalImage(this->dataset->getImage(name));
+			this->setToggledNormalImageByName(name);
 			return true;
 		}
 		return false;
@@ -129,8 +128,7 @@ namespace aprilui
 	{
 		if (this->toggledHoverImageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setToggledHoverImage(this->dataset->getImage(name));
+			this->setToggledHoverImageByName(name);
 			return true;
 		}
 		return false;
@@ -140,8 +138,7 @@ namespace aprilui
 	{
 		if (this->toggledPushedImageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setToggledPushedImage(this->dataset->getImage(name));
+			this->setToggledPushedImageByName(name);
 			return true;
 		}
 		return false;
@@ -151,33 +148,20 @@ namespace aprilui
 	{
 		if (this->toggledDisabledImageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setToggledDisabledImage(this->dataset->getImage(name));
+			this->setToggledDisabledImageByName(name);
 			return true;
 		}
 		return false;
 	}
 	
-	harray<BaseImage*> ToggleButton::getUsedImages()
+	harray<BaseImage*> ToggleButton::_getUsedImages()
 	{
-		harray<BaseImage*> images = ImageButton::getUsedImages();
-		if (this->toggledNormalImage != NULL)
-		{
-			images += this->toggledNormalImage;
-		}
-		if (this->toggledPushedImage != NULL)
-		{
-			images += this->toggledPushedImage;
-		}
-		if (this->toggledHoverImage != NULL)
-		{
-			images += this->toggledHoverImage;
-		}
-		if (this->toggledDisabledImage != NULL)
-		{
-			images += this->toggledDisabledImage;
-		}
-		return images.removedDuplicates();
+		harray<BaseImage*> images = ImageButton::_getUsedImages();
+		images += this->toggledNormalImage;
+		images += this->toggledPushedImage;
+		images += this->toggledHoverImage;
+		images += this->toggledDisabledImage;
+		return images;
 	}
 
 	void ToggleButton::toggle()

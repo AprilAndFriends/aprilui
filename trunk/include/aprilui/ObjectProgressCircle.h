@@ -52,7 +52,6 @@ namespace aprilui
 		void setImage(BaseImage* image);
 		hstr getImageName();
 		void setImageByName(chstr name);
-		harray<BaseImage*> getUsedImages();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
@@ -64,6 +63,8 @@ namespace aprilui
 	protected:
 		Direction direction;
 		
+		harray<BaseImage*> _getUsedImages();
+
 		void _draw();
 		harray<april::TexturedVertex> _calcVertices(grect rect, float progress, Direction direction);
 

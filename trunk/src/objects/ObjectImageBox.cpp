@@ -28,6 +28,7 @@ namespace aprilui
 	{
 		this->image = other.image;
 		this->imageName = other.imageName;
+		this->debugColor = april::Color::Clear;
 	}
 
 	ImageBox::~ImageBox()
@@ -68,45 +69,38 @@ namespace aprilui
 		}
 		else
 		{
-			this->imageName = APRILUI_IMAGE_NAME_NULL;
+			this->imageName = "";
 		}
 	}
 
 	void ImageBox::setImageByName(chstr name)
 	{
-		this->setImage(this->dataset->getImage(name));
+		this->setImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
 	bool ImageBox::trySetImageByName(chstr name)
 	{
 		if (this->imageName != name)
 		{
-			// using c/p code because of performance reasons
-			this->setImage(this->dataset->getImage(name));
+			this->setImageByName(name);
 			return true;
 		}
 		return false;
 	}
 	
-	harray<BaseImage*> ImageBox::getUsedImages()
+	harray<BaseImage*> ImageBox::_getUsedImages()
 	{
-		harray<BaseImage*> images = Object::getUsedImages();
-		if (this->image != NULL)
-		{
-			images += this->image;
-		}
-		return images.removedDuplicates();
+		return (Object::_getUsedImages() + this->image);
 	}
 	
 	void ImageBox::_draw()
 	{
-		if (this->image == NULL)
+		if (this->image != NULL)
 		{
-			this->image = this->dataset->getImage(APRILUI_IMAGE_NAME_NULL);
+			april::Color color = this->_getDrawColor();
+			color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
+			this->image->draw(this->_getDrawRect(), color);
 		}
-		april::Color color = this->_getDrawColor();
-		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		this->image->draw(this->_getDrawRect(), color);
 		Object::_draw();
 	}
 	

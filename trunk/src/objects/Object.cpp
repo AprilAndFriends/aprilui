@@ -1447,9 +1447,17 @@ namespace aprilui
 	
 	harray<BaseImage*> Object::getUsedImages()
 	{
+		harray<BaseImage*> images = this->_getUsedImages();
+		images.removeAll(NULL);
+		images.removeDuplicates();
+		return images;
+	}
+
+	harray<BaseImage*> Object::_getUsedImages()
+	{
 		return harray<BaseImage*>();
 	}
-	
+
 	grect Object::_getDrawRect()
 	{
 		return grect(-this->center, this->rect.getSize());

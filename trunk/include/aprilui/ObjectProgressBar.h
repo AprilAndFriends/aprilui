@@ -51,7 +51,6 @@ namespace aprilui
 		void setImage(BaseImage* image);
 		hstr getImageName();
 		void setImageByName(chstr name);
-		harray<BaseImage*> getUsedImages();
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
@@ -65,6 +64,8 @@ namespace aprilui
 		Direction direction;
 		bool interactable;
 		bool pushed;
+
+		harray<BaseImage*> _getUsedImages();
 
 		grect _calcRectDirection(grect rect, float progress, Direction direction);
 		
