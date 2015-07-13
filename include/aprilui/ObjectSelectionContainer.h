@@ -28,7 +28,7 @@ namespace aprilui
 	public:
 		SelectionContainer(chstr name);
 		virtual ~SelectionContainer();
-		inline hstr getClassName() { return "SelectionContainer"; }
+		inline hstr getClassName() const { return "SelectionContainer"; }
 
 		HL_DEFINE_GET(int, selectedIndex, SelectedIndex);
 		void setSelectedIndex(int value);
