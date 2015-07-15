@@ -92,7 +92,7 @@ namespace aprilui
 		april::Color textColor = this->textColor;
 		april::Color drawLabelColor = this->_makeDrawColor();
 		this->useDisabledAlpha = useDisabledAlpha;
-		april::Color BackgroundDrawColor = this->_makeDrawBackgroundColor(this->_makeDrawColor());
+		april::Color backgroundDrawColor = this->_makeBackgroundDrawColor(this->_makeDrawColor());
 		if (!this->isDerivedEnabled())
 		{
 			if (this->_useDisabledTextColor)
@@ -102,7 +102,7 @@ namespace aprilui
 		}
 		else if (this->hovered)
 		{
-			BackgroundDrawColor.a = (unsigned char)(BackgroundDrawColor.a * 0.75f);
+			backgroundDrawColor.a = (unsigned char)(backgroundDrawColor.a * 0.75f);
 			if (this->pushed)
 			{
 				if (this->_usePushedTextColor)
@@ -116,7 +116,7 @@ namespace aprilui
 			}
 		}
 		grect drawRect = this->_makeDrawRect();
-		LabelBase::_drawLabelBackground(drawRect, drawLabelColor, BackgroundDrawColor);
+		LabelBase::_drawLabelBackground(drawRect, drawLabelColor, backgroundDrawColor);
 		LabelBase::_drawLabel(drawRect, drawLabelColor);
 		this->textColor = textColor;
 	}

@@ -50,7 +50,7 @@ namespace aprilui
 		Object::_draw();
 		grect drawRect = this->_makeDrawRect();
 		april::Color drawColor = this->_makeDrawColor();
-		this->_drawLabelBackground(drawRect, drawColor, this->_makeDrawBackgroundColor(drawColor));
+		this->_drawLabelBackground(drawRect, drawColor, this->_makeBackgroundDrawColor(drawColor));
 		this->_drawLabel(drawRect, drawColor);
 	}
 
