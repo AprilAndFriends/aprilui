@@ -87,35 +87,34 @@ namespace aprilui
 	{
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
-		april::Color color = this->_getDrawColor();
-		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		grect rect = this->_getDrawRect();
+		grect drawRect = this->_makeDrawRect();
+		april::Color drawColor = this->_makeDrawColor();
 		if (this->antiProgressImage != NULL)
 		{
 			if (progress == 0.0f)
 			{
-				this->antiProgressImage->draw(rect, color);
+				this->antiProgressImage->draw(drawRect, drawColor);
 			}
 			else if (progress < 1.0f)
 			{
 				Direction antiDirection = (Direction)((int)this->direction < (int)DirectionLimit ? (int)this->direction * 10 : (int)this->direction / 10);
-				this->antiProgressImage->draw(this->_calcVertices(rect, 1.0f - progress, antiDirection), color);
+				this->antiProgressImage->draw(this->_calcVertices(drawRect, 1.0f - progress, antiDirection), drawColor);
 			}
 		}
 		if (this->progressImage != NULL)
 		{
 			if (progress == 1.0f)
 			{
-				this->progressImage->draw(rect, color);
+				this->progressImage->draw(drawRect, drawColor);
 			}
 			else if (progress > 0.0f)
 			{
-				this->progressImage->draw(this->_calcVertices(rect, progress, this->direction), color);
+				this->progressImage->draw(this->_calcVertices(drawRect, progress, this->direction), drawColor);
 			}
 		}
 		if (this->maskImage != NULL)
 		{
-			this->maskImage->draw(rect, color);
+			this->maskImage->draw(drawRect, drawColor);
 		}
 	}
 

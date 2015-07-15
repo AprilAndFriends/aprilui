@@ -34,10 +34,7 @@ namespace aprilui
 
 	void FilledRect::_draw()
 	{
-		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
-		april::Color drawColor = this->_getDrawColor();
-		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
-		april::rendersys->drawFilledRect(this->_getDrawRect(), drawColor);
+		april::rendersys->drawFilledRect(this->_makeDrawRect(), this->_makeDrawColor());
 	}
 	
 }

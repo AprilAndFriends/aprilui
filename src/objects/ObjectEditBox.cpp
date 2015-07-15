@@ -15,6 +15,7 @@
 #include <april/Window.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "ObjectEditBox.h"
 
@@ -678,19 +679,15 @@ namespace aprilui
 		}
 		// not using Label::_draw() directly, because the selection needs to be drawn inbetween the background and border
 		Object::_draw();
-		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
-		grect drawRect = this->_getDrawRect();
-		april::Color drawColor = this->_getDrawColor();
-		april::Color backgroundColor = this->backgroundColor;
-		backgroundColor.a = (unsigned char)(backgroundColor.a * drawColor.a_f() * disabledAlphaFactor);
-		drawColor.a = (unsigned char)(drawColor.a * disabledAlphaFactor);
+		grect drawRect = this->_makeDrawRect();
+		april::Color drawColor = this->_makeDrawColor();
+		april::Color backgroundColor = this->_makeDrawBackgroundColor(drawColor);
 		// background
 		this->_drawLabelBackground(drawRect, drawColor, backgroundColor);
 		// selection
 		if (this->selectionCount != 0)
 		{
-			april::Color selectionColor = this->selectionColor;
-			selectionColor.a = (unsigned char)(selectionColor.a * disabledAlphaFactor);
+			april::Color selectionColor = this->_makeSelectionDrawColor(drawColor);
 			harray<grect> selectionRects = this->_selectionRects;
 			foreach (grect, it, selectionRects)
 			{
@@ -726,6 +723,11 @@ namespace aprilui
 		}
 		this->text = text;
 		this->color = color;
+	}
+
+	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor)
+	{
+		return aprilui::makeModifiedDrawColor(this->selectionColor, drawColor);
 	}
 
 	void EditBox::_getBaseOffset(gvec2& offset, float& hf)

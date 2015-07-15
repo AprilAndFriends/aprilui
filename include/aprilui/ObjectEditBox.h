@@ -110,6 +110,8 @@ namespace aprilui
 		void _update(float timeDelta);
 		void _draw();
 
+		april::Color _makeSelectionDrawColor(april::Color drawColor);
+
 		void _getBaseOffset(gvec2& offset, float& hf);
 
 		void _updateSelectionCount(int previousCaretIndex);

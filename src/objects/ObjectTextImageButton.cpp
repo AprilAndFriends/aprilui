@@ -87,23 +87,22 @@ namespace aprilui
 	void TextImageButton::_draw()
 	{
 		ImageButton::_draw();
-		april::Color color = this->textColor;
-		april::Color drawColor = this->_getDrawColor();
-		unsigned char alpha = this->backgroundColor.a;
+		bool useDisabledAlpha = this->useDisabledAlpha;
+		this->useDisabledAlpha = !this->_useDisabledTextColor;
+		april::Color textColor = this->textColor;
+		april::Color drawLabelColor = this->_makeDrawColor();
+		this->useDisabledAlpha = useDisabledAlpha;
+		april::Color BackgroundDrawColor = this->_makeDrawBackgroundColor(this->_makeDrawColor());
 		if (!this->isDerivedEnabled())
 		{
 			if (this->_useDisabledTextColor)
 			{
 				this->textColor = this->disabledTextColor;
 			}
-			else
-			{
-				drawColor.a = (unsigned char)(drawColor.a * this->_getDisabledAlphaFactor());
-			}
 		}
 		else if (this->hovered)
 		{
-			this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * 0.75f);
+			BackgroundDrawColor.a = (unsigned char)(BackgroundDrawColor.a * 0.75f);
 			if (this->pushed)
 			{
 				if (this->_usePushedTextColor)
@@ -116,12 +115,10 @@ namespace aprilui
 				this->textColor = this->hoverTextColor;
 			}
 		}
-		grect rect = this->_getDrawRect();
-		this->backgroundColor.a = (unsigned char)(this->backgroundColor.a * this->_getDisabledAlphaFactor());
-		LabelBase::_drawLabelBackground(rect, drawColor, this->backgroundColor);
-		LabelBase::_drawLabel(rect, drawColor);
-		this->textColor = color;
-		this->backgroundColor.a = alpha;
+		grect drawRect = this->_makeDrawRect();
+		LabelBase::_drawLabelBackground(drawRect, drawLabelColor, BackgroundDrawColor);
+		LabelBase::_drawLabel(drawRect, drawLabelColor);
+		this->textColor = textColor;
 	}
 	
 	void TextImageButton::notifyEvent(chstr type, EventArgs* args)

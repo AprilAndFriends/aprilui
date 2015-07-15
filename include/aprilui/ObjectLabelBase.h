@@ -85,6 +85,8 @@ namespace aprilui
 		april::Color fontEffectColor;
 		april::Color backgroundColor;
 		bool backgroundBorder;
+
+		april::Color _makeDrawBackgroundColor(april::Color drawColor);
 		
 		void _drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor);
 		void _drawLabel(grect rect, april::Color color);

@@ -13,6 +13,7 @@
 #ifndef APRILUI_UTIL_H
 #define APRILUI_UTIL_H
 
+#include <april/Color.h>
 #include <gtypes/Rectangle.h>
 
 namespace hlxml
@@ -23,6 +24,7 @@ namespace hlxml
 namespace aprilui
 {
 	void readRectNode(grect& rect, hlxml::Node* node);
-	
+	april::Color makeModifiedDrawColor(april::Color color, april::Color drawColor);
+
 }
 #endif

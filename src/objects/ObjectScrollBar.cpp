@@ -261,12 +261,12 @@ namespace aprilui
 				if ((!this->useFading || this->_retainTime > 0.0f) &&
 					(!this->heightHide || this->_checkAreaSize()))
 				{
-					april::Color color = this->_getDrawColor();
+					april::Color drawColor = this->_makeDrawColor();
 					if (this->useFading && this->_retainTime < FADE_OUT_TIME)
 					{
-						color.a = (unsigned char)hclamp(color.a * this->_retainTime / FADE_OUT_TIME, 0.0f, 255.0f);
+						drawColor.a = (unsigned char)hclamp(drawColor.a * this->_retainTime / FADE_OUT_TIME, 0.0f, 255.0f);
 					}
-					april::rendersys->drawFilledRect(this->_getBarDrawRect(), color);
+					april::rendersys->drawFilledRect(this->_getBarDrawRect(), drawColor);
 				}
 			}
 		}

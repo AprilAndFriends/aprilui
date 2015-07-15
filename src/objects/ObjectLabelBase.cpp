@@ -83,6 +83,11 @@ namespace aprilui
 		return LabelBase::_propertyDescriptions;
 	}
 
+	april::Color LabelBase::_makeDrawBackgroundColor(april::Color drawColor)
+	{
+		return aprilui::makeModifiedDrawColor(this->backgroundColor, drawColor);
+	}
+
 	void LabelBase::_drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor)
 	{
 		if (backgroundColor.a > 0)

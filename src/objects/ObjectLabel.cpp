@@ -48,14 +48,10 @@ namespace aprilui
 	void Label::_draw()
 	{
 		Object::_draw();
-		float disabledAlphaFactor = this->_getDisabledAlphaFactor();
-		april::Color color = this->_getDrawColor();
-		april::Color backgroundColor = this->backgroundColor;
-		backgroundColor.a = (unsigned char)(backgroundColor.a * color.a_f() * disabledAlphaFactor);
-		color.a = (unsigned char)(color.a * disabledAlphaFactor);
-		grect drawRect = this->_getDrawRect();
-		this->_drawLabelBackground(drawRect, color, backgroundColor);
-		this->_drawLabel(drawRect, color);
+		grect drawRect = this->_makeDrawRect();
+		april::Color drawColor = this->_makeDrawColor();
+		this->_drawLabelBackground(drawRect, drawColor, this->_makeDrawBackgroundColor(drawColor));
+		this->_drawLabel(drawRect, drawColor);
 	}
 
 	void Label::notifyEvent(chstr type, EventArgs* args)

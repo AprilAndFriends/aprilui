@@ -322,9 +322,8 @@ namespace aprilui
 
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool _isDerivedHitTestEnabled();
-		grect _getDrawRect();
-		april::Color _getDrawColor();
-		float _getDisabledAlphaFactor();
+		grect _makeDrawRect();
+		april::Color _makeDrawColor();
 		virtual harray<BaseImage*> _getUsedImages();
 
 		void _update(float timeDelta);
@@ -343,6 +342,8 @@ namespace aprilui
 		virtual bool _touch(const harray<gvec2>& touches);
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
+
+		DEPRECATED_ATTRIBUTE grect _getDrawRect() { return this->_makeDrawRect(); }
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

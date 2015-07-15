@@ -90,13 +90,13 @@ namespace aprilui
 
 	void GridViewCell::_draw()
 	{
-		april::Color drawColor = this->_getDrawColor();
+		april::Color drawColor = this->_makeDrawColor();
 		if (this->_gridView != NULL)
 		{
 			april::Color color = this->_getCurrentBackgroundColor() * drawColor;
 			if (color.a > 0)
 			{
-				april::rendersys->drawFilledRect(this->_getDrawRect(), color);
+				april::rendersys->drawFilledRect(this->_makeDrawRect(), color);
 			}
 		}
 		Container::_draw();

@@ -739,7 +739,7 @@ namespace aprilui
 
 	void Object::_drawDebug()
 	{
-		grect rect = this->_getDrawRect();
+		grect rect = this->_makeDrawRect();
 		if (this->debugColor.a > 0)
 		{
 			april::rendersys->drawFilledRect(rect, this->debugColor);
@@ -1458,24 +1458,25 @@ namespace aprilui
 		return harray<BaseImage*>();
 	}
 
-	grect Object::_getDrawRect()
+	grect Object::_makeDrawRect()
 	{
 		return grect(-this->center, this->rect.getSize());
 	}
 
-	april::Color Object::_getDrawColor()
+	april::Color Object::_makeDrawColor()
 	{
-		april::Color color = this->color;
+		april::Color drawColor = this->color;
+		float alpha = (float)drawColor.a;
 		if (this->inheritAlpha)
 		{
-			color.a = this->getDerivedAlpha();
+			alpha *= this->getDerivedAlpha();
 		}
+		if (this->useDisabledAlpha && !this->isDerivedEnabled())
+		{
+			alpha *= 0.5f;
+		}
+		drawColor.a = (unsigned char)alpha;
 		return color;
-	}
-
-	float Object::_getDisabledAlphaFactor()
-	{
-		return (this->useDisabledAlpha && !this->isDerivedEnabled() ? 0.5f : 1.0f);
 	}
 
 	Animator* Object::moveX(float x, float speed)

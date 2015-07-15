@@ -52,7 +52,7 @@ namespace aprilui
 
 	grect ScrollBarH::_getBarDrawRect()
 	{
-		grect result = this->_getDrawRect();
+		grect result = this->_makeDrawRect();
 		if (this->skinName == "")
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);

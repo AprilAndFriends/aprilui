@@ -150,13 +150,13 @@ namespace aprilui
 
 	void ListBoxItem::_draw()
 	{
-		april::Color drawColor = this->_getDrawColor();
+		april::Color drawColor = this->_makeDrawColor();
 		if (this->_listBox != NULL)
 		{
 			april::Color color = this->_getCurrentBackgroundColor() * drawColor;
 			if (color.a > 0)
 			{
-				april::rendersys->drawFilledRect(this->_getDrawRect(), color);
+				april::rendersys->drawFilledRect(this->_makeDrawRect(), color);
 			}
 		}
 		Label::_draw();

@@ -97,9 +97,7 @@ namespace aprilui
 	{
 		if (this->image != NULL)
 		{
-			april::Color color = this->_getDrawColor();
-			color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-			this->image->draw(this->_getDrawRect(), color);
+			this->image->draw(this->_makeDrawRect(), this->_makeDrawColor());
 		}
 		Object::_draw();
 	}

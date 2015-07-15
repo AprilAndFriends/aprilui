@@ -93,13 +93,13 @@ namespace aprilui
 
 	void TreeViewNode::_draw()
 	{
-		april::Color drawColor = this->_getDrawColor();
+		april::Color drawColor = this->_makeDrawColor();
 		if (this->_treeView != NULL)
 		{
 			april::Color color = this->_getCurrentBackgroundColor() * drawColor;
 			if (color.a > 0)
 			{
-				april::rendersys->drawFilledRect(this->_getDrawRect(), color);
+				april::rendersys->drawFilledRect(this->_makeDrawRect(), color);
 			}
 		}
 		Container::_draw();
@@ -111,7 +111,7 @@ namespace aprilui
 				float itemHeight = this->_treeView->getItemHeight();
 				float expanderWidth = this->_treeView->getExpanderWidth();
 				float spacingHeight = this->_treeView->getSpacingHeight();
-				grect drawRect = this->_getDrawRect();
+				grect drawRect = this->_makeDrawRect();
 				grect vertical(-expanderWidth * 0.5f - 1.0f - this->_treeView->getSpacingWidth(), itemHeight + spacingHeight, 2.0f, itemHeight * 0.5f + 1.0f);
 				vertical += drawRect.getPosition();
 				drawRect.set(vertical.x + 2.0f, vertical.y + itemHeight * 0.5f - 1.0f, expanderWidth * 0.5f - 1.0f, 2.0f);

@@ -103,24 +103,23 @@ namespace aprilui
 	{
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
-		april::Color color = this->_getDrawColor();
-		color.a = (unsigned char)(color.a * this->_getDisabledAlphaFactor());
-		grect drawRect = this->_getDrawRect();
-		grect rect;
+		grect drawRect = this->_makeDrawRect();
+		april::Color drawColor = this->_makeDrawColor();
+		grect directionRect;
 		if (this->antiProgressImage != NULL && progress < 1.0f)
 		{
 			Direction antiDirection = (Direction)((int)DirectionMax - (int)this->direction);
 			float antiProgress = 1.0f - progress;
 			if (this->stretching)
 			{
-				this->antiProgressImage->draw(this->_calcRectDirection(drawRect, antiProgress, antiDirection), color);
+				this->antiProgressImage->draw(this->_calcRectDirection(drawRect, antiProgress, antiDirection), drawColor);
 			}
 			else
 			{
 				grect clipRect = this->progressImage->getClipRect();
-				rect = this->_calcRectDirection(grect(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
-				this->antiProgressImage->setClipRect(rect);
-				this->antiProgressImage->draw(drawRect, color);
+				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
+				this->antiProgressImage->setClipRect(directionRect);
+				this->antiProgressImage->draw(drawRect, drawColor);
 				this->antiProgressImage->setClipRect(clipRect);
 			}
 		}
@@ -128,20 +127,20 @@ namespace aprilui
 		{
 			if (this->stretching)
 			{
-				this->progressImage->draw(this->_calcRectDirection(drawRect, progress, this->direction), color);
+				this->progressImage->draw(this->_calcRectDirection(drawRect, progress, this->direction), drawColor);
 			}
 			else
 			{
 				grect clipRect = this->progressImage->getClipRect();
-				rect = this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress, this->direction);
-				this->progressImage->setClipRect(rect);
-				this->progressImage->draw(drawRect, color);
+				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress, this->direction);
+				this->progressImage->setClipRect(directionRect);
+				this->progressImage->draw(drawRect, drawColor);
 				this->progressImage->setClipRect(clipRect);
 			}
 		}
 		if (this->maskImage != NULL)
 		{
-			this->maskImage->draw(this->_getDrawRect(), color);
+			this->maskImage->draw(drawRect, drawColor);
 		}
 	}
 

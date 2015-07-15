@@ -85,11 +85,11 @@ namespace aprilui
 
 	void ImageButton::_draw()
 	{
-		grect rect = this->_getDrawRect();
+		grect rect = this->_makeDrawRect();
 		bool enabled = this->isDerivedEnabled();
 		if (!enabled && this->disabledImage != NULL)
 		{
-			this->disabledImage->draw(rect, this->_getDrawColor());
+			this->disabledImage->draw(rect, this->_makeDrawColor());
 			return;
 		}
 		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
@@ -98,7 +98,7 @@ namespace aprilui
 		{
 			if (this->image != NULL)
 			{
-				this->image->draw(rect, april::Color(this->_getDrawColor() * 0.75f, this->getDerivedAlpha()));
+				this->image->draw(rect, april::Color(this->_makeDrawColor() * 0.75f, this->getDerivedAlpha()));
 			}
 			return;
 		}
@@ -113,7 +113,7 @@ namespace aprilui
 				{
 					april::BlendMode blendMode = blendableImage->getBlendMode();
 					blendableImage->setBlendMode(april::BM_ADD);
-					blendableImage->draw(rect, april::Color(this->_getDrawColor(), this->getDerivedAlpha() / 4));
+					blendableImage->draw(rect, april::Color(this->_makeDrawColor(), this->getDerivedAlpha() / 4));
 					blendableImage->setBlendMode(blendMode);
 				}
 			}
