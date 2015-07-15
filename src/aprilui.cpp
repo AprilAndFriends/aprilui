@@ -400,6 +400,16 @@ namespace aprilui
 			hlog::warn(logTag, "'TiledScrollerY' is deprecated. Use 'TileScrollerY' instead.");
 			switchedTypeName = "TileScrollerY";
 		}
+		else if (switchedTypeName == "CenterMoverX")
+		{
+			hlog::warn(logTag, "'CenterMoverX' is deprecated. Use 'PivotMoverX' instead.");
+			switchedTypeName = "PivotMoverX";
+		}
+		else if (switchedTypeName == "CenterMoverY")
+		{
+			hlog::warn(logTag, "'CenterMoverY' is deprecated. Use 'PivotMoverY' instead.");
+			switchedTypeName = "PivotMoverY";
+		}
 		if (gAnimatorFactories.hasKey(switchedTypeName))
 		{
 			return (*gAnimatorFactories[switchedTypeName])(name);

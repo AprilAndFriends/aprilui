@@ -704,7 +704,7 @@ namespace aprilui
 		// caret render
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
-			grect renderRect = this->caretRect - this->center + this->caretOffset;
+			grect renderRect = this->caretRect - this->pivot + this->caretOffset;
 			// make sure the carat is visible if the editbox is empty
 			if (this->caretIndex == 0)
 			{

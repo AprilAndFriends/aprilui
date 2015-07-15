@@ -152,8 +152,8 @@ namespace aprilui
 	DEFINE_ANIMATOR_F(resizeX, ResizerX); // DEPRECATED
 	DEFINE_ANIMATOR_F(resizeY, ResizerY); // DEPRECATED
 	DEFINE_ANIMATOR_F(rotate, Rotator); // DEPRECATED
-	DEFINE_ANIMATOR_F(moveCenterX, CenterMoverX); // DEPRECATED
-	DEFINE_ANIMATOR_F(moveCenterY, CenterMoverY); // DEPRECATED
+	DEFINE_ANIMATOR_F(movePivotX, PivotMoverX); // DEPRECATED
+	DEFINE_ANIMATOR_F(movePivotY, PivotMoverY); // DEPRECATED
 	DEFINE_ANIMATOR_F(fadeRed, RedChanger); // DEPRECATED
 	DEFINE_ANIMATOR_F(fadeGreen, GreenChanger); // DEPRECATED
 	DEFINE_ANIMATOR_F(fadeBlue, BlueChanger); // DEPRECATED
@@ -167,8 +167,8 @@ namespace aprilui
 	DEFINE_ANIMATOR_F_DELAYED(resizeX, ResizerX); // DEPRECATED
 	DEFINE_ANIMATOR_F_DELAYED(resizeY, ResizerY); // DEPRECATED
 	DEFINE_ANIMATOR_F_DELAYED(rotate, Rotator); // DEPRECATED
-	DEFINE_ANIMATOR_F_DELAYED(moveCenterX, CenterMoverX); // DEPRECATED
-	DEFINE_ANIMATOR_F_DELAYED(moveCenterY, CenterMoverY); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(movePivotX, PivotMoverX); // DEPRECATED
+	DEFINE_ANIMATOR_F_DELAYED(movePivotY, PivotMoverY); // DEPRECATED
 	DEFINE_ANIMATOR_F_DELAYED(fadeRed, RedChanger); // DEPRECATED
 	DEFINE_ANIMATOR_F_DELAYED(fadeGreen, GreenChanger); // DEPRECATED
 	DEFINE_ANIMATOR_F_DELAYED(fadeBlue, BlueChanger); // DEPRECATED
@@ -217,7 +217,7 @@ namespace aprilui
 	Object::Object(const Object& other) : BaseObject(other)
 	{
 		this->rect = other.rect;
-		this->center = other.center;
+		this->pivot = other.pivot;
 		this->color = other.color;
 		this->visible = other.visible;
 		this->scaleFactor = other.scaleFactor;
@@ -299,9 +299,9 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("scale", PropertyDescription::GVEC2);
 			Object::_propertyDescriptions += PropertyDescription("scale_x", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("scale_y", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("center", PropertyDescription::GVEC2);
-			Object::_propertyDescriptions += PropertyDescription("center_x", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("center_y", PropertyDescription::FLOAT);
+			Object::_propertyDescriptions += PropertyDescription("pivot", PropertyDescription::GVEC2);
+			Object::_propertyDescriptions += PropertyDescription("pivot_x", PropertyDescription::FLOAT);
+			Object::_propertyDescriptions += PropertyDescription("pivot_y", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::BOOL);
@@ -420,7 +420,7 @@ namespace aprilui
 		}
 		if (this->rect.w <= 0.0f)
 		{
-			this->center.x = difference * 0.5f;
+			this->pivot.x = difference * 0.5f;
 		}
 		float width = 0.0f;
 		float height = 0.0f;
@@ -446,7 +446,7 @@ namespace aprilui
 				(*it)->setWidth(width + difference);
 				if (width != 0.0f)
 				{
-					(*it)->setCenterX((*it)->getCenterX() * (width + difference) / width);
+					(*it)->setPivotX((*it)->getPivotX() * (width + difference) / width);
 				}
 				if ((*it)->isRetainAnchorAspect())
 				{
@@ -461,7 +461,7 @@ namespace aprilui
 					}
 					if (height != 0.0f)
 					{
-						(*it)->setCenterY((*it)->getCenterY() * (height + differenceAlt) / height);
+						(*it)->setPivotY((*it)->getPivotY() * (height + differenceAlt) / height);
 					}
 				}
 			}
@@ -476,7 +476,7 @@ namespace aprilui
 		}
 		if (this->rect.h <= 0.0f)
 		{
-			this->center.y = difference * 0.5f;
+			this->pivot.y = difference * 0.5f;
 		}
 		float width = 0.0f;
 		float height = 0.0f;
@@ -502,7 +502,7 @@ namespace aprilui
 				(*it)->setHeight(height + difference);
 				if (height != 0.0f)
 				{
-					(*it)->setCenterY((*it)->getCenterY() * (height + difference) / height);
+					(*it)->setPivotY((*it)->getPivotY() * (height + difference) / height);
 				}
 				if ((*it)->isRetainAnchorAspect())
 				{
@@ -517,7 +517,7 @@ namespace aprilui
 					}
 					if (width != 0.0f)
 					{
-						(*it)->setCenterX((*it)->getCenterX() * (width + differenceAlt) / width);
+						(*it)->setPivotX((*it)->getPivotX() * (width + differenceAlt) / width);
 					}
 				}
 			}
@@ -673,7 +673,7 @@ namespace aprilui
 			april::rendersys->setOrthoProjection(grect(orthoProjection.getPosition() - originalRect.getPosition(), originalRect.getSize()));
 			april::rendersys->setViewport(newViewport);
 		}
-		gvec2 position = this->rect.getPosition() + this->center;
+		gvec2 position = this->rect.getPosition() + this->pivot;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
 			april::rendersys->translate(position.x, position.y);
@@ -691,9 +691,9 @@ namespace aprilui
 		{
 			this->_drawDebug();
 		}
-		if (this->center.x != 0.0f || this->center.y != 0.0f)
+		if (this->pivot.x != 0.0f || this->pivot.y != 0.0f)
 		{
-			april::rendersys->translate(-this->center.x, -this->center.y);
+			april::rendersys->translate(-this->pivot.x, -this->pivot.y);
 		}
 		foreach (Object*, it, this->childrenObjects)
 		{
@@ -1065,9 +1065,9 @@ namespace aprilui
 		return false;
 	}
 
-	void Object::resetCenter()
+	void Object::resetPivot()
 	{
-		this->center = this->rect.getSize() / 2;
+		this->pivot = this->rect.getSize() / 2;
 	}
 
 	bool Object::isDerivedVisible()
@@ -1124,9 +1124,24 @@ namespace aprilui
 		if (name == "scale")				return april::gvec2ToHstr(this->getScale());
 		if (name == "scale_x")				return this->getScaleX();
 		if (name == "scale_y")				return this->getScaleY();
-		if (name == "center")				return april::gvec2ToHstr(this->getCenter());
-		if (name == "center_x")				return this->getCenterX();
-		if (name == "center_y")				return this->getCenterY();
+		if (name == "pivot")				return april::gvec2ToHstr(this->getPivot());
+		if (name == "pivot_x")				return this->getPivotX();
+		if (name == "pivot_y")				return this->getPivotY();
+		if (name == "center")
+		{
+			hlog::warn(logTag, "'center' is deprecated. Use 'pivot_x' instead."); // DEPRECATED
+			return april::gvec2ToHstr(this->getPivot());
+		}
+		if (name == "center_x")
+		{
+			hlog::warn(logTag, "'center_x' is deprecated. Use 'pivot_x' instead."); // DEPRECATED
+			return this->getPivotX();
+		}
+		if (name == "center_y")
+		{
+			hlog::warn(logTag, "'center_y' is deprecated. Use 'pivot_y' instead."); // DEPRECATED
+			return this->getPivotY();
+		}
 		if (name == "anchor_left")			return this->isAnchorLeft();
 		if (name == "anchor_right")			return this->isAnchorRight();
 		if (name == "anchor_top")			return this->isAnchorTop();
@@ -1181,10 +1196,25 @@ namespace aprilui
 		else if	(name == "scale")					this->setScale(april::hstrToGvec2(value));
 		else if	(name == "scale_x")					this->setScaleX(value);
 		else if	(name == "scale_y")					this->setScaleY(value);
-		else if	(name == "center")					this->setCenter(april::hstrToGvec2(value));
-		else if	(name == "center_x")				this->setCenterX(value);
-		else if	(name == "center_y")				this->setCenterY(value);
-		else if	(name == "anchor_left")				this->setAnchorLeft(value);
+		else if (name == "pivot")					this->setPivot(april::hstrToGvec2(value));
+		else if (name == "pivot_x")					this->setPivotX(value);
+		else if (name == "pivot_y")					this->setPivotY(value);
+		else if (name == "center")
+		{
+			hlog::warn(logTag, "'center=' is deprecated. Use 'pivot=' instead."); // DEPRECATED
+			this->setPivot(april::hstrToGvec2(value));
+		}
+		else if (name == "center_x")
+		{
+			hlog::warn(logTag, "'center_x=' is deprecated. Use 'pivot_x=' instead."); // DEPRECATED
+			this->setPivotX(value);
+		}
+		else if (name == "center_y")
+		{
+			hlog::warn(logTag, "'center_y=' is deprecated. Use 'pivot_y=' instead."); // DEPRECATED
+			this->setPivotY(value);
+		}
+		else if (name == "anchor_left")				this->setAnchorLeft(value);
 		else if	(name == "anchor_right")			this->setAnchorRight(value);
 		else if	(name == "anchor_top")				this->setAnchorTop(value);
 		else if	(name == "anchor_bottom")			this->setAnchorBottom(value);
@@ -1273,22 +1303,22 @@ namespace aprilui
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
-		gvec2 center;
+		gvec2 pivot;
 		gvec2 scale;
 		gvec2 position;
 		float angle;
 		foreach (Object*, it, sequence)
 		{
-			center = (*it)->getCenter();
+			pivot = (*it)->getPivot();
 			scale = (*it)->getScale();
 			position = (*it)->getPosition();
 			angle = (*it)->getAngle();
 			foreach (gvec2, it2, points)
 			{
-				(*it2) -= center + position;
+				(*it2) -= pivot + position;
 				(*it2).rotate(angle);
 				(*it2) /= scale;
-				(*it2) += center;
+				(*it2) += pivot;
 			}
 		}
 		return points;
@@ -1324,14 +1354,14 @@ namespace aprilui
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
-		gvec2 center;
+		gvec2 pivot;
 		foreach (Object*, it, sequence)
 		{
-			center = (*it)->getCenter();
-			point -= center + (*it)->getPosition();
+			pivot = (*it)->getPivot();
+			point -= pivot + (*it)->getPosition();
 			point.rotate((*it)->getAngle());
 			point /= (*it)->getScale();
-			point += center;
+			point += pivot;
 		}
 		return point;
 	}
@@ -1339,22 +1369,22 @@ namespace aprilui
 	harray<gvec2> Object::getDerivedPoints(harray<gvec2> points, aprilui::Object* overrideRoot)
 	{
 		Object* current = this;
-		gvec2 center;
+		gvec2 pivot;
 		gvec2 scale;
 		gvec2 position;
 		float angle;
 		while (current != NULL)
 		{
-			center = current->getCenter();
+			pivot = current->getPivot();
 			scale = current->getScale();
 			position = current->getPosition();
 			angle = current->getAngle();
 			foreach (gvec2, it, points)
 			{
-				(*it) -= center;
+				(*it) -= pivot;
 				(*it) *= scale;
 				(*it).rotate(-angle);
-				(*it) += center + position;
+				(*it) += pivot + position;
 			}
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
@@ -1364,14 +1394,14 @@ namespace aprilui
 	gvec2 Object::getDerivedPoint(gvec2 point, aprilui::Object* overrideRoot)
 	{
 		Object* current = this;
-		gvec2 center;
+		gvec2 pivot;
 		while (current != NULL)
 		{
-			center = current->getCenter();
-			point -= center;
+			pivot = current->getPivot();
+			point -= pivot;
 			point *= current->getScale();
 			point.rotate(-current->getAngle());
-			point += center + current->getPosition();
+			point += pivot + current->getPosition();
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		return point;
@@ -1415,9 +1445,9 @@ namespace aprilui
 		return this->getBoundingRect(overrideRoot).getSize();
 	}
 
-	gvec2 Object::getDerivedCenter(aprilui::Object* overrideRoot)
+	gvec2 Object::getDerivedPivot(aprilui::Object* overrideRoot)
 	{
-		return this->getDerivedPoint(this->center, overrideRoot);
+		return this->getDerivedPoint(this->pivot, overrideRoot);
 	}
 	
 	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
@@ -1463,7 +1493,7 @@ namespace aprilui
 
 	grect Object::_makeDrawRect()
 	{
-		return grect(-this->center, this->rect.getSize());
+		return grect(-this->pivot, this->rect.getSize());
 	}
 
 	april::Color Object::_makeDrawColor()
@@ -1531,18 +1561,18 @@ namespace aprilui
 		return animatorRotator;
 	}
 
-	Animator* Object::moveCenterX(float x, float speed)
+	Animator* Object::movePivotX(float x, float speed)
 	{
-		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed);
-		return animatorCenterMoverX;
+		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
+		CREATE_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, x, speed);
+		return animatorPivotMoverX;
 	}
 
-	Animator* Object::moveCenterY(float y, float speed)
+	Animator* Object::movePivotY(float y, float speed)
 	{
-		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed);
-		return animatorCenterMoverY;
+		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
+		CREATE_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed);
+		return animatorPivotMoverY;
 	}
 
 	Animator* Object::fadeRed(unsigned char r, float speed)
@@ -1628,20 +1658,20 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, size.y, speed);
 	}
 
-	void Object::moveCenter(float x, float y, float speed)
+	void Object::movePivot(float x, float y, float speed)
 	{
-		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
-		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
+		CREATE_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, x, speed);
+		CREATE_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed);
 	}
 
-	void Object::moveCenter(gvec2 center, float speed)
+	void Object::movePivot(gvec2 pivot, float speed)
 	{
-		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
-		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, center.x, speed);
-		CREATE_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, center.y, speed);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
+		CREATE_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, pivot.x, speed);
+		CREATE_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, pivot.y, speed);
 	}
 
 	void Object::fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed)
@@ -1710,16 +1740,16 @@ namespace aprilui
 		return animatorRotator;
 	}
 
-	Animator* Object::moveCenterXQueue(float x, float speed, float delay)
+	Animator* Object::movePivotXQueue(float x, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed, delay);
-		return animatorCenterMoverX;
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, x, speed, delay);
+		return animatorPivotMoverX;
 	}
 
-	Animator* Object::moveCenterYQueue(float y, float speed, float delay)
+	Animator* Object::movePivotYQueue(float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed, delay);
-		return animatorCenterMoverY;
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed, delay);
+		return animatorPivotMoverY;
 	}
 
 	Animator* Object::fadeRedQueue(unsigned char r, float speed, float delay)
@@ -1788,16 +1818,16 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, size.y, speed, delay);
 	}
 
-	void Object::moveCenterQueue(float x, float y, float speed, float delay)
+	void Object::movePivotQueue(float x, float y, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed, delay);
 	}
 
-	void Object::moveCenterQueue(gvec2 center, float speed, float delay)
+	void Object::movePivotQueue(gvec2 pivot, float speed, float delay)
 	{
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverX, this->center.x, center.x, speed, delay);
-		CREATE_DELAYED_DYNAMIC_ANIMATOR(CenterMoverY, this->center.y, center.y, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, pivot.x, speed, delay);
+		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, pivot.y, speed, delay);
 	}
 
 	void Object::fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay)
@@ -1823,8 +1853,8 @@ namespace aprilui
 	DEFINE_DYNAMIC_ANIMATE(animateWidth, ResizerX);
 	DEFINE_DYNAMIC_ANIMATE(animateHeight, ResizerY);
 	DEFINE_DYNAMIC_ANIMATE(animateAngle, Rotator);
-	DEFINE_DYNAMIC_ANIMATE(animateCenterX, CenterMoverX);
-	DEFINE_DYNAMIC_ANIMATE(animateCenterY, CenterMoverY);
+	DEFINE_DYNAMIC_ANIMATE(animatePivotX, PivotMoverX);
+	DEFINE_DYNAMIC_ANIMATE(animatePivotY, PivotMoverY);
 	DEFINE_DYNAMIC_ANIMATE(animateRed, RedChanger);
 	DEFINE_DYNAMIC_ANIMATE(animateGreen, GreenChanger);
 	DEFINE_DYNAMIC_ANIMATE(animateBlue, BlueChanger);
@@ -1861,13 +1891,13 @@ namespace aprilui
 		return result;
 	}
 
-	harray<Animator*> Object::animateCenter(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
+	harray<Animator*> Object::animatePivot(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
 	{
 		harray<Animator*> result;
-		CREATE_DYNAMIC_ANIMATE(CenterMoverX);
-		CREATE_DYNAMIC_ANIMATE(CenterMoverY);
-		result += animatorCenterMoverX;
-		result += animatorCenterMoverY;
+		CREATE_DYNAMIC_ANIMATE(PivotMoverX);
+		CREATE_DYNAMIC_ANIMATE(PivotMoverY);
+		result += animatorPivotMoverX;
+		result += animatorPivotMoverY;
 		return result;
 	}
 
@@ -1920,14 +1950,14 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(Rotator);
 	}
 
-	void Object::moveCenterXStop()
+	void Object::movePivotXStop()
 	{
-		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
 	}
 
-	void Object::moveCenterYStop()
+	void Object::movePivotYStop()
 	{
-		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
 	}
 
 	void Object::fadeRedStop()
@@ -1973,10 +2003,10 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
 	}
 
-	void Object::moveCenterStop()
+	void Object::movePivotStop()
 	{
-		REMOVE_EXISTING_ANIMATORS(CenterMoverX);
-		REMOVE_EXISTING_ANIMATORS(CenterMoverY);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
+		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
 	}
 
 	void Object::fadeColorStop()

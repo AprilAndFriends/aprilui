@@ -50,8 +50,8 @@
   <Import Project="..\..\..\hltypes\msvc\vs2013-winrt\props-generic\build-defaults.props" />
   <Import Project="props\configuration.props" />
   <ItemGroup>
-    <ClCompile Include="..\..\src\animators\AnimatorCenterMoverX.cpp" />
-    <ClCompile Include="..\..\src\animators\AnimatorCenterMoverY.cpp" />
+    <ClCompile Include="..\..\src\animators\AnimatorPivotMoverX.cpp" />
+    <ClCompile Include="..\..\src\animators\AnimatorPivotMoverY.cpp" />
     <ClCompile Include="..\..\src\animators\AnimatorProgressChanger.cpp" />
     <ClCompile Include="..\..\src\animators\AnimatorResizerX.cpp" />
     <ClCompile Include="..\..\src\animators\AnimatorResizerY.cpp" />
@@ -125,8 +125,8 @@
     <ClCompile Include="..\..\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverX.h" />
-    <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverY.h" />
+    <ClInclude Include="..\..\include\aprilui\AnimatorPivotMoverX.h" />
+    <ClInclude Include="..\..\include\aprilui\AnimatorPivotMoverY.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorProgressChanger.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorResizerX.h" />
     <ClInclude Include="..\..\include\aprilui\AnimatorResizerY.h" />

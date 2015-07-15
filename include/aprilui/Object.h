@@ -74,10 +74,10 @@ namespace aprilui
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
-		HL_DEFINE_GETSET(gvec2, center, Center);
-		inline void setCenter(float x, float y) { this->center.set(x, y); }
-		HL_DEFINE_GETSET(float, center.x, CenterX);
-		HL_DEFINE_GETSET(float, center.y, CenterY);
+		HL_DEFINE_GETSET(gvec2, pivot, Pivot);
+		inline void setPivot(float x, float y) { this->pivot.set(x, y); }
+		HL_DEFINE_GETSET(float, pivot.x, PivotX);
+		HL_DEFINE_GETSET(float, pivot.y, PivotY);
 
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		HL_DEFINE_GETSET(unsigned char, color.r, Red);
@@ -144,7 +144,7 @@ namespace aprilui
 
 		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
-		gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL);
+		gvec2 getDerivedPivot(aprilui::Object* overrideRoot = NULL);
 		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
 		float getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool isDerivedVisible();
@@ -168,7 +168,7 @@ namespace aprilui
 
 		void draw();
 		
-		void resetCenter();
+		void resetPivot();
 		
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
@@ -182,8 +182,8 @@ namespace aprilui
 		Animator* resizeX(float x, float speed);
 		Animator* resizeY(float y, float speed);
 		Animator* rotate(float angle, float speed);
-		Animator* moveCenterX(float x, float speed);
-		Animator* moveCenterY(float y, float speed);
+		Animator* movePivotX(float x, float speed);
+		Animator* movePivotY(float y, float speed);
 		Animator* fadeRed(unsigned char r, float speed);
 		Animator* fadeGreen(unsigned char g, float speed);
 		Animator* fadeBlue(unsigned char b, float speed);
@@ -195,15 +195,15 @@ namespace aprilui
 		void scale(gvec2 scale, float speed);
 		void resize(float x, float y, float speed);
 		void resize(gvec2 size, float speed);
-		void moveCenter(float x, float y, float speed);
-		void moveCenter(gvec2 center, float speed);
+		void movePivot(float x, float y, float speed);
+		void movePivot(gvec2 pivot, float speed);
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
 		void fadeColor(april::Color color, float speed);
-		
+
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
-		Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f);
-		Animator* moveCenterYQueue(float y, float speed, float delay = 0.0f);
+		Animator* movePivotXQueue(float x, float speed, float delay = 0.0f);
+		Animator* movePivotYQueue(float y, float speed, float delay = 0.0f);
 		Animator* scaleXQueue(float x, float speed, float delay = 0.0f);
 		Animator* scaleYQueue(float y, float speed, float delay = 0.0f);
 		Animator* resizeXQueue(float x, float speed, float delay = 0.0f);
@@ -220,8 +220,8 @@ namespace aprilui
 		void scaleQueue(gvec2 scale, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
 		void resizeQueue(gvec2 size, float speed, float delay = 0.0f);
-		void moveCenterQueue(float x, float y, float speed, float delay = 0.0f);
-		void moveCenterQueue(gvec2 center, float speed, float delay = 0.0f);
+		void movePivotQueue(float x, float y, float speed, float delay = 0.0f);
+		void movePivotQueue(gvec2 pivot, float speed, float delay = 0.0f);
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
 
@@ -232,8 +232,8 @@ namespace aprilui
 		Animator* animateWidth(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		Animator* animateHeight(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		Animator* animateAngle(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
-		Animator* animateCenterX(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
-		Animator* animateCenterY(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animatePivotX(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		Animator* animatePivotY(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		Animator* animateRed(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		Animator* animateGreen(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		Animator* animateBlue(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
@@ -242,7 +242,7 @@ namespace aprilui
 		harray<Animator*> animatePosition(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		harray<Animator*> animateScale(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		harray<Animator*> animateSize(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
-		harray<Animator*> animateCenter(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
+		harray<Animator*> animatePivot(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		harray<Animator*> animateColor(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 
 		void moveXStop();
@@ -252,8 +252,8 @@ namespace aprilui
 		void resizeXStop();
 		void resizeYStop();
 		void rotateStop();
-		void moveCenterXStop();
-		void moveCenterYStop();
+		void movePivotXStop();
+		void movePivotYStop();
 		void fadeRedStop();
 		void fadeGreenStop();
 		void fadeBlueStop();
@@ -262,13 +262,37 @@ namespace aprilui
 		void moveStop();
 		void scaleStop();
 		void resizeStop();
-		void moveCenterStop();
+		void movePivotStop();
 		void fadeColorStop();
 
 		void stopAllAnimations();
 
 		DEPRECATED_ATTRIBUTE bool isClickThrough();
 		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED); }
+
+		DEPRECATED_ATTRIBUTE gvec2 getCenter() { return this->getPivot(); }
+		DEPRECATED_ATTRIBUTE void setCenter(gvec2 value) { return this->setPivot(value); }
+		DEPRECATED_ATTRIBUTE void setCenter(float x, float y) { return this->setPivot(x, y); }
+		DEPRECATED_ATTRIBUTE float getCenterX() { return this->getPivotX(); }
+		DEPRECATED_ATTRIBUTE void setCenterX(float value) { return this->setPivotX(value); }
+		DEPRECATED_ATTRIBUTE float getCenterY() { return this->getPivotY(); }
+		DEPRECATED_ATTRIBUTE void setCenterY(float value) { return this->setPivotY(value); }
+
+		DEPRECATED_ATTRIBUTE gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL) { return this->getDerivedPivot(overrideRoot); }
+		DEPRECATED_ATTRIBUTE void resetCenter() { this->resetPivot(); }
+
+		DEPRECATED_ATTRIBUTE Animator* moveCenterX(float x, float speed) { return this->movePivotX(x, speed); }
+		DEPRECATED_ATTRIBUTE Animator* moveCenterY(float y, float speed) { return this->movePivotY(y, speed); }
+		DEPRECATED_ATTRIBUTE void moveCenter(float x, float y, float speed) { this->movePivot(x, y, speed); }
+		DEPRECATED_ATTRIBUTE void moveCenter(gvec2 pivot, float speed) { this->movePivot(pivot, speed); }
+		DEPRECATED_ATTRIBUTE Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f) { return this->movePivotXQueue(x, speed, delay); }
+		DEPRECATED_ATTRIBUTE Animator* moveCenterYQueue(float y, float speed, float delay = 0.0f) { return this->movePivotYQueue(y, speed, delay); }
+		DEPRECATED_ATTRIBUTE void moveCenterQueue(float x, float y, float speed, float delay = 0.0f) { this->movePivotQueue(x, y, speed, delay); }
+		DEPRECATED_ATTRIBUTE void moveCenterQueue(gvec2 pivot, float speed, float delay = 0.0f) { this->movePivotQueue(pivot, speed, delay); }
+
+		DEPRECATED_ATTRIBUTE void moveCenterXStop() { this->movePivotXStop(); }
+		DEPRECATED_ATTRIBUTE void moveCenterYStop() { this->movePivotYStop(); }
+		DEPRECATED_ATTRIBUTE void moveCenterStop() { this->movePivotStop(); }
 
 		DEPRECATED_ATTRIBUTE Animator* moveXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
 		DEPRECATED_ATTRIBUTE Animator* moveYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
@@ -277,8 +301,8 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE Animator* resizeXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
 		DEPRECATED_ATTRIBUTE Animator* resizeYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
 		DEPRECATED_ATTRIBUTE Animator* rotateF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* moveCenterXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* moveCenterYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* movePivotXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
+		DEPRECATED_ATTRIBUTE Animator* movePivotYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
 		DEPRECATED_ATTRIBUTE Animator* fadeRedF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
 		DEPRECATED_ATTRIBUTE Animator* fadeGreenF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
 		DEPRECATED_ATTRIBUTE Animator* fadeBlueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
@@ -292,8 +316,8 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE Animator* resizeXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
 		DEPRECATED_ATTRIBUTE Animator* resizeYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
 		DEPRECATED_ATTRIBUTE Animator* rotateQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* moveCenterXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* moveCenterYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* movePivotXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
+		DEPRECATED_ATTRIBUTE Animator* movePivotYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
 		DEPRECATED_ATTRIBUTE Animator* fadeRedQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
 		DEPRECATED_ATTRIBUTE Animator* fadeGreenQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
 		DEPRECATED_ATTRIBUTE Animator* fadeBlueQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
@@ -302,7 +326,7 @@ namespace aprilui
 
 	protected:
 		grect rect;
-		gvec2 center;
+		gvec2 pivot;
 		april::Color color;
 		bool visible;
 		gvec2 scaleFactor;

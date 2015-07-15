@@ -164,10 +164,10 @@
     <ClCompile Include="..\..\src\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\animators\AnimatorCenterMoverX.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorPivotMoverX.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\animators\AnimatorCenterMoverY.cpp">
+    <ClCompile Include="..\..\src\animators\AnimatorPivotMoverY.cpp">
       <Filter>Source Files\Animators</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\objects\ObjectProgressCircle.cpp">
@@ -406,10 +406,10 @@
     <ClInclude Include="..\..\include\aprilui\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverX.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorPivotMoverX.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\aprilui\AnimatorCenterMoverY.h">
+    <ClInclude Include="..\..\include\aprilui\AnimatorPivotMoverY.h">
       <Filter>Header Files\Animators</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectProgressCircle.h">

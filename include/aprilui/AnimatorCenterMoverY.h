@@ -13,31 +13,15 @@
 #ifndef APRILUI_CENTER_MOVER_Y_H
 #define APRILUI_CENTER_MOVER_Y_H
 
-#include <hltypes/hstring.h>
-
-#include "Animator.h"
+#pragma message("'aprilui/AnimatorCenterMoverY.h' is deprecated. Include 'aprilui/AnimatorPivotMoverY.h' instead.")
+#include "AnimatorCenterMoverY.h"
+#include "apriluiExport.h"
 
 namespace aprilui
 {
 	namespace Animators
 	{
-		class apriluiExport CenterMoverY : public Animator
-		{
-			APRILUI_CLONEABLE(CenterMoverY);
-		public:
-			CenterMoverY(chstr name);
-			~CenterMoverY();
-			inline hstr getClassName() const { return "CenterMoverY"; }
-
-			static Animator* createInstance(chstr name);
-			
-		protected:
-			float _getObjectValue();
-			void _setObjectValue(float value);
-			
-			void _update(float timeDelta);
-
-		};
+		DEPRECATED_ATTRIBUTE typedef PivotMoverY CenterMoverY;
 	}
 }
 

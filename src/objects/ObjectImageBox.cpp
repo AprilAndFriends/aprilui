@@ -58,12 +58,12 @@ namespace aprilui
 			if (this->rect.w == 0.0f)
 			{
 				this->rect.w = size.x;
-				this->center.x = size.x * 0.5f;
+				this->pivot.x = size.x * 0.5f;
 			}
 			if (this->rect.h == 0.0f)
 			{
 				this->rect.h = size.y;
-				this->center.y = size.y * 0.5f;
+				this->pivot.y = size.y * 0.5f;
 			}
 			this->imageName = image->getFullName();
 		}
@@ -107,7 +107,7 @@ namespace aprilui
 		if (this->image != NULL)
 		{
 			this->rect.setSize(this->image->getSrcSize());
-			this->resetCenter();
+			this->resetPivot();
 		}
 	}
 
