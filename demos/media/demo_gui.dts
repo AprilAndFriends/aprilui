@@ -48,7 +48,7 @@
 				<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.1" offset="1.2" timer="0.25"/>
 			</Object>
 			<Object type="Container" name="recursive_rotation_example" rect="240,290,64,64" zorder="100" angle="10" hit_test="disabled">
-				<Object type="TextImageButton" name="text_image_button" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" rect="50,20,128,64" angle="10" center="-100,-100">
+				<Object type="TextImageButton" name="text_image_button" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" rect="50,20,128,64" angle="10" pivot="-100,-100">
 					<Animator type="RedChanger" function="sine" periods="-1" amplitude="64" speed="1" offset="191" timer="1.333333"/>
 					<Animator type="GreenChanger" function="sine" periods="-1" amplitude="64" speed="1.2" offset="191" timer="0.6666667"/>
 					<Animator type="BlueChanger" function="sine" periods="-1" amplitude="64" speed="1.4" offset="191"/>
@@ -163,7 +163,7 @@
 				<Object type="ScrollBarV" name="grid_view_scroll_v" rect="200,0,4,142"/>
 			</Object>
 			<Object type="Container" rect="232,16,128,128" hit_test="disabled_recursive">
-				<Object type="FilledRect" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" center="96,32">
+				<Object type="FilledRect" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" pivot="96,32">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>
 					<Animator type="ResizerY" function="sine" periods="-1" amplitude="32" timer="0.75"/>
 					
