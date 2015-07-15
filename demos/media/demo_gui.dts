@@ -23,17 +23,17 @@
 			<Object type="ImageBox" name="colored_image_box" image="texture/test" color="FF7F7F" rect="32,128,128,64">
 				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
 				<Animator type="MoverY" amplitude="100" speed="0.25"/>
-				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="1"/>
+				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="true"/>
 				<Animator type="ZOrderChanger" function="sine" periods="-1" amplitude="50"/>
 			</Object>
 			<Object type="FilledRect" name="colored_quad" color="007FFF" rect="32,224,128,64">
 				<Animator type="MoverX" function="noise" periods="-1" amplitude="4"/>
 				<Animator type="MoverY" function="noise" periods="-1" amplitude="4"/>
 			</Object>
-			<Object type="ImageButton" name="image_button_disabled" image="texture/test" disabled_image="texture/test_grey" rect="232,160,128,64" enabled="0">
+			<Object type="ImageButton" name="image_button_disabled" image="texture/test" disabled_image="texture/test_grey" rect="232,160,128,64" enabled="false">
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
-			<Object type="EditBox" name="edit_box" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="1" selection_color="009FFFBF" multi_line="1" font="Arial" horz_formatting="left" vert_formatting="top" rect="600,200,192,64"/>
+			<Object type="EditBox" name="edit_box" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="true" selection_color="009FFFBF" multi_line="true" font="Arial" horz_formatting="left" vert_formatting="top" rect="600,200,192,64"/>
 			<Object type="FilledRect" color="007F00" rect="32,320,192,160">
 				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
 				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
@@ -56,16 +56,16 @@
 			</Object>
 			<Object type="ToggleButton" name="toggle_button" image="texture/test_green" toggled_image="texture/test_hover_3" rect="60,528,128,64" zorder="100">
 				<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
-				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="0"/>
+				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="false"/>
 			</Object>
 			<Object type="Container" name="slider_container" rect="10,618,800,600">
-				<Object type="ProgressBar" name="progress_bar_slider" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" progress="0.5" direction="right" interactable="1" rect="0,0,128,24">
+				<Object type="ProgressBar" name="progress_bar_slider" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" progress="0.5" direction="right" interactable="true" rect="0,0,128,24">
 					<Animator type="ResizerX" function="sine" periods="-1" amplitude="50"/>
 					<Animator type="ResizerY" function="sine" periods="-1" amplitude="8" timer="0.25"/>
 				</Object>
 			</Object>
 			<Object type="Container" name="scrolltest_container" rect="840,32,128,128">
-				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="1">
+				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="true">
 					<Object type="ToggleButton" name="toggle_button_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,0,256,128" zorder="100"/>
 					<Object type="ToggleButton" name="toggle_button_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,128,256,128" zorder="100">
 						<Animator type="Rotator" periods="-1" speed="30"/>
@@ -79,7 +79,7 @@
 				</Object>
 				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" grid_size="32" rect="0,128,128,16"/>
 			</Object>
-			<Object type="ListBox" name="list_box" item_height="32" allow_drag="1" rect="600,32,192,142">
+			<Object type="ListBox" name="list_box" item_height="32" allow_drag="true" rect="600,32,192,142">
 				<Object type="ListBoxItem" name="list_box_item_0" text="Item 0" effect="border"/>
 				<Object type="ListBoxItem" name="list_box_item_1" text="Item 1" effect="border"/>
 				<Object type="ListBoxItem" name="list_box_item_2" text="Item 2" effect="border"/>
@@ -88,10 +88,10 @@
 				<Object type="ListBoxItem" name="list_box_item_5" text="Item 5" effect="border"/>
 				<Object type="ScrollBarV" name="list_box_scroll_v" rect="192,0,4,142"/>
 			</Object>
-			<Object type="TreeView" name="tree_view" item_height="32" spacing_width="4" allow_drag="1" rect="600,288,384,144">
+			<Object type="TreeView" name="tree_view" item_height="32" spacing_width="4" allow_drag="true" rect="600,288,384,144">
 				<Object type="FilledRect" name="tree_view_back" color="0000007F" rect="0,0,384,144" zorder="-10"/>
 				<Object type="TreeViewNode" name="tree_view_node_0">
-					<Object type="TreeViewExpander" name="tree_view_node_0_expander" image="texture/test_green" toggled_image="texture/test_red" toggled="1"/>
+					<Object type="TreeViewExpander" name="tree_view_node_0_expander" image="texture/test_green" toggled_image="texture/test_red" toggled="true"/>
 					<Object type="TreeViewImage" name="tree_view_node_0_image" image="texture/test"/>
 					<Object type="TreeViewLabel" name="tree_view_node_0_label" text="Node 0" effect="border" horz_formatting="left"/>
 					<Object type="TreeViewNode" name="tree_view_node_0_0">
@@ -125,7 +125,7 @@
 				</Object>
 				<Object type="ScrollBarV" name="tree_view_scroll_v" rect="384,0,4,144"/>
 			</Object>
-			<Object type="GridView" name="grid_view" item_height="32" allow_drag="1" rect="600,448,200,160">
+			<Object type="GridView" name="grid_view" item_height="32" allow_drag="true" rect="600,448,200,160">
 				<Object type="FilledRect" name="grid_view_back" color="0000007F" rect="0,0,200,160" zorder="-10"/>
 				<Object type="GridViewRowTemplate">
 					<Object type="GridViewCell" size="80,32">
@@ -190,12 +190,12 @@
 			</Object>
 			<Object type="ImageBox" name="skinned_image" image="skin_image/test" rect="260,528,192,64"/>
 			<Object type="ProgressBar" name="progress_bar_1" anti_progress_image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
-			<Object type="ProgressBar" name="progress_bar_2" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" stretching="1" direction="up" rect="0,32,16,128">
+			<Object type="ProgressBar" name="progress_bar_2" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" stretching="true" direction="up" rect="0,32,16,128">
 				<Animator type="ProgressChanger" name="progress_animator" function="sine" periods="-1" offset="0.625" amplitude="0.625" speed="0.25" timer="2"/>
 			</Object>
 			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" rect="20,20,64,64"/>
 			<Object type="FilledRect" color="000000" rect="260,360,48,128">
-				<Object type="OptionButton" name="option_button_1" image="texture/test_red" toggled_image="texture/test_green" rect="8,8,32,32" zorder="100" toggled="1"/>
+				<Object type="OptionButton" name="option_button_1" image="texture/test_red" toggled_image="texture/test_green" rect="8,8,32,32" zorder="100" toggled="true"/>
 				<Object type="OptionButton" name="option_button_2" image="texture/test_red" toggled_image="texture/test_green" rect="8,48,32,32" zorder="100"/>
 				<Object type="OptionButton" name="option_button_3" image="texture/test_red" toggled_image="texture/test_green" rect="8,88,32,32" zorder="100"/>
 			</Object>

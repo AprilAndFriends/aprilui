@@ -144,9 +144,9 @@ namespace aprilui
 		bool _ctrlMode;
 		bool _shiftMode;
 		float _blinkTimer;
-		bool _caretPositionDirty;
 		bool _caretDirty;
 		bool _selectionDirty;
+		bool _caretPositionDirty;
 		bool _sizeProblemReported;
 		gvec2 _caretCursorPosition;
 		harray<grect> _selectionRects;

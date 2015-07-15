@@ -56,9 +56,9 @@ namespace aprilui
 		this->_ctrlMode = false;
 		this->_shiftMode = false;
 		this->_blinkTimer = 0.0f;
-		this->_caretPositionDirty = true; // calculates initial value
 		this->_caretDirty = true; // calculates initial value
 		this->_selectionDirty = true; // calculates initial value
+		this->_caretPositionDirty = false; // this is used only for calculation of clicks, should not be calculated initially
 		this->_sizeProblemReported = false;
 	}
 
@@ -82,9 +82,9 @@ namespace aprilui
 		this->_ctrlMode = false;
 		this->_shiftMode = false;
 		this->_blinkTimer = 0.0f;
-		this->_caretPositionDirty = true; // calculates initial value
 		this->_caretDirty = true; // calculates initial value
 		this->_selectionDirty = true; // calculates initial value
+		this->_caretPositionDirty = false; // this is used only for calculation of clicks, should not be calculated initially
 		this->_sizeProblemReported = false;
 	}
 
@@ -279,6 +279,11 @@ namespace aprilui
 		if (this->text == "")
 		{
 			this->setCaretIndex(0);
+			return;
+		}
+		// if caret already dirty, this calculation should be ignored
+		if (this->_caretDirty)
+		{
 			return;
 		}
 		atres::Font* font = atres::renderer->getFont(this->font);
