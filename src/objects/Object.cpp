@@ -302,6 +302,9 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("pivot", PropertyDescription::GVEC2);
 			Object::_propertyDescriptions += PropertyDescription("pivot_x", PropertyDescription::FLOAT);
 			Object::_propertyDescriptions += PropertyDescription("pivot_y", PropertyDescription::FLOAT);
+			Object::_propertyDescriptions += PropertyDescription("center", PropertyDescription::GVEC2); // DEPRECATED
+			Object::_propertyDescriptions += PropertyDescription("center_x", PropertyDescription::FLOAT); // DEPRECATED
+			Object::_propertyDescriptions += PropertyDescription("center_y", PropertyDescription::FLOAT); // DEPRECATED
 			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::BOOL);
 			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::BOOL);
