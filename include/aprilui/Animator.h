@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.1
 /// 
 /// @section LICENSE
 /// 
@@ -52,7 +52,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, multiplier, Multiplier);
 		HL_DEFINE_GETSET(float, acceleration, Acceleration);
 		HL_DEFINE_GETSET(int, discreteStep, DiscreteStep);
-		HL_DEFINE_ISSET(reset, Reset);
+		HL_DEFINE_ISSET(resetOnExpire, ResetOnExpire);
 		HL_DEFINE_ISSET(inheritValue, InheritValue);
 		HL_DEFINE_GETSET(float, target, Target);
 		HL_DEFINE_ISSET(useTarget, UseTarget);
@@ -63,14 +63,19 @@ namespace aprilui
 		bool isWaitingAnimation();
 		bool isExpired();
 		void setTime(float value);
+		/// @note Same as setTimer() but in periods instead of seconds.
+		void setPeriodsTimer(float value);
 
 		harray<PropertyDescription> getPropertyDescriptions();
+
+		/// @note Does not reset delay.
+		void reset();
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
 		void notifyEvent(chstr type, EventArgs* args);
-		
+
 	protected:
 		float timeDelta;
 		float value;
@@ -84,7 +89,7 @@ namespace aprilui
 		float multiplier;
 		float acceleration;
 		int discreteStep;
-		bool reset;
+		bool resetOnExpire;
 		bool inheritValue;
 		float target;
 		bool useTarget;

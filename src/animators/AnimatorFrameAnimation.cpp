@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.1
 /// 
 /// @section LICENSE
 /// 
@@ -120,7 +120,7 @@ namespace aprilui
 				int lastFrame = this->frameCount - 1;
 				if (isExpired() || frame > lastFrame)
 				{
-					frame = (this->reset ? 0 : lastFrame);
+					frame = (this->resetOnExpire ? 0 : lastFrame);
 				}
 				imageBox->trySetImageByName(this->imageBaseName + hstr(this->firstFrame + frame));
 			}

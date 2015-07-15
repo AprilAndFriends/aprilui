@@ -1,5 +1,5 @@
 /// @file
-/// @version 4.0
+/// @version 4.1
 /// 
 /// @section LICENSE
 /// 
@@ -34,7 +34,7 @@ namespace aprilui
 		this->multiplier = 0.0f;
 		this->acceleration = 0.0f;
 		this->discreteStep = 0;
-		this->reset = false;
+		this->resetOnExpire = false;
 		this->inheritValue = false;
 		this->target = 0.0f;
 		this->useTarget = false;
@@ -55,7 +55,7 @@ namespace aprilui
 		this->multiplier = other.multiplier;
 		this->acceleration = other.acceleration;
 		this->discreteStep = other.discreteStep;
-		this->reset = other.reset;
+		this->resetOnExpire = other.resetOnExpire;
 		this->inheritValue = other.inheritValue;
 		this->target = other.target;
 		this->useTarget = other.useTarget;
@@ -82,12 +82,65 @@ namespace aprilui
 			Animator::_propertyDescriptions += PropertyDescription("multiplier", PropertyDescription::FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("acceleration", PropertyDescription::FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("discrete_step", PropertyDescription::INT);
-			Animator::_propertyDescriptions += PropertyDescription("reset", PropertyDescription::BOOL);
+			Animator::_propertyDescriptions += PropertyDescription("reset_on_expire", PropertyDescription::BOOL);
 			Animator::_propertyDescriptions += PropertyDescription("inherit_value", PropertyDescription::BOOL);
 			Animator::_propertyDescriptions += PropertyDescription("target", PropertyDescription::FLOAT);
 			Animator::_propertyDescriptions += PropertyDescription("time", PropertyDescription::FLOAT);
 		}
 		return (BaseObject::getPropertyDescriptions() + Animator::_propertyDescriptions);
+	}
+
+	bool Animator::isAnimated()
+	{
+		if (!this->enabled)
+		{
+			return false;
+		}
+		if (this->delay > 0.0f)
+		{
+			return false;
+		}
+		if (this->isExpired())
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	bool Animator::isWaitingAnimation()
+	{
+		if (!this->enabled)
+		{
+			return false;
+		}
+		if (this->isExpired())
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	bool Animator::isExpired()
+	{
+		return (!this->enabled || this->periods >= 0.0f && this->timer * habs(this->speed) >= this->periods);
+	}
+	
+	void Animator::setTime(float value)
+	{
+		if (value > 0.0f)
+		{
+			this->speed = 1.0f / value;
+		}
+		else
+		{
+			hlog::warn(logTag, "Cannot set \"time\" to 0 or less.");
+		}
+	}
+
+	/// @note Same as setTimer() but in periods instead of seconds.
+	void Animator::setPeriodsTimer(float value)
+	{
+		this->timer = value / this->speed;
 	}
 
 	void Animator::_update(float timeDelta)
@@ -119,7 +172,7 @@ namespace aprilui
 			this->notifyEvent(Event::AnimationExpired, NULL);
 		}
 	}
-	
+
 	bool Animator::_checkUpdate(float timeDelta)
 	{
 		float delay = this->delay;
@@ -127,7 +180,7 @@ namespace aprilui
 		Animator::_update(timeDelta);
 		return (animated || this->isAnimated() || delay > 0.0f && this->delay <= 0.0f);
 	}
-	
+
 	float Animator::_calculateValue(float timeDelta)
 	{
 		if (this->delay > 0.0f)
@@ -137,7 +190,7 @@ namespace aprilui
 		float time = this->timer;
 		if (this->isExpired())
 		{
-			if (this->reset)
+			if (this->resetOnExpire)
 			{
 				return (this->discreteStep != 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
 			}
@@ -188,52 +241,11 @@ namespace aprilui
 		}
 		return (result * (1.0f + time * habs(this->speed) * this->multiplier) + this->offset);
 	}
-	
-	bool Animator::isAnimated()
+
+	void Animator::reset()
 	{
-		if (!this->enabled)
-		{
-			return false;
-		}
-		if (this->delay > 0.0f)
-		{
-			return false;
-		}
-		if (this->isExpired())
-		{
-			return false;
-		}
-		return true;
-	}
-	
-	bool Animator::isWaitingAnimation()
-	{
-		if (!this->enabled)
-		{
-			return false;
-		}
-		if (this->isExpired())
-		{
-			return false;
-		}
-		return true;
-	}
-	
-	bool Animator::isExpired()
-	{
-		return (!this->enabled || this->periods >= 0.0f && this->timer * habs(this->speed) >= this->periods);
-	}
-	
-	void Animator::setTime(float value)
-	{
-		if (value > 0.0f)
-		{
-			this->speed = 1.0f / value;
-		}
-		else
-		{
-			hlog::warn(logTag, "Cannot set \"time\" to 0 or less.");
-		}
+		this->timer = 0.0f;
+		this->update(0.0f);
 	}
 	
 	hstr Animator::getProperty(chstr name)
@@ -258,7 +270,12 @@ namespace aprilui
 		if (name == "multiplier")		return this->getMultiplier();
 		if (name == "acceleration")		return this->getAcceleration();
 		if (name == "discrete_step")	return this->getDiscreteStep();
-		if (name == "reset")			return this->isReset();
+		if (name == "reset_on_expire")	return this->isResetOnExpire();
+		if (name == "reset")
+		{
+			hlog::warn(logTag, "'reset' is deprecated. Use 'reset_on_expire' instead."); // DEPRECATED
+			return this->isResetOnExpire();
+		}
 		if (name == "inherit_value")	return this->isInheritValue();
 		// derived values
 		if	(name == "target")			return this->getTarget();
@@ -292,7 +309,12 @@ namespace aprilui
 		else if	(name == "multiplier")		this->setMultiplier(value);
 		else if	(name == "acceleration")	this->setAcceleration(value);
 		else if	(name == "discrete_step")	this->setDiscreteStep(value);
-		else if	(name == "reset")			this->setReset(value);
+		else if (name == "reset_on_expire")	this->setResetOnExpire(value);
+		else if (name == "reset")
+		{
+			hlog::warn(logTag, "'reset=' is deprecated. Use 'reset_on_expire=' instead."); // DEPRECATED
+			this->setResetOnExpire(value);
+		}
 		else if	(name == "inherit_value")	this->setInheritValue(value);
 		// derived values
 		else if	(name == "target")
