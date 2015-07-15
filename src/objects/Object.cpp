@@ -1831,36 +1831,58 @@ namespace aprilui
 	DEFINE_DYNAMIC_ANIMATE(animateAlpha, AlphaChanger);
 	DEFINE_DYNAMIC_ANIMATE(animateZOrder, ZOrderChanger);
 
-	void Object::animatePosition(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
+	harray<Animator*> Object::animatePosition(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
 	{
+		harray<Animator*> result;
 		CREATE_DYNAMIC_ANIMATE(MoverX);
 		CREATE_DYNAMIC_ANIMATE(MoverY);
+		result += animatorMoverX;
+		result += animatorMoverY;
+		return result;
 	}
 
-	void Object::animateScale(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
+	harray<Animator*> Object::animateScale(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
 	{
+		harray<Animator*> result;
 		CREATE_DYNAMIC_ANIMATE(ScalerX);
 		CREATE_DYNAMIC_ANIMATE(ScalerY);
+		result += animatorScalerX;
+		result += animatorScalerY;
+		return result;
 	}
 
-	void Object::animateSize(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
+	harray<Animator*> Object::animateSize(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
 	{
+		harray<Animator*> result;
 		CREATE_DYNAMIC_ANIMATE(ResizerX);
 		CREATE_DYNAMIC_ANIMATE(ResizerY);
+		result += animatorResizerX;
+		result += animatorResizerY;
+		return result;
 	}
 
-	void Object::animateCenter(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
+	harray<Animator*> Object::animateCenter(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
 	{
+		harray<Animator*> result;
 		CREATE_DYNAMIC_ANIMATE(CenterMoverX);
 		CREATE_DYNAMIC_ANIMATE(CenterMoverY);
+		result += animatorCenterMoverX;
+		result += animatorCenterMoverY;
+		return result;
 	}
 
-	void Object::animateColor(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
+	harray<Animator*> Object::animateColor(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay)
 	{
+		harray<Animator*> result;
 		CREATE_DYNAMIC_ANIMATE(RedChanger);
 		CREATE_DYNAMIC_ANIMATE(GreenChanger);
 		CREATE_DYNAMIC_ANIMATE(BlueChanger);
 		CREATE_DYNAMIC_ANIMATE(AlphaChanger);
+		result += animatorRedChanger;
+		result += animatorGreenChanger;
+		result += animatorBlueChanger;
+		result += animatorAlphaChanger;
+		return result;
 	}
 
 	void Object::moveXStop()
