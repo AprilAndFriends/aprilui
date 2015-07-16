@@ -1501,11 +1501,7 @@ namespace aprilui
 
 	april::Color Object::_makeDrawColor()
 	{
-		float alpha = (float)this->color.a;
-		if (this->inheritAlpha)
-		{
-			alpha *= this->getDerivedAlpha() / 255.0f;
-		}
+		float alpha = (float)(this->inheritAlpha ? this->getDerivedAlpha() : this->color.a);
 		if (this->useDisabledAlpha && !this->isDerivedEnabled())
 		{
 			alpha *= 0.5f;
