@@ -126,7 +126,7 @@
 #define DEFINE_ANIMATOR_F_DELAYED(functionName, animatorName) \
 	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay) \
 	{ \
-		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods); \
+		CREATE_DELAYED_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods, delay); \
 		return animator ## animatorName; \
 	}
 

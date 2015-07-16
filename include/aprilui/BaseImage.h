@@ -26,6 +26,7 @@
 namespace aprilui
 {
 	class Dataset;
+	class Texture;
 
 	class apriluiExport BaseImage : public Cloneable
 	{
@@ -72,6 +73,8 @@ namespace aprilui
 
 		virtual void draw(grect rect, april::Color color = april::Color::White) = 0;
 		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White) = 0;
+
+		static harray<Texture*> findTextures(harray<BaseImage*> baseImages);
 
 	protected:
 		hstr name;

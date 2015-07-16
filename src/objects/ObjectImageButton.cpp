@@ -85,11 +85,14 @@ namespace aprilui
 
 	void ImageButton::_draw()
 	{
-		grect rect = this->_makeDrawRect();
+		grect drawRect = this->_makeDrawRect();
 		bool enabled = this->isDerivedEnabled();
 		if (!enabled && this->disabledImage != NULL)
 		{
-			this->disabledImage->draw(rect, this->_makeDrawColor());
+			bool useDisabledAlpha = this->useDisabledAlpha;
+			this->useDisabledAlpha = false;
+			this->disabledImage->draw(drawRect, this->_makeDrawColor());
+			this->useDisabledAlpha = useDisabledAlpha;
 			return;
 		}
 		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
@@ -98,7 +101,11 @@ namespace aprilui
 		{
 			if (this->image != NULL)
 			{
-				this->image->draw(rect, april::Color(this->_makeDrawColor() * 0.75f, this->getDerivedAlpha()));
+				april::Color drawColor = this->_makeDrawColor();
+				drawColor.r = (unsigned char)(drawColor.r * 0.75f);
+				drawColor.g = (unsigned char)(drawColor.g * 0.75f);
+				drawColor.b = (unsigned char)(drawColor.b * 0.75f);
+				this->image->draw(drawRect, drawColor);
 			}
 			return;
 		}
@@ -111,9 +118,11 @@ namespace aprilui
 				Image* blendableImage = dynamic_cast<Image*>(this->image);
 				if (blendableImage != NULL)
 				{
+					april::Color drawColor = this->_makeDrawColor();
+					drawColor.a = (unsigned char)(drawColor.a * 0.25f);
 					april::BlendMode blendMode = blendableImage->getBlendMode();
 					blendableImage->setBlendMode(april::BM_ADD);
-					blendableImage->draw(rect, april::Color(this->_makeDrawColor(), this->getDerivedAlpha() / 4));
+					blendableImage->draw(drawRect, drawColor);
 					blendableImage->setBlendMode(blendMode);
 				}
 			}

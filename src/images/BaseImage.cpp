@@ -6,11 +6,16 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#include "BaseImage.h"
 #include "Dataset.h"
+#include "Images.h"
 
 namespace aprilui
 {
+	static Texture* _map_getTexture(Image* image)
+	{
+		return image->getTexture();
+	}
+
 	harray<PropertyDescription> BaseImage::_propertyDescriptions;
 
 	BaseImage::BaseImage(chstr name) : Cloneable()
@@ -189,6 +194,44 @@ namespace aprilui
 		else if (name == "clip_h")			this->setClipHeight(value);
 		else return false;
 		return true;
+	}
+
+	harray<Texture*> BaseImage::findTextures(harray<BaseImage*> baseImages)
+	{
+		baseImages.removeAll(NULL);
+		baseImages.removedDuplicates();
+		// get all images from composite images
+		harray<Image*> images = baseImages.dynamicCast<Image*>();
+		harray<CompositeImage*> compositeImages = baseImages.dynamicCast<CompositeImage*>();
+		harray<CompositeImage::ImageRef> imageRefs;
+		CompositeImage* compositeImage = NULL;
+		harray<BaseImage*> newImages;
+		while (compositeImages.size() > 0)
+		{
+			compositeImage = compositeImages.removeFirst();
+			imageRefs = compositeImage->getImages();
+			foreach (CompositeImage::ImageRef, it2, imageRefs)
+			{
+				compositeImage = dynamic_cast<CompositeImage*>((*it2).first);
+				if (compositeImage != NULL)
+				{
+					compositeImages |= compositeImage;
+				}
+				else
+				{
+					newImages += (*it2).first;
+				}
+			}
+		}
+		newImages.removeDuplicates();
+		// will filter out all actual images
+		images += newImages.dynamicCast<Image*>();
+		images.removeDuplicates();
+		// get all textures
+		harray<Texture*> textures = images.mapped(&_map_getTexture);
+		textures.removeAll(NULL);
+		textures.removeDuplicates();
+		return textures;
 	}
 
 }
