@@ -41,7 +41,6 @@
 		7F38C6D8120967B9002B5134 /* ObjectToggleButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */; };
 		7F38C728120967CC002B5134 /* AnimatorFrameAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */; };
 		7F38C72A120967CC002B5134 /* AnimatorRotator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F38C720120967CC002B5134 /* AnimatorRotator.cpp */; };
-		7F7A4A96129D217700E0ED12 /* NullImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A8F129D217700E0ED12 /* NullImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F7A4A97129D217700E0ED12 /* Images.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A90129D217700E0ED12 /* Images.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F7A4A98129D217700E0ED12 /* CompositeImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7A4A91129D217700E0ED12 /* CompositeImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F7A4AA7129D21A300E0ED12 /* CompositeImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */; };
@@ -351,7 +350,6 @@
 		7F38C6C8120967B9002B5134 /* ObjectToggleButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectToggleButton.cpp; sourceTree = "<group>"; };
 		7F38C71E120967CC002B5134 /* AnimatorFrameAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorFrameAnimation.cpp; sourceTree = "<group>"; };
 		7F38C720120967CC002B5134 /* AnimatorRotator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorRotator.cpp; sourceTree = "<group>"; };
-		7F7A4A8F129D217700E0ED12 /* NullImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NullImage.h; path = include/aprilui/NullImage.h; sourceTree = "<group>"; };
 		7F7A4A90129D217700E0ED12 /* Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Images.h; path = include/aprilui/Images.h; sourceTree = "<group>"; };
 		7F7A4A91129D217700E0ED12 /* CompositeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompositeImage.h; path = include/aprilui/CompositeImage.h; sourceTree = "<group>"; };
 		7F7A4AA1129D21A300E0ED12 /* CompositeImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompositeImage.cpp; sourceTree = "<group>"; };
@@ -782,7 +780,6 @@
 				7FC8041A11EC721E00851062 /* Image.h */,
 				7F7A4A90129D217700E0ED12 /* Images.h */,
 				7F7A4A91129D217700E0ED12 /* CompositeImage.h */,
-				7F7A4A8F129D217700E0ED12 /* NullImage.h */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -826,7 +823,6 @@
 				7F38C6B812096793002B5134 /* ObjectToggleButton.h in Headers */,
 				7FB0C7B1120AE117005EA739 /* Object.h in Headers */,
 				7F33B208120FE2D5004B5E89 /* Animator.h in Headers */,
-				7F7A4A96129D217700E0ED12 /* NullImage.h in Headers */,
 				7F7A4A97129D217700E0ED12 /* Images.h in Headers */,
 				7F7A4A98129D217700E0ED12 /* CompositeImage.h in Headers */,
 				7FA3014612B647E200F71E5E /* AnimatorAlphaChanger.h in Headers */,
