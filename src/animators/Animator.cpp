@@ -203,7 +203,10 @@ namespace aprilui
 			result = time * this->speed * this->amplitude;
 			break;
 		case Sine:
-			result = (float)dsin(time * this->speed * 360) * this->amplitude;
+			result = (float)dsin(time * this->speed * 360.0f) * this->amplitude;
+			break;
+		case SineAbs:
+			result = (float)habs(dsin(time * this->speed * 360.0f)) * this->amplitude;
 			break;
 		case Square:
 			result = (hmodf(time * this->speed, 1.0f) < 0.5f ? this->amplitude : -this->amplitude);
@@ -253,6 +256,7 @@ namespace aprilui
 		if (name == "function" || name == "func")
 		{
 			if (this->animationFunction == Sine)		return "sine";
+			if (this->animationFunction == SineAbs)		return "sine_abs";
 			if (this->animationFunction == Saw)			return "saw";
 			if (this->animationFunction == Square)		return "square";
 			if (this->animationFunction == Triangle)	return "triangle";
@@ -287,8 +291,9 @@ namespace aprilui
 		if		(name == "function" || name == "func")
 		{
 			if		(value == "sine")		this->setAnimationFunction(Sine);
-			else if	(value == "saw")		this->setAnimationFunction(Saw);
-			else if	(value == "square")		this->setAnimationFunction(Square);
+			else if (value == "sine_abs")	this->setAnimationFunction(SineAbs);
+			else if (value == "saw")		this->setAnimationFunction(Saw);
+			else if (value == "square")		this->setAnimationFunction(Square);
 			else if	(value == "triangle")	this->setAnimationFunction(Triangle);
 			else if	(value == "linear")		this->setAnimationFunction(Linear);
 			else if (value == "noise")		this->setAnimationFunction(Noise);

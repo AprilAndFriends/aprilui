@@ -28,6 +28,7 @@ namespace aprilui
 		{
 			Linear,
 			Sine,
+			SineAbs,
 			Square,
 			Saw,
 			Triangle,
