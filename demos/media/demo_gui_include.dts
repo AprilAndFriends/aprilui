@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<Dataset>
+	
+	<Object type="TextImageButton" name="text_image_button" text_key="PUSH_ME_KEY" effect="border" image="texture/test" hover_image="texture/test_hover_2" pushed_image="texture/test_blue" rect="50,20,128,64" angle="10" pivot="-100,-100">
+		<Animator type="RedChanger" name="text_image_button_red" function="sine" periods="-1" amplitude="64" speed="1" offset="191" timer="1.333333"/>
+		<Animator type="GreenChanger" name="text_image_button_green" function="sine" periods="-1" amplitude="64" speed="1.2" offset="191" timer="0.6666667"/>
+		<Animator type="BlueChanger" name="text_image_button_blue" function="sine" periods="-1" amplitude="64" speed="1.4" offset="191"/>
+	</Object>
+	
+</Dataset>

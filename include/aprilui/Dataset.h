@@ -207,8 +207,8 @@ namespace aprilui
 
 		void parseGlobalInclude(chstr path);
 		void parseGlobalIncludeFile(chstr filename);
-		void parseObjectInclude(chstr path, Object* object, chstr namePrefix, chstr nameSuffix, gvec2 offset);
-		void parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
 	protected:
 		struct QueuedCallback

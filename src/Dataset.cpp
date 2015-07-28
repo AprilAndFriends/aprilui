@@ -502,9 +502,8 @@ namespace aprilui
 
 	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
-		hstr className;
 		hstr objectName;
-		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
+		hlxml::Node::Type type;
 		if (*node == "Include")
 		{
 			gvec2 offset;
@@ -516,11 +515,59 @@ namespace aprilui
 			{
 				offset.set(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
 			}
-			this->parseObjectInclude(hrdir::joinPath(this->filePath, node->pstr("path"), false), parent,
-				node->pstr("name_prefix", "") + namePrefix, nameSuffix + node->pstr("name_suffix", ""), offset);
-			return NULL;
+			hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
+			hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
+			hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
+			BaseObject* includeRoot = this->parseObjectInclude(path, parent, newNamePrefix, newNameSuffix, offset);
+			BaseObject* descendant = NULL;
+			hstr typeName;
+			foreach_xmlnode (child, node)
+			{
+				if (*child == "Property")
+				{
+					type = child->getType();
+					if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
+					{
+						objectName = child->pstr("object", "");
+						typeName = child->pstr("type", "");
+						if (objectName != "")
+						{
+							objectName = newNamePrefix + objectName + newNameSuffix;
+							descendant = (includeRoot->getName() == objectName ? includeRoot : includeRoot->findDescendantByName(objectName));
+							if (descendant != NULL)
+							{
+								if (typeName == "" || descendant->getClassName() == typeName)
+								{
+									foreach_xmlproperty (prop, child)
+									{
+										if (prop->name() != "object")
+										{
+											descendant->setProperty(prop->name(), prop->value());
+										}
+									}
+								}
+								else if (typeName != "")
+								{
+									hlog::errorf(logTag, "Found object '%s' in '%s', but found type '%s' instead of expected type '%s'!",
+										objectName.cStr(), path.cStr(), descendant->getClassName().cStr(), typeName.cStr());
+								}
+							}
+							else
+							{
+								hlog::errorf(logTag, "Could not find object '%s' in '%s'!", objectName.cStr(), path.cStr());
+							}
+						}
+						else
+						{
+							hlog::errorf(logTag, "No object specified for property in '%s'!", path.cStr());
+						}
+					}
+				}
+			}
+			return includeRoot;
 		}
-		className = node->pstr("type");
+		hstr className = node->pstr("type");
+		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
 		if (*node == "Object" || *node == "Animator")
 		{
 			if (node->pexists("name"))
@@ -611,7 +658,6 @@ namespace aprilui
 		}
 		if (object != NULL)
 		{
-			hlxml::Node::Type type;
 			foreach_xmlnode (child, node)
 			{
 				type = child->getType();
@@ -655,28 +701,37 @@ namespace aprilui
 		this->filePath = originalFilePath;
 	}
 	
-	void Dataset::parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
 		hlog::write(logTag, "Parsing object include file: " + path);
 		hlxml::Document* doc = this->_openDocument(path);
 		hlxml::Node* current = doc->root();
+		BaseObject* root = NULL;
 		foreach_xmlnode (node, current)
 		{
 			if (*node == "Object" || *node == "Animator")
 			{
-				this->recursiveObjectParse(node, parent, namePrefix, nameSuffix, offset);
+				if (root == NULL)
+				{
+					root = this->recursiveObjectParse(node, parent, namePrefix, nameSuffix, offset);
+				}
+				else
+				{
+					hlog::errorf(logTag, "Detected multiple roots in '%s'. Ignoring other root objects.", path.cStr());
+					break;
+				}
 			}
 		}
+		return root;
 	}
 	
-	void Dataset::parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		if (!path.contains("*"))
 		{
-			this->parseObjectIncludeFile(path, parent, namePrefix, nameSuffix, offset);
-			return;
+			return this->parseObjectIncludeFile(path, parent, namePrefix, nameSuffix, offset);
 		}
 		hstr baseDir = hrdir::baseDir(path);
 		hstr filename = path(baseDir.size() + 1, -1);
@@ -691,6 +746,7 @@ namespace aprilui
 				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, "", "", gvec2());
 			}
 		}
+		return NULL; // since multiple files are loaded, no object is returned
 	}
 	
 	hlxml::Document* Dataset::_openDocument(chstr filename)
