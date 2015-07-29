@@ -546,15 +546,21 @@ namespace aprilui
 											{
 												descendant->setProperty(prop->name(), prop->value());
 											}
-											else if (!this->hasObject(prop->value()))
-											{
-												descendant->setName(prop->value());
-											}
 											else
-											{
-												hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
-													prop->value().cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
-											}
+                                            {
+                                                hstr newName = newNamePrefix + prop->value() + newNameSuffix;
+                                                if (!this->hasObject(newName))
+                                                {
+                                                    this->unregisterObjects(descendant);
+                                                    descendant->setName(newName);
+                                                    this->registerObjects(descendant);
+                                                }
+                                                else
+                                                {
+                                                    hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
+                                                        prop->value().cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
+                                                }
+                                            }
 										}
 									}
 								}
