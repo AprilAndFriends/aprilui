@@ -950,7 +950,7 @@ namespace aprilui
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
 			atres::Font* font = atres::renderer->getFont(this->font);
-			if (font != NULL && font->hasChar(charCode) && (this->filter.size() == 0 || this->filter.uStr().find_first_of(charCode) != std::string::npos))
+			if (font != NULL && font->hasCharacter(charCode) && (this->filter.size() == 0 || this->filter.uStr().find_first_of(charCode) != std::string::npos))
 			{
 				this->_insertChar(charCode);
 			}
