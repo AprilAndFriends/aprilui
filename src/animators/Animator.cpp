@@ -194,7 +194,12 @@ namespace aprilui
 			{
 				return (this->discreteStep != 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
 			}
-			time = this->periods / habs(this->speed);
+			// speed being 0 does not affect calculations in general, because time is multiplied with speed in each implementation
+			// so time can be "undefined" (which is in this case simply the previous value of this->timer)
+			if (this->speed != 0.0f)
+			{
+				time = this->periods / habs(this->speed);
+			}
 		}
 		float result = 0.0f;
 		switch (this->animationFunction)
