@@ -89,6 +89,21 @@ namespace aprilui
 		}
 		return (BaseObject::getPropertyDescriptions() + Animator::_propertyDescriptions);
 	}
+	
+	void Animator::setDelay(float value)
+	{
+		this->delay = hmax(value, 0.0f);
+	}
+	
+	void Animator::setSpeed(float value)
+	{
+		this->speed = hmax(value, 0.000001f);
+	}
+	
+	void Animator::setDiscreteStep(int value)
+	{
+		this->discreteStep = hmax(value, 0);
+	}
 
 	bool Animator::isAnimated()
 	{
@@ -165,7 +180,7 @@ namespace aprilui
 		this->timer += this->timeDelta;
 		if (!heqf(this->acceleration, 0.0f, (float)HL_E_TOLERANCE))
 		{
-			this->speed += this->acceleration * this->timeDelta;
+			this->speed = hmax(this->speed + this->acceleration * this->timeDelta, 0.0f);
 		}
 		if (!expired && this->isExpired())
 		{
@@ -185,14 +200,14 @@ namespace aprilui
 	{
 		if (this->delay > 0.0f)
 		{
-			return (this->discreteStep != 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
+			return (this->discreteStep > 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
 		}
 		float time = this->timer;
 		if (this->isExpired())
 		{
 			if (this->resetOnExpire)
 			{
-				return (this->discreteStep != 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
+				return (this->discreteStep > 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
 			}
 			// speed being 0 does not affect calculations in general, because time is multiplied with speed in each implementation
 			// so time can be "undefined" (which is in this case simply the previous value of this->timer)
@@ -244,7 +259,7 @@ namespace aprilui
 			break;
 		}
 		result *= 1.0f + time * habs(this->speed) * this->multiplier;
-		return (this->discreteStep != 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
+		return (this->discreteStep > 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
 	}
 
 	void Animator::reset()
