@@ -238,11 +238,8 @@ namespace aprilui
 			}
 			break;
 		}
-		if (this->discreteStep != 0)
-		{
-			return (hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep);
-		}
-		return (result * (1.0f + time * habs(this->speed) * this->multiplier) + this->offset);
+		result *= 1.0f + time * habs(this->speed) * this->multiplier;
+		return (this->discreteStep != 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
 	}
 
 	void Animator::reset()
