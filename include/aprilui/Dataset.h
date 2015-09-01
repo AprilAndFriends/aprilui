@@ -79,12 +79,12 @@ namespace aprilui
 		harray<int> findPossibleFocusIndices(bool strict = false);
 		harray<int> findAllFocusIndices();
 		
-		template <class T>
+		template <typename T>
 		inline hmap<hstr, T> getObjectsByType()
 		{
 			return this->objects.dynamicCastValues<hstr, T>();
 		}
-		template <class T>
+		template <typename T>
 		inline hmap<hstr, T> getAnimatorsByType()
 		{
 			return this->animators.dynamicCastValues<hstr, T>();
@@ -137,7 +137,7 @@ namespace aprilui
 		Object* tryGetObject(chstr name);
 		Animator* tryGetAnimator(chstr name);
 
-		template <class T>
+		template <typename T>
 		inline T getObject(chstr name)
 		{
 			T object = dynamic_cast<T>(this->getObject(name));
@@ -147,12 +147,12 @@ namespace aprilui
 			}
 			return object;
 		}
-		template <class T>
+		template <typename T>
 		inline void getObject(chstr name, T& out)
 		{
 			out = this->getObject<T>(name);
 		}
-		template <class T>
+		template <typename T>
 		inline T tryGetObject(chstr name)
 		{
 			T object = dynamic_cast<T>(this->tryGetObject(name));
@@ -162,13 +162,13 @@ namespace aprilui
 			}
 			return object;
 		}
-		template <class T>
+		template <typename T>
 		inline void tryGetObject(chstr name, T& out)
 		{
 			out = this->tryGetObject<T>(name);
 		}
 
-		template <class T>
+		template <typename T>
 		inline T getAnimator(chstr name)
 		{
 			T animator = dynamic_cast<T>(this->getAnimator(name));
@@ -178,12 +178,12 @@ namespace aprilui
 			}
 			return animator;
 		}
-		template <class T>
+		template <typename T>
 		inline void getAnimator(chstr name, T& out)
 		{
 			out = this->getAnimator<T>(name);
 		}
-		template <class T>
+		template <typename T>
 		inline T tryGetAnimator(chstr name)
 		{
 			T animator = dynamic_cast<T>(this->tryGetAnimator(name));
@@ -193,7 +193,7 @@ namespace aprilui
 			}
 			return animator;
 		}
-		template <class T>
+		template <typename T>
 		inline void tryGetAnimator(chstr name, T& out)
 		{
 			out = this->tryGetAnimator<T>(name);
