@@ -1406,19 +1406,18 @@ namespace aprilui
 			return; // optimizations, callback queue is often empty.
 		}
 		// remove all instances of the given event
-		harray<int> removeList;
-		for_iter (i, 0, this->callbackQueue.size())
+		harray<Event*> removeList;
+		foreach (Event*, it, this->callbackQueue)
 		{
-			if (this->callbackQueue[i].event == event)
+			if ((*it).event == event)
 			{
-				removeList += i;
+				removeList += (*it);
 			}
 		}
-		removeList.sort();
-		removeList.reverse();
-		foreach (int, it, removeList)
+		this->callbackQueue -= removeList;
+		foreach (Event*, it, removeList)
 		{
-			delete this->callbackQueue.removeAt(*it).args;
+			delete (*it).args;
 		}
 	}
 	
