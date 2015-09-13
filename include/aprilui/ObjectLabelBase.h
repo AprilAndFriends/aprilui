@@ -50,7 +50,9 @@ namespace aprilui
 		HL_DEFINE_GETSET(atres::Alignment, vertFormatting, VertFormatting);
 		HL_DEFINE_GETSET(atres::Effect, fontEffect, FontEffect);
 		HL_DEFINE_ISSET(useFontEffectColor, UseFontEffectColor);
+		HL_DEFINE_ISSET(useFontEffectParameter, UseFontEffectParameter);
 		HL_DEFINE_GETSET(april::Color, fontEffectColor, FontEffectColor);
+		HL_DEFINE_GETSET(hstr, fontEffectParameter, FontEffectParameter);
 		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
 		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 
@@ -82,7 +84,9 @@ namespace aprilui
 		atres::Alignment vertFormatting;
 		atres::Effect fontEffect;
 		bool useFontEffectColor;
+		bool useFontEffectParameter;
 		april::Color fontEffectColor;
+		hstr fontEffectParameter;
 		april::Color backgroundColor;
 		bool backgroundBorder;
 

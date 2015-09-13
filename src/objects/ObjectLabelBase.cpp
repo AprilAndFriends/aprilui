@@ -37,6 +37,7 @@ namespace aprilui
 		this->vertFormatting = atres::CENTER;
 		this->fontEffect = atres::NONE;
 		this->useFontEffectColor = false;
+		this->useFontEffectParameter = false;
 		this->fontEffectColor = april::Color::Black;
 		this->backgroundColor = april::Color::Clear;
 		this->backgroundBorder = true;
@@ -54,7 +55,9 @@ namespace aprilui
 		this->vertFormatting = other.vertFormatting;
 		this->fontEffect = other.fontEffect;
 		this->useFontEffectColor = other.useFontEffectColor;
+		this->useFontEffectParameter = other.useFontEffectParameter;
 		this->fontEffectColor = other.fontEffectColor;
+		this->fontEffectParameter = other.fontEffectParameter;
 		this->backgroundColor = other.backgroundColor;
 		this->backgroundBorder = other.backgroundBorder;
 	}
@@ -115,7 +118,15 @@ namespace aprilui
 		hstr colorCode = "";
 		if (this->useFontEffectColor)
 		{
-			colorCode += ":" + this->fontEffectColor.hex();
+			colorCode += this->fontEffectColor.hex();
+		}
+		if (this->useFontEffectParameter)
+		{
+			colorCode += "," + this->fontEffectParameter;
+		}
+		if (colorCode != "")
+		{
+			colorCode = ":" + colorCode;
 		}
 		switch (this->fontEffect)
 		{
@@ -162,6 +173,14 @@ namespace aprilui
 			if (this->useFontEffectColor)
 			{
 				effect += ":" + this->fontEffectColor.hex();
+				if (this->useFontEffectParameter)
+				{
+					effect += "," + this->fontEffectParameter;
+				}
+			}
+			else if (this->useFontEffectParameter)
+			{
+				effect += ":," + this->fontEffectParameter;
 			}
 			return effect;
 		}
@@ -209,7 +228,7 @@ namespace aprilui
 		{
 			this->setFontEffect(atres::NONE);
 			this->setUseFontEffectColor(false);
-			harray<hstr> values = value.split(":", -1, true);
+			harray<hstr> values = value.split(":", 1, true);
 			if (values.size() > 0)
 			{
 				if (values[0] == "none")		this->setFontEffect(atres::NONE);
@@ -222,15 +241,21 @@ namespace aprilui
 				}
 				if (values.size() > 1)
 				{
-					if (values[1].isHex() && (values[1].size() == 6 || values[1].size() == 8))
+					values = values[1].split(",", 1);
+					if (values[0].isHex() && (values[0].size() == 6 || values[0].size() == 8))
 					{
 						this->setUseFontEffectColor(true);
-						this->setFontEffectColor(values[1]);
+						this->setFontEffectColor(values[0]);
 					}
-					else
+					else if (values[0] != "")
 					{
-						hlog::warn(logTag, "'effect=' is using invalid color modifier '" + values[1] + "'.");
+						hlog::warn(logTag, "'effect=' is using invalid color modifier '" + values[0] + "'.");
 						return false;
+					}
+					if (values.size() > 1)
+					{
+						this->setUseFontEffectParameter(true);
+						this->setFontEffectParameter(values[1]);
 					}
 				}
 			}
