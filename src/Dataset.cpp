@@ -1615,7 +1615,7 @@ namespace aprilui
 		// preprocessing of format string and args
 		int index;
 		ustr uArg;
-		harray<int> indexes;
+		harray<int> indices;
 		while (uFormat.size() > 0)
 		{
 			index = (int)uFormat.find_first_of('%');
@@ -1657,16 +1657,16 @@ namespace aprilui
 				uArg = uArgs.removeFirst();
 				uPreprocessedFormat += uFormat.substr(0, index) + uArg;
 				uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
-				if (!this->_getCompositeTextKeyFormatIndexes(uArg, indexes))
+				if (!this->_getCompositeTextKeyFormatIndices(uArg, indices))
 				{
 					return false;
 				}
-				if (indexes.size() > uArgs.size())
+				if (indices.size() > uArgs.size())
 				{
 					hlog::error(logTag, "Not enough args!");
 					return false;
 				}
-				uPreprocessedArgs += uArgs.removeFirst(indexes.size());
+				uPreprocessedArgs += uArgs.removeFirst(indices.size());
 			}
 		}
 		uPreprocessedArgs += uArgs; // remaining args
@@ -1678,22 +1678,22 @@ namespace aprilui
 		result = "";
 		ustr uResult;
 		// preprocessing of format string and args
-		harray<int> indexes;
-		if (!this->_getCompositeTextKeyFormatIndexes(uFormat, indexes))
+		harray<int> indices;
+		if (!this->_getCompositeTextKeyFormatIndices(uFormat, indices))
 		{
 			return false;
 		}
-		if (uArgs.size() < indexes.size())
+		if (uArgs.size() < indices.size())
 		{
 			hlog::error(logTag, "Not enough args!");
 			return false;
 		}
-		if (indexes.size() > uArgs.size())
+		if (indices.size() > uArgs.size())
 		{
 			hlog::error(logTag, "Too many args!");
 			return false;
 		}
-		foreach (int, it, indexes)
+		foreach (int, it, indices)
 		{
 			uResult += uFormat.substr(0, (*it));
 			uResult += uArgs.removeFirst();
@@ -1713,10 +1713,10 @@ namespace aprilui
 		return true;
 	}
 
-	bool Dataset::_getCompositeTextKeyFormatIndexes(ustr uFormat, harray<int>& indexes)
+	bool Dataset::_getCompositeTextKeyFormatIndices(ustr uFormat, harray<int>& indices)
 	{
-		indexes.clear();
-		// finding formatting indexes
+		indices.clear();
+		// finding formatting indices
 		int index;
 		int currentIndex = 0;
 		while (uFormat.size() > 0)
@@ -1742,7 +1742,7 @@ namespace aprilui
 				hlog::errorf(logTag, "Unsupported formatting '%%%c'!", uFormat[index + 1]);
 				return false;
 			}
-			indexes += currentIndex + index;
+			indices += currentIndex + index;
 			uFormat = uFormat.substr(index + 2, uFormat.size() - index - 2);
 			currentIndex = 0;
 		}
