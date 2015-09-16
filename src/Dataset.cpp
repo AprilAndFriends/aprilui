@@ -1232,7 +1232,7 @@ namespace aprilui
 			{
 				throw ObjectNotExistsException("Image", name, this->name);
 			}
-			Dataset* dataset;
+			Dataset* dataset = NULL;
 			try
 			{
 				dataset = aprilui::getDatasetByName(name(0, dot));
