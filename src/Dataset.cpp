@@ -801,11 +801,11 @@ namespace aprilui
 		this->parseExternalXMLNode(current);
 		foreach_xmlnode (node, current)
 		{
-			if		(*node == "Texture")		parseTexture(node);
-			else if	(*node == "CompositeImage")	parseCompositeImage(node);
-			else if	(*node == "Object")			parseObject(node);
-			else if	(*node == "Include")		parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
-			else if	(*node == "TextureGroup")	parseTextureGroup(node);
+			if		(*node == "Texture")		this->parseTexture(node);
+			else if	(*node == "CompositeImage")	this->parseCompositeImage(node);
+			else if	(*node == "Object")			this->parseObject(node);
+			else if	(*node == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
+			else if	(*node == "TextureGroup")	this->parseTextureGroup(node);
 			else
 			{
 				this->parseExternalXMLNode(node);
