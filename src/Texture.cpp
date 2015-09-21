@@ -38,7 +38,7 @@ namespace aprilui
 	{
 		if (this->texture != NULL)
 		{
-			delete this->texture;
+			april::rendersys->destroyTexture(this->texture);
 		}
 		foreach (Texture*, it, this->links)
 		{
@@ -182,7 +182,7 @@ namespace aprilui
 		{
 			if (this->texture != NULL)
 			{
-				delete this->texture;
+				april::rendersys->destroyTexture(this->texture);
 			}
 			this->unusedTime = 0.0f;
 			this->texture = april::rendersys->createTextureFromResource(filename, april::Texture::TYPE_IMMUTABLE, this->loadMode);
