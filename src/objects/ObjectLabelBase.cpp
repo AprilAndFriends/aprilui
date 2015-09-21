@@ -33,12 +33,12 @@ namespace aprilui
 		this->textFormatting = true;
 		this->textColor = april::Color::White;
 		this->textOffset.set(0.0f, 0.0f);
-		this->horzFormatting = atres::CENTER_WRAPPED;
-		this->vertFormatting = atres::CENTER;
-		this->fontEffect = atres::NONE;
-		this->useFontEffectColor = false;
-		this->useFontEffectParameter = false;
-		this->fontEffectColor = april::Color::Black;
+		this->horzFormatting = atres::Horizontal::CenterWrapped;
+		this->vertFormatting = atres::Vertical::Center;
+		this->effect = atres::TextEffect::None;
+		this->useEffectColor = false;
+		this->useEffectParameter = false;
+		this->effectColor = april::Color::Black;
 		this->backgroundColor = april::Color::Clear;
 		this->backgroundBorder = true;
 	}
@@ -53,11 +53,11 @@ namespace aprilui
 		this->textOffset = other.textOffset;
 		this->horzFormatting = other.horzFormatting;
 		this->vertFormatting = other.vertFormatting;
-		this->fontEffect = other.fontEffect;
-		this->useFontEffectColor = other.useFontEffectColor;
-		this->useFontEffectParameter = other.useFontEffectParameter;
-		this->fontEffectColor = other.fontEffectColor;
-		this->fontEffectParameter = other.fontEffectParameter;
+		this->effect = other.effect;
+		this->useEffectColor = other.useEffectColor;
+		this->useEffectParameter = other.useEffectParameter;
+		this->effectColor = other.effectColor;
+		this->effectParameter = other.effectParameter;
 		this->backgroundColor = other.backgroundColor;
 		this->backgroundBorder = other.backgroundBorder;
 	}
@@ -116,28 +116,25 @@ namespace aprilui
 			text = "[-]" + text;
 		}
 		hstr colorCode = "";
-		if (this->useFontEffectColor)
+		if (this->useEffectColor)
 		{
-			colorCode += this->fontEffectColor.hex();
+			colorCode += this->effectColor.hex();
 		}
-		if (this->useFontEffectParameter)
+		if (this->useEffectParameter)
 		{
-			colorCode += "," + this->fontEffectParameter;
+			colorCode += "," + this->effectParameter;
 		}
 		if (colorCode != "")
 		{
 			colorCode = ":" + colorCode;
 		}
-		switch (this->fontEffect)
+		if (this->effect == atres::TextEffect::Border)
 		{
-		case atres::BORDER:
 			text = "[b" + colorCode + "]" + text;
-			break;
-		case atres::SHADOW:
+		}
+		else if (this->effect == atres::TextEffect::Shadow)
+		{
 			text = "[s" + colorCode + "]" + text;
-			break;
-		default:
-			break;
 		}
 		atres::renderer->drawText(this->font, rect, text, this->horzFormatting, this->vertFormatting, color, -this->textOffset);
 	}
@@ -149,38 +146,38 @@ namespace aprilui
 		if (name == "text_key")				return this->getTextKey();
 		if (name == "horz_formatting")
 		{
-			if (this->horzFormatting == atres::LEFT)			return "left";
-			if (this->horzFormatting == atres::RIGHT)			return "right";
-			if (this->horzFormatting == atres::CENTER)			return "center";
-			if (this->horzFormatting == atres::LEFT_WRAPPED)	return "left_wrapped";
-			if (this->horzFormatting == atres::RIGHT_WRAPPED)	return "right_wrapped";
-			if (this->horzFormatting == atres::CENTER_WRAPPED)	return "center_wrapped";
-			if (this->horzFormatting == atres::JUSTIFIED)		return "justified";
+			if (this->horzFormatting == atres::Horizontal::Left)			return "left";
+			if (this->horzFormatting == atres::Horizontal::Right)			return "right";
+			if (this->horzFormatting == atres::Horizontal::Center)			return "center";
+			if (this->horzFormatting == atres::Horizontal::LeftWrapped)		return "left_wrapped";
+			if (this->horzFormatting == atres::Horizontal::RightWrapped)	return "right_wrapped";
+			if (this->horzFormatting == atres::Horizontal::CenterWrapped)	return "center_wrapped";
+			if (this->horzFormatting == atres::Horizontal::Justified)		return "justified";
 		}
 		if (name == "vert_formatting")
 		{
-			if (this->vertFormatting == atres::TOP)		return "top";
-			if (this->vertFormatting == atres::CENTER)	return "center";
-			if (this->vertFormatting == atres::BOTTOM)	return "bottom";
+			if (this->vertFormatting == atres::Vertical::Top)		return "top";
+			if (this->vertFormatting == atres::Vertical::Center)	return "center";
+			if (this->vertFormatting == atres::Vertical::Bottom)	return "bottom";
 		}
 		if (name == "text_color")			return this->getTextColor().hex();
 		if (name == "effect")
 		{
 			hstr effect = "";
-			if (this->fontEffect == atres::SHADOW)	effect = "shadow";
-			if (this->fontEffect == atres::BORDER)	effect = "border";
-			if (this->fontEffect == atres::NONE)	effect = "none";
-			if (this->useFontEffectColor)
+			if (this->effect == atres::TextEffect::None)	effect = "none";
+			if (this->effect == atres::TextEffect::Border)	effect = "border";
+			if (this->effect == atres::TextEffect::Shadow)	effect = "shadow";
+			if (this->useEffectColor)
 			{
-				effect += ":" + this->fontEffectColor.hex();
-				if (this->useFontEffectParameter)
+				effect += ":" + this->effectColor.hex();
+				if (this->useEffectParameter)
 				{
-					effect += "," + this->fontEffectParameter;
+					effect += "," + this->effectParameter;
 				}
 			}
-			else if (this->useFontEffectParameter)
+			else if (this->useEffectParameter)
 			{
-				effect += ":," + this->fontEffectParameter;
+				effect += ":," + this->effectParameter;
 			}
 			return effect;
 		}
@@ -199,13 +196,13 @@ namespace aprilui
 		else if (name == "text")				this->setText(value);
 		else if (name == "horz_formatting")
 		{
-			if (value == "left")				this->setHorzFormatting(atres::LEFT);
-			else if (value == "right")			this->setHorzFormatting(atres::RIGHT);
-			else if (value == "center")			this->setHorzFormatting(atres::CENTER);
-			else if (value == "left_wrapped")	this->setHorzFormatting(atres::LEFT_WRAPPED);
-			else if (value == "right_wrapped")	this->setHorzFormatting(atres::RIGHT_WRAPPED);
-			else if (value == "center_wrapped")	this->setHorzFormatting(atres::CENTER_WRAPPED);
-			else if (value == "justified")		this->setHorzFormatting(atres::JUSTIFIED);
+			if (value == "left")				this->setHorzFormatting(atres::Horizontal::Left);
+			else if (value == "right")			this->setHorzFormatting(atres::Horizontal::Right);
+			else if (value == "center")			this->setHorzFormatting(atres::Horizontal::Center);
+			else if (value == "left_wrapped")	this->setHorzFormatting(atres::Horizontal::LeftWrapped);
+			else if (value == "right_wrapped")	this->setHorzFormatting(atres::Horizontal::RightWrapped);
+			else if (value == "center_wrapped")	this->setHorzFormatting(atres::Horizontal::CenterWrapped);
+			else if (value == "justified")		this->setHorzFormatting(atres::Horizontal::Justified);
 			else
 			{
 				hlog::warn(logTag, "'horz_formatting=' does not support value '" + value + "'.");
@@ -214,9 +211,9 @@ namespace aprilui
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")			this->setVertFormatting(atres::TOP);
-			else if (value == "center")	this->setVertFormatting(atres::CENTER);
-			else if (value == "bottom")	this->setVertFormatting(atres::BOTTOM);
+			if (value == "top")			this->setVertFormatting(atres::Vertical::Top);
+			else if (value == "center")	this->setVertFormatting(atres::Vertical::Center);
+			else if (value == "bottom")	this->setVertFormatting(atres::Vertical::Bottom);
 			else
 			{
 				hlog::warn(logTag, "'vert_formatting=' does not support value '" + value + "'.");
@@ -226,14 +223,14 @@ namespace aprilui
 		else if (name == "text_color")			this->setTextColor(value);
 		else if (name == "effect")
 		{
-			this->setFontEffect(atres::NONE);
-			this->setUseFontEffectColor(false);
+			this->setEffect(atres::TextEffect::None);
+			this->setUseEffectColor(false);
 			harray<hstr> values = value.split(":", 1, true);
 			if (values.size() > 0)
 			{
-				if (values[0] == "none")		this->setFontEffect(atres::NONE);
-				else if (values[0] == "shadow")	this->setFontEffect(atres::SHADOW);
-				else if (values[0] == "border")	this->setFontEffect(atres::BORDER);
+				if (values[0] == "none")		this->setEffect(atres::TextEffect::None);
+				else if (values[0] == "shadow")	this->setEffect(atres::TextEffect::Shadow);
+				else if (values[0] == "border")	this->setEffect(atres::TextEffect::Border);
 				else
 				{
 					hlog::warn(logTag, "'effect=' does not support value '" + values[0] + "'.");
@@ -244,8 +241,8 @@ namespace aprilui
 					values = values[1].split(",", 1);
 					if (values[0].isHex() && (values[0].size() == 6 || values[0].size() == 8))
 					{
-						this->setUseFontEffectColor(true);
-						this->setFontEffectColor(values[0]);
+						this->setUseEffectColor(true);
+						this->setEffectColor(values[0]);
 					}
 					else if (values[0] != "")
 					{
@@ -254,8 +251,8 @@ namespace aprilui
 					}
 					if (values.size() > 1)
 					{
-						this->setUseFontEffectParameter(true);
-						this->setFontEffectParameter(values[1]);
+						this->setUseEffectParameter(true);
+						this->setEffectParameter(values[1]);
 					}
 				}
 			}

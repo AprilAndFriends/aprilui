@@ -36,7 +36,7 @@ namespace aprilui
 	EditBox::EditBox(chstr name) : Label(name), ButtonBase()
 	{
 		this->text = "";
-		this->horzFormatting = atres::LEFT;
+		this->horzFormatting = atres::Horizontal::Left;
 		this->textFormatting = false;
 		this->backgroundColor = april::Color::Black;
 		// this class' properties
@@ -445,23 +445,22 @@ namespace aprilui
 				this->caretRect.setPosition(base);
 			}
 		}
-		if (this->horzFormatting == atres::RIGHT || this->horzFormatting == atres::RIGHT_WRAPPED)
+		if (this->horzFormatting.isRight())
 		{
 			this->caretRect.x -= 1;
 		}
 		this->caretRect += gvec2((float)this->renderOffsetX, (float)this->renderOffsetY) * fh;
 		// calculate render offset
 		int jumps = 0;
-		if (!this->disabledOffset && this->horzFormatting != atres::LEFT_WRAPPED && this->horzFormatting != atres::CENTER_WRAPPED &&
-			this->horzFormatting != atres::RIGHT_WRAPPED && this->horzFormatting != atres::JUSTIFIED)
+		if (!this->disabledOffset && !this->horzFormatting.isWrapped())
 		{
 			if (atres::renderer->getTextWidth(this->font, this->text) > this->caretRect.w)
 			{
 				// left side
-				if (this->caretRect.x < fh && (this->horzFormatting != atres::LEFT || this->renderOffsetX < 0))
+				if (this->caretRect.x < fh && (this->horzFormatting != atres::Horizontal::Left || this->renderOffsetX < 0))
 				{
 					jumps = hceil((fh - this->caretRect.x) / fh);
-					if (this->horzFormatting == atres::LEFT)
+					if (this->horzFormatting == atres::Horizontal::Left)
 					{
 						jumps = hmin(jumps, -this->renderOffsetX);
 					}
@@ -476,10 +475,10 @@ namespace aprilui
 					}
 				}
 				// right side
-				if (this->caretRect.x + fh > this->rect.w && (this->horzFormatting != atres::RIGHT || this->renderOffsetX > 0))
+				if (this->caretRect.x + fh > this->rect.w && (this->horzFormatting != atres::Horizontal::Right || this->renderOffsetX > 0))
 				{
 					jumps = -hceil((this->caretRect.x + fh - this->rect.w) / fh);
-					if (this->horzFormatting == atres::RIGHT)
+					if (this->horzFormatting == atres::Horizontal::Right)
 					{
 						jumps = hmax(jumps, -this->renderOffsetX);
 					}
@@ -506,10 +505,10 @@ namespace aprilui
 		if (this->multiLine)
 		{
 			// top side
-			if (this->caretRect.y < fh * 0.5f && (this->horzFormatting != atres::TOP || this->renderOffsetY < 0))
+			if (this->caretRect.y < fh * 0.5f && (this->horzFormatting != atres::Vertical::Top || this->renderOffsetY < 0))
 			{
 				jumps = hceil((fh * 0.5f - this->caretRect.y) / fh);
-				if (this->vertFormatting == atres::TOP)
+				if (this->vertFormatting == atres::Vertical::Top)
 				{
 					jumps = hmin(jumps, -this->renderOffsetY);
 				}
@@ -524,10 +523,10 @@ namespace aprilui
 				}
 			}
 			// bottom side
-			if (this->caretRect.y + (fh + lh) * 0.5f > this->rect.h && (this->horzFormatting != atres::BOTTOM || this->renderOffsetY > 0))
+			if (this->caretRect.y + (fh + lh) * 0.5f > this->rect.h && (this->horzFormatting != atres::Vertical::Bottom || this->renderOffsetY > 0))
 			{
 				jumps = -hceil((this->caretRect.y + (fh + lh) * 0.5f - this->rect.h) / fh);
-				if (this->vertFormatting == atres::BOTTOM)
+				if (this->vertFormatting == atres::Vertical::Bottom)
 				{
 					jumps = hmax(jumps, -this->renderOffsetY);
 				}
@@ -737,19 +736,19 @@ namespace aprilui
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		float w2 = this->rect.w * 0.5f;
 		float h2 = this->rect.h * 0.5f;
-		if (this->horzFormatting == atres::CENTER || this->horzFormatting == atres::CENTER_WRAPPED)
+		if (this->horzFormatting.isCenter())
 		{
 			offset.x = w2;
 		}
-		else if (this->horzFormatting == atres::RIGHT || this->horzFormatting == atres::RIGHT_WRAPPED)
+		else if (this->horzFormatting.isRight())
 		{
 			offset.x = w2 * 2;
 		}
-		if (this->vertFormatting == atres::CENTER)
+		if (this->vertFormatting == atres::Vertical::Center)
 		{
 			hf = 0.5f;
 		}
-		else if (this->vertFormatting == atres::BOTTOM)
+		else if (this->vertFormatting == atres::Vertical::Bottom)
 		{
 			hf = 1.0f;
 		}
@@ -1292,6 +1291,5 @@ namespace aprilui
 		this->text = (left + hstr::fromUnicode(charCode)) + right;
 		this->setCaretIndex(this->caretIndex + 1);
 	}
-	
 
 }

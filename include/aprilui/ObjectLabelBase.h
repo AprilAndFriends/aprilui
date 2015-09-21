@@ -46,13 +46,13 @@ namespace aprilui
 		HL_DEFINE_GETSET(gvec2, textOffset, TextOffset);
 		HL_DEFINE_GETSET(float, textOffset.x, TextOffsetX);
 		HL_DEFINE_GETSET(float, textOffset.y, TextOffsetY);
-		HL_DEFINE_GETSET(atres::Alignment, horzFormatting, HorzFormatting);
-		HL_DEFINE_GETSET(atres::Alignment, vertFormatting, VertFormatting);
-		HL_DEFINE_GETSET(atres::Effect, fontEffect, FontEffect);
-		HL_DEFINE_ISSET(useFontEffectColor, UseFontEffectColor);
-		HL_DEFINE_ISSET(useFontEffectParameter, UseFontEffectParameter);
-		HL_DEFINE_GETSET(april::Color, fontEffectColor, FontEffectColor);
-		HL_DEFINE_GETSET(hstr, fontEffectParameter, FontEffectParameter);
+		HL_DEFINE_GETSET(atres::Horizontal, horzFormatting, HorzFormatting);
+		HL_DEFINE_GETSET(atres::Vertical, vertFormatting, VertFormatting);
+		HL_DEFINE_GETSET(atres::TextEffect, effect, Effect);
+		HL_DEFINE_ISSET(useEffectColor, UseEffectColor);
+		HL_DEFINE_ISSET(useEffectParameter, UseEffectParameter);
+		HL_DEFINE_GETSET(april::Color, effectColor, EffectColor);
+		HL_DEFINE_GETSET(hstr, effectParameter, EffectParameter);
 		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
 		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 
@@ -72,6 +72,9 @@ namespace aprilui
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
+		DEPRECATED_ATTRIBUTE atres::TextEffect getFontEffect() { return this->getEffect(); }
+		DEPRECATED_ATTRIBUTE void setFontEffect(atres::TextEffect value) { this->setEffect(value); }
 		
 	protected:
 		hstr text;
@@ -80,13 +83,13 @@ namespace aprilui
 		bool textFormatting;
 		april::Color textColor;
 		gvec2 textOffset;
-		atres::Alignment horzFormatting;
-		atres::Alignment vertFormatting;
-		atres::Effect fontEffect;
-		bool useFontEffectColor;
-		bool useFontEffectParameter;
-		april::Color fontEffectColor;
-		hstr fontEffectParameter;
+		atres::Horizontal horzFormatting;
+		atres::Vertical vertFormatting;
+		atres::TextEffect effect;
+		bool useEffectColor;
+		bool useEffectParameter;
+		april::Color effectColor;
+		hstr effectParameter;
 		april::Color backgroundColor;
 		bool backgroundBorder;
 
