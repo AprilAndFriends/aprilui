@@ -717,8 +717,8 @@ namespace aprilui
 				v[0].set(renderRect.x, renderRect.y, 0);
 				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
 				// using the original text color
-				v[0].color = april::rendersys->getNativeColorUInt(textColor);
-				v[1].color = april::rendersys->getNativeColorUInt(textColor);
+				v[0].color = april::rendersys->getNativeColorUInt(drawColor);
+				v[1].color = april::rendersys->getNativeColorUInt(drawColor);
 				april::rendersys->render(april::RO_LINE_LIST, v, 2);
 			}
 		}
