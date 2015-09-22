@@ -18,6 +18,7 @@
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "Animators.h"
 #include "aprilui.h"
@@ -39,6 +40,8 @@ namespace aprilui
 	}
 
 	hstr logTag = "aprilui";
+
+	static hversion version(4, 1, 0);
 
 	static bool registerLock = false;
 	static hmap<hstr, Dataset*> gDatasets;
@@ -63,7 +66,7 @@ namespace aprilui
 
 	void init()
 	{
-		hlog::write(logTag, "Initializing AprilUI.");
+		hlog::write(logTag, "Initializing AprilUI: " + version.toString());
 		registerLock = false;
 		cursorVisible = true;
 		limitCursorToViewport = true;
