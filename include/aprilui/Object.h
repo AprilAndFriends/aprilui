@@ -352,7 +352,7 @@ namespace aprilui
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
 		bool _isDerivedHitTestEnabled();
 		grect _makeDrawRect();
-		april::Color _makeDrawColor();
+		virtual april::Color _makeDrawColor();
 		virtual harray<BaseImage*> _getUsedImages();
 
 		void _update(float timeDelta);

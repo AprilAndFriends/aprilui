@@ -56,14 +56,14 @@ namespace aprilui
 		bool isExpanded();
 		bool isSelected();
 
+		void notifyEvent(chstr type, EventArgs* args);
+
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);
-
-		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
 		int depth;

@@ -20,25 +20,68 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> ButtonBase::_propertyDescriptions;
+
 	harray<april::Key> ButtonBase::allowedKeys;
 	harray<april::Button> ButtonBase::allowedButtons;
 
 	ButtonBase::ButtonBase() : _thisObject(NULL)
 	{
+		this->hoverColor = april::Color::White;
+		this->pushedColor = april::Color::White;
+		this->disabledColor = april::Color::White;
 		this->hovered = false;
 		this->pushed = false;
+		this->_useHoverColor = false;
+		this->_usePushedColor = false;
+		this->_useDisabledColor = false;
 	}
 
 	ButtonBase::ButtonBase(const ButtonBase& other) : _thisObject(NULL)
 	{
+		this->hoverColor = other.hoverColor;
+		this->pushedColor = other.pushedColor;
+		this->disabledColor = other.disabledColor;
 		this->hovered = other.hovered;
 		this->pushed = other.pushed;
+		this->_useHoverColor = other._useHoverColor;
+		this->_usePushedColor = other._usePushedColor;
+		this->_useDisabledColor = other._useDisabledColor;
 	}
 	
 	ButtonBase::~ButtonBase()
 	{
 	}
 	
+	void ButtonBase::setHoverColor(april::Color value)
+	{
+		this->hoverColor = value;
+		this->_useHoverColor = true;
+	}
+
+	void ButtonBase::setPushedColor(april::Color value)
+	{
+		this->pushedColor = value;
+		this->_usePushedColor = true;
+	}
+
+	void ButtonBase::setDisabledColor(april::Color value)
+	{
+		this->disabledColor = value;
+		this->_useDisabledColor = true;
+	}
+
+	harray<PropertyDescription> ButtonBase::getPropertyDescriptions()
+	{
+		if (ButtonBase::_propertyDescriptions.size() == 0)
+		{
+			ButtonBase::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::HEXCOLOR);
+			ButtonBase::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::HEXCOLOR);
+			ButtonBase::_propertyDescriptions += PropertyDescription("disabled_color", PropertyDescription::HEXCOLOR);
+		}
+		return ButtonBase::_propertyDescriptions;
+	}
+
 	void ButtonBase::_update(float timeDelta)
 	{
 		this->_updateHover();
@@ -90,6 +133,23 @@ namespace aprilui
 		{
 			this->triggerEvent(this->hovered ? Event::HoverStarted : Event::HoverFinished);
 		}
+	}
+
+	hstr ButtonBase::getProperty(chstr name)
+	{
+		if (name == "hover_color")		return this->getHoverColor().hex();
+		if (name == "pushed_color")		return this->getPushedColor().hex();
+		if (name == "disabled_color")	return this->getDisabledColor().hex();
+		return "";
+	}
+
+	bool ButtonBase::setProperty(chstr name, chstr value)
+	{
+		if (name == "hover_color")			this->setHoverColor(value);
+		else if (name == "pushed_color")	this->setPushedColor(value);
+		else if (name == "disabled_color")	this->setDisabledColor(value);
+		else return false;
+		return true;
 	}
 
 	bool ButtonBase::_mouseDown(april::Key keyCode)
@@ -166,14 +226,4 @@ namespace aprilui
 		return false;
 	}
 
-	hstr ButtonBase::getProperty(chstr name)
-	{
-		return "";
-	}
-	
-	bool ButtonBase::setProperty(chstr name, chstr value)
-	{
-		return false;
-	}
-	
 }

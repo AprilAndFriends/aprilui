@@ -62,16 +62,17 @@ namespace aprilui
 
 		bool trySetTextKey(chstr textKey);
 		
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
+
 		virtual void notifyEvent(chstr type, EventArgs* args);
+
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
-
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
 
 		DEPRECATED_ATTRIBUTE atres::TextEffect getFontEffect() { return this->getEffect(); }
 		DEPRECATED_ATTRIBUTE void setFontEffect(atres::TextEffect value) { this->setEffect(value); }

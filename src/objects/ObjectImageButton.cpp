@@ -237,6 +237,29 @@ namespace aprilui
 		return images;
 	}
 	
+	hstr ImageButton::getProperty(chstr name)
+	{
+		if (name == "pushed_image")		return this->getPushedImageName();
+		if (name == "hover_image")		return this->getHoverImageName();
+		if (name == "disabled_image")	return this->getDisabledImageName();
+		hstr result = ButtonBase::getProperty(name);
+		if (result == "")
+		{
+			result = ImageBox::getProperty(name);
+		}
+		return result;
+	}
+
+	bool ImageButton::setProperty(chstr name, chstr value)
+	{
+		if		(name == "pushed_image")	this->trySetPushedImageByName(value);
+		else if	(name == "hover_image")		this->trySetHoverImageByName(value);
+		else if	(name == "disabled_image")	this->trySetDisabledImageByName(value);
+		else if (ButtonBase::setProperty(name, value)) { }
+		else return ImageBox::setProperty(name, value);
+		return true;
+	}
+	
 	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)
 	{
 		return ImageBox::triggerEvent(type, keyCode);
@@ -267,29 +290,6 @@ namespace aprilui
 		return ImageBox::triggerEvent(type, userData);
 	}
 
-	hstr ImageButton::getProperty(chstr name)
-	{
-		if (name == "pushed_image")		return this->getPushedImageName();
-		if (name == "hover_image")		return this->getHoverImageName();
-		if (name == "disabled_image")	return this->getDisabledImageName();
-		hstr result = ButtonBase::getProperty(name);
-		if (result == "")
-		{
-			result = ImageBox::getProperty(name);
-		}
-		return result;
-	}
-
-	bool ImageButton::setProperty(chstr name, chstr value)
-	{
-		if		(name == "pushed_image")	this->trySetPushedImageByName(value);
-		else if	(name == "hover_image")		this->trySetHoverImageByName(value);
-		else if	(name == "disabled_image")	this->trySetDisabledImageByName(value);
-		else if (ButtonBase::setProperty(name, value)) { }
-		else return ImageBox::setProperty(name, value);
-		return true;
-	}
-	
 	bool ImageButton::_mouseDown(april::Key keyCode)
 	{
 		bool result = ButtonBase::_mouseDown(keyCode);

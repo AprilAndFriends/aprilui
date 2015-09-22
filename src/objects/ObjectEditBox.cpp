@@ -651,6 +651,7 @@ namespace aprilui
 	void EditBox::_draw()
 	{
 		april::Color color = this->color;
+		april::Color textColor = this->textColor;
 		hstr text = this->text;
 		if (this->passwordChar != '\0' && this->text != "")
 		{
@@ -659,7 +660,7 @@ namespace aprilui
 		if (this->text == "" && this->dataset != NULL && this->dataset->getFocusedObject() != this)
 		{
 			this->text = this->emptyText;
-			this->color = this->emptyTextColor;
+			this->textColor = this->emptyTextColor;
 		}
 		unsigned char alpha = this->backgroundColor.a;
 		if (this->pushed)
@@ -704,8 +705,8 @@ namespace aprilui
 		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
 		{
 			grect renderRect = this->caretRect - this->pivot + this->caretOffset;
-			// make sure the carat is visible if the editbox is empty
-			if (this->caretIndex == 0)
+			// make sure the caret is visible if the editbox is empty
+			if (this->caretIndex == 0 && (this->horzFormatting.isLeft() || this->horzFormatting == atres::Horizontal::Justified))
 			{
 				renderRect.x += 1.0f;
 			}
@@ -715,13 +716,15 @@ namespace aprilui
 				april::ColoredVertex v[2];
 				v[0].set(renderRect.x, renderRect.y, 0);
 				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
-				v[0].color = april::rendersys->getNativeColorUInt(this->textColor);
-				v[1].color = april::rendersys->getNativeColorUInt(this->textColor);
+				// using the original text color
+				v[0].color = april::rendersys->getNativeColorUInt(textColor);
+				v[1].color = april::rendersys->getNativeColorUInt(textColor);
 				april::rendersys->render(april::RO_LINE_LIST, v, 2);
 			}
 		}
 		this->text = text;
 		this->color = color;
+		this->textColor = textColor;
 	}
 
 	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor)
@@ -755,6 +758,76 @@ namespace aprilui
 		offset.y = (h2 * 2 - fh) * hf;
 	}
 
+	hstr EditBox::getProperty(chstr name)
+	{
+		if (name == "empty_text")		return this->getEmptyText();
+		if (name == "empty_text_key")	return this->getEmptyTextKey();
+		if (name == "empty_text_color")	return this->getEmptyTextColor().hex();
+		if (name == "max_length")		return this->getMaxLength();
+		if (name == "password_char")	return this->getPasswordChar();
+		if (name == "filter")			return this->getFilter();
+		if (name == "caret_index")		return this->getCaretIndex();
+		if (name == "cursor_index")
+		{
+			hlog::warn(logTag, "'cursor_index' is deprecated. Use 'caret_index' instead."); // DEPRECATED
+			return this->getCaretIndex();
+		}
+		if (name == "caret_offset")		return april::gvec2ToHstr(this->getCaretOffset());
+		if (name == "caret_offset_x")	return this->getCaretOffsetX();
+		if (name == "caret_offset_y")	return this->getCaretOffsetY();
+		if (name == "multi_line")		return this->isMultiLine();
+		if (name == "selectable")		return this->isSelectable();
+		if (name == "selection_count")	return this->getSelectionCount();
+		if (name == "selection_color")	return this->getSelectionColor().hex();
+		if (name == "disabled_offset")	return this->isDisabledOffset();
+		return Label::getProperty(name);
+	}
+
+	bool EditBox::setProperty(chstr name, chstr value)
+	{
+		if (name == "empty_text")				this->setEmptyText(value);
+		else if (name == "empty_text_key")		this->setEmptyTextKey(value);
+		else if (name == "empty_text_color")	this->setEmptyTextColor(value);
+		else if (name == "max_length")			this->setMaxLength(value);
+		else if (name == "password_char")		this->setPasswordChar(value.cStr()[0]);
+		else if (name == "filter")				this->setFilter(value);
+		else if (name == "caret_index")			this->setCaretIndex(value);
+		else if (name == "cursor_index")
+		{
+			hlog::warn(logTag, "'cursor_index=' is deprecated. Use 'caret_index=' instead."); // DEPRECATED
+			this->setCaretIndex(value);
+		}
+		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));
+		else if (name == "caret_offset_x")		this->setCaretOffsetX(value);
+		else if (name == "caret_offset_y")		this->setCaretOffsetY(value);
+		else if (name == "multi_line")			this->setMultiLine(value);
+		else if (name == "selectable")			this->setSelectable(value);
+		else if (name == "selection_count")		this->setSelectionCount(value);
+		else if (name == "selection_color")		this->setSelectionColor(value);
+		else if (name == "disabled_offset")		this->setDisabledOffset(value);
+		else return Label::setProperty(name, value);
+		return true;
+	}
+
+	void EditBox::notifyEvent(chstr type, EventArgs* args)
+	{
+		if (type == Event::LocalizationChanged)
+		{
+			if (this->emptyTextKey != "")
+			{
+				this->setEmptyTextKey(this->emptyTextKey);
+			}
+		}
+		else if (type == Event::FocusGained)
+		{
+			if (!this->pushed) // some OSes will disable the keyboard if it is shown before a mouse-up event
+			{
+				april::window->beginKeyboardHandling();
+			}
+		}
+		Label::notifyEvent(type, args);
+	}
+
 	bool EditBox::triggerEvent(chstr type, april::Key keyCode)
 	{
 		return Label::triggerEvent(type, keyCode);
@@ -785,25 +858,6 @@ namespace aprilui
 		return Label::triggerEvent(type, userData);
 	}
 
-	void EditBox::notifyEvent(chstr type, EventArgs* args)
-	{
-		if (type == Event::LocalizationChanged)
-		{
-			if (this->emptyTextKey != "")
-			{
-				this->setEmptyTextKey(this->emptyTextKey);
-			}
-		}
-		else if (type == Event::FocusGained)
-		{
-			if (!this->pushed) // some OSes will disable the keyboard if it is shown before a mouse-up event
-			{
-				april::window->beginKeyboardHandling();
-			}
-		}
-		Label::notifyEvent(type, args);
-	}
-	
 	bool EditBox::_mouseDown(april::Key keyCode)
 	{
 		bool result = ButtonBase::_mouseDown(keyCode);
@@ -984,57 +1038,6 @@ namespace aprilui
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (result || up || Label::_buttonUp(buttonCode));
-	}
-
-	hstr EditBox::getProperty(chstr name)
-	{
-		if (name == "empty_text")		return this->getEmptyText();
-		if (name == "empty_text_key")	return this->getEmptyTextKey();
-		if (name == "empty_text_color")	return this->getEmptyTextColor().hex();
-		if (name == "max_length")		return this->getMaxLength();
-		if (name == "password_char")	return this->getPasswordChar();
-		if (name == "filter")			return this->getFilter();
-		if (name == "caret_index")		return this->getCaretIndex();
-		if (name == "cursor_index")
-		{
-			hlog::warn(logTag, "'cursor_index' is deprecated. Use 'caret_index' instead."); // DEPRECATED
-			return this->getCaretIndex();
-		}
-		if (name == "caret_offset")		return april::gvec2ToHstr(this->getCaretOffset());
-		if (name == "caret_offset_x")	return this->getCaretOffsetX();
-		if (name == "caret_offset_y")	return this->getCaretOffsetY();
-		if (name == "multi_line")		return this->isMultiLine();
-		if (name == "selectable")		return this->isSelectable();
-		if (name == "selection_count")	return this->getSelectionCount();
-		if (name == "selection_color")	return this->getSelectionColor().hex();
-		if (name == "disabled_offset")	return this->isDisabledOffset();
-		return Label::getProperty(name);
-	}
-	
-	bool EditBox::setProperty(chstr name, chstr value)
-	{
-		if		(name == "empty_text")			this->setEmptyText(value);
-		else if	(name == "empty_text_key")		this->setEmptyTextKey(value);
-		else if (name == "empty_text_color")	this->setEmptyTextColor(value);
-		else if (name == "max_length")			this->setMaxLength(value);
-		else if (name == "password_char")		this->setPasswordChar(value.cStr()[0]);
-		else if (name == "filter")				this->setFilter(value);
-		else if (name == "caret_index")			this->setCaretIndex(value);
-		else if (name == "cursor_index")
-		{
-			hlog::warn(logTag, "'cursor_index=' is deprecated. Use 'caret_index=' instead."); // DEPRECATED
-			this->setCaretIndex(value);
-		}
-		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));
-		else if (name == "caret_offset_x")		this->setCaretOffsetX(value);
-		else if (name == "caret_offset_y")		this->setCaretOffsetY(value);
-		else if (name == "multi_line")			this->setMultiLine(value);
-		else if (name == "selectable")			this->setSelectable(value);
-		else if (name == "selection_count")		this->setSelectionCount(value);
-		else if (name == "selection_color")		this->setSelectionColor(value);
-		else if (name == "disabled_offset")		this->setDisabledOffset(value);
-		else return Label::setProperty(name, value);
-		return true;
 	}
 
 	void EditBox::_updateSelectionCount(int previousCaretIndex)

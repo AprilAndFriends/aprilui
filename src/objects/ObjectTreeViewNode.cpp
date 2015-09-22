@@ -186,36 +186,6 @@ namespace aprilui
 		return offset;
 	}
 
-	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode)
-	{
-		return Container::triggerEvent(type, keyCode);
-	}
-
-	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, chstr string)
-	{
-		return Container::triggerEvent(type, keyCode, string);
-	}
-
-	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, keyCode, position, string, userData);
-	}
-
-	bool TreeViewNode::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, buttonCode, string, userData);
-	}
-
-	bool TreeViewNode::triggerEvent(chstr type, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, string, userData);
-	}
-
-	bool TreeViewNode::triggerEvent(chstr type, void* userData)
-	{
-		return Container::triggerEvent(type, userData);
-	}
-
 	void TreeViewNode::notifyEvent(chstr type, EventArgs* args)
 	{
 		Container::notifyEvent(type, args);
@@ -278,6 +248,36 @@ namespace aprilui
 				hlog::errorf(logTag, "TreeViewNode '%s' not attached to object of class TreeView or TreeViewNode!", this->name.cStr());
 			}
 		}
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode)
+	{
+		return Container::triggerEvent(type, keyCode);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, chstr string)
+	{
+		return Container::triggerEvent(type, keyCode, string);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, string, userData);
+	}
+
+	bool TreeViewNode::triggerEvent(chstr type, void* userData)
+	{
+		return Container::triggerEvent(type, userData);
 	}
 
 	april::Color TreeViewNode::_getCurrentBackgroundColor()

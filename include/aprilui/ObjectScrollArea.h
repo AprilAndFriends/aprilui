@@ -65,16 +65,17 @@ namespace aprilui
 
 		void stopScrolling();
 
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
+
 		void notifyEvent(chstr type, EventArgs* args);
+
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);
-
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
 
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);

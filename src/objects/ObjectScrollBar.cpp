@@ -272,6 +272,29 @@ namespace aprilui
 		}
 	}
 
+	hstr ScrollBar::getProperty(chstr name)
+	{
+		if (name == "skin")						return this->getSkinName();
+		if (name == "grid_size")				return this->getGridSize();
+		if (name == "use_fading")				return this->isUseFading();
+		if (name == "height_hide")				return this->isHeightHide();
+		if (name == "use_stretched_slider")		return this->isUseStretchedSlider();
+		if (name == "disabled_while_scrolling")	return this->isDisabledWhileScrolling();
+		return Object::getProperty(name);
+	}
+
+	bool ScrollBar::setProperty(chstr name, chstr value)
+	{
+		if (name == "skin")								this->setSkinName(value);
+		else if (name == "grid_size")					this->setGridSize(value);
+		else if (name == "use_fading")					this->setUseFading(value);
+		else if (name == "height_hide")					this->setHeightHide(value);
+		else if (name == "use_stretched_slider")		this->setUseStretchedSlider(value);
+		else if (name == "disabled_while_scrolling")	this->setDisabledWhileScrolling(value);
+		else return Object::setProperty(name, value);
+		return true;
+	}
+
 	void ScrollBar::notifyEvent(chstr type, EventArgs* args)
 	{
 		Object::notifyEvent(type, args);
@@ -358,29 +381,6 @@ namespace aprilui
 				}
 			}
 		}
-	}
-
-	hstr ScrollBar::getProperty(chstr name)
-	{
-		if (name == "skin")						return this->getSkinName();
-		if (name == "grid_size")				return this->getGridSize();
-		if (name == "use_fading")				return this->isUseFading();
-		if (name == "height_hide")				return this->isHeightHide();
-		if (name == "use_stretched_slider")		return this->isUseStretchedSlider();
-		if (name == "disabled_while_scrolling")	return this->isDisabledWhileScrolling();
-		return Object::getProperty(name);
-	}
-
-	bool ScrollBar::setProperty(chstr name, chstr value)
-	{
-		if		(name == "skin")						this->setSkinName(value);
-		else if	(name == "grid_size")					this->setGridSize(value);
-		else if	(name == "use_fading")					this->setUseFading(value);
-		else if	(name == "height_hide")					this->setHeightHide(value);
-		else if	(name == "use_stretched_slider")		this->setUseStretchedSlider(value);
-		else if	(name == "disabled_while_scrolling")	this->setDisabledWhileScrolling(value);
-		else return Object::setProperty(name, value);
-		return true;
 	}
 
 	bool ScrollBar::_mouseMove()

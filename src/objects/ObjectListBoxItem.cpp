@@ -79,36 +79,6 @@ namespace aprilui
 		Label::_update(timeDelta);
 	}
 
-	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode)
-	{
-		return Label::triggerEvent(type, keyCode);
-	}
-
-	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode, chstr string)
-	{
-		return Label::triggerEvent(type, keyCode, string);
-	}
-
-	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
-	{
-		return Label::triggerEvent(type, keyCode, position, string, userData);
-	}
-
-	bool ListBoxItem::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
-	{
-		return Label::triggerEvent(type, buttonCode, string, userData);
-	}
-
-	bool ListBoxItem::triggerEvent(chstr type, chstr string, void* userData)
-	{
-		return Label::triggerEvent(type, string, userData);
-	}
-
-	bool ListBoxItem::triggerEvent(chstr type, void* userData)
-	{
-		return Label::triggerEvent(type, userData);
-	}
-
 	void ListBoxItem::notifyEvent(chstr type, EventArgs* args)
 	{
 		Label::notifyEvent(type, args);
@@ -146,6 +116,36 @@ namespace aprilui
 				hlog::errorf(logTag, "ListBoxItem '%s' not attached to object of class ListBox!", this->name.cStr());
 			}
 		}
+	}
+
+	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode)
+	{
+		return Label::triggerEvent(type, keyCode);
+	}
+
+	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode, chstr string)
+	{
+		return Label::triggerEvent(type, keyCode, string);
+	}
+
+	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Label::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool ListBoxItem::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Label::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool ListBoxItem::triggerEvent(chstr type, chstr string, void* userData)
+	{
+		return Label::triggerEvent(type, string, userData);
+	}
+
+	bool ListBoxItem::triggerEvent(chstr type, void* userData)
+	{
+		return Label::triggerEvent(type, userData);
 	}
 
 	void ListBoxItem::_draw()

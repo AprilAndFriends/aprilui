@@ -111,34 +111,46 @@ namespace aprilui
 		return ButtonBase::_findHoverObject();
 	}
 
-	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode)
+	april::Color GridViewCell::_getCurrentBackgroundColor()
 	{
-		return Container::triggerEvent(type, keyCode);
+		if (this->_gridView != NULL)
+		{
+			if (this->pushed)
+			{
+				return (!this->isSelected() ? this->_gridView->getPushedColor() : this->_gridView->getSelectedPushedColor());
+			}
+			if (this->hovered)
+			{
+				return (!this->isSelected() ? this->_gridView->getHoverColor() : this->_gridView->getSelectedHoverColor());
+			}
+			if (this->isSelected())
+			{
+				return this->_gridView->getSelectedColor();
+			}
+		}
+		return april::Color::Clear;
 	}
 
-	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode, chstr string)
+	void GridViewCell::_setSelected()
 	{
-		return Container::triggerEvent(type, keyCode, string);
+		if (this->_gridView != NULL && this->_gridViewRow != NULL)
+		{
+			this->_gridView->setSelectedIndex(this->_gridViewRow->_gridViewCells.indexOf(this) +
+				this->_gridView->rows.indexOf(this->_gridViewRow) * this->_gridView->rowTemplate->_gridViewCells.size());
+		}
 	}
 
-	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	hstr GridViewCell::getProperty(chstr name)
 	{
-		return Container::triggerEvent(type, keyCode, position, string, userData);
+		if (name == "selectable")	return this->isSelectable();
+		return Container::getProperty(name);
 	}
 
-	bool GridViewCell::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	bool GridViewCell::setProperty(chstr name, chstr value)
 	{
-		return Container::triggerEvent(type, buttonCode, string, userData);
-	}
-
-	bool GridViewCell::triggerEvent(chstr type, chstr string, void* userData)
-	{
-		return Container::triggerEvent(type, string, userData);
-	}
-
-	bool GridViewCell::triggerEvent(chstr type, void* userData)
-	{
-		return Container::triggerEvent(type, userData);
+		if (name == "selectable")	this->setSelectable(value);
+		else return Container::setProperty(name, value);
+		return true;
 	}
 
 	void GridViewCell::notifyEvent(chstr type, EventArgs* args)
@@ -172,33 +184,34 @@ namespace aprilui
 		}
 	}
 
-	april::Color GridViewCell::_getCurrentBackgroundColor()
+	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode)
 	{
-		if (this->_gridView != NULL)
-		{
-			if (this->pushed)
-			{
-				return (!this->isSelected() ? this->_gridView->getPushedColor() : this->_gridView->getSelectedPushedColor());
-			}
-			if (this->hovered)
-			{
-				return (!this->isSelected() ? this->_gridView->getHoverColor() : this->_gridView->getSelectedHoverColor());
-			}
-			if (this->isSelected())
-			{
-				return this->_gridView->getSelectedColor();
-			}
-		}
-		return april::Color::Clear;
+		return Container::triggerEvent(type, keyCode);
 	}
 
-	void GridViewCell::_setSelected()
+	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode, chstr string)
 	{
-		if (this->_gridView != NULL && this->_gridViewRow != NULL)
-		{
-			this->_gridView->setSelectedIndex(this->_gridViewRow->_gridViewCells.indexOf(this) +
-				this->_gridView->rows.indexOf(this->_gridViewRow) * this->_gridView->rowTemplate->_gridViewCells.size());
-		}
+		return Container::triggerEvent(type, keyCode, string);
+	}
+
+	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, keyCode, position, string, userData);
+	}
+
+	bool GridViewCell::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, buttonCode, string, userData);
+	}
+
+	bool GridViewCell::triggerEvent(chstr type, chstr string, void* userData)
+	{
+		return Container::triggerEvent(type, string, userData);
+	}
+
+	bool GridViewCell::triggerEvent(chstr type, void* userData)
+	{
+		return Container::triggerEvent(type, userData);
 	}
 
 	bool GridViewCell::_mouseDown(april::Key keyCode)
@@ -266,19 +279,6 @@ namespace aprilui
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (result || up || Container::_buttonUp(buttonCode));
-	}
-
-	hstr GridViewCell::getProperty(chstr name)
-	{
-		if (name == "selectable")	return this->isSelectable();
-		return Container::getProperty(name);
-	}
-
-	bool GridViewCell::setProperty(chstr name, chstr value)
-	{
-		if		(name == "selectable")		this->setSelectable(value);
-		else return Container::setProperty(name, value);
-		return true;
 	}
 
 }

@@ -13,12 +13,14 @@
 #ifndef APRILUI_BUTTON_BASE_H
 #define APRILUI_BUTTON_BASE_H
 
+#include <april/Color.h>
 #include <april/Keys.h>
 #include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
 #include "Cloneable.h"
+#include "PropertyDescription.h"
 
 namespace aprilui
 {
@@ -32,6 +34,12 @@ namespace aprilui
 		ButtonBase();
 		virtual ~ButtonBase();
 
+		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
+		void setHoverColor(april::Color value);
+		HL_DEFINE_GET(april::Color, pushedColor, PushedColor);
+		void setPushedColor(april::Color value);
+		HL_DEFINE_GET(april::Color, disabledColor, DisabledColor);
+		void setDisabledColor(april::Color value);
 		HL_DEFINE_IS(hovered, Hovered);
 		HL_DEFINE_IS(pushed, Pushed);
 		virtual hstr getName() = 0;
@@ -39,6 +47,8 @@ namespace aprilui
 		virtual int getFocusIndex() = 0;
 		virtual Object* getParent() = 0;
 		virtual Dataset* getDataset() = 0;
+
+		harray<PropertyDescription> getPropertyDescriptions();
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
@@ -54,9 +64,16 @@ namespace aprilui
 		static harray<april::Button> allowedButtons;
 
 	protected:
+		april::Color hoverColor;
+		april::Color pushedColor;
+		april::Color disabledColor;
 		bool hovered;
 		bool pushed;
 		
+		bool _useHoverColor;
+		bool _usePushedColor;
+		bool _useDisabledColor;
+
 		virtual void _update(float timeDelta);
 		virtual aprilui::Object* _findHoverObject();
 		void _updateHover();
@@ -71,6 +88,8 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE virtual bool _checkHover() { return (this->_findHoverObject() != NULL); }
 
 	private:
+		static harray<PropertyDescription> _propertyDescriptions;
+
 		Object* _thisObject; // used for internal optimization to avoid dynamic_cast
 
 	};

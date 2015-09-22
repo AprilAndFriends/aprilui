@@ -68,6 +68,11 @@ namespace aprilui
 		
 		void setCaretIndexAt(gvec2 position);
 
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
+		
+		void notifyEvent(chstr type, EventArgs* args);
+
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
@@ -75,10 +80,6 @@ namespace aprilui
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);
 
-		void notifyEvent(chstr type, EventArgs* args);
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-		
 		DEPRECATED_ATTRIBUTE inline int getCursorIndex() { return getCaretIndex(); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndex(int value) { this->setCaretIndex(value); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }

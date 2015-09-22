@@ -54,6 +54,25 @@ namespace aprilui
 		this->_drawLabel(drawRect, drawColor);
 	}
 
+	hstr Label::getProperty(chstr name)
+	{
+		hstr result = LabelBase::getProperty(name);
+		if (result == "")
+		{
+			result = Object::getProperty(name);
+		}
+		return result;
+	}
+
+	bool Label::setProperty(chstr name, chstr value)
+	{
+		if (LabelBase::setProperty(name, value))
+		{
+			return true;
+		}
+		return Object::setProperty(name, value);
+	}
+
 	void Label::notifyEvent(chstr type, EventArgs* args)
 	{
 		Object::notifyEvent(type, args);
@@ -90,22 +109,4 @@ namespace aprilui
 		return Object::triggerEvent(type, userData);
 	}
 
-	hstr Label::getProperty(chstr name)
-	{
-		hstr result = LabelBase::getProperty(name);
-		if (result == "")
-		{
-			result = Object::getProperty(name);
-		}
-		return result;
-	}
-
-	bool Label::setProperty(chstr name, chstr value)
-	{
-		if (LabelBase::setProperty(name, value))
-		{
-			return true;
-		}
-		return Object::setProperty(name, value);
-	}
 }

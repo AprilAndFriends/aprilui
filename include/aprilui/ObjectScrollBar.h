@@ -53,10 +53,10 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		void notifyEvent(chstr type, EventArgs* args);
-
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
+		void notifyEvent(chstr type, EventArgs* args);
 
 		virtual void addScrollValue(float value) = 0;
 		void addScrollValueBackground(float value);

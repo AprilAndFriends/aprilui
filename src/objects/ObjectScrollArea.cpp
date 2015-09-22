@@ -309,6 +309,33 @@ namespace aprilui
 		return child;
 	}
 
+	hstr ScrollArea::getProperty(chstr name)
+	{
+		if (name == "allow_drag")			return this->isAllowDrag();
+		if (name == "inertia")				return this->getInertia();
+		if (name == "drag_threshold")		return this->getDragThreshold();
+		if (name == "drag_max_speed")		return this->getDragMaxSpeed();
+		if (name == "swap_scroll_wheels")	return this->isSwapScrollWheels();
+		hstr result = ButtonBase::getProperty(name);
+		if (result == "")
+		{
+			result = Object::getProperty(name);
+		}
+		return result;
+	}
+
+	bool ScrollArea::setProperty(chstr name, chstr value)
+	{
+		if (name == "allow_drag")				this->setAllowDrag(value);
+		else if (name == "inertia")				this->setInertia(value);
+		else if (name == "drag_threshold")		this->setDragThreshold(value);
+		else if (name == "drag_max_speed")		this->setDragMaxSpeed(value);
+		else if (name == "swap_scroll_wheels")	this->setSwapScrollWheels(value);
+		else if (ButtonBase::setProperty(name, value)) {}
+		else return Object::setProperty(name, value);
+		return true;
+	}
+
 	void ScrollArea::notifyEvent(chstr type, EventArgs* args)
 	{
 		Object::notifyEvent(type, args);
@@ -362,33 +389,6 @@ namespace aprilui
 	bool ScrollArea::triggerEvent(chstr type, void* userData)
 	{
 		return Object::triggerEvent(type, userData);
-	}
-
-	hstr ScrollArea::getProperty(chstr name)
-	{
-		if (name == "allow_drag")			return this->isAllowDrag();
-		if (name == "inertia")				return this->getInertia();
-		if (name == "drag_threshold")		return this->getDragThreshold();
-		if (name == "drag_max_speed")		return this->getDragMaxSpeed();
-		if (name == "swap_scroll_wheels")	return this->isSwapScrollWheels();
-		hstr result = ButtonBase::getProperty(name);
-		if (result == "")
-		{
-			result = Object::getProperty(name);
-		}
-		return result;
-	}
-
-	bool ScrollArea::setProperty(chstr name, chstr value)
-	{
-		if		(name == "allow_drag")			this->setAllowDrag(value);
-		else if (name == "inertia")				this->setInertia(value);
-		else if (name == "drag_threshold")		this->setDragThreshold(value);
-		else if (name == "drag_max_speed")		this->setDragMaxSpeed(value);
-		else if (name == "swap_scroll_wheels")	this->setSwapScrollWheels(value);
-		else if (ButtonBase::setProperty(name, value)) { }
-		else return Object::setProperty(name, value);
-		return true;
 	}
 
 	bool ScrollArea::onMouseDown(april::Key keyCode)
