@@ -106,7 +106,7 @@ namespace aprilui
 	{
 		if (this->image != NULL)
 		{
-			this->rect.setSize(this->image->getSrcSize());
+			this->setSize(this->image->getSrcSize());
 			this->resetPivot();
 		}
 	}
