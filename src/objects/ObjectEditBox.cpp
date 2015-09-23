@@ -33,6 +33,20 @@ namespace aprilui
 {
 	harray<PropertyDescription> EditBox::_propertyDescriptions;
 
+	hstr EditBox::defaultFilterUnsignedNumeric = "0123456789";
+	hstr EditBox::defaultFilterNumeric = EditBox::defaultFilterUnsignedNumeric + "-";
+	hstr EditBox::defaultFilterDecimal = EditBox::defaultFilterNumeric + ".";
+	hstr EditBox::defaultFilterAlphaUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	hstr EditBox::defaultFilterAlphaLowerCase = "abcdefghijklmnopqrstuvwxyz";
+	hstr EditBox::defaultFilterAlpha = EditBox::defaultFilterAlphaUpperCase + EditBox::defaultFilterAlphaLowerCase;
+	hstr EditBox::defaultFilterAlphaNumericUpperCase = EditBox::defaultFilterAlphaUpperCase + EditBox::defaultFilterUnsignedNumeric;
+	hstr EditBox::defaultFilterAlphaNumericLowerCase = EditBox::defaultFilterAlphaLowerCase + EditBox::defaultFilterUnsignedNumeric;
+	hstr EditBox::defaultFilterAlphaNumeric = EditBox::defaultFilterAlpha + EditBox::defaultFilterUnsignedNumeric;
+	hstr EditBox::defaultFilterAsciiNoSpace = EditBox::defaultFilterAlphaNumeric + "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+	hstr EditBox::defaultFilterAscii = EditBox::defaultFilterAsciiNoSpace + " ";
+	hstr EditBox::defaultFilterEmail = EditBox::defaultFilterAlphaNumeric + "+-_.@";
+	hstr EditBox::defaultFilterEmailComplete = EditBox::defaultFilterEmail + "!#$%&'*/=?^`{|}~";
+
 	EditBox::EditBox(chstr name) : Label(name), ButtonBase()
 	{
 		this->text = "";

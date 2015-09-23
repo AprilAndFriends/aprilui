@@ -80,6 +80,20 @@ namespace aprilui
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);
 
+		static hstr defaultFilterUnsignedNumeric;
+		static hstr defaultFilterNumeric;
+		static hstr defaultFilterDecimal;
+		static hstr defaultFilterAlphaUpperCase;
+		static hstr defaultFilterAlphaLowerCase;
+		static hstr defaultFilterAlpha;
+		static hstr defaultFilterAlphaNumericUpperCase;
+		static hstr defaultFilterAlphaNumericLowerCase;
+		static hstr defaultFilterAlphaNumeric;
+		static hstr defaultFilterAsciiNoSpace;
+		static hstr defaultFilterAscii;
+		static hstr defaultFilterEmail;
+		static hstr defaultFilterEmailComplete;
+
 		DEPRECATED_ATTRIBUTE inline int getCursorIndex() { return getCaretIndex(); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndex(int value) { this->setCaretIndex(value); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
