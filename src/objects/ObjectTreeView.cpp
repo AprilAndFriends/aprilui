@@ -297,6 +297,7 @@ namespace aprilui
 		int offset = 0;
 		foreach (TreeViewNode*, it, this->nodes)
 		{
+			(*it)->setVisible(true);
 			offset += (*it)->_updateDisplay(offset);
 		}
 		if (hbetweenIE(this->selectedIndex, 0, this->items.size()))
@@ -321,11 +322,33 @@ namespace aprilui
 			this->scrollArea->setHeight(offset * this->itemHeight + (offset - 1) * this->spacingHeight);
 			this->scrollArea->setScrollOffsetY(scrollOffsetY);
 			this->scrollArea->setVisible(this->items.size() > 0);
+			this->_optimizeVisibility();
 		}
 	}
 
 	void TreeView::_updateItem(int index)
 	{
+	}
+
+	void TreeView::_optimizeVisibility()
+	{
+		if (this->scrollArea != NULL)
+		{
+			grect rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
+			foreach (TreeViewNode*, it, this->nodes)
+			{
+				if ((*it)->isExpanded() || rect.intersects((*it)->getRect()))
+				{
+					(*it)->setVisible(true);
+					(*it)->setAwake(true);
+				}
+				else
+				{
+					(*it)->setVisible(false);
+					(*it)->setAwake(false);
+				}
+			}
+		}
 	}
 
 	hstr TreeView::getProperty(chstr name)

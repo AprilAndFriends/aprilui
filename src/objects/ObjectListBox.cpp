@@ -84,6 +84,7 @@ namespace aprilui
 	{
 		for_iter (i, 0, this->items.size())
 		{
+			this->items[i]->setVisible(true);
 			this->_updateItem(i);
 		}
 		this->_updateScrollArea();
@@ -118,6 +119,28 @@ namespace aprilui
 			this->scrollArea->setHeight(this->items.size() * this->itemHeight);
 			this->scrollArea->setScrollOffsetY(scrollOffsetY);
 			this->scrollArea->setVisible(this->items.size() > 0);
+			this->_optimizeVisibility();
+		}
+	}
+
+	void ListBox::_optimizeVisibility()
+	{
+		if (this->scrollArea != NULL)
+		{
+			grect rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
+			foreach (ListBoxItem*, it, this->items)
+			{
+				if (rect.intersects((*it)->getRect()))
+				{
+					(*it)->setVisible(true);
+					(*it)->setAwake(true);
+				}
+				else
+				{
+					(*it)->setVisible(false);
+					(*it)->setAwake(false);
+				}
+			}
 		}
 	}
 

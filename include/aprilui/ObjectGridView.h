@@ -72,6 +72,7 @@ namespace aprilui
 		void _updateRow(int index);
 		void _updateItem(int index);
 		void _updateScrollArea();
+		void _optimizeVisibility();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

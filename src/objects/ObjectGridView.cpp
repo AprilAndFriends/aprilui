@@ -100,6 +100,7 @@ namespace aprilui
 	{
 		for_iter (i, 0, this->rows.size())
 		{
+			this->rows[i]->setVisible(true);
 			this->_updateRow(i);
 		}
 		this->_updateScrollArea();
@@ -144,6 +145,28 @@ namespace aprilui
 			this->scrollArea->setHeight(this->rows.size() * this->itemHeight + (this->rows.size() - 1) * this->spacingHeight);
 			this->scrollArea->setScrollOffsetY(scrollOffsetY);
 			this->scrollArea->setVisible(this->rows.size() > 0);
+			this->_optimizeVisibility();
+		}
+	}
+
+	void GridView::_optimizeVisibility()
+	{
+		if (this->scrollArea != NULL)
+		{
+			grect rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
+			foreach (GridViewRow*, it, this->rows)
+			{
+				if (rect.intersects((*it)->getRect()))
+				{
+					(*it)->setVisible(true);
+					(*it)->setAwake(true);
+				}
+				else
+				{
+					(*it)->setVisible(false);
+					(*it)->setAwake(false);
+				}
+			}
 		}
 	}
 

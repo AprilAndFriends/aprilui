@@ -66,8 +66,11 @@ namespace aprilui
 		april::Color selectedPushedColor;
 		bool allowDrag;
 
+		void _update(float timeDelta);
+
 		virtual void _updateDisplay() = 0;
 		virtual void _updateItem(int index) = 0;
+		virtual void _optimizeVisibility();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

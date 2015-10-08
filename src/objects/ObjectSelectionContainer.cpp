@@ -190,4 +190,14 @@ namespace aprilui
 		}
 	}
 
+	void SelectionContainer::_update(float timeDelta)
+	{
+		Container::_update(timeDelta);
+		this->_optimizeVisibility();
+	}
+
+	void SelectionContainer::_optimizeVisibility()
+	{
+	}
+
 }
