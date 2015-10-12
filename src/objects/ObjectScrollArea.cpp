@@ -437,28 +437,39 @@ namespace aprilui
 		return Object::_mouseMove();
 	}
 
-	bool ScrollArea::_mouseScroll(float x, float y)
+	bool ScrollArea::onMouseScroll(float x, float y)
 	{
-		bool result = false;
-		Container* parent = dynamic_cast<Container*>(this->parent);
-		if (parent != NULL && parent->isCursorInside())
+		// has to override its children which is why onMouseScroll() is overriden and not _mouseScroll()
+		if (this->hitTest != HIT_TEST_DISABLED_RECURSIVE && this->isVisible() && this->isDerivedEnabled())
 		{
-			if (this->swapScrollWheels)
+			Container* parent = dynamic_cast<Container*>(this->parent);
+			this->_overrideHoverMode = true;
+			bool result = (this->_findHoverObject() == this);
+			this->_overrideHoverMode = false;
+			if (result)
 			{
-				hswap(x, y);
+				result = false;
+				if (this->swapScrollWheels)
+				{
+					hswap(x, y);
+				}
+				if (parent->scrollBarV != NULL)
+				{
+					parent->scrollBarV->addScrollValue(parent->scrollBarV->_calcScrollMove(x, y));
+					result = true;
+				}
+				if (parent->scrollBarH != NULL)
+				{
+					parent->scrollBarH->addScrollValue(parent->scrollBarH->_calcScrollMove(x, y));
+					result = true;
+				}
 			}
-			if (parent->scrollBarV != NULL)
+			if (result)
 			{
-				parent->scrollBarV->addScrollValue(parent->scrollBarV->_calcScrollMove(x, y));
-				result = true;
-			}
-			if (parent->scrollBarH != NULL)
-			{
-				parent->scrollBarH->addScrollValue(parent->scrollBarH->_calcScrollMove(x, y));
-				result = true;
+				return true;
 			}
 		}
-		return (result || Object::_mouseScroll(x, y));
+		return Object::onMouseScroll(x, y);
 	}
 
 	bool ScrollArea::_buttonDown(april::Button buttonCode)

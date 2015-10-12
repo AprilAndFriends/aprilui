@@ -79,6 +79,7 @@ namespace aprilui
 
 		bool onMouseDown(april::Key keyCode);
 		bool onMouseUp(april::Key keyCode);
+		bool onMouseScroll(float x, float y);
 
 		static float defaultInertia;
 		static float defaultDragThreshold;
@@ -103,7 +104,6 @@ namespace aprilui
 
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
-		bool _mouseScroll(float x, float y);
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 
