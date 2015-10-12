@@ -148,7 +148,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
 			listBoxItem = listBox->createItem(hrand(listBox->getItemCount() + 1), april::generateName("item "));
 			listBoxItem->setText(listBoxItem->getName());
-			listBoxItem->setFontEffect(atres::BORDER);
+			listBoxItem->setEffect(atres::TextEffect::Border);
 			break;
 		case april::AK_DELETE:
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
@@ -159,8 +159,8 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			indices += treeView->getItemAt(indices)->getNodes().size();
 			treeViewNode = treeView->createItem(indices, april::generateName("node "));
 			treeViewNode->getLabel()->setText(treeViewNode->getName());
-			treeViewNode->getLabel()->setFontEffect(atres::BORDER);
-			treeViewNode->getLabel()->setHorzFormatting(atres::LEFT);
+			treeViewNode->getLabel()->setEffect(atres::TextEffect::Border);
+			treeViewNode->getLabel()->setHorzFormatting(atres::Horizontal::Left);
 			break;
 		case april::AK_END:
 			treeView = dataset->getObject<aprilui::TreeView*>("tree_view");
