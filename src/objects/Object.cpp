@@ -655,12 +655,14 @@ namespace aprilui
 		{
 			return;
 		}
-		gmat4 originalMatrix = april::rendersys->getModelviewMatrix();
-		grect viewport;
+		gmat4 modelviewMatrix = april::rendersys->getModelviewMatrix();
+		gmat4 projectionMatrix;
 		grect orthoProjection;
+		grect viewport;
 		bool clipped = (this->clip && this->parent != NULL);
 		if (clipped)
 		{
+			projectionMatrix = april::rendersys->getProjectionMatrix();
 			orthoProjection = april::rendersys->getOrthoProjection();
 			viewport = april::rendersys->getViewport();
 			gvec2 ratio = viewport.getSize() / orthoProjection.getSize();
@@ -704,10 +706,11 @@ namespace aprilui
 		}
 		if (clipped)
 		{
+			april::rendersys->setProjectionMatrix(projectionMatrix);
 			april::rendersys->setOrthoProjection(orthoProjection);
 			april::rendersys->setViewport(viewport);
 		}
-		april::rendersys->setModelviewMatrix(originalMatrix);
+		april::rendersys->setModelviewMatrix(modelviewMatrix);
 	}
 	
 	void Object::_update(float timeDelta)
