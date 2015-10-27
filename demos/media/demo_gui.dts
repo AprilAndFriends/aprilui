@@ -20,7 +20,7 @@
 		</Object>
 		<Object type="Container" rect="0,0,1024,768">
 			<Object type="ImageButton" name="hover_image_button" image="texture/test" rect="32,96,64,64"/>
-			<Object type="ImageButton" name="hover_image_button_color_mode" image="texture/test" hover_image="texture/test_color_mode" rect="96,96,64,64"/>
+			<Object type="ImageButton" name="hover_image_button_color_mode" image="texture/test_color_mode" rect="96,96,64,64"/>
 			<Object type="ImageBox" name="colored_image_box" image="texture/test" color="FF7F7F" rect="32,128,128,64">
 				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
 				<Animator type="MoverY" amplitude="100" speed="0.25"/>
