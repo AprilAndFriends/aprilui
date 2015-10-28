@@ -262,22 +262,13 @@ namespace aprilui
 			this->_lastScroll = this->scroll;
 			this->_lastRect = rect;
 		}
-		april::rendersys->setTextureBlendMode(this->blendMode);
-		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
+		april::rendersys->setBlendMode(this->blendMode);
+		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
 		if (this->tileVertices.size() == 0)
 		{
 			return;
 		}
-		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
-		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size(), color);
-		}
-		else
-		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size());
-		}
-		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
-		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
+		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size(), color);
 	}
 
 }

@@ -346,18 +346,9 @@ namespace aprilui
 		}
 		april::rendersys->setTexture(this->texture->getTexture());
 		this->tryLoadTextureCoordinates();
-		april::rendersys->setTextureBlendMode(this->blendMode);
-		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
-		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
-		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->vertices, 4, color);
-		}
-		else
-		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, this->vertices, 4);
-		}
-		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
-		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(this->blendMode);
+		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
+		april::rendersys->render(april::RO_TRIANGLE_STRIP, this->vertices, 4, color);
 	}
 
 	void Image::draw(harray<april::TexturedVertex> vertices, april::Color color)
@@ -382,18 +373,9 @@ namespace aprilui
 			it->u = (rect.x + it->u * rect.w) * iw;
 			it->v = (rect.y + it->v * rect.h) * ih;
 		}
-		april::rendersys->setTextureBlendMode(this->blendMode);
-		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
-		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
-		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)vertices, vertices.size(), color);
-		}
-		else
-		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)vertices, vertices.size());
-		}
-		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
-		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(this->blendMode);
+		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
+		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)vertices, vertices.size(), color);
 	}
 	
 }

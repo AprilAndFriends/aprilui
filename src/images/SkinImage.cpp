@@ -189,8 +189,8 @@ namespace aprilui
 			this->texture->load();
 		}
 		april::rendersys->setTexture(this->texture->getTexture());
-		april::rendersys->setTextureBlendMode(this->blendMode);
-		april::rendersys->setTextureColorMode(this->colorMode, this->colorModeFactor);
+		april::rendersys->setBlendMode(this->blendMode);
+		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
 		this->tryLoadTextureCoordinates();
 		if (this->_lastDrawRect != rect || !this->_skinCoordinatesCalculated)
 		{
@@ -256,16 +256,7 @@ namespace aprilui
 				ADD_VERTICES(right, 10, 11, 14, 15);
 			}
 		}
-		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
-		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
-		}
-		else
-		{
-			april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size());
-		}
-		april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
-		april::rendersys->setTextureColorMode(april::CM_DEFAULT);
+		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
 	}
 
 	void SkinImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
