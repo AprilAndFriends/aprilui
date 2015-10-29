@@ -36,7 +36,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}</ProjectGuid>
-    <RootNamespace>demo_tiledimage</RootNamespace>
+    <RootNamespace>demo_tileimage</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <ApplicationType>Windows Phone</ApplicationType>
@@ -68,7 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demos\demo_tiledimage\demo_tiledimage.cpp" />
+    <ClCompile Include="..\..\demos\demo_tileimage\demo_tileimage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="media\arial.png" />
@@ -143,7 +143,7 @@
     <None Include="media\demo_simple.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="media\demo_tiledimage.dts">
+    <None Include="media\demo_tileimage.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="media\demo_zorder.dts">
@@ -170,8 +170,8 @@
     <None Include="media\transparency.tex">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="..\..\demos\demo_tiledimage\TemporaryKey.pfx" />
-    <AppxManifest Include="..\..\demos\demo_tiledimage\Package-winp8.appxmanifest">
+    <None Include="..\..\demos\demo_tileimage\TemporaryKey.pfx" />
+    <AppxManifest Include="..\..\demos\demo_tileimage\Package-winp8.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
   </ItemGroup>

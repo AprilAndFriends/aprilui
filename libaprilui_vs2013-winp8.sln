@@ -12,7 +12,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_gui", "msvc\vs2013-win
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_zorder", "msvc\vs2013-winp8\demo_zorder.vcxproj", "{0AC0BEAB-AFC2-476C-8B3C-565AD0408A5E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_tiledimage", "msvc\vs2013-winp8\demo_tiledimage.vcxproj", "{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo_tileimage", "msvc\vs2013-winp8\demo_tileimage.vcxproj", "{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\msvc\vs2013-winp8\libhltypes.vcxproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
 EndProject

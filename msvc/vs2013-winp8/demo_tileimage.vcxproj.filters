@@ -117,10 +117,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\demos\demo_tiledimage\TemporaryKey.pfx">
+    <None Include="..\..\demos\demo_tileimage\TemporaryKey.pfx">
       <Filter>winrt</Filter>
     </None>
-    <None Include="media\demo_tiledimage.dts">
+    <None Include="media\demo_tileimage.dts">
       <Filter>winrt\media</Filter>
     </None>
     <None Include="media\texts\de\demo.loc">
@@ -141,7 +141,7 @@
     <None Include="media\demo_simple.dts">
       <Filter>winrt\media</Filter>
     </None>
-    <None Include="media\demo_tiledimage.dts">
+    <None Include="media\demo_tileimage.dts">
       <Filter>winrt\media</Filter>
     </None>
     <None Include="media\demo_zorder.dts">
@@ -164,12 +164,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demos\demo_tiledimage\demo_tiledimage.cpp">
+    <ClCompile Include="..\..\demos\demo_tileimage\demo_tileimage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="..\..\demos\demo_tiledimage\Package-winp8.appxmanifest">
+    <AppxManifest Include="..\..\demos\demo_tileimage\Package-winp8.appxmanifest">
       <Filter>winrt</Filter>
     </AppxManifest>
   </ItemGroup>

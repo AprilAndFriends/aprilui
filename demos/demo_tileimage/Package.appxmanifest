@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="com.aprilui.demoTiledImage" Publisher="CN=AprilUI" Version="4.0.0.0" />
+  <Identity Name="com.aprilui.demoTileImage" Publisher="CN=AprilUI" Version="4.0.0.0" />
   <Properties>
     <DisplayName>AprilUI Demo Tiled Image</DisplayName>
     <PublisherDisplayName>AprilUI</PublisherDisplayName>
@@ -16,7 +16,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="april.App">
-      <m2:VisualElements DisplayName="demo_tiledimage" Square150x150Logo="media\assets\Logo.png" Square30x30Logo="media\assets\LogoTiny.png" Description="AprilUI Demo" ForegroundText="light" BackgroundColor="#464646">
+      <m2:VisualElements DisplayName="demo_tileimage" Square150x150Logo="media\assets\Logo.png" Square30x30Logo="media\assets\LogoTiny.png" Description="AprilUI Demo" ForegroundText="light" BackgroundColor="#464646">
         <m2:DefaultTile Wide310x150Logo="media\assets\WideLogo.png" Square310x310Logo="media\assets\LogoBig.png" DefaultSize="square150x150Logo" Square70x70Logo="media\assets\LogoSmall.png">
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />

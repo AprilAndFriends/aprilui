@@ -52,7 +52,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}</ProjectGuid>
-    <RootNamespace>demo_tiledimage</RootNamespace>
+    <RootNamespace>demo_tileimage</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props-demos\default.props" />
@@ -79,7 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demos\demo_tiledimage\demo_tiledimage.cpp" />
+    <ClCompile Include="..\..\demos\demo_tileimage\demo_tileimage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

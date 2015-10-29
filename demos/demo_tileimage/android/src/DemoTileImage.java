@@ -1,10 +1,10 @@
-package com.aprilui.demoTiledImage;
+package com.aprilui.demoTileImage;
 
-public class DemoTiledImage extends com.april.Activity
+public class DemoTileImage extends com.april.Activity
 {
 	static
 	{
-		System.loadLibrary("demo_tiledimage");
+		System.loadLibrary("demo_tileimage");
 	}
 	
 	@Override
