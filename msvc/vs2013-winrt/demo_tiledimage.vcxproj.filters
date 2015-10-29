@@ -46,7 +46,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="..\..\demos\demo_tiledimage\Package.appxmanifest">
+    <AppxManifest Include="..\..\demos\demo_tileimage\Package.appxmanifest">
       <Filter>winrt</Filter>
     </AppxManifest>
   </ItemGroup>
@@ -156,9 +156,18 @@
     <Image Include="media\circle.png">
       <Filter>winrt\media</Filter>
     </Image>
+    <Image Include="media\cursor.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\logo.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\skin_image.png">
+      <Filter>winrt\media</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\demos\demo_tiledimage\TemporaryKey.pfx">
+    <None Include="..\..\demos\demo_tileimage\TemporaryKey.pfx">
       <Filter>winrt</Filter>
     </None>
     <None Include="media\arial.font">
@@ -170,10 +179,10 @@
     <None Include="media\demo_simple.dts">
       <Filter>winrt\media</Filter>
     </None>
-    <None Include="media\demo_tiledimage.dts">
+    <None Include="media\demo_tileimage.dts">
       <Filter>winrt\media</Filter>
     </None>
-    <None Include="media\demo_tiledimage.dts">
+    <None Include="media\demo_tileimage.dts">
       <Filter>winrt\media</Filter>
     </None>
     <None Include="media\scroll_skin.tex">
@@ -203,14 +212,20 @@
     <None Include="media\demo_zorder.dts">
       <Filter>winrt\media</Filter>
     </None>
+    <None Include="media\demo_gui_include.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\skin_image.tex">
+      <Filter>winrt\media</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\demos\demo_tiledimage\winrt-cursors.rc">
+    <ResourceCompile Include="..\..\demos\demo_tileimage\winrt-cursors.rc">
       <Filter>winrt</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demos\demo_tiledimage\demo_tiledimage.cpp">
+    <ClCompile Include="..\..\demos\demo_tileimage\demo_tileimage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

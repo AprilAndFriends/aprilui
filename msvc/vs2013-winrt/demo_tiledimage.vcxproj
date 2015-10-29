@@ -36,7 +36,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}</ProjectGuid>
-    <RootNamespace>demo_tiledimage</RootNamespace>
+    <RootNamespace>demo_tileimage</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <ApplicationType>Windows Store</ApplicationType>
@@ -68,7 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\demos\demo_tiledimage\demo_tiledimage.cpp" />
+    <ClCompile Include="..\..\demos\demo_tileimage\demo_tileimage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="media\assets\Logo.scale-100.png">
@@ -161,29 +161,58 @@
     <Image Include="media\assets\WideLogo.scale-80.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="media\arial.png" />
-    <Image Include="media\circle.png" />
-    <Image Include="media\scroll_skin.png" />
-    <Image Include="media\texture.jpg" />
-    <Image Include="media\transparency.png" />
+    <Image Include="media\arial.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="media\circle.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="media\cursor.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="media\logo.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="media\scroll_skin.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="media\skin_image.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="media\texture.jpg">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="media\transparency.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
     <None Include="media\arial.font">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="media\cursor.ani" />
-    <None Include="media\simple.cur" />
+    <None Include="media\cursor.ani">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="media\demo_gui_include.dts">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="media\simple.cur">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="media\demo_gui.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="media\demo_simple.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="media\demo_tiledimage.dts">
+    <None Include="media\demo_tileimage.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="media\demo_zorder.dts">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="media\scroll_skin.tex">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="media\skin_image.tex">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="media\texts\de\demo.loc">
@@ -201,13 +230,13 @@
     <None Include="media\transparency.tex">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="..\..\demos\demo_tiledimage\TemporaryKey.pfx" />
-    <AppxManifest Include="..\..\demos\demo_tiledimage\Package.appxmanifest">
+    <None Include="..\..\demos\demo_gui\TemporaryKey.pfx" />
+    <AppxManifest Include="..\..\demos\demo_gui\Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\demos\demo_tiledimage\winrt-cursors.rc" />
+    <ResourceCompile Include="..\..\demos\demo_tileimage\winrt-cursors.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

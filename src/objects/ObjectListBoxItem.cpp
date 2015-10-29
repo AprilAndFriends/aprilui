@@ -156,6 +156,8 @@ namespace aprilui
 			april::Color color = this->_getCurrentBackgroundColor() * drawColor;
 			if (color.a > 0)
 			{
+				april::rendersys->setBlendMode(april::BM_DEFAULT);
+				april::rendersys->setColorMode(april::CM_DEFAULT);
 				april::rendersys->drawFilledRect(this->_makeDrawRect(), color);
 			}
 		}

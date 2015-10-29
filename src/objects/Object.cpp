@@ -747,6 +747,8 @@ namespace aprilui
 	void Object::_drawDebug()
 	{
 		grect rect = this->_makeDrawRect();
+		april::rendersys->setBlendMode(april::BM_DEFAULT);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 		if (this->debugColor.a > 0)
 		{
 			april::rendersys->drawFilledRect(rect, this->debugColor);

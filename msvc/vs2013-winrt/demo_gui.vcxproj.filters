@@ -156,6 +156,15 @@
     <Image Include="media\circle.png">
       <Filter>winrt\media</Filter>
     </Image>
+    <Image Include="media\cursor.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\logo.png">
+      <Filter>winrt\media</Filter>
+    </Image>
+    <Image Include="media\skin_image.png">
+      <Filter>winrt\media</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\demos\demo_gui\TemporaryKey.pfx">
@@ -170,7 +179,7 @@
     <None Include="media\demo_simple.dts">
       <Filter>winrt\media</Filter>
     </None>
-    <None Include="media\demo_tiledimage.dts">
+    <None Include="media\demo_tileimage.dts">
       <Filter>winrt\media</Filter>
     </None>
     <None Include="media\demo_gui.dts">
@@ -201,6 +210,12 @@
       <Filter>winrt\media</Filter>
     </None>
     <None Include="media\demo_zorder.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\demo_gui_include.dts">
+      <Filter>winrt\media</Filter>
+    </None>
+    <None Include="media\skin_image.tex">
       <Filter>winrt\media</Filter>
     </None>
   </ItemGroup>

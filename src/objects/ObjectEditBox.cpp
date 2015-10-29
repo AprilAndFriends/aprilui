@@ -703,7 +703,9 @@ namespace aprilui
 		{
 			april::Color selectionColor = this->_makeSelectionDrawColor(drawColor);
 			harray<grect> selectionRects = this->_selectionRects;
-			foreach (grect, it, selectionRects)
+			april::rendersys->setBlendMode(april::BM_DEFAULT);
+			april::rendersys->setColorMode(april::CM_DEFAULT);
+			foreach(grect, it, selectionRects)
 			{
 				(*it) += drawRect.getPosition() + this->caretOffset;
 				(*it).clip(drawRect);
