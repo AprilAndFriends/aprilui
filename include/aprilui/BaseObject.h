@@ -86,9 +86,6 @@ namespace aprilui
 
 		void update(float timeDelta);
 
-		DEPRECATED_ATTRIBUTE void attach(Object* object);
-		DEPRECATED_ATTRIBUTE void detach();
-
 	protected:
 		hstr name;
 		hstr tag;

@@ -68,9 +68,6 @@ namespace aprilui
 	_EXCEPTION_CLASS_2(ObjectHasParentException, child, parent);
 	#define ObjectHasParentException(child, parent) aprilui::_ObjectHasParentException(child, parent, __FILE__, __LINE__)
 
-	_EXCEPTION_CLASS_1(ObjectWithoutParentException, child);
-	#define ObjectWithoutParentException(child) aprilui::_ObjectWithoutParentException(child, __FILE__, __LINE__)
-
 	_EXCEPTION_CLASS_2(ObjectNotChildException, child, parent);
 	#define ObjectNotChildException(child, parent) aprilui::_ObjectNotChildException(child, parent, __FILE__, __LINE__)
 

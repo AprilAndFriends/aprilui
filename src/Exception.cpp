@@ -47,12 +47,6 @@ namespace aprilui
 		this->_setInternalMessage("Cannot attach object '" + child + "' to object '" + parent + "', object already attached to another parent.", file, line);
 	}
 
-	_ObjectWithoutParentException::_ObjectWithoutParentException(chstr child, const char* file, int line) :
-		hexception("", file, line)
-	{
-		this->_setInternalMessage("Cannot detach object '" + child + "', object has no parent.", file, line);
-	}
-
 	_ObjectNotChildException::_ObjectNotChildException(chstr child, chstr parent, const char* file, int line) :
 		hexception("", file, line)
 	{

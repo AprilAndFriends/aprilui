@@ -212,20 +212,6 @@ namespace aprilui
 		return NULL;
 	}
 
-	void BaseObject::attach(Object* object)
-	{
-		object->addChild(this);
-	}
-
-	void BaseObject::detach()
-	{
-		if (this->parent == NULL)
-		{
-			throw ObjectWithoutParentException(this->getName());
-		}
-		this->parent->removeChild(this);
-	}
-
 	void BaseObject::update(float timeDelta)
 	{
 		if (this->awake)
