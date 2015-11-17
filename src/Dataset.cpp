@@ -864,7 +864,7 @@ namespace aprilui
 			{
 				continue;
 			}
-			// ignore file header, silly utf-8 encoded text files have 2-3 char markers
+			// UTF-8 might have a Byte Order Marker
 			hstr firstLine = lines.first();
 			if (firstLine.size() > 0)
 			{
@@ -875,6 +875,8 @@ namespace aprilui
 				}
 				lines[0] = (i < firstLine.size() ? firstLine(i, firstLine.size() - i) : "");
 			}
+			keyMode = true;
+			values.clear();
 			// now parse the entries
 			foreach (hstr, it2, lines)
 			{
