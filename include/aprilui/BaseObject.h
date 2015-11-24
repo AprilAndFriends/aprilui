@@ -30,6 +30,7 @@ namespace aprilui
 	class Dataset;
 	class EventArgs;
 	class Object;
+	class Style;
 
 	class apriluiExport BaseObject : public EventReceiver
 	{
@@ -41,6 +42,8 @@ namespace aprilui
 		BaseObject(chstr name);
 		~BaseObject();
 		virtual inline hstr getClassName() const { return "BaseObject"; }
+
+		virtual harray<PropertyDescription> getPropertyDescriptions();
 
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);
@@ -67,7 +70,6 @@ namespace aprilui
 		bool isDerivedEnabled();
 		bool isDerivedAwake();
 
-		virtual harray<PropertyDescription> getPropertyDescriptions();
 		bool hasProperty(chstr name);
 
 		/// @returns Whether or not a given object is a direct child of this object
@@ -80,6 +82,9 @@ namespace aprilui
 		bool isAncestor(BaseObject* obj);
 		BaseObject* findChildByName(chstr name);
 		BaseObject* findDescendantByName(chstr name);
+
+		void applyStyle(Style* value);
+		void applyStyleByName(chstr name);
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);

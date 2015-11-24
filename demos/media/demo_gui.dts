@@ -6,16 +6,41 @@
 	<Include path="skin_image.tex"/>
 	<Include path="transparency.tex"/>
 	
-	<Object type="Container" name="root" rect="0,0,1024,768">
+	<Style name="normal_labels">
+		<Object type="Label" font="Arial" effect="shadow" horz_formatting="left"/>
+	</Style>
+	<Style name="options">
+		<Object type="OptionButton" image="texture/test_red" toggled_image="texture/test_green" zorder="100"/>
+	</Style>
+	<Style name="anchoring">
+		<Object type="FilledRect" color="6F6F6F" anchors=""/>
+	</Style>
+	<Style name="infinite_animators">
+		<Animator periods="-1"/>
+	</Style>
+	<Style name="trembling_blue_rects" base="infinite_animators">
+		<Object type="FilledRect" color="007FFF"/>
+		<Animator function="noise" amplitude="4"/>
+	</Style>
+	<Style name="tree_view">
+		<Object type="TreeViewExpander" image="texture/test_green" toggled_image="texture/test_red"/>
+		<Object type="TreeViewImage" image="texture/test"/>
+		<Object type="TreeViewLabel" effect="border" horz_formatting="left"/>
+	</Style>
+	<Style name="list_box">
+		<Object type="ListBoxItem" effect="border"/>
+	</Style>
+	
+	<Object type="Container" name="root" style="infinite_animators" rect="0,0,1024,768">
 		<Object type="ImageBox" name="background" image="texture/test_tile1" rect="0,0,1024,768">
-			<Animator type="TileScrollerX" periods="-1" amplitude="64"/>
-			<Animator type="TileScrollerY" periods="-1" amplitude="-32"/>
+			<Animator type="TileScrollerX" amplitude="64"/>
+			<Animator type="TileScrollerY" amplitude="-32"/>
 			<Object type="FilledRect" color="00FF00" rect="64,32,32,32" angle="50">
 				<Object type="FilledRect" color="FFFF00" rect="64,32,32,32"/>
 			</Object>
 			<Object type="ImageBox" name="background_2" image="texture/test_tile2" color="FFFF00" rect="700,672,324,96">
-				<Animator type="TileScrollerX" periods="-1" amplitude="-64"/>
-				<Animator type="TileScrollerY" periods="-1" amplitude="32"/>
+				<Animator type="TileScrollerX" amplitude="-64"/>
+				<Animator type="TileScrollerY" amplitude="32"/>
 			</Object>
 		</Object>
 		<Object type="Container" rect="0,0,1024,768">
@@ -25,28 +50,28 @@
 				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
 				<Animator type="MoverY" amplitude="100" speed="0.25"/>
 				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="true"/>
-				<Animator type="ZOrderChanger" function="sine" periods="-1" amplitude="50"/>
+				<Animator type="ZOrderChanger" function="sine" amplitude="50"/>
 			</Object>
-			<Object type="FilledRect" name="colored_quad" color="007FFF" rect="32,224,128,64">
-				<Animator type="MoverX" function="noise" periods="-1" amplitude="4"/>
-				<Animator type="MoverY" function="noise" periods="-1" amplitude="4"/>
+			<Object type="FilledRect" name="colored_quad" style="trembling_blue_rects">
+				<Animator type="MoverX"/>
+				<Animator type="MoverY"/>
 			</Object>
 			<Object type="ImageButton" name="image_button_disabled" image="texture/test" disabled_image="texture/test_grey" rect="232,160,128,64" enabled="false">
 				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
 			<Object type="EditBox" name="edit_box" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="true" selection_color="009FFFBF" multi_line="true" font="Arial" horz_formatting="left" vert_formatting="top" rect="600,200,192,64"/>
 			<Object type="FilledRect" color="007F00" rect="32,320,192,160">
-				<Animator type="ScalerX" function="sine" periods="-1" amplitude="0.2" offset="0.8"/>
-				<Animator type="Rotator" periods="-1" amplitude="1" speed="90"/>
+				<Animator type="ScalerX" function="sine" amplitude="0.2" offset="0.8"/>
+				<Animator type="Rotator" amplitude="1" speed="90"/>
 				<Object type="Label" angle="-10" name="label" text="I [b:00FF00]am[/b] a [s 0000FF]label[/s]." effect="border:FF0000" rect="0,64,192,32"/>
 				<Object type="TextImageButton" angle="-10" name="text_button" text="I am a button." hover_text_color="BFBFBF" pushed_text_color="7F7F7F" rect="0,128,192,32"/>
 			</Object>
 			<Object type="ImageBox" name="rotated_image_box" image="transparency/test" angle="30" rect="432,32,128,64">
-				<Animator type="AlphaChanger" function="sine" periods="-1" amplitude="64" speed="1.05" offset="191"/>
+				<Animator type="AlphaChanger" function="sine" amplitude="64" speed="1.05" offset="191"/>
 			</Object>
 			<Object type="ImageButton" name="image_button" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" rect="432,160,128,64" zorder="100">
-				<Animator type="ScalerX" function="sine" periods="-1" amplitude="1.0" offset="0.0" speed="0.5"/>
-				<Animator type="ScalerY" function="sine" periods="-1" amplitude="0.1" offset="1.2" timer="0.25"/>
+				<Animator type="ScalerX" function="sine" amplitude="1.0" offset="0.0" speed="0.5"/>
+				<Animator type="ScalerY" function="sine" amplitude="0.1" offset="1.2" timer="0.25"/>
 			</Object>
 			<Object type="Container" name="recursive_rotation_example" rect="240,290,64,64" zorder="100" angle="10" hit_test="disabled">
 				<Include path="demo_gui_include.dts" name_suffix="_0">
@@ -57,20 +82,20 @@
 				<Include path="demo_gui_include.dts" name_suffix="_1" position="100,100"/>
 			</Object>
 			<Object type="ToggleButton" name="toggle_button" image="texture/test_green" toggled_image="texture/test_hover_3" rect="60,528,128,64" zorder="100">
-				<Animator type="MoverX" function="sine" periods="-1" amplitude="50"/>
-				<Animator type="MoverY" function="sine" periods="-1" amplitude="50" timer="0.25" enabled="false"/>
+				<Animator type="MoverX" function="sine" amplitude="50"/>
+				<Animator type="MoverY" function="sine" amplitude="50" timer="0.25" enabled="false"/>
 			</Object>
 			<Object type="Container" name="slider_container" rect="10,618,800,600">
 				<Object type="ProgressBar" name="progress_bar_slider" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" progress="0.5" direction="right" interactable="true" rect="0,0,128,24">
-					<Animator type="ResizerX" function="sine" periods="-1" amplitude="50"/>
-					<Animator type="ResizerY" function="sine" periods="-1" amplitude="8" timer="0.25"/>
+					<Animator type="ResizerX" function="sine" amplitude="50"/>
+					<Animator type="ResizerY" function="sine" amplitude="8" timer="0.25"/>
 				</Object>
 			</Object>
 			<Object type="Container" name="scrolltest_container" rect="840,32,128,128">
 				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="true">
 					<Object type="ToggleButton" name="toggle_button_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,0,256,128" zorder="100"/>
 					<Object type="ToggleButton" name="toggle_button_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,128,256,128" zorder="100">
-						<Animator type="Rotator" periods="-1" speed="30"/>
+						<Animator type="Rotator" speed="30"/>
 					</Object>
 				</Object>
 				<Object type="ScrollBarV" name="scroll_v" grid_size="32" rect="128,0,16,128">
@@ -81,47 +106,47 @@
 				</Object>
 				<Object type="ScrollBarH" name="scroll_h" skin="scroll_skin" grid_size="32" rect="0,128,128,16"/>
 			</Object>
-			<Object type="ListBox" name="list_box" item_height="32" allow_drag="true" rect="600,32,192,142">
-				<Object type="ListBoxItem" name="list_box_item_0" text="Item 0" effect="border"/>
-				<Object type="ListBoxItem" name="list_box_item_1" text="Item 1" effect="border"/>
-				<Object type="ListBoxItem" name="list_box_item_2" text="Item 2" effect="border"/>
-				<Object type="ListBoxItem" name="list_box_item_3" text="Item 3" effect="border"/>
-				<Object type="ListBoxItem" name="list_box_item_4" text="Item 4" effect="border"/>
-				<Object type="ListBoxItem" name="list_box_item_5" text="Item 5" effect="border"/>
+			<Object type="ListBox" name="list_box" style="list_box" item_height="32" allow_drag="true" rect="600,32,192,142">
+				<Object type="ListBoxItem" name="list_box_item_0" text="Item 0"/>
+				<Object type="ListBoxItem" name="list_box_item_1" text="Item 1*" style=""/>
+				<Object type="ListBoxItem" name="list_box_item_2" text="Item 2"/>
+				<Object type="ListBoxItem" name="list_box_item_3" text="Item 3"/>
+				<Object type="ListBoxItem" name="list_box_item_4" text="Item 4"/>
+				<Object type="ListBoxItem" name="list_box_item_5" text="Item 5"/>
 				<Object type="ScrollBarV" name="list_box_scroll_v" rect="192,0,4,142"/>
 			</Object>
-			<Object type="TreeView" name="tree_view" item_height="32" spacing_width="4" allow_drag="true" rect="600,288,384,144">
+			<Object type="TreeView" name="tree_view" style="tree_view" item_height="32" spacing_width="4" allow_drag="true" rect="600,288,384,144">
 				<Object type="FilledRect" name="tree_view_back" color="0000007F" rect="0,0,384,144" zorder="-10"/>
 				<Object type="TreeViewNode" name="tree_view_node_0">
-					<Object type="TreeViewExpander" name="tree_view_node_0_expander" image="texture/test_green" toggled_image="texture/test_red" toggled="true"/>
-					<Object type="TreeViewImage" name="tree_view_node_0_image" image="texture/test"/>
-					<Object type="TreeViewLabel" name="tree_view_node_0_label" text="Node 0" effect="border" horz_formatting="left"/>
+					<Object type="TreeViewExpander" name="tree_view_node_0_expander" toggled="true"/>
+					<Object type="TreeViewImage" name="tree_view_node_0_image"/>
+					<Object type="TreeViewLabel" name="tree_view_node_0_label" text="Node 0"/>
 					<Object type="TreeViewNode" name="tree_view_node_0_0">
-						<Object type="TreeViewExpander" name="tree_view_node_0_0_expander" image="texture/test_green" toggled_image="texture/test_red"/>
-						<Object type="TreeViewImage" name="tree_view_node_0_0_image" image="texture/test"/>
-						<Object type="TreeViewLabel" name="tree_view_node_0_0_label" text="Node 00" effect="border" horz_formatting="left"/>
+						<Object type="TreeViewExpander" name="tree_view_node_0_0_expander"/>
+						<Object type="TreeViewImage" name="tree_view_node_0_0_image"/>
+						<Object type="TreeViewLabel" name="tree_view_node_0_0_label" text="Node 00"/>
 					</Object>
 					<Object type="TreeViewNode" name="tree_view_node_0_1">
-						<Object type="TreeViewExpander" name="tree_view_node_0_1_expander" image="texture/test_green" toggled_image="texture/test_red"/>
-						<Object type="TreeViewLabel" name="tree_view_node_0_1_label" text="Node 01" effect="border" horz_formatting="left"/>
+						<Object type="TreeViewExpander" name="tree_view_node_0_1_expander"/>
+						<Object type="TreeViewLabel" name="tree_view_node_0_1_label" text="Node 01"/>
 					</Object>
 				</Object>
 				<Object type="TreeViewNode" name="tree_view_node_1">
-					<Object type="TreeViewExpander" name="tree_view_node_1_expander" image="texture/test_green" toggled_image="texture/test_red"/>
-					<Object type="TreeViewImage" name="tree_view_node_1_image" image="texture/test"/>
-					<Object type="TreeViewLabel" name="tree_view_node_1_label" text="Node 1" effect="border" horz_formatting="left"/>
+					<Object type="TreeViewExpander" name="tree_view_node_1_expander"/>
+					<Object type="TreeViewImage" name="tree_view_node_1_image"/>
+					<Object type="TreeViewLabel" name="tree_view_node_1_label" text="Node 1"/>
 					<Object type="TreeViewNode" name="tree_view_node_1_0">
-						<Object type="TreeViewExpander" name="tree_view_node_1_0_expander" image="texture/test_green" toggled_image="texture/test_red"/>
-						<Object type="TreeViewImage" name="tree_view_node_1_0_image" image="texture/test"/>
-						<Object type="TreeViewLabel" name="tree_view_node_1_0_label" text="Node 10" effect="border" horz_formatting="left"/>
+						<Object type="TreeViewExpander" name="tree_view_node_1_0_expander"/>
+						<Object type="TreeViewImage" name="tree_view_node_1_0_image"/>
+						<Object type="TreeViewLabel" name="tree_view_node_1_0_label" text="Node 10"/>
 					</Object>
 					<Object type="TreeViewNode" name="tree_view_node_1_1">
-						<Object type="TreeViewExpander" name="tree_view_node_1_1_expander" image="texture/test_green" toggled_image="texture/test_red"/>
-						<Object type="TreeViewLabel" name="tree_view_node_1_1_label" text="Node 11" effect="border" horz_formatting="left"/>
+						<Object type="TreeViewExpander" name="tree_view_node_1_1_expander"/>
+						<Object type="TreeViewLabel" name="tree_view_node_1_1_label" text="Node 11"/>
 						<Object type="TreeViewNode" name="tree_view_node_1_1_0">
-							<Object type="TreeViewExpander" name="tree_view_node_1_1_0_expander" image="texture/test_green" toggled_image="texture/test_red"/>
-							<Object type="TreeViewImage" name="tree_view_node_1_1_0_image" image="texture/test"/>
-							<Object type="TreeViewLabel" name="tree_view_node_1_1_0_label" text="Node 110" effect="border" horz_formatting="left"/>
+							<Object type="TreeViewExpander" name="tree_view_node_1_1_0_expander"/>
+							<Object type="TreeViewImage" name="tree_view_node_1_1_0_image"/>
+							<Object type="TreeViewLabel" name="tree_view_node_1_1_0_label" text="Node 110"/>
 						</Object>
 					</Object>
 				</Object>
@@ -164,10 +189,10 @@
 				</Object>
 				<Object type="ScrollBarV" name="grid_view_scroll_v" rect="200,0,4,142"/>
 			</Object>
-			<Object type="Container" rect="232,16,128,128" hit_test="disabled_recursive">
-				<Object type="FilledRect" name="crazy_quad" color="6F6F6F" rect="0,0,128,128" anchors="" pivot="96,32">
-					<Animator type="ResizerX" function="sine" periods="-1" amplitude="32"/>
-					<Animator type="ResizerY" function="sine" periods="-1" amplitude="32" timer="0.75"/>
+			<Object type="Container" style="anchoring" rect="232,16,128,128" hit_test="disabled_recursive">
+				<Object type="FilledRect" name="crazy_quad" rect="0,0,128,128" pivot="96,32">
+					<Animator type="ResizerX" function="sine" amplitude="32"/>
+					<Animator type="ResizerY" function="sine" amplitude="32" timer="0.75"/>
 					
 					<Object type="FilledRect" color="FF00FF" anchors="left,right,top,bottom" rect="40,40,48,48"/>
 					
@@ -182,24 +207,24 @@
 				</Object>
 			</Object>
 			<Object type="ImageBox" name="custom_obj" image="texture/test_hover_4" angle="90" rect="340,380,128,64">
-				<Animator type="Rotator" name="custom_animator" function="custom" periods="-1" amplitude="45" speed="0.3"/>
+				<Animator type="Rotator" name="custom_animator" function="custom" amplitude="45" speed="0.3"/>
 			</Object>
-			<Object type="Container" rect="0,672,700,96">
+			<Object type="Container" rect="0,672,700,96" style="normal_labels">
 				<Object type="FilledRect" color="0000007F" rect="0,0,700,96"/>
-				<Object type="Label" name="label_format_0" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" font="Arial" effect="shadow" horz_formatting="left" rect="0,0,700,32"/>
-				<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" font="Arial" effect="shadow" horz_formatting="left" rect="0,32,700,32"/>
-				<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" font="Arial" effect="shadow" horz_formatting="left" rect="0,64,700,32"/>
+				<Object type="Label" name="label_format_0" text_key="{%s %f %f}   {9001:}FORMATTED_KEY PUSH_ME_KEY {(%s)} {1}" rect="0,0,700,32"/>
+				<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" rect="0,32,700,32"/>
+				<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" rect="0,64,700,32"/>
 			</Object>
 			<Object type="ImageBox" name="skinned_image" image="skin_image/test" rect="260,528,192,64"/>
 			<Object type="ProgressBar" name="progress_bar_1" anti_progress_image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
 			<Object type="ProgressBar" name="progress_bar_2" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" stretching="true" direction="up" rect="0,32,16,128">
-				<Animator type="ProgressChanger" name="progress_animator" function="sine" periods="-1" offset="0.625" amplitude="0.625" speed="0.25" timer="2"/>
+				<Animator type="ProgressChanger" name="progress_animator" function="sine" offset="0.625" amplitude="0.625" speed="0.25" timer="2"/>
 			</Object>
 			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" rect="20,20,64,64"/>
-			<Object type="FilledRect" color="000000" rect="260,360,48,128">
-				<Object type="OptionButton" name="option_button_1" image="texture/test_red" toggled_image="texture/test_green" rect="8,8,32,32" zorder="100" toggled="true"/>
-				<Object type="OptionButton" name="option_button_2" image="texture/test_red" toggled_image="texture/test_green" rect="8,48,32,32" zorder="100"/>
-				<Object type="OptionButton" name="option_button_3" image="texture/test_red" toggled_image="texture/test_green" rect="8,88,32,32" zorder="100"/>
+			<Object type="FilledRect" color="000000" rect="260,360,48,128" style="options">
+				<Object type="OptionButton" name="option_button_1" rect="8,8,32,32" toggled="true"/>
+				<Object type="OptionButton" name="option_button_2" rect="8,48,32,32"/>
+				<Object type="OptionButton" name="option_button_3" rect="8,88,32,32"/>
 			</Object>
 		</Object>
 		<Object type="Label" name="keyboard_height" background_color="0000007F" anchors="" rect="368,0,64,32"/>

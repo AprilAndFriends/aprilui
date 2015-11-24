@@ -37,6 +37,7 @@ namespace aprilui
 	class EventArgs;
 	class Image;
 	class Object;
+	class Style;
 	class Texture;
 	
 	class apriluiExport Dataset : public EventReceiver
@@ -57,6 +58,7 @@ namespace aprilui
 		inline hmap<hstr, Animator*>& getAnimators() { return this->animators; }
 		inline hmap<hstr, BaseImage*>& getImages() { return this->images; }
 		inline hmap<hstr, Texture*>& getTextures() { return this->textures; }
+		inline hmap<hstr, Style*>& getStyles() { return this->styles; }
 		inline hmap<hstr, hstr>& getTexts() { return this->texts; }
 		hmap<hstr, BaseObject*> getAllObjects();
 		bool isAnimated();
@@ -67,11 +69,13 @@ namespace aprilui
 		void unload();
 		void registerObjects(BaseObject* root);
 		void unregisterObjects(BaseObject* root);
-		void registerImage(BaseImage* image);
-		void unregisterImage(BaseImage* image);
 		void registerTexture(Texture* texture);
 		void unregisterTexture(Texture* texture);
-		
+		void registerImage(BaseImage* image);
+		void unregisterImage(BaseImage* image);
+		void registerStyle(Style* style);
+		void unregisterStyle(Style* style);
+
 		void registerCallback(chstr name, void (*callback)());
 		void triggerCallback(chstr name);
 		
@@ -103,8 +107,10 @@ namespace aprilui
 		
 		void _destroyTexture(chstr name);
 		void _destroyImage(chstr name);
+		void _destroyStyle(chstr name);
 		void _destroyTexture(Texture* texture);
 		void _destroyImage(BaseImage* image);
+		void _destroyStyle(Style* style);
 		
 		void destroyObjects(chstr rootName);
 		void destroyObjects(BaseObject* root);
@@ -123,6 +129,7 @@ namespace aprilui
 		
 		virtual Texture* getTexture(chstr name);
 		virtual BaseImage* getImage(chstr name);
+		virtual Style* getStyle(chstr name);
 		virtual hstr getTextEntry(chstr textKey);
 		virtual bool hasTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
@@ -130,8 +137,9 @@ namespace aprilui
 		
 		virtual Object* getObject(chstr name);
 		virtual Animator* getAnimator(chstr name);
-		bool hasImage(chstr name);
 		bool hasTexture(chstr name);
+		bool hasImage(chstr name);
+		bool hasStyle(chstr name);
 		bool hasObject(chstr name);
 		bool hasAnimator(chstr name);
 		Object* tryGetObject(chstr name);
@@ -207,8 +215,8 @@ namespace aprilui
 
 		void parseGlobalInclude(chstr path);
 		void parseGlobalIncludeFile(chstr filename);
-		BaseObject* parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
-		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
 	protected:
 		struct QueuedCallback
@@ -228,6 +236,7 @@ namespace aprilui
 		hmap<hstr, Animator*> animators;
 		hmap<hstr, Texture*> textures;
 		hmap<hstr, BaseImage*> images;
+		hmap<hstr, Style*> styles;
 		hmap<hstr, hstr> texts;
 		harray<QueuedCallback> callbackQueue;
 		hmap<hstr, void (*)()> callbacks;
@@ -239,11 +248,12 @@ namespace aprilui
 		void parseTexture(hlxml::Node* node);
 		void parseTextureGroup(hlxml::Node* node);
 		void parseCompositeImage(hlxml::Node* node);
+		void parseStyle(hlxml::Node* node);
 		virtual inline void parseExternalXMLNode(hlxml::Node* node) { }
-		virtual inline BaseObject* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return 0; }
+		virtual inline BaseObject* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return NULL; }
 		
 		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent);
-		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		
 		void readFile(chstr filename);
 		void _loadTexts(chstr path);
@@ -263,6 +273,7 @@ namespace aprilui
 		harray<ustr> _getArgEntries(ustr uString);
 		///! this function is here to silence linker warnings on LLVM compiler...
 		void _throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName);
+
 	};
 
 }

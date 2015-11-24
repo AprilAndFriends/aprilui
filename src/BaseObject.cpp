@@ -16,6 +16,7 @@
 #include "EventArgs.h"
 #include "Exception.h"
 #include "Object.h"
+#include "Style.h"
 
 namespace aprilui
 {
@@ -144,6 +145,34 @@ namespace aprilui
 		this->childrenObjects.sort(&_objectSortCallback);
 	}
 
+	bool BaseObject::isDerivedEnabled()
+	{
+		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
+	}
+
+	bool BaseObject::isDerivedAwake()
+	{
+		return (this->isAwake() && (this->parent == NULL || this->parent->isDerivedAwake()));
+	}
+
+	void BaseObject::setEnabled(bool value)
+	{
+		if (this->enabled != value)
+		{
+			this->enabled = value;
+			this->notifyEvent(Event::EnabledChanged, NULL);
+		}
+	}
+
+	void BaseObject::setAwake(bool value)
+	{
+		if (this->awake != value)
+		{
+			this->awake = value;
+			this->notifyEvent(Event::AwakeChanged, NULL);
+		}
+	}
+
 	bool BaseObject::isChild(BaseObject* obj)
 	{
 		return (obj != NULL && obj->isParent(this));
@@ -235,27 +264,21 @@ namespace aprilui
 		}
 	}
 
-	bool BaseObject::isDerivedEnabled()
+	void BaseObject::applyStyle(Style* style)
 	{
-		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
-	}
-	
-	void BaseObject::setEnabled(bool value)
-	{
-		if (this->enabled != value)
+		if (style != NULL)
 		{
-			this->enabled = value;
-			this->notifyEvent(Event::EnabledChanged, NULL);
+			hmap<hstr, hstr> properties = style->findProperties(this->getClassName());
+			foreach_m (hstr, it, properties)
+			{
+				this->setProperty(it->first, it->second);
+			}
 		}
 	}
 
-	void BaseObject::setAwake(bool value)
+	void BaseObject::applyStyleByName(chstr name)
 	{
-		if (this->awake != value)
-		{
-			this->awake = value;
-			this->notifyEvent(Event::AwakeChanged, NULL);
-		}
+		this->applyStyle(name != "" ? this->dataset->getStyle(name) : NULL);
 	}
 
 	hstr BaseObject::getProperty(chstr name)

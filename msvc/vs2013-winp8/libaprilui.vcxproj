@@ -122,6 +122,7 @@
     <ClCompile Include="..\..\src\objects\ObjectTreeViewLabel.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectTreeViewNode.cpp" />
     <ClCompile Include="..\..\src\PropertyDescription.cpp" />
+    <ClCompile Include="..\..\src\Style.cpp" />
     <ClCompile Include="..\..\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="..\..\include\aprilui\ObjectTreeViewNode.h" />
     <ClInclude Include="..\..\include\aprilui\PropertyDescription.h" />
     <ClInclude Include="..\..\include\aprilui\SkinImage.h" />
+    <ClInclude Include="..\..\include\aprilui\Style.h" />
     <ClInclude Include="..\..\include\aprilui\Texture.h" />
     <ClInclude Include="..\..\include\aprilui\TileImage.h" />
     <ClInclude Include="..\..\src\apriluiUtil.h" />

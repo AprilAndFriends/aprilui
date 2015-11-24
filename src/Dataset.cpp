@@ -31,6 +31,7 @@
 #include "Exception.h"
 #include "Images.h"
 #include "Objects.h"
+#include "Style.h"
 #include "Texture.h"
 
 namespace aprilui
@@ -206,6 +207,36 @@ namespace aprilui
 		delete root;
 	}
 	
+	void Dataset::_destroyTexture(chstr name)
+	{
+		if (!this->textures.hasKey(name))
+		{
+			throw ObjectNotExistsException("Texture", name, this->name);
+		}
+		delete this->textures[name];
+		this->textures.removeKey(name);
+	}
+
+	void Dataset::_destroyImage(chstr name)
+	{
+		if (!this->images.hasKey(name))
+		{
+			throw ObjectNotExistsException("Image", name, this->name);
+		}
+		delete this->images[name];
+		this->images.removeKey(name);
+	}
+
+	void Dataset::_destroyStyle(chstr name)
+	{
+		if (!this->styles.hasKey(name))
+		{
+			throw ObjectNotExistsException("Style", name, this->name);
+		}
+		delete this->styles[name];
+		this->styles.removeKey(name);
+	}
+
 	void Dataset::_destroyTexture(Texture* texture)
 	{
 		hstr filename = texture->getFilename();
@@ -227,25 +258,16 @@ namespace aprilui
 		this->images.removeKey(name);
 		delete image;
 	}
-	
-	void Dataset::_destroyTexture(chstr name)
+
+	void Dataset::_destroyStyle(Style* style)
 	{
-		if (!this->textures.hasKey(name))
+		hstr name = style->getName();
+		if (!this->styles.hasKey(name))
 		{
-			throw ObjectNotExistsException("Texture", name, this->name);
+			throw ObjectNotExistsException("Style", name, this->name);
 		}
-		delete this->textures[name];
-		this->textures.removeKey(name);
-	}
-	
-	void Dataset::_destroyImage(chstr name)
-	{
-		if (!this->images.hasKey(name))
-		{
-			throw ObjectNotExistsException("Image", name, this->name);
-		}
-		delete this->images[name];
-		this->images.removeKey(name);
+		this->styles.removeKey(name);
+		delete style;
 	}
 
 	hstr Dataset::_makeLocalizedTextureName(chstr filename)
@@ -475,9 +497,102 @@ namespace aprilui
 		image->dataset = this;
 	}
 	
+	void Dataset::parseStyle(hlxml::Node* node)
+	{
+		hstr styleName = node->pstr("name");
+		if (this->styles.hasKey(styleName))
+		{
+			throw ObjectExistsException("Style", styleName, this->name);
+		}
+		Style* style = NULL;
+		if (node->pexists("base"))
+		{
+			hstr baseStyleName = node->pstr("base");
+			try
+			{
+				style = this->getStyle(baseStyleName)->clone();
+				style->name = styleName;
+			}
+			catch (hexception& e)
+			{
+				hlog::error(logTag, "Cannot find Base-Style '" + baseStyleName + "':" + e.getMessage());
+			}
+		}
+		if (style == NULL)
+		{
+			style = new Style(styleName);
+		}
+		this->styles[styleName] = style;
+		style->dataset = this;
+		hstr type;
+		hstr name;
+		hmap<hstr, hstr> properties;
+		foreach_xmlnode (child, node)
+		{
+			properties.clear();
+			type = child->pstr("type", "");
+			if (type == "" || aprilui::getObjectFactories().hasKey(type))
+			{
+				foreach_xmlproperty (prop, child)
+				{
+					name = prop->name();
+					if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
+					{
+						hlog::error(logTag, "Using property '" + name + "' in Style is not allowed!");
+					}
+					if (name != "type")
+					{
+						properties[name] = prop->value();
+					}
+				}
+				if (type == "")
+				{
+					if (*child == "Object")
+					{
+						style->objectDefaults.properties.inject(properties);
+					}
+					else if (*child == "Animator")
+					{
+						style->animatorDefaults.properties.inject(properties);
+					}
+				}
+				else
+				{
+					if (*child == "Object")
+					{
+						if (!style->objects.hasKey(type))
+						{
+							style->objects[type] = Style::Group(properties);
+						}
+						else
+						{
+							style->objects[type].properties.inject(properties);
+						}
+					}
+					else if (*child == "Animator")
+					{
+						if (!style->animators.hasKey(type))
+						{
+							style->animators[type] = Style::Group(properties);
+						}
+						else
+						{
+							style->animators[type].properties.inject(properties);
+						}
+					}
+				}
+			}
+			else
+			{
+				hlog::warn(logTag, "Object/Animator type '" + type + "' not found! It might not be registered in aprilui.");
+			}
+		}
+	}
+
 	BaseObject* Dataset::parseObject(hlxml::Node* node, Object* parent)
 	{
-		return this->recursiveObjectParse(node, parent, "", "", gvec2());
+		Style style;
+		return this->recursiveObjectParse(node, parent, &style, "", "", gvec2());
 	}
 	
 	void Dataset::parseTextureGroup(hlxml::Node* node)
@@ -497,10 +612,11 @@ namespace aprilui
 	
 	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent)
 	{
-		return this->recursiveObjectParse(node, parent, "", "", gvec2());
+		Style style;
+		return this->recursiveObjectParse(node, parent, &style, "", "", gvec2());
 	}
 
-	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		hstr objectName;
 		hlxml::Node::Type type;
@@ -518,7 +634,7 @@ namespace aprilui
 			hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
 			hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
 			hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
-			BaseObject* includeRoot = this->parseObjectInclude(path, parent, newNamePrefix, newNameSuffix, offset);
+			BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, offset);
 			BaseObject* descendant = NULL;
 			hstr typeName;
 			foreach_xmlnode (child, node)
@@ -644,6 +760,28 @@ namespace aprilui
 		baseObject->dataset = this;
 		EventArgs args(this);
 		baseObject->notifyEvent(Event::RegisteredInDataset, &args);
+		bool isCustomStyle = node->pexists("style");
+		if (isCustomStyle)
+		{
+			hstr styleName = node->pstr("style");
+			if (styleName != "")
+			{
+				try
+				{
+					style = style->_injected(this->getStyle(styleName));
+				}
+				catch (hexception& e)
+				{
+					hlog::error(logTag, "Cannot find Style '" + styleName + "':" + e.getMessage());
+					isCustomStyle = false;
+				}
+			}
+			else
+			{
+				style = new Style();
+			}
+		}
+		baseObject->applyStyle(style);
 		if (object != NULL)
 		{
 			this->objects[objectName] = object;
@@ -668,7 +806,7 @@ namespace aprilui
 		foreach_xmlproperty (prop, node)
 		{
 			name = prop->name();
-			if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
+			if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h" || name == "style")
 			{
 				continue; // TODO - might be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
 			}
@@ -681,9 +819,13 @@ namespace aprilui
 				type = child->getType();
 				if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
 				{
-					this->recursiveObjectParse(child, object, namePrefix, nameSuffix, gvec2());
+					this->recursiveObjectParse(child, object, style, namePrefix, nameSuffix, gvec2());
 				}
 			}
+		}
+		if (isCustomStyle)
+		{
+			delete style;
 		}
 		return baseObject;
 	}
@@ -719,7 +861,7 @@ namespace aprilui
 		this->filePath = originalFilePath;
 	}
 	
-	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
@@ -733,7 +875,7 @@ namespace aprilui
 			{
 				if (root == NULL)
 				{
-					root = this->recursiveObjectParse(node, parent, namePrefix, nameSuffix, offset);
+					root = this->recursiveObjectParse(node, parent, style, namePrefix, nameSuffix, offset);
 				}
 				else
 				{
@@ -745,11 +887,11 @@ namespace aprilui
 		return root;
 	}
 	
-	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		if (!path.contains("*"))
 		{
-			return this->parseObjectIncludeFile(path, parent, namePrefix, nameSuffix, offset);
+			return this->parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset);
 		}
 		hstr baseDir = hrdir::baseDir(path);
 		hstr filename = path(baseDir.size() + 1, -1);
@@ -761,7 +903,7 @@ namespace aprilui
 		{
 			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
-				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, "", "", gvec2());
+				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2());
 			}
 		}
 		return NULL; // since multiple files are loaded, no object is returned
@@ -802,7 +944,8 @@ namespace aprilui
 		foreach_xmlnode (node, current)
 		{
 			if		(*node == "Texture")		this->parseTexture(node);
-			else if	(*node == "CompositeImage")	this->parseCompositeImage(node);
+			else if (*node == "CompositeImage")	this->parseCompositeImage(node);
+			else if (*node == "Style")			this->parseStyle(node);
 			else if	(*node == "Object")			this->parseObject(node);
 			else if	(*node == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
 			else if	(*node == "TextureGroup")	this->parseTextureGroup(node);
@@ -943,6 +1086,11 @@ namespace aprilui
 			delete it->second;
 		}
 		this->textures.clear();
+		foreach_m (Style*, it, this->styles)
+		{
+			delete it->second;
+		}
+		this->styles.clear();
 		this->callbacks.clear();
 		this->texts.clear();
 		this->root = NULL;
@@ -1022,28 +1170,6 @@ namespace aprilui
 		root->dataset = NULL;
 	}
 	
-	void Dataset::registerImage(BaseImage* image)
-	{
-		hstr name = image->getName();
-		if (this->images.hasKey(name))
-		{
-			throw ObjectExistsException("Image", name, this->name);
-		}
-		this->images[name] = image;
-		image->dataset = this;
-	}
-	
-	void Dataset::unregisterImage(BaseImage* image)
-	{
-		hstr name = image->getName();
-		if (!this->images.hasKey(name))
-		{
-			throw ObjectNotExistsException("Image", name, this->name);
-		}
-		this->images.removeKey(name);
-		image->dataset = NULL;
-	}
-	
 	void Dataset::registerTexture(Texture* texture)
 	{
 		hstr name = texture->getFilename();
@@ -1064,6 +1190,50 @@ namespace aprilui
 		this->textures.removeKey(name);
 	}
 	
+	void Dataset::registerImage(BaseImage* image)
+	{
+		hstr name = image->getName();
+		if (this->images.hasKey(name))
+		{
+			throw ObjectExistsException("Image", name, this->name);
+		}
+		this->images[name] = image;
+		image->dataset = this;
+	}
+
+	void Dataset::unregisterImage(BaseImage* image)
+	{
+		hstr name = image->getName();
+		if (!this->images.hasKey(name))
+		{
+			throw ObjectNotExistsException("Image", name, this->name);
+		}
+		this->images.removeKey(name);
+		image->dataset = NULL;
+	}
+
+	void Dataset::registerStyle(Style* style)
+	{
+		hstr name = style->getName();
+		if (this->styles.hasKey(name))
+		{
+			throw ObjectExistsException("Style", name, this->name);
+		}
+		this->styles[name] = style;
+		style->dataset = this;
+	}
+
+	void Dataset::unregisterStyle(Style* style)
+	{
+		hstr name = style->getName();
+		if (!this->styles.hasKey(name))
+		{
+			throw ObjectNotExistsException("Style", name, this->name);
+		}
+		this->styles.removeKey(name);
+		style->dataset = NULL;
+	}
+
 	bool Dataset::isAnimated()
 	{
 		foreach_m (Object*, it, this->objects)
@@ -1158,16 +1328,21 @@ namespace aprilui
 		return (this->tryGetAnimator(name) != NULL);
 	}
 	
-	bool Dataset::hasImage(chstr name)
-	{
-		return this->images.hasKey(name);
-	}
-	
 	bool Dataset::hasTexture(chstr name)
 	{
 		return this->textures.hasKey(name);
 	}
 	
+	bool Dataset::hasImage(chstr name)
+	{
+		return this->images.hasKey(name);
+	}
+
+	bool Dataset::hasStyle(chstr name)
+	{
+		return this->styles.hasKey(name);
+	}
+
 	Object* Dataset::tryGetObject(chstr name)
 	{
 		int dot = name.indexOf('.');
@@ -1246,6 +1421,34 @@ namespace aprilui
 			image = dataset->getImage(name(dot + 1, -1));
 		}
 		return image;
+	}
+
+	Style* Dataset::getStyle(chstr name)
+	{
+		Style* style = NULL;
+		if (this->styles.hasKey(name))
+		{
+			style = this->styles[name];
+		}
+		if (style == NULL)
+		{
+			int dot = name.indexOf('.');
+			if (dot < 0)
+			{
+				throw ObjectNotExistsException("Style", name, this->name);
+			}
+			Dataset* dataset = NULL;
+			try
+			{
+				dataset = aprilui::getDatasetByName(name(0, dot));
+			}
+			catch (hexception&)
+			{
+				throw ObjectNotExistsException("Style", name, this->name);
+			}
+			style = dataset->getStyle(name(dot + 1, -1));
+		}
+		return style;
 	}
 
 	bool Dataset::_findTextEntry(chstr textKey, hstr* text)
