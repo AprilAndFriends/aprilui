@@ -89,6 +89,10 @@
 		B45603DB1B5681EF00DF8047 /* AnimatorPivotMoverY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45603D51B5681EF00DF8047 /* AnimatorPivotMoverY.cpp */; };
 		B45603DE1B56820F00DF8047 /* AnimatorPivotMoverX.h in Headers */ = {isa = PBXBuildFile; fileRef = B45603DC1B56820F00DF8047 /* AnimatorPivotMoverX.h */; };
 		B45603DF1B56820F00DF8047 /* AnimatorPivotMoverY.h in Headers */ = {isa = PBXBuildFile; fileRef = B45603DD1B56820F00DF8047 /* AnimatorPivotMoverY.h */; };
+		B4B5DC241C046149003BC59E /* Style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B5DC231C046149003BC59E /* Style.cpp */; };
+		B4B5DC261C04615A003BC59E /* Style.h in Headers */ = {isa = PBXBuildFile; fileRef = B4B5DC251C04615A003BC59E /* Style.h */; };
+		B4B5DC271C046165003BC59E /* Style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B5DC231C046149003BC59E /* Style.cpp */; };
+		B4B5DC281C046165003BC59E /* Style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B5DC231C046149003BC59E /* Style.cpp */; };
 		C93D4A7414F288D30097AB06 /* apriluiUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */; };
 		C93D4A7514F288D30097AB06 /* apriluiUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */; };
 		C93D4A7614F288D30097AB06 /* apriluiUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = C93D4A7314F288D30097AB06 /* apriluiUtil.h */; settings = {ATTRIBUTES = (); }; };
@@ -396,6 +400,8 @@
 		B45603D51B5681EF00DF8047 /* AnimatorPivotMoverY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorPivotMoverY.cpp; sourceTree = "<group>"; };
 		B45603DC1B56820F00DF8047 /* AnimatorPivotMoverX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorPivotMoverX.h; path = include/aprilui/AnimatorPivotMoverX.h; sourceTree = "<group>"; };
 		B45603DD1B56820F00DF8047 /* AnimatorPivotMoverY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorPivotMoverY.h; path = include/aprilui/AnimatorPivotMoverY.h; sourceTree = "<group>"; };
+		B4B5DC231C046149003BC59E /* Style.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Style.cpp; path = ../Style.cpp; sourceTree = "<group>"; };
+		B4B5DC251C04615A003BC59E /* Style.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Style.h; path = include/aprilui/Style.h; sourceTree = "<group>"; };
 		C93D4A7214F288D30097AB06 /* apriluiUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apriluiUtil.cpp; path = src/apriluiUtil.cpp; sourceTree = "<group>"; };
 		C93D4A7314F288D30097AB06 /* apriluiUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apriluiUtil.h; path = src/apriluiUtil.h; sourceTree = "<group>"; };
 		C98E1DB014C823D200CB9F1C /* ObjectScrollArea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollArea.cpp; sourceTree = "<group>"; };
@@ -594,6 +600,7 @@
 		7F6D548C1201B06200A2BDF6 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				B4B5DC231C046149003BC59E /* Style.cpp */,
 				D1B0612D1A51824B0062D851 /* ObjectFilledRect.cpp */,
 				D1B0612E1A51824B0062D851 /* ObjectRect.cpp */,
 				D146B5241A273A5200002ED6 /* ObjectSelectionContainer.cpp */,
@@ -675,6 +682,7 @@
 		7FC8041211EC71CF00851062 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				B4B5DC251C04615A003BC59E /* Style.h */,
 				C942B3FF13278C7100C1D1E8 /* Images */,
 				C942B3F113278C3300C1D1E8 /* Animators */,
 				C942B3FE13278C5900C1D1E8 /* Objects */,
@@ -869,6 +877,7 @@
 				D12C44971A3583470025EBF5 /* SkinImage.h in Headers */,
 				D12C44951A3583470025EBF5 /* AnimatorTileScrollerY.h in Headers */,
 				D1147B531A3B49B500C592A4 /* ObjectGridViewRow.h in Headers */,
+				B4B5DC261C04615A003BC59E /* Style.h in Headers */,
 				D1147B521A3B49B500C592A4 /* ObjectGridViewCell.h in Headers */,
 				D1147B511A3B49B500C592A4 /* ObjectGridView.h in Headers */,
 				D1147B541A3B49B500C592A4 /* ObjectGridViewRowTemplate.h in Headers */,
@@ -986,6 +995,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FC8043411EC725B00851062 /* Dataset.cpp in Sources */,
+				B4B5DC241C046149003BC59E /* Style.cpp in Sources */,
 				7FC8043511EC725B00851062 /* Exception.cpp in Sources */,
 				7FF4F1D012017ACA00F0BBB7 /* CallbackEvent.cpp in Sources */,
 				7F38C6C9120967B9002B5134 /* ObjectCallbackObject.cpp in Sources */,
@@ -1066,6 +1076,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D18CB6211902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
+				B4B5DC281C046165003BC59E /* Style.cpp in Sources */,
 				D1522E7B140F6A6B0012F290 /* aprilui.cpp in Sources */,
 				D1522E7C140F6A6B0012F290 /* EventArgs.cpp in Sources */,
 				D18CB6181902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
@@ -1146,6 +1157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D18CB6201902CE040071C391 /* ObjectScrollBarButtonSlider.cpp in Sources */,
+				B4B5DC271C046165003BC59E /* Style.cpp in Sources */,
 				D1F27B2C177A2FCA00E5C131 /* aprilui.cpp in Sources */,
 				D1F27B2D177A2FCA00E5C131 /* EventArgs.cpp in Sources */,
 				D18CB6171902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */,
