@@ -47,9 +47,9 @@
 			<Object type="ImageButton" name="hover_image_button" image="texture/test" rect="32,96,64,64"/>
 			<Object type="ImageButton" name="hover_image_button_color_mode" image="texture/test_color_mode" rect="96,96,64,64"/>
 			<Object type="ImageBox" name="colored_image_box" image="texture/test" color="FF7F7F" rect="32,128,128,64">
-				<Animator type="MoverX" amplitude="100" speed="0.5" delay="1.0"/>
-				<Animator type="MoverY" amplitude="100" speed="0.25"/>
-				<Animator type="MoverX" amplitude="-50" speed="0.5" delay="3.0" inherit_value="true"/>
+				<Animator type="MoverX" periods="1" amplitude="100" speed="0.5" delay="1.0"/>
+				<Animator type="MoverY" periods="1" amplitude="100" speed="0.25"/>
+				<Animator type="MoverX" periods="1" amplitude="-50" speed="0.5" delay="3.0" inherit_value="true"/>
 				<Animator type="ZOrderChanger" function="sine" amplitude="50"/>
 			</Object>
 			<Object type="FilledRect" name="colored_quad" style="trembling_blue_rects">
@@ -57,7 +57,7 @@
 				<Animator type="MoverY"/>
 			</Object>
 			<Object type="ImageButton" name="image_button_disabled" image="texture/test" disabled_image="texture/test_grey" rect="232,160,128,64" enabled="false">
-				<Animator type="Rotator" time="2" target="360" delay="1.5" discrete_step="30"/>
+				<Animator type="Rotator" periods="1" time="2" target="360" delay="1.5" discrete_step="30"/>
 			</Object>
 			<Object type="EditBox" name="edit_box" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="true" selection_color="009FFFBF" multi_line="true" font="Arial" horz_formatting="left" vert_formatting="top" rect="600,200,192,64"/>
 			<Object type="FilledRect" color="007F00" rect="32,320,192,160">
