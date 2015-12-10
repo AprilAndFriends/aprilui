@@ -18,14 +18,14 @@ namespace aprilui
 {
 	class Dataset;
 	
-	class apriluiExport _GenericException : public hltypes::exception
+	class apriluiExport _GenericException : public hexception
 	{
 	public:
 		hstr mType;
 		
 		_GenericException(chstr errorText, chstr type = "", const char* file = "", int line = 0);
 		hstr getType(){ return mType; }
-		hstr getErrorText() { return msg; }
+		hstr getErrorText() { return message; }
 	};
 
 	#define GenericException(msg) _GenericException(msg, "GenericException", __FILE__, __LINE__)
