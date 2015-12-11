@@ -968,7 +968,7 @@ namespace aprilui
 			}
 			catch (hexception& e)
 			{
-				hlog::error(logTag, e.getMessage());
+				hlog::error(logTag, e.getFullMessage());
 				this->_closeDocuments(); // safe not to throw an exception
 				throw e;
 			}
