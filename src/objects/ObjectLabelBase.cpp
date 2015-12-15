@@ -23,9 +23,9 @@ namespace aprilui
 	LabelBase::LabelBase(chstr name) :
 		   mTextColor(255, 255, 255, 255)
 	{
-		mHorzFormatting = atres::CENTER_WRAPPED;
-		mVertFormatting = atres::CENTER;
-		mFontEffect = atres::NONE;
+		mHorzFormatting = atres::Horizontal::CenterWrapped;
+		mVertFormatting = atres::Vertical::Center;
+		mFontEffect = atres::TextEffect::None;
 		mDrawOffset = gvec2();
 		mTextFormatting = true;
 		mText = "LabelBase: " + name;
@@ -44,16 +44,13 @@ namespace aprilui
 			return;
 		}
 		hstr text = mText;
-		switch (mFontEffect)
+		if (mFontEffect == atres::TextEffect::Border)
 		{
-		case atres::BORDER:
 			text = "[b]" + text;
-			break;
-		case atres::SHADOW:
-			text = "[s]" + text;
-			break;
-		default:
-			break;
+		}
+		else if (mFontEffect == atres::TextEffect::Shadow)
+		{
+			text = "[b]" + text;
 		}
 		april::Color color(mTextColor);
 		color.a = (unsigned char)(color.a * alpha);
@@ -77,25 +74,25 @@ namespace aprilui
 		}
 		else if (name == "horz_formatting")
 		{
-			if (value == "left")                setHorzFormatting(atres::LEFT);
-			else if (value == "right")          setHorzFormatting(atres::RIGHT);
-			else if (value == "center")         setHorzFormatting(atres::CENTER);
-			else if (value == "left_wrapped")   setHorzFormatting(atres::LEFT_WRAPPED);
-			else if (value == "right_wrapped")  setHorzFormatting(atres::RIGHT_WRAPPED);
-			else if (value == "center_wrapped") setHorzFormatting(atres::CENTER_WRAPPED);
+			if (value == "left")                setHorzFormatting(atres::Horizontal::Left);
+			else if (value == "right")          setHorzFormatting(atres::Horizontal::Right);
+			else if (value == "center")         setHorzFormatting(atres::Horizontal::Center);
+			else if (value == "left_wrapped")   setHorzFormatting(atres::Horizontal::LeftWrapped);
+			else if (value == "right_wrapped")  setHorzFormatting(atres::Horizontal::RightWrapped);
+			else if (value == "center_wrapped") setHorzFormatting(atres::Horizontal::CenterWrapped);
 		}
 		else if (name == "vert_formatting")
 		{
-			if (value == "top")         setVertFormatting(atres::TOP);
-			else if (value == "center") setVertFormatting(atres::CENTER);
-			else if (value == "bottom") setVertFormatting(atres::BOTTOM);
+			if (value == "top")         setVertFormatting(atres::Vertical::Top);
+			else if (value == "center") setVertFormatting(atres::Vertical::Center);
+			else if (value == "bottom") setVertFormatting(atres::Vertical::Bottom);
 		}
 		else if (name == "color") setTextColor(value);
 		else if (name == "effect")
 		{
-			if (value == "none")           setFontEffect(atres::NONE);
-			else if (value == "shadow")    setFontEffect(atres::SHADOW);
-			else if (value == "border")    setFontEffect(atres::BORDER);
+			if (value == "none")           setFontEffect(atres::TextEffect::None);
+			else if (value == "shadow")    setFontEffect(atres::TextEffect::Shadow);
+			else if (value == "border")    setFontEffect(atres::TextEffect::Border);
 		}
 		else if (name == "offset_x") mDrawOffset.x = (float)value;
 		else if (name == "offset_y") mDrawOffset.y = (float)value;

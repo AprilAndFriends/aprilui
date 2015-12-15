@@ -31,7 +31,7 @@ namespace aprilui
 	{
 		if (mTexture != NULL)
 		{
-			delete mTexture;
+			april::rendersys->destroyTexture(mTexture);
 		}
 		foreach (Texture*, it, mDynamicLinks)
 		{
@@ -120,10 +120,10 @@ namespace aprilui
 		{
 			mUnusedTime = 0.0f;
 			mFilename = filename;
-			mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::TYPE_IMMUTABLE, !(aprilui::getForcedDynamicLoading() || mDynamic));
+			mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::TYPE_IMMUTABLE, april::Texture::LOAD_ON_DEMAND);
 			if (mTexture == NULL)
 			{
-				throw file_not_found(mFilename);
+				throw FileNotOpenException(mFilename);
 			}
 			mTexture->setFilter(mFilter);
 			mTexture->setAddressMode(mAddressMode);
@@ -132,7 +132,7 @@ namespace aprilui
 
 	void Texture::addDynamicLink(Texture* link)
 	{
-		if (!mDynamicLinks.contains(link))
+		if (!mDynamicLinks.has(link))
 		{
 			mDynamicLinks += link;
 			link->addDynamicLink(this);
@@ -141,7 +141,7 @@ namespace aprilui
 	
 	void Texture::removeDynamicLink(Texture* link)
 	{
-		if (mDynamicLinks.contains(link))
+		if (mDynamicLinks.has(link))
 		{
 			mDynamicLinks -= link;
 		}

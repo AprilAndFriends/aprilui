@@ -365,13 +365,13 @@ namespace aprilui
 	void Object::registerEvent(chstr name, void (*callback)(EventArgs*))
 	{
 		Event* event = NULL;
-		if (mEvents.has_key(name))
+		if (mEvents.hasKey(name))
 		{
 			event = mEvents[name];
 		}
         if (callback == NULL)
 		{
-			mEvents.remove_key(name);
+			mEvents.removeKey(name);
 		}
         else
 		{
@@ -385,7 +385,7 @@ namespace aprilui
 
 	void Object::triggerEvent(chstr name, float x, float y, chstr extra)
 	{
-		if (mEvents.has_key(name))
+		if (mEvents.hasKey(name))
 		{
 			EventArgs args(this, x, y, extra);
 			mEvents[name]->execute(&args);
@@ -443,7 +443,7 @@ namespace aprilui
 	void Object::_moveChildToBack(Object* object)
 	{
 		mChildren -= object;
-		mChildren.push_front(object);
+		mChildren.addFirst(object);
 	}
 
 	bool Object::setProperty(chstr name, chstr value)

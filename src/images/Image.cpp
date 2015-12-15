@@ -25,7 +25,7 @@ namespace aprilui
 	{
 		mTexture = texture;
 		mName = name;
-		int index = name.find("/") + 1;
+		int index = name.indexOf("/") + 1;
 		mImageName = name(index, name.size() - index); // the name without the dataset's name prefix
 		mSource = source;
 
@@ -117,7 +117,7 @@ namespace aprilui
 			
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
@@ -129,7 +129,7 @@ namespace aprilui
 		}
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+			april::rendersys->setBlendMode(april::BM_DEFAULT);
 		}
 	}
 
@@ -160,7 +160,7 @@ namespace aprilui
 		
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
@@ -172,7 +172,7 @@ namespace aprilui
 		}
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+			april::rendersys->setBlendMode(april::BM_DEFAULT);
 		}
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}

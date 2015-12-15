@@ -46,7 +46,7 @@ namespace aprilui
 	{
 		if (this->source == NULL)
 		{
-			hlog::writef(aprilui::logTag, "Loading RAM texture '%s'.", this->filename.c_str());
+			hlog::writef(aprilui::logTag, "Loading RAM texture '%s'.", this->filename.cStr());
 			if (this->filename != "")
 			{
 				this->source = april::Image::createFromResource(this->filename);
@@ -66,7 +66,7 @@ namespace aprilui
 	{
 		if (this->source != NULL)
 		{
-			hlog::writef(aprilui::logTag, "Unloading RAM texture '%s'.", this->filename.c_str());
+			hlog::writef(aprilui::logTag, "Unloading RAM texture '%s'.", this->filename.cStr());
 			delete this->source;
 			this->source = NULL;
 		}

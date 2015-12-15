@@ -26,7 +26,7 @@ namespace aprilui
 	hstr pathGetBaseDir(chstr path)
 	{
 		hstr normalized = hdir::normalize(path);
-		int index = normalized.rfind('/');
+		int index = normalized.rindexOf('/');
 		return (index < 0 ? "" : normalized(0, index));
 	}
 

@@ -46,13 +46,13 @@ namespace aprilui
 		
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
 		color *= mColor;
 		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+			april::rendersys->setBlendMode(april::BM_DEFAULT);
 		}
 	}
 
@@ -69,12 +69,12 @@ namespace aprilui
 		april::rendersys->rotate(angle);
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(mBlendMode);
+			april::rendersys->setBlendMode(mBlendMode);
 		}
 		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
 		if (mBlendMode != april::BM_ALPHA)
 		{
-			april::rendersys->setTextureBlendMode(april::BM_DEFAULT);
+			april::rendersys->setBlendMode(april::BM_DEFAULT);
 		}
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}

@@ -60,7 +60,7 @@ namespace aprilui
 		registerLock = true;
 		for (hmap<int, april::Texture*>::iterator it = gFontTextures.begin(); it != gFontTextures.end(); it++)
 		{
-			delete it->second;
+			april::rendersys->destroyTexture(it->second);
 		}
 		gFontTextures.clear();
 		foreach_m (Dataset*, it, gDatasets)
@@ -109,7 +109,7 @@ namespace aprilui
 
 	Dataset* getDatasetByName(chstr name)
 	{
-		if (!gDatasets.has_key(name))
+		if (!gDatasets.hasKey(name))
 		{
 			throw GenericException("Dataset '" + name + "' doesn't exist!");
 		}
@@ -120,7 +120,7 @@ namespace aprilui
 	{
 		if (!registerLock)
 		{
-			if (gDatasets.has_key(name))
+			if (gDatasets.hasKey(name))
 			{
 				throw GenericException("Unable to register dataset '" + name + "', another dataset with the same name exists!");
 			}
@@ -132,7 +132,7 @@ namespace aprilui
 	{
 		if (!registerLock)
 		{
-			gDatasets.remove_key(name);
+			gDatasets.removeKey(name);
 		}
 	}
 	
@@ -269,7 +269,7 @@ namespace aprilui
 	
 	apriluiFnExport hstr expandMacro(chstr macro)
 	{
-		if (g_macroCallback == NULL) throw hl_exception("aprilui macro callback not set, trying to expand macro '" + macro + "'");
+		if (g_macroCallback == NULL) throw Exception("aprilui macro callback not set, trying to expand macro '" + macro + "'");
 		return g_macroCallback(macro);
 	}
 

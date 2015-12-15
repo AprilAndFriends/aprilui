@@ -48,7 +48,7 @@ namespace aprilui
 		mName = name;
 		if (mName == "")
 		{
-			mName = mFilename.rsplit(".", 1, false).pop_first().rsplit("/", 1, false).pop_last();
+			mName = mFilename.rsplit(".", 1, false).removeFirst().rsplit("/", 1, false).removeLast();
 		}
 		mLoaded = false;
 		_registerDataset(mName, this);
@@ -68,54 +68,54 @@ namespace aprilui
 	{
 		if (name != "" && useNameBasePath)
 		{
-			hstr extension = "." + filename.rsplit(".", -1, false).pop_last();
-			if (filename.ends_with(name + extension))
+			hstr extension = "." + filename.rsplit(".", -1, false).removeLast();
+			if (filename.endsWith(name + extension))
 			{
-				return hdir::normalize(filename.replace(name + extension, ""));
+				return hdir::normalize(filename.replaced(name + extension, ""));
 			}
 		}
-		return hdir::normalize(hdir::basedir(filename));
+		return hdir::normalize(hdir::baseDir(filename));
 	}
 	
 	void Dataset::_destroyTexture(Texture* texture)
 	{
-		if (!mTextures.has_key(texture->getFilename()))
+		if (!mTextures.hasKey(texture->getFilename()))
 		{
 			throw ResourceNotExistsException(texture->getFilename(), "Texture", this);
 		}
-		mTextures.remove_key(texture->getFilename());
+		mTextures.removeKey(texture->getFilename());
 		delete texture;
 	}
 	
 	void Dataset::_destroyImage(Image* image)
 	{
-		if (!mImages.has_key(image->getName()))
+		if (!mImages.hasKey(image->getName()))
 		{
 			throw ResourceNotExistsException(image->getName(), "Image", this);
 		}
-		mImages.remove_key(image->getName());
+		mImages.removeKey(image->getName());
 		delete image;
 	}
 	
 	void Dataset::_destroyTexture(chstr name)
 	{
-		if (!mTextures.has_key(name))
+		if (!mTextures.hasKey(name))
 		{
 			throw ResourceNotExistsException(name, "Texture", this);
 		}
 		Texture* texture = mTextures[name];
-		mTextures.remove_key(name);
+		mTextures.removeKey(name);
 		delete texture;
 	}
 	
 	void Dataset::_destroyImage(chstr name)
 	{
-		if (!mImages.has_key(name))
+		if (!mImages.hasKey(name))
 		{
 			throw ResourceNotExistsException(name, "Image", this);
 		}
 		Image* image = mImages[name];
-		mImages.remove_key(name);
+		mImages.removeKey(name);
 		delete image;
 	}
 	
@@ -124,7 +124,7 @@ namespace aprilui
 		hstr localization = getLocalization();
 		if (localization != "")
 		{
-			hstr locpath = hdir::basedir(filename) + "/" + localization + "/" + hdir::basename(filename);
+			hstr locpath = hdir::baseDir(filename) + "/" + localization + "/" + hdir::baseName(filename);
 			locpath = april::rendersys->findTextureResource(locpath);
 			if (locpath != "")
 			{
@@ -137,18 +137,22 @@ namespace aprilui
 	Texture* Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = hdir::normalize(node->pstr("filename"));
-		if (filename.starts_with("$")) filename = expandMacro(filename);
+		if (filename.startsWith("$")) filename = expandMacro(filename);
 		hstr filepath = hdir::normalize(mFilenamePrefix + "/" + filename);
 
-		int slash = filename.rfind('/') + 1;
-		hstr textureName = filename(slash, filename.rfind('.') - slash);
-		if (mTextures.has_key(textureName))
+		int slash = filename.rindexOf('/') + 1;
+		hstr textureName = filename(slash, filename.rindexOf('.') - slash);
+		if (mTextures.hasKey(textureName))
 		{
 			throw ObjectExistsException(filename);
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
-		bool dynamicLoad = node->pbool("dynamic_load", false);
-		
+//		bool dynamicLoad = node->pbool("dynamic_load", false);
+		april::Texture::LoadMode loadMode = april::Texture::LOAD_IMMEDIATE;
+		if (aprilui::getForcedDynamicLoading() || node->pbool("dynamic_load", false))
+		{
+			loadMode = april::Texture::LOAD_ON_DEMAND;
+		}
 		if (mTexExtOverride && filepath.contains("."))
 		{
 			hstr left,right;
@@ -157,7 +161,7 @@ namespace aprilui
 		}
 
 		hstr locpath = _makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, !(aprilui::getForcedDynamicLoading() || dynamicLoad));
+		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, loadMode);
 		if (aprilTexture == NULL)
 		{
 			throw FileNotFoundException(locpath);
@@ -168,14 +172,14 @@ namespace aprilui
 			hstr filter = node->pstr("filter");
 			if      (filter == "linear")  texture->setFilter(april::Texture::FILTER_LINEAR);
 			else if (filter == "nearest") texture->setFilter(april::Texture::FILTER_NEAREST);
-			else throw hl_exception("texture filter '" + filter + "' not supported");
+			else throw Exception("texture filter '" + filter + "' not supported");
 		}
 		texture->setAddressMode(node->pbool("wrap", true) ? april::Texture::ADDRESS_WRAP : april::Texture::ADDRESS_CLAMP);
 		mTextures[textureName] = texture;
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
 		{
-			if (mImages.has_key(textureName))
+			if (mImages.hasKey(textureName))
 			{
 				throw ResourceExistsException(filename, "Texture", this);
 			}
@@ -189,7 +193,7 @@ namespace aprilui
 				if (*child == "Image")
 				{
 					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
-					if (mImages.has_key(name))
+					if (mImages.hasKey(name))
 					{
 						throw ResourceExistsException(name, "Image", this);
 					}
@@ -230,9 +234,9 @@ namespace aprilui
 	{
 		hstr filename = hdir::normalize(node->pstr("filename"));
 		hstr filepath = hdir::normalize(mFilenamePrefix + "/" + filename);
-		int slash = filename.find('/') + 1;
-		hstr textureName = filename(slash, filename.rfind('.') - slash);
-		if (mTextures.has_key(textureName))
+		int slash = filename.indexOf('/') + 1;
+		hstr textureName = filename(slash, filename.rindexOf('.') - slash);
+		if (mTextures.hasKey(textureName))
 		{
 			throw ResourceExistsException(filename, "RamTexture", this);
 		}
@@ -240,7 +244,7 @@ namespace aprilui
 		hstr locpath = _makeLocalizedTextureName(filepath);
 		if (!hresource::exists(locpath))
 		{
-			throw file_not_found(locpath);
+			throw FileNotFoundException(locpath);
 		}
 		RamTexture* tex = new RamTexture(locpath);
 		mRamTextures[textureName] = tex;
@@ -250,7 +254,7 @@ namespace aprilui
 	{
 		hstr name = node->pstr("name");
 		hstr refname;
-		if (mImages.has_key(name))
+		if (mImages.hasKey(name))
 		{
 			throw ResourceExistsException(name, "CompositeImage", this);
 		}
@@ -301,7 +305,7 @@ namespace aprilui
 		{
 			return NULL;
 		}
-		if (mObjects.has_key(objectName))
+		if (mObjects.hasKey(objectName))
 		{
 			throw ResourceExistsException(objectName, "Object", this);
 		}
@@ -348,7 +352,7 @@ namespace aprilui
 		
 		if (object == NULL)
 		{
-			throw hlxml::XMLUnknownClassException(className, node);
+			throw XMLUnknownClassException(className, node);
 		}
 		object->_setDataset(this);
 		hstr name;
@@ -437,7 +441,7 @@ namespace aprilui
 	
 	void Dataset::destroyObject(Object* object)
 	{
-		if (!this->mObjects.has_key(object->getName()))
+		if (!this->mObjects.hasKey(object->getName()))
 		{
 			throw ResourceNotExistsException(object->getName(), "Object", this);
 		}
@@ -450,7 +454,7 @@ namespace aprilui
 		{
 			object->getParent()->removeChild(object);
 		}
-		this->mObjects.remove_key(object->getName());
+		this->mObjects.removeKey(object->getName());
 		delete object;
 	}
 	
@@ -478,7 +482,7 @@ namespace aprilui
 		foreach (hstr, it, files)
 		{
 			f.open(*it);
-			lines = f.read_lines();
+			lines = f.readLines();
 			f.close();
 			if (lines.size() == 0)
 			{
@@ -489,7 +493,7 @@ namespace aprilui
 			if (firstLine.size() > 0)
 			{
 				int i = 0;
-				while (i < firstLine.size() && !is_between((int)firstLine[i], 0, 127))
+				while (i < firstLine.size() && !hbetweenIE((int)firstLine[i], 0, 127))
 				{
 					i++;
 				}
@@ -507,7 +511,7 @@ namespace aprilui
 					}
 					else
 					{
-						key = (*it2).split("#").first().trim(' ');
+						key = (*it2).split("#").first().trimmed(' ');
 					}
 				}
 				else if ((*it2) == "}")
@@ -515,7 +519,7 @@ namespace aprilui
 					keyMode = true;
 					if (key != "")
 					{
-						mTexts[key] = values.join('\n');
+						mTexts[key] = values.joined('\n');
 					}
 				}
 				else
@@ -572,7 +576,7 @@ namespace aprilui
 	void Dataset::registerManualObject(Object* object)
 	{
 		hstr name = object->getName();
-		if (mObjects.has_key(name))
+		if (mObjects.hasKey(name))
 		{
 			throw ResourceExistsException(name, "Object", this);
 		}
@@ -588,18 +592,18 @@ namespace aprilui
 	void Dataset::unregisterManualObject(Object* object)
 	{
 		hstr name = object->getName();
-		if (!mObjects.has_key(name))
+		if (!mObjects.hasKey(name))
 		{
 			throw ResourceNotExistsException(name, "Object", this);
 		}
-		mObjects.remove_key(name);
+		mObjects.removeKey(name);
 		object->_setDataset(NULL);
 	}
 	
 	void Dataset::registerManualImage(Image* image)
 	{
 		hstr name = image->getName();
-		if (mImages.has_key(name))
+		if (mImages.hasKey(name))
 		{
 			throw ResourceExistsException(name, "Image", this);
 		}
@@ -614,19 +618,19 @@ namespace aprilui
 	void Dataset::unregisterManualImage(Image* image)
 	{
 		hstr name = image->getName();
-		if (!mImages.has_key(name))
+		if (!mImages.hasKey(name))
 		{
 			throw ResourceNotExistsException(name, "Image", this);
 		}
-		mImages.remove_key(name);
+		mImages.removeKey(name);
 	}
 	
 	void Dataset::registerManualTexture(Texture* tex)
 	{
 		hstr filename = tex->getFilename();
-		int slash = filename.rfind('/') + 1;
-		hstr name = filename(slash, filename.rfind('.') - slash);
-		if (mTextures.has_key(name))
+		int slash = filename.rindexOf('/') + 1;
+		hstr name = filename(slash, filename.rindexOf('.') - slash);
+		if (mTextures.hasKey(name))
 		{
 			throw ResourceExistsException(name, "Texture", this);
 		}
@@ -654,7 +658,7 @@ namespace aprilui
 	
 	Object* Dataset::getObject(chstr name)
 	{
-		if (!mObjects.has_key(name))
+		if (!mObjects.hasKey(name))
 		{
 			throw ResourceNotExistsException(name, "Object", this);
 		}
@@ -663,7 +667,7 @@ namespace aprilui
 	
 	Texture* Dataset::getTexture(chstr name)
 	{
-		if (!mTextures.has_key(name))
+		if (!mTextures.hasKey(name))
 		{
 			throw ResourceNotExistsException(name, "Texture", this);
 		}
@@ -672,7 +676,7 @@ namespace aprilui
 	
 	RamTexture* Dataset::getRamTexture(chstr name)
 	{
-		if (!mRamTextures.has_key(name))
+		if (!mRamTextures.hasKey(name))
 		{
 			throw ResourceNotExistsException(name, "RamTexture", this);
 		}
@@ -687,7 +691,7 @@ namespace aprilui
 			return &nullImage;
 		}
 		
-		if (!mImages.has_key(name) && name.starts_with("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
+		if (!mImages.hasKey(name) && name.startsWith("0x")) // create new image with a color. don't overuse this,it's meant to be handy when needed only ;)
 		{
 			image = new ColorImage(name);
 			mImages[name] = image;
@@ -698,7 +702,7 @@ namespace aprilui
 		}
 		if (image == NULL)
 		{
-			int dot = name.find('.');
+			int dot = name.indexOf('.');
 			if (dot < 0)
 			{
 				throw ResourceNotExistsException(name, "Image", this);
@@ -719,7 +723,7 @@ namespace aprilui
 	
 	hstr Dataset::getTextEntry(chstr textKey)
 	{
-		return mTexts.try_get_by_key(textKey, "");
+		return mTexts.tryGet(textKey, "");
 	}
 	
 	hstr Dataset::getText(chstr compositeTextKey)
@@ -729,7 +733,7 @@ namespace aprilui
 	
 	bool Dataset::textExists(chstr textKey)
 	{
-		return mTexts.has_key(textKey);
+		return mTexts.hasKey(textKey);
 	}
 	
 	harray<hstr> Dataset::getTextEntries(harray<hstr> keys)
@@ -749,7 +753,7 @@ namespace aprilui
 	
 	void Dataset::triggerCallback(chstr name)
 	{
-		if (mCallbacks.has_key(name))
+		if (mCallbacks.hasKey(name))
 		{
 			mCallbacks[name]();
 		}
@@ -876,39 +880,39 @@ namespace aprilui
 	
 	hstr Dataset::_parseCompositeTextKey(chstr key)
 	{
-		if (!key.starts_with("{"))
+		if (!key.startsWith("{"))
 		{
 			if (!textExists(key))
 			{
-				aprilui::log(hsprintf("WARNING! Text key '%s' does not exist", key.c_str()));
+				aprilui::log(hsprintf("WARNING! Text key '%s' does not exist", key.cStr()));
 			}
 			return getTextEntry(key);
 		}
-		int index = key.find_first_of('}');
+		int index = key.indexOfAny('}');
 		if (index < 0)
 		{
-			aprilui::log(hsprintf("WARNING! Error while trying to parse formatted key '%s'.", key.c_str()));
+			aprilui::log(hsprintf("WARNING! Error while trying to parse formatted key '%s'.", key.cStr()));
 			return key;
 		}
 		harray<hstr> args;
 		hstr format = key(1, index - 1);
-		hstr argString = key(index + 1, key.size() - index - 1).trim(' ');
+		hstr argString = key(index + 1, key.size() - index - 1).trimmed(' ');
 		if (!_processCompositeTextKeyArgs(argString, args))
 		{
-			aprilui::log(hsprintf("- while processing args: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			aprilui::log(hsprintf("- while processing args: '%s' with args '%s'.", format.cStr(), argString.cStr()));
 			return key;
 		}
 		hstr preprocessedFormat;
 		harray<hstr> preprocessedArgs;
 		if (!_preprocessCompositeTextKeyFormat(format, args, preprocessedFormat, preprocessedArgs))
 		{
-			aprilui::log(hsprintf("- while preprocessing format: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			aprilui::log(hsprintf("- while preprocessing format: '%s' with args '%s'.", format.cStr(), argString.cStr()));
 			return key;
 		}
 		hstr result;
 		if (!_processCompositeTextKeyFormat(preprocessedFormat, preprocessedArgs, result))
 		{
-			aprilui::log(hsprintf("- while processing format: '%s' with args '%s'.", format.c_str(), argString.c_str()));
+			aprilui::log(hsprintf("- while processing format: '%s' with args '%s'.", format.cStr(), argString.cStr()));
 			return key;
 		}
 		return result;
@@ -925,8 +929,8 @@ namespace aprilui
 		int closeIndex;
 		while (string.size() > 0)
 		{
-			openIndex = string.find_first_of('{');
-			closeIndex = string.find_first_of('}');
+			openIndex = string.indexOfAny('{');
+			closeIndex = string.indexOfAny('}');
 			if (openIndex < 0 && closeIndex < 0)
 			{
 				args += getTextEntries(string.split(" ", -1, true));
@@ -963,7 +967,7 @@ namespace aprilui
 		harray<int> indexes;
 		while (string.size() > 0)
 		{
-			index = string.find_first_of('%');
+			index = string.indexOfAny('%');
 			if (index < 0)
 			{
 				preprocessedFormat += string;
@@ -989,7 +993,7 @@ namespace aprilui
 				}
 				preprocessedFormat += string(0, index + 2);
 				string = string(index + 2, string.size() - index - 2);
-				preprocessedArgs += args.pop_first();
+				preprocessedArgs += args.removeFirst();
 				continue;
 			}
 			if (string[index + 1] == 'f')
@@ -999,7 +1003,7 @@ namespace aprilui
 					aprilui::log("WARNING! Not enough args");
 					return false;
 				}
-				hstr arg = args.pop_first();
+				hstr arg = args.removeFirst();
 				preprocessedFormat += string(0, index) + arg;
 				string = string(index + 2, string.size() - index - 2);
 				if (!_getCompositeTextKeyFormatIndexes(arg, indexes))
@@ -1011,7 +1015,7 @@ namespace aprilui
 					aprilui::log("WARNING! Not enough args");
 					return false;
 				}
-				preprocessedArgs += args.pop_first(indexes.size());
+				preprocessedArgs += args.removeFirst(indexes.size());
 			}
 		}
 		preprocessedArgs += args; // remaining args
@@ -1041,11 +1045,11 @@ namespace aprilui
 		foreach (int, it, indexes)
 		{
 			result += string(0, (*it));
-			result += args.pop_first();
+			result += args.removeFirst();
 			string = string((*it) + 2, string.size() - (*it) - 2);
 		}
 		result += string;
-		result = result.replace("%%", "%");
+		result = result.replaced("%%", "%");
 		return true;
 	}
 
@@ -1058,7 +1062,7 @@ namespace aprilui
 		int currentIndex = 0;
 		while (string.size() > 0)
 		{
-			index = string.find_first_of('%');
+			index = string.indexOfAny('%');
 			if (index < 0)
 			{
 				break;
