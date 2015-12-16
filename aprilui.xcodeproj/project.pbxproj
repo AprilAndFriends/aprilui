@@ -883,7 +883,7 @@
 		};
 		7FC8A8B21296C772003D3931 /* App Store */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
+			baseConfigurationReference = D1126263191792520091950A /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -907,11 +907,10 @@
 		};
 		B48C349F1C1EDF080009F81A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
+			baseConfigurationReference = D1126263191792520091950A /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -928,17 +927,15 @@
 		};
 		B48C34A01C1EDF080009F81A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
+			baseConfigurationReference = D1126263191792520091950A /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
 				GCC_THUMB_SUPPORT = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -948,13 +945,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
 				GCC_THUMB_SUPPORT = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = "App Store";
 		};
@@ -1095,7 +1090,7 @@
 		};
 		D18ECFD715736468005AD969 /* App Store */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1126263191792520091950A /* Mac.xcconfig */;
+			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";

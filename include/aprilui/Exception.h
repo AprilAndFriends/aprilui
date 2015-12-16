@@ -11,7 +11,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #define APRILUI_EXCEPTION_H
 
 #include <hltypes/hstring.h>
-#include <hltypes/exception.h>
+#include <hltypes/hexception.h>
 #include "apriluiExport.h"
 
 namespace aprilui

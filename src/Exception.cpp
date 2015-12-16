@@ -13,7 +13,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	_GenericException::_GenericException(chstr errorText, chstr type, const char* file, int line) : 
-					   hltypes::exception("", file, line)
+					   hexception("", file, line)
 	{
 		message += errorText;
 	}
