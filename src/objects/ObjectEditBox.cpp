@@ -730,8 +730,8 @@ namespace aprilui
 			if (renderRect.w > 0.0f && renderRect.h > 0.0f)
 			{
 				april::ColoredVertex v[2];
-				v[0] = gvec3(renderRect.x, renderRect.y, 0);
-				v[1] = gvec3(renderRect.x, renderRect.y + renderRect.h, 0);
+				v[0].set(renderRect.x, renderRect.y, 0);
+				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
 				// using the original text color
 				v[0].color = v[1].color = april::rendersys->getNativeColorUInt(drawColor);
 				april::rendersys->render(april::RO_LINE_LIST, v, 2);
