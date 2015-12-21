@@ -271,7 +271,7 @@ namespace aprilui
 		/// @note The returned indices count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
 		bool _getCompositeTextKeyFormatIndices(ustr uFormat, harray<int>& indices);
 		harray<ustr> _getArgEntries(ustr uString);
-		///! this function is here to silence linker warnings on LLVM compiler...
+		/// @note This method is here to silence linker warnings on LLVM compiler.
 		void _throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName);
 
 	};

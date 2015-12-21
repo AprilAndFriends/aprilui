@@ -33,7 +33,7 @@ namespace aprilui
 		APRILUI_CLONEABLE(EventReceiver);
 	public:
 		EventReceiver();
-		virtual ~EventReceiver();
+		~EventReceiver();
 
 		inline hmap<hstr, Event*>& getEvents() { return this->events; }
 
