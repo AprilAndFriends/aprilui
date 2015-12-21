@@ -415,7 +415,7 @@ namespace aprilui
 		float autoScale = 1.0f;
 		atres::Font* font = atres::renderer->getFont(fontName);
 		// rendering changes the scale, this value has to be stored
-		float fontScale = font->getScale();
+		float fontScale = font->getScale() / font->getBaseScale();
 		hstr realFontName = font->getName();
 		bool needsScaling = false;
 		gvec2 size;
@@ -465,9 +465,8 @@ namespace aprilui
 					}
 				}
 			}
+			this->_autoScaleFont = realFontName + ":" + hstr(fontScale * hclamp(autoScale, this->minAutoScale, 1.0f));
 		}
-		this->_autoScaleFont = realFontName + ":" + hstr(fontScale * hclamp(autoScale, this->minAutoScale, 1.0f));
 	}
-
-
+	
 }
