@@ -417,13 +417,27 @@ namespace aprilui
 		// rendering changes the scale, this value has to be stored
 		float fontScale = font->getScale();
 		hstr realFontName = font->getName();
+		bool needsScaling = false;
 		gvec2 size;
-		size.x = atres::renderer->getTextWidth(fontName, text);
-		size.y = atres::renderer->getTextHeight(fontName, text, size.x);
-		if (size.x > 0.0f && size.y > 0.0f && (size.x > rect.w || size.y > rect.h))
+		size.y = atres::renderer->getTextHeight(fontName, text, rect.w);
+		if (size.y > 0.0f && size.y > rect.h)
+		{
+			needsScaling = true;
+		}
+		if (!needsScaling && !horizontal.isWrapped())
+		{
+			size.x = atres::renderer->getTextWidth(fontName, text);
+			if (size.x > 0.0f && size.x > rect.w)
+			{
+				needsScaling = true;
+			}
+		}
+		if (needsScaling)
 		{
 			if (!horizontal.isWrapped())
 			{
+				size.x = atres::renderer->getTextWidth(fontName, text);
+				size.y = atres::renderer->getTextHeight(fontName, text, size.x);
 				autoScale = hmin(rect.w / size.x, rect.h / size.y);
 			}
 			else
