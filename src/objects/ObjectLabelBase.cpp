@@ -9,6 +9,7 @@
 #include <april/Color.h>
 #include <april/RenderSystem.h>
 #include <atres/atres.h>
+#include <atres/Font.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
 #include <hltypes/hexception.h>
@@ -21,8 +22,11 @@
 #include "Exception.h"
 #include "ObjectLabelBase.h"
 
+#define MAX_AUTO_SCALE_STEPS 5
+
 namespace aprilui
 {
+	float LabelBase::defaultMinAutoScale = 1.0f;
 	harray<PropertyDescription> LabelBase::_propertyDescriptions;
 
 	LabelBase::LabelBase()
@@ -33,6 +37,7 @@ namespace aprilui
 		this->textFormatting = true;
 		this->textColor = april::Color::White;
 		this->textOffset.set(0.0f, 0.0f);
+		this->minAutoScale = LabelBase::defaultMinAutoScale;
 		this->horzFormatting = atres::Horizontal::CenterWrapped;
 		this->vertFormatting = atres::Vertical::Center;
 		this->effect = atres::TextEffect::None;
@@ -41,6 +46,7 @@ namespace aprilui
 		this->effectColor = april::Color::Black;
 		this->backgroundColor = april::Color::Clear;
 		this->backgroundBorder = true;
+		this->_autoScaleDirty = true;
 	}
 
 	LabelBase::LabelBase(const LabelBase& other)
@@ -51,6 +57,7 @@ namespace aprilui
 		this->textFormatting = other.textFormatting;
 		this->textColor = other.textColor;
 		this->textOffset = other.textOffset;
+		this->minAutoScale = other.minAutoScale;
 		this->horzFormatting = other.horzFormatting;
 		this->vertFormatting = other.vertFormatting;
 		this->effect = other.effect;
@@ -60,6 +67,7 @@ namespace aprilui
 		this->effectParameter = other.effectParameter;
 		this->backgroundColor = other.backgroundColor;
 		this->backgroundBorder = other.backgroundBorder;
+		this->_autoScaleDirty = true;
 	}
 
 	LabelBase::~LabelBase()
@@ -73,17 +81,121 @@ namespace aprilui
 			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::STRING);
 			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::STRING);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::ENUM);
-			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::ENUM);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::HEXCOLOR);
-			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::ENUM);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_offset", PropertyDescription::GVEC2);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::FLOAT);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::FLOAT);
+			LabelBase::_propertyDescriptions += PropertyDescription("min_auto_scale", PropertyDescription::FLOAT);
+			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::ENUM);
 			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::HEXCOLOR);
 			LabelBase::_propertyDescriptions += PropertyDescription("background_border", PropertyDescription::BOOL);
 		}
 		return LabelBase::_propertyDescriptions;
+	}
+
+	void LabelBase::setText(chstr value)
+	{
+		bool changed = (this->text != value);
+		this->text = value;
+		this->textKey = "";
+		if (changed)
+		{
+			this->triggerEvent(Event::TextChanged);
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setTextKey(chstr value)
+	{
+		bool changed = (this->textKey != value);
+		hstr newTextKey = value; // because value is a chstr which could reference this->textKey itself
+		this->setText(this->getDataset()->getText(newTextKey));
+		this->textKey = newTextKey;
+		if (changed)
+		{
+			this->triggerEvent(Event::TextKeyChanged);
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setFont(chstr value)
+	{
+		if (this->font != value)
+		{
+			this->font = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setTextOffset(gvec2 value)
+	{
+		if (this->textOffset != value)
+		{
+			this->textOffset = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setTextOffsetX(float value)
+	{
+		if (this->textOffset.x != value)
+		{
+			this->textOffset.x = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setTextOffsetY(float value)
+	{
+		if (this->textOffset.y != value)
+		{
+			this->textOffset.y = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setMinAutoScale(float value)
+	{
+		value = hclamp(value, 0.1f, 1.0f);
+		if (this->minAutoScale != value)
+		{
+			this->minAutoScale = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setHorzFormatting(atres::Horizontal value)
+	{
+		if (this->horzFormatting != value)
+		{
+			this->horzFormatting = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setVertFormatting(atres::Vertical value)
+	{
+		if (this->vertFormatting != value)
+		{
+			this->vertFormatting = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	bool LabelBase::trySetTextKey(chstr textKey)
+	{
+		if (this->textKey != textKey)
+		{
+			hstr newTextKey = textKey; // because value is a chstr which could reference this->textKey itself
+			this->setText(this->getDataset()->getText(newTextKey));
+			this->textKey = newTextKey;
+			this->triggerEvent(Event::TextKeyChanged);
+			this->_autoScaleDirty = true;
+			return true;
+		}
+		return false;
 	}
 
 	april::Color LabelBase::_makeBackgroundDrawColor(april::Color drawColor)
@@ -138,7 +250,14 @@ namespace aprilui
 		{
 			text = "[s" + colorCode + "]" + text;
 		}
-		atres::renderer->drawText(this->font, rect, text, this->horzFormatting, this->vertFormatting, color, -this->textOffset);
+		gvec2 offset = -this->textOffset;
+		if (this->_autoScaleDirty)
+		{
+			this->_calcAutoScaleFont(this->font, rect, text, this->horzFormatting, this->vertFormatting, color, offset);
+			this->_autoScaleDirty = false;
+		}
+		hstr font = (this->_autoScaleFont == "" ? this->font : this->_autoScaleFont);
+		atres::renderer->drawText(font, rect, text, this->horzFormatting, this->vertFormatting, color, offset);
 	}
 
 	hstr LabelBase::getProperty(chstr name)
@@ -146,6 +265,11 @@ namespace aprilui
 		if (name == "font")					return this->getFont();
 		if (name == "text")					return this->getText();
 		if (name == "text_key")				return this->getTextKey();
+		if (name == "text_color")			return this->getTextColor().hex();
+		if (name == "text_offset")			return april::gvec2ToHstr(this->getTextOffset());
+		if (name == "text_offset_x")		return this->getTextOffsetX();
+		if (name == "text_offset_y")		return this->getTextOffsetY();
+		if (name == "min_auto_scale")		return this->getMinAutoScale();
 		if (name == "horz_formatting")
 		{
 			if (this->horzFormatting == atres::Horizontal::Left)			return "left";
@@ -162,7 +286,6 @@ namespace aprilui
 			if (this->vertFormatting == atres::Vertical::Center)	return "center";
 			if (this->vertFormatting == atres::Vertical::Bottom)	return "bottom";
 		}
-		if (name == "text_color")			return this->getTextColor().hex();
 		if (name == "effect")
 		{
 			hstr effect = "";
@@ -183,9 +306,6 @@ namespace aprilui
 			}
 			return effect;
 		}
-		if (name == "text_offset")			return april::gvec2ToHstr(this->getTextOffset());
-		if (name == "text_offset_x")		return this->getTextOffsetX();
-		if (name == "text_offset_y")		return this->getTextOffsetY();
 		if (name == "background_color")		return this->getBackgroundColor().hex();
 		if (name == "background_border")	return this->isBackgroundBorder();
 		return "";
@@ -196,6 +316,11 @@ namespace aprilui
 		if (name == "font")						this->setFont(value);
 		else if (name == "text_key")			this->setTextKey(value);
 		else if (name == "text")				this->setText(value);
+		else if (name == "text_color")			this->setTextColor(value);
+		else if (name == "text_offset")			this->setTextOffset(april::hstrToGvec2(value));
+		else if (name == "text_offset_x")		this->setTextOffsetX(value);
+		else if (name == "text_offset_y")		this->setTextOffsetY(value);
+		else if (name == "min_auto_scale")		this->setMinAutoScale(value);
 		else if (name == "horz_formatting")
 		{
 			if (value == "left")				this->setHorzFormatting(atres::Horizontal::Left);
@@ -222,7 +347,6 @@ namespace aprilui
 				return false;
 			}
 		}
-		else if (name == "text_color")			this->setTextColor(value);
 		else if (name == "effect")
 		{
 			this->setEffect(atres::TextEffect::None);
@@ -259,9 +383,6 @@ namespace aprilui
 				}
 			}
 		}
-		else if (name == "text_offset")			this->setTextOffset(april::hstrToGvec2(value));
-		else if (name == "text_offset_x")		this->setTextOffsetX(value);
-		else if (name == "text_offset_y")		this->setTextOffsetY(value);
 		else if (name == "background_color")	this->setBackgroundColor(value);
 		else if (name == "background_border")	this->setBackgroundBorder(value);
 		else return false;
@@ -275,44 +396,64 @@ namespace aprilui
 			if (this->textKey != "")
 			{
 				this->setTextKey(this->textKey);
+				this->_autoScaleDirty = true;
 			}
 		}
-	}
-	
-	void LabelBase::setText(chstr value)
-	{
-		bool changed = (this->text != value);
-		this->text = value;
-		this->textKey = "";
-		if (changed)
+		else if (type == Event::TextChanged || type == Event::TextKeyChanged || type == Event::Resized)
 		{
-			this->triggerEvent(Event::TextChanged);
+			this->_autoScaleDirty = true;
 		}
 	}
 	
-	void LabelBase::setTextKey(chstr value)
+	void LabelBase::_calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical, april::Color color, gvec2 offset)
 	{
-		bool changed = (this->textKey != value);
-		hstr newTextKey = value; // because value is a chstr which could reference this->textKey itself
-		this->setText(this->getDataset()->getText(newTextKey));
-		this->textKey = newTextKey;
-		if (changed)
+		this->_autoScaleFont = "";
+		if (this->minAutoScale >= 1.0f || rect.w <= 0.0f || rect.h <= 0.0f)
 		{
-			this->triggerEvent(Event::TextKeyChanged);
+			return;
 		}
-	}
-	
-	bool LabelBase::trySetTextKey(chstr textKey)
-	{
-		if (this->textKey != textKey)
+		float autoScale = 1.0f;
+		atres::Font* font = atres::renderer->getFont(fontName);
+		// rendering changes the scale, this value has to be stored
+		float fontScale = font->getScale();
+		hstr realFontName = font->getName();
+		gvec2 size;
+		size.x = atres::renderer->getTextWidth(fontName, text);
+		size.y = atres::renderer->getTextHeight(fontName, text, size.x);
+		if (size.x > 0.0f && size.y > 0.0f && (size.x > rect.w || size.y > rect.h))
 		{
-			hstr newTextKey = textKey; // because value is a chstr which could reference this->textKey itself
-			this->setText(this->getDataset()->getText(newTextKey));
-			this->textKey = newTextKey;
-			this->triggerEvent(Event::TextKeyChanged);
-			return true;
+			if (!horizontal.isWrapped())
+			{
+				autoScale = hmin(rect.w / size.x, rect.h / size.y);
+			}
+			else
+			{
+				float upperAutoScale = 1.0f;
+				float lowerAutoScale = this->minAutoScale;
+				float currentAutoScale = this->minAutoScale;
+				autoScale = this->minAutoScale;
+				for_iter (i, 0, MAX_AUTO_SCALE_STEPS)
+				{
+					currentAutoScale = lowerAutoScale + (upperAutoScale - lowerAutoScale) * 0.5f;
+					size.y = atres::renderer->getTextHeight(realFontName + ":" + hstr(fontScale * currentAutoScale), text, rect.w);
+					if (size.y > rect.h)
+					{
+						upperAutoScale = currentAutoScale;
+					}
+					else if (size.y < rect.h)
+					{
+						lowerAutoScale = autoScale = currentAutoScale;
+					}
+					else // however unlikely, the exact sweetspot was hit
+					{
+						autoScale = currentAutoScale;
+						break;
+					}
+				}
+			}
 		}
-		return false;
+		this->_autoScaleFont = realFontName + ":" + hstr(fontScale * hclamp(autoScale, this->minAutoScale, 1.0f));
 	}
+
 
 }

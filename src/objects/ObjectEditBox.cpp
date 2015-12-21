@@ -75,6 +75,7 @@ namespace aprilui
 		this->_selectionDirty = true; // calculates initial value
 		this->_caretPositionDirty = false; // this is used only for calculation of clicks, should not be calculated initially
 		this->_sizeProblemReported = false;
+		this->minAutoScale = 1.0f;
 	}
 
 	EditBox::EditBox(const EditBox& other) : Label(other), ButtonBase(other)
@@ -101,6 +102,7 @@ namespace aprilui
 		this->_selectionDirty = true; // calculates initial value
 		this->_caretPositionDirty = false; // this is used only for calculation of clicks, should not be calculated initially
 		this->_sizeProblemReported = false;
+		this->minAutoScale = 1.0f;
 	}
 
 	EditBox::~EditBox()
@@ -250,6 +252,11 @@ namespace aprilui
 	hstr EditBox::getSelectedText()
 	{
 		return (this->selectionCount != 0 ? this->text.utf8SubString(hmin(this->caretIndex, this->caretIndex + this->selectionCount), habs(this->selectionCount)) : hstr(""));
+	}
+
+	void EditBox::setMinAutoScale(float value)
+	{
+		hlog::warn(logTag, "EditBox does not support setting of 'min_auto_scale'! Call will be ignored.");
 	}
 
 	void EditBox::setCaretIndexAt(gvec2 position)

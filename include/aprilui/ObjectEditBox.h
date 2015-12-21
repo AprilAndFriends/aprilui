@@ -63,6 +63,7 @@ namespace aprilui
 		void setText(chstr value);
 		void setFocused(bool value);
 		hstr getSelectedText();
+		void setMinAutoScale(float value);
 
 		harray<PropertyDescription> getPropertyDescriptions();
 		

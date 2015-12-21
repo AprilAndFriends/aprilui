@@ -182,7 +182,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			gridView = dataset->getObject<aprilui::GridView*>("grid_view");
 			gridView->deleteRow(hrand(gridView->getRowCount()));
 			break;
-		case april::AK_D:
+		case april::AK_F2:
 			aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
 			break;
 		}

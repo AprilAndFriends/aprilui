@@ -41,13 +41,21 @@ namespace aprilui
 		virtual void setText(chstr value);
 		HL_DEFINE_GET(hstr, textKey, TextKey);
 		void setTextKey(chstr value);
-		HL_DEFINE_GETSET(hstr, font, Font);
+		HL_DEFINE_GET(hstr, font, Font);
+		void setFont(chstr value);
 		HL_DEFINE_GETSET(april::Color, textColor, TextColor);
-		HL_DEFINE_GETSET(gvec2, textOffset, TextOffset);
-		HL_DEFINE_GETSET(float, textOffset.x, TextOffsetX);
-		HL_DEFINE_GETSET(float, textOffset.y, TextOffsetY);
-		HL_DEFINE_GETSET(atres::Horizontal, horzFormatting, HorzFormatting);
-		HL_DEFINE_GETSET(atres::Vertical, vertFormatting, VertFormatting);
+		HL_DEFINE_GET(gvec2, textOffset, TextOffset);
+		void setTextOffset(gvec2 value);
+		HL_DEFINE_GET(float, textOffset.x, TextOffsetX);
+		void setTextOffsetX(float value);
+		HL_DEFINE_GET(float, textOffset.y, TextOffsetY);
+		void setTextOffsetY(float value);
+		HL_DEFINE_GET(float, minAutoScale, MinAutoScale);
+		virtual void setMinAutoScale(float value);
+		HL_DEFINE_GET(atres::Horizontal, horzFormatting, HorzFormatting);
+		void setHorzFormatting(atres::Horizontal value);
+		HL_DEFINE_GET(atres::Vertical, vertFormatting, VertFormatting);
+		void setVertFormatting(atres::Vertical value);
 		HL_DEFINE_GETSET(atres::TextEffect, effect, Effect);
 		HL_DEFINE_ISSET(useEffectColor, UseEffectColor);
 		HL_DEFINE_ISSET(useEffectParameter, UseEffectParameter);
@@ -74,6 +82,8 @@ namespace aprilui
 		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
 
+		static float defaultMinAutoScale;
+
 		DEPRECATED_ATTRIBUTE atres::TextEffect getFontEffect() { return this->getEffect(); }
 		DEPRECATED_ATTRIBUTE void setFontEffect(atres::TextEffect value) { this->setEffect(value); }
 		
@@ -84,6 +94,7 @@ namespace aprilui
 		bool textFormatting;
 		april::Color textColor;
 		gvec2 textOffset;
+		float minAutoScale;
 		atres::Horizontal horzFormatting;
 		atres::Vertical vertFormatting;
 		atres::TextEffect effect;
@@ -98,8 +109,13 @@ namespace aprilui
 		
 		void _drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor);
 		void _drawLabel(grect rect, april::Color color);
-		
+
 	private:
+		bool _autoScaleDirty;
+		hstr _autoScaleFont;
+
+		void _calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical, april::Color color, gvec2 offset);
+
 		static harray<PropertyDescription> _propertyDescriptions;
 
 	};
