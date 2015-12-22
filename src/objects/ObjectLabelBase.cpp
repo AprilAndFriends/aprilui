@@ -414,6 +414,10 @@ namespace aprilui
 		}
 		float autoScale = 1.0f;
 		atres::Font* font = atres::renderer->getFont(fontName);
+		if (font == NULL)
+		{
+			return;
+		}
 		// rendering changes the scale, this value has to be stored
 		float fontScale = font->getScale() / font->getBaseScale();
 		hstr realFontName = font->getName();
