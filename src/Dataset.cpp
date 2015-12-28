@@ -989,68 +989,75 @@ namespace aprilui
 		return filepath;
 	}
 	
-	void Dataset::_loadTexts(chstr path)
+	void Dataset::_loadTexts(chstr path) // napravit virtual u headeru i u chapter overrideat ovu funk tako da louda preko threaded dreka
 	{
 		hlog::write(logTag, "Loading texts: " + path);
 		harray<hstr> files = hrdir::files(path, true);
-		harray<hstr> lines;
-		harray<hstr> values;
-		bool keyMode = true;
-		hstr key;
-		hresource f;
+		hresource file;
+		hstream data;
 		foreach (hstr, it, files)
 		{
-			f.open(*it);
-			lines = f.readLines();
-			f.close();
-			if (lines.size() == 0)
+			file.open(*it);
+			data.writeRaw(file); // this has to be deleted somewhere
+			data.seek(0, hltypes::StreamBase::START);
+			file.close();
+			if (data.size() != 0)
 			{
-				continue;
-			}
-			// UTF-8 might have a Byte Order Marker
-			hstr firstLine = lines.first();
-			if (firstLine.size() > 0)
-			{
-				int i = 0;
-				while (i < firstLine.size() && !hbetweenII((int)firstLine[i], 0, 127))
-				{
-					++i;
-				}
-				lines[0] = (i < firstLine.size() ? firstLine(i, firstLine.size() - i) : "");
-			}
-			keyMode = true;
-			values.clear();
-			// now parse the entries
-			foreach (hstr, it2, lines)
-			{
-				if (keyMode)
-				{
-					if ((*it2) == "{")
-					{
-						values.clear();
-						keyMode = false;
-					}
-					else
-					{
-						key = (*it2).split("#").first().trimmed(' ');
-					}
-				}
-				else if ((*it2) == "}")
-				{
-					keyMode = true;
-					if (key != "")
-					{
-						this->texts[key] = values.joined('\n');
-					}
-				}
-				else
-				{
-					values += (*it2);
-				}
+				this->_loadTextResource(data, this->texts);
 			}
 		}
 	}
 	
+	void Dataset::_loadTextResource(hstream& data, hmap<hstr, hstr>& textsMap)
+	{
+		harray<hstr> values;
+		bool keyMode = true;
+		hstr key;
+		harray<hstr> lines = data.readLines();
+	
+		// UTF-8 might have a Byte Order Marker
+		hstr firstLine = lines.first();
+		if (firstLine.size() > 0)
+		{
+			int i = 0;
+			while (i < firstLine.size() && !hbetweenII((int)firstLine[i], 0, 127))
+			{
+				++i;
+			}
+			lines[0] = (i < firstLine.size() ? firstLine(i, firstLine.size() - i) : "");
+		}
+		keyMode = true;
+		values.clear();
+		// now parse the entries
+		foreach (hstr, line, lines)
+		{
+			if (keyMode)
+			{
+				if ((*line) == "{")
+				{
+					values.clear();
+					keyMode = false;
+				}
+				else
+				{
+					key = (*line).split("#").first().trimmed(' ');
+				}
+			}
+			else if ((*line) == "}")
+			{
+				keyMode = true;
+				if (key != "")
+				{
+					textsMap[key] = values.joined('\n');
+				}
+			}
+			else
+			{
+				values += (*line);
+			}
+		}
+	}
+
 	void Dataset::unload()
 	{
 		if (!this->loaded)

@@ -256,7 +256,8 @@ namespace aprilui
 		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		
 		void readFile(chstr filename);
-		void _loadTexts(chstr path);
+		virtual void _loadTexts(chstr path);
+		void _loadTextResource(hstream& data, hmap<hstr, hstr>& textsMap);
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
 		hstr _makeLocalizedTextureName(chstr filename);
 		hstr _makeTextsPath();
