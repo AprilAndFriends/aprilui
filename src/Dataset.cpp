@@ -998,12 +998,13 @@ namespace aprilui
 		foreach (hstr, it, files)
 		{
 			file.open(*it);
-			data.writeRaw(file); // this has to be deleted somewhere
-			data.seek(0, hltypes::StreamBase::START);
+			data.writeRaw(file);
+			data.rewind();
 			file.close();
-			if (data.size() != 0)
+			if (data.size() > 0)
 			{
 				this->_loadTextResource(data, this->texts);
+				data.clear();
 			}
 		}
 	}
@@ -1029,21 +1030,21 @@ namespace aprilui
 		keyMode = true;
 		values.clear();
 		// now parse the entries
-		foreach (hstr, line, lines)
+		foreach (hstr, it2, lines)
 		{
 			if (keyMode)
 			{
-				if ((*line) == "{")
+				if ((*it2) == "{")
 				{
 					values.clear();
 					keyMode = false;
 				}
 				else
 				{
-					key = (*line).split("#").first().trimmed(' ');
+					key = (*it2).split("#").first().trimmed(' ');
 				}
 			}
-			else if ((*line) == "}")
+			else if ((*it2) == "}")
 			{
 				keyMode = true;
 				if (key != "")
@@ -1053,7 +1054,7 @@ namespace aprilui
 			}
 			else
 			{
-				values += (*line);
+				values += (*it2);
 			}
 		}
 	}
