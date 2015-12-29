@@ -159,12 +159,6 @@ namespace aprilui
 		return (Object::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
 	}
 
-	void ScrollArea::_snapScrollOffset()
-	{
-		gvec2 offset = this->getScrollOffset();
-		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
-	}
-
 	void ScrollArea::_update(float timeDelta)
 	{
 		Object::_update(timeDelta);
@@ -188,7 +182,7 @@ namespace aprilui
 				else
 				{
 					this->_dragSpeed.set(0.0f, 0.0f);
-					this->_snapScrollOffset();
+					this->snapScrollOffset();
 				}
 			}
 			if (this->dragging)
@@ -248,7 +242,7 @@ namespace aprilui
 			}
 			gvec2 offset = this->getScrollOffset();
 			this->setScrollOffset(this->_lastScrollOffset - distance);
-			this->_snapScrollOffset();
+			this->snapScrollOffset();
 			gvec2 newOffset = this->getScrollOffset();
 			if (offset.x == newOffset.x)
 			{
@@ -267,6 +261,12 @@ namespace aprilui
 		{
 			this->_dragTimer.set(0.0f, 0.0f);
 		}
+	}
+
+	void ScrollArea::snapScrollOffset()
+	{
+		gvec2 offset = this->getScrollOffset();
+		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
 	}
 
 	void ScrollArea::stopScrolling()

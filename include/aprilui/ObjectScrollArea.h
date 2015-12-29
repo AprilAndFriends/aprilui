@@ -63,6 +63,7 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
+		void snapScrollOffset();
 		void stopScrolling();
 
 		hstr getProperty(chstr name);
@@ -97,7 +98,6 @@ namespace aprilui
 
 		aprilui::Object* _findHoverObject();
 		void _adjustDragSpeed();
-		void _snapScrollOffset();
 		bool _isScrollableScrollArea(aprilui::Object* object);
 
 		void _update(float timeDelta);
