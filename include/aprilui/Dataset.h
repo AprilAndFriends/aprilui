@@ -95,7 +95,7 @@ namespace aprilui
 		}
 
 		void updateTextures(float timeDelta);
-		void unloadUnusedTextures();
+		void unloadUnusedResources();
 		void clearChildUnderCursor();
 		
 		void processEvents();

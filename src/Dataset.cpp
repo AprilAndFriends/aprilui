@@ -1065,6 +1065,7 @@ namespace aprilui
 		{
 			throw Exception("Unable to unload dataset '" + this->getName() + "', data not loaded!");
 		}
+		this->_closeDocuments();
 		foreach_m (Animator*, it, this->animators)
 		{
 			if (it->second->getParent() != NULL)
@@ -1666,8 +1667,9 @@ namespace aprilui
 		}
 	}
 
-	void Dataset::unloadUnusedTextures()
+	void Dataset::unloadUnusedResources()
 	{
+		this->_closeDocuments();
 		foreach_m (Texture*, it, this->textures)
 		{
 			if (it->second->isManaged() && it->second->getUnusedTime() > 1.0f)

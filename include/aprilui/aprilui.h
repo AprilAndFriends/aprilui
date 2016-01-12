@@ -95,7 +95,7 @@ namespace aprilui
 	apriluiFnExport void processEvents();
 	apriluiFnExport void update(float timeDelta);
 	apriluiFnExport void updateTextures(float timeDelta);
-	apriluiFnExport void unloadUnusedTextures();
+	apriluiFnExport void unloadUnusedResources();
 	apriluiFnExport void reloadTextures();
 
 	apriluiFnExport bool setTextureExtensionPrefixes(harray<hstr> prefixes, harray<float> scales);

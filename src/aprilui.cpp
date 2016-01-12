@@ -573,11 +573,11 @@ namespace aprilui
 		}
 	}
 	
-	void unloadUnusedTextures()
+	void unloadUnusedResources()
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{
-			it->second->unloadUnusedTextures();
+			it->second->unloadUnusedResources();
 		}
 	}
 
