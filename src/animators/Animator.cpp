@@ -174,6 +174,7 @@ namespace aprilui
 				return;
 			}
 			this->notifyEvent(Event::AnimationDelayExpired, NULL);
+			this->triggerEvent(Event::AnimationDelayExpired);
 			this->timeDelta = -this->delay;
 		}
 		bool expired = this->isExpired();
@@ -185,6 +186,7 @@ namespace aprilui
 		if (!expired && this->isExpired())
 		{
 			this->notifyEvent(Event::AnimationExpired, NULL);
+			this->triggerEvent(Event::AnimationExpired);
 		}
 	}
 
