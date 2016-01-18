@@ -989,7 +989,7 @@ namespace aprilui
 		return filepath;
 	}
 	
-	void Dataset::_loadTexts(chstr path) // napravit virtual u headeru i u chapter overrideat ovu funk tako da louda preko threaded dreka
+	void Dataset::_loadTexts(chstr path)
 	{
 		hlog::write(logTag, "Loading texts: " + path);
 		harray<hstr> files = hrdir::files(path, true);
