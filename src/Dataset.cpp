@@ -365,9 +365,11 @@ namespace aprilui
 			BaseImage* image = NULL;
 			hstr name;
 			grect rect;
+			hstr className;
 			foreach_xmlnode (child, node)
 			{
-				if (*child == "Image" && (child->pexists("tile") || child->pexists("tile_w") || child->pexists("tile_h"))) // DEPRECATED (this entire block)
+				className = child->getValue();
+				if (className == "Image" && (child->pexists("tile") || child->pexists("tile_w") || child->pexists("tile_h"))) // DEPRECATED (this entire block)
 				{
 					hlog::warn(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
 					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
@@ -429,21 +431,21 @@ namespace aprilui
 						throw ObjectExistsException("Image", name, this->name);
 					}
 					aprilui::readRectNode(rect, child);
-					if (*child == "Image")
+					if (className == "Image")
 					{
 						image = new Image(texture, name, rect);
 					}
-					else if (*child == "TileImage")
+					else if (className == "TileImage")
 					{
 						image = new TileImage(texture, name, rect);
 					}
-					else if (*child == "SkinImage")
+					else if (className == "SkinImage")
 					{
 						image = new SkinImage(texture, name, rect);
 					}
 					else
 					{
-						throw XMLUnknownClassException(child->getValue(), child);
+						throw XMLUnknownClassException(className, child);
 					}
 					this->images[name] = image;
 					image->dataset = this;
@@ -524,14 +526,38 @@ namespace aprilui
 		}
 		this->styles[styleName] = style;
 		style->dataset = this;
-		hstr type;
+		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
+		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
+		hstr className;
 		hstr name;
 		hmap<hstr, hstr> properties;
+		bool isObject = false;
+		bool isAnimator = false;
 		foreach_xmlnode (child, node)
 		{
 			properties.clear();
-			type = child->pstr("type", "");
-			if (type == "" || aprilui::getObjectFactories().hasKey(type))
+			isObject = false;
+			isAnimator = false;
+			className = child->getValue();
+			if (className == "Object")
+			{
+				isObject = true;
+				className = child->pstr("type", "");
+			}
+			else if (className == "Animator")
+			{
+				isAnimator = true;
+				className = child->pstr("type", "");
+			}
+			else
+			{
+				isObject = objectFactories.hasKey(className);
+				if (!isObject)
+				{
+					isAnimator = animatorFactories.hasKey(className);
+				}
+			}
+			if (isObject || isAnimator)
 			{
 				foreach_xmlproperty (prop, child)
 				{
@@ -540,51 +566,51 @@ namespace aprilui
 					{
 						hlog::error(logTag, "Using property '" + name + "' in Style is not allowed!");
 					}
-					if (name != "type")
+					else if (name != "type")
 					{
 						properties[name] = prop->value();
 					}
 				}
-				if (type == "")
+				if (className == "")
 				{
-					if (*child == "Object")
+					if (isObject)
 					{
 						style->objectDefaults.properties.inject(properties);
 					}
-					else if (*child == "Animator")
+					else if (isAnimator)
 					{
 						style->animatorDefaults.properties.inject(properties);
 					}
 				}
 				else
 				{
-					if (*child == "Object")
+					if (isObject)
 					{
-						if (!style->objects.hasKey(type))
+						if (!style->objects.hasKey(className))
 						{
-							style->objects[type] = Style::Group(properties);
+							style->objects[className] = Style::Group(properties);
 						}
 						else
 						{
-							style->objects[type].properties.inject(properties);
+							style->objects[className].properties.inject(properties);
 						}
 					}
-					else if (*child == "Animator")
+					else if (isAnimator)
 					{
-						if (!style->animators.hasKey(type))
+						if (!style->animators.hasKey(className))
 						{
-							style->animators[type] = Style::Group(properties);
+							style->animators[className] = Style::Group(properties);
 						}
 						else
 						{
-							style->animators[type].properties.inject(properties);
+							style->animators[className].properties.inject(properties);
 						}
 					}
 				}
 			}
 			else
 			{
-				hlog::warn(logTag, "Object/Animator type '" + type + "' not found! It might not be registered in aprilui.");
+				hlog::warn(logTag, "Object/Animator type '" + className + "' not found! It might not be registered in aprilui.");
 			}
 		}
 	}
@@ -620,7 +646,8 @@ namespace aprilui
 	{
 		hstr objectName;
 		hlxml::Node::Type type;
-		if (*node == "Include")
+		hstr className = node->getValue();
+		if (className == "Include")
 		{
 			gvec2 offset;
 			if (node->pexists("position"))
@@ -663,20 +690,20 @@ namespace aprilui
 												descendant->setProperty(prop->name(), prop->value());
 											}
 											else
-                                            {
-                                                hstr newName = newNamePrefix + prop->value() + newNameSuffix;
-                                                if (!this->hasObject(newName))
-                                                {
-                                                    this->unregisterObjects(descendant);
-                                                    descendant->setName(newName);
-                                                    this->registerObjects(descendant);
-                                                }
-                                                else
-                                                {
-                                                    hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
-                                                        prop->value().cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
-                                                }
-                                            }
+											{
+												hstr newName = newNamePrefix + prop->value() + newNameSuffix;
+												if (!this->hasObject(newName))
+												{
+													this->unregisterObjects(descendant);
+													descendant->setName(newName);
+													this->registerObjects(descendant);
+												}
+												else
+												{
+													hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
+														prop->value().cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
+												}
+											}
 										}
 									}
 								}
@@ -700,9 +727,30 @@ namespace aprilui
 			}
 			return includeRoot;
 		}
-		hstr className = node->pstr("type");
+		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
+		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
+		bool isObject = false;
+		bool isAnimator = false;
+		if (className == "Object")
+		{
+			isObject = true;
+			className = node->pstr("type", "");
+		}
+		else if (className == "Animator")
+		{
+			isAnimator = true;
+			className = node->pstr("type", "");
+		}
+		else
+		{
+			isObject = objectFactories.hasKey(className);
+			if (!isObject)
+			{
+				isAnimator = animatorFactories.hasKey(className);
+			}
+		}
 		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
-		if (*node == "Object" || *node == "Animator")
+		if (isObject || isAnimator)
 		{
 			if (node->pexists("name"))
 			{
@@ -712,7 +760,7 @@ namespace aprilui
 			{
 				objectName = april::generateName(className);
 			}
-			if (*node == "Object")
+			if (isObject)
 			{
 				aprilui::readRectNode(rect, node);
 				rect += offset;
@@ -729,23 +777,33 @@ namespace aprilui
 		BaseObject* baseObject = NULL;
 		Object* object = NULL;
 		Animator* animator = NULL;
-		if (*node == "Object")
+		if (isObject)
 		{
 			baseObject = object = aprilui::createObject(className, objectName);
 		}
-		else if (*node == "Animator")
+		else if (isAnimator)
 		{
 			baseObject = animator = aprilui::createAnimator(className, objectName);
 		}
 		if (baseObject == NULL)
 		{
+			isObject = false;
+			isAnimator = false;
 			baseObject = this->parseExternalObjectClass(node, objectName, rect);
 			if (baseObject != NULL)
 			{
 				object = dynamic_cast<Object*>(baseObject);
-				if (object == NULL)
+				if (object != NULL)
+				{
+					isObject = true;
+				}
+				else
 				{
 					animator = dynamic_cast<Animator*>(baseObject);
+					if (animator != NULL)
+					{
+						isAnimator = true;
+					}
 				}
 			}
 		}
@@ -753,7 +811,7 @@ namespace aprilui
 		{
 			throw XMLUnknownClassException(className, node);
 		}
-		if (object != NULL)
+		if (isObject)
 		{
 			object->setRect(rect);
 		}
@@ -782,7 +840,7 @@ namespace aprilui
 			}
 		}
 		baseObject->applyStyle(style);
-		if (object != NULL)
+		if (isObject)
 		{
 			this->objects[objectName] = object;
 			if (this->root == NULL)
@@ -794,7 +852,7 @@ namespace aprilui
 				parent->addChild(object);
 			}
 		}
-		else if (animator != NULL)
+		else if (isAnimator)
 		{
 			this->animators[objectName] = animator;
 			if (parent != NULL)
@@ -812,7 +870,7 @@ namespace aprilui
 			}
 			baseObject->setProperty(name, prop->value());
 		}
-		if (object != NULL)
+		if (isObject)
 		{
 			foreach_xmlnode (child, node)
 			{
@@ -869,9 +927,16 @@ namespace aprilui
 		hlxml::Document* doc = this->_openDocument(path);
 		hlxml::Node* current = doc->root();
 		BaseObject* root = NULL;
+
+		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
+		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
+		bool isObject = false;
+		bool isAnimator = false;
+		hstr className;
 		foreach_xmlnode (node, current)
 		{
-			if (*node == "Object" || *node == "Animator")
+			className = node->getValue();
+			if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
 			{
 				if (root == NULL)
 				{
@@ -941,17 +1006,26 @@ namespace aprilui
 			throw Exception("Unable to parse Xml file '" + filename + "', no root node found!");
 		}
 		this->parseExternalXMLNode(current);
+		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
+		hstr className;
 		foreach_xmlnode (node, current)
 		{
-			if		(*node == "Texture")		this->parseTexture(node);
-			else if (*node == "CompositeImage")	this->parseCompositeImage(node);
-			else if (*node == "Style")			this->parseStyle(node);
-			else if	(*node == "Object")			this->parseObject(node);
-			else if	(*node == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
-			else if	(*node == "TextureGroup")	this->parseTextureGroup(node);
-			else
+			if (node->getType() != hlxml::Node::TYPE_COMMENT)
 			{
-				this->parseExternalXMLNode(node);
+				className = node->getValue();
+				if		(className == "Texture")		this->parseTexture(node);
+				else if (className == "CompositeImage")	this->parseCompositeImage(node);
+				else if (className == "Style")			this->parseStyle(node);
+				else if	(className == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
+				else if	(className == "TextureGroup")	this->parseTextureGroup(node);
+				else if (className == "Object" || objectFactories.hasKey(className))
+				{
+					this->parseObject(node);
+				}
+				else
+				{
+					this->parseExternalXMLNode(node);
+				}
 			}
 		}
 	}
