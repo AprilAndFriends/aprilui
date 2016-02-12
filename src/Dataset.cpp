@@ -930,8 +930,6 @@ namespace aprilui
 
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
-		bool isObject = false;
-		bool isAnimator = false;
 		hstr className;
 		foreach_xmlnode (node, current)
 		{
