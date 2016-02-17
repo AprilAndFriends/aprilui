@@ -54,20 +54,20 @@ namespace aprilui
 
 	//---------------------------------------------------------------------------------------------------------
 
-	class apriluiExport _ResourceExistsException : public _GenericException
+	class apriluiExport _ApriluiResourceExistsException : public _GenericException
 	{
 	public:
-		_ResourceExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
+		_ApriluiResourceExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
 	};
 	
-	class apriluiExport _ResourceNotExistsException : public _GenericException
+	class apriluiExport _ApriluiResourceNotExistsException : public _GenericException
 	{
 	public:
-		_ResourceNotExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
+		_ApriluiResourceNotExistsException(chstr object_name, chstr class_name, Dataset* dict, const char* file = "", int line = 0);
 	};
 	
-	#define ResourceExistsException(name, cls, data) _ResourceExistsException(name, cls, data, __FILE__, __LINE__)
-	#define ResourceNotExistsException(name, cls, data) _ResourceNotExistsException(name, cls, data, __FILE__, __LINE__)
+	#define ApriluiResourceExistsException(name, cls, data) _ApriluiResourceExistsException(name, cls, data, __FILE__, __LINE__)
+	#define ApriluiResourceNotExistsException(name, cls, data) _ApriluiResourceNotExistsException(name, cls, data, __FILE__, __LINE__)
 
 	//---------------------------------------------------------------------------------------------------------
 

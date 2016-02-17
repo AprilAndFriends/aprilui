@@ -18,16 +18,16 @@ namespace aprilui
 		message += errorText;
 	}
 
-	_ResourceExistsException::_ResourceExistsException(chstr object_name, chstr class_name,
+	_ApriluiResourceExistsException::_ApriluiResourceExistsException(chstr object_name, chstr class_name,
 													   Dataset* dict, const char* file, int line) :
-							  _GenericException("", "ResourceExistsException", file, line)
+							  _GenericException("", "ApriluiResourceExistsException", file, line)
 	{
 		message += class_name + " already exists: " + object_name + " in dataset " + dict->getName();
 	}
 
-	_ResourceNotExistsException::_ResourceNotExistsException(chstr object_name, chstr class_name,
+	_ApriluiResourceNotExistsException::_ApriluiResourceNotExistsException(chstr object_name, chstr class_name,
 														  Dataset* dict, const char* file, int line) :
-								 _GenericException("", "ResourceNotExistsException", file, line)
+								 _GenericException("", "ApriluiResourceNotExistsException", file, line)
 	{
 		message += class_name + " doesn't exist: " + object_name + " in dataset " + dict->getName();
 	}

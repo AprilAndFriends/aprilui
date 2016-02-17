@@ -10,7 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #ifndef APRILUI_EXPORT_H
 #define APRILUI_EXPORT_H
 
-	#ifdef _STATICLIB
+	#ifdef _LIB
 		#define apriluiExport
 		#define apriluiFnExport
 	#else
@@ -29,7 +29,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 	#endif
 	#ifndef DEPRECATED_ATTRIBUTE
 		#ifdef _MSC_VER
-			#define DEPRECATED_ATTRIBUTE
+			#define DEPRECATED_ATTRIBUTE __declspec(deprecated("function is deprecated"))
 		#else
 			#define DEPRECATED_ATTRIBUTE __attribute__((deprecated))
 		#endif

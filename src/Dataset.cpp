@@ -81,7 +81,7 @@ namespace aprilui
 	{
 		if (!mTextures.hasKey(texture->getFilename()))
 		{
-			throw ResourceNotExistsException(texture->getFilename(), "Texture", this);
+			throw ApriluiResourceNotExistsException(texture->getFilename(), "Texture", this);
 		}
 		mTextures.removeKey(texture->getFilename());
 		delete texture;
@@ -91,7 +91,7 @@ namespace aprilui
 	{
 		if (!mImages.hasKey(image->getName()))
 		{
-			throw ResourceNotExistsException(image->getName(), "Image", this);
+			throw ApriluiResourceNotExistsException(image->getName(), "Image", this);
 		}
 		mImages.removeKey(image->getName());
 		delete image;
@@ -101,7 +101,7 @@ namespace aprilui
 	{
 		if (!mTextures.hasKey(name))
 		{
-			throw ResourceNotExistsException(name, "Texture", this);
+			throw ApriluiResourceNotExistsException(name, "Texture", this);
 		}
 		Texture* texture = mTextures[name];
 		mTextures.removeKey(name);
@@ -112,7 +112,7 @@ namespace aprilui
 	{
 		if (!mImages.hasKey(name))
 		{
-			throw ResourceNotExistsException(name, "Image", this);
+			throw ApriluiResourceNotExistsException(name, "Image", this);
 		}
 		Image* image = mImages[name];
 		mImages.removeKey(name);
@@ -181,7 +181,7 @@ namespace aprilui
 		{
 			if (mImages.hasKey(textureName))
 			{
-				throw ResourceExistsException(filename, "Texture", this);
+				throw ApriluiResourceExistsException(filename, "Texture", this);
 			}
 			mImages[textureName] = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
 		}
@@ -195,7 +195,7 @@ namespace aprilui
 					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (mImages.hasKey(name))
 					{
-						throw ResourceExistsException(name, "Image", this);
+						throw ApriluiResourceExistsException(name, "Image", this);
 					}
 					grect rect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h"));
 					
@@ -238,7 +238,7 @@ namespace aprilui
 		hstr textureName = filename(slash, filename.rindexOf('.') - slash);
 		if (mTextures.hasKey(textureName))
 		{
-			throw ResourceExistsException(filename, "RamTexture", this);
+			throw ApriluiResourceExistsException(filename, "RamTexture", this);
 		}
 //		bool dynamicLoad = node->pbool("dynamic_load", false);
 		hstr locpath = _makeLocalizedTextureName(filepath);
@@ -256,7 +256,7 @@ namespace aprilui
 		hstr refname;
 		if (mImages.hasKey(name))
 		{
-			throw ResourceExistsException(name, "CompositeImage", this);
+			throw ApriluiResourceExistsException(name, "CompositeImage", this);
 		}
 		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
 		foreach_xmlnode (child, node)
@@ -307,7 +307,7 @@ namespace aprilui
 		}
 		if (mObjects.hasKey(objectName))
 		{
-			throw ResourceExistsException(objectName, "Object", this);
+			throw ApriluiResourceExistsException(objectName, "Object", this);
 		}
 		Object* object;
 		
@@ -443,7 +443,7 @@ namespace aprilui
 	{
 		if (!this->mObjects.hasKey(object->getName()))
 		{
-			throw ResourceNotExistsException(object->getName(), "Object", this);
+			throw ApriluiResourceNotExistsException(object->getName(), "Object", this);
 		}
 		harray<Object*> children = object->getChildren();
 		foreach (Object*, it, children)
@@ -578,7 +578,7 @@ namespace aprilui
 		hstr name = object->getName();
 		if (mObjects.hasKey(name))
 		{
-			throw ResourceExistsException(name, "Object", this);
+			throw ApriluiResourceExistsException(name, "Object", this);
 		}
 		mObjects[name] = object;
 		object->_setDataset(this);
@@ -594,7 +594,7 @@ namespace aprilui
 		hstr name = object->getName();
 		if (!mObjects.hasKey(name))
 		{
-			throw ResourceNotExistsException(name, "Object", this);
+			throw ApriluiResourceNotExistsException(name, "Object", this);
 		}
 		mObjects.removeKey(name);
 		object->_setDataset(NULL);
@@ -605,7 +605,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (mImages.hasKey(name))
 		{
-			throw ResourceExistsException(name, "Image", this);
+			throw ApriluiResourceExistsException(name, "Image", this);
 		}
 		mImages[name] = image;
 	}
@@ -620,7 +620,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (!mImages.hasKey(name))
 		{
-			throw ResourceNotExistsException(name, "Image", this);
+			throw ApriluiResourceNotExistsException(name, "Image", this);
 		}
 		mImages.removeKey(name);
 	}
@@ -632,7 +632,7 @@ namespace aprilui
 		hstr name = filename(slash, filename.rindexOf('.') - slash);
 		if (mTextures.hasKey(name))
 		{
-			throw ResourceExistsException(name, "Texture", this);
+			throw ApriluiResourceExistsException(name, "Texture", this);
 		}
 		mTextures[name] = tex;
 	}
@@ -660,7 +660,7 @@ namespace aprilui
 	{
 		if (!mObjects.hasKey(name))
 		{
-			throw ResourceNotExistsException(name, "Object", this);
+			throw ApriluiResourceNotExistsException(name, "Object", this);
 		}
 		return mObjects[name];
 	}
@@ -669,7 +669,7 @@ namespace aprilui
 	{
 		if (!mTextures.hasKey(name))
 		{
-			throw ResourceNotExistsException(name, "Texture", this);
+			throw ApriluiResourceNotExistsException(name, "Texture", this);
 		}
 		return mTextures[name];
 	}
@@ -678,7 +678,7 @@ namespace aprilui
 	{
 		if (!mRamTextures.hasKey(name))
 		{
-			throw ResourceNotExistsException(name, "RamTexture", this);
+			throw ApriluiResourceNotExistsException(name, "RamTexture", this);
 		}
 		return mRamTextures[name];
 	}
@@ -705,7 +705,7 @@ namespace aprilui
 			int dot = name.indexOf('.');
 			if (dot < 0)
 			{
-				throw ResourceNotExistsException(name, "Image", this);
+				throw ApriluiResourceNotExistsException(name, "Image", this);
 			}
 			Dataset* dataset;
 			try
@@ -714,7 +714,7 @@ namespace aprilui
 			}
 			catch (_GenericException)
 			{
-				throw ResourceNotExistsException(name, "Image", this);
+				throw ApriluiResourceNotExistsException(name, "Image", this);
 			}
 			image = dataset->getImage(name(dot + 1, 100));
 		}
