@@ -29,8 +29,8 @@ namespace aprilui
 		this->managed = managed;
 		this->filter = texture->getFilter();
 		this->addressMode = texture->getAddressMode();
-		float scale = aprilui::findTextureExtensionScale(this->filename);
-		this->scale.set(scale, scale);
+		float factor = aprilui::findTextureExtensionScale(this->filename);
+		this->scale.set(factor, factor);
 		this->unusedTime = 0.0f;
 	}
 
@@ -193,8 +193,8 @@ namespace aprilui
 			this->filename = this->texture->getFilename();
 			this->texture->setFilter(this->filter);
 			this->texture->setAddressMode(this->addressMode);
-			float scale = aprilui::findTextureExtensionScale(this->filename);
-			this->scale.set(scale, scale);
+			float factor = aprilui::findTextureExtensionScale(this->filename);
+			this->scale.set(factor, factor);
 		}
 	}
 

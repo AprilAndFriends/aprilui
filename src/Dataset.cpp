@@ -21,7 +21,6 @@
 #include <hlxml/Document.h>
 #include <hlxml/Exception.h>
 #include <hlxml/Node.h>
-#include <hlxml/Property.h>
 
 #include "Animators.h"
 #include "aprilui.h"
@@ -36,6 +35,9 @@
 
 namespace aprilui
 {
+	static harray<hstr> _ignoredStandardProperties = hstr("name,rect,position,size,x,y,w,h").split(',');
+	static harray<hstr> _ignoredStyleProperties = _ignoredStandardProperties + "style";
+
 	void _registerDataset(chstr name, Dataset* dataset);
 	void _unregisterDataset(chstr name, Dataset* dataset);
 	
@@ -356,6 +358,7 @@ namespace aprilui
 			{
 				throw ObjectExistsException("Texture", filename, this->name);
 			}
+			aprilTexture->loadMetaData();
 			BaseImage* image = new Image(texture, filename, grect(0.0f, 0.0f, (float)texture->getWidth(), (float)texture->getHeight()));
 			this->images[textureName] = image;
 			image->dataset = this;
@@ -365,23 +368,27 @@ namespace aprilui
 			BaseImage* image = NULL;
 			hstr name;
 			grect rect;
-			hstr className;
+			hmap<hstr, hstr> childProperties;
 			foreach_xmlnode (child, node)
 			{
-				className = child->getValue();
-				if (className == "Image" && (child->pexists("tile") || child->pexists("tile_w") || child->pexists("tile_h"))) // DEPRECATED (this entire block)
+				childProperties = child->properties;
+				if (child->value == "Image" && (childProperties.hasKey("tile") || childProperties.hasKey("tile_w") || childProperties.hasKey("tile_h"))) // DEPRECATED (this entire block)
 				{
 					hlog::warn(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
-					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
+					name = childProperties["name"];
+					if (prefixImages)
+					{
+						name = textureName + "/" + name;
+					}
 					if (this->images.hasKey(name))
 					{
 						throw ObjectExistsException("Image", name, this->name);
 					}
 					aprilui::readRectNode(rect, child);
 					gvec2 tile;
-					if (child->pexists("tile"))
+					if (childProperties.hasKey("tile"))
 					{
-						tile = april::hstrToGvec2(child->pstr("tile"));
+						tile = april::hstrToGvec2(childProperties["tile"]);
 					}
 					else
 					{
@@ -413,50 +420,46 @@ namespace aprilui
 					}
 					this->images[name] = image;
 					image->dataset = this;
-					foreach_xmlproperty (prop, child)
+					childProperties.removeKeys(((_ignoredStandardProperties + "tile") + "tile_w") + "tile_h");
+					foreach_m (hstr, it, childProperties)
 					{
-						name = prop->name();
-						if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h" || name == "tile" || name == "tile_w" || name == "tile_h")
-						{
-							continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
-						}
-						image->setProperty(name, prop->value());
+						image->setProperty(it->first, it->second);
 					}
 				}
 				else
 				{
-					name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
+					name = childProperties["name"];
+					if (prefixImages)
+					{
+						name = textureName + "/" + name;
+					}
 					if (this->images.hasKey(name))
 					{
 						throw ObjectExistsException("Image", name, this->name);
 					}
 					aprilui::readRectNode(rect, child);
-					if (className == "Image")
+					if (child->value == "Image")
 					{
 						image = new Image(texture, name, rect);
 					}
-					else if (className == "TileImage")
+					else if (child->value == "TileImage")
 					{
 						image = new TileImage(texture, name, rect);
 					}
-					else if (className == "SkinImage")
+					else if (child->value == "SkinImage")
 					{
 						image = new SkinImage(texture, name, rect);
 					}
 					else
 					{
-						throw XMLUnknownClassException(className, child);
+						throw XMLUnknownClassException(child->value, child);
 					}
 					this->images[name] = image;
 					image->dataset = this;
-					foreach_xmlproperty (prop, child)
+					childProperties.removeKeys(_ignoredStandardProperties);
+					foreach_m (hstr, it, childProperties)
 					{
-						name = prop->name();
-						if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
-						{
-							continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
-						}
-						image->setProperty(name, prop->value());
+						image->setProperty(it->first, it->second);
 					}
 				}
 			}
@@ -484,7 +487,7 @@ namespace aprilui
 		grect rect;
 		foreach_xmlnode (child, node)
 		{
-			if (*child == "ImageRef")
+			if (child->value == "ImageRef")
 			{
 				refname = child->pstr("name");
 				aprilui::readRectNode(rect, child);
@@ -492,7 +495,7 @@ namespace aprilui
 			}
 			else
 			{
-				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->getValue().cStr(), name.cStr());
+				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->value.cStr(), name.cStr());
 			}
 		}
 		this->images[name] = image;
@@ -535,10 +538,9 @@ namespace aprilui
 		bool isAnimator = false;
 		foreach_xmlnode (child, node)
 		{
-			properties.clear();
 			isObject = false;
 			isAnimator = false;
-			className = child->getValue();
+			className = child->value;
 			if (className == "Object")
 			{
 				isObject = true;
@@ -559,18 +561,12 @@ namespace aprilui
 			}
 			if (isObject || isAnimator)
 			{
-				foreach_xmlproperty (prop, child)
+				properties = child->properties;
+				if (properties.removeKeys(_ignoredStandardProperties) > 0)
 				{
-					name = prop->name();
-					if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h")
-					{
-						hlog::error(logTag, "Using property '" + name + "' in Style is not allowed!");
-					}
-					else if (name != "type")
-					{
-						properties[name] = prop->value();
-					}
+					hlog::error(logTag, "Using properties '" + _ignoredStandardProperties.joined(',') + "' in Style is not allowed!");
 				}
+				properties.removeKey("type");
 				if (className == "")
 				{
 					if (isObject)
@@ -645,87 +641,10 @@ namespace aprilui
 	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		hstr objectName;
-		hlxml::Node::Type type;
-		hstr className = node->getValue();
+		hstr className = node->value;
 		if (className == "Include")
 		{
-			gvec2 offset;
-			if (node->pexists("position"))
-			{
-				offset = april::hstrToGvec2(node->pstr("position"));
-			}
-			else
-			{
-				offset.set(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
-			}
-			hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
-			hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
-			hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
-			BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, offset);
-			BaseObject* descendant = NULL;
-			hstr typeName;
-			foreach_xmlnode (child, node)
-			{
-				if (*child == "Property")
-				{
-					type = child->getType();
-					if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
-					{
-						objectName = child->pstr("object", "");
-						typeName = child->pstr("type", "");
-						if (objectName != "")
-						{
-							objectName = newNamePrefix + objectName + newNameSuffix;
-							descendant = (includeRoot->getName() == objectName ? includeRoot : includeRoot->findDescendantByName(objectName));
-							if (descendant != NULL)
-							{
-								if (typeName == "" || descendant->getClassName() == typeName)
-								{
-									foreach_xmlproperty (prop, child)
-									{
-										if (prop->name() != "object")
-										{
-											if (prop->name() != "name")
-											{
-												descendant->setProperty(prop->name(), prop->value());
-											}
-											else
-											{
-												hstr newName = newNamePrefix + prop->value() + newNameSuffix;
-												if (!this->hasObject(newName))
-												{
-													this->unregisterObjects(descendant);
-													descendant->setName(newName);
-													this->registerObjects(descendant);
-												}
-												else
-												{
-													hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
-														prop->value().cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
-												}
-											}
-										}
-									}
-								}
-								else if (typeName != "")
-								{
-									hlog::errorf(logTag, "Found object '%s' in '%s', but found type '%s' instead of expected type '%s'!",
-										objectName.cStr(), path.cStr(), descendant->getClassName().cStr(), typeName.cStr());
-								}
-							}
-							else
-							{
-								hlog::errorf(logTag, "Could not find object '%s' in '%s'!", objectName.cStr(), path.cStr());
-							}
-						}
-						else
-						{
-							hlog::errorf(logTag, "No object specified for property in '%s'!", path.cStr());
-						}
-					}
-				}
-			}
-			return includeRoot;
+			return this->recursiveObjectIncludeParse(node, parent, style, namePrefix, nameSuffix, offset);
 		}
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
@@ -861,21 +780,17 @@ namespace aprilui
 			}
 		}
 		hstr name;
-		foreach_xmlproperty (prop, node)
+		hmap<hstr, hstr> properties = node->properties;
+		properties.removeKeys(_ignoredStyleProperties);
+		foreach_m (hstr, it, properties)
 		{
-			name = prop->name();
-			if (name == "name" || name == "rect" || name == "position" || name == "size" || name == "x" || name == "y" || name == "w" || name == "h" || name == "style")
-			{
-				continue; // TODO - might be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
-			}
-			baseObject->setProperty(name, prop->value());
+			baseObject->setProperty(it->first, it->second);
 		}
 		if (isObject)
 		{
 			foreach_xmlnode (child, node)
 			{
-				type = child->getType();
-				if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
+				if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
 				{
 					this->recursiveObjectParse(child, object, style, namePrefix, nameSuffix, gvec2());
 				}
@@ -886,6 +801,89 @@ namespace aprilui
 			delete style;
 		}
 		return baseObject;
+	}
+
+	BaseObject* Dataset::recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	{
+		if (node->pexists("position"))
+		{
+			offset += april::hstrToGvec2(node->pstr("position"));
+		}
+		else
+		{
+			offset += gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
+		}
+		hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
+		hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
+		hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
+		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, offset);
+		BaseObject* descendant = NULL;
+		hstr typeName;
+		hstr objectName;
+		hstr newName;
+		hmap<hstr, hstr> childProperties;
+		foreach_xmlnode (child, node)
+		{
+			if (child->value == "Property")
+			{
+				if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
+				{
+					childProperties = child->properties;
+					if (childProperties.hasKey("object"))
+					{
+						objectName = newNamePrefix + childProperties["object"] + newNameSuffix;
+						descendant = (includeRoot->getName() == objectName ? includeRoot : includeRoot->findDescendantByName(objectName));
+						if (descendant != NULL)
+						{
+							typeName = "";
+							if (childProperties.hasKey("type"))
+							{
+								typeName = childProperties["type"];
+								childProperties.removeKey("type");
+							}
+							if (typeName == "" || descendant->getClassName() == typeName)
+							{
+								childProperties.removeKey("object");
+								if (childProperties.hasKey("name"))
+								{
+									newName = newNamePrefix + childProperties["name"] + newNameSuffix;
+									if (!this->hasObject(newName))
+									{
+										this->unregisterObjects(descendant);
+										descendant->setName(newName);
+										this->registerObjects(descendant);
+									}
+									else
+									{
+										hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
+											childProperties["name"].cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
+									}
+									childProperties.removeKey("name");
+								}
+								foreach_m (hstr, it, childProperties)
+								{
+									descendant->setProperty(it->first, it->second);
+								}
+							}
+							else if (typeName != "")
+							{
+								hlog::errorf(logTag, "Found object '%s' in '%s', but found type '%s' instead of expected type '%s'!",
+									objectName.cStr(), path.cStr(), descendant->getClassName().cStr(), typeName.cStr());
+							}
+						}
+						else
+						{
+							hlog::errorf(logTag, "Could not find object '%s' in '%s'!", objectName.cStr(), path.cStr());
+						}
+					}
+					else
+					{
+						hlog::errorf(logTag, "No object specified for property in '%s'!", path.cStr());
+					}
+				}
+			}
+		}
+		return includeRoot;
 	}
 	
 	void Dataset::parseGlobalIncludeFile(chstr filename)
@@ -933,7 +931,7 @@ namespace aprilui
 		hstr className;
 		foreach_xmlnode (node, current)
 		{
-			className = node->getValue();
+			className = node->value;
 			if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
 			{
 				if (root == NULL)
@@ -1005,18 +1003,16 @@ namespace aprilui
 		}
 		this->parseExternalXMLNode(current);
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
-		hstr className;
 		foreach_xmlnode (node, current)
 		{
-			if (node->getType() != hlxml::Node::TYPE_COMMENT)
+			if (node->type != hlxml::Node::TYPE_COMMENT)
 			{
-				className = node->getValue();
-				if		(className == "Texture")		this->parseTexture(node);
-				else if (className == "CompositeImage")	this->parseCompositeImage(node);
-				else if (className == "Style")			this->parseStyle(node);
-				else if	(className == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
-				else if	(className == "TextureGroup")	this->parseTextureGroup(node);
-				else if (className == "Object" || objectFactories.hasKey(className))
+				if		(node->value == "Texture")			this->parseTexture(node);
+				else if (node->value == "CompositeImage")	this->parseCompositeImage(node);
+				else if (node->value == "Style")			this->parseStyle(node);
+				else if	(node->value == "Include")			this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
+				else if	(node->value == "TextureGroup")		this->parseTextureGroup(node);
+				else if (node->value == "Object" || objectFactories.hasKey(node->value))
 				{
 					this->parseObject(node);
 				}
@@ -1087,7 +1083,6 @@ namespace aprilui
 		bool keyMode = true;
 		hstr key;
 		harray<hstr> lines = data.readLines();
-	
 		// UTF-8 might have a Byte Order Marker
 		hstr firstLine = lines.first();
 		if (firstLine.size() > 0)
@@ -1473,16 +1468,12 @@ namespace aprilui
 	
 	BaseImage* Dataset::getImage(chstr name)
 	{
-		BaseImage* image = NULL;
 		if (name == "null") // DEPRECATED
 		{
 			hlog::warn(logTag, "The 'null' image name has been deprecated. Use an empty string instead to define 'no image'.");
 			return NULL;
 		}
-		if (this->images.hasKey(name))
-		{
-			image = this->images[name];
-		}
+		BaseImage* image = this->images.tryGet(name, NULL);
 		if (image == NULL)
 		{
 			int dot = name.indexOf('.');
@@ -1506,11 +1497,7 @@ namespace aprilui
 
 	Style* Dataset::getStyle(chstr name)
 	{
-		Style* style = NULL;
-		if (this->styles.hasKey(name))
-		{
-			style = this->styles[name];
-		}
+		Style* style = this->styles.tryGet(name, NULL);
 		if (style == NULL)
 		{
 			int dot = name.indexOf('.');

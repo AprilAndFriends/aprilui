@@ -254,7 +254,8 @@ namespace aprilui
 		
 		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
-		
+		BaseObject* recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+
 		void readFile(chstr filename);
 		virtual void _loadTexts(chstr path);
 		void _loadTextResource(hstream& data, hmap<hstr, hstr>& textsMap);
