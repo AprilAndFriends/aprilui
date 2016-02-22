@@ -945,10 +945,16 @@ namespace aprilui
 				this->_ctrlMode ? this->_caretMoveRightWord() : this->_caretMoveRight();
 				break;
 			case april::AK_UP:
-				this->multiLine ? this->_caretMoveUp() : this->_caretMoveStart();
+				if (this->multiLine)
+				{
+					this->_caretMoveUp();
+				}
 				break;
 			case april::AK_DOWN:
-				this->multiLine ? this->_caretMoveDown() : this->_caretMoveEnd();
+				if (this->multiLine)
+				{
+					this->_caretMoveDown();
+				}
 				break;
 #endif
 			case april::AK_BACK:
