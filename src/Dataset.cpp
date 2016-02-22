@@ -20,7 +20,6 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <hlxml/Exception.h>
 #include <hlxml/Document.h>
 #include <hlxml/Node.h>
-#include <hlxml/Property.h>
 
 #include "Animators.h"
 #include "aprilui.h"
@@ -190,7 +189,7 @@ namespace aprilui
 			Image* image;
 			foreach_xmlnode (child, node)
 			{
-				if (*child == "Image")
+				if (child->value == "Image")
 				{
 					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (mImages.hasKey(name))
@@ -261,7 +260,7 @@ namespace aprilui
 		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
 		foreach_xmlnode (child, node)
 		{
-			if (*child == "ImageRef")
+			if (child->value == "ImageRef")
 			{
 				refname = child->pstr("name");
 				image->addImageRef(getImage(refname),
@@ -282,7 +281,7 @@ namespace aprilui
 		grect rect(0, 0, 1, 1);
 		hstr className = node->pstr("type");
 		
-		if (*node == "Object")
+		if (node->value == "Object")
 		{
 			if (node->pexists("name"))
 			{
@@ -297,7 +296,7 @@ namespace aprilui
 			rect.w = node->pfloat("w", -1.0f);
 			rect.h = node->pfloat("h", -1.0f);
 		}
-		else if (*node == "Animator")
+		else if (node->value == "Animator")
 		{
 			objectName = node->pstr("name", generateName("Animator"));
 		}
@@ -328,7 +327,7 @@ namespace aprilui
 		else  parse(EditBox);
 		else  parse(RotationImageBox);
 		else  parse(RotatableImageBox);
-		else if (*node == "Animator")
+		else if (node->value == "Animator")
 		{
 			/*if*/parse_animator(Mover);
 			else  parse_animator(MoveOscillator);
@@ -356,14 +355,13 @@ namespace aprilui
 		}
 		object->_setDataset(this);
 		hstr name;
-		foreach_xmlproperty (prop, node)
+		foreach_m (hstr, it, node->properties)
 		{
-			name = prop->name();
-			if (name == "x" || name == "y" || name == "w" || name == "h")
+			if (it->first == "x" || it->first == "y" || it->first == "w" || it->first == "h")
 			{
 				continue; // TODO - should be done better, maybe reading parameters from a list, then removing them so they aren't set more than once
 			}
-			object->setProperty(name, prop->value());
+			object->setProperty(it->first, it->second);
 		}
 		mObjects[objectName] = object;
 		if (parent != NULL)
@@ -371,13 +369,11 @@ namespace aprilui
 			parent->addChild(object);
 		}
 		
-		hlxml::Node::Type type;
 		foreach_xmlnode (child, node)
 		{
-			type = child->getType();
-			if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
+			if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
 			{
-				if (*child == "Property")
+				if (child->value == "Property")
 				{
 					object->setProperty(child->pstr("name"), child->pstr("value"));
 				}
@@ -404,11 +400,9 @@ namespace aprilui
 
 		hmap<Texture*, hstr> dynamicLinks;
 		hstr links;
-		hlxml::Node::Type type;
 		foreach_xmlnode (p, current)
 		{
-			type = p->getType();
-			if      (*p == "Texture")
+			if      (p->value == "Texture")
 			{
 				Texture* texture = parseTexture(p);
 				if (p->pexists("dynamic_link"))
@@ -417,10 +411,10 @@ namespace aprilui
 					dynamicLinks[texture] = links;
 				}
 			}
-			else if (*p == "RamTexture")     parseRamTexture(p);
-			else if (*p == "CompositeImage") parseCompositeImage(p);
-			else if (*p == "Object")         parseObject(p);
-			else if (type != hlxml::Node::TYPE_TEXT && type != hlxml::Node::TYPE_COMMENT)
+			else if (p->value == "RamTexture")     parseRamTexture(p);
+			else if (p->value == "CompositeImage") parseCompositeImage(p);
+			else if (p->value == "Object")         parseObject(p);
+			else if (p->type != hlxml::Node::TYPE_TEXT && p->type != hlxml::Node::TYPE_COMMENT)
 			{
 				parseExternalXMLNode(p);
 			}
