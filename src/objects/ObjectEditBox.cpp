@@ -1373,10 +1373,18 @@ namespace aprilui
 			{
 				this->_deleteSelected();
 			}
-			std::basic_string<unsigned int> uString = string.uStr();
-			for_itert (size_t, i, 0, uString.size())
+			atres::Font* font = atres::renderer->getFont(this->font);
+			if (font != NULL)
 			{
-				this->_insertChar(uString[i]);
+				std::basic_string<unsigned int> uString = string.uStr();
+				std::basic_string<unsigned int> uFilter = this->filter.uStr();
+				for_itert (size_t, i, 0, uString.size())
+				{
+					if (font->hasCharacter(uString[i]) && (this->filter.size() == 0 || uFilter.find_first_of(uString[i]) != std::string::npos))
+					{
+						this->_insertChar(uString[i]);
+					}
+				}
 			}
 		}
 	}
