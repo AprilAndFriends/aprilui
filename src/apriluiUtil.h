@@ -20,7 +20,7 @@
 #define __THROW_EXCEPTION(exception) throw exception;
 #else
 #define __THROW_EXCEPTION(exception, enabled, returnCode) \
-	hexception& e = exception; \
+	hexception e = exception; \
 	if (enabled) \
 	{ \
 		throw e; \
