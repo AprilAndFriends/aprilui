@@ -321,7 +321,7 @@ namespace aprilui
 	{
 		if (obj->getParent() != NULL)
 		{
-			throw ObjectHasParentException(obj->getName(), this->getName());
+			__THROW_EXCEPTION(ObjectHasParentException(obj->getName(), this->getName()), aprilui::childManipulationDebugExceptionsEnabled, return);
 		}
 		Object* object = dynamic_cast<Object*>(obj);
 		if (object != NULL)
@@ -345,7 +345,7 @@ namespace aprilui
 	{
 		if (obj->getParent() != this)
 		{
-			throw ObjectNotChildException(obj->getName(), this->getName());
+			__THROW_EXCEPTION(ObjectNotChildException(obj->getName(), this->getName()), aprilui::childManipulationDebugExceptionsEnabled, return);
 		}
 		obj->notifyEvent(Event::DetachedFromObject, NULL);
 		Object* object = dynamic_cast<Object*>(obj);

@@ -88,7 +88,15 @@ namespace aprilui
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
 	apriluiFnExport void drawCursor();
-	
+	/// @brief Allows certain exception types to be disabled.
+	/// @param[in] textureFiles Exceptions related to proper loading of textures.
+	/// @param[in] childManipulation Exceptions related to proper handling of BaseObject children.
+	/// @param[in] creationFactories Exceptions related to proper handling of Object and Animator factories.
+	/// @param[in] objectExistence Exceptions related to proper handling when certain dataset, objects, images, textures, styles, etc. exist or not.
+	/// @param[in] systemConsistency Exceptions related to other aspects of the system.
+	/// @note This is only enabled when compiling as debug and should only be used as debug feature and to prevent crashes when having incomplete data.
+	apriluiFnExport void setDebugExceptionsEnabled(bool textureFiles, bool childManipulation, bool creationFactories, bool objectExistence, bool systemConsistency);
+
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
 	
 	apriluiFnExport void notifyEvent(chstr type, EventArgs* args);

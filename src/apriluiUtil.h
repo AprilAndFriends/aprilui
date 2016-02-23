@@ -16,6 +16,18 @@
 #include <april/Color.h>
 #include <gtypes/Rectangle.h>
 
+#ifndef _DEBUG
+#define __THROW_EXCEPTION(exception) throw exception;
+#else
+#define __THROW_EXCEPTION(exception, enabled, returnCode) \
+	hexception& e = exception; \
+	if (enabled) \
+	{ \
+		throw e; \
+	} \
+	returnCode;
+#endif
+
 namespace hlxml
 {
 	class Node;
@@ -23,6 +35,12 @@ namespace hlxml
 
 namespace aprilui
 {
+	extern bool textureFilesDebugExceptionsEnabled;
+	extern bool childManipulationDebugExceptionsEnabled;
+	extern bool creationFactoriesDebugExceptionsEnabled;
+	extern bool objectExistenceDebugExceptionsEnabled;
+	extern bool systemConsistencyDebugExceptionsEnabled;
+
 	void readRectNode(grect& rect, hlxml::Node* node);
 	april::Color makeModifiedDrawColor(april::Color color, april::Color drawColor);
 

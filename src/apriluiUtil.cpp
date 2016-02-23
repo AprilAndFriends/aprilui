@@ -15,7 +15,13 @@
 #include "apriluiUtil.h"
 
 namespace aprilui
-{	
+{
+	bool textureFilesDebugExceptionsEnabled = true;
+	bool childManipulationDebugExceptionsEnabled = true;
+	bool creationFactoriesDebugExceptionsEnabled = true;
+	bool objectExistenceDebugExceptionsEnabled = true;
+	bool systemConsistencyDebugExceptionsEnabled = true;
+
 	void readRectNode(grect& rect, hlxml::Node* node)
 	{
 		rect.set(0.0f, 0.0f, 0.0f, 0.0f);

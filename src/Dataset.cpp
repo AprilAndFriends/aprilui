@@ -178,7 +178,7 @@ namespace aprilui
 				dataset->destroyObjects(root);
 				return;
 			}
-			throw ObjectNotExistsException("Object", root->getName(), this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Object", root->getName(), this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		harray<BaseObject*> children = root->getChildren();
 		foreach (BaseObject*, it, children)
@@ -213,7 +213,7 @@ namespace aprilui
 	{
 		if (!this->textures.hasKey(name))
 		{
-			throw ObjectNotExistsException("Texture", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		delete this->textures[name];
 		this->textures.removeKey(name);
@@ -223,7 +223,7 @@ namespace aprilui
 	{
 		if (!this->images.hasKey(name))
 		{
-			throw ObjectNotExistsException("Image", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		delete this->images[name];
 		this->images.removeKey(name);
@@ -233,7 +233,7 @@ namespace aprilui
 	{
 		if (!this->styles.hasKey(name))
 		{
-			throw ObjectNotExistsException("Style", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Style", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		delete this->styles[name];
 		this->styles.removeKey(name);
@@ -244,7 +244,7 @@ namespace aprilui
 		hstr filename = texture->getFilename();
 		if (!this->textures.hasKey(filename))
 		{
-			throw ObjectNotExistsException("Texture", filename, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Texture", filename, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->textures.removeKey(filename);
 		delete texture;
@@ -255,7 +255,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (!this->images.hasKey(name))
 		{
-			throw ObjectNotExistsException("Image", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->images.removeKey(name);
 		delete image;
@@ -266,7 +266,7 @@ namespace aprilui
 		hstr name = style->getName();
 		if (!this->styles.hasKey(name))
 		{
-			throw ObjectNotExistsException("Style", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Style", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->styles.removeKey(name);
 		delete style;
@@ -294,7 +294,7 @@ namespace aprilui
 		hstr textureName = hrdir::baseName(filename);
 		if (this->textures.hasKey(textureName))
 		{
-			throw ObjectExistsException("Texture", textureName, this->name);
+			__THROW_EXCEPTION(ObjectExistsException("Texture", textureName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool managed = node->pbool("managed", aprilui::isDefaultManagedTextures());
@@ -326,13 +326,16 @@ namespace aprilui
 			else if (mode == "on_demand")		loadMode = april::Texture::LOAD_ON_DEMAND;
 			else if (mode == "async")			loadMode = april::Texture::LOAD_ASYNC;
 			else if (mode == "async_on_demand")	loadMode = april::Texture::LOAD_ASYNC_ON_DEMAND;
-			else throw Exception("load_mode '" + mode + "' not supported");
+			else
+			{
+				__THROW_EXCEPTION(Exception("Load Mode '" + mode + "' is not supported!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
+			}
 		}
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
 		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, loadMode);
 		if (aprilTexture == NULL)
 		{
-			throw FileCouldNotOpenException(locpath);
+			__THROW_EXCEPTION(FileCouldNotOpenException(locpath), aprilui::textureFilesDebugExceptionsEnabled, return);
 		}
 		Texture* texture = new Texture(filepath, aprilTexture, managed);
 		if (node->pexists("filter"))
@@ -340,7 +343,10 @@ namespace aprilui
 			hstr filter = node->pstr("filter");
 			if		(filter == "linear")	texture->setFilter(april::Texture::FILTER_LINEAR);
 			else if	(filter == "nearest")	texture->setFilter(april::Texture::FILTER_NEAREST);
-			else throw Exception("texture filter '" + filter + "' not supported");
+			else
+			{
+				__THROW_EXCEPTION(Exception("Texture Filter '" + filter + "' is not supported!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
+			}
 		}
 		if (node->pbool("wrap", false))
 		{
@@ -356,7 +362,7 @@ namespace aprilui
 		{
 			if (this->images.hasKey(textureName))
 			{
-				throw ObjectExistsException("Texture", filename, this->name);
+				__THROW_EXCEPTION(ObjectExistsException("Image", textureName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 			}
 			aprilTexture->loadMetaData();
 			BaseImage* image = new Image(texture, filename, grect(0.0f, 0.0f, (float)texture->getWidth(), (float)texture->getHeight()));
@@ -382,7 +388,7 @@ namespace aprilui
 					}
 					if (this->images.hasKey(name))
 					{
-						throw ObjectExistsException("Image", name, this->name);
+						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
 					aprilui::readRectNode(rect, child);
 					gvec2 tile;
@@ -435,7 +441,7 @@ namespace aprilui
 					}
 					if (this->images.hasKey(name))
 					{
-						throw ObjectExistsException("Image", name, this->name);
+						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
 					aprilui::readRectNode(rect, child);
 					if (child->value == "Image")
@@ -452,7 +458,7 @@ namespace aprilui
 					}
 					else
 					{
-						throw XMLUnknownClassException(child->value, child);
+						__THROW_EXCEPTION(XMLUnknownClassException(child->value, child), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
 					}
 					this->images[name] = image;
 					image->dataset = this;
@@ -472,7 +478,7 @@ namespace aprilui
 		hstr refname;
 		if (this->images.hasKey(name))
 		{
-			throw ObjectExistsException("CompositeImage", name, this->name);
+			__THROW_EXCEPTION(ObjectExistsException("CompositeImage", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		gvec2 size;
 		if (node->pexists("size"))
@@ -507,7 +513,7 @@ namespace aprilui
 		hstr styleName = node->pstr("name");
 		if (this->styles.hasKey(styleName))
 		{
-			throw ObjectExistsException("Style", styleName, this->name);
+			__THROW_EXCEPTION(ObjectExistsException("Style", styleName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		Style* style = NULL;
 		if (node->pexists("base"))
@@ -515,8 +521,16 @@ namespace aprilui
 			hstr baseStyleName = node->pstr("base");
 			try
 			{
-				style = this->getStyle(baseStyleName)->clone();
-				style->name = styleName;
+				style = this->getStyle(baseStyleName);
+				if (style != NULL)
+				{
+					style = style->clone();
+					style->name = styleName;
+				}
+				else
+				{
+					hlog::error(logTag, "Cannot find Base-Style '" + baseStyleName + "'!");
+				}
 			}
 			catch (hexception& e)
 			{
@@ -691,7 +705,7 @@ namespace aprilui
 		}
 		if (this->objects.hasKey(objectName))
 		{
-			throw ObjectExistsException("Object", objectName, this->name);
+			__THROW_EXCEPTION(ObjectExistsException("Object", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
 		BaseObject* baseObject = NULL;
 		Object* object = NULL;
@@ -728,7 +742,7 @@ namespace aprilui
 		}
 		if (baseObject == NULL)
 		{
-			throw XMLUnknownClassException(className, node);
+			__THROW_EXCEPTION(XMLUnknownClassException(className, node), aprilui::systemConsistencyDebugExceptionsEnabled, return NULL);
 		}
 		if (isObject)
 		{
@@ -743,9 +757,19 @@ namespace aprilui
 			hstr styleName = node->pstr("style");
 			if (styleName != "")
 			{
+				Style* newStyle = NULL;
 				try
 				{
-					style = style->_injected(this->getStyle(styleName));
+					newStyle = this->getStyle(styleName);
+					if (newStyle != NULL)
+					{
+						style = style->_injected(newStyle);
+					}
+					else
+					{
+						hlog::error(logTag, "Cannot find Style '" + styleName + "'!");
+						isCustomStyle = false;
+					}
 				}
 				catch (hexception& e)
 				{
@@ -999,7 +1023,7 @@ namespace aprilui
 		hlxml::Node* current = doc.root();
 		if (current == NULL)
 		{
-			throw Exception("Unable to parse Xml file '" + filename + "', no root node found!");
+			__THROW_EXCEPTION(Exception("Unable to parse Xml file '" + filename + "', no root node found!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
 		}
 		this->parseExternalXMLNode(current);
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
@@ -1130,7 +1154,7 @@ namespace aprilui
 	{
 		if (!this->loaded)
 		{
-			throw Exception("Unable to unload dataset '" + this->getName() + "', data not loaded!");
+			return;
 		}
 		this->_closeDocuments();
 		foreach_m (Animator*, it, this->animators)
@@ -1189,6 +1213,7 @@ namespace aprilui
 			name = (*it)->getName();
 			if (this->objects.hasKey(name) || this->animators.hasKey(name))
 			{
+				// this exception cannot be disabled on purpose
 				throw ObjectExistsException("Object", name, this->name);
 			}
 			object = dynamic_cast<Object*>(*it);
@@ -1223,6 +1248,7 @@ namespace aprilui
 				dataset->unregisterObjects(root);
 				return;
 			}
+			// this exception cannot be disabled on purpose
 			throw ObjectNotExistsException("Object", root->getName(), this->name);
 		}
 		harray<BaseObject*> children = root->getChildren();
@@ -1251,7 +1277,7 @@ namespace aprilui
 		hstr name = texture->getFilename();
 		if (this->textures.hasKey(name))
 		{
-			throw ObjectExistsException("Texture", name, this->name);
+			__THROW_EXCEPTION(ObjectExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->textures[name] = texture;
 	}
@@ -1261,7 +1287,7 @@ namespace aprilui
 		hstr name = texture->getFilename();
 		if (!this->textures.hasKey(name))
 		{
-			throw ObjectNotExistsException("Texture", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->textures.removeKey(name);
 	}
@@ -1271,7 +1297,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (this->images.hasKey(name))
 		{
-			throw ObjectExistsException("Image", name, this->name);
+			__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->images[name] = image;
 		image->dataset = this;
@@ -1282,7 +1308,7 @@ namespace aprilui
 		hstr name = image->getName();
 		if (!this->images.hasKey(name))
 		{
-			throw ObjectNotExistsException("Image", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->images.removeKey(name);
 		image->dataset = NULL;
@@ -1293,7 +1319,7 @@ namespace aprilui
 		hstr name = style->getName();
 		if (this->styles.hasKey(name))
 		{
-			throw ObjectExistsException("Style", name, this->name);
+			__THROW_EXCEPTION(ObjectExistsException("Style", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->styles[name] = style;
 		style->dataset = this;
@@ -1304,7 +1330,7 @@ namespace aprilui
 		hstr name = style->getName();
 		if (!this->styles.hasKey(name))
 		{
-			throw ObjectNotExistsException("Style", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Style", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->styles.removeKey(name);
 		style->dataset = NULL;
@@ -1355,7 +1381,7 @@ namespace aprilui
 		{
 			if (!this->objects.hasKey(name))
 			{
-				throw ObjectNotExistsException("Object", name, this->name);
+				__THROW_EXCEPTION(ObjectNotExistsException("Object", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 			}
 			return this->objects[name];
 		}
@@ -1366,7 +1392,10 @@ namespace aprilui
 		}
 		catch (hexception&)
 		{
-			throw ObjectNotExistsException("Object", name, this->name);
+		}
+		if (dataset == NULL)
+		{
+			__THROW_EXCEPTION(ObjectNotExistsException("Object", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
 		return dataset->getObject(name(dot + 1, -1));
 	}
@@ -1378,7 +1407,7 @@ namespace aprilui
 		{
 			if (!this->animators.hasKey(name))
 			{
-				throw ObjectNotExistsException("Animator", name, this->name);
+				__THROW_EXCEPTION(ObjectNotExistsException("Animator", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 			}
 			return this->animators[name];
 		}
@@ -1389,7 +1418,10 @@ namespace aprilui
 		}
 		catch (hexception&)
 		{
-			throw ObjectNotExistsException("Animator", name, this->name);
+		}
+		if (dataset == NULL)
+		{
+			__THROW_EXCEPTION(ObjectNotExistsException("Animator", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
 		return dataset->getAnimator(name(dot + 1, -1));
 	}
@@ -1433,9 +1465,8 @@ namespace aprilui
 		}
 		catch (hexception&)
 		{
-			return NULL;
 		}
-		return dataset->tryGetObject(name(dot + 1, -1));
+		return (dataset != NULL ? dataset->tryGetObject(name(dot + 1, -1)) : NULL);
 	}
 
 	Animator* Dataset::tryGetAnimator(chstr name)
@@ -1452,16 +1483,15 @@ namespace aprilui
 		}
 		catch (hexception&)
 		{
-			return NULL;
 		}
-		return dataset->tryGetAnimator(name(dot + 1, -1));
+		return (dataset != NULL ? dataset->tryGetAnimator(name(dot + 1, -1)) : NULL);
 	}
 
 	Texture* Dataset::getTexture(chstr name)
 	{
 		if (!this->textures.hasKey(name))
 		{
-			throw ObjectNotExistsException("Texture", name, this->name);
+			__THROW_EXCEPTION(ObjectNotExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
 		return this->textures[name];
 	}
@@ -1479,7 +1509,7 @@ namespace aprilui
 			int dot = name.indexOf('.');
 			if (dot < 0)
 			{
-				throw ObjectNotExistsException("Image", name, this->name);
+				__THROW_EXCEPTION(ObjectNotExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 			}
 			Dataset* dataset = NULL;
 			try
@@ -1488,7 +1518,10 @@ namespace aprilui
 			}
 			catch (hexception&)
 			{
-				throw ObjectNotExistsException("Image", name, this->name);
+			}
+			if (dataset == NULL)
+			{
+				__THROW_EXCEPTION(ObjectNotExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 			}
 			image = dataset->getImage(name(dot + 1, -1));
 		}
@@ -1503,7 +1536,7 @@ namespace aprilui
 			int dot = name.indexOf('.');
 			if (dot < 0)
 			{
-				throw ObjectNotExistsException("Style", name, this->name);
+				__THROW_EXCEPTION(ObjectNotExistsException("Style", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 			}
 			Dataset* dataset = NULL;
 			try
@@ -1512,7 +1545,10 @@ namespace aprilui
 			}
 			catch (hexception&)
 			{
-				throw ObjectNotExistsException("Style", name, this->name);
+			}
+			if (dataset == NULL)
+			{
+				__THROW_EXCEPTION(ObjectNotExistsException("Style", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 			}
 			style = dataset->getStyle(name(dot + 1, -1));
 		}
@@ -2050,6 +2086,8 @@ namespace aprilui
 
 	void Dataset::_throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName)
 	{
+		// this exception cannot be disabled on purpose
 		throw InvalidObjectTypeCast(typeName, objName, datasetName);
 	}
+
 }

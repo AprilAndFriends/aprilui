@@ -9,6 +9,7 @@
 #include <april/RenderSystem.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Texture.h"
 
 namespace aprilui
@@ -188,7 +189,7 @@ namespace aprilui
 			this->texture = april::rendersys->createTextureFromResource(filename, april::Texture::TYPE_IMMUTABLE, this->loadMode);
 			if (this->texture == NULL)
 			{
-				throw ResourceFileCouldNotOpenException(filename);
+				__THROW_EXCEPTION(ResourceFileCouldNotOpenException(filename), aprilui::textureFilesDebugExceptionsEnabled, return);
 			}
 			this->filename = this->texture->getFilename();
 			this->texture->setFilter(this->filter);

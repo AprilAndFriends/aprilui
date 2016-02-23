@@ -22,6 +22,7 @@
 
 #include "Animators.h"
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "Exception.h"
 #include "Image.h"
@@ -312,7 +313,7 @@ namespace aprilui
 	{
 		if (gObjectFactories.hasKey(typeName))
 		{
-			throw ObjectFactoryExistsException("Object", typeName);
+			__THROW_EXCEPTION(ObjectFactoryExistsException("Object", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
 		gObjectFactories[typeName] = factory;
 	}
@@ -321,7 +322,7 @@ namespace aprilui
 	{
 		if (gAnimatorFactories.hasKey(typeName))
 		{
-			throw ObjectFactoryNotExistsException("Animator", typeName);
+			__THROW_EXCEPTION(ObjectFactoryExistsException("Animator", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
 		gAnimatorFactories[typeName] = factory;
 	}
@@ -330,7 +331,7 @@ namespace aprilui
 	{
 		if (!gObjectFactories.hasKey(typeName))
 		{
-			throw ObjectFactoryNotExistsException("Object", typeName);
+			__THROW_EXCEPTION(ObjectFactoryNotExistsException("Object", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
 		gObjectFactories.removeKey(typeName);
 	}
@@ -339,7 +340,7 @@ namespace aprilui
 	{
 		if (!gAnimatorFactories.hasKey(typeName))
 		{
-			throw ObjectFactoryNotExistsException("Animator", typeName);
+			__THROW_EXCEPTION(ObjectFactoryNotExistsException("Animator", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
 		gAnimatorFactories.removeKey(typeName);
 	}
@@ -511,12 +512,26 @@ namespace aprilui
 			gCursor->draw(grect(getCursorPosition(), gCursor->getSrcSize()));
 		}
 	}
+
+	void setDebugExceptionsEnabled(bool textureFiles, bool childManipulation, bool creationFactories, bool objectExistence, bool systemConsistency)
+	{
+#ifdef _DEBUG
+		hlog::warn(logTag, "Setting debug-exceptions!");
+		aprilui::textureFilesDebugExceptionsEnabled = textureFiles;
+		aprilui::childManipulationDebugExceptionsEnabled = childManipulation;
+		aprilui::creationFactoriesDebugExceptionsEnabled = creationFactories;
+		aprilui::objectExistenceDebugExceptionsEnabled = objectExistence;
+		aprilui::systemConsistencyDebugExceptionsEnabled = systemConsistency;
+#else
+		hlog::warn(logTag, "Setting debug-exceptions is not allowed on release builds and will be ignored!");
+#endif
+	}
 	
 	Dataset* getDatasetByName(chstr name)
 	{
 		if (!gDatasets.hasKey(name))
 		{
-			throw Exception("Dataset '" + name + "' doesn't exist!");
+			__THROW_EXCEPTION(ObjectNotExistsException("Dataset", name, name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
 		return gDatasets[name];
 	}
@@ -527,7 +542,7 @@ namespace aprilui
 		{
 			if (gDatasets.hasKey(name))
 			{
-				throw Exception("Unable to register dataset '" + name + "', another dataset with the same name exists!");
+				__THROW_EXCEPTION(ObjectExistsException("Dataset", name, name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 			}
 			gDatasets[name] = dataset;
 		}
