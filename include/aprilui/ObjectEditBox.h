@@ -52,13 +52,14 @@ namespace aprilui
 		HL_DEFINE_ISSET(selectable, Selectable);
 		HL_DEFINE_GET(int, selectionCount, SelectionCount);
 		void setSelectionCount(int value);
+		HL_DEFINE_GETSET(april::Color, selectionColor, SelectionColor);
+		HL_DEFINE_ISSET(clipboardEnabled, ClipboardEnabled);
 		HL_DEFINE_GET(int, maxLength, MaxLength);
 		void setMaxLength(int value);
 		HL_DEFINE_GETSET(char, passwordChar, PasswordChar);
 		HL_DEFINE_ISSET(disabledOffset, DisabledOffset);
 		HL_DEFINE_GET(hstr, filter, Filter);
 		void setFilter(chstr value);
-		HL_DEFINE_GETSET(april::Color, selectionColor, SelectionColor);
 		HL_DEFINE_GET(grect, caretRect, CaretRect);
 		void setText(chstr value);
 		void setFocused(bool value);
@@ -113,6 +114,7 @@ namespace aprilui
 		bool selectable;
 		int selectionCount;
 		april::Color selectionColor;
+		bool clipboardEnabled;
 		bool disabledOffset;
 
 		grect caretRect;
@@ -125,6 +127,16 @@ namespace aprilui
 		
 		void _update(float timeDelta);
 		void _draw();
+
+		bool _mouseDown(april::Key keyCode);
+		bool _mouseUp(april::Key keyCode);
+		void _mouseCancel(april::Key keyCode);
+		bool _mouseMove();
+		bool _keyDown(april::Key keyCode);
+		bool _keyUp(april::Key keyCode);
+		bool _char(unsigned int charCode);
+		bool _buttonDown(april::Button buttonCode);
+		bool _buttonUp(april::Button buttonCode);
 
 		april::Color _makeSelectionDrawColor(april::Color drawColor);
 
@@ -145,16 +157,9 @@ namespace aprilui
 		void _deleteRightWord();
 		bool _deleteSelected();
 		void _insertChar(unsigned int charCode);
-
-		bool _mouseDown(april::Key keyCode);
-		bool _mouseUp(april::Key keyCode);
-		void _mouseCancel(april::Key keyCode);
-		bool _mouseMove();
-		bool _keyDown(april::Key keyCode);
-		bool _keyUp(april::Key keyCode);
-		bool _char(unsigned int charCode);
-		bool _buttonDown(april::Button buttonCode);
-		bool _buttonUp(april::Button buttonCode);
+		void _cutText();
+		void _copyText();
+		void _pasteText();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

@@ -9,6 +9,7 @@
 #include <april/Keys.h>
 #include <atres/atres.h>
 #include <atres/Font.h>
+#include <hltypes/hclipboard.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
@@ -65,6 +66,7 @@ namespace aprilui
 		this->selectable = false;
 		this->selectionCount = 0;
 		this->selectionColor = april::Color::Grey;
+		this->clipboardEnabled = false;
 		this->disabledOffset = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
@@ -92,6 +94,7 @@ namespace aprilui
 		this->selectable = other.selectable;
 		this->selectionCount = other.selectionCount;
 		this->selectionColor = other.selectionColor;
+		this->clipboardEnabled = other.clipboardEnabled;
 		this->disabledOffset = other.disabledOffset;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
@@ -132,6 +135,7 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selection_count", PropertyDescription::INT);
 			EditBox::_propertyDescriptions += PropertyDescription("selection_color", PropertyDescription::HEXCOLOR);
+			EditBox::_propertyDescriptions += PropertyDescription("clipboard_enabled", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::BOOL);
 		}
 		return (Label::getPropertyDescriptions() + EditBox::_propertyDescriptions);
@@ -749,59 +753,29 @@ namespace aprilui
 		this->textColor = textColor;
 	}
 
-	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor)
-	{
-		return aprilui::makeModifiedDrawColor(this->selectionColor, drawColor);
-	}
-
-	void EditBox::_getBaseOffset(gvec2& offset, float& hf)
-	{
-		offset.set(0.0f, 0.0f);
-		hf = 0.0f; // x height factor
-		float fh = atres::renderer->getFont(this->font)->getLineHeight();
-		float w2 = this->rect.w * 0.5f;
-		float h2 = this->rect.h * 0.5f;
-		if (this->horzFormatting.isCenter())
-		{
-			offset.x = w2;
-		}
-		else if (this->horzFormatting.isRight())
-		{
-			offset.x = w2 * 2;
-		}
-		if (this->vertFormatting == atres::Vertical::Center)
-		{
-			hf = 0.5f;
-		}
-		else if (this->vertFormatting == atres::Vertical::Bottom)
-		{
-			hf = 1.0f;
-		}
-		offset.y = (h2 * 2 - fh) * hf;
-	}
-
 	hstr EditBox::getProperty(chstr name)
 	{
-		if (name == "empty_text")		return this->getEmptyText();
-		if (name == "empty_text_key")	return this->getEmptyTextKey();
-		if (name == "empty_text_color")	return this->getEmptyTextColor().hex();
-		if (name == "max_length")		return this->getMaxLength();
-		if (name == "password_char")	return this->getPasswordChar();
-		if (name == "filter")			return this->getFilter();
-		if (name == "caret_index")		return this->getCaretIndex();
+		if (name == "empty_text")			return this->getEmptyText();
+		if (name == "empty_text_key")		return this->getEmptyTextKey();
+		if (name == "empty_text_color")		return this->getEmptyTextColor().hex();
+		if (name == "max_length")			return this->getMaxLength();
+		if (name == "password_char")		return this->getPasswordChar();
+		if (name == "filter")				return this->getFilter();
+		if (name == "caret_index")			return this->getCaretIndex();
 		if (name == "cursor_index")
 		{
 			hlog::warn(logTag, "'cursor_index' is deprecated. Use 'caret_index' instead."); // DEPRECATED
 			return this->getCaretIndex();
 		}
-		if (name == "caret_offset")		return april::gvec2ToHstr(this->getCaretOffset());
-		if (name == "caret_offset_x")	return this->getCaretOffsetX();
-		if (name == "caret_offset_y")	return this->getCaretOffsetY();
-		if (name == "multi_line")		return this->isMultiLine();
-		if (name == "selectable")		return this->isSelectable();
-		if (name == "selection_count")	return this->getSelectionCount();
-		if (name == "selection_color")	return this->getSelectionColor().hex();
-		if (name == "disabled_offset")	return this->isDisabledOffset();
+		if (name == "caret_offset")			return april::gvec2ToHstr(this->getCaretOffset());
+		if (name == "caret_offset_x")		return this->getCaretOffsetX();
+		if (name == "caret_offset_y")		return this->getCaretOffsetY();
+		if (name == "multi_line")			return this->isMultiLine();
+		if (name == "selectable")			return this->isSelectable();
+		if (name == "selection_count")		return this->getSelectionCount();
+		if (name == "selection_color")		return this->getSelectionColor().hex();
+		if (name == "clipboard_enabled")	return this->isClipboardEnabled();
+		if (name == "disabled_offset")		return this->isDisabledOffset();
 		return Label::getProperty(name);
 	}
 
@@ -826,6 +800,7 @@ namespace aprilui
 		else if (name == "selectable")			this->setSelectable(value);
 		else if (name == "selection_count")		this->setSelectionCount(value);
 		else if (name == "selection_color")		this->setSelectionColor(value);
+		else if (name == "clipboard_enabled")	this->setClipboardEnabled(value);
 		else if (name == "disabled_offset")		this->setDisabledOffset(value);
 		else return Label::setProperty(name, value);
 		return true;
@@ -993,9 +968,27 @@ namespace aprilui
 					this->setSelectionCount(-this->text.utf8Size());
 				}
 				break;
+			case april::AK_X:
+				if (this->_ctrlMode)
+				{
+					this->_cutText();
+				}
+				break;
+			case april::AK_C:
+				if (this->_ctrlMode)
+				{
+					this->_copyText();
+				}
+				break;
+			case april::AK_V:
+				if (this->_ctrlMode)
+				{
+					this->_pasteText();
+				}
+				break;
 #endif
 			case april::AK_RETURN:
-				if (this->multiLine)
+				if (this->multiLine && !this->_ctrlMode)
 				{
 					this->_insertChar('\n');
 				}
@@ -1031,7 +1024,7 @@ namespace aprilui
 
 	bool EditBox::_char(unsigned int charCode)
 	{
-		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
+		if ((this->dataset == NULL || this->dataset->getFocusedObject() == this) && !this->_ctrlMode)
 		{
 			atres::Font* font = atres::renderer->getFont(this->font);
 			if (font != NULL && font->hasCharacter(charCode) && (this->filter.size() == 0 || this->filter.uStr().find_first_of(charCode) != std::string::npos))
@@ -1069,6 +1062,37 @@ namespace aprilui
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (result || up || Label::_buttonUp(buttonCode));
+	}
+
+	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor)
+	{
+		return aprilui::makeModifiedDrawColor(this->selectionColor, drawColor);
+	}
+
+	void EditBox::_getBaseOffset(gvec2& offset, float& hf)
+	{
+		offset.set(0.0f, 0.0f);
+		hf = 0.0f; // x height factor
+		float fh = atres::renderer->getFont(this->font)->getLineHeight();
+		float w2 = this->rect.w * 0.5f;
+		float h2 = this->rect.h * 0.5f;
+		if (this->horzFormatting.isCenter())
+		{
+			offset.x = w2;
+		}
+		else if (this->horzFormatting.isRight())
+		{
+			offset.x = w2 * 2;
+		}
+		if (this->vertFormatting == atres::Vertical::Center)
+		{
+			hf = 0.5f;
+		}
+		else if (this->vertFormatting == atres::Vertical::Bottom)
+		{
+			hf = 1.0f;
+		}
+		offset.y = (h2 * 2 - fh) * hf;
 	}
 
 	void EditBox::_updateSelectionCount(int previousCaretIndex)
@@ -1302,10 +1326,6 @@ namespace aprilui
 
 	void EditBox::_insertChar(unsigned int charCode)
 	{
-		if (this->_ctrlMode && (charCode == 'A' || charCode == 'a'))
-		{
-			return;
-		}
 		this->_deleteSelected();
 		int size = this->text.utf8Size();
 		if (this->maxLength > 0 && size >= this->maxLength)
@@ -1324,6 +1344,41 @@ namespace aprilui
 		}
 		this->text = (left + hstr::fromUnicode(charCode)) + right;
 		this->setCaretIndex(this->caretIndex + 1);
+	}
+
+	void EditBox::_cutText()
+	{
+		hstr selectedText = this->getSelectedText();
+		if (selectedText != "" && hclipboard::setString(selectedText))
+		{
+			this->_deleteSelected();
+		}
+	}
+
+	void EditBox::_copyText()
+	{
+		hstr selectedText = this->getSelectedText();
+		if (selectedText != "")
+		{
+			hclipboard::setString(selectedText);
+		}
+	}
+
+	void EditBox::_pasteText()
+	{
+		hstr string;
+		if (hclipboard::getString(string))
+		{
+			if (this->getSelectionCount() > 0)
+			{
+				this->_deleteSelected();
+			}
+			std::basic_string<unsigned int> uString = string.uStr();
+			for_itert (size_t, i, 0, uString.size())
+			{
+				this->_insertChar(uString[i]);
+			}
+		}
 	}
 
 }
