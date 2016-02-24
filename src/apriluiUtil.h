@@ -17,7 +17,7 @@
 #include <gtypes/Rectangle.h>
 
 #ifndef _DEBUG
-#define __THROW_EXCEPTION(exception) throw exception;
+#define __THROW_EXCEPTION(exception, unused1, unused2) throw exception;
 #else
 #define __THROW_EXCEPTION(exception, enabled, returnCode) \
 	hexception e = exception; \
