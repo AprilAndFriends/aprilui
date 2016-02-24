@@ -71,6 +71,7 @@ namespace aprilui
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
 		this->_ctrlMode = false;
+		this->_altMode = false;
 		this->_shiftMode = false;
 		this->_blinkTimer = 0.0f;
 		this->_caretDirty = true; // calculates initial value
@@ -99,6 +100,7 @@ namespace aprilui
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
 		this->_ctrlMode = false;
+		this->_altMode = false;
 		this->_shiftMode = false;
 		this->_blinkTimer = 0.0f;
 		this->_caretDirty = true; // calculates initial value
@@ -914,10 +916,10 @@ namespace aprilui
 			{
 #if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
 			case april::AK_LEFT:
-				this->_ctrlMode ? this->_caretMoveLeftWord() : this->_caretMoveLeft();
+				this->_ctrlMode && !this->_altMode ? this->_caretMoveLeftWord() : this->_caretMoveLeft();
 				break;
 			case april::AK_RIGHT:
-				this->_ctrlMode ? this->_caretMoveRightWord() : this->_caretMoveRight();
+				this->_ctrlMode && !this->_altMode ? this->_caretMoveRightWord() : this->_caretMoveRight();
 				break;
 			case april::AK_UP:
 				if (this->multiLine)
@@ -935,13 +937,13 @@ namespace aprilui
 			case april::AK_BACK:
 				if (!this->_deleteSelected())
 				{
-					this->_ctrlMode ? this->_deleteLeftWord() : this->_deleteLeft();
+					this->_ctrlMode && !this->_altMode ? this->_deleteLeftWord() : this->_deleteLeft();
 				}
 				break;
 			case april::AK_DELETE:
 				if (!this->_deleteSelected())
 				{
-					this->_ctrlMode ? this->_deleteRightWord() : this->_deleteRight();
+					this->_ctrlMode && !this->_altMode ? this->_deleteRightWord() : this->_deleteRight();
 				}
 				break;
 #if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
@@ -958,37 +960,40 @@ namespace aprilui
 #endif
 				this->_ctrlMode = true;
 				break;
+			case april::AK_MENU:
+				this->_altMode = true;
+				break;
 			case april::AK_SHIFT:
 				this->_shiftMode = true;
 				break;
 			case april::AK_A:
-				if (this->_ctrlMode)
+				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_caretMoveEnd();
 					this->setSelectionCount(-this->text.utf8Size());
 				}
 				break;
 			case april::AK_X:
-				if (this->_ctrlMode)
+				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_cutText();
 				}
 				break;
 			case april::AK_C:
-				if (this->_ctrlMode)
+				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_copyText();
 				}
 				break;
 			case april::AK_V:
-				if (this->_ctrlMode)
+				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_pasteText();
 				}
 				break;
 #endif
 			case april::AK_RETURN:
-				if (this->multiLine && !this->_ctrlMode)
+				if (this->multiLine && !this->_ctrlMode && !this->_altMode)
 				{
 					this->_insertChar('\n');
 				}
@@ -1006,12 +1011,14 @@ namespace aprilui
 		switch (keyCode)
 		{
 		case april::AK_CONTROL:
-		case april::AK_MENU:
 #ifdef _MAC
 		case april::AK_LCOMMAND:
 		case april::AK_RCOMMAND:
 #endif
 			this->_ctrlMode = false;
+			break;
+		case april::AK_MENU:
+			this->_altMode = false;
 			break;
 		case april::AK_SHIFT:
 			this->_shiftMode = false;
@@ -1024,7 +1031,7 @@ namespace aprilui
 
 	bool EditBox::_char(unsigned int charCode)
 	{
-		if ((this->dataset == NULL || this->dataset->getFocusedObject() == this) && !this->_ctrlMode)
+		if ((this->dataset == NULL || this->dataset->getFocusedObject() == this) && !this->_ctrlMode && !this->_altMode)
 		{
 			atres::Font* font = atres::renderer->getFont(this->font);
 			if (font != NULL && font->hasCharacter(charCode) && (this->filter.size() == 0 || this->filter.uStr().find_first_of(charCode) != std::string::npos))
