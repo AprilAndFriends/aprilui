@@ -9,6 +9,7 @@
 #include <april/Color.h>
 #include <april/RenderSystem.h>
 #include <april/Keys.h>
+#include <april/Window.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
