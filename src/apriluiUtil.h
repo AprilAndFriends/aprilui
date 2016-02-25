@@ -20,11 +20,11 @@
 #define __THROW_EXCEPTION(exception, unused1, unused2) throw exception;
 #else
 #define __THROW_EXCEPTION(exception, enabled, returnCode) \
-	hexception e = exception; \
 	if (enabled) \
 	{ \
-		throw e; \
+		throw exception; \
 	} \
+	exception; \
 	returnCode;
 #endif
 
