@@ -225,10 +225,10 @@ namespace aprilui
 			result = time * this->speed * this->amplitude;
 			break;
 		case Sine:
-			result = (float)dsin(time * this->speed * 360.0f) * this->amplitude;
+			result = (float)hsin(time * this->speed * 360.0f) * this->amplitude;
 			break;
 		case SineAbs:
-			result = (float)habs(dsin(time * this->speed * 360.0f)) * this->amplitude;
+			result = (float)habs(hsin(time * this->speed * 360.0f)) * this->amplitude;
 			break;
 		case Square:
 			result = (hmodf(time * this->speed, 1.0f) < 0.5f ? this->amplitude : -this->amplitude);

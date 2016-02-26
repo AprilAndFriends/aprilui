@@ -199,7 +199,7 @@ namespace aprilui
 		}
 		double angle = hmodf(progress * 360.0f + 45.0f, 90.0f) - 45.0f;
 		// angle will always be between -45° and 45° so there is no tan() risk here
-		float ratio = (float)dtan(angle) * 0.5f + 0.5f;
+		float ratio = (float)htan(angle) * 0.5f + 0.5f;
 		p0 += (p1 - p0) * ratio;
 		result += MAKE_VERTEX(p0);
 		return result;

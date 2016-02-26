@@ -1253,10 +1253,10 @@ namespace aprilui
 
 	bool Object::angleEquals(float angle)
 	{
-		float s1 = (float)dsin(angle);
-		float c1 = (float)dcos(angle);
-		float s2 = (float)dsin(angle);
-		float c2 = (float)dcos(angle);
+		float s1 = (float)hsin(angle);
+		float c1 = (float)hcos(angle);
+		float s2 = (float)hsin(angle);
+		float c2 = (float)hcos(angle);
 		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
 	}
 
