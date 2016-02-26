@@ -306,7 +306,7 @@ void april_init(const harray<hstr>& args)
 		april::window->setUpdateDelegate(updateDelegate);
 		april::window->setKeyboardDelegate(keyboardDelegate);
 		april::window->setMouseDelegate(mouseDelegate);
-		cursor = april::window->createCursor(RESOURCE_PATH "cursor");
+		cursor = april::window->createCursorFromResource(RESOURCE_PATH "cursor");
 		april::window->setCursor(cursor);
 		atres::renderer->registerFont(new atres::FontBitmap(RESOURCE_PATH "arial.font"));
 		aprilui::setViewport(viewport);
@@ -333,7 +333,7 @@ void april_destroy()
 	try
 	{
 		april::window->setCursor(NULL);
-		delete cursor;
+		april::window->destroyCursor(cursor);
 		delete dataset;
 		aprilui::destroy();
 		atres::destroy();

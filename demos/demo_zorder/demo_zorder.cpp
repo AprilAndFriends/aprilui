@@ -129,7 +129,7 @@ void april_init(const harray<hstr>& args)
 		april::window->setParam("cursor_mappings", "101 " RESOURCE_PATH "cursor\n102 " RESOURCE_PATH "simple");
 #endif
 		april::window->setUpdateDelegate(updateDelegate);
-		cursor = april::window->createCursor(RESOURCE_PATH "cursor");
+		cursor = april::window->createCursorFromResource(RESOURCE_PATH "cursor");
 		april::window->setCursor(cursor);
 		aprilui::setViewport(viewport);
 		aprilui::setLocalization("en");
@@ -147,7 +147,7 @@ void april_destroy()
 	try
 	{
 		april::window->setCursor(NULL);
-		delete cursor;
+		april::window->destroyCursor(cursor);
 		delete dataset;
 		aprilui::destroy();
 		atres::destroy();
