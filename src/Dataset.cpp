@@ -64,7 +64,7 @@ namespace aprilui
 		{
 			if (this->focusedObject != NULL)
 			{
-				april::window->terminateKeyboardHandling();
+				april::window->hideVirtualKeyboard();
 			}
 			this->unload();
 		}
@@ -1800,7 +1800,7 @@ namespace aprilui
 	{
 		if (this->focusedObject != NULL)
 		{
-			april::window->terminateKeyboardHandling();
+			april::window->hideVirtualKeyboard();
 			// in case of a recursive call, the focused object has to be removed first.
 			aprilui::Object* object = this->focusedObject;
 			this->focusedObject = NULL;

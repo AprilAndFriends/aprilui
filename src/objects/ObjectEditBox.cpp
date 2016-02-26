@@ -821,7 +821,7 @@ namespace aprilui
 		{
 			if (!this->pushed) // some OSes will disable the keyboard if it is shown before a mouse-up event
 			{
-				april::window->beginKeyboardHandling();
+				april::window->showVirtualKeyboard();
 			}
 		}
 		Label::notifyEvent(type, args);
@@ -890,7 +890,7 @@ namespace aprilui
 			if (this->isFocused())
 			{
 				// some OSes will disable the keyboard if it is shown before a mouse-up event
-				april::window->beginKeyboardHandling();
+				april::window->showVirtualKeyboard();
 			}
 			this->triggerEvent(Event::Click, keyCode);
 		}
