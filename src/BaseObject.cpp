@@ -68,7 +68,7 @@ namespace aprilui
 			BaseObject::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::STRING);
 			BaseObject::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::BOOL);
 			BaseObject::_propertyDescriptions += PropertyDescription("awake", PropertyDescription::BOOL);
-			BaseObject::_propertyDescriptions += PropertyDescription("zorder", PropertyDescription::INT);
+			BaseObject::_propertyDescriptions += PropertyDescription("z_order", PropertyDescription::INT);
 		}
 		return BaseObject::_propertyDescriptions;
 	}
@@ -123,11 +123,11 @@ namespace aprilui
 		return descendants;
 	}
 
-	void BaseObject::setZOrder(int zorder)
+	void BaseObject::setZOrder(int zOrder)
 	{
-		if (this->zOrder != zorder)
+		if (this->zOrder != zOrder)
 		{
-			this->zOrder = zorder;
+			this->zOrder = zOrder;
 			if (this->parent != NULL)
 			{
 				this->parent->_sortChildren();
@@ -288,7 +288,12 @@ namespace aprilui
 		if (name == "full_name")	return this->getFullName();
 		if (name == "enabled")		return this->isEnabled();
 		if (name == "awake")		return this->isAwake();
-		if (name == "zorder")		return this->getZOrder();
+		if (name == "z_order")		return this->getZOrder();
+		if (name == "zorder")
+		{
+			hlog::warn(logTag, "'zorder' is deprecated. Use 'z_order' instead."); // DEPRECATED
+			return this->getZOrder();
+		}
 		if (name != "type" && !this->hasProperty(name))
 		{
 			hlog::errorf(logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
@@ -302,7 +307,12 @@ namespace aprilui
 		else if (name == "tag")		this->setTag(value);
 		else if (name == "enabled")	this->setEnabled(value);
 		else if (name == "awake")	this->setAwake(value);
-		else if (name == "zorder")	this->setZOrder(value);
+		else if (name == "z_order")	this->setZOrder(value);
+		else if (name == "zorder")
+		{
+			hlog::warn(logTag, "'zorder=' is deprecated. Use 'z_order=' instead."); // DEPRECATED
+			this->setZOrder(value);
+		}
 		else
 		{
 			if (name != "type" && !this->hasProperty(name))
