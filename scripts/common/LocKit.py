@@ -1,0 +1,197 @@
+# Contains utility classes for working with merged TSV localization files.
+
+import os.path
+import re
+
+from BfgParser import *
+from LocParser import *
+from TsvParser import *
+from XlsParser import *
+
+class LocKit:
+
+	@staticmethod
+	def readLocFiles(path, language):
+		print ""
+		print "Checking for files..."
+		print "- path: %s" % path
+		files = LocParser.getFileList(path, language)
+		print ""
+		print "Parsing of %d file(s)..." % len(files)
+		locFiles = []
+		for filename in files:
+			locFile = LocParser.parse(filename, language)
+			locFile.filename = locFile.filename.replace(path + "/", "", 1)
+			locFiles.append(locFile)
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		return locFiles
+	
+	@staticmethod	
+	def writeLocFiles(path, locFiles):
+		print ""
+		print "Writing output %d file(s)..." % len(locFiles)
+		try:
+			os.makedirs(path)
+		except:
+			pass
+		for locFile in locFiles:
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+			text = LocParser.joinEntries(locFile.entries)
+			try:
+				os.makedirs(os.path.dirname(path + "/" + locFile.filename))
+			except:
+				pass
+			file = open(path + "/" + locFile.filename, "wb")
+			file.write(LocParser.BOM + text)
+			file.close()
+		
+	@staticmethod
+	def readTsvFile(inputFilename):
+		print ""
+		print "Parsing TSV file..."
+		locFiles = TsvParser.parse(inputFilename)
+		for locFile in locFiles:
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		return locFiles
+	
+	@staticmethod
+	def writeTsvFile(filename, locFiles):
+		print ""
+		print "Writing output file..."
+		for locFile in locFiles:
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		text = TsvParser.generateFile(locFiles)
+		file = open(filename, "wb")
+		file.write(LocParser.BOM + text)
+		file.close()
+		
+	@staticmethod
+	def readXlsFile(inputFilename):
+		print ""
+		print "Parsing XLS file..."
+		locFiles = XlsParser.parse(inputFilename)
+		for locFile in locFiles:
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		return locFiles
+	
+	@staticmethod
+	def writeXlsFile(filename, locFiles):
+		print ""
+		print "Writing output file..."
+		for locFile in locFiles:
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		wb = XlsParser.generateFile(locFiles)		
+		wb.save(filename)
+		
+	@staticmethod
+	def readBfgFile(inputFilename, language):
+		print ""
+		print "Parsing BFG file..."
+		locFiles = BfgParser.parse(inputFilename, language)
+		for locFile in locFiles:
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		return locFiles
+	
+	@staticmethod
+	def writeBfgFile(filename, locFiles):
+		print ""
+		print "Writing output file..."
+		for locFile in locFiles:
+			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		text = BfgParser.generateFile(locFiles)
+		file = open(filename, "wb")
+		file.write(LocParser.BOM + text)
+		file.close()
+		
+	@staticmethod
+	def _findLocFile(originalLocFiles, locFile, warning = True):
+		for file in originalLocFiles:
+			if file.getReferenceFilename() == locFile.getReferenceFilename():
+				return file
+		if warning:
+			print "----"
+			print "WARNING! No corresponding original file exists for '%s'." % locFile.filename
+			print "----"
+		return None
+	
+	@staticmethod
+	def _findLocEntry(originalLocEntries, locEntry, warning = True):
+		for entry in originalLocEntries:
+			if entry.key == locEntry.key:
+				return entry
+		if warning:
+			print "----"
+			print "WARNING! Key '%s' exists in new file, but does not exist in original." % locEntry.key
+			print "----"
+		return None
+	
+	@staticmethod
+	def insertOriginalLocFiles(locFiles, originalLocFiles):
+		for locFile in locFiles:
+			originalLocFile = LocKit._findLocFile(originalLocFiles, locFile)
+			if originalLocFile != None:
+				for locEntry in locFile.entries:
+					originalLocEntry = LocKit._findLocEntry(originalLocFile.entries, locEntry)
+					if originalLocEntry != None:
+						locEntry.original = originalLocEntry.value
+		return locFiles
+		
+	@staticmethod
+	def createDifferenceLocFiles(locFiles, originalLocFiles, language, changedKeys):
+		newLocFiles = []
+		for originalLocFile in originalLocFiles:
+			locFile = LocKit._findLocFile(locFiles, originalLocFile, False)
+			entries = []
+			if locFile != None:
+				entries = locFile.entries
+			
+			filename = originalLocFile.getReferenceFilename()
+			basename = os.path.basename(filename)
+			filename = filename.replace("/" + basename, "")
+			if language != "":
+				filename += "/" + language
+			filename += "/" + basename
+			locFile = LocFile(filename, language, [])
+			for originalLocEntry in originalLocFile.entries:
+				locEntry = LocKit._findLocEntry(entries, originalLocEntry, False)
+				if locEntry == None or locEntry.key in changedKeys:
+					locFile.entries.append(LocEntry(originalLocEntry.key, "", originalLocEntry.value, originalLocEntry.comment))
+			if len(locFile.entries) > 0:
+				newLocFiles.append(locFile)
+		return newLocFiles
+		
+	@staticmethod
+	def updateLocFiles(originalLocFiles, locFiles, language):
+		newLocFiles = []
+		for locFile in locFiles:
+			originalLocFile = LocKit._findLocFile(originalLocFiles, locFile, False)
+			if originalLocFile == None:
+				filename = locFile.getReferenceFilename()
+				basename = os.path.basename(filename)
+				filename = filename.replace("/" + basename, "")
+				if language != "":
+					filename += "/" + language
+				filename += "/" + basename
+				originalLocFile = LocFile(filename, language, [])
+			for locEntry in locFile.entries:
+				originalLocEntry = LocKit._findLocEntry(originalLocFile.entries, locEntry, False)
+				if originalLocEntry == None:
+					originalLocEntry = LocEntry(locEntry.key, locEntry.value, locEntry.original, locEntry.comment)
+					originalLocFile.entries.append(originalLocEntry)
+				originalLocEntry.value = locEntry.value
+			if len(originalLocFile.entries):
+				newLocFiles.append(originalLocFile)
+		return newLocFiles
+		
+	@staticmethod
+	def renameKeys(locFiles, renamedKeys):
+		for locFile in locFiles:
+			print "RENAME " + locFile.filename
+			for locEntry in locFile.entries:
+				print "   KEY " + locEntry.key
+				print renamedKeys
+				if renamedKeys.has_key(locEntry.key):
+					locEntry.key = renamedKeys[locEntry.key]
+					print "REANEMD"
+					break
+		return locFiles
