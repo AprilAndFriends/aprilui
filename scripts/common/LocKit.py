@@ -84,26 +84,6 @@ class LocKit:
 		wb.save(filename)
 		
 	@staticmethod
-	def readBfgFile(inputFilename, language):
-		print ""
-		print "Parsing BFG file..."
-		locFiles = BfgParser.parse(inputFilename, language)
-		for locFile in locFiles:
-			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
-		return locFiles
-	
-	@staticmethod
-	def writeBfgFile(filename, locFiles):
-		print ""
-		print "Writing output file..."
-		for locFile in locFiles:
-			print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
-		text = BfgParser.generateFile(locFiles)
-		file = open(filename, "wb")
-		file.write(LocParser.BOM + text)
-		file.close()
-		
-	@staticmethod
 	def _findLocFile(originalLocFiles, locFile, warning = True):
 		for file in originalLocFiles:
 			if file.getReferenceFilename() == locFile.getReferenceFilename():
