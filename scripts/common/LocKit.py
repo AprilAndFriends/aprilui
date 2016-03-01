@@ -3,7 +3,6 @@
 import os.path
 import re
 
-from BfgParser import *
 from LocParser import *
 from TsvParser import *
 from XlsParser import *
