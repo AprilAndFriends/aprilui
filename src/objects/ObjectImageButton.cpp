@@ -317,7 +317,12 @@ namespace aprilui
 	
 	bool ImageButton::_mouseMove()
 	{
-		return (ButtonBase::_mouseMove() || ImageBox::_mouseMove());
+		bool result = (ButtonBase::_mouseMove() || ImageBox::_mouseMove());
+		if (result)
+		{
+			this->triggerEvent(Event::MouseMove);
+		}
+		return result;
 	}
 
 	bool ImageButton::_buttonDown(april::Button buttonCode)
