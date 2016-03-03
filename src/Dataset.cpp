@@ -683,29 +683,30 @@ namespace aprilui
 			}
 		}
 		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
-		if (isObject || isAnimator)
-		{
-			if (node->pexists("name"))
-			{
-				objectName = namePrefix + node->pstr("name") + nameSuffix;
-			}
-			else
-			{
-				objectName = april::generateName(className);
-			}
-			if (isObject)
-			{
-				aprilui::readRectNode(rect, node);
-				rect += offset;
-			}
-		}
-		else
+		if (!isObject && !isAnimator)
 		{
 			return NULL;
 		}
-		if (this->objects.hasKey(objectName))
+		if (node->pexists("name"))
+		{
+			objectName = namePrefix + node->pstr("name") + nameSuffix;
+		}
+		else
+		{
+			objectName = april::generateName(className);
+		}
+		if (isObject)
+		{
+			aprilui::readRectNode(rect, node);
+			rect += offset;
+		}
+		if (isObject && this->objects.hasKey(objectName))
 		{
 			__THROW_EXCEPTION(ObjectExistsException("Object", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
+		}
+		if (isAnimator && this->animators.hasKey(objectName))
+		{
+			__THROW_EXCEPTION(ObjectExistsException("Animator", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
 		BaseObject* baseObject = NULL;
 		Object* object = NULL;
