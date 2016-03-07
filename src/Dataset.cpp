@@ -1233,6 +1233,11 @@ namespace aprilui
 			(*it)->dataset = this;
 			(*it)->notifyEvent(Event::RegisteredInDataset, &args);
 		}
+		// if no root objects exists, this root becomes the new root object
+		if (this->root == NULL)
+		{
+			this->root = root;
+		}
 	}
 	
 	void Dataset::unregisterObjects(BaseObject* root)
