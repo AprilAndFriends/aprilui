@@ -1236,7 +1236,11 @@ namespace aprilui
 		// if no root objects exists, this root becomes the new root object
 		if (this->root == NULL)
 		{
-			this->root = root;
+			Object* rootObject = dynamic_cast<Object*>(root);
+			if (rootObject != NULL)
+			{
+				this->root = rootObject;
+			}
 		}
 	}
 	
