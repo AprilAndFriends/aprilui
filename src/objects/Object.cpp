@@ -368,7 +368,7 @@ namespace aprilui
 	{
 		if (this->dataset != NULL)
 		{
-			this->dataset->registerObjects(object);
+			this->dataset->registerObjects(object, false);
 		}
 		this->addChild(object);
 	}

@@ -1204,7 +1204,7 @@ namespace aprilui
 		this->triggerEvent(aprilui::Event::DatasetUnloaded);
 	}
 	
-	void Dataset::registerObjects(BaseObject* root)
+	void Dataset::registerObjects(BaseObject* root, bool setRootIfNull)
 	{
 		hstr name;
 		harray<BaseObject*> objects;
@@ -1238,7 +1238,7 @@ namespace aprilui
 			(*it)->notifyEvent(Event::RegisteredInDataset, &args);
 		}
 		// if no root objects exists, this root becomes the new root object
-		if (this->root == NULL)
+		if (setRootIfNull && this->root == NULL)
 		{
 			Object* rootObject = dynamic_cast<Object*>(root);
 			if (rootObject != NULL)

@@ -67,7 +67,7 @@ namespace aprilui
 
 		void load();
 		void unload();
-		void registerObjects(BaseObject* root);
+		void registerObjects(BaseObject* root, bool setRootIfNull = true);
 		void unregisterObjects(BaseObject* root);
 		void registerTexture(Texture* texture);
 		void unregisterTexture(Texture* texture);
