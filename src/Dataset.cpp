@@ -206,6 +206,10 @@ namespace aprilui
 				this->animators.removeKey(root->getName());
 			}
 		}
+		if (this->root == root)
+		{
+			this->root = NULL;
+		}
 		delete root;
 	}
 	
