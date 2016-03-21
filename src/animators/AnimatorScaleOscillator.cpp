@@ -60,7 +60,7 @@ namespace aprilui
                 return;
             }
 			mTimer += k;
-			float factor = (float)dsin(mTimer * mSpeed * 360) * mAmplitude + mBaseline;
+			float factor = (float)hsin(mTimer * mSpeed * 360) * mAmplitude + mBaseline;
 			mParent->setSize(mInitialSize.x + factor, mInitialSize.y + factor);
 		}
 		

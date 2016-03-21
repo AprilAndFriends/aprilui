@@ -74,8 +74,8 @@ namespace aprilui
                 return;
             }
 			mTimer += k;
-			float factor_x = (float)dsin(mTimer * mSpeed.x * 360) * mAmplitude.x + mBaseline.x;
-			float factor_y = (float)dsin(mTimer * mSpeed.y * 360) * mAmplitude.y + mBaseline.y;
+			float factor_x = (float)hsin(mTimer * mSpeed.x * 360) * mAmplitude.x + mBaseline.x;
+			float factor_y = (float)hsin(mTimer * mSpeed.y * 360) * mAmplitude.y + mBaseline.y;
 			mParent->setPosition(mInitialPosition.x + factor_x, mInitialPosition.y + factor_y);
 		}
 		

@@ -48,10 +48,10 @@ namespace aprilui
 
 	bool RotationImageBox::angleEquals(float angle)
 	{
-		float s1 = (float)dsin(angle);
-		float s2 = (float)dsin(mAngle);
-		float c1 = (float)dcos(angle);
-		float c2 = (float)dcos(mAngle);
+		float s1 = (float)hsin(angle);
+		float s2 = (float)hsin(mAngle);
+		float c1 = (float)hcos(angle);
+		float c2 = (float)hcos(mAngle);
 		return (fabs(s1 - s2) < 0.01f && fabs(c1 - c2) < 0.01f);
 	}
 	

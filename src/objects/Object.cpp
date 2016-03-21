@@ -225,7 +225,7 @@ namespace aprilui
 		{
 			if (mDataset->getFocusedObject() != NULL)
 			{
-				april::window->terminateKeyboardHandling();
+				april::window->hideVirtualKeyboard();
 			}
 			mDataset->setFocusedObject(NULL);
 		}

@@ -62,11 +62,11 @@ namespace aprilui
 			{
 				this->mDataset->setFocusedObject(this);
 				this->mBlinkTimer = 0.0f;
-				april::window->beginKeyboardHandling();
+				april::window->showVirtualKeyboard();
 			}
 			else if (this->mDataset->getFocusedObject() == this)
 			{
-				april::window->terminateKeyboardHandling();
+				april::window->hideVirtualKeyboard();
 				this->mDataset->setFocusedObject(NULL);
 			}
 		}
@@ -256,7 +256,7 @@ namespace aprilui
 				mDataset->setFocusedObject(this);
 				mBlinkTimer = 0.0f;
 			}
-			april::window->beginKeyboardHandling();
+			april::window->showVirtualKeyboard();
 			mPushed = false;
 			triggerEvent("Click", x, y, button);
 			return true;
