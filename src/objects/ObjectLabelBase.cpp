@@ -23,6 +23,8 @@
 #include "ObjectLabelBase.h"
 
 #define MAX_AUTO_SCALE_STEPS 5
+#define SAFE_AUTO_SCALE_FACTOR 1.01f // floating point errors can cause problems so the auto-scale required area is slightly enlarged
+#define SAFE_AUTO_SCALE_CHECK_VALUE 1.2f // suddenly the calculated height could be much higher
 
 namespace aprilui
 {
@@ -441,7 +443,13 @@ namespace aprilui
 			if (!horizontal.isWrapped())
 			{
 				size.x = atres::renderer->getTextWidth(fontName, text);
-				size.y = atres::renderer->getTextHeight(fontName, text, size.x);
+				float newY = atres::renderer->getTextHeight(fontName, text, size.x);
+				while (size.y * SAFE_AUTO_SCALE_CHECK_VALUE < newY)
+				{
+					size.x *= SAFE_AUTO_SCALE_FACTOR;
+					newY = atres::renderer->getTextHeight(fontName, text, size.x);
+				}
+				size.y = newY;
 				autoScale = hmin(rect.w / size.x, rect.h / size.y);
 			}
 			else
