@@ -363,7 +363,7 @@ namespace aprilui
 						atres::RenderWord* word = NULL;
 						foreach (atres::RenderWord, it, line->words)
 						{
-							if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.x + (*it).rect.w))
+							if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
 							{
 								word = &(*it);
 								break;
@@ -457,7 +457,7 @@ namespace aprilui
 				}
 				else
 				{
-					this->caretRect.x = allLine.rect.x + line.rect.w;
+					this->caretRect.x = allLine.rect.x + line.advanceX;
 				}
 			}
 		}
@@ -481,7 +481,7 @@ namespace aprilui
 		int jumps = 0;
 		if (!this->disabledOffset && !this->horzFormatting.isWrapped())
 		{
-			if (atres::renderer->getTextWidth(this->font, this->text) > this->caretRect.w)
+			if (atres::renderer->getTextAdvanceX(this->font, this->text) > this->caretRect.w)
 			{
 				// left side
 				if (this->caretRect.x < fh && (this->horzFormatting != atres::Horizontal::Left || this->renderOffsetX < 0))
@@ -659,7 +659,7 @@ namespace aprilui
 		{
 			if (allLineStart != NULL)
 			{
-				this->_selectionRects += grect(positionStart + renderOffset, allLineStart->rect.right() - positionStart.x, fh);
+				this->_selectionRects += grect(positionStart + renderOffset, allLineStart->rect.x + allLineStart->rect.right() - positionStart.x, fh);
 			}
 			if (linesEndCount - linesStartCount > 1)
 			{
