@@ -426,7 +426,8 @@ namespace aprilui
 		bool needsScaling = false;
 		gvec2 size;
 		size.y = atres::renderer->getTextHeight(fontName, text, rect.w);
-		if (size.y > 0.0f && size.y > rect.h)
+		// either one word that doesn't even fit in the initial rect-width or the height is too large for the rect
+		if (size.y <= 0.0f || size.y > rect.h)
 		{
 			needsScaling = true;
 		}
@@ -444,10 +445,12 @@ namespace aprilui
 			{
 				size.x = atres::renderer->getTextWidth(fontName, text);
 				float newY = atres::renderer->getTextHeight(fontName, text, size.x);
-				while (size.y * SAFE_AUTO_SCALE_CHECK_VALUE < newY)
+				int i = 0;
+				while (size.y * SAFE_AUTO_SCALE_CHECK_VALUE < newY && i < MAX_AUTO_SCALE_STEPS)
 				{
 					size.x *= SAFE_AUTO_SCALE_FACTOR;
 					newY = atres::renderer->getTextHeight(fontName, text, size.x);
+					++i;
 				}
 				size.y = newY;
 				autoScale = hmin(rect.w / size.x, rect.h / size.y);
