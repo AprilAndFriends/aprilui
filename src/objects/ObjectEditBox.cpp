@@ -457,7 +457,7 @@ namespace aprilui
 				}
 				else
 				{
-					this->caretRect.x = allLine.rect.x + line.advanceX;
+					this->caretRect.x = allLine.rect.x + line.rect.w;
 				}
 			}
 		}
@@ -481,7 +481,7 @@ namespace aprilui
 		int jumps = 0;
 		if (!this->disabledOffset && !this->horzFormatting.isWrapped())
 		{
-			if (atres::renderer->getTextAdvanceX(this->font, this->text) > this->caretRect.w)
+			if (atres::renderer->getTextWidth(this->font, this->text) > this->caretRect.w)
 			{
 				// left side
 				if (this->caretRect.x < fh && (this->horzFormatting != atres::Horizontal::Left || this->renderOffsetX < 0))
