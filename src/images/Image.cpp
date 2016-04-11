@@ -115,10 +115,8 @@ namespace aprilui
 		april::rendersys->setTexture(mTexture->getRenderTexture());
 		_tryLoadTexCoords();
 			
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(mBlendMode);
-		}
+		april::rendersys->setBlendMode(mBlendMode);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
 			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
@@ -127,10 +125,8 @@ namespace aprilui
 		{
 			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
 		}
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(april::BM_DEFAULT);
-		}
+		april::rendersys->setBlendMode(april::BM_DEFAULT);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 	}
 
 	void Image::draw(grect rect, april::Color color, float angle, gvec2 center)
@@ -158,10 +154,8 @@ namespace aprilui
 		april::rendersys->setTexture(mTexture->getRenderTexture());
 		_tryLoadTexCoords();
 		
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(mBlendMode);
-		}
+		april::rendersys->setBlendMode(mBlendMode);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
 			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
@@ -170,10 +164,8 @@ namespace aprilui
 		{
 			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
 		}
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(april::BM_DEFAULT);
-		}
+		april::rendersys->setBlendMode(april::BM_DEFAULT);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}
 

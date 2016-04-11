@@ -75,7 +75,8 @@ namespace aprilui
 		april::Color color;
 		color.a = (unsigned char)(alpha * 255);
 		mImage->draw(_getDrawRect() + offset, color);
-		//rendersys->setTextureBlendMode(april::ALPHA_BLEND);
+		april::rendersys->setBlendMode(april::BM_DEFAULT);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 	}
 
 	bool ImageBox::setProperty(chstr name, chstr value)
