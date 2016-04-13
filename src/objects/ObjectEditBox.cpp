@@ -70,6 +70,7 @@ namespace aprilui
 		this->disabledOffset = false;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
+		this->_consumeKey = false;
 		this->_ctrlMode = false;
 		this->_altMode = false;
 		this->_shiftMode = false;
@@ -99,6 +100,7 @@ namespace aprilui
 		this->disabledOffset = other.disabledOffset;
 		this->renderOffsetX = 0;
 		this->renderOffsetY = 0;
+		this->_consumeKey = false;
 		this->_ctrlMode = false;
 		this->_altMode = false;
 		this->_shiftMode = false;
@@ -912,6 +914,7 @@ namespace aprilui
 	{
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
+			this->_consumeKey = false;
 			switch (keyCode)
 			{
 #if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
@@ -967,28 +970,32 @@ namespace aprilui
 				this->_shiftMode = true;
 				break;
 			case april::AK_A:
-				if (this->_ctrlMode && !this->_altMode)
+				if (this->_ctrlMode && !this->_altMode && this->selectable)
 				{
 					this->_caretMoveEnd();
 					this->setSelectionCount(-this->text.utf8Size());
+					this->_consumeKey = true;
 				}
 				break;
 			case april::AK_X:
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_cutText();
+					this->_consumeKey = true;
 				}
 				break;
 			case april::AK_C:
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_copyText();
+					this->_consumeKey = true;
 				}
 				break;
 			case april::AK_V:
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_pasteText();
+					this->_consumeKey = true;
 				}
 				break;
 #endif
@@ -1031,7 +1038,7 @@ namespace aprilui
 
 	bool EditBox::_char(unsigned int charCode)
 	{
-		if ((this->dataset == NULL || this->dataset->getFocusedObject() == this) && !this->_ctrlMode && !this->_altMode)
+		if ((this->dataset == NULL || this->dataset->getFocusedObject() == this) && !this->_consumeKey)
 		{
 			atres::Font* font = atres::renderer->getFont(this->font);
 			if (font != NULL && font->hasCharacter(charCode) && (this->filter.size() == 0 || this->filter.uStr().find_first_of(charCode) != std::string::npos))
@@ -1039,6 +1046,7 @@ namespace aprilui
 				this->_insertChar(charCode);
 			}
 		}
+		this->_consumeKey = false;
 		return Label::_char(charCode);
 	}
 

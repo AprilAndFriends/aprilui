@@ -164,6 +164,7 @@ namespace aprilui
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
+		bool _consumeKey;
 		bool _ctrlMode;
 		bool _altMode;
 		bool _shiftMode;
