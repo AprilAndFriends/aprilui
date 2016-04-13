@@ -880,7 +880,7 @@ namespace aprilui
 									{
 										this->unregisterObjects(descendant);
 										descendant->setName(newName);
-										this->registerObjects(descendant);
+										this->registerObjects(descendant, false);
 									}
 									else
 									{

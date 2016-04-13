@@ -64,7 +64,7 @@ namespace aprilui
 		}
 		if (this->dataset != NULL)
 		{
-			this->dataset->registerObjects(row);
+			this->dataset->registerObjects(row, false);
 		}
 		return row;
 	}
