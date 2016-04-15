@@ -52,7 +52,7 @@ namespace aprilui
 
 		TileImage* TileScrollerY::_getParentsTileImage()
 		{
-			hstr parentName = (this->parent != NULL ? this->parent->getName() : "null");
+			hstr parentName = (this->parent != NULL ? this->parent->getName() : "NULL");
 			ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);
 			if (imageBox == NULL)
 			{
