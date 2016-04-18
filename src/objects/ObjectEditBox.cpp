@@ -205,7 +205,8 @@ namespace aprilui
 	void EditBox::setFilter(chstr value)
 	{
 		this->filter = value;
-		this->setText(this->text);
+		hstr newText = this->text;
+		this->setText(newText); // because this->text could be altered within setText()
 	}
 
 	void EditBox::setText(chstr value)
@@ -260,6 +261,11 @@ namespace aprilui
 	hstr EditBox::getSelectedText()
 	{
 		return (this->selectionCount != 0 ? this->text.utf8SubString(hmin(this->caretIndex, this->caretIndex + this->selectionCount), habs(this->selectionCount)) : hstr(""));
+	}
+
+	hstr EditBox::getDisplayedText()
+	{
+		return (this->passwordChar == '\0' || this->text == "" ? this->text : hstr(this->passwordChar, this->text.utf8Size()));
 	}
 
 	void EditBox::setMinAutoScale(float value)
@@ -321,21 +327,22 @@ namespace aprilui
 		{
 			return;
 		}
+		hstr text = this->getDisplayedText();
 		float fh = font->getLineHeight();
 		gvec2 position = this->_caretCursorPosition;
 		// full text
-		harray<atres::RenderLine> lines = MAKE_RENDER_LINES(this->text);
+		harray<atres::RenderLine> lines = MAKE_RENDER_LINES(text);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
-		int offsetIndex = this->text.size();
+		int offsetIndex = text.size();
 		position.x -= this->renderOffsetX * fh;
 		position.y += xhf * (CHECK_RECT_HEIGHT - this->rect.h) - this->renderOffsetY * fh;
 		if (lines.size() > 0)
 		{
 			if (position.y >= lines.first().rect.y)
 			{
-				offsetIndex = this->text.size();
+				offsetIndex = text.size();
 				atres::RenderLine* line = NULL;
 				float descender = 0.0f;
 				for_iter (i, 0, lines.size())
@@ -404,7 +411,7 @@ namespace aprilui
 				offsetIndex = 0;
 			}
 		}
-		this->setCaretIndex(this->text(0, offsetIndex).utf8Size());
+		this->setCaretIndex(text(0, offsetIndex).utf8Size());
 	}
 
 	void EditBox::_updateCaret()
@@ -414,11 +421,7 @@ namespace aprilui
 			return;
 		}
 		this->_caretDirty = false;
-		hstr text = this->text;
-		if (this->passwordChar != '\0' && this->text != "")
-		{
-			text = hstr(this->passwordChar, this->text.utf8Size());
-		}
+		hstr text = this->getDisplayedText();
 		hstr leftText = text.utf8SubString(0, this->caretIndex);
 		atres::Font* font = atres::renderer->getFont(this->font);
 		if (font == NULL)
@@ -430,7 +433,7 @@ namespace aprilui
 		float lh = fh + descender;
 		this->caretRect.set(0.0f, 0.0f, 1.0f, fh);
 		// full text
-		harray<atres::RenderLine> allLines = MAKE_RENDER_LINES(this->text);
+		harray<atres::RenderLine> allLines = MAKE_RENDER_LINES(text);
 		gvec2 base;
 		float xhf = 0.0f; // x height factor
 		this->_getBaseOffset(base, xhf);
@@ -483,7 +486,7 @@ namespace aprilui
 		int jumps = 0;
 		if (!this->disabledOffset && !this->horzFormatting.isWrapped())
 		{
-			if (atres::renderer->getTextWidth(this->font, this->text) > this->caretRect.w)
+			if (atres::renderer->getTextWidth(this->font, text) > this->caretRect.w)
 			{
 				// left side
 				if (this->caretRect.x < fh && (this->horzFormatting != atres::Horizontal::Left || this->renderOffsetX < 0))
@@ -593,17 +596,18 @@ namespace aprilui
 		{
 			return;
 		}
+		hstr text = this->getDisplayedText();
 		grect rect;
 		float fh = atres::renderer->getFont(this->font)->getLineHeight();
 		// full text
-		harray<atres::RenderLine> allLines = MAKE_RENDER_LINES(this->text);
+		harray<atres::RenderLine> allLines = MAKE_RENDER_LINES(text);
 		gvec2 base;
 		float hf = 0.0f; // x height factor
 		this->_getBaseOffset(base, hf);
 		float yOffset = hf * (this->rect.h - CHECK_RECT_HEIGHT);
 		// vars
-		hstr textStart = this->text.utf8SubString(0, hmin(this->caretIndex, this->caretIndex + this->selectionCount));
-		hstr textEnd = this->text.utf8SubString(0, hmax(this->caretIndex, this->caretIndex + this->selectionCount));
+		hstr textStart = text.utf8SubString(0, hmin(this->caretIndex, this->caretIndex + this->selectionCount));
+		hstr textEnd = text.utf8SubString(0, hmax(this->caretIndex, this->caretIndex + this->selectionCount));
 		harray<atres::RenderLine> linesStart;
 		harray<atres::RenderLine> linesEnd;
 		gvec2 positionStart;
@@ -635,7 +639,7 @@ namespace aprilui
 				positionStart += base;
 			}
 		}
-		if (textEnd != this->text)
+		if (textEnd != text)
 		{
 			linesEnd = MAKE_RENDER_LINES(textEnd);
 			allLineEnd = &allLines[linesEnd.size() - 1];
@@ -682,10 +686,7 @@ namespace aprilui
 		april::Color color = this->color;
 		april::Color textColor = this->textColor;
 		hstr text = this->text;
-		if (this->passwordChar != '\0' && this->text != "")
-		{
-			this->text = hstr(this->passwordChar, this->text.utf8Size());
-		}
+		this->text = this->getDisplayedText();
 		if (this->text == "" && this->dataset != NULL && this->dataset->getFocusedObject() != this)
 		{
 			this->text = this->emptyText;
