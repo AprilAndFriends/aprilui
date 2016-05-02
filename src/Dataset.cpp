@@ -382,7 +382,7 @@ namespace aprilui
 			foreach_xmlnode (child, node)
 			{
 				childProperties = child->properties;
-				if (child->value == "Image" && (childProperties.hasKey("tile") || childProperties.hasKey("tile_w") || childProperties.hasKey("tile_h"))) // DEPRECATED (this entire block)
+				if (child->name == "Image" && (childProperties.hasKey("tile") || childProperties.hasKey("tile_w") || childProperties.hasKey("tile_h"))) // DEPRECATED (this entire block)
 				{
 					hlog::warn(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
 					name = childProperties["name"];
@@ -448,21 +448,21 @@ namespace aprilui
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
 					aprilui::readRectNode(rect, child);
-					if (child->value == "Image")
+					if (child->name == "Image")
 					{
 						image = new Image(texture, name, rect);
 					}
-					else if (child->value == "TileImage")
+					else if (child->name == "TileImage")
 					{
 						image = new TileImage(texture, name, rect);
 					}
-					else if (child->value == "SkinImage")
+					else if (child->name == "SkinImage")
 					{
 						image = new SkinImage(texture, name, rect);
 					}
 					else
 					{
-						__THROW_EXCEPTION(XMLUnknownClassException(child->value, child), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
+						__THROW_EXCEPTION(XMLUnknownClassException(child->name, child), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
 					}
 					this->images[name] = image;
 					image->dataset = this;
@@ -497,7 +497,7 @@ namespace aprilui
 		grect rect;
 		foreach_xmlnode (child, node)
 		{
-			if (child->value == "ImageRef")
+			if (child->name == "ImageRef")
 			{
 				refname = child->pstr("name");
 				aprilui::readRectNode(rect, child);
@@ -505,7 +505,7 @@ namespace aprilui
 			}
 			else
 			{
-				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->value.cStr(), name.cStr());
+				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->name.cStr(), name.cStr());
 			}
 		}
 		this->images[name] = image;
@@ -558,7 +558,7 @@ namespace aprilui
 		{
 			isObject = false;
 			isAnimator = false;
-			className = child->value;
+			className = child->name;
 			if (className == "Object")
 			{
 				isObject = true;
@@ -659,7 +659,7 @@ namespace aprilui
 	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
 	{
 		hstr objectName;
-		hstr className = node->value;
+		hstr className = node->name;
 		if (className == "Include")
 		{
 			return this->recursiveObjectIncludeParse(node, parent, style, namePrefix, nameSuffix, offset);
@@ -853,7 +853,7 @@ namespace aprilui
 		hmap<hstr, hstr> childProperties;
 		foreach_xmlnode (child, node)
 		{
-			if (child->value == "Property")
+			if (child->name == "Property")
 			{
 				if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
 				{
@@ -960,7 +960,7 @@ namespace aprilui
 		hstr className;
 		foreach_xmlnode (node, current)
 		{
-			className = node->value;
+			className = node->name;
 			if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
 			{
 				if (root == NULL)
@@ -1036,12 +1036,12 @@ namespace aprilui
 		{
 			if (node->type != hlxml::Node::TYPE_COMMENT)
 			{
-				if		(node->value == "Texture")			this->parseTexture(node);
-				else if (node->value == "CompositeImage")	this->parseCompositeImage(node);
-				else if (node->value == "Style")			this->parseStyle(node);
-				else if	(node->value == "Include")			this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
-				else if	(node->value == "TextureGroup")		this->parseTextureGroup(node);
-				else if (node->value == "Object" || objectFactories.hasKey(node->value))
+				if		(node->name == "Texture")			this->parseTexture(node);
+				else if (node->name == "CompositeImage")	this->parseCompositeImage(node);
+				else if (node->name == "Style")			this->parseStyle(node);
+				else if	(node->name == "Include")			this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
+				else if	(node->name == "TextureGroup")		this->parseTextureGroup(node);
+				else if (node->name == "Object" || objectFactories.hasKey(node->name))
 				{
 					this->parseObject(node);
 				}
