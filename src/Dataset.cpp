@@ -189,7 +189,7 @@ namespace aprilui
 			Image* image;
 			foreach_xmlnode (child, node)
 			{
-				if (child->value == "Image")
+				if (child->name == "Image")
 				{
 					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
 					if (mImages.hasKey(name))
@@ -260,7 +260,7 @@ namespace aprilui
 		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
 		foreach_xmlnode (child, node)
 		{
-			if (child->value == "ImageRef")
+			if (child->name == "ImageRef")
 			{
 				refname = child->pstr("name");
 				image->addImageRef(getImage(refname),
@@ -281,7 +281,7 @@ namespace aprilui
 		grect rect(0, 0, 1, 1);
 		hstr className = node->pstr("type");
 		
-		if (node->value == "Object")
+		if (node->name == "Object")
 		{
 			if (node->pexists("name"))
 			{
@@ -296,7 +296,7 @@ namespace aprilui
 			rect.w = node->pfloat("w", -1.0f);
 			rect.h = node->pfloat("h", -1.0f);
 		}
-		else if (node->value == "Animator")
+		else if (node->name == "Animator")
 		{
 			objectName = node->pstr("name", generateName("Animator"));
 		}
@@ -327,7 +327,7 @@ namespace aprilui
 		else  parse(EditBox);
 		else  parse(RotationImageBox);
 		else  parse(RotatableImageBox);
-		else if (node->value == "Animator")
+		else if (node->name == "Animator")
 		{
 			/*if*/parse_animator(Mover);
 			else  parse_animator(MoveOscillator);
@@ -373,7 +373,7 @@ namespace aprilui
 		{
 			if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
 			{
-				if (child->value == "Property")
+				if (child->name == "Property")
 				{
 					object->setProperty(child->pstr("name"), child->pstr("value"));
 				}
@@ -402,7 +402,7 @@ namespace aprilui
 		hstr links;
 		foreach_xmlnode (p, current)
 		{
-			if      (p->value == "Texture")
+			if      (p->name == "Texture")
 			{
 				Texture* texture = parseTexture(p);
 				if (p->pexists("dynamic_link"))
@@ -411,9 +411,9 @@ namespace aprilui
 					dynamicLinks[texture] = links;
 				}
 			}
-			else if (p->value == "RamTexture")     parseRamTexture(p);
-			else if (p->value == "CompositeImage") parseCompositeImage(p);
-			else if (p->value == "Object")         parseObject(p);
+			else if (p->name == "RamTexture")     parseRamTexture(p);
+			else if (p->name == "CompositeImage") parseCompositeImage(p);
+			else if (p->name == "Object")         parseObject(p);
 			else if (p->type != hlxml::Node::TYPE_TEXT && p->type != hlxml::Node::TYPE_COMMENT)
 			{
 				parseExternalXMLNode(p);
