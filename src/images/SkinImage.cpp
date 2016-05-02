@@ -283,38 +283,24 @@ namespace aprilui
 			else
 			{
 				april::TexturedVertex w[6];
-				gvec2 invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
-				if (this->rotated)
-				{
-					hswap(invSize.x, invSize.y);
-				}
-				grect invSrcRect(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
-				if (this->rotated)
-				{
-					hswap(invSrcRect.w, invSrcRect.h);
-				}
 				gvec2 tile = this->skinRect.getSize();
-				gvec2 srcFactor = invSrcRect.getSize() / tile;
-				float difference = 0.0f;
 				int countX = hceil((rect.w - (this->srcRect.w - this->skinRect.w)) / tile.x);
 				int countY = hceil((rect.h - (this->srcRect.h - this->skinRect.h)) / tile.y);
 				int i = 0;
 				int j = 0;
-				int k = 0;
-				int l = 0;
 				if (this->skinRect.y > 0.0f)
 				{
 					ADD_VERTICES(left, 0, 1, 4, 5);
 					if (hcenter)
 					{
 						SET_HELPER_VERTICES(w, v, 1, 2, 5, 6);
-						k = countX;
+						i = countX;
 						while (true)
 						{
 							w[1].x = w[3].x = w[5].x = w[0].x + tile.x;
 							this->_vertices.add(w, 6);
-							--k;
-							if (k <= 0)
+							--i;
+							if (i <= 0)
 							{
 								break;
 							}
@@ -328,13 +314,13 @@ namespace aprilui
 					if (left)
 					{
 						SET_HELPER_VERTICES(w, v, 4, 5, 8, 9);
-						l = countY;
+						j = countY;
 						while (true)
 						{
 							w[2].y = w[4].y = w[5].y = w[0].y + tile.y;
 							this->_vertices.add(w, 6);
-							--l;
-							if (l <= 0)
+							--j;
+							if (j <= 0)
 							{
 								break;
 							}
@@ -344,17 +330,17 @@ namespace aprilui
 					if (hcenter)
 					{
 						SET_HELPER_VERTICES(w, v, 5, 6, 9, 10);
-						l = countY;
+						j = countY;
 						while (true)
 						{
 							w[2].y = w[4].y = w[5].y = w[0].y + tile.y;
-							k = countX;
+							i = countX;
 							while (true)
 							{
 								w[1].x = w[3].x = w[5].x = w[0].x + tile.x;
 								this->_vertices.add(w, 6);
-								--k;
-								if (k <= 0)
+								--i;
+								if (i <= 0)
 								{
 									break;
 								}
@@ -363,8 +349,8 @@ namespace aprilui
 							w[1].x = w[3].x = w[5].x = w[1].x - countX * tile.x;
 							w[0].x = w[2].x = w[4].x = w[1].x;
 							this->_vertices.add(w, 6);
-							--l;
-							if (l <= 0)
+							--j;
+							if (j <= 0)
 							{
 								break;
 							}
@@ -374,13 +360,13 @@ namespace aprilui
 					if (right)
 					{
 						SET_HELPER_VERTICES(w, v, 6, 7, 10, 11);
-						l = countY;
+						j = countY;
 						while (true)
 						{
 							w[2].y = w[4].y = w[5].y = w[0].y + tile.y;
 							this->_vertices.add(w, 6);
-							--l;
-							if (l <= 0)
+							--j;
+							if (j <= 0)
 							{
 								break;
 							}
@@ -394,13 +380,13 @@ namespace aprilui
 					if (hcenter)
 					{
 						SET_HELPER_VERTICES(w, v, 9, 10, 13, 14);
-						k = countX;
+						i = countX;
 						while (true)
 						{
 							w[1].x = w[3].x = w[5].x = w[0].x + tile.x;
 							this->_vertices.add(w, 6);
-							--k;
-							if (k <= 0)
+							--i;
+							if (i <= 0)
 							{
 								break;
 							}
