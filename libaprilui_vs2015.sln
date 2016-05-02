@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 14 for Windows Desktop
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libaprilui", "msvc\vs2015\libaprilui.vcxproj", "{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,8 +19,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\msvc\vs2015\libhltypes.vcxproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhlxml", "..\hltypes\hlxml\msvc\vs2015\libhlxml.vcxproj", "{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libtinyxml", "..\hltypes\lib\tinyxml\msvc\vs2015\libtinyxml.vcxproj", "{C406DAEC-0886-4771-8DEA-9D7329B46CC1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libminiz", "..\hltypes\lib\miniz\msvc\vs2015\libminiz.vcxproj", "{C21E5B3F-F2EF-4F4A-8F30-00A2DA05F3D9}"
 EndProject
@@ -196,30 +194,6 @@ Global
 		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}.ReleaseS|Android-x86.Build.0 = ReleaseS|Android-x86
 		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}.ReleaseS|Win32.ActiveCfg = ReleaseS|Win32
 		{601BCB9E-AAF2-412E-8AEB-9FC77D0505D8}.ReleaseS|Win32.Build.0 = ReleaseS|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Debug|Android.ActiveCfg = Debug|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Debug|Android.Build.0 = Debug|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Debug|Android-x86.ActiveCfg = Debug|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Debug|Android-x86.Build.0 = Debug|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Debug|Win32.Build.0 = Debug|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.DebugS|Android.ActiveCfg = DebugS|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.DebugS|Android.Build.0 = DebugS|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.DebugS|Android-x86.ActiveCfg = DebugS|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.DebugS|Android-x86.Build.0 = DebugS|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.DebugS|Win32.ActiveCfg = DebugS|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.DebugS|Win32.Build.0 = DebugS|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Release|Android.ActiveCfg = Release|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Release|Android.Build.0 = Release|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Release|Android-x86.ActiveCfg = Release|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Release|Android-x86.Build.0 = Release|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Release|Win32.ActiveCfg = Release|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.Release|Win32.Build.0 = Release|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.ReleaseS|Android.ActiveCfg = ReleaseS|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.ReleaseS|Android.Build.0 = ReleaseS|Android
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.ReleaseS|Android-x86.ActiveCfg = ReleaseS|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.ReleaseS|Android-x86.Build.0 = ReleaseS|Android-x86
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.ReleaseS|Win32.ActiveCfg = ReleaseS|Win32
-		{C406DAEC-0886-4771-8DEA-9D7329B46CC1}.ReleaseS|Win32.Build.0 = ReleaseS|Win32
 		{C21E5B3F-F2EF-4F4A-8F30-00A2DA05F3D9}.Debug|Android.ActiveCfg = Debug|Android
 		{C21E5B3F-F2EF-4F4A-8F30-00A2DA05F3D9}.Debug|Android.Build.0 = Debug|Android
 		{C21E5B3F-F2EF-4F4A-8F30-00A2DA05F3D9}.Debug|Android-x86.ActiveCfg = Debug|Android-x86

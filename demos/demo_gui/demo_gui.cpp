@@ -56,7 +56,7 @@ aprilui::Dataset* dataset = NULL;
 
 float _animatorCustomFunction(aprilui::Animator* animator, float time)
 {
-	float sine = (float)dsin(time * animator->getSpeed() * 360);
+	float sine = (float)hsin(time * animator->getSpeed() * 360);
 	return (sine * sine * animator->getAmplitude() + time * 30); // sin(t)^2 + t*30
 }
 
