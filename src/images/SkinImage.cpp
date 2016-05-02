@@ -28,6 +28,14 @@
 		this->_vertices += v[index3]; \
 	}
 
+#define SET_HELPER_VERTICES(helper, original, index0, index1, index2, index3) \
+	helper[0] = original[index0]; \
+	helper[1] = original[index1]; \
+	helper[2] = original[index2]; \
+	helper[3] = original[index1]; \
+	helper[4] = original[index2]; \
+	helper[5] = original[index3];
+
 namespace aprilui
 {
 	harray<PropertyDescription> SkinImage::_propertyDescriptions;
@@ -35,11 +43,13 @@ namespace aprilui
 	SkinImage::SkinImage(Texture* texture, chstr name, grect source) : Image(texture, name, source)
 	{
 		this->_skinCoordinatesCalculated = false;
+		this->tiledBorders = false;
 	}
 
 	SkinImage::SkinImage(const SkinImage& other) : Image(other)
 	{
 		this->skinRect = other.skinRect;
+		this->tiledBorders = other.tiledBorders;
 		this->_lastDrawRect = other._lastDrawRect;
 		this->_skinCoordinatesCalculated = other._skinCoordinatesCalculated;
 		this->_vertices = other._vertices;
@@ -60,6 +70,7 @@ namespace aprilui
 			SkinImage::_propertyDescriptions += PropertyDescription("skin_y", PropertyDescription::FLOAT);
 			SkinImage::_propertyDescriptions += PropertyDescription("skin_w", PropertyDescription::FLOAT);
 			SkinImage::_propertyDescriptions += PropertyDescription("skin_h", PropertyDescription::FLOAT);
+			SkinImage::_propertyDescriptions += PropertyDescription("tiled_borders", PropertyDescription::BOOL);
 		}
 		return (SkinImage::_propertyDescriptions + Image::getPropertyDescriptions());
 	}
@@ -145,6 +156,15 @@ namespace aprilui
 		}
 	}
 
+	void SkinImage::setTiledBorders(bool value)
+	{
+		if (this->tiledBorders != value)
+		{
+			this->tiledBorders = value;
+			this->_skinCoordinatesCalculated = false;
+		}
+	}
+
 	hstr SkinImage::getProperty(chstr name)
 	{
 		if (name == "skin_rect")		return april::grectToHstr(this->getSkinRect());
@@ -154,6 +174,7 @@ namespace aprilui
 		if (name == "skin_y")			return this->getSkinRect().y;
 		if (name == "skin_w")			return this->getSkinRect().w;
 		if (name == "skin_h")			return this->getSkinRect().h;
+		if (name == "tiled_borders")	return this->isTiledBorders();
 		return Image::getProperty(name);
 	}
 
@@ -166,6 +187,7 @@ namespace aprilui
 		else if (name == "skin_y")			this->setSkinY(value);
 		else if (name == "skin_w")			this->setSkinWidth(value);
 		else if (name == "skin_h")			this->setSkinHeight(value);
+		else if (name == "tiled_borders")	this->setTiledBorders(value);
 		else return Image::setProperty(name, value);
 		return true;
 	}
@@ -237,23 +259,156 @@ namespace aprilui
 			bool left = (this->skinRect.x > 0.0f);
 			bool hcenter = (rect.w > this->srcRect.w - this->skinRect.w);
 			bool right = (this->srcRect.w > this->skinRect.right());
-			if (this->skinRect.y > 0.0f)
+			if (!this->tiledBorders)
 			{
-				ADD_VERTICES(left, 0, 1, 4, 5);
-				ADD_VERTICES(hcenter, 1, 2, 5, 6);
-				ADD_VERTICES(right, 2, 3, 6, 7);
+				if (this->skinRect.y > 0.0f)
+				{
+					ADD_VERTICES(left, 0, 1, 4, 5);
+					ADD_VERTICES(hcenter, 1, 2, 5, 6);
+					ADD_VERTICES(right, 2, 3, 6, 7);
+				}
+				if (rect.h > this->srcRect.h - this->skinRect.h)
+				{
+					ADD_VERTICES(left, 4, 5, 8, 9);
+					ADD_VERTICES(hcenter, 5, 6, 9, 10);
+					ADD_VERTICES(right, 6, 7, 10, 11);
+				}
+				if (this->srcRect.h > this->skinRect.bottom())
+				{
+					ADD_VERTICES(left, 8, 9, 12, 13);
+					ADD_VERTICES(hcenter, 9, 10, 13, 14);
+					ADD_VERTICES(right, 10, 11, 14, 15);
+				}
 			}
-			if (rect.h > this->srcRect.h - this->skinRect.h)
+			else
 			{
-				ADD_VERTICES(left, 4, 5, 8, 9);
-				ADD_VERTICES(hcenter, 5, 6, 9, 10);
-				ADD_VERTICES(right, 6, 7, 10, 11);
-			}
-			if (this->srcRect.h > this->skinRect.bottom())
-			{
-				ADD_VERTICES(left, 8, 9, 12, 13);
-				ADD_VERTICES(hcenter, 9, 10, 13, 14);
-				ADD_VERTICES(right, 10, 11, 14, 15);
+				april::TexturedVertex w[6];
+				gvec2 invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
+				if (this->rotated)
+				{
+					hswap(invSize.x, invSize.y);
+				}
+				grect invSrcRect(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
+				if (this->rotated)
+				{
+					hswap(invSrcRect.w, invSrcRect.h);
+				}
+				gvec2 tile = this->skinRect.getSize();
+				gvec2 srcFactor = invSrcRect.getSize() / tile;
+				float difference = 0.0f;
+				int countX = hceil((rect.w - (this->srcRect.w - this->skinRect.w)) / tile.x);
+				int countY = hceil((rect.h - (this->srcRect.h - this->skinRect.h)) / tile.y);
+				int i = 0;
+				int j = 0;
+				int k = 0;
+				int l = 0;
+				if (this->skinRect.y > 0.0f)
+				{
+					ADD_VERTICES(left, 0, 1, 4, 5);
+					if (hcenter)
+					{
+						SET_HELPER_VERTICES(w, v, 1, 2, 5, 6);
+						k = countX;
+						while (true)
+						{
+							w[1].x = w[3].x = w[5].x = w[0].x + tile.x;
+							this->_vertices.add(w, 6);
+							--k;
+							if (k <= 0)
+							{
+								break;
+							}
+							w[0].x = w[2].x = w[4].x = w[1].x;
+						}
+					}
+					ADD_VERTICES(right, 2, 3, 6, 7);
+				}
+				if (rect.h > this->srcRect.h - this->skinRect.h)
+				{
+					if (left)
+					{
+						SET_HELPER_VERTICES(w, v, 4, 5, 8, 9);
+						l = countY;
+						while (true)
+						{
+							w[2].y = w[4].y = w[5].y = w[0].y + tile.y;
+							this->_vertices.add(w, 6);
+							--l;
+							if (l <= 0)
+							{
+								break;
+							}
+							w[0].y = w[1].y = w[3].y = w[2].y;
+						}
+					}
+					if (hcenter)
+					{
+						SET_HELPER_VERTICES(w, v, 5, 6, 9, 10);
+						l = countY;
+						while (true)
+						{
+							w[2].y = w[4].y = w[5].y = w[0].y + tile.y;
+							k = countX;
+							while (true)
+							{
+								w[1].x = w[3].x = w[5].x = w[0].x + tile.x;
+								this->_vertices.add(w, 6);
+								--k;
+								if (k <= 0)
+								{
+									break;
+								}
+								w[0].x = w[2].x = w[4].x = w[1].x;
+							}
+							w[1].x = w[3].x = w[5].x = w[1].x - countX * tile.x;
+							w[0].x = w[2].x = w[4].x = w[1].x;
+							this->_vertices.add(w, 6);
+							--l;
+							if (l <= 0)
+							{
+								break;
+							}
+							w[0].y = w[1].y = w[3].y = w[2].y;
+						}
+					}
+					if (right)
+					{
+						SET_HELPER_VERTICES(w, v, 6, 7, 10, 11);
+						l = countY;
+						while (true)
+						{
+							w[2].y = w[4].y = w[5].y = w[0].y + tile.y;
+							this->_vertices.add(w, 6);
+							--l;
+							if (l <= 0)
+							{
+								break;
+							}
+							w[0].y = w[1].y = w[3].y = w[2].y;
+						}
+					}
+				}
+				if (this->srcRect.h > this->skinRect.bottom())
+				{
+					ADD_VERTICES(left, 8, 9, 12, 13);
+					if (hcenter)
+					{
+						SET_HELPER_VERTICES(w, v, 9, 10, 13, 14);
+						k = countX;
+						while (true)
+						{
+							w[1].x = w[3].x = w[5].x = w[0].x + tile.x;
+							this->_vertices.add(w, 6);
+							--k;
+							if (k <= 0)
+							{
+								break;
+							}
+							w[0].x = w[2].x = w[4].x = w[1].x;
+						}
+					}
+					ADD_VERTICES(right, 10, 11, 14, 15);
+				}
 			}
 		}
 		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);

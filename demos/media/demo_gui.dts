@@ -10,7 +10,7 @@
 		<Object type="Label" font="Arial" effect="shadow" horz_formatting="left"/>
 	</Style>
 	<Style name="options">
-		<Object type="OptionButton" image="texture/test_red" toggled_image="texture/test_green" zorder="100"/>
+		<Object type="OptionButton" image="texture/test_red" toggled_image="texture/test_green" z_order="100"/>
 	</Style>
 	<Style name="anchoring">
 		<Object type="FilledRect" color="6F6F6F" anchors=""/>
@@ -69,11 +69,11 @@
 			<Object type="ImageBox" name="rotated_image_box" image="transparency/test" angle="30" rect="432,32,128,64">
 				<Animator type="AlphaChanger" function="sine" amplitude="64" speed="1.05" offset="191"/>
 			</Object>
-			<Object type="ImageButton" name="image_button" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" rect="432,160,128,64" zorder="100">
+			<Object type="ImageButton" name="image_button" image="texture/test" hover_image="texture/test_hover" pushed_image="texture/test_grey" rect="432,160,128,64" z_order="100">
 				<Animator type="ScalerX" function="sine" amplitude="1.0" offset="0.0" speed="0.5"/>
 				<Animator type="ScalerY" function="sine" amplitude="0.1" offset="1.2" timer="0.25"/>
 			</Object>
-			<Object type="Container" name="recursive_rotation_example" rect="240,290,64,64" zorder="100" angle="10" hit_test="disabled">
+			<Object type="Container" name="recursive_rotation_example" rect="240,290,64,64" z_order="100" angle="10" hit_test="disabled">
 				<Include path="demo_gui_include.dts" name_suffix="_0">
 					<Property object="text_image_button" text="LOL" effect="shadow"/>
 					<Property object="text_image_button_red" enabled="false"/>
@@ -85,7 +85,7 @@
 			<Object type="Label" name="label_auto_scale_1" font="Arial:1.05" text="I am scaled" background_color="7F00FF9F" background_border="false" rect="824,472,160,14"/>
 			<Object type="Label" name="label_auto_scale_2" font="Arial:1.05" text="I am scaled&#x0A;in many lines" background_color="7F00FF9F" background_border="false" min_auto_scale="0.25" rect="824,496,160,30"/>
 			<Object type="Label" name="label_auto_scale_3" font="Arial:1.05" text="I am scaled&#x0A;in many lines" background_color="7F00FF9F" background_border="false" rect="824,534,160,30"/>
-			<Object type="ToggleButton" name="toggle_button" image="texture/test_green" toggled_image="texture/test_hover_3" rect="60,528,128,64" zorder="100">
+			<Object type="ToggleButton" name="toggle_button" image="texture/test_green" toggled_image="texture/test_hover_3" rect="60,528,128,64" z_order="100">
 				<Animator type="MoverX" function="sine" amplitude="50"/>
 				<Animator type="MoverY" function="sine" amplitude="50" timer="0.25" enabled="false"/>
 			</Object>
@@ -97,8 +97,8 @@
 			</Object>
 			<Object type="Container" name="scrolltest_container" rect="840,32,128,128">
 				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="true">
-					<Object type="ToggleButton" name="toggle_button_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,0,256,128" zorder="100"/>
-					<Object type="ToggleButton" name="toggle_button_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,128,256,128" zorder="100">
+					<Object type="ToggleButton" name="toggle_button_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,0,256,128" z_order="100"/>
+					<Object type="ToggleButton" name="toggle_button_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,128,256,128" z_order="100">
 						<Animator type="Rotator" speed="30"/>
 					</Object>
 				</Object>
@@ -120,7 +120,7 @@
 				<Object type="ScrollBarV" name="list_box_scroll_v" rect="192,0,4,142"/>
 			</Object>
 			<Object type="TreeView" name="tree_view" style="tree_view" item_height="32" spacing_width="4" allow_drag="true" rect="600,288,384,144">
-				<Object type="FilledRect" name="tree_view_back" color="0000007F" rect="0,0,384,144" zorder="-10"/>
+				<Object type="FilledRect" name="tree_view_back" color="0000007F" rect="0,0,384,144" z_order="-10"/>
 				<Object type="TreeViewNode" name="tree_view_node_0">
 					<Object type="TreeViewExpander" name="tree_view_node_0_expander" toggled="true"/>
 					<Object type="TreeViewImage" name="tree_view_node_0_image"/>
@@ -157,7 +157,7 @@
 				<Object type="ScrollBarV" name="tree_view_scroll_v" rect="384,0,4,144"/>
 			</Object>
 			<Object type="GridView" name="grid_view" item_height="32" allow_drag="true" rect="600,448,200,160">
-				<Object type="FilledRect" name="grid_view_back" color="0000007F" rect="0,0,200,160" zorder="-10"/>
+				<Object type="FilledRect" name="grid_view_back" color="0000007F" rect="0,0,200,160" z_order="-10"/>
 				<Object type="GridViewRowTemplate">
 					<Object type="GridViewCell" size="80,32">
 						<Object type="Label" text="Item 1" effect="border" rect="0,0,80,32"/>
@@ -219,12 +219,13 @@
 				<Object type="Label" name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" rect="0,32,700,32"/>
 				<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" rect="0,64,700,32"/>
 			</Object>
-			<Object type="ImageBox" name="skinned_image" image="skin_image/test" rect="260,528,192,64"/>
+			<Object type="ImageBox" name="skinned_image" image="skin_image/test" rect="260,512,192,64"/>
+			<Object type="ImageBox" name="skinned_tiled_image" image="skin_image/test_tiled" rect="260,592,192,80"/>
 			<Object type="ProgressBar" name="progress_bar_1" anti_progress_image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
 			<Object type="ProgressBar" name="progress_bar_2" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" stretching="true" direction="up" rect="0,32,16,128">
 				<Animator type="ProgressChanger" name="progress_animator" function="sine" offset="0.625" amplitude="0.625" speed="0.25" timer="2"/>
 			</Object>
-			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" zorder="9000" direction="clockwise90" rect="20,20,64,64"/>
+			<Object type="ProgressCircle" name="progress_circle_1" image="circle/test_red" progress_image="circle/test_green" z_order="9000" direction="clockwise90" rect="20,20,64,64"/>
 			<Object type="FilledRect" color="000000" rect="260,360,48,128" style="options">
 				<Object type="OptionButton" name="option_button_1" rect="8,8,32,32" toggled="true"/>
 				<Object type="OptionButton" name="option_button_2" rect="8,48,32,32"/>

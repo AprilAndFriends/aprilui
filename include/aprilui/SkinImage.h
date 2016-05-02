@@ -42,6 +42,8 @@ namespace aprilui
 		inline gvec2 getSkinSize() { return this->skinRect.getSize(); }
 		void setSkinSize(gvec2 value);
 		void setSkinSize(float w, float h);
+		HL_DEFINE_IS(tiledBorders, TiledBorders);
+		void setTiledBorders(bool value);
 
 		void draw(grect rect, april::Color color);
 		void draw(harray<april::TexturedVertex> vertices, april::Color color);
@@ -53,6 +55,7 @@ namespace aprilui
 
 	protected:
 		grect skinRect;
+		bool tiledBorders;
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
