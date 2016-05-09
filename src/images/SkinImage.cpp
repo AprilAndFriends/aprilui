@@ -17,7 +17,9 @@
 #include "SkinImage.h"
 #include "Texture.h"
 
-#define ADD_VERTICES(condition, index0, index1, index2, index3) \
+#define TILED_FIT_LIMIT 0.2f
+
+#define CREATE_TRIANGLE(condition, index0, index1, index2, index3) \
 	if (condition) \
 	{ \
 		this->_vertices += v[index0]; \
@@ -219,6 +221,7 @@ namespace aprilui
 			this->_lastDrawRect = rect;
 			this->_skinCoordinatesCalculated = true;
 			this->_vertices.clear();
+			// coordinate translation
 			gvec2 pos[4];
 			pos[0] = rect.getPosition();
 			pos[3] = rect.getBottomRight();
@@ -241,6 +244,7 @@ namespace aprilui
 			uv[1] = uv[0] + skinRect.getPosition() / srcSize * (uv[3] - uv[0]);
 			uv[2] = uv[1] + skinRect.getSize() / srcSize * (uv[3] - uv[0]);
 			april::TexturedVertex v[16];
+			// setting up the vertices grid
 			for_iter (j, 0, 4)
 			{
 				for_iter (i, 0, 4)
@@ -261,36 +265,58 @@ namespace aprilui
 			bool right = (this->srcRect.w > this->skinRect.right());
 			if (!this->tiledBorders)
 			{
+				// when tiled borders are disabled, the vertices only have to be arranged into triangles
 				if (this->skinRect.y > 0.0f)
 				{
-					ADD_VERTICES(left, 0, 1, 4, 5);
-					ADD_VERTICES(hcenter, 1, 2, 5, 6);
-					ADD_VERTICES(right, 2, 3, 6, 7);
+					CREATE_TRIANGLE(left, 0, 1, 4, 5);
+					CREATE_TRIANGLE(hcenter, 1, 2, 5, 6);
+					CREATE_TRIANGLE(right, 2, 3, 6, 7);
 				}
 				if (rect.h > this->srcRect.h - this->skinRect.h)
 				{
-					ADD_VERTICES(left, 4, 5, 8, 9);
-					ADD_VERTICES(hcenter, 5, 6, 9, 10);
-					ADD_VERTICES(right, 6, 7, 10, 11);
+					CREATE_TRIANGLE(left, 4, 5, 8, 9);
+					CREATE_TRIANGLE(hcenter, 5, 6, 9, 10);
+					CREATE_TRIANGLE(right, 6, 7, 10, 11);
 				}
 				if (this->srcRect.h > this->skinRect.bottom())
 				{
-					ADD_VERTICES(left, 8, 9, 12, 13);
-					ADD_VERTICES(hcenter, 9, 10, 13, 14);
-					ADD_VERTICES(right, 10, 11, 14, 15);
+					CREATE_TRIANGLE(left, 8, 9, 12, 13);
+					CREATE_TRIANGLE(hcenter, 9, 10, 13, 14);
+					CREATE_TRIANGLE(right, 10, 11, 14, 15);
 				}
 			}
 			else
 			{
+				// when tiled borders are enabled, a more complicated procedure is required to arrange all vertices into triangles
 				april::TexturedVertex w[6];
 				gvec2 tile = this->skinRect.getSize();
-				int countX = hceil((rect.w - (this->srcRect.w - this->skinRect.w)) / tile.x);
-				int countY = hceil((rect.h - (this->srcRect.h - this->skinRect.h)) / tile.y);
+				gvec2 border = rect.getSize() - (this->srcRect.getSize() - this->skinRect.getSize());
+				float tileCountX = border.x / tile.x;
+				float tileCountY = border.y / tile.y;
+				int countX = (int)tileCountX;
+				int countY = (int)tileCountY;
+				if (tileCountX - countX > TILED_FIT_LIMIT)
+				{
+					++countX;
+				}
+				if (tileCountY - countY > TILED_FIT_LIMIT)
+				{
+					++countY;
+				}
+				if (countX > 0)
+				{
+					tile.x = border.x / countX;
+				}
+				if (countY > 0)
+				{
+					tile.y = border.y / countY;
+				}
 				int i = 0;
 				int j = 0;
 				if (this->skinRect.y > 0.0f)
 				{
-					ADD_VERTICES(left, 0, 1, 4, 5);
+					CREATE_TRIANGLE(left, 0, 1, 4, 5);
+					// top center
 					if (hcenter)
 					{
 						SET_HELPER_VERTICES(w, v, 1, 2, 5, 6);
@@ -307,10 +333,11 @@ namespace aprilui
 							w[0].x = w[2].x = w[4].x = w[1].x;
 						}
 					}
-					ADD_VERTICES(right, 2, 3, 6, 7);
+					CREATE_TRIANGLE(right, 2, 3, 6, 7);
 				}
 				if (rect.h > this->srcRect.h - this->skinRect.h)
 				{
+					// center left
 					if (left)
 					{
 						SET_HELPER_VERTICES(w, v, 4, 5, 8, 9);
@@ -327,6 +354,7 @@ namespace aprilui
 							w[0].y = w[1].y = w[3].y = w[2].y;
 						}
 					}
+					// center center
 					if (hcenter)
 					{
 						SET_HELPER_VERTICES(w, v, 5, 6, 9, 10);
@@ -357,6 +385,7 @@ namespace aprilui
 							w[0].y = w[1].y = w[3].y = w[2].y;
 						}
 					}
+					// center right
 					if (right)
 					{
 						SET_HELPER_VERTICES(w, v, 6, 7, 10, 11);
@@ -376,7 +405,8 @@ namespace aprilui
 				}
 				if (this->srcRect.h > this->skinRect.bottom())
 				{
-					ADD_VERTICES(left, 8, 9, 12, 13);
+					CREATE_TRIANGLE(left, 8, 9, 12, 13);
+					// bottom center
 					if (hcenter)
 					{
 						SET_HELPER_VERTICES(w, v, 9, 10, 13, 14);
@@ -393,7 +423,7 @@ namespace aprilui
 							w[0].x = w[2].x = w[4].x = w[1].x;
 						}
 					}
-					ADD_VERTICES(right, 10, 11, 14, 15);
+					CREATE_TRIANGLE(right, 10, 11, 14, 15);
 				}
 			}
 		}

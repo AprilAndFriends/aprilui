@@ -690,7 +690,10 @@ namespace aprilui
 		{
 			april::rendersys->scale(this->scaleFactor.x, this->scaleFactor.y, 1.0f);
 		}
-		this->_draw();
+		if (this->rect.w > 0.0f && this->rect.h > 0.0f)
+		{
+			this->_draw();
+		}
 		if (aprilui::isDebugEnabled())
 		{
 			this->_drawDebug();
@@ -699,9 +702,12 @@ namespace aprilui
 		{
 			april::rendersys->translate(-this->pivot.x, -this->pivot.y);
 		}
-		foreach (Object*, it, this->childrenObjects)
+		if (this->rect.w > 0.0f && this->rect.h > 0.0f)
 		{
-			(*it)->draw();
+			foreach (Object*, it, this->childrenObjects)
+			{
+				(*it)->draw();
+			}
 		}
 		if (clipped)
 		{

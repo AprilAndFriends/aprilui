@@ -221,7 +221,7 @@
 				<Object type="Label" name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" rect="0,64,700,32"/>
 			</Object>
 			<Object type="ImageBox" name="skinned_image" image="skin_image/test" rect="260,512,192,64"/>
-			<Object type="ImageBox" name="skinned_tiled_image" image="skin_tiled_image/test" rect="260,576,192,96"/>
+			<Object type="ImageBox" name="skinned_tiled_image" image="skin_tiled_image/test" rect="260,576,170,96"/>
 			<Object type="ProgressBar" name="progress_bar_1" anti_progress_image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
 			<Object type="ProgressBar" name="progress_bar_2" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" stretching="true" direction="up" rect="0,32,16,128">
 				<Animator type="ProgressChanger" name="progress_animator" function="sine" offset="0.625" amplitude="0.625" speed="0.25" timer="2"/>
