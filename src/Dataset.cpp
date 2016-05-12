@@ -70,6 +70,12 @@ namespace aprilui
 		}
 	}
 
+	bool Dataset::isLoaded()
+	{
+		return (this->loaded || this->objects.size() > 0 || this->animators.size() > 0 || this->textures.size() > 0 ||
+			this->images.size() > 0 || this->styles.size() > 0 || this->texts.size() > 0);
+	}
+
 	hmap<hstr, BaseObject*> Dataset::getAllObjects()
 	{
 		hmap<hstr, BaseObject*> result = this->animators.cast<hstr, BaseObject*>();
@@ -1157,7 +1163,7 @@ namespace aprilui
 
 	void Dataset::unload()
 	{
-		if (!this->loaded)
+		if (!this->isLoaded())
 		{
 			return;
 		}

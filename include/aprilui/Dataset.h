@@ -51,7 +51,6 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(hstr, filePath, FilePath);
 		HL_DEFINE_GETSET(hstr, textsPath, TextsPath);
-		HL_DEFINE_IS(loaded, Loaded);
 		HL_DEFINE_GET(Object*, focusedObject, FocusedObject);
 		HL_DEFINE_GETSET(Object*, root, Root);
 		inline hmap<hstr, Object*>& getObjects() { return this->objects; }
@@ -60,6 +59,7 @@ namespace aprilui
 		inline hmap<hstr, Texture*>& getTextures() { return this->textures; }
 		inline hmap<hstr, Style*>& getStyles() { return this->styles; }
 		inline hmap<hstr, hstr>& getTexts() { return this->texts; }
+		bool isLoaded();
 		hmap<hstr, BaseObject*> getAllObjects();
 		bool isAnimated();
 		bool isWaitingAnimation();
