@@ -36,6 +36,7 @@ namespace aprilui
 	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport float getDefaultScale();
 	
+	apriluiFnExport bool hasDataset(chstr name);
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
 	apriluiFnExport void update(float time);
 	apriluiFnExport void updateTextures(float time);

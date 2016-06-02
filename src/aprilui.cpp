@@ -107,6 +107,11 @@ namespace aprilui
 		viewport = value;
 	}
 
+	bool hasDataset(chstr name)
+	{
+		return gDatasets.hasKey(name);
+	}
+
 	Dataset* getDatasetByName(chstr name)
 	{
 		if (!gDatasets.hasKey(name))
