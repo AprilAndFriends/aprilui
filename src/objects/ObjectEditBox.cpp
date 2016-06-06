@@ -171,7 +171,6 @@ namespace aprilui
 	
 	void EditBox::setCursorIndexAt(float x, float y)
 	{
-		gvec2 position = gvec2(x, y);
 		hstr text;
 		if (mPasswordChar == '\0' || mText == "")
 		{
