@@ -97,7 +97,7 @@
 				</Object>
 			</Object>
 			<Object type="Container" name="scrolltest_container" rect="840,32,128,128">
-				<Object type="ScrollArea" name="scrolltest_scroll_area" x="-64" y="-64" w="256" h="256" allow_drag="true">
+				<Object type="ScrollArea" name="scrolltest_scroll_area" rect="-64,-64,256,256" allow_drag="true">
 					<Object type="ToggleButton" name="toggle_button_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,0,256,128" z_order="100"/>
 					<Object type="ToggleButton" name="toggle_button_scroll_2" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,128,256,128" z_order="100">
 						<Animator type="Rotator" speed="30"/>
