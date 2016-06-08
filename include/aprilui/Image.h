@@ -25,6 +25,8 @@
 #include "BaseImage.h"
 #include "PropertyDescription.h"
 
+#define APRILUI_IMAGE_MAX_VERTICES 6
+
 namespace aprilui
 {
 	class Texture;
@@ -86,7 +88,7 @@ namespace aprilui
 		bool rotated;
 		bool invertX;
 		bool invertY;
-		april::TexturedVertex vertices[4];
+		april::TexturedVertex vertices[APRILUI_IMAGE_MAX_VERTICES];
 
 		grect _makeClippedSrcRect();
 		

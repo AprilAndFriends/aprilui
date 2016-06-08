@@ -229,7 +229,7 @@ namespace aprilui
 			pos[2] = pos[0] + rect.getSize() - (this->srcRect.getSize() - this->skinRect.getBottomRight());
 			gvec2 uv[4];
 			uv[0].set(Image::vertices[0].u, Image::vertices[0].v);
-			uv[3].set(Image::vertices[3].u, Image::vertices[3].v);
+			uv[3].set(Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].u, Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].v);
 			grect skinRect = this->skinRect;
 			gvec2 srcSize = this->srcRect.getSize();
 			if (this->rotated)

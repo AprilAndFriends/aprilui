@@ -49,7 +49,7 @@ namespace aprilui
 		this->rotated = other.rotated;
 		this->invertX = other.invertX;
 		this->invertY = other.invertY;
-		for_iter (i, 0, 4)
+		for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
 		{
 			this->vertices[i] = other.vertices[i];
 		}
@@ -66,7 +66,7 @@ namespace aprilui
 		this->rotated = other.rotated;
 		this->invertX = other.invertX;
 		this->invertY = other.invertY;
-		for_iter (i, 0, 4)
+		for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
 		{
 			this->vertices[i] = other.vertices[i];
 		}
@@ -272,30 +272,44 @@ namespace aprilui
 			float iw = 1.0f / this->texture->getWidth();
 			float ih = 1.0f / this->texture->getHeight();
 			grect rect = this->_makeClippedSrcRect();
+			gvec2 topLeft;
+			gvec2 topRight;
+			gvec2 bottomLeft;
+			gvec2 bottomRight;
 			if (!this->rotated)
 			{
-				this->vertices[0].u = this->vertices[2].u = rect.left() * iw;
-				this->vertices[0].v = this->vertices[1].v = rect.top() * ih;
-				this->vertices[1].u = this->vertices[3].u = rect.right() * iw;
-				this->vertices[2].v = this->vertices[3].v = rect.bottom() * ih;
+				topLeft.x = bottomLeft.x = rect.left() * iw;
+				topLeft.y = topRight.y = rect.top() * ih;
+				topRight.x = bottomRight.x = rect.right() * iw;
+				bottomLeft.y = bottomRight.y = rect.bottom() * ih;
 			}
 			else
 			{
-				this->vertices[0].u = this->vertices[1].u = (rect.x + rect.h) * iw;
-				this->vertices[0].v = this->vertices[2].v = rect.y * ih;
-				this->vertices[1].v = this->vertices[3].v = (rect.y + rect.w) * ih;
-				this->vertices[2].u = this->vertices[3].u = rect.x * iw;
+				topLeft.x = topRight.x = (rect.x + rect.h) * iw;
+				topLeft.y = bottomLeft.y = rect.y * ih;
+				topRight.y = bottomRight.y = (rect.y + rect.w) * ih;
+				bottomLeft.x = bottomRight.x = rect.x * iw;
 			}
 			if (this->invertX)
 			{
-				hswap(this->vertices[0].u, this->vertices[1].u);
-				hswap(this->vertices[2].u, this->vertices[3].u);
+				hswap(topLeft.x, topRight.x);
+				hswap(bottomLeft.x, bottomRight.x);
 			}
 			if (this->invertY)
 			{
-				hswap(this->vertices[0].v, this->vertices[2].v);
-				hswap(this->vertices[1].v, this->vertices[3].v);
+				hswap(topLeft.y, bottomLeft.y);
+				hswap(topRight.y, bottomRight.y);
 			}
+			this->vertices[0].u = topLeft.x;
+			this->vertices[0].v = topLeft.y;
+			this->vertices[1].u = topRight.x;
+			this->vertices[1].v = topRight.y;
+			this->vertices[2].u = bottomLeft.x;
+			this->vertices[2].v = bottomLeft.y;
+			this->vertices[3] = this->vertices[1];
+			this->vertices[4] = this->vertices[2];
+			this->vertices[5].u = bottomRight.x;
+			this->vertices[5].v = bottomRight.y;
 		}
 	}
 
@@ -336,10 +350,10 @@ namespace aprilui
 			rect += this->clipRect.getPosition() * sizeRatio;
 			rect.setSize(this->clipRect.getSize() * sizeRatio);
 		}
-		this->vertices[0].x = this->vertices[2].x = rect.left();
-		this->vertices[0].y = this->vertices[1].y = rect.top();
-		this->vertices[1].x = this->vertices[3].x = rect.right();
-		this->vertices[2].y = this->vertices[3].y = rect.bottom();
+		this->vertices[0].x = this->vertices[2].x = this->vertices[4].x = rect.left();
+		this->vertices[0].y = this->vertices[1].y = this->vertices[3].y = rect.top();
+		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = rect.right();
+		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = rect.bottom();
 		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
 			this->texture->load();
@@ -348,7 +362,7 @@ namespace aprilui
 		this->tryLoadTextureCoordinates();
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
-		april::rendersys->render(april::RO_TRIANGLE_STRIP, this->vertices, 4, color);
+		april::rendersys->render(april::RO_TRIANGLE_LIST, this->vertices, APRILUI_IMAGE_MAX_VERTICES, color);
 	}
 
 	void Image::draw(harray<april::TexturedVertex> vertices, april::Color color)
