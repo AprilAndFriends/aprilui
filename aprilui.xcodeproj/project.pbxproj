@@ -236,6 +236,24 @@
 		D16ED2C719ADECD4000B6218 /* BaseObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16ED2C519ADECC6000B6218 /* BaseObject.cpp */; };
 		D16ED2C819ADECD5000B6218 /* BaseObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16ED2C519ADECC6000B6218 /* BaseObject.cpp */; };
 		D16ED2CA19ADECE8000B6218 /* BaseObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D16ED2C919ADECE8000B6218 /* BaseObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D17CF3491D0994F700389885 /* demo_gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D17CF3471D09946700389885 /* demo_gui.cpp */; };
+		D17CF34C1D09951B00389885 /* media in Resources */ = {isa = PBXBuildFile; fileRef = D17CF34B1D09951B00389885 /* media */; };
+		D17CF34D1D09956800389885 /* libaprilui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F27B63177A2FCA00E5C131 /* libaprilui.a */; };
+		D17CF34F1D09957000389885 /* libapril.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF34E1D09957000389885 /* libapril.a */; };
+		D17CF3511D09957500389885 /* libhltypes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3501D09957500389885 /* libhltypes.a */; };
+		D17CF3531D09957A00389885 /* libgtypes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3521D09957A00389885 /* libgtypes.a */; };
+		D17CF3551D09957F00389885 /* libhlxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3541D09957F00389885 /* libhlxml.a */; };
+		D17CF3571D09958300389885 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3561D09958300389885 /* libpng.a */; };
+		D17CF3591D09958700389885 /* libjpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3581D09958700389885 /* libjpg.a */; };
+		D17CF35C1D09959100389885 /* libatres.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF35A1D09959100389885 /* libatres.a */; };
+		D17CF35D1D09959100389885 /* libatresttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF35B1D09959100389885 /* libatresttf.a */; };
+		D17CF35F1D09959500389885 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF35E1D09959500389885 /* libfreetype.a */; };
+		D17CF3611D09959A00389885 /* libzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3601D09959A00389885 /* libzlib.a */; };
+		D17CF3631D0995B000389885 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3621D0995B000389885 /* CoreFoundation.framework */; };
+		D17CF3651D09960300389885 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3641D09960300389885 /* Foundation.framework */; };
+		D17CF3671D09960800389885 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3661D09960800389885 /* OpenGL.framework */; };
+		D17CF3691D09961100389885 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF3681D09961100389885 /* QuartzCore.framework */; };
+		D17CF36B1D09961A00389885 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D17CF36A1D09961A00389885 /* AppKit.framework */; };
 		D18CB6161902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */; };
 		D18CB6171902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */; };
 		D18CB6181902CE040071C391 /* ObjectScrollBarButtonBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */; };
@@ -464,6 +482,24 @@
 		D16E9913158BE54D00C058CE /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = include/aprilui/Texture.h; sourceTree = "<group>"; };
 		D16ED2C519ADECC6000B6218 /* BaseObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseObject.cpp; path = src/BaseObject.cpp; sourceTree = SOURCE_ROOT; };
 		D16ED2C919ADECE8000B6218 /* BaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseObject.h; path = include/aprilui/BaseObject.h; sourceTree = "<group>"; };
+		D17CF3331D09942E00389885 /* demo_gui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo_gui.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D17CF3471D09946700389885 /* demo_gui.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = demo_gui.cpp; path = demos/demo_gui/demo_gui.cpp; sourceTree = "<group>"; };
+		D17CF34B1D09951B00389885 /* media */ = {isa = PBXFileReference; lastKnownFileType = folder; name = media; path = demos/media; sourceTree = "<group>"; };
+		D17CF34E1D09957000389885 /* libapril.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libapril.a; path = ../../__build__/products/Debug/libapril.a; sourceTree = "<group>"; };
+		D17CF3501D09957500389885 /* libhltypes.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhltypes.a; path = ../../__build__/products/Debug/libhltypes.a; sourceTree = "<group>"; };
+		D17CF3521D09957A00389885 /* libgtypes.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtypes.a; path = ../../__build__/products/Debug/libgtypes.a; sourceTree = "<group>"; };
+		D17CF3541D09957F00389885 /* libhlxml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhlxml.a; path = ../../__build__/products/Debug/libhlxml.a; sourceTree = "<group>"; };
+		D17CF3561D09958300389885 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../__build__/products/Debug/libpng.a; sourceTree = "<group>"; };
+		D17CF3581D09958700389885 /* libjpg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpg.a; path = ../../__build__/products/Debug/libjpg.a; sourceTree = "<group>"; };
+		D17CF35A1D09959100389885 /* libatres.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libatres.a; path = ../../__build__/products/Debug/libatres.a; sourceTree = "<group>"; };
+		D17CF35B1D09959100389885 /* libatresttf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libatresttf.a; path = ../../__build__/products/Debug/libatresttf.a; sourceTree = "<group>"; };
+		D17CF35E1D09959500389885 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../__build__/products/Debug/libfreetype.a; sourceTree = "<group>"; };
+		D17CF3601D09959A00389885 /* libzlib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzlib.a; path = ../../__build__/products/Debug/libzlib.a; sourceTree = "<group>"; };
+		D17CF3621D0995B000389885 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		D17CF3641D09960300389885 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D17CF3661D09960800389885 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		D17CF3681D09961100389885 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D17CF36A1D09961A00389885 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		D18CB6121902CE040071C391 /* ObjectScrollBarButtonBackground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarButtonBackground.cpp; sourceTree = "<group>"; };
 		D18CB6131902CE040071C391 /* ObjectScrollBarButtonBackward.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarButtonBackward.cpp; sourceTree = "<group>"; };
 		D18CB6141902CE040071C391 /* ObjectScrollBarButtonForward.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectScrollBarButtonForward.cpp; sourceTree = "<group>"; };
@@ -510,6 +546,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D17CF3301D09942E00389885 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D17CF36B1D09961A00389885 /* AppKit.framework in Frameworks */,
+				D17CF3691D09961100389885 /* QuartzCore.framework in Frameworks */,
+				D17CF3671D09960800389885 /* OpenGL.framework in Frameworks */,
+				D17CF3651D09960300389885 /* Foundation.framework in Frameworks */,
+				D17CF3631D0995B000389885 /* CoreFoundation.framework in Frameworks */,
+				D17CF3611D09959A00389885 /* libzlib.a in Frameworks */,
+				D17CF35F1D09959500389885 /* libfreetype.a in Frameworks */,
+				D17CF35C1D09959100389885 /* libatres.a in Frameworks */,
+				D17CF35D1D09959100389885 /* libatresttf.a in Frameworks */,
+				D17CF3591D09958700389885 /* libjpg.a in Frameworks */,
+				D17CF3571D09958300389885 /* libpng.a in Frameworks */,
+				D17CF3551D09957F00389885 /* libhlxml.a in Frameworks */,
+				D17CF3531D09957A00389885 /* libgtypes.a in Frameworks */,
+				D17CF3511D09957500389885 /* libhltypes.a in Frameworks */,
+				D17CF34F1D09957000389885 /* libapril.a in Frameworks */,
+				D17CF34D1D09956800389885 /* libaprilui.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D1F27B5C177A2FCA00E5C131 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -526,6 +585,7 @@
 				8DC2EF5B0486A6940098B216 /* aprilui.framework */,
 				D1522E69140F6A040012F290 /* libaprilui.a */,
 				D1F27B63177A2FCA00E5C131 /* libaprilui.a */,
+				D17CF3331D09942E00389885 /* demo_gui.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -533,6 +593,7 @@
 		0867D691FE84028FC02AAC07 /* libaprilui */ = {
 			isa = PBXGroup;
 			children = (
+				D17CF3451D09944C00389885 /* demos */,
 				D1681B9818D7674D0088FC68 /* config */,
 				7FC8041211EC71CF00851062 /* include */,
 				7FC8041111EC71CC00851062 /* src */,
@@ -546,6 +607,21 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D17CF36A1D09961A00389885 /* AppKit.framework */,
+				D17CF3681D09961100389885 /* QuartzCore.framework */,
+				D17CF3661D09960800389885 /* OpenGL.framework */,
+				D17CF3641D09960300389885 /* Foundation.framework */,
+				D17CF3621D0995B000389885 /* CoreFoundation.framework */,
+				D17CF3601D09959A00389885 /* libzlib.a */,
+				D17CF35E1D09959500389885 /* libfreetype.a */,
+				D17CF35A1D09959100389885 /* libatres.a */,
+				D17CF35B1D09959100389885 /* libatresttf.a */,
+				D17CF3581D09958700389885 /* libjpg.a */,
+				D17CF3561D09958300389885 /* libpng.a */,
+				D17CF3541D09957F00389885 /* libhlxml.a */,
+				D17CF3521D09957A00389885 /* libgtypes.a */,
+				D17CF3501D09957500389885 /* libhltypes.a */,
+				D17CF34E1D09957000389885 /* libapril.a */,
 				1058C7B0FEA5585E11CA2CBB /* mac */,
 			);
 			name = Frameworks;
@@ -802,6 +878,31 @@
 			name = config;
 			sourceTree = "<group>";
 		};
+		D17CF3451D09944C00389885 /* demos */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF34B1D09951B00389885 /* media */,
+				D17CF3461D09945100389885 /* demo_gui */,
+			);
+			name = demos;
+			sourceTree = "<group>";
+		};
+		D17CF3461D09945100389885 /* demo_gui */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF34A1D0994FF00389885 /* Resources */,
+				D17CF3471D09946700389885 /* demo_gui.cpp */,
+			);
+			name = demo_gui;
+			sourceTree = "<group>";
+		};
+		D17CF34A1D0994FF00389885 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -933,6 +1034,23 @@
 			productReference = D1522E69140F6A040012F290 /* libaprilui.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		D17CF3321D09942E00389885 /* demo_gui */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D17CF3441D09942E00389885 /* Build configuration list for PBXNativeTarget "demo_gui" */;
+			buildPhases = (
+				D17CF32F1D09942E00389885 /* Sources */,
+				D17CF3301D09942E00389885 /* Frameworks */,
+				D17CF3311D09942E00389885 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = demo_gui;
+			productName = demo_gui;
+			productReference = D17CF3331D09942E00389885 /* demo_gui.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D1F27B27177A2FCA00E5C131 /* aprilui (Mac) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D1F27B5D177A2FCA00E5C131 /* Build configuration list for PBXNativeTarget "aprilui (Mac)" */;
@@ -956,6 +1074,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0730;
+				TargetAttributes = {
+					D17CF3321D09942E00389885 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -966,6 +1089,7 @@
 				Japanese,
 				French,
 				German,
+				Base,
 			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* libaprilui */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
@@ -975,6 +1099,7 @@
 				8DC2EF4F0486A6940098B216 /* aprilui */,
 				D1F27B27177A2FCA00E5C131 /* aprilui (Mac) */,
 				D1522E68140F6A040012F290 /* aprilui (iOS) */,
+				D17CF3321D09942E00389885 /* demo_gui */,
 			);
 		};
 /* End PBXProject section */
@@ -984,6 +1109,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D17CF3311D09942E00389885 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D17CF34C1D09951B00389885 /* media in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1149,6 +1282,14 @@
 				D16E9910158BE53800C058CE /* Texture.cpp in Sources */,
 				B45603D81B5681EF00DF8047 /* AnimatorPivotMoverX.cpp in Sources */,
 				D1BA0FC516BFD80F0085EE2B /* ObjectProgressBar.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D17CF32F1D09942E00389885 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D17CF3491D0994F700389885 /* demo_gui.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1399,6 +1540,140 @@
 			};
 			name = "App Store";
 		};
+		D17CF3411D09942E00389885 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = demos/demo_gui/mac.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.apriluidemogui;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D17CF3421D09942E00389885 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = demos/demo_gui/mac.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.apriluidemogui;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D17CF3431D09942E00389885 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = demos/demo_gui/mac.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.apriluidemogui;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = "App Store";
+		};
 		D1F27B5F177A2FCA00E5C131 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D1681BAD18D768BC0088FC68 /* Mac.xcconfig */;
@@ -1482,6 +1757,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
+		};
+		D17CF3441D09942E00389885 /* Build configuration list for PBXNativeTarget "demo_gui" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D17CF3411D09942E00389885 /* Debug */,
+				D17CF3421D09942E00389885 /* Release */,
+				D17CF3431D09942E00389885 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		D1F27B5D177A2FCA00E5C131 /* Build configuration list for PBXNativeTarget "aprilui (Mac)" */ = {
 			isa = XCConfigurationList;
