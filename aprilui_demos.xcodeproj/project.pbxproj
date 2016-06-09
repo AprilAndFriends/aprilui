@@ -1,0 +1,1112 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		D17CF37B1D09989C00389885 /* demo_gui */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D17CF37C1D09989C00389885 /* Build configuration list for PBXAggregateTarget "demo_gui" */;
+			buildPhases = (
+			);
+			dependencies = (
+				D17CF4211D09994E00389885 /* PBXTargetDependency */,
+				D17CF4191D09994E00389885 /* PBXTargetDependency */,
+				D17CF4251D09994E00389885 /* PBXTargetDependency */,
+				D17CF4231D09994E00389885 /* PBXTargetDependency */,
+				D17CF41B1D09994E00389885 /* PBXTargetDependency */,
+				D17CF41F1D09994E00389885 /* PBXTargetDependency */,
+				D17CF41D1D09994E00389885 /* PBXTargetDependency */,
+				D17CF4131D09994E00389885 /* PBXTargetDependency */,
+				D17CF4171D09994E00389885 /* PBXTargetDependency */,
+				D17CF4151D09994E00389885 /* PBXTargetDependency */,
+				D17CF3811D0998B000389885 /* PBXTargetDependency */,
+				D17CF3831D0998B000389885 /* PBXTargetDependency */,
+			);
+			name = demo_gui;
+			productName = demo_gui;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXContainerItemProxy section */
+		D17CF3731D09988600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF36C1D09988600389885 /* aprilui.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = aprilui;
+		};
+		D17CF3751D09988600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF36C1D09988600389885 /* aprilui.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27B63177A2FCA00E5C131;
+			remoteInfo = "aprilui (Mac)";
+		};
+		D17CF3771D09988600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF36C1D09988600389885 /* aprilui.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1522E69140F6A040012F290;
+			remoteInfo = "aprilui (iOS)";
+		};
+		D17CF3791D09988600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF36C1D09988600389885 /* aprilui.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D17CF3331D09942E00389885;
+			remoteInfo = demo_gui;
+		};
+		D17CF3801D0998B000389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF36C1D09988600389885 /* aprilui.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F27B27177A2FCA00E5C131;
+			remoteInfo = "aprilui (Mac)";
+		};
+		D17CF3821D0998B000389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF36C1D09988600389885 /* aprilui.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D17CF3321D09942E00389885;
+			remoteInfo = demo_gui;
+		};
+		D17CF38B1D0998FA00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3841D0998FA00389885 /* jpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D07F2C80486CC7A007CD1D0;
+			remoteInfo = jpg;
+		};
+		D17CF38D1D0998FA00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3841D0998FA00389885 /* jpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27935177A292A00E5C131;
+			remoteInfo = "jpg (Mac)";
+		};
+		D17CF38F1D0998FA00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3841D0998FA00389885 /* jpg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1BB6F2E150E99EE00EF9400;
+			remoteInfo = "jpg (iOS)";
+		};
+		D17CF3971D09990100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3911D09990100389885 /* png.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D07F2C80486CC7A007CD1D0;
+			remoteInfo = png;
+		};
+		D17CF3991D09990100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3911D09990100389885 /* png.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F2794E177A295D00E5C131;
+			remoteInfo = "png (Mac)";
+		};
+		D17CF39B1D09990100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3911D09990100389885 /* png.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1BB6F2E150E99EE00EF9400;
+			remoteInfo = "png (iOS)";
+		};
+		D17CF3A31D09991500389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF39D1D09991500389885 /* zlib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D07F2C80486CC7A007CD1D0;
+			remoteInfo = zlib;
+		};
+		D17CF3A51D09991500389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF39D1D09991500389885 /* zlib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F278941779FFF000E5C131;
+			remoteInfo = "zlib (Mac)";
+		};
+		D17CF3A71D09991500389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF39D1D09991500389885 /* zlib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1BB6F2E150E99EE00EF9400;
+			remoteInfo = "zlib (iOS)";
+		};
+		D17CF3B01D09991900389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3A91D09991900389885 /* hltypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = hltypes;
+		};
+		D17CF3B21D09991900389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3A91D09991900389885 /* hltypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27A9F177A2D0E00E5C131;
+			remoteInfo = "hltypes (Mac)";
+		};
+		D17CF3B41D09991900389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3A91D09991900389885 /* hltypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1522F3E140F7A310012F290;
+			remoteInfo = "hltypes (iOS)";
+		};
+		D17CF3B61D09991900389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3A91D09991900389885 /* hltypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1155B081A29DC270048B67C;
+			remoteInfo = "hltypes-unittest";
+		};
+		D17CF3BE1D09991D00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3B81D09991D00389885 /* hlxml.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = "hlxml (rapidxml)";
+		};
+		D17CF3C01D09991D00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3B81D09991D00389885 /* hlxml.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27ABF177A2D3C00E5C131;
+			remoteInfo = "hlxml (Mac rapidxml)";
+		};
+		D17CF3C21D09991D00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3B81D09991D00389885 /* hlxml.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1E1DD69140E58E600499A97;
+			remoteInfo = "hlxml (iOS rapidxml)";
+		};
+		D17CF3CB1D09992100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3C41D09992100389885 /* gtypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = gtypes;
+		};
+		D17CF3CD1D09992100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3C41D09992100389885 /* gtypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27A89177A2CB600E5C131;
+			remoteInfo = "gtypes (Mac)";
+		};
+		D17CF3CF1D09992100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3C41D09992100389885 /* gtypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1522F1C140F79500012F290;
+			remoteInfo = "gtypes (iOS)";
+		};
+		D17CF3D11D09992100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3C41D09992100389885 /* gtypes.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1353E7E1AD311BA00BB5829;
+			remoteInfo = "gtypesTests (Mac)";
+		};
+		D17CF3D91D09992A00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3D31D09992A00389885 /* freetype.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = freetype;
+		};
+		D17CF3DB1D09992A00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3D31D09992A00389885 /* freetype.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27986177A29C500E5C131;
+			remoteInfo = "freetype (Mac)";
+		};
+		D17CF3DD1D09992A00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3D31D09992A00389885 /* freetype.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1522F1C140F79500012F290;
+			remoteInfo = "freetype (iOS)";
+		};
+		D17CF3E51D09992D00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3DF1D09992D00389885 /* atres.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = atres;
+		};
+		D17CF3E71D09992D00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3DF1D09992D00389885 /* atres.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27B15177A2F1A00E5C131;
+			remoteInfo = "atres (Mac)";
+		};
+		D17CF3E91D09992D00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3DF1D09992D00389885 /* atres.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1981D20140F90670057C3AF;
+			remoteInfo = "atres (iOS)";
+		};
+		D17CF3F21D09993100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3EB1D09993100389885 /* atresttf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = atresttf;
+		};
+		D17CF3F41D09993100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3EB1D09993100389885 /* atresttf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27B26177A2F7700E5C131;
+			remoteInfo = "atresttf (Mac)";
+		};
+		D17CF3F61D09993100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3EB1D09993100389885 /* atresttf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1522F1C140F79500012F290;
+			remoteInfo = "atresttf (iOS)";
+		};
+		D17CF3F81D09993100389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3EB1D09993100389885 /* atresttf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D178E4D21560F3B60026CCD0;
+			remoteInfo = ttf_fontgen;
+		};
+		D17CF4041D09993600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1AF66F3170B1E5900A43743;
+			remoteInfo = "april (Cocoa OpenGL)";
+		};
+		D17CF4061D09993600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = "april (SDL OpenGL)";
+		};
+		D17CF4081D09993600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1534776178AD62A00151D1A;
+			remoteInfo = "april (Mac Cocoa OpenGL)";
+		};
+		D17CF40A1D09993600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1F27AEF177A2DF700E5C131;
+			remoteInfo = "april (Mac OpenKODE)";
+		};
+		D17CF40C1D09993600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1981C30140F824B0057C3AF;
+			remoteInfo = "april (iOS OpenGLES1)";
+		};
+		D17CF40E1D09993600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B44FBDC51BE0E44A00DD8995;
+			remoteInfo = "april (iOS OpenGLES2)";
+		};
+		D17CF4101D09993600389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1134F17175CDA3300BFF3A2;
+			remoteInfo = "april (iOS OpenKODE)";
+		};
+		D17CF4121D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D153474D178AD62A00151D1A;
+			remoteInfo = "april (Mac Cocoa OpenGL)";
+		};
+		D17CF4141D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3EB1D09993100389885 /* atresttf.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F27B16177A2F7700E5C131;
+			remoteInfo = "atresttf (Mac)";
+		};
+		D17CF4161D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3DF1D09992D00389885 /* atres.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F27B07177A2F1A00E5C131;
+			remoteInfo = "atres (Mac)";
+		};
+		D17CF4181D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3D31D09992A00389885 /* freetype.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F2795C177A29C500E5C131;
+			remoteInfo = "freetype (Mac)";
+		};
+		D17CF41A1D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3C41D09992100389885 /* gtypes.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F27A77177A2CB600E5C131;
+			remoteInfo = "gtypes (Mac)";
+		};
+		D17CF41C1D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3B81D09991D00389885 /* hlxml.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F27AB0177A2D3C00E5C131;
+			remoteInfo = "hlxml (Mac rapidxml)";
+		};
+		D17CF41E1D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3A91D09991900389885 /* hltypes.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F27A8A177A2D0E00E5C131;
+			remoteInfo = "hltypes (Mac)";
+		};
+		D17CF4201D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF39D1D09991500389885 /* zlib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F2787D1779FFF000E5C131;
+			remoteInfo = "zlib (Mac)";
+		};
+		D17CF4221D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3911D09990100389885 /* png.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F27936177A295D00E5C131;
+			remoteInfo = "png (Mac)";
+		};
+		D17CF4241D09994E00389885 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D17CF3841D0998FA00389885 /* jpg.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D1F278FF177A292A00E5C131;
+			remoteInfo = "jpg (Mac)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1681BAC18D768BC0088FC68 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
+		D1681BAD18D768BC0088FC68 /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
+		D17CF36C1D09988600389885 /* aprilui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = aprilui.xcodeproj; sourceTree = "<group>"; };
+		D17CF3841D0998FA00389885 /* jpg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jpg.xcodeproj; path = ../april/lib/jpeg/jpg.xcodeproj; sourceTree = "<group>"; };
+		D17CF3911D09990100389885 /* png.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = png.xcodeproj; path = ../april/lib/png/projects/xcode/png.xcodeproj; sourceTree = "<group>"; };
+		D17CF39D1D09991500389885 /* zlib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = zlib.xcodeproj; path = ../hltypes/lib/zlib/xcode/zlib.xcodeproj; sourceTree = "<group>"; };
+		D17CF3A91D09991900389885 /* hltypes.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = hltypes.xcodeproj; path = ../hltypes/hltypes.xcodeproj; sourceTree = "<group>"; };
+		D17CF3B81D09991D00389885 /* hlxml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = hlxml.xcodeproj; path = ../hltypes/hlxml/hlxml.xcodeproj; sourceTree = "<group>"; };
+		D17CF3C41D09992100389885 /* gtypes.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gtypes.xcodeproj; path = ../gtypes/gtypes.xcodeproj; sourceTree = "<group>"; };
+		D17CF3D31D09992A00389885 /* freetype.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = freetype.xcodeproj; path = ../atres/lib/freetype/freetype.xcodeproj; sourceTree = "<group>"; };
+		D17CF3DF1D09992D00389885 /* atres.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = atres.xcodeproj; path = ../atres/atres.xcodeproj; sourceTree = "<group>"; };
+		D17CF3EB1D09993100389885 /* atresttf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = atresttf.xcodeproj; path = ../atres/atresttf/atresttf.xcodeproj; sourceTree = "<group>"; };
+		D17CF3FA1D09993600389885 /* april.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = april.xcodeproj; path = ../april/april.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* libaprilui */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF39D1D09991500389885 /* zlib.xcodeproj */,
+				D17CF3D31D09992A00389885 /* freetype.xcodeproj */,
+				D17CF3841D0998FA00389885 /* jpg.xcodeproj */,
+				D17CF3911D09990100389885 /* png.xcodeproj */,
+				D17CF3C41D09992100389885 /* gtypes.xcodeproj */,
+				D17CF3A91D09991900389885 /* hltypes.xcodeproj */,
+				D17CF3B81D09991D00389885 /* hlxml.xcodeproj */,
+				D17CF3FA1D09993600389885 /* april.xcodeproj */,
+				D17CF3DF1D09992D00389885 /* atres.xcodeproj */,
+				D17CF3EB1D09993100389885 /* atresttf.xcodeproj */,
+				D17CF36C1D09988600389885 /* aprilui.xcodeproj */,
+				D1681B9818D7674D0088FC68 /* config */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = libaprilui;
+			sourceTree = "<group>";
+		};
+		D1681B9818D7674D0088FC68 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				D1681BAC18D768BC0088FC68 /* iOS.xcconfig */,
+				D1681BAD18D768BC0088FC68 /* Mac.xcconfig */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		D17CF36D1D09988600389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3741D09988600389885 /* aprilui.framework */,
+				D17CF3761D09988600389885 /* libaprilui.a */,
+				D17CF3781D09988600389885 /* libaprilui.a */,
+				D17CF37A1D09988600389885 /* demo_gui.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3851D0998FA00389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF38C1D0998FA00389885 /* jpg.framework */,
+				D17CF38E1D0998FA00389885 /* libjpg.a */,
+				D17CF3901D0998FA00389885 /* libjpg.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3921D09990100389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3981D09990100389885 /* png.framework */,
+				D17CF39A1D09990100389885 /* libpng.a */,
+				D17CF39C1D09990100389885 /* libpng.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF39E1D09991500389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3A41D09991500389885 /* zlib.framework */,
+				D17CF3A61D09991500389885 /* libzlib.a */,
+				D17CF3A81D09991500389885 /* libzlib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3AA1D09991900389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3B11D09991900389885 /* hltypes.framework */,
+				D17CF3B31D09991900389885 /* libhltypes.a */,
+				D17CF3B51D09991900389885 /* libhltypes.a */,
+				D17CF3B71D09991900389885 /* hltypes-unittest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3B91D09991D00389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3BF1D09991D00389885 /* hlxml.framework */,
+				D17CF3C11D09991D00389885 /* libhlxml.a */,
+				D17CF3C31D09991D00389885 /* libhlxml.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3C51D09992100389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3CC1D09992100389885 /* gtypes.framework */,
+				D17CF3CE1D09992100389885 /* libgtypes.a */,
+				D17CF3D01D09992100389885 /* libgtypes.a */,
+				D17CF3D21D09992100389885 /* gtypes.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3D41D09992A00389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3DA1D09992A00389885 /* freetype.framework */,
+				D17CF3DC1D09992A00389885 /* libfreetype.a */,
+				D17CF3DE1D09992A00389885 /* libfreetype.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3E01D09992D00389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3E61D09992D00389885 /* atres.framework */,
+				D17CF3E81D09992D00389885 /* libatres.a */,
+				D17CF3EA1D09992D00389885 /* libatres.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3EC1D09993100389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3F31D09993100389885 /* atresttf.framework */,
+				D17CF3F51D09993100389885 /* libatresttf.a */,
+				D17CF3F71D09993100389885 /* libatresttf.a */,
+				D17CF3F91D09993100389885 /* ttf_fontgen.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D17CF3FB1D09993600389885 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF4051D09993600389885 /* april.framework */,
+				D17CF4071D09993600389885 /* april.framework */,
+				D17CF4091D09993600389885 /* libapril.a */,
+				D17CF40B1D09993600389885 /* libapril-kd.a */,
+				D17CF40D1D09993600389885 /* libapril.a */,
+				D17CF40F1D09993600389885 /* libapril.a */,
+				D17CF4111D09993600389885 /* libapril-kd.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				TargetAttributes = {
+					D17CF37B1D09989C00389885 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui_demos" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				Base,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* libaprilui */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D17CF3FB1D09993600389885 /* Products */;
+					ProjectRef = D17CF3FA1D09993600389885 /* april.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF36D1D09988600389885 /* Products */;
+					ProjectRef = D17CF36C1D09988600389885 /* aprilui.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3E01D09992D00389885 /* Products */;
+					ProjectRef = D17CF3DF1D09992D00389885 /* atres.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3EC1D09993100389885 /* Products */;
+					ProjectRef = D17CF3EB1D09993100389885 /* atresttf.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3D41D09992A00389885 /* Products */;
+					ProjectRef = D17CF3D31D09992A00389885 /* freetype.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3C51D09992100389885 /* Products */;
+					ProjectRef = D17CF3C41D09992100389885 /* gtypes.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3AA1D09991900389885 /* Products */;
+					ProjectRef = D17CF3A91D09991900389885 /* hltypes.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3B91D09991D00389885 /* Products */;
+					ProjectRef = D17CF3B81D09991D00389885 /* hlxml.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3851D0998FA00389885 /* Products */;
+					ProjectRef = D17CF3841D0998FA00389885 /* jpg.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF3921D09990100389885 /* Products */;
+					ProjectRef = D17CF3911D09990100389885 /* png.xcodeproj */;
+				},
+				{
+					ProductGroup = D17CF39E1D09991500389885 /* Products */;
+					ProjectRef = D17CF39D1D09991500389885 /* zlib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D17CF37B1D09989C00389885 /* demo_gui */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D17CF3741D09988600389885 /* aprilui.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = aprilui.framework;
+			remoteRef = D17CF3731D09988600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3761D09988600389885 /* libaprilui.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaprilui.a;
+			remoteRef = D17CF3751D09988600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3781D09988600389885 /* libaprilui.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaprilui.a;
+			remoteRef = D17CF3771D09988600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF37A1D09988600389885 /* demo_gui.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = demo_gui.app;
+			remoteRef = D17CF3791D09988600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF38C1D0998FA00389885 /* jpg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = jpg.framework;
+			remoteRef = D17CF38B1D0998FA00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF38E1D0998FA00389885 /* libjpg.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjpg.a;
+			remoteRef = D17CF38D1D0998FA00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3901D0998FA00389885 /* libjpg.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjpg.a;
+			remoteRef = D17CF38F1D0998FA00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3981D09990100389885 /* png.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = png.framework;
+			remoteRef = D17CF3971D09990100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF39A1D09990100389885 /* libpng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpng.a;
+			remoteRef = D17CF3991D09990100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF39C1D09990100389885 /* libpng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libpng.a;
+			remoteRef = D17CF39B1D09990100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3A41D09991500389885 /* zlib.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = zlib.framework;
+			remoteRef = D17CF3A31D09991500389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3A61D09991500389885 /* libzlib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libzlib.a;
+			remoteRef = D17CF3A51D09991500389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3A81D09991500389885 /* libzlib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libzlib.a;
+			remoteRef = D17CF3A71D09991500389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3B11D09991900389885 /* hltypes.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = hltypes.framework;
+			remoteRef = D17CF3B01D09991900389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3B31D09991900389885 /* libhltypes.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libhltypes.a;
+			remoteRef = D17CF3B21D09991900389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3B51D09991900389885 /* libhltypes.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libhltypes.a;
+			remoteRef = D17CF3B41D09991900389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3B71D09991900389885 /* hltypes-unittest */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "hltypes-unittest";
+			remoteRef = D17CF3B61D09991900389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3BF1D09991D00389885 /* hlxml.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = hlxml.framework;
+			remoteRef = D17CF3BE1D09991D00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3C11D09991D00389885 /* libhlxml.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libhlxml.a;
+			remoteRef = D17CF3C01D09991D00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3C31D09991D00389885 /* libhlxml.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libhlxml.a;
+			remoteRef = D17CF3C21D09991D00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3CC1D09992100389885 /* gtypes.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = gtypes.framework;
+			remoteRef = D17CF3CB1D09992100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3CE1D09992100389885 /* libgtypes.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libgtypes.a;
+			remoteRef = D17CF3CD1D09992100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3D01D09992100389885 /* libgtypes.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libgtypes.a;
+			remoteRef = D17CF3CF1D09992100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3D21D09992100389885 /* gtypes.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = gtypes.xctest;
+			remoteRef = D17CF3D11D09992100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3DA1D09992A00389885 /* freetype.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = freetype.framework;
+			remoteRef = D17CF3D91D09992A00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3DC1D09992A00389885 /* libfreetype.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libfreetype.a;
+			remoteRef = D17CF3DB1D09992A00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3DE1D09992A00389885 /* libfreetype.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libfreetype.a;
+			remoteRef = D17CF3DD1D09992A00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3E61D09992D00389885 /* atres.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = atres.framework;
+			remoteRef = D17CF3E51D09992D00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3E81D09992D00389885 /* libatres.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libatres.a;
+			remoteRef = D17CF3E71D09992D00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3EA1D09992D00389885 /* libatres.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libatres.a;
+			remoteRef = D17CF3E91D09992D00389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3F31D09993100389885 /* atresttf.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = atresttf.framework;
+			remoteRef = D17CF3F21D09993100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3F51D09993100389885 /* libatresttf.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libatresttf.a;
+			remoteRef = D17CF3F41D09993100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3F71D09993100389885 /* libatresttf.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libatresttf.a;
+			remoteRef = D17CF3F61D09993100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF3F91D09993100389885 /* ttf_fontgen.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ttf_fontgen.app;
+			remoteRef = D17CF3F81D09993100389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF4051D09993600389885 /* april.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = april.framework;
+			remoteRef = D17CF4041D09993600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF4071D09993600389885 /* april.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = april.framework;
+			remoteRef = D17CF4061D09993600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF4091D09993600389885 /* libapril.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libapril.a;
+			remoteRef = D17CF4081D09993600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF40B1D09993600389885 /* libapril-kd.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libapril-kd.a";
+			remoteRef = D17CF40A1D09993600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF40D1D09993600389885 /* libapril.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libapril.a;
+			remoteRef = D17CF40C1D09993600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF40F1D09993600389885 /* libapril.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libapril.a;
+			remoteRef = D17CF40E1D09993600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D17CF4111D09993600389885 /* libapril-kd.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libapril-kd.a";
+			remoteRef = D17CF4101D09993600389885 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXTargetDependency section */
+		D17CF3811D0998B000389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "aprilui (Mac)";
+			targetProxy = D17CF3801D0998B000389885 /* PBXContainerItemProxy */;
+		};
+		D17CF3831D0998B000389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = demo_gui;
+			targetProxy = D17CF3821D0998B000389885 /* PBXContainerItemProxy */;
+		};
+		D17CF4131D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "april (Mac Cocoa OpenGL)";
+			targetProxy = D17CF4121D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF4151D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "atresttf (Mac)";
+			targetProxy = D17CF4141D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF4171D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "atres (Mac)";
+			targetProxy = D17CF4161D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF4191D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "freetype (Mac)";
+			targetProxy = D17CF4181D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF41B1D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "gtypes (Mac)";
+			targetProxy = D17CF41A1D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF41D1D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "hlxml (Mac rapidxml)";
+			targetProxy = D17CF41C1D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF41F1D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "hltypes (Mac)";
+			targetProxy = D17CF41E1D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF4211D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "zlib (Mac)";
+			targetProxy = D17CF4201D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF4231D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "png (Mac)";
+			targetProxy = D17CF4221D09994E00389885 /* PBXContainerItemProxy */;
+		};
+		D17CF4251D09994E00389885 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "jpg (Mac)";
+			targetProxy = D17CF4241D09994E00389885 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7FC8A8B11296C772003D3931 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
+			};
+			name = "App Store";
+		};
+		C981CCD7132AF0A90072B5A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		C981CCD9132AF0AF0072B5A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/../atres/include",
+					"${SRCROOT}/../april/include",
+					"${SRCROOT}/include",
+				);
+			};
+			name = Release;
+		};
+		D17CF37D1D09989C00389885 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D17CF37E1D09989C00389885 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D17CF37F1D09989C00389885 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "App Store";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "aprilui_demos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C981CCD7132AF0A90072B5A9 /* Debug */,
+				C981CCD9132AF0AF0072B5A9 /* Release */,
+				7FC8A8B11296C772003D3931 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D17CF37C1D09989C00389885 /* Build configuration list for PBXAggregateTarget "demo_gui" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D17CF37D1D09989C00389885 /* Debug */,
+				D17CF37E1D09989C00389885 /* Release */,
+				D17CF37F1D09989C00389885 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
