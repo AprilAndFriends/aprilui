@@ -1105,6 +1105,7 @@
 				D17CF37F1D09989C00389885 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
