@@ -284,6 +284,9 @@ void april_init(const harray<hstr>& args)
 		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "demo_gui", options);
 		atres::init();
 		aprilui::init();
+		hmap<hstr, hstr> op;
+		op["layer_pull_up_merge"] = false;
+		april::rendersys->setRenderMode(april::RenderSystem::RenderMode::Layered2D, op);
 #ifdef _WINRT
 		april::window->setParam("cursor_mappings", "101 " RESOURCE_PATH "cursor\n102 " RESOURCE_PATH "simple");
 #endif
