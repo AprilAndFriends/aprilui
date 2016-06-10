@@ -3,8 +3,8 @@
 
 	<Include path="texture.tex"/>
 	
-	<Object type="Container" name="root" rect="0,0,800,600">
-		<Object type="ImageBox" image="texture/tile" rect="32,32,736,536"/>
-	</Object>
+	<Container name="root" rect="0,0,800,600">
+		<ImageBox image="texture/tile" rect="32,32,736,536"/>
+	</Container>
 	
 </Dataset>
