@@ -241,6 +241,7 @@ static UpdateDelegate* updateDelegate = NULL;
 static KeyboardDelegate* keyboardDelegate = NULL;
 static MouseDelegate* mouseDelegate = NULL;
 
+#ifdef __APPLE__
 static void ObjCUtil_setCWD(const char* override_default_dir)
 {
 	static bool set = 0;
@@ -260,11 +261,13 @@ static void ObjCUtil_setCWD(const char* override_default_dir)
 		set = 1;
 	}
 }
+#endif
 
 void april_init(const harray<hstr>& args)
 {
+#ifdef __APPLE__
 	ObjCUtil_setCWD(nil);
-	
+#endif
 	updateDelegate = new UpdateDelegate();
 	keyboardDelegate = new KeyboardDelegate();
 	mouseDelegate = new MouseDelegate();
