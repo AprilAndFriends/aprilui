@@ -42,6 +42,8 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, dragThreshold, DragThreshold);
 		HL_DEFINE_GETSET(float, dragMaxSpeed, DragMaxSpeed);
 		HL_DEFINE_ISSET(swapScrollWheels, SwapScrollWheels);
+		HL_DEFINE_ISSET(optimizeOobChildrenVisible, OptimizeOobChildrenVisible);
+		HL_DEFINE_ISSET(optimizeOobChildrenAwake, OptimizeOobChildrenAwake);
 		HL_DEFINE_IS(dragging, Dragging);
 		hstr getName();
 		bool isCursorInside();
@@ -94,6 +96,8 @@ namespace aprilui
 		float dragThreshold;
 		float dragMaxSpeed;
 		bool swapScrollWheels;
+		bool optimizeOobChildrenVisible;
+		bool optimizeOobChildrenAwake;
 		bool dragging;
 
 		aprilui::Object* _findHoverObject();

@@ -37,6 +37,8 @@ namespace aprilui
 		this->dragThreshold = ScrollArea::defaultDragThreshold;
 		this->dragMaxSpeed = ScrollArea::defaultDragMaxSpeed;
 		this->swapScrollWheels = false;
+		this->optimizeOobChildrenVisible = false;
+		this->optimizeOobChildrenAwake = false;
 		this->dragging = false;
 		this->debugColor = april::Color(april::Color::Yellow, 32);
 		this->_overrideHoverMode = false;
@@ -49,6 +51,8 @@ namespace aprilui
 		this->dragThreshold = other.dragThreshold;
 		this->dragMaxSpeed = other.dragMaxSpeed;
 		this->swapScrollWheels = other.swapScrollWheels;
+		this->optimizeOobChildrenVisible = other.optimizeOobChildrenVisible;
+		this->optimizeOobChildrenAwake = other.optimizeOobChildrenAwake;
 		this->dragging = false;
 		this->_overrideHoverMode = false;
 	}
@@ -156,12 +160,43 @@ namespace aprilui
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::FLOAT);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::FLOAT);
 			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::BOOL);
+			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::BOOL);
+			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::BOOL);
 		}
 		return (Object::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
 	}
 
 	void ScrollArea::_update(float timeDelta)
 	{
+		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake))
+		{
+			grect rect(0.0f, 0.0f, this->parent->getSize());
+			foreach (Object*, it, this->childrenObjects)
+			{
+				if (rect.intersects((*it)->getBoundingRect(this)))
+				{
+					if (this->optimizeOobChildrenVisible)
+					{
+						(*it)->setVisible(true);
+					}
+					if (this->optimizeOobChildrenAwake)
+					{
+						(*it)->setAwake(true);
+					}
+				}
+				else
+				{
+					if (this->optimizeOobChildrenVisible)
+					{
+						(*it)->setVisible(false);
+					}
+					if (this->optimizeOobChildrenAwake)
+					{
+						(*it)->setAwake(false);
+					}
+				}
+			}
+		}
 		Object::_update(timeDelta);
 		if (this->allowDrag && this->parent != NULL)
 		{
@@ -312,11 +347,13 @@ namespace aprilui
 
 	hstr ScrollArea::getProperty(chstr name)
 	{
-		if (name == "allow_drag")			return this->isAllowDrag();
-		if (name == "inertia")				return this->getInertia();
-		if (name == "drag_threshold")		return this->getDragThreshold();
-		if (name == "drag_max_speed")		return this->getDragMaxSpeed();
-		if (name == "swap_scroll_wheels")	return this->isSwapScrollWheels();
+		if (name == "allow_drag")						return this->isAllowDrag();
+		if (name == "inertia")							return this->getInertia();
+		if (name == "drag_threshold")					return this->getDragThreshold();
+		if (name == "drag_max_speed")					return this->getDragMaxSpeed();
+		if (name == "swap_scroll_wheels")				return this->isSwapScrollWheels();
+		if (name == "optimize_oob_children_visible")	return this->isOptimizeOobChildrenVisible();
+		if (name == "optimize_oob_children_awake")		return this->isOptimizeOobChildrenAwake();
 		hstr result = ButtonBase::getProperty(name);
 		if (result == "")
 		{
@@ -327,11 +364,13 @@ namespace aprilui
 
 	bool ScrollArea::setProperty(chstr name, chstr value)
 	{
-		if (name == "allow_drag")				this->setAllowDrag(value);
-		else if (name == "inertia")				this->setInertia(value);
-		else if (name == "drag_threshold")		this->setDragThreshold(value);
-		else if (name == "drag_max_speed")		this->setDragMaxSpeed(value);
-		else if (name == "swap_scroll_wheels")	this->setSwapScrollWheels(value);
+		if (name == "allow_drag")							this->setAllowDrag(value);
+		else if (name == "inertia")							this->setInertia(value);
+		else if (name == "drag_threshold")					this->setDragThreshold(value);
+		else if (name == "drag_max_speed")					this->setDragMaxSpeed(value);
+		else if (name == "swap_scroll_wheels")				this->setSwapScrollWheels(value);
+		else if (name == "optimize_oob_children_visible")	this->setOptimizeOobChildrenVisible(value);
+		else if (name == "optimize_oob_children_awake")		this->setOptimizeOobChildrenAwake(value);
 		else if (ButtonBase::setProperty(name, value)) {}
 		else return Object::setProperty(name, value);
 		return true;
