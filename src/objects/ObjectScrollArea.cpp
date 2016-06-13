@@ -139,6 +139,7 @@ namespace aprilui
 	void ScrollArea::setScrollOffsetX(float value)
 	{
 		this->setX(this->parent != NULL ? hclamp(-value, hmin(this->parent->getWidth() - this->getWidth(), 0.0f), 0.0f) : -value);
+		this->_updateOobChildren();
 	}
 
 	float ScrollArea::getScrollOffsetY()
@@ -149,6 +150,7 @@ namespace aprilui
 	void ScrollArea::setScrollOffsetY(float value)
 	{
 		this->setY(this->parent != NULL ? hclamp(-value, hmin(this->parent->getHeight() - this->getHeight(), 0.0f), 0.0f) : -value);
+		this->_updateOobChildren();
 	}
 
 	harray<PropertyDescription> ScrollArea::getPropertyDescriptions()
@@ -168,35 +170,7 @@ namespace aprilui
 
 	void ScrollArea::_update(float timeDelta)
 	{
-		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake))
-		{
-			grect rect(0.0f, 0.0f, this->parent->getSize());
-			foreach (Object*, it, this->childrenObjects)
-			{
-				if (rect.intersects((*it)->getBoundingRect(this)))
-				{
-					if (this->optimizeOobChildrenVisible)
-					{
-						(*it)->setVisible(true);
-					}
-					if (this->optimizeOobChildrenAwake)
-					{
-						(*it)->setAwake(true);
-					}
-				}
-				else
-				{
-					if (this->optimizeOobChildrenVisible)
-					{
-						(*it)->setVisible(false);
-					}
-					if (this->optimizeOobChildrenAwake)
-					{
-						(*it)->setAwake(false);
-					}
-				}
-			}
-		}
+		this->_updateOobChildren();
 		Object::_update(timeDelta);
 		if (this->allowDrag && this->parent != NULL)
 		{
@@ -296,6 +270,39 @@ namespace aprilui
 		else
 		{
 			this->_dragTimer.set(0.0f, 0.0f);
+		}
+	}
+
+	void ScrollArea::_updateOobChildren()
+	{
+		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake))
+		{
+			grect rect(0.0f, 0.0f, this->parent->getSize());
+			foreach (Object*, it, this->childrenObjects)
+			{
+				if (rect.intersects((*it)->getBoundingRect(this)))
+				{
+					if (this->optimizeOobChildrenVisible)
+					{
+						(*it)->setVisible(true);
+					}
+					if (this->optimizeOobChildrenAwake)
+					{
+						(*it)->setAwake(true);
+					}
+				}
+				else
+				{
+					if (this->optimizeOobChildrenVisible)
+					{
+						(*it)->setVisible(false);
+					}
+					if (this->optimizeOobChildrenAwake)
+					{
+						(*it)->setAwake(false);
+					}
+				}
+			}
 		}
 	}
 

@@ -105,6 +105,7 @@ namespace aprilui
 		bool _isScrollableScrollArea(aprilui::Object* object);
 
 		void _update(float timeDelta);
+		void _updateOobChildren();
 
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
