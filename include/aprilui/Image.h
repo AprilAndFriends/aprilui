@@ -53,10 +53,10 @@ namespace aprilui
 		void setSrcWidth(float value);
 		HL_DEFINE_GET(float, srcRect.h, SrcHeight);
 		void setSrcHeight(float value);
-		inline gvec2 getSrcPosition() { return this->srcRect.getPosition(); }
+		inline gvec2 getSrcPosition() const { return this->srcRect.getPosition(); }
 		void setSrcPosition(gvec2 value);
 		void setSrcPosition(float x, float y);
-		inline gvec2 getSrcSize() { return this->srcRect.getSize(); }
+		inline gvec2 getSrcSize() const { return this->srcRect.getSize(); }
 		void setSrcSize(gvec2 value);
 		void setSrcSize(float w, float h);
 		HL_DEFINE_GETSET(april::Color, color, Color);

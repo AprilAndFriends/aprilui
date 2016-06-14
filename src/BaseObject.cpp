@@ -20,11 +20,6 @@
 
 namespace aprilui
 {
-	static bool _objectSortCallback(Object* a, Object* b)
-	{
-		return (a->getZOrder() < b->getZOrder());
-	}
-	
 	harray<PropertyDescription> BaseObject::_propertyDescriptions;
 
 	BaseObject::BaseObject(chstr name) : EventReceiver()
@@ -96,12 +91,12 @@ namespace aprilui
 		this->name = value;
 	}
 
-	hstr BaseObject::getFullName()
+	hstr BaseObject::getFullName() const
 	{
 		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 
-	harray<Object*> BaseObject::getAncestors()
+	harray<Object*> BaseObject::getAncestors() const
 	{
 		harray<Object*> result;
 		Object* parent = this->parent;
@@ -113,10 +108,10 @@ namespace aprilui
 		return result;
 	}
 
-	harray<BaseObject*> BaseObject::getDescendants()
+	harray<BaseObject*> BaseObject::getDescendants() const
 	{
 		harray<BaseObject*> descendants = this->getChildren();
-		foreach (Object*, it, this->childrenObjects)
+		foreachc (Object*, it, this->childrenObjects)
 		{
 			descendants += (*it)->getDescendants();
 		}
@@ -135,22 +130,23 @@ namespace aprilui
 		}
 	}
 
-	harray<BaseObject*> BaseObject::getChildren()
+	harray<BaseObject*> BaseObject::getChildren() const
 	{
 		return (this->childrenObjects.cast<BaseObject*>() + this->childrenAnimators.cast<BaseObject*>());
 	}
 
 	void BaseObject::_sortChildren()
 	{
-		this->childrenObjects.sort(&_objectSortCallback);
+		HL_LAMBDA_CLASS(_sortObjects, bool, ((Object* const& a, Object* const& b) { return (a->getZOrder() < b->getZOrder()); }));
+		this->childrenObjects.sort(&_sortObjects::lambda);
 	}
 
-	bool BaseObject::isDerivedEnabled()
+	bool BaseObject::isDerivedEnabled() const
 	{
 		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
 	}
 
-	bool BaseObject::isDerivedAwake()
+	bool BaseObject::isDerivedAwake() const
 	{
 		return (this->isAwake() && (this->parent == NULL || this->parent->isDerivedAwake()));
 	}

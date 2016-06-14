@@ -11,11 +11,6 @@
 
 namespace aprilui
 {
-	static Texture* _map_getTexture(Image* image)
-	{
-		return image->getTexture();
-	}
-
 	harray<PropertyDescription> BaseImage::_propertyDescriptions;
 
 	BaseImage::BaseImage(chstr name) : Cloneable()
@@ -70,7 +65,7 @@ namespace aprilui
 		this->name = value;
 	}
 
-	hstr BaseImage::getFullName()
+	hstr BaseImage::getFullName() const
 	{
 		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
@@ -228,7 +223,8 @@ namespace aprilui
 		images += newImages.dynamicCast<Image*>();
 		images.removeDuplicates();
 		// get all textures
-		harray<Texture*> textures = images.mapped(&_map_getTexture);
+		HL_LAMBDA_CLASS(_imageTextures, Texture*, ((Image* const& image) { return image->getTexture(); }));
+		harray<Texture*> textures = images.mapped(&_imageTextures::lambda);
 		textures.removeAll(NULL);
 		textures.removeDuplicates();
 		return textures;

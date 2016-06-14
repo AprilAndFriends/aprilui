@@ -175,21 +175,6 @@ namespace aprilui
 	DEFINE_ANIMATOR_F_DELAYED(fadeAlpha, AlphaChanger); // DEPRECATED
 	DEFINE_ANIMATOR_F_DELAYED(changeZOrder, ZOrderChanger); // DEPRECATED
 
-	static Animator* _map_clonedAnimators(Animator* animator)
-	{
-		return animator->clone();
-	}
-	
-	static bool _filter_isAnimated(Animator* animator)
-	{
-		return animator->isAnimated();
-	}
-
-	static bool _filter_isWaitingAnimation(Animator* animator)
-	{
-		return animator->isWaitingAnimation();
-	}
-
 	harray<PropertyDescription> Object::_propertyDescriptions;
 
 	Object::Object(chstr name) : BaseObject(name)
@@ -234,7 +219,8 @@ namespace aprilui
 		this->focusIndex = other.focusIndex;
 		this->customPointInsideCallback = other.customPointInsideCallback;
 		this->debugColor = other.debugColor;
-		this->dynamicAnimators = other.dynamicAnimators.mapped(&_map_clonedAnimators);
+		HL_LAMBDA_CLASS(_cloneAnimators, Animator*, ((Animator* const& animator) { return animator->clone(); }));
+		this->dynamicAnimators = other.dynamicAnimators.mapped(&_cloneAnimators::lambda);
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -636,12 +622,14 @@ namespace aprilui
 
 	bool Object::isAnimated()
 	{
-		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_filter_isAnimated);
+		HL_LAMBDA_CLASS(_isAnimated, bool, ((Animator* const& animator) { return animator->isAnimated(); }));
+		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_isAnimated::lambda);
 	}
 
 	bool Object::isWaitingAnimation()
 	{
-		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_filter_isWaitingAnimation);
+		HL_LAMBDA_CLASS(_isWaitingAnimation, bool, ((Animator* const& animator) { return animator->isWaitingAnimation(); }));
+		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_isWaitingAnimation::lambda);
 	}
 
 	bool Object::hasDynamicAnimation()

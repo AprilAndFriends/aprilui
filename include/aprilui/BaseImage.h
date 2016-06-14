@@ -51,19 +51,19 @@ namespace aprilui
 		void setClipWidth(float value);
 		HL_DEFINE_GET(float, clipRect.h, ClipHeight);
 		void setClipHeight(float value);
-		inline gvec2 getClipPosition() { return this->clipRect.getPosition(); }
+		inline gvec2 getClipPosition() const { return this->clipRect.getPosition(); }
 		void setClipPosition(gvec2 value);
 		void setClipPosition(float x, float y);
-		inline gvec2 getClipSize() { return this->clipRect.getSize(); }
+		inline gvec2 getClipSize() const { return this->clipRect.getSize(); }
 		void setClipSize(gvec2 value);
 		void setClipSize(float w, float h);
-		hstr getFullName();
+		hstr getFullName() const;
 
-		virtual gvec2 getSrcSize() = 0;
+		virtual gvec2 getSrcSize() const = 0;
 		virtual void setSrcSize(gvec2 value) = 0;
-		virtual float getSrcWidth() = 0;
+		virtual float getSrcWidth() const = 0;
 		virtual void setSrcWidth(float value) = 0;
-		virtual float getSrcHeight() = 0;
+		virtual float getSrcHeight() const = 0;
 		virtual void setSrcHeight(float value) = 0;
 
 		virtual harray<PropertyDescription> getPropertyDescriptions();

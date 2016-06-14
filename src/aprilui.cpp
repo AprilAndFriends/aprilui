@@ -35,11 +35,6 @@ namespace aprilui
 	bool getDefaultDynamicLoading() { return isDefaultManagedTextures(); } // DEPRECATED
 	void setDefaultDynamicLoading(bool value) { setDefaultManagedTextures(value); } // DEPRECATED
 
-	static bool _filter_defaultExtensions(hstr extension)
-	{
-		return (extension.count('.') <= 1); // extension not using a prefix
-	}
-
 	hstr logTag = "aprilui";
 
 	static hversion version(4, 1, 0);
@@ -613,7 +608,8 @@ namespace aprilui
 		}
 		harray<hstr> currentExtensions = april::getTextureExtensions();
 		// removing all non-default extensions
-		harray<hstr> defaultExtensions = currentExtensions.findAll(&_filter_defaultExtensions);
+		HL_LAMBDA_CLASS(_defaultExtensions, bool, ((hstr const& extension) { return (extension.count('.') <= 1); }));
+		harray<hstr> defaultExtensions = currentExtensions.findAll(&_defaultExtensions::lambda);
 		// adding new extensions and scales
 		harray<hstr> newExtensions;
 		harray<float> newScales;
