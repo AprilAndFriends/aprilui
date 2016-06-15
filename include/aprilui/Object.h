@@ -105,7 +105,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
 		HL_DEFINE_ISSET(clip, Clip);
-		virtual HL_DEFINE_GET(int, focusIndex, FocusIndex);
+		virtual inline int getFocusIndex() { return this->focusIndex; }
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }

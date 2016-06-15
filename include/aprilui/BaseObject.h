@@ -48,7 +48,7 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);
 		HL_DEFINE_GETSET(hstr, tag, Tag);
-		virtual HL_DEFINE_GET(Dataset*, dataset, Dataset);
+		virtual inline Dataset* getDataset() { return this->dataset; }
 		HL_DEFINE_GET(Object*, parent, Parent);
 		HL_DEFINE_IS(enabled, Enabled);
 		void setEnabled(bool value);

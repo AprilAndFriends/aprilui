@@ -35,9 +35,9 @@ namespace aprilui
 		
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		virtual HL_DEFINE_GET(BaseImage*, image, Image);
+		virtual inline BaseImage* getImage() { return this->image; }
 		virtual void setImage(BaseImage* value);
-		virtual HL_DEFINE_GET(hstr, imageName, ImageName);
+		virtual inline hstr getImageName() { return this->imageName; }
 		virtual void setImageByName(chstr name);
 		
 		/// @brief Optimized version.
