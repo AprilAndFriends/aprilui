@@ -60,8 +60,8 @@ namespace aprilui
 		inline harray<Object*>& getChildrenObjects() { return this->childrenObjects; }
 		inline harray<Animator*>& getChildrenAnimators() { return this->childrenAnimators; }
 		harray<BaseObject*> getChildren() const;
-		virtual inline bool isAnimated() const { return false; }
-		virtual inline bool isWaitingAnimation() const { return false; }
+		virtual inline bool isAnimated() { return false; }
+		virtual inline bool isWaitingAnimation() { return false; }
 
 		hstr getFullName() const;
 		harray<Object*> getAncestors() const;

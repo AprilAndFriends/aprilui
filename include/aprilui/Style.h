@@ -45,7 +45,7 @@ namespace aprilui
 
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
-		hstr getFullName();
+		hstr getFullName() const;
 
 		hmap<hstr, hstr> findProperties(chstr className);
 

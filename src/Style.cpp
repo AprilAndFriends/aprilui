@@ -45,7 +45,7 @@ namespace aprilui
 	{
 	}
 
-	hstr Style::getFullName()
+	hstr Style::getFullName() const
 	{
 		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
