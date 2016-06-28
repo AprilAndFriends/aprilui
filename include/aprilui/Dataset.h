@@ -55,6 +55,7 @@ namespace aprilui
 		void unregisterManualImage(Image* img);
 
         bool hasImage(chstr name) { return mImages.hasKey(name); }
+		bool hasRamTexture(chstr name) { return mRamTextures.hasKey(name); }
 		void registerCallback(chstr name, void (*callback)());
 		void triggerCallback(chstr name);
 		

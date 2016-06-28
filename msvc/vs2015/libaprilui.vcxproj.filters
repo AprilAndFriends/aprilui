@@ -167,6 +167,12 @@
     <ClCompile Include="..\..\src\objects\ObjectTextButton.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectProgressBar.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectProgressBase.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\aprilui.h">
@@ -318,6 +324,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\TiledImage.h">
       <Filter>Header Files\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectProgressBar.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectProgressBase.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

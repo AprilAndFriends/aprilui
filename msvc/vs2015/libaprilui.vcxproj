@@ -93,6 +93,8 @@
     <ClCompile Include="..\..\src\objects\ObjectImageButton.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectLabel.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectLabelBase.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectProgressBar.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectProgressBase.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectRotatableImageBox.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectRotationImageBox.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectSlider.cpp" />
@@ -109,6 +111,8 @@
     <ClCompile Include="..\..\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\aprilui\ObjectProgressBar.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectProgressBase.h" />
     <ClInclude Include="..\..\include\aprilui\RamTexture.h" />
     <ClInclude Include="..\..\src\apriluiUtil.h" />
     <ClInclude Include="..\..\include\aprilui\EventReceiver.h" />

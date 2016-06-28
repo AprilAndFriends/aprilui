@@ -23,6 +23,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include "ObjectLabelBase.h"
 #include "ObjectColoredImageBox.h"
 #include "ObjectImageButton.h"
+#include "ObjectProgressBar.h"
 #include "ObjectCallbackObject.h"
 #include "ObjectRotatableImageBox.h"
 #include "ObjectRotationImageBox.h"

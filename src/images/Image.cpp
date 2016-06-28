@@ -42,131 +42,167 @@ namespace aprilui
 	
 	void Image::setSourceRect(grect r)
 	{
-		mSource = r;
-		mTextureCoordinatesLoaded = 0;
+		if (mSource != r)
+		{
+			mSource = r;
+			mTextureCoordinatesLoaded = false;
+		}
 	}
 
-	
+	void Image::setClipRect(grect value)
+	{
+		if (mClipRect != value)
+		{
+			mClipRect = value;
+			mTextureCoordinatesLoaded = false;
+		}
+	}
+
 	void Image::_tryLoadTexCoords()
 	{
-		if (!mTextureCoordinatesLoaded && mTexture != NULL && mTexture->getWidth() > 0 && mTexture->getHeight() > 0)
+		if (!this->mTextureCoordinatesLoaded && this->mTexture != NULL && this->mTexture->getWidth() > 0 && this->mTexture->getHeight() > 0)
 		{
-			mTextureCoordinatesLoaded = true;
-			float w = (float)mTexture->getWidth();
-			float h = (float)mTexture->getHeight();
-			if (!mVertical)
+			this->mTextureCoordinatesLoaded = true;
+			float iw = 1.0f / this->mTexture->getWidth();
+			float ih = 1.0f / this->mTexture->getHeight();
+			grect rect = this->_makeClippedSrcRect();
+			gvec2 topLeft;
+			gvec2 topRight;
+			gvec2 bottomLeft;
+			gvec2 bottomRight;
+			if (!this->mVertical)
 			{
-				_tVertexes[0].u = mSource.x / w;				_tVertexes[0].v = mSource.y / h;
-				_tVertexes[1].u = (mSource.x + mSource.w) / w;	_tVertexes[1].v = mSource.y / h;
-				_tVertexes[2].u = mSource.x / w;				_tVertexes[2].v = (mSource.y + mSource.h) / h;
-				_tVertexes[3].u = (mSource.x + mSource.w) / w;	_tVertexes[3].v = (mSource.y + mSource.h) / h;
-				if (mInvertX)
-				{
-					hswap(_tVertexes[0].u, _tVertexes[1].u);
-					hswap(_tVertexes[2].u, _tVertexes[3].u);
-				}
-				if (mInvertY)
-				{
-					hswap(_tVertexes[0].v, _tVertexes[2].v);
-					hswap(_tVertexes[1].v, _tVertexes[3].v);
-				}
+				topLeft.x = bottomLeft.x = rect.left() * iw;
+				topLeft.y = topRight.y = rect.top() * ih;
+				topRight.x = bottomRight.x = rect.right() * iw;
+				bottomLeft.y = bottomRight.y = rect.bottom() * ih;
 			}
 			else
 			{
-				_tVertexes[0].u = (mSource.x + mSource.h) / w;	_tVertexes[0].v = mSource.y / h;
-				_tVertexes[1].u = (mSource.x + mSource.h) / w;	_tVertexes[1].v = (mSource.y + mSource.w) / h;
-				_tVertexes[2].u = mSource.x / w;				_tVertexes[2].v = mSource.y / h;
-				_tVertexes[3].u = mSource.x / w;				_tVertexes[3].v = (mSource.y + mSource.w) / h;
-				if (mInvertY)
-				{
-					hswap(_tVertexes[0].u, _tVertexes[2].u);
-					hswap(_tVertexes[1].u, _tVertexes[3].u);
-				}
-				if (mInvertX)
-				{
-					hswap(_tVertexes[0].v, _tVertexes[1].v);
-					hswap(_tVertexes[2].v, _tVertexes[3].v);
-				}
+				topLeft.x = topRight.x = (rect.x + rect.h) * iw;
+				topLeft.y = bottomLeft.y = rect.y * ih;
+				topRight.y = bottomRight.y = (rect.y + rect.w) * ih;
+				bottomLeft.x = bottomRight.x = rect.x * iw;
 			}
+			if (this->mInvertX)
+			{
+				hswap(topLeft.x, topRight.x);
+				hswap(bottomLeft.x, bottomRight.x);
+			}
+			if (this->mInvertY)
+			{
+				hswap(topLeft.y, bottomLeft.y);
+				hswap(topRight.y, bottomRight.y);
+			}
+			this->_tVertexes[0].u = topLeft.x;
+			this->_tVertexes[0].v = topLeft.y;
+			this->_tVertexes[1].u = topRight.x;
+			this->_tVertexes[1].v = topRight.y;
+			this->_tVertexes[2].u = bottomLeft.x;
+			this->_tVertexes[2].v = bottomLeft.y;
+			this->_tVertexes[3] = this->_tVertexes[1];
+			this->_tVertexes[4] = this->_tVertexes[2];
+			this->_tVertexes[5].u = bottomRight.x;
+			this->_tVertexes[5].v = bottomRight.y;
 		}
+	}
+
+	grect Image::_makeClippedSrcRect()
+	{
+		if (this->mClipRect.w > 0.0f && this->mClipRect.h > 0.0f)
+		{
+			if (this->mVertical)
+			{
+				grect rect = this->mClipRect;
+				grect srcRect = this->mSource;
+				hswap(rect.x, rect.y);
+				hswap(rect.w, rect.h);
+				hswap(srcRect.w, srcRect.h);
+				rect.x = srcRect.w - (rect.x + rect.w);
+				srcRect.clip(rect + srcRect.getPosition());
+				hswap(srcRect.w, srcRect.h);
+				return srcRect;
+			}
+			return this->mSource.clipped(this->mClipRect + this->mSource.getPosition());
+		}
+		return this->mSource;
 	}
 
 	void Image::draw(grect rect)
 	{
-		draw(rect, april::Color());
+		draw(rect, april::Color::White);
 	}
 	
 	void Image::draw(grect rect, april::Color color)
 	{
-		if (rect.w == -1)
+		if (rect.w < 0.0f)
 		{
 			rect.w = mSource.w;
 		}
-		if (rect.h == -1)
+		if (rect.h < 0.0f)
 		{
 			rect.h = mSource.h;
 		}
-		_tVertexes[0].x = rect.x;          _tVertexes[0].y = rect.y;
-		_tVertexes[1].x = rect.x + rect.w; _tVertexes[1].y = rect.y;
-		_tVertexes[2].x = rect.x;          _tVertexes[2].y = rect.y + rect.h;
-		_tVertexes[3].x = rect.x + rect.w; _tVertexes[3].y = rect.y + rect.h;
-		
-		mTexture->load();
-		april::rendersys->setTexture(mTexture->getRenderTexture());
-		_tryLoadTexCoords();
-			
-		april::rendersys->setBlendMode(mBlendMode);
+		if (this->mClipRect.w > 0.0f && this->mClipRect.h > 0.0f)
+		{
+			gvec2 sizeRatio = rect.getSize() / this->mSource.getSize();
+			rect += this->mClipRect.getPosition() * sizeRatio;
+			rect.setSize(this->mClipRect.getSize() * sizeRatio);
+		}
+		this->_tVertexes[0].x = this->_tVertexes[2].x = this->_tVertexes[4].x = rect.left();
+		this->_tVertexes[0].y = this->_tVertexes[1].y = this->_tVertexes[3].y = rect.top();
+		this->_tVertexes[1].x = this->_tVertexes[3].x = this->_tVertexes[5].x = rect.right();
+		this->_tVertexes[2].y = this->_tVertexes[4].y = this->_tVertexes[5].y = rect.bottom();
+		if (this->mTexture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
+		{
+			this->mTexture->load();
+		}
+		april::rendersys->setTexture(this->mTexture->getRenderTexture());
+		this->_tryLoadTexCoords();
+		april::rendersys->setBlendMode(this->mBlendMode);
 		april::rendersys->setColorMode(april::CM_DEFAULT);
-		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
-		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
-		}
-		else
-		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
-		}
+		april::rendersys->render(april::RO_TRIANGLE_LIST, this->_tVertexes, 6, color);
 		april::rendersys->setBlendMode(april::BM_DEFAULT);
 		april::rendersys->setColorMode(april::CM_DEFAULT);
 	}
 
 	void Image::draw(grect rect, april::Color color, float angle, gvec2 center)
 	{
-		if (rect.w == -1)
+		if (rect.w < 0.0f)
 		{
 			rect.w = mSource.w;
 		}
-		if (rect.h == -1)
+		if (rect.h < 0.0f)
 		{
 			rect.h = mSource.h;
 		}
-		
-		_tVertexes[0].x = -center.x;				_tVertexes[0].y = -center.y;
-		_tVertexes[1].x = rect.w - center.x;		_tVertexes[1].y = -center.y;
-		_tVertexes[2].x = -center.x;				_tVertexes[2].y = rect.h - center.y;
-		_tVertexes[3].x = rect.w - center.x;		_tVertexes[3].y = rect.h - center.y;
-		
-		gtypes::Matrix4 temp_matrix = april::rendersys->getModelviewMatrix();
+		if (this->mClipRect.w > 0.0f && this->mClipRect.h > 0.0f)
+		{
+			gvec2 sizeRatio = rect.getSize() / this->mSource.getSize();
+			rect += this->mClipRect.getPosition() * sizeRatio;
+			rect.setSize(this->mClipRect.getSize() * sizeRatio);
+		}
+		this->_tVertexes[0].x = this->_tVertexes[2].x = this->_tVertexes[4].x = rect.left();
+		this->_tVertexes[0].y = this->_tVertexes[1].y = this->_tVertexes[3].y = rect.top();
+		this->_tVertexes[1].x = this->_tVertexes[3].x = this->_tVertexes[5].x = rect.right();
+		this->_tVertexes[2].y = this->_tVertexes[4].y = this->_tVertexes[5].y = rect.bottom();
+		gtypes::Matrix4 tempMatrix = april::rendersys->getModelviewMatrix();
 		april::rendersys->setIdentityTransform();
 		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		april::rendersys->rotate(angle);
 
-		mTexture->load();
-		april::rendersys->setTexture(mTexture->getRenderTexture());
-		_tryLoadTexCoords();
-		
-		april::rendersys->setBlendMode(mBlendMode);
+		if (this->mTexture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
+		{
+			this->mTexture->load();
+		}
+		april::rendersys->setTexture(this->mTexture->getRenderTexture());
+		this->_tryLoadTexCoords();
+		april::rendersys->setBlendMode(this->mBlendMode);
 		april::rendersys->setColorMode(april::CM_DEFAULT);
-		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
-		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
-		}
-		else
-		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
-		}
+		april::rendersys->render(april::RO_TRIANGLE_LIST, this->_tVertexes, 6, color);
 		april::rendersys->setBlendMode(april::BM_DEFAULT);
 		april::rendersys->setColorMode(april::CM_DEFAULT);
-		april::rendersys->setModelviewMatrix(temp_matrix);
+		april::rendersys->setModelviewMatrix(tempMatrix);
 	}
 
 	void Image::draw(grect rect, april::Color color, float angle)
