@@ -222,11 +222,6 @@ namespace aprilui
 					{
 						image->setBlendMode(april::BM_ADD);
 					}
-					if (child->pexists("clip_x") && child->pexists("clip_y") && child->pexists("clip_w") && child->pexists("clip_h"))
-					{
-						grect clipRect(child->pfloat("clip_x"), child->pfloat("clip_y"), child->pfloat("clip_w"), child->pfloat("clip_h"));
-						image->setClipRect(clipRect);
-					}
 					mImages[name] = image;
 				}
 		    }
@@ -332,7 +327,6 @@ namespace aprilui
 		else  parse(EditBox);
 		else  parse(RotationImageBox);
 		else  parse(RotatableImageBox);
-		else  parse(ProgressBar);
 		else if (node->name == "Animator")
 		{
 			/*if*/parse_animator(Mover);
@@ -685,7 +679,7 @@ namespace aprilui
 	
 	Image* Dataset::getImage(chstr name)
 	{
-		Image* image = NULL;
+		Image* image;
 		if (name == "null")
 		{
 			return &nullImage;

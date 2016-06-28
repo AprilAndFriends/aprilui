@@ -43,9 +43,7 @@ namespace aprilui
 		hstr getImageName() const { return mImageName; }
 		const grect& getSource() const { return mSource; }
 		void setSourceRect(grect r);
-		grect getClipRect() const { return mClipRect; }
-		void setClipRect(grect value);
-
+		
 		april::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
 		
@@ -54,7 +52,6 @@ namespace aprilui
 		hstr mName;
 		hstr mImageName;
 		grect mSource;
-		grect mClipRect;
 		april::BlendMode mBlendMode;
 		bool mVertical;
 		bool mInvertX;
@@ -62,10 +59,9 @@ namespace aprilui
 		bool mTextureCoordinatesLoaded;
 
 		void _tryLoadTexCoords();
-		grect _makeClippedSrcRect();
 
 	private:
-		april::TexturedVertex _tVertexes[6];
+		april::TexturedVertex _tVertexes[4];
 		
 	};
 

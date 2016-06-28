@@ -25,15 +25,23 @@ namespace aprilui
 	void ImageBox::setImage(Image* image)
 	{
 		mImage = image;
-		mImageName = (image != NULL ? image->getName() : "null");
-		grect rect = image->getSource();
-		if (mRect.w == -1)
+		if (image != NULL)
 		{
-			mRect.w = rect.w * getDefaultScale();
+			mImageName = image->getName();
+			grect rect = image->getSource();
+			if (mRect.w == -1)
+			{
+				mRect.w = rect.w * getDefaultScale();
+			}
+			if (mRect.h == -1)
+			{
+				mRect.h = rect.h * getDefaultScale();
+			}
 		}
-		if (mRect.h == -1)
+		else
 		{
-			mRect.h = rect.h * getDefaultScale();
+			mImageName = image->getName();
+			mImageName = "null";
 		}
 	}
 
