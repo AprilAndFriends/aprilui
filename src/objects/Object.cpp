@@ -69,14 +69,10 @@ namespace aprilui
 		}
 	}
 
-	bool _objectSortCallback(Object* a, Object* b)
-	{
-		return (a->getZOrder() < b->getZOrder());
-	}
-
 	void Object::sortChildren()
 	{
-		mChildren.sort(_objectSortCallback);
+		HL_LAMBDA_CLASS(_sortObjects, bool, ((Object* const& a, Object* const& b) { return (a->getZOrder() < b->getZOrder()); }));
+		mChildren.sort(&_sortObjects::lambda);
 	}
 
 	void Object::addChild(Object* object)
