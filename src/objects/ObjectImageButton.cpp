@@ -10,6 +10,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
+#include "aprilui.h"
 #include "Dataset.h"
 #include "Image.h"
 #include "ObjectImageButton.h"
@@ -30,12 +31,14 @@ namespace aprilui
 	void ImageButton::OnDraw(gvec2 offset)
 	{
 		grect rect = _getDrawRect() + offset;
-		if (!isDerivedEnabled() && mDisabledImage != NULL)
+		bool enabled = this->isDerivedEnabled();
+		if (!enabled && mDisabledImage != NULL)
 		{
 			mDisabledImage->draw(rect);
 			return;
 		}
-		if (mPushed && mPushedImage == NULL && isCursorInside())
+		bool hover = isCursorInside();
+		if (mPushed && mPushedImage == NULL && hover)
 		{
 			april::Color color;
 			color *= 0.7f;
@@ -44,6 +47,23 @@ namespace aprilui
 			return;
 		}
 		ImageBox::OnDraw(offset);
+		// the same thing for a hover image fallback solution
+		if (enabled && hover && !mPushed && mHoverImage == NULL)
+		{
+			if (mImage != NULL)
+			{
+				Image* blendableImage = dynamic_cast<Image*>(mImage);
+				if (blendableImage != NULL)
+				{
+					april::Color drawColor;
+					drawColor.a = (unsigned char)(drawColor.a * 0.5f);
+					april::BlendMode blendMode = blendableImage->getBlendMode();
+					blendableImage->setBlendMode(april::BM_ADD);
+					blendableImage->draw(rect, drawColor);
+					blendableImage->setBlendMode(blendMode);
+				}
+			}
+		}
 	}
 
 	void ImageButton::update(float k)

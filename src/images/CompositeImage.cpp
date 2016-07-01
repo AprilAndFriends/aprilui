@@ -37,7 +37,7 @@ namespace aprilui
 		ImageRef reference;
 		reference.image = image;
 		reference.rect = rect;
-		mImages.addFirst(reference);
+		mImages += reference;
 	}
 
 	void CompositeImage::draw(grect rect, april::Color color)

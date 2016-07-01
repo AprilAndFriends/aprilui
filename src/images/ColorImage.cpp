@@ -44,16 +44,12 @@ namespace aprilui
 		_pVertices[2].x = rect.x;          _pVertices[2].y = rect.y + rect.h;
 		_pVertices[3].x = rect.x + rect.w; _pVertices[3].y = rect.y + rect.h;
 		
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(mBlendMode);
-		}
+		april::rendersys->setBlendMode(mBlendMode);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 		color *= mColor;
 		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(april::BM_DEFAULT);
-		}
+		april::rendersys->setBlendMode(april::BM_DEFAULT);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 	}
 
 	void ColorImage::draw(grect rect, april::Color color, float angle, gvec2 center)
@@ -67,15 +63,11 @@ namespace aprilui
 		april::rendersys->setIdentityTransform();
 		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		april::rendersys->rotate(angle);
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(mBlendMode);
-		}
+		april::rendersys->setBlendMode(mBlendMode);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
-		if (mBlendMode != april::BM_ALPHA)
-		{
-			april::rendersys->setBlendMode(april::BM_DEFAULT);
-		}
+		april::rendersys->setBlendMode(april::BM_DEFAULT);
+		april::rendersys->setColorMode(april::CM_DEFAULT);
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}
 
