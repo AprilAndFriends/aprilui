@@ -40,7 +40,7 @@ def help():
 	print "                  e.g. 'en' would cause only files that look like"
 	print "                  '*en/FILENAME.EXTENSION' to be read."
 	print ""
-	print "example: loc_kit_split_tsv.py new_loc locale.txt ../data/localization/en"
+	print "example: loc_kit_update_loc.py new_loc locale.txt ../data/localization/en en"
 	print ""
 	os.system("pause")
 
