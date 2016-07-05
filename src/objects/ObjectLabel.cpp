@@ -17,8 +17,8 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 namespace aprilui
 {
 	Label::Label(chstr name, grect rect) :
-		LabelBase(name),
-		Object("Label", name, rect)
+		Object("Label", name, rect),
+		LabelBase(name)
 	{
 	}
 
