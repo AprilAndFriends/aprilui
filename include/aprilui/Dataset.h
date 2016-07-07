@@ -35,16 +35,16 @@ namespace aprilui
 	class apriluiExport Dataset : public EventReceiver
 	{
 	public:
-		Object* parseObject(hlxml::Node* node, Object* parent = NULL);
+		virtual Object* parseObject(hlxml::Node* node, Object* parent = NULL);
 		
 		Dataset(chstr filename, chstr name = "");
 		~Dataset();
 		
-		hstr getFilePath() { return mFilePath; }
+		virtual hstr getFilePath() { return mFilePath; }
 
-		void load(chstr path = "");
-		void unload();
-		bool isLoaded() { return mLoaded; }
+		virtual void load(chstr path = "");
+		virtual void unload();
+		virtual bool isLoaded() { return mLoaded; }
 		void registerManualObject(Object* o);
 		void registerObjects(Object* o); // aprilui trunk compatibility
 		void unregisterManualObject(Object* o);
@@ -54,25 +54,25 @@ namespace aprilui
 		void registerManualTexture(Texture* tex);
 		void unregisterManualImage(Image* img);
 
-		bool hasImage(chstr name) { return mImages.hasKey(name); }
-		bool hasRamTexture(chstr name) { return mRamTextures.hasKey(name); }
-		void registerCallback(chstr name, void (*callback)());
-		void triggerCallback(chstr name);
+		virtual bool hasImage(chstr name) { return mImages.hasKey(name); }
+		virtual bool hasRamTexture(chstr name) { return mRamTextures.hasKey(name); }
+		virtual void registerCallback(chstr name, void (*callback)());
+		virtual void triggerCallback(chstr name);
 		
-		bool isAnimated();
+		virtual bool isAnimated();
 		void setFocusedObject(Object* object) { mFocusedObject = object; }
 		Object* getFocusedObject() { return mFocusedObject; }
 		
 		// use these functions only in debug purposes
-		void _setFilename(chstr filename) { mFilename = filename; }
-		void _setFilenamePrefix(chstr prefix) { mFilenamePrefix = prefix; }
-		hstr _getFilename() { return mFilename; }
-		hstr _getFilenamePrefix() { return mFilenamePrefix; }
+		virtual void _setFilename(chstr filename) { mFilename = filename; }
+		virtual void _setFilenamePrefix(chstr prefix) { mFilenamePrefix = prefix; }
+		virtual hstr _getFilename() { return mFilename; }
+		virtual hstr _getFilenamePrefix() { return mFilenamePrefix; }
 		hmap<hstr, Object*>& getObjects() { return mObjects; }
 
-		void updateTextures(float k);
+		virtual void updateTextures(float k);
 		virtual void update(float k);
-		void draw();
+		virtual void draw();
 		
 		void _destroyTexture(chstr tex);
 		void _destroyImage(chstr img);
@@ -89,21 +89,21 @@ namespace aprilui
 		
 		virtual Object* getObject(chstr name);
 		virtual Texture* getTexture(chstr name);
-		RamTexture* getRamTexture(chstr name);
+		virtual RamTexture* getRamTexture(chstr name);
 		virtual Image* getImage(chstr name);
 		virtual hstr getTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
 		virtual bool textExists(chstr name);
-		hmap<hstr, hstr>& getTexts() { return mTexts; }
-		harray<hstr> getTextEntries(harray<hstr> keys);
+		virtual hmap<hstr, hstr>& getTexts() { return mTexts; }
+		virtual harray<hstr> getTextEntries(harray<hstr> keys);
 
-		hstr getName() { return mName; }
+		virtual hstr getName() { return mName; }
 		
 		void setTextureExtensionOverride(hstr override) { mTexExtOverride = override; }
 
-		void notifyEvent(chstr name, void* params);
-		void reloadTexts();
-		void reloadTextures();
+		virtual void notifyEvent(chstr name, void* params);
+		virtual void reloadTexts();
+		virtual void reloadTextures();
 
 	protected:
 		hstr mName;
@@ -120,19 +120,19 @@ namespace aprilui
 
 		hmap<hstr, void (*)()> mCallbacks;
 
-		Texture* parseTexture(hlxml::Node* node);
-		void parseRamTexture(hlxml::Node* node);
-		void parseCompositeImage(hlxml::Node* node);
+		virtual Texture* parseTexture(hlxml::Node* node);
+		virtual void parseRamTexture(hlxml::Node* node);
+		virtual void parseCompositeImage(hlxml::Node* node);
 		virtual void parseExternalXMLNode(hlxml::Node* node) { }
 		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr obj_name, grect rect) { return 0; }
 		
-		Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
+		virtual Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		
-		void readFile(chstr filename);
-		void _loadTexts(hstr path);
+		virtual void readFile(chstr filename);
+		virtual void _loadTexts(hstr path);
 		hstr _makeTextsPath();
 		
-		hstr _makeFilePath(chstr filename, chstr name, bool useNameBasePath);
+		virtual hstr _makeFilePath(chstr filename, chstr name, bool useNameBasePath);
 		hstr _makeLocalizedTextureName(chstr filename);
 
 		hstr _parseCompositeTextKey(chstr key);
