@@ -53,6 +53,8 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
+		static int maxRectCache;
+
 	protected:
 		grect skinRect;
 		bool tiledBorders;
@@ -60,8 +62,8 @@ namespace aprilui
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
-		grect _lastDrawRect;
 		bool _skinCoordinatesCalculated;
+		hmap<grect, harray<april::TexturedVertex> > _rectVertices;
 		harray<april::TexturedVertex> _vertices;
 
 	};

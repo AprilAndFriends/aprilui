@@ -19,15 +19,15 @@
 
 #define TILED_FIT_LIMIT 0.2f
 
-#define CREATE_TRIANGLE(condition, index0, index1, index2, index3) \
+#define CREATE_TRIANGLE(vertices, condition, index0, index1, index2, index3) \
 	if (condition) \
 	{ \
-		this->_vertices += v[index0]; \
-		this->_vertices += v[index1]; \
-		this->_vertices += v[index2]; \
-		this->_vertices += v[index1]; \
-		this->_vertices += v[index2]; \
-		this->_vertices += v[index3]; \
+		vertices += v[index0]; \
+		vertices += v[index1]; \
+		vertices += v[index2]; \
+		vertices += v[index1]; \
+		vertices += v[index2]; \
+		vertices += v[index3]; \
 	}
 
 #define SET_HELPER_VERTICES(helper, original, index0, index1, index2, index3) \
@@ -41,6 +41,7 @@
 namespace aprilui
 {
 	harray<PropertyDescription> SkinImage::_propertyDescriptions;
+	int SkinImage::maxRectCache = 30;
 
 	SkinImage::SkinImage(Texture* texture, chstr name, grect source) : Image(texture, name, source)
 	{
@@ -52,9 +53,8 @@ namespace aprilui
 	{
 		this->skinRect = other.skinRect;
 		this->tiledBorders = other.tiledBorders;
-		this->_lastDrawRect = other._lastDrawRect;
 		this->_skinCoordinatesCalculated = other._skinCoordinatesCalculated;
-		this->_vertices = other._vertices;
+		this->_rectVertices = other._rectVertices;
 	}
 
 	SkinImage::~SkinImage()
@@ -206,7 +206,7 @@ namespace aprilui
 		}
 		if (!this->_textureCoordinatesLoaded)
 		{
-			this->_skinCoordinatesCalculated = true;
+			this->_skinCoordinatesCalculated = false;
 		}
 		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
@@ -216,11 +216,18 @@ namespace aprilui
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
 		this->tryLoadTextureCoordinates();
-		if (this->_lastDrawRect != rect || !this->_skinCoordinatesCalculated)
+		if (!this->_skinCoordinatesCalculated)
 		{
-			this->_lastDrawRect = rect;
 			this->_skinCoordinatesCalculated = true;
-			this->_vertices.clear();
+			this->_rectVertices.clear();
+		}
+		this->_vertices.clear();
+		if (!this->_rectVertices.hasKey(rect))
+		{
+			if (this->_rectVertices.size() >= SkinImage::maxRectCache)
+			{
+				this->_rectVertices.clear();
+			}
 			// coordinate translation
 			gvec2 pos[4];
 			pos[0] = rect.getPosition();
@@ -268,21 +275,21 @@ namespace aprilui
 				// when tiled borders are disabled, the vertices only have to be arranged into triangles
 				if (this->skinRect.y > 0.0f)
 				{
-					CREATE_TRIANGLE(left, 0, 1, 4, 5);
-					CREATE_TRIANGLE(hcenter, 1, 2, 5, 6);
-					CREATE_TRIANGLE(right, 2, 3, 6, 7);
+					CREATE_TRIANGLE(this->_vertices, left, 0, 1, 4, 5);
+					CREATE_TRIANGLE(this->_vertices, hcenter, 1, 2, 5, 6);
+					CREATE_TRIANGLE(this->_vertices, right, 2, 3, 6, 7);
 				}
 				if (rect.h > this->srcRect.h - this->skinRect.h)
 				{
-					CREATE_TRIANGLE(left, 4, 5, 8, 9);
-					CREATE_TRIANGLE(hcenter, 5, 6, 9, 10);
-					CREATE_TRIANGLE(right, 6, 7, 10, 11);
+					CREATE_TRIANGLE(this->_vertices, left, 4, 5, 8, 9);
+					CREATE_TRIANGLE(this->_vertices, hcenter, 5, 6, 9, 10);
+					CREATE_TRIANGLE(this->_vertices, right, 6, 7, 10, 11);
 				}
 				if (this->srcRect.h > this->skinRect.bottom())
 				{
-					CREATE_TRIANGLE(left, 8, 9, 12, 13);
-					CREATE_TRIANGLE(hcenter, 9, 10, 13, 14);
-					CREATE_TRIANGLE(right, 10, 11, 14, 15);
+					CREATE_TRIANGLE(this->_vertices, left, 8, 9, 12, 13);
+					CREATE_TRIANGLE(this->_vertices, hcenter, 9, 10, 13, 14);
+					CREATE_TRIANGLE(this->_vertices, right, 10, 11, 14, 15);
 				}
 			}
 			else
@@ -315,7 +322,7 @@ namespace aprilui
 				int j = 0;
 				if (this->skinRect.y > 0.0f)
 				{
-					CREATE_TRIANGLE(left, 0, 1, 4, 5);
+					CREATE_TRIANGLE(this->_vertices, left, 0, 1, 4, 5);
 					// top center
 					if (hcenter)
 					{
@@ -333,7 +340,7 @@ namespace aprilui
 							w[0].x = w[2].x = w[4].x = w[1].x;
 						}
 					}
-					CREATE_TRIANGLE(right, 2, 3, 6, 7);
+					CREATE_TRIANGLE(this->_vertices, right, 2, 3, 6, 7);
 				}
 				if (rect.h > this->srcRect.h - this->skinRect.h)
 				{
@@ -405,7 +412,7 @@ namespace aprilui
 				}
 				if (this->srcRect.h > this->skinRect.bottom())
 				{
-					CREATE_TRIANGLE(left, 8, 9, 12, 13);
+					CREATE_TRIANGLE(this->_vertices, left, 8, 9, 12, 13);
 					// bottom center
 					if (hcenter)
 					{
@@ -423,9 +430,14 @@ namespace aprilui
 							w[0].x = w[2].x = w[4].x = w[1].x;
 						}
 					}
-					CREATE_TRIANGLE(right, 10, 11, 14, 15);
+					CREATE_TRIANGLE(this->_vertices, right, 10, 11, 14, 15);
 				}
 			}
+			this->_rectVertices[rect] = this->_vertices;
+		}
+		else
+		{
+			this->_vertices = this->_rectVertices[rect];
 		}
 		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
 	}
