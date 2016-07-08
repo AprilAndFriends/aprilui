@@ -50,10 +50,9 @@ namespace aprilui
 		}
 	}
 
-	april::Color makeModifiedDrawColor(april::Color color, april::Color drawColor)
+	april::Color makeModifiedDrawColor(const april::Color& color, const april::Color& drawColor)
 	{
-		color.a = (unsigned char)(color.a * drawColor.a_f());
-		return color;
+		return april::Color(color, (unsigned char)(color.a * drawColor.a_f()));
 	}
 
 }

@@ -32,7 +32,7 @@ namespace aprilui
 			return new ScalerX(name);
 		}
 
-		float ScalerX::_getObjectValue()
+		float ScalerX::_getObjectValue() const
 		{
 			return this->parent->getScaleX();
 		}

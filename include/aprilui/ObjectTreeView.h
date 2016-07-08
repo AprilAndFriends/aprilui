@@ -57,15 +57,15 @@ namespace aprilui
 		/// @note These are ALL the TreeViewNodes in the TreeView.
 		/// @note These are not necessarily in the same order as they are organized within the TreeView.
 		HL_DEFINE_GET(harray<TreeViewNode*>, items, Items);
-		TreeViewNode* getSelected();
+		TreeViewNode* getSelected() const;
 		void setSelected(harray<int> nodeIndices);
-		int getItemCount();
+		int getItemCount() const;
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
 		virtual TreeViewNode* createItem(harray<int> nodeIndices, chstr name = "");
 		bool deleteItem(harray<int> nodeIndices);
-		TreeViewNode* getItemAt(harray<int> nodeIndices);
+		TreeViewNode* getItemAt(harray<int> nodeIndices) const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
@@ -84,7 +84,7 @@ namespace aprilui
 		void _optimizeVisibility();
 
 		void _deleteChildren(TreeViewNode* node);
-		bool _findNode(harray<int> nodeIndices, TreeViewNode** node);
+		bool _findNode(harray<int> nodeIndices, TreeViewNode** node) const;
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

@@ -39,7 +39,7 @@ namespace aprilui
 		void setPushedTextColor(april::Color value);
 		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
 		void setDisabledTextColor(april::Color value);
-		Dataset* getDataset();
+		Dataset* getDataset() const;
 
 		harray<PropertyDescription> getPropertyDescriptions();
 

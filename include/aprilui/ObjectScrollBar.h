@@ -82,34 +82,34 @@ namespace aprilui
 		ScrollBarButtonForward* _buttonForwardSkinned;
 		ScrollBarButtonBackward* _buttonBackwardSkinned;
 
-		ScrollBarButtonBackground* _getButtonBackground();
+		ScrollBarButtonBackground* _getButtonBackground() const;
 		void _setButtonBackground(ScrollBarButtonBackground* button);
 		void _unsetButtonBackground(ScrollBarButtonBackground* button);
-		ScrollBarButtonSlider* _getButtonSlider();
+		ScrollBarButtonSlider* _getButtonSlider() const;
 		void _setButtonSlider(ScrollBarButtonSlider* button);
 		void _unsetButtonSlider(ScrollBarButtonSlider* button);
-		ScrollBarButtonForward* _getButtonForward();
+		ScrollBarButtonForward* _getButtonForward() const;
 		void _setButtonForward(ScrollBarButtonForward* button);
 		void _unsetButtonForward(ScrollBarButtonForward* button);
-		ScrollBarButtonBackward* _getButtonBackward();
+		ScrollBarButtonBackward* _getButtonBackward() const;
 		void _setButtonBackward(ScrollBarButtonBackward* button);
 		void _unsetButtonBackward(ScrollBarButtonBackward* button);
 
 		void _initAreaDragging();
-		bool _canAddScrollValue();
+		bool _canAddScrollValue() const;
 
-		virtual hstr _getSkinNameBackground() = 0;
-		virtual hstr _getSkinNameSliderNormal() = 0;
-		virtual hstr _getSkinNameSliderHover() = 0;
-		virtual hstr _getSkinNameSliderPushed() = 0;
-		virtual hstr _getSkinNameForwardNormal() = 0;
-		virtual hstr _getSkinNameForwardHover() = 0;
-		virtual hstr _getSkinNameForwardPushed() = 0;
-		virtual hstr _getSkinNameBackwardNormal() = 0;
-		virtual hstr _getSkinNameBackwardHover() = 0;
-		virtual hstr _getSkinNameBackwardPushed() = 0;
+		virtual hstr _getSkinNameBackground() const = 0;
+		virtual hstr _getSkinNameSliderNormal() const = 0;
+		virtual hstr _getSkinNameSliderHover() const = 0;
+		virtual hstr _getSkinNameSliderPushed() const = 0;
+		virtual hstr _getSkinNameForwardNormal() const = 0;
+		virtual hstr _getSkinNameForwardHover() const = 0;
+		virtual hstr _getSkinNameForwardPushed() const = 0;
+		virtual hstr _getSkinNameBackwardNormal() const = 0;
+		virtual hstr _getSkinNameBackwardHover() const = 0;
+		virtual hstr _getSkinNameBackwardPushed() const = 0;
 
-		virtual grect _getBarDrawRect() = 0;
+		virtual grect _getBarDrawRect() const = 0;
 
 		/// @note x and y range from 0 to 1
 		virtual float _calcScrollJump(float x, float y, gvec2 size) = 0;

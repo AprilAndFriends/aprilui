@@ -70,25 +70,39 @@ namespace aprilui
 		}
 	}
 
-	bool Dataset::isLoaded()
+	bool Dataset::isLoaded() const
 	{
 		return (this->loaded || this->objects.size() > 0 || this->animators.size() > 0 || this->textures.size() > 0 ||
 			this->images.size() > 0 || this->styles.size() > 0 || this->texts.size() > 0);
 	}
 
-	hmap<hstr, BaseObject*> Dataset::getAllObjects()
+	hmap<hstr, BaseObject*> Dataset::getAllObjects() const
 	{
 		hmap<hstr, BaseObject*> result = this->animators.cast<hstr, BaseObject*>();
 		result.inject(this->objects.cast<hstr, BaseObject*>());
 		return result;
 	}
 
-	int Dataset::getFocusedObjectIndex()
+	int Dataset::getFocusedObjectIndex() const
 	{
 		return (this->focusedObject != NULL && this->focusedObject->isEnabled() &&
 			this->focusedObject->isVisible() ? this->focusedObject->getFocusIndex() : -1);
 	}
 
+	bool Dataset::isAnimated() const
+	{
+		HL_LAMBDA_CLASS(_isAnimatedObject, bool, ((hstr const& name, Object* const& object) { return object->isAnimated(); }));
+		HL_LAMBDA_CLASS(_isAnimatedAnimator, bool, ((hstr const& name, Animator* const& animator) { return animator->isAnimated(); }));
+		return (this->objects.matchesAny(&_isAnimatedObject::lambda) || this->animators.matchesAny(&_isAnimatedAnimator::lambda));
+	}
+	
+	bool Dataset::isWaitingAnimation() const
+	{
+		HL_LAMBDA_CLASS(_isWaitingAnimationObject, bool, ((hstr const& name, Object* const& object) { return object->isWaitingAnimation(); }));
+		HL_LAMBDA_CLASS(_isWaitingAnimationAnimator, bool, ((hstr const& name, Animator* const& animator) { return animator->isWaitingAnimation(); }));
+		return (this->objects.matchesAny(&_isWaitingAnimationObject::lambda) || this->animators.matchesAny(&_isWaitingAnimationAnimator::lambda));
+	}
+	
 	bool Dataset::trySetFocusedObjectByIndex(int value, bool strict)
 	{
 		if (value < 0)
@@ -1356,44 +1370,6 @@ namespace aprilui
 		style->dataset = NULL;
 	}
 
-	bool Dataset::isAnimated()
-	{
-		foreach_m (Object*, it, this->objects)
-		{
-			if (it->second->isAnimated())
-			{
-				return true;
-			}
-		}
-		foreach_m (Animator*, it, this->animators)
-		{
-			if (it->second->isAnimated())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	bool Dataset::isWaitingAnimation()
-	{
-		foreach_m (Object*, it, this->objects)
-		{
-			if (it->second->isWaitingAnimation())
-			{
-				return true;
-			}
-		}
-		foreach_m (Animator*, it, this->animators)
-		{
-			if (it->second->isWaitingAnimation())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	Object* Dataset::getObject(chstr name)
 	{
 		int dot = name.indexOf('.');
@@ -1446,32 +1422,32 @@ namespace aprilui
 		return dataset->getAnimator(name(dot + 1, -1));
 	}
 
-	bool Dataset::hasObject(chstr name)
+	bool Dataset::hasObject(chstr name) const
 	{
 		return (this->tryGetObject(name) != NULL);
 	}
 	
-	bool Dataset::hasAnimator(chstr name)
+	bool Dataset::hasAnimator(chstr name) const
 	{
 		return (this->tryGetAnimator(name) != NULL);
 	}
 	
-	bool Dataset::hasTexture(chstr name)
+	bool Dataset::hasTexture(chstr name) const
 	{
 		return this->textures.hasKey(name);
 	}
 	
-	bool Dataset::hasImage(chstr name)
+	bool Dataset::hasImage(chstr name) const
 	{
 		return this->images.hasKey(name);
 	}
 
-	bool Dataset::hasStyle(chstr name)
+	bool Dataset::hasStyle(chstr name) const
 	{
 		return this->styles.hasKey(name);
 	}
 
-	Object* Dataset::tryGetObject(chstr name)
+	Object* Dataset::tryGetObject(chstr name) const
 	{
 		int dot = name.indexOf('.');
 		if (dot < 0)
@@ -1489,7 +1465,7 @@ namespace aprilui
 		return (dataset != NULL ? dataset->tryGetObject(name(dot + 1, -1)) : NULL);
 	}
 
-	Animator* Dataset::tryGetAnimator(chstr name)
+	Animator* Dataset::tryGetAnimator(chstr name) const
 	{
 		int dot = name.indexOf('.');
 		if (dot < 0)

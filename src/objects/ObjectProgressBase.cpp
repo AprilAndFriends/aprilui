@@ -74,7 +74,7 @@ namespace aprilui
 		this->setMaskImage(name != "" ? this->getDataset()->getImage(name) : NULL);
 	}
 
-	harray<BaseImage*> ProgressBase::_getUsedImages()
+	harray<BaseImage*> ProgressBase::_getUsedImages() const
 	{
 		harray<BaseImage*> images;
 		images += this->progressImage;

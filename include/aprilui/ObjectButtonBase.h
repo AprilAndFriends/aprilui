@@ -42,11 +42,11 @@ namespace aprilui
 		void setDisabledColor(april::Color value);
 		HL_DEFINE_IS(hovered, Hovered);
 		HL_DEFINE_IS(pushed, Pushed);
-		virtual hstr getName() = 0;
-		virtual bool isCursorInside() = 0;
-		virtual int getFocusIndex() = 0;
-		virtual Object* getParent() = 0;
-		virtual Dataset* getDataset() = 0;
+		virtual hstr getName() const = 0;
+		virtual bool isCursorInside() const = 0;
+		virtual int getFocusIndex() const = 0;
+		virtual Object* getParent() const = 0;
+		virtual Dataset* getDataset() const = 0;
 
 		harray<PropertyDescription> getPropertyDescriptions();
 

@@ -35,7 +35,7 @@ namespace aprilui
 		return new Label(name);
 	}
 
-	Dataset* Label::getDataset()
+	Dataset* Label::getDataset() const
 	{
 		return Object::getDataset();
 	}

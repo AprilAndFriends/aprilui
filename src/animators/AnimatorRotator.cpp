@@ -32,7 +32,7 @@ namespace aprilui
 			return new Rotator(name);
 		}
 
-		float Rotator::_getObjectValue()
+		float Rotator::_getObjectValue() const
 		{
 			return this->parent->getAngle();
 		}

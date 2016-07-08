@@ -32,7 +32,7 @@ namespace aprilui
 			return new ZOrderChanger(name);
 		}
 
-		float ZOrderChanger::_getObjectValue()
+		float ZOrderChanger::_getObjectValue() const
 		{
 			return (float)this->parent->getZOrder();
 		}

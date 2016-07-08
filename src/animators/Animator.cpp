@@ -105,37 +105,17 @@ namespace aprilui
 		this->discreteStep = hmax(value, 0);
 	}
 
-	bool Animator::isAnimated()
+	bool Animator::isAnimated() const
 	{
-		if (!this->enabled)
-		{
-			return false;
-		}
-		if (this->delay > 0.0f)
-		{
-			return false;
-		}
-		if (this->isExpired())
-		{
-			return false;
-		}
-		return true;
+		return (this->enabled && this->delay <= 0.0f && !this->isExpired());
 	}
 	
-	bool Animator::isWaitingAnimation()
+	bool Animator::isWaitingAnimation() const
 	{
-		if (!this->enabled)
-		{
-			return false;
-		}
-		if (this->isExpired())
-		{
-			return false;
-		}
-		return true;
+		return (this->enabled && !this->isExpired());
 	}
 	
-	bool Animator::isExpired()
+	bool Animator::isExpired() const
 	{
 		return (!this->enabled || this->periods >= 0.0f && this->timer * habs(this->speed) >= this->periods);
 	}

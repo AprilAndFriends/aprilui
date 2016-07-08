@@ -36,12 +36,12 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		hstr getName();
-		int getFocusIndex();
-		Object* getParent();
-		Dataset* getDataset();
-		bool isCursorInside();
-		bool isSelected();
+		hstr getName() const;
+		int getFocusIndex() const;
+		Object* getParent() const;
+		Dataset* getDataset() const;
+		bool isCursorInside() const;
+		bool isSelected() const;
 
 		void notifyEvent(chstr type, EventArgs* args);
 
@@ -56,7 +56,7 @@ namespace aprilui
 		void _update(float timeDelta);
 		void _draw();
 
-		april::Color _getCurrentBackgroundColor();
+		april::Color _getCurrentBackgroundColor() const;
 		void _setSelected();
 
 		bool _mouseDown(april::Key keyCode);

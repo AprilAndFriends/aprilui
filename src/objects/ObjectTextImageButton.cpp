@@ -50,7 +50,7 @@ namespace aprilui
 		return new TextImageButton(name);
 	}
 
-	Dataset* TextImageButton::getDataset()
+	Dataset* TextImageButton::getDataset() const
 	{
 		return ImageButton::getDataset();
 	}

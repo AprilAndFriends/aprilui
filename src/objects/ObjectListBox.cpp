@@ -70,12 +70,12 @@ namespace aprilui
 		}
 	}
 
-	ListBoxItem* ListBox::getSelected()
+	ListBoxItem* ListBox::getSelected() const
 	{
 		return (hbetweenIE(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
 	}
 
-	int ListBox::getItemCount()
+	int ListBox::getItemCount() const
 	{
 		return this->items.size();
 	}

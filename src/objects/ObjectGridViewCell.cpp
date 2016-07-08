@@ -51,32 +51,32 @@ namespace aprilui
 		return (Container::getPropertyDescriptions() + GridViewCell::_propertyDescriptions);
 	}
 
-	hstr GridViewCell::getName()
+	hstr GridViewCell::getName() const
 	{
 		return Container::getName();
 	}
 
-	int GridViewCell::getFocusIndex()
+	int GridViewCell::getFocusIndex() const
 	{
 		return Container::getFocusIndex();
 	}
 
-	Object* GridViewCell::getParent()
+	Object* GridViewCell::getParent() const
 	{
 		return Container::getParent();
 	}
 
-	Dataset* GridViewCell::getDataset()
+	Dataset* GridViewCell::getDataset() const
 	{
 		return Container::getDataset();
 	}
 
-	bool GridViewCell::isCursorInside()
+	bool GridViewCell::isCursorInside() const
 	{
 		return Container::isCursorInside();
 	}
 
-	bool GridViewCell::isSelected()
+	bool GridViewCell::isSelected() const
 	{
 		return (this->_gridView != NULL && hbetweenIE(this->_gridView->selectedIndex, 0, this->_gridView->cells.size()) &&
 			this->_gridView->cells[this->_gridView->selectedIndex] == this);
@@ -113,7 +113,7 @@ namespace aprilui
 		return ButtonBase::_findHoverObject();
 	}
 
-	april::Color GridViewCell::_getCurrentBackgroundColor()
+	april::Color GridViewCell::_getCurrentBackgroundColor() const
 	{
 		if (this->_gridView != NULL)
 		{

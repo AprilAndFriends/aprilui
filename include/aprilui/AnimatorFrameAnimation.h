@@ -34,7 +34,7 @@ namespace aprilui
 			HL_DEFINE_GETSET(hstr, imageBaseName, ImageBaseName);
 			HL_DEFINE_GETSET(int, firstFrame, FirstFrame);
 			HL_DEFINE_GETSET(int, frameCount, FrameCount);
-			bool isAnimated();
+			bool isAnimated() const;
 
 			harray<PropertyDescription> getPropertyDescriptions();
 
@@ -48,7 +48,7 @@ namespace aprilui
 			int firstFrame;
 			int frameCount;
 			
-			inline float _getObjectValue() { return 0.0f; }
+			inline float _getObjectValue() const { return 0.0f; }
 			inline void _setObjectValue(float value) { }
 
 			void _update(float timeDelta);

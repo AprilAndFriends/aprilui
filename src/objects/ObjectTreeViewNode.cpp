@@ -49,37 +49,37 @@ namespace aprilui
 		return new TreeViewNode(name);
 	}
 
-	hstr TreeViewNode::getName()
+	hstr TreeViewNode::getName() const
 	{
 		return Container::getName();
 	}
 
-	int TreeViewNode::getFocusIndex()
+	int TreeViewNode::getFocusIndex() const
 	{
 		return Container::getFocusIndex();
 	}
 
-	Object* TreeViewNode::getParent()
+	Object* TreeViewNode::getParent() const
 	{
 		return Container::getParent();
 	}
 
-	Dataset* TreeViewNode::getDataset()
+	Dataset* TreeViewNode::getDataset() const
 	{
 		return Container::getDataset();
 	}
 
-	bool TreeViewNode::isCursorInside()
+	bool TreeViewNode::isCursorInside() const
 	{
 		return Container::isCursorInside();
 	}
 
-	bool TreeViewNode::isExpanded()
+	bool TreeViewNode::isExpanded() const
 	{
 		return (this->nodes.size() > 0 && this->expander != NULL && this->expander->isDerivedVisible() && this->expander->isToggled());
 	}
 
-	bool TreeViewNode::isSelected()
+	bool TreeViewNode::isSelected() const
 	{
 		return (this->_treeView != NULL && hbetweenIE(this->_treeView->selectedIndex, 0, this->_treeView->items.size()) &&
 			this->_treeView->items[this->_treeView->selectedIndex] == this);
@@ -282,7 +282,7 @@ namespace aprilui
 		return Container::triggerEvent(type, userData);
 	}
 
-	april::Color TreeViewNode::_getCurrentBackgroundColor()
+	april::Color TreeViewNode::_getCurrentBackgroundColor() const
 	{
 		if (this->_treeView != NULL)
 		{

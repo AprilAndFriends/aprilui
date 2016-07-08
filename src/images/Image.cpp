@@ -313,7 +313,7 @@ namespace aprilui
 		}
 	}
 
-	grect Image::_makeClippedSrcRect()
+	grect Image::_makeClippedSrcRect() const
 	{
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{

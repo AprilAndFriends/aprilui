@@ -76,22 +76,22 @@ namespace aprilui
 		}
 	}
 
-	GridViewCell* GridView::getSelected()
+	GridViewCell* GridView::getSelected() const
 	{
 		return (hbetweenIE(this->selectedIndex, 0, this->cells.size()) ? this->cells[this->selectedIndex] : NULL);
 	}
 
-	int GridView::getRowCount()
+	int GridView::getRowCount() const
 	{
 		return this->rows.size();
 	}
 
-	int GridView::getCellCount()
+	int GridView::getCellCount() const
 	{
 		return this->cells.size();
 	}
 
-	int GridView::getItemCount()
+	int GridView::getItemCount() const
 	{
 		return this->cells.size();
 	}

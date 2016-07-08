@@ -47,10 +47,10 @@ namespace aprilui
 		static Object* createInstance(chstr name);
 		
 		HL_DEFINE_GETSET(Direction, direction, Direction);
-		Dataset* getDataset();
-		BaseImage* getImage();
+		Dataset* getDataset() const;
+		BaseImage* getImage() const;
 		void setImage(BaseImage* image);
-		hstr getImageName();
+		hstr getImageName() const;
 		void setImageByName(chstr name);
 
 		harray<PropertyDescription> getPropertyDescriptions();
@@ -63,7 +63,7 @@ namespace aprilui
 	protected:
 		Direction direction;
 		
-		harray<BaseImage*> _getUsedImages();
+		harray<BaseImage*> _getUsedImages() const;
 
 		void _draw();
 		harray<april::TexturedVertex> _calcVertices(grect rect, float progress, Direction direction);

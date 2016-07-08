@@ -46,10 +46,10 @@ namespace aprilui
 		HL_DEFINE_ISSET(stretching, Stretching);
 		HL_DEFINE_GETSET(Direction, direction, Direction);
 		HL_DEFINE_ISSET(interactable, Interactable);
-		Dataset* getDataset();
-		BaseImage* getImage();
+		Dataset* getDataset() const;
+		BaseImage* getImage() const;
 		void setImage(BaseImage* image);
-		hstr getImageName();
+		hstr getImageName() const;
 		void setImageByName(chstr name);
 
 		harray<PropertyDescription> getPropertyDescriptions();
@@ -65,7 +65,7 @@ namespace aprilui
 		bool interactable;
 		bool pushed;
 
-		harray<BaseImage*> _getUsedImages();
+		harray<BaseImage*> _getUsedImages() const;
 
 		grect _calcRectDirection(grect rect, float progress, Direction direction);
 		

@@ -63,9 +63,9 @@ namespace aprilui
 		inline float (*getCustomFunction())(Animator*, float) { return this->customFunction; }
 		inline void setCustomFunction(float (*value)(Animator*, float)) { this->customFunction = value; }
 
-		bool isAnimated();
-		bool isWaitingAnimation();
-		bool isExpired();
+		bool isAnimated() const;
+		bool isWaitingAnimation() const;
+		bool isExpired() const;
 		void setTime(float value);
 		/// @note Same as setTimer() but in periods instead of seconds.
 		void setPeriodsTimer(float value);
@@ -107,7 +107,7 @@ namespace aprilui
 		void _valueUpdateSimple(float timeDelta);
 		void _valueUpdateUChar(float timeDelta);
 
-		virtual float _getObjectValue() = 0;
+		virtual float _getObjectValue() const = 0;
 		virtual void _setObjectValue(float value) = 0;
 
 	private:

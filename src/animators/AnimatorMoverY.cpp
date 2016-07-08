@@ -32,7 +32,7 @@ namespace aprilui
 			return new MoverY(name);
 		}
 
-		float MoverY::_getObjectValue()
+		float MoverY::_getObjectValue() const
 		{
 			return this->parent->getY();
 		}

@@ -37,7 +37,7 @@ namespace aprilui
 		return new OptionButton(name);
 	}
 
-	int OptionButton::getOptionCount()
+	int OptionButton::getOptionCount() const
 	{
 		return (this->parent != NULL ? this->parent->getChildrenObjects().dynamicCast<OptionButton*>().size() : 0);
 	}

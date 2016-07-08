@@ -33,8 +33,7 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 		
-		Dataset* getDataset();
-		unsigned char getDerivedAlpha();
+		Dataset* getDataset() const;
 
 		harray<PropertyDescription> getPropertyDescriptions();
 

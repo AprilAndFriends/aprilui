@@ -39,12 +39,12 @@ namespace aprilui
 		return new ProgressCircle(name);
 	}
 
-	Dataset* ProgressCircle::getDataset()
+	Dataset* ProgressCircle::getDataset() const
 	{
 		return ImageBox::getDataset();
 	}
 
-	BaseImage* ProgressCircle::getImage()
+	BaseImage* ProgressCircle::getImage() const
 	{
 		return ImageBox::getImage();
 	}
@@ -54,7 +54,7 @@ namespace aprilui
 		ImageBox::setImage(image);
 	}
 
-	hstr ProgressCircle::getImageName()
+	hstr ProgressCircle::getImageName() const
 	{
 		return ImageBox::getImageName();
 	}
@@ -64,7 +64,7 @@ namespace aprilui
 		ImageBox::setImageByName(name);
 	}
 
-	harray<BaseImage*> ProgressCircle::_getUsedImages()
+	harray<BaseImage*> ProgressCircle::_getUsedImages() const
 	{
 		return (ProgressBase::_getUsedImages() + ImageBox::_getUsedImages());
 	}

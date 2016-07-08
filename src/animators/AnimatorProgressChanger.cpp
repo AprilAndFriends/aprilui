@@ -35,7 +35,7 @@ namespace aprilui
 			return new ProgressChanger(name);
 		}
 
-		float ProgressChanger::_getObjectValue()
+		float ProgressChanger::_getObjectValue() const
 		{
 			ProgressBase* progressObject = dynamic_cast<ProgressBase*>(this->parent);
 			if (progressObject == NULL)

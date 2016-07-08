@@ -75,7 +75,7 @@ namespace aprilui
 		hstr toggledPushedImageName;
 		hstr toggledDisabledImageName;
 
-		harray<BaseImage*> _getUsedImages();
+		harray<BaseImage*> _getUsedImages() const;
 
 		void _update(float timeDelta);
 		void _draw();

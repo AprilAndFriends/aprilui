@@ -44,12 +44,12 @@ namespace aprilui
 		return new ProgressBar(name);
 	}
 
-	Dataset* ProgressBar::getDataset()
+	Dataset* ProgressBar::getDataset() const
 	{
 		return ImageBox::getDataset();
 	}
 
-	BaseImage* ProgressBar::getImage()
+	BaseImage* ProgressBar::getImage() const
 	{
 		return ImageBox::getImage();
 	}
@@ -59,7 +59,7 @@ namespace aprilui
 		ImageBox::setImage(image);
 	}
 
-	hstr ProgressBar::getImageName()
+	hstr ProgressBar::getImageName() const
 	{
 		return ImageBox::getImageName();
 	}
@@ -69,7 +69,7 @@ namespace aprilui
 		ImageBox::setImageByName(name);
 	}
 	
-	harray<BaseImage*> ProgressBar::_getUsedImages()
+	harray<BaseImage*> ProgressBar::_getUsedImages() const
 	{
 		return (ProgressBase::_getUsedImages() + ImageBox::_getUsedImages());
 	}

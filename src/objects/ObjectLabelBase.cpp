@@ -200,7 +200,7 @@ namespace aprilui
 		return false;
 	}
 
-	april::Color LabelBase::_makeBackgroundDrawColor(april::Color drawColor)
+	april::Color LabelBase::_makeBackgroundDrawColor(april::Color drawColor) const
 	{
 		return aprilui::makeModifiedDrawColor(this->backgroundColor, drawColor);
 	}

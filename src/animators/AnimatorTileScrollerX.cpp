@@ -35,7 +35,7 @@ namespace aprilui
 			return new TileScrollerX(name);
 		}
 
-		float TileScrollerX::_getObjectValue()
+		float TileScrollerX::_getObjectValue() const
 		{
 			TileImage* image = this->_getParentsTileImage();
 			return (image != NULL ? image->getScrollX() : 0.0f);
@@ -50,7 +50,7 @@ namespace aprilui
 			}
 		}
 
-		TileImage* TileScrollerX::_getParentsTileImage()
+		TileImage* TileScrollerX::_getParentsTileImage() const
 		{
 			hstr parentName = (this->parent != NULL ? this->parent->getName() : "NULL");
 			ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);

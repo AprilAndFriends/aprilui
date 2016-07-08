@@ -32,7 +32,7 @@ namespace aprilui
 			return new BlueChanger(name);
 		}
 
-		float BlueChanger::_getObjectValue()
+		float BlueChanger::_getObjectValue() const
 		{
 			return (float)this->parent->getBlue();
 		}

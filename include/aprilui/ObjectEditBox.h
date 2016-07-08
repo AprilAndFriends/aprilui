@@ -32,11 +32,11 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 		
-		hstr getName();
-		int getFocusIndex();
-		Object* getParent();
-		Dataset* getDataset();
-		bool isCursorInside();
+		hstr getName() const;
+		int getFocusIndex() const;
+		Object* getParent() const;
+		Dataset* getDataset() const;
+		bool isCursorInside() const;
 
 		HL_DEFINE_GET(hstr, emptyText, EmptyText);
 		void setEmptyText(chstr value);
@@ -63,8 +63,8 @@ namespace aprilui
 		HL_DEFINE_GET(grect, caretRect, CaretRect);
 		void setText(chstr value);
 		void setFocused(bool value);
-		hstr getSelectedText();
-		hstr getDisplayedText();
+		hstr getSelectedText() const;
+		hstr getDisplayedText() const;
 		void setMinAutoScale(float value);
 
 		harray<PropertyDescription> getPropertyDescriptions();
@@ -97,10 +97,10 @@ namespace aprilui
 		static hstr defaultFilterEmail;
 		static hstr defaultFilterEmailComplete;
 
-		DEPRECATED_ATTRIBUTE inline int getCursorIndex() { return getCaretIndex(); }
+		DEPRECATED_ATTRIBUTE inline int getCursorIndex() const { return getCaretIndex(); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndex(int value) { this->setCaretIndex(value); }
 		DEPRECATED_ATTRIBUTE inline void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
-		DEPRECATED_ATTRIBUTE inline gvec2 getCaretPosition() { return gvec2(this->caretRect.x, this->caretRect.y + this->caretRect.h * 0.5f); }
+		DEPRECATED_ATTRIBUTE inline gvec2 getCaretPosition() const { return gvec2(this->caretRect.x, this->caretRect.y + this->caretRect.h * 0.5f); }
 		
 	protected:
 		hstr emptyText;
@@ -139,9 +139,9 @@ namespace aprilui
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 
-		april::Color _makeSelectionDrawColor(april::Color drawColor);
+		april::Color _makeSelectionDrawColor(april::Color drawColor) const;
 
-		void _getBaseOffset(gvec2& offset, float& hf);
+		void _getBaseOffset(gvec2& offset, float& hf) const;
 
 		void _updateSelectionCount(int previousCaretIndex);
 		void _caretMoveStart();

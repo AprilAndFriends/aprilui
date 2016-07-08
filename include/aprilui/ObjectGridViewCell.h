@@ -37,14 +37,14 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		hstr getName();
-		int getFocusIndex();
-		Object* getParent();
-		Dataset* getDataset();
-		bool isCursorInside();
+		hstr getName() const;
+		int getFocusIndex() const;
+		Object* getParent() const;
+		Dataset* getDataset() const;
+		bool isCursorInside() const;
 
 		HL_DEFINE_ISSET(selectable, Selectable);
-		bool isSelected();
+		bool isSelected() const;
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
@@ -66,7 +66,7 @@ namespace aprilui
 		void _update(float timeDelta);
 		void _draw();
 
-		april::Color _getCurrentBackgroundColor();
+		april::Color _getCurrentBackgroundColor() const;
 		void _setSelected();
 		aprilui::Object* _findHoverObject();
 

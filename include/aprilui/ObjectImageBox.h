@@ -35,9 +35,9 @@ namespace aprilui
 		
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		virtual inline BaseImage* getImage() { return this->image; }
+		virtual inline BaseImage* getImage() const { return this->image; }
 		virtual void setImage(BaseImage* value);
-		virtual inline hstr getImageName() { return this->imageName; }
+		virtual inline hstr getImageName() const { return this->imageName; }
 		virtual void setImageByName(chstr name);
 		
 		/// @brief Optimized version.
@@ -52,7 +52,7 @@ namespace aprilui
 		BaseImage* image;
 		hstr imageName;
 		
-		harray<BaseImage*> _getUsedImages();
+		harray<BaseImage*> _getUsedImages() const;
 
 		void _draw();
 		

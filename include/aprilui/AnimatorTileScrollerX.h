@@ -34,9 +34,9 @@ namespace aprilui
 			static Animator* createInstance(chstr name);
 			
 		protected:
-			float _getObjectValue();
+			float _getObjectValue() const;
 			void _setObjectValue(float value);
-			TileImage* _getParentsTileImage();
+			TileImage* _getParentsTileImage() const;
 			
 			void _update(float timeDelta);
 

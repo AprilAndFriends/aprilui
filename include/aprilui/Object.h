@@ -35,7 +35,7 @@ namespace aprilui
 	class EventArgs;
 	class Object;
 	
-	typedef bool (*CustomPointInsideCallback)(Object*, gvec2);
+	typedef bool (*CustomPointInsideCallback)(const Object*, const gvec2&);
 
 	class apriluiExport Object : public BaseObject
 	{
@@ -53,7 +53,7 @@ namespace aprilui
 		Object(chstr name);
 		~Object();
 		inline hstr getClassName() const { return "Object"; }
-		Object* cloneTree();
+		Object* cloneTree() const;
 
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(grect value);
@@ -67,10 +67,10 @@ namespace aprilui
 		void setWidth(float value);
 		HL_DEFINE_GET(float, rect.h, Height);
 		void setHeight(float value);
-		inline gvec2 getPosition() { return this->rect.getPosition(); }
+		inline gvec2 getPosition() const { return this->rect.getPosition(); }
 		inline void setPosition(gvec2 value) { this->rect.setPosition(value); }
 		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
-		inline gvec2 getSize() { return this->rect.getSize(); }
+		inline gvec2 getSize() const { return this->rect.getSize(); }
 		void setSize(gvec2 value);
 		void setSize(float w, float h);
 
@@ -85,9 +85,9 @@ namespace aprilui
 		HL_DEFINE_GETSET(unsigned char, color.b, Blue);
 		HL_DEFINE_GETSET(unsigned char, color.a, Alpha);
 
-		inline bool isVisible() { return (this->visible && this->color.a > 0); }
+		inline bool isVisible() const { return (this->visible && this->color.a > 0); }
 		HL_DEFINE_SET(bool, visible, Visible);
-		inline bool getVisibilityFlag() { return this->visible; }
+		inline bool getVisibilityFlag() const { return this->visible; }
 
 		HL_DEFINE_GETSET(gvec2, scaleFactor, Scale);
 		inline void setScale(float x, float y) { this->scaleFactor.set(x, y); }
@@ -105,20 +105,20 @@ namespace aprilui
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
 		HL_DEFINE_ISSET(clip, Clip);
-		virtual inline int getFocusIndex() { return this->focusIndex; }
+		virtual inline int getFocusIndex() const { return this->focusIndex; }
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
-		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
+		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
 
 		harray<PropertyDescription> getPropertyDescriptions();
 
-		virtual bool isFocused();
+		bool isFocused() const;
 		virtual void setFocused(bool focused);
-		bool isCursorInside();
+		virtual bool isCursorInside() const;
 		Object* getChildUnderCursor();
 
-		harray<BaseImage*> getUsedImages();
-		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL);
+		harray<BaseImage*> getUsedImages() const;
+		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL) const;
 
 		void addChild(BaseObject* object);
 		void removeChild(BaseObject* object);
@@ -127,30 +127,30 @@ namespace aprilui
 		void removeChildren(bool recursive = false);
 		void destroyChildren();
 
-		Object* getChildUnderPoint(gvec2 pos);
-		Object* getChildUnderPoint(float x, float y);
+		Object* getChildUnderPoint(gvec2 pos) const;
+		Object* getChildUnderPoint(float x, float y) const;
 		virtual void clearChildUnderCursor();
-		virtual bool isPointInside(gvec2 position);
-		bool angleEquals(float angle);
+		virtual bool isPointInside(gvec2 position) const;
+		bool angleEquals(float angle) const;
 
-		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
-		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
+		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL) const;
 
-		harray<gvec2> getDerivedPoints(harray<gvec2> points, aprilui::Object* overrideRoot = NULL);
-		gvec2 getDerivedPoint(gvec2 point, aprilui::Object* overrideRoot = NULL);
-		grect getBoundingRect(aprilui::Object* overrideRoot = NULL);
+		harray<gvec2> getDerivedPoints(harray<gvec2> points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2 getDerivedPoint(gvec2 point, aprilui::Object* overrideRoot = NULL) const;
+		grect getBoundingRect(aprilui::Object* overrideRoot = NULL) const;
 		/// @note The points are ordered as top-left, top-right, bottom-left, bottom-right within the local space.
-		harray<gvec2> getDerivedCorners(aprilui::Object* overrideRoot = NULL);
+		harray<gvec2> getDerivedCorners(aprilui::Object* overrideRoot = NULL) const;
 
-		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
-		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
-		gvec2 getDerivedPivot(aprilui::Object* overrideRoot = NULL);
-		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
-		float getDerivedAngle(aprilui::Object* overrideRoot = NULL);
-		bool isDerivedVisible();
-		virtual bool isAnimated();
-		virtual bool isWaitingAnimation();
-		bool hasDynamicAnimation();
+		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL) const;
+		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL) const;
+		gvec2 getDerivedPivot(aprilui::Object* overrideRoot = NULL) const;
+		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL) const;
+		float getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
+		bool isDerivedVisible() const;
+		bool isAnimated() const;
+		bool isWaitingAnimation() const;
+		bool hasDynamicAnimation() const;
 		
 		// if this returns true, the event is processed and is not propagated to parents or other siblings, etc.
 		// (these should usually not be overriden)
@@ -267,18 +267,18 @@ namespace aprilui
 
 		void stopAllAnimations();
 
-		DEPRECATED_ATTRIBUTE bool isClickThrough();
+		DEPRECATED_ATTRIBUTE bool isClickThrough() const;
 		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED); }
 
-		DEPRECATED_ATTRIBUTE gvec2 getCenter() { return this->getPivot(); }
+		DEPRECATED_ATTRIBUTE gvec2 getCenter() const { return this->getPivot(); }
 		DEPRECATED_ATTRIBUTE void setCenter(gvec2 value) { return this->setPivot(value); }
 		DEPRECATED_ATTRIBUTE void setCenter(float x, float y) { return this->setPivot(x, y); }
-		DEPRECATED_ATTRIBUTE float getCenterX() { return this->getPivotX(); }
+		DEPRECATED_ATTRIBUTE float getCenterX() const { return this->getPivotX(); }
 		DEPRECATED_ATTRIBUTE void setCenterX(float value) { return this->setPivotX(value); }
-		DEPRECATED_ATTRIBUTE float getCenterY() { return this->getPivotY(); }
+		DEPRECATED_ATTRIBUTE float getCenterY() const { return this->getPivotY(); }
 		DEPRECATED_ATTRIBUTE void setCenterY(float value) { return this->setPivotY(value); }
 
-		DEPRECATED_ATTRIBUTE gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL) { return this->getDerivedPivot(overrideRoot); }
+		DEPRECATED_ATTRIBUTE gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL) const { return this->getDerivedPivot(overrideRoot); }
 		DEPRECATED_ATTRIBUTE void resetCenter() { this->resetPivot(); }
 
 		DEPRECATED_ATTRIBUTE Animator* moveCenterX(float x, float speed) { return this->movePivotX(x, speed); }
@@ -347,13 +347,13 @@ namespace aprilui
 		
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
-		void _cloneChildren(harray<Object*>& objects, harray<Animator*>& animators);
+		void _cloneChildren(const harray<Object*>& objects, const harray<Animator*>& animators);
 
-		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL);
-		bool _isDerivedHitTestEnabled();
-		grect _makeDrawRect();
-		virtual april::Color _makeDrawColor();
-		virtual harray<BaseImage*> _getUsedImages();
+		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
+		bool _isDerivedHitTestEnabled() const;
+		grect _makeDrawRect() const;
+		virtual april::Color _makeDrawColor() const;
+		virtual harray<BaseImage*> _getUsedImages() const;
 
 		void _update(float timeDelta);
 		virtual void _draw();
@@ -372,7 +372,7 @@ namespace aprilui
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
 
-		DEPRECATED_ATTRIBUTE grect _getDrawRect() { return this->_makeDrawRect(); }
+		DEPRECATED_ATTRIBUTE grect _getDrawRect() const { return this->_makeDrawRect(); }
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

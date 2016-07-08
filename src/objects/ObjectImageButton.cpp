@@ -47,27 +47,27 @@ namespace aprilui
 		return new ImageButton(name);
 	}
 
-	hstr ImageButton::getName()
+	hstr ImageButton::getName() const
 	{
 		return ImageBox::getName();
 	}
 
-	int ImageButton::getFocusIndex()
+	int ImageButton::getFocusIndex() const
 	{
 		return ImageBox::getFocusIndex();
 	}
 
-	Object* ImageButton::getParent()
+	Object* ImageButton::getParent() const
 	{
 		return ImageBox::getParent();
 	}
 
-	Dataset* ImageButton::getDataset()
+	Dataset* ImageButton::getDataset() const
 	{
 		return ImageBox::getDataset();
 	}
 
-	bool ImageButton::isCursorInside()
+	bool ImageButton::isCursorInside() const
 	{
 		return ImageBox::isCursorInside();
 	}
@@ -227,7 +227,7 @@ namespace aprilui
 		this->normalImageName = this->imageName;
 	}
 	
-	harray<BaseImage*> ImageButton::_getUsedImages()
+	harray<BaseImage*> ImageButton::_getUsedImages() const
 	{
 		harray<BaseImage*> images = ImageBox::_getUsedImages();
 		images += this->normalImage;

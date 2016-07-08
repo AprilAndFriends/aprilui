@@ -32,7 +32,7 @@ namespace aprilui
 			return new ResizerX(name);
 		}
 
-		float ResizerX::_getObjectValue()
+		float ResizerX::_getObjectValue() const
 		{
 			return this->parent->getWidth();
 		}

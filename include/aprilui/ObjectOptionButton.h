@@ -32,7 +32,7 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		int getOptionCount();
+		int getOptionCount() const;
 
 		hstr getProperty(chstr name);
 

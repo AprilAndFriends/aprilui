@@ -32,7 +32,7 @@ namespace aprilui
 			return new PivotMoverY(name);
 		}
 
-		float PivotMoverY::_getObjectValue()
+		float PivotMoverY::_getObjectValue() const
 		{
 			return this->parent->getPivotY();
 		}

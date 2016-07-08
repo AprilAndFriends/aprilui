@@ -47,7 +47,7 @@ namespace aprilui
 		HL_DEFINE_IS(allowDrag, AllowDrag);
 		void setAllowDrag(bool value);
 
-		virtual int getItemCount() = 0;
+		virtual int getItemCount() const = 0;
 
 		virtual harray<PropertyDescription> getPropertyDescriptions();
 

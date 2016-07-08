@@ -75,7 +75,7 @@ namespace aprilui
 
 		void tryLoadTextureCoordinates();
 
-		DEPRECATED_ATTRIBUTE inline bool isVertical() { return this->rotated; }
+		DEPRECATED_ATTRIBUTE inline bool isVertical() const { return this->rotated; }
 		DEPRECATED_ATTRIBUTE inline void setVertical(bool value) { this->rotated = value; }
 		
 	protected:
@@ -90,7 +90,7 @@ namespace aprilui
 		bool invertY;
 		april::TexturedVertex vertices[APRILUI_IMAGE_MAX_VERTICES];
 
-		grect _makeClippedSrcRect();
+		grect _makeClippedSrcRect() const;
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

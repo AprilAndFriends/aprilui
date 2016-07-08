@@ -42,32 +42,32 @@ namespace aprilui
 		return new ListBoxItem(name);
 	}
 
-	hstr ListBoxItem::getName()
+	hstr ListBoxItem::getName() const
 	{
 		return Label::getName();
 	}
 
-	int ListBoxItem::getFocusIndex()
+	int ListBoxItem::getFocusIndex() const
 	{
 		return Label::getFocusIndex();
 	}
 
-	Object* ListBoxItem::getParent()
+	Object* ListBoxItem::getParent() const
 	{
 		return Label::getParent();
 	}
 
-	Dataset* ListBoxItem::getDataset()
+	Dataset* ListBoxItem::getDataset() const
 	{
 		return Label::getDataset();
 	}
 
-	bool ListBoxItem::isCursorInside()
+	bool ListBoxItem::isCursorInside() const
 	{
 		return Label::isCursorInside();
 	}
 
-	bool ListBoxItem::isSelected()
+	bool ListBoxItem::isSelected() const
 	{
 		return (this->_listBox != NULL && hbetweenIE(this->_listBox->selectedIndex, 0, this->_listBox->items.size()) &&
 			this->_listBox->items[this->_listBox->selectedIndex] == this);
@@ -164,7 +164,7 @@ namespace aprilui
 		Label::_draw();
 	}
 
-	april::Color ListBoxItem::_getCurrentBackgroundColor()
+	april::Color ListBoxItem::_getCurrentBackgroundColor() const
 	{
 		if (this->_listBox != NULL)
 		{

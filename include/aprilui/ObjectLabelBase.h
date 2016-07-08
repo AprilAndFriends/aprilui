@@ -64,7 +64,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
 		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 
-		virtual Dataset* getDataset() = 0;
+		virtual Dataset* getDataset() const = 0;
 
 		virtual harray<PropertyDescription> getPropertyDescriptions();
 
@@ -84,7 +84,7 @@ namespace aprilui
 
 		static float defaultMinAutoScale;
 
-		DEPRECATED_ATTRIBUTE atres::TextEffect getFontEffect() { return this->getEffect(); }
+		DEPRECATED_ATTRIBUTE atres::TextEffect getFontEffect() const { return this->getEffect(); }
 		DEPRECATED_ATTRIBUTE void setFontEffect(atres::TextEffect value) { this->setEffect(value); }
 		
 	protected:
@@ -105,7 +105,7 @@ namespace aprilui
 		april::Color backgroundColor;
 		bool backgroundBorder;
 
-		april::Color _makeBackgroundDrawColor(april::Color drawColor);
+		april::Color _makeBackgroundDrawColor(april::Color drawColor) const;
 		
 		void _drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor);
 		void _drawLabel(grect rect, april::Color color);

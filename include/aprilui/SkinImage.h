@@ -36,10 +36,10 @@ namespace aprilui
 		void setSkinWidth(float value);
 		HL_DEFINE_GET(float, skinRect.h, SkinHeight);
 		void setSkinHeight(float value);
-		inline gvec2 getSkinPosition() { return this->skinRect.getPosition(); }
+		inline gvec2 getSkinPosition() const { return this->skinRect.getPosition(); }
 		void setSkinPosition(gvec2 value);
 		void setSkinPosition(float x, float y);
-		inline gvec2 getSkinSize() { return this->skinRect.getSize(); }
+		inline gvec2 getSkinSize() const { return this->skinRect.getSize(); }
 		void setSkinSize(gvec2 value);
 		void setSkinSize(float w, float h);
 		HL_DEFINE_IS(tiledBorders, TiledBorders);

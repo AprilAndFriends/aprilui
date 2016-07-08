@@ -41,8 +41,8 @@ namespace aprilui
 		HL_DEFINE_GET(april::Color, oddColor, OddColor);
 		void setOddColor(april::Color value);
 		HL_DEFINE_GET(harray<ListBoxItem*>, items, Items);
-		ListBoxItem* getSelected();
-		int getItemCount();
+		ListBoxItem* getSelected() const;
+		int getItemCount() const;
 
 		harray<PropertyDescription> getPropertyDescriptions();
 

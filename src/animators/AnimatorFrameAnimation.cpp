@@ -43,21 +43,9 @@ namespace aprilui
 			return new FrameAnimation(name);
 		}
 
-		bool FrameAnimation::isAnimated()
+		bool FrameAnimation::isAnimated() const
 		{
-			if (!Animator::isAnimated())
-			{
-				return false;
-			}
-			if (this->imageBaseName == "")
-			{
-				return false;
-			}
-			if (this->frameCount <= 0)
-			{
-				return false;
-			}
-			return true;
+			return (Animator::isAnimated() && this->imageBaseName != "" && this->frameCount > 0);
 		}
 
 		harray<PropertyDescription> FrameAnimation::getPropertyDescriptions()

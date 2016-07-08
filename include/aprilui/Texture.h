@@ -35,12 +35,12 @@ namespace aprilui
 		HL_DEFINE_GET(gvec2, scale, Scale);
 		HL_DEFINE_GET(float, unusedTime, UnusedTime);
 		HL_DEFINE_GET(harray<Texture*>, links, Links);
-		int getWidth();
-		int getHeight();
-		bool isLoaded();
-		bool isLoadedAsync();
-		bool isAsyncLoadQueued();
-		bool isValid();
+		int getWidth() const;
+		int getHeight() const;
+		bool isLoaded() const;
+		bool isLoadedAsync() const;
+		bool isAsyncLoadQueued() const;
+		bool isValid() const;
 		void setFilter(april::Texture::Filter value);
 		void setAddressMode(april::Texture::AddressMode value);
 

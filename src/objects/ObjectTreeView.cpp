@@ -110,7 +110,7 @@ namespace aprilui
 		}
 	}
 
-	TreeViewNode* TreeView::getSelected()
+	TreeViewNode* TreeView::getSelected() const
 	{
 		return (hbetweenIE(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
 	}
@@ -131,12 +131,12 @@ namespace aprilui
 		this->setSelectedIndex(this->items.indexOf(node));
 	}
 
-	int TreeView::getItemCount()
+	int TreeView::getItemCount() const
 	{
 		return this->items.size();
 	}
 
-	bool TreeView::_findNode(harray<int> nodeIndices, TreeViewNode** node)
+	bool TreeView::_findNode(harray<int> nodeIndices, TreeViewNode** node) const
 	{
 		*node = NULL;
 		if (nodeIndices.size() == 0)
@@ -280,7 +280,7 @@ namespace aprilui
 		}
 	}
 
-	TreeViewNode* TreeView::getItemAt(harray<int> nodeIndices)
+	TreeViewNode* TreeView::getItemAt(harray<int> nodeIndices) const
 	{
 		if (nodeIndices.size() == 0)
 		{

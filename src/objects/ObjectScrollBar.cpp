@@ -98,7 +98,7 @@ namespace aprilui
 		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
 	}
 
-	ScrollBarButtonBackground* ScrollBar::_getButtonBackground()
+	ScrollBarButtonBackground* ScrollBar::_getButtonBackground() const
 	{
 		return (this->_buttonBackground != NULL ? this->_buttonBackground : this->_buttonBackgroundSkinned);
 	}
@@ -127,7 +127,7 @@ namespace aprilui
 		}
 	}
 
-	ScrollBarButtonSlider* ScrollBar::_getButtonSlider()
+	ScrollBarButtonSlider* ScrollBar::_getButtonSlider() const
 	{
 		return (this->_buttonSlider != NULL ? this->_buttonSlider : this->_buttonSliderSkinned);
 	}
@@ -156,7 +156,7 @@ namespace aprilui
 		}
 	}
 
-	ScrollBarButtonForward* ScrollBar::_getButtonForward()
+	ScrollBarButtonForward* ScrollBar::_getButtonForward() const
 	{
 		return (this->_buttonForward != NULL ? this->_buttonForward : this->_buttonForwardSkinned);
 	}
@@ -185,7 +185,7 @@ namespace aprilui
 		}
 	}
 
-	ScrollBarButtonBackward* ScrollBar::_getButtonBackward()
+	ScrollBarButtonBackward* ScrollBar::_getButtonBackward() const
 	{
 		return (this->_buttonBackward != NULL ? this->_buttonBackward : this->_buttonBackwardSkinned);
 	}
@@ -400,7 +400,7 @@ namespace aprilui
 		return Object::_mouseMove();
 	}
 
-	bool ScrollBar::_canAddScrollValue()
+	bool ScrollBar::_canAddScrollValue() const
 	{
 		if (!this->disabledWhileScrolling)
 		{

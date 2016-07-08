@@ -47,14 +47,34 @@ namespace aprilui
 		}
 	}
 
-	int Texture::getWidth()
+	int Texture::getWidth() const
 	{
 		return (int)(this->texture->getWidth() * this->scale.x);
 	}
 
-	int Texture::getHeight()
+	int Texture::getHeight() const
 	{
 		return (int)(this->texture->getHeight() * this->scale.y);
+	}
+
+	bool Texture::isLoaded() const
+	{
+		return (this->texture != NULL && this->texture->isLoaded());
+	}
+
+	bool Texture::isLoadedAsync() const
+	{
+		return (this->texture != NULL && this->texture->isLoadedAsync());
+	}
+
+	bool Texture::isAsyncLoadQueued() const
+	{
+		return (this->texture != NULL && this->texture->isAsyncLoadQueued());
+	}
+
+	bool Texture::isValid() const
+	{
+		return (this->texture != NULL);
 	}
 
 	void Texture::setFilter(april::Texture::Filter value)
@@ -67,26 +87,6 @@ namespace aprilui
 	{
 		this->addressMode = value;
 		this->texture->setAddressMode(value);
-	}
-
-	bool Texture::isLoaded()
-	{
-		return (this->texture != NULL && this->texture->isLoaded());
-	}
-
-	bool Texture::isLoadedAsync()
-	{
-		return (this->texture != NULL && this->texture->isLoadedAsync());
-	}
-
-	bool Texture::isAsyncLoadQueued()
-	{
-		return (this->texture != NULL && this->texture->isAsyncLoadQueued());
-	}
-
-	bool Texture::isValid()
-	{
-		return (this->texture != NULL);
 	}
 
 	void Texture::update(float timeDelta)

@@ -41,11 +41,11 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, disabledImageName, DisabledImageName);
 		HL_DEFINE_GET(BaseImage*, normalImage, Image);
 		void setImage(BaseImage* value);
-		hstr getName();
-		int getFocusIndex();
-		Object* getParent();
-		Dataset* getDataset();
-		bool isCursorInside();
+		hstr getName() const;
+		int getFocusIndex() const;
+		Object* getParent() const;
+		Dataset* getDataset() const;
+		bool isCursorInside() const;
 		void setHoverImage(BaseImage* image);
 		void setPushedImage(BaseImage* image);
 		void setDisabledImage(BaseImage* name);
@@ -82,7 +82,7 @@ namespace aprilui
 		hstr pushedImageName;
 		hstr disabledImageName;
 		
-		harray<BaseImage*> _getUsedImages();
+		harray<BaseImage*> _getUsedImages() const;
 
 		void _update(float timeDelta);
 		void _draw();

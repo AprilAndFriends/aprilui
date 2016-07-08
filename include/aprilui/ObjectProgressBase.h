@@ -45,10 +45,10 @@ namespace aprilui
 		void setAntiProgressImageByName(chstr name);
 		void setMaskImageByName(chstr name);
 
-		virtual Dataset* getDataset() = 0;
-		virtual BaseImage* getImage() = 0;
+		virtual Dataset* getDataset() const = 0;
+		virtual BaseImage* getImage() const = 0;
 		virtual void setImage(BaseImage* image) = 0;
-		virtual hstr getImageName() = 0;
+		virtual hstr getImageName() const = 0;
 		virtual void setImageByName(chstr name) = 0;
 
 		virtual harray<PropertyDescription> getPropertyDescriptions();
@@ -71,7 +71,7 @@ namespace aprilui
 		hstr maskImageName;
 		float progress;
 		
-		virtual harray<BaseImage*> _getUsedImages();
+		virtual harray<BaseImage*> _getUsedImages() const;
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

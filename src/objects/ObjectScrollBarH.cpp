@@ -50,7 +50,7 @@ namespace aprilui
 		return new ScrollBarH(name);
 	}
 
-	grect ScrollBarH::_getBarDrawRect()
+	grect ScrollBarH::_getBarDrawRect() const
 	{
 		grect result = this->_makeDrawRect();
 		if (this->skinName == "")

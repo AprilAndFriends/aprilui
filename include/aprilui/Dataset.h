@@ -59,11 +59,11 @@ namespace aprilui
 		inline hmap<hstr, Texture*>& getTextures() { return this->textures; }
 		inline hmap<hstr, Style*>& getStyles() { return this->styles; }
 		inline hmap<hstr, hstr>& getTexts() { return this->texts; }
-		bool isLoaded();
-		hmap<hstr, BaseObject*> getAllObjects();
-		bool isAnimated();
-		bool isWaitingAnimation();
-		int getFocusedObjectIndex();
+		bool isLoaded() const;
+		hmap<hstr, BaseObject*> getAllObjects() const;
+		int getFocusedObjectIndex() const;
+		bool isAnimated() const;
+		bool isWaitingAnimation() const;
 
 		void load();
 		void unload();
@@ -84,12 +84,12 @@ namespace aprilui
 		harray<int> findAllFocusIndices();
 		
 		template <typename T>
-		inline hmap<hstr, T> getObjectsByType()
+		inline hmap<hstr, T> getObjectsByType() const
 		{
 			return this->objects.dynamicCastValues<hstr, T>();
 		}
 		template <typename T>
-		inline hmap<hstr, T> getAnimatorsByType()
+		inline hmap<hstr, T> getAnimatorsByType() const
 		{
 			return this->animators.dynamicCastValues<hstr, T>();
 		}
@@ -137,13 +137,13 @@ namespace aprilui
 		
 		virtual Object* getObject(chstr name);
 		virtual Animator* getAnimator(chstr name);
-		bool hasTexture(chstr name);
-		bool hasImage(chstr name);
-		bool hasStyle(chstr name);
-		bool hasObject(chstr name);
-		bool hasAnimator(chstr name);
-		Object* tryGetObject(chstr name);
-		Animator* tryGetAnimator(chstr name);
+		bool hasTexture(chstr name) const;
+		bool hasImage(chstr name) const;
+		bool hasStyle(chstr name) const;
+		bool hasObject(chstr name) const;
+		bool hasAnimator(chstr name) const;
+		Object* tryGetObject(chstr name) const;
+		Animator* tryGetAnimator(chstr name) const;
 
 		template <typename T>
 		inline T getObject(chstr name)

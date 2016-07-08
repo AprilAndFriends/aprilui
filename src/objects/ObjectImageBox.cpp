@@ -88,7 +88,7 @@ namespace aprilui
 		return false;
 	}
 	
-	harray<BaseImage*> ImageBox::_getUsedImages()
+	harray<BaseImage*> ImageBox::_getUsedImages() const
 	{
 		return (Object::_getUsedImages() + this->image);
 	}

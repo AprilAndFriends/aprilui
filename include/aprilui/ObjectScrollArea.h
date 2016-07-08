@@ -45,22 +45,21 @@ namespace aprilui
 		HL_DEFINE_ISSET(optimizeOobChildrenVisible, OptimizeOobChildrenVisible);
 		HL_DEFINE_ISSET(optimizeOobChildrenAwake, OptimizeOobChildrenAwake);
 		HL_DEFINE_IS(dragging, Dragging);
-		hstr getName();
-		bool isCursorInside();
-		int getFocusIndex();
-		Object* getParent();
-		Dataset* getDataset();
-		bool isScrolling();		
-		bool isScrollable();
-		bool isScrollableX();
-		bool isScrollableY();
-		
-		gvec2 getScrollOffset();
+		hstr getName() const;
+		bool isCursorInside() const;
+		int getFocusIndex() const;
+		Object* getParent() const;
+		Dataset* getDataset() const;
+		bool isScrolling() const;
+		bool isScrollable() const;
+		bool isScrollableX() const;
+		bool isScrollableY() const;
+		gvec2 getScrollOffset() const;
 		void setScrollOffset(gvec2 value);
 		void setScrollOffset(float x, float y);
-		float getScrollOffsetX();
+		float getScrollOffsetX() const;
 		void setScrollOffsetX(float value);
-		float getScrollOffsetY();
+		float getScrollOffsetY() const;
 		void setScrollOffsetY(float value);
 
 		harray<PropertyDescription> getPropertyDescriptions();
@@ -102,7 +101,7 @@ namespace aprilui
 
 		aprilui::Object* _findHoverObject();
 		void _adjustDragSpeed();
-		bool _isScrollableScrollArea(aprilui::Object* object);
+		bool _isScrollableScrollArea(aprilui::Object* object) const;
 
 		void _update(float timeDelta);
 		void _updateOobChildren();

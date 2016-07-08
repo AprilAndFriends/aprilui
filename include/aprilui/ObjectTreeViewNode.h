@@ -42,19 +42,19 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		hstr getName();
-		int getFocusIndex();
-		Object* getParent();
-		Dataset* getDataset();
-		bool isCursorInside();
+		hstr getName() const;
+		int getFocusIndex() const;
+		Object* getParent() const;
+		Dataset* getDataset() const;
+		bool isCursorInside() const;
 
 		HL_DEFINE_GET(int, depth, Depth);
 		HL_DEFINE_GET(harray<TreeViewNode*>, nodes, Nodes);
 		HL_DEFINE_GET(TreeViewExpander*, expander, Expander);
 		HL_DEFINE_GET(TreeViewImage*, image, Image);
 		HL_DEFINE_GET(TreeViewLabel*, label, Label);
-		bool isExpanded();
-		bool isSelected();
+		bool isExpanded() const;
+		bool isSelected() const;
 
 		void notifyEvent(chstr type, EventArgs* args);
 
@@ -77,7 +77,7 @@ namespace aprilui
 
 		int _updateDisplay(int offsetIndex);
 		int _calcOffset();
-		april::Color _getCurrentBackgroundColor();
+		april::Color _getCurrentBackgroundColor() const;
 		void _setSelected();
 
 		bool _mouseDown(april::Key keyCode);

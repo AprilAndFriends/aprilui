@@ -114,7 +114,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool EventReceiver::isEventRegistered(chstr type)
+	bool EventReceiver::isEventRegistered(chstr type) const
 	{
 		return this->events.hasKey(type);
 	}

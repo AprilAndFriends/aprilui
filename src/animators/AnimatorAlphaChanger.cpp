@@ -32,7 +32,7 @@ namespace aprilui
 			return new AlphaChanger(name);
 		}
 
-		float AlphaChanger::_getObjectValue()
+		float AlphaChanger::_getObjectValue() const
 		{
 			return (float)this->parent->getAlpha();
 		}

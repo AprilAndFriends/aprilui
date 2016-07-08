@@ -51,18 +51,18 @@ namespace aprilui
 		static hstr skinNameVBackwardPushed;
 
 	protected:
-		inline hstr _getSkinNameBackground() { return skinNameVBackground; }
-		inline hstr _getSkinNameSliderNormal() { return skinNameVSliderNormal; }
-		inline hstr _getSkinNameSliderHover() { return skinNameVSliderHover; }
-		inline hstr _getSkinNameSliderPushed() { return skinNameVSliderPushed; }
-		inline hstr _getSkinNameForwardNormal() { return skinNameVForwardNormal; }
-		inline hstr _getSkinNameForwardHover() { return skinNameVForwardHover; }
-		inline hstr _getSkinNameForwardPushed() { return skinNameVForwardPushed; }
-		inline hstr _getSkinNameBackwardNormal() { return skinNameVBackwardNormal; }
-		inline hstr _getSkinNameBackwardHover() { return skinNameVBackwardHover; }
-		inline hstr _getSkinNameBackwardPushed() { return skinNameVBackwardPushed; }
+		inline hstr _getSkinNameBackground() const { return skinNameVBackground; }
+		inline hstr _getSkinNameSliderNormal() const { return skinNameVSliderNormal; }
+		inline hstr _getSkinNameSliderHover() const { return skinNameVSliderHover; }
+		inline hstr _getSkinNameSliderPushed() const { return skinNameVSliderPushed; }
+		inline hstr _getSkinNameForwardNormal() const { return skinNameVForwardNormal; }
+		inline hstr _getSkinNameForwardHover() const { return skinNameVForwardHover; }
+		inline hstr _getSkinNameForwardPushed() const { return skinNameVForwardPushed; }
+		inline hstr _getSkinNameBackwardNormal() const { return skinNameVBackwardNormal; }
+		inline hstr _getSkinNameBackwardHover() const { return skinNameVBackwardHover; }
+		inline hstr _getSkinNameBackwardPushed() const { return skinNameVBackwardPushed; }
 
-		grect _getBarDrawRect();
+		grect _getBarDrawRect() const;
 
 		float _calcScrollJump(float x, float y, gvec2 size);
 		float _calcScrollMove(float x, float y);

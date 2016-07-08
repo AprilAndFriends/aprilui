@@ -154,7 +154,7 @@ namespace aprilui
 		return false;
 	}
 	
-	harray<BaseImage*> ToggleButton::_getUsedImages()
+	harray<BaseImage*> ToggleButton::_getUsedImages() const
 	{
 		harray<BaseImage*> images = ImageButton::_getUsedImages();
 		images += this->toggledNormalImage;

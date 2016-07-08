@@ -145,27 +145,27 @@ namespace aprilui
 		return (Label::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}
 
-	hstr EditBox::getName()
+	hstr EditBox::getName() const
 	{
 		return Label::getName();
 	}
 
-	int EditBox::getFocusIndex()
+	int EditBox::getFocusIndex() const
 	{
 		return Label::getFocusIndex();
 	}
 
-	Object* EditBox::getParent()
+	Object* EditBox::getParent() const
 	{
 		return Label::getParent();
 	}
 
-	Dataset* EditBox::getDataset()
+	Dataset* EditBox::getDataset() const
 	{
 		return Label::getDataset();
 	}
 
-	bool EditBox::isCursorInside()
+	bool EditBox::isCursorInside() const
 	{
 		return Label::isCursorInside();
 	}
@@ -258,12 +258,12 @@ namespace aprilui
 		}
 	}
 
-	hstr EditBox::getSelectedText()
+	hstr EditBox::getSelectedText() const
 	{
 		return (this->selectionCount != 0 ? this->text.utf8SubString(hmin(this->caretIndex, this->caretIndex + this->selectionCount), habs(this->selectionCount)) : hstr(""));
 	}
 
-	hstr EditBox::getDisplayedText()
+	hstr EditBox::getDisplayedText() const
 	{
 		return (this->passwordChar == '\0' || this->text == "" ? this->text : hstr(this->passwordChar, this->text.utf8Size()));
 	}
@@ -1080,12 +1080,12 @@ namespace aprilui
 		return (result || up || Label::_buttonUp(buttonCode));
 	}
 
-	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor)
+	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor) const
 	{
 		return aprilui::makeModifiedDrawColor(this->selectionColor, drawColor);
 	}
 
-	void EditBox::_getBaseOffset(gvec2& offset, float& hf)
+	void EditBox::_getBaseOffset(gvec2& offset, float& hf) const
 	{
 		offset.set(0.0f, 0.0f);
 		hf = 0.0f; // x height factor

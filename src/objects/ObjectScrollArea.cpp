@@ -66,55 +66,55 @@ namespace aprilui
 		return new ScrollArea(name);
 	}
 
-	hstr ScrollArea::getName()
+	hstr ScrollArea::getName() const
 	{
 		return Object::getName();
 	}
 
-	int ScrollArea::getFocusIndex()
+	int ScrollArea::getFocusIndex() const
 	{
 		return Object::getFocusIndex();
 	}
 
-	bool ScrollArea::isCursorInside()
+	bool ScrollArea::isCursorInside() const
 	{
 		return Object::isCursorInside();
 	}
 
-	Object* ScrollArea::getParent()
+	Object* ScrollArea::getParent() const
 	{
 		return Object::getParent();
 	}
 
-	Dataset* ScrollArea::getDataset()
+	Dataset* ScrollArea::getDataset() const
 	{
 		return Object::getDataset();
 	}
 
-	bool ScrollArea::isScrolling()
+	bool ScrollArea::isScrolling() const
 	{
 		return (!this->pushed && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f));
 	}
 	
-	bool ScrollArea::isScrollable()
+	bool ScrollArea::isScrollable() const
 	{
 		Container* parent = dynamic_cast<Container*>(this->parent);
 		return (parent != NULL && (this->rect.w > parent->rect.w || this->rect.h > parent->rect.h));
 	}
 	
-	bool ScrollArea::isScrollableX()
+	bool ScrollArea::isScrollableX() const
 	{
 		Container* parent = dynamic_cast<Container*>(this->parent);
 		return (parent != NULL && this->rect.w > parent->rect.w);
 	}
 	
-	bool ScrollArea::isScrollableY()
+	bool ScrollArea::isScrollableY() const
 	{
 		Container* parent = dynamic_cast<Container*>(this->parent);
 		return (parent != NULL && this->rect.h > parent->rect.h);
 	}
 
-	gvec2 ScrollArea::getScrollOffset()
+	gvec2 ScrollArea::getScrollOffset() const
 	{
 		return -this->getPosition();
 	}
@@ -131,7 +131,7 @@ namespace aprilui
 		this->setScrollOffsetY(y);
 	}
 
-	float ScrollArea::getScrollOffsetX()
+	float ScrollArea::getScrollOffsetX() const
 	{
 		return -this->getX();
 	}
@@ -142,7 +142,7 @@ namespace aprilui
 		this->_updateOobChildren();
 	}
 
-	float ScrollArea::getScrollOffsetY()
+	float ScrollArea::getScrollOffsetY() const
 	{
 		return -this->getY();
 	}
@@ -320,7 +320,7 @@ namespace aprilui
 		this->_dragTimer.set(0.0f, 0.0f);
 	}
 
-	bool ScrollArea::_isScrollableScrollArea(aprilui::Object* object)
+	bool ScrollArea::_isScrollableScrollArea(aprilui::Object* object) const
     {
         ScrollArea* scrollArea = dynamic_cast<ScrollArea*>(object);
 		return (scrollArea != NULL && scrollArea->isScrollable());
