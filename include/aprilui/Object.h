@@ -110,7 +110,7 @@ namespace aprilui
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		bool isFocused() const;
 		virtual void setFocused(bool focused);

@@ -52,7 +52,7 @@ namespace aprilui
 		return new TreeView(name);
 	}
 
-	harray<PropertyDescription> TreeView::getPropertyDescriptions()
+	harray<PropertyDescription> TreeView::getPropertyDescriptions() const
 	{
 		if (TreeView::_propertyDescriptions.size() == 0)
 		{

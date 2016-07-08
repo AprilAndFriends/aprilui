@@ -73,7 +73,7 @@ namespace aprilui
 		this->_useDisabledTextColor = true;
 	}
 
-	harray<PropertyDescription> TextImageButton::getPropertyDescriptions()
+	harray<PropertyDescription> TextImageButton::getPropertyDescriptions() const
 	{
 		if (TextImageButton::_propertyDescriptions.size() == 0)
 		{

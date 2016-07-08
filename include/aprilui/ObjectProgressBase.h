@@ -51,7 +51,7 @@ namespace aprilui
 		virtual hstr getImageName() const = 0;
 		virtual void setImageByName(chstr name) = 0;
 
-		virtual harray<PropertyDescription> getPropertyDescriptions();
+		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		/// @brief Optimized version.
 		bool trySetProgressImageByName(chstr name);

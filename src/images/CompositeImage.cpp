@@ -56,7 +56,7 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> CompositeImage::getPropertyDescriptions()
+	harray<PropertyDescription> CompositeImage::getPropertyDescriptions() const
 	{
 		if (CompositeImage::_propertyDescriptions.size() == 0)
 		{

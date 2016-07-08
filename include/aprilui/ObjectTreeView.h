@@ -61,7 +61,7 @@ namespace aprilui
 		void setSelected(harray<int> nodeIndices);
 		int getItemCount() const;
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual TreeViewNode* createItem(harray<int> nodeIndices, chstr name = "");
 		bool deleteItem(harray<int> nodeIndices);

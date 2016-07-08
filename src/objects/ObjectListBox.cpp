@@ -42,7 +42,7 @@ namespace aprilui
 		return new ListBox(name);
 	}
 
-	harray<PropertyDescription> ListBox::getPropertyDescriptions()
+	harray<PropertyDescription> ListBox::getPropertyDescriptions() const
 	{
 		if (ListBox::_propertyDescriptions.size() == 0)
 		{

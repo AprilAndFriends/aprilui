@@ -76,7 +76,7 @@ namespace aprilui
 	{
 	}
 	
-	harray<PropertyDescription> Image::getPropertyDescriptions()
+	harray<PropertyDescription> Image::getPropertyDescriptions() const
 	{
 		if (Image::_propertyDescriptions.size() == 0)
 		{

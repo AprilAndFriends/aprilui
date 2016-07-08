@@ -66,7 +66,7 @@ namespace aprilui
 		virtual float getSrcHeight() const = 0;
 		virtual void setSrcHeight(float value) = 0;
 
-		virtual harray<PropertyDescription> getPropertyDescriptions();
+		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);

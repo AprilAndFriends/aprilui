@@ -84,7 +84,7 @@ namespace aprilui
 		this->notifyEvent(Event::ScrollSkinChanged, NULL);
 	}
 
-	harray<PropertyDescription> ScrollBar::getPropertyDescriptions()
+	harray<PropertyDescription> ScrollBar::getPropertyDescriptions() const
 	{
 		if (ScrollBar::_propertyDescriptions.size() == 0)
 		{

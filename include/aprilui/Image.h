@@ -68,7 +68,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
 		inline const april::TexturedVertex* getVertices() const { return this->vertices; } // use with care!
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

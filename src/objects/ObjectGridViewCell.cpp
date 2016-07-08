@@ -42,7 +42,7 @@ namespace aprilui
 		return new GridViewCell(name);
 	}
 
-	harray<PropertyDescription> GridViewCell::getPropertyDescriptions()
+	harray<PropertyDescription> GridViewCell::getPropertyDescriptions() const
 	{
 		if (GridViewCell::_propertyDescriptions.size() == 0)
 		{

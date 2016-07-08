@@ -53,7 +53,7 @@ namespace aprilui
 		void setPushedImageByName(chstr name);
 		void setDisabledImageByName(chstr name);
 		
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		/// @brief Optimized version.
 		bool trySetHoverImageByName(chstr name);

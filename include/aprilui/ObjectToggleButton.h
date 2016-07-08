@@ -49,7 +49,7 @@ namespace aprilui
 		void setToggledPushedImageByName(chstr name);
 		void setToggledDisabledImageByName(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		/// @brief Optimized versions.
 		bool trySetToggledNormalImageByName(chstr name);

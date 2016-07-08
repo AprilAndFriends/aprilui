@@ -44,7 +44,7 @@ namespace aprilui
 		ListBoxItem* getSelected() const;
 		int getItemCount() const;
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual ListBoxItem* createItem(int index, chstr name = "");
 		bool deleteItem(int index);

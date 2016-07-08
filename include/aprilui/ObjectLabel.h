@@ -35,7 +35,7 @@ namespace aprilui
 		
 		Dataset* getDataset() const;
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

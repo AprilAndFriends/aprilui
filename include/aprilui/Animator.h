@@ -70,7 +70,7 @@ namespace aprilui
 		/// @note Same as setTimer() but in periods instead of seconds.
 		void setPeriodsTimer(float value);
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		/// @note Does not reset delay.
 		void reset();

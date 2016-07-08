@@ -38,7 +38,7 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> TileImage::getPropertyDescriptions()
+	harray<PropertyDescription> TileImage::getPropertyDescriptions() const
 	{
 		if (TileImage::_propertyDescriptions.size() == 0)
 		{

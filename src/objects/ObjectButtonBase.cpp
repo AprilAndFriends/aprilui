@@ -71,7 +71,7 @@ namespace aprilui
 		this->_useDisabledColor = true;
 	}
 
-	harray<PropertyDescription> ButtonBase::getPropertyDescriptions()
+	harray<PropertyDescription> ButtonBase::getPropertyDescriptions() const
 	{
 		if (ButtonBase::_propertyDescriptions.size() == 0)
 		{

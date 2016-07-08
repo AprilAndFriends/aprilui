@@ -48,7 +48,7 @@ namespace aprilui
 			return (Animator::isAnimated() && this->imageBaseName != "" && this->frameCount > 0);
 		}
 
-		harray<PropertyDescription> FrameAnimation::getPropertyDescriptions()
+		harray<PropertyDescription> FrameAnimation::getPropertyDescriptions() const
 		{
 			if (FrameAnimation::_propertyDescriptions.size() == 0)
 			{

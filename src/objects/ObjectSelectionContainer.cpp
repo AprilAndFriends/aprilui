@@ -49,7 +49,7 @@ namespace aprilui
 	{
 	}
 	
-	harray<PropertyDescription> SelectionContainer::getPropertyDescriptions()
+	harray<PropertyDescription> SelectionContainer::getPropertyDescriptions() const
 	{
 		if (SelectionContainer::_propertyDescriptions.size() == 0)
 		{

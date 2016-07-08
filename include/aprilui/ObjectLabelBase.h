@@ -66,7 +66,7 @@ namespace aprilui
 
 		virtual Dataset* getDataset() const = 0;
 
-		virtual harray<PropertyDescription> getPropertyDescriptions();
+		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		bool trySetTextKey(chstr textKey);
 		

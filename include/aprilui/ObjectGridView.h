@@ -51,7 +51,7 @@ namespace aprilui
 		int getCellCount() const;
 		int getItemCount() const;
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual GridViewRow* createRow(int index, chstr name = "");
 		bool deleteRow(int index);

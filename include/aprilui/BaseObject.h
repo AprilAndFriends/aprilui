@@ -43,7 +43,7 @@ namespace aprilui
 		~BaseObject();
 		virtual inline hstr getClassName() const { return "BaseObject"; }
 
-		virtual harray<PropertyDescription> getPropertyDescriptions();
+		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual hstr getName() const { return this->name; }
 		void setName(chstr value);

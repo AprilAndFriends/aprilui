@@ -67,7 +67,7 @@ namespace aprilui
 		hstr getDisplayedText() const;
 		void setMinAutoScale(float value);
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 		
 		void setCaretIndexAt(gvec2 position);
 

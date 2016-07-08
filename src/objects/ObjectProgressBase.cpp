@@ -83,7 +83,7 @@ namespace aprilui
 		return images;
 	}
 
-	harray<PropertyDescription> ProgressBase::getPropertyDescriptions()
+	harray<PropertyDescription> ProgressBase::getPropertyDescriptions() const
 	{
 		if (ProgressBase::_propertyDescriptions.size() == 0)
 		{

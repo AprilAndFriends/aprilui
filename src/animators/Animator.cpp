@@ -66,7 +66,7 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> Animator::getPropertyDescriptions()
+	harray<PropertyDescription> Animator::getPropertyDescriptions() const
 	{
 		if (Animator::_propertyDescriptions.size() == 0)
 		{

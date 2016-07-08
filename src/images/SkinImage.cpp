@@ -61,7 +61,7 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> SkinImage::getPropertyDescriptions()
+	harray<PropertyDescription> SkinImage::getPropertyDescriptions() const
 	{
 		if (SkinImage::_propertyDescriptions.size() == 0)
 		{

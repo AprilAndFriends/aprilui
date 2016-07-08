@@ -48,7 +48,7 @@ namespace aprilui
 		return new GridView(name);
 	}
 
-	harray<PropertyDescription> GridView::getPropertyDescriptions()
+	harray<PropertyDescription> GridView::getPropertyDescriptions() const
 	{
 		if (GridView::_propertyDescriptions.size() == 0)
 		{

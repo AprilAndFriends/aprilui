@@ -52,7 +52,7 @@ namespace aprilui
 		hstr getImageName() const;
 		void setImageByName(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		bool trySetImageByName(chstr name);
 

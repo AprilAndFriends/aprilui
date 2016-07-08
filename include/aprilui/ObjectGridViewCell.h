@@ -46,7 +46,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(selectable, Selectable);
 		bool isSelected() const;
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

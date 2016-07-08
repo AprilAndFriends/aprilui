@@ -76,7 +76,7 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> LabelBase::getPropertyDescriptions()
+	harray<PropertyDescription> LabelBase::getPropertyDescriptions() const
 	{
 		if (LabelBase::_propertyDescriptions.size() == 0)
 		{

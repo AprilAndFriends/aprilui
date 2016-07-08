@@ -261,7 +261,7 @@ namespace aprilui
 		}
 	}
 
-	harray<PropertyDescription> Object::getPropertyDescriptions()
+	harray<PropertyDescription> Object::getPropertyDescriptions() const
 	{
 		if (Object::_propertyDescriptions.size() == 0)
 		{

@@ -121,7 +121,7 @@ namespace aprilui
 		return new EditBox(name);
 	}
 
-	harray<PropertyDescription> EditBox::getPropertyDescriptions()
+	harray<PropertyDescription> EditBox::getPropertyDescriptions() const
 	{
 		if (EditBox::_propertyDescriptions.size() == 0)
 		{

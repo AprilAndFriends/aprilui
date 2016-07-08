@@ -62,7 +62,7 @@ namespace aprilui
 		float getScrollOffsetY() const;
 		void setScrollOffsetY(float value);
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		void snapScrollOffset();
 		void stopScrolling();

@@ -40,7 +40,7 @@ namespace aprilui
 		return Object::getDataset();
 	}
 
-	harray<PropertyDescription> Label::getPropertyDescriptions()
+	harray<PropertyDescription> Label::getPropertyDescriptions() const
 	{
 		return (Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions());
 	}

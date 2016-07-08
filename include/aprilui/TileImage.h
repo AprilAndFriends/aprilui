@@ -40,7 +40,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, scroll.y, ScrollY);
 		HL_DEFINE_ISSET(useTileCount, UseTileCount);
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 		
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);

@@ -72,7 +72,7 @@ namespace aprilui
 		return ImageBox::isCursorInside();
 	}
 
-	harray<PropertyDescription> ImageButton::getPropertyDescriptions()
+	harray<PropertyDescription> ImageButton::getPropertyDescriptions() const
 	{
 		if (ImageButton::_propertyDescriptions.size() == 0)
 		{

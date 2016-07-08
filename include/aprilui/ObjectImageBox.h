@@ -33,7 +33,7 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 		
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual inline BaseImage* getImage() const { return this->image; }
 		virtual void setImage(BaseImage* value);

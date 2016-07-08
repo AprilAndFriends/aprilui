@@ -153,7 +153,7 @@ namespace aprilui
 		this->_updateOobChildren();
 	}
 
-	harray<PropertyDescription> ScrollArea::getPropertyDescriptions()
+	harray<PropertyDescription> ScrollArea::getPropertyDescriptions() const
 	{
 		if (ScrollArea::_propertyDescriptions.size() == 0)
 		{

@@ -48,7 +48,7 @@ namespace aprilui
 		virtual Object* getParent() const = 0;
 		virtual Dataset* getDataset() const = 0;
 
-		harray<PropertyDescription> getPropertyDescriptions();
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);

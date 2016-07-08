@@ -40,7 +40,7 @@ namespace aprilui
 		return new ImageBox(name);
 	}
 
-	harray<PropertyDescription> ImageBox::getPropertyDescriptions()
+	harray<PropertyDescription> ImageBox::getPropertyDescriptions() const
 	{
 		if (ImageBox::_propertyDescriptions.size() == 0)
 		{

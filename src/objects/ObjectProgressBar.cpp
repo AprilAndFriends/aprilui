@@ -74,7 +74,7 @@ namespace aprilui
 		return (ProgressBase::_getUsedImages() + ImageBox::_getUsedImages());
 	}
 
-	harray<PropertyDescription> ProgressBar::getPropertyDescriptions()
+	harray<PropertyDescription> ProgressBar::getPropertyDescriptions() const
 	{
 		if (ProgressBar::_propertyDescriptions.size() == 0)
 		{

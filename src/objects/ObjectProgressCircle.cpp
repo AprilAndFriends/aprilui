@@ -69,7 +69,7 @@ namespace aprilui
 		return (ProgressBase::_getUsedImages() + ImageBox::_getUsedImages());
 	}
 
-	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions()
+	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions() const
 	{
 		if (ProgressCircle::_propertyDescriptions.size() == 0)
 		{

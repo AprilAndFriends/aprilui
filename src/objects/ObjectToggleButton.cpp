@@ -101,7 +101,7 @@ namespace aprilui
 		this->setToggledDisabledImage(name != "" ? this->dataset->getImage(name) : NULL);
 	}
 
-	harray<PropertyDescription> ToggleButton::getPropertyDescriptions()
+	harray<PropertyDescription> ToggleButton::getPropertyDescriptions() const
 	{
 		if (ToggleButton::_propertyDescriptions.size() == 0)
 		{
