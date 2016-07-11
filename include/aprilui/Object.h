@@ -130,6 +130,7 @@ namespace aprilui
 		Object* getChildUnderPoint(gvec2 pos) const;
 		Object* getChildUnderPoint(float x, float y) const;
 		virtual void clearChildUnderCursor();
+		void clearDescendantChildrenUnderCursor();
 		virtual bool isPointInside(gvec2 position) const;
 		bool angleEquals(float angle) const;
 

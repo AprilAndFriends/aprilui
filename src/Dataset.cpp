@@ -205,21 +205,10 @@ namespace aprilui
 		{
 			this->destroyObjects(*it);
 		}
-		aprilui::BaseObject* rootParent = root->getParent();
+		aprilui::Object* rootParent = root->getParent();
 		if (rootParent != NULL)
 		{
-			aprilui::BaseObject* node = rootParent;
-			aprilui::Object* obj;
-			while (node != NULL)
-			{
-				obj = dynamic_cast<Object*>(node);
-				if (obj != NULL)
-				{
-					obj->clearChildUnderCursor();
-				}
-				node = node->getParent();
-			}
-			root->getParent()->removeChild(root);
+			rootParent->removeChild(root);
 		}
 		Object* object = dynamic_cast<Object*>(root);
 		if (object != NULL)

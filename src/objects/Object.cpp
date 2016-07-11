@@ -333,10 +333,17 @@ namespace aprilui
 		{
 			__THROW_EXCEPTION(ObjectNotChildException(obj->getName(), this->getName()), aprilui::childManipulationDebugExceptionsEnabled, return);
 		}
+		Object* root = this;
+		while (root != NULL)
+		{
+			root->clearChildUnderCursor();
+			root = root->getParent();
+		}
 		obj->notifyEvent(Event::DetachedFromObject, NULL);
 		Object* object = dynamic_cast<Object*>(obj);
 		if (object != NULL)
 		{
+			object->clearDescendantChildrenUnderCursor();
 			this->childrenObjects -= object;
 		}
 		else
@@ -1323,6 +1330,15 @@ namespace aprilui
 	{
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
+	}
+
+	void Object::clearDescendantChildrenUnderCursor()
+	{
+		this->clearChildUnderCursor();
+		foreach (Object*, it, this->childrenObjects)
+		{
+			(*it)->clearDescendantChildrenUnderCursor();
+		}
 	}
 	
 	harray<gvec2> Object::transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot) const
