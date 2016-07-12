@@ -62,8 +62,16 @@ namespace aprilui
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
+		class RectVertices
+		{
+		public:
+			grect rect;
+			harray<april::TexturedVertex> vertices;
+			
+		};
+
 		bool _skinCoordinatesCalculated;
-		hmap<grect, harray<april::TexturedVertex> > _rectVertices;
+		harray<RectVertices> _rectVertices;
 		harray<april::TexturedVertex> _vertices;
 
 	};

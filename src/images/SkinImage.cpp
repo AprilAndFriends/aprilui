@@ -221,9 +221,19 @@ namespace aprilui
 			this->_skinCoordinatesCalculated = true;
 			this->_rectVertices.clear();
 		}
-		this->_vertices.clear();
-		if (!this->_rectVertices.hasKey(rect))
+		bool found = false;
+		foreach (RectVertices, it, this->_rectVertices)
 		{
+			if ((*it).rect == rect)
+			{
+				this->_vertices = (*it).vertices;
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			this->_vertices.clear();
 			if (this->_rectVertices.size() >= SkinImage::maxRectCache)
 			{
 				this->_rectVertices.clear();
@@ -433,11 +443,10 @@ namespace aprilui
 					CREATE_TRIANGLE(this->_vertices, right, 10, 11, 14, 15);
 				}
 			}
-			this->_rectVertices[rect] = this->_vertices;
-		}
-		else
-		{
-			this->_vertices = this->_rectVertices[rect];
+			RectVertices rectVertices;
+			rectVertices.rect = rect;
+			rectVertices.vertices = this->_vertices;
+			this->_rectVertices += rectVertices;
 		}
 		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
 	}
