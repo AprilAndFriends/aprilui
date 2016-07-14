@@ -537,7 +537,7 @@ namespace aprilui
 		if (this->multiLine)
 		{
 			// top side
-			if (this->caretRect.y < fh * 0.5f && (this->horzFormatting != atres::Vertical::Top || this->renderOffsetY < 0))
+			if (this->caretRect.y < fh * 0.5f && (this->vertFormatting != atres::Vertical::Top || this->renderOffsetY < 0))
 			{
 				jumps = hceil((fh * 0.5f - this->caretRect.y) / fh);
 				if (this->vertFormatting == atres::Vertical::Top)
@@ -555,7 +555,7 @@ namespace aprilui
 				}
 			}
 			// bottom side
-			if (this->caretRect.y + (fh + lh) * 0.5f > this->rect.h && (this->horzFormatting != atres::Vertical::Bottom || this->renderOffsetY > 0))
+			if (this->caretRect.y + (fh + lh) * 0.5f > this->rect.h && (this->vertFormatting != atres::Vertical::Bottom || this->renderOffsetY > 0))
 			{
 				jumps = -hceil((this->caretRect.y + (fh + lh) * 0.5f - this->rect.h) / fh);
 				if (this->vertFormatting == atres::Vertical::Bottom)
