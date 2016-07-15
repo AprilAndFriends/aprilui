@@ -48,6 +48,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(gvec2, caretOffset, CaretOffset);
 		HL_DEFINE_GETSET(float, caretOffset.x, CaretOffsetX);
 		HL_DEFINE_GETSET(float, caretOffset.y, CaretOffsetY);
+		HL_DEFINE_GETSET(april::Color, caretColor, CaretColor);
 		HL_DEFINE_ISSET(multiLine, MultiLine);
 		HL_DEFINE_ISSET(selectable, Selectable);
 		HL_DEFINE_GET(int, selectionCount, SelectionCount);
@@ -111,6 +112,7 @@ namespace aprilui
 		hstr filter;
 		int caretIndex;
 		gvec2 caretOffset;
+		april::Color caretColor;
 		bool multiLine;
 		bool selectable;
 		int selectionCount;

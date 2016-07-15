@@ -62,6 +62,7 @@ namespace aprilui
 		this->passwordChar = '\0';
 		this->filter = "";
 		this->caretIndex = 0;
+		this->caretColor = april::Color::White;
 		this->multiLine = false;
 		this->selectable = false;
 		this->selectionCount = 0;
@@ -92,6 +93,7 @@ namespace aprilui
 		this->filter = other.filter;
 		this->caretIndex = other.caretIndex;
 		this->caretOffset = other.caretOffset;
+		this->caretColor = other.caretColor;
 		this->multiLine = other.multiLine;
 		this->selectable = other.selectable;
 		this->selectionCount = other.selectionCount;
@@ -135,6 +137,7 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("caret_offset", PropertyDescription::GVEC2);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_x", PropertyDescription::FLOAT);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_y", PropertyDescription::FLOAT);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_color", PropertyDescription::HEXCOLOR);
 			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
 			EditBox::_propertyDescriptions += PropertyDescription("selection_count", PropertyDescription::INT);
@@ -749,7 +752,7 @@ namespace aprilui
 				v[0].set(renderRect.x, renderRect.y, 0);
 				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
 				// using the original text color
-				v[0].color = v[1].color = april::rendersys->getNativeColorUInt(drawColor);
+				v[0].color = v[1].color = april::rendersys->getNativeColorUInt(this->caretColor);
 				april::rendersys->render(april::RO_LINE_LIST, v, 2);
 			}
 		}
@@ -775,6 +778,7 @@ namespace aprilui
 		if (name == "caret_offset")			return april::gvec2ToHstr(this->getCaretOffset());
 		if (name == "caret_offset_x")		return this->getCaretOffsetX();
 		if (name == "caret_offset_y")		return this->getCaretOffsetY();
+		if (name == "caret_offset_y")		return this->getCaretColor().hex();
 		if (name == "multi_line")			return this->isMultiLine();
 		if (name == "selectable")			return this->isSelectable();
 		if (name == "selection_count")		return this->getSelectionCount();
@@ -801,6 +805,7 @@ namespace aprilui
 		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));
 		else if (name == "caret_offset_x")		this->setCaretOffsetX(value);
 		else if (name == "caret_offset_y")		this->setCaretOffsetY(value);
+		else if (name == "caret_color")			this->setCaretColor(value);
 		else if (name == "multi_line")			this->setMultiLine(value);
 		else if (name == "selectable")			this->setSelectable(value);
 		else if (name == "selection_count")		this->setSelectionCount(value);
