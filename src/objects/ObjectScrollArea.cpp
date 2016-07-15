@@ -175,47 +175,50 @@ namespace aprilui
 		if (this->allowDrag && this->parent != NULL)
 		{
 			ButtonBase::_update(timeDelta);
-			gvec2 position = aprilui::getCursorPosition();
-			if (this->pushed)
+			if (timeDelta > 0.0f) // don't update this if no time has passed
 			{
-				if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
-					!heqf(this->_clickPosition.x, position.x, this->dragThreshold) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold)) && this->isScrollable())
+				gvec2 position = aprilui::getCursorPosition();
+				if (this->pushed)
 				{
-					this->dragging = true;
-					this->_clickScrollOffset = this->getScrollOffset();
+					if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
+						!heqf(this->_clickPosition.x, position.x, this->dragThreshold) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold)) && this->isScrollable())
+					{
+						this->dragging = true;
+						this->_clickScrollOffset = this->getScrollOffset();
+						this->_lastPosition = position;
+						foreach (Object*, it, this->childrenObjects)
+						{
+							(*it)->onMouseCancel(april::AK_NONE);
+						}
+					}
+					else
+					{
+						this->_dragSpeed.set(0.0f, 0.0f);
+						this->snapScrollOffset();
+					}
+				}
+				if (this->dragging)
+				{
+					// some devices have a bad digitizer so this serves as special hack to smoothen the dragging movement on the scroll-area
+					if (april::window->getInputMode() == april::Window::TOUCH && this->_lastPosition != position)
+					{
+						position = this->_lastPosition + (position - this->_lastPosition) * 0.5f;
+					}
+					this->setScrollOffset(this->_clickScrollOffset + (this->_clickPosition - position) / this->getDerivedScale());
+					this->_dragSpeed = (position - this->_lastPosition) / timeDelta;
+					if (this->dragMaxSpeed > 0.0f)
+					{
+						float length = this->_dragSpeed.length();
+						if (length > 0.0f && length > this->dragMaxSpeed)
+						{
+							this->_dragSpeed *= this->dragMaxSpeed / length;
+						}
+					}
 					this->_lastPosition = position;
-					foreach (Object*, it, this->childrenObjects)
-					{
-						(*it)->onMouseCancel(april::AK_NONE);
-					}
+					this->_lastScrollOffset = this->getScrollOffset();
+					this->_dragTimer.set(0.0f, 0.0f);
+					this->_adjustDragSpeed();
 				}
-				else
-				{
-					this->_dragSpeed.set(0.0f, 0.0f);
-					this->snapScrollOffset();
-				}
-			}
-			if (this->dragging)
-			{
-				// some devices have a bad digitizer so this serves as special hack to smoothen the dragging movement on the scroll-area
-				if (april::window->getInputMode() == april::Window::TOUCH && this->_lastPosition != position)
-				{
-					position = this->_lastPosition + (position - this->_lastPosition) * 0.5f;
-				}
-				this->setScrollOffset(this->_clickScrollOffset + (this->_clickPosition - position) / this->getDerivedScale());
-				this->_dragSpeed = (position - this->_lastPosition) / timeDelta;
-				if (this->dragMaxSpeed > 0.0f)
-				{
-					float length = this->_dragSpeed.length();
-					if (length > 0.0f && length > this->dragMaxSpeed)
-					{
-						this->_dragSpeed *= this->dragMaxSpeed / length;
-					}
-				}
-				this->_lastPosition = position;
-				this->_lastScrollOffset = this->getScrollOffset();
-				this->_dragTimer.set(0.0f, 0.0f);
-				this->_adjustDragSpeed();
 			}
 		}
 		if (!this->dragging && this->inertia > 0.0f && this->isScrolling())
