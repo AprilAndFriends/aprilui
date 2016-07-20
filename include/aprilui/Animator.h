@@ -25,7 +25,7 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE_ABSTRACT(Animator)
 	public:
-		HL_ENUM_CLASS_DECLARE(AnimationFunction,
+		HL_ENUM_CLASS_PREFIX_DECLARE(apriluiExport, AnimationFunction,
 		(
 			HL_ENUM_DECLARE(AnimationFunction, Linear);
 			HL_ENUM_DECLARE(AnimationFunction, Sine);
