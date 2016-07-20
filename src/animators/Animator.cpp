@@ -18,13 +18,25 @@
 
 namespace aprilui
 {
+	HL_ENUM_CLASS_DEFINE(Animator::AnimationFunction,
+	(
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Linear, "linear");
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Sine, "sine");
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, SineAbs, "sine_abs");
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Square, "square");
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Saw, "saw");
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Triangle, "triangle");
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Noise, "noise");
+		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Custom, "custom");
+	));
+
 	harray<PropertyDescription> Animator::_propertyDescriptions;
 
 	Animator::Animator(chstr name) : BaseObject(name)
 	{
 		this->timeDelta = 0.0f;
 		this->value = 0.0f;
-		this->animationFunction = Linear;
+		this->animationFunction = AnimationFunction::Linear;
 		this->timer = 0.0f;
 		this->delay = 0.0f;
 		this->periods = 1.0f;
@@ -199,24 +211,28 @@ namespace aprilui
 			}
 		}
 		float result = 0.0f;
-		switch (this->animationFunction)
+		if (this->animationFunction == AnimationFunction::Linear)
 		{
-		case Linear:
 			result = time * this->speed * this->amplitude;
-			break;
-		case Sine:
+		}
+		else if (this->animationFunction == AnimationFunction::Sine)
+		{
 			result = (float)hsin(time * this->speed * 360.0f) * this->amplitude;
-			break;
-		case SineAbs:
+		}
+		else if (this->animationFunction == AnimationFunction::SineAbs)
+		{
 			result = (float)habs(hsin(time * this->speed * 360.0f)) * this->amplitude;
-			break;
-		case Square:
+		}
+		else if (this->animationFunction == AnimationFunction::Square)
+		{
 			result = (hmodf(time * this->speed, 1.0f) < 0.5f ? this->amplitude : -this->amplitude);
-			break;
-		case Saw:
+		}
+		else if (this->animationFunction == AnimationFunction::Saw)
+		{
 			result = (hmodf(time * this->speed + 0.5f, 1.0f) - 0.5f) * 2 * this->amplitude;
-			break;
-		case Triangle:
+		}
+		else if (this->animationFunction == AnimationFunction::Triangle)
+		{
 			result = hmodf(time * this->speed, 1.0f);
 			if (!hbetweenIE(result, 0.25f, 0.75f))
 			{
@@ -226,19 +242,20 @@ namespace aprilui
 			{
 				result = -(hmodf(time * this->speed - 0.25f, 1.0f) - 0.25f) * 4 * this->amplitude;
 			}
-			break;
-		case Noise:
+		}
+		else if (this->animationFunction == AnimationFunction::Noise)
+		{
 			if (timeDelta > 0.0f)
 			{
 				result = hrandf(-this->speed * this->amplitude, this->speed * this->amplitude);
 			}
-			break;
-		case Custom:
+		}
+		else if (this->animationFunction == AnimationFunction::Custom)
+		{
 			if (this->customFunction != NULL)
 			{
 				result = this->customFunction(this, time);
 			}
-			break;
 		}
 		result *= 1.0f + time * habs(this->speed) * this->multiplier;
 		return (this->discreteStep > 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
@@ -252,36 +269,26 @@ namespace aprilui
 	
 	hstr Animator::getProperty(chstr name)
 	{
-		if (name == "function" || name == "func")
-		{
-			if (this->animationFunction == Sine)		return "sine";
-			if (this->animationFunction == SineAbs)		return "sine_abs";
-			if (this->animationFunction == Saw)			return "saw";
-			if (this->animationFunction == Square)		return "square";
-			if (this->animationFunction == Triangle)	return "triangle";
-			if (this->animationFunction == Linear)		return "linear";
-			if (this->animationFunction == Noise)		return "noise";
-			if (this->animationFunction == Custom)		return "custom";
-		}
-		if (name == "timer")			return this->getTimer();
-		if (name == "delay")			return this->getDelay();
-		if (name == "periods")			return this->getPeriods();
-		if (name == "amplitude")		return this->getAmplitude();
-		if (name == "peak_to_peak")		return (2 * this->getAmplitude());
-		if (name == "speed")			return this->getSpeed();
-		if (name == "offset")			return this->getOffset();
-		if (name == "multiplier")		return this->getMultiplier();
-		if (name == "acceleration")		return this->getAcceleration();
-		if (name == "discrete_step")	return this->getDiscreteStep();
-		if (name == "reset_on_expire")	return this->isResetOnExpire();
+		if (name == "function" || name == "func")	return this->animationFunction.getName();
+		if (name == "timer")						return this->getTimer();
+		if (name == "delay")						return this->getDelay();
+		if (name == "periods")						return this->getPeriods();
+		if (name == "amplitude")					return this->getAmplitude();
+		if (name == "peak_to_peak")					return (2 * this->getAmplitude());
+		if (name == "speed")						return this->getSpeed();
+		if (name == "offset")						return this->getOffset();
+		if (name == "multiplier")					return this->getMultiplier();
+		if (name == "acceleration")					return this->getAcceleration();
+		if (name == "discrete_step")				return this->getDiscreteStep();
+		if (name == "reset_on_expire")				return this->isResetOnExpire();
 		if (name == "reset")
 		{
 			hlog::warn(logTag, "'reset' is deprecated. Use 'reset_on_expire' instead."); // DEPRECATED
 			return this->isResetOnExpire();
 		}
-		if (name == "inherit_value")	return this->isInheritValue();
+		if (name == "inherit_value")				return this->isInheritValue();
 		// derived values
-		if	(name == "target")			return this->getTarget();
+		if	(name == "target")						return this->getTarget();
 		return BaseObject::getProperty(name);
 	}
 	
@@ -289,14 +296,10 @@ namespace aprilui
 	{
 		if		(name == "function" || name == "func")
 		{
-			if		(value == "sine")		this->setAnimationFunction(Sine);
-			else if (value == "sine_abs")	this->setAnimationFunction(SineAbs);
-			else if (value == "saw")		this->setAnimationFunction(Saw);
-			else if (value == "square")		this->setAnimationFunction(Square);
-			else if	(value == "triangle")	this->setAnimationFunction(Triangle);
-			else if	(value == "linear")		this->setAnimationFunction(Linear);
-			else if (value == "noise")		this->setAnimationFunction(Noise);
-			else if (value == "custom")		this->setAnimationFunction(Custom);
+			if (AnimationFunction::hasValue(value))
+			{
+				this->setAnimationFunction(AnimationFunction::fromName(value));
+			}
 			else
 			{
 				hlog::warn(logTag, "'function=' does not support value '" + value + "'.");

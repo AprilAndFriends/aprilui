@@ -13,6 +13,7 @@
 #ifndef APRILUI_ANIMATOR_H
 #define APRILUI_ANIMATOR_H
 
+#include <hltypes/henum.h>
 #include <gtypes/Rectangle.h>
 
 #include "apriluiExport.h"
@@ -24,17 +25,17 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE_ABSTRACT(Animator)
 	public:
-		enum AnimationFunction
-		{
-			Linear,
-			Sine,
-			SineAbs,
-			Square,
-			Saw,
-			Triangle,
-			Noise,
-			Custom
-		};
+		HL_ENUM_CLASS_DECLARE(AnimationFunction,
+		(
+			HL_ENUM_DECLARE(AnimationFunction, Linear);
+			HL_ENUM_DECLARE(AnimationFunction, Sine);
+			HL_ENUM_DECLARE(AnimationFunction, SineAbs);
+			HL_ENUM_DECLARE(AnimationFunction, Square);
+			HL_ENUM_DECLARE(AnimationFunction, Saw);
+			HL_ENUM_DECLARE(AnimationFunction, Triangle);
+			HL_ENUM_DECLARE(AnimationFunction, Noise);
+			HL_ENUM_DECLARE(AnimationFunction, Custom);
+		));
 
 		friend class BaseObject;
 
