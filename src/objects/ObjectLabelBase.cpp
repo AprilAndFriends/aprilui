@@ -8,6 +8,7 @@ Copyright (c) 2010 Kresimir Spes, Boris Mikic                                   
 * the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
 \************************************************************************************/
 #include <atres/atres.h>
+#include <atres/Utility.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hexception.h>
 #include <hltypes/harray.h>
