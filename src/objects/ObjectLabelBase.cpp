@@ -26,6 +26,9 @@ namespace aprilui
 		mHorzFormatting = atres::Horizontal::CenterWrapped;
 		mVertFormatting = atres::Vertical::Center;
 		mFontEffect = atres::TextEffect::None;
+		mUseEffectColor = false;
+		mUseEffectParameter = false;
+		mEffectColor = april::Color::Black;
 		mDrawOffset = gvec2();
 		mTextFormatting = true;
 		mText = "LabelBase: " + name;
@@ -44,24 +47,34 @@ namespace aprilui
 			return;
 		}
 		hstr text = mText;
+		if (!mTextFormatting)
+		{
+			text = "[-]" + text;
+		}
+		hstr colorCode = "";
+		if (mUseEffectColor)
+		{
+			colorCode += mEffectColor.hex();
+		}
+		if (mUseEffectParameter)
+		{
+			colorCode += "," + mEffectParameter;
+		}
+		if (colorCode != "")
+		{
+			colorCode = ":" + colorCode;
+		}
 		if (mFontEffect == atres::TextEffect::Border)
 		{
-			text = "[b]" + text;
+			text = "[b" + colorCode + "]" + text;
 		}
 		else if (mFontEffect == atres::TextEffect::Shadow)
 		{
-			text = "[b]" + text;
+			text = "[s" + colorCode + "]" + text;
 		}
 		april::Color color(mTextColor);
 		color.a = (unsigned char)(color.a * alpha);
-		if (mTextFormatting)
-		{
-			atres::renderer->drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
-		}
-		else
-		{
-			atres::renderer->drawTextUnformatted(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
-		}
+		atres::renderer->drawText(mFontName, rect, text, mHorzFormatting, mVertFormatting, color, -mDrawOffset);
 	}
 
 	bool LabelBase::setProperty(chstr name,chstr value)
@@ -90,9 +103,39 @@ namespace aprilui
 		else if (name == "color") setTextColor(value);
 		else if (name == "effect")
 		{
-			if (value == "none")           setFontEffect(atres::TextEffect::None);
-			else if (value == "shadow")    setFontEffect(atres::TextEffect::Shadow);
-			else if (value == "border")    setFontEffect(atres::TextEffect::Border);
+			setFontEffect(atres::TextEffect::None);
+			mUseEffectColor = false;
+			harray<hstr> values = value.split(":", 1, true);
+			if (values.size() > 0)
+			{
+				if (values[0] == "none")		setFontEffect(atres::TextEffect::None);
+				else if (values[0] == "shadow")	setFontEffect(atres::TextEffect::Shadow);
+				else if (values[0] == "border")	setFontEffect(atres::TextEffect::Border);
+				else
+				{
+					logMessage("WARNING: 'effect=' does not support value '" + values[0] + "'.");
+					return false;
+				}
+				if (values.size() > 1)
+				{
+					values = values[1].split(",", 1);
+					if (values[0].isHex() && (values[0].size() == 6 || values[0].size() == 8))
+					{
+						mUseEffectColor = true;
+						mEffectColor = values[0];
+					}
+					else if (values[0] != "")
+					{
+						logMessage("WARNING: 'effect=' is using invalid color modifier '" + values[0] + "'.");
+						return false;
+					}
+					if (values.size() > 1)
+					{
+						mUseEffectParameter = true;
+						mEffectParameter = values[1];
+					}
+				}
+			}
 		}
 		else if (name == "offset_x") mDrawOffset.x = (float)value;
 		else if (name == "offset_y") mDrawOffset.y = (float)value;

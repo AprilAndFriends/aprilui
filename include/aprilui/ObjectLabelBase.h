@@ -59,6 +59,10 @@ namespace aprilui
 		atres::Horizontal mHorzFormatting;
 		atres::Vertical mVertFormatting;
 		atres::TextEffect mFontEffect;
+		bool mUseEffectColor;
+		bool mUseEffectParameter;
+		april::Color mEffectColor;
+		hstr mEffectParameter;
 		april::Color mTextColor;
 		
 		void _drawLabel(grect rect, float alpha);
