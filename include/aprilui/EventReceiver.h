@@ -1,15 +1,10 @@
 /// @file
-/// @author  Boris Mikic
-/// @version 1.8
+/// @version 1.34
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
-/// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
-/// 
-/// @section DESCRIPTION
-/// 
-/// Defines a base class for classes that can receive and handle events.
+/// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #ifndef APRILUI_EVENT_RECEIVER_H
 #define APRILUI_EVENT_RECEIVER_H

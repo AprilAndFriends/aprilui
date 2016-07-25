@@ -1,12 +1,11 @@
-/************************************************************************************\
-This source file is part of the APRIL User Interface Library                         *
-For latest info, see http://libaprilui.sourceforge.net/                              *
-**************************************************************************************
-Copyright (c) 2010 Kresimir Spes, Boris Mikic                                        *
-*                                                                                    *
-* This program is free software; you can redistribute it and/or modify it under      *
-* the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php   *
-\************************************************************************************/
+/// @file
+/// @version 1.34
+/// 
+/// @section LICENSE
+/// 
+/// This program is free software; you can redistribute it and/or modify it under
+/// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
+
 #ifndef APRILUI_ANIMATORS_H
 #define APRILUI_ANIMATORS_H
 

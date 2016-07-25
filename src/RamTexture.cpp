@@ -1,8 +1,5 @@
 /// @file
-/// @author  Kresimir Spes
-/// @author  Boris Mikic
-/// @author  Ivan Vucica
-/// @version 3.3
+/// @version 1.34
 /// 
 /// @section LICENSE
 /// 
