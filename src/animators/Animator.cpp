@@ -20,14 +20,14 @@ namespace aprilui
 {
 	HL_ENUM_CLASS_DEFINE(Animator::AnimationFunction,
 	(
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Linear, "linear");
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Sine, "sine");
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, SineAbs, "sine_abs");
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Square, "square");
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Saw, "saw");
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Triangle, "triangle");
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Noise, "noise");
-		HL_ENUM_DEFINE_NAME(Animator::AnimationFunction, Custom, "custom");
+		HL_ENUM_DEFINE(Animator::AnimationFunction, Linear);
+		HL_ENUM_DEFINE(Animator::AnimationFunction, Sine);
+		HL_ENUM_DEFINE(Animator::AnimationFunction, SineAbs);
+		HL_ENUM_DEFINE(Animator::AnimationFunction, Square);
+		HL_ENUM_DEFINE(Animator::AnimationFunction, Saw);
+		HL_ENUM_DEFINE(Animator::AnimationFunction, Triangle);
+		HL_ENUM_DEFINE(Animator::AnimationFunction, Noise);
+		HL_ENUM_DEFINE(Animator::AnimationFunction, Custom);
 	));
 
 	harray<PropertyDescription> Animator::_propertyDescriptions;
@@ -269,7 +269,17 @@ namespace aprilui
 	
 	hstr Animator::getProperty(chstr name)
 	{
-		if (name == "function" || name == "func")	return this->animationFunction.getName();
+		if (name == "function" || name == "func")
+		{
+			if (this->animationFunction == Animator::AnimationFunction::Linear)		return "linear";
+			if (this->animationFunction == Animator::AnimationFunction::Sine)		return "sine";
+			if (this->animationFunction == Animator::AnimationFunction::SineAbs)	return "sine_abs";
+			if (this->animationFunction == Animator::AnimationFunction::Square)		return "square";
+			if (this->animationFunction == Animator::AnimationFunction::Saw)		return "saw";
+			if (this->animationFunction == Animator::AnimationFunction::Triangle)	return "triangle";
+			if (this->animationFunction == Animator::AnimationFunction::Noise)		return "noise";
+			if (this->animationFunction == Animator::AnimationFunction::Custom)		return "custom";
+		}
 		if (name == "timer")						return this->getTimer();
 		if (name == "delay")						return this->getDelay();
 		if (name == "periods")						return this->getPeriods();
@@ -296,10 +306,14 @@ namespace aprilui
 	{
 		if		(name == "function" || name == "func")
 		{
-			if (AnimationFunction::hasValue(value))
-			{
-				this->setAnimationFunction(AnimationFunction::fromName(value));
-			}
+			if (value == "linear")			this->setAnimationFunction(Animator::AnimationFunction::Linear);
+			else if (value == "sine")		this->setAnimationFunction(Animator::AnimationFunction::Sine);
+			else if (value == "sine_abs")	this->setAnimationFunction(Animator::AnimationFunction::SineAbs);
+			else if (value == "square")		this->setAnimationFunction(Animator::AnimationFunction::Square);
+			else if (value == "saw")		this->setAnimationFunction(Animator::AnimationFunction::Saw);
+			else if (value == "triangle")	this->setAnimationFunction(Animator::AnimationFunction::Triangle);
+			else if (value == "noise")		this->setAnimationFunction(Animator::AnimationFunction::Noise);
+			else if (value == "custom")		this->setAnimationFunction(Animator::AnimationFunction::Custom);
 			else
 			{
 				hlog::warn(logTag, "'function=' does not support value '" + value + "'.");
