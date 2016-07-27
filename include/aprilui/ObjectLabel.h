@@ -34,6 +34,7 @@ namespace aprilui
 		static Object* createInstance(chstr name);
 		
 		Dataset* getDataset() const;
+		hstr getAutoScaledFont();
 
 		harray<PropertyDescription> getPropertyDescriptions() const;
 

@@ -40,6 +40,7 @@ namespace aprilui
 		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
 		void setDisabledTextColor(april::Color value);
 		Dataset* getDataset() const;
+		hstr getAutoScaledFont();
 
 		harray<PropertyDescription> getPropertyDescriptions() const;
 

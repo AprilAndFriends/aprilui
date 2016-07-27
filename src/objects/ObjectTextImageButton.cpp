@@ -55,6 +55,12 @@ namespace aprilui
 		return ImageButton::getDataset();
 	}
 
+	hstr TextImageButton::getAutoScaledFont()
+	{
+		this->_calcAutoScaledFont(this->_makeDrawRect());
+		return this->autoScaledFont;
+	}
+
 	void TextImageButton::setHoverTextColor(april::Color value)
 	{
 		this->hoverTextColor = value;

@@ -40,6 +40,12 @@ namespace aprilui
 		return Object::getDataset();
 	}
 
+	hstr Label::getAutoScaledFont()
+	{
+		this->_calcAutoScaledFont(this->_makeDrawRect());
+		return this->autoScaledFont;
+	}
+
 	harray<PropertyDescription> Label::getPropertyDescriptions() const
 	{
 		return (Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions());

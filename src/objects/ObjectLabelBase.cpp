@@ -88,6 +88,7 @@ namespace aprilui
 			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::FLOAT);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::FLOAT);
 			LabelBase::_propertyDescriptions += PropertyDescription("min_auto_scale", PropertyDescription::FLOAT);
+			LabelBase::_propertyDescriptions += PropertyDescription("auto_scaled_font", PropertyDescription::STRING);
 			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::ENUM);
 			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::ENUM);
 			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::ENUM);
@@ -165,6 +166,20 @@ namespace aprilui
 		{
 			this->minAutoScale = value;
 			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::_calcAutoScaledFont(grect rect)
+	{
+		if (this->_autoScaleDirty)
+		{
+			hstr text = this->text;
+			if (!this->textFormatting)
+			{
+				text = "[-]" + text;
+			}
+			this->_calcAutoScaleFont(this->font, rect, text, this->horzFormatting, this->vertFormatting);
+			this->_autoScaleDirty = false;
 		}
 	}
 
@@ -255,10 +270,10 @@ namespace aprilui
 		gvec2 offset = -this->textOffset;
 		if (this->_autoScaleDirty)
 		{
-			this->_calcAutoScaleFont(this->font, rect, text, this->horzFormatting, this->vertFormatting, color, offset);
+			this->_calcAutoScaleFont(this->font, rect, text, this->horzFormatting, this->vertFormatting);
 			this->_autoScaleDirty = false;
 		}
-		hstr font = (this->_autoScaleFont == "" ? this->font : this->_autoScaleFont);
+		hstr font = (this->autoScaledFont == "" ? this->font : this->autoScaledFont);
 		atres::renderer->drawText(font, rect, text, this->horzFormatting, this->vertFormatting, color, offset);
 	}
 
@@ -272,6 +287,7 @@ namespace aprilui
 		if (name == "text_offset_x")		return this->getTextOffsetX();
 		if (name == "text_offset_y")		return this->getTextOffsetY();
 		if (name == "min_auto_scale")		return this->getMinAutoScale();
+		if (name == "auto_scaled_font")		return this->getAutoScaledFont();
 		if (name == "horz_formatting")
 		{
 			if (this->horzFormatting == atres::Horizontal::Left)			return "left";
@@ -407,9 +423,9 @@ namespace aprilui
 		}
 	}
 	
-	void LabelBase::_calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical, april::Color color, gvec2 offset)
+	void LabelBase::_calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical)
 	{
-		this->_autoScaleFont = "";
+		this->autoScaledFont = "";
 		if (this->minAutoScale >= 1.0f || rect.w <= 0.0f || rect.h <= 0.0f)
 		{
 			return;
@@ -480,7 +496,7 @@ namespace aprilui
 					}
 				}
 			}
-			this->_autoScaleFont = realFontName + ":" + hstr(fontScale * hclamp(autoScale, this->minAutoScale, 1.0f));
+			this->autoScaledFont = realFontName + ":" + hstr(fontScale * hclamp(autoScale, this->minAutoScale, 1.0f));
 		}
 	}
 	

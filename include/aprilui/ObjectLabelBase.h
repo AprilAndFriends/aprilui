@@ -65,6 +65,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 
 		virtual Dataset* getDataset() const = 0;
+		virtual hstr getAutoScaledFont() = 0;
 
 		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
@@ -95,6 +96,7 @@ namespace aprilui
 		april::Color textColor;
 		gvec2 textOffset;
 		float minAutoScale;
+		hstr autoScaledFont;
 		atres::Horizontal horzFormatting;
 		atres::Vertical vertFormatting;
 		atres::TextEffect effect;
@@ -105,6 +107,7 @@ namespace aprilui
 		april::Color backgroundColor;
 		bool backgroundBorder;
 
+		void _calcAutoScaledFont(grect rect);
 		april::Color _makeBackgroundDrawColor(april::Color drawColor) const;
 		
 		void _drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor);
@@ -112,9 +115,8 @@ namespace aprilui
 
 	private:
 		bool _autoScaleDirty;
-		hstr _autoScaleFont;
 
-		void _calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical, april::Color color, gvec2 offset);
+		void _calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
 
 		static harray<PropertyDescription> _propertyDescriptions;
 
