@@ -62,6 +62,16 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, effectColor, EffectColor);
 		HL_DEFINE_GETSET(hstr, effectParameter, EffectParameter);
 		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
+		HL_DEFINE_ISSET(strikeThrough, StrikeThrough);
+		HL_DEFINE_ISSET(useStrikeThroughColor, UseStrikeThroughColor);
+		HL_DEFINE_ISSET(useStrikeThroughParameter, UseStrikeThroughParameter);
+		HL_DEFINE_GETSET(april::Color, strikeThroughColor, StrikeThroughColor);
+		HL_DEFINE_GETSET(hstr, strikeThroughParameter, StrikeThroughParameter);
+		HL_DEFINE_ISSET(underline, Underline);
+		HL_DEFINE_ISSET(useUnderlineColor, UseUnderlineColor);
+		HL_DEFINE_ISSET(useUnderlineParameter, UseUnderlineParameter);
+		HL_DEFINE_GETSET(april::Color, underlineColor, UnderlineColor);
+		HL_DEFINE_GETSET(hstr, underlineParameter, UnderlineParameter);
 		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 
 		virtual Dataset* getDataset() const = 0;
@@ -104,6 +114,16 @@ namespace aprilui
 		bool useEffectParameter;
 		april::Color effectColor;
 		hstr effectParameter;
+		bool strikeThrough;
+		bool useStrikeThroughColor;
+		bool useStrikeThroughParameter;
+		april::Color strikeThroughColor;
+		hstr strikeThroughParameter;
+		bool underline;
+		bool useUnderlineColor;
+		bool useUnderlineParameter;
+		april::Color underlineColor;
+		hstr underlineParameter;
 		april::Color backgroundColor;
 		bool backgroundBorder;
 

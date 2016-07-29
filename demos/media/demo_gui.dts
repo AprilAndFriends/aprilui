@@ -64,8 +64,8 @@
 			<FilledRect color="007F00" rect="32,320,192,160">
 				<ScalerX function="sine" amplitude="0.2" offset="0.8"/>
 				<Rotator amplitude="1" speed="90"/>
-				<Label name="label" text="I [b:00FF00]am[/b] a [s 0000FF]label[/s]." effect="border:FF0000" rect="0,64,192,32" angle="-10"/>
-				<TextImageButton name="text_button" text="I am a button." hover_text_color="BFBFBF" pushed_text_color="7F7F7F" rect="0,128,192,32" angle="-10"/>
+				<Label name="label" text="I [b:00FF00]am[/b] [u]a [s 0000FF]label[/s][/u]." effect="border:FF0000" strike_through="true" rect="0,64,192,32" angle="-10"/>
+				<TextImageButton name="text_button" text="I am [t]a button[/t]." hover_text_color="BFBFBF" underline="true" pushed_text_color="7F7F7F" rect="0,128,192,32" angle="-10"/>
 			</FilledRect>
 			<ImageBox name="rotated_image_box" image="transparency/test" angle="30" rect="432,32,128,64">
 				<AlphaChanger function="sine" amplitude="64" speed="1.05" offset="191"/>

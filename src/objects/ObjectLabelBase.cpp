@@ -46,6 +46,14 @@ namespace aprilui
 		this->useEffectColor = false;
 		this->useEffectParameter = false;
 		this->effectColor = april::Color::Black;
+		this->strikeThrough = false;
+		this->useStrikeThroughColor = false;
+		this->useStrikeThroughParameter = false;
+		this->strikeThroughColor = april::Color::White;
+		this->underline = false;
+		this->useUnderlineColor = false;
+		this->useUnderlineParameter = false;
+		this->underlineColor = april::Color::White;
 		this->backgroundColor = april::Color::Clear;
 		this->backgroundBorder = true;
 		this->_autoScaleDirty = true;
@@ -67,6 +75,15 @@ namespace aprilui
 		this->useEffectParameter = other.useEffectParameter;
 		this->effectColor = other.effectColor;
 		this->effectParameter = other.effectParameter;
+		this->useStrikeThroughColor = other.useStrikeThroughColor;
+		this->useStrikeThroughParameter = other.useStrikeThroughParameter;
+		this->strikeThroughColor = other.strikeThroughColor;
+		this->strikeThroughParameter = other.strikeThroughParameter;
+		this->underline = other.underline;
+		this->useUnderlineColor = other.useUnderlineColor;
+		this->useUnderlineParameter = other.useUnderlineParameter;
+		this->underlineColor = other.underlineColor;
+		this->underlineParameter = other.underlineParameter;
 		this->backgroundColor = other.backgroundColor;
 		this->backgroundBorder = other.backgroundBorder;
 		this->_autoScaleDirty = true;
@@ -92,6 +109,8 @@ namespace aprilui
 			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::ENUM);
 			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::ENUM);
 			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::ENUM);
+			LabelBase::_propertyDescriptions += PropertyDescription("strike_through", PropertyDescription::BOOL);
+			LabelBase::_propertyDescriptions += PropertyDescription("underline", PropertyDescription::BOOL);
 			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::HEXCOLOR);
 			LabelBase::_propertyDescriptions += PropertyDescription("background_border", PropertyDescription::BOOL);
 		}
@@ -246,6 +265,7 @@ namespace aprilui
 		{
 			text = "[-]" + text;
 		}
+		// text effect
 		hstr colorCode = "";
 		if (this->useEffectColor)
 		{
@@ -266,6 +286,42 @@ namespace aprilui
 		else if (this->effect == atres::TextEffect::Shadow)
 		{
 			text = "[s" + colorCode + "]" + text;
+		}
+		// strike-through
+		if (this->strikeThrough)
+		{
+			colorCode = "";
+			if (this->useStrikeThroughColor)
+			{
+				colorCode += this->strikeThroughColor.hex();
+			}
+			if (this->useStrikeThroughParameter)
+			{
+				colorCode += "," + this->strikeThroughParameter;
+			}
+			if (colorCode != "")
+			{
+				colorCode = ":" + colorCode;
+			}
+			text = "[t" + colorCode + "]" + text;
+		}
+		// strike-through
+		if (this->underline)
+		{
+			colorCode = "";
+			if (this->useUnderlineColor)
+			{
+				colorCode += this->underlineColor.hex();
+			}
+			if (this->useUnderlineParameter)
+			{
+				colorCode += "," + this->underlineParameter;
+			}
+			if (colorCode != "")
+			{
+				colorCode = ":" + colorCode;
+			}
+			text = "[u" + colorCode + "]" + text;
 		}
 		gvec2 offset = -this->textOffset;
 		if (this->_autoScaleDirty)
@@ -324,6 +380,8 @@ namespace aprilui
 			}
 			return effect;
 		}
+		if (name == "strike_through")		return this->isStrikeThrough();
+		if (name == "underline")			return this->isUnderline();
 		if (name == "background_color")		return this->getBackgroundColor().hex();
 		if (name == "background_border")	return this->isBackgroundBorder();
 		return "";
@@ -401,6 +459,8 @@ namespace aprilui
 				}
 			}
 		}
+		else if (name == "strike_through")		this->setStrikeThrough(value);
+		else if (name == "underline")			this->setUnderline(value);
 		else if (name == "background_color")	this->setBackgroundColor(value);
 		else if (name == "background_border")	this->setBackgroundBorder(value);
 		else return false;
