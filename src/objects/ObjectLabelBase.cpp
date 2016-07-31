@@ -75,6 +75,7 @@ namespace aprilui
 		this->useEffectParameter = other.useEffectParameter;
 		this->effectColor = other.effectColor;
 		this->effectParameter = other.effectParameter;
+		this->strikeThrough = other.strikeThrough;
 		this->useStrikeThroughColor = other.useStrikeThroughColor;
 		this->useStrikeThroughParameter = other.useStrikeThroughParameter;
 		this->strikeThroughColor = other.strikeThroughColor;
