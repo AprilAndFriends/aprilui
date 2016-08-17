@@ -348,9 +348,14 @@ namespace aprilui
 				hlog::warn(logTag, "'load_mode=\"immediate\"' is deprecated. Defaulting to 'load_mode=\"async\"'."); // DEPRECATED
 				loadMode = april::Texture::LOAD_ASYNC;
 			}
-			else if (mode == "on_demand")		loadMode = april::Texture::LOAD_ON_DEMAND;
-			else if (mode == "async")			loadMode = april::Texture::LOAD_ASYNC;
-			else if (mode == "async_on_demand")	loadMode = april::Texture::LOAD_ASYNC_ON_DEMAND;
+			else if (mode == "on_demand")				loadMode = april::Texture::LOAD_ON_DEMAND;
+			else if (mode == "async")					loadMode = april::Texture::LOAD_ASYNC;
+			else if (mode == "async_deferred_upload")	loadMode = april::Texture::LOAD_ASYNC_DEFERRED_UPLOAD;
+			else if (mode == "async_on_demand")
+			{
+				hlog::warn(logTag, "'load_mode=\"async_on_demand\"' is deprecated. Use 'load_mode=\"async_deferred_upload\"' instead."); // DEPRECATED
+				loadMode = april::Texture::LOAD_ASYNC_DEFERRED_UPLOAD;
+			}
 			else
 			{
 				__THROW_EXCEPTION(Exception("Load Mode '" + mode + "' is not supported!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
