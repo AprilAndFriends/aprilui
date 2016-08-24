@@ -10,6 +10,8 @@
 
 #include "aprilui.h"
 #include "apriluiUtil.h"
+#include "Dataset.h"
+#include "Event.h"
 #include "Texture.h"
 
 namespace aprilui
@@ -17,8 +19,9 @@ namespace aprilui
 	void (*Texture::loadListener)(Texture*) = NULL;
 	void (*Texture::unloadListener)(Texture*) = NULL;
 
-	Texture::Texture(chstr filename, april::Texture* texture, bool managed)
+	Texture::Texture(Dataset* dataset, chstr filename, april::Texture* texture, bool managed)
 	{
+		this->dataset = dataset;
 		this->originalFilename = filename;
 		this->filename = texture->getFilename();
 		if (this->filename == "")
@@ -72,6 +75,11 @@ namespace aprilui
 		return (this->texture != NULL && this->texture->isAsyncLoadQueued());
 	}
 
+	bool Texture::isLoadedAny() const
+	{
+		return (this->texture != NULL && this->texture->isLoadedAny());
+	}
+
 	bool Texture::isValid() const
 	{
 		return (this->texture != NULL);
@@ -91,17 +99,18 @@ namespace aprilui
 
 	void Texture::update(float timeDelta)
 	{
-		if (this->managed && (this->texture->isLoaded() || this->texture->isLoadedAsync()))
+		if (this->managed && this->texture != NULL && (this->texture->isLoaded() || this->texture->isLoadedAsync()))
 		{
 			float maxTime = aprilui::getTextureIdleUnloadTime();
 			this->unusedTime += timeDelta;
 			if (maxTime > 0.0f && unusedTime >= maxTime)
 			{
+				this->texture->unload();
+				this->dataset->triggerEvent(Event::TextureUnloaded, this);
 				if (unloadListener != NULL)
 				{
 					(*unloadListener)(this);
 				}
-				this->texture->unload();
 				this->unusedTime = 0.0f; // safe guard if texture is reloaded externally at some point
 			}
 		}
@@ -122,10 +131,15 @@ namespace aprilui
 		this->unusedTime = 0.0f;
 		if (!this->isLoaded())
 		{
+			bool loaded = this->texture->isLoadedAny();
 			result = this->texture->load();
-			if (loadListener != NULL)
+			if (!loaded && result)
 			{
-				(*loadListener)(this);
+				this->dataset->triggerEvent(Event::TextureLoaded, this);
+				if (loadListener != NULL)
+				{
+					(*loadListener)(this);
+				}
 			}
 		}
 		if (!ignoreDynamicLinks)
@@ -133,12 +147,16 @@ namespace aprilui
 			foreach (Texture*, it, this->links)
 			{
 				(*it)->unusedTime = 0.0f;
-				if (!(*it)->isLoaded() && !(*it)->isLoadedAsync() && !(*it)->isAsyncLoadQueued())
+				if (!(*it)->isLoadedAny())
 				{
-					(*it)->texture->loadAsync();
-					if (loadListener != NULL)
+					// using loadAsync() here on purpose as the linked textures are probably not required right now so they can be loaded asynchronously
+					if ((*it)->texture->loadAsync())
 					{
-						(*loadListener)(*it);
+						this->dataset->triggerEvent(Event::TextureLoaded, (*it));
+						if (loadListener != NULL)
+						{
+							(*loadListener)(this);
+						}
 					}
 				}
 			}
@@ -150,18 +168,33 @@ namespace aprilui
 	{
 		bool result = false;
 		this->unusedTime = 0.0f;
-		if (this->texture != NULL && !this->texture->isLoaded() && !this->texture->isLoadedAsync() && !this->texture->isAsyncLoadQueued())
+		if (!this->isLoadedAny())
 		{
 			result = this->texture->loadAsync();
+			if (result)
+			{
+				this->dataset->triggerEvent(Event::TextureLoaded, this);
+				if (loadListener != NULL)
+				{
+					(*loadListener)(this);
+				}
+			}
 		}
 		if (!ignoreDynamicLinks)
 		{
 			foreach (Texture*, it, this->links)
 			{
 				(*it)->unusedTime = 0.0f;
-				if ((*it)->texture != NULL && !(*it)->texture->isLoaded() && !(*it)->texture->isLoadedAsync() && !(*it)->texture->isAsyncLoadQueued())
+				if (!(*it)->isLoadedAny())
 				{
-					(*it)->texture->loadAsync();
+					if ((*it)->texture->loadAsync())
+					{
+						this->dataset->triggerEvent(Event::TextureLoaded, (*it));
+						if (loadListener != NULL)
+						{
+							(*loadListener)(this);
+						}
+					}
 				}
 			}
 		}
@@ -170,11 +203,19 @@ namespace aprilui
 
 	void Texture::unload()
 	{
-		if (unloadListener != NULL)
+		if (this->texture != NULL)
 		{
-			(*unloadListener)(this);
+			bool loaded = this->texture->isLoadedAny();
+			this->texture->unload();
+			if (loaded)
+			{
+				this->dataset->triggerEvent(Event::TextureUnloaded, this);
+				if (unloadListener != NULL)
+				{
+					(*unloadListener)(this);
+				}
+			}
 		}
-		this->texture->unload();
 	}
 
 	void Texture::reload(chstr filename)

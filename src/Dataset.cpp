@@ -367,7 +367,7 @@ namespace aprilui
 		{
 			__THROW_EXCEPTION(FileCouldNotOpenException(locpath), aprilui::textureFilesDebugExceptionsEnabled, return);
 		}
-		Texture* texture = new Texture(filepath, aprilTexture, managed);
+		Texture* texture = new Texture(this, filepath, aprilTexture, managed);
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");

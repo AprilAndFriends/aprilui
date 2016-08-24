@@ -21,12 +21,15 @@
 
 namespace aprilui
 {
+	class Dataset;
+
 	class apriluiExport Texture
 	{
 	public:
-		Texture(chstr filename, april::Texture* texture, bool managed = false);
+		Texture(Dataset* dataset, chstr filename, april::Texture* texture, bool managed = false);
 		virtual ~Texture();
 
+		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);
 		HL_DEFINE_GET(hstr, filename, Filename);
 		HL_DEFINE_GET(april::Texture*, texture, Texture);
@@ -40,6 +43,7 @@ namespace aprilui
 		bool isLoaded() const;
 		bool isLoadedAsync() const;
 		bool isAsyncLoadQueued() const;
+		bool isLoadedAny() const;
 		bool isValid() const;
 		void setFilter(april::Texture::Filter value);
 		void setAddressMode(april::Texture::AddressMode value);
@@ -59,6 +63,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE static void setUnloadListener(void (*callback)(Texture*));
 
 	protected:
+		Dataset* dataset;
 		hstr originalFilename;
 		hstr filename;
 		april::Texture* texture;

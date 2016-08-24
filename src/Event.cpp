@@ -24,6 +24,8 @@ namespace aprilui
 	hstr Event::DatasetUnloaded = "DatasetUnloaded";
 	hstr Event::RegisteredInDataset = "RegisteredInDataset";
 	hstr Event::UnregisteredFromDataset = "UnregisteredFromDataset";
+	hstr Event::TextureLoaded = "TextureLoaded";
+	hstr Event::TextureUnloaded = "TextureUnloaded";
 	hstr Event::AttachedToObject = "AttachedToObject";
 	hstr Event::DetachedFromObject = "DetachedFromObject";
 	hstr Event::MouseDown = "MouseDown";
@@ -60,7 +62,7 @@ namespace aprilui
 	{
 	}
 
-	Event::Event(const Event& other) : Cloneable()
+	Event::Event(const Event& other) : Cloneable(other)
 	{
 	}
 
@@ -74,6 +76,8 @@ namespace aprilui
 		SYSTEM_EVENT_CHECK(DatasetUnloaded);
 		SYSTEM_EVENT_CHECK(RegisteredInDataset);
 		SYSTEM_EVENT_CHECK(UnregisteredFromDataset);
+		SYSTEM_EVENT_CHECK(TextureLoaded);
+		SYSTEM_EVENT_CHECK(TextureUnloaded);
 		SYSTEM_EVENT_CHECK(AttachedToObject);
 		SYSTEM_EVENT_CHECK(DetachedFromObject);
 		SYSTEM_EVENT_CHECK(MouseDown);

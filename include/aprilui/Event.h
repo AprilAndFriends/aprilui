@@ -30,6 +30,8 @@ namespace aprilui
 		static hstr DatasetUnloaded;
 		static hstr RegisteredInDataset;
 		static hstr UnregisteredFromDataset;
+		static hstr TextureLoaded;
+		static hstr TextureUnloaded;
 		static hstr AttachedToObject;
 		static hstr DetachedFromObject;
 		static hstr MouseDown;
