@@ -106,7 +106,10 @@ namespace aprilui
 			if (maxTime > 0.0f && unusedTime >= maxTime)
 			{
 				this->texture->unload();
-				this->dataset->triggerEvent(Event::TextureUnloaded, this);
+				if (this->dataset != NULL)
+				{
+					this->dataset->triggerEvent(Event::TextureUnloaded, this);
+				}
 				if (unloadListener != NULL)
 				{
 					(*unloadListener)(this);
@@ -135,7 +138,10 @@ namespace aprilui
 			result = this->texture->load();
 			if (!loaded && result)
 			{
-				this->dataset->triggerEvent(Event::TextureLoaded, this);
+				if (this->dataset != NULL)
+				{
+					this->dataset->triggerEvent(Event::TextureLoaded, this);
+				}
 				if (loadListener != NULL)
 				{
 					(*loadListener)(this);
@@ -152,7 +158,10 @@ namespace aprilui
 					// using loadAsync() here on purpose as the linked textures are probably not required right now so they can be loaded asynchronously
 					if ((*it)->texture->loadAsync())
 					{
-						this->dataset->triggerEvent(Event::TextureLoaded, (*it));
+						if (this->dataset != NULL)
+						{
+							this->dataset->triggerEvent(Event::TextureLoaded, (*it));
+						}
 						if (loadListener != NULL)
 						{
 							(*loadListener)(this);
@@ -173,7 +182,10 @@ namespace aprilui
 			result = this->texture->loadAsync();
 			if (result)
 			{
-				this->dataset->triggerEvent(Event::TextureLoaded, this);
+				if (this->dataset != NULL)
+				{
+					this->dataset->triggerEvent(Event::TextureLoaded, this);
+				}
 				if (loadListener != NULL)
 				{
 					(*loadListener)(this);
@@ -189,7 +201,10 @@ namespace aprilui
 				{
 					if ((*it)->texture->loadAsync())
 					{
-						this->dataset->triggerEvent(Event::TextureLoaded, (*it));
+						if (this->dataset != NULL)
+						{
+							this->dataset->triggerEvent(Event::TextureLoaded, (*it));
+						}
 						if (loadListener != NULL)
 						{
 							(*loadListener)(this);
@@ -209,7 +224,10 @@ namespace aprilui
 			this->texture->unload();
 			if (loaded)
 			{
-				this->dataset->triggerEvent(Event::TextureUnloaded, this);
+				if (this->dataset != NULL)
+				{
+					this->dataset->triggerEvent(Event::TextureUnloaded, this);
+				}
 				if (unloadListener != NULL)
 				{
 					(*unloadListener)(this);
