@@ -367,7 +367,7 @@ namespace aprilui
 		{
 			__THROW_EXCEPTION(FileCouldNotOpenException(locpath), aprilui::textureFilesDebugExceptionsEnabled, return);
 		}
-		Texture* texture = new Texture(filepath, aprilTexture, managed);
+		Texture* texture = new Texture(filename, filepath, aprilTexture, managed);
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
@@ -1065,7 +1065,7 @@ namespace aprilui
 			{
 				if		(node->name == "Texture")			this->parseTexture(node);
 				else if (node->name == "CompositeImage")	this->parseCompositeImage(node);
-				else if (node->name == "Style")			this->parseStyle(node);
+				else if (node->name == "Style")				this->parseStyle(node);
 				else if	(node->name == "Include")			this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
 				else if	(node->name == "TextureGroup")		this->parseTextureGroup(node);
 				else if (node->name == "Object" || objectFactories.hasKey(node->name))

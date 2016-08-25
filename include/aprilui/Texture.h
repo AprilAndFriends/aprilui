@@ -28,16 +28,17 @@ namespace aprilui
 	public:
 		friend class Dataset;
 
-		Texture(chstr filename, april::Texture* texture, bool managed = false);
+		Texture(chstr name, chstr filename, april::Texture* texture, bool managed = false);
 		virtual ~Texture();
 
-		HL_DEFINE_GET(Dataset*, dataset, Dataset);
+		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);
 		HL_DEFINE_GET(hstr, filename, Filename);
 		HL_DEFINE_GET(april::Texture*, texture, Texture);
 		HL_DEFINE_GET(april::Texture::LoadMode, loadMode, LoadMode);
 		HL_DEFINE_IS(managed, Managed);
 		HL_DEFINE_GET(gvec2, scale, Scale);
+		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(float, unusedTime, UnusedTime);
 		HL_DEFINE_GET(harray<Texture*>, links, Links);
 		int getWidth() const;
@@ -65,17 +66,18 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE static void setUnloadListener(void (*callback)(Texture*));
 
 	protected:
-		Dataset* dataset;
+		hstr name;
 		hstr originalFilename;
 		hstr filename;
 		april::Texture* texture;
 		april::Texture::LoadMode loadMode;
 		bool managed;
-		gvec2 scale;
-		float unusedTime;
-		harray<Texture*> links;
 		april::Texture::Filter filter;
 		april::Texture::AddressMode addressMode;
+		gvec2 scale;
+		Dataset* dataset;
+		harray<Texture*> links;
+		float unusedTime;
 
 		static void (*loadListener)(Texture*);
 		static void (*unloadListener)(Texture*);

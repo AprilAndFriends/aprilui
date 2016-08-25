@@ -19,9 +19,9 @@ namespace aprilui
 	void (*Texture::loadListener)(Texture*) = NULL;
 	void (*Texture::unloadListener)(Texture*) = NULL;
 
-	Texture::Texture(chstr filename, april::Texture* texture, bool managed)
+	Texture::Texture(chstr name, chstr filename, april::Texture* texture, bool managed)
 	{
-		this->dataset = NULL;
+		this->name = name;
 		this->originalFilename = filename;
 		this->filename = texture->getFilename();
 		if (this->filename == "")
@@ -35,6 +35,7 @@ namespace aprilui
 		this->addressMode = texture->getAddressMode();
 		float factor = aprilui::findTextureExtensionScale(this->filename);
 		this->scale.set(factor, factor);
+		this->dataset = NULL;
 		this->unusedTime = 0.0f;
 	}
 
