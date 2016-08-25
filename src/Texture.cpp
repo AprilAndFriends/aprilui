@@ -19,9 +19,9 @@ namespace aprilui
 	void (*Texture::loadListener)(Texture*) = NULL;
 	void (*Texture::unloadListener)(Texture*) = NULL;
 
-	Texture::Texture(Dataset* dataset, chstr filename, april::Texture* texture, bool managed)
+	Texture::Texture(chstr filename, april::Texture* texture, bool managed)
 	{
-		this->dataset = dataset;
+		this->dataset = NULL;
 		this->originalFilename = filename;
 		this->filename = texture->getFilename();
 		if (this->filename == "")

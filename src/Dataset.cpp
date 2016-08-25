@@ -367,7 +367,7 @@ namespace aprilui
 		{
 			__THROW_EXCEPTION(FileCouldNotOpenException(locpath), aprilui::textureFilesDebugExceptionsEnabled, return);
 		}
-		Texture* texture = new Texture(this, filepath, aprilTexture, managed);
+		Texture* texture = new Texture(filepath, aprilTexture, managed);
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
@@ -387,6 +387,7 @@ namespace aprilui
 			texture->setAddressMode(april::Texture::ADDRESS_CLAMP);
 		}
 		this->textures[textureName] = texture;
+		texture->dataset = this;
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
 		{
@@ -1320,6 +1321,7 @@ namespace aprilui
 			__THROW_EXCEPTION(ObjectExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->textures[name] = texture;
+		texture->dataset = this;
 	}
 
 	void Dataset::unregisterTexture(Texture* texture)
@@ -1330,6 +1332,7 @@ namespace aprilui
 			__THROW_EXCEPTION(ObjectNotExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		this->textures.removeKey(name);
+		texture->dataset = NULL;
 	}
 	
 	void Dataset::registerImage(BaseImage* image)

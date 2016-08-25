@@ -26,7 +26,9 @@ namespace aprilui
 	class apriluiExport Texture
 	{
 	public:
-		Texture(Dataset* dataset, chstr filename, april::Texture* texture, bool managed = false);
+		friend class Dataset;
+
+		Texture(chstr filename, april::Texture* texture, bool managed = false);
 		virtual ~Texture();
 
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
