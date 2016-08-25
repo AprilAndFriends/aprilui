@@ -48,14 +48,15 @@ namespace aprilui
 		virtual hstr getName() const { return this->name; }
 		void setName(chstr value);
 		HL_DEFINE_GETSET(hstr, tag, Tag);
-		virtual inline Dataset* getDataset() const { return this->dataset; }
-		virtual inline Object* getParent() const { return this->parent; }
+		hstr getFullName() const;
 		HL_DEFINE_IS(enabled, Enabled);
 		void setEnabled(bool value);
 		HL_DEFINE_IS(awake, Awake);
 		void setAwake(bool value);
 		HL_DEFINE_GET(int, zOrder, ZOrder);
 		void setZOrder(int zorder);
+		virtual inline Dataset* getDataset() const { return this->dataset; }
+		virtual inline Object* getParent() const { return this->parent; }
 
 		inline harray<Object*>& getChildrenObjects() { return this->childrenObjects; }
 		inline harray<Animator*>& getChildrenAnimators() { return this->childrenAnimators; }
@@ -65,7 +66,6 @@ namespace aprilui
 		virtual inline bool isAnimated() const { return false; }
 		virtual inline bool isWaitingAnimation() const { return false; }
 
-		hstr getFullName() const;
 		harray<Object*> getAncestors() const;
 		harray<BaseObject*> getDescendants() const;
 
