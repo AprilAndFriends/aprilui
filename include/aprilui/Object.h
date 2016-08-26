@@ -127,7 +127,7 @@ namespace aprilui
 		void removeChildren(bool recursive = false);
 		void destroyChildren();
 
-		Object* getChildUnderPoint(gvec2 pos) const;
+		Object* getChildUnderPoint(gvec2 point) const;
 		Object* getChildUnderPoint(float x, float y) const;
 		virtual void clearChildUnderCursor();
 		void clearDescendantChildrenUnderCursor();
@@ -246,27 +246,49 @@ namespace aprilui
 		harray<Animator*> animatePivot(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		harray<Animator*> animateColor(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 
-		void moveXStop();
-		void moveYStop();
-		void scaleXStop();
-		void scaleYStop();
-		void resizeXStop();
-		void resizeYStop();
-		void rotateStop();
-		void movePivotXStop();
-		void movePivotYStop();
-		void fadeRedStop();
-		void fadeGreenStop();
-		void fadeBlueStop();
-		void fadeAlphaStop();
-		void changeZOrderStop();
-		void moveStop();
-		void scaleStop();
-		void resizeStop();
-		void movePivotStop();
-		void fadeColorStop();
+		void animateStopX();
+		void animateStopY();
+		void animateStopScaleX();
+		void animateStopScaleY();
+		void animateStopWidth();
+		void animateStopHeight();
+		void animateStopAngle();
+		void animateStopPivotX();
+		void animateStopPivotY();
+		void animateStopRed();
+		void animateStopGreen();
+		void animateStopBlue();
+		void animateStopAlpha();
+		void animateStopZOrder();
+		void animateStopMove();
+		void animateStopScale();
+		void animateStopSize();
+		void animateStopPivot();
+		void animateStopColor();
 
-		void stopAllAnimations();
+		void animateStopAll();
+
+		DEPRECATED_ATTRIBUTE void moveXStop() { this->animateStopX(); }
+		DEPRECATED_ATTRIBUTE void moveYStop() { this->animateStopY(); }
+		DEPRECATED_ATTRIBUTE void scaleXStop() { this->animateStopScaleX(); }
+		DEPRECATED_ATTRIBUTE void scaleYStop() { this->animateStopScaleY(); }
+		DEPRECATED_ATTRIBUTE void resizeXStop() { this->animateStopWidth(); }
+		DEPRECATED_ATTRIBUTE void resizeYStop() { this->animateStopHeight(); }
+		DEPRECATED_ATTRIBUTE void rotateStop() { this->animateStopAngle(); }
+		DEPRECATED_ATTRIBUTE void movePivotXStop() { this->animateStopPivotX(); }
+		DEPRECATED_ATTRIBUTE void movePivotYStop() { this->animateStopPivotY(); }
+		DEPRECATED_ATTRIBUTE void fadeRedStop() { this->animateStopRed(); }
+		DEPRECATED_ATTRIBUTE void fadeGreenStop() { this->animateStopGreen(); }
+		DEPRECATED_ATTRIBUTE void fadeBlueStop() { this->animateStopBlue(); }
+		DEPRECATED_ATTRIBUTE void fadeAlphaStop() { this->animateStopAlpha(); }
+		DEPRECATED_ATTRIBUTE void changeZOrderStop() { this->animateStopZOrder(); }
+		DEPRECATED_ATTRIBUTE void moveStop() { this->animateStopMove(); }
+		DEPRECATED_ATTRIBUTE void scaleStop() { this->animateStopScale(); }
+		DEPRECATED_ATTRIBUTE void resizeStop() { this->animateStopSize(); }
+		DEPRECATED_ATTRIBUTE void movePivotStop() { this->animateStopPivot(); }
+		DEPRECATED_ATTRIBUTE void fadeColorStop() { this->animateStopColor(); }
+
+		DEPRECATED_ATTRIBUTE void stopAllAnimations() { this->animateStopAll(); }
 
 		DEPRECATED_ATTRIBUTE bool isClickThrough() const;
 		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED); }
@@ -291,9 +313,9 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void moveCenterQueue(float x, float y, float speed, float delay = 0.0f) { this->movePivotQueue(x, y, speed, delay); }
 		DEPRECATED_ATTRIBUTE void moveCenterQueue(gvec2 pivot, float speed, float delay = 0.0f) { this->movePivotQueue(pivot, speed, delay); }
 
-		DEPRECATED_ATTRIBUTE void moveCenterXStop() { this->movePivotXStop(); }
-		DEPRECATED_ATTRIBUTE void moveCenterYStop() { this->movePivotYStop(); }
-		DEPRECATED_ATTRIBUTE void moveCenterStop() { this->movePivotStop(); }
+		DEPRECATED_ATTRIBUTE void moveCenterXStop() { this->animateStopPivotX(); }
+		DEPRECATED_ATTRIBUTE void moveCenterYStop() { this->animateStopPivotY(); }
+		DEPRECATED_ATTRIBUTE void moveCenterStop() { this->animateStopPivot(); }
 
 		DEPRECATED_ATTRIBUTE Animator* moveXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
 		DEPRECATED_ATTRIBUTE Animator* moveYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);

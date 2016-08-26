@@ -1293,7 +1293,7 @@ namespace aprilui
 		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
 	}
 
-	Object* Object::getChildUnderPoint(gvec2 pos) const
+	Object* Object::getChildUnderPoint(gvec2 point) const
 	{
 		if (!this->isVisible() || this->hitTest == HIT_TEST_DISABLED_RECURSIVE)
 		{
@@ -1302,13 +1302,13 @@ namespace aprilui
 		Object* object = NULL;
 		foreachc_r (Object*, it, this->childrenObjects)
 		{
-			object = (*it)->getChildUnderPoint(pos);
+			object = (*it)->getChildUnderPoint(point);
 			if (object != NULL)
 			{
 				break;
 			}
 		}
-		return (object == NULL && this->hitTest == HIT_TEST_ENABLED && this->isPointInside(pos) ? (Object*)this : object);
+		return (object == NULL && this->hitTest == HIT_TEST_ENABLED && this->isPointInside(point) ? (Object*)this : object);
 	}
 
 	Object* Object::getChildUnderPoint(float x, float y) const
@@ -1919,101 +1919,101 @@ namespace aprilui
 		return result;
 	}
 
-	void Object::moveXStop()
+	void Object::animateStopX()
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
 	}
 
-	void Object::moveYStop()
+	void Object::animateStopY()
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverY);
 	}
 
-	void Object::scaleXStop()
+	void Object::animateStopScaleX()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 	}
 
-	void Object::scaleYStop()
+	void Object::animateStopScaleY()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
 	}
 
-	void Object::resizeXStop()
+	void Object::animateStopWidth()
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 	}
 
-	void Object::resizeYStop()
+	void Object::animateStopHeight()
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
 	}
 
-	void Object::rotateStop()
+	void Object::animateStopAngle()
 	{
 		REMOVE_EXISTING_ANIMATORS(Rotator);
 	}
 
-	void Object::movePivotXStop()
+	void Object::animateStopPivotX()
 	{
 		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
 	}
 
-	void Object::movePivotYStop()
+	void Object::animateStopPivotY()
 	{
 		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
 	}
 
-	void Object::fadeRedStop()
+	void Object::animateStopRed()
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
 	}
 
-	void Object::fadeGreenStop()
+	void Object::animateStopGreen()
 	{
 		REMOVE_EXISTING_ANIMATORS(GreenChanger);
 	}
 
-	void Object::fadeBlueStop()
+	void Object::animateStopBlue()
 	{
 		REMOVE_EXISTING_ANIMATORS(BlueChanger);
 	}
 
-	void Object::fadeAlphaStop()
+	void Object::animateStopAlpha()
 	{
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
 	}
 
-	void Object::changeZOrderStop()
+	void Object::animateStopZOrder()
 	{
 		REMOVE_EXISTING_ANIMATORS(ZOrderChanger);
 	}
 
-	void Object::moveStop()
+	void Object::animateStopMove()
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
 		REMOVE_EXISTING_ANIMATORS(MoverY);
 	}
 
-	void Object::scaleStop()
+	void Object::animateStopScale()
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
 	}
 
-	void Object::resizeStop()
+	void Object::animateStopSize()
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
 	}
 
-	void Object::movePivotStop()
+	void Object::animateStopPivot()
 	{
 		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
 		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
 	}
 
-	void Object::fadeColorStop()
+	void Object::animateStopColor()
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
 		REMOVE_EXISTING_ANIMATORS(GreenChanger);
@@ -2021,7 +2021,7 @@ namespace aprilui
 		REMOVE_EXISTING_ANIMATORS(AlphaChanger);
 	}
 
-	void Object::stopAllAnimations()
+	void Object::animateStopAll()
 	{
 		foreach (Animator*, it, this->dynamicAnimators)
 		{
