@@ -332,12 +332,12 @@ namespace aprilui
 			if (dynamicLoad)
 			{
 				managed = true;
-				loadMode = april::Texture::LOAD_ON_DEMAND;
+				loadMode = april::Texture::LoadMode::OnDemand;
 			}
 			else
 			{
 				managed = false;
-				loadMode = april::Texture::LOAD_ASYNC;
+				loadMode = april::Texture::LoadMode::Async;
 			}
 		}
 		if (node->pexists("load_mode"))
@@ -346,15 +346,15 @@ namespace aprilui
 			if (mode == "immediate")
 			{
 				hlog::warn(logTag, "'load_mode=\"immediate\"' is deprecated. Defaulting to 'load_mode=\"async\"'."); // DEPRECATED
-				loadMode = april::Texture::LOAD_ASYNC;
+				loadMode = april::Texture::LoadMode::Async;
 			}
-			else if (mode == "on_demand")				loadMode = april::Texture::LOAD_ON_DEMAND;
-			else if (mode == "async")					loadMode = april::Texture::LOAD_ASYNC;
-			else if (mode == "async_deferred_upload")	loadMode = april::Texture::LOAD_ASYNC_DEFERRED_UPLOAD;
+			else if (mode == "on_demand")				loadMode = april::Texture::LoadMode::OnDemand;
+			else if (mode == "async")					loadMode = april::Texture::LoadMode::Async;
+			else if (mode == "async_deferred_upload")	loadMode = april::Texture::LoadMode::AsyncDeferredUpload;
 			else if (mode == "async_on_demand")
 			{
 				hlog::warn(logTag, "'load_mode=\"async_on_demand\"' is deprecated. Use 'load_mode=\"async_deferred_upload\"' instead."); // DEPRECATED
-				loadMode = april::Texture::LOAD_ASYNC_DEFERRED_UPLOAD;
+				loadMode = april::Texture::LoadMode::AsyncDeferredUpload;
 			}
 			else
 			{
@@ -362,7 +362,7 @@ namespace aprilui
 			}
 		}
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, loadMode);
+		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::Type::Immutable, loadMode);
 		if (aprilTexture == NULL)
 		{
 			__THROW_EXCEPTION(FileCouldNotOpenException(locpath), aprilui::textureFilesDebugExceptionsEnabled, return);
@@ -371,8 +371,8 @@ namespace aprilui
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
-			if		(filter == "linear")	texture->setFilter(april::Texture::FILTER_LINEAR);
-			else if	(filter == "nearest")	texture->setFilter(april::Texture::FILTER_NEAREST);
+			if		(filter == "linear")	texture->setFilter(april::Texture::Filter::Linear);
+			else if	(filter == "nearest")	texture->setFilter(april::Texture::Filter::Nearest);
 			else
 			{
 				__THROW_EXCEPTION(Exception("Texture Filter '" + filter + "' is not supported!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
@@ -380,11 +380,11 @@ namespace aprilui
 		}
 		if (node->pbool("wrap", false))
 		{
-			texture->setAddressMode(april::Texture::ADDRESS_WRAP);
+			texture->setAddressMode(april::Texture::AddressMode::Wrap);
 		}
 		else
 		{
-			texture->setAddressMode(april::Texture::ADDRESS_CLAMP);
+			texture->setAddressMode(april::Texture::AddressMode::Clamp);
 		}
 		this->textures[textureName] = texture;
 		texture->dataset = this;

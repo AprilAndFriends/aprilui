@@ -246,7 +246,7 @@ namespace aprilui
 				april::rendersys->destroyTexture(this->texture);
 			}
 			this->unusedTime = 0.0f;
-			this->texture = april::rendersys->createTextureFromResource(filename, april::Texture::TYPE_IMMUTABLE, this->loadMode);
+			this->texture = april::rendersys->createTextureFromResource(filename, april::Texture::Type::Immutable, this->loadMode);
 			if (this->texture == NULL)
 			{
 				__THROW_EXCEPTION(ResourceFileCouldNotOpenException(filename), aprilui::textureFilesDebugExceptionsEnabled, return);

@@ -93,7 +93,7 @@ namespace aprilui
 			hswap(srcSize.x, srcSize.y);
 		}
 		bool fullTexture = (this->texture->isValid() && renderTexture->isLoaded() &&
-			renderTexture->getAddressMode() == april::Texture::ADDRESS_WRAP &&
+			renderTexture->getAddressMode() == april::Texture::AddressMode::Wrap &&
 			this->srcRect.x == 0.0f && this->srcRect.y == 0.0f &&
 			srcSize.x == (float)this->texture->getWidth() && srcSize.y == (float)this->texture->getHeight());
 		if (fullTexture)
