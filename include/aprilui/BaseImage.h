@@ -36,6 +36,7 @@ namespace aprilui
 
 		BaseImage(chstr name);
 		~BaseImage();
+		virtual inline hstr getClassName() const { return "BaseObject"; }
 		
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);

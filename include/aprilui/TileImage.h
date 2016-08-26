@@ -29,6 +29,7 @@ namespace aprilui
 	public:
 		TileImage(Texture* texture, chstr name, grect source);
 		~TileImage();
+		inline hstr getClassName() const { return "TileImage"; }
 		
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
 		inline void setTile(float w, float h) { this->tile.set(w, h); }

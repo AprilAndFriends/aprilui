@@ -36,8 +36,8 @@ namespace aprilui
 		APRILUI_CLONEABLE(Image);
 	public:
 		Image(Texture* texture, chstr name, grect source);
-		DEPRECATED_ATTRIBUTE Image(const Image& other, chstr name);
 		~Image();
+		inline hstr getClassName() const { return "Image"; }
 		
 		virtual void draw(grect rect, april::Color color = april::Color::White);
 		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White);
@@ -75,6 +75,7 @@ namespace aprilui
 
 		void tryLoadTextureCoordinates();
 
+		DEPRECATED_ATTRIBUTE Image(const Image& other, chstr name);
 		DEPRECATED_ATTRIBUTE inline bool isVertical() const { return this->rotated; }
 		DEPRECATED_ATTRIBUTE inline void setVertical(bool value) { this->rotated = value; }
 		

@@ -25,6 +25,7 @@ namespace aprilui
 	public:
 		SkinImage(Texture* texture, chstr name, grect source);
 		~SkinImage();
+		inline hstr getClassName() const { return "SkinImage"; }
 
 		HL_DEFINE_GET(grect, skinRect, SkinRect);
 		void setSkinRect(grect value);

@@ -127,24 +127,24 @@ namespace aprilui
 		bool onButtonDown(april::Button buttonCode);
 		bool onButtonUp(april::Button buttonCode);
 		
+		virtual Object* getObject(chstr name);
+		virtual Animator* getAnimator(chstr name);
+		Object* tryGetObject(chstr name) const;
+		Animator* tryGetAnimator(chstr name) const;
 		virtual Texture* getTexture(chstr name);
 		virtual BaseImage* getImage(chstr name);
 		virtual Style* getStyle(chstr name);
-		virtual hstr getTextEntry(chstr textKey);
-		virtual bool hasTextEntry(chstr textKey);
-		virtual hstr getText(chstr compositeTextKey);
-		harray<hstr> getTexts(harray<hstr> keys);
-		
-		virtual Object* getObject(chstr name);
-		virtual Animator* getAnimator(chstr name);
 		bool hasTexture(chstr name) const;
 		bool hasImage(chstr name) const;
 		bool hasStyle(chstr name) const;
 		bool hasObject(chstr name) const;
 		bool hasAnimator(chstr name) const;
-		Object* tryGetObject(chstr name) const;
-		Animator* tryGetAnimator(chstr name) const;
 
+		virtual hstr getTextEntry(chstr textKey);
+		virtual bool hasTextEntry(chstr textKey);
+		virtual hstr getText(chstr compositeTextKey);
+		harray<hstr> getTexts(harray<hstr> keys);
+		
 		template <typename T>
 		inline T getObject(chstr name)
 		{

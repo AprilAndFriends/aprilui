@@ -30,9 +30,8 @@ namespace aprilui
 		typedef std::pair<BaseImage*, grect> ImageRef;
 
 		CompositeImage(chstr name, gvec2 size);
-		DEPRECATED_ATTRIBUTE CompositeImage(chstr name, const CompositeImage& other);
-		DEPRECATED_ATTRIBUTE CompositeImage(const CompositeImage& other, chstr name);
 		~CompositeImage();
+		inline hstr getClassName() const { return "CompositeImage"; }
 		
 		HL_DEFINE_GETSET(gvec2, size, SrcSize);
 		HL_DEFINE_GETSET(float, size.x, SrcWidth);
@@ -51,6 +50,9 @@ namespace aprilui
 		void draw(grect rect, april::Color color);
 		void draw(harray<april::TexturedVertex> vertices, april::Color color);
 		
+		DEPRECATED_ATTRIBUTE CompositeImage(chstr name, const CompositeImage& other);
+		DEPRECATED_ATTRIBUTE CompositeImage(const CompositeImage& other, chstr name);
+
 	protected:
 		gvec2 size;
 		bool restoreClipRects;

@@ -1431,31 +1431,6 @@ namespace aprilui
 		return dataset->getAnimator(name(dot + 1, -1));
 	}
 
-	bool Dataset::hasObject(chstr name) const
-	{
-		return (this->tryGetObject(name) != NULL);
-	}
-	
-	bool Dataset::hasAnimator(chstr name) const
-	{
-		return (this->tryGetAnimator(name) != NULL);
-	}
-	
-	bool Dataset::hasTexture(chstr name) const
-	{
-		return this->textures.hasKey(name);
-	}
-	
-	bool Dataset::hasImage(chstr name) const
-	{
-		return this->images.hasKey(name);
-	}
-
-	bool Dataset::hasStyle(chstr name) const
-	{
-		return this->styles.hasKey(name);
-	}
-
 	Object* Dataset::tryGetObject(chstr name) const
 	{
 		int dot = name.indexOf('.');
@@ -1558,6 +1533,31 @@ namespace aprilui
 			style = dataset->getStyle(name(dot + 1, -1));
 		}
 		return style;
+	}
+
+	bool Dataset::hasObject(chstr name) const
+	{
+		return (this->tryGetObject(name) != NULL);
+	}
+
+	bool Dataset::hasAnimator(chstr name) const
+	{
+		return (this->tryGetAnimator(name) != NULL);
+	}
+
+	bool Dataset::hasTexture(chstr name) const
+	{
+		return this->textures.hasKey(name);
+	}
+
+	bool Dataset::hasImage(chstr name) const
+	{
+		return this->images.hasKey(name);
+	}
+
+	bool Dataset::hasStyle(chstr name) const
+	{
+		return this->styles.hasKey(name);
 	}
 
 	bool Dataset::_findTextEntry(chstr textKey, hstr* text)
