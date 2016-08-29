@@ -829,9 +829,9 @@ namespace aprilui
 				ancestor = obj->getParent();
 			}
 		}
-		if (this->customPointInsideCallback)
+		if (this->customPointInsideCallback != NULL)
 		{
-			return this->customPointInsideCallback(this, position);
+			return (*this->customPointInsideCallback)(this, position);
 		}
 		return grect(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
 	}
