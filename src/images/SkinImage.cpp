@@ -238,17 +238,38 @@ namespace aprilui
 			{
 				this->_rectVertices.clear();
 			}
+			// which pieces will be rendered
+			bool left = (this->skinRect.x > 0.0f);
+			bool hcenter = (rect.w > this->srcRect.w - this->skinRect.w);
+			bool right = (this->srcRect.w > this->skinRect.right());
+			bool top = (this->skinRect.y > 0.0f);
+			bool vcenter = (rect.h > this->srcRect.h - this->skinRect.h);
+			bool bottom = (this->srcRect.h > this->skinRect.bottom());
+			grect skinRect = this->skinRect;
+			gvec2 srcSize = this->srcRect.getSize();
+			// modifying skinRect if only borders are visible
+			if (!hcenter)
+			{
+				float difference = this->srcRect.w - this->skinRect.w - rect.w;
+				skinRect.x -= difference * 0.5f;
+				skinRect.w += difference;
+			}
+			if (!vcenter)
+			{
+				float difference = this->srcRect.h - this->skinRect.h - rect.h;
+				skinRect.y -= difference * 0.5f;
+				skinRect.h += difference;
+			}
 			// coordinate translation
 			gvec2 pos[4];
 			pos[0] = rect.getPosition();
 			pos[3] = rect.getBottomRight();
-			pos[1] = pos[0] + this->skinRect.getPosition();
-			pos[2] = pos[0] + rect.getSize() - (this->srcRect.getSize() - this->skinRect.getBottomRight());
+			pos[1] = pos[0] + skinRect.getPosition();
+			pos[2] = pos[0] + rect.getSize() - (srcRect.getSize() - skinRect.getBottomRight());
 			gvec2 uv[4];
 			uv[0].set(Image::vertices[0].u, Image::vertices[0].v);
 			uv[3].set(Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].u, Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].v);
-			grect skinRect = this->skinRect;
-			gvec2 srcSize = this->srcRect.getSize();
+			// take rotation into account
 			if (this->rotated)
 			{
 				hswap(uv[0].x, uv[3].x); // undoes modified Image::vertices
@@ -277,25 +298,22 @@ namespace aprilui
 					}
 				}
 			}
-			bool left = (this->skinRect.x > 0.0f);
-			bool hcenter = (rect.w > this->srcRect.w - this->skinRect.w);
-			bool right = (this->srcRect.w > this->skinRect.right());
 			if (!this->tiledBorders)
 			{
 				// when tiled borders are disabled, the vertices only have to be arranged into triangles
-				if (this->skinRect.y > 0.0f)
+				if (top)
 				{
 					CREATE_TRIANGLE(this->_vertices, left, 0, 1, 4, 5);
 					CREATE_TRIANGLE(this->_vertices, hcenter, 1, 2, 5, 6);
 					CREATE_TRIANGLE(this->_vertices, right, 2, 3, 6, 7);
 				}
-				if (rect.h > this->srcRect.h - this->skinRect.h)
+				if (vcenter)
 				{
 					CREATE_TRIANGLE(this->_vertices, left, 4, 5, 8, 9);
 					CREATE_TRIANGLE(this->_vertices, hcenter, 5, 6, 9, 10);
 					CREATE_TRIANGLE(this->_vertices, right, 6, 7, 10, 11);
 				}
-				if (this->srcRect.h > this->skinRect.bottom())
+				if (bottom)
 				{
 					CREATE_TRIANGLE(this->_vertices, left, 8, 9, 12, 13);
 					CREATE_TRIANGLE(this->_vertices, hcenter, 9, 10, 13, 14);
@@ -312,11 +330,11 @@ namespace aprilui
 				float tileCountY = border.y / tile.y;
 				int countX = (int)tileCountX;
 				int countY = (int)tileCountY;
-				if (tileCountX - countX > TILED_FIT_LIMIT)
+				if (tileCountX - countX > TILED_FIT_LIMIT || countX == 0 && tileCountX > 0.0f)
 				{
 					++countX;
 				}
-				if (tileCountY - countY > TILED_FIT_LIMIT)
+				if (tileCountY - countY > TILED_FIT_LIMIT || countY == 0 && tileCountY > 0.0f)
 				{
 					++countY;
 				}
@@ -330,7 +348,7 @@ namespace aprilui
 				}
 				int i = 0;
 				int j = 0;
-				if (this->skinRect.y > 0.0f)
+				if (top)
 				{
 					CREATE_TRIANGLE(this->_vertices, left, 0, 1, 4, 5);
 					// top center
@@ -352,7 +370,7 @@ namespace aprilui
 					}
 					CREATE_TRIANGLE(this->_vertices, right, 2, 3, 6, 7);
 				}
-				if (rect.h > this->srcRect.h - this->skinRect.h)
+				if (vcenter)
 				{
 					// center left
 					if (left)
@@ -420,7 +438,7 @@ namespace aprilui
 						}
 					}
 				}
-				if (this->srcRect.h > this->skinRect.bottom())
+				if (bottom)
 				{
 					CREATE_TRIANGLE(this->_vertices, left, 8, 9, 12, 13);
 					// bottom center
