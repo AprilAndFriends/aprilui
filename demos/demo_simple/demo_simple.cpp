@@ -121,7 +121,7 @@ void april_init(const harray<hstr>& args)
 #if defined(_ANDROID) || defined(_IOS) || defined(_WINRT)
 		drawRect.setSize(april::getSystemInfo().displayResolution);
 #endif
-		april::init(april::RS_DEFAULT, april::WS_DEFAULT);
+		april::init(april::RenderSystemType::Default, april::WindowType::Default);
 		april::createRenderSystem();
 		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "AprilUI: Simple Demo");
 		atres::init();
