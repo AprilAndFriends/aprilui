@@ -19,7 +19,7 @@
 
 #define APRILUI_CLONEABLE(type) \
 public: \
-	virtual inline type* clone() const { return new type(*this); } \
+	virtual type* clone() const { return new type(*this); } \
 protected: \
 	type(const type& other);
 
