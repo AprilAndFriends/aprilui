@@ -45,7 +45,7 @@ namespace aprilui
 
 		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
-		virtual hstr getName() const { return this->name; }
+		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);
 		HL_DEFINE_GETSET(hstr, tag, Tag);
 		hstr getFullName() const;

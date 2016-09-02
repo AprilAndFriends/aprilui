@@ -42,6 +42,10 @@ namespace aprilui
 	
 	class apriluiExport Dataset : public EventReceiver
 	{
+		// TODO - enable cloning of dataset
+	protected:
+		virtual Dataset* clone() const { return NULL; }
+		//APRILUI_CLONEABLE(Dataset);
 	public:
 		BaseObject* parseObject(hlxml::Node* node, Object* parent = NULL);
 		

@@ -13,9 +13,9 @@
 
 namespace aprilui
 {
-	EventArgs::EventArgs(EventReceiver* receiver, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, gvec2 position, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->receiver = receiver;
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
@@ -27,9 +27,9 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(EventReceiver* receiver, april::Button buttonCode, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, EventReceiver* receiver, april::Button buttonCode, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->receiver = receiver;
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
@@ -40,9 +40,9 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(EventReceiver* receiver, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, EventReceiver* receiver, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->receiver = receiver;
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
@@ -52,9 +52,9 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(EventReceiver* receiver, void* userData)
+	EventArgs::EventArgs(chstr eventType, EventReceiver* receiver, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->receiver = receiver;
 		this->baseObject = dynamic_cast<BaseObject*>(receiver);
 		this->object = dynamic_cast<Object*>(receiver);
@@ -63,9 +63,9 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Object* object, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, Object* object, april::Key keyCode, gvec2 position, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->object = object;
 		this->baseObject = object;
 		this->receiver = object;
@@ -75,9 +75,9 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Object* object, april::Button buttonCode, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, Object* object, april::Button buttonCode, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->object = object;
 		this->baseObject = object;
 		this->receiver = object;
@@ -86,9 +86,9 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Object* object, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, Object* object, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->object = object;
 		this->baseObject = object;
 		this->receiver = object;
@@ -96,18 +96,18 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Object* object, void* userData)
+	EventArgs::EventArgs(chstr eventType, Object* object, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->object = object;
 		this->baseObject = object;
 		this->receiver = object;
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Animator* animator, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, Animator* animator, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->animator = animator;
 		this->baseObject = animator;
 		this->receiver = animator;
@@ -115,27 +115,27 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Animator* animator, void* userData)
+	EventArgs::EventArgs(chstr eventType, Animator* animator, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->animator = animator;
 		this->baseObject = animator;
 		this->receiver = animator;
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Dataset* dataset, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, Dataset* dataset, chstr string, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->dataset = dataset;
 		this->receiver = dataset;
 		this->string = string;
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(Dataset* dataset, void* userData)
+	EventArgs::EventArgs(chstr eventType, Dataset* dataset, void* userData)
 	{
-		this->_initDefaults();
+		this->_initDefaults(eventType);
 		this->dataset = dataset;
 		this->receiver = dataset;
 		this->userData = userData;
@@ -145,8 +145,9 @@ namespace aprilui
 	{
 	}
 
-	void EventArgs::_initDefaults()
+	void EventArgs::_initDefaults(chstr eventType)
 	{
+		this->eventType = eventType;
 		this->receiver = NULL;
 		this->baseObject = NULL;
 		this->object = NULL;

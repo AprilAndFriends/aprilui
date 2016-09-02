@@ -30,6 +30,7 @@ namespace aprilui
 	class apriluiExport EventArgs
 	{
 	public:
+		hstr eventType;
 		EventReceiver* receiver;
 		BaseObject* baseObject;
 		Object* object;
@@ -41,22 +42,22 @@ namespace aprilui
 		april::Button buttonCode;
 		void* userData;
 		
-		EventArgs(EventReceiver* receiver, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
-		EventArgs(EventReceiver* receiver, april::Button buttonCode, chstr string = "", void* userData = NULL);
-		EventArgs(EventReceiver* receiver, chstr string, void* userData = NULL);
-		EventArgs(EventReceiver* receiver, void* userData = NULL);
-		EventArgs(Object* object, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
-		EventArgs(Object* object, april::Button buttonCode, chstr string = "", void* userData = NULL);
-		EventArgs(Object* object, chstr string, void* userData = NULL);
-		EventArgs(Object* object, void* userData = NULL);
-		EventArgs(Animator* animator, chstr string, void* userData = NULL);
-		EventArgs(Animator* animator, void* userData = NULL);
-		EventArgs(Dataset* dataset, chstr string, void* userData = NULL);
-		EventArgs(Dataset* dataset, void* userData = NULL);
+		EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, EventReceiver* receiver, april::Button buttonCode, chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, EventReceiver* receiver, chstr string, void* userData = NULL);
+		EventArgs(chstr eventType, EventReceiver* receiver, void* userData = NULL);
+		EventArgs(chstr eventType, Object* object, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, Object* object, april::Button buttonCode, chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, Object* object, chstr string, void* userData = NULL);
+		EventArgs(chstr eventType, Object* object, void* userData = NULL);
+		EventArgs(chstr eventType, Animator* animator, chstr string, void* userData = NULL);
+		EventArgs(chstr eventType, Animator* animator, void* userData = NULL);
+		EventArgs(chstr eventType, Dataset* dataset, chstr string, void* userData = NULL);
+		EventArgs(chstr eventType, Dataset* dataset, void* userData = NULL);
 		~EventArgs();
 
 	protected:
-		void _initDefaults();
+		void _initDefaults(chstr eventType);
 
 	};
 

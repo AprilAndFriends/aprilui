@@ -127,7 +127,7 @@ namespace aprilui
 	{
 		if (this->events.hasKey(type))
 		{
-			this->dataset->queueCallback(this->events[type], new EventArgs(this, keyCode, aprilui::getCursorPosition(), "", NULL));
+			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, keyCode, aprilui::getCursorPosition(), "", NULL));
 			return true;
 		}
 		return false;
@@ -137,7 +137,7 @@ namespace aprilui
 	{
 		if (this->events.hasKey(type))
 		{
-			this->dataset->queueCallback(this->events[type], new EventArgs(this, keyCode, aprilui::getCursorPosition(), string, NULL));
+			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, keyCode, aprilui::getCursorPosition(), string, NULL));
 			return true;
 		}
 		return false;
@@ -147,7 +147,7 @@ namespace aprilui
 	{
 		if (this->events.hasKey(type))
 		{
-			this->dataset->queueCallback(this->events[type], new EventArgs(this, keyCode, position, string, userData));
+			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, keyCode, position, string, userData));
 			return true;
 		}
 		return false;
@@ -157,7 +157,7 @@ namespace aprilui
 	{
 		if (this->events.hasKey(type))
 		{
-			this->dataset->queueCallback(this->events[type], new EventArgs(this, buttonCode, string, userData));
+			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, buttonCode, string, userData));
 			return true;
 		}
 		return false;
@@ -167,7 +167,7 @@ namespace aprilui
 	{
 		if (this->events.hasKey(type))
 		{
-			this->dataset->queueCallback(this->events[type], new EventArgs(this, string, userData));
+			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, string, userData));
 			return true;
 		}
 		return false;
@@ -177,7 +177,7 @@ namespace aprilui
 	{
 		if (this->events.hasKey(type))
 		{
-			this->dataset->queueCallback(this->events[type], new EventArgs(this, userData));
+			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, userData));
 			return true;
 		}
 		return false;

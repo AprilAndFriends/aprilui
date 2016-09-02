@@ -30,11 +30,12 @@ namespace aprilui
 
 	class apriluiExport EventReceiver : public Cloneable
 	{
-		APRILUI_CLONEABLE(EventReceiver);
+		APRILUI_CLONEABLE_ABSTRACT(EventReceiver);
 	public:
 		EventReceiver();
 		~EventReceiver();
 
+		virtual hstr getName() const = 0;
 		inline hmap<hstr, Event*>& getEvents() { return this->events; }
 
 		bool registerEvent(chstr type, void(*callback)(EventArgs*));

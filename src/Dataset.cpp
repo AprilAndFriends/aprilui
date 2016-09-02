@@ -781,7 +781,7 @@ namespace aprilui
 			object->setRect(rect);
 		}
 		baseObject->dataset = this;
-		EventArgs args(this);
+		EventArgs args(Event::RegisteredInDataset, this);
 		baseObject->notifyEvent(Event::RegisteredInDataset, &args);
 		bool isCustomStyle = node->pexists("style");
 		if (isCustomStyle)
@@ -1239,7 +1239,7 @@ namespace aprilui
 		objects += root->getDescendants();
 		Object* object = NULL;
 		Animator* animator = NULL;
-		EventArgs args(this);
+		EventArgs args(Event::RegisteredInDataset, this);
 		foreach (BaseObject*, it, objects)
 		{
 			name = (*it)->getName();
