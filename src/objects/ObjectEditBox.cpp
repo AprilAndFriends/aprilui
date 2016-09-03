@@ -47,7 +47,7 @@ namespace aprilui
 	hstr EditBox::defaultFilterAscii = EditBox::defaultFilterAsciiNoSpace + " ";
 	hstr EditBox::defaultFilterEmail = EditBox::defaultFilterAlphaNumeric + "+-_.@";
 	hstr EditBox::defaultFilterEmailComplete = EditBox::defaultFilterEmail + "!#$%&'*/=?^`{|}~";
-
+	
 	EditBox::EditBox(chstr name) : Label(name), ButtonBase()
 	{
 		this->text = "";
