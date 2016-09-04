@@ -120,7 +120,7 @@ namespace aprilui
 			}
 		}
 #ifdef _DEBUG
-		hlog::warnf(logTag, "Object with Focus Index '%d' does not exist, is not visible or is not enabled!", value);
+		hlog::warnf(logTag, "Object with Focus Index '%d' in '%s' does not exist, is not visible or is not enabled!", value, this->name.cStr());
 #endif
 		return false;
 	}
