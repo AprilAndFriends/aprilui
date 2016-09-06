@@ -35,8 +35,9 @@ namespace aprilui
 	harray<PropertyDescription> EditBox::_propertyDescriptions;
 
 	hstr EditBox::defaultFilterUnsignedNumeric = "0123456789";
+	hstr EditBox::defaultFilterUnsignedDecimal = EditBox::defaultFilterUnsignedNumeric + ".";
 	hstr EditBox::defaultFilterNumeric = EditBox::defaultFilterUnsignedNumeric + "-";
-	hstr EditBox::defaultFilterDecimal = EditBox::defaultFilterNumeric + ".";
+	hstr EditBox::defaultFilterDecimal = EditBox::defaultFilterUnsignedDecimal + "-";
 	hstr EditBox::defaultFilterAlphaUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	hstr EditBox::defaultFilterAlphaLowerCase = "abcdefghijklmnopqrstuvwxyz";
 	hstr EditBox::defaultFilterAlpha = EditBox::defaultFilterAlphaUpperCase + EditBox::defaultFilterAlphaLowerCase;

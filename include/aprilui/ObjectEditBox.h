@@ -85,6 +85,7 @@ namespace aprilui
 		bool triggerEvent(chstr type, void* userData = NULL);
 
 		static hstr defaultFilterUnsignedNumeric;
+		static hstr defaultFilterUnsignedDecimal;
 		static hstr defaultFilterNumeric;
 		static hstr defaultFilterDecimal;
 		static hstr defaultFilterAlphaUpperCase;
