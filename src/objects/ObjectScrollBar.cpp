@@ -42,6 +42,7 @@ namespace aprilui
 		this->heightHide = true;
 		this->useStretchedSlider = true;
 		this->disabledWhileScrolling = false;
+		this->maxGridScroll = 0;
 		this->_buttonBackground = NULL;
 		this->_buttonSlider = NULL;
 		this->_buttonBackward = NULL;
@@ -62,6 +63,7 @@ namespace aprilui
 		this->heightHide = other.heightHide;
 		this->useStretchedSlider = other.useStretchedSlider;
 		this->disabledWhileScrolling = other.disabledWhileScrolling;
+		this->maxGridScroll = other.maxGridScroll;
 		this->_buttonBackground = (other._buttonBackground != NULL ? other._buttonBackground->clone() : NULL);
 		this->_buttonSlider = (other._buttonSlider != NULL ? other._buttonSlider->clone() : NULL);
 		this->_buttonBackward = (other._buttonBackward != NULL ? other._buttonBackward->clone() : NULL);
@@ -94,6 +96,7 @@ namespace aprilui
 			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::BOOL);
 			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::BOOL);
 			ScrollBar::_propertyDescriptions += PropertyDescription("disabled_while_scrolling", PropertyDescription::BOOL);
+			ScrollBar::_propertyDescriptions += PropertyDescription("max_grid_scroll", PropertyDescription::INT);
 		}
 		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
 	}
@@ -282,6 +285,7 @@ namespace aprilui
 		if (name == "height_hide")				return this->isHeightHide();
 		if (name == "use_stretched_slider")		return this->isUseStretchedSlider();
 		if (name == "disabled_while_scrolling")	return this->isDisabledWhileScrolling();
+		if (name == "max_grid_scroll")			return this->getMaxGridScroll();
 		return Object::getProperty(name);
 	}
 
@@ -293,6 +297,7 @@ namespace aprilui
 		else if (name == "height_hide")					this->setHeightHide(value);
 		else if (name == "use_stretched_slider")		this->setUseStretchedSlider(value);
 		else if (name == "disabled_while_scrolling")	this->setDisabledWhileScrolling(value);
+		else if (name == "max_grid_scroll")				this->setMaxGridScroll(value);
 		else return Object::setProperty(name, value);
 		return true;
 	}

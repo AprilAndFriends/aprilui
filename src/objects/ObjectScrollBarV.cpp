@@ -283,6 +283,12 @@ namespace aprilui
 			// s0 = v0 ^ 2 / (2 * a)
 			s = -hsgn(parent->scrollArea->_dragSpeed.y) * parent->scrollArea->_dragSpeed.y * parent->scrollArea->_dragSpeed.y * 0.5f / inertia;
 		}
+		// limiting scrolling movement
+		if (this->maxGridScroll > 0)
+		{
+			s = hsgn(s) * hmin(habs(s), this->maxGridScroll * this->gridSize);
+		}
+		// calculating the final scroll movement distance
 		float difference = parent->scrollArea->_lastScrollOffset.y - hroundf(parent->scrollArea->_lastScrollOffset.y / this->gridSize) * this->gridSize;
 		float offset = hroundf(s / this->gridSize) * this->gridSize - s;
 		if (parent->getHeight() > this->gridSize)

@@ -48,6 +48,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(heightHide, HeightHide);
 		HL_DEFINE_ISSET(useStretchedSlider, UseStretchedSlider);
 		HL_DEFINE_ISSET(disabledWhileScrolling, DisabledWhileScrolling);
+		HL_DEFINE_GETSET(int, maxGridScroll, MaxGridScroll);
 		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
 
@@ -69,6 +70,7 @@ namespace aprilui
 	protected:
 		hstr skinName;
 		float gridSize;
+		int maxGridScroll;
 		bool useFading;
 		bool heightHide;
 		bool useStretchedSlider;
