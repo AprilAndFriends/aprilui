@@ -145,11 +145,10 @@ namespace aprilui
 			throw ObjectExistsException(filename);
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
-//		bool dynamicLoad = node->pbool("dynamic_load", false);
-		april::Texture::LoadMode loadMode = april::Texture::LOAD_IMMEDIATE;
+		april::Texture::LoadMode loadMode = april::Texture::LoadMode::Async;
 		if (aprilui::getForcedDynamicLoading() || node->pbool("dynamic_load", false))
 		{
-			loadMode = april::Texture::LOAD_ON_DEMAND;
+			loadMode = april::Texture::LoadMode::OnDemand;
 		}
 		if (mTexExtOverride && filepath.contains("."))
 		{
@@ -159,7 +158,7 @@ namespace aprilui
 		}
 
 		hstr locpath = _makeLocalizedTextureName(filepath);
-		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::TYPE_IMMUTABLE, loadMode);
+		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::Type::Immutable, loadMode);
 		if (aprilTexture == NULL)
 		{
 			throw FileNotFoundException(locpath);
@@ -168,11 +167,11 @@ namespace aprilui
 		if (node->pexists("filter"))
 		{
 			hstr filter = node->pstr("filter");
-			if      (filter == "linear")  texture->setFilter(april::Texture::FILTER_LINEAR);
-			else if (filter == "nearest") texture->setFilter(april::Texture::FILTER_NEAREST);
+			if      (filter == "linear")  texture->setFilter(april::Texture::Filter::Linear);
+			else if (filter == "nearest") texture->setFilter(april::Texture::Filter::Nearest);
 			else throw Exception("texture filter '" + filter + "' not supported");
 		}
-		texture->setAddressMode(node->pbool("wrap", true) ? april::Texture::ADDRESS_WRAP : april::Texture::ADDRESS_CLAMP);
+		texture->setAddressMode(node->pbool("wrap", true) ? april::Texture::AddressMode::Wrap : april::Texture::AddressMode::Clamp);
 		mTextures[textureName] = texture;
 		// extract image definitions
 		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area

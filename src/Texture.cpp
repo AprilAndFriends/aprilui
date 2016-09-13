@@ -119,7 +119,7 @@ namespace aprilui
 		{
 			mUnusedTime = 0.0f;
 			mFilename = filename;
-			mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::TYPE_IMMUTABLE, april::Texture::LOAD_ON_DEMAND);
+			mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::Type::Immutable, april::Texture::LoadMode::OnDemand);
 			if (mTexture == NULL)
 			{
 				throw FileNotOpenException(mFilename);
