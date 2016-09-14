@@ -2,8 +2,12 @@
 
 import os.path
 import re
-from openpyxl import *
-from openpyxl.styles import Font, Alignment
+import sys
+try:
+	from openpyxl import *
+	from openpyxl.styles import Font, Alignment
+except:
+	print "WARNING: Using XLS requires OpenPyXL installed!"
 
 from LocParser import *
 
