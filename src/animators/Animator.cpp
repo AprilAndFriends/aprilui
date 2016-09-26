@@ -245,10 +245,7 @@ namespace aprilui
 		}
 		else if (this->animationFunction == AnimationFunction::Noise)
 		{
-			if (timeDelta > 0.0f)
-			{
-				result = hrandf(-this->speed * this->amplitude, this->speed * this->amplitude);
-			}
+			result = hrandf(-this->speed * this->amplitude, this->speed * this->amplitude);
 		}
 		else if (this->animationFunction == AnimationFunction::Custom)
 		{
