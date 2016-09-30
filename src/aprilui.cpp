@@ -510,16 +510,12 @@ namespace aprilui
 
 	void setDebugExceptionsEnabled(bool textureFiles, bool childManipulation, bool creationFactories, bool objectExistence, bool systemConsistency)
 	{
-#ifdef _DEBUG
 		hlog::warn(logTag, "Setting debug-exceptions!");
 		aprilui::textureFilesDebugExceptionsEnabled = textureFiles;
 		aprilui::childManipulationDebugExceptionsEnabled = childManipulation;
 		aprilui::creationFactoriesDebugExceptionsEnabled = creationFactories;
 		aprilui::objectExistenceDebugExceptionsEnabled = objectExistence;
 		aprilui::systemConsistencyDebugExceptionsEnabled = systemConsistency;
-#else
-		hlog::warn(logTag, "Setting debug-exceptions is not allowed on release builds and will be ignored!");
-#endif
 	}
 	
 	Dataset* getDatasetByName(chstr name)
