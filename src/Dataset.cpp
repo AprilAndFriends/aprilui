@@ -389,7 +389,7 @@ namespace aprilui
 		this->textures[textureName] = texture;
 		texture->dataset = this;
 		// extract image definitions
-		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
+		if (node->children.size() == 0) // if there are no images defined, create one that fills the whole area
 		{
 			if (this->images.hasKey(textureName))
 			{
@@ -408,8 +408,8 @@ namespace aprilui
 			hmap<hstr, hstr> childProperties;
 			foreach_xmlnode (child, node)
 			{
-				childProperties = child->properties;
-				if (child->name == "Image" && (childProperties.hasKey("tile") || childProperties.hasKey("tile_w") || childProperties.hasKey("tile_h"))) // DEPRECATED (this entire block)
+				childProperties = (*child)->properties;
+				if ((*child)->name == "Image" && (childProperties.hasKey("tile") || childProperties.hasKey("tile_w") || childProperties.hasKey("tile_h"))) // DEPRECATED (this entire block)
 				{
 					hlog::warn(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
 					name = childProperties["name"];
@@ -421,7 +421,7 @@ namespace aprilui
 					{
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
-					aprilui::readRectNode(rect, child);
+					aprilui::readRectNode(rect, (*child));
 					gvec2 tile;
 					if (childProperties.hasKey("tile"))
 					{
@@ -429,7 +429,7 @@ namespace aprilui
 					}
 					else
 					{
-						tile.set(child->pfloat("tile_w", 0.0f), child->pfloat("tile_h", 0.0f));
+						tile.set((*child)->pfloat("tile_w", 0.0f), (*child)->pfloat("tile_h", 0.0f));
 					}
 					TileImage* tileImage = new TileImage(texture, name, rect);
 					image = tileImage;
@@ -474,22 +474,22 @@ namespace aprilui
 					{
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
-					aprilui::readRectNode(rect, child);
-					if (child->name == "Image")
+					aprilui::readRectNode(rect, (*child));
+					if ((*child)->name == "Image")
 					{
 						image = new Image(texture, name, rect);
 					}
-					else if (child->name == "TileImage")
+					else if ((*child)->name == "TileImage")
 					{
 						image = new TileImage(texture, name, rect);
 					}
-					else if (child->name == "SkinImage")
+					else if ((*child)->name == "SkinImage")
 					{
 						image = new SkinImage(texture, name, rect);
 					}
 					else
 					{
-						__THROW_EXCEPTION(XMLUnknownClassException(child->name, child), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
+						__THROW_EXCEPTION(XMLUnknownClassException((*child)->name, (*child)), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
 					}
 					this->images[name] = image;
 					image->dataset = this;
@@ -524,15 +524,15 @@ namespace aprilui
 		grect rect;
 		foreach_xmlnode (child, node)
 		{
-			if (child->name == "ImageRef")
+			if ((*child)->name == "ImageRef")
 			{
-				refname = child->pstr("name");
-				aprilui::readRectNode(rect, child);
+				refname = (*child)->pstr("name");
+				aprilui::readRectNode(rect, (*child));
 				image->addImageRef(this->getImage(refname), rect);
 			}
 			else
 			{
-				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", child->name.cStr(), name.cStr());
+				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", (*child)->name.cStr(), name.cStr());
 			}
 		}
 		this->images[name] = image;
@@ -585,16 +585,16 @@ namespace aprilui
 		{
 			isObject = false;
 			isAnimator = false;
-			className = child->name;
+			className = (*child)->name;
 			if (className == "Object")
 			{
 				isObject = true;
-				className = child->pstr("type", "");
+				className = (*child)->pstr("type", "");
 			}
 			else if (className == "Animator")
 			{
 				isAnimator = true;
-				className = child->pstr("type", "");
+				className = (*child)->pstr("type", "");
 			}
 			else
 			{
@@ -606,7 +606,7 @@ namespace aprilui
 			}
 			if (isObject || isAnimator)
 			{
-				properties = child->properties;
+				properties = (*child)->properties;
 				if (properties.removeKeys(_ignoredStandardProperties) > 0)
 				{
 					hlog::error(logTag, "Using properties '" + _ignoredStandardProperties.joined(',') + "' in Style is not allowed!");
@@ -846,9 +846,9 @@ namespace aprilui
 		{
 			foreach_xmlnode (child, node)
 			{
-				if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
+				if ((*child)->type != hlxml::Node::TYPE_TEXT && (*child)->type != hlxml::Node::TYPE_COMMENT)
 				{
-					this->recursiveObjectParse(child, object, style, namePrefix, nameSuffix, gvec2());
+					this->recursiveObjectParse((*child), object, style, namePrefix, nameSuffix, gvec2());
 				}
 			}
 		}
@@ -880,11 +880,11 @@ namespace aprilui
 		hmap<hstr, hstr> childProperties;
 		foreach_xmlnode (child, node)
 		{
-			if (child->name == "Property")
+			if ((*child)->name == "Property")
 			{
-				if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
+				if ((*child)->type != hlxml::Node::TYPE_TEXT && (*child)->type != hlxml::Node::TYPE_COMMENT)
 				{
-					childProperties = child->properties;
+					childProperties = (*child)->properties;
 					if (childProperties.hasKey("object"))
 					{
 						objectName = newNamePrefix + childProperties["object"] + newNameSuffix;
@@ -987,12 +987,12 @@ namespace aprilui
 		hstr className;
 		foreach_xmlnode (node, current)
 		{
-			className = node->name;
+			className = (*node)->name;
 			if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
 			{
 				if (root == NULL)
 				{
-					root = this->recursiveObjectParse(node, parent, style, namePrefix, nameSuffix, offset);
+					root = this->recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset);
 				}
 				else
 				{
@@ -1061,20 +1061,20 @@ namespace aprilui
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		foreach_xmlnode (node, current)
 		{
-			if (node->type != hlxml::Node::TYPE_COMMENT)
+			if ((*node)->type != hlxml::Node::TYPE_COMMENT)
 			{
-				if		(node->name == "Texture")			this->parseTexture(node);
-				else if (node->name == "CompositeImage")	this->parseCompositeImage(node);
-				else if (node->name == "Style")				this->parseStyle(node);
-				else if	(node->name == "Include")			this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), node->pstr("path"), false));
-				else if	(node->name == "TextureGroup")		this->parseTextureGroup(node);
-				else if (node->name == "Object" || objectFactories.hasKey(node->name))
+				if		((*node)->name == "Texture")		this->parseTexture(*node);
+				else if ((*node)->name == "CompositeImage")	this->parseCompositeImage(*node);
+				else if ((*node)->name == "Style")			this->parseStyle(*node);
+				else if	((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), (*node)->pstr("path"), false));
+				else if	((*node)->name == "TextureGroup")	this->parseTextureGroup(*node);
+				else if ((*node)->name == "Object" || objectFactories.hasKey((*node)->name))
 				{
-					this->parseObject(node);
+					this->parseObject(*node);
 				}
 				else
 				{
-					this->parseExternalXMLNode(node);
+					this->parseExternalXMLNode(*node);
 				}
 			}
 		}
