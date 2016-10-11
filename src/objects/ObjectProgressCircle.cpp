@@ -18,11 +18,53 @@
 
 namespace aprilui
 {
+	HL_ENUM_CLASS_DEFINE(ProgressCircle::Direction,
+	(
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Clockwise270, 2);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Clockwise180, 4);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Clockwise, 6);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Clockwise90, 8);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, ClockwiseMax, 10);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Counterclockwise270, 20);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Counterclockwise180, 40);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Counterclockwise, 60);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, Counterclockwise90, 80);
+		HL_ENUM_DEFINE_VALUE(ProgressCircle::Direction, CounterclockwiseMax, 100);
+
+		int ProgressCircle::Direction::getAngle() const
+		{
+			if (*this == Clockwise270 || *this == Counterclockwise270)
+			{
+				return 270;
+			}
+			if (*this == Clockwise180 || *this == Counterclockwise180)
+			{
+				return 180;
+			}
+			if (*this == Clockwise90 || *this == Counterclockwise90)
+			{
+				return 90;
+			}
+			return 0;
+		}
+
+		bool ProgressCircle::Direction::isClockwise() const
+		{
+			return (this->value <= ClockwiseMax.value);
+		}
+
+		bool ProgressCircle::Direction::isCounterclockwise() const
+		{
+			return (this->value > ClockwiseMax.value);
+		}
+
+	));
+
 	harray<PropertyDescription> ProgressCircle::_propertyDescriptions;
 
 	ProgressCircle::ProgressCircle(chstr name) : ImageBox(name), ProgressBase()
 	{
-		this->direction = Clockwise;
+		this->direction = Direction::Clockwise;
 	}
 
 	ProgressCircle::ProgressCircle(const ProgressCircle& other) : ImageBox(other), ProgressBase(other)
@@ -97,7 +139,7 @@ namespace aprilui
 			}
 			else if (progress < 1.0f)
 			{
-				Direction antiDirection = (Direction)((int)this->direction < (int)DirectionLimit ? (int)this->direction * 10 : (int)this->direction / 10);
+				Direction antiDirection = Direction::fromInt(this->direction.value < Direction::ClockwiseMax.value ? this->direction.value * 10 : this->direction.value / 10);
 				this->antiProgressImage->draw(this->_calcVertices(drawRect, 1.0f - progress, antiDirection), drawColor);
 			}
 		}
@@ -126,34 +168,37 @@ namespace aprilui
 		gvec2 topRight;
 		gvec2 bottomLeft;
 		gvec2 bottomRight;
-		switch (direction)
+		if (direction == Direction::Clockwise)
 		{
-		case Clockwise:
 			splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 1.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(1.0f, 0.0f);
-			break;
-		case Clockwise90:
+		}
+		else if (direction == Direction::Clockwise90)
+		{
 			splitCenter.set(0.5f, 0.0f);	topLeft.set(1.0f, 1.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(0.0f, 0.0f);
-			break;
-		case Clockwise180:
+		}
+		else if (direction == Direction::Clockwise180)
+		{
 			splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 0.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(0.0f, 1.0f);
-			break;
-		case Clockwise270:
+		}
+		else if (direction == Direction::Clockwise270)
+		{
 			splitCenter.set(0.5f, 1.0f);	topLeft.set(0.0f, 0.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(1.0f, 1.0f);
-			break;
-		case Counterclockwise:
+		}
+		else if (direction == Direction::Counterclockwise)
+		{
 			splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 0.0f);	topRight.set(1.0f, 0.0f);	bottomLeft.set(0.0f, 1.0f);		bottomRight.set(1.0f, 1.0f);
-			break;
-		case Counterclockwise90:
+		}
+		else if (direction == Direction::Counterclockwise90)
+		{
 			splitCenter.set(0.5f, 0.0f);	topLeft.set(0.0f, 1.0f);	topRight.set(0.0f, 0.0f);	bottomLeft.set(1.0f, 1.0f);		bottomRight.set(1.0f, 0.0f);
-			break;
-		case Counterclockwise180:
+		}
+		else if (direction == Direction::Counterclockwise180)
+		{
 			splitCenter.set(0.0f, 0.5f);	topLeft.set(1.0f, 1.0f);	topRight.set(0.0f, 1.0f);	bottomLeft.set(1.0f, 0.0f);		bottomRight.set(0.0f, 0.0f);
-			break;
-		case Counterclockwise270:
+		}
+		else if (direction == Direction::Counterclockwise270)
+		{
 			splitCenter.set(0.5f, 1.0f);	topLeft.set(1.0f, 0.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(0.0f, 1.0f);
-			break;
-		default:
-			break;
 		}
 		harray<april::TexturedVertex> vertices;
 		result += MAKE_VERTEX(gvec2(0.5f, 0.5f));
@@ -207,17 +252,7 @@ namespace aprilui
 
 	hstr ProgressCircle::getProperty(chstr name)
 	{
-		if (name == "direction")
-		{
-			if (this->direction == Clockwise)			return "clockwise";
-			if (this->direction == Clockwise90)			return "clockwise90";
-			if (this->direction == Clockwise180)		return "clockwise180";
-			if (this->direction == Clockwise270)		return "clockwise270";
-			if (this->direction == Counterclockwise)	return "counterclockwise";
-			if (this->direction == Counterclockwise90)	return "counterclockwise90";
-			if (this->direction == Counterclockwise180)	return "counterclockwise180";
-			if (this->direction == Counterclockwise270)	return "counterclockwise270";
-		}
+		if (name == "direction")	return this->direction.getName().lowered();
 		hstr result = ProgressBase::getProperty(name);
 		if (result == "")
 		{
@@ -230,14 +265,14 @@ namespace aprilui
 	{
 		if		(name == "direction")
 		{
-			if (value == "clockwise")					this->setDirection(Clockwise);
-			else if (value == "clockwise90")			this->setDirection(Clockwise90);
-			else if (value == "clockwise180")			this->setDirection(Clockwise180);
-			else if (value == "clockwise270")			this->setDirection(Clockwise270);
-			else if (value == "counterclockwise")		this->setDirection(Counterclockwise);
-			else if (value == "counterclockwise90")		this->setDirection(Counterclockwise90);
-			else if (value == "counterclockwise180")	this->setDirection(Counterclockwise180);
-			else if (value == "counterclockwise270")	this->setDirection(Counterclockwise270);
+			if (value == "clockwise")					this->setDirection(Direction::Clockwise);
+			else if (value == "clockwise90")			this->setDirection(Direction::Clockwise90);
+			else if (value == "clockwise180")			this->setDirection(Direction::Clockwise180);
+			else if (value == "clockwise270")			this->setDirection(Direction::Clockwise270);
+			else if (value == "counterclockwise")		this->setDirection(Direction::Counterclockwise);
+			else if (value == "counterclockwise90")		this->setDirection(Direction::Counterclockwise90);
+			else if (value == "counterclockwise180")	this->setDirection(Direction::Counterclockwise180);
+			else if (value == "counterclockwise270")	this->setDirection(Direction::Counterclockwise270);
 			else
 			{
 				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");

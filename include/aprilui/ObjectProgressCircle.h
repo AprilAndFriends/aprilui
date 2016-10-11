@@ -27,18 +27,22 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(ProgressCircle);
 	public:
-		enum Direction
-		{
-			Clockwise270 = 2,
-			Clockwise180 = 4,
-			Clockwise = 6,
-			Clockwise90 = 8,
-			Counterclockwise270 = 20,
-			Counterclockwise180 = 40,
-			Counterclockwise = 60,
-			Counterclockwise90 = 80,
-			DirectionLimit = 10, // used for calculation
-		};
+		HL_ENUM_CLASS_DECLARE(Direction,
+		(
+			HL_ENUM_DECLARE(Direction, Clockwise270);
+			HL_ENUM_DECLARE(Direction, Clockwise180);
+			HL_ENUM_DECLARE(Direction, Clockwise);
+			HL_ENUM_DECLARE(Direction, Clockwise90);
+			HL_ENUM_DECLARE(Direction, ClockwiseMax);
+			HL_ENUM_DECLARE(Direction, Counterclockwise270);
+			HL_ENUM_DECLARE(Direction, Counterclockwise180);
+			HL_ENUM_DECLARE(Direction, Counterclockwise);
+			HL_ENUM_DECLARE(Direction, Counterclockwise90);
+			HL_ENUM_DECLARE(Direction, CounterclockwiseMax);
+			int getAngle() const;
+			bool isClockwise() const;
+			bool isCounterclockwise() const;
+		));
 
 		ProgressCircle(chstr name);
 		~ProgressCircle();

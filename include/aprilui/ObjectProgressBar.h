@@ -28,14 +28,14 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(ProgressBar);
 	public:
-		enum Direction
-		{
-			Down = 2,
-			Left = 4,
-			Right = 6,
-			Up = 8,
-			DirectionMax = 10 // used for calculation
-		};
+		HL_ENUM_CLASS_DECLARE(Direction,
+		(
+			HL_ENUM_DECLARE(Direction, Down);
+			HL_ENUM_DECLARE(Direction, Left);
+			HL_ENUM_DECLARE(Direction, Right);
+			HL_ENUM_DECLARE(Direction, Up);
+			HL_ENUM_DECLARE(Direction, Max);
+		));
 
 		ProgressBar(chstr name);
 		~ProgressBar();

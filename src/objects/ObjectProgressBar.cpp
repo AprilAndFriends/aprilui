@@ -17,12 +17,21 @@
 
 namespace aprilui
 {
+	HL_ENUM_CLASS_DEFINE(ProgressBar::Direction,
+	(
+		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Down, 2);
+		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Left, 4);
+		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Right, 6);
+		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Up, 8);
+		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Max, 10);
+	));
+
 	harray<PropertyDescription> ProgressBar::_propertyDescriptions;
 
 	ProgressBar::ProgressBar(chstr name) : ImageBox(name), ProgressBase()
 	{
 		this->stretching = false;
-		this->direction = Right;
+		this->direction = Direction::Right;
 		this->interactable = false;
 		this->pushed = false;
 	}
@@ -108,7 +117,7 @@ namespace aprilui
 		grect directionRect;
 		if (this->antiProgressImage != NULL && progress < 1.0f)
 		{
-			Direction antiDirection = (Direction)((int)DirectionMax - (int)this->direction);
+			Direction antiDirection = Direction::fromInt(Direction::Max.value - this->direction.value);
 			float antiProgress = 1.0f - progress;
 			if (this->stretching)
 			{
@@ -147,26 +156,25 @@ namespace aprilui
 	grect ProgressBar::_calcRectDirection(grect rect, float progress, Direction direction)
 	{
 		float size = 0.0f;
-		switch (direction)
+		if (direction == Direction::Right)
 		{
-		case Right:
 			rect.w *= progress;
-			break;
-		case Left:
+		}
+		else if (direction == Direction::Left)
+		{
 			size = rect.w * progress;
 			rect.x += rect.w - size;
 			rect.w = size;
-			break;
-		case Down:
+		}
+		else if (direction == Direction::Down)
+		{
 			rect.h *= progress;
-			break;
-		case Up:
+		}
+		else if (direction == Direction::Up)
+		{
 			size = rect.h * progress;
 			rect.y += rect.h - size;
 			rect.h = size;
-			break;
-		default:
-			break;
 		}
 		return rect;
 	}
@@ -174,13 +182,7 @@ namespace aprilui
 	hstr ProgressBar::getProperty(chstr name)
 	{
 		if (name == "stretching")	return this->isStretching();
-		if (name == "direction")
-		{
-			if (this->direction == Right)	return "right";
-			if (this->direction == Left)	return "left";
-			if (this->direction == Down)	return "down";
-			if (this->direction == Up)		return "up";
-		}
+		if (name == "direction")	return this->direction.getName().lowered();
 		if (name == "interactable")	return this->isInteractable();
 		hstr result = ProgressBase::getProperty(name);
 		if (result == "")
@@ -195,10 +197,10 @@ namespace aprilui
 		if		(name == "stretching")		this->setStretching(value);
 		else if (name == "direction")
 		{
-			if (value == "right")			this->setDirection(Right);
-			else if (value == "left")		this->setDirection(Left);
-			else if (value == "down")		this->setDirection(Down);
-			else if (value == "up")			this->setDirection(Up);
+			if (value == "right")			this->setDirection(Direction::Right);
+			else if (value == "left")		this->setDirection(Direction::Left);
+			else if (value == "down")		this->setDirection(Direction::Down);
+			else if (value == "up")			this->setDirection(Direction::Up);
 			else
 			{
 				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");
@@ -252,22 +254,21 @@ namespace aprilui
 	{
 		gvec2 position = this->transformToLocalSpace(aprilui::getCursorPosition());
 		float newProgress = 0.0f;
-		switch (this->direction)
+		if (this->direction == Direction::Right)
 		{
-		case Right:
 			newProgress = position.x / this->rect.w;
-			break;
-		case Left:
+		}
+		else if (this->direction == Direction::Left)
+		{
 			newProgress = 1.0f - position.x / this->rect.w;
-			break;
-		case Down:
+		}
+		else if (this->direction == Direction::Down)
+		{
 			newProgress = position.y / this->rect.h;
-			break;
-		case Up:
+		}
+		else if (this->direction == Direction::Up)
+		{
 			newProgress = 1.0f - position.y / this->rect.h;
-			break;
-		default:
-			break;
 		}
 		newProgress = hclamp(newProgress, 0.0f, 1.0f);
 		if (this->progress != newProgress)
