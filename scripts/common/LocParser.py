@@ -101,7 +101,7 @@ class LocParser:
 				merged.append("%s # %s\n{\n%s\n}\n" % (locEntry.key, locEntry.comment, locEntry.value))
 			else:
 				merged.append("%s\n{\n%s\n}\n" % (locEntry.key, locEntry.value))
-		result = "\n".join(merged) # including BOM to make result UTF8 encoded
+		result = "\n".join(merged) + "\n"
 		return result
 
 	@staticmethod
