@@ -75,7 +75,9 @@ class LocParser:
 		print "  checking %s" % path
 		files = []
 		dirs = []
-		for f in os.listdir(path + "/"):
+		dirListing = os.listdir(path + "/")
+		dirListing.sort(key = lambda filename: [int(match) if match.isdigit() else match for match in re.split('(\d+)', filename)])
+		for f in dirListing:
 			if f == ".svn" or f == "." or f == "..":
 				continue
 			name = path + "/" + f
