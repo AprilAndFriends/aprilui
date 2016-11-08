@@ -219,6 +219,8 @@ namespace aprilui
 		{
 			this->pushed = true;
 			this->_updateInteractablePosition();
+			// TODO - will be removed once the hover refactor has been done
+			this->triggerEvent(Event::MouseDown, keyCode);
 			return true;
 		}
 		return ImageBox::_mouseDown(keyCode);
@@ -226,10 +228,15 @@ namespace aprilui
 
 	bool ProgressBar::_mouseUp(april::Key keyCode)
 	{
-		if (this->interactable && this->pushed && this->isCursorInside())
+		if (this->interactable && this->pushed)
 		{
-			this->pushed = false;
-			return true;
+			// TODO - will be removed once the hover refactor has been done
+			this->triggerEvent(Event::MouseUp, keyCode);
+			if (this->isCursorInside())
+			{
+				this->pushed = false;
+				return true;
+			}
 		}
 		this->pushed = false;
 		return ImageBox::_mouseUp(keyCode);
