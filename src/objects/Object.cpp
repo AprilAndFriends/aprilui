@@ -221,6 +221,10 @@ namespace aprilui
 		this->debugColor = other.debugColor;
 		HL_LAMBDA_CLASS(_cloneAnimators, Animator*, ((Animator* const& animator) { return animator->clone(); }));
 		this->dynamicAnimators = other.dynamicAnimators.mapped(&_cloneAnimators::lambda);
+		foreach (Animator*, it, this->dynamicAnimators)
+		{
+			(*it)->parent = this;
+		}
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
