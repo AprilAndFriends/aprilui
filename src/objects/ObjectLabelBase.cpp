@@ -99,6 +99,7 @@ namespace aprilui
 		if (LabelBase::_propertyDescriptions.size() == 0)
 		{
 			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::STRING);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_formatting", PropertyDescription::BOOL);
 			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::STRING);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::STRING);
 			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::HEXCOLOR);
@@ -337,6 +338,7 @@ namespace aprilui
 	hstr LabelBase::getProperty(chstr name)
 	{
 		if (name == "font")					return this->getFont();
+		if (name == "text_formatting")		return this->isTextFormatting();
 		if (name == "text")					return this->getText();
 		if (name == "text_key")				return this->getTextKey();
 		if (name == "text_color")			return this->getTextColor().hex();
@@ -391,6 +393,7 @@ namespace aprilui
 	bool LabelBase::setProperty(chstr name, chstr value)
 	{
 		if (name == "font")						this->setFont(value);
+		else if (name == "text_formatting")		this->setTextFormatting(value);
 		else if (name == "text_key")			this->setTextKey(value);
 		else if (name == "text")				this->setText(value);
 		else if (name == "text_color")			this->setTextColor(value);
