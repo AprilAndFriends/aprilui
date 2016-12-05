@@ -1,4 +1,4 @@
-# Contains generic utility classes for working with localizations files.
+﻿# Contains generic utility classes for working with localizations files.
 
 import os
 import os.path
