@@ -24,8 +24,8 @@ class LocEntry:
 
 	def __init__(self, key, value, original, comment):
 		self.key = key
-		self.value = value.replace("­", "-").replace("´", "'").replace("’", "'").replace("`", "'").replace("‘", "'").replace("''", '"')
-		self.original = original.replace("­", "-").replace("´", "'").replace("’", "'").replace("`", "'").replace("‘", "'").replace("''", '"')
+		self.value = value.replace("­", "-").replace("–", "-").replace("´", "'").replace("’", "'").replace("`", "'").replace("‘", "'").replace("''", '"')
+		self.original = original.replace("­", "-").replace("–", "-").replace("´", "'").replace("’", "'").replace("`", "'").replace("‘", "'").replace("''", '"')
 		self.comment = comment
 		
 	def __repr__(self):
