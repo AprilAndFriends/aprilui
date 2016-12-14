@@ -445,7 +445,7 @@ namespace aprilui
 		float visibleHeight = (float)(int)(viewportHeight * (1.0f - april::window->getVirtualKeyboardHeightRatio()));
 		float keyboardHeight = viewportHeight - visibleHeight;
 		aprilui::Object* object = NULL;
-		aprilui::EditBox* editbox = NULL;
+		aprilui::EditBox* editBox = NULL;
 		grect rect;
 		float h = 0.0f;
 		foreach_m (Dataset*, it, gDatasets)
@@ -455,10 +455,10 @@ namespace aprilui
 			{
 				rect = object->getBoundingRect();
 				h = (float)(int)(rect.y + rect.h * 0.5f);
-				editbox = dynamic_cast<aprilui::EditBox*>(object);
-				if (editbox != NULL)
+				editBox = dynamic_cast<aprilui::EditBox*>(object);
+				if (editBox != NULL)
 				{
-					h = editbox->getDerivedPoint(editbox->getCaretRect().getPosition()).y;
+					h = editBox->getDerivedPoint(editBox->getCaretRect().getPosition()).y;
 				}
 				viewport.y = hclamp(-h + (float)(int)(visibleHeight * 0.5f), -keyboardHeight, 0.0f);
 				break;
