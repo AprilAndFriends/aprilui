@@ -44,6 +44,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "ScrollBar"; }
 
 		HL_DEFINE_GETSET(float, gridSize, GridSize);
+		HL_DEFINE_GETSET(float, scrollDistance, ScrollDistance);
 		HL_DEFINE_ISSET(useFading, UseFading);
 		HL_DEFINE_ISSET(heightHide, HeightHide);
 		HL_DEFINE_ISSET(useStretchedSlider, UseStretchedSlider);
@@ -70,6 +71,7 @@ namespace aprilui
 	protected:
 		hstr skinName;
 		float gridSize;
+		float scrollDistance;
 		int maxGridScroll;
 		bool useFading;
 		bool heightHide;

@@ -38,6 +38,7 @@ namespace aprilui
 	ScrollBar::ScrollBar(chstr name) : Object(name)
 	{
 		this->gridSize = ScrollBar::defaultGridSize;
+		this->scrollDistance = ScrollBar::defaultScrollDistance;
 		this->useFading = true;
 		this->heightHide = true;
 		this->useStretchedSlider = true;
@@ -59,6 +60,7 @@ namespace aprilui
 	{
 		this->skinName = other.skinName;
 		this->gridSize = other.gridSize;
+		this->scrollDistance = other.scrollDistance;
 		this->useFading = other.useFading;
 		this->heightHide = other.heightHide;
 		this->useStretchedSlider = other.useStretchedSlider;
@@ -92,6 +94,7 @@ namespace aprilui
 		{
 			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::STRING);
 			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::FLOAT);
+			ScrollBar::_propertyDescriptions += PropertyDescription("scroll_distance", PropertyDescription::FLOAT);
 			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::BOOL);
 			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::BOOL);
 			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::BOOL);
@@ -281,6 +284,7 @@ namespace aprilui
 	{
 		if (name == "skin")						return this->getSkinName();
 		if (name == "grid_size")				return this->getGridSize();
+		if (name == "scroll_distance")			return this->getScrollDistance();
 		if (name == "use_fading")				return this->isUseFading();
 		if (name == "height_hide")				return this->isHeightHide();
 		if (name == "use_stretched_slider")		return this->isUseStretchedSlider();
@@ -293,6 +297,7 @@ namespace aprilui
 	{
 		if (name == "skin")								this->setSkinName(value);
 		else if (name == "grid_size")					this->setGridSize(value);
+		else if (name == "scroll_distance")				this->setScrollDistance(value);
 		else if (name == "use_fading")					this->setUseFading(value);
 		else if (name == "height_hide")					this->setHeightHide(value);
 		else if (name == "use_stretched_slider")		this->setUseStretchedSlider(value);
@@ -427,7 +432,7 @@ namespace aprilui
 	{
 		if (this->_canAddScrollValue())
 		{
-			this->addScrollValue(-hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::defaultScrollDistance) * multiplier)));
+			this->addScrollValue(-hmax(habs(this->gridSize), (float)(int)(habs(this->scrollDistance) * multiplier)));
 		}
 	}
 
@@ -435,7 +440,7 @@ namespace aprilui
 	{
 		if (this->_canAddScrollValue())
 		{
-			this->addScrollValue(hmax(habs(this->gridSize), (float)(int)(habs(ScrollBar::defaultScrollDistance) * multiplier)));
+			this->addScrollValue(hmax(habs(this->gridSize), (float)(int)(habs(this->scrollDistance) * multiplier)));
 		}
 	}
 

@@ -131,7 +131,7 @@ namespace aprilui
 
 	float ScrollBarH::_calcScrollMove(float x, float y)
 	{
-		return hroundf(x * ScrollBar::defaultScrollDistance);
+		return hroundf(x * this->scrollDistance);
 	}
 
 	void ScrollBarH::notifyEvent(chstr type, EventArgs* args)
