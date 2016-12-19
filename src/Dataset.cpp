@@ -174,7 +174,7 @@ namespace aprilui
 		texture->setAddressMode(node->pbool("wrap", true) ? april::Texture::AddressMode::Wrap : april::Texture::AddressMode::Clamp);
 		mTextures[textureName] = texture;
 		// extract image definitions
-		if (node->iterChildren() == NULL) // if there are no images defined, create one that fills the whole area
+		if (node->children.size() == 0) // if there are no images defined, create one that fills the whole area
 		{
 			if (mImages.hasKey(textureName))
 			{
@@ -184,38 +184,38 @@ namespace aprilui
 		}
 		else
 		{
-			Image* image;
+			Image* image = NULL;
 			foreach_xmlnode (child, node)
 			{
-				if (child->name == "Image")
+				if ((*child)->name == "Image")
 				{
-					hstr name = (prefixImages ? textureName + "/" + child->pstr("name") : child->pstr("name"));
+					hstr name = (prefixImages ? textureName + "/" + (*child)->pstr("name") : (*child)->pstr("name"));
 					if (mImages.hasKey(name))
 					{
 						throw ApriluiResourceExistsException(name, "Image", this);
 					}
-					grect rect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h"));
+					grect rect((*child)->pfloat("x"), (*child)->pfloat("y"), (*child)->pfloat("w"), (*child)->pfloat("h"));
 					
-					bool vertical = child->pbool("vertical", false);
-					float tile_w = child->pfloat("tile_w", 1.0f);
-					float tile_h = child->pfloat("tile_h", 1.0f);
+					bool vertical = (*child)->pbool("vertical", false);
+					float tile_w = (*child)->pfloat("tile_w", 1.0f);
+					float tile_h = (*child)->pfloat("tile_h", 1.0f);
 					
 					if (tile_w != 1.0f || tile_h != 1.0f)
 					{
 						image = new TiledImage(texture, name, rect, vertical, tile_w, tile_h);
 					}
-					else if (child->pexists("color"))
+					else if ((*child)->pexists("color"))
 					{
-						april::Color color(child->pstr("color"));
+						april::Color color((*child)->pstr("color"));
 						image = new ColoredImage(texture, name, rect, vertical, color);
 					}
 					else
 					{
-						bool invertX = child->pbool("invertx", false);
-						bool invertY = child->pbool("inverty", false);
+						bool invertX = (*child)->pbool("invertx", false);
+						bool invertY = (*child)->pbool("inverty", false);
 						image = new Image(texture, name, rect, vertical, invertX, invertY);    
 					}
-					hstr mode = child->pstr("blend_mode", "default");
+					hstr mode = (*child)->pstr("blend_mode", "default");
 					if (mode == "add")
 					{
 						image->setBlendMode(april::BM_ADD);
@@ -258,11 +258,10 @@ namespace aprilui
 		CompositeImage* image = new CompositeImage(name, node->pfloat("w"), node->pfloat("h"));
 		foreach_xmlnode (child, node)
 		{
-			if (child->name == "ImageRef")
+			if ((*child)->name == "ImageRef")
 			{
-				refname = child->pstr("name");
-				image->addImageRef(getImage(refname),
-					grect(child->pfloat("x"), child->pfloat("y"), child->pfloat("w"), child->pfloat("h")));
+				refname = (*child)->pstr("name");
+				image->addImageRef(getImage(refname), grect((*child)->pfloat("x"), (*child)->pfloat("y"), (*child)->pfloat("w"), (*child)->pfloat("h")));
 			}
 		}
 		mImages[name] = image;
@@ -369,15 +368,15 @@ namespace aprilui
 		
 		foreach_xmlnode (child, node)
 		{
-			if (child->type != hlxml::Node::TYPE_TEXT && child->type != hlxml::Node::TYPE_COMMENT)
+			if ((*child)->type != hlxml::Node::TYPE_TEXT && (*child)->type != hlxml::Node::TYPE_COMMENT)
 			{
-				if (child->name == "Property")
+				if ((*child)->name == "Property")
 				{
-					object->setProperty(child->pstr("name"), child->pstr("value"));
+					object->setProperty((*child)->pstr("name"), (*child)->pstr("value"));
 				}
 				else
 				{
-					recursiveObjectParse(child, object);
+					recursiveObjectParse((*child), object);
 				}
 			}
 		}
@@ -398,23 +397,23 @@ namespace aprilui
 
 		hmap<Texture*, hstr> dynamicLinks;
 		hstr links;
-		foreach_xmlnode (p, current)
+		foreach_xmlnode (node, current)
 		{
-			if      (p->name == "Texture")
+			if      ((*node)->name == "Texture")
 			{
-				Texture* texture = parseTexture(p);
-				if (p->pexists("dynamic_link"))
+				Texture* texture = parseTexture(*node);
+				if ((*node)->pexists("dynamic_link"))
 				{
-					links = p->pstr("dynamic_link");
+					links = (*node)->pstr("dynamic_link");
 					dynamicLinks[texture] = links;
 				}
 			}
-			else if (p->name == "RamTexture")     parseRamTexture(p);
-			else if (p->name == "CompositeImage") parseCompositeImage(p);
-			else if (p->name == "Object")         parseObject(p);
-			else if (p->type != hlxml::Node::TYPE_TEXT && p->type != hlxml::Node::TYPE_COMMENT)
+			else if ((*node)->name == "RamTexture")     parseRamTexture(*node);
+			else if ((*node)->name == "CompositeImage") parseCompositeImage(*node);
+			else if ((*node)->name == "Object")         parseObject(*node);
+			else if ((*node)->type != hlxml::Node::TYPE_TEXT && (*node)->type != hlxml::Node::TYPE_COMMENT)
 			{
-				parseExternalXMLNode(p);
+				parseExternalXMLNode(*node);
 			}
 		}
 		delete  doc;
