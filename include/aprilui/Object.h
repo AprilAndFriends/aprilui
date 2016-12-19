@@ -69,6 +69,7 @@ namespace aprilui
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
 		grect getRect() { return mRect; }
 		void setRect(grect value) { mRect = value; }
+		void setRect(float x, float y, float w, float h) { mRect.set(x, y, w, h); }
 
 		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
 		void setVisible(bool value) { mVisible = value; }
@@ -87,7 +88,9 @@ namespace aprilui
 		void setUseScale(bool value) { mUseScale = value; }
 		void setCenter(gvec2 value) { }
 		void setCenter(float x, float y) { }
-		
+		void setPivot(gvec2 value) { }
+		void setPivot(float x, float y) { }
+
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
 		void setAnchors(bool a, bool b, bool c, bool d) {}

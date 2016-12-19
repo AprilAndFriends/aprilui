@@ -575,7 +575,7 @@ namespace aprilui
 		object->_setDataset(this);
 	}
 	
-	void Dataset::registerObjects(Object* o) // aprilui trunk compatibility
+	void Dataset::registerObjects(Object* o, bool unused) // aprilui trunk compatibility
 	{
 		registerManualObject(o);
 	}
@@ -591,6 +591,12 @@ namespace aprilui
 		object->_setDataset(NULL);
 	}
 	
+	void Dataset::unregisterObjects(Object* root)
+	{
+		// is this ok? does this need to be recursive after all?
+		this->unregisterManualObject(root);
+	}
+
 	void Dataset::registerManualImage(Image* image)
 	{
 		hstr name = image->getName();
