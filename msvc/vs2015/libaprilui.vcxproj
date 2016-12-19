@@ -65,6 +65,7 @@
     <ClCompile Include="..\..\src\aprilui.cpp" />
     <ClCompile Include="..\..\src\CallbackEvent.cpp" />
     <ClCompile Include="..\..\src\Dataset.cpp" />
+    <ClCompile Include="..\..\src\Event.cpp" />
     <ClCompile Include="..\..\src\EventArgs.cpp" />
     <ClCompile Include="..\..\src\EventReceiver.cpp" />
     <ClCompile Include="..\..\src\Exception.cpp" />
