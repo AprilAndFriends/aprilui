@@ -62,7 +62,7 @@ namespace aprilui
 		aprilui::_unregisterDataset(this->name, this);
 		if (this->isLoaded())
 		{
-			if (this->focusedObject != NULL)
+			if (this->focusedObject != NULL && dynamic_cast<EditBox*>(this->focusedObject) != NULL)
 			{
 				april::window->hideVirtualKeyboard();
 			}

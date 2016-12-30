@@ -117,6 +117,11 @@ namespace aprilui
 
 	EditBox::~EditBox()
 	{
+		// required, because setFocused() is virtual
+		if (this->isFocused())
+		{
+			this->setFocused(false);
+		}
 	}
 
 	Object* EditBox::createInstance(chstr name)
