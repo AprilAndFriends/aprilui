@@ -95,8 +95,6 @@ namespace aprilui
 		void setAlpha(float alpha);
 		void setAnchors(bool a, bool b, bool c, bool d) {}
 
-		harray<Object*> getDescendants();
-
 		void moveToFront();
 		void moveToBack();
 		

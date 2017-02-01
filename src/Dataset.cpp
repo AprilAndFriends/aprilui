@@ -589,53 +589,12 @@ namespace aprilui
 	
 	void Dataset::registerObjects(Object* root, bool unused) // aprilui trunk compatibility
 	{
-		hstr name;
-		harray<Object*> objects;
-		objects += root;
-		objects += root->getDescendants();
-		Object* object = NULL;
-		foreach (Object*, it, objects)
-		{
-			name = (*it)->getName();
-			if (this->mObjects.hasKey(name))
-			{
-				// this exception cannot be disabled on purpose
-				throw ApriluiResourceExistsException(name, "Object", this);
-			}
-			this->mObjects[name] = object;
-			object->_setDataset(this);
-		}
+		registerManualObject(root);
 	}
 
 	void Dataset::unregisterObjects(Object* root) // aprilui trunk compatibility
 	{
-		if (this->mObjects.hasKey(root->getName()))
-		{
-			// this object could be from another dataset, so check that first.
-			Dataset* dataset = root->getDataset();
-			if (dataset != this)
-			{
-				hlog::writef(logTag, "Dataset '%s' unregistering object from another dataset: '%s'", this->getName().cStr(), root->getName().cStr());
-				dataset->unregisterObjects(root);
-				return;
-			}
-			// this exception cannot be disabled on purpose
-			throw ApriluiResourceNotExistsException(root->getName(), "Object", this);
-		}
-		harray<Object*> children = root->getChildren();
-		foreach (Object*, it, children)
-		{
-			this->unregisterObjects(*it);
-		}
-		if (this->mFocusedObject != NULL)
-		{
-			if (this->mFocusedObject == root)
-			{
-				this->mFocusedObject = NULL;
-			}
-		}
-		this->mObjects.removeKey(root->getName());
-		root->_setDataset(NULL);
+		unregisterManualObject(root);
 	}
 
 	void Dataset::registerManualImage(Image* image)
