@@ -11,10 +11,11 @@
 #include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdir.h>
-#include <hltypes/hrdir.h>
 #include <hltypes/hfile.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hrdir.h>
 #include <hltypes/hresource.h>
 #include <hlxml/Exception.h>
 #include <hlxml/Document.h>
@@ -575,11 +576,6 @@ namespace aprilui
 		object->_setDataset(this);
 	}
 	
-	void Dataset::registerObjects(Object* o, bool unused) // aprilui trunk compatibility
-	{
-		registerManualObject(o);
-	}
-	
 	void Dataset::unregisterManualObject(Object* object)
 	{
 		hstr name = object->getName();
@@ -591,10 +587,55 @@ namespace aprilui
 		object->_setDataset(NULL);
 	}
 	
-	void Dataset::unregisterObjects(Object* root)
+	void Dataset::registerObjects(Object* root, bool unused) // aprilui trunk compatibility
 	{
-		// is this ok? does this need to be recursive after all?
-		this->unregisterManualObject(root);
+		hstr name;
+		harray<Object*> objects;
+		objects += root;
+		objects += root->getDescendants();
+		Object* object = NULL;
+		foreach (Object*, it, objects)
+		{
+			name = (*it)->getName();
+			if (this->mObjects.hasKey(name))
+			{
+				// this exception cannot be disabled on purpose
+				throw ApriluiResourceExistsException(name, "Object", this);
+			}
+			this->mObjects[name] = object;
+			object->_setDataset(this);
+		}
+	}
+
+	void Dataset::unregisterObjects(Object* root) // aprilui trunk compatibility
+	{
+		if (this->mObjects.hasKey(root->getName()))
+		{
+			// this object could be from another dataset, so check that first.
+			Dataset* dataset = root->getDataset();
+			if (dataset != this)
+			{
+				hlog::writef(logTag, "Dataset '%s' unregistering object from another dataset: '%s'", this->getName().cStr(), root->getName().cStr());
+				dataset->unregisterObjects(root);
+				return;
+			}
+			// this exception cannot be disabled on purpose
+			throw ApriluiResourceNotExistsException(root->getName(), "Object", this);
+		}
+		harray<Object*> children = root->getChildren();
+		foreach (Object*, it, children)
+		{
+			this->unregisterObjects(*it);
+		}
+		if (this->mFocusedObject != NULL)
+		{
+			if (this->mFocusedObject == root)
+			{
+				this->mFocusedObject = NULL;
+			}
+		}
+		this->mObjects.removeKey(root->getName());
+		root->_setDataset(NULL);
 	}
 
 	void Dataset::registerManualImage(Image* image)

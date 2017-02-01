@@ -88,12 +88,14 @@ namespace aprilui
 		void setUseScale(bool value) { mUseScale = value; }
 		void setCenter(gvec2 value) { }
 		void setCenter(float x, float y) { }
-		void setPivot(gvec2 value) { }
-		void setPivot(float x, float y) { }
+		inline void setPivot(gvec2 value) { } // aprilui trunk compatibility
+		inline void setPivot(float x, float y) { } // aprilui trunk compatibility
 
 		float getAlpha() { return mAlpha; }
 		void setAlpha(float alpha);
 		void setAnchors(bool a, bool b, bool c, bool d) {}
+
+		harray<Object*> getDescendants();
 
 		void moveToFront();
 		void moveToBack();

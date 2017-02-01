@@ -413,6 +413,16 @@ namespace aprilui
 		mAlpha = hclamp(alpha, 0.0f, 1.0f);
 	}
 
+	harray<Object*> Object::getDescendants()
+	{
+		harray<Object*> descendants = this->getChildren();
+		foreachc (Object*, it, this->mChildren)
+		{
+			descendants += (*it)->getDescendants();
+		}
+		return descendants;
+	}
+
 	void Object::moveToFront()
 	{
 		if (mParent != NULL)
