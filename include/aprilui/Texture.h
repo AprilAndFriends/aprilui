@@ -21,6 +21,7 @@ namespace aprilui
 	{
 	public:
 		Texture(chstr filename, april::Texture* texture);
+		Texture(chstr name, chstr filename, april::Texture* texture, bool managed); // aprilui trunk compatibility
 		~Texture();
 
 		hstr getOriginalFilename() { return mOriginalFilename; }
@@ -30,6 +31,7 @@ namespace aprilui
 		bool isDynamic() { return mDynamic; }
 
 		april::Texture* getRenderTexture();
+		april::Texture* getTexture(); // aprilui trunk compatibility
 		int getWidth();
 		int getHeight();
 		bool isValid();
@@ -47,6 +49,7 @@ namespace aprilui
 		void removeDynamicLink(Texture* link);
 
 	protected:
+		hstr mName;
 		hstr mOriginalFilename;
 		hstr mFilename;
 		april::Texture* mTexture;

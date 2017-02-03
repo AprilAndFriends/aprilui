@@ -16,8 +16,17 @@
 
 namespace aprilui
 {
-	ImageButton::ImageButton(chstr name, grect rect) :
-		ImageBox(name, rect)
+	ImageButton::ImageButton(chstr name, grect rect) : ImageBox(name, rect)
+	{
+		_setTypeName("ImageButton");
+		mPushed = false;
+		mNormalImage = NULL;
+		mPushedImage = NULL;
+		mHoverImage = NULL;
+		mDisabledImage = NULL;
+	}
+
+	ImageButton::ImageButton(chstr name) : ImageBox(name, grect())// aprilui trunk compatibility
 	{
 		_setTypeName("ImageButton");
 		mPushed = false;

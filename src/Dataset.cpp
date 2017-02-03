@@ -195,7 +195,15 @@ namespace aprilui
 					{
 						throw ApriluiResourceExistsException(name, "Image", this);
 					}
-					grect rect((*child)->pfloat("x"), (*child)->pfloat("y"), (*child)->pfloat("w"), (*child)->pfloat("h"));
+					grect rect;
+					if ((*child)->pexists("rect")) // aprilui trunk compatibility
+					{
+						rect = april::hstrToGrect((*child)->pstr("rect"));
+					}
+					else
+					{
+						rect.set((*child)->pfloat("x"), (*child)->pfloat("y"), (*child)->pfloat("w"), (*child)->pfloat("h"));
+					}
 					
 					bool vertical = (*child)->pbool("vertical", false);
 					float tile_w = (*child)->pfloat("tile_w", 1.0f);
@@ -607,11 +615,6 @@ namespace aprilui
 		mImages[name] = image;
 	}
 	
-	void Dataset::registerImage(Image* img) // aprilui trunk compatibility
-	{
-		registerManualImage(img);
-	}
-	
 	void Dataset::unregisterManualImage(Image* image)
 	{
 		hstr name = image->getName();
@@ -622,6 +625,16 @@ namespace aprilui
 		mImages.removeKey(name);
 	}
 	
+	void Dataset::registerImage(Image* img) // aprilui trunk compatibility
+	{
+		registerManualImage(img);
+	}
+
+	void Dataset::unregisterImage(Image* img) // aprilui trunk compatibility
+	{
+		unregisterManualImage(img);
+	}
+
 	void Dataset::registerManualTexture(Texture* tex)
 	{
 		hstr filename = tex->getFilename();
@@ -639,6 +652,18 @@ namespace aprilui
 		registerManualTexture(texture);
 	}
 	
+	void Dataset::unregisterTexture(Texture* texture) // aprilui trunk compatibility
+	{
+		hstr filename = texture->getFilename();
+		int slash = filename.rindexOf('/') + 1;
+		hstr name = filename(slash, filename.rindexOf('.') - slash);
+		if (!mTextures.hasKey(name))
+		{
+			throw ApriluiResourceNotExistsException(name, "Texture", this);
+		}
+		mTextures.removeKey(name);
+	}
+
 	bool Dataset::isAnimated()
 	{
 		aprilui::Animator* object;

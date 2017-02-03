@@ -49,10 +49,12 @@ namespace aprilui
 		void registerObjects(Object* object, bool unused = true); // aprilui trunk compatibility
 		void unregisterObjects(Object* object); // aprilui trunk compatibility
 		void registerManualImage(Image* img);
-		void registerImage(Image* img); // aprilui trunk compatibility
-		void registerTexture(Texture* texture); // aprilui trunk compatibility
-		void registerManualTexture(Texture* tex);
 		void unregisterManualImage(Image* img);
+		void registerImage(Image* img); // aprilui trunk compatibility
+		void unregisterImage(Image* img); // aprilui trunk compatibility
+		void registerManualTexture(Texture* tex);
+		void registerTexture(Texture* texture); // aprilui trunk compatibility
+		void unregisterTexture(Texture* texture); // aprilui trunk compatibility
 
 		virtual bool hasImage(chstr name) { return mImages.hasKey(name); }
 		virtual bool hasRamTexture(chstr name) { return mRamTextures.hasKey(name); }

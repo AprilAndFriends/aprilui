@@ -16,6 +16,7 @@ namespace aprilui
 	// TODO - refactor april to support a "TextureInterface" class or something like that
 	Texture::Texture(chstr filename, april::Texture* texture)
 	{
+		mName = filename;
 		mOriginalFilename = filename;
 		mFilename = filename;
 		mTexture = texture;
@@ -24,6 +25,19 @@ namespace aprilui
 		mScale.set(1.0f, 1.0f);
 		mUnusedTime = 0.0f;
 		mDynamic = !texture->isLoaded();
+	}
+
+	Texture::Texture(chstr name, chstr filename, april::Texture* texture, bool managed) // aprilui trunk compatibility
+	{
+		mName = name;
+		mOriginalFilename = filename;
+		mFilename = filename;
+		mTexture = texture;
+		mFilter = texture->getFilter();
+		mAddressMode = texture->getAddressMode();
+		mScale.set(1.0f, 1.0f);
+		mUnusedTime = 0.0f;
+		mDynamic = managed;
 	}
 
 	Texture::~Texture()
@@ -46,6 +60,11 @@ namespace aprilui
 			(*it)->mUnusedTime = 0.0f;
 		}
 		return mTexture;
+	}
+
+	april::Texture* Texture::getTexture() // aprilui trunk compatibility
+	{
+		return getRenderTexture();
 	}
 
 	int Texture::getWidth()

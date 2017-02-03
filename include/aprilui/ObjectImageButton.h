@@ -22,7 +22,8 @@ namespace aprilui
 	{
 	public:
 		ImageButton(chstr name, grect rect);
-		
+		ImageButton(chstr name); // aprilui trunk compatibility
+
 		Image* getPushedImage() { return mPushedImage; }
 		void setPushedImage(Image* image) { mPushedImage = image; }
 		void setPushedImageByName(chstr image);
