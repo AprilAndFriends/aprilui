@@ -798,7 +798,7 @@ namespace aprilui
 	{
 		if (name == "empty_text")				this->setEmptyText(value);
 		else if (name == "empty_text_key")		this->setEmptyTextKey(value);
-		else if (name == "empty_text_color")	this->setEmptyTextColor(value);
+		else if (name == "empty_text_color")	this->setEmptyTextColor(aprilui::_makeColor(value));
 		else if (name == "max_length")			this->setMaxLength(value);
 		else if (name == "password_char")		this->setPasswordChar(value.cStr()[0]);
 		else if (name == "filter")				this->setFilter(value);
@@ -811,11 +811,11 @@ namespace aprilui
 		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));
 		else if (name == "caret_offset_x")		this->setCaretOffsetX(value);
 		else if (name == "caret_offset_y")		this->setCaretOffsetY(value);
-		else if (name == "caret_color")			this->setCaretColor(value);
+		else if (name == "caret_color")			this->setCaretColor(aprilui::_makeColor(value));
 		else if (name == "multi_line")			this->setMultiLine(value);
 		else if (name == "selectable")			this->setSelectable(value);
 		else if (name == "selection_count")		this->setSelectionCount(value);
-		else if (name == "selection_color")		this->setSelectionColor(value);
+		else if (name == "selection_color")		this->setSelectionColor(aprilui::_makeColor(value));
 		else if (name == "clipboard_enabled")	this->setClipboardEnabled(value);
 		else if (name == "disabled_offset")		this->setDisabledOffset(value);
 		else return Label::setProperty(name, value);
@@ -1093,7 +1093,7 @@ namespace aprilui
 
 	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor) const
 	{
-		return aprilui::makeModifiedDrawColor(this->selectionColor, drawColor);
+		return aprilui::_makeModifiedDrawColor(this->selectionColor, drawColor);
 	}
 
 	void EditBox::_getBaseOffset(gvec2& offset, float& hf) const

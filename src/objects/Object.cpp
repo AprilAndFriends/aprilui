@@ -1234,7 +1234,7 @@ namespace aprilui
 		else if	(name == "green")					this->setGreen((int)value);
 		else if	(name == "blue")					this->setBlue((int)value);
 		else if	(name == "alpha")					this->setAlpha((int)value);
-		else if	(name == "color")					this->setColor(value);
+		else if	(name == "color")					this->setColor(aprilui::_makeColor(value));
 		else if	(name == "angle")					this->setAngle(value);
 		else if	(name == "scale")					this->setScale(april::hstrToGvec2(value));
 		else if	(name == "scale_x")					this->setScaleX(value);

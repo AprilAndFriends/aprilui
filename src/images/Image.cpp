@@ -225,7 +225,7 @@ namespace aprilui
 		else if	(name == "position")			this->setSrcPosition(april::hstrToGvec2(value));
 		else if	(name == "x")					this->setSrcX(value);
 		else if	(name == "y")					this->setSrcY(value);
-		else if (name == "color")				this->setColor(value);
+		else if (name == "color")				this->setColor(aprilui::_makeColor(value));
 		else if	(name == "rotated")				this->setRotated(value);
 		else if	(name == "vertical")
 		{

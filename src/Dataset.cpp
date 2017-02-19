@@ -421,7 +421,7 @@ namespace aprilui
 					{
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
-					aprilui::readRectNode(rect, (*child));
+					aprilui::_readRectNode(rect, (*child));
 					gvec2 tile;
 					if (childProperties.hasKey("tile"))
 					{
@@ -474,7 +474,7 @@ namespace aprilui
 					{
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
-					aprilui::readRectNode(rect, (*child));
+					aprilui::_readRectNode(rect, (*child));
 					if ((*child)->name == "Image")
 					{
 						image = new Image(texture, name, rect);
@@ -527,7 +527,7 @@ namespace aprilui
 			if ((*child)->name == "ImageRef")
 			{
 				refname = (*child)->pstr("name");
-				aprilui::readRectNode(rect, (*child));
+				aprilui::_readRectNode(rect, (*child));
 				image->addImageRef(this->getImage(refname), rect);
 			}
 			else
@@ -728,7 +728,7 @@ namespace aprilui
 		}
 		if (isObject)
 		{
-			aprilui::readRectNode(rect, node);
+			aprilui::_readRectNode(rect, node);
 			rect += offset;
 		}
 		if (isObject && this->objects.hasKey(objectName))

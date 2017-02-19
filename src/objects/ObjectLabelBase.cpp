@@ -238,7 +238,7 @@ namespace aprilui
 
 	april::Color LabelBase::_makeBackgroundDrawColor(april::Color drawColor) const
 	{
-		return aprilui::makeModifiedDrawColor(this->backgroundColor, drawColor);
+		return aprilui::_makeModifiedDrawColor(this->backgroundColor, drawColor);
 	}
 
 	void LabelBase::_drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor)
@@ -396,7 +396,7 @@ namespace aprilui
 		else if (name == "text_formatting")		this->setTextFormatting(value);
 		else if (name == "text_key")			this->setTextKey(value);
 		else if (name == "text")				this->setText(value);
-		else if (name == "text_color")			this->setTextColor(value);
+		else if (name == "text_color")			this->setTextColor(aprilui::_makeColor(value));
 		else if (name == "text_offset")			this->setTextOffset(april::hstrToGvec2(value));
 		else if (name == "text_offset_x")		this->setTextOffsetX(value);
 		else if (name == "text_offset_y")		this->setTextOffsetY(value);
@@ -465,7 +465,7 @@ namespace aprilui
 		}
 		else if (name == "strike_through")		this->setStrikeThrough(value);
 		else if (name == "underline")			this->setUnderline(value);
-		else if (name == "background_color")	this->setBackgroundColor(value);
+		else if (name == "background_color")	this->setBackgroundColor(aprilui::_makeColor(value));
 		else if (name == "background_border")	this->setBackgroundBorder(value);
 		else return false;
 		return true;

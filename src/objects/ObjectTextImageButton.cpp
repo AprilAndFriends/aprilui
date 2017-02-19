@@ -12,6 +12,7 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "ObjectLabelBase.h"
 #include "ObjectTextImageButton.h"
@@ -166,9 +167,9 @@ namespace aprilui
 
 	bool TextImageButton::setProperty(chstr name, chstr value)
 	{
-		if (name == "hover_text_color")			this->setHoverTextColor(value);
-		else if (name == "pushed_text_color")	this->setPushedTextColor(value);
-		else if (name == "disabled_text_color")	this->setDisabledTextColor(value);
+		if (name == "hover_text_color")			this->setHoverTextColor(aprilui::_makeColor(value));
+		else if (name == "pushed_text_color")	this->setPushedTextColor(aprilui::_makeColor(value));
+		else if (name == "disabled_text_color")	this->setDisabledTextColor(aprilui::_makeColor(value));
 		else if (LabelBase::setProperty(name, value)) {}
 		else return ImageButton::setProperty(name, value);
 		return true;

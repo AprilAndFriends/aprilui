@@ -11,6 +11,7 @@
 #include <hltypes/harray.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "Object.h"
 #include "ObjectButtonBase.h"
@@ -145,9 +146,9 @@ namespace aprilui
 
 	bool ButtonBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "hover_color")			this->setHoverColor(value);
-		else if (name == "pushed_color")	this->setPushedColor(value);
-		else if (name == "disabled_color")	this->setDisabledColor(value);
+		if (name == "hover_color")			this->setHoverColor(aprilui::_makeColor(value));
+		else if (name == "pushed_color")	this->setPushedColor(aprilui::_makeColor(value));
+		else if (name == "disabled_color")	this->setDisabledColor(aprilui::_makeColor(value));
 		else return false;
 		return true;
 	}

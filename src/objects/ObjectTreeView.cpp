@@ -12,6 +12,7 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "MemberCallbackEvent.h"
 #include "ObjectScrollArea.h"
@@ -367,7 +368,7 @@ namespace aprilui
 		else if (name == "image_width")		this->setImageWidth(value);
 		else if (name == "spacing_width")	this->setSpacingWidth(value);
 		else if (name == "spacing_height")	this->setSpacingHeight(value);
-		else if (name == "connector_color")	this->setConnectorColor(value);
+		else if (name == "connector_color")	this->setConnectorColor(aprilui::_makeColor(value));
 		else return SelectionContainer::setProperty(name, value);
 		return true;
 	}

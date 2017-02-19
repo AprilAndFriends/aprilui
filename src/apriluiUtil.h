@@ -41,8 +41,9 @@ namespace aprilui
 	extern bool objectExistenceDebugExceptionsEnabled;
 	extern bool systemConsistencyDebugExceptionsEnabled;
 
-	void readRectNode(grect& rect, hlxml::Node* node);
-	april::Color makeModifiedDrawColor(const april::Color& color, const april::Color& drawColor);
+	void _readRectNode(grect& rect, hlxml::Node* node);
+	april::Color _makeModifiedDrawColor(const april::Color& color, const april::Color& drawColor);
+	april::Color _makeColor(chstr colorValue);
 
 }
 #endif

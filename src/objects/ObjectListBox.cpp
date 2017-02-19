@@ -11,6 +11,7 @@
 #include <hltypes/hstring.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "ObjectListBox.h"
 #include "ObjectListBoxItem.h"
@@ -202,8 +203,8 @@ namespace aprilui
 
 	bool ListBox::setProperty(chstr name, chstr value)
 	{
-		if		(name == "even_color")	this->setEvenColor(value);
-		else if (name == "odd_color")	this->setOddColor(value);
+		if		(name == "even_color")	this->setEvenColor(aprilui::_makeColor(value));
+		else if (name == "odd_color")	this->setOddColor(aprilui::_makeColor(value));
 		else return SelectionContainer::setProperty(name, value);
 		return true;
 	}

@@ -12,6 +12,7 @@
 #include <hltypes/harray.h>
 
 #include "aprilui.h"
+#include "apriluiUtil.h"
 #include "Dataset.h"
 #include "Object.h"
 #include "ObjectSelectionContainer.h"
@@ -165,11 +166,11 @@ namespace aprilui
 	{
 		if		(name == "selected_index")			this->setSelectedIndex(value);
 		else if (name == "item_height")				this->setItemHeight(value);
-		else if (name == "hover_color")				this->setHoverColor(value);
-		else if (name == "pushed_color")			this->setPushedColor(value);
-		else if (name == "selected_color")			this->setSelectedColor(value);
-		else if (name == "selected_hover_color")	this->setSelectedHoverColor(value);
-		else if (name == "selected_pushed_color")	this->setSelectedPushedColor(value);
+		else if (name == "hover_color")				this->setHoverColor(aprilui::_makeColor(value));
+		else if (name == "pushed_color")			this->setPushedColor(aprilui::_makeColor(value));
+		else if (name == "selected_color")			this->setSelectedColor(aprilui::_makeColor(value));
+		else if (name == "selected_hover_color")	this->setSelectedHoverColor(aprilui::_makeColor(value));
+		else if (name == "selected_pushed_color")	this->setSelectedPushedColor(aprilui::_makeColor(value));
 		else if (name == "allow_drag")				this->setAllowDrag(value);
 		else return Container::setProperty(name, value);
 		return true;
