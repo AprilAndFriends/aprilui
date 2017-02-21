@@ -125,7 +125,7 @@ namespace aprilui
 			}
 			else
 			{
-				grect clipRect = this->progressImage->getClipRect();
+				grect clipRect = (this->progressImage != NULL ? this->progressImage->getClipRect() : this->rect);
 				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
 				this->antiProgressImage->setClipRect(directionRect);
 				this->antiProgressImage->draw(drawRect, drawColor);
