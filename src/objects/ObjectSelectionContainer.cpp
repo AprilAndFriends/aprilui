@@ -100,6 +100,11 @@ namespace aprilui
 		}
 	}
 
+	void SelectionContainer::setHoverSymbolicColor(chstr value)
+	{
+		this->setHoverColor(aprilui::_makeColor(value));
+	}
+
 	void SelectionContainer::setPushedColor(april::Color value)
 	{
 		if (this->pushedColor != value)
@@ -107,6 +112,11 @@ namespace aprilui
 			this->pushedColor = value;
 			this->_updateDisplay();
 		}
+	}
+
+	void SelectionContainer::setPushedSymbolicColor(chstr value)
+	{
+		this->setPushedColor(aprilui::_makeColor(value));
 	}
 
 	void SelectionContainer::setSelectedColor(april::Color value)
@@ -118,6 +128,11 @@ namespace aprilui
 		}
 	}
 
+	void SelectionContainer::setSelectedSymbolicColor(chstr value)
+	{
+		this->setSelectedColor(aprilui::_makeColor(value));
+	}
+
 	void SelectionContainer::setSelectedHoverColor(april::Color value)
 	{
 		if (this->selectedHoverColor != value)
@@ -127,6 +142,11 @@ namespace aprilui
 		}
 	}
 
+	void SelectionContainer::setSelectedHoverSymbolicColor(chstr value)
+	{
+		this->setSelectedHoverColor(aprilui::_makeColor(value));
+	}
+
 	void SelectionContainer::setSelectedPushedColor(april::Color value)
 	{
 		if (this->selectedPushedColor != value)
@@ -134,6 +154,11 @@ namespace aprilui
 			this->selectedPushedColor = value;
 			this->_updateDisplay();
 		}
+	}
+
+	void SelectionContainer::setSelectedPushedSymbolicColor(chstr value)
+	{
+		this->setSelectedPushedColor(aprilui::_makeColor(value));
 	}
 
 	void SelectionContainer::setAllowDrag(bool value)

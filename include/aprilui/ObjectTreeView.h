@@ -52,6 +52,7 @@ namespace aprilui
 		void setSpacingHeight(float value);
 		HL_DEFINE_GET(april::Color, connectorColor, ConnectorColor);
 		void setConnectorColor(april::Color value);
+		void setConnectorSymbolicColor(chstr value);
 		/// @note These are only the root TreeViewNodes in the TreeView.
 		HL_DEFINE_GET(harray<TreeViewNode*>, nodes, Nodes);
 		/// @note These are ALL the TreeViewNodes in the TreeView.

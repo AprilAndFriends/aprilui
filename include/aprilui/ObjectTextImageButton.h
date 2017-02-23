@@ -35,10 +35,13 @@ namespace aprilui
 
 		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
 		void setHoverTextColor(april::Color value);
+		void setHoverTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, pushedTextColor, PushedTextColor);
 		void setPushedTextColor(april::Color value);
+		void setPushedTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
 		void setDisabledTextColor(april::Color value);
+		void setDisabledTextSymbolicColor(chstr value);
 		Dataset* getDataset() const;
 		hstr getAutoScaledFont();
 

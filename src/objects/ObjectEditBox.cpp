@@ -179,6 +179,24 @@ namespace aprilui
 		return Label::isCursorInside();
 	}
 
+	void EditBox::setEmptyText(chstr value)
+	{
+		this->emptyText = value;
+		this->emptyTextKey = "";
+	}
+
+	void EditBox::setEmptyTextKey(chstr value)
+	{
+		hstr emptyTextKey = value; // because value is a chstr which could reference textKey
+		this->setEmptyText(this->getDataset()->getText(emptyTextKey));
+		this->emptyTextKey = emptyTextKey;
+	}
+
+	void EditBox::setEmptyTextSymbolicColor(chstr value)
+	{
+		this->setEmptyTextColor(aprilui::_makeColor(value));
+	}
+
 	void EditBox::setCaretIndex(int value)
 	{
 		int newCaretIndex = hclamp(value, 0, this->text.utf8Size());
@@ -191,6 +209,11 @@ namespace aprilui
 		this->_blinkTimer = 0.0f;
 	}
 
+	void EditBox::setCaretSymbolicColor(chstr value)
+	{
+		this->setCaretColor(aprilui::_makeColor(value));
+	}
+
 	void EditBox::setSelectionCount(int value)
 	{
 		int newSelectionCount = (this->selectable ? hclamp(value, -this->caretIndex, this->text.utf8Size() - this->caretIndex) : 0);
@@ -199,6 +222,11 @@ namespace aprilui
 			this->selectionCount = newSelectionCount;
 			this->_selectionDirty = true;
 		}
+	}
+
+	void EditBox::setSelectionSymbolicColor(chstr value)
+	{
+		this->setSelectionColor(aprilui::_makeColor(value));
 	}
 
 	void EditBox::setMaxLength(int value)
@@ -243,19 +271,6 @@ namespace aprilui
 		Label::setText(newValue);
 		this->setCaretIndex(this->caretIndex);
 		this->setSelectionCount(0);
-	}
-
-	void EditBox::setEmptyText(chstr value)
-	{
-		this->emptyText = value;
-		this->emptyTextKey = "";
-	}
-
-	void EditBox::setEmptyTextKey(chstr value)
-	{
-		hstr emptyTextKey = value; // because value is a chstr which could reference textKey
-		this->setEmptyText(this->getDataset()->getText(emptyTextKey));
-		this->emptyTextKey = emptyTextKey;
 	}
 
 	void EditBox::setFocused(bool value)

@@ -36,14 +36,19 @@ namespace aprilui
 		void setItemHeight(float value);
 		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
 		void setHoverColor(april::Color value);
+		void setHoverSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, pushedColor, PushedColor);
 		void setPushedColor(april::Color value);
+		void setPushedSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, selectedColor, SelectedColor);
 		void setSelectedColor(april::Color value);
+		void setSelectedSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, selectedHoverColor, SelectedHoverColor);
 		void setSelectedHoverColor(april::Color value);
+		void setSelectedHoverSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, selectedPushedColor, SelectedPushedColor);
 		void setSelectedPushedColor(april::Color value);
+		void setSelectedPushedSymbolicColor(chstr value);
 		HL_DEFINE_IS(allowDrag, AllowDrag);
 		void setAllowDrag(bool value);
 

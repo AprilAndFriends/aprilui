@@ -62,6 +62,11 @@ namespace aprilui
 		}
 	}
 
+	void ListBox::setEvenSymbolicColor(chstr value)
+	{
+		this->setEvenColor(aprilui::_makeColor(value));
+	}
+
 	void ListBox::setOddColor(april::Color value)
 	{
 		if (this->oddColor != value)
@@ -69,6 +74,11 @@ namespace aprilui
 			this->oddColor = value;
 			this->_updateDisplay();
 		}
+	}
+
+	void ListBox::setOddSymbolicColor(chstr value)
+	{
+		this->setOddColor(aprilui::_makeColor(value));
 	}
 
 	ListBoxItem* ListBox::getSelected() const

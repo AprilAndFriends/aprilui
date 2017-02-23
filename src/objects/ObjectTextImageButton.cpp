@@ -68,16 +68,31 @@ namespace aprilui
 		this->_useHoverTextColor = true;
 	}
 
+	void TextImageButton::setHoverTextSymbolicColor(chstr value)
+	{
+		this->setHoverTextColor(aprilui::_makeColor(value));
+	}
+
 	void TextImageButton::setPushedTextColor(april::Color value)
 	{
 		this->pushedTextColor = value;
 		this->_usePushedTextColor = true;
 	}
 
+	void TextImageButton::setPushedTextSymbolicColor(chstr value)
+	{
+		this->setPushedTextColor(aprilui::_makeColor(value));
+	}
+
 	void TextImageButton::setDisabledTextColor(april::Color value)
 	{
 		this->disabledTextColor = value;
 		this->_useDisabledTextColor = true;
+	}
+
+	void TextImageButton::setDisabledTextSymbolicColor(chstr value)
+	{
+		this->setDisabledTextColor(aprilui::_makeColor(value));
 	}
 
 	harray<PropertyDescription> TextImageButton::getPropertyDescriptions() const

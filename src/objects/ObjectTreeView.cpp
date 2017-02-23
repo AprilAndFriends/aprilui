@@ -111,6 +111,11 @@ namespace aprilui
 		}
 	}
 
+	void TreeView::setConnectorSymbolicColor(chstr value)
+	{
+		this->setConnectorColor(aprilui::_makeColor(value));
+	}
+
 	TreeViewNode* TreeView::getSelected() const
 	{
 		return (hbetweenIE(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);

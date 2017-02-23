@@ -175,6 +175,11 @@ namespace aprilui
 		}
 	}
 
+	void Image::setSymbolicColor(chstr value)
+	{
+		this->setColor(aprilui::_makeColor(value));
+	}
+
 	hstr Image::getProperty(chstr name)
 	{
 		if (name == "rect")					return april::grectToHstr(this->getSrcRect());

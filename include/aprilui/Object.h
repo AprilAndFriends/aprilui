@@ -80,6 +80,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, pivot.y, PivotY);
 
 		HL_DEFINE_GETSET(april::Color, color, Color);
+		void setSymbolicColor(chstr value);
 		HL_DEFINE_GETSET(unsigned char, color.r, Red);
 		HL_DEFINE_GETSET(unsigned char, color.g, Green);
 		HL_DEFINE_GETSET(unsigned char, color.b, Blue);

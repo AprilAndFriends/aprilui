@@ -153,6 +153,11 @@ namespace aprilui
 		}
 	}
 
+	void LabelBase::setTextSymbolicColor(chstr value)
+	{
+		this->setTextColor(aprilui::_makeColor(value));
+	}
+
 	void LabelBase::setTextOffset(gvec2 value)
 	{
 		if (this->textOffset != value)
@@ -188,6 +193,26 @@ namespace aprilui
 			this->minAutoScale = value;
 			this->_autoScaleDirty = true;
 		}
+	}
+
+	void LabelBase::setEffectSymbolicColor(chstr value)
+	{
+		this->setEffectColor(aprilui::_makeColor(value));
+	}
+
+	void LabelBase::setBackgroundSymbolicColor(chstr value)
+	{
+		this->setBackgroundColor(aprilui::_makeColor(value));
+	}
+
+	void LabelBase::setStrikeThroughSymbolicColor(chstr value)
+	{
+		this->setStrikeThroughColor(aprilui::_makeColor(value));
+	}
+
+	void LabelBase::setUnderlineSymbolicColor(chstr value)
+	{
+		this->setUnderlineColor(aprilui::_makeColor(value));
 	}
 
 	void LabelBase::_calcAutoScaledFont(grect rect)

@@ -45,6 +45,7 @@ namespace aprilui
 		void setFont(chstr value);
 		HL_DEFINE_ISSET(textFormatting, TextFormatting);
 		HL_DEFINE_GETSET(april::Color, textColor, TextColor);
+		void setTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(gvec2, textOffset, TextOffset);
 		void setTextOffset(gvec2 value);
 		HL_DEFINE_GET(float, textOffset.x, TextOffsetX);
@@ -61,17 +62,21 @@ namespace aprilui
 		HL_DEFINE_ISSET(useEffectColor, UseEffectColor);
 		HL_DEFINE_ISSET(useEffectParameter, UseEffectParameter);
 		HL_DEFINE_GETSET(april::Color, effectColor, EffectColor);
+		void setEffectSymbolicColor(chstr value);
 		HL_DEFINE_GETSET(hstr, effectParameter, EffectParameter);
 		HL_DEFINE_GETSET(april::Color, backgroundColor, BackgroundColor);
+		void setBackgroundSymbolicColor(chstr value);
 		HL_DEFINE_ISSET(strikeThrough, StrikeThrough);
 		HL_DEFINE_ISSET(useStrikeThroughColor, UseStrikeThroughColor);
 		HL_DEFINE_ISSET(useStrikeThroughParameter, UseStrikeThroughParameter);
 		HL_DEFINE_GETSET(april::Color, strikeThroughColor, StrikeThroughColor);
+		void setStrikeThroughSymbolicColor(chstr value);
 		HL_DEFINE_GETSET(hstr, strikeThroughParameter, StrikeThroughParameter);
 		HL_DEFINE_ISSET(underline, Underline);
 		HL_DEFINE_ISSET(useUnderlineColor, UseUnderlineColor);
 		HL_DEFINE_ISSET(useUnderlineParameter, UseUnderlineParameter);
 		HL_DEFINE_GETSET(april::Color, underlineColor, UnderlineColor);
+		void setUnderlineSymbolicColor(chstr value);
 		HL_DEFINE_GETSET(hstr, underlineParameter, UnderlineParameter);
 		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 

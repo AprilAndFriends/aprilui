@@ -60,6 +60,7 @@ namespace aprilui
 		void setSrcSize(gvec2 value);
 		void setSrcSize(float w, float h);
 		HL_DEFINE_GETSET(april::Color, color, Color);
+		void setSymbolicColor(chstr value);
 		HL_DEFINE_ISSET(rotated, Rotated);
 		HL_DEFINE_ISSET(invertX, InvertX);
 		HL_DEFINE_ISSET(invertY, InvertY);

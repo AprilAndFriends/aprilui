@@ -60,16 +60,31 @@ namespace aprilui
 		this->_useHoverColor = true;
 	}
 
+	void ButtonBase::setHoverSymbolicColor(chstr value)
+	{
+		this->setHoverColor(aprilui::_makeColor(value));
+	}
+
 	void ButtonBase::setPushedColor(april::Color value)
 	{
 		this->pushedColor = value;
 		this->_usePushedColor = true;
 	}
 
+	void ButtonBase::setPushedSymbolicColor(chstr value)
+	{
+		this->setPushedColor(aprilui::_makeColor(value));
+	}
+
 	void ButtonBase::setDisabledColor(april::Color value)
 	{
 		this->disabledColor = value;
 		this->_useDisabledColor = true;
+	}
+
+	void ButtonBase::setDisabledSymbolicColor(chstr value)
+	{
+		this->setDisabledColor(aprilui::_makeColor(value));
 	}
 
 	harray<PropertyDescription> ButtonBase::getPropertyDescriptions() const

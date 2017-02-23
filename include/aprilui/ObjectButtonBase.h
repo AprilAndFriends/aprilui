@@ -36,10 +36,13 @@ namespace aprilui
 
 		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
 		void setHoverColor(april::Color value);
+		void setHoverSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, pushedColor, PushedColor);
 		void setPushedColor(april::Color value);
+		void setPushedSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, disabledColor, DisabledColor);
 		void setDisabledColor(april::Color value);
+		void setDisabledSymbolicColor(chstr value);
 		HL_DEFINE_IS(hovered, Hovered);
 		HL_DEFINE_IS(pushed, Pushed);
 		virtual hstr getName() const = 0;
