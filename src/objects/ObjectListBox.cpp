@@ -206,12 +206,9 @@ namespace aprilui
 
 	void ListBox::snapToSelectedItem()
 	{
-		ListBoxItem* item = this->getSelected();
 		if (this->selectedIndex >= 0)
 		{
-			float minScrollOffsetY = (this->selectedIndex + 1) * this->itemHeight - this->rect.h;
-			float maxScrollOffsetY = this->selectedIndex * this->itemHeight;
-			this->scrollArea->setScrollOffsetY(hclamp(this->scrollArea->getScrollOffsetY(), minScrollOffsetY, maxScrollOffsetY));
+			this->scrollArea->setScrollOffsetY(hclamp(this->scrollArea->getScrollOffsetY(), (this->selectedIndex + 1) * this->itemHeight - this->rect.h, this->selectedIndex * this->itemHeight));
 			this->_optimizeVisibility();
 		}
 	}
