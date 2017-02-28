@@ -16,9 +16,6 @@
 #include <april/Color.h>
 #include <gtypes/Rectangle.h>
 
-#ifndef _DEBUG
-#define __THROW_EXCEPTION(exception, unused1, unused2) throw exception;
-#else
 #define __THROW_EXCEPTION(exception, enabled, returnCode) \
 	if (enabled) \
 	{ \
@@ -26,7 +23,6 @@
 	} \
 	exception; \
 	returnCode;
-#endif
 
 namespace hlxml
 {
