@@ -51,6 +51,7 @@ namespace aprilui
 		virtual ListBoxItem* createItem(int index, chstr name = "");
 		bool deleteItem(int index);
 		ListBoxItem* getItemAt(int index);
+		void snapToSelectedItem();
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

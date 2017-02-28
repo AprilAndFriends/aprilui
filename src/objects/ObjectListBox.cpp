@@ -204,6 +204,18 @@ namespace aprilui
 		return (hbetweenIE(index, 0, this->items.size()) ? this->items[index] : NULL);
 	}
 
+	void ListBox::snapToSelectedItem()
+	{
+		ListBoxItem* item = this->getSelected();
+		if (this->selectedIndex >= 0)
+		{
+			float minScrollOffsetY = (this->selectedIndex + 1) * this->itemHeight - this->rect.h;
+			float maxScrollOffsetY = this->selectedIndex * this->itemHeight;
+			this->scrollArea->setScrollOffsetY(hclamp(this->scrollArea->getScrollOffsetY(), minScrollOffsetY, maxScrollOffsetY));
+			this->_optimizeVisibility();
+		}
+	}
+
 	hstr ListBox::getProperty(chstr name)
 	{
 		if (name == "even_color")	return this->getEvenColor().hex();
