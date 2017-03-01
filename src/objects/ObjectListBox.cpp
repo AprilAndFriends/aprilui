@@ -47,8 +47,8 @@ namespace aprilui
 	{
 		if (ListBox::_propertyDescriptions.size() == 0)
 		{
-			ListBox::_propertyDescriptions += PropertyDescription("even_color", PropertyDescription::HEXCOLOR);
-			ListBox::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::HEXCOLOR);
+			ListBox::_propertyDescriptions += PropertyDescription("even_color", PropertyDescription::Type::Color);
+			ListBox::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::Type::Color);
 		}
 		return (SelectionContainer::getPropertyDescriptions() + ListBox::_propertyDescriptions);
 	}

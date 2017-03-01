@@ -54,15 +54,15 @@ namespace aprilui
 	{
 		if (SelectionContainer::_propertyDescriptions.size() == 0)
 		{
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_index", PropertyDescription::INT);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("item_height", PropertyDescription::FLOAT);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::HEXCOLOR);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::HEXCOLOR);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_color", PropertyDescription::HEXCOLOR);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_hover_color", PropertyDescription::HEXCOLOR);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_pushed_color", PropertyDescription::HEXCOLOR);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::BOOL);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("item_count", PropertyDescription::INT);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_index", PropertyDescription::Type::Int);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("item_height", PropertyDescription::Type::Float);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_hover_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_pushed_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("item_count", PropertyDescription::Type::Int);
 		}
 		return (Container::getPropertyDescriptions() + SelectionContainer::_propertyDescriptions);
 	}

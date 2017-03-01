@@ -52,8 +52,8 @@ namespace aprilui
 	{
 		if (GridView::_propertyDescriptions.size() == 0)
 		{
-			GridView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::FLOAT);
-			GridView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::FLOAT);
+			GridView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::Type::Float);
+			GridView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::Type::Float);
 		}
 		return (SelectionContainer::getPropertyDescriptions() + GridView::_propertyDescriptions);
 	}

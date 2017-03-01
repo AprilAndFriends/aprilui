@@ -157,13 +157,13 @@ namespace aprilui
 	{
 		if (ScrollArea::_propertyDescriptions.size() == 0)
 		{
-			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::BOOL);
-			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::FLOAT);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::FLOAT);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::FLOAT);
-			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::BOOL);
-			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::BOOL);
-			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::BOOL);
+			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
 		}
 		return (Object::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
 	}

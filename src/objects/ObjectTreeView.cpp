@@ -57,11 +57,11 @@ namespace aprilui
 	{
 		if (TreeView::_propertyDescriptions.size() == 0)
 		{
-			TreeView::_propertyDescriptions += PropertyDescription("expander_width", PropertyDescription::FLOAT);
-			TreeView::_propertyDescriptions += PropertyDescription("image_width", PropertyDescription::FLOAT);
-			TreeView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::FLOAT);
-			TreeView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::FLOAT);
-			TreeView::_propertyDescriptions += PropertyDescription("connector_color", PropertyDescription::HEXCOLOR);
+			TreeView::_propertyDescriptions += PropertyDescription("expander_width", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions += PropertyDescription("image_width", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions += PropertyDescription("connector_color", PropertyDescription::Type::Color);
 		}
 		return (SelectionContainer::getPropertyDescriptions() + TreeView::_propertyDescriptions);
 	}

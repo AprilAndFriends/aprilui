@@ -60,7 +60,7 @@ namespace aprilui
 	{
 		if (CompositeImage::_propertyDescriptions.size() == 0)
 		{
-			CompositeImage::_propertyDescriptions += PropertyDescription("restore_clip_rects", PropertyDescription::BOOL);
+			CompositeImage::_propertyDescriptions += PropertyDescription("restore_clip_rects", PropertyDescription::Type::Bool);
 		}
 		return (CompositeImage::_propertyDescriptions + BaseImage::getPropertyDescriptions());
 	}

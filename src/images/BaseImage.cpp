@@ -37,20 +37,20 @@ namespace aprilui
 	{
 		if (BaseImage::_propertyDescriptions.size() == 0)
 		{
-			BaseImage::_propertyDescriptions += PropertyDescription("name", PropertyDescription::STRING);
-			BaseImage::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::STRING);
-			BaseImage::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::STRING);
-			BaseImage::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::STRING);
-			BaseImage::_propertyDescriptions += PropertyDescription("size", PropertyDescription::GVEC2);
-			BaseImage::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
-			BaseImage::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_rect", PropertyDescription::GRECT);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_position", PropertyDescription::GVEC2);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_size", PropertyDescription::GVEC2);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_x", PropertyDescription::FLOAT);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_y", PropertyDescription::FLOAT);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_w", PropertyDescription::FLOAT);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_h", PropertyDescription::FLOAT);
+			BaseImage::_propertyDescriptions += PropertyDescription("name", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions += PropertyDescription("size", PropertyDescription::Type::Gvec2);
+			BaseImage::_propertyDescriptions += PropertyDescription("w", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions += PropertyDescription("h", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions += PropertyDescription("clip_rect", PropertyDescription::Type::Grect);
+			BaseImage::_propertyDescriptions += PropertyDescription("clip_position", PropertyDescription::Type::Gvec2);
+			BaseImage::_propertyDescriptions += PropertyDescription("clip_size", PropertyDescription::Type::Gvec2);
+			BaseImage::_propertyDescriptions += PropertyDescription("clip_x", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions += PropertyDescription("clip_y", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions += PropertyDescription("clip_w", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions += PropertyDescription("clip_h", PropertyDescription::Type::Float);
 		}
 		return BaseImage::_propertyDescriptions;
 	}

@@ -98,23 +98,23 @@ namespace aprilui
 	{
 		if (LabelBase::_propertyDescriptions.size() == 0)
 		{
-			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_formatting", PropertyDescription::BOOL);
-			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::HEXCOLOR);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset", PropertyDescription::GVEC2);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::FLOAT);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::FLOAT);
-			LabelBase::_propertyDescriptions += PropertyDescription("min_auto_scale", PropertyDescription::FLOAT);
-			LabelBase::_propertyDescriptions += PropertyDescription("auto_scaled_font", PropertyDescription::STRING);
-			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::ENUM);
-			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::ENUM);
-			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::ENUM);
-			LabelBase::_propertyDescriptions += PropertyDescription("strike_through", PropertyDescription::BOOL);
-			LabelBase::_propertyDescriptions += PropertyDescription("underline", PropertyDescription::BOOL);
-			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::HEXCOLOR);
-			LabelBase::_propertyDescriptions += PropertyDescription("background_border", PropertyDescription::BOOL);
+			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_formatting", PropertyDescription::Type::Bool);
+			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::Type::Color);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset", PropertyDescription::Type::Gvec2);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::Type::Float);
+			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::Type::Float);
+			LabelBase::_propertyDescriptions += PropertyDescription("min_auto_scale", PropertyDescription::Type::Float);
+			LabelBase::_propertyDescriptions += PropertyDescription("auto_scaled_font", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::Type::Enum);
+			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::Type::Enum);
+			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::Type::Enum);
+			LabelBase::_propertyDescriptions += PropertyDescription("strike_through", PropertyDescription::Type::Bool);
+			LabelBase::_propertyDescriptions += PropertyDescription("underline", PropertyDescription::Type::Bool);
+			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::Type::Color);
+			LabelBase::_propertyDescriptions += PropertyDescription("background_border", PropertyDescription::Type::Bool);
 		}
 		return LabelBase::_propertyDescriptions;
 	}

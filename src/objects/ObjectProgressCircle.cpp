@@ -115,7 +115,7 @@ namespace aprilui
 	{
 		if (ProgressCircle::_propertyDescriptions.size() == 0)
 		{
-			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::ENUM);
+			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
 		}
 		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressCircle::_propertyDescriptions);
 	}

@@ -91,9 +91,9 @@ namespace aprilui
 	{
 		if (ButtonBase::_propertyDescriptions.size() == 0)
 		{
-			ButtonBase::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::HEXCOLOR);
-			ButtonBase::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::HEXCOLOR);
-			ButtonBase::_propertyDescriptions += PropertyDescription("disabled_color", PropertyDescription::HEXCOLOR);
+			ButtonBase::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
+			ButtonBase::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
+			ButtonBase::_propertyDescriptions += PropertyDescription("disabled_color", PropertyDescription::Type::Color);
 		}
 		return ButtonBase::_propertyDescriptions;
 	}

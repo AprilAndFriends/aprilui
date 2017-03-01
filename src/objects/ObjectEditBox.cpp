@@ -133,23 +133,23 @@ namespace aprilui
 	{
 		if (EditBox::_propertyDescriptions.size() == 0)
 		{
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::STRING);
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::STRING);
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text_color", PropertyDescription::HEXCOLOR);
-			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::INT);
-			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::CHAR);
-			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::STRING);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::INT);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_offset", PropertyDescription::GVEC2);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_x", PropertyDescription::FLOAT);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_y", PropertyDescription::FLOAT);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_color", PropertyDescription::HEXCOLOR);
-			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::BOOL);
-			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
-			EditBox::_propertyDescriptions += PropertyDescription("selection_count", PropertyDescription::INT);
-			EditBox::_propertyDescriptions += PropertyDescription("selection_color", PropertyDescription::HEXCOLOR);
-			EditBox::_propertyDescriptions += PropertyDescription("clipboard_enabled", PropertyDescription::BOOL);
-			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::BOOL);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::Type::String);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::Type::String);
+			EditBox::_propertyDescriptions += PropertyDescription("empty_text_color", PropertyDescription::Type::Color);
+			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::Type::Int);
+			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::Type::Char);
+			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::Type::String);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::Type::Int);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_offset", PropertyDescription::Type::Gvec2);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_x", PropertyDescription::Type::Float);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_y", PropertyDescription::Type::Float);
+			EditBox::_propertyDescriptions += PropertyDescription("caret_color", PropertyDescription::Type::Color);
+			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::Type::Bool);
+			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::Type::Bool);
+			EditBox::_propertyDescriptions += PropertyDescription("selection_count", PropertyDescription::Type::Int);
+			EditBox::_propertyDescriptions += PropertyDescription("selection_color", PropertyDescription::Type::Color);
+			EditBox::_propertyDescriptions += PropertyDescription("clipboard_enabled", PropertyDescription::Type::Bool);
+			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::Type::Bool);
 		}
 		return (Label::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}

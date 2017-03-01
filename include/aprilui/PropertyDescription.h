@@ -13,6 +13,7 @@
 #ifndef APRILUI_PROPERTY_DESCRIPTION_H
 #define APRILUI_PROPERTY_DESCRIPTION_H
 
+#include <hltypes/henum.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
@@ -23,30 +24,31 @@ namespace aprilui
 	class apriluiExport PropertyDescription
 	{
 	public:
-		enum PropertyType
-		{
-			INT,
-			FLOAT,
-			CHAR,
-			UCHAR,
-			BOOL,
-			STRING,
-			ENUM,
-			GRECT,
-			GVEC2,
-			HEXCOLOR
-		};
+		HL_ENUM_CLASS_PREFIX_DECLARE(apriluiExport, Type,
+		(
+			HL_ENUM_DECLARE(Type, Int);
+			HL_ENUM_DECLARE(Type, Float);
+			HL_ENUM_DECLARE(Type, Char);
+			HL_ENUM_DECLARE(Type, UChar);
+			HL_ENUM_DECLARE(Type, Bool);
+			HL_ENUM_DECLARE(Type, String);
+			HL_ENUM_DECLARE(Type, Enum);
+			HL_ENUM_DECLARE(Type, Grect);
+			HL_ENUM_DECLARE(Type, Gvec2);
+			HL_ENUM_DECLARE(Type, Gvec3);
+			HL_ENUM_DECLARE(Type, Color);
+		));
 
-		PropertyDescription(chstr name, PropertyType type, bool arrayData = false);
+		PropertyDescription(chstr name, Type type, bool arrayData = false);
 		~PropertyDescription();
 
 		HL_DEFINE_GET(hstr, name, Name);
-		HL_DEFINE_GET(PropertyType, type, Type);
+		HL_DEFINE_GET(Type, type, Type);
 		HL_DEFINE_IS(arrayData, ArrayData);
 
 	protected:
 		hstr name;
-		PropertyType type;
+		Type type;
 		bool arrayData;
 
 	};

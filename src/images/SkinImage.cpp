@@ -65,14 +65,14 @@ namespace aprilui
 	{
 		if (SkinImage::_propertyDescriptions.size() == 0)
 		{
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_rect", PropertyDescription::GRECT);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_position", PropertyDescription::GVEC2);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_size", PropertyDescription::GVEC2);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_x", PropertyDescription::FLOAT);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_y", PropertyDescription::FLOAT);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_w", PropertyDescription::FLOAT);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_h", PropertyDescription::FLOAT);
-			SkinImage::_propertyDescriptions += PropertyDescription("tiled_borders", PropertyDescription::BOOL);
+			SkinImage::_propertyDescriptions += PropertyDescription("skin_rect", PropertyDescription::Type::Grect);
+			SkinImage::_propertyDescriptions += PropertyDescription("skin_position", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions += PropertyDescription("skin_size", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions += PropertyDescription("skin_x", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions += PropertyDescription("skin_y", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions += PropertyDescription("skin_w", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions += PropertyDescription("skin_h", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions += PropertyDescription("tiled_borders", PropertyDescription::Type::Bool);
 		}
 		return (SkinImage::_propertyDescriptions + Image::getPropertyDescriptions());
 	}

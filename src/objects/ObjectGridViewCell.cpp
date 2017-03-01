@@ -46,7 +46,7 @@ namespace aprilui
 	{
 		if (GridViewCell::_propertyDescriptions.size() == 0)
 		{
-			GridViewCell::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::BOOL);
+			GridViewCell::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::Type::Bool);
 		}
 		return (Container::getPropertyDescriptions() + GridViewCell::_propertyDescriptions);
 	}

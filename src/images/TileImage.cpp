@@ -42,13 +42,13 @@ namespace aprilui
 	{
 		if (TileImage::_propertyDescriptions.size() == 0)
 		{
-			TileImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::GVEC2);
-			TileImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::FLOAT);
-			TileImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::FLOAT);
-			TileImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::GVEC2);
-			TileImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::FLOAT);
-			TileImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::FLOAT);
-			TileImage::_propertyDescriptions += PropertyDescription("use_tile_count", PropertyDescription::BOOL);
+			TileImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::Type::Gvec2);
+			TileImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::Type::Gvec2);
+			TileImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions += PropertyDescription("use_tile_count", PropertyDescription::Type::Bool);
 		}
 		return (Image::getPropertyDescriptions() + TileImage::_propertyDescriptions);
 	}

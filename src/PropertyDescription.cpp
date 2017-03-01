@@ -13,7 +13,22 @@
 
 namespace aprilui
 {
-	PropertyDescription::PropertyDescription(chstr name, PropertyType type, bool arrayData)
+	HL_ENUM_CLASS_DEFINE(PropertyDescription::Type,
+	(
+		HL_ENUM_DEFINE(PropertyDescription::Type, Int);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Float);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Char);
+		HL_ENUM_DEFINE(PropertyDescription::Type, UChar);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Bool);
+		HL_ENUM_DEFINE(PropertyDescription::Type, String);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Enum);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Grect);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Gvec2);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Gvec3);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Color);
+	));
+
+	PropertyDescription::PropertyDescription(chstr name, Type type, bool arrayData)
 	{
 		this->name = name;
 		this->type = type;

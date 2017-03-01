@@ -80,16 +80,16 @@ namespace aprilui
 	{
 		if (Image::_propertyDescriptions.size() == 0)
 		{
-			Image::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::GRECT);
-			Image::_propertyDescriptions += PropertyDescription("position", PropertyDescription::GVEC2);
-			Image::_propertyDescriptions += PropertyDescription("x", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::HEXCOLOR);
-			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::BOOL);
-			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::ENUM);
-			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::ENUM);
-			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::FLOAT);
-			Image::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::STRING);
+			Image::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::Type::Grect);
+			Image::_propertyDescriptions += PropertyDescription("position", PropertyDescription::Type::Gvec2);
+			Image::_propertyDescriptions += PropertyDescription("x", PropertyDescription::Type::Float);
+			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::Type::Float);
+			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::Type::Color);
+			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::Type::Bool);
+			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::Type::Enum);
+			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::Type::Enum);
+			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::Type::Float);
+			Image::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::Type::String);
 		}
 		return (Image::_propertyDescriptions + BaseImage::getPropertyDescriptions());
 	}

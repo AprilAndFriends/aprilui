@@ -92,14 +92,14 @@ namespace aprilui
 	{
 		if (ScrollBar::_propertyDescriptions.size() == 0)
 		{
-			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::STRING);
-			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::FLOAT);
-			ScrollBar::_propertyDescriptions += PropertyDescription("scroll_distance", PropertyDescription::FLOAT);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::BOOL);
-			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::BOOL);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::BOOL);
-			ScrollBar::_propertyDescriptions += PropertyDescription("disabled_while_scrolling", PropertyDescription::BOOL);
-			ScrollBar::_propertyDescriptions += PropertyDescription("max_grid_scroll", PropertyDescription::INT);
+			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::Type::String);
+			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::Type::Float);
+			ScrollBar::_propertyDescriptions += PropertyDescription("scroll_distance", PropertyDescription::Type::Float);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions += PropertyDescription("disabled_while_scrolling", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions += PropertyDescription("max_grid_scroll", PropertyDescription::Type::Int);
 		}
 		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
 	}

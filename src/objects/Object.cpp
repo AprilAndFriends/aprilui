@@ -277,40 +277,40 @@ namespace aprilui
 	{
 		if (Object::_propertyDescriptions.size() == 0)
 		{
-			Object::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::GRECT);
-			Object::_propertyDescriptions += PropertyDescription("position", PropertyDescription::GVEC2);
-			Object::_propertyDescriptions += PropertyDescription("size", PropertyDescription::GVEC2);
-			Object::_propertyDescriptions += PropertyDescription("x", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("y", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("w", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("hit_test", PropertyDescription::ENUM);
-			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::BOOL); // DEPRECATED
-			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::UCHAR);
-			Object::_propertyDescriptions += PropertyDescription("green", PropertyDescription::UCHAR);
-			Object::_propertyDescriptions += PropertyDescription("blue", PropertyDescription::UCHAR);
-			Object::_propertyDescriptions += PropertyDescription("alpha", PropertyDescription::UCHAR);
-			Object::_propertyDescriptions += PropertyDescription("color", PropertyDescription::HEXCOLOR);
-			Object::_propertyDescriptions += PropertyDescription("angle", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("scale", PropertyDescription::GVEC2);
-			Object::_propertyDescriptions += PropertyDescription("scale_x", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("scale_y", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("pivot", PropertyDescription::GVEC2);
-			Object::_propertyDescriptions += PropertyDescription("pivot_x", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("pivot_y", PropertyDescription::FLOAT);
-			Object::_propertyDescriptions += PropertyDescription("center", PropertyDescription::GVEC2); // DEPRECATED
-			Object::_propertyDescriptions += PropertyDescription("center_x", PropertyDescription::FLOAT); // DEPRECATED
-			Object::_propertyDescriptions += PropertyDescription("center_y", PropertyDescription::FLOAT); // DEPRECATED
-			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("anchor_bottom", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("retain_anchor_aspect", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("clip", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::BOOL);
-			Object::_propertyDescriptions += PropertyDescription("focus_index", PropertyDescription::INT);
+			Object::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::Type::Grect);
+			Object::_propertyDescriptions += PropertyDescription("position", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions += PropertyDescription("size", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions += PropertyDescription("x", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("y", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("w", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("hit_test", PropertyDescription::Type::Enum);
+			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::Type::Bool); // DEPRECATED
+			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions += PropertyDescription("green", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions += PropertyDescription("blue", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions += PropertyDescription("alpha", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions += PropertyDescription("color", PropertyDescription::Type::Color);
+			Object::_propertyDescriptions += PropertyDescription("angle", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("scale", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions += PropertyDescription("scale_x", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("scale_y", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("pivot", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions += PropertyDescription("pivot_x", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("pivot_y", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions += PropertyDescription("center", PropertyDescription::Type::Gvec2); // DEPRECATED
+			Object::_propertyDescriptions += PropertyDescription("center_x", PropertyDescription::Type::Float); // DEPRECATED
+			Object::_propertyDescriptions += PropertyDescription("center_y", PropertyDescription::Type::Float); // DEPRECATED
+			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("anchor_bottom", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("retain_anchor_aspect", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("clip", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("focus_index", PropertyDescription::Type::Int);
 		}
 		return (BaseObject::getPropertyDescriptions() + Object::_propertyDescriptions);
 	}

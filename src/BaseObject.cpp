@@ -58,12 +58,12 @@ namespace aprilui
 	{
 		if (BaseObject::_propertyDescriptions.size() == 0)
 		{
-			BaseObject::_propertyDescriptions += PropertyDescription("name", PropertyDescription::STRING);
-			BaseObject::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::STRING);
-			BaseObject::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::STRING);
-			BaseObject::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::BOOL);
-			BaseObject::_propertyDescriptions += PropertyDescription("awake", PropertyDescription::BOOL);
-			BaseObject::_propertyDescriptions += PropertyDescription("z_order", PropertyDescription::INT);
+			BaseObject::_propertyDescriptions += PropertyDescription("name", PropertyDescription::Type::String);
+			BaseObject::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::Type::String);
+			BaseObject::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::Type::String);
+			BaseObject::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::Type::Bool);
+			BaseObject::_propertyDescriptions += PropertyDescription("awake", PropertyDescription::Type::Bool);
+			BaseObject::_propertyDescriptions += PropertyDescription("z_order", PropertyDescription::Type::Int);
 		}
 		return BaseObject::_propertyDescriptions;
 	}

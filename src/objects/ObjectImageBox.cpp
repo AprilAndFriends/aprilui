@@ -44,7 +44,7 @@ namespace aprilui
 	{
 		if (ImageBox::_propertyDescriptions.size() == 0)
 		{
-			ImageBox::_propertyDescriptions += PropertyDescription("image", PropertyDescription::STRING);
+			ImageBox::_propertyDescriptions += PropertyDescription("image", PropertyDescription::Type::String);
 		}
 		return (Object::getPropertyDescriptions() + ImageBox::_propertyDescriptions);
 	}
