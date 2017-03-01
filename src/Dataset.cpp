@@ -846,7 +846,7 @@ namespace aprilui
 		{
 			foreach_xmlnode (child, node)
 			{
-				if ((*child)->type != hlxml::Node::TYPE_TEXT && (*child)->type != hlxml::Node::TYPE_COMMENT)
+				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 				{
 					this->recursiveObjectParse((*child), object, style, namePrefix, nameSuffix, gvec2());
 				}
@@ -882,7 +882,7 @@ namespace aprilui
 		{
 			if ((*child)->name == "Property")
 			{
-				if ((*child)->type != hlxml::Node::TYPE_TEXT && (*child)->type != hlxml::Node::TYPE_COMMENT)
+				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 				{
 					childProperties = (*child)->properties;
 					if (childProperties.hasKey("object"))
@@ -1061,7 +1061,7 @@ namespace aprilui
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		foreach_xmlnode (node, current)
 		{
-			if ((*node)->type != hlxml::Node::TYPE_COMMENT)
+			if ((*node)->type != hlxml::Node::Type::Comment)
 			{
 				if		((*node)->name == "Texture")		this->parseTexture(*node);
 				else if ((*node)->name == "CompositeImage")	this->parseCompositeImage(*node);
