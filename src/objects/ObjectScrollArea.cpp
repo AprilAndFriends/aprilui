@@ -444,7 +444,7 @@ namespace aprilui
 	bool ScrollArea::onMouseDown(april::Key keyCode)
 	{
 		// has to override its children which is why onMouseDown() is overriden and not _mouseDown()
-		if (this->allowDrag && this->hitTest != HIT_TEST_DISABLED_RECURSIVE && this->isVisible() && this->isDerivedEnabled())
+		if (this->allowDrag && this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
 		{
 			this->_overrideHoverMode = true;
 			bool result = ButtonBase::_mouseDown(keyCode);
@@ -460,7 +460,7 @@ namespace aprilui
 	bool ScrollArea::onMouseUp(april::Key keyCode)
 	{
 		// has to override its children which is why onMouseUp() is overriden and not _mouseUp()
-		if (this->allowDrag && this->hitTest != HIT_TEST_DISABLED_RECURSIVE && this->isVisible() && this->isDerivedEnabled())
+		if (this->allowDrag && this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
 		{
 			this->dragging = false;
 			this->_adjustDragSpeed();
@@ -490,7 +490,7 @@ namespace aprilui
 	bool ScrollArea::onMouseScroll(float x, float y)
 	{
 		// has to override its children which is why onMouseScroll() is overriden and not _mouseScroll()
-		if (this->hitTest != HIT_TEST_DISABLED_RECURSIVE && this->isVisible() && this->isDerivedEnabled())
+		if (this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			this->_overrideHoverMode = true;

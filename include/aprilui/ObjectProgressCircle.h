@@ -27,7 +27,7 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(ProgressCircle);
 	public:
-		HL_ENUM_CLASS_DECLARE(Direction,
+		HL_ENUM_CLASS_PREFIX_DECLARE(apriluiExport, Direction,
 		(
 			HL_ENUM_DECLARE(Direction, Clockwise270);
 			HL_ENUM_DECLARE(Direction, Clockwise180);

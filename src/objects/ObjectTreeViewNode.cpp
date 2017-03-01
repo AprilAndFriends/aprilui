@@ -164,12 +164,12 @@ namespace aprilui
 			if (this->image != NULL)
 			{
 				this->image->setX(0.0f);
-				this->image->setHitTest(HIT_TEST_DISABLED);
+				this->image->setHitTest(HitTest::Disabled);
 			}
 			if (this->label != NULL)
 			{
 				this->label->setX(this->_treeView->getImageWidth() + this->_treeView->getSpacingWidth());
-				this->label->setHitTest(HIT_TEST_DISABLED);
+				this->label->setHitTest(HitTest::Disabled);
 			}
 		}
 		return offset;

@@ -43,12 +43,12 @@ namespace aprilui
 	public:
 		friend class Dataset;
 
-		enum HitTest
-		{
-			HIT_TEST_ENABLED = 0,
-			HIT_TEST_DISABLED = 1,
-			HIT_TEST_DISABLED_RECURSIVE = 2
-		};
+		HL_ENUM_CLASS_PREFIX_DECLARE(apriluiExport, HitTest,
+		(
+			HL_ENUM_DECLARE(HitTest, Enabled);
+			HL_ENUM_DECLARE(HitTest, Disabled);
+			HL_ENUM_DECLARE(HitTest, DisabledRecursive);
+		));
 
 		Object(chstr name);
 		~Object();
@@ -292,7 +292,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void stopAllAnimations() { this->animateStopAll(); }
 
 		DEPRECATED_ATTRIBUTE bool isClickThrough() const;
-		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HIT_TEST_DISABLED_RECURSIVE : HIT_TEST_ENABLED); }
+		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HitTest::DisabledRecursive : HitTest::Enabled); }
 
 		DEPRECATED_ATTRIBUTE gvec2 getCenter() const { return this->getPivot(); }
 		DEPRECATED_ATTRIBUTE void setCenter(gvec2 value) { return this->setPivot(value); }

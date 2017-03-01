@@ -28,7 +28,7 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(ProgressBar);
 	public:
-		HL_ENUM_CLASS_DECLARE(Direction,
+		HL_ENUM_CLASS_PREFIX_DECLARE(apriluiExport, Direction,
 		(
 			HL_ENUM_DECLARE(Direction, Down);
 			HL_ENUM_DECLARE(Direction, Left);
