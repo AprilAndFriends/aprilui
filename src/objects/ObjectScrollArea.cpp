@@ -200,7 +200,7 @@ namespace aprilui
 				if (this->dragging)
 				{
 					// some devices have a bad digitizer so this serves as special hack to smoothen the dragging movement on the scroll-area
-					if (april::window->getInputMode() == april::Window::TOUCH && this->_lastPosition != position)
+					if (april::window->getInputMode() == april::InputMode::Touch && this->_lastPosition != position)
 					{
 						position = this->_lastPosition + (position - this->_lastPosition) * 0.5f;
 					}
