@@ -743,8 +743,8 @@ namespace aprilui
 		{
 			april::Color selectionColor = this->_makeSelectionDrawColor(drawColor);
 			harray<grect> selectionRects = this->_selectionRects;
-			april::rendersys->setBlendMode(april::BM_DEFAULT);
-			april::rendersys->setColorMode(april::CM_DEFAULT);
+			april::rendersys->setBlendMode(april::BlendMode::Alpha);
+			april::rendersys->setColorMode(april::ColorMode::Multiply);
 			foreach (grect, it, selectionRects)
 			{
 				(*it) += drawRect.getPosition() + this->caretOffset;
@@ -774,7 +774,7 @@ namespace aprilui
 				v[1].set(renderRect.x, renderRect.y + renderRect.h, 0);
 				// using the original text color
 				v[0].color = v[1].color = april::rendersys->getNativeColorUInt(this->caretColor);
-				april::rendersys->render(april::RO_LINE_LIST, v, 2);
+				april::rendersys->render(april::RenderOperation::LineList, v, 2);
 			}
 		}
 		this->text = text;

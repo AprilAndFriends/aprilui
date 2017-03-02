@@ -29,8 +29,8 @@ namespace aprilui
 		this->texture = texture;
 		this->srcRect = source;
 		this->color = april::Color::White;
-		this->blendMode = april::BM_DEFAULT;
-		this->colorMode = april::CM_DEFAULT;
+		this->blendMode = april::BlendMode::Alpha;
+		this->colorMode = april::ColorMode::Multiply;
 		this->colorModeFactor = 1.0f;
 		this->rotated = false;
 		this->invertX = false;
@@ -205,16 +205,18 @@ namespace aprilui
 		}
 		if (name == "blend_mode")
 		{
-			if (this->blendMode == april::BM_ADD)		return "add";
-			if (this->blendMode == april::BM_SUBTRACT)	return "subtract";
-			if (this->blendMode == april::BM_OVERWRITE)	return "overwrite";
-			return "default";
+			if (this->blendMode == april::BlendMode::Alpha)		return "alpha";
+			if (this->blendMode == april::BlendMode::Add)		return "add";
+			if (this->blendMode == april::BlendMode::Subtract)	return "subtract";
+			if (this->blendMode == april::BlendMode::Overwrite)	return "overwrite";
+			return "";
 		}
 		if (name == "color_mode")
 		{
-			if (this->colorMode == april::CM_LERP)		return "lerp";
-			if (this->colorMode == april::CM_MULTIPLY)	return "alpha_map";
-			return "multiply";
+			if (this->colorMode == april::ColorMode::Multiply)	return "multiply";
+			if (this->colorMode == april::ColorMode::AlphaMap)	return "alpha_map";
+			if (this->colorMode == april::ColorMode::Lerp)		return "lerp";
+			return "";
 		}
 		if (name == "color_mode_factor")	return this->getColorModeFactor();
 		if (name == "texture")
@@ -249,19 +251,27 @@ namespace aprilui
 		}
 		else if	(name == "blend_mode")
 		{
-			if		(value == "default")	this->setBlendMode(april::BM_DEFAULT);
-			else if	(value == "alpha")		this->setBlendMode(april::BM_ALPHA);
-			else if	(value == "add")		this->setBlendMode(april::BM_ADD);
-			else if	(value == "subtract")	this->setBlendMode(april::BM_SUBTRACT);
-			else if	(value == "overwrite")	this->setBlendMode(april::BM_OVERWRITE);
+			if (value == "default")
+			{
+				hlog::warn(logTag, "'blend_mode=default' is deprecated. Use 'blend_mode=alpha' instead."); // DEPRECATED
+				this->setBlendMode(april::BlendMode::Alpha);
+			}
+			else if	(value == "alpha")		this->setBlendMode(april::BlendMode::Alpha);
+			else if	(value == "add")		this->setBlendMode(april::BlendMode::Add);
+			else if	(value == "subtract")	this->setBlendMode(april::BlendMode::Subtract);
+			else if	(value == "overwrite")	this->setBlendMode(april::BlendMode::Overwrite);
 			else hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
 		}
 		else if	(name == "color_mode")
 		{
-			if		(value == "default")	this->setColorMode(april::CM_DEFAULT);
-			else if	(value == "multiply")	this->setColorMode(april::CM_MULTIPLY);
-			else if	(value == "lerp")		this->setColorMode(april::CM_LERP);
-			else if	(value == "alpha_map")	this->setColorMode(april::CM_ALPHA_MAP);
+			if (value == "default")
+			{
+				hlog::warn(logTag, "'color_mode=default' is deprecated. Use 'color_mode=multiply' instead."); // DEPRECATED
+				this->setColorMode(april::ColorMode::Multiply);
+			}
+			else if	(value == "multiply")	this->setColorMode(april::ColorMode::Multiply);
+			else if	(value == "alpha_map")	this->setColorMode(april::ColorMode::AlphaMap);
+			else if (value == "lerp")		this->setColorMode(april::ColorMode::Lerp);
 			else hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
 		}
 		else if	(name == "color_mode_factor")	this->setColorModeFactor(value);
@@ -367,7 +377,7 @@ namespace aprilui
 		this->tryLoadTextureCoordinates();
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
-		april::rendersys->render(april::RO_TRIANGLE_LIST, this->vertices, APRILUI_IMAGE_MAX_VERTICES, color);
+		april::rendersys->render(april::RenderOperation::TriangleList, this->vertices, APRILUI_IMAGE_MAX_VERTICES, color);
 	}
 
 	void Image::draw(harray<april::TexturedVertex> vertices, april::Color color)
@@ -394,7 +404,7 @@ namespace aprilui
 		}
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
-		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)vertices, vertices.size(), color);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)vertices, vertices.size(), color);
 	}
 	
 }

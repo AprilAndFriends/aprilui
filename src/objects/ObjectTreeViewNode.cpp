@@ -94,8 +94,8 @@ namespace aprilui
 	void TreeViewNode::_draw()
 	{
 		april::Color drawColor = this->_makeDrawColor();
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		if (this->_treeView != NULL)
 		{
 			april::Color color = this->_getCurrentBackgroundColor() * drawColor;

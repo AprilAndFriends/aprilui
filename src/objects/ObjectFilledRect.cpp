@@ -34,8 +34,8 @@ namespace aprilui
 
 	void FilledRect::_draw()
 	{
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		april::rendersys->drawFilledRect(this->_makeDrawRect(), this->_makeDrawColor());
 	}
 	

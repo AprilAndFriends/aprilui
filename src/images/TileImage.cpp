@@ -268,7 +268,7 @@ namespace aprilui
 		{
 			return;
 		}
-		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size(), color);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size(), color);
 	}
 
 }

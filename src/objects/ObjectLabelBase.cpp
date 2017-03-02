@@ -270,8 +270,8 @@ namespace aprilui
 	{
 		if (backgroundColor.a > 0)
 		{
-			april::rendersys->setBlendMode(april::BM_DEFAULT);
-			april::rendersys->setColorMode(april::CM_DEFAULT);
+			april::rendersys->setBlendMode(april::BlendMode::Alpha);
+			april::rendersys->setColorMode(april::ColorMode::Multiply);
 			april::rendersys->drawFilledRect(rect, backgroundColor);
 			if (this->backgroundBorder)
 			{

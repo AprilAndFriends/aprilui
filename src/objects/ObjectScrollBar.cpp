@@ -272,8 +272,8 @@ namespace aprilui
 					{
 						drawColor.a = (unsigned char)hclamp(drawColor.a * this->_retainTime / FADE_OUT_TIME, 0.0f, 255.0f);
 					}
-					april::rendersys->setBlendMode(april::BM_DEFAULT);
-					april::rendersys->setColorMode(april::CM_DEFAULT);
+					april::rendersys->setBlendMode(april::BlendMode::Alpha);
+					april::rendersys->setColorMode(april::ColorMode::Multiply);
 					april::rendersys->drawFilledRect(this->_getBarDrawRect(), drawColor);
 				}
 			}

@@ -466,7 +466,7 @@ namespace aprilui
 			rectVertices.vertices = this->_vertices;
 			this->_rectVertices += rectVertices;
 		}
-		april::rendersys->render(april::RO_TRIANGLE_LIST, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
 	}
 
 	void SkinImage::draw(harray<april::TexturedVertex> vertices, april::Color color)

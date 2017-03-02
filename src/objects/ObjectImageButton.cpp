@@ -121,7 +121,7 @@ namespace aprilui
 					april::Color drawColor = this->_makeDrawColor();
 					drawColor.a = (unsigned char)(drawColor.a * 0.25f);
 					april::BlendMode blendMode = blendableImage->getBlendMode();
-					blendableImage->setBlendMode(april::BM_ADD);
+					blendableImage->setBlendMode(april::BlendMode::Add);
 					blendableImage->draw(drawRect, drawColor);
 					blendableImage->setBlendMode(blendMode);
 				}
