@@ -153,8 +153,8 @@ namespace aprilui
 		this->object = NULL;
 		this->animator = NULL;
 		this->dataset = NULL;
-		this->keyCode = april::AK_NONE;
-		this->buttonCode = april::AB_NONE;
+		this->keyCode = april::Key::None;
+		this->buttonCode = april::Button::None;
 		this->userData = NULL;
 	}
 	

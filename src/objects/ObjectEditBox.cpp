@@ -942,99 +942,110 @@ namespace aprilui
 		if (this->dataset == NULL || this->dataset->getFocusedObject() == this)
 		{
 			this->_consumeKey = false;
-			switch (keyCode)
+			if (keyCode == april::Key::Backspace)
 			{
-#if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
-			case april::AK_LEFT:
-				this->_ctrlMode && !this->_altMode ? this->_caretMoveLeftWord() : this->_caretMoveLeft();
-				break;
-			case april::AK_RIGHT:
-				this->_ctrlMode && !this->_altMode ? this->_caretMoveRightWord() : this->_caretMoveRight();
-				break;
-			case april::AK_UP:
-				if (this->multiLine)
-				{
-					this->_caretMoveUp();
-				}
-				break;
-			case april::AK_DOWN:
-				if (this->multiLine)
-				{
-					this->_caretMoveDown();
-				}
-				break;
-#endif
-			case april::AK_BACK:
 				if (!this->_deleteSelected())
 				{
 					this->_ctrlMode && !this->_altMode ? this->_deleteLeftWord() : this->_deleteLeft();
 				}
-				break;
-			case april::AK_DELETE:
+			}
+			else if (keyCode == april::Key::Delete)
+			{
 				if (!this->_deleteSelected())
 				{
 					this->_ctrlMode && !this->_altMode ? this->_deleteRightWord() : this->_deleteRight();
 				}
-				break;
+			}
 #if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
-			case april::AK_HOME:
+			else if (keyCode == april::Key::ArrowLeft)
+			{
+				this->_ctrlMode && !this->_altMode ? this->_caretMoveLeftWord() : this->_caretMoveLeft();
+			}
+			else if (keyCode == april::Key::ArrowRight)
+			{
+				this->_ctrlMode && !this->_altMode ? this->_caretMoveRightWord() : this->_caretMoveRight();
+			}
+			else if (keyCode == april::Key::ArrowUp)
+			{
+				if (this->multiLine)
+				{
+					this->_caretMoveUp();
+				}
+			}
+			else if (keyCode == april::Key::ArrowDown)
+			{
+				if (this->multiLine)
+				{
+					this->_caretMoveDown();
+				}
+			}
+			else if (keyCode == april::Key::Home)
+			{
 				this->_caretMoveStart();
-				break;
-			case april::AK_END:
+			}
+			else if (keyCode == april::Key::End)
+			{
 				this->_caretMoveEnd();
-				break;
-			case april::AK_CONTROL:
-#ifdef _MAC
-			case april::AK_LCOMMAND:
-			case april::AK_RCOMMAND:
-#endif
+			}
+			else if (keyCode == april::Key::Control)
+			{
 				this->_ctrlMode = true;
-				break;
-			case april::AK_MENU:
+			}
+#ifdef _MAC
+			else if (keyCode == april::Key::CommandL || keyCode == april::Key::CommandR)
+			{
+				this->_ctrlMode = true;
+			}
+#endif
+			else if (keyCode == april::Key::Menu)
+			{
 				this->_altMode = true;
-				break;
-			case april::AK_SHIFT:
+			}
+			else if (keyCode == april::Key::Shift)
+			{
 				this->_shiftMode = true;
-				break;
-			case april::AK_A:
+			}
+			else if (keyCode == april::Key::A)
+			{
 				if (this->_ctrlMode && !this->_altMode && this->selectable)
 				{
 					this->_caretMoveEnd();
 					this->setSelectionCount(-this->text.utf8Size());
 					this->_consumeKey = true;
 				}
-				break;
-			case april::AK_X:
+			}
+			else if (keyCode == april::Key::X)
+			{
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_cutText();
 					this->_consumeKey = true;
 				}
-				break;
-			case april::AK_C:
+			}
+			else if (keyCode == april::Key::C)
+			{
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_copyText();
 					this->_consumeKey = true;
 				}
-				break;
-			case april::AK_V:
+			}
+			else if (keyCode == april::Key::V)
+			{
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_pasteText();
 					this->_consumeKey = true;
 				}
-				break;
+			}
 #endif
-			case april::AK_RETURN:
+			else if (keyCode == april::Key::Return)
+			{
 				if (this->multiLine && !this->_ctrlMode && !this->_altMode)
 				{
 					this->_insertChar('\n');
 				}
-				this->triggerEvent(Event::SubmitEditText, april::AK_RETURN);
-				break;
-			default:
-				break;
+				this->triggerEvent(Event::SubmitEditText, april::Key::Return);
 			}
 		}
 		return Label::_keyDown(keyCode);
@@ -1042,23 +1053,23 @@ namespace aprilui
 	
 	bool EditBox::_keyUp(april::Key keyCode)
 	{
-		switch (keyCode)
+		if (keyCode == april::Key::Control)
 		{
-		case april::AK_CONTROL:
-#ifdef _MAC
-		case april::AK_LCOMMAND:
-		case april::AK_RCOMMAND:
-#endif
 			this->_ctrlMode = false;
-			break;
-		case april::AK_MENU:
+		}
+#ifdef _MAC
+		else if (keyCode == april::Key::CommandL || if (keyCode == april::Key::CommandR)
+		{
+			this->_ctrlMode = false;
+		}
+#endif
+		else if (keyCode == april::Key::Menu)
+		{
 			this->_altMode = false;
-			break;
-		case april::AK_SHIFT:
+		}
+		else if (keyCode == april::Key::Shift)
+		{
 			this->_shiftMode = false;
-			break;
-		default:
-			break;
 		}
 		return Label::_keyUp(keyCode);
 	}

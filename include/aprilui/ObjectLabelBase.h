@@ -95,7 +95,7 @@ namespace aprilui
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
-		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
 

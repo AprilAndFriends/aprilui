@@ -188,7 +188,7 @@ namespace aprilui
 						this->_lastPosition = position;
 						foreach (Object*, it, this->childrenObjects)
 						{
-							(*it)->onMouseCancel(april::AK_NONE);
+							(*it)->onMouseCancel(april::Key::None);
 						}
 					}
 					else
