@@ -1058,7 +1058,7 @@ namespace aprilui
 			this->_ctrlMode = false;
 		}
 #ifdef _MAC
-		else if (keyCode == april::Key::CommandL || if (keyCode == april::Key::CommandR)
+		else if (keyCode == april::Key::CommandL || keyCode == april::Key::CommandR)
 		{
 			this->_ctrlMode = false;
 		}
