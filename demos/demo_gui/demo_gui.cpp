@@ -128,7 +128,7 @@ class KeyboardDelegate : public april::KeyboardDelegate
 			dataset->load();
 			dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
 			break;
-		case april::AK_CONTROL:
+		case april::Key::Control:
 			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 			{
 				aprilui::Texture* texture = dataset->getTexture("texture");
