@@ -13,6 +13,7 @@
 
 #include "aprilui.h"
 #include "ObjectContainer.h"
+#include "ObjectScrollArea.h"
 
 namespace aprilui
 {
@@ -39,6 +40,24 @@ namespace aprilui
 	Object* Container::createInstance(chstr name)
 	{
 		return new Container(name);
+	}
+
+	void Container::_updateChildrenHorizontal(float difference)
+	{
+		Object::_updateChildrenHorizontal(difference);
+		if (this->scrollArea != NULL)
+		{
+			this->scrollArea->_updateOobChildren();
+		}
+	}
+
+	void Container::_updateChildrenVertical(float difference)
+	{
+		Object::_updateChildrenVertical(difference);
+		if (this->scrollArea != NULL)
+		{
+			this->scrollArea->_updateOobChildren();
+		}
 	}
 
 }

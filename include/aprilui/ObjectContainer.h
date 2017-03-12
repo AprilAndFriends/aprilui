@@ -46,6 +46,9 @@ namespace aprilui
 		ScrollBarH* scrollBarH;
 		ScrollBarV* scrollBarV;
 
+		void _updateChildrenHorizontal(float difference);
+		void _updateChildrenVertical(float difference);
+
 	};
 }
 

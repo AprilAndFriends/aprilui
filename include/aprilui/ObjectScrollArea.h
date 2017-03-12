@@ -23,10 +23,13 @@
 
 namespace aprilui
 {
+	class Container;
+
 	class apriluiExport ScrollArea : public Object, public ButtonBase
 	{
 		APRILUI_CLONEABLE(ScrollArea);
 	public:
+		friend class Container;
 		friend class ScrollBar;
 		friend class ScrollBarH;
 		friend class ScrollBarV;
@@ -104,6 +107,8 @@ namespace aprilui
 		bool _isScrollableScrollArea(aprilui::Object* object) const;
 
 		void _update(float timeDelta);
+		void _updateChildrenHorizontal(float difference);
+		void _updateChildrenVertical(float difference);
 		void _updateOobChildren();
 
 		void _mouseCancel(april::Key keyCode);
