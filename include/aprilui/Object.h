@@ -369,8 +369,8 @@ namespace aprilui
 		harray<Animator*> dynamicAnimators;
 		april::Color debugColor;
 		
-		virtual void _updateChildrenHorizontal(float difference);
-		virtual void _updateChildrenVertical(float difference);
+		void _updateChildrenHorizontal(float difference);
+		void _updateChildrenVertical(float difference);
 		void _cloneChildren(const harray<Object*>& objects, const harray<Animator*>& animators);
 
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;

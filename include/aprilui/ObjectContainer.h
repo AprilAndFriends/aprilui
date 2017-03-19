@@ -40,14 +40,13 @@ namespace aprilui
 		inline hstr getClassName() const { return "Container"; }
 
 		static Object* createInstance(chstr name);
+
+		void notifyEvent(chstr type, EventArgs* args);
 		
 	protected:
 		ScrollArea* scrollArea;
 		ScrollBarH* scrollBarH;
 		ScrollBarV* scrollBarV;
-
-		void _updateChildrenHorizontal(float difference);
-		void _updateChildrenVertical(float difference);
 
 	};
 }

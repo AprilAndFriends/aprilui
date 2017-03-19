@@ -42,21 +42,16 @@ namespace aprilui
 		return new Container(name);
 	}
 
-	void Container::_updateChildrenHorizontal(float difference)
+	void Container::notifyEvent(chstr type, EventArgs* args)
 	{
-		Object::_updateChildrenHorizontal(difference);
-		if (this->scrollArea != NULL)
+		Object::notifyEvent(type, args);
+		if (type == Event::Resized)
 		{
-			this->scrollArea->_updateOobChildren();
-		}
-	}
-
-	void Container::_updateChildrenVertical(float difference)
-	{
-		Object::_updateChildrenVertical(difference);
-		if (this->scrollArea != NULL)
-		{
-			this->scrollArea->_updateOobChildren();
+			if (this->scrollArea != NULL)
+			{
+				this->scrollArea->snapScrollOffset();
+				this->scrollArea->_updateOobChildren();
+			}
 		}
 	}
 

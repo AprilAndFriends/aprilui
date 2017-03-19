@@ -276,18 +276,6 @@ namespace aprilui
 		}
 	}
 
-	void ScrollArea::_updateChildrenHorizontal(float difference)
-	{
-		Object::_updateChildrenHorizontal(difference);
-		this->_updateOobChildren();
-	}
-
-	void ScrollArea::_updateChildrenVertical(float difference)
-	{
-		Object::_updateChildrenVertical(difference);
-		this->_updateOobChildren();
-	}
-
 	void ScrollArea::_updateOobChildren()
 	{
 		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake))
@@ -419,7 +407,8 @@ namespace aprilui
 		}
 		else if (type == Event::Resized)
 		{
-			this->setScrollOffset(this->getScrollOffset());
+			this->snapScrollOffset();
+			this->_updateOobChildren();
 		}
 	}
 
