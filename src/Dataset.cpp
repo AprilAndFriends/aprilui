@@ -951,7 +951,7 @@ namespace aprilui
 		this->filePath = originalFilePath;
 	}
 	
-	void Dataset::parseGlobalInclude(chstr path)
+	void Dataset::parseGlobalInclude(chstr path, bool optional)
 	{
 		int nParsed = 0;
 		hstr originalFilePath = this->filePath;
@@ -964,7 +964,7 @@ namespace aprilui
 		}
 		else
 		{
-			if (!hrdir::exists(this->filePath))
+			if (!optional && !hrdir::exists(this->filePath))
 			{
 				throw Exception(hsprintf("Failed parsing dataset include dir '%s' (included from '%s'), dir not found.", this->filePath.cStr(), originalFilePath.cStr()));
 			}
@@ -1076,7 +1076,7 @@ namespace aprilui
 				if		((*node)->name == "Texture")		this->parseTexture(*node);
 				else if ((*node)->name == "CompositeImage")	this->parseCompositeImage(*node);
 				else if ((*node)->name == "Style")			this->parseStyle(*node);
-				else if	((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), (*node)->pstr("path"), false));
+				else if ((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), (*node)->pstr("path"), false), (*node)->pbool("optional", false));
 				else if	((*node)->name == "TextureGroup")	this->parseTextureGroup(*node);
 				else if ((*node)->name == "Object" || objectFactories.hasKey((*node)->name))
 				{

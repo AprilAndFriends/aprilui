@@ -217,7 +217,7 @@ namespace aprilui
 		void focus(Object* object);
 		void removeFocus();
 
-		void parseGlobalInclude(chstr path);
+		void parseGlobalInclude(chstr path, bool optional = false);
 		void parseGlobalIncludeFile(chstr filename);
 		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
