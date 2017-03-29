@@ -953,24 +953,34 @@ namespace aprilui
 	
 	void Dataset::parseGlobalInclude(chstr path)
 	{
+		int nParsed = 0;
 		hstr originalFilePath = this->filePath;
 		this->filePath = this->_makeFilePath(path);
 		if (!path.contains("*"))
 		{
+			nParsed = 1;
 			this->readFile(path);
 			this->filePath = originalFilePath;
-			return;
 		}
-		hstr extension = hrdir::baseName(path).replaced("*", "");
-		harray<hstr> contents = hrdir::files(this->filePath, true).sorted();
-		foreach (hstr, it, contents)
+		else
 		{
-			if ((*it).endsWith(extension))
+			if (!hrdir::exists(this->filePath))
 			{
-				this->readFile((*it));
+				throw Exception(hsprintf("Failed parsing dataset include dir '%s' (included from '%s'), dir not found.", this->filePath.cStr(), originalFilePath.cStr()));
+			}
+			hstr extension = hrdir::baseName(path).replaced("*", "");
+			harray<hstr> contents = hrdir::files(this->filePath, true).sorted();
+			foreach (hstr, it, contents)
+			{
+				if ((*it).endsWith(extension))
+				{
+					this->readFile((*it));
+					nParsed++;
+				}
 			}
 		}
 		this->filePath = originalFilePath;
+		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", path.cStr(), nParsed);
 	}
 	
 	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
