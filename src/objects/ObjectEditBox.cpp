@@ -251,7 +251,7 @@ namespace aprilui
 		hstr newValue = value;
 		if (newValue.size() > 0 && this->filter.size() > 0)
 		{
-			std::basic_string<unsigned int> ustr = newValue.uStr();
+			std::ustring ustr = newValue.uStr();
 			harray<unsigned int> uText(ustr.c_str(), (int)ustr.size());
 			ustr = this->filter.uStr();
 			harray<unsigned int> uFilter(ustr.c_str(), (int)ustr.size());
@@ -1429,8 +1429,8 @@ namespace aprilui
 			atres::Font* font = atres::renderer->getFont(this->font);
 			if (font != NULL)
 			{
-				std::basic_string<unsigned int> uString = string.uStr();
-				std::basic_string<unsigned int> uFilter = this->filter.uStr();
+				std::ustring uString = string.uStr();
+				std::ustring uFilter = this->filter.uStr();
 				for_itert (size_t, i, 0, uString.size())
 				{
 					if (font->hasCharacter(uString[i]) && (this->filter.size() == 0 || uFilter.find_first_of(uString[i]) != std::string::npos))

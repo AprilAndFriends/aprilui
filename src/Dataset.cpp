@@ -1825,7 +1825,7 @@ namespace aprilui
 	
 	hstr Dataset::_parseCompositeTextKey(chstr key)
 	{
-		ustr uChars = key.uStr();
+		std::ustring uChars = key.uStr();
 		if (uChars.size() == 0 || uChars[0] != '{')
 		{
 			if ((int)uChars.find_first_of('{') >= 0 || (int)uChars.find_first_of('}') >= 0)
@@ -1846,9 +1846,9 @@ namespace aprilui
 			hlog::errorf(logTag, "Could not parse formatted key '%s'.", key.cStr());
 			return key;
 		}
-		harray<ustr> uArgs;
-		ustr uFormat = uChars.substr(1, index - 1);
-		ustr uArgString = uChars.substr(index + 1, uChars.size() - index - 1);
+		harray<std::ustring> uArgs;
+		std::ustring uFormat = uChars.substr(1, index - 1);
+		std::ustring uArgString = uChars.substr(index + 1, uChars.size() - index - 1);
 		// trimming
 		if (uArgString.size() > 0)
 		{
@@ -1873,32 +1873,32 @@ namespace aprilui
 		// trimming finished
 		if (!this->_processCompositeTextKeyArgs(uArgString, uArgs))
 		{
-			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
-			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
+			hstr format = hstr::fromUnicode(uFormat.c_str());
+			hstr argString = hstr::fromUnicode(uArgString.c_str());
 			hlog::writef(logTag, "- while processing args: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
-		ustr uPreprocessedFormat;
-		harray<ustr> uPreprocessedArgs;
+		std::ustring uPreprocessedFormat;
+		harray<std::ustring> uPreprocessedArgs;
 		if (!this->_preprocessCompositeTextKeyFormat(uFormat, uArgs, uPreprocessedFormat, uPreprocessedArgs))
 		{
-			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
-			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
+			hstr format = hstr::fromUnicode(uFormat.c_str());
+			hstr argString = hstr::fromUnicode(uArgString.c_str());
 			hlog::writef(logTag, "- while preprocessing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		hstr result;
 		if (!this->_processCompositeTextKeyFormat(uPreprocessedFormat, uPreprocessedArgs, result))
 		{
-			hstr format = hstr::fromUnicode(harray<unsigned int>(uFormat.c_str(), (int)uFormat.size()));
-			hstr argString = hstr::fromUnicode(harray<unsigned int>(uArgString.c_str(), (int)uArgString.size()));
+			hstr format = hstr::fromUnicode(uFormat.c_str());
+			hstr argString = hstr::fromUnicode(uArgString.c_str());
 			hlog::writef(logTag, "- while processing format: '%s' with args '%s'.", format.cStr(), argString.cStr());
 			return key;
 		}
 		return result;
 	}
 
-	bool Dataset::_processCompositeTextKeyArgs(ustr uArgString, harray<ustr>& uArgs)
+	bool Dataset::_processCompositeTextKeyArgs(std::ustring uArgString, harray<std::ustring>& uArgs)
 	{
 		uArgs.clear();
 		// splittings args
@@ -1933,13 +1933,13 @@ namespace aprilui
 		return true;
 	}
 
-	bool Dataset::_preprocessCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, ustr& uPreprocessedFormat, harray<ustr>& uPreprocessedArgs)
+	bool Dataset::_preprocessCompositeTextKeyFormat(std::ustring uFormat, harray<std::ustring> uArgs, std::ustring& uPreprocessedFormat, harray<std::ustring>& uPreprocessedArgs)
 	{
 		uPreprocessedFormat.clear();
 		uPreprocessedArgs.clear();
 		// preprocessing of format string and args
 		int index;
-		ustr uArg;
+		std::ustring uArg;
 		harray<int> indices;
 		while (uFormat.size() > 0)
 		{
@@ -1998,10 +1998,10 @@ namespace aprilui
 		return true;
 	}
 
-	bool Dataset::_processCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, hstr& result)
+	bool Dataset::_processCompositeTextKeyFormat(std::ustring uFormat, harray<std::ustring> uArgs, hstr& result)
 	{
 		result = "";
-		ustr uResult;
+		std::ustring uResult;
 		// preprocessing of format string and args
 		harray<int> indices;
 		if (!this->_getCompositeTextKeyFormatIndices(uFormat, indices))
@@ -2038,7 +2038,7 @@ namespace aprilui
 		return true;
 	}
 
-	bool Dataset::_getCompositeTextKeyFormatIndices(ustr uFormat, harray<int>& indices)
+	bool Dataset::_getCompositeTextKeyFormatIndices(std::ustring uFormat, harray<int>& indices)
 	{
 		indices.clear();
 		// finding formatting indices
@@ -2075,7 +2075,7 @@ namespace aprilui
 	}
 
 
-	harray<Dataset::ustr> Dataset::_getArgEntries(ustr uString)
+	harray<std::ustring> Dataset::_getArgEntries(std::ustring uString)
 	{
 		harray<hstr> keys;
 		int index;
@@ -2091,7 +2091,7 @@ namespace aprilui
 		}
 		keys += hstr::fromUnicode(uString.c_str());
 		keys.removeAll("");
-		harray<ustr> result;
+		harray<std::ustring> result;
 		foreach (hstr, it, keys)
 		{
 			result += this->getTextEntry(*it).uStr();

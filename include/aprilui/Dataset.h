@@ -268,15 +268,13 @@ namespace aprilui
 		hstr _makeTextsPath();
 		bool _findTextEntry(chstr textKey, hstr* text);
 		
-		typedef std::basic_string<unsigned int> ustr;
-		
 		hstr _parseCompositeTextKey(chstr key);
-		bool _processCompositeTextKeyArgs(ustr uArgString, harray<ustr>& uArgs);
-		bool _preprocessCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, ustr& uPreprocessedFormat, harray<ustr>& uPreprocessedArgs);
-		bool _processCompositeTextKeyFormat(ustr uFormat, harray<ustr> uArgs, hstr& result);
+		bool _processCompositeTextKeyArgs(std::ustring uArgString, harray<std::ustring>& uArgs);
+		bool _preprocessCompositeTextKeyFormat(std::ustring uFormat, harray<std::ustring> uArgs, std::ustring& uPreprocessedFormat, harray<std::ustring>& uPreprocessedArgs);
+		bool _processCompositeTextKeyFormat(std::ustring uFormat, harray<std::ustring> uArgs, hstr& result);
 		/// @note The returned indices count the positions relative to the last format tag (minus the 2 characters of the format tag itself), not from the beginning of the string
-		bool _getCompositeTextKeyFormatIndices(ustr uFormat, harray<int>& indices);
-		harray<ustr> _getArgEntries(ustr uString);
+		bool _getCompositeTextKeyFormatIndices(std::ustring uFormat, harray<int>& indices);
+		harray<std::ustring> _getArgEntries(std::ustring uString);
 		/// @note This method is here to silence linker warnings on LLVM compiler.
 		void _throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName);
 
