@@ -53,6 +53,7 @@ namespace aprilui
 		{
 			this->name = hrdir::baseName(hresource::withoutExtension(this->filename));
 		}
+		this->textsPaths += aprilui::getDefaultTextsPath();
 		this->loaded = false;
 		aprilui::_registerDataset(this->name, this);
 	}
@@ -68,6 +69,12 @@ namespace aprilui
 			}
 			this->unload();
 		}
+	}
+
+	void Dataset::setTextsPath(chstr value)
+	{
+		this->textsPaths.clear();
+		this->textsPaths += value;
 	}
 
 	bool Dataset::isLoaded() const
@@ -1094,7 +1101,10 @@ namespace aprilui
 	{
 		if (this->filename != "")
 		{
-			this->_loadTexts(this->_makeTextsPath());
+			foreach (hstr, it, this->textsPaths)
+			{
+				this->_loadTexts(this->_makeTextsPath(*it));
+			}
 			try
 			{
 				this->readFile(this->filename);
@@ -1112,9 +1122,9 @@ namespace aprilui
 		this->triggerEvent(aprilui::Event::DatasetLoaded);
 	}
 
-	hstr Dataset::_makeTextsPath()
+	hstr Dataset::_makeTextsPath(chstr textsPath)
 	{
-		hstr filepathPrefix = hrdir::joinPath(this->filePath, (this->textsPath != "" ? this->textsPath : aprilui::getDefaultTextsPath()), false);
+		hstr filepathPrefix = hrdir::joinPath(this->filePath, textsPath, false);
 		hstr filepath = hrdir::normalize(hrdir::joinPath(filepathPrefix, aprilui::getLocalization(), false));
 		if (!hrdir::exists(filepath))
 		{
@@ -1792,7 +1802,10 @@ namespace aprilui
 	void Dataset::reloadTexts()
 	{
 		this->texts.clear();
-		this->_loadTexts(this->_makeTextsPath());
+		foreach (hstr, it, this->textsPaths)
+		{
+			this->_loadTexts(this->_makeTextsPath(*it));
+		}
 	}
 	
 	void Dataset::reloadTextures()

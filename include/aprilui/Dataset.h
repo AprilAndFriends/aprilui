@@ -54,7 +54,8 @@ namespace aprilui
 		
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(hstr, filePath, FilePath);
-		HL_DEFINE_GETSET(hstr, textsPath, TextsPath);
+		HL_DEFINE_GETSET(harray<hstr>, textsPaths, TextsPaths);
+		void setTextsPath(chstr value); // useful when using only one text path
 		HL_DEFINE_GET(Object*, focusedObject, FocusedObject);
 		HL_DEFINE_GETSET(Object*, root, Root);
 		inline hmap<hstr, Object*>& getObjects() { return this->objects; }
@@ -222,6 +223,8 @@ namespace aprilui
 		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
 
+		DEPRECATED_ATTRIBUTE hstr getTextsPath() const { return (this->textsPaths.size() > 0 ? this->textsPaths.first() : ""); }
+
 	protected:
 		struct QueuedCallback
 		{
@@ -232,7 +235,7 @@ namespace aprilui
 		hstr name;
 		hstr filename;
 		hstr filePath;
-		hstr textsPath;
+		harray<hstr> textsPaths;
 		bool loaded;
 		Object* focusedObject;
 		Object* root;
@@ -265,7 +268,7 @@ namespace aprilui
 		void _loadTextResource(hstream& data, hmap<hstr, hstr>& textsMap);
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
 		hstr _makeLocalizedTextureName(chstr filename);
-		hstr _makeTextsPath();
+		hstr _makeTextsPath(chstr textsPath);
 		bool _findTextEntry(chstr textKey, hstr* text);
 		
 		hstr _parseCompositeTextKey(chstr key);
