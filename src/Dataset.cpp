@@ -412,14 +412,12 @@ namespace aprilui
 			BaseImage* image = NULL;
 			hstr name;
 			grect rect;
-			hmap<hstr, hstr> childProperties;
 			foreach_xmlnode (child, node)
 			{
-				childProperties = (*child)->properties;
-				if ((*child)->name == "Image" && (childProperties.hasKey("tile") || childProperties.hasKey("tile_w") || childProperties.hasKey("tile_h"))) // DEPRECATED (this entire block)
+				if ((*child)->name == "Image" && ((*child)->properties.hasKey("tile") || (*child)->properties.hasKey("tile_w") || (*child)->properties.hasKey("tile_h"))) // DEPRECATED (this entire block)
 				{
 					hlog::warn(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
-					name = childProperties["name"];
+					name = (*child)->properties["name"];
 					if (prefixImages)
 					{
 						name = textureName + "/" + name;
@@ -430,9 +428,9 @@ namespace aprilui
 					}
 					aprilui::_readRectNode(rect, (*child));
 					gvec2 tile;
-					if (childProperties.hasKey("tile"))
+					if ((*child)->properties.hasKey("tile"))
 					{
-						tile = april::hstrToGvec2(childProperties["tile"]);
+						tile = april::hstrToGvec2((*child)->properties["tile"]);
 					}
 					else
 					{
@@ -464,15 +462,17 @@ namespace aprilui
 					}
 					this->images[name] = image;
 					image->dataset = this;
-					childProperties.removeKeys(((_ignoredStandardProperties + "tile") + "tile_w") + "tile_h");
-					foreach_m (hstr, it, childProperties)
+					foreach_m (hstr, it, (*child)->properties)
 					{
-						image->setProperty(it->first, it->second);
+						if (!_ignoredStandardProperties.has(it->first) && it->first != "tile" && it->first != "tile_w" && it->first != "tile_h")
+						{
+							image->setProperty(it->first, it->second);
+						}
 					}
 				}
 				else
 				{
-					name = childProperties["name"];
+					name = (*child)->properties["name"];
 					if (prefixImages)
 					{
 						name = textureName + "/" + name;
@@ -500,10 +500,12 @@ namespace aprilui
 					}
 					this->images[name] = image;
 					image->dataset = this;
-					childProperties.removeKeys(_ignoredStandardProperties);
-					foreach_m (hstr, it, childProperties)
+					foreach_m (hstr, it, (*child)->properties)
 					{
-						image->setProperty(it->first, it->second);
+						if (!_ignoredStandardProperties.has(it->first))
+						{
+							image->setProperty(it->first, it->second);
+						}
 					}
 				}
 			}
@@ -843,11 +845,12 @@ namespace aprilui
 			}
 		}
 		hstr name;
-		hmap<hstr, hstr> properties = node->properties;
-		properties.removeKeys(_ignoredStyleProperties);
-		foreach_m (hstr, it, properties)
+		foreach_m (hstr, it, node->properties)
 		{
-			baseObject->setProperty(it->first, it->second);
+			if (!_ignoredStyleProperties.has(it->first))
+			{
+				baseObject->setProperty(it->first, it->second);
+			}
 		}
 		if (isObject)
 		{
@@ -884,32 +887,28 @@ namespace aprilui
 		hstr typeName;
 		hstr objectName;
 		hstr newName;
-		hmap<hstr, hstr> childProperties;
 		foreach_xmlnode (child, node)
 		{
 			if ((*child)->name == "Property")
 			{
 				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 				{
-					childProperties = (*child)->properties;
-					if (childProperties.hasKey("object"))
+					if ((*child)->properties.hasKey("object"))
 					{
-						objectName = newNamePrefix + childProperties["object"] + newNameSuffix;
+						objectName = newNamePrefix + (*child)->properties["object"] + newNameSuffix;
 						descendant = (includeRoot->getName() == objectName ? includeRoot : includeRoot->findDescendantByName(objectName));
 						if (descendant != NULL)
 						{
 							typeName = "";
-							if (childProperties.hasKey("type"))
+							if ((*child)->properties.hasKey("type"))
 							{
-								typeName = childProperties["type"];
-								childProperties.removeKey("type");
+								typeName = (*child)->properties["type"];
 							}
 							if (typeName == "" || descendant->getClassName() == typeName)
 							{
-								childProperties.removeKey("object");
-								if (childProperties.hasKey("name"))
+								if ((*child)->properties.hasKey("name"))
 								{
-									newName = newNamePrefix + childProperties["name"] + newNameSuffix;
+									newName = newNamePrefix + (*child)->properties["name"] + newNameSuffix;
 									if (!this->hasObject(newName))
 									{
 										this->unregisterObjects(descendant);
@@ -919,13 +918,15 @@ namespace aprilui
 									else
 									{
 										hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
-											childProperties["name"].cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
+											(*child)->properties["name"].cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
 									}
-									childProperties.removeKey("name");
 								}
-								foreach_m (hstr, it, childProperties)
+								foreach_m (hstr, it, (*child)->properties)
 								{
-									descendant->setProperty(it->first, it->second);
+									if (it->first != "type" && it->first != "object" && it->first != "name")
+									{
+										descendant->setProperty(it->first, it->second);
+									}
 								}
 							}
 							else if (typeName != "")
