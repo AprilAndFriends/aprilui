@@ -23,7 +23,6 @@
 		7F38C6A512096793002B5134 /* AnimatorFrameAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6A712096793002B5134 /* AnimatorRotator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68D12096793002B5134 /* AnimatorRotator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6A912096793002B5134 /* ObjectCallbackObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C68F12096793002B5134 /* ObjectCallbackObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F38C6AB12096793002B5134 /* ObjectColoredQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69112096793002B5134 /* ObjectColoredQuad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6AD12096793002B5134 /* ObjectEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69312096793002B5134 /* ObjectEditBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6AE12096793002B5134 /* ObjectImageBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69412096793002B5134 /* ObjectImageBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F38C6AF12096793002B5134 /* ObjectImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F38C69512096793002B5134 /* ObjectImageButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -354,7 +353,6 @@
 		7F38C68B12096793002B5134 /* AnimatorFrameAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorFrameAnimation.h; path = include/aprilui/AnimatorFrameAnimation.h; sourceTree = "<group>"; };
 		7F38C68D12096793002B5134 /* AnimatorRotator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatorRotator.h; path = include/aprilui/AnimatorRotator.h; sourceTree = "<group>"; };
 		7F38C68F12096793002B5134 /* ObjectCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectCallbackObject.h; path = include/aprilui/ObjectCallbackObject.h; sourceTree = "<group>"; };
-		7F38C69112096793002B5134 /* ObjectColoredQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectColoredQuad.h; path = include/aprilui/ObjectColoredQuad.h; sourceTree = "<group>"; };
 		7F38C69312096793002B5134 /* ObjectEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectEditBox.h; path = include/aprilui/ObjectEditBox.h; sourceTree = "<group>"; };
 		7F38C69412096793002B5134 /* ObjectImageBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectImageBox.h; path = include/aprilui/ObjectImageBox.h; sourceTree = "<group>"; };
 		7F38C69512096793002B5134 /* ObjectImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectImageButton.h; path = include/aprilui/ObjectImageButton.h; sourceTree = "<group>"; };
@@ -830,7 +828,6 @@
 				7FC8041B11EC721E00851062 /* Objects.h */,
 				7FA3014512B647E200F71E5E /* ObjectButtonBase.h */,
 				7F38C68F12096793002B5134 /* ObjectCallbackObject.h */,
-				7F38C69112096793002B5134 /* ObjectColoredQuad.h */,
 				7F1B524E12E471B800E958D8 /* ObjectContainer.h */,
 				7F38C69312096793002B5134 /* ObjectEditBox.h */,
 				7F38C69412096793002B5134 /* ObjectImageBox.h */,
@@ -922,7 +919,6 @@
 				B45603DE1B56820F00DF8047 /* AnimatorPivotMoverX.h in Headers */,
 				7F38C6A712096793002B5134 /* AnimatorRotator.h in Headers */,
 				7F38C6A912096793002B5134 /* ObjectCallbackObject.h in Headers */,
-				7F38C6AB12096793002B5134 /* ObjectColoredQuad.h in Headers */,
 				7F38C6AD12096793002B5134 /* ObjectEditBox.h in Headers */,
 				7F38C6AE12096793002B5134 /* ObjectImageBox.h in Headers */,
 				7F38C6AF12096793002B5134 /* ObjectImageButton.h in Headers */,
