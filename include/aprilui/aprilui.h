@@ -25,13 +25,16 @@
 
 #define APRILUI_REGISTER_OBJECT_TYPE(name) aprilui::registerObjectFactory(name("").getClassName(), &name::createInstance)
 #define APRILUI_REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(name("").getClassName(), &name::createInstance)
+#define APRILUI_REGISTER_IMAGE_TYPE(name) aprilui::registerImageFactory(name(NULL, "", grect()).getClassName(), &name::createInstance)
 
 namespace aprilui
 {
 	class Animator;
 	class BaseImage;
 	class Dataset;
+	class Image;
 	class Object;
+	class Texture;
 
 	static const char SeparatorParameter = ',';
 	
@@ -69,21 +72,26 @@ namespace aprilui
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr));
 	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));
+	apriluiFnExport void registerImageFactory(chstr typeName, Image* (*factory)(Texture*, chstr, cgrect));
 	apriluiFnExport bool hasObjectFactory(chstr typeName);
 	apriluiFnExport bool hasAnimatorFactory(chstr typeName);
+	apriluiFnExport bool hasImageFactory(chstr typeName);
 	apriluiFnExport void unregisterObjectFactory(chstr typeName);
 	apriluiFnExport void unregisterAnimatorFactory(chstr typeName);
+	apriluiFnExport void unregisterImageFactory(chstr typeName);
 	apriluiFnExport const hmap<hstr, Object* (*)(chstr)>& getObjectFactories();
 	apriluiFnExport const hmap<hstr, Animator* (*)(chstr)>& getAnimatorFactories();
+	apriluiFnExport const hmap<hstr, Image* (*)(Texture*, chstr, cgrect)>& getImageFactories();
 
 	apriluiFnExport Object* createObject(chstr type, chstr name);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
-	
-	apriluiFnExport gvec2 transformWindowPoint(gvec2 point);
-	apriluiFnExport void updateViewportPosition(grect newViewport, bool updateOrthoProjection = true);
+	apriluiFnExport Image* createImage(chstr type, Texture* texture, chstr name, cgrect source);
+
+	apriluiFnExport gvec2 transformWindowPoint(cgvec2 point);
+	apriluiFnExport void updateViewportPosition(cgrect newViewport, bool updateOrthoProjection = true);
 	apriluiFnExport void updateCursorPosition();
 	apriluiFnExport gvec2 getCursorPosition();
-	apriluiFnExport void setCursorPosition(gvec2 position);
+	apriluiFnExport void setCursorPosition(cgvec2 position);
 	apriluiFnExport void setCursorImage(BaseImage* image);
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
@@ -123,9 +131,5 @@ namespace aprilui
 	apriluiFnExport void onButtonDown(april::Button buttonCode);
 	apriluiFnExport void onButtonUp(april::Button buttonCode);
 
-	DEPRECATED_ATTRIBUTE apriluiFnExport bool getDefaultDynamicLoading();
-	DEPRECATED_ATTRIBUTE apriluiFnExport void setDefaultDynamicLoading(bool value);
-
 }
-
 #endif

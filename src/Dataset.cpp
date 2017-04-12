@@ -416,7 +416,7 @@ namespace aprilui
 			{
 				if ((*child)->name == "Image" && ((*child)->properties.hasKey("tile") || (*child)->properties.hasKey("tile_w") || (*child)->properties.hasKey("tile_h"))) // DEPRECATED (this entire block)
 				{
-					hlog::warn(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead.");
+					hlog::error(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead. THIS FEATURE WILL BE REMOVED SOON!");
 					name = (*child)->properties["name"];
 					if (prefixImages)
 					{
@@ -482,22 +482,11 @@ namespace aprilui
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
 					aprilui::_readRectNode(rect, (*child));
-					if ((*child)->name == "Image")
-					{
-						image = new Image(texture, name, rect);
-					}
-					else if ((*child)->name == "TileImage")
-					{
-						image = new TileImage(texture, name, rect);
-					}
-					else if ((*child)->name == "SkinImage")
-					{
-						image = new SkinImage(texture, name, rect);
-					}
-					else
+					if (!aprilui::hasImageFactory((*child)->name))
 					{
 						__THROW_EXCEPTION(XMLUnknownClassException((*child)->name, (*child)), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
 					}
+					image = aprilui::createImage((*child)->name, texture, name, rect);
 					this->images[name] = image;
 					image->dataset = this;
 					foreach_m (hstr, it, (*child)->properties)

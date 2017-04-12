@@ -24,7 +24,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> Image::_propertyDescriptions;
 
-	Image::Image(Texture* texture, chstr name, grect source) : BaseImage(name)
+	Image::Image(Texture* texture, chstr name, cgrect source) : BaseImage(name)
 	{
 		this->texture = texture;
 		this->srcRect = source;
@@ -37,24 +37,6 @@ namespace aprilui
 		this->invertY = false;
 	}
 
-	// DEPRECATED
-	Image::Image(const Image& other, chstr name) : BaseImage(other)
-	{
-		this->texture = other.texture;
-		this->srcRect = other.srcRect;
-		this->color = other.color;
-		this->blendMode = other.blendMode;
-		this->colorMode = other.colorMode;
-		this->colorModeFactor = other.colorModeFactor;
-		this->rotated = other.rotated;
-		this->invertX = other.invertX;
-		this->invertY = other.invertY;
-		for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
-		{
-			this->vertices[i] = other.vertices[i];
-		}
-	}
-	
 	Image::Image(const Image& other) : BaseImage(other)
 	{
 		this->texture = other.texture;
@@ -75,6 +57,11 @@ namespace aprilui
 	Image::~Image()
 	{
 	}
+
+	Image* Image::createInstance(Texture* texture, chstr name, cgrect source)
+	{
+		return new Image(texture, name, source);
+	}
 	
 	harray<PropertyDescription> Image::getPropertyDescriptions() const
 	{
@@ -94,7 +81,7 @@ namespace aprilui
 		return (Image::_propertyDescriptions + BaseImage::getPropertyDescriptions());
 	}
 
-	void Image::setSrcRect(grect value)
+	void Image::setSrcRect(cgrect value)
 	{
 		if (this->srcRect != value)
 		{
@@ -139,7 +126,7 @@ namespace aprilui
 		}
 	}
 
-	void Image::setSrcPosition(gvec2 value)
+	void Image::setSrcPosition(cgvec2 value)
 	{
 		if (this->srcRect.getPosition() != value)
 		{

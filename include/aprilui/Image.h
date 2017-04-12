@@ -35,16 +35,18 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(Image);
 	public:
-		Image(Texture* texture, chstr name, grect source);
+		Image(Texture* texture, chstr name, cgrect source);
 		~Image();
 		inline hstr getClassName() const { return "Image"; }
-		
+
+		static Image* createInstance(Texture* texture, chstr name, cgrect source);
+
 		virtual void draw(grect rect, april::Color color = april::Color::White);
 		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White);
 		
 		HL_DEFINE_GET(Texture*, texture, Texture);
 		HL_DEFINE_GET(grect, srcRect, SrcRect);
-		void setSrcRect(grect value);
+		void setSrcRect(cgrect value);
 		HL_DEFINE_GET(float, srcRect.x, SrcX);
 		void setSrcX(float value);
 		HL_DEFINE_GET(float, srcRect.y, SrcY);
@@ -54,7 +56,7 @@ namespace aprilui
 		HL_DEFINE_GET(float, srcRect.h, SrcHeight);
 		void setSrcHeight(float value);
 		inline gvec2 getSrcPosition() const { return this->srcRect.getPosition(); }
-		void setSrcPosition(gvec2 value);
+		void setSrcPosition(cgvec2 value);
 		void setSrcPosition(float x, float y);
 		inline gvec2 getSrcSize() const { return this->srcRect.getSize(); }
 		void setSrcSize(gvec2 value);
@@ -76,10 +78,6 @@ namespace aprilui
 
 		void tryLoadTextureCoordinates();
 
-		DEPRECATED_ATTRIBUTE Image(const Image& other, chstr name);
-		DEPRECATED_ATTRIBUTE inline bool isVertical() const { return this->rotated; }
-		DEPRECATED_ATTRIBUTE inline void setVertical(bool value) { this->rotated = value; }
-		
 	protected:
 		Texture* texture;
 		grect srcRect;

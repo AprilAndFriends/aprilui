@@ -43,7 +43,7 @@ namespace aprilui
 	harray<PropertyDescription> SkinImage::_propertyDescriptions;
 	int SkinImage::maxRectCache = 30;
 
-	SkinImage::SkinImage(Texture* texture, chstr name, grect source) : Image(texture, name, source)
+	SkinImage::SkinImage(Texture* texture, chstr name, cgrect source) : Image(texture, name, source)
 	{
 		this->_skinCoordinatesCalculated = false;
 		this->tiledBorders = false;
@@ -59,6 +59,11 @@ namespace aprilui
 
 	SkinImage::~SkinImage()
 	{
+	}
+
+	Image* SkinImage::createInstance(Texture* texture, chstr name, cgrect source)
+	{
+		return new SkinImage(texture, name, source);
 	}
 
 	harray<PropertyDescription> SkinImage::getPropertyDescriptions() const
@@ -77,7 +82,7 @@ namespace aprilui
 		return (SkinImage::_propertyDescriptions + Image::getPropertyDescriptions());
 	}
 
-	void SkinImage::setSkinRect(grect value)
+	void SkinImage::setSkinRect(cgrect value)
 	{
 		if (this->skinRect != value)
 		{
@@ -122,7 +127,7 @@ namespace aprilui
 		}
 	}
 
-	void SkinImage::setSkinPosition(gvec2 value)
+	void SkinImage::setSkinPosition(cgvec2 value)
 	{
 		if (this->skinRect.getPosition() != value)
 		{
@@ -140,7 +145,7 @@ namespace aprilui
 		}
 	}
 
-	void SkinImage::setSkinSize(gvec2 value)
+	void SkinImage::setSkinSize(cgvec2 value)
 	{
 		if (this->skinRect.getSize() != value)
 		{
@@ -224,9 +229,9 @@ namespace aprilui
 		bool found = false;
 		foreach (RectVertices, it, this->_rectVertices)
 		{
-			if ((*it).rect == rect)
+			if ((*it).first == rect)
 			{
-				this->_vertices = (*it).vertices;
+				this->_vertices = (*it).second;
 				found = true;
 				break;
 			}
@@ -461,10 +466,7 @@ namespace aprilui
 					CREATE_TRIANGLE(this->_vertices, right, 10, 11, 14, 15);
 				}
 			}
-			RectVertices rectVertices;
-			rectVertices.rect = rect;
-			rectVertices.vertices = this->_vertices;
-			this->_rectVertices += rectVertices;
+			this->_rectVertices += RectVertices(rect, this->_vertices);
 		}
 		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
 	}

@@ -13,6 +13,7 @@
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <atres/atres.h>
+#include <gtypes/Rectangle.h>
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hltypesUtil.h>
@@ -27,22 +28,23 @@
 #include "Exception.h"
 #include "Image.h"
 #include "Objects.h"
+#include "SkinImage.h"
+#include "Texture.h"
+#include "TileImage.h"
 
 #define REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(#name, &Animators::name::createInstance)
 
 namespace aprilui
 {
-	bool getDefaultDynamicLoading() { return isDefaultManagedTextures(); } // DEPRECATED
-	void setDefaultDynamicLoading(bool value) { setDefaultManagedTextures(value); } // DEPRECATED
-
 	hstr logTag = "aprilui";
 
-	static hversion version(4, 1, 0);
+	static hversion version(4, 2, 0);
 
 	static bool registerLock = false;
 	static hmap<hstr, Dataset*> gDatasets;
 	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
+	static hmap<hstr, Image* (*)(Texture*, chstr, cgrect)> gImageFactories;
 	static BaseImage* gCursor = NULL;
 	static bool cursorVisible = true;
 	static gvec2 cursorPosition;
@@ -127,6 +129,10 @@ namespace aprilui
 		REGISTER_ANIMATOR_TYPE(TileScrollerX);
 		REGISTER_ANIMATOR_TYPE(TileScrollerY);
 		REGISTER_ANIMATOR_TYPE(ZOrderChanger);
+
+		APRILUI_REGISTER_IMAGE_TYPE(Image);
+		APRILUI_REGISTER_IMAGE_TYPE(SkinImage);
+		APRILUI_REGISTER_IMAGE_TYPE(TileImage);
 	}
 	
 	void destroy()
@@ -322,6 +328,15 @@ namespace aprilui
 		gAnimatorFactories[typeName] = factory;
 	}
 	
+	void registerImageFactory(chstr typeName, Image* (*factory)(Texture*, chstr, cgrect))
+	{
+		if (gImageFactories.hasKey(typeName))
+		{
+			__THROW_EXCEPTION(ObjectFactoryExistsException("Image", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
+		}
+		gImageFactories[typeName] = factory;
+	}
+
 	void unregisterObjectFactory(chstr typeName)
 	{
 		if (!gObjectFactories.hasKey(typeName))
@@ -340,6 +355,15 @@ namespace aprilui
 		gAnimatorFactories.removeKey(typeName);
 	}
 
+	void unregisterImageFactory(chstr typeName)
+	{
+		if (!gImageFactories.hasKey(typeName))
+		{
+			__THROW_EXCEPTION(ObjectFactoryNotExistsException("Image", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
+		}
+		gImageFactories.removeKey(typeName);
+	}
+
 	const hmap<hstr, Object* (*)(chstr)>& getObjectFactories()
 	{
 		return gObjectFactories;
@@ -348,6 +372,11 @@ namespace aprilui
 	const hmap<hstr, Animator* (*)(chstr)>& getAnimatorFactories()
 	{
 		return gAnimatorFactories;
+	}
+
+	const hmap<hstr, Image* (*)(Texture*, chstr, cgrect)>& getImageFactories()
+	{
+		return gImageFactories;
 	}
 
 	bool hasObjectFactory(chstr typeName)
@@ -360,6 +389,11 @@ namespace aprilui
 		return gAnimatorFactories.hasKey(typeName);
 	}
 	
+	bool hasImageFactory(chstr typeName)
+	{
+		return gImageFactories.hasKey(typeName);
+	}
+
 	Object* createObject(chstr typeName, chstr name)
 	{
 		if (gObjectFactories.hasKey(typeName))
@@ -417,19 +451,29 @@ namespace aprilui
 		return NULL;
 	}
 	
-	gvec2 transformWindowPoint(gvec2 point)
+	Image* createImage(chstr typeName, Texture* texture, chstr name, cgrect source)
 	{
-		point.x = (float)(int)(point.x * viewport.w / april::window->getWidth()) - viewport.x;
-		point.y = (float)(int)(point.y * viewport.h / april::window->getHeight()) - viewport.y;
-		if (limitCursorToViewport)
+		if (gImageFactories.hasKey(typeName))
 		{
-			point.x = hclamp(point.x, 0.0f, viewport.w - 1);
-			point.y = hclamp(point.y, 0.0f, viewport.h - 1);
+			return (*gImageFactories[typeName])(texture, name, source);
 		}
-		return point;
+		return NULL;
 	}
 
-	void updateViewportPosition(grect newViewport, bool updateOrthoProjection)
+	gvec2 transformWindowPoint(cgvec2 point)
+	{
+		gvec2 result;
+		result.x = (float)(int)(point.x * viewport.w / april::window->getWidth()) - viewport.x;
+		result.y = (float)(int)(point.y * viewport.h / april::window->getHeight()) - viewport.y;
+		if (limitCursorToViewport)
+		{
+			result.x = hclamp(result.x, 0.0f, viewport.w - 1);
+			result.y = hclamp(result.y, 0.0f, viewport.h - 1);
+		}
+		return result;
+	}
+
+	void updateViewportPosition(cgrect newViewport, bool updateOrthoProjection)
 	{
 		viewport = newViewport;
 		bool keyboardVisible = (useKeyboardAutoOffset && april::window->isVirtualKeyboardVisible());
@@ -475,7 +519,7 @@ namespace aprilui
 		cursorPosition = transformWindowPoint(april::window->getCursorPosition());
 	}
 	
-	void setCursorPosition(gvec2 position)
+	void setCursorPosition(cgvec2 position)
 	{
 		cursorPosition = position;
 	}

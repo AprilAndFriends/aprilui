@@ -23,12 +23,14 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(SkinImage);
 	public:
-		SkinImage(Texture* texture, chstr name, grect source);
+		SkinImage(Texture* texture, chstr name, cgrect source);
 		~SkinImage();
 		inline hstr getClassName() const { return "SkinImage"; }
 
+		static Image* createInstance(Texture* texture, chstr name, cgrect source);
+
 		HL_DEFINE_GET(grect, skinRect, SkinRect);
-		void setSkinRect(grect value);
+		void setSkinRect(cgrect value);
 		HL_DEFINE_GET(float, skinRect.x, SkinX);
 		void setSkinX(float value);
 		HL_DEFINE_GET(float, skinRect.y, SkinY);
@@ -38,10 +40,10 @@ namespace aprilui
 		HL_DEFINE_GET(float, skinRect.h, SkinHeight);
 		void setSkinHeight(float value);
 		inline gvec2 getSkinPosition() const { return this->skinRect.getPosition(); }
-		void setSkinPosition(gvec2 value);
+		void setSkinPosition(cgvec2 value);
 		void setSkinPosition(float x, float y);
 		inline gvec2 getSkinSize() const { return this->skinRect.getSize(); }
-		void setSkinSize(gvec2 value);
+		void setSkinSize(cgvec2 value);
 		void setSkinSize(float w, float h);
 		HL_DEFINE_IS(tiledBorders, TiledBorders);
 		void setTiledBorders(bool value);
@@ -63,13 +65,7 @@ namespace aprilui
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
-		class RectVertices
-		{
-		public:
-			grect rect;
-			harray<april::TexturedVertex> vertices;
-			
-		};
+		typedef std::pair<grect, harray<april::TexturedVertex> > RectVertices;
 
 		bool _skinCoordinatesCalculated;
 		harray<RectVertices> _rectVertices;

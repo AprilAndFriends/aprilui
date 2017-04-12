@@ -18,7 +18,7 @@ namespace aprilui
 {
 	harray<PropertyDescription> TileImage::_propertyDescriptions;
 
-	TileImage::TileImage(Texture* texture, chstr name, grect source) : Image(texture, name, source)
+	TileImage::TileImage(Texture* texture, chstr name, cgrect source) : Image(texture, name, source)
 	{
 		this->tile = source.getSize();
 		this->useTileCount = false;
@@ -36,6 +36,11 @@ namespace aprilui
 
 	TileImage::~TileImage()
 	{
+	}
+
+	Image* TileImage::createInstance(Texture* texture, chstr name, cgrect source)
+	{
+		return new TileImage(texture, name, source);
 	}
 
 	harray<PropertyDescription> TileImage::getPropertyDescriptions() const
@@ -150,8 +155,8 @@ namespace aprilui
 			scroll.y = hmodf(this->scroll.y, tile.y) - tile.y;
 			int countX = hceil((rect.w - scroll.x) / tile.x);
 			int countY = hceil((rect.h - scroll.y) / tile.y);
-			int i;
-			int j;
+			int i = 0;
+			int j = 0;
 			if (!this->rotated)
 			{
 				for_iterx (j, 0, countY)

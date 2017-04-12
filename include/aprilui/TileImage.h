@@ -27,10 +27,12 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(TileImage);
 	public:
-		TileImage(Texture* texture, chstr name, grect source);
+		TileImage(Texture* texture, chstr name, cgrect source);
 		~TileImage();
 		inline hstr getClassName() const { return "TileImage"; }
 		
+		static Image* createInstance(Texture* texture, chstr name, cgrect source);
+
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
 		inline void setTile(float w, float h) { this->tile.set(w, h); }
 		HL_DEFINE_GETSET(float, tile.x, TileW);
@@ -63,7 +65,5 @@ namespace aprilui
 
 	};
 
-	DEPRECATED_ATTRIBUTE typedef TileImage TiledImage;
-	
 }
 #endif

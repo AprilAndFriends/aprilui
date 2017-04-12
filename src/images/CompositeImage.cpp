@@ -22,29 +22,11 @@ namespace aprilui
 {
 	harray<PropertyDescription> CompositeImage::_propertyDescriptions;
 
-	CompositeImage::CompositeImage(chstr name, gvec2 size) : BaseImage(name), restoreClipRects(true)
+	CompositeImage::CompositeImage(chstr name, cgvec2 size) : BaseImage(name), restoreClipRects(true)
 	{
 		this->size = size;
 	}
 	
-	// DEPRECATED
-	CompositeImage::CompositeImage(chstr name, const CompositeImage& other) : BaseImage(other)
-	{
-		this->name = name;
-		this->size = other.size;
-		this->images = other.images;
-		this->restoreClipRects = other.restoreClipRects;
-	}
-
-	// DEPRECATED
-	CompositeImage::CompositeImage(const CompositeImage& other, chstr name) : BaseImage(other)
-	{
-		this->name = name;
-		this->size = other.size;
-		this->images = other.images;
-		this->restoreClipRects = other.restoreClipRects;
-	}
-
 	CompositeImage::CompositeImage(const CompositeImage& other) : BaseImage(other)
 	{
 		this->size = other.size;
@@ -65,7 +47,7 @@ namespace aprilui
 		return (CompositeImage::_propertyDescriptions + BaseImage::getPropertyDescriptions());
 	}
 
-	void CompositeImage::addImageRef(BaseImage* image, grect rect)
+	void CompositeImage::addImageRef(BaseImage* image, cgrect rect)
 	{
 		this->images += ImageRef(image, rect);
 	}

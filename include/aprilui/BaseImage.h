@@ -43,7 +43,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(hstr, tag, Tag);
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(grect, clipRect, ClipRect);
-		void setClipRect(grect value);
+		void setClipRect(cgrect value);
 		HL_DEFINE_GET(float, clipRect.x, ClipX);
 		void setClipX(float value);
 		HL_DEFINE_GET(float, clipRect.y, ClipY);
@@ -53,10 +53,10 @@ namespace aprilui
 		HL_DEFINE_GET(float, clipRect.h, ClipHeight);
 		void setClipHeight(float value);
 		inline gvec2 getClipPosition() const { return this->clipRect.getPosition(); }
-		void setClipPosition(gvec2 value);
+		void setClipPosition(cgvec2 value);
 		void setClipPosition(float x, float y);
 		inline gvec2 getClipSize() const { return this->clipRect.getSize(); }
-		void setClipSize(gvec2 value);
+		void setClipSize(cgvec2 value);
 		void setClipSize(float w, float h);
 		hstr getFullName() const;
 

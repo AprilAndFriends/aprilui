@@ -29,7 +29,7 @@ namespace aprilui
 	public:
 		typedef std::pair<BaseImage*, grect> ImageRef;
 
-		CompositeImage(chstr name, gvec2 size);
+		CompositeImage(chstr name, cgvec2 size);
 		~CompositeImage();
 		inline hstr getClassName() const { return "CompositeImage"; }
 		
@@ -44,15 +44,12 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
-		void addImageRef(BaseImage* image, grect rect);
+		void addImageRef(BaseImage* image, cgrect rect);
 		void clearImages();
 		
 		void draw(grect rect, april::Color color);
 		void draw(harray<april::TexturedVertex> vertices, april::Color color);
 		
-		DEPRECATED_ATTRIBUTE CompositeImage(chstr name, const CompositeImage& other);
-		DEPRECATED_ATTRIBUTE CompositeImage(const CompositeImage& other, chstr name);
-
 	protected:
 		gvec2 size;
 		bool restoreClipRects;

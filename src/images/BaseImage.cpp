@@ -70,7 +70,7 @@ namespace aprilui
 		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 
-	void BaseImage::setClipRect(grect value)
+	void BaseImage::setClipRect(cgrect value)
 	{
 		if (this->clipRect != value)
 		{
@@ -115,7 +115,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipPosition(gvec2 value)
+	void BaseImage::setClipPosition(cgvec2 value)
 	{
 		if (this->clipRect.getPosition() != value)
 		{
@@ -133,7 +133,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipSize(gvec2 value)
+	void BaseImage::setClipSize(cgvec2 value)
 	{
 		if (this->clipRect.getSize() != value)
 		{
