@@ -205,7 +205,6 @@
     <ClInclude Include="..\..\include\aprilui\Object.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectButtonBase.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectCallbackObject.h" />
-    <ClInclude Include="..\..\include\aprilui\ObjectColoredQuad.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectContainer.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectEditBox.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectFilledRect.h" />

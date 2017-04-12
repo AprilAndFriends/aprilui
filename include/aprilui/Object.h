@@ -269,28 +269,6 @@ namespace aprilui
 
 		void animateStopAll();
 
-		DEPRECATED_ATTRIBUTE void moveXStop() { this->animateStopX(); }
-		DEPRECATED_ATTRIBUTE void moveYStop() { this->animateStopY(); }
-		DEPRECATED_ATTRIBUTE void scaleXStop() { this->animateStopScaleX(); }
-		DEPRECATED_ATTRIBUTE void scaleYStop() { this->animateStopScaleY(); }
-		DEPRECATED_ATTRIBUTE void resizeXStop() { this->animateStopWidth(); }
-		DEPRECATED_ATTRIBUTE void resizeYStop() { this->animateStopHeight(); }
-		DEPRECATED_ATTRIBUTE void rotateStop() { this->animateStopAngle(); }
-		DEPRECATED_ATTRIBUTE void movePivotXStop() { this->animateStopPivotX(); }
-		DEPRECATED_ATTRIBUTE void movePivotYStop() { this->animateStopPivotY(); }
-		DEPRECATED_ATTRIBUTE void fadeRedStop() { this->animateStopRed(); }
-		DEPRECATED_ATTRIBUTE void fadeGreenStop() { this->animateStopGreen(); }
-		DEPRECATED_ATTRIBUTE void fadeBlueStop() { this->animateStopBlue(); }
-		DEPRECATED_ATTRIBUTE void fadeAlphaStop() { this->animateStopAlpha(); }
-		DEPRECATED_ATTRIBUTE void changeZOrderStop() { this->animateStopZOrder(); }
-		DEPRECATED_ATTRIBUTE void moveStop() { this->animateStopMove(); }
-		DEPRECATED_ATTRIBUTE void scaleStop() { this->animateStopScale(); }
-		DEPRECATED_ATTRIBUTE void resizeStop() { this->animateStopSize(); }
-		DEPRECATED_ATTRIBUTE void movePivotStop() { this->animateStopPivot(); }
-		DEPRECATED_ATTRIBUTE void fadeColorStop() { this->animateStopColor(); }
-
-		DEPRECATED_ATTRIBUTE void stopAllAnimations() { this->animateStopAll(); }
-
 		DEPRECATED_ATTRIBUTE bool isClickThrough() const;
 		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HitTest::DisabledRecursive : HitTest::Enabled); }
 
@@ -303,7 +281,6 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void setCenterY(float value) { return this->setPivotY(value); }
 
 		DEPRECATED_ATTRIBUTE gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL) const { return this->getDerivedPivot(overrideRoot); }
-		DEPRECATED_ATTRIBUTE void resetCenter() { this->resetPivot(); }
 
 		DEPRECATED_ATTRIBUTE Animator* moveCenterX(float x, float speed) { return this->movePivotX(x, speed); }
 		DEPRECATED_ATTRIBUTE Animator* moveCenterY(float y, float speed) { return this->movePivotY(y, speed); }
@@ -317,36 +294,6 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE void moveCenterXStop() { this->animateStopPivotX(); }
 		DEPRECATED_ATTRIBUTE void moveCenterYStop() { this->animateStopPivotY(); }
 		DEPRECATED_ATTRIBUTE void moveCenterStop() { this->animateStopPivot(); }
-
-		DEPRECATED_ATTRIBUTE Animator* moveXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* moveYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* scaleXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* scaleYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* resizeXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* resizeYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* rotateF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* movePivotXF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* movePivotYF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* fadeRedF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* fadeGreenF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* fadeBlueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* fadeAlphaF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-		DEPRECATED_ATTRIBUTE Animator* changeZOrderF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods);
-
-		DEPRECATED_ATTRIBUTE Animator* moveXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* moveYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* scaleXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* scaleYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* resizeXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* resizeYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* rotateQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* movePivotXQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* movePivotYQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* fadeRedQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* fadeGreenQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* fadeBlueQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* fadeAlphaQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
-		DEPRECATED_ATTRIBUTE Animator* changeZOrderQueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay = 0.0f);
 
 	protected:
 		grect rect;

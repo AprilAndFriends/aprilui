@@ -42,8 +42,6 @@ namespace aprilui
 
 		};
 
-		DEPRECATED_ATTRIBUTE typedef TileScrollerX TiledScrollerX;
-
 	}
 }
 

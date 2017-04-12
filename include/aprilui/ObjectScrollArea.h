@@ -90,8 +90,6 @@ namespace aprilui
 		static float defaultDragThreshold;
 		static float defaultDragMaxSpeed;
 
-		DEPRECATED_ATTRIBUTE void __stop() { return this->stopScrolling(); }
-
 	protected:
 		bool allowDrag;
 		float inertia;

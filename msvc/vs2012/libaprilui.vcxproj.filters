@@ -322,9 +322,6 @@
     <ClInclude Include="..\..\include\aprilui\ObjectCallbackObject.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\aprilui\ObjectColoredQuad.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ObjectFilledRect.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
