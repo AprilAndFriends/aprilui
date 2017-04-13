@@ -146,6 +146,7 @@ namespace aprilui
 		gDatasets.clear();
 		gObjectFactories.clear();
 		gAnimatorFactories.clear();
+		gImageFactories.clear();
 		gCursor = NULL;
 	}
 	
