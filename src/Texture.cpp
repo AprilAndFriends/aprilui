@@ -129,6 +129,19 @@ namespace aprilui
 		}
 	}
 	
+	bool Texture::loadMetaData(bool ignoreDynamicLinks)
+	{
+		bool result = this->texture->loadMetaData();
+		if (!ignoreDynamicLinks)
+		{
+			foreach (Texture*, it, this->links)
+			{
+				(*it)->texture->loadMetaData();
+			}
+		}
+		return result;
+	}
+
 	bool Texture::load(bool ignoreDynamicLinks)
 	{
 		bool result = true;

@@ -54,6 +54,7 @@ namespace aprilui
 		void update(float timeDelta);
 		void resetUnusedTime();
 
+		virtual bool loadMetaData(bool ignoreDynamicLinks = false);
 		virtual bool load(bool ignoreDynamicLinks = false);
 		virtual bool loadAsync(bool ignoreDynamicLinks = false);
 		virtual void unload();
