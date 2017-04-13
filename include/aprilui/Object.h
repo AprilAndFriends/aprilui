@@ -35,7 +35,7 @@ namespace aprilui
 	class EventArgs;
 	class Object;
 	
-	typedef bool (*CustomPointInsideCallback)(const Object*, const gvec2&);
+	typedef bool (*CustomPointInsideCallback)(const Object*, cgvec2);
 
 	class apriluiExport Object : public BaseObject
 	{
