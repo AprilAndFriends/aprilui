@@ -41,9 +41,6 @@ namespace aprilui
 
 		static Image* createInstance(Texture* texture, chstr name, cgrect source);
 
-		virtual void draw(grect rect, april::Color color = april::Color::White);
-		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White);
-		
 		HL_DEFINE_GET(Texture*, texture, Texture);
 		HL_DEFINE_GET(grect, srcRect, SrcRect);
 		void setSrcRect(cgrect value);
@@ -52,14 +49,14 @@ namespace aprilui
 		HL_DEFINE_GET(float, srcRect.y, SrcY);
 		void setSrcY(float value);
 		HL_DEFINE_GET(float, srcRect.w, SrcWidth);
-		void setSrcWidth(float value);
+		void setSrcWidth(const float& value);
 		HL_DEFINE_GET(float, srcRect.h, SrcHeight);
-		void setSrcHeight(float value);
+		void setSrcHeight(const float& value);
 		inline gvec2 getSrcPosition() const { return this->srcRect.getPosition(); }
 		void setSrcPosition(cgvec2 value);
 		void setSrcPosition(float x, float y);
 		inline gvec2 getSrcSize() const { return this->srcRect.getSize(); }
-		void setSrcSize(gvec2 value);
+		void setSrcSize(cgvec2 value);
 		void setSrcSize(float w, float h);
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		void setSymbolicColor(chstr value);
@@ -75,6 +72,9 @@ namespace aprilui
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
+		void draw(cgrect rect, april::Color color = april::Color::White);
+		void draw(const harray<april::TexturedVertex>& vertices, april::Color color = april::Color::White);
 
 		void tryLoadTextureCoordinates();
 

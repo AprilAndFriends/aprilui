@@ -244,7 +244,7 @@ namespace aprilui
 		}
 	}
 
-	void TileImage::draw(grect rect, april::Color color)
+	void TileImage::draw(cgrect rect, april::Color color)
 	{
 		if (this->color != april::Color::White)
 		{

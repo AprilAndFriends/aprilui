@@ -48,7 +48,7 @@ namespace aprilui
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
-		void draw(grect rect, april::Color color);
+		void draw(cgrect rect, april::Color color);
 		
 	protected:
 		gvec2 tile;

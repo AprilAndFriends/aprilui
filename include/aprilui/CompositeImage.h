@@ -47,8 +47,8 @@ namespace aprilui
 		void addImageRef(BaseImage* image, cgrect rect);
 		void clearImages();
 		
-		void draw(grect rect, april::Color color);
-		void draw(harray<april::TexturedVertex> vertices, april::Color color);
+		void draw(cgrect rect, april::Color color);
+		void draw(const harray<april::TexturedVertex>& vertices, april::Color color);
 		
 	protected:
 		gvec2 size;

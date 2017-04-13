@@ -57,7 +57,7 @@ namespace aprilui
 		this->images.clear();
 	}
 	
-	void CompositeImage::draw(grect rect, april::Color color)
+	void CompositeImage::draw(cgrect rect, april::Color color)
 	{
 		if (color.a == 0)
 		{
@@ -100,7 +100,7 @@ namespace aprilui
 		}
 	}
 	
-	void CompositeImage::draw(harray<april::TexturedVertex> vertices, april::Color color)
+	void CompositeImage::draw(const harray<april::TexturedVertex>& vertices, april::Color color)
 	{
 		hlog::warn(logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}

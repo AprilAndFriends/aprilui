@@ -108,7 +108,7 @@ namespace aprilui
 		}
 	}
 
-	void Image::setSrcWidth(float value)
+	void Image::setSrcWidth(const float& value)
 	{
 		if (this->srcRect.w != value)
 		{
@@ -117,7 +117,7 @@ namespace aprilui
 		}
 	}
 
-	void Image::setSrcHeight(float value)
+	void Image::setSrcHeight(const float& value)
 	{
 		if (this->srcRect.h != value)
 		{
@@ -144,7 +144,7 @@ namespace aprilui
 		}
 	}
 
-	void Image::setSrcSize(gvec2 value)
+	void Image::setSrcSize(cgvec2 value)
 	{
 		if (this->srcRect.getSize() != value)
 		{
@@ -336,7 +336,7 @@ namespace aprilui
 		return this->srcRect;
 	}
 
-	void Image::draw(grect rect, april::Color color)
+	void Image::draw(cgrect rect, april::Color color)
 	{
 		if (this->color != april::Color::White)
 		{
@@ -346,16 +346,17 @@ namespace aprilui
 		{
 			return;
 		}
+		grect drawRect = rect;
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
-			gvec2 sizeRatio = rect.getSize() / this->srcRect.getSize();
-			rect += this->clipRect.getPosition() * sizeRatio;
-			rect.setSize(this->clipRect.getSize() * sizeRatio);
+			gvec2 sizeRatio = drawRect.getSize() / this->srcRect.getSize();
+			drawRect += this->clipRect.getPosition() * sizeRatio;
+			drawRect.setSize(this->clipRect.getSize() * sizeRatio);
 		}
-		this->vertices[0].x = this->vertices[2].x = this->vertices[4].x = rect.left();
-		this->vertices[0].y = this->vertices[1].y = this->vertices[3].y = rect.top();
-		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = rect.right();
-		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = rect.bottom();
+		this->vertices[0].x = this->vertices[2].x = this->vertices[4].x = drawRect.left();
+		this->vertices[0].y = this->vertices[1].y = this->vertices[3].y = drawRect.top();
+		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = drawRect.right();
+		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = drawRect.bottom();
 		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
 			this->texture->load();
@@ -367,7 +368,7 @@ namespace aprilui
 		april::rendersys->render(april::RenderOperation::TriangleList, this->vertices, APRILUI_IMAGE_MAX_VERTICES, color);
 	}
 
-	void Image::draw(harray<april::TexturedVertex> vertices, april::Color color)
+	void Image::draw(const harray<april::TexturedVertex>& vertices, april::Color color)
 	{
 		if (this->color != april::Color::White)
 		{
@@ -384,14 +385,15 @@ namespace aprilui
 		float iw = 1.0f / this->texture->getWidth();
 		float ih = 1.0f / this->texture->getHeight();
 		grect rect = this->_makeClippedSrcRect();
-		foreach (april::TexturedVertex, it, vertices)
+		harray<april::TexturedVertex> textureVertices = vertices;
+		foreach (april::TexturedVertex, it, textureVertices)
 		{
 			it->u = (rect.x + it->u * rect.w) * iw;
 			it->v = (rect.y + it->v * rect.h) * ih;
 		}
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
-		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)vertices, vertices.size(), color);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)textureVertices, textureVertices.size(), color);
 	}
 	
 }

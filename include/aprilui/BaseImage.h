@@ -61,19 +61,19 @@ namespace aprilui
 		hstr getFullName() const;
 
 		virtual gvec2 getSrcSize() const = 0;
-		virtual void setSrcSize(gvec2 value) = 0;
+		virtual void setSrcSize(cgvec2 value) = 0;
 		virtual float getSrcWidth() const = 0;
-		virtual void setSrcWidth(float value) = 0;
+		virtual void setSrcWidth(const float& value) = 0;
 		virtual float getSrcHeight() const = 0;
-		virtual void setSrcHeight(float value) = 0;
+		virtual void setSrcHeight(const float& value) = 0;
 
 		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
-		virtual void draw(grect rect, april::Color color = april::Color::White) = 0;
-		virtual void draw(harray<april::TexturedVertex> vertices, april::Color color = april::Color::White) = 0;
+		virtual void draw(cgrect rect, april::Color color = april::Color::White) = 0;
+		virtual void draw(const harray<april::TexturedVertex>& vertices, april::Color color = april::Color::White) = 0;
 
 		static harray<Texture*> findTextures(harray<BaseImage*> baseImages);
 
