@@ -73,8 +73,8 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
-		void draw(cgrect rect, april::Color color = april::Color::White);
-		void draw(const harray<april::TexturedVertex>& vertices, april::Color color = april::Color::White);
+		void draw(cgrect rect, const april::Color& color = april::Color::White);
+		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 
 		void tryLoadTextureCoordinates();
 

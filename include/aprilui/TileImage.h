@@ -48,8 +48,9 @@ namespace aprilui
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
-		void draw(cgrect rect, april::Color color);
-		
+		void draw(cgrect rect, const april::Color& color = april::Color::White);
+		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
+
 	protected:
 		gvec2 tile;
 		gvec2 scroll;

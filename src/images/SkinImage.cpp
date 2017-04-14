@@ -199,15 +199,16 @@ namespace aprilui
 		return true;
 	}
 
-	void SkinImage::draw(cgrect rect, april::Color color)
+	void SkinImage::draw(cgrect rect, const april::Color& color)
 	{
-		if (this->color != april::Color::White)
-		{
-			color *= this->color;
-		}
-		if (color.a == 0)
+		if (color.a == 0 || this->color.a == 0)
 		{
 			return;
+		}
+		april::Color drawColor = color;
+		if (this->color != april::Color::White)
+		{
+			drawColor *= this->color;
 		}
 		if (!this->_textureCoordinatesLoaded)
 		{
@@ -468,10 +469,10 @@ namespace aprilui
 			}
 			this->_rectVertices += RectVertices(rect, this->_vertices);
 		}
-		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), color);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), drawColor);
 	}
 
-	void SkinImage::draw(const harray<april::TexturedVertex>& vertices, april::Color color)
+	void SkinImage::draw(const harray<april::TexturedVertex>& vertices, const april::Color& color)
 	{
 		hlog::warn(logTag, "SkinImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}

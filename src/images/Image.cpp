@@ -336,15 +336,16 @@ namespace aprilui
 		return this->srcRect;
 	}
 
-	void Image::draw(cgrect rect, april::Color color)
+	void Image::draw(cgrect rect, const april::Color& color)
 	{
-		if (this->color != april::Color::White)
-		{
-			color *= this->color;
-		}
-		if (color.a == 0)
+		if (color.a == 0 || this->color.a == 0)
 		{
 			return;
+		}
+		april::Color drawColor = color;
+		if (this->color != april::Color::White)
+		{
+			drawColor *= this->color;
 		}
 		grect drawRect = rect;
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
@@ -365,18 +366,19 @@ namespace aprilui
 		this->tryLoadTextureCoordinates();
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
-		april::rendersys->render(april::RenderOperation::TriangleList, this->vertices, APRILUI_IMAGE_MAX_VERTICES, color);
+		april::rendersys->render(april::RenderOperation::TriangleList, this->vertices, APRILUI_IMAGE_MAX_VERTICES, drawColor);
 	}
 
-	void Image::draw(const harray<april::TexturedVertex>& vertices, april::Color color)
+	void Image::draw(const harray<april::TexturedVertex>& vertices, const april::Color& color)
 	{
-		if (this->color != april::Color::White)
-		{
-			color *= this->color;
-		}
-		if (color.a == 0)
+		if (color.a == 0 || this->color.a == 0)
 		{
 			return;
+		}
+		april::Color drawColor = color;
+		if (this->color != april::Color::White)
+		{
+			drawColor *= this->color;
 		}
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getTexture());
@@ -393,7 +395,7 @@ namespace aprilui
 		}
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
-		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)textureVertices, textureVertices.size(), color);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)textureVertices, textureVertices.size(), drawColor);
 	}
 	
 }

@@ -9,7 +9,9 @@
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hlog.h>
 
+#include "aprilui.h"
 #include "apriluiUtil.h"
 #include "Texture.h"
 #include "TileImage.h"
@@ -244,15 +246,16 @@ namespace aprilui
 		}
 	}
 
-	void TileImage::draw(cgrect rect, april::Color color)
+	void TileImage::draw(cgrect rect, const april::Color& color)
 	{
-		if (this->color != april::Color::White)
-		{
-			color *= this->color;
-		}
-		if (color.a == 0)
+		if (color.a == 0 || this->color.a == 0)
 		{
 			return;
+		}
+		april::Color drawColor = color;
+		if (this->color != april::Color::White)
+		{
+			drawColor *= this->color;
 		}
 		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
@@ -273,7 +276,12 @@ namespace aprilui
 		{
 			return;
 		}
-		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size(), color);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->tileVertices, this->tileVertices.size(), drawColor);
+	}
+
+	void TileImage::draw(const harray<april::TexturedVertex>& vertices, const april::Color& color)
+	{
+		hlog::warn(logTag, "TileImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}
 
 }

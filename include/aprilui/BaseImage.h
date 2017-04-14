@@ -72,8 +72,8 @@ namespace aprilui
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
-		virtual void draw(cgrect rect, april::Color color = april::Color::White) = 0;
-		virtual void draw(const harray<april::TexturedVertex>& vertices, april::Color color = april::Color::White) = 0;
+		virtual void draw(cgrect rect, const april::Color& color = april::Color::White) = 0;
+		virtual void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White) = 0;
 
 		static harray<Texture*> findTextures(harray<BaseImage*> baseImages);
 

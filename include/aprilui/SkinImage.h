@@ -48,8 +48,8 @@ namespace aprilui
 		HL_DEFINE_IS(tiledBorders, TiledBorders);
 		void setTiledBorders(bool value);
 
-		void draw(cgrect rect, april::Color color);
-		void draw(const harray<april::TexturedVertex>& vertices, april::Color color);
+		void draw(cgrect rect, const april::Color& color = april::Color::White);
+		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 		
 		harray<PropertyDescription> getPropertyDescriptions() const;
 
