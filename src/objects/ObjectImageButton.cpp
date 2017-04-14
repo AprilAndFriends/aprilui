@@ -270,7 +270,7 @@ namespace aprilui
 		return ImageBox::triggerEvent(type, keyCode, string);
 	}
 
-	bool ImageButton::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool ImageButton::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
 	{
 		return ImageBox::triggerEvent(type, keyCode, position, string, userData);
 	}

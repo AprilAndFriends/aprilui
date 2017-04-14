@@ -47,7 +47,7 @@ namespace aprilui
 	apriluiFnExport void setDebugEnabled(bool value);
 	
 	apriluiFnExport grect getViewport();
-	apriluiFnExport void setViewport(grect value);
+	apriluiFnExport void setViewport(cgrect value);
 	apriluiFnExport bool isLimitCursorToViewport();
 	apriluiFnExport void setLimitCursorToViewport(bool value);
 	apriluiFnExport bool isHoverEffectEnabled();
@@ -59,7 +59,7 @@ namespace aprilui
 	apriluiFnExport hstr getLocalization();
 	apriluiFnExport void setLocalization(chstr value);
 	apriluiFnExport harray<hstr> getSupportedLocalizations();
-	apriluiFnExport void setSupportedLocalizations(harray<hstr> value);
+	apriluiFnExport void setSupportedLocalizations(const harray<hstr>& value);
 	apriluiFnExport float getTextureIdleUnloadTime();
 	apriluiFnExport void setTextureIdleUnloadTime(float value);
 	apriluiFnExport bool isDefaultManagedTextures();

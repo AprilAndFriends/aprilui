@@ -56,10 +56,10 @@ namespace aprilui
 		Object* cloneTree() const;
 
 		HL_DEFINE_GET(grect, rect, Rect);
-		void setRect(grect value);
-		void setRect(gvec2 position, gvec2 size);
-		void setRect(gvec2 position, float w, float h);
-		void setRect(float x, float y, gvec2 size);
+		void setRect(cgrect value);
+		void setRect(cgvec2 position, cgvec2 size);
+		void setRect(cgvec2 position, float w, float h);
+		void setRect(float x, float y, cgvec2 size);
 		void setRect(float x, float y, float w, float h);
 		HL_DEFINE_GETSET(float, rect.x, X);
 		HL_DEFINE_GETSET(float, rect.y, Y);
@@ -68,10 +68,10 @@ namespace aprilui
 		HL_DEFINE_GET(float, rect.h, Height);
 		void setHeight(float value);
 		inline gvec2 getPosition() const { return this->rect.getPosition(); }
-		inline void setPosition(gvec2 value) { this->rect.setPosition(value); }
+		inline void setPosition(cgvec2 value) { this->rect.setPosition(value); }
 		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
 		inline gvec2 getSize() const { return this->rect.getSize(); }
-		void setSize(gvec2 value);
+		void setSize(cgvec2 value);
 		void setSize(float w, float h);
 
 		HL_DEFINE_GETSET(gvec2, pivot, Pivot);
@@ -128,18 +128,18 @@ namespace aprilui
 		void removeChildren(bool recursive = false);
 		void destroyChildren();
 
-		Object* getChildUnderPoint(gvec2 point) const;
+		Object* getChildUnderPoint(cgvec2 point) const;
 		Object* getChildUnderPoint(float x, float y) const;
 		virtual void clearChildUnderCursor();
 		void clearDescendantChildrenUnderCursor();
-		virtual bool isPointInside(gvec2 position) const;
+		virtual bool isPointInside(cgvec2 position) const;
 		bool angleEquals(float angle) const;
 
-		harray<gvec2> transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot = NULL) const;
-		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL) const;
+		harray<gvec2> transformToLocalSpace(const harray<gvec2>& points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2 transformToLocalSpace(cgvec2 point, aprilui::Object* overrideRoot = NULL) const;
 
-		harray<gvec2> getDerivedPoints(harray<gvec2> points, aprilui::Object* overrideRoot = NULL) const;
-		gvec2 getDerivedPoint(gvec2 point, aprilui::Object* overrideRoot = NULL) const;
+		harray<gvec2> getDerivedPoints(const harray<gvec2>& points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2 getDerivedPoint(cgvec2 point, aprilui::Object* overrideRoot = NULL) const;
 		grect getBoundingRect(aprilui::Object* overrideRoot = NULL) const;
 		/// @note The points are ordered as top-left, top-right, bottom-left, bottom-right within the local space.
 		harray<gvec2> getDerivedCorners(aprilui::Object* overrideRoot = NULL) const;
@@ -192,15 +192,15 @@ namespace aprilui
 		Animator* fadeAlpha(unsigned char a, float speed);
 		Animator* changeZOrder(int z, float speed);
 		void move(float x, float y, float speed);
-		void move(gvec2 position, float speed);
+		void move(cgvec2 position, float speed);
 		void scale(float x, float y, float speed);
-		void scale(gvec2 scale, float speed);
+		void scale(cgvec2 scale, float speed);
 		void resize(float x, float y, float speed);
-		void resize(gvec2 size, float speed);
+		void resize(cgvec2 size, float speed);
 		void movePivot(float x, float y, float speed);
-		void movePivot(gvec2 pivot, float speed);
+		void movePivot(cgvec2 pivot, float speed);
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
-		void fadeColor(april::Color color, float speed);
+		void fadeColor(const april::Color& color, float speed);
 
 		Animator* moveXQueue(float x, float speed, float delay = 0.0f);
 		Animator* moveYQueue(float y, float speed, float delay = 0.0f);
@@ -217,15 +217,15 @@ namespace aprilui
 		Animator* fadeAlphaQueue(unsigned char a, float speed, float delay = 0.0f);
 		Animator* changeZOrderQueue(int z, float speed, float delay = 0.0f);
 		void moveQueue(float x, float y, float speed, float delay = 0.0f);
-		void moveQueue(gvec2 position, float speed, float delay = 0.0f);
+		void moveQueue(cgvec2 position, float speed, float delay = 0.0f);
 		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
-		void scaleQueue(gvec2 scale, float speed, float delay = 0.0f);
+		void scaleQueue(cgvec2 scale, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
-		void resizeQueue(gvec2 size, float speed, float delay = 0.0f);
+		void resizeQueue(cgvec2 size, float speed, float delay = 0.0f);
 		void movePivotQueue(float x, float y, float speed, float delay = 0.0f);
-		void movePivotQueue(gvec2 pivot, float speed, float delay = 0.0f);
+		void movePivotQueue(cgvec2 pivot, float speed, float delay = 0.0f);
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
-		void fadeColorQueue(april::Color color, float speed, float delay = 0.0f);
+		void fadeColorQueue(const april::Color& color, float speed, float delay = 0.0f);
 
 		Animator* animateX(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
 		Animator* animateY(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods = 0.0f, float durationPeriods = -1.0f, float delay = 0.0f);
@@ -273,7 +273,7 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE inline void setClickThrough(bool value) { this->hitTest = (value ? HitTest::DisabledRecursive : HitTest::Enabled); }
 
 		DEPRECATED_ATTRIBUTE gvec2 getCenter() const { return this->getPivot(); }
-		DEPRECATED_ATTRIBUTE void setCenter(gvec2 value) { return this->setPivot(value); }
+		DEPRECATED_ATTRIBUTE void setCenter(cgvec2 value) { return this->setPivot(value); }
 		DEPRECATED_ATTRIBUTE void setCenter(float x, float y) { return this->setPivot(x, y); }
 		DEPRECATED_ATTRIBUTE float getCenterX() const { return this->getPivotX(); }
 		DEPRECATED_ATTRIBUTE void setCenterX(float value) { return this->setPivotX(value); }
@@ -285,11 +285,11 @@ namespace aprilui
 		DEPRECATED_ATTRIBUTE Animator* moveCenterX(float x, float speed) { return this->movePivotX(x, speed); }
 		DEPRECATED_ATTRIBUTE Animator* moveCenterY(float y, float speed) { return this->movePivotY(y, speed); }
 		DEPRECATED_ATTRIBUTE void moveCenter(float x, float y, float speed) { this->movePivot(x, y, speed); }
-		DEPRECATED_ATTRIBUTE void moveCenter(gvec2 pivot, float speed) { this->movePivot(pivot, speed); }
+		DEPRECATED_ATTRIBUTE void moveCenter(cgvec2 pivot, float speed) { this->movePivot(pivot, speed); }
 		DEPRECATED_ATTRIBUTE Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f) { return this->movePivotXQueue(x, speed, delay); }
 		DEPRECATED_ATTRIBUTE Animator* moveCenterYQueue(float y, float speed, float delay = 0.0f) { return this->movePivotYQueue(y, speed, delay); }
 		DEPRECATED_ATTRIBUTE void moveCenterQueue(float x, float y, float speed, float delay = 0.0f) { this->movePivotQueue(x, y, speed, delay); }
-		DEPRECATED_ATTRIBUTE void moveCenterQueue(gvec2 pivot, float speed, float delay = 0.0f) { this->movePivotQueue(pivot, speed, delay); }
+		DEPRECATED_ATTRIBUTE void moveCenterQueue(cgvec2 pivot, float speed, float delay = 0.0f) { this->movePivotQueue(pivot, speed, delay); }
 
 		DEPRECATED_ATTRIBUTE void moveCenterXStop() { this->animateStopPivotX(); }
 		DEPRECATED_ATTRIBUTE void moveCenterYStop() { this->animateStopPivotY(); }
@@ -342,8 +342,6 @@ namespace aprilui
 		virtual bool _touch(const harray<gvec2>& touches);
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
-
-		DEPRECATED_ATTRIBUTE grect _getDrawRect() const { return this->_makeDrawRect(); }
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

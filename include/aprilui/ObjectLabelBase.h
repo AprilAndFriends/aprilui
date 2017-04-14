@@ -47,7 +47,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, textColor, TextColor);
 		void setTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(gvec2, textOffset, TextOffset);
-		void setTextOffset(gvec2 value);
+		void setTextOffset(cgvec2 value);
 		HL_DEFINE_GET(float, textOffset.x, TextOffsetX);
 		void setTextOffsetX(float value);
 		HL_DEFINE_GET(float, textOffset.y, TextOffsetY);
@@ -94,7 +94,7 @@ namespace aprilui
 
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
-		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
@@ -133,16 +133,16 @@ namespace aprilui
 		april::Color backgroundColor;
 		bool backgroundBorder;
 
-		void _calcAutoScaledFont(grect rect);
-		april::Color _makeBackgroundDrawColor(april::Color drawColor) const;
+		void _calcAutoScaledFont(cgrect rect);
+		april::Color _makeBackgroundDrawColor(const april::Color& drawColor) const;
 		
-		void _drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor);
-		void _drawLabel(grect rect, april::Color color);
+		void _drawLabelBackground(cgrect rect, const april::Color& color, const april::Color& backgroundColor);
+		void _drawLabel(cgrect rect, const april::Color& color);
 
 	private:
 		bool _autoScaleDirty;
 
-		void _calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
+		void _calcAutoScaleFont(chstr fontName, cgrect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
 
 		static harray<PropertyDescription> _propertyDescriptions;
 

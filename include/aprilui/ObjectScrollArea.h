@@ -58,7 +58,7 @@ namespace aprilui
 		bool isScrollableX() const;
 		bool isScrollableY() const;
 		gvec2 getScrollOffset() const;
-		void setScrollOffset(gvec2 value);
+		void setScrollOffset(cgvec2 value);
 		void setScrollOffset(float x, float y);
 		float getScrollOffsetX() const;
 		void setScrollOffsetX(float value);
@@ -77,7 +77,7 @@ namespace aprilui
 
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
-		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);

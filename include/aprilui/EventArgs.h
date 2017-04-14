@@ -42,11 +42,11 @@ namespace aprilui
 		april::Button buttonCode;
 		void* userData;
 		
-		EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, cgvec2 position = gvec2(), chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, EventReceiver* receiver, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, EventReceiver* receiver, chstr string, void* userData = NULL);
 		EventArgs(chstr eventType, EventReceiver* receiver, void* userData = NULL);
-		EventArgs(chstr eventType, Object* object, april::Key keyCode, gvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, Object* object, april::Key keyCode, cgvec2 position = gvec2(), chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, Object* object, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, Object* object, chstr string, void* userData = NULL);
 		EventArgs(chstr eventType, Object* object, void* userData = NULL);

@@ -102,7 +102,7 @@ namespace aprilui
 		}
 	}
 
-	void TreeView::setConnectorColor(april::Color value)
+	void TreeView::setConnectorColor(const april::Color& value)
 	{
 		if (this->connectorColor != value)
 		{
@@ -121,7 +121,7 @@ namespace aprilui
 		return (hbetweenIE(this->selectedIndex, 0, this->items.size()) ? this->items[this->selectedIndex] : NULL);
 	}
 
-	void TreeView::setSelected(harray<int> nodeIndices)
+	void TreeView::setSelected(const harray<int>& nodeIndices)
 	{
 		if (nodeIndices.size() == 0)
 		{
@@ -219,7 +219,7 @@ namespace aprilui
 		return item;
 	}
 
-	bool TreeView::deleteItem(harray<int> nodeIndices)
+	bool TreeView::deleteItem(const harray<int>& nodeIndices)
 	{
 		if (nodeIndices.size() == 0)
 		{
@@ -286,7 +286,7 @@ namespace aprilui
 		}
 	}
 
-	TreeViewNode* TreeView::getItemAt(harray<int> nodeIndices) const
+	TreeViewNode* TreeView::getItemAt(const harray<int>& nodeIndices) const
 	{
 		if (nodeIndices.size() == 0)
 		{

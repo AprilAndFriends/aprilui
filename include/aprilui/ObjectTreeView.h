@@ -51,7 +51,7 @@ namespace aprilui
 		HL_DEFINE_GET(float, spacingHeight, SpacingHeight);
 		void setSpacingHeight(float value);
 		HL_DEFINE_GET(april::Color, connectorColor, ConnectorColor);
-		void setConnectorColor(april::Color value);
+		void setConnectorColor(const april::Color& value);
 		void setConnectorSymbolicColor(chstr value);
 		/// @note These are only the root TreeViewNodes in the TreeView.
 		HL_DEFINE_GET(harray<TreeViewNode*>, nodes, Nodes);
@@ -59,14 +59,14 @@ namespace aprilui
 		/// @note These are not necessarily in the same order as they are organized within the TreeView.
 		HL_DEFINE_GET(harray<TreeViewNode*>, items, Items);
 		TreeViewNode* getSelected() const;
-		void setSelected(harray<int> nodeIndices);
+		void setSelected(const harray<int>& nodeIndices);
 		int getItemCount() const;
 
 		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual TreeViewNode* createItem(harray<int> nodeIndices, chstr name = "");
-		bool deleteItem(harray<int> nodeIndices);
-		TreeViewNode* getItemAt(harray<int> nodeIndices) const;
+		bool deleteItem(const harray<int>& nodeIndices);
+		TreeViewNode* getItemAt(const harray<int>& nodeIndices) const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

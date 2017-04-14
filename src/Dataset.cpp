@@ -681,7 +681,7 @@ namespace aprilui
 		return this->recursiveObjectParse(node, parent, &style, "", "", gvec2());
 	}
 
-	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
 		hstr objectName;
 		hstr className = node->name;
@@ -858,20 +858,21 @@ namespace aprilui
 		return baseObject;
 	}
 
-	BaseObject* Dataset::recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
+		gvec2 newOffset = offset;
 		if (node->pexists("position"))
 		{
-			offset += april::hstrToGvec2(node->pstr("position"));
+			newOffset += april::hstrToGvec2(node->pstr("position"));
 		}
 		else
 		{
-			offset += gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
+			newOffset += gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
 		}
 		hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
 		hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
 		hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
-		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, offset);
+		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, newOffset);
 		BaseObject* descendant = NULL;
 		hstr typeName;
 		hstr objectName;
@@ -980,7 +981,7 @@ namespace aprilui
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", path.cStr(), nParsed);
 	}
 	
-	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
@@ -1011,7 +1012,7 @@ namespace aprilui
 		return root;
 	}
 	
-	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset)
+	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
 		if (!path.contains("*"))
 		{
@@ -1610,10 +1611,10 @@ namespace aprilui
 		return this->_parseCompositeTextKey(compositeTextKey);
 	}
 	
-	harray<hstr> Dataset::getTexts(harray<hstr> keys)
+	harray<hstr> Dataset::getTexts(const harray<hstr>& keys)
 	{
 		harray<hstr> result;
-		foreach (hstr, it, keys)
+		foreachc (hstr, it, keys)
 		{
 			result += this->getTextEntry(*it);
 		}

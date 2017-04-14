@@ -160,7 +160,7 @@ namespace aprilui
 		}
 	}
 
-	harray<april::TexturedVertex> ProgressCircle::_calcVertices(grect rect, float progress, Direction direction)
+	harray<april::TexturedVertex> ProgressCircle::_calcVertices(cgrect rect, float progress, Direction direction)
 	{
 		harray<april::TexturedVertex> result;
 		gvec2 splitCenter;

@@ -37,10 +37,10 @@ namespace aprilui
 		static Object* createInstance(chstr name);
 
 		HL_DEFINE_GET(april::Color, evenColor, EvenColor);
-		void setEvenColor(april::Color value);
+		void setEvenColor(const april::Color& value);
 		void setEvenSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, oddColor, OddColor);
-		void setOddColor(april::Color value);
+		void setOddColor(const april::Color& value);
 		void setOddSymbolicColor(chstr value);
 		HL_DEFINE_GET(harray<ListBoxItem*>, items, Items);
 		ListBoxItem* getSelected() const;

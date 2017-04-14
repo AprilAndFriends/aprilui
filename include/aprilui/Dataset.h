@@ -148,7 +148,7 @@ namespace aprilui
 		virtual hstr getTextEntry(chstr textKey);
 		virtual bool hasTextEntry(chstr textKey);
 		virtual hstr getText(chstr compositeTextKey);
-		harray<hstr> getTexts(harray<hstr> keys);
+		harray<hstr> getTexts(const harray<hstr>& keys);
 		
 		template <typename T>
 		inline T getObject(chstr name)
@@ -220,8 +220,8 @@ namespace aprilui
 
 		void parseGlobalInclude(chstr path, bool optional = false);
 		void parseGlobalIncludeFile(chstr filename);
-		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
-		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
+		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
 
 		DEPRECATED_ATTRIBUTE hstr getTextsPath() const { return (this->textsPaths.size() > 0 ? this->textsPaths.first() : ""); }
 
@@ -257,11 +257,11 @@ namespace aprilui
 		void parseCompositeImage(hlxml::Node* node);
 		void parseStyle(hlxml::Node* node);
 		virtual inline void parseExternalXMLNode(hlxml::Node* node) { }
-		virtual inline BaseObject* parseExternalObjectClass(hlxml::Node* node, chstr objName, grect rect) { return NULL; }
+		virtual inline BaseObject* parseExternalObjectClass(hlxml::Node* node, chstr objName, cgrect rect) { return NULL; }
 		
 		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent);
-		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
-		BaseObject* recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, gvec2 offset);
+		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
+		BaseObject* recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
 
 		void readFile(chstr filename);
 		virtual void _loadTexts(chstr path);

@@ -158,7 +158,7 @@ namespace aprilui
 		this->setTextColor(aprilui::_makeColor(value));
 	}
 
-	void LabelBase::setTextOffset(gvec2 value)
+	void LabelBase::setTextOffset(cgvec2 value)
 	{
 		if (this->textOffset != value)
 		{
@@ -215,7 +215,7 @@ namespace aprilui
 		this->setUnderlineColor(aprilui::_makeColor(value));
 	}
 
-	void LabelBase::_calcAutoScaledFont(grect rect)
+	void LabelBase::_calcAutoScaledFont(cgrect rect)
 	{
 		if (this->_autoScaleDirty)
 		{
@@ -261,12 +261,12 @@ namespace aprilui
 		return false;
 	}
 
-	april::Color LabelBase::_makeBackgroundDrawColor(april::Color drawColor) const
+	april::Color LabelBase::_makeBackgroundDrawColor(const april::Color& drawColor) const
 	{
 		return aprilui::_makeModifiedDrawColor(this->backgroundColor, drawColor);
 	}
 
-	void LabelBase::_drawLabelBackground(grect rect, april::Color color, april::Color backgroundColor)
+	void LabelBase::_drawLabelBackground(cgrect rect, const april::Color& color, const april::Color& backgroundColor)
 	{
 		if (backgroundColor.a > 0)
 		{
@@ -280,13 +280,13 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::_drawLabel(grect rect, april::Color color)
+	void LabelBase::_drawLabel(cgrect rect, const april::Color& color)
 	{
 		if (this->text.size() == 0)
 		{
 			return;
 		}
-		color *= this->textColor;
+		april::Color drawColor = color * this->textColor;
 		hstr text = this->text;
 		if (!this->textFormatting)
 		{
@@ -357,7 +357,7 @@ namespace aprilui
 			this->_autoScaleDirty = false;
 		}
 		hstr font = (this->autoScaledFont == "" ? this->font : this->autoScaledFont);
-		atres::renderer->drawText(font, rect, text, this->horzFormatting, this->vertFormatting, color, offset);
+		atres::renderer->drawText(font, rect, text, this->horzFormatting, this->vertFormatting, drawColor, offset);
 	}
 
 	hstr LabelBase::getProperty(chstr name)
@@ -512,7 +512,7 @@ namespace aprilui
 		}
 	}
 	
-	void LabelBase::_calcAutoScaleFont(chstr fontName, grect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical)
+	void LabelBase::_calcAutoScaleFont(chstr fontName, cgrect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical)
 	{
 		this->autoScaledFont = "";
 		if (this->minAutoScale >= 1.0f || rect.w <= 0.0f || rect.h <= 0.0f)

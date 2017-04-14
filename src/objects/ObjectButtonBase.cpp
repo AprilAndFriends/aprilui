@@ -54,7 +54,7 @@ namespace aprilui
 	{
 	}
 	
-	void ButtonBase::setHoverColor(april::Color value)
+	void ButtonBase::setHoverColor(const april::Color& value)
 	{
 		this->hoverColor = value;
 		this->_useHoverColor = true;
@@ -65,7 +65,7 @@ namespace aprilui
 		this->setHoverColor(aprilui::_makeColor(value));
 	}
 
-	void ButtonBase::setPushedColor(april::Color value)
+	void ButtonBase::setPushedColor(const april::Color& value)
 	{
 		this->pushedColor = value;
 		this->_usePushedColor = true;
@@ -76,7 +76,7 @@ namespace aprilui
 		this->setPushedColor(aprilui::_makeColor(value));
 	}
 
-	void ButtonBase::setDisabledColor(april::Color value)
+	void ButtonBase::setDisabledColor(const april::Color& value)
 	{
 		this->disabledColor = value;
 		this->_useDisabledColor = true;

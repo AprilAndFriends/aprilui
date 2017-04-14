@@ -70,7 +70,7 @@ namespace aprilui
 		harray<BaseImage*> _getUsedImages() const;
 
 		void _draw();
-		harray<april::TexturedVertex> _calcVertices(grect rect, float progress, Direction direction);
+		harray<april::TexturedVertex> _calcVertices(cgrect rect, float progress, Direction direction);
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

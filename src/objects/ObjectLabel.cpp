@@ -19,7 +19,7 @@ namespace aprilui
 	Label::Label(chstr name) : Object(name), LabelBase()
 	{
 		this->text = "Label: " + name;
-		this->debugColor = april::Color(april::Color::Aqua, 32);
+		this->debugColor.set(april::Color::Aqua, 32);
 	}
 
 	Label::Label(const Label& other) : Object(other), LabelBase(other)
@@ -95,7 +95,7 @@ namespace aprilui
 		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool Label::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool Label::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
 	{
 		return Object::triggerEvent(type, keyCode, position, string, userData);
 	}

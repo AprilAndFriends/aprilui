@@ -73,7 +73,7 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions() const;
 		
-		void setCaretIndexAt(gvec2 position);
+		void setCaretIndexAt(cgvec2 position);
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
@@ -82,7 +82,7 @@ namespace aprilui
 
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
-		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);
@@ -145,7 +145,7 @@ namespace aprilui
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 
-		april::Color _makeSelectionDrawColor(april::Color drawColor) const;
+		april::Color _makeSelectionDrawColor(const april::Color& drawColor) const;
 
 		void _getBaseOffset(gvec2& offset, float& hf) const;
 

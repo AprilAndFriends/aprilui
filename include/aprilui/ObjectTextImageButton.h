@@ -34,13 +34,13 @@ namespace aprilui
 		static Object* createInstance(chstr name);
 
 		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
-		void setHoverTextColor(april::Color value);
+		void setHoverTextColor(const april::Color& value);
 		void setHoverTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, pushedTextColor, PushedTextColor);
-		void setPushedTextColor(april::Color value);
+		void setPushedTextColor(const april::Color& value);
 		void setPushedTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
-		void setDisabledTextColor(april::Color value);
+		void setDisabledTextColor(const april::Color& value);
 		void setDisabledTextSymbolicColor(chstr value);
 		Dataset* getDataset() const;
 		hstr getAutoScaledFont();
@@ -54,7 +54,7 @@ namespace aprilui
 
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
-		bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);

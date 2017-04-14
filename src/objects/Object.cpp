@@ -172,7 +172,7 @@ namespace aprilui
 		this->useDisabledAlpha = true;
 		this->focusIndex = -1;
 		this->customPointInsideCallback = NULL;
-		this->debugColor = april::Color(april::Color::Black, 32);
+		this->debugColor.set(april::Color::Black, 32);
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -502,7 +502,7 @@ namespace aprilui
 		}
 	}
 
-	void Object::setRect(grect value)
+	void Object::setRect(cgrect value)
 	{
 		this->_updateChildrenHorizontal(value.w - this->rect.w);
 		this->_updateChildrenVertical(value.h - this->rect.h);
@@ -510,7 +510,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setRect(gvec2 position, gvec2 size)
+	void Object::setRect(cgvec2 position, cgvec2 size)
 	{
 		this->_updateChildrenHorizontal(size.x - this->rect.w);
 		this->_updateChildrenVertical(size.y - this->rect.h);
@@ -518,7 +518,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setRect(gvec2 position, float w, float h)
+	void Object::setRect(cgvec2 position, float w, float h)
 	{
 		this->_updateChildrenHorizontal(w - this->rect.w);
 		this->_updateChildrenVertical(h - this->rect.h);
@@ -526,7 +526,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setRect(float x, float y, gvec2 size)
+	void Object::setRect(float x, float y, cgvec2 size)
 	{
 		this->_updateChildrenHorizontal(size.x - this->rect.w);
 		this->_updateChildrenVertical(size.y - this->rect.h);
@@ -556,7 +556,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setSize(gvec2 value)
+	void Object::setSize(cgvec2 value)
 	{
 		this->_updateChildrenHorizontal(value.x - this->rect.w);
 		this->_updateChildrenVertical(value.y - this->rect.h);
@@ -796,7 +796,7 @@ namespace aprilui
 		return this->isPointInside(aprilui::getCursorPosition());
 	}
 	
-	bool Object::isPointInside(gvec2 position) const
+	bool Object::isPointInside(cgvec2 position) const
 	{
 		if (heqf(this->scaleFactor.x, 0.0f, 0.0001f) || heqf(this->scaleFactor.y, 0.0f, 0.0001f))
 		{
@@ -1280,7 +1280,7 @@ namespace aprilui
 		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
 	}
 
-	Object* Object::getChildUnderPoint(gvec2 point) const
+	Object* Object::getChildUnderPoint(cgvec2 point) const
 	{
 		if (!this->isVisible() || this->hitTest == HitTest::DisabledRecursive)
 		{
@@ -1328,7 +1328,7 @@ namespace aprilui
 		}
 	}
 	
-	harray<gvec2> Object::transformToLocalSpace(harray<gvec2> points, aprilui::Object* overrideRoot) const
+	harray<gvec2> Object::transformToLocalSpace(const harray<gvec2>& points, aprilui::Object* overrideRoot) const
 	{
 		harray<const Object*> sequence;
 		const Object* current = this;
@@ -1338,6 +1338,7 @@ namespace aprilui
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
+		harray<gvec2> result = points;
 		gvec2 pivot;
 		gvec2 scale;
 		gvec2 position;
@@ -1348,7 +1349,7 @@ namespace aprilui
 			scale = (*it)->getScale();
 			position = (*it)->getPosition();
 			angle = (*it)->getAngle();
-			foreach (gvec2, it2, points)
+			foreach (gvec2, it2, result)
 			{
 				(*it2) -= pivot + position;
 				(*it2).rotate(angle);
@@ -1356,10 +1357,10 @@ namespace aprilui
 				(*it2) += pivot;
 			}
 		}
-		return points;
+		return result;
 	}
 	
-	gvec2 Object::transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot) const
+	gvec2 Object::transformToLocalSpace(cgvec2 point, aprilui::Object* overrideRoot) const
 	{
 		harray<const Object*> sequence;
 		const Object* current = this;
@@ -1369,21 +1370,23 @@ namespace aprilui
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
+		gvec2 result = point;
 		gvec2 pivot;
 		foreach (const Object*, it, sequence)
 		{
 			pivot = (*it)->getPivot();
-			point -= pivot + (*it)->getPosition();
-			point.rotate((*it)->getAngle());
-			point /= (*it)->getScale();
-			point += pivot;
+			result -= pivot + (*it)->getPosition();
+			result.rotate((*it)->getAngle());
+			result /= (*it)->getScale();
+			result += pivot;
 		}
-		return point;
+		return result;
 	}
 
-	harray<gvec2> Object::getDerivedPoints(harray<gvec2> points, aprilui::Object* overrideRoot) const
+	harray<gvec2> Object::getDerivedPoints(const harray<gvec2>& points, aprilui::Object* overrideRoot) const
 	{
 		const Object* current = this;
+		harray<gvec2> result = points;
 		gvec2 pivot;
 		gvec2 scale;
 		gvec2 position;
@@ -1394,7 +1397,7 @@ namespace aprilui
 			scale = current->getScale();
 			position = current->getPosition();
 			angle = current->getAngle();
-			foreach (gvec2, it, points)
+			foreach (gvec2, it, result)
 			{
 				(*it) -= pivot;
 				(*it) *= scale;
@@ -1403,23 +1406,24 @@ namespace aprilui
 			}
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
-		return points;
+		return result;
 	}
 
-	gvec2 Object::getDerivedPoint(gvec2 point, aprilui::Object* overrideRoot) const
+	gvec2 Object::getDerivedPoint(cgvec2 point, aprilui::Object* overrideRoot) const
 	{
 		const Object* current = this;
+		gvec2 result = point;
 		gvec2 pivot;
 		while (current != NULL)
 		{
 			pivot = current->getPivot();
-			point -= pivot;
-			point *= current->getScale();
-			point.rotate(-current->getAngle());
-			point += pivot + current->getPosition();
+			result -= pivot;
+			result *= current->getScale();
+			result.rotate(-current->getAngle());
+			result += pivot + current->getPosition();
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
-		return point;
+		return result;
 	}
 
 	grect Object::getBoundingRect(aprilui::Object* overrideRoot) const
@@ -1609,7 +1613,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed);
 	}
 
-	void Object::move(gvec2 position, float speed)
+	void Object::move(cgvec2 position, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
 		REMOVE_EXISTING_ANIMATORS(MoverY);
@@ -1625,7 +1629,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed);
 	}
 
-	void Object::scale(gvec2 scale, float speed)
+	void Object::scale(cgvec2 scale, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
@@ -1641,7 +1645,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed);
 	}
 
-	void Object::resize(gvec2 size, float speed)
+	void Object::resize(cgvec2 size, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
@@ -1657,7 +1661,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed);
 	}
 
-	void Object::movePivot(gvec2 pivot, float speed)
+	void Object::movePivot(cgvec2 pivot, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
 		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
@@ -1677,7 +1681,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)a, speed);
 	}
 	
-	void Object::fadeColor(april::Color color, float speed)
+	void Object::fadeColor(const april::Color& color, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(RedChanger);
 		REMOVE_EXISTING_ANIMATORS(GreenChanger);
@@ -1779,7 +1783,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed, delay);
 	}
 
-	void Object::moveQueue(gvec2 position, float speed, float delay)
+	void Object::moveQueue(cgvec2 position, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->rect.x, position.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, position.y, speed, delay);
@@ -1791,7 +1795,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed, delay);
 	}
 
-	void Object::scaleQueue(gvec2 scale, float speed, float delay)
+	void Object::scaleQueue(cgvec2 scale, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, scale.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, scale.y, speed, delay);
@@ -1803,7 +1807,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed, delay);
 	}
 
-	void Object::resizeQueue(gvec2 size, float speed, float delay)
+	void Object::resizeQueue(cgvec2 size, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, size.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, size.y, speed, delay);
@@ -1815,7 +1819,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed, delay);
 	}
 
-	void Object::movePivotQueue(gvec2 pivot, float speed, float delay)
+	void Object::movePivotQueue(cgvec2 pivot, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, pivot.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, pivot.y, speed, delay);
@@ -1829,7 +1833,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(AlphaChanger, (float)this->color.a, (float)a, speed, delay);
 	}
 
-	void Object::fadeColorQueue(april::Color color, float speed, float delay)
+	void Object::fadeColorQueue(const april::Color& color, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(RedChanger, (float)this->color.r, (float)color.r, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(GreenChanger, (float)this->color.g, (float)color.g, speed, delay);

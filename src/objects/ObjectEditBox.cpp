@@ -297,7 +297,7 @@ namespace aprilui
 		hlog::warn(logTag, "EditBox does not support setting of 'min_auto_scale'! Call will be ignored.");
 	}
 
-	void EditBox::setCaretIndexAt(gvec2 position)
+	void EditBox::setCaretIndexAt(cgvec2 position)
 	{
 		if (!this->pushed || this->_caretCursorPosition != position)
 		{
@@ -866,7 +866,7 @@ namespace aprilui
 		return Label::triggerEvent(type, keyCode, string);
 	}
 
-	bool EditBox::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool EditBox::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
 	{
 		return Label::triggerEvent(type, keyCode, position, string, userData);
 	}
@@ -1117,7 +1117,7 @@ namespace aprilui
 		return (result || up || Label::_buttonUp(buttonCode));
 	}
 
-	april::Color EditBox::_makeSelectionDrawColor(april::Color drawColor) const
+	april::Color EditBox::_makeSelectionDrawColor(const april::Color& drawColor) const
 	{
 		return aprilui::_makeModifiedDrawColor(this->selectionColor, drawColor);
 	}

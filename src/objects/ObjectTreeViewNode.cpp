@@ -262,7 +262,7 @@ namespace aprilui
 		return Container::triggerEvent(type, keyCode, string);
 	}
 
-	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
 	{
 		return Container::triggerEvent(type, keyCode, position, string, userData);
 	}

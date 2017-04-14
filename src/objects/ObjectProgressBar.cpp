@@ -153,30 +153,31 @@ namespace aprilui
 		}
 	}
 
-	grect ProgressBar::_calcRectDirection(grect rect, float progress, Direction direction)
+	grect ProgressBar::_calcRectDirection(cgrect rect, float progress, Direction direction)
 	{
+		grect result = rect;
 		float size = 0.0f;
 		if (direction == Direction::Right)
 		{
-			rect.w *= progress;
+			result.w *= progress;
 		}
 		else if (direction == Direction::Left)
 		{
-			size = rect.w * progress;
-			rect.x += rect.w - size;
-			rect.w = size;
+			size = result.w * progress;
+			result.x += result.w - size;
+			result.w = size;
 		}
 		else if (direction == Direction::Down)
 		{
-			rect.h *= progress;
+			result.h *= progress;
 		}
 		else if (direction == Direction::Up)
 		{
-			size = rect.h * progress;
-			rect.y += rect.h - size;
-			rect.h = size;
+			size = result.h * progress;
+			result.y += result.h - size;
+			result.h = size;
 		}
-		return rect;
+		return result;
 	}
 
 	hstr ProgressBar::getProperty(chstr name)

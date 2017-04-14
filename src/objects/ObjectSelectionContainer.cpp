@@ -91,7 +91,7 @@ namespace aprilui
 		}
 	}
 
-	void SelectionContainer::setHoverColor(april::Color value)
+	void SelectionContainer::setHoverColor(const april::Color& value)
 	{
 		if (this->hoverColor != value)
 		{
@@ -105,7 +105,7 @@ namespace aprilui
 		this->setHoverColor(aprilui::_makeColor(value));
 	}
 
-	void SelectionContainer::setPushedColor(april::Color value)
+	void SelectionContainer::setPushedColor(const april::Color& value)
 	{
 		if (this->pushedColor != value)
 		{
@@ -119,7 +119,7 @@ namespace aprilui
 		this->setPushedColor(aprilui::_makeColor(value));
 	}
 
-	void SelectionContainer::setSelectedColor(april::Color value)
+	void SelectionContainer::setSelectedColor(const april::Color& value)
 	{
 		if (this->selectedColor != value)
 		{
@@ -133,7 +133,7 @@ namespace aprilui
 		this->setSelectedColor(aprilui::_makeColor(value));
 	}
 
-	void SelectionContainer::setSelectedHoverColor(april::Color value)
+	void SelectionContainer::setSelectedHoverColor(const april::Color& value)
 	{
 		if (this->selectedHoverColor != value)
 		{
@@ -147,7 +147,7 @@ namespace aprilui
 		this->setSelectedHoverColor(aprilui::_makeColor(value));
 	}
 
-	void SelectionContainer::setSelectedPushedColor(april::Color value)
+	void SelectionContainer::setSelectedPushedColor(const april::Color& value)
 	{
 		if (this->selectedPushedColor != value)
 		{

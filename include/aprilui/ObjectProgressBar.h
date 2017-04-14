@@ -67,7 +67,7 @@ namespace aprilui
 
 		harray<BaseImage*> _getUsedImages() const;
 
-		grect _calcRectDirection(grect rect, float progress, Direction direction);
+		grect _calcRectDirection(cgrect rect, float progress, Direction direction);
 		
 		void _update(float timeDelta);
 		void _draw();

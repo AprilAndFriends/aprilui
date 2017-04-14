@@ -40,7 +40,7 @@ namespace aprilui
 		this->optimizeOobChildrenVisible = false;
 		this->optimizeOobChildrenAwake = false;
 		this->dragging = false;
-		this->debugColor = april::Color(april::Color::Yellow, 32);
+		this->debugColor.set(april::Color::Yellow, 32);
 		this->_overrideHoverMode = false;
 	}
 
@@ -119,7 +119,7 @@ namespace aprilui
 		return -this->getPosition();
 	}
 
-	void ScrollArea::setScrollOffset(gvec2 value)
+	void ScrollArea::setScrollOffset(cgvec2 value)
 	{
 		this->setScrollOffsetX(value.x);
 		this->setScrollOffsetY(value.y);
@@ -422,7 +422,7 @@ namespace aprilui
 		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool ScrollArea::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool ScrollArea::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
 	{
 		return Object::triggerEvent(type, keyCode, position, string, userData);
 	}

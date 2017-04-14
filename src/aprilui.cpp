@@ -165,7 +165,7 @@ namespace aprilui
 		return viewport;
 	}
 	
-	void setViewport(grect value)
+	void setViewport(cgrect value)
 	{
 		viewport = value;
 	}
@@ -256,7 +256,7 @@ namespace aprilui
 		return supportedLocalizations;
 	}
 	
-	void setSupportedLocalizations(harray<hstr> value)
+	void setSupportedLocalizations(const harray<hstr>& value)
 	{
 		supportedLocalizations = value;
 	}

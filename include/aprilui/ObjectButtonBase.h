@@ -35,13 +35,13 @@ namespace aprilui
 		virtual ~ButtonBase();
 
 		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
-		void setHoverColor(april::Color value);
+		void setHoverColor(const april::Color& value);
 		void setHoverSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, pushedColor, PushedColor);
-		void setPushedColor(april::Color value);
+		void setPushedColor(const april::Color& value);
 		void setPushedSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, disabledColor, DisabledColor);
-		void setDisabledColor(april::Color value);
+		void setDisabledColor(const april::Color& value);
 		void setDisabledSymbolicColor(chstr value);
 		HL_DEFINE_IS(hovered, Hovered);
 		HL_DEFINE_IS(pushed, Pushed);
@@ -58,7 +58,7 @@ namespace aprilui
 
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
-		virtual bool triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string = "", void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;

@@ -62,7 +62,7 @@ namespace aprilui
 		return this->autoScaledFont;
 	}
 
-	void TextImageButton::setHoverTextColor(april::Color value)
+	void TextImageButton::setHoverTextColor(const april::Color& value)
 	{
 		this->hoverTextColor = value;
 		this->_useHoverTextColor = true;
@@ -73,7 +73,7 @@ namespace aprilui
 		this->setHoverTextColor(aprilui::_makeColor(value));
 	}
 
-	void TextImageButton::setPushedTextColor(april::Color value)
+	void TextImageButton::setPushedTextColor(const april::Color& value)
 	{
 		this->pushedTextColor = value;
 		this->_usePushedTextColor = true;
@@ -84,7 +84,7 @@ namespace aprilui
 		this->setPushedTextColor(aprilui::_makeColor(value));
 	}
 
-	void TextImageButton::setDisabledTextColor(april::Color value)
+	void TextImageButton::setDisabledTextColor(const april::Color& value)
 	{
 		this->disabledTextColor = value;
 		this->_useDisabledTextColor = true;
@@ -206,7 +206,7 @@ namespace aprilui
 		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, gvec2 position, chstr string, void* userData)
+	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
 	{
 		return ImageButton::triggerEvent(type, keyCode, position, string, userData);
 	}

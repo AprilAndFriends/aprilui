@@ -53,7 +53,7 @@ namespace aprilui
 		return (SelectionContainer::getPropertyDescriptions() + ListBox::_propertyDescriptions);
 	}
 
-	void ListBox::setEvenColor(april::Color value)
+	void ListBox::setEvenColor(const april::Color& value)
 	{
 		if (this->evenColor != value)
 		{
@@ -67,7 +67,7 @@ namespace aprilui
 		this->setEvenColor(aprilui::_makeColor(value));
 	}
 
-	void ListBox::setOddColor(april::Color value)
+	void ListBox::setOddColor(const april::Color& value)
 	{
 		if (this->oddColor != value)
 		{
