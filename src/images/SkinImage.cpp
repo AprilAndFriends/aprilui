@@ -209,6 +209,10 @@ namespace aprilui
 		if (this->color != april::Color::White)
 		{
 			drawColor *= this->color;
+			if (drawColor.a == 0)
+			{
+				return;
+			}
 		}
 		if (!this->_textureCoordinatesLoaded)
 		{

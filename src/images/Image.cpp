@@ -346,6 +346,10 @@ namespace aprilui
 		if (this->color != april::Color::White)
 		{
 			drawColor *= this->color;
+			if (drawColor.a == 0)
+			{
+				return;
+			}
 		}
 		grect drawRect = rect;
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)

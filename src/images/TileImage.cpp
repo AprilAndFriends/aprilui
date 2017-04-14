@@ -256,6 +256,10 @@ namespace aprilui
 		if (this->color != april::Color::White)
 		{
 			drawColor *= this->color;
+			if (drawColor.a == 0)
+			{
+				return;
+			}
 		}
 		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
