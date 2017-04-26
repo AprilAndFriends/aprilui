@@ -473,8 +473,16 @@ namespace aprilui
 					values = values[1].split(",", 1);
 					if (values[0] != "")
 					{
+						try
+						{
+							this->setEffectSymbolicColor(values[0]);
+						}
+						catch (hexception&)
+						{
+							hlog::warn(logTag, "'effect=' is using invalid color modifier '" + values[0] + "'.");
+							return false;
+						}
 						this->setUseEffectColor(true);
-						this->setEffectSymbolicColor(values[0]);
 					}
 					else
 					{
@@ -482,13 +490,12 @@ namespace aprilui
 					}
 					if (values.size() > 1)
 					{
-						this->setUseEffectParameter(true);
 						this->setEffectParameter(values[1]);
+						this->setUseEffectParameter(true);
 					}
 					else
 					{
 						this->setUseEffectParameter(false);
-						this->setEffectParameter(values[1]);
 					}
 				}
 			}
