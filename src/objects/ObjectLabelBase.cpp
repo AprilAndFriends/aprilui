@@ -6,6 +6,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
+#include <april/april.h>
 #include <april/Color.h>
 #include <april/RenderSystem.h>
 #include <atres/atres.h>
@@ -470,19 +471,23 @@ namespace aprilui
 				if (values.size() > 1)
 				{
 					values = values[1].split(",", 1);
-					if (values[0].isHex() && (values[0].size() == 6 || values[0].size() == 8))
+					if (values[0] != "")
 					{
 						this->setUseEffectColor(true);
-						this->setEffectColor(values[0]);
+						this->setEffectSymbolicColor(values[0]);
 					}
-					else if (values[0] != "")
+					else
 					{
-						hlog::warn(logTag, "'effect=' is using invalid color modifier '" + values[0] + "'.");
-						return false;
+						this->setUseEffectColor(false);
 					}
 					if (values.size() > 1)
 					{
 						this->setUseEffectParameter(true);
+						this->setEffectParameter(values[1]);
+					}
+					else
+					{
+						this->setUseEffectParameter(false);
 						this->setEffectParameter(values[1]);
 					}
 				}
