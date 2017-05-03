@@ -21,6 +21,7 @@
 #include "ObjectEditBox.h"
 
 #define UNICODE_CHAR_SPACE 0x20
+#define UNICODE_CHAR_ZERO_WIDTH_SPACE 0x200B
 #define UNICODE_CHAR_NEWLINE 0x0A
 #define CHECK_RECT_HEIGHT 100000.0f
 #define CHECK_RECT (grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT))
@@ -1214,7 +1215,7 @@ namespace aprilui
 		while (newCaretIndex > 0)
 		{
 			c = this->text.firstUnicodeChar(newCaretIndex - 1);
-			if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
+			if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_ZERO_WIDTH_SPACE && c != UNICODE_CHAR_NEWLINE)
 			{
 				break;
 			}
@@ -1235,7 +1236,7 @@ namespace aprilui
 			while (newCaretIndex > 0)
 			{
 				c = this->text.firstUnicodeChar(newCaretIndex - 1);
-				if (c == UNICODE_CHAR_SPACE || c == UNICODE_CHAR_NEWLINE)
+				if (c == UNICODE_CHAR_SPACE || c == UNICODE_CHAR_ZERO_WIDTH_SPACE || c == UNICODE_CHAR_NEWLINE)
 				{
 					break;
 				}
@@ -1257,7 +1258,7 @@ namespace aprilui
 		while (newCaretIndex < size)
 		{
 			c = this->text.firstUnicodeChar(newCaretIndex);
-			if (c == UNICODE_CHAR_SPACE)
+			if (c == UNICODE_CHAR_SPACE || c == UNICODE_CHAR_ZERO_WIDTH_SPACE)
 			{
 				break;
 			}
@@ -1278,7 +1279,7 @@ namespace aprilui
 			while (newCaretIndex < size)
 			{
 				c = this->text.firstUnicodeChar(newCaretIndex);
-				if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_NEWLINE)
+				if (c != UNICODE_CHAR_SPACE && c != UNICODE_CHAR_ZERO_WIDTH_SPACE && c != UNICODE_CHAR_NEWLINE)
 				{
 					break;
 				}
@@ -1327,13 +1328,24 @@ namespace aprilui
 	
 	void EditBox::_deleteLeftWord()
 	{
+		unsigned int unicodeChar = 0;
 		int index = this->caretIndex;
-		while (index > 0 && this->text.firstUnicodeChar(index - 1) == UNICODE_CHAR_SPACE)
+		while (index > 0)
 		{
+			unicodeChar = this->text.firstUnicodeChar(index - 1);
+			if (unicodeChar != UNICODE_CHAR_SPACE && unicodeChar != UNICODE_CHAR_ZERO_WIDTH_SPACE)
+			{
+				break;
+			}
 			--index;
 		}
-		while (index > 0 && this->text.firstUnicodeChar(index - 1) != UNICODE_CHAR_SPACE)
+		while (index > 0)
 		{
+			unicodeChar = this->text.firstUnicodeChar(index - 1);
+			if (unicodeChar != UNICODE_CHAR_SPACE && unicodeChar != UNICODE_CHAR_ZERO_WIDTH_SPACE)
+			{
+				break;
+			}
 			--index;
 		}
 		if (this->caretIndex > index)
@@ -1344,14 +1356,25 @@ namespace aprilui
 	
 	void EditBox::_deleteRightWord()
 	{
+		unsigned int unicodeChar = 0;
 		int index = this->caretIndex;
 		int size = this->text.utf8Size();
-		while (index < size && this->text.firstUnicodeChar(index) != UNICODE_CHAR_SPACE)
+		while (index < size)
 		{
+			unicodeChar = this->text.firstUnicodeChar(index - 1);
+			if (unicodeChar == UNICODE_CHAR_SPACE || unicodeChar == UNICODE_CHAR_ZERO_WIDTH_SPACE)
+			{
+				break;
+			}
 			++index;
 		}
-		while (index < size && this->text.firstUnicodeChar(index) == UNICODE_CHAR_SPACE)
+		while (index < size)
 		{
+			unicodeChar = this->text.firstUnicodeChar(index - 1);
+			if (unicodeChar != UNICODE_CHAR_SPACE && unicodeChar != UNICODE_CHAR_ZERO_WIDTH_SPACE)
+			{
+				break;
+			}
 			++index;
 		}
 		if (index > this->caretIndex)
