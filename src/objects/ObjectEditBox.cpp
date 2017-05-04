@@ -1209,7 +1209,7 @@ namespace aprilui
 	void EditBox::_caretMoveLeftWord()
 	{
 		int newCaretIndex = this->caretIndex;
-		unsigned char c = 0;
+		unsigned int c = 0;
 		bool first = true;
 		bool newLine = false;
 		while (newCaretIndex > 0)
@@ -1252,7 +1252,7 @@ namespace aprilui
 	{
 		int newCaretIndex = this->caretIndex;
 		int size = this->text.utf8Size();
-		unsigned char c = 0;
+		unsigned int c = 0;
 		bool first = true;
 		bool newLine = false;
 		while (newCaretIndex < size)
