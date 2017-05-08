@@ -52,6 +52,7 @@ namespace aprilui
 	SkinImage::SkinImage(const SkinImage& other) : Image(other)
 	{
 		this->skinRect = other.skinRect;
+		this->borderIndent = other.borderIndent;
 		this->tiledBorders = other.tiledBorders;
 		this->_skinCoordinatesCalculated = other._skinCoordinatesCalculated;
 		this->_rectVertices = other._rectVertices;
@@ -77,6 +78,9 @@ namespace aprilui
 			SkinImage::_propertyDescriptions += PropertyDescription("skin_y", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions += PropertyDescription("skin_w", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions += PropertyDescription("skin_h", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions += PropertyDescription("border_indent", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions += PropertyDescription("border_indent_x", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions += PropertyDescription("border_indent_y", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions += PropertyDescription("tiled_borders", PropertyDescription::Type::Bool);
 		}
 		return (SkinImage::_propertyDescriptions + Image::getPropertyDescriptions());
@@ -163,6 +167,42 @@ namespace aprilui
 		}
 	}
 
+	void SkinImage::setBorderIndent(cgvec2 value)
+	{
+		if (this->borderIndent != value)
+		{
+			this->borderIndent = value;
+			this->_skinCoordinatesCalculated = false;
+		}
+	}
+
+	void SkinImage::setBorderIndent(float x, float y)
+	{
+		if (this->borderIndent.x != x || this->borderIndent.y != y)
+		{
+			this->borderIndent.set(x, y);
+			this->_skinCoordinatesCalculated = false;
+		}
+	}
+
+	void SkinImage::setBorderIndentX(float value)
+	{
+		if (this->borderIndent.x != value)
+		{
+			this->borderIndent.x = value;
+			this->_skinCoordinatesCalculated = false;
+		}
+	}
+
+	void SkinImage::setBorderIndentY(float value)
+	{
+		if (this->borderIndent.y != value)
+		{
+			this->borderIndent.y = value;
+			this->_skinCoordinatesCalculated = false;
+		}
+	}
+
 	void SkinImage::setTiledBorders(bool value)
 	{
 		if (this->tiledBorders != value)
@@ -181,6 +221,9 @@ namespace aprilui
 		if (name == "skin_y")			return this->getSkinRect().y;
 		if (name == "skin_w")			return this->getSkinRect().w;
 		if (name == "skin_h")			return this->getSkinRect().h;
+		if (name == "border_indent")	return april::gvec2ToHstr(this->getBorderIndent());
+		if (name == "border_indent_x")	return this->getBorderIndent().x;
+		if (name == "border_indent_y")	return this->getBorderIndent().y;
 		if (name == "tiled_borders")	return this->isTiledBorders();
 		return Image::getProperty(name);
 	}
@@ -194,6 +237,9 @@ namespace aprilui
 		else if (name == "skin_y")			this->setSkinY(value);
 		else if (name == "skin_w")			this->setSkinWidth(value);
 		else if (name == "skin_h")			this->setSkinHeight(value);
+		else if (name == "border_indent")	this->setBorderIndent(april::hstrToGvec2(value));
+		else if (name == "border_indent_x")	this->setBorderIndentX(value);
+		else if (name == "border_indent_y")	this->setBorderIndentY(value);
 		else if (name == "tiled_borders")	this->setTiledBorders(value);
 		else return Image::setProperty(name, value);
 		return true;
@@ -249,33 +295,40 @@ namespace aprilui
 				this->_rectVertices.clear();
 			}
 			// which pieces will be rendered
-			bool left = (this->skinRect.x > 0.0f);
-			bool hcenter = (rect.w > this->srcRect.w - this->skinRect.w);
-			bool right = (this->srcRect.w > this->skinRect.right());
-			bool top = (this->skinRect.y > 0.0f);
-			bool vcenter = (rect.h > this->srcRect.h - this->skinRect.h);
-			bool bottom = (this->srcRect.h > this->skinRect.bottom());
+			grect indentedSkinRect(this->skinRect.getPosition() + this->borderIndent, this->skinRect.getSize() - this->borderIndent * 2);
 			grect skinRect = this->skinRect;
 			gvec2 srcSize = this->srcRect.getSize();
+			bool left = (indentedSkinRect.x > 0.0f);
+			bool hcenter = (rect.w > this->srcRect.w - indentedSkinRect.w);
+			bool right = (this->srcRect.w > indentedSkinRect.right());
+			bool top = (indentedSkinRect.y > 0.0f);
+			bool vcenter = (rect.h > this->srcRect.h - indentedSkinRect.h);
+			bool bottom = (this->srcRect.h > indentedSkinRect.bottom());
 			// modifying skinRect if only borders are visible
 			if (!hcenter)
 			{
-				float difference = this->srcRect.w - this->skinRect.w - rect.w;
+				float difference = this->srcRect.w - skinRect.w - rect.w;
 				skinRect.x -= difference * 0.5f;
 				skinRect.w += difference;
+				difference = this->srcRect.w - indentedSkinRect.w - rect.w;
+				indentedSkinRect.x -= difference * 0.5f;
+				indentedSkinRect.w += difference;
 			}
 			if (!vcenter)
 			{
-				float difference = this->srcRect.h - this->skinRect.h - rect.h;
+				float difference = this->srcRect.h - skinRect.h - rect.h;
 				skinRect.y -= difference * 0.5f;
 				skinRect.h += difference;
+				difference = this->srcRect.h - indentedSkinRect.h - rect.h;
+				indentedSkinRect.y -= difference * 0.5f;
+				indentedSkinRect.h += difference;
 			}
 			// coordinate translation
 			gvec2 pos[4];
 			pos[0] = rect.getPosition();
 			pos[3] = rect.getBottomRight();
-			pos[1] = pos[0] + skinRect.getPosition();
-			pos[2] = pos[0] + rect.getSize() - (srcRect.getSize() - skinRect.getBottomRight());
+			pos[1] = pos[0] + indentedSkinRect.getPosition();
+			pos[2] = pos[0] + rect.getSize() - (srcRect.getSize() - indentedSkinRect.getBottomRight());
 			gvec2 uv[4];
 			uv[0].set(Image::vertices[0].u, Image::vertices[0].v);
 			uv[3].set(Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].u, Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].v);
@@ -335,7 +388,7 @@ namespace aprilui
 				// when tiled borders are enabled, a more complicated procedure is required to arrange all vertices into triangles
 				april::TexturedVertex w[6];
 				gvec2 tile = this->skinRect.getSize();
-				gvec2 border = rect.getSize() - (this->srcRect.getSize() - this->skinRect.getSize());
+				gvec2 border = rect.getSize() - (this->srcRect.getSize() - indentedSkinRect.getSize());
 				float tileCountX = border.x / tile.x;
 				float tileCountY = border.y / tile.y;
 				int countX = (int)tileCountX;

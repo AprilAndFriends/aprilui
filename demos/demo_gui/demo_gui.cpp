@@ -121,50 +121,56 @@ class KeyboardDelegate : public april::KeyboardDelegate
 		aprilui::GridView* gridView = NULL;
 		aprilui::GridViewRow* gridViewRow = NULL;
 		harray<int> indices = hstr("1,0").split(',').cast<int>();
-		switch (keyCode)
+		if (keyCode == april::Key::Menu)
 		{
-		case april::AK_MENU:
 			dataset->unload();
 			dataset->load();
 			dataset->getAnimator("custom_animator")->setCustomFunction(&_animatorCustomFunction);
-			break;
-		case april::Key::Control:
+		}
+		else if (keyCode == april::Key::Control)
+		{
 			aprilui::setLocalization(aprilui::getLocalization() == "en" ? "de" : "en");
 			{
 				aprilui::Texture* texture = dataset->getTexture("texture");
 				texture->reload(aprilui::getLocalization() == "en" ? RESOURCE_PATH "texture" : RESOURCE_PATH "transparency");
 			}
-			break;
-		case april::AK_N:
+		}
+		else if (keyCode == april::Key::N)
+		{
 			object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
 			if (object->getHeight() > 128)
 			{
 				object->setHeight(object->getHeight() - 128);
 			}
-			break;
-		case april::AK_M:
+		}
+		else if (keyCode == april::Key::M)
+		{
 			object = dataset->getObject<aprilui::ScrollArea*>("scrolltest_scroll_area");
 			object->setHeight(object->getHeight() + 128);
-			break;
-		case april::AK_INSERT:
+		}
+		else if (keyCode == april::Key::Insert)
+		{
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
 			listBoxItem = listBox->createItem(hrand(listBox->getItemCount() + 1), april::generateName("item "));
 			listBoxItem->setText(listBoxItem->getName());
 			listBoxItem->setEffect(atres::TextEffect::Border);
-			break;
-		case april::AK_DELETE:
+		}
+		else if (keyCode == april::Key::Delete)
+		{
 			listBox = dataset->getObject<aprilui::ListBox*>("list_box");
 			listBox->deleteItem(hrand(listBox->getItemCount()));
-			break;
-		case april::AK_HOME:
+		}
+		else if (keyCode == april::Key::Home)
+		{
 			treeView = dataset->getObject<aprilui::TreeView*>("tree_view");
 			indices += treeView->getItemAt(indices)->getNodes().size();
 			treeViewNode = treeView->createItem(indices, april::generateName("node "));
 			treeViewNode->getLabel()->setText(treeViewNode->getName());
 			treeViewNode->getLabel()->setEffect(atres::TextEffect::Border);
 			treeViewNode->getLabel()->setHorzFormatting(atres::Horizontal::Left);
-			break;
-		case april::AK_END:
+		}
+		else if (keyCode == april::Key::End)
+		{
 			treeView = dataset->getObject<aprilui::TreeView*>("tree_view");
 			treeViewNode = treeView->getItemAt(indices);
 			if (treeViewNode != NULL)
@@ -175,18 +181,20 @@ class KeyboardDelegate : public april::KeyboardDelegate
 					treeView->deleteItem(indices);
 				}
 			}
-			break;
-		case april::AK_PRIOR:
+		}
+		else if (keyCode == april::Key::Prior)
+		{
 			gridView = dataset->getObject<aprilui::GridView*>("grid_view");
 			gridViewRow = gridView->createRow(hrand(gridView->getRowCount() + 1), april::generateName("row "));
-			break;
-		case april::AK_NEXT:
+		}
+		else if (keyCode == april::Key::Next)
+		{
 			gridView = dataset->getObject<aprilui::GridView*>("grid_view");
 			gridView->deleteRow(hrand(gridView->getRowCount()));
-			break;
-		case april::AK_F2:
+		}
+		else if (keyCode == april::Key::F2)
+		{
 			aprilui::setDebugEnabled(!aprilui::isDebugEnabled());
-			break;
 		}
 		aprilui::onKeyDown(keyCode);
 	}

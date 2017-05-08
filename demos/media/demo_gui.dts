@@ -230,8 +230,10 @@
 				<Label name="label_format_1" text_key="{%f %s}{Format %s}{this}    NORMAL_KEY" rect="0,32,700,32"/>
 				<Label name="label_format_2" text_key="{%s %} {malformed} NO_KEY {see log for info}" rect="0,64,700,32"/>
 			</Container>
-			<ImageBox name="skinned_image" image="skin_image/test" rect="260,512,192,64"/>
-			<ImageBox name="skinned_tiled_image" image="skin_tiled_image/test" rect="260,576,170,96"/>
+			<ImageBox name="skinned_image" image="skin_image/test" rect="200,512,192,64"/>
+			<ImageBox name="skinned_image_indent" image="skin_image/test_indent" rect="400,512,160,56"/>
+			<ImageBox name="skinned_tiled_image" image="skin_tiled_image/test" rect="200,576,170,96"/>
+			<ImageBox name="skinned_tiled_image_indent" image="skin_tiled_image/test_indent" rect="400,576,140,72"/>
 			<ProgressBar name="progress_bar_1" anti_progress_image="texture/test_red" progress_image="texture/test_green" mask_image="transparency/mask" direction="right" rect="0,0,128,16"/>
 			<ProgressBar name="progress_bar_2" anti_progress_image="texture/test_blue" progress_image="texture/test_yellow" stretching="true" direction="up" rect="0,32,16,128">
 				<ProgressChanger name="progress_animator" function="sine" offset="0.625" amplitude="0.625" speed="0.25" timer="2"/>

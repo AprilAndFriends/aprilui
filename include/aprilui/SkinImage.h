@@ -45,6 +45,13 @@ namespace aprilui
 		inline gvec2 getSkinSize() const { return this->skinRect.getSize(); }
 		void setSkinSize(cgvec2 value);
 		void setSkinSize(float w, float h);
+		HL_DEFINE_GET(gvec2, borderIndent, BorderIndent);
+		void setBorderIndent(cgvec2 value);
+		void setBorderIndent(float x, float y);
+		HL_DEFINE_GET(float, borderIndent.x, BorderIndentX);
+		void setBorderIndentX(float value);
+		HL_DEFINE_GET(float, borderIndent.y, BorderIndentY);
+		void setBorderIndentY(float value);
 		HL_DEFINE_IS(tiledBorders, TiledBorders);
 		void setTiledBorders(bool value);
 
@@ -60,6 +67,7 @@ namespace aprilui
 
 	protected:
 		grect skinRect;
+		gvec2 borderIndent;
 		bool tiledBorders;
 
 	private:

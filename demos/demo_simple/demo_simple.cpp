@@ -56,8 +56,8 @@ public:
 		aprilui::processEvents();
 		april::rendersys->clear();
 		april::rendersys->setOrthoProjection(viewport);
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		april::rendersys->drawFilledRect(viewport, april::Color::Grey);
 		april::rendersys->drawFilledRect(grect(0.0f, 0.0f, 100.0f, 75.0f), april::Color::Yellow);
 		dataset->draw();
