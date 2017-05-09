@@ -266,7 +266,7 @@ namespace aprilui
 			this->texture->load();
 		}
 		april::rendersys->setTexture(this->texture->getTexture());
-		bool recreateVertices = !this->_textureCoordinatesLoaded;
+		bool recreateVertices = (!this->_textureCoordinatesLoaded || !this->_clipRectCalculated);
 		this->tryLoadTextureCoordinates();
 		if (recreateVertices || this->_lastScroll != this->scroll || this->_lastRect != rect)
 		{

@@ -268,9 +268,10 @@ namespace aprilui
 
 	void Image::tryLoadTextureCoordinates()
 	{
-		if (!this->_textureCoordinatesLoaded && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)
+		if ((!this->_textureCoordinatesLoaded || !this->_clipRectCalculated) && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)
 		{
 			this->_textureCoordinatesLoaded = true;
+			this->_clipRectCalculated = true;
 			float iw = 1.0f / this->texture->getWidth();
 			float ih = 1.0f / this->texture->getHeight();
 			grect rect = this->_makeClippedSrcRect();

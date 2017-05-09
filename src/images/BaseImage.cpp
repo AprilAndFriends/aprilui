@@ -18,6 +18,7 @@ namespace aprilui
 		this->name = name;
 		this->dataset = NULL;
 		this->_textureCoordinatesLoaded = false;
+		this->_clipRectCalculated = false;
 	}
 
 	BaseImage::BaseImage(const BaseImage& other) : Cloneable(other)
@@ -26,7 +27,8 @@ namespace aprilui
 		this->tag = other.tag;
 		this->dataset = NULL;
 		this->clipRect = other.clipRect;
-		this->_textureCoordinatesLoaded = other._textureCoordinatesLoaded;
+		this->_textureCoordinatesLoaded = false;
+		this->_clipRectCalculated = false;
 	}
 
 	BaseImage::~BaseImage()
@@ -75,7 +77,7 @@ namespace aprilui
 		if (this->clipRect != value)
 		{
 			this->clipRect = value;
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -84,7 +86,7 @@ namespace aprilui
 		if (this->clipRect.x != value)
 		{
 			this->clipRect.x = value;
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -93,7 +95,7 @@ namespace aprilui
 		if (this->clipRect.y != value)
 		{
 			this->clipRect.y = value;
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -102,7 +104,7 @@ namespace aprilui
 		if (this->clipRect.w != value)
 		{
 			this->clipRect.w = value;
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -111,7 +113,7 @@ namespace aprilui
 		if (this->clipRect.h != value)
 		{
 			this->clipRect.h = value;
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -120,7 +122,7 @@ namespace aprilui
 		if (this->clipRect.getPosition() != value)
 		{
 			this->clipRect.setPosition(value);
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -129,7 +131,7 @@ namespace aprilui
 		if (this->clipRect.x != x || this->clipRect.y != y)
 		{
 			this->clipRect.setPosition(x, y);
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -138,7 +140,7 @@ namespace aprilui
 		if (this->clipRect.getSize() != value)
 		{
 			this->clipRect.setSize(value);
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 
@@ -147,7 +149,7 @@ namespace aprilui
 		if (this->clipRect.w != w || this->clipRect.h != h)
 		{
 			this->clipRect.setSize(w, h);
-			this->_textureCoordinatesLoaded = false;
+			this->_clipRectCalculated = false;
 		}
 	}
 

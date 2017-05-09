@@ -84,6 +84,7 @@ namespace aprilui
 		grect clipRect;
 
 		bool _textureCoordinatesLoaded;
+		bool _clipRectCalculated;
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

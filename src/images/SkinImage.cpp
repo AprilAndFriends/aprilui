@@ -260,9 +260,10 @@ namespace aprilui
 				return;
 			}
 		}
-		if (!this->_textureCoordinatesLoaded)
+		if (!this->_textureCoordinatesLoaded || !this->_clipRectCalculated)
 		{
 			this->_skinCoordinatesCalculated = false;
+			this->_clipRectCalculated = true; // not used for texture coordinates in this class so it's disabled
 		}
 		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
 		{
@@ -271,7 +272,10 @@ namespace aprilui
 		april::rendersys->setTexture(this->texture->getTexture());
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
+		grect originalClipRect = this->clipRect; // prevents wrong calculations for src coordinates
+		this->clipRect.set(0.0f, 0.0f, 0.0f, 0.0f);
 		this->tryLoadTextureCoordinates();
+		this->clipRect = originalClipRect;
 		if (!this->_skinCoordinatesCalculated)
 		{
 			this->_skinCoordinatesCalculated = true;
@@ -524,9 +528,66 @@ namespace aprilui
 					CREATE_TRIANGLE(this->_vertices, right, 10, 11, 14, 15);
 				}
 			}
+			// clipped rect
+			if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
+			{
+				float range = 0.0f;
+				float offset = 0.0f;
+				gvec2 clipScale = rect.getSize() / this->srcRect.getSize();
+				grect clipRect(rect.getPosition() + this->clipRect.getPosition() * clipScale, this->clipRect.getSize() * clipScale);
+				for_iter (i, 0, this->_vertices.size() / 6)
+				{
+					// remove out-of bounds
+					if (this->_vertices[i * 6 + 1].x <= clipRect.x || this->_vertices[i * 6].x >= clipRect.right() || this->_vertices[i * 6 + 2].y <= clipRect.y || this->_vertices[i * 6].y >= clipRect.bottom())
+					{
+						this->_vertices.removeAt(i * 6, 6);
+						--i;
+					}
+					else
+					{
+						// cut coordinates and correct src
+						if (this->_vertices[i * 6].x < clipRect.x)
+						{
+							range = this->_vertices[i * 6 + 1].x - this->_vertices[i * 6].x;
+							offset = clipRect.x - this->_vertices[i * 6].x;
+							this->_vertices[i * 6].x += offset;		this->_vertices[i * 6 + 2].x += offset;	this->_vertices[i * 6 + 4].x += offset;
+							offset *= (this->_vertices[i * 6 + 1].u - this->_vertices[i * 6].u) / range;
+							this->_vertices[i * 6].u += offset;		this->_vertices[i * 6 + 2].u += offset;	this->_vertices[i * 6 + 4].u += offset;
+						}
+						if (this->_vertices[i * 6 + 1].x > clipRect.right())
+						{
+							range = this->_vertices[i * 6 + 1].x - this->_vertices[i * 6].x;
+							offset = this->_vertices[i * 6 + 1].x - clipRect.right();
+							this->_vertices[i * 6 + 1].x -= offset;	this->_vertices[i * 6 + 3].x -= offset;	this->_vertices[i * 6 + 5].x -= offset;
+							offset *= (this->_vertices[i * 6 + 1].u - this->_vertices[i * 6].u) / range;
+							this->_vertices[i * 6 + 1].u -= offset;	this->_vertices[i * 6 + 3].u -= offset;	this->_vertices[i * 6 + 5].u -= offset;
+						}
+						if (this->_vertices[i * 6].y < clipRect.y)
+						{
+							range = this->_vertices[i * 6 + 2].y - this->_vertices[i * 6].y;
+							offset = clipRect.y - this->_vertices[i * 6].y;
+							this->_vertices[i * 6].y += offset;		this->_vertices[i * 6 + 1].y += offset;	this->_vertices[i * 6 + 3].y += offset;
+							offset *= (this->_vertices[i * 6 + 2].v - this->_vertices[i * 6].v) / range;
+							this->_vertices[i * 6].v += offset;		this->_vertices[i * 6 + 1].v += offset;	this->_vertices[i * 6 + 3].v += offset;
+						}
+						if (this->_vertices[i * 6 + 2].y > clipRect.bottom())
+						{
+							range = this->_vertices[i * 6 + 2].y - this->_vertices[i * 6].y;
+							offset = this->_vertices[i * 6 + 2].y - clipRect.bottom();
+							this->_vertices[i * 6 + 2].y -= offset;	this->_vertices[i * 6 + 4].y -= offset;	this->_vertices[i * 6 + 5].y -= offset;
+							offset *= (this->_vertices[i * 6 + 2].v - this->_vertices[i * 6].v) / range;
+							this->_vertices[i * 6 + 2].v -= offset;	this->_vertices[i * 6 + 4].v -= offset;	this->_vertices[i * 6 + 5].v -= offset;
+						}
+					}
+				}
+			}
+			// finished coordinates
 			this->_rectVertices += RectVertices(rect, this->_vertices);
 		}
-		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), drawColor);
+		if (this->_vertices.size() > 0)
+		{
+			april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)this->_vertices, this->_vertices.size(), drawColor);
+		}
 	}
 
 	void SkinImage::draw(const harray<april::TexturedVertex>& vertices, const april::Color& color)
