@@ -1312,6 +1312,7 @@ namespace aprilui
 			this->text = left + right;
 			this->_blinkTimer = 0.0f;
 			this->setCaretIndex(newCaretIndex);
+			this->triggerEvent(Event::TextChanged);
 		}
 		this->setSelectionCount(0);
 	}
@@ -1420,6 +1421,7 @@ namespace aprilui
 		}
 		this->text = (left + hstr::fromUnicode(charCode)) + right;
 		this->setCaretIndex(this->caretIndex + 1);
+		this->triggerEvent(Event::TextChanged);
 	}
 
 	void EditBox::_cutText()
