@@ -314,14 +314,14 @@ namespace aprilui
 		{
 			this->_blinkTimer += time * 2;
 			this->_blinkTimer = (this->_blinkTimer - (int)this->_blinkTimer);
-			this->_updateCaretRect();
+			this->_updateCaretPosition();
 			this->_updateCaret();
 			this->_updateSelection();
 			return;
 		}
 		int index = this->caretIndex;
 		this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
-		this->_updateCaretRect();
+		this->_updateCaretPosition();
 		this->_updateCaret();
 		if (this->selectable)
 		{
@@ -330,7 +330,7 @@ namespace aprilui
 		this->_updateSelection();
 	}
 
-	void EditBox::_updateCaretRect()
+	void EditBox::_updateCaretPosition()
 	{
 		if (!this->_caretPositionDirty)
 		{
@@ -895,7 +895,7 @@ namespace aprilui
 			this->setCaretIndexAt(this->transformToLocalSpace(aprilui::getCursorPosition()));
 			this->setSelectionCount(0);
 			this->setFocused(true);
-			this->_updateCaretRect();
+			this->_updateCaretPosition();
 			this->_updateCaret();
 			this->_updateSelection();
 			this->triggerEvent(Event::MouseDown, keyCode);
@@ -1187,9 +1187,9 @@ namespace aprilui
 		int index = this->caretIndex;
 		if (this->caretIndex > 0)
 		{
-			this->_updateCaretRect();
+			this->_updateCaretPosition();
 			this->setCaretIndexAt(gvec2(this->caretRect.x, this->caretRect.y - atres::renderer->getFont(this->font)->getLineHeight() * 0.5f));
-			this->_updateCaretRect();
+			this->_updateCaretPosition();
 		}
 		this->_updateSelectionCount(index);
 	}
@@ -1199,9 +1199,9 @@ namespace aprilui
 		int index = this->caretIndex;
 		if (this->caretIndex < this->text.utf8Size())
 		{
-			this->_updateCaretRect();
+			this->_updateCaretPosition();
 			this->setCaretIndexAt(gvec2(this->caretRect.x, this->caretRect.y + atres::renderer->getFont(this->font)->getLineHeight() * 1.5f));
-			this->_updateCaretRect();
+			this->_updateCaretPosition();
 		}
 		this->_updateSelectionCount(index);
 	}

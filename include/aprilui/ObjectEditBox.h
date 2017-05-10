@@ -128,7 +128,7 @@ namespace aprilui
 		int renderOffsetX;
 		int renderOffsetY;
 
-		void _updateCaretRect();
+		void _updateCaretPosition();
 		void _updateCaret();
 		void _updateSelection();
 		

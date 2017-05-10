@@ -375,13 +375,16 @@ namespace aprilui
 		if (name == "auto_scaled_font")		return this->getAutoScaledFont();
 		if (name == "horz_formatting")
 		{
-			if (this->horzFormatting == atres::Horizontal::Left)			return "left";
-			if (this->horzFormatting == atres::Horizontal::Right)			return "right";
-			if (this->horzFormatting == atres::Horizontal::Center)			return "center";
-			if (this->horzFormatting == atres::Horizontal::LeftWrapped)		return "left_wrapped";
-			if (this->horzFormatting == atres::Horizontal::RightWrapped)	return "right_wrapped";
-			if (this->horzFormatting == atres::Horizontal::CenterWrapped)	return "center_wrapped";
-			if (this->horzFormatting == atres::Horizontal::Justified)		return "justified";
+			if (this->horzFormatting == atres::Horizontal::Left)					return "left";
+			if (this->horzFormatting == atres::Horizontal::Right)					return "right";
+			if (this->horzFormatting == atres::Horizontal::Center)					return "center";
+			if (this->horzFormatting == atres::Horizontal::LeftWrapped)				return "left_wrapped";
+			if (this->horzFormatting == atres::Horizontal::LeftWrappedUntrimmed)	return "left_wrapped_untrimmed";
+			if (this->horzFormatting == atres::Horizontal::RightWrapped)			return "right_wrapped";
+			if (this->horzFormatting == atres::Horizontal::RightWrappedUntrimmed)	return "right_wrapped_untrimmed";
+			if (this->horzFormatting == atres::Horizontal::CenterWrapped)			return "center_wrapped";
+			if (this->horzFormatting == atres::Horizontal::CenterWrappedUntrimmed)	return "center_wrapped_untrimmed";
+			if (this->horzFormatting == atres::Horizontal::Justified)				return "justified";
 		}
 		if (name == "vert_formatting")
 		{
@@ -429,13 +432,16 @@ namespace aprilui
 		else if (name == "min_auto_scale")		this->setMinAutoScale(value);
 		else if (name == "horz_formatting")
 		{
-			if (value == "left")				this->setHorzFormatting(atres::Horizontal::Left);
-			else if (value == "right")			this->setHorzFormatting(atres::Horizontal::Right);
-			else if (value == "center")			this->setHorzFormatting(atres::Horizontal::Center);
-			else if (value == "left_wrapped")	this->setHorzFormatting(atres::Horizontal::LeftWrapped);
-			else if (value == "right_wrapped")	this->setHorzFormatting(atres::Horizontal::RightWrapped);
-			else if (value == "center_wrapped")	this->setHorzFormatting(atres::Horizontal::CenterWrapped);
-			else if (value == "justified")		this->setHorzFormatting(atres::Horizontal::Justified);
+			if (value == "left")							this->setHorzFormatting(atres::Horizontal::Left);
+			else if (value == "right")						this->setHorzFormatting(atres::Horizontal::Right);
+			else if (value == "center")						this->setHorzFormatting(atres::Horizontal::Center);
+			else if (value == "left_wrapped")				this->setHorzFormatting(atres::Horizontal::LeftWrapped);
+			else if (value == "left_wrapped_untrimmed")		this->setHorzFormatting(atres::Horizontal::LeftWrappedUntrimmed);
+			else if (value == "right_wrapped")				this->setHorzFormatting(atres::Horizontal::RightWrapped);
+			else if (value == "right_wrapped_untrimmed")	this->setHorzFormatting(atres::Horizontal::RightWrappedUntrimmed);
+			else if (value == "center_wrapped")				this->setHorzFormatting(atres::Horizontal::CenterWrapped);
+			else if (value == "center_wrapped_untrimmed")	this->setHorzFormatting(atres::Horizontal::CenterWrappedUntrimmed);
+			else if (value == "justified")					this->setHorzFormatting(atres::Horizontal::Justified);
 			else
 			{
 				hlog::warn(logTag, "'horz_formatting=' does not support value '" + value + "'.");
