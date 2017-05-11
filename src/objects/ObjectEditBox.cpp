@@ -381,6 +381,7 @@ namespace aprilui
 						if (position.x <= lines[i].rect.right())
 						{
 							line = &lines[i];
+							offsetIndex = line->start;
 						}
 						else
 						{
@@ -389,28 +390,20 @@ namespace aprilui
 						break;
 					}
 				}
-				if (line != NULL)
+				if (line != NULL && line->words.size() > 0)
 				{
-					offsetIndex = line->start;
-					if (line->words.size() > 0)
+					offsetIndex = line->start + line->count;
+					float ow = 0.0f;
+					float cw = 0.0f;
+					foreach (atres::RenderWord, it, line->words)
 					{
-						atres::RenderWord* word = NULL;
-						foreach (atres::RenderWord, it, line->words)
+						if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
 						{
-							if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
+							ow = (*it).rect.x;
+							offsetIndex = (*it).start;
+							foreach (float, it2, (*it).charWidths)
 							{
-								word = &(*it);
-								break;
-							}
-						}
-						if (word != NULL)
-						{
-							float ow = word->rect.x;
-							offsetIndex = word->start;
-							float cw = 0.0f;
-							foreach (float, it, word->charWidths)
-							{
-								cw = (*it) * 0.5f;
+								cw = (*it2) * 0.5f;
 								if (hbetweenIE(position.x, ow, ow + cw))
 								{
 									break;
@@ -423,10 +416,7 @@ namespace aprilui
 								}
 								ow += cw;
 							}
-						}
-						else if (position.x > line->rect.x)
-						{
-							offsetIndex = line->start + line->count;
+							break;
 						}
 					}
 				}
