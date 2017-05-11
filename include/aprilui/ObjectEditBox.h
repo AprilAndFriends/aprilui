@@ -131,7 +131,9 @@ namespace aprilui
 		void _updateCaretPosition();
 		void _updateCaret();
 		void _updateSelection();
-		
+		gvec2 _makeCaretPosition(const harray<atres::RenderLine>& lines, int index, cgvec2 base, float fontHeight, float heightOffset, int* lineIndex = NULL);
+		void _makeBaseOffset(gvec2& offset, float& heightOffset, float* heightFactor = NULL) const;
+
 		void _update(float timeDelta);
 		void _draw();
 
@@ -146,8 +148,6 @@ namespace aprilui
 		bool _buttonUp(april::Button buttonCode);
 
 		april::Color _makeSelectionDrawColor(const april::Color& drawColor) const;
-
-		void _getBaseOffset(gvec2& offset, float& hf) const;
 
 		void _updateSelectionCount(int previousCaretIndex);
 		void _caretMoveStart();
