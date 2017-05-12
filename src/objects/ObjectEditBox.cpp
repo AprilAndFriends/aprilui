@@ -401,7 +401,7 @@ namespace aprilui
 						{
 							ow = (*it).rect.x;
 							offsetIndex = (*it).start;
-							foreach (float, it2, (*it).charWidths)
+							foreach (float, it2, (*it).charAdvanceXs)
 							{
 								cw = (*it2) * 0.5f;
 								if (hbetweenIE(position.x, ow, ow + cw))
