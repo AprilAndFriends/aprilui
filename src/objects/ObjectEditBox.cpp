@@ -627,6 +627,7 @@ namespace aprilui
 		gvec2 result(lines.last().rect.right(), lines.last().rect.y + heightOffset);
 		int currentIndex = 0;
 		std::ustring ustr;
+		int size = 0;
 		for_iter (i, 0, lines.size())
 		{
 			if (hbetweenIE(index, lines[i].start, lines[i].start + lines[i].count))
@@ -650,7 +651,8 @@ namespace aprilui
 							result.x = (*it).rect.x;
 							currentIndex = (*it).start;
 							ustr = (*it).text.uStr();
-							for_itert (size_t, j, 0, ustr.size())
+							size = (int)ustr.size();
+							for_iter (j, 0, size)
 							{
 								if (currentIndex == index)
 								{
@@ -1425,7 +1427,8 @@ namespace aprilui
 			{
 				std::ustring uString = string.uStr();
 				std::ustring uFilter = this->filter.uStr();
-				for_itert (size_t, i, 0, uString.size())
+				int size = (int)uString.size();
+				for_iter (i, 0, size)
 				{
 					if (font->hasCharacter(uString[i]) && (this->filter.size() == 0 || uFilter.find_first_of(uString[i]) != std::string::npos))
 					{
