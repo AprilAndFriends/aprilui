@@ -760,7 +760,7 @@ namespace aprilui
 		{
 			grect renderRect = this->caretRect - this->pivot + this->caretOffset;
 			// make sure the caret is visible if the editbox is empty
-			if (renderRect.x < 1.0f && (this->horzFormatting.isLeft() || this->horzFormatting == atres::Horizontal::Justified))
+			if (renderRect.x < drawRect.x + 1.0f && (this->horzFormatting.isLeft() || this->horzFormatting == atres::Horizontal::Justified))
 			{
 				renderRect.x += 1.0f;
 			}
