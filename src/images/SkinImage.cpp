@@ -300,11 +300,12 @@ namespace aprilui
 			}
 			// which pieces will be rendered
 			grect indentedSkinRect(this->skinRect.getPosition() + this->borderIndent, this->skinRect.getSize() - this->borderIndent * 2);
-			grect clippedIndentedSkinRect = indentedSkinRect.clipped(this->skinRect);
+			grect clippedIndentedSkinRect = indentedSkinRect.clipped(grect(0.0f, 0.0f, this->srcRect.getSize()));
 			if (indentedSkinRect != clippedIndentedSkinRect)
 			{
-				hlog::warnf(logTag, "Image '%s' uses a border_indent (%g,%g) that is bigger than the actual border defined by skin_rect (%g,%g,%g,%g)!",
-					this->name.cStr(), this->borderIndent.x, this->borderIndent.y, this->skinRect.x, this->skinRect.y, this->skinRect.w, this->skinRect.h);
+				hlog::warnf(logTag, "Image '%s' uses a border_indent (%g,%g) that is bigger than the actual border defined by skin_rect (%g,%g,%g,%g) resulting in (%g,%g,%g,%g)!",
+					this->name.cStr(), this->borderIndent.x, this->borderIndent.y, this->skinRect.x, this->skinRect.y, this->skinRect.w, this->skinRect.h,
+					clippedIndentedSkinRect.x, clippedIndentedSkinRect.y, clippedIndentedSkinRect.w, clippedIndentedSkinRect.h);
 				indentedSkinRect = clippedIndentedSkinRect;
 			}
 			grect skinRect = this->skinRect;
