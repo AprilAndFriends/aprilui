@@ -1074,7 +1074,7 @@ namespace aprilui
 				if		((*node)->name == "Texture")		this->parseTexture(*node);
 				else if ((*node)->name == "CompositeImage")	this->parseCompositeImage(*node);
 				else if ((*node)->name == "Style")			this->parseStyle(*node);
-				else if ((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), (*node)->pstr("path"), false), (*node)->pbool("optional", false));
+				else if ((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), (*node)->pstr("path"), true), (*node)->pbool("optional", false));
 				else if	((*node)->name == "TextureGroup")	this->parseTextureGroup(*node);
 				else if ((*node)->name == "Object" || objectFactories.hasKey((*node)->name))
 				{
