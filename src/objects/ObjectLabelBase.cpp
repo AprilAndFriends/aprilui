@@ -412,8 +412,40 @@ namespace aprilui
 			}
 			return effect;
 		}
-		if (name == "strike_through")		return this->isStrikeThrough();
-		if (name == "underline")			return this->isUnderline();
+		if (name == "strike_through")
+		{
+			hstr strikeThrough = this->strikeThrough;
+			if (this->useStrikeThroughColor)
+			{
+				strikeThrough += ":" + this->strikeThroughColor.hex();
+				if (this->useStrikeThroughParameter)
+				{
+					strikeThrough += "," + this->strikeThroughParameter;
+				}
+			}
+			else if (this->useStrikeThroughParameter)
+			{
+				strikeThrough += ":," + this->strikeThroughParameter;
+			}
+			return strikeThrough;
+		}
+		if (name == "underline")
+		{
+			hstr underline = this->underline;
+			if (this->useUnderlineColor)
+			{
+				underline += ":" + this->underlineColor.hex();
+				if (this->useUnderlineParameter)
+				{
+					underline += "," + this->underlineParameter;
+				}
+			}
+			else if (this->useUnderlineParameter)
+			{
+				underline += ":," + this->underlineParameter;
+			}
+			return underline;
+		}
 		if (name == "background_color")		return this->getBackgroundColor().hex();
 		if (name == "background_border")	return this->isBackgroundBorder();
 		return "";
@@ -463,6 +495,7 @@ namespace aprilui
 		{
 			this->setEffect(atres::TextEffect::None);
 			this->setUseEffectColor(false);
+			this->setUseEffectParameter(false);
 			harray<hstr> values = value.split(":", 1, true);
 			if (values.size() > 0)
 			{
@@ -476,41 +509,102 @@ namespace aprilui
 				}
 				if (values.size() > 1)
 				{
-					values = values[1].split(",", 1);
-					if (values[0] != "")
+					bool useColor = false;
+					bool useParameter = false;
+					april::Color color;
+					hstr parameter;
+					if (!this->_analyzeExtraParameters(name, values[1], useColor, useParameter, color, parameter))
 					{
-						try
-						{
-							this->setEffectSymbolicColor(values[0]);
-						}
-						catch (hexception&)
-						{
-							hlog::warn(logTag, "'effect=' is using invalid color modifier '" + values[0] + "'.");
-							return false;
-						}
-						this->setUseEffectColor(true);
+						return false;
 					}
-					else
-					{
-						this->setUseEffectColor(false);
-					}
-					if (values.size() > 1)
-					{
-						this->setEffectParameter(values[1]);
-						this->setUseEffectParameter(true);
-					}
-					else
-					{
-						this->setUseEffectParameter(false);
-					}
+					this->setUseEffectColor(useColor);
+					this->setUseEffectParameter(useParameter);
+					this->setEffectColor(color);
+					this->setEffectParameter(parameter);
 				}
 			}
 		}
-		else if (name == "strike_through")		this->setStrikeThrough(value);
-		else if (name == "underline")			this->setUnderline(value);
+		else if (name == "strike_through")
+		{
+			this->setStrikeThrough(false);
+			this->setUseStrikeThroughColor(false);
+			this->setUseStrikeThroughParameter(false);
+			harray<hstr> values = value.split(":", 1, true);
+			if (values.size() > 0)
+			{
+				this->setStrikeThrough(values[0]);
+				if (values.size() > 1)
+				{
+					bool useColor = false;
+					bool useParameter = false;
+					april::Color color;
+					hstr parameter;
+					if (!this->_analyzeExtraParameters(name, values[1], useColor, useParameter, color, parameter))
+					{
+						return false;
+					}
+					this->setUseStrikeThroughColor(useColor);
+					this->setUseStrikeThroughParameter(useParameter);
+					this->setStrikeThroughColor(color);
+					this->setStrikeThroughParameter(parameter);
+				}
+			}
+		}
+		else if (name == "underline")
+		{
+			this->setUnderline(false);
+			this->setUseUnderlineColor(false);
+			this->setUseEffectParameter(false);
+			harray<hstr> values = value.split(":", 1, true);
+			if (values.size() > 0)
+			{
+				this->setUnderline(values[0]);
+				if (values.size() > 1)
+				{
+					bool useColor = false;
+					bool useParameter = false;
+					april::Color color;
+					hstr parameter;
+					if (!this->_analyzeExtraParameters(name, values[1], useColor, useParameter, color, parameter))
+					{
+						return false;
+					}
+					this->setUseUnderlineColor(useColor);
+					this->setUseUnderlineParameter(useParameter);
+					this->setUnderlineColor(color);
+					this->setUnderlineParameter(parameter);
+				}
+			}
+		}
 		else if (name == "background_color")	this->setBackgroundColor(aprilui::_makeColor(value));
 		else if (name == "background_border")	this->setBackgroundBorder(value);
 		else return false;
+		return true;
+	}
+
+	bool LabelBase::_analyzeExtraParameters(chstr name, chstr value, bool& useColor, bool& useParameter, april::Color& color, hstr& parameter) const
+	{
+		harray<hstr> values = value.split(",", 1);
+		useColor = false;
+		if (values[0] != "")
+		{
+			try
+			{
+				color = aprilui::_makeColor(values[0]);
+			}
+			catch (hexception&)
+			{
+				hlog::warnf(logTag, "'%s=' is using invalid color modifier '%s'.", name.cStr(), values[0].cStr());
+				return false;
+			}
+			useColor = true;
+		}
+		useParameter = false;
+		if (values.size() > 1)
+		{
+			parameter = values[1];
+			useParameter = true;
+		}
 		return true;
 	}
 	

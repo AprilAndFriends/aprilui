@@ -135,6 +135,7 @@ namespace aprilui
 
 		void _calcAutoScaledFont(cgrect rect);
 		april::Color _makeBackgroundDrawColor(const april::Color& drawColor) const;
+		bool _analyzeExtraParameters(chstr name, chstr value, bool& useColor, bool& useParameter, april::Color& color, hstr& parameter) const;
 		
 		void _drawLabelBackground(cgrect rect, const april::Color& color, const april::Color& backgroundColor);
 		void _drawLabel(cgrect rect, const april::Color& color);
