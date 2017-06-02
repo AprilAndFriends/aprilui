@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="..\..\demos\demo_zorder\Package-uwp.appxmanifest">
-      <Filter>winrt</Filter>
+      <Filter>winuwp</Filter>
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
@@ -222,7 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\demos\demo_zorder\winrt-cursors.rc">
-      <Filter>winrt</Filter>
+      <Filter>winuwp</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
