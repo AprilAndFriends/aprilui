@@ -705,11 +705,12 @@ namespace aprilui
 
 	void EditBox::_draw()
 	{
+		bool focused = (this->dataset->getFocusedObject() == this);
 		april::Color color = this->color;
 		april::Color textColor = this->textColor;
 		hstr text = this->text;
 		this->text = this->getDisplayedText();
-		if (this->text == "" && this->dataset != NULL && this->dataset->getFocusedObject() != this)
+		if (this->text == "" && this->dataset != NULL && !focused)
 		{
 			this->text = this->emptyText;
 			this->textColor = this->emptyTextColor;
@@ -737,7 +738,7 @@ namespace aprilui
 		// background
 		this->_drawLabelBackground(drawRect, drawColor, backgroundColor);
 		// selection
-		if (this->selectionCount != 0)
+		if (this->selectionCount != 0 && focused)
 		{
 			april::Color selectionColor = this->_makeSelectionDrawColor(drawColor);
 			harray<grect> selectionRects = this->_selectionRects;
@@ -756,7 +757,7 @@ namespace aprilui
 		// border and normal label text
 		this->_drawLabel(drawRect, drawColor);
 		// caret render
-		if (this->dataset != NULL && this->dataset->getFocusedObject() == this && this->_blinkTimer < 0.5f)
+		if (this->dataset != NULL && focused && this->_blinkTimer < 0.5f)
 		{
 			grect renderRect = this->caretRect - this->pivot + this->caretOffset;
 			// make sure the caret is visible if the editbox is empty
