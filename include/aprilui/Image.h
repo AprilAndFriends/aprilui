@@ -61,8 +61,6 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		void setSymbolicColor(chstr value);
 		HL_DEFINE_ISSET(rotated, Rotated);
-		HL_DEFINE_ISSET(invertX, InvertX);
-		HL_DEFINE_ISSET(invertY, InvertY);
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
@@ -86,8 +84,6 @@ namespace aprilui
 		april::ColorMode colorMode;
 		float colorModeFactor;
 		bool rotated;
-		bool invertX;
-		bool invertY;
 		april::TexturedVertex vertices[APRILUI_IMAGE_MAX_VERTICES];
 
 		grect _makeClippedSrcRect() const;

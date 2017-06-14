@@ -33,8 +33,6 @@ namespace aprilui
 		this->colorMode = april::ColorMode::Multiply;
 		this->colorModeFactor = 1.0f;
 		this->rotated = false;
-		this->invertX = false;
-		this->invertY = false;
 	}
 
 	Image::Image(const Image& other) : BaseImage(other)
@@ -46,8 +44,6 @@ namespace aprilui
 		this->colorMode = other.colorMode;
 		this->colorModeFactor = other.colorModeFactor;
 		this->rotated = other.rotated;
-		this->invertX = other.invertX;
-		this->invertY = other.invertY;
 		for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
 		{
 			this->vertices[i] = other.vertices[i];
@@ -180,16 +176,6 @@ namespace aprilui
 			hlog::warn(logTag, "'vertical' is deprecated. Use 'rotated' instead."); // DEPRECATED
 			return this->isRotated();
 		}
-		if (name == "invert_x" || name == "invertx")
-		{
-			hlog::warn(logTag, "'" + name + "' is deprecated. Use 'Object.scale_x' instead."); // DEPRECATED
-			return this->isInvertX();
-		}
-		if (name == "invert_y" || name == "inverty")
-		{
-			hlog::warn(logTag, "'" + name + "' is deprecated. Use 'Object.scale_y' instead."); // DEPRECATED
-			return this->isInvertY();
-		}
 		if (name == "blend_mode")
 		{
 			if (this->blendMode == april::BlendMode::Alpha)		return "alpha";
@@ -225,16 +211,6 @@ namespace aprilui
 		{
 			hlog::warn(logTag, "'vertical=' is deprecated. Use 'rotated=' instead."); // DEPRECATED
 			this->setRotated(value);
-		}
-		else if	(name == "invert_x" || name == "invertx")
-		{
-			hlog::warn(logTag, "'" + name + "=' is deprecated. Use 'Object.scale_x=' instead."); // DEPRECATED
-			this->setInvertX(value);
-		}
-		else if (name == "invert_y" || name == "inverty")
-		{
-			hlog::warn(logTag, "'"+ name + "=' is deprecated. Use 'Object.scale_y=' instead."); // DEPRECATED
-			this->setInvertY(value);
 		}
 		else if	(name == "blend_mode")
 		{
@@ -292,16 +268,6 @@ namespace aprilui
 				topLeft.y = bottomLeft.y = rect.y * ih;
 				topRight.y = bottomRight.y = (rect.y + rect.w) * ih;
 				bottomLeft.x = bottomRight.x = rect.x * iw;
-			}
-			if (this->invertX)
-			{
-				hswap(topLeft.x, topRight.x);
-				hswap(bottomLeft.x, bottomRight.x);
-			}
-			if (this->invertY)
-			{
-				hswap(topLeft.y, bottomLeft.y);
-				hswap(topRight.y, bottomRight.y);
 			}
 			this->vertices[0].u = topLeft.x;
 			this->vertices[0].v = topLeft.y;
