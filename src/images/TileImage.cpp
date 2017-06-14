@@ -95,45 +95,23 @@ namespace aprilui
 		april::TexturedVertex v;
 		april::Texture* renderTexture = this->texture->getTexture();
 		gvec2 srcSize = this->srcRect.getSize();
-		if (this->rotated)
-		{
-			hswap(srcSize.x, srcSize.y);
-		}
 		bool fullTexture = (this->texture->isValid() && renderTexture->isLoaded() &&
 			renderTexture->getAddressMode() == april::Texture::AddressMode::Wrap &&
 			this->srcRect.x == 0.0f && this->srcRect.y == 0.0f &&
 			srcSize.x == (float)this->texture->getWidth() && srcSize.y == (float)this->texture->getHeight());
 		if (fullTexture)
 		{
-			if (this->rotated)
-			{
-				hswap(rect.w, rect.h);
-				float y = scroll.y;
-				scroll.y = scroll.x;
-				scroll.x = -y;
-			}
 			if (!this->useTileCount)
 			{
 				tile = rect.getSize() / tile;
 			}
 			srcs[0] = -scroll / rect.getSize() * tile;
 			srcs[1] = tile + srcs[0];
-			if (!this->rotated)
-			{
-				v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
-				v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
-				v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
-				this->tileVertices += this->tileVertices(-2, 2);
-				v.x = positions[1].x;	v.y = positions[1].y;	v.u = srcs[1].x;	v.v = srcs[1].y;	this->tileVertices += v;
-			}
-			else
-			{
-				v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
-				v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[1].y;	this->tileVertices += v;
-				v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
-				this->tileVertices += this->tileVertices(-2, 2);
-				v.x = positions[1].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
-			}
+			v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
+			v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
+			v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
+			this->tileVertices += this->tileVertices(-2, 2);
+			v.x = positions[1].x;	v.y = positions[1].y;	v.u = srcs[1].x;	v.v = srcs[1].y;	this->tileVertices += v;
 		}
 		else
 		{
@@ -142,15 +120,7 @@ namespace aprilui
 				tile = rect.getSize() / tile;
 			}
 			gvec2 invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
-			if (this->rotated)
-			{
-				hswap(invSize.x, invSize.y);
-			}
 			grect invSrcRect(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
-			if (this->rotated)
-			{
-				hswap(invSrcRect.w, invSrcRect.h);
-			}
 			gvec2 srcFactor = invSrcRect.getSize() / tile;
 			float difference = 0.0f;
 			scroll.x = hmodf(this->scroll.x, tile.x) - tile.x;
@@ -159,88 +129,43 @@ namespace aprilui
 			int countY = hceil((rect.h - scroll.y) / tile.y);
 			int i = 0;
 			int j = 0;
-			if (!this->rotated)
+			for_iterx (j, 0, countY)
 			{
-				for_iterx (j, 0, countY)
+				for_iterx (i, 0, countX)
 				{
-					for_iterx (i, 0, countX)
+					positions[0] = rect.getPosition() + scroll + gvec2((float)i, (float)j) * tile;
+					positions[1] = positions[0] + tile;
+					srcs[0] = invSrcRect.getTopLeft();
+					srcs[1] = invSrcRect.getBottomRight();
+					difference = rect.x - positions[0].x;
+					if (difference > 0.0f)
 					{
-						positions[0] = rect.getPosition() + scroll + gvec2((float)i, (float)j) * tile;
-						positions[1] = positions[0] + tile;
-						srcs[0] = invSrcRect.getTopLeft();
-						srcs[1] = invSrcRect.getBottomRight();
-						difference = rect.x - positions[0].x;
-						if (difference > 0.0f)
-						{
-							srcs[0].x += difference * srcFactor.x;
-							positions[0].x += difference;
-						}
-						difference = positions[1].x - (rect.x + rect.w);
-						if (difference > 0.0f)
-						{
-							srcs[1].x -= difference * srcFactor.x;
-							positions[1].x -= difference;
-						}
-						difference = rect.y - positions[0].y;
-						if (difference > 0.0f)
-						{
-							srcs[0].y += difference * srcFactor.y;
-							positions[0].y += difference;
-						}
-						difference = positions[1].y - (rect.y + rect.h);
-						if (difference > 0.0f)
-						{
-							srcs[1].y -= difference * srcFactor.y;
-							positions[1].y -= difference;
-						}
-						v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
-						v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
-						v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
-						this->tileVertices += this->tileVertices(-2, 2);
-						v.x = positions[1].x;	v.y = positions[1].y;	v.u = srcs[1].x;	v.v = srcs[1].y;	this->tileVertices += v;
+						srcs[0].x += difference * srcFactor.x;
+						positions[0].x += difference;
 					}
-				}
-			}
-			else
-			{
-				for_iterx (j, 0, countY)
-				{
-					for_iterx (i, 0, countX)
+					difference = positions[1].x - (rect.x + rect.w);
+					if (difference > 0.0f)
 					{
-						positions[0] = rect.getPosition() + scroll + gvec2((float)i, (float)j) * tile;
-						positions[1] = positions[0] + tile;
-						srcs[0] = invSrcRect.getTopLeft();
-						srcs[1] = invSrcRect.getBottomRight();
-						difference = rect.x - positions[0].x;
-						if (difference > 0.0f)
-						{
-							srcs[0].y += difference * srcFactor.x;
-							positions[0].x += difference;
-						}
-						difference = positions[1].x - (rect.x + rect.w);
-						if (difference > 0.0f)
-						{
-							srcs[1].y -= difference * srcFactor.x;
-							positions[1].x -= difference;
-						}
-						difference = rect.y - positions[0].y;
-						if (difference > 0.0f)
-						{
-							srcs[1].x -= difference * srcFactor.y;
-							positions[0].y += difference;
-						}
-						difference = positions[1].y - (rect.y + rect.h);
-						if (difference > 0.0f)
-						{
-							srcs[0].x += difference * srcFactor.y;
-							positions[1].y -= difference;
-						}
-						v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
-						v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[1].y;	this->tileVertices += v;
-						v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
-						this->tileVertices += this->tileVertices(-2, 2);
-						v.x = positions[1].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
+						srcs[1].x -= difference * srcFactor.x;
+						positions[1].x -= difference;
 					}
+					difference = rect.y - positions[0].y;
+					if (difference > 0.0f)
+					{
+						srcs[0].y += difference * srcFactor.y;
+						positions[0].y += difference;
+					}
+					difference = positions[1].y - (rect.y + rect.h);
+					if (difference > 0.0f)
+					{
+						srcs[1].y -= difference * srcFactor.y;
+						positions[1].y -= difference;
+					}
+					v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
+					v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
+					v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
+					this->tileVertices += this->tileVertices(-2, 2);
+					v.x = positions[1].x;	v.y = positions[1].y;	v.u = srcs[1].x;	v.v = srcs[1].y;	this->tileVertices += v;
 				}
 			}
 		}

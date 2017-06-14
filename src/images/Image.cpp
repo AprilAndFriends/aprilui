@@ -32,7 +32,6 @@ namespace aprilui
 		this->blendMode = april::BlendMode::Alpha;
 		this->colorMode = april::ColorMode::Multiply;
 		this->colorModeFactor = 1.0f;
-		this->rotated = false;
 	}
 
 	Image::Image(const Image& other) : BaseImage(other)
@@ -43,7 +42,6 @@ namespace aprilui
 		this->blendMode = other.blendMode;
 		this->colorMode = other.colorMode;
 		this->colorModeFactor = other.colorModeFactor;
-		this->rotated = other.rotated;
 		for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
 		{
 			this->vertices[i] = other.vertices[i];
@@ -68,7 +66,6 @@ namespace aprilui
 			Image::_propertyDescriptions += PropertyDescription("x", PropertyDescription::Type::Float);
 			Image::_propertyDescriptions += PropertyDescription("y", PropertyDescription::Type::Float);
 			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::Type::Color);
-			Image::_propertyDescriptions += PropertyDescription("rotated", PropertyDescription::Type::Bool);
 			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::Type::Float);
@@ -170,12 +167,6 @@ namespace aprilui
 		if (name == "x")					return this->getSrcRect().x;
 		if (name == "y")					return this->getSrcRect().y;
 		if (name == "color")				return this->getColor().hex();
-		if (name == "rotated")				return this->isRotated();
-		if (name == "vertical")
-		{
-			hlog::warn(logTag, "'vertical' is deprecated. Use 'rotated' instead."); // DEPRECATED
-			return this->isRotated();
-		}
 		if (name == "blend_mode")
 		{
 			if (this->blendMode == april::BlendMode::Alpha)		return "alpha";
@@ -206,12 +197,6 @@ namespace aprilui
 		else if	(name == "x")					this->setSrcX(value);
 		else if	(name == "y")					this->setSrcY(value);
 		else if (name == "color")				this->setColor(aprilui::_makeColor(value));
-		else if	(name == "rotated")				this->setRotated(value);
-		else if	(name == "vertical")
-		{
-			hlog::warn(logTag, "'vertical=' is deprecated. Use 'rotated=' instead."); // DEPRECATED
-			this->setRotated(value);
-		}
 		else if	(name == "blend_mode")
 		{
 			if (value == "default")
@@ -255,20 +240,10 @@ namespace aprilui
 			gvec2 topRight;
 			gvec2 bottomLeft;
 			gvec2 bottomRight;
-			if (!this->rotated)
-			{
-				topLeft.x = bottomLeft.x = rect.left() * iw;
-				topLeft.y = topRight.y = rect.top() * ih;
-				topRight.x = bottomRight.x = rect.right() * iw;
-				bottomLeft.y = bottomRight.y = rect.bottom() * ih;
-			}
-			else
-			{
-				topLeft.x = topRight.x = (rect.x + rect.h) * iw;
-				topLeft.y = bottomLeft.y = rect.y * ih;
-				topRight.y = bottomRight.y = (rect.y + rect.w) * ih;
-				bottomLeft.x = bottomRight.x = rect.x * iw;
-			}
+			topLeft.x = bottomLeft.x = rect.left() * iw;
+			topLeft.y = topRight.y = rect.top() * ih;
+			topRight.x = bottomRight.x = rect.right() * iw;
+			bottomLeft.y = bottomRight.y = rect.bottom() * ih;
 			this->vertices[0].u = topLeft.x;
 			this->vertices[0].v = topLeft.y;
 			this->vertices[1].u = topRight.x;
@@ -286,18 +261,6 @@ namespace aprilui
 	{
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
-			if (this->rotated)
-			{
-				grect rect = this->clipRect;
-				grect srcRect = this->srcRect;
-				hswap(rect.x, rect.y);
-				hswap(rect.w, rect.h);
-				hswap(srcRect.w, srcRect.h);
-				rect.x = srcRect.w - (rect.x + rect.w);
-				srcRect.clip(rect + srcRect.getPosition());
-				hswap(srcRect.w, srcRect.h);
-				return srcRect;
-			}
 			return this->srcRect.clipped(this->clipRect + this->srcRect.getPosition());
 		}
 		return this->srcRect;
