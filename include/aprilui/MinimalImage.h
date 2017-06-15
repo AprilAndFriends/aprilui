@@ -76,7 +76,7 @@ namespace aprilui
 		april::TexturedVertex vertices[APRILUI_IMAGE_MAX_VERTICES];
 		bool _textureCoordinatesLoaded;
 
-		grect _makeClippedSrcRect() const;
+		virtual grect _makeClippedSrcRect() const;
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
