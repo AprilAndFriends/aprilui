@@ -44,7 +44,7 @@ namespace aprilui
 	static hmap<hstr, Dataset*> gDatasets;
 	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
-	static hmap<hstr, Image* (*)(Texture*, chstr, cgrect)> gImageFactories;
+	static hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)> gImageFactories;
 	static BaseImage* gCursor = NULL;
 	static bool cursorVisible = true;
 	static gvec2 cursorPosition;
@@ -130,6 +130,7 @@ namespace aprilui
 		REGISTER_ANIMATOR_TYPE(TileScrollerY);
 		REGISTER_ANIMATOR_TYPE(ZOrderChanger);
 
+		APRILUI_REGISTER_IMAGE_TYPE(MinimalImage);
 		APRILUI_REGISTER_IMAGE_TYPE(Image);
 		APRILUI_REGISTER_IMAGE_TYPE(SkinImage);
 		APRILUI_REGISTER_IMAGE_TYPE(TileImage);
@@ -222,8 +223,7 @@ namespace aprilui
 		if (supportedLocalizations.size() > 0 && !supportedLocalizations.has(value) &&
 			value != defaultLocalization)
 		{
-			hlog::warnf(logTag, "Localization '%s' not supported, defaulting back to '%s'.",
-				value.cStr(), defaultLocalization.cStr());
+			hlog::warnf(logTag, "Localization '%s' not supported, defaulting back to '%s'.", value.cStr(), defaultLocalization.cStr());
 			localization = defaultLocalization;
 		}
 		else
@@ -329,7 +329,7 @@ namespace aprilui
 		gAnimatorFactories[typeName] = factory;
 	}
 	
-	void registerImageFactory(chstr typeName, Image* (*factory)(Texture*, chstr, cgrect))
+	void registerImageFactory(chstr typeName, MinimalImage* (*factory)(Texture*, chstr, cgrect))
 	{
 		if (gImageFactories.hasKey(typeName))
 		{
@@ -375,7 +375,7 @@ namespace aprilui
 		return gAnimatorFactories;
 	}
 
-	const hmap<hstr, Image* (*)(Texture*, chstr, cgrect)>& getImageFactories()
+	const hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)>& getImageFactories()
 	{
 		return gImageFactories;
 	}
@@ -452,7 +452,7 @@ namespace aprilui
 		return NULL;
 	}
 	
-	Image* createImage(chstr typeName, Texture* texture, chstr name, cgrect source)
+	MinimalImage* createImage(chstr typeName, Texture* texture, chstr name, cgrect source)
 	{
 		if (gImageFactories.hasKey(typeName))
 		{

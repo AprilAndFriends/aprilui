@@ -27,7 +27,7 @@ namespace aprilui
 		~SkinImage();
 		inline hstr getClassName() const { return "SkinImage"; }
 
-		static Image* createInstance(Texture* texture, chstr name, cgrect source);
+		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
 		HL_DEFINE_GET(grect, skinRect, SkinRect);
 		void setSkinRect(cgrect value);

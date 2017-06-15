@@ -17,7 +17,6 @@ namespace aprilui
 	{
 		this->name = name;
 		this->dataset = NULL;
-		this->_textureCoordinatesLoaded = false;
 		this->_clipRectCalculated = false;
 	}
 
@@ -27,7 +26,6 @@ namespace aprilui
 		this->tag = other.tag;
 		this->dataset = NULL;
 		this->clipRect = other.clipRect;
-		this->_textureCoordinatesLoaded = false;
 		this->_clipRectCalculated = false;
 	}
 
@@ -166,8 +164,8 @@ namespace aprilui
 		if (name == "w")				return this->getSrcWidth();
 		if (name == "h")				return this->getSrcHeight();
 		if (name == "clip_rect")		return april::grectToHstr(this->getClipRect());
-		if (name == "clip_position")	return april::gvec2ToHstr(this->getClipRect().getPosition());
-		if (name == "clip_size")		return april::gvec2ToHstr(this->getClipRect().getSize());
+		if (name == "clip_position")	return april::gvec2ToHstr(this->getClipPosition());
+		if (name == "clip_size")		return april::gvec2ToHstr(this->getClipSize());
 		if (name == "clip_x")			return this->getClipRect().x;
 		if (name == "clip_y")			return this->getClipRect().y;
 		if (name == "clip_w")			return this->getClipRect().w;
@@ -183,8 +181,8 @@ namespace aprilui
 		else if	(name == "w")				this->setSrcWidth(value);
 		else if	(name == "h")				this->setSrcHeight(value);
 		else if (name == "clip_rect")		this->setClipRect(april::hstrToGrect(value));
-		else if (name == "clip_position")	this->clipRect.setPosition(april::hstrToGvec2(value));
-		else if (name == "clip_size")		this->clipRect.setSize(april::hstrToGvec2(value));
+		else if (name == "clip_position")	this->setClipPosition(april::hstrToGvec2(value));
+		else if (name == "clip_size")		this->setClipSize(april::hstrToGvec2(value));
 		else if (name == "clip_x")			this->setClipX(value);
 		else if (name == "clip_y")			this->setClipY(value);
 		else if (name == "clip_w")			this->setClipWidth(value);

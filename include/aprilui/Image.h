@@ -22,16 +22,14 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "BaseImage.h"
+#include "MinimalImage.h"
 #include "PropertyDescription.h"
-
-#define APRILUI_IMAGE_MAX_VERTICES 6
 
 namespace aprilui
 {
 	class Texture;
 	
-	class apriluiExport Image : public BaseImage
+	class apriluiExport Image : public MinimalImage
 	{
 		APRILUI_CLONEABLE(Image);
 	public:
@@ -39,31 +37,13 @@ namespace aprilui
 		~Image();
 		inline hstr getClassName() const { return "Image"; }
 
-		static Image* createInstance(Texture* texture, chstr name, cgrect source);
+		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
-		HL_DEFINE_GET(Texture*, texture, Texture);
-		HL_DEFINE_GET(grect, srcRect, SrcRect);
-		void setSrcRect(cgrect value);
-		HL_DEFINE_GET(float, srcRect.x, SrcX);
-		void setSrcX(float value);
-		HL_DEFINE_GET(float, srcRect.y, SrcY);
-		void setSrcY(float value);
-		HL_DEFINE_GET(float, srcRect.w, SrcWidth);
-		void setSrcWidth(const float& value);
-		HL_DEFINE_GET(float, srcRect.h, SrcHeight);
-		void setSrcHeight(const float& value);
-		inline gvec2 getSrcPosition() const { return this->srcRect.getPosition(); }
-		void setSrcPosition(cgvec2 value);
-		void setSrcPosition(float x, float y);
-		inline gvec2 getSrcSize() const { return this->srcRect.getSize(); }
-		void setSrcSize(cgvec2 value);
-		void setSrcSize(float w, float h);
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		void setSymbolicColor(chstr value);
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
-		inline const april::TexturedVertex* getVertices() const { return this->vertices; } // use with care!
 
 		harray<PropertyDescription> getPropertyDescriptions() const;
 
@@ -73,18 +53,11 @@ namespace aprilui
 		void draw(cgrect rect, const april::Color& color = april::Color::White);
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 
-		void tryLoadTextureCoordinates();
-
 	protected:
-		Texture* texture;
-		grect srcRect;
 		april::Color color;
 		april::BlendMode blendMode;
 		april::ColorMode colorMode;
 		float colorModeFactor;
-		april::TexturedVertex vertices[APRILUI_IMAGE_MAX_VERTICES];
-
-		grect _makeClippedSrcRect() const;
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

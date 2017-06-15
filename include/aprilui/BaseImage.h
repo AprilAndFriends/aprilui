@@ -36,7 +36,7 @@ namespace aprilui
 
 		BaseImage(chstr name);
 		~BaseImage();
-		virtual inline hstr getClassName() const { return "BaseObject"; }
+		virtual inline hstr getClassName() const { return "BaseImage"; }
 		
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);
@@ -83,7 +83,6 @@ namespace aprilui
 		Dataset* dataset;
 		grect clipRect;
 
-		bool _textureCoordinatesLoaded;
 		bool _clipRectCalculated;
 
 	private:

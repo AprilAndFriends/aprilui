@@ -32,7 +32,7 @@ namespace aprilui
 	class Animator;
 	class BaseImage;
 	class Dataset;
-	class Image;
+	class MinimalImage;
 	class Object;
 	class Texture;
 
@@ -72,7 +72,7 @@ namespace aprilui
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr));
 	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));
-	apriluiFnExport void registerImageFactory(chstr typeName, Image* (*factory)(Texture*, chstr, cgrect));
+	apriluiFnExport void registerImageFactory(chstr typeName, MinimalImage* (*factory)(Texture*, chstr, cgrect));
 	apriluiFnExport bool hasObjectFactory(chstr typeName);
 	apriluiFnExport bool hasAnimatorFactory(chstr typeName);
 	apriluiFnExport bool hasImageFactory(chstr typeName);
@@ -81,11 +81,11 @@ namespace aprilui
 	apriluiFnExport void unregisterImageFactory(chstr typeName);
 	apriluiFnExport const hmap<hstr, Object* (*)(chstr)>& getObjectFactories();
 	apriluiFnExport const hmap<hstr, Animator* (*)(chstr)>& getAnimatorFactories();
-	apriluiFnExport const hmap<hstr, Image* (*)(Texture*, chstr, cgrect)>& getImageFactories();
+	apriluiFnExport const hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)>& getImageFactories();
 
 	apriluiFnExport Object* createObject(chstr type, chstr name);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
-	apriluiFnExport Image* createImage(chstr type, Texture* texture, chstr name, cgrect source);
+	apriluiFnExport MinimalImage* createImage(chstr type, Texture* texture, chstr name, cgrect source);
 
 	apriluiFnExport gvec2 transformWindowPoint(cgvec2 point);
 	apriluiFnExport void updateViewportPosition(cgrect newViewport, bool updateOrthoProjection = true);

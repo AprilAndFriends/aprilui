@@ -62,7 +62,7 @@ namespace aprilui
 	{
 	}
 
-	Image* SkinImage::createInstance(Texture* texture, chstr name, cgrect source)
+	MinimalImage* SkinImage::createInstance(Texture* texture, chstr name, cgrect source)
 	{
 		return new SkinImage(texture, name, source);
 	}

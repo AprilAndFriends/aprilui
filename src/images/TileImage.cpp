@@ -40,7 +40,7 @@ namespace aprilui
 	{
 	}
 
-	Image* TileImage::createInstance(Texture* texture, chstr name, cgrect source)
+	MinimalImage* TileImage::createInstance(Texture* texture, chstr name, cgrect source)
 	{
 		return new TileImage(texture, name, source);
 	}

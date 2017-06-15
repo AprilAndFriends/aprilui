@@ -31,7 +31,7 @@ namespace aprilui
 		~TileImage();
 		inline hstr getClassName() const { return "TileImage"; }
 		
-		static Image* createInstance(Texture* texture, chstr name, cgrect source);
+		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
 		inline void setTile(float w, float h) { this->tile.set(w, h); }
