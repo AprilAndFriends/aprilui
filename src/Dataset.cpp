@@ -322,7 +322,6 @@ namespace aprilui
 	void Dataset::parseTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
-		hstr filepath = hrdir::normalize(hrdir::joinPath(this->filePath, filename, false));
 		hstr textureName = hrdir::baseName(filename);
 		if (this->textures.hasKey(textureName))
 		{
@@ -368,6 +367,7 @@ namespace aprilui
 				__THROW_EXCEPTION(Exception("Load Mode '" + mode + "' is not supported!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
 			}
 		}
+		hstr filepath = hrdir::normalize(hrdir::joinPath(this->filePath, filename, false));
 		hstr locpath = this->_makeLocalizedTextureName(filepath);
 		april::Texture* aprilTexture = april::rendersys->createTextureFromResource(locpath, april::Texture::Type::Immutable, loadMode);
 		if (aprilTexture == NULL)
@@ -462,9 +462,11 @@ namespace aprilui
 					}
 					this->images[name] = image;
 					image->dataset = this;
+					// the standard properties are not used anymore and can be safely removed without problems
+					(*child)->properties.removeKeys(_ignoredStandardProperties);
 					foreach_m (hstr, it, (*child)->properties)
 					{
-						if (!_ignoredStandardProperties.has(it->first) && it->first != "tile" && it->first != "tile_w" && it->first != "tile_h")
+						if (it->first != "tile" && it->first != "tile_w" && it->first != "tile_h")
 						{
 							image->setProperty(it->first, it->second);
 						}
@@ -482,19 +484,18 @@ namespace aprilui
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 					}
 					aprilui::_readRectNode(rect, (*child));
-					if (!aprilui::hasImageFactory((*child)->name))
+					image = aprilui::createImage((*child)->name, texture, name, rect);
+					if (image == NULL)
 					{
 						__THROW_EXCEPTION(XMLUnknownClassException((*child)->name, (*child)), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
 					}
-					image = aprilui::createImage((*child)->name, texture, name, rect);
 					this->images[name] = image;
 					image->dataset = this;
+					// the standard properties are not used anymore and can be safely removed without problems
+					(*child)->properties.removeKeys(_ignoredStandardProperties);
 					foreach_m (hstr, it, (*child)->properties)
 					{
-						if (!_ignoredStandardProperties.has(it->first))
-						{
-							image->setProperty(it->first, it->second);
-						}
+						image->setProperty(it->first, it->second);
 					}
 				}
 			}
@@ -504,7 +505,6 @@ namespace aprilui
 	void Dataset::parseCompositeImage(hlxml::Node* node)
 	{
 		hstr name = node->pstr("name");
-		hstr refname;
 		if (this->images.hasKey(name))
 		{
 			__THROW_EXCEPTION(ObjectExistsException("CompositeImage", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
@@ -516,7 +516,8 @@ namespace aprilui
 		}
 		else
 		{
-			size.set(node->pfloat("w"), node->pfloat("h"));
+			size.x = node->pfloat("w");
+			size.y = node->pfloat("h");
 		}
 		CompositeImage* image = new CompositeImage(name, size);
 		grect rect;
@@ -524,9 +525,8 @@ namespace aprilui
 		{
 			if ((*child)->name == "ImageRef")
 			{
-				refname = (*child)->pstr("name");
 				aprilui::_readRectNode(rect, (*child));
-				image->addImageRef(this->getImage(refname), rect);
+				image->addImageRef(this->getImage((*child)->pstr("name")), rect);
 			}
 			else
 			{
@@ -951,12 +951,12 @@ namespace aprilui
 	
 	void Dataset::parseGlobalInclude(chstr path, bool optional)
 	{
-		int nParsed = 0;
+		int parsedCount = 0;
 		hstr originalFilePath = this->filePath;
 		this->filePath = this->_makeFilePath(path);
 		if (!path.contains("*"))
 		{
-			nParsed = 1;
+			parsedCount = 1;
 			this->readFile(path);
 			this->filePath = originalFilePath;
 		}
@@ -967,18 +967,24 @@ namespace aprilui
 				throw Exception(hsprintf("Failed parsing dataset include dir '%s' (included from '%s'), dir not found.", this->filePath.cStr(), originalFilePath.cStr()));
 			}
 			hstr extension = hrdir::baseName(path).replaced("*", "");
-			harray<hstr> contents = hrdir::files(this->filePath, true).sorted();
+			harray<hstr> contents = hrdir::files(this->filePath, true);
+			harray<hstr> files;
 			foreach (hstr, it, contents)
 			{
 				if ((*it).endsWith(extension))
 				{
-					this->readFile((*it));
-					nParsed++;
+					files += (*it);
 				}
+			}
+			parsedCount = files.size();
+			hlog::writef(logTag, "Parsing include: '%s', %d files found", path.cStr(), parsedCount);
+			foreach (hstr, it, files)
+			{
+				this->readFile((*it));
 			}
 		}
 		this->filePath = originalFilePath;
-		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", path.cStr(), nParsed);
+		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", path.cStr(), parsedCount);
 	}
 	
 	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
@@ -989,7 +995,6 @@ namespace aprilui
 		hlxml::Document* doc = this->_openDocument(path);
 		hlxml::Node* current = doc->root();
 		BaseObject* root = NULL;
-
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
 		hstr className;
@@ -998,15 +1003,12 @@ namespace aprilui
 			className = (*node)->name;
 			if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
 			{
-				if (root == NULL)
-				{
-					root = this->recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset);
-				}
-				else
+				if (root != NULL)
 				{
 					hlog::errorf(logTag, "Detected multiple roots in '%s'. Ignoring other root objects.", path.cStr());
 					break;
 				}
+				root = this->recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset);
 			}
 		}
 		return root;
@@ -1200,20 +1202,23 @@ namespace aprilui
 			return;
 		}
 		this->_closeDocuments();
+		aprilui::Object* parent = NULL;
 		foreach_m (Animator*, it, this->animators)
 		{
-			if (it->second->getParent() != NULL)
+			parent = it->second->getParent();
+			if (parent != NULL)
 			{
-				it->second->getParent()->removeChild(it->second);
+				parent->removeChild(it->second);
 			}
 			delete it->second;
 		}
 		this->animators.clear();
 		foreach_m (Object*, it, this->objects)
 		{
-			if (it->second->getParent() != NULL)
+			parent = it->second->getParent();
+			if (parent != NULL)
 			{
-				it->second->getParent()->removeChild(it->second);
+				parent->removeChild(it->second);
 			}
 			it->second->removeChildren(false);
 			delete it->second;
