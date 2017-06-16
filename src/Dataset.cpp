@@ -7,6 +7,7 @@
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #include <april/april.h>
+#include <april/Platform.h>
 #include <april/RenderSystem.h>
 #include <april/Texture.h>
 #include <april/Window.h>
@@ -18,6 +19,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hrdir.h>
 #include <hltypes/hresource.h>
+#include <hltypes/hthread.h>
 #include <hlxml/Document.h>
 #include <hlxml/Exception.h>
 #include <hlxml/Node.h>
@@ -55,6 +57,7 @@ namespace aprilui
 		}
 		this->textsPaths += aprilui::getDefaultTextsPath();
 		this->loaded = false;
+		this->_internalLoadDataset = NULL;
 		aprilui::_registerDataset(this->name, this);
 	}
 	
@@ -948,7 +951,20 @@ namespace aprilui
 		this->readFile(filename);
 		this->filePath = originalFilePath;
 	}
+
+	Dataset::XmlLoadThread::XmlLoadThread() : hthread(&Dataset::_asyncHlXmlLoad, "aprilui async hlxml")
+	{
+		this->dataset = NULL;
+	}
 	
+	void Dataset::_asyncHlXmlLoad(hthread* thread)
+	{
+		XmlLoadThread* loadThread = (XmlLoadThread*)thread;
+		loadThread->dataset->load();
+	}
+
+	extern bool _datasetRegisterLock;
+
 	void Dataset::parseGlobalInclude(chstr path, bool optional)
 	{
 		int parsedCount = 0;
@@ -976,12 +992,85 @@ namespace aprilui
 					files += (*it);
 				}
 			}
+			files.sort();
+			files.reverse();
 			parsedCount = files.size();
 			hlog::writef(logTag, "Parsing include: '%s', %d files found", path.cStr(), parsedCount);
-			foreach (hstr, it, files)
+			harray<XmlLoadThread*> threads;
+			int cpuCores = hmax(april::getSystemInfo().cpuCores, 1); // try to utilize all cores
+			for_iter (i, 0, cpuCores)
 			{
-				this->readFile((*it));
+				threads += new XmlLoadThread();
 			}
+			_datasetRegisterLock = true;
+			harray<hstr> queuedFiles = files;
+			bool running = true;
+			aprilui::Object* root = NULL;
+			hmap<hstr, BaseImage*> images;
+			hmap<hstr, Texture*> textures;
+			hmap<hstr, Style*> styles;
+			hstr filename;
+			while (running)
+			{
+				running = (queuedFiles.size() > 0);
+				foreach (XmlLoadThread*, it, threads)
+				{
+					if ((*it)->isRunning())
+					{
+						running = true;
+					}
+					else
+					{
+						if ((*it)->dataset != NULL)
+						{
+							running = true;
+							(*it)->join();
+							// move everything to this dataset
+							root = (*it)->dataset->root;
+							images = (*it)->dataset->images;
+							textures = (*it)->dataset->textures;
+							styles = (*it)->dataset->styles;
+							if (root != NULL)
+							{
+								this->registerObjects(root, false);
+							}
+							foreach_m (BaseImage*, it2, images)
+							{
+								this->registerImage(it2->second);
+							}
+							foreach_m (Texture*, it2, textures)
+							{
+								this->registerTexture(it2->second);
+							}
+							foreach_m (Style*, it2, styles)
+							{
+								this->registerStyle(it2->second);
+							}
+							// so they don't get destroyed with the dataset
+							(*it)->dataset->objects.clear();
+							(*it)->dataset->animators.clear();
+							(*it)->dataset->images.clear();
+							(*it)->dataset->textures.clear();
+							(*it)->dataset->styles.clear();
+							delete (*it)->dataset;
+							(*it)->dataset = NULL;
+						}
+						if (queuedFiles.size() > 0)
+						{
+							filename = queuedFiles.removeLast();
+							(*it)->dataset = new Dataset(filename, filename);
+							(*it)->dataset->_internalLoadDataset = this;
+							(*it)->start();
+						}
+					}
+				}
+				hthread::sleep(0.01f);
+			}
+			foreach (XmlLoadThread*, it, threads)
+			{
+				delete (*it);
+			}
+			_datasetRegisterLock = false;
 		}
 		this->filePath = originalFilePath;
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", path.cStr(), parsedCount);
@@ -992,8 +1081,8 @@ namespace aprilui
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
 		hlog::write(logTag, "Parsing object include file: " + path);
-		hlxml::Document* doc = this->_openDocument(path);
-		hlxml::Node* current = doc->root();
+		hlxml::Document doc(path);
+		hlxml::Node* current = doc.root();
 		BaseObject* root = NULL;
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
@@ -1061,8 +1150,8 @@ namespace aprilui
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
 		hlog::write(logTag, "Parsing dataset file: " + path);
-		hlxml::Document doc(path);
-		hlxml::Node* current = doc.root();
+		hlxml::Document* doc = this->_openDocument(path);
+		hlxml::Node* current = doc->root();
 		if (current == NULL)
 		{
 			__THROW_EXCEPTION(Exception("Unable to parse Xml file '" + filename + "', no root node found!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
@@ -1331,7 +1420,7 @@ namespace aprilui
 	
 	void Dataset::registerTexture(Texture* texture)
 	{
-		hstr name = texture->getFilename();
+		hstr name = texture->getName();
 		if (this->textures.hasKey(name))
 		{
 			__THROW_EXCEPTION(ObjectExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
@@ -1342,7 +1431,7 @@ namespace aprilui
 
 	void Dataset::unregisterTexture(Texture* texture)
 	{
-		hstr name = texture->getFilename();
+		hstr name = texture->getName();
 		if (!this->textures.hasKey(name))
 		{
 			__THROW_EXCEPTION(ObjectNotExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
@@ -1500,6 +1589,10 @@ namespace aprilui
 			return NULL;
 		}
 		BaseImage* image = this->images.tryGet(name, NULL);
+		if (image == NULL && this->_internalLoadDataset != NULL)
+		{
+			image = this->_internalLoadDataset->images.tryGet(name, NULL);
+		}
 		if (image == NULL)
 		{
 			int dot = name.indexOf('.');
@@ -1527,6 +1620,10 @@ namespace aprilui
 	Style* Dataset::getStyle(chstr name)
 	{
 		Style* style = this->styles.tryGet(name, NULL);
+		if (style == NULL && this->_internalLoadDataset != NULL)
+		{
+			style = this->_internalLoadDataset->styles.tryGet(name, NULL);
+		}
 		if (style == NULL)
 		{
 			int dot = name.indexOf('.');

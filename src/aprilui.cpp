@@ -40,7 +40,7 @@ namespace aprilui
 
 	static hversion version(4, 2, 0);
 
-	static bool registerLock = false;
+	bool _datasetRegisterLock = false; // not static, because it is used elsewhere
 	static hmap<hstr, Dataset*> gDatasets;
 	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
@@ -65,7 +65,7 @@ namespace aprilui
 	void init()
 	{
 		hlog::write(logTag, "Initializing AprilUI: " + version.toString());
-		registerLock = false;
+		_datasetRegisterLock = false;
 		cursorVisible = true;
 		limitCursorToViewport = true;
 		hoverEffectEnabled = true;
@@ -139,7 +139,7 @@ namespace aprilui
 	void destroy()
 	{
 		hlog::write(logTag, "Destroying AprilUI.");
-		registerLock = true;
+		_datasetRegisterLock = true;
 		foreach_m (Dataset*, it, gDatasets)
 		{
 			delete it->second;
@@ -574,7 +574,7 @@ namespace aprilui
 	
 	void _registerDataset(chstr name, Dataset* dataset)
 	{
-		if (!registerLock)
+		if (!_datasetRegisterLock)
 		{
 			if (gDatasets.hasKey(name))
 			{
@@ -586,7 +586,7 @@ namespace aprilui
 	
 	void _unregisterDataset(chstr name, Dataset* dataset)
 	{
-		if (!registerLock)
+		if (!_datasetRegisterLock)
 		{
 			gDatasets.removeKey(name);
 		}

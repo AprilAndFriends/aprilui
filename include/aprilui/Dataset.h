@@ -17,6 +17,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hthread.h>
 
 #include "aprilui.h"
 #include "apriluiExport.h"
@@ -232,6 +233,16 @@ namespace aprilui
 			aprilui::EventArgs* args;
 		};
 
+		class XmlLoadThread : public hthread
+		{
+		public:
+			Dataset* dataset;
+
+			XmlLoadThread();
+
+		};
+		friend class XmlLoadThread;
+
 		hstr name;
 		hstr filename;
 		hstr filePath;
@@ -280,6 +291,11 @@ namespace aprilui
 		harray<std::ustring> _getArgEntries(std::ustring uString);
 		/// @note This method is here to silence linker warnings on LLVM compiler.
 		void _throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName);
+
+		static void _asyncHlXmlLoad(hthread* thread);
+
+	private:
+		Dataset* _internalLoadDataset;
 
 	};
 
