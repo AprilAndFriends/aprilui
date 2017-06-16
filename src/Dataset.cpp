@@ -997,7 +997,7 @@ namespace aprilui
 			parsedCount = files.size();
 			hlog::writef(logTag, "Parsing include: '%s', %d files found", path.cStr(), parsedCount);
 			harray<XmlLoadThread*> threads;
-			int cpuCores = hmax(april::getSystemInfo().cpuCores, 1); // try to utilize all cores
+			int cpuCores = hmax(april::getSystemInfo().cpuCores - 1, 1); // try to utilize all additional cores
 			for_iter (i, 0, cpuCores)
 			{
 				threads += new XmlLoadThread();
