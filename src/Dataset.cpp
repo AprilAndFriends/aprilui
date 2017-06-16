@@ -1005,11 +1005,8 @@ namespace aprilui
 			_datasetRegisterLock = true;
 			harray<hstr> queuedFiles = files;
 			bool running = true;
-			aprilui::Object* root = NULL;
-			hmap<hstr, BaseImage*> images;
-			hmap<hstr, Texture*> textures;
-			hmap<hstr, Style*> styles;
 			hstr filename;
+			harray<Dataset*> loadedDatasets;
 			while (running)
 			{
 				running = (queuedFiles.size() > 0);
@@ -1025,34 +1022,7 @@ namespace aprilui
 						{
 							running = true;
 							(*it)->join();
-							// move everything to this dataset
-							root = (*it)->dataset->root;
-							images = (*it)->dataset->images;
-							textures = (*it)->dataset->textures;
-							styles = (*it)->dataset->styles;
-							if (root != NULL)
-							{
-								this->registerObjects(root, false);
-							}
-							foreach_m (BaseImage*, it2, images)
-							{
-								this->registerImage(it2->second);
-							}
-							foreach_m (Texture*, it2, textures)
-							{
-								this->registerTexture(it2->second);
-							}
-							foreach_m (Style*, it2, styles)
-							{
-								this->registerStyle(it2->second);
-							}
-							// so they don't get destroyed with the dataset
-							(*it)->dataset->objects.clear();
-							(*it)->dataset->animators.clear();
-							(*it)->dataset->images.clear();
-							(*it)->dataset->textures.clear();
-							(*it)->dataset->styles.clear();
-							delete (*it)->dataset;
+							loadedDatasets += (*it)->dataset;
 							(*it)->dataset = NULL;
 						}
 						if (queuedFiles.size() > 0)
@@ -1064,6 +1034,34 @@ namespace aprilui
 						}
 					}
 				}
+				foreach (Dataset*, it, loadedDatasets)
+				{
+					// move everything to this dataset
+					if ((*it)->root != NULL)
+					{
+						this->registerObjects((*it)->root, false);
+					}
+					foreach_m (BaseImage*, it2, (*it)->images)
+					{
+						this->registerImage(it2->second);
+					}
+					foreach_m (Texture*, it2, (*it)->textures)
+					{
+						this->registerTexture(it2->second);
+					}
+					foreach_m (Style*, it2, (*it)->styles)
+					{
+						this->registerStyle(it2->second);
+					}
+					// so they don't get destroyed with the dataset
+					(*it)->objects.clear();
+					(*it)->animators.clear();
+					(*it)->images.clear();
+					(*it)->textures.clear();
+					(*it)->styles.clear();
+					delete (*it);
+				}
+				loadedDatasets.clear();
 				hthread::sleep(0.01f);
 			}
 			foreach (XmlLoadThread*, it, threads)
