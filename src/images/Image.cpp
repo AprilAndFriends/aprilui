@@ -168,6 +168,10 @@ namespace aprilui
 		if (this->color != april::Color::White)
 		{
 			drawColor *= this->color;
+			if (drawColor.a == 0)
+			{
+				return;
+			}
 		}
 		this->texture->load();
 		april::rendersys->setTexture(this->texture->getTexture());
