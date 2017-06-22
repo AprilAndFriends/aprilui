@@ -967,13 +967,14 @@ namespace aprilui
 
 	void Dataset::parseGlobalInclude(chstr path, bool optional)
 	{
+		hstr normalizedPath = hrdir::normalize(path);
 		int parsedCount = 0;
 		hstr originalFilePath = this->filePath;
-		this->filePath = this->_makeFilePath(path);
-		if (!path.contains("*"))
+		this->filePath = this->_makeFilePath(normalizedPath);
+		if (!normalizedPath.contains("*"))
 		{
 			parsedCount = 1;
-			this->readFile(path);
+			this->readFile(normalizedPath);
 			this->filePath = originalFilePath;
 		}
 		else
@@ -982,7 +983,7 @@ namespace aprilui
 			{
 				throw Exception(hsprintf("Failed parsing dataset include dir '%s' (included from '%s'), dir not found.", this->filePath.cStr(), originalFilePath.cStr()));
 			}
-			hstr extension = hrdir::baseName(path).replaced("*", "");
+			hstr extension = hrdir::baseName(normalizedPath).replaced("*", "");
 			harray<hstr> contents = hrdir::files(this->filePath, true);
 			harray<hstr> files;
 			foreach (hstr, it, contents)
@@ -995,7 +996,7 @@ namespace aprilui
 			files.sort();
 			files.reverse();
 			parsedCount = files.size();
-			hlog::writef(logTag, "Parsing include: '%s', %d files found", path.cStr(), parsedCount);
+			hlog::writef(logTag, "Parsing include: '%s', %d files found", normalizedPath.cStr(), parsedCount);
 			harray<XmlLoadThread*> threads;
 			int cpuCores = hmax(april::getSystemInfo().cpuCores - 1, 1); // try to utilize all additional cores
 			for_iter (i, 0, cpuCores)
@@ -1071,7 +1072,7 @@ namespace aprilui
 			_datasetRegisterLock = false;
 		}
 		this->filePath = originalFilePath;
-		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", path.cStr(), parsedCount);
+		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", normalizedPath.cStr(), parsedCount);
 	}
 	
 	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
