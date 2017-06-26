@@ -54,7 +54,7 @@ namespace aprilui
 	{
 		this->text = "";
 		this->horzFormatting = atres::Horizontal::Left;
-		this->textFormatting = false;
+		//this->textFormatting = false;
 		this->backgroundColor = april::Color::Black;
 		// this class' properties
 		this->emptyText = "";
@@ -393,29 +393,30 @@ namespace aprilui
 				if (line != NULL && line->words.size() > 0)
 				{
 					offsetIndex = line->start + line->count;
-					float ow = 0.0f;
-					float cw = 0.0f;
+					float offsetWidth = 0.0f;
+					float charWidth = 0.0f;
+					int count = 0;
 					foreach (atres::RenderWord, it, line->words)
 					{
 						if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
 						{
-							ow = (*it).rect.x;
+							offsetWidth = (*it).rect.x;
 							offsetIndex = (*it).start;
-							foreach (float, it2, (*it).charAdvanceXs)
+							count = 0;
+							for_iter (i, 0, (*it).charXs.size())
 							{
-								cw = (*it2) * 0.5f;
-								if (hbetweenIE(position.x, ow, ow + cw))
+								offsetWidth = (*it).rect.x + (*it).charXs[i];
+								if (position.x < offsetWidth + (*it).charAdvanceXs[i] * 0.5f)
 								{
 									break;
 								}
-								++offsetIndex;
-								ow += cw;
-								if (hbetweenIE(position.x, ow, ow + cw))
+								++count;
+								if (position.x < offsetWidth + (*it).charAdvanceXs[i] * 2)
 								{
 									break;
 								}
-								ow += cw;
 							}
+							offsetIndex += (*it).text.utf8SubString(0, count).size();
 							break;
 						}
 					}
