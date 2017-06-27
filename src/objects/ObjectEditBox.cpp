@@ -394,7 +394,6 @@ namespace aprilui
 				{
 					offsetIndex = line->start + line->count;
 					float offsetWidth = 0.0f;
-					float charWidth = 0.0f;
 					int count = 0;
 					foreach (atres::RenderWord, it, line->words)
 					{
