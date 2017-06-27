@@ -660,7 +660,7 @@ namespace aprilui
 	BaseObject* Dataset::parseObject(hlxml::Node* node, Object* parent)
 	{
 		Style style;
-		return this->_recursiveObjectParse(node, parent, &style);
+		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2());
 	}
 	
 	void Dataset::_parseTextureGroup(hlxml::Node* node)
@@ -681,16 +681,16 @@ namespace aprilui
 	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent)
 	{
 		Style style;
-		return this->_recursiveObjectParse(node, parent, &style);
+		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2());
 	}
 
-	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, bool registerInDataset)
+	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
 		hstr objectName;
 		hstr className = node->name;
 		if (className == "Include")
 		{
-			return this->_recursiveObjectIncludeParse(node, parent, style);
+			return this->_recursiveObjectIncludeParse(node, parent, style, namePrefix, nameSuffix, offset);
 		}
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
@@ -721,7 +721,7 @@ namespace aprilui
 		}
 		if (node->pexists("name"))
 		{
-			objectName = node->pstr("name");
+			objectName = namePrefix + node->pstr("name") + nameSuffix;
 		}
 		else
 		{
@@ -730,17 +730,15 @@ namespace aprilui
 		if (isObject)
 		{
 			aprilui::_readRectNode(rect, node);
+			rect += offset;
 		}
-		if (registerInDataset)
+		if (isObject && this->objects.hasKey(objectName))
 		{
-			if (isObject && this->objects.hasKey(objectName))
-			{
-				__THROW_EXCEPTION(ObjectExistsException("Object", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
-			}
-			if (isAnimator && this->animators.hasKey(objectName))
-			{
-				__THROW_EXCEPTION(ObjectExistsException("Animator", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
-			}
+			__THROW_EXCEPTION(ObjectExistsException("Object", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
+		}
+		if (isAnimator && this->animators.hasKey(objectName))
+		{
+			__THROW_EXCEPTION(ObjectExistsException("Animator", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
 		BaseObject* baseObject = NULL;
 		Object* object = NULL;
@@ -783,12 +781,9 @@ namespace aprilui
 		{
 			object->setRect(rect);
 		}
-		baseObject->dataset = this; // this is required even when registerInDataset is false, mostly due to references within datasets (texts, images, etc.)
-		if (registerInDataset)
-		{
-			EventArgs args(Event::RegisteredInDataset, this);
-			baseObject->notifyEvent(Event::RegisteredInDataset, &args);
-		}
+		baseObject->dataset = this;
+		EventArgs args(Event::RegisteredInDataset, this);
+		baseObject->notifyEvent(Event::RegisteredInDataset, &args);
 		bool isCustomStyle = node->pexists("style");
 		if (isCustomStyle)
 		{
@@ -821,24 +816,25 @@ namespace aprilui
 			}
 		}
 		baseObject->applyStyle(style);
-		if (registerInDataset)
+		if (isObject)
 		{
-			if (isObject)
+			this->objects[objectName] = object;
+			if (this->root == NULL)
 			{
-				this->objects[objectName] = object;
-				if (this->root == NULL)
-				{
-					this->root = object;
-				}
+				this->root = object;
 			}
-			else if (isAnimator)
+			if (parent != NULL)
 			{
-				this->animators[objectName] = animator;
+				parent->addChild(object);
 			}
 		}
-		if (parent != NULL && (isObject || isAnimator))
+		else if (isAnimator)
 		{
-			parent->addChild(baseObject);
+			this->animators[objectName] = animator;
+			if (parent != NULL)
+			{
+				parent->addChild(animator);
+			}
 		}
 		hstr name;
 		foreach_m (hstr, it, node->properties)
@@ -854,7 +850,7 @@ namespace aprilui
 			{
 				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 				{
-					this->_recursiveObjectParse((*child), object, style, registerInDataset);
+					this->_recursiveObjectParse((*child), object, style, namePrefix, nameSuffix, gvec2());
 				}
 			}
 		}
@@ -865,9 +861,9 @@ namespace aprilui
 		return baseObject;
 	}
 
-	BaseObject* Dataset::_recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style)
+	BaseObject* Dataset::_recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
-		gvec2 newOffset;
+		gvec2 newOffset = offset;
 		if (node->pexists("position"))
 		{
 			newOffset += april::hstrToGvec2(node->pstr("position"));
@@ -877,9 +873,9 @@ namespace aprilui
 			newOffset += gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
 		}
 		hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
-		hstr namePrefix = node->pstr("name_prefix", "");
-		hstr nameSuffix = node->pstr("name_suffix", "");
-		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, namePrefix, nameSuffix, newOffset);
+		hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
+		hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
+		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, newOffset);
 		if (includeRoot != NULL)
 		{
 			BaseObject* descendant = NULL;
@@ -894,7 +890,7 @@ namespace aprilui
 					{
 						if ((*child)->properties.hasKey("object"))
 						{
-							objectName = namePrefix + (*child)->properties["object"] + nameSuffix;
+							objectName = newNamePrefix + (*child)->properties["object"] + newNameSuffix;
 							descendant = (includeRoot->getName() == objectName ? includeRoot : includeRoot->findDescendantByName(objectName));
 							if (descendant != NULL)
 							{
@@ -907,7 +903,7 @@ namespace aprilui
 								{
 									if ((*child)->properties.hasKey("name"))
 									{
-										newName = namePrefix + (*child)->properties["name"] + nameSuffix;
+										newName = newNamePrefix + (*child)->properties["name"] + newNameSuffix;
 										if (!this->hasObject(newName))
 										{
 											this->unregisterObjects(descendant);
@@ -1084,79 +1080,30 @@ namespace aprilui
 
 	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
-		return this->_parseObjectIncludeFile(filename, parent, style, namePrefix, nameSuffix, offset, false);
-	}
-	
-	BaseObject* Dataset::_parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool cacheObjects)
-	{
+		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
+		hlog::write(logTag, "Parsing object include file: " + path);
+		hlxml::Document doc(path);
+		hlxml::Node* current = doc.root();
+		if (current == NULL)
+		{
+			__THROW_EXCEPTION(Exception("Unable to parse XML file '" + filename + "', no root node found!"), aprilui::systemConsistencyDebugExceptionsEnabled, return NULL);
+		}
 		BaseObject* root = NULL;
-		if (!this->includeObjects.hasKey(path))
+		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
+		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
+		hstr className;
+		foreach_xmlnode (node, current)
 		{
-			hlog::write(logTag, "Parsing object include file: " + path);
-			// parse dataset xml file, error checking first
-			hlxml::Document doc = hlxml::Document(path);
-			hlxml::Node* current = doc.root();
-			if (current == NULL)
+			className = (*node)->name;
+			if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
 			{
-				__THROW_EXCEPTION(Exception("Unable to parse XML file '" + filename + "', no root node found!"), aprilui::systemConsistencyDebugExceptionsEnabled, return NULL);
-			}
-			const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
-			const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
-			hstr className;
-			foreach_xmlnode (node, current)
-			{
-				className = (*node)->name;
-				if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
+				if (root != NULL)
 				{
-					if (root != NULL)
-					{
-						hlog::errorf(logTag, "Detected multiple roots in '%s'. Ignoring other root objects.", path.cStr());
-						break;
-					}
-					root = this->_recursiveObjectParse((*node), NULL, style, false);
+					hlog::errorf(logTag, "Detected multiple roots in '%s'. Ignoring other root objects.", path.cStr());
+					break;
 				}
-			}
-			if (cacheObjects && root != NULL)
-			{
-				this->includeObjects[path] = root;
-			}
-		}
-		else
-		{
-			hlog::write(logTag, "Cloning object include file: " + path);
-			root = this->includeObjects[path];
-		}
-		if (root != NULL)
-		{
-			Object* object = dynamic_cast<Object*>(root);
-			if (object != NULL)
-			{
-				if (cacheObjects)
-				{
-					root = object = object->cloneTree();
-				}
-				if (namePrefix != "" || nameSuffix != "")
-				{
-					harray<BaseObject*> descendants = object->getDescendants();
-					foreach (BaseObject*, it, descendants)
-					{
-						(*it)->dataset = NULL; // because it had to be set earlier for accessing dataset-dependent resources such as texts or images
-						(*it)->setName(namePrefix + (*it)->getName() + nameSuffix);
-					}
-				}
-				object->setPosition(object->getPosition() + offset);
-			}
-			else if (cacheObjects)
-			{
-				root = root->clone();
-			}
-			root->dataset = NULL; // because it had to be set earlier for accessing dataset-dependent resources such as texts or images
-			root->setName(namePrefix + root->getName() + nameSuffix);
-			this->registerObjects(root);
-			if (parent != NULL)
-			{
-				parent->addChild(root);
+				root = this->_recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset);
 			}
 		}
 		return root;
@@ -1166,7 +1113,7 @@ namespace aprilui
 	{
 		if (!path.contains("*"))
 		{
-			return this->_parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset, true);
+			return this->parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset);
 		}
 		hstr baseDir = hrdir::baseDir(path);
 		hstr filename = path(baseDir.size() + 1, -1);
@@ -1178,7 +1125,7 @@ namespace aprilui
 		{
 			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
-				this->_parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2(), true);
+				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2());
 			}
 		}
 		return NULL; // since multiple files are loaded, no object is returned
@@ -1202,11 +1149,6 @@ namespace aprilui
 			delete it->second;
 		}
 		this->includeDocuments.clear();
-		foreach_m (BaseObject*, it, this->includeObjects)
-		{
-			delete it->second;
-		}
-		this->includeObjects.clear();
 	}
 	
 	void Dataset::_readFile(chstr filename)

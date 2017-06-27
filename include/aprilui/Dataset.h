@@ -259,7 +259,6 @@ namespace aprilui
 		harray<QueuedCallback> callbackQueue;
 		hmap<hstr, void (*)()> callbacks;
 		hmap<hstr, hlxml::Document*> includeDocuments;
-		hmap<hstr, BaseObject*> includeObjects;
 
 		hlxml::Document* _openDocument(chstr filename);
 		void _closeDocuments();
@@ -270,11 +269,10 @@ namespace aprilui
 		void _parseStyle(hlxml::Node* node);
 		virtual inline void _parseExternalXmlNode(hlxml::Node* node) { }
 		virtual inline BaseObject* _parseExternalObjectClass(hlxml::Node* node, chstr objName, cgrect rect) { return NULL; }
-		BaseObject* _parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool cacheObjects);
 
 		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent);
-		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, bool registerInDataset = true);
-		BaseObject* _recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style);
+		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
+		BaseObject* _recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
 
 		void _readFile(chstr filename);
 		virtual void _loadTexts(chstr path);
@@ -283,7 +281,7 @@ namespace aprilui
 		hstr _makeLocalizedTextureName(chstr filename);
 		hstr _makeTextsPath(chstr textsPath);
 		bool _findTextEntry(chstr textKey, hstr* text);
-		
+
 		hstr _parseCompositeTextKey(chstr key);
 		bool _processCompositeTextKeyArgs(std::ustring uArgString, harray<std::ustring>& uArgs);
 		bool _preprocessCompositeTextKeyFormat(std::ustring uFormat, harray<std::ustring> uArgs, std::ustring& uPreprocessedFormat, harray<std::ustring>& uPreprocessedArgs);
