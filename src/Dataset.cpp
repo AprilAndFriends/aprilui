@@ -322,7 +322,7 @@ namespace aprilui
 		return filename;
 	}
 	
-	void Dataset::parseTexture(hlxml::Node* node)
+	void Dataset::_parseTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
 		hstr textureName = hrdir::baseName(filename);
@@ -505,7 +505,7 @@ namespace aprilui
 		}
 	}
 	
-	void Dataset::parseCompositeImage(hlxml::Node* node)
+	void Dataset::_parseCompositeImage(hlxml::Node* node)
 	{
 		hstr name = node->pstr("name");
 		if (this->images.hasKey(name))
@@ -540,7 +540,7 @@ namespace aprilui
 		image->dataset = this;
 	}
 	
-	void Dataset::parseStyle(hlxml::Node* node)
+	void Dataset::_parseStyle(hlxml::Node* node)
 	{
 		hstr styleName = node->pstr("name");
 		if (this->styles.hasKey(styleName))
@@ -660,10 +660,10 @@ namespace aprilui
 	BaseObject* Dataset::parseObject(hlxml::Node* node, Object* parent)
 	{
 		Style style;
-		return this->recursiveObjectParse(node, parent, &style, "", "", gvec2());
+		return this->_recursiveObjectParse(node, parent, &style);
 	}
 	
-	void Dataset::parseTextureGroup(hlxml::Node* node)
+	void Dataset::_parseTextureGroup(hlxml::Node* node)
 	{
 		harray<hstr> names = node->pstr("names").split(",", -1, true);
 		foreach (hstr, it, names)
@@ -678,19 +678,19 @@ namespace aprilui
 		}
 	}
 	
-	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent)
+	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent)
 	{
 		Style style;
-		return this->recursiveObjectParse(node, parent, &style, "", "", gvec2());
+		return this->_recursiveObjectParse(node, parent, &style);
 	}
 
-	BaseObject* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
+	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, bool registerInDataset)
 	{
 		hstr objectName;
 		hstr className = node->name;
 		if (className == "Include")
 		{
-			return this->recursiveObjectIncludeParse(node, parent, style, namePrefix, nameSuffix, offset);
+			return this->_recursiveObjectIncludeParse(node, parent, style);
 		}
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
@@ -721,7 +721,7 @@ namespace aprilui
 		}
 		if (node->pexists("name"))
 		{
-			objectName = namePrefix + node->pstr("name") + nameSuffix;
+			objectName = node->pstr("name");
 		}
 		else
 		{
@@ -730,15 +730,17 @@ namespace aprilui
 		if (isObject)
 		{
 			aprilui::_readRectNode(rect, node);
-			rect += offset;
 		}
-		if (isObject && this->objects.hasKey(objectName))
+		if (registerInDataset)
 		{
-			__THROW_EXCEPTION(ObjectExistsException("Object", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
-		}
-		if (isAnimator && this->animators.hasKey(objectName))
-		{
-			__THROW_EXCEPTION(ObjectExistsException("Animator", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
+			if (isObject && this->objects.hasKey(objectName))
+			{
+				__THROW_EXCEPTION(ObjectExistsException("Object", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
+			}
+			if (isAnimator && this->animators.hasKey(objectName))
+			{
+				__THROW_EXCEPTION(ObjectExistsException("Animator", objectName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
+			}
 		}
 		BaseObject* baseObject = NULL;
 		Object* object = NULL;
@@ -755,7 +757,7 @@ namespace aprilui
 		{
 			isObject = false;
 			isAnimator = false;
-			baseObject = this->parseExternalObjectClass(node, objectName, rect);
+			baseObject = this->_parseExternalObjectClass(node, objectName, rect);
 			if (baseObject != NULL)
 			{
 				object = dynamic_cast<Object*>(baseObject);
@@ -781,9 +783,12 @@ namespace aprilui
 		{
 			object->setRect(rect);
 		}
-		baseObject->dataset = this;
-		EventArgs args(Event::RegisteredInDataset, this);
-		baseObject->notifyEvent(Event::RegisteredInDataset, &args);
+		baseObject->dataset = this; // this is required even when registerInDataset is false, mostly due to references within datasets (texts, images, etc.)
+		if (registerInDataset)
+		{
+			EventArgs args(Event::RegisteredInDataset, this);
+			baseObject->notifyEvent(Event::RegisteredInDataset, &args);
+		}
 		bool isCustomStyle = node->pexists("style");
 		if (isCustomStyle)
 		{
@@ -816,25 +821,24 @@ namespace aprilui
 			}
 		}
 		baseObject->applyStyle(style);
-		if (isObject)
+		if (registerInDataset)
 		{
-			this->objects[objectName] = object;
-			if (this->root == NULL)
+			if (isObject)
 			{
-				this->root = object;
+				this->objects[objectName] = object;
+				if (this->root == NULL)
+				{
+					this->root = object;
+				}
 			}
-			if (parent != NULL)
+			else if (isAnimator)
 			{
-				parent->addChild(object);
+				this->animators[objectName] = animator;
 			}
 		}
-		else if (isAnimator)
+		if (parent != NULL && (isObject || isAnimator))
 		{
-			this->animators[objectName] = animator;
-			if (parent != NULL)
-			{
-				parent->addChild(animator);
-			}
+			parent->addChild(baseObject);
 		}
 		hstr name;
 		foreach_m (hstr, it, node->properties)
@@ -850,7 +854,7 @@ namespace aprilui
 			{
 				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 				{
-					this->recursiveObjectParse((*child), object, style, namePrefix, nameSuffix, gvec2());
+					this->_recursiveObjectParse((*child), object, style, registerInDataset);
 				}
 			}
 		}
@@ -861,9 +865,9 @@ namespace aprilui
 		return baseObject;
 	}
 
-	BaseObject* Dataset::recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
+	BaseObject* Dataset::_recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style)
 	{
-		gvec2 newOffset = offset;
+		gvec2 newOffset;
 		if (node->pexists("position"))
 		{
 			newOffset += april::hstrToGvec2(node->pstr("position"));
@@ -873,69 +877,72 @@ namespace aprilui
 			newOffset += gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
 		}
 		hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
-		hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
-		hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
-		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, newOffset);
-		BaseObject* descendant = NULL;
-		hstr typeName;
-		hstr objectName;
-		hstr newName;
-		foreach_xmlnode (child, node)
+		hstr namePrefix = node->pstr("name_prefix", "");
+		hstr nameSuffix = node->pstr("name_suffix", "");
+		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, namePrefix, nameSuffix, newOffset);
+		if (includeRoot != NULL)
 		{
-			if ((*child)->name == "Property")
+			BaseObject* descendant = NULL;
+			hstr typeName;
+			hstr objectName;
+			hstr newName;
+			foreach_xmlnode (child, node)
 			{
-				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
+				if ((*child)->name == "Property")
 				{
-					if ((*child)->properties.hasKey("object"))
+					if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 					{
-						objectName = newNamePrefix + (*child)->properties["object"] + newNameSuffix;
-						descendant = (includeRoot->getName() == objectName ? includeRoot : includeRoot->findDescendantByName(objectName));
-						if (descendant != NULL)
+						if ((*child)->properties.hasKey("object"))
 						{
-							typeName = "";
-							if ((*child)->properties.hasKey("type"))
+							objectName = namePrefix + (*child)->properties["object"] + nameSuffix;
+							descendant = (includeRoot->getName() == objectName ? includeRoot : includeRoot->findDescendantByName(objectName));
+							if (descendant != NULL)
 							{
-								typeName = (*child)->properties["type"];
-							}
-							if (typeName == "" || descendant->getClassName() == typeName)
-							{
-								if ((*child)->properties.hasKey("name"))
+								typeName = "";
+								if ((*child)->properties.hasKey("type"))
 								{
-									newName = newNamePrefix + (*child)->properties["name"] + newNameSuffix;
-									if (!this->hasObject(newName))
+									typeName = (*child)->properties["type"];
+								}
+								if (typeName == "" || descendant->getClassName() == typeName)
+								{
+									if ((*child)->properties.hasKey("name"))
 									{
-										this->unregisterObjects(descendant);
-										descendant->setName(newName);
-										this->registerObjects(descendant, false);
+										newName = namePrefix + (*child)->properties["name"] + nameSuffix;
+										if (!this->hasObject(newName))
+										{
+											this->unregisterObjects(descendant);
+											descendant->setName(newName);
+											this->registerObjects(descendant, false);
+										}
+										else
+										{
+											hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
+												(*child)->properties["name"].cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
+										}
 									}
-									else
+									foreach_m (hstr, it, (*child)->properties)
 									{
-										hlog::errorf(logTag, "Cannot set name '%s' for object '%s' in '%s', object already exists in '%s'!",
-											(*child)->properties["name"].cStr(), objectName.cStr(), path.cStr(), this->name.cStr());
+										if (it->first != "type" && it->first != "object" && it->first != "name")
+										{
+											descendant->setProperty(it->first, it->second);
+										}
 									}
 								}
-								foreach_m (hstr, it, (*child)->properties)
+								else if (typeName != "")
 								{
-									if (it->first != "type" && it->first != "object" && it->first != "name")
-									{
-										descendant->setProperty(it->first, it->second);
-									}
+									hlog::errorf(logTag, "Found object '%s' in '%s', but found type '%s' instead of expected type '%s'!",
+										objectName.cStr(), path.cStr(), descendant->getClassName().cStr(), typeName.cStr());
 								}
 							}
-							else if (typeName != "")
+							else
 							{
-								hlog::errorf(logTag, "Found object '%s' in '%s', but found type '%s' instead of expected type '%s'!",
-									objectName.cStr(), path.cStr(), descendant->getClassName().cStr(), typeName.cStr());
+								hlog::errorf(logTag, "Could not find object '%s' in '%s'!", objectName.cStr(), path.cStr());
 							}
 						}
 						else
 						{
-							hlog::errorf(logTag, "Could not find object '%s' in '%s'!", objectName.cStr(), path.cStr());
+							hlog::errorf(logTag, "No object specified for property in '%s'!", path.cStr());
 						}
-					}
-					else
-					{
-						hlog::errorf(logTag, "No object specified for property in '%s'!", path.cStr());
 					}
 				}
 			}
@@ -948,7 +955,7 @@ namespace aprilui
 		// parse dataset xml file, error checking first
 		hstr originalFilePath = this->filePath;
 		this->filePath = this->_makeFilePath(filename);
-		this->readFile(filename);
+		this->_readFile(filename);
 		this->filePath = originalFilePath;
 	}
 
@@ -974,7 +981,7 @@ namespace aprilui
 		if (!normalizedPath.contains("*"))
 		{
 			parsedCount = 1;
-			this->readFile(normalizedPath);
+			this->_readFile(normalizedPath);
 			this->filePath = originalFilePath;
 		}
 		else
@@ -1074,29 +1081,80 @@ namespace aprilui
 		this->filePath = originalFilePath;
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", normalizedPath.cStr(), parsedCount);
 	}
-	
+
 	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
 	{
-		// parse dataset xml file, error checking first
+		return this->_parseObjectIncludeFile(filename, parent, style, namePrefix, nameSuffix, offset, false);
+	}
+	
+	BaseObject* Dataset::_parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool cacheObjects)
+	{
 		hstr path = hrdir::normalize(filename);
-		hlog::write(logTag, "Parsing object include file: " + path);
-		hlxml::Document doc(path);
-		hlxml::Node* current = doc.root();
 		BaseObject* root = NULL;
-		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
-		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
-		hstr className;
-		foreach_xmlnode (node, current)
+		if (!this->includeObjects.hasKey(path))
 		{
-			className = (*node)->name;
-			if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
+			hlog::write(logTag, "Parsing object include file: " + path);
+			// parse dataset xml file, error checking first
+			hlxml::Document doc = hlxml::Document(path);
+			hlxml::Node* current = doc.root();
+			if (current == NULL)
 			{
-				if (root != NULL)
+				__THROW_EXCEPTION(Exception("Unable to parse XML file '" + filename + "', no root node found!"), aprilui::systemConsistencyDebugExceptionsEnabled, return NULL);
+			}
+			const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
+			const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
+			hstr className;
+			foreach_xmlnode (node, current)
+			{
+				className = (*node)->name;
+				if (className == "Object" || className == "Animator" || objectFactories.hasKey(className) || animatorFactories.hasKey(className))
 				{
-					hlog::errorf(logTag, "Detected multiple roots in '%s'. Ignoring other root objects.", path.cStr());
-					break;
+					if (root != NULL)
+					{
+						hlog::errorf(logTag, "Detected multiple roots in '%s'. Ignoring other root objects.", path.cStr());
+						break;
+					}
+					root = this->_recursiveObjectParse((*node), NULL, style, false);
 				}
-				root = this->recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset);
+			}
+			if (cacheObjects && root != NULL)
+			{
+				this->includeObjects[path] = root;
+			}
+		}
+		else
+		{
+			hlog::write(logTag, "Cloning object include file: " + path);
+			root = this->includeObjects[path];
+		}
+		if (root != NULL)
+		{
+			Object* object = dynamic_cast<Object*>(root);
+			if (object != NULL)
+			{
+				if (cacheObjects)
+				{
+					root = object = object->cloneTree();
+				}
+				if (namePrefix != "" || nameSuffix != "")
+				{
+					harray<BaseObject*> descendants = object->getDescendants();
+					foreach (BaseObject*, it, descendants)
+					{
+						(*it)->setName(namePrefix + (*it)->getName() + nameSuffix);
+					}
+				}
+				object->setPosition(object->getPosition() + offset);
+			}
+			else if (cacheObjects)
+			{
+				root = root->clone();
+			}
+			root->setName(namePrefix + root->getName() + nameSuffix);
+			this->registerObjects(root);
+			if (parent != NULL)
+			{
+				parent->addChild(root);
 			}
 		}
 		return root;
@@ -1106,7 +1164,7 @@ namespace aprilui
 	{
 		if (!path.contains("*"))
 		{
-			return this->parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset);
+			return this->_parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset, true);
 		}
 		hstr baseDir = hrdir::baseDir(path);
 		hstr filename = path(baseDir.size() + 1, -1);
@@ -1118,7 +1176,7 @@ namespace aprilui
 		{
 			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
-				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2());
+				this->_parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2(), true);
 			}
 		}
 		return NULL; // since multiple files are loaded, no object is returned
@@ -1142,9 +1200,14 @@ namespace aprilui
 			delete it->second;
 		}
 		this->includeDocuments.clear();
+		foreach_m (BaseObject*, it, this->includeObjects)
+		{
+			delete it->second;
+		}
+		this->includeObjects.clear();
 	}
 	
-	void Dataset::readFile(chstr filename)
+	void Dataset::_readFile(chstr filename)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
@@ -1153,26 +1216,26 @@ namespace aprilui
 		hlxml::Node* current = doc->root();
 		if (current == NULL)
 		{
-			__THROW_EXCEPTION(Exception("Unable to parse Xml file '" + filename + "', no root node found!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
+			__THROW_EXCEPTION(Exception("Unable to parse XML file '" + filename + "', no root node found!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
 		}
-		this->parseExternalXMLNode(current);
+		this->_parseExternalXmlNode(current);
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		foreach_xmlnode (node, current)
 		{
 			if ((*node)->type != hlxml::Node::Type::Comment)
 			{
-				if		((*node)->name == "Texture")		this->parseTexture(*node);
-				else if ((*node)->name == "CompositeImage")	this->parseCompositeImage(*node);
-				else if ((*node)->name == "Style")			this->parseStyle(*node);
+				if		((*node)->name == "Texture")		this->_parseTexture(*node);
+				else if ((*node)->name == "CompositeImage")	this->_parseCompositeImage(*node);
+				else if ((*node)->name == "Style")			this->_parseStyle(*node);
 				else if ((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), (*node)->pstr("path"), true), (*node)->pbool("optional", false));
-				else if	((*node)->name == "TextureGroup")	this->parseTextureGroup(*node);
+				else if	((*node)->name == "TextureGroup")	this->_parseTextureGroup(*node);
 				else if ((*node)->name == "Object" || objectFactories.hasKey((*node)->name))
 				{
 					this->parseObject(*node);
 				}
 				else
 				{
-					this->parseExternalXMLNode(*node);
+					this->_parseExternalXmlNode(*node);
 				}
 			}
 		}
@@ -1188,7 +1251,7 @@ namespace aprilui
 			}
 			try
 			{
-				this->readFile(this->filename);
+				this->_readFile(this->filename);
 				this->_closeDocuments(); // safe not to throw an exception
 			}
 			catch (hexception& e)

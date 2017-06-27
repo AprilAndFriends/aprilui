@@ -259,22 +259,24 @@ namespace aprilui
 		harray<QueuedCallback> callbackQueue;
 		hmap<hstr, void (*)()> callbacks;
 		hmap<hstr, hlxml::Document*> includeDocuments;
-		
+		hmap<hstr, BaseObject*> includeObjects;
+
 		hlxml::Document* _openDocument(chstr filename);
 		void _closeDocuments();
 		
-		void parseTexture(hlxml::Node* node);
-		void parseTextureGroup(hlxml::Node* node);
-		void parseCompositeImage(hlxml::Node* node);
-		void parseStyle(hlxml::Node* node);
-		virtual inline void parseExternalXMLNode(hlxml::Node* node) { }
-		virtual inline BaseObject* parseExternalObjectClass(hlxml::Node* node, chstr objName, cgrect rect) { return NULL; }
-		
-		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent);
-		BaseObject* recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
-		BaseObject* recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
+		void _parseTexture(hlxml::Node* node);
+		void _parseTextureGroup(hlxml::Node* node);
+		void _parseCompositeImage(hlxml::Node* node);
+		void _parseStyle(hlxml::Node* node);
+		virtual inline void _parseExternalXmlNode(hlxml::Node* node) { }
+		virtual inline BaseObject* _parseExternalObjectClass(hlxml::Node* node, chstr objName, cgrect rect) { return NULL; }
+		BaseObject* _parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool cacheObjects);
 
-		void readFile(chstr filename);
+		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent);
+		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, bool registerInDataset = true);
+		BaseObject* _recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style);
+
+		void _readFile(chstr filename);
 		virtual void _loadTexts(chstr path);
 		void _loadTextResource(hstream& data, hmap<hstr, hstr>& textsMap);
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
