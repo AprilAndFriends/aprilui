@@ -1141,6 +1141,7 @@ namespace aprilui
 					harray<BaseObject*> descendants = object->getDescendants();
 					foreach (BaseObject*, it, descendants)
 					{
+						(*it)->dataset = NULL; // because it had to be set earlier for accessing dataset-dependent resources such as texts or images
 						(*it)->setName(namePrefix + (*it)->getName() + nameSuffix);
 					}
 				}
@@ -1150,6 +1151,7 @@ namespace aprilui
 			{
 				root = root->clone();
 			}
+			root->dataset = NULL; // because it had to be set earlier for accessing dataset-dependent resources such as texts or images
 			root->setName(namePrefix + root->getName() + nameSuffix);
 			this->registerObjects(root);
 			if (parent != NULL)
