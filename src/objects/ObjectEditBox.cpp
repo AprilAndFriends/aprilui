@@ -410,10 +410,6 @@ namespace aprilui
 									break;
 								}
 								++count;
-								if (position.x < offsetWidth + (*it).charAdvanceXs[i] * 2)
-								{
-									break;
-								}
 							}
 							offsetIndex += (*it).text.utf8SubString(0, count).size();
 							break;
