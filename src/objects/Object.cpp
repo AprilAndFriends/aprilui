@@ -1498,14 +1498,19 @@ namespace aprilui
 	
 	april::Color Object::_makeDrawColor() const
 	{
-		float alpha = (float)(this->inheritAlpha ? this->getDerivedAlpha() : this->color.a);
+		return this->_makeDrawColor(this->color);
+	}
+	
+	april::Color Object::_makeDrawColor(const april::Color& color) const
+	{
+		float alpha = (float)(this->inheritAlpha ? this->getDerivedAlpha() : color.a);
 		if (this->useDisabledAlpha && !this->isDerivedEnabled())
 		{
 			alpha *= 0.5f;
 		}
-		return april::Color(this->color, (unsigned char)alpha);
+		return april::Color(color, (unsigned char)alpha);
 	}
-
+	
 	Animator* Object::moveX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);

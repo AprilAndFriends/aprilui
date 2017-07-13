@@ -68,6 +68,7 @@ namespace aprilui
 		Direction direction;
 		
 		harray<BaseImage*> _getUsedImages() const;
+		april::Color _makeDrawColor(const april::Color& color) const;
 
 		void _draw();
 		harray<april::TexturedVertex> _calcVertices(cgrect rect, float progress, Direction direction);

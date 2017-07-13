@@ -113,7 +113,9 @@ namespace aprilui
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		grect drawRect = this->_makeDrawRect();
-		april::Color drawColor = this->_makeDrawColor();
+		april::Color drawProgressColor = this->_makeDrawProgressColor();
+		april::Color drawAntiProgressColor = this->_makeDrawAntiProgressColor();
+		april::Color drawMaskColor = this->_makeDrawMaskColor();
 		grect directionRect;
 		if (this->antiProgressImage != NULL && progress < 1.0f)
 		{
@@ -121,14 +123,14 @@ namespace aprilui
 			float antiProgress = 1.0f - progress;
 			if (this->stretching)
 			{
-				this->antiProgressImage->draw(this->_calcRectDirection(drawRect, antiProgress, antiDirection), drawColor);
+				this->antiProgressImage->draw(this->_calcRectDirection(drawRect, antiProgress, antiDirection), drawAntiProgressColor);
 			}
 			else
 			{
 				grect clipRect = (this->progressImage != NULL ? this->progressImage->getClipRect() : this->rect);
 				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
 				this->antiProgressImage->setClipRect(directionRect);
-				this->antiProgressImage->draw(drawRect, drawColor);
+				this->antiProgressImage->draw(drawRect, drawProgressColor);
 				this->antiProgressImage->setClipRect(clipRect);
 			}
 		}
@@ -136,21 +138,26 @@ namespace aprilui
 		{
 			if (this->stretching)
 			{
-				this->progressImage->draw(this->_calcRectDirection(drawRect, progress, this->direction), drawColor);
+				this->progressImage->draw(this->_calcRectDirection(drawRect, progress, this->direction), drawProgressColor);
 			}
 			else
 			{
 				grect clipRect = this->progressImage->getClipRect();
 				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress, this->direction);
 				this->progressImage->setClipRect(directionRect);
-				this->progressImage->draw(drawRect, drawColor);
+				this->progressImage->draw(drawRect, drawProgressColor);
 				this->progressImage->setClipRect(clipRect);
 			}
 		}
 		if (this->maskImage != NULL)
 		{
-			this->maskImage->draw(drawRect, drawColor);
+			this->maskImage->draw(drawRect, drawMaskColor);
 		}
+	}
+	
+	april::Color ProgressBar::_makeDrawColor(const april::Color& color) const
+	{
+		return ImageBox::_makeDrawColor(color);
 	}
 
 	grect ProgressBar::_calcRectDirection(cgrect rect, float progress, Direction direction)

@@ -66,6 +66,7 @@ namespace aprilui
 		bool pushed;
 
 		harray<BaseImage*> _getUsedImages() const;
+		april::Color _makeDrawColor(const april::Color& color) const;
 
 		grect _calcRectDirection(cgrect rect, float progress, Direction direction);
 		

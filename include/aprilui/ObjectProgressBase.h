@@ -13,6 +13,7 @@
 #ifndef APRILUI_PROGRESS_BASE_H
 #define APRILUI_PROGRESS_BASE_H
 
+#include <april/Color.h>
 #include <gtypes/Rectangle.h>
 #include <hltypes/hstring.h>
 
@@ -38,12 +39,18 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, antiProgressImageName, AntiProgressImageName);
 		HL_DEFINE_GET(hstr, maskImageName, MaskImageName);
 		HL_DEFINE_GETSET(float, progress, Progress);
+		HL_DEFINE_GETSET(april::Color, progressColor, ProgressColor);
+		HL_DEFINE_GETSET(april::Color, antiProgressColor, AntiProgressColor);
+		HL_DEFINE_GETSET(april::Color, maskColor, MaskColor);
 		void setProgressImage(BaseImage* image);
 		void setAntiProgressImage(BaseImage* image);
 		void setMaskImage(BaseImage* image);
 		void setProgressImageByName(chstr name);
 		void setAntiProgressImageByName(chstr name);
 		void setMaskImageByName(chstr name);
+		void setSymbolicProgressColor(chstr value);
+		void setSymbolicAntiProgressColor(chstr value);
+		void setSymbolicMaskColor(chstr value);
 
 		virtual Dataset* getDataset() const = 0;
 		virtual BaseImage* getImage() const = 0;
@@ -70,6 +77,14 @@ namespace aprilui
 		BaseImage* maskImage;
 		hstr maskImageName;
 		float progress;
+		april::Color progressColor;
+		april::Color antiProgressColor;
+		april::Color maskColor;
+		
+		virtual april::Color _makeDrawColor(const april::Color& color) const = 0;
+		april::Color _makeDrawProgressColor() const;
+		april::Color _makeDrawAntiProgressColor() const;
+		april::Color _makeDrawMaskColor() const;
 		
 		virtual harray<BaseImage*> _getUsedImages() const;
 

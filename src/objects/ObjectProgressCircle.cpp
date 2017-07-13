@@ -110,6 +110,11 @@ namespace aprilui
 	{
 		return (ProgressBase::_getUsedImages() + ImageBox::_getUsedImages());
 	}
+	
+	april::Color ProgressCircle::_makeDrawColor(const april::Color& color) const
+	{
+		return ImageBox::_makeDrawColor(color);
+	}
 
 	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions() const
 	{
@@ -130,33 +135,35 @@ namespace aprilui
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		grect drawRect = this->_makeDrawRect();
-		april::Color drawColor = this->_makeDrawColor();
+		april::Color drawProgressColor = this->_makeDrawProgressColor();
+		april::Color drawAntiProgressColor = this->_makeDrawAntiProgressColor();
+		april::Color drawMaskColor = this->_makeDrawMaskColor();
 		if (this->antiProgressImage != NULL)
 		{
 			if (progress == 0.0f)
 			{
-				this->antiProgressImage->draw(drawRect, drawColor);
+				this->antiProgressImage->draw(drawRect, drawAntiProgressColor);
 			}
 			else if (progress < 1.0f)
 			{
 				Direction antiDirection = Direction::fromInt(this->direction.value < Direction::ClockwiseMax.value ? this->direction.value * 10 : this->direction.value / 10);
-				this->antiProgressImage->draw(this->_calcVertices(drawRect, 1.0f - progress, antiDirection), drawColor);
+				this->antiProgressImage->draw(this->_calcVertices(drawRect, 1.0f - progress, antiDirection), drawAntiProgressColor);
 			}
 		}
 		if (this->progressImage != NULL)
 		{
 			if (progress == 1.0f)
 			{
-				this->progressImage->draw(drawRect, drawColor);
+				this->progressImage->draw(drawRect, drawProgressColor);
 			}
 			else if (progress > 0.0f)
 			{
-				this->progressImage->draw(this->_calcVertices(drawRect, progress, this->direction), drawColor);
+				this->progressImage->draw(this->_calcVertices(drawRect, progress, this->direction), drawProgressColor);
 			}
 		}
 		if (this->maskImage != NULL)
 		{
-			this->maskImage->draw(drawRect, drawColor);
+			this->maskImage->draw(drawRect, drawMaskColor);
 		}
 	}
 
