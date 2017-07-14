@@ -1876,13 +1876,10 @@ namespace aprilui
 
 	void Dataset::notifyEvent(chstr type, EventArgs* args)
 	{
-		foreach_m (Object*, it, this->objects)
+		harray<BaseObject*> allObjects = this->objects.values().cast<BaseObject*>() + this->animators.values().cast<BaseObject*>(); // events might delete objects
+		foreach (BaseObject*, it, allObjects)
 		{
-			it->second->notifyEvent(type, args);
-		}
-		foreach_m (Animator*, it, this->animators)
-		{
-			it->second->notifyEvent(type, args);
+			(*it)->notifyEvent(type, args);
 		}
 	}
 
