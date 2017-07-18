@@ -24,13 +24,13 @@ namespace aprilui
 	GridViewCell::GridViewCell(chstr name) : Container(name)
 	{
 		this->selectable = true;
-		this->_gridView = NULL;
+		this->gridView = NULL;
 	}
 
 	GridViewCell::GridViewCell(const GridViewCell& other) : Container(other)
 	{
 		this->selectable = other.selectable;
-		this->_gridView = NULL;
+		this->gridView = NULL;
 	}
 
 	GridViewCell::~GridViewCell()
@@ -78,8 +78,8 @@ namespace aprilui
 
 	bool GridViewCell::isSelected() const
 	{
-		return (this->_gridView != NULL && hbetweenIE(this->_gridView->selectedIndex, 0, this->_gridView->cells.size()) &&
-			this->_gridView->cells[this->_gridView->selectedIndex] == this);
+		return (this->gridView != NULL && hbetweenIE(this->gridView->selectedIndex, 0, this->gridView->cells.size()) &&
+			this->gridView->cells[this->gridView->selectedIndex] == this);
 	}
 
 	void GridViewCell::_update(float timeDelta)
@@ -91,7 +91,7 @@ namespace aprilui
 	void GridViewCell::_draw()
 	{
 		april::Color drawColor = this->_makeDrawColor();
-		if (this->_gridView != NULL)
+		if (this->gridView != NULL)
 		{
 			april::Color color = this->_getCurrentBackgroundColor() * drawColor;
 			if (color.a > 0)
@@ -115,19 +115,19 @@ namespace aprilui
 
 	april::Color GridViewCell::_getCurrentBackgroundColor() const
 	{
-		if (this->_gridView != NULL)
+		if (this->gridView != NULL)
 		{
 			if (this->pushed)
 			{
-				return (!this->isSelected() ? this->_gridView->getPushedColor() : this->_gridView->getSelectedPushedColor());
+				return (!this->isSelected() ? this->gridView->getPushedColor() : this->gridView->getSelectedPushedColor());
 			}
 			if (this->hovered)
 			{
-				return (!this->isSelected() ? this->_gridView->getHoverColor() : this->_gridView->getSelectedHoverColor());
+				return (!this->isSelected() ? this->gridView->getHoverColor() : this->gridView->getSelectedHoverColor());
 			}
 			if (this->isSelected())
 			{
-				return this->_gridView->getSelectedColor();
+				return this->gridView->getSelectedColor();
 			}
 		}
 		return april::Color::Clear;
@@ -135,10 +135,10 @@ namespace aprilui
 
 	void GridViewCell::_setSelected()
 	{
-		if (this->_gridView != NULL && this->_gridViewRow != NULL)
+		if (this->gridView != NULL && this->gridViewRow != NULL)
 		{
-			this->_gridView->setSelectedIndex(this->_gridViewRow->_gridViewCells.indexOf(this) +
-				this->_gridView->rows.indexOf(this->_gridViewRow) * this->_gridView->rowTemplate->_gridViewCells.size());
+			this->gridView->setSelectedIndex(this->gridViewRow->gridViewCells.indexOf(this) +
+				this->gridView->rows.indexOf(this->gridViewRow) * this->gridView->rowTemplate->gridViewCells.size());
 		}
 	}
 
@@ -163,24 +163,24 @@ namespace aprilui
 			GridViewRow* gridViewRow = dynamic_cast<GridViewRow*>(this->parent);
 			if (gridViewRow != NULL)
 			{
-				this->_gridViewRow = gridViewRow;
-				this->_gridView = gridViewRow->_gridView;
-				this->_gridViewRow->_gridViewCells += this;
+				this->gridViewRow = gridViewRow;
+				this->gridView = gridViewRow->gridView;
+				this->gridViewRow->gridViewCells += this;
 				// setup all properties
-				this->setPosition(this->_gridViewRow->_gridViewCells.size() > 1 ? this->_gridViewRow->_gridViewCells[-2]->getRect().right() + this->_gridView->getSpacingWidth() : 0.0f, 0.0f);
-				this->setHeight(this->_gridView->getItemHeight());
+				this->setPosition(this->gridViewRow->gridViewCells.size() > 1 ? this->gridViewRow->gridViewCells[-2]->getRect().right() + this->gridView->getSpacingWidth() : 0.0f, 0.0f);
+				this->setHeight(this->gridView->getItemHeight());
 				this->setAnchors(true, true, true, false);
 				if (dynamic_cast<GridViewRowTemplate*>(gridViewRow) == NULL)
 				{
-					int cellsCount = this->_gridView->cells.size();
-					this->_gridView->cells += this;
-					this->_gridView->_updateItem(cellsCount);
+					int cellsCount = this->gridView->cells.size();
+					this->gridView->cells += this;
+					this->gridView->_updateItem(cellsCount);
 				}
 			}
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
 			{
-				this->_gridView = NULL;
-				this->_gridViewRow = NULL;
+				this->gridView = NULL;
+				this->gridViewRow = NULL;
 				hlog::errorf(logTag, "GridViewCell '%s' not attached to object of class GridViewRow!", this->name.cStr());
 			}
 		}

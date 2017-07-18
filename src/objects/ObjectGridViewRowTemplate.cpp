@@ -53,7 +53,7 @@ namespace aprilui
 	{
 		GridViewRow* row = GridViewRow::clone(); // clones only the superclass which is GridViewRow
 		row->setName(name);
-		this->_gridView->addChild(row);
+		this->gridView->addChild(row);
 		row->setEnabled(true);
 		row->setVisible(true);
 		row->_cloneChildren(this->childrenObjects, this->childrenAnimators);
@@ -77,12 +77,12 @@ namespace aprilui
 			GridView* gridView = dynamic_cast<GridView*>(this->parent);
 			if (gridView != NULL)
 			{
-				this->_gridView = gridView;
-				this->_gridView->rowTemplate = this;
+				this->gridView = gridView;
+				this->gridView->rowTemplate = this;
 			}
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
 			{
-				this->_gridView = NULL;
+				this->gridView = NULL;
 				hlog::errorf(logTag, "GridViewRowTemplate '%s' not attached to object of class GridView!", this->name.cStr());
 			}
 		}

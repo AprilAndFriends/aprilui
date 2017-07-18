@@ -62,6 +62,8 @@ namespace aprilui
 
 	protected:
 		bool selectable;
+		GridView* gridView;
+		GridViewRow* gridViewRow;
 
 		void _update(float timeDelta);
 		void _draw();
@@ -78,8 +80,6 @@ namespace aprilui
 		bool _buttonUp(april::Button buttonCode);
 
 	private:
-		GridView* _gridView;
-		GridViewRow* _gridViewRow;
 		april::Color _hoverColor;
 		april::Color _pushedColor;
 

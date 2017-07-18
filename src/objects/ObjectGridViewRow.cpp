@@ -19,12 +19,12 @@ namespace aprilui
 {
 	GridViewRow::GridViewRow(chstr name) : Container(name)
 	{
-		this->_gridView = NULL;
+		this->gridView = NULL;
 	}
 
 	GridViewRow::GridViewRow(const GridViewRow& other) : Container(other)
 	{
-		this->_gridView = NULL;
+		this->gridView = NULL;
 	}
 
 	GridViewRow::~GridViewRow()
@@ -44,20 +44,20 @@ namespace aprilui
 			GridView* gridView = dynamic_cast<GridView*>(this->parent);
 			if (gridView != NULL)
 			{
-				this->_gridView = gridView;
-				if (this->_gridView->scrollArea != NULL)
+				this->gridView = gridView;
+				if (this->gridView->scrollArea != NULL)
 				{
-					int itemCount = this->_gridView->rows.size();
-					float itemHeight = this->_gridView->getItemHeight();
+					int itemCount = this->gridView->rows.size();
+					float itemHeight = this->gridView->getItemHeight();
 					// reattach to ScrollArea
-					this->_gridView->removeChild(this);
-					this->_gridView->scrollArea->addChild(this);
+					this->gridView->removeChild(this);
+					this->gridView->scrollArea->addChild(this);
 					// setup all properties
-					this->_gridView->rows += this;
-					this->setRect(0.0f, itemCount * (itemHeight + this->_gridView->getSpacingHeight()), this->_gridView->getWidth(), itemHeight);
+					this->gridView->rows += this;
+					this->setRect(0.0f, itemCount * (itemHeight + this->gridView->getSpacingHeight()), this->gridView->getWidth(), itemHeight);
 					this->setAnchors(true, true, true, false);
-					this->_gridView->_updateRow(itemCount);
-					this->_gridView->_updateScrollArea();
+					this->gridView->_updateRow(itemCount);
+					this->gridView->_updateScrollArea();
 				}
 				else
 				{
@@ -66,7 +66,7 @@ namespace aprilui
 			}
 			else if (this->parent != NULL && dynamic_cast<ScrollArea*>(this->parent) == NULL)
 			{
-				this->_gridView = NULL;
+				this->gridView = NULL;
 				hlog::errorf(logTag, "GridViewRow '%s' not attached to object of class GridView!", this->name.cStr());
 			}
 		}

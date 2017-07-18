@@ -112,8 +112,8 @@ namespace aprilui
 		{
 			this->rows[index]->setY(index * (this->itemHeight + this->spacingHeight));
 			this->rows[index]->setHeight(this->itemHeight);
-			int offset = index * this->rowTemplate->_gridViewCells.size();
-			for_iter (i, 0, this->rows[index]->_gridViewCells.size())
+			int offset = index * this->rowTemplate->gridViewCells.size();
+			for_iter (i, 0, this->rows[index]->gridViewCells.size())
 			{
 				this->_updateItem(i + offset);
 			}
@@ -189,7 +189,7 @@ namespace aprilui
 		this->rows -= row;
 		int rowsCount = this->rows.size();
 		this->rows.insertAt(index, row);
-		int cellsCount = this->rowTemplate->_gridViewCells.size();
+		int cellsCount = this->rowTemplate->gridViewCells.size();
 		// reordering cells/cells
 		this->cells = this->cells(0, index * cellsCount) + this->cells(rowsCount * cellsCount, cellsCount) + this->cells(index * cellsCount, (rowsCount - index) * cellsCount);
 		if (selected != NULL)
@@ -209,10 +209,10 @@ namespace aprilui
 		}
 		GridViewCell* selected = this->getSelected();
 		this->setSelectedIndex(-1);
-		if (selected != NULL && selected->_gridViewRow == this->rows[index])
+		if (selected != NULL && selected->gridViewRow == this->rows[index])
 		{
 			int cellIndex = this->cells.indexOf(selected);
-			int columnCount = this->rowTemplate->_gridViewCells.size();
+			int columnCount = this->rowTemplate->gridViewCells.size();
 			if (this->rows.size() == 1)
 			{
 				selected = NULL;
@@ -227,7 +227,7 @@ namespace aprilui
 			}
 		}
 		GridViewRow* row = this->rows.removeAt(index);
-		this->cells -= row->_gridViewCells;
+		this->cells -= row->gridViewCells;
 		this->dataset->destroyObjects(row);
 		if (selected != NULL)
 		{

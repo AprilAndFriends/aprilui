@@ -38,13 +38,13 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		HL_DEFINE_GET(harray<GridViewCell*>, _gridViewCells, Cells);
+		HL_DEFINE_GET(harray<GridViewCell*>, gridViewCells, Cells);
 
 		void notifyEvent(chstr type, EventArgs* args);
 
 	protected:
-		GridView* _gridView;
-		harray<GridViewCell*> _gridViewCells;
+		GridView* gridView;
+		harray<GridViewCell*> gridViewCells;
 
 	};
 
