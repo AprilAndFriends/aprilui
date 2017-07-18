@@ -113,12 +113,10 @@ namespace aprilui
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		grect drawRect = this->_makeDrawRect();
-		april::Color drawProgressColor = this->_makeDrawProgressColor();
-		april::Color drawAntiProgressColor = this->_makeDrawAntiProgressColor();
-		april::Color drawMaskColor = this->_makeDrawMaskColor();
 		grect directionRect;
 		if (this->antiProgressImage != NULL && progress < 1.0f)
 		{
+			april::Color drawAntiProgressColor = this->_makeDrawAntiProgressColor();
 			Direction antiDirection = Direction::fromInt(Direction::Max.value - this->direction.value);
 			float antiProgress = 1.0f - progress;
 			if (this->stretching)
@@ -130,12 +128,13 @@ namespace aprilui
 				grect clipRect = (this->progressImage != NULL ? this->progressImage->getClipRect() : this->rect);
 				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
 				this->antiProgressImage->setClipRect(directionRect);
-				this->antiProgressImage->draw(drawRect, drawProgressColor);
+				this->antiProgressImage->draw(drawRect, drawAntiProgressColor);
 				this->antiProgressImage->setClipRect(clipRect);
 			}
 		}
 		if (this->progressImage != NULL && progress > 0.0f)
 		{
+			april::Color drawProgressColor = this->_makeDrawProgressColor();
 			if (this->stretching)
 			{
 				this->progressImage->draw(this->_calcRectDirection(drawRect, progress, this->direction), drawProgressColor);
@@ -151,7 +150,7 @@ namespace aprilui
 		}
 		if (this->maskImage != NULL)
 		{
-			this->maskImage->draw(drawRect, drawMaskColor);
+			this->maskImage->draw(drawRect, this->_makeDrawMaskColor());
 		}
 	}
 	
