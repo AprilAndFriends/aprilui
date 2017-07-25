@@ -987,6 +987,7 @@ namespace aprilui
 				throw Exception(hsprintf("Failed parsing dataset include dir '%s' (included from '%s'), dir not found.", this->filePath.cStr(), originalFilePath.cStr()));
 			}
 			hstr extension = hrdir::baseName(normalizedPath).replaced("*", "");
+			hstr directory = hrdir::baseDir(normalizedPath);
 			harray<hstr> contents = hrdir::files(this->filePath, true);
 			harray<hstr> files;
 			foreach (hstr, it, contents)
@@ -1051,6 +1052,7 @@ namespace aprilui
 					}
 					foreach_m (Texture*, it2, (*it)->textures)
 					{
+						it2->second->filename = hrdir::joinPath(directory, it2->second->filename);
 						this->registerTexture(it2->second);
 					}
 					foreach_m (Style*, it2, (*it)->styles)
