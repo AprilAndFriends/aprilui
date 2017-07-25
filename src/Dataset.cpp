@@ -326,9 +326,9 @@ namespace aprilui
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));
 		hstr textureName = hrdir::baseName(filename);
-		if (this->textures.hasKey(textureName))
+		if (this->textures.hasKey(filename))
 		{
-			__THROW_EXCEPTION(ObjectExistsException("Texture", textureName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
+			__THROW_EXCEPTION(ObjectExistsException("Texture", filename, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
 		bool prefixImages = node->pbool("prefix_images", true);
 		bool managed = node->pbool("managed", aprilui::isDefaultManagedTextures());
@@ -396,18 +396,18 @@ namespace aprilui
 		{
 			texture->setAddressMode(april::Texture::AddressMode::Clamp);
 		}
-		this->textures[textureName] = texture;
+		this->textures[filename] = texture;
 		texture->dataset = this;
 		// extract image definitions
 		if (node->children.size() == 0) // if there are no images defined, create one that fills the whole area
 		{
-			if (this->images.hasKey(textureName))
+			if (this->images.hasKey(filename))
 			{
-				__THROW_EXCEPTION(ObjectExistsException("Image", textureName, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
+				__THROW_EXCEPTION(ObjectExistsException("Image", filename, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 			}
 			aprilTexture->loadMetaData();
 			BaseImage* image = new Image(texture, filename, grect(0.0f, 0.0f, (float)texture->getWidth(), (float)texture->getHeight()));
-			this->images[textureName] = image;
+			this->images[filename] = image;
 			image->dataset = this;
 		}
 		else
@@ -972,22 +972,24 @@ namespace aprilui
 	{
 		hstr normalizedPath = hrdir::normalize(path);
 		int parsedCount = 0;
-		hstr originalFilePath = this->filePath;
-		this->filePath = this->_makeFilePath(normalizedPath);
 		if (!normalizedPath.contains("*"))
 		{
+			hstr originalFilePath = this->filePath;
+			this->filePath = this->_makeFilePath(normalizedPath);
 			parsedCount = 1;
 			this->_readFile(normalizedPath);
 			this->filePath = originalFilePath;
 		}
 		else
 		{
-			if (!optional && !hrdir::exists(this->filePath))
+			hstr directory = hrdir::baseDir(normalizedPath);
+			hstr texturePrefix = hrdir::createRelativePath(this->filePath, directory);
+			if (!optional && !hrdir::exists(directory))
 			{
-				throw Exception(hsprintf("Failed parsing dataset include dir '%s' (included from '%s'), dir not found.", this->filePath.cStr(), originalFilePath.cStr()));
+				throw Exception(hsprintf("Failed parsing dataset include dir '%s' (included from '%s'), dir not found.", normalizedPath.cStr(), this->filePath.cStr()));
 			}
 			hstr extension = hrdir::baseName(normalizedPath).replaced("*", "");
-			harray<hstr> contents = hrdir::files(this->filePath, true);
+			harray<hstr> contents = hrdir::files(directory, true);
 			harray<hstr> files;
 			foreach (hstr, it, contents)
 			{
@@ -1051,6 +1053,7 @@ namespace aprilui
 					}
 					foreach_m (Texture*, it2, (*it)->textures)
 					{
+						it2->second->name = hrdir::joinPath(texturePrefix, it2->second->name);
 						this->registerTexture(it2->second);
 					}
 					foreach_m (Style*, it2, (*it)->styles)
@@ -1074,7 +1077,6 @@ namespace aprilui
 			}
 			_datasetRegisterLock = false;
 		}
-		this->filePath = originalFilePath;
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", normalizedPath.cStr(), parsedCount);
 	}
 
@@ -1164,6 +1166,7 @@ namespace aprilui
 		}
 		this->_parseExternalXmlNode(current);
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
+		hstr baseDir = hrdir::baseDir(path);
 		foreach_xmlnode (node, current)
 		{
 			if ((*node)->type != hlxml::Node::Type::Comment)
@@ -1171,7 +1174,7 @@ namespace aprilui
 				if		((*node)->name == "Texture")		this->_parseTexture(*node);
 				else if ((*node)->name == "CompositeImage")	this->_parseCompositeImage(*node);
 				else if ((*node)->name == "Style")			this->_parseStyle(*node);
-				else if ((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(hrdir::baseDir(path), (*node)->pstr("path"), true), (*node)->pbool("optional", false));
+				else if ((*node)->name == "Include")		this->parseGlobalInclude(hrdir::joinPath(baseDir, (*node)->pstr("path"), true), (*node)->pbool("optional", false));
 				else if	((*node)->name == "TextureGroup")	this->_parseTextureGroup(*node);
 				else if ((*node)->name == "Object" || objectFactories.hasKey((*node)->name))
 				{
