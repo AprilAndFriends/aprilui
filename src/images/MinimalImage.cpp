@@ -151,7 +151,7 @@ namespace aprilui
 		if (name == "y")					return this->getSrcRect().y;
 		if (name == "texture")
 		{
-			return (this->texture != NULL ? hdir::baseName(this->texture->getOriginalFilename()) : "");
+			return (this->texture != NULL ? this->texture->getName() : "");
 		}
 		return BaseImage::getProperty(name);
 	}
