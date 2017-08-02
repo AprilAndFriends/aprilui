@@ -47,16 +47,16 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, value, Value);
 		HL_DEFINE_GETSET(float, timer, Timer);
 		HL_DEFINE_GET(float, delay, Delay);
-		void setDelay(float value);
+		void setDelay(const float& value);
 		HL_DEFINE_GETSET(float, periods, Periods);
 		HL_DEFINE_GETSET(float, amplitude, Amplitude);
 		HL_DEFINE_GET(float, speed, Speed);
-		void setSpeed(float value);
+		void setSpeed(const float& value);
 		HL_DEFINE_GETSET(float, offset, Offset);
 		HL_DEFINE_GETSET(float, multiplier, Multiplier);
 		HL_DEFINE_GETSET(float, acceleration, Acceleration);
 		HL_DEFINE_GET(int, discreteStep, DiscreteStep);
-		void setDiscreteStep(int value);
+		void setDiscreteStep(const int& value);
 		HL_DEFINE_ISSET(resetOnExpire, ResetOnExpire);
 		HL_DEFINE_ISSET(inheritValue, InheritValue);
 		HL_DEFINE_GETSET(float, target, Target);
@@ -69,7 +69,7 @@ namespace aprilui
 		bool isExpired() const;
 		void setTime(float value);
 		/// @note Same as setTimer() but in periods instead of seconds.
-		void setPeriodsTimer(float value);
+		void setPeriodsTimer(const float& value);
 
 		harray<PropertyDescription> getPropertyDescriptions() const;
 

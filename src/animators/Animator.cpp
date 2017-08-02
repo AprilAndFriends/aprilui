@@ -102,17 +102,17 @@ namespace aprilui
 		return (BaseObject::getPropertyDescriptions() + Animator::_propertyDescriptions);
 	}
 	
-	void Animator::setDelay(float value)
+	void Animator::setDelay(const float& value)
 	{
 		this->delay = hmax(value, 0.0f);
 	}
 	
-	void Animator::setSpeed(float value)
+	void Animator::setSpeed(const float& value)
 	{
 		this->speed = hmax(value, 0.000001f);
 	}
 	
-	void Animator::setDiscreteStep(int value)
+	void Animator::setDiscreteStep(const int& value)
 	{
 		this->discreteStep = hmax(value, 0);
 	}
@@ -145,7 +145,7 @@ namespace aprilui
 	}
 
 	/// @note Same as setTimer() but in periods instead of seconds.
-	void Animator::setPeriodsTimer(float value)
+	void Animator::setPeriodsTimer(const float& value)
 	{
 		this->timer = value / this->speed;
 	}

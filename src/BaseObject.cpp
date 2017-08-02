@@ -96,6 +96,36 @@ namespace aprilui
 		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 
+	void BaseObject::setEnabled(const bool& value)
+	{
+		if (this->enabled != value)
+		{
+			this->enabled = value;
+			this->notifyEvent(Event::EnabledChanged, NULL);
+		}
+	}
+
+	void BaseObject::setAwake(const bool& value)
+	{
+		if (this->awake != value)
+		{
+			this->awake = value;
+			this->notifyEvent(Event::AwakeChanged, NULL);
+		}
+	}
+
+	void BaseObject::setZOrder(const int& zOrder)
+	{
+		if (this->zOrder != zOrder)
+		{
+			this->zOrder = zOrder;
+			if (this->parent != NULL)
+			{
+				this->parent->_sortChildren();
+			}
+		}
+	}
+
 	harray<Object*> BaseObject::getAncestors() const
 	{
 		harray<Object*> result;
@@ -118,18 +148,6 @@ namespace aprilui
 		return descendants;
 	}
 
-	void BaseObject::setZOrder(int zOrder)
-	{
-		if (this->zOrder != zOrder)
-		{
-			this->zOrder = zOrder;
-			if (this->parent != NULL)
-			{
-				this->parent->_sortChildren();
-			}
-		}
-	}
-
 	harray<BaseObject*> BaseObject::getChildren() const
 	{
 		return (this->childrenObjects.cast<BaseObject*>() + this->childrenAnimators.cast<BaseObject*>());
@@ -149,24 +167,6 @@ namespace aprilui
 	bool BaseObject::isDerivedAwake() const
 	{
 		return (this->isAwake() && (this->parent == NULL || this->parent->isDerivedAwake()));
-	}
-
-	void BaseObject::setEnabled(bool value)
-	{
-		if (this->enabled != value)
-		{
-			this->enabled = value;
-			this->notifyEvent(Event::EnabledChanged, NULL);
-		}
-	}
-
-	void BaseObject::setAwake(bool value)
-	{
-		if (this->awake != value)
-		{
-			this->awake = value;
-			this->notifyEvent(Event::AwakeChanged, NULL);
-		}
 	}
 
 	bool BaseObject::isChild(BaseObject* obj)

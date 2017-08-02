@@ -50,11 +50,11 @@ namespace aprilui
 		HL_DEFINE_GETSET(hstr, tag, Tag);
 		hstr getFullName() const;
 		HL_DEFINE_IS(enabled, Enabled);
-		void setEnabled(bool value);
+		void setEnabled(const bool& value);
 		HL_DEFINE_IS(awake, Awake);
-		void setAwake(bool value);
+		void setAwake(const bool& value);
 		HL_DEFINE_GET(int, zOrder, ZOrder);
-		void setZOrder(int zorder);
+		void setZOrder(const int& zorder);
 		virtual inline Dataset* getDataset() const { return this->dataset; }
 		virtual inline Object* getParent() const { return this->parent; }
 
