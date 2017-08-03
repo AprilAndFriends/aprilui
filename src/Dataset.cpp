@@ -204,7 +204,7 @@ namespace aprilui
 			Dataset* dataset = root->getDataset();
 			if (dataset != this)
 			{
-				hlog::writef(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().cStr(), root->getFullName().cStr());
+				hlog::warnf(logTag, "Dataset '%s' destroying object from another dataset: '%s'", this->getName().cStr(), root->getFullName().cStr());
 				dataset->destroyObjects(root);
 				return;
 			}
