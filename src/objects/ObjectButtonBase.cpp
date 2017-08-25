@@ -28,6 +28,7 @@ namespace aprilui
 
 	ButtonBase::ButtonBase() : _thisObject(NULL)
 	{
+		this->pushDeadZone = -1.0f;
 		this->hoverColor = april::Color::White;
 		this->pushedColor = april::Color::White;
 		this->disabledColor = april::Color::White;
@@ -40,6 +41,7 @@ namespace aprilui
 
 	ButtonBase::ButtonBase(const ButtonBase& other) : _thisObject(NULL)
 	{
+		this->pushDeadZone = other.pushDeadZone;
 		this->hoverColor = other.hoverColor;
 		this->pushedColor = other.pushedColor;
 		this->disabledColor = other.disabledColor;
@@ -91,6 +93,7 @@ namespace aprilui
 	{
 		if (ButtonBase::_propertyDescriptions.size() == 0)
 		{
+			ButtonBase::_propertyDescriptions += PropertyDescription("push_dead_zone", PropertyDescription::Type::Float);
 			ButtonBase::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
 			ButtonBase::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
 			ButtonBase::_propertyDescriptions += PropertyDescription("disabled_color", PropertyDescription::Type::Color);
@@ -153,6 +156,7 @@ namespace aprilui
 
 	hstr ButtonBase::getProperty(chstr name)
 	{
+		if (name == "push_dead_zone")	return this->getPushDeadZone();
 		if (name == "hover_color")		return this->getHoverColor().hex();
 		if (name == "pushed_color")		return this->getPushedColor().hex();
 		if (name == "disabled_color")	return this->getDisabledColor().hex();
@@ -161,7 +165,8 @@ namespace aprilui
 
 	bool ButtonBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "hover_color")			this->setHoverColor(aprilui::_makeColor(value));
+		if (name == "push_dead_zone")		this->setPushDeadZone(value);
+		else if (name == "hover_color")		this->setHoverColor(aprilui::_makeColor(value));
 		else if (name == "pushed_color")	this->setPushedColor(aprilui::_makeColor(value));
 		else if (name == "disabled_color")	this->setDisabledColor(aprilui::_makeColor(value));
 		else return false;
@@ -178,6 +183,7 @@ namespace aprilui
 		if (this->hovered)
 		{
 			this->pushed = true;
+			this->_mouseDownPosition = this->_thisObject->transformToLocalSpace(aprilui::getCursorPosition());
 			return true;
 		}
 		return false;
@@ -208,6 +214,13 @@ namespace aprilui
 	bool ButtonBase::_mouseMove()
 	{
 		this->_updateHover();
+		if (this->pushDeadZone >= 0.0f)
+		{
+			if ((this->_mouseDownPosition - this->_thisObject->transformToLocalSpace(aprilui::getCursorPosition())).squaredLength() > this->pushDeadZone * this->pushDeadZone)
+			{
+				this->_mouseCancel(april::Key::None);
+			}
+		}
 		return false;
 	}
 

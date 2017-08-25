@@ -34,6 +34,7 @@ namespace aprilui
 		ButtonBase();
 		virtual ~ButtonBase();
 
+		HL_DEFINE_GETSET(float, pushDeadZone, PushDeadZone);
 		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
 		void setHoverColor(const april::Color& value);
 		void setHoverSymbolicColor(chstr value);
@@ -67,6 +68,7 @@ namespace aprilui
 		static harray<april::Button> allowedButtons;
 
 	protected:
+		float pushDeadZone;
 		april::Color hoverColor;
 		april::Color pushedColor;
 		april::Color disabledColor;
@@ -93,6 +95,7 @@ namespace aprilui
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
+		gvec2 _mouseDownPosition;
 		Object* _thisObject; // used for internal optimization to avoid dynamic_cast
 
 	};
