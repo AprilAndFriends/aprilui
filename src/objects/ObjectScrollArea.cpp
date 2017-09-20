@@ -26,6 +26,7 @@ namespace aprilui
 	float ScrollArea::defaultInertia = 2000.0f;
 	float ScrollArea::defaultDragThreshold = 16.0f;
 	float ScrollArea::defaultDragMaxSpeed = 0.0f;
+	float ScrollArea::defaultDirectionKeySpeed = 400.0f;
 
 	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
 
@@ -33,13 +34,16 @@ namespace aprilui
 	{
 		this->clip = true;
 		this->allowDrag = false;
+		this->allowDirectionKeys = false;
 		this->inertia = ScrollArea::defaultInertia;
 		this->dragThreshold = ScrollArea::defaultDragThreshold;
 		this->dragMaxSpeed = ScrollArea::defaultDragMaxSpeed;
+		this->directionKeySpeed = ScrollArea::defaultDirectionKeySpeed;
 		this->swapScrollWheels = false;
 		this->optimizeOobChildrenVisible = false;
 		this->optimizeOobChildrenAwake = false;
 		this->dragging = false;
+		this->directionKeyScrolling = false;
 		this->debugColor.set(april::Color::Yellow, 32);
 		this->_overrideHoverMode = false;
 	}
@@ -47,13 +51,16 @@ namespace aprilui
 	ScrollArea::ScrollArea(const ScrollArea& other) : Object(other), ButtonBase(other)
 	{
 		this->allowDrag = other.allowDrag;
+		this->allowDirectionKeys = other.allowDirectionKeys;
 		this->inertia = other.inertia;
 		this->dragThreshold = other.dragThreshold;
 		this->dragMaxSpeed = other.dragMaxSpeed;
+		this->directionKeySpeed = other.directionKeySpeed;
 		this->swapScrollWheels = other.swapScrollWheels;
 		this->optimizeOobChildrenVisible = other.optimizeOobChildrenVisible;
 		this->optimizeOobChildrenAwake = other.optimizeOobChildrenAwake;
 		this->dragging = false;
+		this->directionKeyScrolling = false;
 		this->_overrideHoverMode = false;
 	}
 
@@ -71,9 +78,11 @@ namespace aprilui
 		if (ScrollArea::_propertyDescriptions.size() == 0)
 		{
 			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("allow_direction_keys", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("direction_key_speed", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
@@ -172,9 +181,12 @@ namespace aprilui
 	{
 		this->_updateOobChildren();
 		Object::_update(timeDelta);
-		if (this->allowDrag && this->parent != NULL)
+		if (this->allowDrag && this->parent != NULL || this->allowDirectionKeys)
 		{
 			ButtonBase::_update(timeDelta);
+		}
+		if (this->allowDrag && this->parent != NULL)
+		{
 			if (timeDelta > 0.0f) // don't update this if no time has passed
 			{
 				gvec2 position = aprilui::getCursorPosition();
@@ -274,6 +286,18 @@ namespace aprilui
 		{
 			this->_dragTimer.set(0.0f, 0.0f);
 		}
+		if (this->allowDirectionKeys && !this->dragging && this->hovered && this->directionKeyScrolling && this->dataset->getFocusedObject() == NULL &&
+			(this->inertia <= 0.0f || !this->isScrolling()))
+		{
+			if (this->_directionKeySpeed.x != 0.0f)
+			{
+				this->setScrollOffsetX(this->getScrollOffsetX() + timeDelta * this->_directionKeySpeed.x);
+			}
+			if (this->_directionKeySpeed.y != 0.0f)
+			{
+				this->setScrollOffsetY(this->getScrollOffsetY() + timeDelta * this->_directionKeySpeed.y);
+			}
+		}
 	}
 
 	void ScrollArea::_updateOobChildren()
@@ -315,12 +339,25 @@ namespace aprilui
 		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
 	}
 
+	void ScrollArea::snapScrollOffsetX()
+	{
+		this->setScrollOffsetX(hroundf(this->getScrollOffsetX()));
+	}
+
+	void ScrollArea::snapScrollOffsetY()
+	{
+		this->setScrollOffsetY(hroundf(this->getScrollOffsetY()));
+	}
+
 	void ScrollArea::stopScrolling()
 	{
 		this->dragging = false;
+		this->directionKeyScrolling = false;
 		this->pushed = false;
 		this->_dragSpeed.set(0.0f, 0.0f);
 		this->_dragTimer.set(0.0f, 0.0f);
+		this->_directionKeySpeed.set(0.0f, 0.0f);
+		this->snapScrollOffset();
 	}
 
 	bool ScrollArea::_isScrollableScrollArea(aprilui::Object* object) const
@@ -332,6 +369,10 @@ namespace aprilui
 	aprilui::Object* ScrollArea::_findHoverObject()
 	{
 		if (this->dragging)
+		{
+			return (this->isCursorInside() ? this : NULL);
+		}
+		if (this->directionKeyScrolling && this->dataset->getFocusedObject() == NULL)
 		{
 			return (this->isCursorInside() ? this : NULL);
 		}
@@ -358,9 +399,11 @@ namespace aprilui
 	hstr ScrollArea::getProperty(chstr name)
 	{
 		if (name == "allow_drag")						return this->isAllowDrag();
+		if (name == "allow_direction_keys")				return this->isAllowDirectionKeys();
 		if (name == "inertia")							return this->getInertia();
 		if (name == "drag_threshold")					return this->getDragThreshold();
 		if (name == "drag_max_speed")					return this->getDragMaxSpeed();
+		if (name == "direction_key_speed")				return this->getDirectionKeySpeed();
 		if (name == "swap_scroll_wheels")				return this->isSwapScrollWheels();
 		if (name == "optimize_oob_children_visible")	return this->isOptimizeOobChildrenVisible();
 		if (name == "optimize_oob_children_awake")		return this->isOptimizeOobChildrenAwake();
@@ -375,9 +418,11 @@ namespace aprilui
 	bool ScrollArea::setProperty(chstr name, chstr value)
 	{
 		if (name == "allow_drag")							this->setAllowDrag(value);
+		else if (name == "allow_direction_keys")			this->setAllowDirectionKeys(value);
 		else if (name == "inertia")							this->setInertia(value);
 		else if (name == "drag_threshold")					this->setDragThreshold(value);
 		else if (name == "drag_max_speed")					this->setDragMaxSpeed(value);
+		else if (name == "direction_key_speed")				this->setDirectionKeySpeed(value);
 		else if (name == "swap_scroll_wheels")				this->setSwapScrollWheels(value);
 		else if (name == "optimize_oob_children_visible")	this->setOptimizeOobChildrenVisible(value);
 		else if (name == "optimize_oob_children_awake")		this->setOptimizeOobChildrenAwake(value);
@@ -473,6 +518,48 @@ namespace aprilui
 		return Object::onMouseUp(keyCode);
 	}
 	
+	bool ScrollArea::onMouseScroll(float x, float y)
+	{
+		// has to override its children which is why onMouseScroll() is overriden and not _mouseScroll()
+		if (this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
+		{
+			Container* parent = dynamic_cast<Container*>(this->parent);
+			if (parent != NULL)
+			{
+				this->_overrideHoverMode = true;
+				bool result = (this->_findHoverObject() == this);
+				this->_overrideHoverMode = false;
+				if (result)
+				{
+					result = false;
+					if (this->swapScrollWheels)
+					{
+						hswap(x, y);
+					}
+					if (parent->scrollBarV != NULL)
+					{
+						parent->scrollBarV->addScrollValue(parent->scrollBarV->_calcScrollMove(x, y));
+						result = true;
+					}
+					if (parent->scrollBarH != NULL)
+					{
+						parent->scrollBarH->addScrollValue(parent->scrollBarH->_calcScrollMove(x, y));
+						result = true;
+					}
+				}
+				if (result)
+				{
+					return true;
+				}
+			}
+			else
+			{
+				hlog::errorf(logTag, "ScrollArea '%s' attached to object '%s' which is not a Container!", this->name.cStr(), this->parent->getName().cStr());
+			}
+		}
+		return Object::onMouseScroll(x, y);
+	}
+
 	void ScrollArea::_mouseCancel(april::Key keyCode)
 	{
 		ButtonBase::_mouseCancel(keyCode);
@@ -488,39 +575,76 @@ namespace aprilui
 		return Object::_mouseMove();
 	}
 
-	bool ScrollArea::onMouseScroll(float x, float y)
+	bool ScrollArea::_keyDown(april::Key keyCode)
 	{
-		// has to override its children which is why onMouseScroll() is overriden and not _mouseScroll()
-		if (this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
+		if (this->allowDirectionKeys && this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
 		{
-			Container* parent = dynamic_cast<Container*>(this->parent);
-			this->_overrideHoverMode = true;
-			bool result = (this->_findHoverObject() == this);
-			this->_overrideHoverMode = false;
-			if (result)
+			if (keyCode == april::Key::ArrowRight)
 			{
-				result = false;
-				if (this->swapScrollWheels)
-				{
-					hswap(x, y);
-				}
-				if (parent->scrollBarV != NULL)
-				{
-					parent->scrollBarV->addScrollValue(parent->scrollBarV->_calcScrollMove(x, y));
-					result = true;
-				}
-				if (parent->scrollBarH != NULL)
-				{
-					parent->scrollBarH->addScrollValue(parent->scrollBarH->_calcScrollMove(x, y));
-					result = true;
-				}
+				this->_directionKeySpeed.x = this->directionKeySpeed;
+				this->directionKeyScrolling = true;
 			}
-			if (result)
+			else if (keyCode == april::Key::ArrowLeft)
 			{
-				return true;
+				this->_directionKeySpeed.x = -this->directionKeySpeed;
+				this->directionKeyScrolling = true;
+			}
+			if (keyCode == april::Key::ArrowDown)
+			{
+				this->_directionKeySpeed.y = this->directionKeySpeed;
+				this->directionKeyScrolling = true;
+			}
+			else if (keyCode == april::Key::ArrowUp)
+			{
+				this->_directionKeySpeed.y = -this->directionKeySpeed;
+				this->directionKeyScrolling = true;
 			}
 		}
-		return Object::onMouseScroll(x, y);
+		return Object::_keyDown(keyCode);
+	}
+
+	bool ScrollArea::_keyUp(april::Key keyCode)
+	{
+		if (this->allowDirectionKeys && this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
+		{
+			if (keyCode == april::Key::ArrowRight)
+			{
+				if (this->_directionKeySpeed.x > 0.0f)
+				{
+					this->_directionKeySpeed.x = 0.0f;
+					this->snapScrollOffsetX();
+				}
+				this->directionKeyScrolling = (this->_directionKeySpeed.x != 0.0f || this->_directionKeySpeed.y != 0.0f);
+			}
+			else if (keyCode == april::Key::ArrowLeft)
+			{
+				if (this->_directionKeySpeed.x < 0.0f)
+				{
+					this->_directionKeySpeed.x = 0.0f;
+					this->snapScrollOffsetX();
+				}
+				this->directionKeyScrolling = (this->_directionKeySpeed.x != 0.0f || this->_directionKeySpeed.y != 0.0f);
+			}
+			else if (keyCode == april::Key::ArrowDown)
+			{
+				if (this->_directionKeySpeed.y > 0.0f)
+				{
+					this->_directionKeySpeed.y = 0.0f;
+					this->snapScrollOffsetY();
+				}
+				this->directionKeyScrolling = (this->_directionKeySpeed.x != 0.0f || this->_directionKeySpeed.y != 0.0f);
+			}
+			else if (keyCode == april::Key::ArrowUp)
+			{
+				if (this->_directionKeySpeed.y < 0.0f)
+				{
+					this->_directionKeySpeed.y = 0.0f;
+					this->snapScrollOffsetY();
+				}
+				this->directionKeyScrolling = (this->_directionKeySpeed.x != 0.0f || this->_directionKeySpeed.y != 0.0f);
+			}
+		}
+		return Object::_keyUp(keyCode);
 	}
 
 	bool ScrollArea::_buttonDown(april::Button buttonCode)

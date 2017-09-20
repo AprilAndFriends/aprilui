@@ -943,104 +943,125 @@ namespace aprilui
 				{
 					this->_ctrlMode && !this->_altMode ? this->_deleteLeftWord() : this->_deleteLeft();
 				}
+				return true;
 			}
-			else if (keyCode == april::Key::Delete)
+			if (keyCode == april::Key::Delete)
 			{
 				if (!this->_deleteSelected())
 				{
 					this->_ctrlMode && !this->_altMode ? this->_deleteRightWord() : this->_deleteRight();
 				}
+				return true;
 			}
 #if !defined(_ANDROID) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
-			else if (keyCode == april::Key::ArrowLeft)
+			if (keyCode == april::Key::ArrowLeft)
 			{
 				this->_ctrlMode && !this->_altMode ? this->_caretMoveLeftWord() : this->_caretMoveLeft();
+				return true;
 			}
-			else if (keyCode == april::Key::ArrowRight)
+			if (keyCode == april::Key::ArrowRight)
 			{
 				this->_ctrlMode && !this->_altMode ? this->_caretMoveRightWord() : this->_caretMoveRight();
+				return true;
 			}
-			else if (keyCode == april::Key::ArrowUp)
+			if (keyCode == april::Key::ArrowUp)
 			{
 				if (this->multiLine || this->horzFormatting.isWrapped())
 				{
 					this->_caretMoveUp();
 				}
+				return true;
 			}
-			else if (keyCode == april::Key::ArrowDown)
+			if (keyCode == april::Key::ArrowDown)
 			{
 				if (this->multiLine || this->horzFormatting.isWrapped())
 				{
 					this->_caretMoveDown();
 				}
+				return true;
 			}
-			else if (keyCode == april::Key::Home)
+			if (keyCode == april::Key::Home)
 			{
 				this->_caretMoveStart();
+				return true;
 			}
-			else if (keyCode == april::Key::End)
+			if (keyCode == april::Key::End)
 			{
 				this->_caretMoveEnd();
+				return true;
 			}
-			else if (keyCode == april::Key::Control)
+			if (keyCode == april::Key::Control)
 			{
 				this->_ctrlMode = true;
+				// no return, not preventing other objects from processing this key
 			}
 #ifdef _MAC
-			else if (keyCode == april::Key::CommandL || keyCode == april::Key::CommandR)
+			if (keyCode == april::Key::CommandL || keyCode == april::Key::CommandR)
 			{
 				this->_ctrlMode = true;
+				// no return, not preventing other objects from processing this key
 			}
 #endif
-			else if (keyCode == april::Key::Menu)
+			if (keyCode == april::Key::Menu)
 			{
 				this->_altMode = true;
+				// no return, not preventing other objects from processing this key
 			}
-			else if (keyCode == april::Key::Shift)
+			if (keyCode == april::Key::Shift)
 			{
 				this->_shiftMode = true;
+				// no return, not preventing other objects from processing this key
 			}
-			else if (keyCode == april::Key::A)
+			if (keyCode == april::Key::A)
 			{
 				if (this->_ctrlMode && !this->_altMode && this->selectable)
 				{
 					this->_caretMoveEnd();
 					this->setSelectionCount(-this->text.utf8Size());
 					this->_consumeKey = true;
+					return true;
 				}
+				// no return, not preventing other objects from processing this key
 			}
-			else if (keyCode == april::Key::X)
+			if (keyCode == april::Key::X)
 			{
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_cutText();
 					this->_consumeKey = true;
+					return true;
 				}
+				// no return, not preventing other objects from processing this key
 			}
-			else if (keyCode == april::Key::C)
+			if (keyCode == april::Key::C)
 			{
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_copyText();
 					this->_consumeKey = true;
+					return true;
 				}
+				// no return, not preventing other objects from processing this key
 			}
-			else if (keyCode == april::Key::V)
+			if (keyCode == april::Key::V)
 			{
 				if (this->_ctrlMode && !this->_altMode)
 				{
 					this->_pasteText();
 					this->_consumeKey = true;
+					return true;
 				}
+				// no return, not preventing other objects from processing this key
 			}
 #endif
-			else if (keyCode == april::Key::Return)
+			if (keyCode == april::Key::Return)
 			{
 				if (this->multiLine && !this->_ctrlMode && !this->_altMode)
 				{
 					this->_insertChar('\n');
 				}
 				this->triggerEvent(Event::SubmitEditText, april::Key::Return);
+				return true;
 			}
 		}
 		return Label::_keyDown(keyCode);
