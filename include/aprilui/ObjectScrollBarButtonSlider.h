@@ -29,7 +29,6 @@ namespace aprilui
 		ScrollBarButtonSlider(chstr name);
 		~ScrollBarButtonSlider();
 		inline hstr getClassName() const { return "ScrollBarButtonSlider"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

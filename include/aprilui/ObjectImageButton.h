@@ -30,9 +30,10 @@ namespace aprilui
 		ImageButton(chstr name);
 		~ImageButton();
 		inline hstr getClassName() const { return "ImageButton"; }
-
 		static Object* createInstance(chstr name);
 		
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GET(BaseImage*, hoverImage, HoverImage);
 		HL_DEFINE_GET(BaseImage*, pushedImage, PushedImage);
 		HL_DEFINE_GET(BaseImage*, disabledImage, DisabledImage);
@@ -53,8 +54,6 @@ namespace aprilui
 		void setPushedImageByName(chstr name);
 		void setDisabledImageByName(chstr name);
 		
-		harray<PropertyDescription> getPropertyDescriptions() const;
-
 		/// @brief Optimized version.
 		bool trySetHoverImageByName(chstr name);
 		/// @brief Optimized version.

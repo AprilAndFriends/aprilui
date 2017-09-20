@@ -33,8 +33,9 @@ namespace aprilui
 		ListBoxItem(chstr name);
 		~ListBoxItem();
 		inline hstr getClassName() const { return "ListBoxItem"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getName() const;
 		int getFocusIndex() const;

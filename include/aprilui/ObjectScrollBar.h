@@ -43,6 +43,8 @@ namespace aprilui
 		~ScrollBar();
 		inline hstr getClassName() const { return "ScrollBar"; }
 
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GETSET(float, gridSize, GridSize);
 		HL_DEFINE_GETSET(float, scrollDistance, ScrollDistance);
 		HL_DEFINE_ISSET(useFading, UseFading);
@@ -52,8 +54,6 @@ namespace aprilui
 		HL_DEFINE_GETSET(int, maxGridScroll, MaxGridScroll);
 		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

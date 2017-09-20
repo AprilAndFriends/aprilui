@@ -37,6 +37,8 @@ namespace aprilui
 		LabelBase();
 		virtual ~LabelBase();
 
+		virtual harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GET(hstr, text, Text);
 		virtual void setText(chstr value);
 		HL_DEFINE_GET(hstr, textKey, TextKey);
@@ -82,8 +84,6 @@ namespace aprilui
 
 		virtual Dataset* getDataset() const = 0;
 		virtual hstr getAutoScaledFont() = 0;
-
-		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		bool trySetTextKey(chstr textKey);
 		

@@ -34,7 +34,6 @@ namespace aprilui
 		TreeViewImage(chstr name);
 		~TreeViewImage();
 		inline hstr getClassName() const { return "TreeViewImage"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

@@ -33,14 +33,14 @@ namespace aprilui
 		~CompositeImage();
 		inline hstr getClassName() const { return "CompositeImage"; }
 		
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GETSET(gvec2, size, SrcSize);
 		HL_DEFINE_GETSET(float, size.x, SrcWidth);
 		HL_DEFINE_GETSET(float, size.y, SrcHeight);
 		HL_DEFINE_ISSET(restoreClipRects, RestoreClipRects);
 		inline const harray<ImageRef>& getImages() { return this->images; }
 		
-		harray<PropertyDescription> getPropertyDescriptions() const;
-
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 

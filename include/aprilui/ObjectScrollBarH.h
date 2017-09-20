@@ -32,7 +32,6 @@ namespace aprilui
 		ScrollBarH(chstr name);
 		~ScrollBarH();
 		inline hstr getClassName() const { return "ScrollBarH"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

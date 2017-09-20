@@ -51,6 +51,17 @@ namespace aprilui
 		return new TextImageButton(name);
 	}
 
+	harray<PropertyDescription> TextImageButton::getPropertyDescriptions() const
+	{
+		if (TextImageButton::_propertyDescriptions.size() == 0)
+		{
+			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::Type::Color);
+			TextImageButton::_propertyDescriptions += PropertyDescription("pushed_text_color", PropertyDescription::Type::Color);
+			TextImageButton::_propertyDescriptions += PropertyDescription("disabled_text_color", PropertyDescription::Type::Color);
+		}
+		return (LabelBase::getPropertyDescriptions() + ImageButton::getPropertyDescriptions() + TextImageButton::_propertyDescriptions);
+	}
+
 	Dataset* TextImageButton::getDataset() const
 	{
 		return ImageButton::getDataset();
@@ -93,17 +104,6 @@ namespace aprilui
 	void TextImageButton::setDisabledTextSymbolicColor(chstr value)
 	{
 		this->setDisabledTextColor(aprilui::_makeColor(value));
-	}
-
-	harray<PropertyDescription> TextImageButton::getPropertyDescriptions() const
-	{
-		if (TextImageButton::_propertyDescriptions.size() == 0)
-		{
-			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::Type::Color);
-			TextImageButton::_propertyDescriptions += PropertyDescription("pushed_text_color", PropertyDescription::Type::Color);
-			TextImageButton::_propertyDescriptions += PropertyDescription("disabled_text_color", PropertyDescription::Type::Color);
-		}
-		return (LabelBase::getPropertyDescriptions() + ImageButton::getPropertyDescriptions() + TextImageButton::_propertyDescriptions);
 	}
 
 	void TextImageButton::_draw()

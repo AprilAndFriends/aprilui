@@ -30,8 +30,9 @@ namespace aprilui
 		TextImageButton(chstr name);
 		~TextImageButton();
 		inline hstr getClassName() const { return "TextImageButton"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
 		void setHoverTextColor(const april::Color& value);
@@ -44,8 +45,6 @@ namespace aprilui
 		void setDisabledTextSymbolicColor(chstr value);
 		Dataset* getDataset() const;
 		hstr getAutoScaledFont();
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

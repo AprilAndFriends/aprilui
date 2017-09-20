@@ -53,6 +53,17 @@ namespace aprilui
 		return new ProgressBar(name);
 	}
 
+	harray<PropertyDescription> ProgressBar::getPropertyDescriptions() const
+	{
+		if (ProgressBar::_propertyDescriptions.size() == 0)
+		{
+			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::Type::Bool);
+			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
+			ProgressBar::_propertyDescriptions += PropertyDescription("interactable", PropertyDescription::Type::Bool);
+		}
+		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressBar::_propertyDescriptions);
+	}
+
 	Dataset* ProgressBar::getDataset() const
 	{
 		return ImageBox::getDataset();
@@ -81,17 +92,6 @@ namespace aprilui
 	harray<BaseImage*> ProgressBar::_getUsedImages() const
 	{
 		return (ProgressBase::_getUsedImages() + ImageBox::_getUsedImages());
-	}
-
-	harray<PropertyDescription> ProgressBar::getPropertyDescriptions() const
-	{
-		if (ProgressBar::_propertyDescriptions.size() == 0)
-		{
-			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::Type::Bool);
-			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
-			ProgressBar::_propertyDescriptions += PropertyDescription("interactable", PropertyDescription::Type::Bool);
-		}
-		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressBar::_propertyDescriptions);
 	}
 
 	bool ProgressBar::trySetImageByName(chstr name)

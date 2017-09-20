@@ -38,6 +38,8 @@ namespace aprilui
 		~BaseImage();
 		virtual inline hstr getClassName() const { return "BaseImage"; }
 		
+		virtual harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);
 		HL_DEFINE_GETSET(hstr, tag, Tag);
@@ -66,8 +68,6 @@ namespace aprilui
 		virtual void setSrcWidth(const float& value) = 0;
 		virtual float getSrcHeight() const = 0;
 		virtual void setSrcHeight(const float& value) = 0;
-
-		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);

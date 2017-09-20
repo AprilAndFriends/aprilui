@@ -31,12 +31,12 @@ namespace aprilui
 
 			static Animator* createInstance(chstr name);
 
+			harray<PropertyDescription> getPropertyDescriptions() const;
+
 			HL_DEFINE_GETSET(hstr, imageBaseName, ImageBaseName);
 			HL_DEFINE_GETSET(int, firstFrame, FirstFrame);
 			HL_DEFINE_GETSET(int, frameCount, FrameCount);
 			bool isAnimated() const;
-
-			harray<PropertyDescription> getPropertyDescriptions() const;
 
 			hstr getProperty(chstr name);
 			bool setProperty(chstr name, chstr value);

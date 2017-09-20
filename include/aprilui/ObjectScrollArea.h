@@ -37,8 +37,9 @@ namespace aprilui
 		ScrollArea(chstr name);
 		~ScrollArea();
 		inline hstr getClassName() const { return "ScrollArea"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_ISSET(allowDrag, AllowDrag);
 		HL_DEFINE_GETSET(float, inertia, Inertia);
@@ -64,8 +65,6 @@ namespace aprilui
 		void setScrollOffsetX(float value);
 		float getScrollOffsetY() const;
 		void setScrollOffsetY(float value);
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		void snapScrollOffset();
 		void stopScrolling();

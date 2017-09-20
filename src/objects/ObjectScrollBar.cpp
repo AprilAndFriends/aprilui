@@ -82,12 +82,6 @@ namespace aprilui
 	{
 	}
 
-	void ScrollBar::setSkinName(chstr value)
-	{
-		this->skinName = value;
-		this->notifyEvent(Event::ScrollSkinChanged, NULL);
-	}
-
 	harray<PropertyDescription> ScrollBar::getPropertyDescriptions() const
 	{
 		if (ScrollBar::_propertyDescriptions.size() == 0)
@@ -102,6 +96,12 @@ namespace aprilui
 			ScrollBar::_propertyDescriptions += PropertyDescription("max_grid_scroll", PropertyDescription::Type::Int);
 		}
 		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
+	}
+
+	void ScrollBar::setSkinName(chstr value)
+	{
+		this->skinName = value;
+		this->notifyEvent(Event::ScrollSkinChanged, NULL);
 	}
 
 	ScrollBarButtonBackground* ScrollBar::_getButtonBackground() const

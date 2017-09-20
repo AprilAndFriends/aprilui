@@ -43,11 +43,6 @@ namespace aprilui
 			return new FrameAnimation(name);
 		}
 
-		bool FrameAnimation::isAnimated() const
-		{
-			return (Animator::isAnimated() && this->imageBaseName != "" && this->frameCount > 0);
-		}
-
 		harray<PropertyDescription> FrameAnimation::getPropertyDescriptions() const
 		{
 			if (FrameAnimation::_propertyDescriptions.size() == 0)
@@ -57,6 +52,11 @@ namespace aprilui
 				FrameAnimation::_propertyDescriptions += PropertyDescription("frame_count", PropertyDescription::Type::Int);
 			}
 			return (Animator::getPropertyDescriptions() + FrameAnimation::_propertyDescriptions);
+		}
+
+		bool FrameAnimation::isAnimated() const
+		{
+			return (Animator::isAnimated() && this->imageBaseName != "" && this->frameCount > 0);
 		}
 
 		hstr FrameAnimation::getProperty(chstr name)

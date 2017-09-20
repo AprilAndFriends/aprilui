@@ -47,17 +47,16 @@ namespace aprilui
 		ProgressCircle(chstr name);
 		~ProgressCircle();
 		inline hstr getClassName() const { return "ProgressCircle"; }
-
 		static Object* createInstance(chstr name);
 		
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GETSET(Direction, direction, Direction);
 		Dataset* getDataset() const;
 		BaseImage* getImage() const;
 		void setImage(BaseImage* image);
 		hstr getImageName() const;
 		void setImageByName(chstr name);
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		bool trySetImageByName(chstr name);
 

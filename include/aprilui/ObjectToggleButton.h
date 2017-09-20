@@ -28,8 +28,9 @@ namespace aprilui
 		ToggleButton(chstr name);
 		~ToggleButton();
 		inline hstr getClassName() const { return "ToggleButton"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_ISSET(toggled, Toggled);
 		HL_DEFINE_GET(BaseImage*, toggledNormalImage, ToggledNormalImage);
@@ -48,8 +49,6 @@ namespace aprilui
 		void setToggledHoverImageByName(chstr name);
 		void setToggledPushedImageByName(chstr name);
 		void setToggledDisabledImageByName(chstr name);
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		/// @brief Optimized versions.
 		bool trySetToggledNormalImageByName(chstr name);

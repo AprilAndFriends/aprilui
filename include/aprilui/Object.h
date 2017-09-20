@@ -55,6 +55,8 @@ namespace aprilui
 		inline hstr getClassName() const { return "Object"; }
 		Object* cloneTree() const;
 
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GET(grect, rect, Rect);
 		void setRect(cgrect value);
 		void setRect(cgvec2 position, cgvec2 size);
@@ -110,8 +112,6 @@ namespace aprilui
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		bool isFocused() const;
 		virtual void setFocused(bool focused);

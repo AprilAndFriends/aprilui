@@ -29,7 +29,6 @@ namespace aprilui
 		FilledRect(chstr name);
 		~FilledRect();
 		inline hstr getClassName() const { return "FilledRect"; }
-
 		static Object* createInstance(chstr name);
 
 	protected:

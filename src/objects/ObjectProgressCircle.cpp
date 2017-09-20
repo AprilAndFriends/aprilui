@@ -81,6 +81,15 @@ namespace aprilui
 		return new ProgressCircle(name);
 	}
 
+	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions() const
+	{
+		if (ProgressCircle::_propertyDescriptions.size() == 0)
+		{
+			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
+		}
+		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressCircle::_propertyDescriptions);
+	}
+
 	Dataset* ProgressCircle::getDataset() const
 	{
 		return ImageBox::getDataset();
@@ -114,15 +123,6 @@ namespace aprilui
 	april::Color ProgressCircle::_makeDrawColor(const april::Color& color) const
 	{
 		return ImageBox::_makeDrawColor(color);
-	}
-
-	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions() const
-	{
-		if (ProgressCircle::_propertyDescriptions.size() == 0)
-		{
-			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
-		}
-		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressCircle::_propertyDescriptions);
 	}
 
 	bool ProgressCircle::trySetImageByName(chstr name)

@@ -33,7 +33,6 @@ namespace aprilui
 		GridViewRowTemplate(chstr name);
 		~GridViewRowTemplate();
 		inline hstr getClassName() const { return "GridViewRowTemplate"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

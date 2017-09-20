@@ -34,6 +34,8 @@ namespace aprilui
 		ButtonBase();
 		virtual ~ButtonBase();
 
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GETSET(float, pushDeadZone, PushDeadZone);
 		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
 		void setHoverColor(const april::Color& value);
@@ -51,8 +53,6 @@ namespace aprilui
 		virtual int getFocusIndex() const = 0;
 		virtual Object* getParent() const = 0;
 		virtual Dataset* getDataset() const = 0;
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);

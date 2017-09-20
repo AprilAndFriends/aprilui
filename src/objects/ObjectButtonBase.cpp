@@ -56,6 +56,18 @@ namespace aprilui
 	{
 	}
 	
+	harray<PropertyDescription> ButtonBase::getPropertyDescriptions() const
+	{
+		if (ButtonBase::_propertyDescriptions.size() == 0)
+		{
+			ButtonBase::_propertyDescriptions += PropertyDescription("push_dead_zone", PropertyDescription::Type::Float);
+			ButtonBase::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
+			ButtonBase::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
+			ButtonBase::_propertyDescriptions += PropertyDescription("disabled_color", PropertyDescription::Type::Color);
+		}
+		return ButtonBase::_propertyDescriptions;
+	}
+
 	void ButtonBase::setHoverColor(const april::Color& value)
 	{
 		this->hoverColor = value;
@@ -87,18 +99,6 @@ namespace aprilui
 	void ButtonBase::setDisabledSymbolicColor(chstr value)
 	{
 		this->setDisabledColor(aprilui::_makeColor(value));
-	}
-
-	harray<PropertyDescription> ButtonBase::getPropertyDescriptions() const
-	{
-		if (ButtonBase::_propertyDescriptions.size() == 0)
-		{
-			ButtonBase::_propertyDescriptions += PropertyDescription("push_dead_zone", PropertyDescription::Type::Float);
-			ButtonBase::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
-			ButtonBase::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
-			ButtonBase::_propertyDescriptions += PropertyDescription("disabled_color", PropertyDescription::Type::Color);
-		}
-		return ButtonBase::_propertyDescriptions;
 	}
 
 	void ButtonBase::_update(float timeDelta)
@@ -214,6 +214,10 @@ namespace aprilui
 	bool ButtonBase::_mouseMove()
 	{
 		this->_updateHover();
+		if (this->getName() == "msgbox_animated_container_1")
+		{
+			int i = 0;
+		}
 		if (this->pushDeadZone >= 0.0f)
 		{
 			if ((this->_mouseDownPosition - this->_thisObject->transformToLocalSpace(aprilui::getCursorPosition())).squaredLength() > this->pushDeadZone * this->pushDeadZone)

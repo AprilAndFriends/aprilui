@@ -41,6 +41,8 @@ namespace aprilui
 
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GET(Texture*, texture, Texture);
 		HL_DEFINE_GET(grect, srcRect, SrcRect);
 		void setSrcRect(cgrect value);
@@ -59,8 +61,6 @@ namespace aprilui
 		void setSrcSize(cgvec2 value);
 		void setSrcSize(float w, float h);
 		inline const april::TexturedVertex* getVertices() const { return this->vertices; } // use with care!
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

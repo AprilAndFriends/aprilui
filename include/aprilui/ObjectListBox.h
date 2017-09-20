@@ -33,8 +33,9 @@ namespace aprilui
 		ListBox(chstr name);
 		~ListBox();
 		inline hstr getClassName() const { return "ListBox"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(april::Color, evenColor, EvenColor);
 		void setEvenColor(const april::Color& value);
@@ -45,8 +46,6 @@ namespace aprilui
 		HL_DEFINE_GET(harray<ListBoxItem*>, items, Items);
 		ListBoxItem* getSelected() const;
 		int getItemCount() const;
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual ListBoxItem* createItem(int index, chstr name = "");
 		bool deleteItem(int index);

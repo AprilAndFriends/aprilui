@@ -35,6 +35,11 @@ namespace aprilui
 		return new Label(name);
 	}
 
+	harray<PropertyDescription> Label::getPropertyDescriptions() const
+	{
+		return (Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions());
+	}
+
 	Dataset* Label::getDataset() const
 	{
 		return Object::getDataset();
@@ -44,11 +49,6 @@ namespace aprilui
 	{
 		this->_calcAutoScaledFont(this->_makeDrawRect());
 		return this->autoScaledFont;
-	}
-
-	harray<PropertyDescription> Label::getPropertyDescriptions() const
-	{
-		return (Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions());
 	}
 
 	void Label::_draw()

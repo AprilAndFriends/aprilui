@@ -66,6 +66,21 @@ namespace aprilui
 		return new ScrollArea(name);
 	}
 
+	harray<PropertyDescription> ScrollArea::getPropertyDescriptions() const
+	{
+		if (ScrollArea::_propertyDescriptions.size() == 0)
+		{
+			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
+		}
+		return (Object::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
+	}
+
 	hstr ScrollArea::getName() const
 	{
 		return Object::getName();
@@ -151,21 +166,6 @@ namespace aprilui
 	{
 		this->setY(this->parent != NULL ? hclamp(-value, hmin(this->parent->getHeight() - this->getHeight(), 0.0f), 0.0f) : -value);
 		this->_updateOobChildren();
-	}
-
-	harray<PropertyDescription> ScrollArea::getPropertyDescriptions() const
-	{
-		if (ScrollArea::_propertyDescriptions.size() == 0)
-		{
-			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
-			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
-			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
-			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
-		}
-		return (Object::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
 	}
 
 	void ScrollArea::_update(float timeDelta)

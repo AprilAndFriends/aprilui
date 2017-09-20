@@ -34,7 +34,6 @@ namespace aprilui
 		TreeViewExpander(chstr name);
 		~TreeViewExpander();
 		inline hstr getClassName() const { return "TreeViewExpander"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

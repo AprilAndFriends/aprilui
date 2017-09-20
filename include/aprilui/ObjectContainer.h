@@ -38,7 +38,6 @@ namespace aprilui
 		Container(chstr name);
 		~Container();
 		inline hstr getClassName() const { return "Container"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

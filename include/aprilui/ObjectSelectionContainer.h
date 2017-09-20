@@ -27,8 +27,10 @@ namespace aprilui
 		APRILUI_CLONEABLE_ABSTRACT(SelectionContainer);
 	public:
 		SelectionContainer(chstr name);
-		virtual ~SelectionContainer();
+		~SelectionContainer();
 		inline hstr getClassName() const { return "SelectionContainer"; }
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(int, selectedIndex, SelectedIndex);
 		void setSelectedIndex(int value);
@@ -53,8 +55,6 @@ namespace aprilui
 		void setAllowDrag(bool value);
 
 		virtual int getItemCount() const = 0;
-
-		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

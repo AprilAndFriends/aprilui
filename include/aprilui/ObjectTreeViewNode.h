@@ -39,8 +39,9 @@ namespace aprilui
 		TreeViewNode(chstr name);
 		~TreeViewNode();
 		inline hstr getClassName() const { return "TreeViewNode"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getName() const;
 		int getFocusIndex() const;

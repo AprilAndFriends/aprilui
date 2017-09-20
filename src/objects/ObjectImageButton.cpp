@@ -47,6 +47,17 @@ namespace aprilui
 		return new ImageButton(name);
 	}
 
+	harray<PropertyDescription> ImageButton::getPropertyDescriptions() const
+	{
+		if (ImageButton::_propertyDescriptions.size() == 0)
+		{
+			ImageButton::_propertyDescriptions += PropertyDescription("pushed_image", PropertyDescription::Type::String);
+			ImageButton::_propertyDescriptions += PropertyDescription("hover_image", PropertyDescription::Type::String);
+			ImageButton::_propertyDescriptions += PropertyDescription("disabled_image", PropertyDescription::Type::String);
+		}
+		return (ImageBox::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions() + ImageButton::_propertyDescriptions);
+	}
+
 	hstr ImageButton::getName() const
 	{
 		return ImageBox::getName();
@@ -70,17 +81,6 @@ namespace aprilui
 	bool ImageButton::isCursorInside() const
 	{
 		return ImageBox::isCursorInside();
-	}
-
-	harray<PropertyDescription> ImageButton::getPropertyDescriptions() const
-	{
-		if (ImageButton::_propertyDescriptions.size() == 0)
-		{
-			ImageButton::_propertyDescriptions += PropertyDescription("pushed_image", PropertyDescription::Type::String);
-			ImageButton::_propertyDescriptions += PropertyDescription("hover_image", PropertyDescription::Type::String);
-			ImageButton::_propertyDescriptions += PropertyDescription("disabled_image", PropertyDescription::Type::String);
-		}
-		return (ImageBox::getPropertyDescriptions() + ImageButton::_propertyDescriptions);
 	}
 
 	void ImageButton::_draw()

@@ -34,7 +34,6 @@ namespace aprilui
 		TreeViewLabel(chstr name);
 		~TreeViewLabel();
 		inline hstr getClassName() const { return "TreeViewLabel"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

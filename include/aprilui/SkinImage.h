@@ -29,6 +29,8 @@ namespace aprilui
 
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GET(grect, skinRect, SkinRect);
 		void setSkinRect(cgrect value);
 		HL_DEFINE_GET(float, skinRect.x, SkinX);
@@ -58,8 +60,6 @@ namespace aprilui
 		void draw(cgrect rect, const april::Color& color = april::Color::White);
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 		
-		harray<PropertyDescription> getPropertyDescriptions() const;
-
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 

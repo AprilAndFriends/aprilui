@@ -43,6 +43,8 @@ namespace aprilui
 		~Animator();
 		inline hstr getClassName() const { return "Animator"; }
 		
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GETSET(AnimationFunction, animationFunction, AnimationFunction);
 		HL_DEFINE_GETSET(float, value, Value);
 		HL_DEFINE_GETSET(float, timer, Timer);
@@ -70,8 +72,6 @@ namespace aprilui
 		void setTime(float value);
 		/// @note Same as setTimer() but in periods instead of seconds.
 		void setPeriodsTimer(const float& value);
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		/// @note Does not reset delay.
 		void reset();

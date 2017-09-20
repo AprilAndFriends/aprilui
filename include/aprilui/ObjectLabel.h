@@ -30,13 +30,12 @@ namespace aprilui
 		Label(chstr name);
 		~Label();
 		inline hstr getClassName() const { return "Label"; }
-
 		static Object* createInstance(chstr name);
 		
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		Dataset* getDataset() const;
 		hstr getAutoScaledFont();
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);

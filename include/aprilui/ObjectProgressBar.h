@@ -40,9 +40,10 @@ namespace aprilui
 		ProgressBar(chstr name);
 		~ProgressBar();
 		inline hstr getClassName() const { return "ProgressBar"; }
-
 		static Object* createInstance(chstr name);
 		
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_ISSET(stretching, Stretching);
 		HL_DEFINE_GETSET(Direction, direction, Direction);
 		HL_DEFINE_ISSET(interactable, Interactable);
@@ -51,8 +52,6 @@ namespace aprilui
 		void setImage(BaseImage* image);
 		hstr getImageName() const;
 		void setImageByName(chstr name);
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		bool trySetImageByName(chstr name);
 

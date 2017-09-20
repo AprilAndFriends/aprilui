@@ -152,7 +152,7 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("clipboard_enabled", PropertyDescription::Type::Bool);
 			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::Type::Bool);
 		}
-		return (Label::getPropertyDescriptions() + EditBox::_propertyDescriptions);
+		return (Label::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions() + EditBox::_propertyDescriptions);
 	}
 
 	hstr EditBox::getName() const

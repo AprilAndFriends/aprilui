@@ -39,8 +39,9 @@ namespace aprilui
 		TreeView(chstr name);
 		~TreeView();
 		inline hstr getClassName() const { return "TreeView"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(float, expanderWidth, ExpanderWidth);
 		void setExpanderWidth(float value);
@@ -61,8 +62,6 @@ namespace aprilui
 		TreeViewNode* getSelected() const;
 		void setSelected(const harray<int>& nodeIndices);
 		int getItemCount() const;
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual TreeViewNode* createItem(harray<int> nodeIndices, chstr name = "");
 		bool deleteItem(const harray<int>& nodeIndices);

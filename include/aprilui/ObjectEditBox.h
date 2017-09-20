@@ -29,9 +29,10 @@ namespace aprilui
 		EditBox(chstr name);
 		~EditBox();
 		inline hstr getClassName() const { return "EditBox"; }
-
 		static Object* createInstance(chstr name);
 		
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		hstr getName() const;
 		int getFocusIndex() const;
 		Object* getParent() const;
@@ -71,8 +72,6 @@ namespace aprilui
 		hstr getDisplayedText() const;
 		void setMinAutoScale(float value);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
-		
 		void setCaretIndexAt(cgvec2 position);
 
 		hstr getProperty(chstr name);

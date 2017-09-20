@@ -29,7 +29,6 @@ namespace aprilui
 		ScrollBarButtonBackground(chstr name);
 		~ScrollBarButtonBackground();
 		inline hstr getClassName() const { return "ScrollBarButtonBackground"; }
-
 		static Object* createInstance(chstr name);
 
 		void notifyEvent(chstr type, EventArgs* args);

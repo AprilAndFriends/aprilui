@@ -32,6 +32,8 @@ namespace aprilui
 		ProgressBase();
 		virtual ~ProgressBase();
 
+		virtual harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GET(BaseImage*, progressImage, ProgressImage);
 		HL_DEFINE_GET(BaseImage*, antiProgressImage, AntiProgressImage);
 		HL_DEFINE_GET(BaseImage*, maskImage, MaskImage);
@@ -57,8 +59,6 @@ namespace aprilui
 		virtual void setImage(BaseImage* image) = 0;
 		virtual hstr getImageName() const = 0;
 		virtual void setImageByName(chstr name) = 0;
-
-		virtual harray<PropertyDescription> getPropertyDescriptions() const;
 
 		/// @brief Optimized version.
 		bool trySetProgressImageByName(chstr name);

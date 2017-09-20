@@ -49,6 +49,11 @@ namespace aprilui
 		return new TreeViewNode(name);
 	}
 
+	harray<PropertyDescription> TreeViewNode::getPropertyDescriptions() const
+	{
+		return (Container::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions());
+	}
+
 	hstr TreeViewNode::getName() const
 	{
 		return Container::getName();

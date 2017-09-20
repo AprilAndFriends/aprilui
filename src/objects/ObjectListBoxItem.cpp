@@ -42,6 +42,11 @@ namespace aprilui
 		return new ListBoxItem(name);
 	}
 
+	harray<PropertyDescription> ListBoxItem::getPropertyDescriptions() const
+	{
+		return (Label::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions());
+	}
+
 	hstr ListBoxItem::getName() const
 	{
 		return Label::getName();

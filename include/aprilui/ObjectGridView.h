@@ -36,8 +36,9 @@ namespace aprilui
 		GridView(chstr name);
 		~GridView();
 		inline hstr getClassName() const { return "GridView"; }
-
 		static Object* createInstance(chstr name);
+
+		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(float, spacingWidth, SpacingWidth);
 		void setSpacingWidth(float value);
@@ -50,8 +51,6 @@ namespace aprilui
 		int getRowCount() const;
 		int getCellCount() const;
 		int getItemCount() const;
-
-		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		virtual GridViewRow* createRow(int index, chstr name = "");
 		bool deleteRow(int index);

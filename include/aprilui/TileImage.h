@@ -33,6 +33,8 @@ namespace aprilui
 		
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
+		harray<PropertyDescription> getPropertyDescriptions() const;
+
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
 		inline void setTile(float w, float h) { this->tile.set(w, h); }
 		HL_DEFINE_GETSET(float, tile.x, TileW);
@@ -43,8 +45,6 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, scroll.y, ScrollY);
 		HL_DEFINE_ISSET(useTileCount, UseTileCount);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
-		
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 

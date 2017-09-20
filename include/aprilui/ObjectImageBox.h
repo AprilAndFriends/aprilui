@@ -30,7 +30,6 @@ namespace aprilui
 		ImageBox(chstr name);
 		~ImageBox();
 		inline hstr getClassName() const { return "ImageBox"; }
-
 		static Object* createInstance(chstr name);
 		
 		harray<PropertyDescription> getPropertyDescriptions() const;
