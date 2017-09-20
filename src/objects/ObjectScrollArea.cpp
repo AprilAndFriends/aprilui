@@ -294,14 +294,24 @@ namespace aprilui
 		if (this->allowDirectionKeys && !this->dragging && this->hovered && this->directionKeyScrolling && this->dataset->getFocusedObject() == NULL &&
 			(this->inertia <= 0.0f || !this->isScrolling()))
 		{
+			gvec2 scrollOffset = this->getScrollOffset();
 			if (this->_directionKeySpeed.x != 0.0f)
 			{
-				this->setScrollOffsetX(this->getScrollOffsetX() + timeDelta * this->_directionKeySpeed.x);
+				scrollOffset.x += timeDelta * this->_directionKeySpeed.x;
+				if (this->parent != NULL)
+				{
+					scrollOffset.x = hmin(scrollOffset.x, -hroundf(this->parent->getWidth() - this->getWidth())); // requires double negation due to how hround works
+				}
 			}
 			if (this->_directionKeySpeed.y != 0.0f)
 			{
-				this->setScrollOffsetY(this->getScrollOffsetY() + timeDelta * this->_directionKeySpeed.y);
+				scrollOffset.y += timeDelta * this->_directionKeySpeed.y;
+				if (this->parent != NULL)
+				{
+					scrollOffset.y = hmin(scrollOffset.y, -hroundf(this->parent->getHeight() - this->getHeight())); // requires double negation due to how hround works
+				}
 			}
+			this->setScrollOffset(scrollOffset);
 		}
 	}
 
