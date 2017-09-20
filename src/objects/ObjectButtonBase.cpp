@@ -214,10 +214,6 @@ namespace aprilui
 	bool ButtonBase::_mouseMove()
 	{
 		this->_updateHover();
-		if (this->getName() == "msgbox_animated_container_1")
-		{
-			int i = 0;
-		}
 		if (this->pushDeadZone >= 0.0f)
 		{
 			if ((this->_mouseDownPosition - this->_thisObject->transformToLocalSpace(aprilui::getCursorPosition())).squaredLength() > this->pushDeadZone * this->pushDeadZone)
