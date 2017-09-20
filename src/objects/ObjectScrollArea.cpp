@@ -643,6 +643,10 @@ namespace aprilui
 				}
 				this->directionKeyScrolling = (this->_directionKeySpeed.x != 0.0f || this->_directionKeySpeed.y != 0.0f);
 			}
+			if (!this->directionKeyScrolling && !this->dragging)
+			{
+				this->_adjustDragSpeed();
+			}
 		}
 		return Object::_keyUp(keyCode);
 	}
