@@ -57,6 +57,7 @@ namespace aprilui
 		Object* getParent() const;
 		Dataset* getDataset() const;
 		bool isScrolling() const;
+		bool isDirectionKeyScrolling() const;
 		bool isScrollable() const;
 		bool isScrollableX() const;
 		bool isScrollableY() const;

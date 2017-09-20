@@ -26,7 +26,7 @@ namespace aprilui
 	float ScrollArea::defaultInertia = 2000.0f;
 	float ScrollArea::defaultDragThreshold = 16.0f;
 	float ScrollArea::defaultDragMaxSpeed = 0.0f;
-	float ScrollArea::defaultDirectionKeySpeed = 400.0f;
+	float ScrollArea::defaultDirectionKeySpeed = 1000.0f;
 
 	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
 
@@ -120,6 +120,11 @@ namespace aprilui
 		return (!this->pushed && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f));
 	}
 	
+	bool ScrollArea::isDirectionKeyScrolling() const
+	{
+		return (this->allowDirectionKeys && !this->dragging && this->hovered && this->directionKeyScrolling && this->dataset->getFocusedObject() == NULL);
+	}
+
 	bool ScrollArea::isScrollable() const
 	{
 		Container* parent = dynamic_cast<Container*>(this->parent);

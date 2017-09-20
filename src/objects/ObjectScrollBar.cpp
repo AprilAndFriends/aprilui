@@ -260,12 +260,11 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL && parent->scrollArea != NULL)
 			{
-				if (parent->scrollArea->isDragging() || parent->scrollArea->isScrolling())
+				if (parent->scrollArea->isDragging() || parent->scrollArea->isScrolling() || parent->scrollArea->isDirectionKeyScrolling())
 				{
 					this->_retainTime = RETAIN_TIME;
 				}
-				if ((!this->useFading || this->_retainTime > 0.0f) &&
-					(!this->heightHide || this->_checkAreaSize()))
+				if ((!this->useFading || this->_retainTime > 0.0f) && (!this->heightHide || this->_checkAreaSize()))
 				{
 					april::Color drawColor = this->_makeDrawColor();
 					if (this->useFading && this->_retainTime < FADE_OUT_TIME)
