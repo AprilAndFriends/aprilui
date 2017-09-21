@@ -108,9 +108,10 @@ namespace aprilui
 		bool dragging;
 		bool directionKeyScrolling;
 
-		aprilui::Object* _findHoverObject();
+		Object* _findHoverObject();
+		bool _isScrollableScrollArea(Object* object) const;
+		bool _executeScroll(float x, float y, Container* parentContainer);
 		void _adjustDragSpeed();
-		bool _isScrollableScrollArea(aprilui::Object* object) const;
 
 		void _update(float timeDelta);
 		void _updateOobChildren();
@@ -121,6 +122,7 @@ namespace aprilui
 		bool _keyUp(april::Key keyCode);
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
+
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

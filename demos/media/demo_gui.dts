@@ -97,7 +97,7 @@
 				</ProgressBar>
 			</Container>
 			<Container name="scrolltest_container" rect="840,32,128,128">
-				<ScrollArea name="scrolltest_scroll_area" rect="-64,-64,256,256" allow_drag="true" allow_direction_keys="true">
+				<ScrollArea name="scrolltest_scroll_area" rect="-64,-64,256,256" allow_drag="true" allow_direction_keys="true" direction_key_speed="300">
 					<ToggleButton name="toggle_button_scroll_0" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,0,256,128" z_order="100"/>
 					<ToggleButton name="toggle_button_scroll_1" image="texture/test_green" toggled_image="texture/test_hover_3" rect="0,128,256,128" z_order="100">
 						<Rotator speed="30"/>
@@ -109,10 +109,10 @@
 					<ScrollBarButtonBackground image="texture/test_yellow" rect="0,16,16,96"/>
 					<ScrollBarButtonSlider image="texture/test_red" rect="0,16,16,8"/>
 				</ScrollBarV>
-				<ScrollBarH name="scroll_h" skin="scroll_skin" grid_size="32" rect="0,128,128,16"/>
+				<ScrollBarH name="scroll_h" skin="scroll_skin" rect="0,128,128,16"/>
 			</Container>
 			<Container name="scrolltest_grid_container" rect="840,200,128,48">
-				<ScrollArea name="scrolltest_grid_scroll_area" rect="0,0,640,48" allow_drag="true">
+				<ScrollArea name="scrolltest_grid_scroll_area" rect="0,0,640,48" allow_drag="true" allow_direction_keys="true" direction_key_speed="300">
 					<ImageButton name="grid_button_0" image="texture/test_green" rect="0,0,128,48"/>
 					<ImageButton name="grid_button_1" image="texture/test_blue" rect="128,0,128,48"/>
 					<ImageButton name="grid_button_2" image="texture/test_green" rect="256,0,128,48"/>

@@ -79,6 +79,7 @@ namespace aprilui
 		{
 			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("allow_direction_keys", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("use_grid_direction_keys", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
@@ -541,28 +542,11 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL)
 			{
-				this->_overrideHoverMode = true;
-				bool result = (this->_findHoverObject() == this);
-				this->_overrideHoverMode = false;
-				if (result)
+				if (this->swapScrollWheels)
 				{
-					result = false;
-					if (this->swapScrollWheels)
-					{
-						hswap(x, y);
-					}
-					if (parent->scrollBarV != NULL)
-					{
-						parent->scrollBarV->addScrollValue(parent->scrollBarV->_calcScrollMove(x, y));
-						result = true;
-					}
-					if (parent->scrollBarH != NULL)
-					{
-						parent->scrollBarH->addScrollValue(parent->scrollBarH->_calcScrollMove(x, y));
-						result = true;
-					}
+					hswap(x, y);
 				}
-				if (result)
+				if (this->_executeScroll(x, y, parent))
 				{
 					return true;
 				}
@@ -594,25 +578,64 @@ namespace aprilui
 	{
 		if (this->allowDirectionKeys && this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
 		{
+			bool scrolled = false;
+			float x = 0.0f;
+			float y = 0.0f;
 			if (keyCode == april::Key::ArrowRight)
 			{
-				this->_directionKeySpeed.x = this->directionKeySpeed;
-				this->directionKeyScrolling = true;
+				x = 1.0f;
 			}
 			else if (keyCode == april::Key::ArrowLeft)
 			{
-				this->_directionKeySpeed.x = -this->directionKeySpeed;
-				this->directionKeyScrolling = true;
+				x = -1.0f;
 			}
 			if (keyCode == april::Key::ArrowDown)
 			{
-				this->_directionKeySpeed.y = this->directionKeySpeed;
-				this->directionKeyScrolling = true;
+				y = 1.0f;
 			}
 			else if (keyCode == april::Key::ArrowUp)
 			{
-				this->_directionKeySpeed.y = -this->directionKeySpeed;
-				this->directionKeyScrolling = true;
+				y = -1.0f;
+			}
+			if (x != 0.0f || y != 0.0f)
+			{
+				Container* parent = dynamic_cast<Container*>(this->parent);
+				if (parent != NULL)
+				{
+					// this type of scrolling works only when grid size is active
+					if (parent->scrollBarH != NULL && x != 0.0f && parent->scrollBarH->getGridSize() > 0.0f ||
+						parent->scrollBarV != NULL && y != 0.0f && parent->scrollBarV->getGridSize() > 0.0f)
+					{
+						scrolled = this->_executeScroll(x, y, parent);
+					}
+				}
+				else
+				{
+					hlog::errorf(logTag, "ScrollArea '%s' attached to object '%s' which is not a Container!", this->name.cStr(), this->parent->getName().cStr());
+				}
+			}
+			if (!scrolled)
+			{
+				if (keyCode == april::Key::ArrowRight)
+				{
+					this->_directionKeySpeed.x = this->directionKeySpeed;
+					this->directionKeyScrolling = true;
+				}
+				else if (keyCode == april::Key::ArrowLeft)
+				{
+					this->_directionKeySpeed.x = -this->directionKeySpeed;
+					this->directionKeyScrolling = true;
+				}
+				if (keyCode == april::Key::ArrowDown)
+				{
+					this->_directionKeySpeed.y = this->directionKeySpeed;
+					this->directionKeyScrolling = true;
+				}
+				else if (keyCode == april::Key::ArrowUp)
+				{
+					this->_directionKeySpeed.y = -this->directionKeySpeed;
+					this->directionKeyScrolling = true;
+				}
 			}
 		}
 		return Object::_keyDown(keyCode);
@@ -676,6 +699,28 @@ namespace aprilui
 		return (ButtonBase::_buttonUp(buttonCode) || Object::_buttonUp(buttonCode));
 	}
 	
+	bool ScrollArea::_executeScroll(float x, float y, Container* parentContainer)
+	{
+		this->_overrideHoverMode = true;
+		bool result = (this->_findHoverObject() == this);
+		this->_overrideHoverMode = false;
+		if (result)
+		{
+			result = false;
+			if (parentContainer->scrollBarV != NULL)
+			{
+				parentContainer->scrollBarV->addScrollValue(parentContainer->scrollBarV->_calcScrollMove(x, y));
+				result = true;
+			}
+			if (parentContainer->scrollBarH != NULL)
+			{
+				parentContainer->scrollBarH->addScrollValue(parentContainer->scrollBarH->_calcScrollMove(x, y));
+				result = true;
+			}
+		}
+		return result;
+	}
+
 	void ScrollArea::_adjustDragSpeed()
 	{
 		this->_lastScrollOffset = this->getScrollOffset();
