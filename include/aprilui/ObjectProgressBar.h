@@ -34,7 +34,10 @@ namespace aprilui
 			HL_ENUM_DECLARE(Direction, Left);
 			HL_ENUM_DECLARE(Direction, Right);
 			HL_ENUM_DECLARE(Direction, Up);
-			HL_ENUM_DECLARE(Direction, Max);
+			HL_ENUM_DECLARE(Direction, Horizontal);
+			HL_ENUM_DECLARE(Direction, Vertical);
+			bool hasAntiProgress() const;
+			Direction getOppositeDirection() const;
 		));
 
 		ProgressBar(chstr name);

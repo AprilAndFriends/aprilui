@@ -15,6 +15,8 @@
 #include "ObjectProgressBar.h"
 #include "Texture.h"
 
+#define MAX_DIRECTION 10 // used for optimizing some code
+
 namespace aprilui
 {
 	HL_ENUM_CLASS_DEFINE(ProgressBar::Direction,
@@ -23,7 +25,22 @@ namespace aprilui
 		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Left, 4);
 		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Right, 6);
 		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Up, 8);
-		HL_ENUM_DEFINE_VALUE(ProgressBar::Direction, Max, 10);
+		HL_ENUM_DEFINE(ProgressBar::Direction, Horizontal);
+		HL_ENUM_DEFINE(ProgressBar::Direction, Vertical);
+
+		bool ProgressBar::Direction::hasAntiProgress() const
+		{
+			return (*this != Horizontal && *this != Vertical);
+		}
+
+		ProgressBar::Direction ProgressBar::Direction::getOppositeDirection() const
+		{
+			if (*this == Horizontal || *this == Vertical)
+			{
+				return (*this);
+			}
+			return ProgressBar::Direction::fromInt(MAX_DIRECTION - this->value);
+		}
 	));
 
 	harray<PropertyDescription> ProgressBar::_propertyDescriptions;
@@ -114,10 +131,10 @@ namespace aprilui
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		grect drawRect = this->_makeDrawRect();
 		grect directionRect;
-		if (this->antiProgressImage != NULL && progress < 1.0f)
+		if (this->antiProgressImage != NULL && progress < 1.0f && this->direction.hasAntiProgress())
 		{
 			april::Color drawAntiProgressColor = this->_makeDrawAntiProgressColor();
-			Direction antiDirection = Direction::fromInt(Direction::Max.value - this->direction.value);
+			Direction antiDirection = this->direction.getOppositeDirection();
 			float antiProgress = 1.0f - progress;
 			if (this->stretching)
 			{
@@ -173,6 +190,12 @@ namespace aprilui
 			result.x += result.w - size;
 			result.w = size;
 		}
+		else if (direction == Direction::Horizontal)
+		{
+			size = result.w * progress;
+			result.x += (result.w - size) * 0.5f;
+			result.w = size;
+		}
 		else if (direction == Direction::Down)
 		{
 			result.h *= progress;
@@ -181,6 +204,12 @@ namespace aprilui
 		{
 			size = result.h * progress;
 			result.y += result.h - size;
+			result.h = size;
+		}
+		else if (direction == Direction::Vertical)
+		{
+			size = result.h * progress;
+			result.y += (result.h - size) * 0.5f;
 			result.h = size;
 		}
 		return result;
@@ -208,6 +237,8 @@ namespace aprilui
 			else if (value == "left")		this->setDirection(Direction::Left);
 			else if (value == "down")		this->setDirection(Direction::Down);
 			else if (value == "up")			this->setDirection(Direction::Up);
+			else if (value == "horizontal")	this->setDirection(Direction::Horizontal);
+			else if (value == "vertical")	this->setDirection(Direction::Vertical);
 			else
 			{
 				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");
