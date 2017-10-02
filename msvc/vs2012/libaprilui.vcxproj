@@ -54,6 +54,7 @@
     <ProjectGuid>{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}</ProjectGuid>
     <RootNamespace>aprilui</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\hltypes\msvc\vs2012\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\default.props" />
   <Import Project="..\..\..\hltypes\msvc\vs2012\props-generic\platform-$(Platform).props" />
