@@ -54,6 +54,7 @@
     <ProjectGuid>{2CEBEAC6-0C61-4501-9D01-EBD4BCA998B5}</ProjectGuid>
     <RootNamespace>demo_tileimage</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\hltypes\msvc\vs2013\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props-demos\default.props" />
   <Import Project="..\..\..\hltypes\msvc\vs2013\props-generic\platform-$(Platform).props" />
