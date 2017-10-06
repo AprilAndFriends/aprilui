@@ -675,6 +675,12 @@ namespace aprilui
 		// if extension scales have not changed
 		if (extensionScales != newExtensionScales)
 		{
+			harray<hstr> logs;
+			foreach_m (float, it, newExtensionScales)
+			{
+				logs += hsprintf("%s:%g", it->first.cStr(), it->second);
+			}
+			hlog::write(logTag, "Setting texture extension scales:\n" + logs.joined('\n'));
 			extensionScales = newExtensionScales;
 			april::setTextureExtensions(newExtensions);
 			return true;
