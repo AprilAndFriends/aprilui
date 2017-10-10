@@ -277,6 +277,7 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("anchor_bottom", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions += PropertyDescription("anchors", PropertyDescription::Type::String);
 			Object::_propertyDescriptions += PropertyDescription("retain_anchor_aspect", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("clip", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::Type::Bool);
