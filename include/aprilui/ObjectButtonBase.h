@@ -90,7 +90,8 @@ namespace aprilui
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
 
-		DEPRECATED_ATTRIBUTE virtual bool _checkHover() { return (this->_findHoverObject() != NULL); }
+		DEPRECATED_ATTRIBUTE("Deprecated API. Use _findHoverObject() instead.")
+			virtual bool _checkHover() { return (this->_findHoverObject() != NULL); }
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
