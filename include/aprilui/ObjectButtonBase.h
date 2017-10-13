@@ -90,7 +90,7 @@ namespace aprilui
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
 
-		DEPRECATED_ATTRIBUTE("Deprecated API. Use _findHoverObject() instead.")
+		HL_DEPRECATED("Deprecated API. Use _findHoverObject() instead.")
 			virtual bool _checkHover() { return (this->_findHoverObject() != NULL); }
 
 	private:

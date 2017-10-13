@@ -63,9 +63,9 @@ namespace aprilui
 		void addLink(Texture* link);
 		void removeLink(Texture* link);
 		
-		DEPRECATED_ATTRIBUTE("Deprecated API.")
+		HL_DEPRECATED("Deprecated API.")
 			static void setLoadListener(void (*callback)(Texture*));
-		DEPRECATED_ATTRIBUTE("Deprecated API.")
+		HL_DEPRECATED("Deprecated API.")
 			static void setUnloadListener(void (*callback)(Texture*));
 
 	protected:

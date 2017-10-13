@@ -224,7 +224,7 @@ namespace aprilui
 		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
 		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
 
-		DEPRECATED_ATTRIBUTE("Deprecated API. Use getTextsPaths() instead.")
+		HL_DEPRECATED("Deprecated API. Use getTextsPaths() instead.")
 			hstr getTextsPath() const { return (this->textsPaths.size() > 0 ? this->textsPaths.first() : ""); }
 
 	protected:

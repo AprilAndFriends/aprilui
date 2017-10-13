@@ -101,9 +101,9 @@ namespace aprilui
 
 		static float defaultMinAutoScale;
 
-		DEPRECATED_ATTRIBUTE("Deprecated API. Use getEffect() instead.")
+		HL_DEPRECATED("Deprecated API. Use getEffect() instead.")
 			atres::TextEffect getFontEffect() const { return this->getEffect(); }
-		DEPRECATED_ATTRIBUTE("Deprecated API. Use setEffect() instead.")
+		HL_DEPRECATED("Deprecated API. Use setEffect() instead.")
 			void setFontEffect(atres::TextEffect value) { this->setEffect(value); }
 		
 	protected:
