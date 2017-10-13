@@ -21,7 +21,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		DEPRECATED_ATTRIBUTE("Deprecated API. Use PivotMoverY instead.") typedef PivotMoverY CenterMoverY;
+		HL_DEPRECATED("Deprecated API. Use PivotMoverY instead.") typedef PivotMoverY CenterMoverY;
 	}
 }
 
