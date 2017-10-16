@@ -123,7 +123,6 @@ namespace aprilui
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 
-
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
 
