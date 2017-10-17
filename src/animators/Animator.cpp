@@ -196,7 +196,7 @@ namespace aprilui
 		{
 			return (this->discreteStep > 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
 		}
-		float time = this->timer;
+		double time = this->timer;
 		if (this->isExpired())
 		{
 			if (this->resetOnExpire)
@@ -210,37 +210,37 @@ namespace aprilui
 				time = this->periods / habs(this->speed);
 			}
 		}
-		float result = 0.0f;
+		double result = 0.0;
 		if (this->animationFunction == AnimationFunction::Linear)
 		{
 			result = time * this->speed * this->amplitude;
 		}
 		else if (this->animationFunction == AnimationFunction::Sine)
 		{
-			result = (float)hsin(time * this->speed * 360.0f) * this->amplitude;
+			result = hsin(time * this->speed * 360.0) * this->amplitude;
 		}
 		else if (this->animationFunction == AnimationFunction::SineAbs)
 		{
-			result = (float)habs(hsin(time * this->speed * 360.0f)) * this->amplitude;
+			result = habs(hsin(time * this->speed * 360.0)) * this->amplitude;
 		}
 		else if (this->animationFunction == AnimationFunction::Square)
 		{
-			result = (hmodf(time * this->speed, 1.0f) < 0.5f ? this->amplitude : -this->amplitude);
+			result = (hmodd(time * this->speed, 1.0) < 0.5 ? this->amplitude : -this->amplitude);
 		}
 		else if (this->animationFunction == AnimationFunction::Saw)
 		{
-			result = (hmodf(time * this->speed + 0.5f, 1.0f) - 0.5f) * 2 * this->amplitude;
+			result = (hmodd(time * this->speed + 0.5, 1.0) - 0.5) * 2 * this->amplitude;
 		}
 		else if (this->animationFunction == AnimationFunction::Triangle)
 		{
-			result = hmodf(time * this->speed, 1.0f);
-			if (!hbetweenIE(result, 0.25f, 0.75f))
+			result = hmodd(time * this->speed, 1.0);
+			if (!hbetweenIE(result, 0.25, 0.75))
 			{
-				result = (hmodf(time * this->speed + 0.5f, 1.0f) - 0.5f) * 4 * this->amplitude;
+				result = (hmodd(time * this->speed + 0.5, 1.0) - 0.5) * 4 * this->amplitude;
 			}
 			else
 			{
-				result = -(hmodf(time * this->speed - 0.25f, 1.0f) - 0.25f) * 4 * this->amplitude;
+				result = -(hmodd(time * this->speed - 0.25, 1.0) - 0.25) * 4 * this->amplitude;
 			}
 		}
 		else if (this->animationFunction == AnimationFunction::Noise)
@@ -254,13 +254,13 @@ namespace aprilui
 				result = this->customFunction(this, time);
 			}
 		}
-		result *= 1.0f + time * habs(this->speed) * this->multiplier;
-		return (this->discreteStep > 0 ? hfloorf((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
+		result *= 1.0 + time * habs(this->speed) * this->multiplier;
+		return (float)(this->discreteStep > 0 ? hfloord((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
 	}
 
 	void Animator::reset()
 	{
-		this->timer = 0.0f;
+		this->timer = 0.0;
 		this->update(0.0f);
 	}
 	

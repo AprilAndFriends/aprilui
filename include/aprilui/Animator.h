@@ -47,7 +47,7 @@ namespace aprilui
 
 		HL_DEFINE_GETSET(AnimationFunction, animationFunction, AnimationFunction);
 		HL_DEFINE_GETSET(float, value, Value);
-		HL_DEFINE_GETSET(float, timer, Timer);
+		HL_DEFINE_GETSET(double, timer, Timer);
 		HL_DEFINE_GET(float, delay, Delay);
 		void setDelay(const float& value);
 		HL_DEFINE_GETSET(float, periods, Periods);
@@ -63,8 +63,8 @@ namespace aprilui
 		HL_DEFINE_ISSET(inheritValue, InheritValue);
 		HL_DEFINE_GETSET(float, target, Target);
 		HL_DEFINE_ISSET(useTarget, UseTarget);
-		inline float (*getCustomFunction())(Animator*, float) { return this->customFunction; }
-		inline void setCustomFunction(float (*value)(Animator*, float)) { this->customFunction = value; }
+		inline double (*getCustomFunction())(Animator*, double) { return this->customFunction; }
+		inline void setCustomFunction(double (*value)(Animator*, double)) { this->customFunction = value; }
 
 		bool isAnimated() const;
 		bool isWaitingAnimation() const;
@@ -85,7 +85,7 @@ namespace aprilui
 		float timeDelta;
 		float value;
 		AnimationFunction animationFunction;
-		float timer;
+		double timer;
 		float delay;
 		float periods;
 		float amplitude;
@@ -98,7 +98,7 @@ namespace aprilui
 		bool inheritValue;
 		float target;
 		bool useTarget;
-		float (*customFunction)(Animator*, float);
+		double(*customFunction)(Animator*, double);
 		
 		void _update(float timeDelta);
 

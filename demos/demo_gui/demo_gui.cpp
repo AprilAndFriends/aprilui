@@ -56,9 +56,9 @@ grect viewport = drawRect;
 april::Cursor* cursor = NULL;
 aprilui::Dataset* dataset = NULL;
 
-float _animatorCustomFunction(aprilui::Animator* animator, float time)
+double _animatorCustomFunction(aprilui::Animator* animator, double time)
 {
-	float sine = (float)hsin(time * animator->getSpeed() * 360);
+	double sine = hsin(time * animator->getSpeed() * 360);
 	return (sine * sine * animator->getAmplitude() + time * 30); // sin(t)^2 + t*30
 }
 
