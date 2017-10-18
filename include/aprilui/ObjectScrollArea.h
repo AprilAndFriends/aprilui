@@ -42,11 +42,9 @@ namespace aprilui
 		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_ISSET(allowDrag, AllowDrag);
-		HL_DEFINE_ISSET(allowDirectionKeys, AllowDirectionKeys);
 		HL_DEFINE_GETSET(float, inertia, Inertia);
 		HL_DEFINE_GETSET(float, dragThreshold, DragThreshold);
 		HL_DEFINE_GETSET(float, dragMaxSpeed, DragMaxSpeed);
-		HL_DEFINE_GETSET(float, directionKeySpeed, DirectionKeySpeed);
 		HL_DEFINE_ISSET(swapScrollWheels, SwapScrollWheels);
 		HL_DEFINE_ISSET(optimizeOobChildrenVisible, OptimizeOobChildrenVisible);
 		HL_DEFINE_ISSET(optimizeOobChildrenAwake, OptimizeOobChildrenAwake);
@@ -57,7 +55,6 @@ namespace aprilui
 		Object* getParent() const;
 		Dataset* getDataset() const;
 		bool isScrolling() const;
-		bool isDirectionKeyScrolling() const;
 		bool isScrollable() const;
 		bool isScrollableX() const;
 		bool isScrollableY() const;
@@ -93,20 +90,16 @@ namespace aprilui
 		static float defaultInertia;
 		static float defaultDragThreshold;
 		static float defaultDragMaxSpeed;
-		static float defaultDirectionKeySpeed;
 
 	protected:
 		bool allowDrag;
-		bool allowDirectionKeys;
 		float inertia;
 		float dragThreshold;
 		float dragMaxSpeed;
-		float directionKeySpeed;
 		bool swapScrollWheels;
 		bool optimizeOobChildrenVisible;
 		bool optimizeOobChildrenAwake;
 		bool dragging;
-		bool directionKeyScrolling;
 
 		Object* _findHoverObject();
 		bool _isScrollableScrollArea(Object* object) const;
@@ -118,8 +111,6 @@ namespace aprilui
 
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
-		bool _keyDown(april::Key keyCode);
-		bool _keyUp(april::Key keyCode);
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 
@@ -132,7 +123,6 @@ namespace aprilui
 		gvec2 _lastScrollOffset;
 		gvec2 _dragSpeed;
 		gvec2 _dragTimer;
-		gvec2 _directionKeySpeed;
 		bool _overrideHoverMode;
 
 	};
