@@ -106,7 +106,10 @@ namespace aprilui
 				tile = rect.getSize() / tile;
 			}
 			srcs[0] = -scroll / rect.getSize() * tile;
-			srcs[1] = tile + srcs[0];
+			// used to avoid going too far beyond [0, 1] since some shader-based renderers use low-precision floating point values for UV coordinates
+			srcs[0].x = hmodf(srcs[0].x, 1.0f);
+			srcs[0].y = hmodf(srcs[0].y, 1.0f);
+			srcs[1] = srcs[0] + tile;
 			v.x = positions[0].x;	v.y = positions[0].y;	v.u = srcs[0].x;	v.v = srcs[0].y;	this->tileVertices += v;
 			v.x = positions[1].x;	v.y = positions[0].y;	v.u = srcs[1].x;	v.v = srcs[0].y;	this->tileVertices += v;
 			v.x = positions[0].x;	v.y = positions[1].y;	v.u = srcs[0].x;	v.v = srcs[1].y;	this->tileVertices += v;
