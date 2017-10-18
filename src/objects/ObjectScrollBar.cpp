@@ -260,7 +260,7 @@ namespace aprilui
 			Container* parent = dynamic_cast<Container*>(this->parent);
 			if (parent != NULL && parent->scrollArea != NULL)
 			{
-				if (parent->scrollArea->isDragging() || parent->scrollArea->isScrolling() || parent->scrollArea->isDirectionKeyScrolling())
+				if (parent->scrollArea->isDragging() || parent->scrollArea->isScrolling())
 				{
 					this->_retainTime = RETAIN_TIME;
 				}
