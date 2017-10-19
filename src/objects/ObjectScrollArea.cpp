@@ -346,7 +346,7 @@ namespace aprilui
 						}
 					}
 				}
-				else
+				else if (this->oobChildrenFadeSizeFactor.y > 0.0f)
 				{
 					adjustedRect.set(rect.x - boundingRect.w, rect.y + boundingRect.h, rect.w + boundingRect.w * 2.0f, rect.h - boundingRect.h * 2.0f);
 					if (adjustedRect.h > 0.0f)
