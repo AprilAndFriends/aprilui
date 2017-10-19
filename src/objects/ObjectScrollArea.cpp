@@ -37,6 +37,7 @@ namespace aprilui
 		this->dragThreshold = ScrollArea::defaultDragThreshold;
 		this->dragMaxSpeed = ScrollArea::defaultDragMaxSpeed;
 		this->swapScrollWheels = false;
+		this->oobChildrenFadeSizeFactor.set(-1.0f, -1.0f);
 		this->optimizeOobChildrenVisible = false;
 		this->optimizeOobChildrenAwake = false;
 		this->dragging = false;
@@ -51,6 +52,7 @@ namespace aprilui
 		this->dragThreshold = other.dragThreshold;
 		this->dragMaxSpeed = other.dragMaxSpeed;
 		this->swapScrollWheels = other.swapScrollWheels;
+		this->oobChildrenFadeSizeFactor = other.oobChildrenFadeSizeFactor;
 		this->optimizeOobChildrenVisible = other.optimizeOobChildrenVisible;
 		this->optimizeOobChildrenAwake = other.optimizeOobChildrenAwake;
 		this->dragging = false;
@@ -75,6 +77,9 @@ namespace aprilui
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_size_factor", PropertyDescription::Type::Gvec2);
+			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_size_factor_x", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_size_factor_y", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
 		}
@@ -278,31 +283,80 @@ namespace aprilui
 
 	void ScrollArea::_updateOobChildren()
 	{
-		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake))
+		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake || this->oobChildrenFadeSizeFactor.x > 0.0f || this->oobChildrenFadeSizeFactor.y > 0.0f))
 		{
 			grect rect(0.0f, 0.0f, this->parent->getSize());
+			grect adjustedRect;
+			grect boundingRect;
+			float alphaFactor = 1.0f;
 			foreach (Object*, it, this->childrenObjects)
 			{
-				if (rect.intersects((*it)->getBoundingRect(this)))
+				boundingRect = (*it)->getBoundingRect(this);
+				if (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake)
 				{
-					if (this->optimizeOobChildrenVisible)
+					if (rect.intersects(boundingRect))
 					{
-						(*it)->setVisible(true);
+						if (this->optimizeOobChildrenVisible)
+						{
+							(*it)->setVisible(true);
+						}
+						if (this->optimizeOobChildrenAwake)
+						{
+							(*it)->setAwake(true);
+						}
 					}
-					if (this->optimizeOobChildrenAwake)
+					else
 					{
-						(*it)->setAwake(true);
+						if (this->optimizeOobChildrenVisible)
+						{
+							(*it)->setVisible(false);
+						}
+						if (this->optimizeOobChildrenAwake)
+						{
+							(*it)->setAwake(false);
+						}
+					}
+				}
+				if (this->oobChildrenFadeSizeFactor.x > 0.0f)
+				{
+					if (this->oobChildrenFadeSizeFactor.y > 0.0f)
+					{
+						adjustedRect.set(rect.x + boundingRect.w, rect.y + boundingRect.h, rect.w - boundingRect.w * 2.0f, rect.h - boundingRect.h * 2.0f);
+						if (adjustedRect.w > 0.0f && adjustedRect.h > 0.0f)
+						{
+							(*it)->setAlpha((unsigned char)(hclamp(boundingRect.clipped(adjustedRect).getArea() /
+								(this->oobChildrenFadeSizeFactor.x * this->oobChildrenFadeSizeFactor.y) / boundingRect.getArea(), 0.0f, 1.0f) * 255.0f));
+						}
+						else
+						{
+							(*it)->setAlpha(0);
+						}
+					}
+					else
+					{
+						adjustedRect.set(rect.x + boundingRect.w, rect.y- boundingRect.h, rect.w - boundingRect.w * 2.0f, rect.h + boundingRect.h * 2.0f);
+						if (adjustedRect.w > 0.0f)
+						{
+							(*it)->setAlpha((unsigned char)(hclamp(boundingRect.clipped(adjustedRect).getArea() /
+								this->oobChildrenFadeSizeFactor.x / boundingRect.getArea(), 0.0f, 1.0f) * 255.0f));
+						}
+						else
+						{
+							(*it)->setAlpha(0);
+						}
 					}
 				}
 				else
 				{
-					if (this->optimizeOobChildrenVisible)
+					adjustedRect.set(rect.x - boundingRect.w, rect.y + boundingRect.h, rect.w + boundingRect.w * 2.0f, rect.h - boundingRect.h * 2.0f);
+					if (adjustedRect.h > 0.0f)
 					{
-						(*it)->setVisible(false);
+						(*it)->setAlpha((unsigned char)(hclamp(boundingRect.clipped(adjustedRect).getArea() / 
+							this->oobChildrenFadeSizeFactor.y / boundingRect.getArea(), 0.0f, 1.0f) * 255.0f));
 					}
-					if (this->optimizeOobChildrenAwake)
+					else
 					{
-						(*it)->setAwake(false);
+						(*it)->setAlpha(0);
 					}
 				}
 			}
@@ -373,6 +427,9 @@ namespace aprilui
 		if (name == "drag_threshold")					return this->getDragThreshold();
 		if (name == "drag_max_speed")					return this->getDragMaxSpeed();
 		if (name == "swap_scroll_wheels")				return this->isSwapScrollWheels();
+		if (name == "oob_children_fade_size_factor")	return april::gvec2ToHstr(this->getOobChildrenFadeSizeFactor());
+		if (name == "oob_children_fade_size_factor_x")	return this->getOobChildrenFadeSizeFactorX();
+		if (name == "oob_children_fade_size_factor_y")	return this->getOobChildrenFadeSizeFactorY();
 		if (name == "optimize_oob_children_visible")	return this->isOptimizeOobChildrenVisible();
 		if (name == "optimize_oob_children_awake")		return this->isOptimizeOobChildrenAwake();
 		hstr result = ButtonBase::getProperty(name);
@@ -390,6 +447,9 @@ namespace aprilui
 		else if (name == "drag_threshold")					this->setDragThreshold(value);
 		else if (name == "drag_max_speed")					this->setDragMaxSpeed(value);
 		else if (name == "swap_scroll_wheels")				this->setSwapScrollWheels(value);
+		else if (name == "oob_children_fade_size_factor")	this->setOobChildrenFadeSizeFactor(april::hstrToGvec2(value));
+		else if (name == "oob_children_fade_size_factor_x")	this->setOobChildrenFadeSizeFactorX(value);
+		else if (name == "oob_children_fade_size_factor_y")	this->setOobChildrenFadeSizeFactorY(value);
 		else if (name == "optimize_oob_children_visible")	this->setOptimizeOobChildrenVisible(value);
 		else if (name == "optimize_oob_children_awake")		this->setOptimizeOobChildrenAwake(value);
 		else if (ButtonBase::setProperty(name, value)) {}

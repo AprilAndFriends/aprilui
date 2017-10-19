@@ -46,6 +46,10 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, dragThreshold, DragThreshold);
 		HL_DEFINE_GETSET(float, dragMaxSpeed, DragMaxSpeed);
 		HL_DEFINE_ISSET(swapScrollWheels, SwapScrollWheels);
+		HL_DEFINE_GETSET(gvec2, oobChildrenFadeSizeFactor, OobChildrenFadeSizeFactor);
+		inline void setOobChildrenFadeSizeFactor(float x, float y) { this->scaleFactor.set(x, y); }
+		HL_DEFINE_GETSET(float, oobChildrenFadeSizeFactor.x, OobChildrenFadeSizeFactorX);
+		HL_DEFINE_GETSET(float, oobChildrenFadeSizeFactor.y, OobChildrenFadeSizeFactorY);
 		HL_DEFINE_ISSET(optimizeOobChildrenVisible, OptimizeOobChildrenVisible);
 		HL_DEFINE_ISSET(optimizeOobChildrenAwake, OptimizeOobChildrenAwake);
 		HL_DEFINE_IS(dragging, Dragging);
@@ -97,6 +101,7 @@ namespace aprilui
 		float dragThreshold;
 		float dragMaxSpeed;
 		bool swapScrollWheels;
+		gvec2 oobChildrenFadeSizeFactor;
 		bool optimizeOobChildrenVisible;
 		bool optimizeOobChildrenAwake;
 		bool dragging;
