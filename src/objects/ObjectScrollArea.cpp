@@ -288,7 +288,6 @@ namespace aprilui
 			grect rect(0.0f, 0.0f, this->parent->getSize());
 			grect adjustedRect;
 			grect boundingRect;
-			float alphaFactor = 1.0f;
 			foreach (Object*, it, this->childrenObjects)
 			{
 				boundingRect = (*it)->getBoundingRect(this);
