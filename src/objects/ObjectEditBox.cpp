@@ -590,7 +590,7 @@ namespace aprilui
 		}
 		else
 		{
-			this->_selectionRects += grect(positionStart + renderOffset, lines[lineIndexStart].rect.x + lines[lineIndexStart].rect.right() - positionStart.x, fontHeight);
+			this->_selectionRects += grect(positionStart + renderOffset, lines[lineIndexStart].rect.right() - positionStart.x, fontHeight);
 			if (lineIndexEnd - lineIndexStart > 1)
 			{
 				for_iter (i, lineIndexStart + 1, lineIndexEnd)
@@ -634,31 +634,24 @@ namespace aprilui
 				}
 				result.y = lines[i].rect.y + heightOffset;
 				result.x = base.x + lines[i].rect.x;
-				if (lines[i].terminated)
+				foreachc (atres::RenderWord, it, lines[i].words)
 				{
-					result.y += fontHeight;
-				}
-				else
-				{
-					foreachc (atres::RenderWord, it, lines[i].words)
+					if (hbetweenIE(index, (*it).start, (*it).start + (*it).count))
 					{
-						if (hbetweenIE(index, (*it).start, (*it).start + (*it).count))
+						result.x = (*it).rect.x;
+						currentIndex = (*it).start;
+						ustr = (*it).text.uStr();
+						size = (int)ustr.size();
+						for_iter (j, 0, size)
 						{
-							result.x = (*it).rect.x;
-							currentIndex = (*it).start;
-							ustr = (*it).text.uStr();
-							size = (int)ustr.size();
-							for_iter (j, 0, size)
+							if (currentIndex == index)
 							{
-								if (currentIndex == index)
-								{
-									break;
-								}
-								result.x = (*it).rect.x + (*it).segmentWidths[j];
-								currentIndex += hstr::fromUnicode(ustr[j]).utf8Size();
+								break;
 							}
-							break;
+							result.x = (*it).rect.x + (*it).segmentWidths[j];
+							currentIndex += hstr::fromUnicode(ustr[j]).utf8Size();
 						}
+						break;
 					}
 				}
 				break;
