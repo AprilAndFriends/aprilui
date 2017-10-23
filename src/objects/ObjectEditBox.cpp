@@ -54,7 +54,7 @@ namespace aprilui
 	{
 		this->text = "";
 		this->horzFormatting = atres::Horizontal::Left;
-		//this->textFormatting = false;
+		this->textFormatting = false;
 		this->backgroundColor = april::Color::Black;
 		// this class' properties
 		this->emptyText = "";
