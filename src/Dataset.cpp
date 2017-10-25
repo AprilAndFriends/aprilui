@@ -57,6 +57,8 @@ namespace aprilui
 		}
 		this->textsPaths += aprilui::getDefaultTextsPath();
 		this->loaded = false;
+		this->_asyncPreLoading = false;
+		this->_asyncPreLoadThread = NULL;
 		this->_internalLoadDataset = NULL;
 		aprilui::_registerDataset(this->name, this);
 	}
@@ -72,6 +74,10 @@ namespace aprilui
 			}
 			this->unload();
 		}
+		else if (this->_asyncPreLoading)
+		{
+			this->unload();
+		}
 	}
 
 	void Dataset::setTextsPath(chstr value)
@@ -80,10 +86,23 @@ namespace aprilui
 		this->textsPaths += value;
 	}
 
-	bool Dataset::isLoaded() const
+	bool Dataset::isLoaded()
 	{
-		return (this->loaded || this->objects.size() > 0 || this->animators.size() > 0 || this->textures.size() > 0 ||
-			this->images.size() > 0 || this->styles.size() > 0 || this->texts.size() > 0);
+		if (this->loaded)
+		{
+			return true;
+		}
+		if (!this->_asyncPreLoading)
+		{
+			return (this->objects.size() > 0 || this->animators.size() > 0 || this->textures.size() > 0 ||
+				this->images.size() > 0 || this->styles.size() > 0 || this->texts.size() > 0);
+		}
+		return false;
+	}
+
+	bool Dataset::isPreLoadingAsync()
+	{
+		return (this->_asyncPreLoading && this->_asyncPreLoadThread != NULL);
 	}
 
 	hmap<hstr, BaseObject*> Dataset::getAllObjects() const
@@ -501,6 +520,11 @@ namespace aprilui
 						image->setProperty(it->first, it->second);
 					}
 				}
+				// preload was aborted
+				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+				{
+					break;
+				}
 			}
 		}
 	}
@@ -534,6 +558,11 @@ namespace aprilui
 			else
 			{
 				hlog::warnf(logTag, "Unknown node name '%s' in CompositeImage '%s'.", (*child)->name.cStr(), name.cStr());
+			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
 			}
 		}
 		this->images[name] = image;
@@ -654,6 +683,11 @@ namespace aprilui
 			{
 				hlog::warn(logTag, "Object/Animator type '" + className + "' not found! It might not be registered in aprilui.");
 			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
+			}
 		}
 	}
 
@@ -673,6 +707,11 @@ namespace aprilui
 				if ((*it) != (*it2))
 				{
 					this->getTexture(*it)->addLink(this->getTexture(*it2));
+				}
+				// preload was aborted
+				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+				{
+					return;
 				}
 			}
 		}
@@ -843,6 +882,11 @@ namespace aprilui
 			{
 				baseObject->setProperty(it->first, it->second);
 			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
+			}
 		}
 		if (isObject)
 		{
@@ -851,6 +895,11 @@ namespace aprilui
 				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 				{
 					this->_recursiveObjectParse((*child), object, style, namePrefix, nameSuffix, gvec2());
+				}
+				// preload was aborted
+				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+				{
+					break;
 				}
 			}
 		}
@@ -941,6 +990,11 @@ namespace aprilui
 						}
 					}
 				}
+				// preload was aborted
+				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+				{
+					break;
+				}
 			}
 		}
 		return includeRoot;
@@ -955,14 +1009,14 @@ namespace aprilui
 		this->filePath = originalFilePath;
 	}
 
-	Dataset::XmlLoadThread::XmlLoadThread() : hthread(&Dataset::_asyncHlXmlLoad, "aprilui async hlxml")
+	Dataset::LoadThread::LoadThread(void (*function)(hthread*)) : hthread(function, "aprilui async hlxml")
 	{
 		this->dataset = NULL;
 	}
 	
 	void Dataset::_asyncHlXmlLoad(hthread* thread)
 	{
-		XmlLoadThread* loadThread = (XmlLoadThread*)thread;
+		LoadThread* loadThread = (LoadThread*)thread;
 		loadThread->dataset->load();
 	}
 
@@ -977,6 +1031,7 @@ namespace aprilui
 			hstr originalFilePath = this->filePath;
 			this->filePath = this->_makeFilePath(normalizedPath);
 			parsedCount = 1;
+			hlog::writef(logTag, "Parsing include: '%s'", normalizedPath.cStr());
 			this->_readFile(normalizedPath);
 			this->filePath = originalFilePath;
 		}
@@ -999,83 +1054,102 @@ namespace aprilui
 				}
 			}
 			files.sort();
-			files.reverse();
 			parsedCount = files.size();
 			hlog::writef(logTag, "Parsing include: '%s', %d files found", normalizedPath.cStr(), parsedCount);
-			harray<XmlLoadThread*> threads;
-			int cpuCores = hmax(april::getSystemInfo().cpuCores - 1, 1); // try to utilize all additional cores
-			for_iter (i, 0, cpuCores)
+			// use more threads only if loading this synchronously
+			if (this->_asyncPreLoadThread == NULL)
 			{
-				threads += new XmlLoadThread();
-			}
-			_datasetRegisterLock = true;
-			harray<hstr> queuedFiles = files;
-			bool running = true;
-			hstr filename;
-			harray<Dataset*> loadedDatasets;
-			while (running)
-			{
-				running = (queuedFiles.size() > 0);
-				foreach (XmlLoadThread*, it, threads)
+				files.reverse();
+				harray<LoadThread*> threads;
+				int cpuCores = hmax(april::getSystemInfo().cpuCores - 1, 1); // try to utilize all additional cores
+				for_iter (i, 0, cpuCores)
 				{
-					if ((*it)->isRunning())
+					threads += new LoadThread(&Dataset::_asyncHlXmlLoad);
+				}
+				_datasetRegisterLock = true;
+				harray<hstr> queuedFiles = files;
+				bool running = true;
+				hstr filename;
+				harray<Dataset*> loadedDatasets;
+				while (running)
+				{
+					running = (queuedFiles.size() > 0);
+					foreach (LoadThread*, it, threads)
 					{
-						running = true;
-					}
-					else
-					{
-						if ((*it)->dataset != NULL)
+						if ((*it)->isRunning())
 						{
 							running = true;
-							(*it)->join();
-							loadedDatasets += (*it)->dataset;
-							(*it)->dataset = NULL;
 						}
-						if (queuedFiles.size() > 0)
+						else
 						{
-							filename = queuedFiles.removeLast();
-							(*it)->dataset = new Dataset(filename, filename);
-							(*it)->dataset->_internalLoadDataset = this;
-							(*it)->start();
+							if ((*it)->dataset != NULL)
+							{
+								running = true;
+								(*it)->join();
+								loadedDatasets += (*it)->dataset;
+								(*it)->dataset = NULL;
+							}
+							if (queuedFiles.size() > 0)
+							{
+								filename = queuedFiles.removeLast();
+								(*it)->dataset = new Dataset(filename, filename);
+								(*it)->dataset->_internalLoadDataset = this;
+								(*it)->start();
+							}
 						}
 					}
+					foreach (Dataset*, it, loadedDatasets)
+					{
+						// move everything to this dataset
+						if ((*it)->root != NULL)
+						{
+							this->registerObjects((*it)->root, false);
+						}
+						foreach_m (BaseImage*, it2, (*it)->images)
+						{
+							this->registerImage(it2->second);
+						}
+						foreach_m (Texture*, it2, (*it)->textures)
+						{
+							it2->second->name = hrdir::joinPath(texturePrefix, it2->second->name);
+							this->registerTexture(it2->second);
+						}
+						foreach_m (Style*, it2, (*it)->styles)
+						{
+							this->registerStyle(it2->second);
+						}
+						// so they don't get destroyed with the dataset
+						(*it)->objects.clear();
+						(*it)->animators.clear();
+						(*it)->images.clear();
+						(*it)->textures.clear();
+						(*it)->styles.clear();
+						delete (*it);
+					}
+					loadedDatasets.clear();
+					hthread::sleep(0.01f);
 				}
-				foreach (Dataset*, it, loadedDatasets)
+				foreach (LoadThread*, it, threads)
 				{
-					// move everything to this dataset
-					if ((*it)->root != NULL)
-					{
-						this->registerObjects((*it)->root, false);
-					}
-					foreach_m (BaseImage*, it2, (*it)->images)
-					{
-						this->registerImage(it2->second);
-					}
-					foreach_m (Texture*, it2, (*it)->textures)
-					{
-						it2->second->name = hrdir::joinPath(texturePrefix, it2->second->name);
-						this->registerTexture(it2->second);
-					}
-					foreach_m (Style*, it2, (*it)->styles)
-					{
-						this->registerStyle(it2->second);
-					}
-					// so they don't get destroyed with the dataset
-					(*it)->objects.clear();
-					(*it)->animators.clear();
-					(*it)->images.clear();
-					(*it)->textures.clear();
-					(*it)->styles.clear();
 					delete (*it);
 				}
-				loadedDatasets.clear();
-				hthread::sleep(0.01f);
+				_datasetRegisterLock = false;
 			}
-			foreach (XmlLoadThread*, it, threads)
+			else
 			{
-				delete (*it);
+				hstr originalFilePath = this->filePath;
+				foreach (hstr, it, files)
+				{
+					this->filePath = this->_makeFilePath(*it);
+					this->_readFile(*it);
+					// preload was aborted
+					if (!this->_asyncPreLoading)
+					{
+						break;
+					}
+				}
+				this->filePath = originalFilePath;
 			}
-			_datasetRegisterLock = false;
 		}
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", normalizedPath.cStr(), parsedCount);
 	}
@@ -1107,6 +1181,11 @@ namespace aprilui
 				}
 				root = this->_recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset);
 			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
+			}
 		}
 		return root;
 	}
@@ -1128,6 +1207,11 @@ namespace aprilui
 			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
 				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2());
+			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
 			}
 		}
 		return NULL; // since multiple files are loaded, no object is returned
@@ -1185,16 +1269,61 @@ namespace aprilui
 					this->_parseExternalXmlNode(*node);
 				}
 			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
+			}
 		}
 	}
 
 	void Dataset::load()
+	{
+		if (this->_asyncPreLoadThread != NULL)
+		{
+			this->_asyncPreLoadThread->join();
+			delete this->_asyncPreLoadThread;
+			this->_asyncPreLoadThread = NULL;
+			this->_asyncPreLoading = false;
+		}
+		else
+		{
+			this->_load();
+		}
+		this->loaded = true;
+		this->update(0.0f);
+		this->triggerEvent(aprilui::Event::DatasetLoaded);
+	}
+
+	void Dataset::_asyncLoad(hthread* thread)
+	{
+		LoadThread* loadThread = (LoadThread*)thread;
+		loadThread->dataset->_load();
+	}
+
+	void Dataset::preLoadAsync()
+	{
+		if (this->_asyncPreLoadThread == NULL && !this->_asyncPreLoading && !this->loaded)
+		{
+			this->_asyncPreLoading = true;
+			this->_asyncPreLoadThread = new LoadThread(&Dataset::_asyncLoad);
+			this->_asyncPreLoadThread->dataset = this;
+			this->_asyncPreLoadThread->start();
+		}
+	}
+
+	void Dataset::_load()
 	{
 		if (this->filename != "")
 		{
 			foreach (hstr, it, this->textsPaths)
 			{
 				this->_loadTexts(this->_makeTextsPath(*it));
+				// preload was aborted
+				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+				{
+					break;
+				}
 			}
 			try
 			{
@@ -1208,9 +1337,6 @@ namespace aprilui
 				throw e;
 			}
 		}
-		this->loaded = true;
-		this->update(0.0f);
-		this->triggerEvent(aprilui::Event::DatasetLoaded);
 	}
 
 	hstr Dataset::_makeTextsPath(chstr textsPath)
@@ -1240,6 +1366,11 @@ namespace aprilui
 			{
 				this->_loadTextResource(data, this->texts);
 				data.clear();
+			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
 			}
 		}
 	}
@@ -1290,12 +1421,27 @@ namespace aprilui
 			{
 				values += (*it2);
 			}
+			// preload was aborted
+			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+			{
+				break;
+			}
 		}
 	}
 
 	void Dataset::unload()
 	{
-		if (!this->isLoaded())
+		if (this->_asyncPreLoadThread != NULL && this->_asyncPreLoading)
+		{
+			// abort pre-load
+			this->_asyncPreLoading = false;
+			this->_asyncPreLoadThread->join();
+			delete this->_asyncPreLoadThread;
+			this->_asyncPreLoadThread = NULL;
+			// make sure to delete everything below
+			this->loaded = true;
+		}
+		else if (!this->isLoaded())
 		{
 			return;
 		}

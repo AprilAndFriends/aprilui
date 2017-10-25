@@ -65,13 +65,15 @@ namespace aprilui
 		inline hmap<hstr, Texture*>& getTextures() { return this->textures; }
 		inline hmap<hstr, Style*>& getStyles() { return this->styles; }
 		inline hmap<hstr, hstr>& getTexts() { return this->texts; }
-		bool isLoaded() const;
+		bool isLoaded();
+		bool isPreLoadingAsync();
 		hmap<hstr, BaseObject*> getAllObjects() const;
 		int getFocusedObjectIndex() const;
 		bool isAnimated() const;
 		bool isWaitingAnimation() const;
 
 		void load();
+		void preLoadAsync();
 		void unload();
 		void registerObjects(BaseObject* root, bool setRootIfNull = true);
 		void unregisterObjects(BaseObject* root);
@@ -234,15 +236,15 @@ namespace aprilui
 			aprilui::EventArgs* args;
 		};
 
-		class XmlLoadThread : public hthread
+		class LoadThread : public hthread
 		{
 		public:
 			Dataset* dataset;
 
-			XmlLoadThread();
+			LoadThread(void (*function)(hthread*));
 
 		};
-		friend class XmlLoadThread;
+		friend class LoadThread;
 
 		hstr name;
 		hstr filename;
@@ -275,6 +277,7 @@ namespace aprilui
 		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
 		BaseObject* _recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
 
+		void _load();
 		void _readFile(chstr filename);
 		virtual void _loadTexts(chstr path);
 		void _loadTextResource(hstream& data, hmap<hstr, hstr>& textsMap);
@@ -293,9 +296,12 @@ namespace aprilui
 		/// @note This method is here to silence linker warnings on LLVM compiler.
 		void _throwInvalidObjectTypeCast(chstr typeName, chstr objName, chstr datasetName);
 
+		static void _asyncLoad(hthread* thread);
 		static void _asyncHlXmlLoad(hthread* thread);
 
 	private:
+		bool _asyncPreLoading;
+		LoadThread* _asyncPreLoadThread;
 		Dataset* _internalLoadDataset;
 
 	};
