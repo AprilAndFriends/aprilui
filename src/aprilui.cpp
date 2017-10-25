@@ -668,18 +668,15 @@ namespace aprilui
 			newScales += 1.0f;
 		}
 		hmap<hstr, float> newExtensionScales;
+		harray<hstr> logs;
 		for_iter (i, 0, newExtensions.size())
 		{
 			newExtensionScales[newExtensions[i]] = newScales[i];
+			logs += hsprintf("%s:%g", newExtensions[i].cStr(), newScales[i]);
 		}
 		// if extension scales have not changed
 		if (extensionScales != newExtensionScales)
 		{
-			harray<hstr> logs;
-			foreach_m (float, it, newExtensionScales)
-			{
-				logs += hsprintf("%s:%g", it->first.cStr(), it->second);
-			}
 			hlog::write(logTag, "Setting texture extension scales:\n" + logs.joined('\n'));
 			extensionScales = newExtensionScales;
 			april::setTextureExtensions(newExtensions);
