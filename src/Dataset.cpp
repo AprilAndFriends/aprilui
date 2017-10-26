@@ -1056,7 +1056,7 @@ namespace aprilui
 			}
 			files.sort();
 			parsedCount = files.size();
-			hlog::writef(logTag, "  -> %d files found", parsedCount);
+			hlog::writef(logTag, "  -> %d file(s) found", parsedCount);
 			// use more threads only if loading this synchronously
 			if (this->_asyncPreLoadThread == NULL)
 			{
