@@ -349,7 +349,16 @@ namespace aprilui
 		{
 			__THROW_EXCEPTION(ObjectExistsException("Texture", filename, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
-		bool prefixImages = node->pbool("prefix_images", true);
+		hstr namePrefix = "";
+		if (node->pexists("image_prefix"))
+		{
+			namePrefix = node->pstr("image_prefix");
+		}
+		else if (node->pbool("prefix_images", true))
+		{
+			hlog::warn(logTag, "'prefix_images' is deprecated. Use 'image_prefix' instead.");
+			namePrefix = textureName + "/";
+		}
 		bool managed = node->pbool("managed", aprilui::isDefaultManagedTextures());
 		april::Texture::LoadMode loadMode = aprilui::getDefaultTextureLoadMode();
 		// DEPRECATED
@@ -439,11 +448,7 @@ namespace aprilui
 				if ((*child)->name == "Image" && ((*child)->properties.hasKey("tile") || (*child)->properties.hasKey("tile_w") || (*child)->properties.hasKey("tile_h"))) // DEPRECATED (this entire block)
 				{
 					hlog::error(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead. THIS FEATURE WILL BE REMOVED SOON!");
-					name = (*child)->properties["name"];
-					if (prefixImages)
-					{
-						name = textureName + "/" + name;
-					}
+					name = namePrefix + (*child)->properties["name"];
 					if (this->images.hasKey(name))
 					{
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
@@ -496,11 +501,7 @@ namespace aprilui
 				}
 				else
 				{
-					name = (*child)->properties["name"];
-					if (prefixImages)
-					{
-						name = textureName + "/" + name;
-					}
+					name = namePrefix + (*child)->properties["name"];
 					if (this->images.hasKey(name))
 					{
 						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
@@ -1025,13 +1026,13 @@ namespace aprilui
 	void Dataset::parseGlobalInclude(chstr path, bool optional)
 	{
 		hstr normalizedPath = hrdir::normalize(path);
+		hlog::writef(logTag, "Parsing include: '%s'", normalizedPath.cStr());
 		int parsedCount = 0;
 		if (!normalizedPath.contains("*"))
 		{
 			hstr originalFilePath = this->filePath;
 			this->filePath = this->_makeFilePath(normalizedPath);
 			parsedCount = 1;
-			hlog::writef(logTag, "Parsing include: '%s'", normalizedPath.cStr());
 			this->_readFile(normalizedPath);
 			this->filePath = originalFilePath;
 		}
@@ -1055,7 +1056,7 @@ namespace aprilui
 			}
 			files.sort();
 			parsedCount = files.size();
-			hlog::writef(logTag, "Parsing include: '%s', %d files found", normalizedPath.cStr(), parsedCount);
+			hlog::writef(logTag, "  -> %d files found", parsedCount);
 			// use more threads only if loading this synchronously
 			if (this->_asyncPreLoadThread == NULL)
 			{
