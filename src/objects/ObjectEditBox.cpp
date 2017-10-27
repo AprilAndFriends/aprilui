@@ -385,7 +385,6 @@ namespace aprilui
 						if (position.x < lines[i].rect.right())
 						{
 							line = &lines[i];
-							offsetIndex = line->start;
 						}
 						else
 						{
@@ -395,29 +394,33 @@ namespace aprilui
 					}
 				}
 			}
-			if (line != NULL && line->words.size() > 0 && position.x > line->rect.x)
+			if (line != NULL)
 			{
 				offsetIndex = line->start;
-				float offsetWidth = 0.0f;
-				int count = 0;
-				foreach (atres::RenderWord, it, line->words)
+				if (line->words.size() > 0 && position.x > line->rect.x)
 				{
-					if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
+					offsetIndex = line->start + line->count;
+					float offsetWidth = 0.0f;
+					int count = 0;
+					foreach (atres::RenderWord, it, line->words)
 					{
-						offsetWidth = (*it).rect.x;
-						offsetIndex = (*it).start;
-						count = 0;
-						for_iter (i, 0, (*it).charXs.size())
+						if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
 						{
-							offsetWidth = (*it).rect.x + (*it).charXs[i];
-							if (position.x < offsetWidth + (*it).charAdvanceXs[i] * 0.5f)
+							offsetWidth = (*it).rect.x;
+							offsetIndex = (*it).start;
+							count = 0;
+							for_iter (i, 0, (*it).charXs.size())
 							{
-								break;
+								offsetWidth = (*it).rect.x + (*it).charXs[i];
+								if (position.x < offsetWidth + (*it).charAdvanceXs[i] * 0.5f)
+								{
+									break;
+								}
+								++count;
 							}
-							++count;
+							offsetIndex += (*it).text.utf8SubString(0, count).size();
+							break;
 						}
-						offsetIndex += (*it).text.utf8SubString(0, count).size();
-						break;
 					}
 				}
 			}
@@ -624,7 +627,8 @@ namespace aprilui
 		int currentIndex = 0;
 		std::ustring ustr;
 		int size = 0;
-		for_iter (i, 0, lines.size())
+		// going backwards here, because when using wrapped, a line will consider the last space to be within its limits even though the caret should be placed in the next line
+		for_iter_r (i, lines.size(), 0)
 		{
 			if (hbetweenII(index, lines[i].start, lines[i].start + lines[i].count))
 			{
