@@ -365,20 +365,24 @@ namespace aprilui
 		position.y += -heightOffset - this->renderOffsetY * fontHeight;
 		if (lines.size() > 0)
 		{
-			if (position.y >= lines.first().rect.y)
+			offsetIndex = 0;
+			atres::RenderLine* line = NULL;
+			if (position.y <= lines.first().rect.y)
+			{
+				line = &lines.first();
+			}
+			else if (position.y >= lines.last().rect.bottom())
+			{
+				line = &lines.last();
+			}
+			else
 			{
 				offsetIndex = text.size();
-				atres::RenderLine* line = NULL;
-				float descender = 0.0f;
 				for_iter (i, 0, lines.size())
 				{
-					if (i == lines.size() - 1)
+					if (hbetweenIE(position.y, lines[i].rect.y, lines[i].rect.bottom()))
 					{
-						descender = atres::renderer->getFont(this->font)->getDescender();
-					}
-					if (hbetweenIE(position.y, lines[i].rect.y, lines[i].rect.bottom() + descender))
-					{
-						if (position.x <= lines[i].rect.right())
+						if (position.x < lines[i].rect.right())
 						{
 							line = &lines[i];
 							offsetIndex = line->start;
@@ -390,36 +394,32 @@ namespace aprilui
 						break;
 					}
 				}
-				if (line != NULL && line->words.size() > 0)
+			}
+			if (line != NULL && line->words.size() > 0 && position.x > line->rect.x)
+			{
+				offsetIndex = line->start;
+				float offsetWidth = 0.0f;
+				int count = 0;
+				foreach (atres::RenderWord, it, line->words)
 				{
-					offsetIndex = line->start + line->count;
-					float offsetWidth = 0.0f;
-					int count = 0;
-					foreach (atres::RenderWord, it, line->words)
+					if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
 					{
-						if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
+						offsetWidth = (*it).rect.x;
+						offsetIndex = (*it).start;
+						count = 0;
+						for_iter (i, 0, (*it).charXs.size())
 						{
-							offsetWidth = (*it).rect.x;
-							offsetIndex = (*it).start;
-							count = 0;
-							for_iter (i, 0, (*it).charXs.size())
+							offsetWidth = (*it).rect.x + (*it).charXs[i];
+							if (position.x < offsetWidth + (*it).charAdvanceXs[i] * 0.5f)
 							{
-								offsetWidth = (*it).rect.x + (*it).charXs[i];
-								if (position.x < offsetWidth + (*it).charAdvanceXs[i] * 0.5f)
-								{
-									break;
-								}
-								++count;
+								break;
 							}
-							offsetIndex += (*it).text.utf8SubString(0, count).size();
-							break;
+							++count;
 						}
+						offsetIndex += (*it).text.utf8SubString(0, count).size();
+						break;
 					}
 				}
-			}
-			else
-			{
-				offsetIndex = 0;
 			}
 		}
 		this->setCaretIndex(text(0, offsetIndex).utf8Size());
@@ -453,7 +453,7 @@ namespace aprilui
 		this->caretRect.setPosition(this->_makeCaretPosition(lines, this->caretIndex, base, fontHeight, heightOffset));
 		if (this->horzFormatting.isRight())
 		{
-			this->caretRect.x -= 1;
+			this->caretRect.x -= 1.0f;
 		}
 		this->caretRect += gvec2((float)this->renderOffsetX, (float)this->renderOffsetY) * fontHeight;
 		// calculate render offset
@@ -626,7 +626,7 @@ namespace aprilui
 		int size = 0;
 		for_iter (i, 0, lines.size())
 		{
-			if (hbetweenIE(index, lines[i].start, lines[i].start + lines[i].count))
+			if (hbetweenII(index, lines[i].start, lines[i].start + lines[i].count))
 			{
 				if (lineIndex != NULL)
 				{
@@ -636,7 +636,7 @@ namespace aprilui
 				result.x = base.x + lines[i].rect.x;
 				foreachc (atres::RenderWord, it, lines[i].words)
 				{
-					if (hbetweenIE(index, (*it).start, (*it).start + (*it).count))
+					if (hbetweenII(index, (*it).start, (*it).start + (*it).count))
 					{
 						result.x = (*it).rect.x;
 						currentIndex = (*it).start;
