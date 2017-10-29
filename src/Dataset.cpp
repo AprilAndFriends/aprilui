@@ -354,9 +354,16 @@ namespace aprilui
 		{
 			namePrefix = node->pstr("image_prefix");
 		}
-		else if (node->pbool("prefix_images", true))
+		else if (node->pexists("prefix_images"))
 		{
 			hlog::warn(logTag, "'prefix_images' is deprecated. Use 'image_prefix' instead.");
+			if (node->pbool("prefix_images"))
+			{
+				namePrefix = textureName + "/";
+			}
+		}
+		else
+		{
 			namePrefix = textureName + "/";
 		}
 		bool managed = node->pbool("managed", aprilui::isDefaultManagedTextures());
