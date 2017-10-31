@@ -35,6 +35,14 @@
 #include "Style.h"
 #include "Texture.h"
 
+#define __EXPAND(...) __VA_ARGS__
+#define ASSERT_NO_ASYNC_LOADING(methodName, returnValue) \
+	if (this->_asyncPreLoading) \
+	{ \
+		hlog::errorf(logTag, "Cannot use " #methodName "() in dataset '%s' while async loading is running!", this->name.cStr()); \
+		return __EXPAND returnValue; \
+	}
+
 namespace aprilui
 {
 	static harray<hstr> _ignoredStandardProperties = hstr("name,rect,position,size,x,y,w,h").split(',');
@@ -82,6 +90,7 @@ namespace aprilui
 
 	void Dataset::setTextsPath(chstr value)
 	{
+		ASSERT_NO_ASYNC_LOADING(setTextsPath, ())
 		this->textsPaths.clear();
 		this->textsPaths += value;
 	}
@@ -107,6 +116,7 @@ namespace aprilui
 
 	hmap<hstr, BaseObject*> Dataset::getAllObjects() const
 	{
+		ASSERT_NO_ASYNC_LOADING(getAllObjects, (hmap<hstr, BaseObject*>()));
 		hmap<hstr, BaseObject*> result = this->animators.cast<hstr, BaseObject*>();
 		result.inject(this->objects.cast<hstr, BaseObject*>());
 		return result;
@@ -114,12 +124,13 @@ namespace aprilui
 
 	int Dataset::getFocusedObjectIndex() const
 	{
-		return (this->focusedObject != NULL && this->focusedObject->isEnabled() &&
-			this->focusedObject->isVisible() ? this->focusedObject->getFocusIndex() : -1);
+		ASSERT_NO_ASYNC_LOADING(getFocusedObjectIndex, (-1));
+		return (this->focusedObject != NULL && this->focusedObject->isEnabled() && this->focusedObject->isVisible() ? this->focusedObject->getFocusIndex() : -1);
 	}
 
 	bool Dataset::isAnimated() const
 	{
+		ASSERT_NO_ASYNC_LOADING(isAnimated, (false));
 		HL_LAMBDA_CLASS(_isAnimatedObject, bool, ((hstr const& name, Object* const& object) { return object->isAnimated(); }));
 		HL_LAMBDA_CLASS(_isAnimatedAnimator, bool, ((hstr const& name, Animator* const& animator) { return animator->isAnimated(); }));
 		return (this->objects.matchesAny(&_isAnimatedObject::lambda) || this->animators.matchesAny(&_isAnimatedAnimator::lambda));
@@ -127,6 +138,7 @@ namespace aprilui
 	
 	bool Dataset::isWaitingAnimation() const
 	{
+		ASSERT_NO_ASYNC_LOADING(isWaitingAnimation, (false));
 		HL_LAMBDA_CLASS(_isWaitingAnimationObject, bool, ((hstr const& name, Object* const& object) { return object->isWaitingAnimation(); }));
 		HL_LAMBDA_CLASS(_isWaitingAnimationAnimator, bool, ((hstr const& name, Animator* const& animator) { return animator->isWaitingAnimation(); }));
 		return (this->objects.matchesAny(&_isWaitingAnimationObject::lambda) || this->animators.matchesAny(&_isWaitingAnimationAnimator::lambda));
@@ -134,6 +146,7 @@ namespace aprilui
 	
 	bool Dataset::trySetFocusedObjectByIndex(int value, bool strict)
 	{
+		ASSERT_NO_ASYNC_LOADING(trySetFocusedObjectByIndex, (false));
 		if (value < 0)
 		{
 			this->removeFocus();
@@ -156,6 +169,7 @@ namespace aprilui
 
 	harray<int> Dataset::findPossibleFocusIndices(bool strict)
 	{
+		ASSERT_NO_ASYNC_LOADING(findPossibleFocusIndices, (harray<int>()));
 		harray<int> result;
 		int focusIndex = 0;
 		foreach_m (Object*, it, this->objects)
@@ -172,6 +186,7 @@ namespace aprilui
 
 	harray<int> Dataset::findAllFocusIndices()
 	{
+		ASSERT_NO_ASYNC_LOADING(findAllFocusIndices, (harray<int>()));
 		harray<int> result;
 		int focusIndex = 0;
 		foreach_m (Object*, it, this->objects)
@@ -212,11 +227,13 @@ namespace aprilui
 	
 	void Dataset::destroyObjects(chstr rootName)
 	{
+		ASSERT_NO_ASYNC_LOADING(destroyObjects, ());
 		this->destroyObjects(this->getObject(rootName));
 	}
 	
 	void Dataset::destroyObjects(BaseObject* root)
 	{
+		ASSERT_NO_ASYNC_LOADING(destroyObjects, ());
 		if (!this->objects.hasKey(root->getName()) && !this->animators.hasKey(root->getName()))
 		{
 			// this object could be from another dataset, so check that first.
@@ -714,7 +731,16 @@ namespace aprilui
 			{
 				if ((*it) != (*it2))
 				{
-					this->getTexture(*it)->addLink(this->getTexture(*it2));
+					// not using getTexture() here, because this code can be called during sync load, but getTexture() must not
+					if (!this->textures.hasKey(*it))
+					{
+						__THROW_EXCEPTION(ObjectNotExistsException("Texture", (*it), this->name), aprilui::objectExistenceDebugExceptionsEnabled, );
+					}
+					if (!this->textures.hasKey(*it2))
+					{
+						__THROW_EXCEPTION(ObjectNotExistsException("Texture", (*it2), this->name), aprilui::objectExistenceDebugExceptionsEnabled, );
+					}
+					this->textures[*it]->addLink(this->textures[*it2]);
 				}
 				// preload was aborted
 				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
@@ -1649,6 +1675,7 @@ namespace aprilui
 
 	Object* Dataset::getObject(chstr name)
 	{
+		ASSERT_NO_ASYNC_LOADING(getObject, (NULL));
 		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
@@ -1675,6 +1702,7 @@ namespace aprilui
 
 	Animator* Dataset::getAnimator(chstr name)
 	{
+		ASSERT_NO_ASYNC_LOADING(getAnimator, (NULL));
 		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
@@ -1701,6 +1729,7 @@ namespace aprilui
 
 	Object* Dataset::tryGetObject(chstr name) const
 	{
+		ASSERT_NO_ASYNC_LOADING(tryGetObject, (NULL));
 		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
@@ -1719,6 +1748,7 @@ namespace aprilui
 
 	Animator* Dataset::tryGetAnimator(chstr name) const
 	{
+		ASSERT_NO_ASYNC_LOADING(tryGetAnimator, (NULL));
 		int dot = name.indexOf('.');
 		if (dot < 0)
 		{
@@ -1737,6 +1767,7 @@ namespace aprilui
 
 	Texture* Dataset::getTexture(chstr name)
 	{
+		ASSERT_NO_ASYNC_LOADING(getTexture, (NULL));
 		if (!this->textures.hasKey(name))
 		{
 			__THROW_EXCEPTION(ObjectNotExistsException("Texture", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
@@ -1746,6 +1777,7 @@ namespace aprilui
 	
 	BaseImage* Dataset::getImage(chstr name)
 	{
+		ASSERT_NO_ASYNC_LOADING(getImage, (NULL));
 		if (name == "null") // DEPRECATED
 		{
 			hlog::warn(logTag, "The 'null' image name has been deprecated. Use an empty string instead to define 'no image'.");
@@ -1782,6 +1814,7 @@ namespace aprilui
 
 	Style* Dataset::getStyle(chstr name)
 	{
+		ASSERT_NO_ASYNC_LOADING(getStyle, (NULL));
 		Style* style = this->styles.tryGet(name, NULL);
 		if (style == NULL && this->_internalLoadDataset != NULL)
 		{
@@ -1813,26 +1846,31 @@ namespace aprilui
 
 	bool Dataset::hasObject(chstr name) const
 	{
+		ASSERT_NO_ASYNC_LOADING(hasObject, (false));
 		return (this->tryGetObject(name) != NULL);
 	}
 
 	bool Dataset::hasAnimator(chstr name) const
 	{
+		ASSERT_NO_ASYNC_LOADING(hasAnimator, (false));
 		return (this->tryGetAnimator(name) != NULL);
 	}
 
 	bool Dataset::hasTexture(chstr name) const
 	{
+		ASSERT_NO_ASYNC_LOADING(hasTexture, (false));
 		return this->textures.hasKey(name);
 	}
 
 	bool Dataset::hasImage(chstr name) const
 	{
+		ASSERT_NO_ASYNC_LOADING(hasImage, (false));
 		return this->images.hasKey(name);
 	}
 
 	bool Dataset::hasStyle(chstr name) const
 	{
+		ASSERT_NO_ASYNC_LOADING(hasStyle, (false));
 		return this->styles.hasKey(name);
 	}
 
@@ -1861,6 +1899,7 @@ namespace aprilui
 	
 	hstr Dataset::getTextEntry(chstr textKey)
 	{
+		ASSERT_NO_ASYNC_LOADING(getTextEntry, (""));
 		hstr text;
 		this->_findTextEntry(textKey, &text);
 		return text;
@@ -1868,16 +1907,19 @@ namespace aprilui
 	
 	bool Dataset::hasTextEntry(chstr textKey)
 	{
+		ASSERT_NO_ASYNC_LOADING(hasTextEntry, (false));
 		return this->_findTextEntry(textKey, NULL);
 	}
 	
 	hstr Dataset::getText(chstr compositeTextKey)
 	{
+		ASSERT_NO_ASYNC_LOADING(getText, (""));
 		return this->_parseCompositeTextKey(compositeTextKey);
 	}
 	
 	harray<hstr> Dataset::getTexts(const harray<hstr>& keys)
 	{
+		ASSERT_NO_ASYNC_LOADING(getTexts, (harray<hstr>()));
 		harray<hstr> result;
 		foreachc (hstr, it, keys)
 		{
@@ -1901,6 +1943,7 @@ namespace aprilui
 	
 	void Dataset::draw()
 	{
+		ASSERT_NO_ASYNC_LOADING(draw, ());
 		if (this->root != NULL)
 		{
 			this->root->draw();
@@ -1909,61 +1952,73 @@ namespace aprilui
 	
 	bool Dataset::onMouseDown(april::Key keyCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onMouseDown, (false));
 		return (this->root != NULL && this->root->onMouseDown(keyCode));
 	}
 	
 	bool Dataset::onMouseUp(april::Key keyCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onMouseUp, (false));
 		return (this->root != NULL && this->root->onMouseUp(keyCode));
 	}
 	
 	bool Dataset::onMouseCancel(april::Key keyCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onMouseCancel, (false));
 		return (this->root != NULL && this->root->onMouseCancel(keyCode));
 	}
 	
 	bool Dataset::onMouseMove()
 	{
+		ASSERT_NO_ASYNC_LOADING(onMouseMove, (false));
 		return (this->root != NULL && this->root->onMouseMove());
 	}
 	
 	bool Dataset::onMouseScroll(float x, float y)
 	{
+		ASSERT_NO_ASYNC_LOADING(onMouseScroll, (false));
 		return (this->root != NULL && this->root->onMouseScroll(x, y));
 	}
 	
 	bool Dataset::onKeyDown(april::Key keyCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onKeyDown, (false));
 		return (this->root != NULL && this->root->onKeyDown(keyCode));
 	}
 	
 	bool Dataset::onKeyUp(april::Key keyCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onKeyUp, (false));
 		return (this->root != NULL && this->root->onKeyUp(keyCode));
 	}
 	
 	bool Dataset::onChar(unsigned int charCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onChar, (false));
 		return (this->root != NULL && this->root->onChar(charCode));
 	}
 	
 	bool Dataset::onTouch(const harray<gvec2>& touches)
 	{
+		ASSERT_NO_ASYNC_LOADING(onTouch, (false));
 		return (this->root != NULL && this->root->onTouch(touches));
 	}
 	
 	bool Dataset::onButtonDown(april::Button buttonCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onButtonDown, (false));
 		return (this->root != NULL && this->root->onButtonDown(buttonCode));
 	}
 	
 	bool Dataset::onButtonUp(april::Button buttonCode)
 	{
+		ASSERT_NO_ASYNC_LOADING(onButtonUp, (false));
 		return (this->root != NULL && this->root->onButtonUp(buttonCode));
 	}
 	
 	void Dataset::updateTextures(float timeDelta)
 	{
+		ASSERT_NO_ASYNC_LOADING(updateTextures, ());
 		foreach_m (Texture*, it, this->textures)
 		{
 			it->second->update(timeDelta);
@@ -2015,6 +2070,7 @@ namespace aprilui
 	
 	void Dataset::update(float timeDelta)
 	{
+		ASSERT_NO_ASYNC_LOADING(update, ());
 		this->updateTextures(timeDelta);
 		if (this->root != NULL && this->root->getParent() == NULL)
 		{
@@ -2025,6 +2081,7 @@ namespace aprilui
 
 	void Dataset::clearChildUnderCursor()
 	{
+		ASSERT_NO_ASYNC_LOADING(clearChildUnderCursor, ());
 		foreach_m (Object*, it, this->objects)
 		{
 			it->second->clearChildUnderCursor();
@@ -2033,6 +2090,7 @@ namespace aprilui
 
 	void Dataset::notifyEvent(chstr type, EventArgs* args)
 	{
+		ASSERT_NO_ASYNC_LOADING(notifyEvent, ());
 		harray<BaseObject*> allObjects = this->objects.values().cast<BaseObject*>() + this->animators.values().cast<BaseObject*>(); // events might delete objects
 		foreach (BaseObject*, it, allObjects)
 		{
@@ -2042,6 +2100,7 @@ namespace aprilui
 
 	void Dataset::unloadUnusedResources()
 	{
+		ASSERT_NO_ASYNC_LOADING(unloadUnusedResources, ());
 		this->_closeDocuments();
 		foreach_m (Texture*, it, this->textures)
 		{
@@ -2054,6 +2113,7 @@ namespace aprilui
 
 	void Dataset::reloadTexts()
 	{
+		ASSERT_NO_ASYNC_LOADING(reloadTexts, ());
 		this->texts.clear();
 		foreach (hstr, it, this->textsPaths)
 		{
@@ -2063,6 +2123,7 @@ namespace aprilui
 	
 	void Dataset::reloadTextures()
 	{
+		ASSERT_NO_ASYNC_LOADING(reloadTextures, ());
 		foreach_m (aprilui::Texture*, it, this->textures)
 		{
 			it->second->reload(this->_makeLocalizedTextureName(it->second->getOriginalFilename()));
@@ -2071,6 +2132,7 @@ namespace aprilui
 
 	void Dataset::focus(Object* object)
 	{
+		ASSERT_NO_ASYNC_LOADING(focus, ());
 		this->removeFocus();
 		this->focusedObject = object;
 		this->focusedObject->notifyEvent(Event::FocusGained, NULL);
@@ -2079,6 +2141,7 @@ namespace aprilui
 
 	void Dataset::removeFocus()
 	{
+		ASSERT_NO_ASYNC_LOADING(removeFocus, ());
 		if (this->focusedObject != NULL)
 		{
 			april::window->hideVirtualKeyboard();
@@ -2339,7 +2402,6 @@ namespace aprilui
 		}
 		return true;
 	}
-
 
 	harray<std::ustring> Dataset::_getArgEntries(std::ustring uString)
 	{
