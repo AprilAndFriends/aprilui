@@ -140,7 +140,7 @@ namespace aprilui
 		Object* tryGetObject(chstr name) const;
 		Animator* tryGetAnimator(chstr name) const;
 		virtual Texture* getTexture(chstr name);
-		virtual BaseImage* getImage(chstr name);
+		BaseImage* getImage(chstr name);
 		virtual Style* getStyle(chstr name);
 		bool hasTexture(chstr name) const;
 		bool hasImage(chstr name) const;
@@ -265,6 +265,8 @@ namespace aprilui
 
 		hlxml::Document* _openDocument(chstr filename);
 		void _closeDocuments();
+
+		virtual BaseImage* _getImage(chstr name);
 		
 		void _parseTexture(hlxml::Node* node);
 		void _parseTextureGroup(hlxml::Node* node);

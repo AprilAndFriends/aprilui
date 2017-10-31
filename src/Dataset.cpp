@@ -578,7 +578,7 @@ namespace aprilui
 			if ((*child)->name == "ImageRef")
 			{
 				aprilui::_readRectNode(rect, (*child));
-				image->addImageRef(this->getImage((*child)->pstr("name")), rect);
+				image->addImageRef(this->_getImage((*child)->pstr("name")), rect);
 			}
 			else
 			{
@@ -1778,6 +1778,11 @@ namespace aprilui
 	BaseImage* Dataset::getImage(chstr name)
 	{
 		ASSERT_NO_ASYNC_LOADING(getImage, (NULL));
+		return this->_getImage(name);
+	}
+
+	BaseImage* Dataset::_getImage(chstr name)
+	{
 		if (name == "null") // DEPRECATED
 		{
 			hlog::warn(logTag, "The 'null' image name has been deprecated. Use an empty string instead to define 'no image'.");
@@ -1807,7 +1812,7 @@ namespace aprilui
 			{
 				__THROW_EXCEPTION(ObjectNotExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 			}
-			image = dataset->getImage(name(dot + 1, -1));
+			image = dataset->_getImage(name(dot + 1, -1));
 		}
 		return image;
 	}
