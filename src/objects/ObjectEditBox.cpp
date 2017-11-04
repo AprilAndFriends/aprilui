@@ -840,7 +840,9 @@ namespace aprilui
 		}
 		else if (type == Event::FocusGained)
 		{
-			if (!this->pushed) // some OSes will disable the keyboard if it is shown before a mouse-up event
+			// some OSes will disable the keyboard if it is shown before a mouse-up event
+			// Controller input mode needs to explicitly show the keyboard
+			if (!this->pushed && april::window->getInputMode() != april::InputMode::Controller)
 			{
 				april::window->showVirtualKeyboard();
 			}
@@ -1125,6 +1127,11 @@ namespace aprilui
 		}
 		if (result)
 		{
+			if (april::window->getInputMode() == april::InputMode::Controller && !april::window->isVirtualKeyboardVisible() &&
+				EditBox::allowedButtons.has(buttonCode))
+			{
+				april::window->showVirtualKeyboard();
+			}
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (result || up || Label::_buttonUp(buttonCode));
