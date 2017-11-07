@@ -44,10 +44,10 @@ class XlsParser:
 			if comment is None:
 				comment = ""
 				
-			key = key.encode("ascii", "ignore")
-			value = value.encode("ascii", "ignore")
-			original = original.encode("ascii", "ignore")
-			comment = comment.encode("ascii", "ignore")
+			key = key.encode("utf_8", "replace")
+			value = value.encode("utf_8", "replace")
+			original = original.encode("utf_8", "replace")
+			comment = comment.encode("utf_8", "replace")
 			
 			columns = [key, value, original, comment]
 			
