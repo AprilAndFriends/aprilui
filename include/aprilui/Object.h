@@ -269,53 +269,6 @@ namespace aprilui
 
 		void animateStopAll();
 
-		HL_DEPRECATED("Deprecated API. Use getHitTest() instead.")
-			bool isClickThrough() const;
-		HL_DEPRECATED("Deprecated API. Use setHitTest() instead.")
-			inline void setClickThrough(bool value) { this->hitTest = (value ? HitTest::DisabledRecursive : HitTest::Enabled); }
-
-		HL_DEPRECATED("Deprecated API. Use getPivot() instead.")
-			inline gvec2 getCenter() const { return this->getPivot(); }
-		HL_DEPRECATED("Deprecated API. Use setPivot() instead.")
-			inline void setCenter(cgvec2 value) { return this->setPivot(value); }
-		HL_DEPRECATED("Deprecated API. Use setPivot() instead.")
-			inline void setCenter(float x, float y) { return this->setPivot(x, y); }
-		HL_DEPRECATED("Deprecated API. Use getPivotX() instead.")
-			inline float getCenterX() const { return this->getPivotX(); }
-		HL_DEPRECATED("Deprecated API. Use setPivotX() instead.")
-			inline void setCenterX(float value) { return this->setPivotX(value); }
-		HL_DEPRECATED("Deprecated API. Use getPivotY() instead.")
-			inline float getCenterY() const { return this->getPivotY(); }
-		HL_DEPRECATED("Deprecated API. Use setPivotY() instead.")
-			inline void setCenterY(float value) { return this->setPivotY(value); }
-
-		HL_DEPRECATED("Deprecated API. Use getDerivedPoint() instead.")
-			inline gvec2 getDerivedCenter(aprilui::Object* overrideRoot = NULL) const { return this->getDerivedPivot(overrideRoot); }
-
-		HL_DEPRECATED("Deprecated API. Use movePivotX() instead.")
-			inline Animator* moveCenterX(float x, float speed) { return this->movePivotX(x, speed); }
-		HL_DEPRECATED("Deprecated API. Use movePivotY() instead.")
-			inline Animator* moveCenterY(float y, float speed) { return this->movePivotY(y, speed); }
-		HL_DEPRECATED("Deprecated API. Use movePivot() instead.")
-			inline void moveCenter(float x, float y, float speed) { this->movePivot(x, y, speed); }
-		HL_DEPRECATED("Deprecated API. Use movePivot() instead.")
-			inline void moveCenter(cgvec2 pivot, float speed) { this->movePivot(pivot, speed); }
-		HL_DEPRECATED("Deprecated API. Use movePivotXQueue() instead.")
-			inline Animator* moveCenterXQueue(float x, float speed, float delay = 0.0f) { return this->movePivotXQueue(x, speed, delay); }
-		HL_DEPRECATED("Deprecated API. Use movePivotYQueue() instead.")
-			inline Animator* moveCenterYQueue(float y, float speed, float delay = 0.0f) { return this->movePivotYQueue(y, speed, delay); }
-		HL_DEPRECATED("Deprecated API. Use movePivotQueue() instead.")
-			inline void moveCenterQueue(float x, float y, float speed, float delay = 0.0f) { this->movePivotQueue(x, y, speed, delay); }
-		HL_DEPRECATED("Deprecated API. Use movePivotQueue() instead.")
-			inline void moveCenterQueue(cgvec2 pivot, float speed, float delay = 0.0f) { this->movePivotQueue(pivot, speed, delay); }
-
-		HL_DEPRECATED("Deprecated API. Use animateStopPivotX() instead.")
-			inline void moveCenterXStop() { this->animateStopPivotX(); }
-		HL_DEPRECATED("Deprecated API. Use animateStopPivotY() instead.")
-			inline void moveCenterYStop() { this->animateStopPivotY(); }
-		HL_DEPRECATED("Deprecated API. Use animateStopPivot() instead.")
-			inline void moveCenterStop() { this->animateStopPivot(); }
-
 	protected:
 		grect rect;
 		gvec2 pivot;

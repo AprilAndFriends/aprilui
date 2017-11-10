@@ -101,15 +101,6 @@ namespace aprilui
 		static hstr defaultFilterEmail;
 		static hstr defaultFilterEmailComplete;
 
-		HL_DEPRECATED("Deprecated API. Use getCaretIndex() instead.")
-			inline int getCursorIndex() const { return getCaretIndex(); }
-		HL_DEPRECATED("Deprecated API. Use setCaretIndex() instead.")
-			inline void setCursorIndex(int value) { this->setCaretIndex(value); }
-		HL_DEPRECATED("Deprecated API. Use setCaretIndexAt() instead.")
-			inline void setCursorIndexAt(float x, float y) { this->setCaretIndexAt(gvec2(x, y)); }
-		HL_DEPRECATED("Deprecated API. Use getCaretRect() instead.")
-			inline gvec2 getCaretPosition() const { return gvec2(this->caretRect.x, this->caretRect.y + this->caretRect.h * 0.5f); }
-		
 	protected:
 		hstr emptyText;
 		hstr emptyTextKey;

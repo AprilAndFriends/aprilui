@@ -783,11 +783,6 @@ namespace aprilui
 		if (name == "password_char")		return this->getPasswordChar();
 		if (name == "filter")				return this->getFilter();
 		if (name == "caret_index")			return this->getCaretIndex();
-		if (name == "cursor_index")
-		{
-			hlog::warn(logTag, "'cursor_index' is deprecated. Use 'caret_index' instead."); // DEPRECATED
-			return this->getCaretIndex();
-		}
 		if (name == "caret_offset")			return april::gvec2ToHstr(this->getCaretOffset());
 		if (name == "caret_offset_x")		return this->getCaretOffsetX();
 		if (name == "caret_offset_y")		return this->getCaretOffsetY();
@@ -810,11 +805,6 @@ namespace aprilui
 		else if (name == "password_char")		this->setPasswordChar(value.cStr()[0]);
 		else if (name == "filter")				this->setFilter(value);
 		else if (name == "caret_index")			this->setCaretIndex(value);
-		else if (name == "cursor_index")
-		{
-			hlog::warn(logTag, "'cursor_index=' is deprecated. Use 'caret_index=' instead."); // DEPRECATED
-			this->setCaretIndex(value);
-		}
 		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));
 		else if (name == "caret_offset_x")		this->setCaretOffsetX(value);
 		else if (name == "caret_offset_y")		this->setCaretOffsetY(value);

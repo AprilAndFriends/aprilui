@@ -288,11 +288,6 @@ namespace aprilui
 		if (name == "acceleration")					return this->getAcceleration();
 		if (name == "discrete_step")				return this->getDiscreteStep();
 		if (name == "reset_on_expire")				return this->isResetOnExpire();
-		if (name == "reset")
-		{
-			hlog::warn(logTag, "'reset' is deprecated. Use 'reset_on_expire' instead."); // DEPRECATED
-			return this->isResetOnExpire();
-		}
 		if (name == "inherit_value")				return this->isInheritValue();
 		// derived values
 		if	(name == "target")						return this->getTarget();
@@ -328,11 +323,6 @@ namespace aprilui
 		else if	(name == "acceleration")	this->setAcceleration(value);
 		else if	(name == "discrete_step")	this->setDiscreteStep(value);
 		else if (name == "reset_on_expire")	this->setResetOnExpire(value);
-		else if (name == "reset")
-		{
-			hlog::warn(logTag, "'reset=' is deprecated. Use 'reset_on_expire=' instead."); // DEPRECATED
-			this->setResetOnExpire(value);
-		}
 		else if	(name == "inherit_value")	this->setInheritValue(value);
 		// derived values
 		else if	(name == "target")

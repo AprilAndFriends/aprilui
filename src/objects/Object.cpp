@@ -96,56 +96,8 @@
 		return animator ## type; \
 	}
 
-// DEPRECATED
-#define CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, startPeriods, durationPeriods, delay) \
-	Animator* animator ## type = new Animators::type(april::generateName("dynamic_animator_")); \
-	this->dynamicAnimators += animator ## type; \
-	animator ## type->parent = this; \
-	animator ## type->setOffset(offset); \
-	animator ## type->setAmplitude(amplitude); \
-	animator ## type->setAnimationFunction(function); \
-	animator ## type->setSpeed(speed * durationPeriods); \
-	animator ## type->setPeriods(startPeriods + durationPeriods); \
-	animator ## type->setTimer(startPeriods / (speed * durationPeriods)); \
-	if (delay > 0.0f) \
-	{ \
-		animator ## type->setInheritValue(true); \
-		animator ## type->setDelay(delay); \
-	}
-// DEPRECATED
-#define CREATE_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, startPeriods, durationPeriods) \
-	CREATE_DELAYED_DYNAMIC_ANIMATOR_F(type, offset, amplitude, speed, function, startPeriods, durationPeriods, 0.0f);
-// DEPRECATED
-#define DEFINE_ANIMATOR_F(functionName, animatorName) \
-	Animator* Object::functionName ## F(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods) \
-	{ \
-		REMOVE_EXISTING_ANIMATORS(animatorName); \
-		CREATE_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods); \
-		return animator ## animatorName; \
-	}
-// DEPRECATED
-#define DEFINE_ANIMATOR_F_DELAYED(functionName, animatorName) \
-	Animator* Object::functionName ## QueueF(float offset, float amplitude, float speed, Animator::AnimationFunction function, float startPeriods, float durationPeriods, float delay) \
-	{ \
-		CREATE_DELAYED_DYNAMIC_ANIMATOR_F(animatorName, offset, amplitude, speed, function, startPeriods, durationPeriods, delay); \
-		return animator ## animatorName; \
-	}
-
 namespace aprilui
 {
-	bool Object::isClickThrough() const // DEPRECATED
-	{
-		if (this->hitTest == HitTest::DisabledRecursive)
-		{
-			return true;
-		}
-		if (this->hitTest == HitTest::Disabled)
-		{
-			hlog::warn(logTag, "'hitTest' value is 'HitTest::Disabled', but accessing isClickThrough(), defaulting to false!");
-		}
-		return false;
-	}
-
 	HL_ENUM_CLASS_DEFINE(Object::HitTest,
 	(
 		HL_ENUM_DEFINE(Object::HitTest, Enabled);
@@ -256,7 +208,6 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("hit_test", PropertyDescription::Type::Enum);
-			Object::_propertyDescriptions += PropertyDescription("click_through", PropertyDescription::Type::Bool); // DEPRECATED
 			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::Type::UChar);
 			Object::_propertyDescriptions += PropertyDescription("green", PropertyDescription::Type::UChar);
@@ -270,9 +221,6 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("pivot", PropertyDescription::Type::Gvec2);
 			Object::_propertyDescriptions += PropertyDescription("pivot_x", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions += PropertyDescription("pivot_y", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("center", PropertyDescription::Type::Gvec2); // DEPRECATED
-			Object::_propertyDescriptions += PropertyDescription("center_x", PropertyDescription::Type::Float); // DEPRECATED
-			Object::_propertyDescriptions += PropertyDescription("center_y", PropertyDescription::Type::Float); // DEPRECATED
 			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::Type::Bool);
@@ -1135,11 +1083,6 @@ namespace aprilui
 			if (this->hitTest == HitTest::Disabled)				return "disabled";
 			if (this->hitTest == HitTest::DisabledRecursive)	return "disabled_recursive";
 		}
-		if (name == "click_through")
-		{
-			hlog::warn(logTag, "'click_through' is deprecated. Use 'hit_test' instead."); // DEPRECATED
-			return (this->getHitTest() == HitTest::DisabledRecursive);
-		}
 		if (name == "inherit_alpha")		return this->isInheritAlpha();
 		if (name == "red")					return this->getRed();
 		if (name == "green")				return this->getGreen();
@@ -1153,21 +1096,6 @@ namespace aprilui
 		if (name == "pivot")				return april::gvec2ToHstr(this->getPivot());
 		if (name == "pivot_x")				return this->getPivotX();
 		if (name == "pivot_y")				return this->getPivotY();
-		if (name == "center")
-		{
-			hlog::warn(logTag, "'center' is deprecated. Use 'pivot_x' instead."); // DEPRECATED
-			return april::gvec2ToHstr(this->getPivot());
-		}
-		if (name == "center_x")
-		{
-			hlog::warn(logTag, "'center_x' is deprecated. Use 'pivot_x' instead."); // DEPRECATED
-			return this->getPivotX();
-		}
-		if (name == "center_y")
-		{
-			hlog::warn(logTag, "'center_y' is deprecated. Use 'pivot_y' instead."); // DEPRECATED
-			return this->getPivotY();
-		}
 		if (name == "anchor_left")			return this->isAnchorLeft();
 		if (name == "anchor_right")			return this->isAnchorRight();
 		if (name == "anchor_top")			return this->isAnchorTop();
@@ -1200,18 +1128,6 @@ namespace aprilui
 				return false;
 			}
 		}
-		else if (name == "click_through")
-		{
-			if (value)
-			{
-				hlog::warn(logTag, "'click_through=\"1\"' is deprecated. Use 'hit_test=\"disabled_recursive\"' instead."); // DEPRECATED
-			}
-			else
-			{
-				hlog::warn(logTag, "'click_through=\"0\"' is deprecated. Use 'hit_test=\"enabled\"' instead."); // DEPRECATED
-			}
-			this->setHitTest(value ? HitTest::DisabledRecursive : HitTest::Enabled);
-		}
 		else if (name == "inherit_alpha")			this->setInheritAlpha(value);
 		else if	(name == "red")						this->setRed((int)value);
 		else if	(name == "green")					this->setGreen((int)value);
@@ -1225,21 +1141,6 @@ namespace aprilui
 		else if (name == "pivot")					this->setPivot(april::hstrToGvec2(value));
 		else if (name == "pivot_x")					this->setPivotX(value);
 		else if (name == "pivot_y")					this->setPivotY(value);
-		else if (name == "center")
-		{
-			hlog::warn(logTag, "'center=' is deprecated. Use 'pivot=' instead."); // DEPRECATED
-			this->setPivot(april::hstrToGvec2(value));
-		}
-		else if (name == "center_x")
-		{
-			hlog::warn(logTag, "'center_x=' is deprecated. Use 'pivot_x=' instead."); // DEPRECATED
-			this->setPivotX(value);
-		}
-		else if (name == "center_y")
-		{
-			hlog::warn(logTag, "'center_y=' is deprecated. Use 'pivot_y=' instead."); // DEPRECATED
-			this->setPivotY(value);
-		}
 		else if (name == "anchor_left")				this->setAnchorLeft(value);
 		else if	(name == "anchor_right")			this->setAnchorRight(value);
 		else if	(name == "anchor_top")				this->setAnchorTop(value);

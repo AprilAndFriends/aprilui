@@ -285,11 +285,6 @@ namespace aprilui
 		if (name == "enabled")		return this->isEnabled();
 		if (name == "awake")		return this->isAwake();
 		if (name == "z_order")		return this->getZOrder();
-		if (name == "zorder")
-		{
-			hlog::warn(logTag, "'zorder' is deprecated. Use 'z_order' instead."); // DEPRECATED
-			return this->getZOrder();
-		}
 		if (name != "type" && !this->hasProperty(name))
 		{
 			hlog::errorf(logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
@@ -304,11 +299,6 @@ namespace aprilui
 		else if (name == "enabled")	this->setEnabled(value);
 		else if (name == "awake")	this->setAwake(value);
 		else if (name == "z_order")	this->setZOrder(value);
-		else if (name == "zorder")
-		{
-			hlog::warn(logTag, "'zorder=' is deprecated. Use 'z_order=' instead."); // DEPRECATED
-			this->setZOrder(value);
-		}
 		else
 		{
 			if (name != "type" && !this->hasProperty(name))
