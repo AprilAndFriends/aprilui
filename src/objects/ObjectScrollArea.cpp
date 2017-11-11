@@ -182,7 +182,7 @@ namespace aprilui
 			ButtonBase::_update(timeDelta);
 			if (timeDelta > 0.0f) // don't update this if no time has passed
 			{
-				gvec2 position = aprilui::getCursorPosition();
+				gvec2 position = this->rect.getPosition() + this->transformToLocalSpace(aprilui::getCursorPosition());
 				if (this->pushed)
 				{
 					if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
@@ -209,7 +209,7 @@ namespace aprilui
 					{
 						position = this->_lastPosition + (position - this->_lastPosition) * 0.5f;
 					}
-					this->setScrollOffset(this->_clickScrollOffset + (this->_clickPosition - position) / this->getDerivedScale());
+					this->setScrollOffset(this->_clickScrollOffset + this->_clickPosition - position);
 					this->_dragSpeed = (position - this->_lastPosition) / timeDelta;
 					if (this->dragMaxSpeed > 0.0f)
 					{
@@ -522,7 +522,7 @@ namespace aprilui
 			this->_overrideHoverMode = false;
 			if (result)
 			{
-				this->_clickPosition = aprilui::getCursorPosition();
+				this->_clickPosition = this->rect.getPosition() + this->transformToLocalSpace(aprilui::getCursorPosition());
 			}
 		}
 		return Object::onMouseDown(keyCode);
