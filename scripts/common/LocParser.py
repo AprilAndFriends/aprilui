@@ -5,12 +5,12 @@ import os.path
 import re
 
 class LocFile:
-	
+
 	def __init__(self, filename, language, entries):
 		self.filename = filename
 		self.language = language
 		self.entries = entries
-		
+
 	def getReferenceFilename(self):
 		filename = self.filename
 		if self.language != "":
@@ -27,7 +27,7 @@ class LocEntry:
 		self.value = value.replace("­", "-").replace("–", "-").replace("´", "'").replace("’", "'").replace("`", "'").replace("‘", "'").replace("''", '"').replace("“", '"').replace("”", '"')
 		self.original = original.replace("­", "-").replace("–", "-").replace("´", "'").replace("’", "'").replace("`", "'").replace("‘", "'").replace("''", '"').replace("“", '"').replace("”", '"')
 		self.comment = comment
-		
+
 	def __repr__(self):
 		result = self.key
 		if self.comment != "":
@@ -69,10 +69,11 @@ class LocParser:
 		for match in matches:
 			entries.append(LocEntry(match[0], match[2], match[2], match[1]))
 		return LocFile(filename, language, entries)
-	
+
 	@staticmethod
-	def getFileList(path, language):
-		print "  checking %s" % path
+	def getFileList(path, language, silent = False):
+		if not silent:
+			print "  checking %s" % path
 		files = []
 		dirs = []
 		dirListing = os.listdir(path + "/")
@@ -87,14 +88,15 @@ class LocParser:
 			except:
 				if name.lower().endswith(LocParser.EXTENSION.lower()) and (language == "" or path.lower().endswith("/" + language.lower())):
 					files.append(name)
-					print "  -> %s" % LocParser._getBasename(name, path)
+					if not silent:
+						print "  -> %s" % LocParser._getBasename(name, path)
 		if len(files) > 0:
 			return files
 		list = []
 		for dir in dirs:
-			list.extend(LocParser.getFileList(dir, language))
+			list.extend(LocParser.getFileList(dir, language, silent))
 		return list
-		
+
 	@staticmethod
 	def joinEntries(locEntries):
 		merged = []
