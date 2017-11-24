@@ -118,13 +118,24 @@ namespace aprilui
 		}
 		float offset = parent->scrollArea->getScrollOffsetY();
 		float result = 0.0f;
-		if (y / size.y * parent->scrollArea->getHeight() < offset)
+		if (!ScrollBar::useBackgroundInstantScroll)
 		{
-			result = hmax(-parent->getHeight(), -offset);
+			if (y / size.y * parent->scrollArea->getHeight() < offset)
+			{
+				result = hmax(-parent->getHeight(), -offset);
+			}
+			else
+			{
+				result = hmin(parent->getHeight(), parent->scrollArea->getHeight() - parent->getHeight() - offset);
+			}
+		}
+		else if (this->_buttonSlider != NULL)
+		{
+			result = (y - this->_buttonSlider->getHeight() * 0.5f) / (size.y - this->_buttonSlider->getHeight()) * (parent->scrollArea->getHeight() - parent->getHeight()) - offset;
 		}
 		else
 		{
-			result = hmin(parent->getHeight(), parent->scrollArea->getHeight() - parent->getHeight() - offset);
+			result = (y - size.y * parent->getHeight() / parent->scrollArea->getHeight() * 0.5f) / size.y * parent->scrollArea->getHeight() - offset;
 		}
 		return result;
 	}

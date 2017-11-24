@@ -32,6 +32,7 @@ namespace aprilui
 {
 	float ScrollBar::defaultScrollDistance = 32.0f;
 	float ScrollBar::defaultGridSize = 0.0f;
+	bool ScrollBar::useBackgroundInstantScroll = false;
 
 	harray<PropertyDescription> ScrollBar::_propertyDescriptions;
 

@@ -67,6 +67,7 @@ namespace aprilui
 
 		static float defaultScrollDistance;
 		static float defaultGridSize;
+		static bool useBackgroundInstantScroll;
 
 	protected:
 		hstr skinName;
