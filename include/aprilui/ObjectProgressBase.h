@@ -50,9 +50,9 @@ namespace aprilui
 		void setProgressImageByName(chstr name);
 		void setAntiProgressImageByName(chstr name);
 		void setMaskImageByName(chstr name);
-		void setSymbolicProgressColor(chstr value);
-		void setSymbolicAntiProgressColor(chstr value);
-		void setSymbolicMaskColor(chstr value);
+		void setProgressSymbolicColor(chstr value);
+		void setAntiProgressSymbolicColor(chstr value);
+		void setMaskSymbolicColor(chstr value);
 
 		virtual Dataset* getDataset() const = 0;
 		virtual BaseImage* getImage() const = 0;
@@ -68,6 +68,12 @@ namespace aprilui
 		
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+		HL_DEPRECATED("Deprecated API. Use setProgressSymbolicColor() instead.") void setSymbolicProgressColor(chstr value) { this->setProgressSymbolicColor(value); }
+		HL_DEPRECATED("Deprecated API. Use setAntiProgressSymbolicColor() instead.") void setSymbolicAntiProgressColor(chstr value) { this->setAntiProgressSymbolicColor(value); }
+		HL_DEPRECATED("Deprecated API. Use setMaskSymbolicColor() instead.") void setSymbolicMaskColor(chstr value) { this->setMaskSymbolicColor(value); }
+#endif
 
 	protected:
 		BaseImage* progressImage;

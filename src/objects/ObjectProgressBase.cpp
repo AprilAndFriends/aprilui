@@ -135,17 +135,17 @@ namespace aprilui
 		return false;
 	}
 	
-	void ProgressBase::setSymbolicProgressColor(chstr value)
+	void ProgressBase::setProgressSymbolicColor(chstr value)
 	{
 		this->setProgressColor(aprilui::_makeColor(value));
 	}
 	
-	void ProgressBase::setSymbolicAntiProgressColor(chstr value)
+	void ProgressBase::setAntiProgressSymbolicColor(chstr value)
 	{
 		this->setAntiProgressColor(aprilui::_makeColor(value));
 	}
 	
-	void ProgressBase::setSymbolicMaskColor(chstr value)
+	void ProgressBase::setMaskSymbolicColor(chstr value)
 	{
 		this->setMaskColor(aprilui::_makeColor(value));
 	}
