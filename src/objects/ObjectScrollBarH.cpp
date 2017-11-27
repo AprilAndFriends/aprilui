@@ -309,7 +309,7 @@ namespace aprilui
 		// these are grid snapping cases when grid size exceeds parent size
 		else if (habs(difference) == 0.0f) // using habs because it can be -0.0f!
 		{
-			s = hsgn(s) * this->gridSize;
+			s = hround(s / this->gridSize) * this->gridSize;
 		}
 		else if (habs(s) < habs(difference) || hsgn(s) != hsgn(difference))
 		{
