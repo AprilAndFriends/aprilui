@@ -1095,6 +1095,7 @@ namespace aprilui
 			{
 				files.reverse();
 				harray<LoadThread*> threads;
+				hlog::write(logTag, "april::getSystemInfo() in Dataset::parseGlobalInclude()");
 				int cpuCores = hmax(april::getSystemInfo().cpuCores - 1, 1); // try to utilize all additional cores
 				for_iter (i, 0, cpuCores)
 				{
