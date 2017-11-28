@@ -385,38 +385,12 @@ namespace aprilui
 		}
 		bool managed = node->pbool("managed", aprilui::isDefaultManagedTextures());
 		april::Texture::LoadMode loadMode = aprilui::getDefaultTextureLoadMode();
-		// DEPRECATED
-		if (node->pexists("dynamic_load"))
-		{
-			hlog::warn(logTag, "'dynamic_load' is deprecated. Use 'managed' and 'load_mode' instead.");
-			bool dynamicLoad = node->pbool("dynamic_load");
-			if (dynamicLoad)
-			{
-				managed = true;
-				loadMode = april::Texture::LoadMode::OnDemand;
-			}
-			else
-			{
-				managed = false;
-				loadMode = april::Texture::LoadMode::Async;
-			}
-		}
 		if (node->pexists("load_mode"))
 		{
 			hstr mode = node->pstr("load_mode");
-			if (mode == "immediate")
-			{
-				hlog::warn(logTag, "'load_mode=\"immediate\"' is deprecated. Defaulting to 'load_mode=\"async\"'."); // DEPRECATED
-				loadMode = april::Texture::LoadMode::Async;
-			}
-			else if (mode == "on_demand")				loadMode = april::Texture::LoadMode::OnDemand;
+			if (mode == "on_demand")					loadMode = april::Texture::LoadMode::OnDemand;
 			else if (mode == "async")					loadMode = april::Texture::LoadMode::Async;
 			else if (mode == "async_deferred_upload")	loadMode = april::Texture::LoadMode::AsyncDeferredUpload;
-			else if (mode == "async_on_demand")
-			{
-				hlog::warn(logTag, "'load_mode=\"async_on_demand\"' is deprecated. Use 'load_mode=\"async_deferred_upload\"' instead."); // DEPRECATED
-				loadMode = april::Texture::LoadMode::AsyncDeferredUpload;
-			}
 			else
 			{
 				__THROW_EXCEPTION(Exception("Load Mode '" + mode + "' is not supported!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
@@ -469,81 +443,24 @@ namespace aprilui
 			grect rect;
 			foreach_xmlnode (child, node)
 			{
-				if ((*child)->name == "Image" && ((*child)->properties.hasKey("tile") || (*child)->properties.hasKey("tile_w") || (*child)->properties.hasKey("tile_h"))) // DEPRECATED (this entire block)
+				name = namePrefix + (*child)->properties["name"];
+				if (this->images.hasKey(name))
 				{
-					hlog::error(logTag, "Using 'tile', 'tile_w' and 'tile_h' in an 'Image' is deprecated. Use 'TileImage' instead. THIS FEATURE WILL BE REMOVED SOON!");
-					name = namePrefix + (*child)->properties["name"];
-					if (this->images.hasKey(name))
-					{
-						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
-					}
-					aprilui::_readRectNode(rect, (*child));
-					gvec2 tile;
-					if ((*child)->properties.hasKey("tile"))
-					{
-						tile = april::hstrToGvec2((*child)->properties["tile"]);
-					}
-					else
-					{
-						tile.set((*child)->pfloat("tile_w", 0.0f), (*child)->pfloat("tile_h", 0.0f));
-					}
-					TileImage* tileImage = new TileImage(texture, name, rect);
-					image = tileImage;
-					if (tile.x < 0.0f)
-					{
-						tileImage->setTileW(-tile.x);
-					}
-					else if (tile.x > 0.0f)
-					{
-						tileImage->setTileW(tile.x);
-						tileImage->setUseTileCount(true);
-					}
-					if (tile.y < 0.0f)
-					{
-						tileImage->setTileH(-tile.y);
-					}
-					else if (tile.y > 0.0f)
-					{
-						tileImage->setTileH(tile.y);
-						tileImage->setUseTileCount(true);
-					}
-					if (hsgn(tile.x) != hsgn(tile.y))
-					{
-						hlog::warn(logTag, "'tile_w' and 'tile_h' have to be either both positive or negative!");
-					}
-					this->images[name] = image;
-					image->dataset = this;
-					// the standard properties are not used anymore and can be safely removed without problems
-					(*child)->properties.removeKeys(_ignoredStandardProperties);
-					foreach_m (hstr, it, (*child)->properties)
-					{
-						if (it->first != "tile" && it->first != "tile_w" && it->first != "tile_h")
-						{
-							image->setProperty(it->first, it->second);
-						}
-					}
+					__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
 				}
-				else
+				aprilui::_readRectNode(rect, (*child));
+				image = aprilui::createImage((*child)->name, texture, name, rect);
+				if (image == NULL)
 				{
-					name = namePrefix + (*child)->properties["name"];
-					if (this->images.hasKey(name))
-					{
-						__THROW_EXCEPTION(ObjectExistsException("Image", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, continue);
-					}
-					aprilui::_readRectNode(rect, (*child));
-					image = aprilui::createImage((*child)->name, texture, name, rect);
-					if (image == NULL)
-					{
-						__THROW_EXCEPTION(XMLUnknownClassException((*child)->name, (*child)), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
-					}
-					this->images[name] = image;
-					image->dataset = this;
-					// the standard properties are not used anymore and can be safely removed without problems
-					(*child)->properties.removeKeys(_ignoredStandardProperties);
-					foreach_m (hstr, it, (*child)->properties)
-					{
-						image->setProperty(it->first, it->second);
-					}
+					__THROW_EXCEPTION(XMLUnknownClassException((*child)->name, (*child)), aprilui::systemConsistencyDebugExceptionsEnabled, continue);
+				}
+				this->images[name] = image;
+				image->dataset = this;
+				// the standard properties are not used anymore and can be safely removed without problems
+				(*child)->properties.removeKeys(_ignoredStandardProperties);
+				foreach_m (hstr, it, (*child)->properties)
+				{
+					image->setProperty(it->first, it->second);
 				}
 				// preload was aborted
 				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
@@ -1784,11 +1701,6 @@ namespace aprilui
 
 	BaseImage* Dataset::_getImage(chstr name)
 	{
-		if (name == "null") // DEPRECATED
-		{
-			hlog::warn(logTag, "The 'null' image name has been deprecated. Use an empty string instead to define 'no image'.");
-			return NULL;
-		}
 		BaseImage* image = this->images.tryGet(name, NULL);
 		if (image == NULL && this->_internalLoadDataset != NULL)
 		{

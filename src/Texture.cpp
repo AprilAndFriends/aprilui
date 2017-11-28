@@ -16,9 +16,6 @@
 
 namespace aprilui
 {
-	void (*Texture::loadListener)(Texture*) = NULL;
-	void (*Texture::unloadListener)(Texture*) = NULL;
-
 	Texture::Texture(chstr name, chstr filename, april::Texture* texture, bool managed)
 	{
 		this->name = name;
@@ -111,10 +108,6 @@ namespace aprilui
 				{
 					this->dataset->triggerEvent(Event::TextureUnloaded, this);
 				}
-				if (unloadListener != NULL)
-				{
-					(*unloadListener)(this);
-				}
 				this->unusedTime = 0.0f; // safe guard if texture is reloaded externally at some point
 			}
 		}
@@ -156,10 +149,6 @@ namespace aprilui
 				{
 					this->dataset->triggerEvent(Event::TextureLoaded, this);
 				}
-				if (loadListener != NULL)
-				{
-					(*loadListener)(this);
-				}
 			}
 		}
 		if (!ignoreDynamicLinks)
@@ -175,10 +164,6 @@ namespace aprilui
 						if (this->dataset != NULL)
 						{
 							this->dataset->triggerEvent(Event::TextureLoaded, (*it));
-						}
-						if (loadListener != NULL)
-						{
-							(*loadListener)(this);
 						}
 					}
 				}
@@ -200,10 +185,6 @@ namespace aprilui
 				{
 					this->dataset->triggerEvent(Event::TextureLoaded, this);
 				}
-				if (loadListener != NULL)
-				{
-					(*loadListener)(this);
-				}
 			}
 		}
 		if (!ignoreDynamicLinks)
@@ -218,10 +199,6 @@ namespace aprilui
 						if (this->dataset != NULL)
 						{
 							this->dataset->triggerEvent(Event::TextureLoaded, (*it));
-						}
-						if (loadListener != NULL)
-						{
-							(*loadListener)(this);
 						}
 					}
 				}
@@ -241,10 +218,6 @@ namespace aprilui
 				if (this->dataset != NULL)
 				{
 					this->dataset->triggerEvent(Event::TextureUnloaded, this);
-				}
-				if (unloadListener != NULL)
-				{
-					(*unloadListener)(this);
 				}
 			}
 		}
@@ -287,16 +260,6 @@ namespace aprilui
 		{
 			this->links -= link;
 		}
-	}
-	
-	void Texture::setLoadListener(void (*callback)(Texture*))
-	{
-		Texture::loadListener = callback;
-	}
-	
-	void Texture::setUnloadListener(void (*callback)(Texture*))
-	{
-		Texture::unloadListener = callback;
 	}
 	
 }

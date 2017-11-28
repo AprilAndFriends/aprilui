@@ -93,12 +93,7 @@ namespace aprilui
 		if (name == "color")					this->setColor(aprilui::_makeColor(value));
 		else if	(name == "blend_mode")
 		{
-			if (value == "default")
-			{
-				hlog::warn(logTag, "'blend_mode=default' is deprecated. Use 'blend_mode=alpha' instead."); // DEPRECATED
-				this->setBlendMode(april::BlendMode::Alpha);
-			}
-			else if	(value == "alpha")		this->setBlendMode(april::BlendMode::Alpha);
+			if	(value == "alpha")			this->setBlendMode(april::BlendMode::Alpha);
 			else if	(value == "add")		this->setBlendMode(april::BlendMode::Add);
 			else if	(value == "subtract")	this->setBlendMode(april::BlendMode::Subtract);
 			else if	(value == "overwrite")	this->setBlendMode(april::BlendMode::Overwrite);
@@ -106,12 +101,7 @@ namespace aprilui
 		}
 		else if	(name == "color_mode")
 		{
-			if (value == "default")
-			{
-				hlog::warn(logTag, "'color_mode=default' is deprecated. Use 'color_mode=multiply' instead."); // DEPRECATED
-				this->setColorMode(april::ColorMode::Multiply);
-			}
-			else if	(value == "multiply")	this->setColorMode(april::ColorMode::Multiply);
+			if	(value == "multiply")		this->setColorMode(april::ColorMode::Multiply);
 			else if	(value == "alpha_map")	this->setColorMode(april::ColorMode::AlphaMap);
 			else if (value == "lerp")		this->setColorMode(april::ColorMode::Lerp);
 			else hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());

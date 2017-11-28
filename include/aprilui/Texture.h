@@ -63,11 +63,6 @@ namespace aprilui
 		void addLink(Texture* link);
 		void removeLink(Texture* link);
 		
-		HL_DEPRECATED("Deprecated API.")
-			static void setLoadListener(void (*callback)(Texture*));
-		HL_DEPRECATED("Deprecated API.")
-			static void setUnloadListener(void (*callback)(Texture*));
-
 	protected:
 		hstr name;
 		hstr originalFilename;
@@ -81,9 +76,6 @@ namespace aprilui
 		Dataset* dataset;
 		harray<Texture*> links;
 		float unusedTime;
-
-		static void (*loadListener)(Texture*);
-		static void (*unloadListener)(Texture*);
 
 	};
 

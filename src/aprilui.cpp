@@ -397,68 +397,17 @@ namespace aprilui
 
 	Object* createObject(chstr typeName, chstr name)
 	{
-		if (gObjectFactories.hasKey(typeName))
-		{
-			return (*gObjectFactories[typeName])(name);
-		}
-		hstr switchedTypeName = typeName;
-		// DEPRECATED start
-		if (switchedTypeName == "ColoredQuad")
-		{
-			hlog::warn(logTag, "'ColoredQuad' is deprecated. Use 'FilledRect' instead.");
-			switchedTypeName = "FilledRect";
-		}
-		if (gObjectFactories.hasKey(switchedTypeName))
-		{
-			return (*gObjectFactories[switchedTypeName])(name);
-		}
-		// DEPRECATED end
-		return NULL;
+		return (gObjectFactories.hasKey(typeName) ? (*gObjectFactories[typeName])(name) : NULL);
 	}
 	
 	Animator* createAnimator(chstr typeName, chstr name)
 	{
-		if (gAnimatorFactories.hasKey(typeName))
-		{
-			return (*gAnimatorFactories[typeName])(name);
-		}
-		hstr switchedTypeName = typeName;
-		// DEPRECATED start
-		if (switchedTypeName == "TiledScrollerX")
-		{
-			hlog::warn(logTag, "'TiledScrollerX' is deprecated. Use 'TileScrollerX' instead.");
-			switchedTypeName = "TileScrollerX";
-		}
-		else if (switchedTypeName == "TiledScrollerY")
-		{
-			hlog::warn(logTag, "'TiledScrollerY' is deprecated. Use 'TileScrollerY' instead.");
-			switchedTypeName = "TileScrollerY";
-		}
-		else if (switchedTypeName == "CenterMoverX")
-		{
-			hlog::warn(logTag, "'CenterMoverX' is deprecated. Use 'PivotMoverX' instead.");
-			switchedTypeName = "PivotMoverX";
-		}
-		else if (switchedTypeName == "CenterMoverY")
-		{
-			hlog::warn(logTag, "'CenterMoverY' is deprecated. Use 'PivotMoverY' instead.");
-			switchedTypeName = "PivotMoverY";
-		}
-		if (gAnimatorFactories.hasKey(switchedTypeName))
-		{
-			return (*gAnimatorFactories[switchedTypeName])(name);
-		}
-		// DEPRECATED end
-		return NULL;
+		return (gAnimatorFactories.hasKey(typeName) ? (*gAnimatorFactories[typeName])(name) : NULL);
 	}
 	
 	MinimalImage* createImage(chstr typeName, Texture* texture, chstr name, cgrect source)
 	{
-		if (gImageFactories.hasKey(typeName))
-		{
-			return (*gImageFactories[typeName])(texture, name, source);
-		}
-		return NULL;
+		return (gImageFactories.hasKey(typeName) ? (*gImageFactories[typeName])(texture, name, source) : NULL);
 	}
 
 	gvec2 transformWindowPoint(cgvec2 point)

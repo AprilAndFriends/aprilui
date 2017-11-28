@@ -18,13 +18,6 @@
 #include "EventArgs.h"
 #include "EventReceiver.h"
 
-#define EVENT_TYPE_CHECK_DEPRECATED(newType, oldType) \
-	if (realType == oldType) \
-	{ \
-		hlog::warnf(logTag, "The event '%s' is deprecated. Use '%s' instead.", oldType, newType.cStr()); \
-		realType = newType; \
-	}
-
 namespace aprilui
 {
 	EventReceiver::EventReceiver() : Cloneable()
@@ -69,30 +62,8 @@ namespace aprilui
 	{
 		if (event != NULL)
 		{
-			/*
 			this->unregisterEvent(type);
 			this->events[type] = event;
-			*/
-			// TODO - will be removed once deprecated code is removed
-			hstr realType = type;
-			EVENT_TYPE_CHECK_DEPRECATED(Event::RegisteredInDataset, "RegisterInDataset");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::UnregisteredFromDataset, "UnregisterFromDataset");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::AttachedToObject, "AttachToObject");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::DetachedFromObject, "DetachFromObject");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::EnabledChanged, "OnEnableChanged");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::FocusGained, "GainFocus");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::FocusLost, "LoseFocus");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::TextChanged, "onTextChanged");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::TextKeyChanged, "onTextKeyChanged");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::LocalizationChanged, "onLocalizationChanged");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::SubmitEditText, "Submit");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::ScrollSkinChanged, "SkinChange");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::SetProgressValue, "Set");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::AnimationDelayExpired, "OnDelayEnd");
-			EVENT_TYPE_CHECK_DEPRECATED(Event::AnimationDelayExpired, "DelayExpired");
-			this->unregisterEvent(realType);
-			this->events[realType] = event;
-			// TODO - until here
 			return true;
 		}
 		return false;
