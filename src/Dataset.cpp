@@ -1089,10 +1089,15 @@ namespace aprilui
 			else
 			{
 				hstr originalFilePath = this->filePath;
+				hstr xmlFilePath;
 				foreach (hstr, it, files)
 				{
 					this->filePath = this->_makeFilePath(*it);
 					this->_readFile(*it);
+					// removing loaded XML file to reduce RAM load
+					xmlFilePath = hrdir::normalize(*it);
+					delete this->includeDocuments[xmlFilePath];
+					this->includeDocuments.removeKey(xmlFilePath);
 					// preload was aborted
 					if (!this->_asyncPreLoading)
 					{
