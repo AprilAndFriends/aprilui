@@ -719,7 +719,16 @@ namespace aprilui
 		}
 		if (isObject)
 		{
-			aprilui::_readRectNode(rect, node, (parent != NULL ? &parent->getSize() : NULL));
+			// has to be done with way with an if-statement, because some compilers complain about using a pointer on temporary objects
+			if (parent != NULL)
+			{
+				gvec2 parentSize = parent->getSize();
+				aprilui::_readRectNode(rect, node, &parentSize);
+			}
+			else
+			{
+				aprilui::_readRectNode(rect, node);
+			}
 			rect += offset;
 		}
 		if (isObject && this->objects.hasKey(objectName))
