@@ -719,7 +719,7 @@ namespace aprilui
 		}
 		if (isObject)
 		{
-			aprilui::_readRectNode(rect, node);
+			aprilui::_readRectNode(rect, node, (parent != NULL ? &parent->getSize() : NULL));
 			rect += offset;
 		}
 		if (isObject && this->objects.hasKey(objectName))
