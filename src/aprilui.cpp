@@ -288,11 +288,6 @@ namespace aprilui
 
 	void setDefaultTextureLoadMode(april::Texture::LoadMode value)
 	{
-		if (value == april::Texture::LoadMode::Immediate)
-		{
-			hlog::warn(logTag, "'setDefaultTextureLoadMode' with 'april::Texture::LoadMode::Immediate' is deprecated. Defaulting to 'april::Texture::LoadMode::Async'"); // DEPRECATED
-			value = april::Texture::LoadMode::Async;
-		}
 		defaultTextureLoadMode = value;
 	}
 
