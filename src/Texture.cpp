@@ -142,7 +142,7 @@ namespace aprilui
 		if (!this->isLoaded())
 		{
 			bool loaded = this->texture->isLoadedAny();
-			result = this->texture->loadAsync();
+			result = this->texture->load();
 			if (!loaded && result)
 			{
 				if (this->dataset != NULL)
