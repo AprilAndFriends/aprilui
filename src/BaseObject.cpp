@@ -140,12 +140,22 @@ namespace aprilui
 
 	harray<BaseObject*> BaseObject::getDescendants() const
 	{
-		harray<BaseObject*> descendants = this->getChildren();
+		harray<BaseObject*> result = this->getChildren();
 		foreachc (Object*, it, this->childrenObjects)
 		{
-			descendants += (*it)->getDescendants();
+			result += (*it)->getDescendants();
 		}
-		return descendants;
+		return result;
+	}
+
+	harray<Object*> BaseObject::getDescendantObjects() const
+	{
+		harray<Object*> result = this->childrenObjects;
+		foreachc (Object*, it, this->childrenObjects)
+		{
+			result += (*it)->getDescendantObjects();
+		}
+		return result;
 	}
 
 	harray<BaseObject*> BaseObject::getChildren() const

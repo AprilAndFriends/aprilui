@@ -68,6 +68,7 @@ namespace aprilui
 
 		harray<Object*> getAncestors() const;
 		harray<BaseObject*> getDescendants() const;
+		harray<Object*> getDescendantObjects() const;
 
 		bool isDerivedEnabled() const;
 		bool isDerivedAwake() const;
