@@ -69,6 +69,7 @@ namespace aprilui
 	apriluiFnExport bool isUseKeyboardAutoOffset();
 	apriluiFnExport void setUseKeyboardAutoOffset(bool value);
 	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
+	apriluiFnExport harray<Texture*> getTextures();
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr));
 	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));

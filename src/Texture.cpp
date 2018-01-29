@@ -16,6 +16,9 @@
 
 namespace aprilui
 {
+	void _registerTexture(Texture* texture);
+	void _unregisterTexture(Texture* texture);
+
 	Texture::Texture(chstr name, chstr filename, april::Texture* texture, bool managed)
 	{
 		this->name = name;
@@ -34,10 +37,12 @@ namespace aprilui
 		this->scale.set(factor, factor);
 		this->dataset = NULL;
 		this->unusedTime = 0.0f;
+		_registerTexture(this);
 	}
 
 	Texture::~Texture()
 	{
+		_unregisterTexture(this);
 		if (this->texture != NULL)
 		{
 			april::rendersys->destroyTexture(this->texture);

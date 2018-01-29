@@ -42,6 +42,7 @@ namespace aprilui
 
 	bool _datasetRegisterLock = false; // not static, because it is used elsewhere
 	static hmap<hstr, Dataset*> gDatasets;
+	static harray<Texture*> gTextures;
 	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
 	static hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)> gImageFactories;
@@ -305,6 +306,11 @@ namespace aprilui
 	{
 		return gDatasets;
 	}
+
+	harray<Texture*> getTextures()
+	{
+		return gTextures;
+	}
 	
 	void registerObjectFactory(chstr typeName, Object* (*factory)(chstr))
 	{
@@ -536,6 +542,16 @@ namespace aprilui
 		}
 	}
 	
+	void _registerTexture(Texture* texture)
+	{
+		gTextures += texture;
+	}
+
+	void _unregisterTexture(Texture* texture)
+	{
+		gTextures -= texture;
+	}
+
 	void notifyEvent(chstr type, EventArgs* args)
 	{
 		foreach_m (Dataset*, it, gDatasets)
