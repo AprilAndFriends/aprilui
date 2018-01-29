@@ -43,6 +43,7 @@ namespace aprilui
 	bool _datasetRegisterLock = false; // not static, because it is used elsewhere
 	static hmap<hstr, Dataset*> gDatasets;
 	static harray<Texture*> gTextures;
+	static hmutex gTexturesMutex;
 	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
 	static hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)> gImageFactories;
@@ -309,6 +310,7 @@ namespace aprilui
 
 	harray<Texture*> getTextures()
 	{
+		hmutex::ScopeLock lock(&gTexturesMutex);
 		return gTextures;
 	}
 	
@@ -544,11 +546,13 @@ namespace aprilui
 	
 	void _registerTexture(Texture* texture)
 	{
+		hmutex::ScopeLock lock(&gTexturesMutex);
 		gTextures += texture;
 	}
 
 	void _unregisterTexture(Texture* texture)
 	{
+		hmutex::ScopeLock lock(&gTexturesMutex);
 		gTextures -= texture;
 	}
 
