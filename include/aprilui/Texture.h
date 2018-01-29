@@ -43,10 +43,10 @@ namespace aprilui
 		HL_DEFINE_GET(harray<Texture*>, links, Links);
 		int getWidth() const;
 		int getHeight() const;
-		bool isUploaded() const;
-		bool isReadyForUpload() const;
+		bool isLoaded() const;
+		bool isLoadedAsync() const;
 		bool isAsyncLoadQueued() const;
-		bool isUnloaded() const;
+		bool isLoadedAny() const;
 		bool isValid() const;
 		void setFilter(april::Texture::Filter value);
 		void setAddressMode(april::Texture::AddressMode value);

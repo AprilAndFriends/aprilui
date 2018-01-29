@@ -58,14 +58,14 @@ namespace aprilui
 		return (int)(this->texture->getHeight() * this->scale.y);
 	}
 
-	bool Texture::isUploaded() const
+	bool Texture::isLoaded() const
 	{
-		return (this->texture != NULL && this->texture->isUploaded());
+		return (this->texture != NULL && this->texture->isLoaded());
 	}
 
-	bool Texture::isReadyForUpload() const
+	bool Texture::isLoadedAsync() const
 	{
-		return (this->texture != NULL && this->texture->isReadyForUpload());
+		return (this->texture != NULL && this->texture->isLoadedAsync());
 	}
 
 	bool Texture::isAsyncLoadQueued() const
@@ -73,9 +73,9 @@ namespace aprilui
 		return (this->texture != NULL && this->texture->isAsyncLoadQueued());
 	}
 
-	bool Texture::isUnloaded() const
+	bool Texture::isLoadedAny() const
 	{
-		return (this->texture != NULL && this->texture->isUnloaded());
+		return (this->texture != NULL && this->texture->isLoadedAny());
 	}
 
 	bool Texture::isValid() const
@@ -97,7 +97,7 @@ namespace aprilui
 
 	void Texture::update(float timeDelta)
 	{
-		if (this->managed && this->texture != NULL && !this->texture->isUnloaded())
+		if (this->managed && this->texture != NULL && (this->texture->isLoaded() || this->texture->isLoadedAsync()))
 		{
 			float maxTime = aprilui::getTextureIdleUnloadTime();
 			this->unusedTime += timeDelta;
@@ -139,11 +139,11 @@ namespace aprilui
 	{
 		bool result = true;
 		this->unusedTime = 0.0f;
-		if (!this->isUploaded())
+		if (!this->isLoaded())
 		{
-			bool unloaded = this->texture->isUnloaded();
-			result = this->texture->loadAsync();
-			if (unloaded && result)
+			bool loaded = this->texture->isLoadedAny();
+			result = this->texture->load();
+			if (!loaded && result)
 			{
 				if (this->dataset != NULL)
 				{
@@ -156,7 +156,7 @@ namespace aprilui
 			foreach (Texture*, it, this->links)
 			{
 				(*it)->unusedTime = 0.0f;
-				if ((*it)->isUnloaded())
+				if (!(*it)->isLoadedAny())
 				{
 					// using loadAsync() here on purpose as the linked textures are probably not required right now so they can be loaded asynchronously
 					if ((*it)->texture->loadAsync())
@@ -176,7 +176,7 @@ namespace aprilui
 	{
 		bool result = false;
 		this->unusedTime = 0.0f;
-		if (this->isUnloaded())
+		if (!this->isLoadedAny())
 		{
 			result = this->texture->loadAsync();
 			if (result)
@@ -192,7 +192,7 @@ namespace aprilui
 			foreach (Texture*, it, this->links)
 			{
 				(*it)->unusedTime = 0.0f;
-				if ((*it)->isUnloaded())
+				if (!(*it)->isLoadedAny())
 				{
 					if ((*it)->texture->loadAsync())
 					{
@@ -211,9 +211,9 @@ namespace aprilui
 	{
 		if (this->texture != NULL)
 		{
-			bool previouslyUnloaded = this->texture->isUnloaded();
+			bool loaded = this->texture->isLoadedAny();
 			this->texture->unload();
-			if (!previouslyUnloaded)
+			if (loaded)
 			{
 				if (this->dataset != NULL)
 				{
