@@ -24,7 +24,7 @@
 namespace aprilui
 {
 	float ScrollArea::defaultInertia = 2000.0f;
-	float ScrollArea::defaultDragThreshold = 16.0f;
+	gvec2 ScrollArea::defaultDragThreshold(16.0f, 16.0f);
 	float ScrollArea::defaultDragMaxSpeed = 0.0f;
 
 	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
@@ -76,7 +76,9 @@ namespace aprilui
 		{
 			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Gvec2);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold_x", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold_y", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_size_factor", PropertyDescription::Type::Gvec2);
@@ -191,7 +193,7 @@ namespace aprilui
 				if (this->pushed)
 				{
 					if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
-						!heqf(this->_clickPosition.x, position.x, this->dragThreshold) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold)) && this->isScrollable())
+						!heqf(this->_clickPosition.x, position.x, this->dragThreshold.x) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold.y)) && this->isScrollable())
 					{
 						this->dragging = true;
 						this->_clickScrollOffset = this->getScrollOffset();
@@ -420,7 +422,9 @@ namespace aprilui
 	{
 		if (name == "allow_drag")							return this->isAllowDrag();
 		if (name == "inertia")								return this->getInertia();
-		if (name == "drag_threshold")						return this->getDragThreshold();
+		if (name == "drag_threshold")						return april::gvec2ToHstr(this->getDragThreshold());
+		if (name == "drag_threshold_x")						return this->getDragThresholdX();
+		if (name == "drag_threshold_y")						return this->getDragThresholdY();
 		if (name == "drag_max_speed")						return this->getDragMaxSpeed();
 		if (name == "swap_scroll_wheels")					return this->isSwapScrollWheels();
 		if (name == "oob_children_fade_size_factor")		return april::gvec2ToHstr(this->getOobChildrenFadeSizeFactor());
@@ -443,7 +447,20 @@ namespace aprilui
 	{
 		if (name == "allow_drag")								this->setAllowDrag(value);
 		else if (name == "inertia")								this->setInertia(value);
-		else if (name == "drag_threshold")						this->setDragThreshold(value);
+		else if (name == "drag_threshold")
+		{
+			if (value.contains(","))
+			{
+				this->setDragThreshold(april::hstrToGvec2(value));
+			}
+			else
+			{
+				hlog::warn(logTag, "'drag_threshold=' as 'float' is deprecated. Use 'gvec2' or 'drag_threshold_x' and 'drag_threshold_y' instead.");
+				this->setDragThreshold(gvec2(value, value));
+			}
+		}
+		else if (name == "drag_threshold_x")					this->setDragThresholdX(value);
+		else if (name == "drag_threshold_y")					this->setDragThresholdY(value);
 		else if (name == "drag_max_speed")						this->setDragMaxSpeed(value);
 		else if (name == "swap_scroll_wheels")					this->setSwapScrollWheels(value);
 		else if (name == "oob_children_fade_size_factor")		this->setOobChildrenFadeSizeFactor(april::hstrToGvec2(value));

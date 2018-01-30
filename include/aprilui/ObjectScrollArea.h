@@ -43,7 +43,9 @@ namespace aprilui
 
 		HL_DEFINE_ISSET(allowDrag, AllowDrag);
 		HL_DEFINE_GETSET(float, inertia, Inertia);
-		HL_DEFINE_GETSET(float, dragThreshold, DragThreshold);
+		HL_DEFINE_GETSET(gvec2, dragThreshold, DragThreshold);
+		HL_DEFINE_GETSET(float, dragThreshold.x, DragThresholdX);
+		HL_DEFINE_GETSET(float, dragThreshold.y, DragThresholdY);
 		HL_DEFINE_GETSET(float, dragMaxSpeed, DragMaxSpeed);
 		HL_DEFINE_ISSET(swapScrollWheels, SwapScrollWheels);
 		HL_DEFINE_GETSET(gvec2, oobChildrenFadeSizeFactor, OobChildrenFadeSizeFactor);
@@ -96,13 +98,13 @@ namespace aprilui
 		bool onMouseScroll(float x, float y);
 
 		static float defaultInertia;
-		static float defaultDragThreshold;
+		static gvec2 defaultDragThreshold;
 		static float defaultDragMaxSpeed;
 
 	protected:
 		bool allowDrag;
 		float inertia;
-		float dragThreshold;
+		gvec2 dragThreshold;
 		float dragMaxSpeed;
 		bool swapScrollWheels;
 		gvec2 oobChildrenFadeSizeFactor;
