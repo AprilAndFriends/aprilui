@@ -71,7 +71,7 @@ public:
 
 static UpdateDelegate* updateDelegate = NULL;
 
-void april_init(const harray<hstr>& args)
+void __aprilApplicationInit()
 {
 #ifdef __APPLE__
 	// On MacOSX, the current working directory is not set by
@@ -145,7 +145,7 @@ void april_init(const harray<hstr>& args)
 	}
 }
 
-void april_destroy()
+void __aprilApplicationDestroy()
 {
 	try
 	{

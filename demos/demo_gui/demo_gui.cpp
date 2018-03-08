@@ -271,7 +271,8 @@ static void ObjCUtil_setCWD(const char* override_default_dir)
 }
 #endif
 
-void april_init(const harray<hstr>& args)
+
+void __aprilApplicationInit()
 {
 #ifdef __APPLE__
 	ObjCUtil_setCWD(nil);
@@ -320,7 +321,7 @@ void april_init(const harray<hstr>& args)
 	}
 }
 
-void april_destroy()
+void __aprilApplicationDestroy()
 {
 	try
 	{
