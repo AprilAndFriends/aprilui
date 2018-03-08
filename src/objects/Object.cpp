@@ -165,7 +165,6 @@ namespace aprilui
 		{
 			delete (*it);
 		}
-		this->dynamicAnimators.clear();
 		if (this->isFocused())
 		{
 			this->setFocused(false);

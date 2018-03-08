@@ -51,7 +51,6 @@ namespace aprilui
 			}
 			delete it->second;
 		}
-		this->events.clear();
 	}
 
 	harray<PropertyDescription> BaseObject::getPropertyDescriptions() const
