@@ -30,7 +30,7 @@
 
 #include <april/april.h>
 #include <april/Cursor.h>
-#include <april/KeyboardDelegate.h>
+#include <april/KeyDelegate.h>
 #include <april/main.h>
 #include <april/MouseDelegate.h>
 #include <april/Platform.h>
@@ -109,7 +109,7 @@ public:
 
 };
 
-class KeyboardDelegate : public april::KeyboardDelegate
+class KeyDelegate : public april::KeyDelegate
 {
 	void onKeyDown(april::Key keyCode)
 	{
@@ -246,7 +246,7 @@ class MouseDelegate : public april::MouseDelegate
 };
 
 static UpdateDelegate* updateDelegate = NULL;
-static KeyboardDelegate* keyboardDelegate = NULL;
+static KeyDelegate* keyDelegate = NULL;
 static MouseDelegate* mouseDelegate = NULL;
 
 #ifdef __APPLE__
@@ -277,7 +277,7 @@ void april_init(const harray<hstr>& args)
 	ObjCUtil_setCWD(nil);
 #endif
 	updateDelegate = new UpdateDelegate();
-	keyboardDelegate = new KeyboardDelegate();
+	keyDelegate = new KeyDelegate();
 	mouseDelegate = new MouseDelegate();
 	try
 	{
@@ -296,7 +296,7 @@ void april_init(const harray<hstr>& args)
 		april::window->setParam("cursor_mappings", "101 " RESOURCE_PATH "cursor\n102 " RESOURCE_PATH "simple");
 #endif
 		april::window->setUpdateDelegate(updateDelegate);
-		april::window->setKeyboardDelegate(keyboardDelegate);
+		april::window->setKeyDelegate(keyDelegate);
 		april::window->setMouseDelegate(mouseDelegate);
 		cursor = april::window->createCursorFromResource(RESOURCE_PATH "cursor");
 		april::window->setCursor(cursor);
@@ -337,8 +337,8 @@ void april_destroy()
 	}
 	delete updateDelegate;
 	updateDelegate = NULL;
-	delete keyboardDelegate;
-	keyboardDelegate = NULL;
+	delete keyDelegate;
+	keyDelegate = NULL;
 	delete mouseDelegate;
 	mouseDelegate = NULL;
 }
