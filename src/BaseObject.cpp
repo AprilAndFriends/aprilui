@@ -43,14 +43,6 @@ namespace aprilui
 
 	BaseObject::~BaseObject()
 	{
-		foreach_m (Event*, it, this->events)
-		{
-			if (this->dataset != NULL)
-			{
-				this->dataset->removeCallbackFromQueue(it->second);
-			}
-			delete it->second;
-		}
 	}
 
 	harray<PropertyDescription> BaseObject::getPropertyDescriptions() const
