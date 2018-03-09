@@ -65,7 +65,7 @@ namespace aprilui
 	{
 		if (ImageButton::_getters.size() == 0)
 		{
-			ImageButton::_getters = ImageBox::_getGetters() + ButtonBase::_getGetters();
+			ImageButton::_getters = ImageBox::_getGetters() + ButtonBase::_generateGetters<ImageButton>();
 			ImageButton::_getters["pushed_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getPushedImageName);
 			ImageButton::_getters["hover_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getHoverImageName);
 			ImageButton::_getters["disabled_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getDisabledImageName);
@@ -77,7 +77,7 @@ namespace aprilui
 	{
 		if (ImageButton::_setters.size() == 0)
 		{
-			ImageButton::_setters = ImageBox::_getSetters() + ButtonBase::_getSetters();
+			ImageButton::_setters = ImageBox::_getSetters() + ButtonBase::_generateSetters<ImageButton>();
 			ImageButton::_setters["pushed_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetPushedImageByName);
 			ImageButton::_setters["hover_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetHoverImageByName);
 			ImageButton::_setters["disabled_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetDisabledImageByName);

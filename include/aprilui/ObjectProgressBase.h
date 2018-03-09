@@ -83,9 +83,6 @@ namespace aprilui
 		april::Color progressColor;
 		april::Color antiProgressColor;
 		april::Color maskColor;
-		
-		virtual hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
-		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		virtual april::Color _makeDrawColor(const april::Color& color) const = 0;
 		april::Color _makeDrawProgressColor() const;
@@ -93,6 +90,34 @@ namespace aprilui
 		april::Color _makeDrawMaskColor() const;
 		
 		virtual harray<BaseImage*> _getUsedImages() const;
+
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateGetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["progress_image"] = new PropertyDescription::Get<T, hstr>(&T::getProgressImageName);
+			result["anti_progress_image"] = new PropertyDescription::Get<T, hstr>(&T::getAntiProgressImageName);
+			result["mask_image"] = new PropertyDescription::Get<T, hstr>(&T::getMaskImageName);
+			result["progress"] = new PropertyDescription::Get<T, float>(&T::getProgress);
+			result["progress_color"] = new PropertyDescription::GetColor<T>(&T::getProgressColor);
+			result["anti_progress_color"] = new PropertyDescription::GetColor<T>(&T::getAntiProgressColor);
+			result["mask_color"] = new PropertyDescription::GetColor<T>(&T::getMaskColor);
+			return result;
+		}
+
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateSetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["progress_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetProgressImageByName);
+			result["anti_progress_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetAntiProgressImageByName);
+			result["mask_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetMaskImageByName);
+			result["progress"] = new PropertyDescription::Set<T, float>(&T::setProgress);
+			result["progress_color"] = new PropertyDescription::SetColor<T>(&T::setProgressColor);
+			result["anti_progress_color"] = new PropertyDescription::SetColor<T>(&T::setAntiProgressColor);
+			result["mask_color"] = new PropertyDescription::SetColor<T>(&T::setMaskColor);
+			return result;
+		}
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;

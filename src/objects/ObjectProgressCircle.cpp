@@ -61,6 +61,8 @@ namespace aprilui
 	));
 
 	harray<PropertyDescription> ProgressCircle::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_setters;
 
 	ProgressCircle::ProgressCircle(chstr name) : ImageBox(name), ProgressBase()
 	{
@@ -89,6 +91,24 @@ namespace aprilui
 			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
 		}
 		return ProgressCircle::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ProgressCircle::_getGetters() const
+	{
+		if (ProgressCircle::_getters.size() == 0)
+		{
+			ProgressCircle::_getters = ImageBox::_getGetters() + ProgressBase::_generateGetters<ProgressCircle>();
+		}
+		return ProgressCircle::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ProgressCircle::_getSetters() const
+	{
+		if (ProgressCircle::_setters.size() == 0)
+		{
+			ProgressCircle::_setters = ImageBox::_getSetters() + ProgressBase::_generateSetters<ProgressCircle>();
+		}
+		return ProgressCircle::_setters;
 	}
 
 	Dataset* ProgressCircle::getDataset() const

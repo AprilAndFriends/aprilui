@@ -162,7 +162,7 @@ namespace aprilui
 	{
 		if (EditBox::_getters.size() == 0)
 		{
-			EditBox::_getters = Label::_getGetters() + ButtonBase::_getGetters();
+			EditBox::_getters = Label::_getGetters() + ButtonBase::_generateGetters<EditBox>();
 			EditBox::_getters["empty_text"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getEmptyText);
 			EditBox::_getters["empty_text_key"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getEmptyTextKey);
 			EditBox::_getters["empty_text_color"] = new PropertyDescription::GetColor<EditBox>(&EditBox::getEmptyTextColor);
@@ -188,7 +188,7 @@ namespace aprilui
 	{
 		if (EditBox::_setters.size() == 0)
 		{
-			EditBox::_setters = Label::_getSetters() + ButtonBase::_getSetters();
+			EditBox::_setters = Label::_getSetters() + ButtonBase::_generateSetters<EditBox>();
 			EditBox::_setters["empty_text"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyText);
 			EditBox::_setters["empty_text_key"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyTextKey);
 			EditBox::_setters["empty_text_color"] = new PropertyDescription::SetColor<EditBox>(&EditBox::setEmptyTextColor);

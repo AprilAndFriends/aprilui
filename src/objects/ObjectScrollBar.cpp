@@ -124,14 +124,14 @@ namespace aprilui
 		if (ScrollBar::_setters.size() == 0)
 		{
 			ScrollBar::_setters = Object::_getSetters();
-			ScrollBar::_getters["skin"] = new PropertyDescription::Set<ScrollBar, hstr>(&ScrollBar::setSkinName);
-			ScrollBar::_getters["grid_size"] = new PropertyDescription::Set<ScrollBar, float>(&ScrollBar::setGridSize);
-			ScrollBar::_getters["scroll_distance"] = new PropertyDescription::Set<ScrollBar, float>(&ScrollBar::setScrollDistance);
-			ScrollBar::_getters["use_fading"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setUseFading);
-			ScrollBar::_getters["height_hide"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setHeightHide);
-			ScrollBar::_getters["use_stretched_slider"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setUseStretchedSlider);
-			ScrollBar::_getters["disabled_while_scrolling"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setDisabledWhileScrolling);
-			ScrollBar::_getters["max_grid_scroll"] = new PropertyDescription::Set<ScrollBar, int>(&ScrollBar::setMaxGridScroll);
+			ScrollBar::_setters["skin"] = new PropertyDescription::Set<ScrollBar, hstr>(&ScrollBar::setSkinName);
+			ScrollBar::_setters["grid_size"] = new PropertyDescription::Set<ScrollBar, float>(&ScrollBar::setGridSize);
+			ScrollBar::_setters["scroll_distance"] = new PropertyDescription::Set<ScrollBar, float>(&ScrollBar::setScrollDistance);
+			ScrollBar::_setters["use_fading"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setUseFading);
+			ScrollBar::_setters["height_hide"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setHeightHide);
+			ScrollBar::_setters["use_stretched_slider"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setUseStretchedSlider);
+			ScrollBar::_setters["disabled_while_scrolling"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setDisabledWhileScrolling);
+			ScrollBar::_setters["max_grid_scroll"] = new PropertyDescription::Set<ScrollBar, int>(&ScrollBar::setMaxGridScroll);
 		}
 		return ScrollBar::_setters;
 	}

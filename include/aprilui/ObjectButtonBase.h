@@ -76,9 +76,6 @@ namespace aprilui
 		bool _usePushedColor;
 		bool _useDisabledColor;
 
-		virtual hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
-		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
-
 		virtual void _update(float timeDelta);
 		virtual aprilui::Object* _findHoverObject();
 		void _updateHover();
@@ -89,6 +86,28 @@ namespace aprilui
 		virtual bool _mouseMove();
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
+
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateGetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["push_dead_zone"] = new PropertyDescription::Get<T, float>(&T::getPushDeadZone);
+			result["hover_color"] = new PropertyDescription::GetColor<T>(&T::getHoverColor);
+			result["pushed_color"] = new PropertyDescription::GetColor<T>(&T::getPushedColor);
+			result["disabled_color"] = new PropertyDescription::GetColor<T>(&T::getDisabledColor);
+			return result;
+		}
+
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateSetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["push_dead_zone"] = new PropertyDescription::Set<T, float>(&T::setPushDeadZone);
+			result["hover_color"] = new PropertyDescription::SetColor<T>(&T::setHoverColor);
+			result["pushed_color"] = new PropertyDescription::SetColor<T>(&T::setPushedColor);
+			result["disabled_color"] = new PropertyDescription::SetColor<T>(&T::setDisabledColor);
+			return result;
+		}
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
@@ -101,5 +120,4 @@ namespace aprilui
 	};
 	
 }
-
 #endif

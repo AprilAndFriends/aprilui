@@ -70,30 +70,6 @@ namespace aprilui
 		return ButtonBase::_propertyDescriptions;
 	}
 
-	hmap<hstr, PropertyDescription::Accessor*>& ButtonBase::_getGetters() const
-	{
-		if (ButtonBase::_getters.size() == 0)
-		{
-			ButtonBase::_getters["push_dead_zone"] = new PropertyDescription::Get<ButtonBase, float>(&ButtonBase::getPushDeadZone);
-			ButtonBase::_getters["hover_color"] = new PropertyDescription::GetColor<ButtonBase>(&ButtonBase::getHoverColor);
-			ButtonBase::_getters["pushed_color"] = new PropertyDescription::GetColor<ButtonBase>(&ButtonBase::getPushedColor);
-			ButtonBase::_getters["disabled_color"] = new PropertyDescription::GetColor<ButtonBase>(&ButtonBase::getDisabledColor);
-		}
-		return ButtonBase::_getters;
-	}
-
-	hmap<hstr, PropertyDescription::Accessor*>& ButtonBase::_getSetters() const
-	{
-		if (ButtonBase::_setters.size() == 0)
-		{
-			ButtonBase::_setters["push_dead_zone"] = new PropertyDescription::Set<ButtonBase, float>(&ButtonBase::setPushDeadZone);
-			ButtonBase::_setters["hover_color"] = new PropertyDescription::SetColor<ButtonBase>(&ButtonBase::setHoverColor);
-			ButtonBase::_setters["pushed_color"] = new PropertyDescription::SetColor<ButtonBase>(&ButtonBase::setPushedColor);
-			ButtonBase::_setters["disabled_color"] = new PropertyDescription::SetColor<ButtonBase>(&ButtonBase::setDisabledColor);
-		}
-		return ButtonBase::_setters;
-	}
-
 	void ButtonBase::setHoverColor(const april::Color& value)
 	{
 		this->hoverColor = value;

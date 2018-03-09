@@ -122,45 +122,6 @@ namespace aprilui
 		return LabelBase::_propertyDescriptions;
 	}
 
-	hmap<hstr, PropertyDescription::Accessor*>& LabelBase::_getGetters() const
-	{
-		if (LabelBase::_getters.size() == 0)
-		{
-			LabelBase::_getters["font"] = new PropertyDescription::Get<LabelBase, hstr>(&LabelBase::getFont);
-			LabelBase::_getters["text_formatting"] = new PropertyDescription::Get<LabelBase, bool>(&LabelBase::isTextFormatting);
-			LabelBase::_getters["text"] = new PropertyDescription::Get<LabelBase, hstr>(&LabelBase::getText);
-			LabelBase::_getters["text_key"] = new PropertyDescription::Get<LabelBase, hstr>(&LabelBase::getTextKey);
-			LabelBase::_getters["text_color"] = new PropertyDescription::GetColor<LabelBase>(&LabelBase::getTextColor);
-			LabelBase::_getters["text_offset"] = new PropertyDescription::GetGvec2<LabelBase>(&LabelBase::getTextOffset);
-			LabelBase::_getters["text_offset_x"] = new PropertyDescription::Get<LabelBase, float>(&LabelBase::getTextOffsetX);
-			LabelBase::_getters["text_offset_y"] = new PropertyDescription::Get<LabelBase, float>(&LabelBase::getTextOffsetY);
-			LabelBase::_getters["min_auto_scale"] = new PropertyDescription::Get<LabelBase, float>(&LabelBase::getMinAutoScale);
-			LabelBase::_getters["auto_scaled_font"] = new PropertyDescription::Get<LabelBase, hstr>(&LabelBase::getAutoScaledFont);
-			LabelBase::_getters["background_color"] = new PropertyDescription::GetColor<LabelBase>(&LabelBase::getBackgroundColor);
-			LabelBase::_getters["background_border"] = new PropertyDescription::Get<LabelBase, bool>(&LabelBase::isBackgroundBorder);
-		}
-		return LabelBase::_getters;
-	}
-
-	hmap<hstr, PropertyDescription::Accessor*>& LabelBase::_getSetters() const
-	{
-		if (LabelBase::_setters.size() == 0)
-		{
-			LabelBase::_setters["font"] = new PropertyDescription::Set<LabelBase, hstr>(&LabelBase::setFont);
-			LabelBase::_setters["text_formatting"] = new PropertyDescription::Set<LabelBase, bool>(&LabelBase::setTextFormatting);
-			LabelBase::_setters["text"] = new PropertyDescription::Set<LabelBase, hstr>(&LabelBase::setText);
-			LabelBase::_setters["text_key"] = new PropertyDescription::Set<LabelBase, hstr>(&LabelBase::setTextKey);
-			LabelBase::_setters["text_color"] = new PropertyDescription::SetColor<LabelBase>(&LabelBase::setTextColor);
-			LabelBase::_setters["text_offset"] = new PropertyDescription::SetGvec2<LabelBase>(&LabelBase::setTextOffset);
-			LabelBase::_setters["text_offset_x"] = new PropertyDescription::Set<LabelBase, float>(&LabelBase::setTextOffsetX);
-			LabelBase::_setters["text_offset_y"] = new PropertyDescription::Set<LabelBase, float>(&LabelBase::setTextOffsetY);
-			LabelBase::_setters["min_auto_scale"] = new PropertyDescription::Set<LabelBase, float>(&LabelBase::setMinAutoScale);
-			LabelBase::_setters["background_color"] = new PropertyDescription::SetColor<LabelBase>(&LabelBase::setBackgroundColor);
-			LabelBase::_setters["background_border"] = new PropertyDescription::Set<LabelBase, bool>(&LabelBase::setBackgroundBorder);
-		}
-		return LabelBase::_setters;
-	}
-
 	void LabelBase::setText(chstr value)
 	{
 		bool changed = (this->text != value);

@@ -130,19 +130,19 @@ namespace aprilui
 		if (Animator::_setters.size() == 0)
 		{
 			Animator::_setters = BaseObject::_getSetters();
-			Animator::_getters["timer"] = new PropertyDescription::Set<Animator, double>(&Animator::setTimer);
-			Animator::_getters["delay"] = new PropertyDescription::Set<Animator, float>(&Animator::setDelay);
-			Animator::_getters["periods"] = new PropertyDescription::Set<Animator, float>(&Animator::setPeriods);
-			Animator::_getters["amplitude"] = new PropertyDescription::Set<Animator, float>(&Animator::setAmplitude);
-			Animator::_getters["speed"] = new PropertyDescription::Set<Animator, float>(&Animator::setSpeed);
-			Animator::_getters["offset"] = new PropertyDescription::Set<Animator, float>(&Animator::setOffset);
-			Animator::_getters["multiplier"] = new PropertyDescription::Set<Animator, float>(&Animator::setMultiplier);
-			Animator::_getters["acceleration"] = new PropertyDescription::Set<Animator, float>(&Animator::setAcceleration);
-			Animator::_getters["discrete_step"] = new PropertyDescription::Set<Animator, int>(&Animator::setDiscreteStep);
-			Animator::_getters["reset_on_expire"] = new PropertyDescription::Set<Animator, bool>(&Animator::setResetOnExpire);
-			Animator::_getters["inherit_value"] = new PropertyDescription::Set<Animator, bool>(&Animator::setInheritValue);
-			Animator::_getters["target"] = new PropertyDescription::Set<Animator, float>(&Animator::setTarget);
-			Animator::_getters["time"] = new PropertyDescription::Set<Animator, float>(&Animator::setTime);
+			Animator::_setters["timer"] = new PropertyDescription::Set<Animator, double>(&Animator::setTimer);
+			Animator::_setters["delay"] = new PropertyDescription::Set<Animator, float>(&Animator::setDelay);
+			Animator::_setters["periods"] = new PropertyDescription::Set<Animator, float>(&Animator::setPeriods);
+			Animator::_setters["amplitude"] = new PropertyDescription::Set<Animator, float>(&Animator::setAmplitude);
+			Animator::_setters["speed"] = new PropertyDescription::Set<Animator, float>(&Animator::setSpeed);
+			Animator::_setters["offset"] = new PropertyDescription::Set<Animator, float>(&Animator::setOffset);
+			Animator::_setters["multiplier"] = new PropertyDescription::Set<Animator, float>(&Animator::setMultiplier);
+			Animator::_setters["acceleration"] = new PropertyDescription::Set<Animator, float>(&Animator::setAcceleration);
+			Animator::_setters["discrete_step"] = new PropertyDescription::Set<Animator, int>(&Animator::setDiscreteStep);
+			Animator::_setters["reset_on_expire"] = new PropertyDescription::Set<Animator, bool>(&Animator::setResetOnExpire);
+			Animator::_setters["inherit_value"] = new PropertyDescription::Set<Animator, bool>(&Animator::setInheritValue);
+			Animator::_setters["target"] = new PropertyDescription::Set<Animator, float>(&Animator::setTarget);
+			Animator::_setters["time"] = new PropertyDescription::Set<Animator, float>(&Animator::setTime);
 		}
 		return Animator::_setters;
 	}

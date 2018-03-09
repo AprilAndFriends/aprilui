@@ -69,7 +69,7 @@ namespace aprilui
 	{
 		if (TextImageButton::_getters.size() == 0)
 		{
-			TextImageButton::_getters = ImageButton::_getGetters() + LabelBase::_getGetters();
+			TextImageButton::_getters = ImageButton::_getGetters() + LabelBase::_generateGetters<TextImageButton>();
 			TextImageButton::_getters["pushed_text_color"] = new PropertyDescription::GetColor<TextImageButton>(&TextImageButton::getPushedTextColor);
 			TextImageButton::_getters["hover_text_color"] = new PropertyDescription::GetColor<TextImageButton>(&TextImageButton::getHoverTextColor);
 			TextImageButton::_getters["disabled_text_color"] = new PropertyDescription::GetColor<TextImageButton>(&TextImageButton::getDisabledTextColor);
@@ -81,7 +81,7 @@ namespace aprilui
 	{
 		if (TextImageButton::_setters.size() == 0)
 		{
-			TextImageButton::_setters = ImageButton::_getSetters() + LabelBase::_getSetters();
+			TextImageButton::_setters = ImageButton::_getSetters() + LabelBase::_generateSetters<TextImageButton>();
 			TextImageButton::_setters["pushed_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setPushedTextColor);
 			TextImageButton::_setters["hover_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setHoverTextColor);
 			TextImageButton::_setters["disabled_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setDisabledTextColor);
@@ -196,21 +196,21 @@ namespace aprilui
 	
 	hstr TextImageButton::getProperty(chstr name)
 	{
-		hstr result = ImageButton::getProperty(name);
+		hstr result = LabelBase::getProperty(name); // check side-class first
 		if (result == "")
 		{
-			result = LabelBase::getProperty(name);
+			result = ImageButton::getProperty(name);
 		}
 		return result;
 	}
 
 	bool TextImageButton::setProperty(chstr name, chstr value)
 	{
-		if (ImageButton::setProperty(name, value))
+		if (LabelBase::setProperty(name, value)) // check side-class first
 		{
 			return true;
 		}
-		return LabelBase::setProperty(name, value);
+		return ImageButton::setProperty(name, value);
 	}
 
 	void TextImageButton::notifyEvent(chstr type, EventArgs* args)

@@ -52,7 +52,7 @@ namespace aprilui
 	{
 		if (Label::_getters.size() == 0)
 		{
-			Label::_getters = Object::_getGetters() + LabelBase::_getGetters();
+			Label::_getters = Object::_getGetters() + LabelBase::_generateGetters<Label>();
 		}
 		return Label::_getters;
 	}
@@ -61,7 +61,7 @@ namespace aprilui
 	{
 		if (Label::_setters.size() == 0)
 		{
-			Label::_setters = Object::_getSetters() + LabelBase::_getSetters();
+			Label::_setters = Object::_getSetters() + LabelBase::_generateSetters<Label>();
 		}
 		return Label::_setters;
 	}
@@ -88,7 +88,7 @@ namespace aprilui
 
 	hstr Label::getProperty(chstr name)
 	{
-		hstr result = LabelBase::getProperty(name);
+		hstr result = LabelBase::getProperty(name); // check side-class first
 		if (result == "")
 		{
 			result = Object::getProperty(name);
@@ -98,7 +98,7 @@ namespace aprilui
 
 	bool Label::setProperty(chstr name, chstr value)
 	{
-		if (LabelBase::setProperty(name, value))
+		if (LabelBase::setProperty(name, value)) // check side-class first
 		{
 			return true;
 		}

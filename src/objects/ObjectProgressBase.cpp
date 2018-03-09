@@ -65,36 +65,6 @@ namespace aprilui
 		return ProgressBase::_propertyDescriptions;
 	}
 
-	hmap<hstr, PropertyDescription::Accessor*>& ProgressBase::_getGetters() const
-	{
-		if (ProgressBase::_getters.size() == 0)
-		{
-			ProgressBase::_getters["progress_image"] = new PropertyDescription::Get<ProgressBase, hstr>(&ProgressBase::getProgressImageName);
-			ProgressBase::_getters["anti_progress_image"] = new PropertyDescription::Get<ProgressBase, hstr>(&ProgressBase::getAntiProgressImageName);
-			ProgressBase::_getters["mask_image"] = new PropertyDescription::Get<ProgressBase, hstr>(&ProgressBase::getMaskImageName);
-			ProgressBase::_getters["progress"] = new PropertyDescription::Get<ProgressBase, float>(&ProgressBase::getProgress);
-			ProgressBase::_getters["progress_color"] = new PropertyDescription::GetColor<ProgressBase>(&ProgressBase::getProgressColor);
-			ProgressBase::_getters["anti_progress_color"] = new PropertyDescription::GetColor<ProgressBase>(&ProgressBase::getAntiProgressColor);
-			ProgressBase::_getters["mask_color"] = new PropertyDescription::GetColor<ProgressBase>(&ProgressBase::getMaskColor);
-		}
-		return ProgressBase::_getters;
-	}
-
-	hmap<hstr, PropertyDescription::Accessor*>& ProgressBase::_getSetters() const
-	{
-		if (ProgressBase::_setters.size() == 0)
-		{
-			ProgressBase::_setters["progress_image"] = new PropertyDescription::TrySet<ProgressBase, hstr>(&ProgressBase::trySetProgressImageByName);
-			ProgressBase::_setters["anti_progress_image"] = new PropertyDescription::TrySet<ProgressBase, hstr>(&ProgressBase::trySetAntiProgressImageByName);
-			ProgressBase::_setters["mask_image"] = new PropertyDescription::TrySet<ProgressBase, hstr>(&ProgressBase::trySetMaskImageByName);
-			ProgressBase::_setters["progress"] = new PropertyDescription::Set<ProgressBase, float>(&ProgressBase::setProgress);
-			ProgressBase::_setters["progress_color"] = new PropertyDescription::SetColor<ProgressBase>(&ProgressBase::setProgressColor);
-			ProgressBase::_setters["anti_progress_color"] = new PropertyDescription::SetColor<ProgressBase>(&ProgressBase::setAntiProgressColor);
-			ProgressBase::_setters["mask_color"] = new PropertyDescription::SetColor<ProgressBase>(&ProgressBase::setMaskColor);
-		}
-		return ProgressBase::_setters;
-	}
-
 	void ProgressBase::setProgressImage(BaseImage* image)
 	{
 		this->progressImage = image;

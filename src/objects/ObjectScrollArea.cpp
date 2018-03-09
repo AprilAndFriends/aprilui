@@ -100,7 +100,7 @@ namespace aprilui
 	{
 		if (ScrollArea::_getters.size() == 0)
 		{
-			ScrollArea::_getters = Object::_getGetters() + ButtonBase::_getGetters();
+			ScrollArea::_getters = Object::_getGetters() + ButtonBase::_generateGetters<ScrollArea>();
 			ScrollArea::_getters["allow_drag"] = new PropertyDescription::Get<ScrollArea, bool>(&ScrollArea::isAllowDrag);
 			ScrollArea::_getters["inertia"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getInertia);
 			ScrollArea::_getters["drag_threshold"] = new PropertyDescription::GetGvec2<ScrollArea>(&ScrollArea::getDragThreshold);
@@ -124,7 +124,7 @@ namespace aprilui
 	{
 		if (ScrollArea::_setters.size() == 0)
 		{
-			ScrollArea::_setters = Object::_getSetters() + ButtonBase::_getSetters();
+			ScrollArea::_setters = Object::_getSetters() + ButtonBase::_generateSetters<ScrollArea>();
 			ScrollArea::_setters["allow_drag"] = new PropertyDescription::Set<ScrollArea, bool>(&ScrollArea::setAllowDrag);
 			ScrollArea::_setters["inertia"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setInertia);
 			ScrollArea::_setters["drag_threshold"] = new PropertyDescription::SetGvec2<ScrollArea>(&ScrollArea::setDragThreshold);

@@ -88,7 +88,7 @@ namespace aprilui
 	{
 		if (ProgressBar::_getters.size() == 0)
 		{
-			ProgressBar::_getters = ImageBox::_getGetters() + ProgressBase::_getGetters();
+			ProgressBar::_getters = ImageBox::_getGetters() + ProgressBase::_generateGetters<ProgressBar>();
 			ProgressBar::_getters["stretching"] = new PropertyDescription::Get<ProgressBar, bool>(&ProgressBar::isStretching);
 			ProgressBar::_getters["interactable"] = new PropertyDescription::Get<ProgressBar, bool>(&ProgressBar::isInteractable);
 		}
@@ -99,13 +99,12 @@ namespace aprilui
 	{
 		if (ProgressBar::_setters.size() == 0)
 		{
-			ProgressBar::_setters = ImageBox::_getSetters() + ProgressBase::_getSetters();
+			ProgressBar::_setters = ImageBox::_getSetters() + ProgressBase::_generateSetters<ProgressBar>();
 			ProgressBar::_setters["stretching"] = new PropertyDescription::Set<ProgressBar, bool>(&ProgressBar::setStretching);
 			ProgressBar::_setters["interactable"] = new PropertyDescription::Set<ProgressBar, bool>(&ProgressBar::setInteractable);
 		}
 		return ProgressBar::_setters;
 	}
-
 
 	Dataset* ProgressBar::getDataset() const
 	{
