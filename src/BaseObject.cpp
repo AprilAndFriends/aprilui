@@ -21,6 +21,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> BaseObject::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> BaseObject::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> BaseObject::_setters;
 
 	BaseObject::BaseObject(chstr name) : EventReceiver()
 	{
@@ -57,6 +59,33 @@ namespace aprilui
 			BaseObject::_propertyDescriptions += PropertyDescription("z_order", PropertyDescription::Type::Int);
 		}
 		return BaseObject::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& BaseObject::_getGetters() const
+	{
+		if (BaseObject::_getters.size() == 0)
+		{
+			BaseObject::_getters["name"] = new PropertyDescription::Get<BaseObject, hstr>(&BaseObject::getName);
+			BaseObject::_getters["full_name"] = new PropertyDescription::Get<BaseObject, hstr>(&BaseObject::getFullName);
+			BaseObject::_getters["tag"] = new PropertyDescription::Get<BaseObject, hstr>(&BaseObject::getTag);
+			BaseObject::_getters["enabled"] = new PropertyDescription::Get<BaseObject, bool>(&BaseObject::isEnabled);
+			BaseObject::_getters["awake"] = new PropertyDescription::Get<BaseObject, bool>(&BaseObject::isAwake);
+			BaseObject::_getters["z_order"] = new PropertyDescription::Get<BaseObject, int>(&BaseObject::getZOrder);
+		}
+		return BaseObject::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& BaseObject::_getSetters() const
+	{
+		if (BaseObject::_setters.size() == 0)
+		{
+			BaseObject::_setters["name"] = new PropertyDescription::Set<BaseObject, hstr>(&BaseObject::setName);
+			BaseObject::_setters["tag"] = new PropertyDescription::Set<BaseObject, hstr>(&BaseObject::setTag);
+			BaseObject::_setters["enabled"] = new PropertyDescription::Set<BaseObject, bool>(&BaseObject::setEnabled);
+			BaseObject::_setters["awake"] = new PropertyDescription::Set<BaseObject, bool>(&BaseObject::setAwake);
+			BaseObject::_setters["z_order"] = new PropertyDescription::Set<BaseObject, int>(&BaseObject::setZOrder);
+		}
+		return BaseObject::_setters;
 	}
 
 	bool BaseObject::hasProperty(chstr name)
@@ -170,32 +199,33 @@ namespace aprilui
 		return (this->isAwake() && (this->parent == NULL || this->parent->isDerivedAwake()));
 	}
 
-	bool BaseObject::isChild(BaseObject* obj)
+	bool BaseObject::isChild(BaseObject* object)
 	{
-		return (obj != NULL && obj->isParent(this));
+		return (object != NULL && object->isParent(this));
 	}
 
-	bool BaseObject::isDescendant(BaseObject* obj)
+	bool BaseObject::isDescendant(BaseObject* object)
 	{
-		return (obj != NULL && obj->isAncestor(this));
+		return (object != NULL && object->isAncestor(this));
 	}
 
-	bool BaseObject::isParent(BaseObject* obj)
+	bool BaseObject::isParent(BaseObject* object)
 	{
-		return (obj != NULL && obj == this->parent);
+		return (object != NULL && object == this->parent);
 	}
 
-	bool BaseObject::isAncestor(BaseObject* obj)
+	bool BaseObject::isAncestor(BaseObject* object)
 	{
-		if (obj == NULL)
+		if (object != NULL)
 		{
-			return false;
-		}
-		for (BaseObject* o = this->getParent(); o != NULL; o = o->getParent())
-		{
-			if (o == obj)
+			BaseObject* current = this->getParent();
+			while (current != NULL)
 			{
-				return true;
+				if (current == object)
+				{
+					return true;
+				}
+				current = current->getParent();
 			}
 		}
 		return false;
@@ -280,13 +310,14 @@ namespace aprilui
 
 	hstr BaseObject::getProperty(chstr name)
 	{
-		if (name == "name")			return this->getName();
-		if (name == "tag")			return this->getTag();
-		if (name == "full_name")	return this->getFullName();
-		if (name == "enabled")		return this->isEnabled();
-		if (name == "awake")		return this->isAwake();
-		if (name == "z_order")		return this->getZOrder();
-		if (name != "type" && !this->hasProperty(name))
+		hmap<hstr, PropertyDescription::Accessor*>& getters = this->_getGetters();
+		if (getters.hasKey(name))
+		{
+			hstr result;
+			getters[name]->execute(this, result);
+			return result;
+		}
+		if (name != "type")
 		{
 			hlog::errorf(logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
 		}
@@ -295,20 +326,18 @@ namespace aprilui
 	
 	bool BaseObject::setProperty(chstr name, chstr value)
 	{
-		if		(name == "name")	this->setName(value);
-		else if (name == "tag")		this->setTag(value);
-		else if (name == "enabled")	this->setEnabled(value);
-		else if (name == "awake")	this->setAwake(value);
-		else if (name == "z_order")	this->setZOrder(value);
-		else
+		hmap<hstr, PropertyDescription::Accessor*>& setters = this->_getSetters();
+		if (setters.hasKey(name))
 		{
-			if (name != "type" && !this->hasProperty(name))
-			{
-				hlog::errorf(logTag, "Could not set property '%s' to '%s' in '%s'!", name.cStr(), value.cStr(), this->name.cStr());
-			}
-			return false;
+			hstr newValue = value;
+			setters[name]->execute(this, newValue);
+			return true;
 		}
-		return true;
+		if (name != "type")
+		{
+			hlog::errorf(logTag, "Could not set property '%s' to '%s' in '%s'!", name.cStr(), value.cStr(), this->name.cStr());
+		}
+		return false;
 	}
 	
 }

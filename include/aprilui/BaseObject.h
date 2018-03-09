@@ -76,13 +76,13 @@ namespace aprilui
 		bool hasProperty(chstr name);
 
 		/// @returns Whether or not a given object is a direct child of this object
-		bool isChild(BaseObject* obj);
+		bool isChild(BaseObject* object);
 		/// @returns whether or not a given object is a descendant of this object (child or child of a child etc., recursively)
-		bool isDescendant(BaseObject* obj);
+		bool isDescendant(BaseObject* object);
 		/// @returns whether or not a given object is a direct parent of this object
-		bool isParent(BaseObject* obj);
+		bool isParent(BaseObject* object);
 		/// @returns whether or not a given object is an ancestor of a this object (parent or parent of a parent etc., recursively)
-		bool isAncestor(BaseObject* obj);
+		bool isAncestor(BaseObject* object);
 		BaseObject* findChildByName(chstr name);
 		BaseObject* findDescendantByName(chstr name);
 
@@ -104,11 +104,16 @@ namespace aprilui
 		bool awake;
 		int zOrder;
 
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		virtual void _update(float timeDelta);
 		void _sortChildren();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 	

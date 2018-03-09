@@ -66,9 +66,9 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, rect.x, X);
 		HL_DEFINE_GETSET(float, rect.y, Y);
 		HL_DEFINE_GET(float, rect.w, Width);
-		void setWidth(float value);
+		void setWidth(const float& value);
 		HL_DEFINE_GET(float, rect.h, Height);
-		void setHeight(float value);
+		void setHeight(const float& value);
 		inline gvec2 getPosition() const { return this->rect.getPosition(); }
 		inline void setPosition(cgvec2 value) { this->rect.setPosition(value); }
 		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
@@ -290,6 +290,9 @@ namespace aprilui
 		harray<Animator*> dynamicAnimators;
 		april::Color debugColor;
 		
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
 		void _cloneChildren(const harray<Object*>& objects, const harray<Animator*>& animators);
@@ -320,6 +323,8 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 		Object* _childUnderCursor;
 		bool _checkedChildUnderCursor;

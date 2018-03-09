@@ -106,6 +106,8 @@ namespace aprilui
 	));
 
 	harray<PropertyDescription> Object::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> Object::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> Object::_setters;
 
 	Object::Object(chstr name) : BaseObject(name)
 	{
@@ -231,6 +233,85 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("focus_index", PropertyDescription::Type::Int);
 		}
 		return (BaseObject::getPropertyDescriptions() + Object::_propertyDescriptions);
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& Object::_getGetters() const
+	{
+		if (Object::_getters.size() == 0)
+		{
+			Object::_getters = BaseObject::_getGetters();
+			Object::_getters["rect"] = new PropertyDescription::GetGrect<Object>(&Object::getRect);
+			Object::_getters["position"] = new PropertyDescription::GetGvec2<Object>(&Object::getPosition);
+			Object::_getters["size"] = new PropertyDescription::GetGvec2<Object>(&Object::getSize);
+			Object::_getters["x"] = new PropertyDescription::Get<Object, float>(&Object::getX);
+			Object::_getters["y"] = new PropertyDescription::Get<Object, float>(&Object::getY);
+			Object::_getters["w"] = new PropertyDescription::Get<Object, float>(&Object::getWidth);
+			Object::_getters["h"] = new PropertyDescription::Get<Object, float>(&Object::getHeight);
+			Object::_getters["visible"] = new PropertyDescription::Get<Object, bool>(&Object::isVisible);
+			//Object::_getters["hit_test"] = new PropertyDescription::Get<Object, Enum);
+			Object::_getters["inherit_alpha"] = new PropertyDescription::Get<Object, bool>(&Object::isInheritAlpha);
+			Object::_getters["red"] = new PropertyDescription::GetUChar<Object>(&Object::getRed);
+			Object::_getters["green"] = new PropertyDescription::GetUChar<Object>(&Object::getGreen);
+			Object::_getters["blue"] = new PropertyDescription::GetUChar<Object>(&Object::getBlue);
+			Object::_getters["alpha"] = new PropertyDescription::GetUChar<Object>(&Object::getAlpha);
+			Object::_getters["color"] = new PropertyDescription::GetColor<Object>(&Object::getColor);
+			Object::_getters["angle"] = new PropertyDescription::Get<Object, float>(&Object::getAngle);
+			Object::_getters["scale"] = new PropertyDescription::GetGvec2<Object>(&Object::getScale);
+			Object::_getters["scale_x"] = new PropertyDescription::Get<Object, float>(&Object::getScaleX);
+			Object::_getters["scale_y"] = new PropertyDescription::Get<Object, float>(&Object::getScaleY);
+			Object::_getters["pivot"] = new PropertyDescription::GetGvec2<Object>(&Object::getPivot);
+			Object::_getters["pivot_x"] = new PropertyDescription::Get<Object, float>(&Object::getPivotX);
+			Object::_getters["pivot_y"] = new PropertyDescription::Get<Object, float>(&Object::getPivotY);
+			Object::_getters["anchor_left"] = new PropertyDescription::Get<Object, bool>(&Object::isAnchorLeft);
+			Object::_getters["anchor_right"] = new PropertyDescription::Get<Object, bool>(&Object::isAnchorRight);
+			Object::_getters["anchor_top"] = new PropertyDescription::Get<Object, bool>(&Object::isAnchorTop);
+			Object::_getters["anchor_bottom"] = new PropertyDescription::Get<Object, bool>(&Object::isAnchorBottom);
+			Object::_getters["retain_anchor_aspect"] = new PropertyDescription::Get<Object, bool>(&Object::isRetainAnchorAspect);
+			Object::_getters["clip"] = new PropertyDescription::Get<Object, bool>(&Object::isClip);
+			Object::_getters["use_disabled_alpha"] = new PropertyDescription::Get<Object, bool>(&Object::isUseDisabledAlpha);
+			Object::_getters["focus_index"] = new PropertyDescription::Get<Object, int>(&Object::getFocusIndex);
+		}
+		return Object::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& Object::_getSetters() const
+	{
+		if (Object::_setters.size() == 0)
+		{
+			Object::_setters = BaseObject::_getSetters();
+			Object::_setters["rect"] = new PropertyDescription::SetGrect<Object>(&Object::setRect);
+			Object::_setters["position"] = new PropertyDescription::SetGvec2<Object>(&Object::setPosition);
+			Object::_setters["size"] = new PropertyDescription::SetGvec2<Object>(&Object::setSize);
+			Object::_setters["x"] = new PropertyDescription::Set<Object, float>(&Object::setX);
+			Object::_setters["y"] = new PropertyDescription::Set<Object, float>(&Object::setY);
+			Object::_setters["w"] = new PropertyDescription::Set<Object, float>(&Object::setWidth);
+			Object::_setters["h"] = new PropertyDescription::Set<Object, float>(&Object::setHeight);
+			Object::_setters["visible"] = new PropertyDescription::Set<Object, bool>(&Object::setVisible);
+			//Object::_setters["hit_test"] = new PropertyDescription::Set<Object, Enum);
+			Object::_setters["inherit_alpha"] = new PropertyDescription::Set<Object, bool>(&Object::setInheritAlpha);
+			Object::_setters["red"] = new PropertyDescription::SetUChar<Object>(&Object::setRed);
+			Object::_setters["green"] = new PropertyDescription::SetUChar<Object>(&Object::setGreen);
+			Object::_setters["blue"] = new PropertyDescription::SetUChar<Object>(&Object::setBlue);
+			Object::_setters["alpha"] = new PropertyDescription::SetUChar<Object>(&Object::setAlpha);
+			Object::_setters["color"] = new PropertyDescription::SetColor<Object>(&Object::setColor);
+			Object::_setters["angle"] = new PropertyDescription::Set<Object, float>(&Object::setAngle);
+			Object::_setters["scale"] = new PropertyDescription::SetGvec2<Object>(&Object::setScale);
+			Object::_setters["scale_x"] = new PropertyDescription::Set<Object, float>(&Object::setScaleX);
+			Object::_setters["scale_y"] = new PropertyDescription::Set<Object, float>(&Object::setScaleY);
+			Object::_setters["pivot"] = new PropertyDescription::SetGvec2<Object>(&Object::setPivot);
+			Object::_setters["pivot_x"] = new PropertyDescription::Set<Object, float>(&Object::setPivotX);
+			Object::_setters["pivot_y"] = new PropertyDescription::Set<Object, float>(&Object::setPivotY);
+			Object::_setters["anchor_left"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorLeft);
+			Object::_setters["anchor_right"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorRight);
+			Object::_setters["anchor_top"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorTop);
+			Object::_setters["anchor_bottom"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorBottom);
+			//Object::_setters["anchors"] = new PropertyDescription::Set<Object, String);
+			Object::_setters["retain_anchor_aspect"] = new PropertyDescription::Set<Object, bool>(&Object::setRetainAnchorAspect);
+			Object::_setters["clip"] = new PropertyDescription::Set<Object, bool>(&Object::setClip);
+			Object::_setters["use_disabled_alpha"] = new PropertyDescription::Set<Object, bool>(&Object::setUseDisabledAlpha);
+			Object::_setters["focus_index"] = new PropertyDescription::Set<Object, int>(&Object::setFocusIndex);
+		}
+		return Object::_setters;
 	}
 
 	void Object::addChild(BaseObject* obj)
@@ -490,14 +571,14 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setWidth(float value)
+	void Object::setWidth(const float& value)
 	{
 		this->_updateChildrenHorizontal(value - this->rect.w);
 		this->rect.w = value;
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setHeight(float value)
+	void Object::setHeight(const float& value)
 	{
 		this->_updateChildrenVertical(value - this->rect.h);
 		this->rect.h = value;
@@ -1065,58 +1146,21 @@ namespace aprilui
 		}
 		return true;
 	}
-	
+
 	hstr Object::getProperty(chstr name)
 	{
-		if (name == "rect")					return april::grectToHstr(this->getRect());
-		if (name == "position")				return april::gvec2ToHstr(this->getPosition());
-		if (name == "size")					return april::gvec2ToHstr(this->getSize());
-		if (name == "x")					return this->getX();
-		if (name == "y")					return this->getY();
-		if (name == "w")					return this->getWidth();
-		if (name == "h")					return this->getHeight();
-		if (name == "visible")				return this->getVisibilityFlag();
 		if (name == "hit_test")
 		{
 			if (this->hitTest == HitTest::Enabled)				return "enabled";
 			if (this->hitTest == HitTest::Disabled)				return "disabled";
 			if (this->hitTest == HitTest::DisabledRecursive)	return "disabled_recursive";
 		}
-		if (name == "inherit_alpha")		return this->isInheritAlpha();
-		if (name == "red")					return this->getRed();
-		if (name == "green")				return this->getGreen();
-		if (name == "blue")					return this->getBlue();
-		if (name == "alpha")				return this->getAlpha();
-		if (name == "color")				return this->getColor().hex();
-		if (name == "angle")				return this->getAngle();
-		if (name == "scale")				return april::gvec2ToHstr(this->getScale());
-		if (name == "scale_x")				return this->getScaleX();
-		if (name == "scale_y")				return this->getScaleY();
-		if (name == "pivot")				return april::gvec2ToHstr(this->getPivot());
-		if (name == "pivot_x")				return this->getPivotX();
-		if (name == "pivot_y")				return this->getPivotY();
-		if (name == "anchor_left")			return this->isAnchorLeft();
-		if (name == "anchor_right")			return this->isAnchorRight();
-		if (name == "anchor_top")			return this->isAnchorTop();
-		if (name == "anchor_bottom")		return this->isAnchorBottom();
-		if (name == "retain_anchor_aspect")	return this->isRetainAnchorAspect();
-		if (name == "clip")					return this->isClip();
-		if (name == "use_disabled_alpha")	return this->isUseDisabledAlpha();
-		if (name == "focus_index")			return this->getFocusIndex();
 		return BaseObject::getProperty(name);
 	}
-	
+
 	bool Object::setProperty(chstr name, chstr value)
 	{
-		if		(name == "rect")					this->setRect(april::hstrToGrect(value));
-		else if	(name == "position")				this->setPosition(april::hstrToGvec2(value));
-		else if	(name == "size")					this->setSize(april::hstrToGvec2(value));
-		else if	(name == "x")						this->setX(value);
-		else if	(name == "y")						this->setY(value);
-		else if	(name == "w")						this->setWidth(value);
-		else if	(name == "h")						this->setHeight(value);
-		else if	(name == "visible")					this->setVisible(value);
-		else if	(name == "hit_test")
+		if (name == "hit_test")
 		{
 			if (value == "enabled")					this->setHitTest(HitTest::Enabled);
 			else if (value == "disabled")			this->setHitTest(HitTest::Disabled);
@@ -1126,26 +1170,9 @@ namespace aprilui
 				hlog::warn(logTag, "'hit_test=' does not support value '" + value + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if (name == "inherit_alpha")			this->setInheritAlpha(value);
-		else if	(name == "red")						this->setRed((int)value);
-		else if	(name == "green")					this->setGreen((int)value);
-		else if	(name == "blue")					this->setBlue((int)value);
-		else if	(name == "alpha")					this->setAlpha((int)value);
-		else if	(name == "color")					this->setColor(aprilui::_makeColor(value));
-		else if	(name == "angle")					this->setAngle(value);
-		else if	(name == "scale")					this->setScale(april::hstrToGvec2(value));
-		else if	(name == "scale_x")					this->setScaleX(value);
-		else if	(name == "scale_y")					this->setScaleY(value);
-		else if (name == "pivot")					this->setPivot(april::hstrToGvec2(value));
-		else if (name == "pivot_x")					this->setPivotX(value);
-		else if (name == "pivot_y")					this->setPivotY(value);
-		else if (name == "anchor_left")				this->setAnchorLeft(value);
-		else if	(name == "anchor_right")			this->setAnchorRight(value);
-		else if	(name == "anchor_top")				this->setAnchorTop(value);
-		else if	(name == "anchor_bottom")			this->setAnchorBottom(value);
-		else if	(name == "retain_anchor_aspect")	this->setRetainAnchorAspect(value);
-		else if	(name == "anchors")
+		if (name == "anchors")
 		{
 			harray<hstr> anchors = value.replaced(" ", "").lowered().split(",", -1, true);
 			this->setAnchorLeft(anchors.has("all") || anchors.has("left"));
@@ -1163,12 +1190,9 @@ namespace aprilui
 				hlog::warn(logTag, "'anchors=' does not support values '" + anchors.joined(",") + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if	(name == "clip")					this->setClip(value);
-		else if	(name == "use_disabled_alpha")		this->setUseDisabledAlpha(value);
-		else if	(name == "focus_index")				this->setFocusIndex(value);
-		else return BaseObject::setProperty(name, value);
-		return true;
+		return BaseObject::setProperty(name, value);
 	}
 
 	bool Object::angleEquals(float angle) const
