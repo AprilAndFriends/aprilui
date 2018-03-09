@@ -13,6 +13,8 @@
 #ifndef APRILUI_PROPERTY_DESCRIPTION_H
 #define APRILUI_PROPERTY_DESCRIPTION_H
 
+#include <april/april.h>
+#include <april/aprilUtil.h>
 #include <april/Color.h>
 #include <hltypes/henum.h>
 #include <hltypes/hltypesUtil.h>
@@ -44,8 +46,21 @@
 		inline void execute(void* object, hstr& parameter) const { const type& converted = conversionCode; (((O*)object)->*this->function)(converted); } \
 	};
 
+
 namespace aprilui
 {
+	// Temp to fix compile problems
+	inline april::Color __makeColor(chstr colorValue)
+	{
+		april::Color result;
+		if (april::findSymbolicColor(colorValue, result))
+		{
+			return result;
+		}
+		result.set(colorValue);
+		return result;
+	}
+	
 	class apriluiExport PropertyDescription
 	{
 	public:
@@ -107,7 +122,7 @@ namespace aprilui
 		_DEFINE_SPECIAL_GET_CLASS(Grect, grect, april::grectToHstr(result));
 		_DEFINE_SPECIAL_SET_CLASS(Grect, grect, april::hstrToGrect(parameter));
 		_DEFINE_SPECIAL_GET_CLASS(Color, april::Color, result.hex());
-		_DEFINE_SPECIAL_SET_CLASS(Color, april::Color, aprilui::_makeColor(parameter));
+		_DEFINE_SPECIAL_SET_CLASS(Color, april::Color, __makeColor(parameter));
 
 		PropertyDescription(chstr name, Type type, bool arrayData = false);
 		~PropertyDescription();
