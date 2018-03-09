@@ -23,6 +23,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> GridView::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> GridView::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> GridView::_setters;
 
 	GridView::GridView(chstr name) : SelectionContainer(name)
 	{
@@ -52,13 +54,36 @@ namespace aprilui
 	{
 		if (GridView::_propertyDescriptions.size() == 0)
 		{
+			GridView::_propertyDescriptions = SelectionContainer::getPropertyDescriptions();
 			GridView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::Type::Float);
 			GridView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::Type::Float);
 		}
-		return (SelectionContainer::getPropertyDescriptions() + GridView::_propertyDescriptions);
+		return GridView::_propertyDescriptions;
 	}
 
-	void GridView::setSpacingWidth(float value)
+	hmap<hstr, PropertyDescription::Accessor*>& GridView::_getGetters() const
+	{
+		if (GridView::_getters.size() == 0)
+		{
+			GridView::_getters = SelectionContainer::_getGetters();
+			GridView::_getters["spacing_width"] = new PropertyDescription::Get<GridView, float>(&GridView::getSpacingWidth);
+			GridView::_getters["spacing_height"] = new PropertyDescription::Get<GridView, float>(&GridView::getSpacingHeight);
+		}
+		return GridView::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& GridView::_getSetters() const
+	{
+		if (GridView::_setters.size() == 0)
+		{
+			GridView::_setters = SelectionContainer::_getSetters();
+			GridView::_setters["spacing_width"] = new PropertyDescription::Set<GridView, float>(&GridView::setSpacingWidth);
+			GridView::_setters["spacing_height"] = new PropertyDescription::Set<GridView, float>(&GridView::setSpacingHeight);
+		}
+		return GridView::_setters;
+	}
+
+	void GridView::setSpacingWidth(const float& value)
 	{
 		if (this->spacingWidth != value)
 		{
@@ -67,7 +92,7 @@ namespace aprilui
 		}
 	}
 
-	void GridView::setSpacingHeight(float value)
+	void GridView::setSpacingHeight(const float& value)
 	{
 		if (this->spacingHeight != value)
 		{
@@ -245,21 +270,6 @@ namespace aprilui
 	GridViewCell* GridView::getItemAt(int index)
 	{
 		return (hbetweenIE(index, 0, this->cells.size()) ? this->cells[index] : NULL);
-	}
-
-	hstr GridView::getProperty(chstr name)
-	{
-		if (name == "spacing_width")	return this->getSpacingWidth();
-		if (name == "spacing_height")	return this->getSpacingHeight();
-		return SelectionContainer::getProperty(name);
-	}
-
-	bool GridView::setProperty(chstr name, chstr value)
-	{
-		if		(name == "spacing_width")	this->setSpacingWidth(value);
-		else if (name == "spacing_height")	this->setSpacingHeight(value);
-		else return SelectionContainer::setProperty(name, value);
-		return true;
 	}
 
 }

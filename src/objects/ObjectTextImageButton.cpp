@@ -20,15 +20,17 @@
 namespace aprilui
 {
 	harray<PropertyDescription> TextImageButton::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> TextImageButton::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> TextImageButton::_setters;
 
 	TextImageButton::TextImageButton(chstr name) : ImageButton(name), LabelBase()
 	{
 		this->text = "TextImageButton: " + name;
-		this->pushedTextColor = april::Color::White * 0.2f;
 		this->hoverTextColor = april::Color::Grey;
+		this->pushedTextColor = april::Color::White * 0.2f;
 		this->disabledTextColor = april::Color::Grey;
-		this->_useHoverTextColor = false;
 		this->_usePushedTextColor = false;
+		this->_useHoverTextColor = false;
 		this->_useDisabledTextColor = false;
 	}
 
@@ -37,8 +39,8 @@ namespace aprilui
 		this->pushedTextColor = other.pushedTextColor;
 		this->hoverTextColor = other.hoverTextColor;
 		this->disabledTextColor = other.disabledTextColor;
-		this->_useHoverTextColor = other._useHoverTextColor;
 		this->_usePushedTextColor = other._usePushedTextColor;
+		this->_useHoverTextColor = other._useHoverTextColor;
 		this->_useDisabledTextColor = other._useDisabledTextColor;
 	}
 
@@ -55,11 +57,36 @@ namespace aprilui
 	{
 		if (TextImageButton::_propertyDescriptions.size() == 0)
 		{
-			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::Type::Color);
+			TextImageButton::_propertyDescriptions = ImageButton::getPropertyDescriptions() + LabelBase::getPropertyDescriptions();
 			TextImageButton::_propertyDescriptions += PropertyDescription("pushed_text_color", PropertyDescription::Type::Color);
+			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::Type::Color);
 			TextImageButton::_propertyDescriptions += PropertyDescription("disabled_text_color", PropertyDescription::Type::Color);
 		}
-		return (LabelBase::getPropertyDescriptions() + ImageButton::getPropertyDescriptions() + TextImageButton::_propertyDescriptions);
+		return TextImageButton::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& TextImageButton::_getGetters() const
+	{
+		if (TextImageButton::_getters.size() == 0)
+		{
+			TextImageButton::_getters = ImageButton::_getGetters() + LabelBase::_getGetters();
+			TextImageButton::_getters["pushed_text_color"] = new PropertyDescription::GetColor<TextImageButton>(&TextImageButton::getPushedTextColor);
+			TextImageButton::_getters["hover_text_color"] = new PropertyDescription::GetColor<TextImageButton>(&TextImageButton::getHoverTextColor);
+			TextImageButton::_getters["disabled_text_color"] = new PropertyDescription::GetColor<TextImageButton>(&TextImageButton::getDisabledTextColor);
+		}
+		return TextImageButton::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& TextImageButton::_getSetters() const
+	{
+		if (TextImageButton::_setters.size() == 0)
+		{
+			TextImageButton::_setters = ImageButton::_getSetters() + LabelBase::_getSetters();
+			TextImageButton::_setters["pushed_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setPushedTextColor);
+			TextImageButton::_setters["hover_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setHoverTextColor);
+			TextImageButton::_setters["disabled_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setDisabledTextColor);
+		}
+		return TextImageButton::_setters;
 	}
 
 	Dataset* TextImageButton::getDataset() const
@@ -169,31 +196,27 @@ namespace aprilui
 	
 	hstr TextImageButton::getProperty(chstr name)
 	{
-		if (name == "hover_text_color")		return this->getHoverTextColor().hex();
-		if (name == "pushed_text_color")	return this->getPushedTextColor().hex();
-		if (name == "disabled_text_color")	return this->getDisabledTextColor().hex();
-		hstr result = LabelBase::getProperty(name);
+		hstr result = ImageButton::getProperty(name);
 		if (result == "")
 		{
-			result = ImageButton::getProperty(name);
+			result = LabelBase::getProperty(name);
 		}
 		return result;
 	}
 
 	bool TextImageButton::setProperty(chstr name, chstr value)
 	{
-		if (name == "hover_text_color")			this->setHoverTextColor(aprilui::_makeColor(value));
-		else if (name == "pushed_text_color")	this->setPushedTextColor(aprilui::_makeColor(value));
-		else if (name == "disabled_text_color")	this->setDisabledTextColor(aprilui::_makeColor(value));
-		else if (LabelBase::setProperty(name, value)) {}
-		else return ImageButton::setProperty(name, value);
-		return true;
+		if (ImageButton::setProperty(name, value))
+		{
+			return true;
+		}
+		return LabelBase::setProperty(name, value);
 	}
 
 	void TextImageButton::notifyEvent(chstr type, EventArgs* args)
 	{
-		LabelBase::notifyEvent(type, args);
 		ImageButton::notifyEvent(type, args);
+		LabelBase::notifyEvent(type, args);
 	}
 
 	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode)
@@ -203,7 +226,7 @@ namespace aprilui
 
 	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, chstr string)
 	{
-		return Object::triggerEvent(type, keyCode, string);
+		return ImageButton::triggerEvent(type, keyCode, string);
 	}
 
 	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)

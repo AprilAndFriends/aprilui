@@ -51,11 +51,11 @@ namespace aprilui
 		HL_DEFINE_GET(gvec2, textOffset, TextOffset);
 		void setTextOffset(cgvec2 value);
 		HL_DEFINE_GET(float, textOffset.x, TextOffsetX);
-		void setTextOffsetX(float value);
+		void setTextOffsetX(const float& value);
 		HL_DEFINE_GET(float, textOffset.y, TextOffsetY);
-		void setTextOffsetY(float value);
+		void setTextOffsetY(const float& value);
 		HL_DEFINE_GET(float, minAutoScale, MinAutoScale);
-		virtual void setMinAutoScale(float value);
+		virtual void setMinAutoScale(const float& value);
 		HL_DEFINE_GET(atres::Horizontal, horzFormatting, HorzFormatting);
 		void setHorzFormatting(atres::Horizontal value);
 		HL_DEFINE_GET(atres::Vertical, vertFormatting, VertFormatting);
@@ -130,6 +130,9 @@ namespace aprilui
 		april::Color backgroundColor;
 		bool backgroundBorder;
 
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		void _calcAutoScaledFont(cgrect rect);
 		april::Color _makeBackgroundDrawColor(const april::Color& drawColor) const;
 		bool _analyzeExtraParameters(chstr name, chstr value, bool& useColor, bool& useParameter, april::Color& color, hstr& parameter) const;
@@ -143,6 +146,8 @@ namespace aprilui
 		void _calcAutoScaleFont(chstr fontName, cgrect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
 
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 	

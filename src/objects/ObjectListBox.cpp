@@ -21,6 +21,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> ListBox::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ListBox::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ListBox::_setters;
 
 	ListBox::ListBox(chstr name) : SelectionContainer(name)
 	{
@@ -47,10 +49,33 @@ namespace aprilui
 	{
 		if (ListBox::_propertyDescriptions.size() == 0)
 		{
+			ListBox::_propertyDescriptions = SelectionContainer::getPropertyDescriptions();
 			ListBox::_propertyDescriptions += PropertyDescription("even_color", PropertyDescription::Type::Color);
 			ListBox::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::Type::Color);
 		}
-		return (SelectionContainer::getPropertyDescriptions() + ListBox::_propertyDescriptions);
+		return ListBox::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ListBox::_getGetters() const
+	{
+		if (ListBox::_getters.size() == 0)
+		{
+			ListBox::_getters = SelectionContainer::_getGetters();
+			ListBox::_getters["even_color"] = new PropertyDescription::GetColor<ListBox>(&ListBox::getEvenColor);
+			ListBox::_getters["odd_color"] = new PropertyDescription::GetColor<ListBox>(&ListBox::getOddColor);
+		}
+		return ListBox::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ListBox::_getSetters() const
+	{
+		if (ListBox::_setters.size() == 0)
+		{
+			ListBox::_setters = SelectionContainer::_getSetters();
+			ListBox::_setters["even_color"] = new PropertyDescription::SetColor<ListBox>(&ListBox::setEvenColor);
+			ListBox::_setters["odd_color"] = new PropertyDescription::SetColor<ListBox>(&ListBox::setOddColor);
+		}
+		return ListBox::_setters;
 	}
 
 	void ListBox::setEvenColor(const april::Color& value)
@@ -211,21 +236,6 @@ namespace aprilui
 			this->scrollArea->setScrollOffsetY(hclamp(this->scrollArea->getScrollOffsetY(), (this->selectedIndex + 1) * this->itemHeight - this->rect.h, this->selectedIndex * this->itemHeight));
 			this->_optimizeVisibility();
 		}
-	}
-
-	hstr ListBox::getProperty(chstr name)
-	{
-		if (name == "even_color")	return this->getEvenColor().hex();
-		if (name == "odd_color")	return this->getOddColor().hex();
-		return SelectionContainer::getProperty(name);
-	}
-
-	bool ListBox::setProperty(chstr name, chstr value)
-	{
-		if		(name == "even_color")	this->setEvenColor(aprilui::_makeColor(value));
-		else if (name == "odd_color")	this->setOddColor(aprilui::_makeColor(value));
-		else return SelectionContainer::setProperty(name, value);
-		return true;
 	}
 
 }

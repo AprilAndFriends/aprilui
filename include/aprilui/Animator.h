@@ -69,7 +69,7 @@ namespace aprilui
 		bool isAnimated() const;
 		bool isWaitingAnimation() const;
 		bool isExpired() const;
-		void setTime(float value);
+		void setTime(const float& value);
 		/// @note Same as setTimer() but in periods instead of seconds.
 		void setPeriodsTimer(const float& value);
 
@@ -100,6 +100,9 @@ namespace aprilui
 		bool useTarget;
 		double(*customFunction)(Animator*, double);
 		
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		void _update(float timeDelta);
 
 		float _calculateValue(float timeDelta);
@@ -113,9 +116,10 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 
 }
-
 #endif

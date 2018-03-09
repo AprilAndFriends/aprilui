@@ -28,6 +28,8 @@ namespace aprilui
 	float ScrollArea::defaultDragMaxSpeed = 0.0f;
 
 	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ScrollArea::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ScrollArea::_setters;
 
 	ScrollArea::ScrollArea(chstr name) : Object(name), ButtonBase()
 	{
@@ -74,6 +76,7 @@ namespace aprilui
 	{
 		if (ScrollArea::_propertyDescriptions.size() == 0)
 		{
+			ScrollArea::_propertyDescriptions = Object::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions();
 			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
 			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Gvec2);
@@ -90,7 +93,55 @@ namespace aprilui
 			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
 			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
 		}
-		return (Object::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions() + ScrollArea::_propertyDescriptions);
+		return ScrollArea::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ScrollArea::_getGetters() const
+	{
+		if (ScrollArea::_getters.size() == 0)
+		{
+			ScrollArea::_getters = Object::_getGetters() + ButtonBase::_getGetters();
+			ScrollArea::_getters["allow_drag"] = new PropertyDescription::Get<ScrollArea, bool>(&ScrollArea::isAllowDrag);
+			ScrollArea::_getters["inertia"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getInertia);
+			ScrollArea::_getters["drag_threshold"] = new PropertyDescription::GetGvec2<ScrollArea>(&ScrollArea::getDragThreshold);
+			ScrollArea::_getters["drag_threshold_x"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getDragThresholdX);
+			ScrollArea::_getters["drag_threshold_y"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getDragThresholdY);
+			ScrollArea::_getters["drag_max_speed"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getDragMaxSpeed);
+			ScrollArea::_getters["swap_scroll_wheels"] = new PropertyDescription::Get<ScrollArea, bool>(&ScrollArea::isSwapScrollWheels);
+			ScrollArea::_getters["oob_children_fade_size_factor"] = new PropertyDescription::GetGvec2<ScrollArea>(&ScrollArea::getOobChildrenFadeSizeFactor);
+			ScrollArea::_getters["oob_children_fade_size_factor_x"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getOobChildrenFadeSizeFactorX);
+			ScrollArea::_getters["oob_children_fade_size_factor_y"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getOobChildrenFadeSizeFactorY);
+			ScrollArea::_getters["oob_children_fade_offset_factor"] = new PropertyDescription::GetGvec2<ScrollArea>(&ScrollArea::getOobChildrenFadeOffsetFactor);
+			ScrollArea::_getters["oob_children_fade_offset_factor_x"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getOobChildrenFadeOffsetFactorX);
+			ScrollArea::_getters["oob_children_fade_offset_factor_y"] = new PropertyDescription::Get<ScrollArea, float>(&ScrollArea::getOobChildrenFadeOffsetFactorY);
+			ScrollArea::_getters["optimize_oob_children_visible"] = new PropertyDescription::Get<ScrollArea, bool>(&ScrollArea::isOptimizeOobChildrenVisible);
+			ScrollArea::_getters["optimize_oob_children_awake"] = new PropertyDescription::Get<ScrollArea, bool>(&ScrollArea::isOptimizeOobChildrenAwake);
+		}
+		return ScrollArea::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ScrollArea::_getSetters() const
+	{
+		if (ScrollArea::_setters.size() == 0)
+		{
+			ScrollArea::_setters = Object::_getSetters() + ButtonBase::_getSetters();
+			ScrollArea::_setters["allow_drag"] = new PropertyDescription::Set<ScrollArea, bool>(&ScrollArea::setAllowDrag);
+			ScrollArea::_setters["inertia"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setInertia);
+			ScrollArea::_setters["drag_threshold"] = new PropertyDescription::SetGvec2<ScrollArea>(&ScrollArea::setDragThreshold);
+			ScrollArea::_setters["drag_threshold_x"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setDragThresholdX);
+			ScrollArea::_setters["drag_threshold_y"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setDragThresholdY);
+			ScrollArea::_setters["drag_max_speed"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setDragMaxSpeed);
+			ScrollArea::_setters["swap_scroll_wheels"] = new PropertyDescription::Set<ScrollArea, bool>(&ScrollArea::setSwapScrollWheels);
+			ScrollArea::_setters["oob_children_fade_size_factor"] = new PropertyDescription::SetGvec2<ScrollArea>(&ScrollArea::setOobChildrenFadeSizeFactor);
+			ScrollArea::_setters["oob_children_fade_size_factor_x"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setOobChildrenFadeSizeFactorX);
+			ScrollArea::_setters["oob_children_fade_size_factor_y"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setOobChildrenFadeSizeFactorY);
+			ScrollArea::_setters["oob_children_fade_offset_factor"] = new PropertyDescription::SetGvec2<ScrollArea>(&ScrollArea::setOobChildrenFadeOffsetFactor);
+			ScrollArea::_setters["oob_children_fade_offset_factor_x"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setOobChildrenFadeOffsetFactorX);
+			ScrollArea::_setters["oob_children_fade_offset_factor_y"] = new PropertyDescription::Set<ScrollArea, float>(&ScrollArea::setOobChildrenFadeOffsetFactorY);
+			ScrollArea::_setters["optimize_oob_children_visible"] = new PropertyDescription::Set<ScrollArea, bool>(&ScrollArea::setOptimizeOobChildrenVisible);
+			ScrollArea::_setters["optimize_oob_children_awake"] = new PropertyDescription::Set<ScrollArea, bool>(&ScrollArea::setOptimizeOobChildrenAwake);
+		}
+		return ScrollArea::_setters;
 	}
 
 	hstr ScrollArea::getName() const
@@ -416,64 +467,6 @@ namespace aprilui
 			}
 		}
 		return child;
-	}
-
-	hstr ScrollArea::getProperty(chstr name)
-	{
-		if (name == "allow_drag")							return this->isAllowDrag();
-		if (name == "inertia")								return this->getInertia();
-		if (name == "drag_threshold")						return april::gvec2ToHstr(this->getDragThreshold());
-		if (name == "drag_threshold_x")						return this->getDragThresholdX();
-		if (name == "drag_threshold_y")						return this->getDragThresholdY();
-		if (name == "drag_max_speed")						return this->getDragMaxSpeed();
-		if (name == "swap_scroll_wheels")					return this->isSwapScrollWheels();
-		if (name == "oob_children_fade_size_factor")		return april::gvec2ToHstr(this->getOobChildrenFadeSizeFactor());
-		if (name == "oob_children_fade_size_factor_x")		return this->getOobChildrenFadeSizeFactorX();
-		if (name == "oob_children_fade_size_factor_y")		return this->getOobChildrenFadeSizeFactorY();
-		if (name == "oob_children_fade_offset_factor")		return april::gvec2ToHstr(this->getOobChildrenFadeOffsetFactor());
-		if (name == "oob_children_fade_offset_factor_x")	return this->getOobChildrenFadeOffsetFactorX();
-		if (name == "oob_children_fade_offset_factor_y")	return this->getOobChildrenFadeOffsetFactorY();
-		if (name == "optimize_oob_children_visible")		return this->isOptimizeOobChildrenVisible();
-		if (name == "optimize_oob_children_awake")			return this->isOptimizeOobChildrenAwake();
-		hstr result = ButtonBase::getProperty(name);
-		if (result == "")
-		{
-			result = Object::getProperty(name);
-		}
-		return result;
-	}
-
-	bool ScrollArea::setProperty(chstr name, chstr value)
-	{
-		if (name == "allow_drag")								this->setAllowDrag(value);
-		else if (name == "inertia")								this->setInertia(value);
-		else if (name == "drag_threshold")
-		{
-			if (value.contains(","))
-			{
-				this->setDragThreshold(april::hstrToGvec2(value));
-			}
-			else
-			{
-				hlog::warn(logTag, "'drag_threshold=' as 'float' is deprecated. Use 'gvec2' or 'drag_threshold_x' and 'drag_threshold_y' instead.");
-				this->setDragThreshold(gvec2(value, value));
-			}
-		}
-		else if (name == "drag_threshold_x")					this->setDragThresholdX(value);
-		else if (name == "drag_threshold_y")					this->setDragThresholdY(value);
-		else if (name == "drag_max_speed")						this->setDragMaxSpeed(value);
-		else if (name == "swap_scroll_wheels")					this->setSwapScrollWheels(value);
-		else if (name == "oob_children_fade_size_factor")		this->setOobChildrenFadeSizeFactor(april::hstrToGvec2(value));
-		else if (name == "oob_children_fade_size_factor_x")		this->setOobChildrenFadeSizeFactorX(value);
-		else if (name == "oob_children_fade_size_factor_y")		this->setOobChildrenFadeSizeFactorY(value);
-		else if (name == "oob_children_fade_offset_factor")		this->setOobChildrenFadeOffsetFactor(april::hstrToGvec2(value));
-		else if (name == "oob_children_fade_offset_factor_x")	this->setOobChildrenFadeOffsetFactorX(value);
-		else if (name == "oob_children_fade_offset_factor_y")	this->setOobChildrenFadeOffsetFactorY(value);
-		else if (name == "optimize_oob_children_visible")		this->setOptimizeOobChildrenVisible(value);
-		else if (name == "optimize_oob_children_awake")			this->setOptimizeOobChildrenAwake(value);
-		else if (ButtonBase::setProperty(name, value)) {}
-		else return Object::setProperty(name, value);
-		return true;
 	}
 
 	void ScrollArea::notifyEvent(chstr type, EventArgs* args)

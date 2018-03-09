@@ -47,9 +47,6 @@ namespace aprilui
 		HL_DEFINE_ISSET(selectable, Selectable);
 		bool isSelected() const;
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 		void notifyEvent(chstr type, EventArgs* args);
 
 		bool triggerEvent(chstr type, april::Key keyCode);
@@ -63,6 +60,9 @@ namespace aprilui
 		bool selectable;
 		GridView* gridView;
 		GridViewRow* gridViewRow;
+
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		void _update(float timeDelta);
 		void _draw();
@@ -83,9 +83,10 @@ namespace aprilui
 		april::Color _pushedColor;
 
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 
 }
-
 #endif

@@ -25,6 +25,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> TreeView::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> TreeView::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> TreeView::_setters;
 
 	TreeView::TreeView(chstr name) : SelectionContainer(name)
 	{
@@ -57,16 +59,46 @@ namespace aprilui
 	{
 		if (TreeView::_propertyDescriptions.size() == 0)
 		{
+			TreeView::_propertyDescriptions = SelectionContainer::getPropertyDescriptions();
 			TreeView::_propertyDescriptions += PropertyDescription("expander_width", PropertyDescription::Type::Float);
 			TreeView::_propertyDescriptions += PropertyDescription("image_width", PropertyDescription::Type::Float);
 			TreeView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::Type::Float);
 			TreeView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::Type::Float);
 			TreeView::_propertyDescriptions += PropertyDescription("connector_color", PropertyDescription::Type::Color);
 		}
-		return (SelectionContainer::getPropertyDescriptions() + TreeView::_propertyDescriptions);
+		return TreeView::_propertyDescriptions;
 	}
 
-	void TreeView::setExpanderWidth(float value)
+
+	hmap<hstr, PropertyDescription::Accessor*>& TreeView::_getGetters() const
+	{
+		if (TreeView::_getters.size() == 0)
+		{
+			TreeView::_getters = SelectionContainer::_getGetters();
+			TreeView::_getters["expander_width"] = new PropertyDescription::Get<TreeView, float>(&TreeView::getExpanderWidth);
+			TreeView::_getters["image_width"] = new PropertyDescription::Get<TreeView, float>(&TreeView::getImageWidth);
+			TreeView::_getters["spacing_width"] = new PropertyDescription::Get<TreeView, float>(&TreeView::getSpacingWidth);
+			TreeView::_getters["spacing_height"] = new PropertyDescription::Get<TreeView, float>(&TreeView::getSpacingHeight);
+			TreeView::_getters["connector_color"] = new PropertyDescription::GetColor<TreeView>(&TreeView::getConnectorColor);
+		}
+		return TreeView::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& TreeView::_getSetters() const
+	{
+		if (TreeView::_setters.size() == 0)
+		{
+			TreeView::_setters = SelectionContainer::_getSetters();
+			TreeView::_setters["expander_width"] = new PropertyDescription::Set<TreeView, float>(&TreeView::setExpanderWidth);
+			TreeView::_setters["image_width"] = new PropertyDescription::Set<TreeView, float>(&TreeView::setImageWidth);
+			TreeView::_setters["spacing_width"] = new PropertyDescription::Set<TreeView, float>(&TreeView::setSpacingWidth);
+			TreeView::_setters["spacing_height"] = new PropertyDescription::Set<TreeView, float>(&TreeView::setSpacingHeight);
+			TreeView::_setters["connector_color"] = new PropertyDescription::SetColor<TreeView>(&TreeView::setConnectorColor);
+		}
+		return TreeView::_setters;
+	}
+
+	void TreeView::setExpanderWidth(const float& value)
 	{
 		if (this->expanderWidth != value)
 		{
@@ -75,7 +107,7 @@ namespace aprilui
 		}
 	}
 
-	void TreeView::setImageWidth(float value)
+	void TreeView::setImageWidth(const float& value)
 	{
 		if (this->imageWidth != value)
 		{
@@ -84,7 +116,7 @@ namespace aprilui
 		}
 	}
 
-	void TreeView::setSpacingWidth(float value)
+	void TreeView::setSpacingWidth(const float& value)
 	{
 		if (this->spacingWidth != value)
 		{
@@ -93,7 +125,7 @@ namespace aprilui
 		}
 	}
 
-	void TreeView::setSpacingHeight(float value)
+	void TreeView::setSpacingHeight(const float& value)
 	{
 		if (this->spacingHeight != value)
 		{
@@ -277,7 +309,7 @@ namespace aprilui
 	{
 		if (node->nodes.size() > 0)
 		{
-			foreach (TreeViewNode*, it, node->nodes)
+			foreach(TreeViewNode*, it, node->nodes)
 			{
 				this->_deleteChildren(*it);
 			}
@@ -301,7 +333,7 @@ namespace aprilui
 	void TreeView::_updateDisplay()
 	{
 		int offset = 0;
-		foreach (TreeViewNode*, it, this->nodes)
+		foreach(TreeViewNode*, it, this->nodes)
 		{
 			(*it)->setVisible(true);
 			offset += (*it)->_updateDisplay(offset);
@@ -341,7 +373,7 @@ namespace aprilui
 		if (this->scrollArea != NULL)
 		{
 			grect rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
-			foreach (TreeViewNode*, it, this->nodes)
+			foreach(TreeViewNode*, it, this->nodes)
 			{
 				if ((*it)->isExpanded() || rect.intersects((*it)->getRect()))
 				{
@@ -355,27 +387,6 @@ namespace aprilui
 				}
 			}
 		}
-	}
-
-	hstr TreeView::getProperty(chstr name)
-	{
-		if (name == "expander_width")	return this->getExpanderWidth();
-		if (name == "image_width")		return this->getImageWidth();
-		if (name == "spacing_width")	return this->getSpacingWidth();
-		if (name == "spacing_height")	return this->getSpacingHeight();
-		if (name == "connector_color")	return this->getConnectorColor().hex();
-		return SelectionContainer::getProperty(name);
-	}
-
-	bool TreeView::setProperty(chstr name, chstr value)
-	{
-		if		(name == "expander_width")	this->setExpanderWidth(value);
-		else if (name == "image_width")		this->setImageWidth(value);
-		else if (name == "spacing_width")	this->setSpacingWidth(value);
-		else if (name == "spacing_height")	this->setSpacingHeight(value);
-		else if (name == "connector_color")	this->setConnectorColor(aprilui::_makeColor(value));
-		else return SelectionContainer::setProperty(name, value);
-		return true;
 	}
 
 }

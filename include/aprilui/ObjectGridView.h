@@ -41,9 +41,9 @@ namespace aprilui
 		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(float, spacingWidth, SpacingWidth);
-		void setSpacingWidth(float value);
+		void setSpacingWidth(const float& value);
 		HL_DEFINE_GET(float, spacingHeight, SpacingHeight);
-		void setSpacingHeight(float value);
+		void setSpacingHeight(const float& value);
 		HL_DEFINE_GET(GridViewRowTemplate*, rowTemplate, RowTemplate);
 		HL_DEFINE_GET(harray<GridViewRow*>, rows, Rows);
 		HL_DEFINE_GET(harray<GridViewCell*>, cells, Cells);
@@ -57,15 +57,15 @@ namespace aprilui
 		GridViewRow* getRowAt(int index);
 		GridViewCell* getItemAt(int index);
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 	protected:
 		float spacingWidth;
 		float spacingHeight;
 		GridViewRowTemplate* rowTemplate;
 		harray<GridViewRow*> rows;
 		harray<GridViewCell*> cells;
+
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		void _updateDisplay();
 		void _updateRow(int index);
@@ -75,8 +75,10 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

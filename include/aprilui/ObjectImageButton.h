@@ -61,9 +61,6 @@ namespace aprilui
 		/// @brief Optimized version.
 		bool trySetDisabledImageByName(chstr name);
 		
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
 		bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL);
@@ -81,6 +78,9 @@ namespace aprilui
 		hstr pushedImageName;
 		hstr disabledImageName;
 		
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		harray<BaseImage*> _getUsedImages() const;
 
 		void _update(float timeDelta);
@@ -95,8 +95,10 @@ namespace aprilui
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

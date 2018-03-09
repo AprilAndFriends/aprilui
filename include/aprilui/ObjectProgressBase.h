@@ -65,9 +65,6 @@ namespace aprilui
 		bool trySetAntiProgressImageByName(chstr name);
 		bool trySetMaskImageByName(chstr name);
 		virtual bool trySetImageByName(chstr name) = 0;
-		
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 		HL_DEPRECATED("Deprecated API. Use setProgressSymbolicColor() instead.") void setSymbolicProgressColor(chstr value) { this->setProgressSymbolicColor(value); }
@@ -87,6 +84,9 @@ namespace aprilui
 		april::Color antiProgressColor;
 		april::Color maskColor;
 		
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		virtual april::Color _makeDrawColor(const april::Color& color) const = 0;
 		april::Color _makeDrawProgressColor() const;
 		april::Color _makeDrawAntiProgressColor() const;
@@ -96,8 +96,10 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

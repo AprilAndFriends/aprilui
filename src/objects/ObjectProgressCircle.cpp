@@ -85,9 +85,10 @@ namespace aprilui
 	{
 		if (ProgressCircle::_propertyDescriptions.size() == 0)
 		{
+			ProgressCircle::_propertyDescriptions = ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions();
 			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
 		}
-		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressCircle::_propertyDescriptions);
+		return ProgressCircle::_propertyDescriptions;
 	}
 
 	Dataset* ProgressCircle::getDataset() const
@@ -257,17 +258,12 @@ namespace aprilui
 	hstr ProgressCircle::getProperty(chstr name)
 	{
 		if (name == "direction")	return this->direction.getName().lowered();
-		hstr result = ProgressBase::getProperty(name);
-		if (result == "")
-		{
-			result = ImageBox::getProperty(name);
-		}
-		return result;
+		return ImageBox::getProperty(name);
 	}
 
 	bool ProgressCircle::setProperty(chstr name, chstr value)
 	{
-		if		(name == "direction")
+		if (name == "direction")
 		{
 			if (value == "clockwise")					this->setDirection(Direction::Clockwise);
 			else if (value == "clockwise90")			this->setDirection(Direction::Clockwise90);
@@ -282,10 +278,9 @@ namespace aprilui
 				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if (ProgressBase::setProperty(name, value)) { }
-		else return ImageBox::setProperty(name, value);
-		return true;
+		return ImageBox::setProperty(name, value);
 	}
 	
 }

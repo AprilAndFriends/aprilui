@@ -17,6 +17,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> ImageButton::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ImageButton::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ImageButton::_setters;
 
 	ImageButton::ImageButton(chstr name) : ImageBox(name), ButtonBase()
 	{
@@ -51,11 +53,36 @@ namespace aprilui
 	{
 		if (ImageButton::_propertyDescriptions.size() == 0)
 		{
+			ImageButton::_propertyDescriptions = ImageBox::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions();
 			ImageButton::_propertyDescriptions += PropertyDescription("pushed_image", PropertyDescription::Type::String);
 			ImageButton::_propertyDescriptions += PropertyDescription("hover_image", PropertyDescription::Type::String);
 			ImageButton::_propertyDescriptions += PropertyDescription("disabled_image", PropertyDescription::Type::String);
 		}
-		return (ImageBox::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions() + ImageButton::_propertyDescriptions);
+		return ImageButton::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ImageButton::_getGetters() const
+	{
+		if (ImageButton::_getters.size() == 0)
+		{
+			ImageButton::_getters = ImageBox::_getGetters() + ButtonBase::_getGetters();
+			ImageButton::_getters["pushed_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getPushedImageName);
+			ImageButton::_getters["hover_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getHoverImageName);
+			ImageButton::_getters["disabled_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getDisabledImageName);
+		}
+		return ImageButton::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ImageButton::_getSetters() const
+	{
+		if (ImageButton::_setters.size() == 0)
+		{
+			ImageButton::_setters = ImageBox::_getSetters() + ButtonBase::_getSetters();
+			ImageButton::_setters["pushed_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetPushedImageByName);
+			ImageButton::_setters["hover_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetHoverImageByName);
+			ImageButton::_setters["disabled_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetDisabledImageByName);
+		}
+		return ImageButton::_setters;
 	}
 
 	hstr ImageButton::getName() const
@@ -235,29 +262,6 @@ namespace aprilui
 		images += this->hoverImage;
 		images += this->disabledImage;
 		return images;
-	}
-	
-	hstr ImageButton::getProperty(chstr name)
-	{
-		if (name == "pushed_image")		return this->getPushedImageName();
-		if (name == "hover_image")		return this->getHoverImageName();
-		if (name == "disabled_image")	return this->getDisabledImageName();
-		hstr result = ButtonBase::getProperty(name);
-		if (result == "")
-		{
-			result = ImageBox::getProperty(name);
-		}
-		return result;
-	}
-
-	bool ImageButton::setProperty(chstr name, chstr value)
-	{
-		if		(name == "pushed_image")	this->trySetPushedImageByName(value);
-		else if	(name == "hover_image")		this->trySetHoverImageByName(value);
-		else if	(name == "disabled_image")	this->trySetDisabledImageByName(value);
-		else if (ButtonBase::setProperty(name, value)) { }
-		else return ImageBox::setProperty(name, value);
-		return true;
 	}
 	
 	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)

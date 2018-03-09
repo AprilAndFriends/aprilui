@@ -44,13 +44,13 @@ namespace aprilui
 		harray<PropertyDescription> getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(float, expanderWidth, ExpanderWidth);
-		void setExpanderWidth(float value);
+		void setExpanderWidth(const float& value);
 		HL_DEFINE_GET(float, imageWidth, ImageWidth);
-		void setImageWidth(float value);
+		void setImageWidth(const float& value);
 		HL_DEFINE_GET(float, spacingWidth, SpacingWidth);
-		void setSpacingWidth(float value);
+		void setSpacingWidth(const float& value);
 		HL_DEFINE_GET(float, spacingHeight, SpacingHeight);
-		void setSpacingHeight(float value);
+		void setSpacingHeight(const float& value);
 		HL_DEFINE_GET(april::Color, connectorColor, ConnectorColor);
 		void setConnectorColor(const april::Color& value);
 		void setConnectorSymbolicColor(chstr value);
@@ -67,9 +67,6 @@ namespace aprilui
 		bool deleteItem(const harray<int>& nodeIndices);
 		TreeViewNode* getItemAt(const harray<int>& nodeIndices) const;
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 	protected:
 		float expanderWidth;
 		float imageWidth;
@@ -78,6 +75,9 @@ namespace aprilui
 		april::Color connectorColor;
 		harray<TreeViewNode*> nodes;
 		harray<TreeViewNode*> items;
+
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		void _updateDisplay();
 		void _updateItem(int index);
@@ -88,9 +88,10 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 
 }
-
 #endif

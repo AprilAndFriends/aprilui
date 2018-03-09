@@ -55,9 +55,6 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, skinName, SkinName);
 		void setSkinName(chstr value);
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 		void notifyEvent(chstr type, EventArgs* args);
 
 		virtual void addScrollValue(float value) = 0;
@@ -86,6 +83,9 @@ namespace aprilui
 		ScrollBarButtonSlider* _buttonSliderSkinned;
 		ScrollBarButtonForward* _buttonForwardSkinned;
 		ScrollBarButtonBackward* _buttonBackwardSkinned;
+
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		ScrollBarButtonBackground* _getButtonBackground() const;
 		void _setButtonBackground(ScrollBarButtonBackground* button);
@@ -132,12 +132,14 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 		gvec2 _clickPosition;
 		float _retainTime;
 		bool _scrolling;
 
 	};
-}
 
+}
 #endif

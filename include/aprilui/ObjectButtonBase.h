@@ -54,9 +54,6 @@ namespace aprilui
 		virtual Object* getParent() const = 0;
 		virtual Dataset* getDataset() const = 0;
 
-		virtual hstr getProperty(chstr name);
-		virtual bool setProperty(chstr name, chstr value);
-
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL) = 0;
@@ -79,6 +76,9 @@ namespace aprilui
 		bool _usePushedColor;
 		bool _useDisabledColor;
 
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		virtual void _update(float timeDelta);
 		virtual aprilui::Object* _findHoverObject();
 		void _updateHover();
@@ -92,6 +92,8 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 		gvec2 _mouseDownPosition;
 		Object* _thisObject; // used for internal optimization to avoid dynamic_cast
