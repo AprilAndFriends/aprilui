@@ -82,9 +82,9 @@ namespace aprilui
 		if (TextImageButton::_setters.size() == 0)
 		{
 			TextImageButton::_setters = ImageButton::_getSetters() + LabelBase::_generateSetters<TextImageButton>();
-			TextImageButton::_setters["pushed_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setPushedTextColor);
-			TextImageButton::_setters["hover_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setHoverTextColor);
-			TextImageButton::_setters["disabled_text_color"] = new PropertyDescription::SetColor<TextImageButton>(&TextImageButton::setDisabledTextColor);
+			TextImageButton::_setters["pushed_text_color"] = new PropertyDescription::Set<TextImageButton, hstr>(&TextImageButton::setPushedTextSymbolicColor);
+			TextImageButton::_setters["hover_text_color"] = new PropertyDescription::Set<TextImageButton, hstr>(&TextImageButton::setHoverTextSymbolicColor);
+			TextImageButton::_setters["disabled_text_color"] = new PropertyDescription::Set<TextImageButton, hstr>(&TextImageButton::setDisabledTextSymbolicColor);
 		}
 		return TextImageButton::_setters;
 	}

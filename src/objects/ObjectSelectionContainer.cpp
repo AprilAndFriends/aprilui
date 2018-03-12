@@ -95,11 +95,11 @@ namespace aprilui
 			SelectionContainer::_setters = Container::_getSetters();
 			SelectionContainer::_setters["selected_index"] = new PropertyDescription::Set<SelectionContainer, int>(&SelectionContainer::setSelectedIndex);
 			SelectionContainer::_setters["item_height"] = new PropertyDescription::Set<SelectionContainer, float>(&SelectionContainer::setItemHeight);
-			SelectionContainer::_setters["pushed_color"] = new PropertyDescription::SetColor<SelectionContainer>(&SelectionContainer::setPushedColor);
-			SelectionContainer::_setters["hover_color"] = new PropertyDescription::SetColor<SelectionContainer>(&SelectionContainer::setHoverColor);
-			SelectionContainer::_setters["selected_color"] = new PropertyDescription::SetColor<SelectionContainer>(&SelectionContainer::setSelectedColor);
-			SelectionContainer::_setters["selected_pushed_color"] = new PropertyDescription::SetColor<SelectionContainer>(&SelectionContainer::setSelectedPushedColor);
-			SelectionContainer::_setters["selected_hover_color"] = new PropertyDescription::SetColor<SelectionContainer>(&SelectionContainer::setSelectedHoverColor);
+			SelectionContainer::_setters["pushed_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setPushedSymbolicColor);
+			SelectionContainer::_setters["hover_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setHoverSymbolicColor);
+			SelectionContainer::_setters["selected_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setSelectedSymbolicColor);
+			SelectionContainer::_setters["selected_pushed_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setSelectedPushedSymbolicColor);
+			SelectionContainer::_setters["selected_hover_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setSelectedHoverSymbolicColor);
 			SelectionContainer::_setters["allow_drag"] = new PropertyDescription::Set<SelectionContainer, bool>(&SelectionContainer::setAllowDrag);
 		}
 		return SelectionContainer::_setters;

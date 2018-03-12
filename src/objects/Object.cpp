@@ -292,7 +292,7 @@ namespace aprilui
 			Object::_setters["green"] = new PropertyDescription::SetUChar<Object>(&Object::setGreen);
 			Object::_setters["blue"] = new PropertyDescription::SetUChar<Object>(&Object::setBlue);
 			Object::_setters["alpha"] = new PropertyDescription::SetUChar<Object>(&Object::setAlpha);
-			Object::_setters["color"] = new PropertyDescription::SetColor<Object>(&Object::setColor);
+			Object::_setters["color"] = new PropertyDescription::Set<Object, hstr>(&Object::setSymbolicColor);
 			Object::_setters["angle"] = new PropertyDescription::Set<Object, float>(&Object::setAngle);
 			Object::_setters["scale"] = new PropertyDescription::SetGvec2<Object>(&Object::setScale);
 			Object::_setters["scale_x"] = new PropertyDescription::Set<Object, float>(&Object::setScaleX);

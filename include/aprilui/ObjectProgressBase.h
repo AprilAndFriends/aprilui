@@ -113,9 +113,9 @@ namespace aprilui
 			result["anti_progress_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetAntiProgressImageByName);
 			result["mask_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetMaskImageByName);
 			result["progress"] = new PropertyDescription::Set<T, float>(&T::setProgress);
-			result["progress_color"] = new PropertyDescription::SetColor<T>(&T::setProgressColor);
-			result["anti_progress_color"] = new PropertyDescription::SetColor<T>(&T::setAntiProgressColor);
-			result["mask_color"] = new PropertyDescription::SetColor<T>(&T::setMaskColor);
+			result["progress_color"] = new PropertyDescription::Set<T, hstr>(&T::setProgressSymbolicColor);
+			result["anti_progress_color"] = new PropertyDescription::Set<T, hstr>(&T::setAntiProgressSymbolicColor);
+			result["mask_color"] = new PropertyDescription::Set<T, hstr>(&T::setMaskSymbolicColor);
 			return result;
 		}
 

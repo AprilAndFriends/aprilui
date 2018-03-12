@@ -191,7 +191,7 @@ namespace aprilui
 			EditBox::_setters = Label::_getSetters() + ButtonBase::_generateSetters<EditBox>();
 			EditBox::_setters["empty_text"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyText);
 			EditBox::_setters["empty_text_key"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyTextKey);
-			EditBox::_setters["empty_text_color"] = new PropertyDescription::SetColor<EditBox>(&EditBox::setEmptyTextColor);
+			EditBox::_setters["empty_text_color"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyTextSymbolicColor);
 			EditBox::_setters["max_length"] = new PropertyDescription::Set<EditBox, int>(&EditBox::setMaxLength);
 			EditBox::_setters["password_char"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setPasswordChar);
 			EditBox::_setters["filter"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setFilter);
@@ -199,11 +199,11 @@ namespace aprilui
 			EditBox::_setters["caret_offset"] = new PropertyDescription::SetGvec2<EditBox>(&EditBox::setCaretOffset);
 			EditBox::_setters["caret_offset_x"] = new PropertyDescription::Set<EditBox, float>(&EditBox::setCaretOffsetX);
 			EditBox::_setters["caret_offset_y"] = new PropertyDescription::Set<EditBox, float>(&EditBox::setCaretOffsetY);
-			EditBox::_setters["caret_color"] = new PropertyDescription::SetColor<EditBox>(&EditBox::setCaretColor);
+			EditBox::_setters["caret_color"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setCaretSymbolicColor);
 			EditBox::_setters["multi_line"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setMultiLine);
 			EditBox::_setters["selectable"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setSelectable);
 			EditBox::_setters["selection_count"] = new PropertyDescription::Set<EditBox, int>(&EditBox::setSelectionCount);
-			EditBox::_setters["selection_color"] = new PropertyDescription::SetColor<EditBox>(&EditBox::setSelectionColor);
+			EditBox::_setters["selection_color"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setSelectionSymbolicColor);
 			EditBox::_setters["clipboard_enabled"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setClipboardEnabled);
 			EditBox::_setters["disabled_offset"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setDisabledOffset);
 		}

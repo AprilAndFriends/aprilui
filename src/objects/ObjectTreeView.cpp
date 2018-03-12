@@ -93,7 +93,7 @@ namespace aprilui
 			TreeView::_setters["image_width"] = new PropertyDescription::Set<TreeView, float>(&TreeView::setImageWidth);
 			TreeView::_setters["spacing_width"] = new PropertyDescription::Set<TreeView, float>(&TreeView::setSpacingWidth);
 			TreeView::_setters["spacing_height"] = new PropertyDescription::Set<TreeView, float>(&TreeView::setSpacingHeight);
-			TreeView::_setters["connector_color"] = new PropertyDescription::SetColor<TreeView>(&TreeView::setConnectorColor);
+			TreeView::_setters["connector_color"] = new PropertyDescription::Set<TreeView, hstr>(&TreeView::setConnectorSymbolicColor);
 		}
 		return TreeView::_setters;
 	}

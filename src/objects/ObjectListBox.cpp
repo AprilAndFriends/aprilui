@@ -72,8 +72,8 @@ namespace aprilui
 		if (ListBox::_setters.size() == 0)
 		{
 			ListBox::_setters = SelectionContainer::_getSetters();
-			ListBox::_setters["even_color"] = new PropertyDescription::SetColor<ListBox>(&ListBox::setEvenColor);
-			ListBox::_setters["odd_color"] = new PropertyDescription::SetColor<ListBox>(&ListBox::setOddColor);
+			ListBox::_setters["even_color"] = new PropertyDescription::Set<ListBox, hstr>(&ListBox::setEvenSymbolicColor);
+			ListBox::_setters["odd_color"] = new PropertyDescription::Set<ListBox, hstr>(&ListBox::setOddSymbolicColor);
 		}
 		return ListBox::_setters;
 	}

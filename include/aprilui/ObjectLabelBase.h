@@ -164,12 +164,12 @@ namespace aprilui
 			result["text_formatting"] = new PropertyDescription::Set<T, bool>(&T::setTextFormatting);
 			result["text"] = new PropertyDescription::Set<T, hstr>(&T::setText);
 			result["text_key"] = new PropertyDescription::Set<T, hstr>(&T::setTextKey);
-			result["text_color"] = new PropertyDescription::SetColor<T>(&T::setTextColor);
+			result["text_color"] = new PropertyDescription::Set<T, hstr>(&T::setTextSymbolicColor);
 			result["text_offset"] = new PropertyDescription::SetGvec2<T>(&T::setTextOffset);
 			result["text_offset_x"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetX);
 			result["text_offset_y"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetY);
 			result["min_auto_scale"] = new PropertyDescription::Set<T, float>(&T::setMinAutoScale);
-			result["background_color"] = new PropertyDescription::SetColor<T>(&T::setBackgroundColor);
+			result["background_color"] = new PropertyDescription::Set<T, hstr>(&T::setBackgroundSymbolicColor);
 			result["background_border"] = new PropertyDescription::Set<T, bool>(&T::setBackgroundBorder);
 			return result;
 		}

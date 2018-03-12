@@ -103,9 +103,9 @@ namespace aprilui
 		{
 			hmap<hstr, PropertyDescription::Accessor*> result;
 			result["push_dead_zone"] = new PropertyDescription::Set<T, float>(&T::setPushDeadZone);
-			result["hover_color"] = new PropertyDescription::SetColor<T>(&T::setHoverColor);
-			result["pushed_color"] = new PropertyDescription::SetColor<T>(&T::setPushedColor);
-			result["disabled_color"] = new PropertyDescription::SetColor<T>(&T::setDisabledColor);
+			result["hover_color"] = new PropertyDescription::Set<T, hstr>(&T::setHoverSymbolicColor);
+			result["pushed_color"] = new PropertyDescription::Set<T, hstr>(&T::setPushedSymbolicColor);
+			result["disabled_color"] = new PropertyDescription::Set<T, hstr>(&T::setDisabledSymbolicColor);
 			return result;
 		}
 
