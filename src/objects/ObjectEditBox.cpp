@@ -63,7 +63,7 @@ namespace aprilui
 		this->emptyTextKey = "";
 		this->emptyTextColor = april::Color::White;
 		this->maxLength = 0;
-		this->passwordChar = '\0';
+		this->passwordChar = "";
 		this->filter = "";
 		this->caretIndex = 0;
 		this->caretColor = april::Color::White;
