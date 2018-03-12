@@ -46,7 +46,6 @@
 		inline void execute(void* object, hstr& parameter) const { const type& converted = conversionCode; (((O*)object)->*this->function)(converted); } \
 	};
 
-
 namespace aprilui
 {
 	class apriluiExport PropertyDescription
