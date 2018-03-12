@@ -34,12 +34,12 @@ namespace aprilui
 
 		harray<PropertyDescription> getPropertyDescriptions() const;
 
-		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
-		void setHoverTextColor(const april::Color& value);
-		void setHoverTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, pushedTextColor, PushedTextColor);
 		void setPushedTextColor(const april::Color& value);
 		void setPushedTextSymbolicColor(chstr value);
+		HL_DEFINE_GET(april::Color, hoverTextColor, HoverTextColor);
+		void setHoverTextColor(const april::Color& value);
+		void setHoverTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(april::Color, disabledTextColor, DisabledTextColor);
 		void setDisabledTextColor(const april::Color& value);
 		void setDisabledTextSymbolicColor(chstr value);
@@ -59,21 +59,25 @@ namespace aprilui
 		bool triggerEvent(chstr type, void* userData = NULL);
 
 	protected:
-		april::Color hoverTextColor;
 		april::Color pushedTextColor;
+		april::Color hoverTextColor;
 		april::Color disabledTextColor;
 		
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		void _draw();
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
-		bool _useHoverTextColor;
 		bool _usePushedTextColor;
+		bool _useHoverTextColor;
 		bool _useDisabledTextColor;
 
 	};
 	
 }
-
 #endif

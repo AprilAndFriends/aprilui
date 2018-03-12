@@ -200,6 +200,7 @@ namespace aprilui
 	{
 		if (Object::_propertyDescriptions.size() == 0)
 		{
+			Object::_propertyDescriptions = BaseObject::getPropertyDescriptions();
 			Object::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::Type::Grect);
 			Object::_propertyDescriptions += PropertyDescription("position", PropertyDescription::Type::Gvec2);
 			Object::_propertyDescriptions += PropertyDescription("size", PropertyDescription::Type::Gvec2);
@@ -232,7 +233,7 @@ namespace aprilui
 			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions += PropertyDescription("focus_index", PropertyDescription::Type::Int);
 		}
-		return (BaseObject::getPropertyDescriptions() + Object::_propertyDescriptions);
+		return Object::_propertyDescriptions;
 	}
 
 	hmap<hstr, PropertyDescription::Accessor*>& Object::_getGetters() const
@@ -248,7 +249,6 @@ namespace aprilui
 			Object::_getters["w"] = new PropertyDescription::Get<Object, float>(&Object::getWidth);
 			Object::_getters["h"] = new PropertyDescription::Get<Object, float>(&Object::getHeight);
 			Object::_getters["visible"] = new PropertyDescription::Get<Object, bool>(&Object::isVisible);
-			//Object::_getters["hit_test"] = new PropertyDescription::Get<Object, Enum);
 			Object::_getters["inherit_alpha"] = new PropertyDescription::Get<Object, bool>(&Object::isInheritAlpha);
 			Object::_getters["red"] = new PropertyDescription::GetUChar<Object>(&Object::getRed);
 			Object::_getters["green"] = new PropertyDescription::GetUChar<Object>(&Object::getGreen);
@@ -287,13 +287,12 @@ namespace aprilui
 			Object::_setters["w"] = new PropertyDescription::Set<Object, float>(&Object::setWidth);
 			Object::_setters["h"] = new PropertyDescription::Set<Object, float>(&Object::setHeight);
 			Object::_setters["visible"] = new PropertyDescription::Set<Object, bool>(&Object::setVisible);
-			//Object::_setters["hit_test"] = new PropertyDescription::Set<Object, Enum);
 			Object::_setters["inherit_alpha"] = new PropertyDescription::Set<Object, bool>(&Object::setInheritAlpha);
 			Object::_setters["red"] = new PropertyDescription::SetUChar<Object>(&Object::setRed);
 			Object::_setters["green"] = new PropertyDescription::SetUChar<Object>(&Object::setGreen);
 			Object::_setters["blue"] = new PropertyDescription::SetUChar<Object>(&Object::setBlue);
 			Object::_setters["alpha"] = new PropertyDescription::SetUChar<Object>(&Object::setAlpha);
-			Object::_setters["color"] = new PropertyDescription::SetColor<Object>(&Object::setColor);
+			Object::_setters["color"] = new PropertyDescription::Set<Object, hstr>(&Object::setSymbolicColor);
 			Object::_setters["angle"] = new PropertyDescription::Set<Object, float>(&Object::setAngle);
 			Object::_setters["scale"] = new PropertyDescription::SetGvec2<Object>(&Object::setScale);
 			Object::_setters["scale_x"] = new PropertyDescription::Set<Object, float>(&Object::setScaleX);
@@ -305,7 +304,6 @@ namespace aprilui
 			Object::_setters["anchor_right"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorRight);
 			Object::_setters["anchor_top"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorTop);
 			Object::_setters["anchor_bottom"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorBottom);
-			//Object::_setters["anchors"] = new PropertyDescription::Set<Object, String);
 			Object::_setters["retain_anchor_aspect"] = new PropertyDescription::Set<Object, bool>(&Object::setRetainAnchorAspect);
 			Object::_setters["clip"] = new PropertyDescription::Set<Object, bool>(&Object::setClip);
 			Object::_setters["use_disabled_alpha"] = new PropertyDescription::Set<Object, bool>(&Object::setUseDisabledAlpha);
@@ -1175,21 +1173,22 @@ namespace aprilui
 		if (name == "anchors")
 		{
 			harray<hstr> anchors = value.replaced(" ", "").lowered().split(",", -1, true);
+			harray<hstr> testAnchors = anchors;
+			testAnchors.removeAll("left");
+			testAnchors.removeAll("right");
+			testAnchors.removeAll("top");
+			testAnchors.removeAll("bottom");
+			testAnchors.removeAll("none");
+			testAnchors.removeAll("all");
+			if (testAnchors.size() > 0)
+			{
+				hlog::warn(logTag, "Found invalid values in 'anchors=' ('" + testAnchors.joined(",") + "').");
+				return false;
+			}
 			this->setAnchorLeft(anchors.has("all") || anchors.has("left"));
 			this->setAnchorRight(anchors.has("all") || anchors.has("right"));
 			this->setAnchorTop(anchors.has("all") || anchors.has("top"));
 			this->setAnchorBottom(anchors.has("all") || anchors.has("bottom"));
-			anchors.removeAll("left");
-			anchors.removeAll("right");
-			anchors.removeAll("top");
-			anchors.removeAll("bottom");
-			anchors.removeAll("none");
-			anchors.removeAll("all");
-			if (anchors.size() > 0)
-			{
-				hlog::warn(logTag, "'anchors=' does not support values '" + anchors.joined(",") + "'.");
-				return false;
-			}
 			return true;
 		}
 		return BaseObject::setProperty(name, value);

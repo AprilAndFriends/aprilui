@@ -44,6 +44,8 @@ namespace aprilui
 	));
 
 	harray<PropertyDescription> ProgressBar::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressBar::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressBar::_setters;
 
 	ProgressBar::ProgressBar(chstr name) : ImageBox(name), ProgressBase()
 	{
@@ -74,11 +76,34 @@ namespace aprilui
 	{
 		if (ProgressBar::_propertyDescriptions.size() == 0)
 		{
+			ProgressBar::_propertyDescriptions = ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions();
 			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::Type::Bool);
 			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
 			ProgressBar::_propertyDescriptions += PropertyDescription("interactable", PropertyDescription::Type::Bool);
 		}
-		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressBar::_propertyDescriptions);
+		return ProgressBar::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ProgressBar::_getGetters() const
+	{
+		if (ProgressBar::_getters.size() == 0)
+		{
+			ProgressBar::_getters = ImageBox::_getGetters() + ProgressBase::_generateGetters<ProgressBar>();
+			ProgressBar::_getters["stretching"] = new PropertyDescription::Get<ProgressBar, bool>(&ProgressBar::isStretching);
+			ProgressBar::_getters["interactable"] = new PropertyDescription::Get<ProgressBar, bool>(&ProgressBar::isInteractable);
+		}
+		return ProgressBar::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ProgressBar::_getSetters() const
+	{
+		if (ProgressBar::_setters.size() == 0)
+		{
+			ProgressBar::_setters = ImageBox::_getSetters() + ProgressBase::_generateSetters<ProgressBar>();
+			ProgressBar::_setters["stretching"] = new PropertyDescription::Set<ProgressBar, bool>(&ProgressBar::setStretching);
+			ProgressBar::_setters["interactable"] = new PropertyDescription::Set<ProgressBar, bool>(&ProgressBar::setInteractable);
+		}
+		return ProgressBar::_setters;
 	}
 
 	Dataset* ProgressBar::getDataset() const
@@ -217,21 +242,13 @@ namespace aprilui
 
 	hstr ProgressBar::getProperty(chstr name)
 	{
-		if (name == "stretching")	return this->isStretching();
 		if (name == "direction")	return this->direction.getName().lowered();
-		if (name == "interactable")	return this->isInteractable();
-		hstr result = ProgressBase::getProperty(name);
-		if (result == "")
-		{
-			result = ImageBox::getProperty(name);
-		}
-		return result;
+		return ImageBox::getProperty(name);
 	}
 
 	bool ProgressBar::setProperty(chstr name, chstr value)
 	{
-		if		(name == "stretching")		this->setStretching(value);
-		else if (name == "direction")
+		if (name == "direction")
 		{
 			if (value == "right")			this->setDirection(Direction::Right);
 			else if (value == "left")		this->setDirection(Direction::Left);
@@ -244,11 +261,9 @@ namespace aprilui
 				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if (name == "interactable")	this->setInteractable(value);
-		else if (ProgressBase::setProperty(name, value)) { }
-		else return ImageBox::setProperty(name, value);
-		return true;
+		return ImageBox::setProperty(name, value);
 	}
 	
 	bool ProgressBar::_mouseDown(april::Key keyCode)

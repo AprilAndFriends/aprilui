@@ -31,6 +31,8 @@ namespace aprilui
 	));
 
 	harray<PropertyDescription> Animator::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> Animator::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> Animator::_setters;
 
 	Animator::Animator(chstr name) : BaseObject(name)
 	{
@@ -82,13 +84,13 @@ namespace aprilui
 	{
 		if (Animator::_propertyDescriptions.size() == 0)
 		{
+			Animator::_propertyDescriptions = BaseObject::getPropertyDescriptions();
 			Animator::_propertyDescriptions += PropertyDescription("function", PropertyDescription::Type::Enum);
 			Animator::_propertyDescriptions += PropertyDescription("func", PropertyDescription::Type::Enum);
-			Animator::_propertyDescriptions += PropertyDescription("timer", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions += PropertyDescription("timer", PropertyDescription::Type::Double);
 			Animator::_propertyDescriptions += PropertyDescription("delay", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions += PropertyDescription("periods", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions += PropertyDescription("amplitude", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("peak_to_peak", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions += PropertyDescription("speed", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions += PropertyDescription("offset", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions += PropertyDescription("multiplier", PropertyDescription::Type::Float);
@@ -99,9 +101,52 @@ namespace aprilui
 			Animator::_propertyDescriptions += PropertyDescription("target", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions += PropertyDescription("time", PropertyDescription::Type::Float);
 		}
-		return (BaseObject::getPropertyDescriptions() + Animator::_propertyDescriptions);
+		return  Animator::_propertyDescriptions;
 	}
 	
+	hmap<hstr, PropertyDescription::Accessor*>& Animator::_getGetters() const
+	{
+		if (Animator::_getters.size() == 0)
+		{
+			Animator::_getters = BaseObject::_getGetters();
+			Animator::_getters["timer"] = new PropertyDescription::Get<Animator, double>(&Animator::getTimer);
+			Animator::_getters["delay"] = new PropertyDescription::Get<Animator, float>(&Animator::getDelay);
+			Animator::_getters["periods"] = new PropertyDescription::Get<Animator, float>(&Animator::getPeriods);
+			Animator::_getters["amplitude"] = new PropertyDescription::Get<Animator, float>(&Animator::getAmplitude);
+			Animator::_getters["speed"] = new PropertyDescription::Get<Animator, float>(&Animator::getSpeed);
+			Animator::_getters["offset"] = new PropertyDescription::Get<Animator, float>(&Animator::getOffset);
+			Animator::_getters["multiplier"] = new PropertyDescription::Get<Animator, float>(&Animator::getMultiplier);
+			Animator::_getters["acceleration"] = new PropertyDescription::Get<Animator, float>(&Animator::getAcceleration);
+			Animator::_getters["discrete_step"] = new PropertyDescription::Get<Animator, int>(&Animator::getDiscreteStep);
+			Animator::_getters["reset_on_expire"] = new PropertyDescription::Get<Animator, bool>(&Animator::isResetOnExpire);
+			Animator::_getters["inherit_value"] = new PropertyDescription::Get<Animator, bool>(&Animator::isInheritValue);
+			Animator::_getters["target"] = new PropertyDescription::Get<Animator, float>(&Animator::getTarget);
+		}
+		return Animator::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& Animator::_getSetters() const
+	{
+		if (Animator::_setters.size() == 0)
+		{
+			Animator::_setters = BaseObject::_getSetters();
+			Animator::_setters["timer"] = new PropertyDescription::Set<Animator, double>(&Animator::setTimer);
+			Animator::_setters["delay"] = new PropertyDescription::Set<Animator, float>(&Animator::setDelay);
+			Animator::_setters["periods"] = new PropertyDescription::Set<Animator, float>(&Animator::setPeriods);
+			Animator::_setters["amplitude"] = new PropertyDescription::Set<Animator, float>(&Animator::setAmplitude);
+			Animator::_setters["speed"] = new PropertyDescription::Set<Animator, float>(&Animator::setSpeed);
+			Animator::_setters["offset"] = new PropertyDescription::Set<Animator, float>(&Animator::setOffset);
+			Animator::_setters["multiplier"] = new PropertyDescription::Set<Animator, float>(&Animator::setMultiplier);
+			Animator::_setters["acceleration"] = new PropertyDescription::Set<Animator, float>(&Animator::setAcceleration);
+			Animator::_setters["discrete_step"] = new PropertyDescription::Set<Animator, int>(&Animator::setDiscreteStep);
+			Animator::_setters["reset_on_expire"] = new PropertyDescription::Set<Animator, bool>(&Animator::setResetOnExpire);
+			Animator::_setters["inherit_value"] = new PropertyDescription::Set<Animator, bool>(&Animator::setInheritValue);
+			Animator::_setters["target"] = new PropertyDescription::Set<Animator, float>(&Animator::setTarget);
+			Animator::_setters["time"] = new PropertyDescription::Set<Animator, float>(&Animator::setTime);
+		}
+		return Animator::_setters;
+	}
+
 	void Animator::setDelay(const float& value)
 	{
 		this->delay = hmax(value, 0.0f);
@@ -132,7 +177,7 @@ namespace aprilui
 		return (!this->enabled || this->periods >= 0.0f && this->timer * habs(this->speed) >= this->periods);
 	}
 	
-	void Animator::setTime(float value)
+	void Animator::setTime(const float& value)
 	{
 		if (value > 0.0f)
 		{
@@ -277,26 +322,12 @@ namespace aprilui
 			if (this->animationFunction == Animator::AnimationFunction::Noise)		return "noise";
 			if (this->animationFunction == Animator::AnimationFunction::Custom)		return "custom";
 		}
-		if (name == "timer")						return this->getTimer();
-		if (name == "delay")						return this->getDelay();
-		if (name == "periods")						return this->getPeriods();
-		if (name == "amplitude")					return this->getAmplitude();
-		if (name == "peak_to_peak")					return (2 * this->getAmplitude());
-		if (name == "speed")						return this->getSpeed();
-		if (name == "offset")						return this->getOffset();
-		if (name == "multiplier")					return this->getMultiplier();
-		if (name == "acceleration")					return this->getAcceleration();
-		if (name == "discrete_step")				return this->getDiscreteStep();
-		if (name == "reset_on_expire")				return this->isResetOnExpire();
-		if (name == "inherit_value")				return this->isInheritValue();
-		// derived values
-		if	(name == "target")						return this->getTarget();
 		return BaseObject::getProperty(name);
 	}
 	
 	bool Animator::setProperty(chstr name, chstr value)
 	{
-		if		(name == "function" || name == "func")
+		if (name == "function" || name == "func")
 		{
 			if (value == "linear")			this->setAnimationFunction(Animator::AnimationFunction::Linear);
 			else if (value == "sine")		this->setAnimationFunction(Animator::AnimationFunction::Sine);
@@ -311,29 +342,22 @@ namespace aprilui
 				hlog::warn(logTag, "'function=' does not support value '" + value + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if	(name == "timer")			this->setTimer(value);
-		else if	(name == "delay")			this->setDelay(value);
-		else if	(name == "periods")			this->setPeriods(value);
-		else if	(name == "amplitude")		this->setAmplitude(value);
-		else if	(name == "peak_to_peak")	this->setAmplitude((float)value * 0.5f);
-		else if	(name == "speed")			this->setSpeed(value);
-		else if	(name == "offset")			this->setOffset(value);
-		else if	(name == "multiplier")		this->setMultiplier(value);
-		else if	(name == "acceleration")	this->setAcceleration(value);
-		else if	(name == "discrete_step")	this->setDiscreteStep(value);
-		else if (name == "reset_on_expire")	this->setResetOnExpire(value);
-		else if	(name == "inherit_value")	this->setInheritValue(value);
 		// derived values
-		else if	(name == "target")
+		if (name == "target")
 		{
 			this->setTarget(value);
 			this->setUseTarget(true);
 			this->setInheritValue(true);
+			return true;
 		}
-		else if	(name == "time")			this->setTime(value);
-		else return BaseObject::setProperty(name, value);
-		return true;
+		if (name == "time")
+		{
+			this->setTime(value);
+			return true;
+		}
+		return BaseObject::setProperty(name, value);
 	}
 	
 	void Animator::notifyEvent(chstr type, EventArgs* args)

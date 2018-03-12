@@ -68,6 +68,7 @@ namespace aprilui
 		(
 			HL_ENUM_DECLARE(Type, Int);
 			HL_ENUM_DECLARE(Type, Float);
+			HL_ENUM_DECLARE(Type, Double);
 			HL_ENUM_DECLARE(Type, Char);
 			HL_ENUM_DECLARE(Type, UChar);
 			HL_ENUM_DECLARE(Type, Bool);
@@ -92,24 +93,42 @@ namespace aprilui
 		class apriluiExport Get : public Accessor
 		{
 		public:
-			T (O::*function)() const;
-
-			inline Get(T (O::*function)() const) : Accessor() { this->function = function; }
 			inline Get(T (O::*function)()) : Accessor() { this->function = function; }
+			inline Get(T (O::*function)() const) : Accessor() { this->function = (T (O::*)())function; }
 
 			inline void execute(void* object, hstr& parameter) const { parameter = (((O*)object)->*this->function)(); }
+
+		protected:
+			T (O::*function)();
+
+		};
+
+		template <typename O, typename T, typename R>
+		class apriluiExport _SetBase : public Accessor
+		{
+		public:
+			inline _SetBase(R (O::*function)(const T&)) : Accessor() { this->function = function; }
+
+			inline void execute(void* object, hstr& parameter) const { (((O*)object)->*this->function)((T)parameter); }
+
+		protected:
+			R (O::*function)(const T&);
 
 		};
 
 		template <typename O, typename T>
-		class apriluiExport Set : public Accessor
+		class apriluiExport Set : public _SetBase<O, T, void>
 		{
 		public:
-			void (O::*function)(const T&);
+			inline Set(void (O::*function)(const T&)) : _SetBase(function) { }
 
-			inline Set(void (O::*function)(const T&)) : Accessor() { this->function = function; }
+		};
 
-			inline void execute(void* object, hstr& parameter) const { (((O*)object)->*this->function)((T)parameter); }
+		template <typename O, typename T>
+		class apriluiExport TrySet : public _SetBase<O, T, bool>
+		{
+		public:
+			inline TrySet(bool (O::*function)(const T&)) : _SetBase(function) { }
 
 		};
 
@@ -122,7 +141,6 @@ namespace aprilui
 		_DEFINE_SPECIAL_GET_CLASS(Grect, grect, april::grectToHstr(result));
 		_DEFINE_SPECIAL_SET_CLASS(Grect, grect, april::hstrToGrect(parameter));
 		_DEFINE_SPECIAL_GET_CLASS(Color, april::Color, result.hex());
-		_DEFINE_SPECIAL_SET_CLASS(Color, april::Color, __makeColor(parameter));
 
 		PropertyDescription(chstr name, Type type, bool arrayData = false);
 		~PropertyDescription();

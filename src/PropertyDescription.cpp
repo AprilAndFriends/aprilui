@@ -17,6 +17,7 @@ namespace aprilui
 	(
 		HL_ENUM_DEFINE(PropertyDescription::Type, Int);
 		HL_ENUM_DEFINE(PropertyDescription::Type, Float);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Double);
 		HL_ENUM_DEFINE(PropertyDescription::Type, Char);
 		HL_ENUM_DEFINE(PropertyDescription::Type, UChar);
 		HL_ENUM_DEFINE(PropertyDescription::Type, Bool);

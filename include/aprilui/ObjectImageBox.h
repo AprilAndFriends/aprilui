@@ -44,21 +44,23 @@ namespace aprilui
 
 		void resizeToFitImage();
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 	protected:
 		BaseImage* image;
 		hstr imageName;
 		
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		harray<BaseImage*> _getUsedImages() const;
 
 		void _draw();
 		
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

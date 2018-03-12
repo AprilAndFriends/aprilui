@@ -31,6 +31,8 @@ namespace aprilui
 {
 	float LabelBase::defaultMinAutoScale = 1.0f;
 	harray<PropertyDescription> LabelBase::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> LabelBase::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> LabelBase::_setters;
 
 	LabelBase::LabelBase()
 	{
@@ -168,7 +170,7 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::setTextOffsetX(float value)
+	void LabelBase::setTextOffsetX(const float& value)
 	{
 		if (this->textOffset.x != value)
 		{
@@ -177,7 +179,7 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::setTextOffsetY(float value)
+	void LabelBase::setTextOffsetY(const float& value)
 	{
 		if (this->textOffset.y != value)
 		{
@@ -186,12 +188,12 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::setMinAutoScale(float value)
+	void LabelBase::setMinAutoScale(const float& value)
 	{
-		value = hclamp(value, 0.1f, 1.0f);
-		if (this->minAutoScale != value)
+		float newValue = hclamp(value, 0.1f, 1.0f);
+		if (this->minAutoScale != newValue)
 		{
-			this->minAutoScale = value;
+			this->minAutoScale = newValue;
 			this->_autoScaleDirty = true;
 		}
 	}
@@ -363,16 +365,6 @@ namespace aprilui
 
 	hstr LabelBase::getProperty(chstr name)
 	{
-		if (name == "font")					return this->getFont();
-		if (name == "text_formatting")		return this->isTextFormatting();
-		if (name == "text")					return this->getText();
-		if (name == "text_key")				return this->getTextKey();
-		if (name == "text_color")			return this->getTextColor().hex();
-		if (name == "text_offset")			return april::gvec2ToHstr(this->getTextOffset());
-		if (name == "text_offset_x")		return this->getTextOffsetX();
-		if (name == "text_offset_y")		return this->getTextOffsetY();
-		if (name == "min_auto_scale")		return this->getMinAutoScale();
-		if (name == "auto_scaled_font")		return this->getAutoScaledFont();
 		if (name == "horz_formatting")
 		{
 			if (this->horzFormatting == atres::Horizontal::Left)					return "left";
@@ -446,23 +438,12 @@ namespace aprilui
 			}
 			return underline;
 		}
-		if (name == "background_color")		return this->getBackgroundColor().hex();
-		if (name == "background_border")	return this->isBackgroundBorder();
 		return "";
 	}
 	
 	bool LabelBase::setProperty(chstr name, chstr value)
 	{
-		if (name == "font")						this->setFont(value);
-		else if (name == "text_formatting")		this->setTextFormatting(value);
-		else if (name == "text_key")			this->setTextKey(value);
-		else if (name == "text")				this->setText(value);
-		else if (name == "text_color")			this->setTextColor(aprilui::_makeColor(value));
-		else if (name == "text_offset")			this->setTextOffset(april::hstrToGvec2(value));
-		else if (name == "text_offset_x")		this->setTextOffsetX(value);
-		else if (name == "text_offset_y")		this->setTextOffsetY(value);
-		else if (name == "min_auto_scale")		this->setMinAutoScale(value);
-		else if (name == "horz_formatting")
+		if (name == "horz_formatting")
 		{
 			if (value == "left")							this->setHorzFormatting(atres::Horizontal::Left);
 			else if (value == "right")						this->setHorzFormatting(atres::Horizontal::Right);
@@ -479,8 +460,9 @@ namespace aprilui
 				hlog::warn(logTag, "'horz_formatting=' does not support value '" + value + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if (name == "vert_formatting")
+		if (name == "vert_formatting")
 		{
 			if (value == "top")			this->setVertFormatting(atres::Vertical::Top);
 			else if (value == "center")	this->setVertFormatting(atres::Vertical::Center);
@@ -490,8 +472,9 @@ namespace aprilui
 				hlog::warn(logTag, "'vert_formatting=' does not support value '" + value + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if (name == "effect")
+		if (name == "effect")
 		{
 			this->setEffect(atres::TextEffect::None);
 			this->setUseEffectColor(false);
@@ -523,8 +506,9 @@ namespace aprilui
 					this->setEffectParameter(parameter);
 				}
 			}
+			return true;
 		}
-		else if (name == "strike_through")
+		if (name == "strike_through")
 		{
 			this->setStrikeThrough(false);
 			this->setUseStrikeThroughColor(false);
@@ -549,8 +533,9 @@ namespace aprilui
 					this->setStrikeThroughParameter(parameter);
 				}
 			}
+			return true;
 		}
-		else if (name == "underline")
+		if (name == "underline")
 		{
 			this->setUnderline(false);
 			this->setUseUnderlineColor(false);
@@ -575,11 +560,9 @@ namespace aprilui
 					this->setUnderlineParameter(parameter);
 				}
 			}
+			return true;
 		}
-		else if (name == "background_color")	this->setBackgroundColor(aprilui::_makeColor(value));
-		else if (name == "background_border")	this->setBackgroundBorder(value);
-		else return false;
-		return true;
+		return false;
 	}
 
 	bool LabelBase::_analyzeExtraParameters(chstr name, chstr value, bool& useColor, bool& useParameter, april::Color& color, hstr& parameter) const

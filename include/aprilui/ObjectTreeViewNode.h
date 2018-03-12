@@ -92,6 +92,8 @@ namespace aprilui
 		TreeView* _treeView;
 		TreeViewNode* _treeViewParentNode;
 
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 
 }

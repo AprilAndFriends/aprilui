@@ -20,6 +20,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> GridViewCell::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> GridViewCell::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> GridViewCell::_setters;
 
 	GridViewCell::GridViewCell(chstr name) : Container(name)
 	{
@@ -46,9 +48,30 @@ namespace aprilui
 	{
 		if (GridViewCell::_propertyDescriptions.size() == 0)
 		{
+			GridViewCell::_propertyDescriptions = Container::getPropertyDescriptions();
 			GridViewCell::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::Type::Bool);
 		}
-		return (Container::getPropertyDescriptions() + GridViewCell::_propertyDescriptions);
+		return GridViewCell::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& GridViewCell::_getGetters() const
+	{
+		if (GridViewCell::_getters.size() == 0)
+		{
+			GridViewCell::_getters = Container::_getGetters();
+			GridViewCell::_getters["selectable"] = new PropertyDescription::Get<GridViewCell, bool>(&GridViewCell::isSelectable);
+		}
+		return GridViewCell::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& GridViewCell::_getSetters() const
+	{
+		if (GridViewCell::_setters.size() == 0)
+		{
+			GridViewCell::_setters = Container::_getSetters();
+			GridViewCell::_setters["selectable"] = new PropertyDescription::Set<GridViewCell, bool>(&GridViewCell::setSelectable);
+		}
+		return GridViewCell::_setters;
 	}
 
 	hstr GridViewCell::getName() const
@@ -140,19 +163,6 @@ namespace aprilui
 			this->gridView->setSelectedIndex(this->gridViewRow->gridViewCells.indexOf(this) +
 				this->gridView->rows.indexOf(this->gridViewRow) * this->gridView->rowTemplate->gridViewCells.size());
 		}
-	}
-
-	hstr GridViewCell::getProperty(chstr name)
-	{
-		if (name == "selectable")	return this->isSelectable();
-		return Container::getProperty(name);
-	}
-
-	bool GridViewCell::setProperty(chstr name, chstr value)
-	{
-		if (name == "selectable")	this->setSelectable(value);
-		else return Container::setProperty(name, value);
-		return true;
 	}
 
 	void GridViewCell::notifyEvent(chstr type, EventArgs* args)

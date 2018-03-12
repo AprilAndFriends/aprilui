@@ -52,13 +52,13 @@ namespace aprilui
 		ListBoxItem* getItemAt(int index);
 		void snapToSelectedItem();
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 	protected:
 		april::Color evenColor;
 		april::Color oddColor;
 		harray<ListBoxItem*> items;
+
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		void _updateDisplay();
 		void _updateItem(int index);
@@ -67,8 +67,10 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

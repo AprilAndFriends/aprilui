@@ -73,8 +73,9 @@ namespace aprilui
 		april::Color _hoverColor;
 		april::Color _pushedColor;
 
+		static harray<PropertyDescription> _propertyDescriptions;
+
 	};
 
 }
-
 #endif

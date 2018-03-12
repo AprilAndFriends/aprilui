@@ -17,6 +17,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> ImageBox::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ImageBox::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ImageBox::_setters;
 
 	ImageBox::ImageBox(chstr name) : Object(name)
 	{
@@ -44,9 +46,30 @@ namespace aprilui
 	{
 		if (ImageBox::_propertyDescriptions.size() == 0)
 		{
+			ImageBox::_propertyDescriptions = Object::getPropertyDescriptions();
 			ImageBox::_propertyDescriptions += PropertyDescription("image", PropertyDescription::Type::String);
 		}
-		return (Object::getPropertyDescriptions() + ImageBox::_propertyDescriptions);
+		return ImageBox::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ImageBox::_getGetters() const
+	{
+		if (ImageBox::_getters.size() == 0)
+		{
+			ImageBox::_getters = Object::_getGetters();
+			ImageBox::_getters["image"] = new PropertyDescription::Get<ImageBox, hstr>(&ImageBox::getImageName);
+		}
+		return ImageBox::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ImageBox::_getSetters() const
+	{
+		if (ImageBox::_setters.size() == 0)
+		{
+			ImageBox::_setters = Object::_getSetters();
+			ImageBox::_setters["image"] = new PropertyDescription::TrySet<ImageBox, hstr>(&ImageBox::trySetImageByName);
+		}
+		return ImageBox::_setters;
 	}
 
 	void ImageBox::setImage(BaseImage* image)
@@ -109,19 +132,6 @@ namespace aprilui
 			this->setSize(this->image->getSrcSize());
 			this->resetPivot();
 		}
-	}
-
-	hstr ImageBox::getProperty(chstr name)
-	{
-		if (name == "image")	return this->getImageName();
-		return Object::getProperty(name);
-	}
-
-	bool ImageBox::setProperty(chstr name, chstr value)
-	{
-		if (name == "image")	this->trySetImageByName(value);
-		else return Object::setProperty(name, value);
-		return true;
 	}
 
 }

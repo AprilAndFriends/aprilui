@@ -51,11 +51,11 @@ namespace aprilui
 		HL_DEFINE_GET(gvec2, textOffset, TextOffset);
 		void setTextOffset(cgvec2 value);
 		HL_DEFINE_GET(float, textOffset.x, TextOffsetX);
-		void setTextOffsetX(float value);
+		void setTextOffsetX(const float& value);
 		HL_DEFINE_GET(float, textOffset.y, TextOffsetY);
-		void setTextOffsetY(float value);
+		void setTextOffsetY(const float& value);
 		HL_DEFINE_GET(float, minAutoScale, MinAutoScale);
-		virtual void setMinAutoScale(float value);
+		virtual void setMinAutoScale(const float& value);
 		HL_DEFINE_GET(atres::Horizontal, horzFormatting, HorzFormatting);
 		void setHorzFormatting(atres::Horizontal value);
 		HL_DEFINE_GET(atres::Vertical, vertFormatting, VertFormatting);
@@ -137,12 +137,51 @@ namespace aprilui
 		void _drawLabelBackground(cgrect rect, const april::Color& color, const april::Color& backgroundColor);
 		void _drawLabel(cgrect rect, const april::Color& color);
 
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateGetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["font"] = new PropertyDescription::Get<T, hstr>(&T::getFont);
+			result["text_formatting"] = new PropertyDescription::Get<T, bool>(&T::isTextFormatting);
+			result["text"] = new PropertyDescription::Get<T, hstr>(&T::getText);
+			result["text_key"] = new PropertyDescription::Get<T, hstr>(&T::getTextKey);
+			result["text_color"] = new PropertyDescription::GetColor<T>(&T::getTextColor);
+			result["text_offset"] = new PropertyDescription::GetGvec2<T>(&T::getTextOffset);
+			result["text_offset_x"] = new PropertyDescription::Get<T, float>(&T::getTextOffsetX);
+			result["text_offset_y"] = new PropertyDescription::Get<T, float>(&T::getTextOffsetY);
+			result["min_auto_scale"] = new PropertyDescription::Get<T, float>(&T::getMinAutoScale);
+			result["auto_scaled_font"] = new PropertyDescription::Get<T, hstr>(&T::getAutoScaledFont);
+			result["background_color"] = new PropertyDescription::GetColor<T>(&T::getBackgroundColor);
+			result["background_border"] = new PropertyDescription::Get<T, bool>(&T::isBackgroundBorder);
+			return result;
+		}
+
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateSetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["font"] = new PropertyDescription::Set<T, hstr>(&T::setFont);
+			result["text_formatting"] = new PropertyDescription::Set<T, bool>(&T::setTextFormatting);
+			result["text"] = new PropertyDescription::Set<T, hstr>(&T::setText);
+			result["text_key"] = new PropertyDescription::Set<T, hstr>(&T::setTextKey);
+			result["text_color"] = new PropertyDescription::Set<T, hstr>(&T::setTextSymbolicColor);
+			result["text_offset"] = new PropertyDescription::SetGvec2<T>(&T::setTextOffset);
+			result["text_offset_x"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetX);
+			result["text_offset_y"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetY);
+			result["min_auto_scale"] = new PropertyDescription::Set<T, float>(&T::setMinAutoScale);
+			result["background_color"] = new PropertyDescription::Set<T, hstr>(&T::setBackgroundSymbolicColor);
+			result["background_border"] = new PropertyDescription::Set<T, bool>(&T::setBackgroundBorder);
+			return result;
+		}
+
 	private:
 		bool _autoScaleDirty;
 
 		void _calcAutoScaleFont(chstr fontName, cgrect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
 
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 	

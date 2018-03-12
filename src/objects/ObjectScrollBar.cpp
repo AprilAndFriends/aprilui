@@ -35,6 +35,8 @@ namespace aprilui
 	bool ScrollBar::useBackgroundInstantScroll = false;
 
 	harray<PropertyDescription> ScrollBar::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ScrollBar::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ScrollBar::_setters;
 
 	ScrollBar::ScrollBar(chstr name) : Object(name)
 	{
@@ -87,6 +89,7 @@ namespace aprilui
 	{
 		if (ScrollBar::_propertyDescriptions.size() == 0)
 		{
+			ScrollBar::_propertyDescriptions = Object::getPropertyDescriptions();
 			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::Type::String);
 			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::Type::Float);
 			ScrollBar::_propertyDescriptions += PropertyDescription("scroll_distance", PropertyDescription::Type::Float);
@@ -96,13 +99,50 @@ namespace aprilui
 			ScrollBar::_propertyDescriptions += PropertyDescription("disabled_while_scrolling", PropertyDescription::Type::Bool);
 			ScrollBar::_propertyDescriptions += PropertyDescription("max_grid_scroll", PropertyDescription::Type::Int);
 		}
-		return (Object::getPropertyDescriptions() + ScrollBar::_propertyDescriptions);
+		return ScrollBar::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ScrollBar::_getGetters() const
+	{
+		if (ScrollBar::_getters.size() == 0)
+		{
+			ScrollBar::_getters = Object::_getGetters();
+			ScrollBar::_getters["skin"] = new PropertyDescription::Get<ScrollBar, hstr>(&ScrollBar::getSkinName);
+			ScrollBar::_getters["grid_size"] = new PropertyDescription::Get<ScrollBar, float>(&ScrollBar::getGridSize);
+			ScrollBar::_getters["scroll_distance"] = new PropertyDescription::Get<ScrollBar, float>(&ScrollBar::getScrollDistance);
+			ScrollBar::_getters["use_fading"] = new PropertyDescription::Get<ScrollBar, bool>(&ScrollBar::isUseFading);
+			ScrollBar::_getters["height_hide"] = new PropertyDescription::Get<ScrollBar, bool>(&ScrollBar::isHeightHide);
+			ScrollBar::_getters["use_stretched_slider"] = new PropertyDescription::Get<ScrollBar, bool>(&ScrollBar::isUseStretchedSlider);
+			ScrollBar::_getters["disabled_while_scrolling"] = new PropertyDescription::Get<ScrollBar, bool>(&ScrollBar::isDisabledWhileScrolling);
+			ScrollBar::_getters["max_grid_scroll"] = new PropertyDescription::Get<ScrollBar, int>(&ScrollBar::getMaxGridScroll);
+		}
+		return ScrollBar::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ScrollBar::_getSetters() const
+	{
+		if (ScrollBar::_setters.size() == 0)
+		{
+			ScrollBar::_setters = Object::_getSetters();
+			ScrollBar::_setters["skin"] = new PropertyDescription::Set<ScrollBar, hstr>(&ScrollBar::setSkinName);
+			ScrollBar::_setters["grid_size"] = new PropertyDescription::Set<ScrollBar, float>(&ScrollBar::setGridSize);
+			ScrollBar::_setters["scroll_distance"] = new PropertyDescription::Set<ScrollBar, float>(&ScrollBar::setScrollDistance);
+			ScrollBar::_setters["use_fading"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setUseFading);
+			ScrollBar::_setters["height_hide"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setHeightHide);
+			ScrollBar::_setters["use_stretched_slider"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setUseStretchedSlider);
+			ScrollBar::_setters["disabled_while_scrolling"] = new PropertyDescription::Set<ScrollBar, bool>(&ScrollBar::setDisabledWhileScrolling);
+			ScrollBar::_setters["max_grid_scroll"] = new PropertyDescription::Set<ScrollBar, int>(&ScrollBar::setMaxGridScroll);
+		}
+		return ScrollBar::_setters;
 	}
 
 	void ScrollBar::setSkinName(chstr value)
 	{
-		this->skinName = value;
-		this->notifyEvent(Event::ScrollSkinChanged, NULL);
+		if (this->skinName != value)
+		{
+			this->skinName = value;
+			this->notifyEvent(Event::ScrollSkinChanged, NULL);
+		}
 	}
 
 	ScrollBarButtonBackground* ScrollBar::_getButtonBackground() const
@@ -278,33 +318,6 @@ namespace aprilui
 				}
 			}
 		}
-	}
-
-	hstr ScrollBar::getProperty(chstr name)
-	{
-		if (name == "skin")						return this->getSkinName();
-		if (name == "grid_size")				return this->getGridSize();
-		if (name == "scroll_distance")			return this->getScrollDistance();
-		if (name == "use_fading")				return this->isUseFading();
-		if (name == "height_hide")				return this->isHeightHide();
-		if (name == "use_stretched_slider")		return this->isUseStretchedSlider();
-		if (name == "disabled_while_scrolling")	return this->isDisabledWhileScrolling();
-		if (name == "max_grid_scroll")			return this->getMaxGridScroll();
-		return Object::getProperty(name);
-	}
-
-	bool ScrollBar::setProperty(chstr name, chstr value)
-	{
-		if (name == "skin")								this->setSkinName(value);
-		else if (name == "grid_size")					this->setGridSize(value);
-		else if (name == "scroll_distance")				this->setScrollDistance(value);
-		else if (name == "use_fading")					this->setUseFading(value);
-		else if (name == "height_hide")					this->setHeightHide(value);
-		else if (name == "use_stretched_slider")		this->setUseStretchedSlider(value);
-		else if (name == "disabled_while_scrolling")	this->setDisabledWhileScrolling(value);
-		else if (name == "max_grid_scroll")				this->setMaxGridScroll(value);
-		else return Object::setProperty(name, value);
-		return true;
 	}
 
 	void ScrollBar::notifyEvent(chstr type, EventArgs* args)

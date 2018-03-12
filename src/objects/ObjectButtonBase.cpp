@@ -22,6 +22,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> ButtonBase::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ButtonBase::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ButtonBase::_setters;
 
 	harray<april::Key> ButtonBase::allowedKeys;
 	harray<april::Button> ButtonBase::allowedButtons;
@@ -152,25 +154,6 @@ namespace aprilui
 		{
 			this->triggerEvent(this->hovered ? Event::HoverStarted : Event::HoverFinished);
 		}
-	}
-
-	hstr ButtonBase::getProperty(chstr name)
-	{
-		if (name == "push_dead_zone")	return this->getPushDeadZone();
-		if (name == "hover_color")		return this->getHoverColor().hex();
-		if (name == "pushed_color")		return this->getPushedColor().hex();
-		if (name == "disabled_color")	return this->getDisabledColor().hex();
-		return "";
-	}
-
-	bool ButtonBase::setProperty(chstr name, chstr value)
-	{
-		if (name == "push_dead_zone")		this->setPushDeadZone(value);
-		else if (name == "hover_color")		this->setHoverColor(aprilui::_makeColor(value));
-		else if (name == "pushed_color")	this->setPushedColor(aprilui::_makeColor(value));
-		else if (name == "disabled_color")	this->setDisabledColor(aprilui::_makeColor(value));
-		else return false;
-		return true;
 	}
 
 	bool ButtonBase::_mouseDown(april::Key keyCode)

@@ -20,6 +20,8 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> TreeViewNode::_propertyDescriptions;
+
 	TreeViewNode::TreeViewNode(chstr name) : Container(name), ButtonBase()
 	{
 		this->depth = -1;
@@ -51,7 +53,11 @@ namespace aprilui
 
 	harray<PropertyDescription> TreeViewNode::getPropertyDescriptions() const
 	{
-		return (Container::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions());
+		if (TreeViewNode::_propertyDescriptions.size() == 0)
+		{
+			TreeViewNode::_propertyDescriptions = Container::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions();
+		}
+		return TreeViewNode::_propertyDescriptions;
 	}
 
 	hstr TreeViewNode::getName() const

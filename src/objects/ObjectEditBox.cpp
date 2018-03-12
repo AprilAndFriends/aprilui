@@ -34,6 +34,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> EditBox::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> EditBox::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> EditBox::_setters;
 
 	hstr EditBox::defaultFilterUnsignedNumeric = "0123456789";
 	hstr EditBox::defaultFilterUnsignedDecimal = EditBox::defaultFilterUnsignedNumeric + ".";
@@ -61,7 +63,7 @@ namespace aprilui
 		this->emptyTextKey = "";
 		this->emptyTextColor = april::Color::White;
 		this->maxLength = 0;
-		this->passwordChar = '\0';
+		this->passwordChar = "";
 		this->filter = "";
 		this->caretIndex = 0;
 		this->caretColor = april::Color::White;
@@ -71,8 +73,8 @@ namespace aprilui
 		this->selectionColor = april::Color::Grey;
 		this->clipboardEnabled = false;
 		this->disabledOffset = false;
-		this->renderOffsetX = 0;
-		this->renderOffsetY = 0;
+		this->_renderOffsetX = 0;
+		this->_renderOffsetY = 0;
 		this->_consumeKey = false;
 		this->_ctrlMode = false;
 		this->_altMode = false;
@@ -102,8 +104,8 @@ namespace aprilui
 		this->selectionColor = other.selectionColor;
 		this->clipboardEnabled = other.clipboardEnabled;
 		this->disabledOffset = other.disabledOffset;
-		this->renderOffsetX = 0;
-		this->renderOffsetY = 0;
+		this->_renderOffsetX = 0;
+		this->_renderOffsetY = 0;
 		this->_consumeKey = false;
 		this->_ctrlMode = false;
 		this->_altMode = false;
@@ -134,11 +136,12 @@ namespace aprilui
 	{
 		if (EditBox::_propertyDescriptions.size() == 0)
 		{
+			EditBox::_propertyDescriptions = Label::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions();
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::Type::String);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::Type::String);
 			EditBox::_propertyDescriptions += PropertyDescription("empty_text_color", PropertyDescription::Type::Color);
 			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::Type::Int);
-			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::Type::Char);
+			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::Type::String);
 			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::Type::String);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::Type::Int);
 			EditBox::_propertyDescriptions += PropertyDescription("caret_offset", PropertyDescription::Type::Gvec2);
@@ -152,7 +155,59 @@ namespace aprilui
 			EditBox::_propertyDescriptions += PropertyDescription("clipboard_enabled", PropertyDescription::Type::Bool);
 			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::Type::Bool);
 		}
-		return (Label::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions() + EditBox::_propertyDescriptions);
+		return EditBox::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& EditBox::_getGetters() const
+	{
+		if (EditBox::_getters.size() == 0)
+		{
+			EditBox::_getters = Label::_getGetters() + ButtonBase::_generateGetters<EditBox>();
+			EditBox::_getters["empty_text"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getEmptyText);
+			EditBox::_getters["empty_text_key"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getEmptyTextKey);
+			EditBox::_getters["empty_text_color"] = new PropertyDescription::GetColor<EditBox>(&EditBox::getEmptyTextColor);
+			EditBox::_getters["max_length"] = new PropertyDescription::Get<EditBox, int>(&EditBox::getMaxLength);
+			EditBox::_getters["password_char"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getPasswordChar);
+			EditBox::_getters["filter"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getFilter);
+			EditBox::_getters["caret_index"] = new PropertyDescription::Get<EditBox, int>(&EditBox::getCaretIndex);
+			EditBox::_getters["caret_offset"] = new PropertyDescription::GetGvec2<EditBox>(&EditBox::getCaretOffset);
+			EditBox::_getters["caret_offset_x"] = new PropertyDescription::Get<EditBox, float>(&EditBox::getCaretOffsetX);
+			EditBox::_getters["caret_offset_y"] = new PropertyDescription::Get<EditBox, float>(&EditBox::getCaretOffsetY);
+			EditBox::_getters["caret_color"] = new PropertyDescription::GetColor<EditBox>(&EditBox::getCaretColor);
+			EditBox::_getters["multi_line"] = new PropertyDescription::Get<EditBox, bool>(&EditBox::isMultiLine);
+			EditBox::_getters["selectable"] = new PropertyDescription::Get<EditBox, bool>(&EditBox::isSelectable);
+			EditBox::_getters["selection_count"] = new PropertyDescription::Get<EditBox, int>(&EditBox::getSelectionCount);
+			EditBox::_getters["selection_color"] = new PropertyDescription::GetColor<EditBox>(&EditBox::getSelectionColor);
+			EditBox::_getters["clipboard_enabled"] = new PropertyDescription::Get<EditBox, bool>(&EditBox::isClipboardEnabled);
+			EditBox::_getters["disabled_offset"] = new PropertyDescription::Get<EditBox, bool>(&EditBox::isDisabledOffset);
+		}
+		return EditBox::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& EditBox::_getSetters() const
+	{
+		if (EditBox::_setters.size() == 0)
+		{
+			EditBox::_setters = Label::_getSetters() + ButtonBase::_generateSetters<EditBox>();
+			EditBox::_setters["empty_text"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyText);
+			EditBox::_setters["empty_text_key"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyTextKey);
+			EditBox::_setters["empty_text_color"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setEmptyTextSymbolicColor);
+			EditBox::_setters["max_length"] = new PropertyDescription::Set<EditBox, int>(&EditBox::setMaxLength);
+			EditBox::_setters["password_char"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setPasswordChar);
+			EditBox::_setters["filter"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setFilter);
+			EditBox::_setters["caret_index"] = new PropertyDescription::Set<EditBox, int>(&EditBox::setCaretIndex);
+			EditBox::_setters["caret_offset"] = new PropertyDescription::SetGvec2<EditBox>(&EditBox::setCaretOffset);
+			EditBox::_setters["caret_offset_x"] = new PropertyDescription::Set<EditBox, float>(&EditBox::setCaretOffsetX);
+			EditBox::_setters["caret_offset_y"] = new PropertyDescription::Set<EditBox, float>(&EditBox::setCaretOffsetY);
+			EditBox::_setters["caret_color"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setCaretSymbolicColor);
+			EditBox::_setters["multi_line"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setMultiLine);
+			EditBox::_setters["selectable"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setSelectable);
+			EditBox::_setters["selection_count"] = new PropertyDescription::Set<EditBox, int>(&EditBox::setSelectionCount);
+			EditBox::_setters["selection_color"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setSelectionSymbolicColor);
+			EditBox::_setters["clipboard_enabled"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setClipboardEnabled);
+			EditBox::_setters["disabled_offset"] = new PropertyDescription::Set<EditBox, bool>(&EditBox::setDisabledOffset);
+		}
+		return EditBox::_setters;
 	}
 
 	hstr EditBox::getName() const
@@ -198,7 +253,7 @@ namespace aprilui
 		this->setEmptyTextColor(aprilui::_makeColor(value));
 	}
 
-	void EditBox::setCaretIndex(int value)
+	void EditBox::setCaretIndex(const int& value)
 	{
 		int newCaretIndex = hclamp(value, 0, this->text.utf8Size());
 		if (this->caretIndex != newCaretIndex)
@@ -215,7 +270,7 @@ namespace aprilui
 		this->setCaretColor(aprilui::_makeColor(value));
 	}
 
-	void EditBox::setSelectionCount(int value)
+	void EditBox::setSelectionCount(const int& value)
 	{
 		int newSelectionCount = (this->selectable ? hclamp(value, -this->caretIndex, this->text.utf8Size() - this->caretIndex) : 0);
 		if (this->selectionCount != newSelectionCount)
@@ -230,7 +285,7 @@ namespace aprilui
 		this->setSelectionColor(aprilui::_makeColor(value));
 	}
 
-	void EditBox::setMaxLength(int value)
+	void EditBox::setMaxLength(const int& value)
 	{
 		this->maxLength = value;
 		if (this->maxLength > 0 && this->text.utf8Size() > this->maxLength)
@@ -290,7 +345,7 @@ namespace aprilui
 
 	hstr EditBox::getDisplayedText() const
 	{
-		return (this->passwordChar == '\0' || this->text == "" ? this->text : hstr(this->passwordChar, this->text.utf8Size()));
+		return (this->passwordChar == "" || this->text == "" ? this->text : harray<hstr>(this->passwordChar, this->text.utf8Size()).joined(""));
 	}
 
 	void EditBox::setMinAutoScale(float value)
@@ -361,8 +416,8 @@ namespace aprilui
 		float heightOffset = 0.0f;
 		this->_makeBaseOffset(base, heightOffset);
 		int offsetIndex = text.size();
-		position.x -= this->renderOffsetX * fontHeight;
-		position.y += -heightOffset - this->renderOffsetY * fontHeight;
+		position.x -= this->_renderOffsetX * fontHeight;
+		position.y += -heightOffset - this->_renderOffsetY * fontHeight;
 		if (lines.size() > 0)
 		{
 			offsetIndex = 0;
@@ -458,7 +513,7 @@ namespace aprilui
 		{
 			this->caretRect.x -= 1.0f;
 		}
-		this->caretRect += gvec2((float)this->renderOffsetX, (float)this->renderOffsetY) * fontHeight;
+		this->caretRect += gvec2((float)this->_renderOffsetX, (float)this->_renderOffsetY) * fontHeight;
 		// calculate render offset
 		int jumps = 0;
 		if (!this->disabledOffset && !this->horzFormatting.isWrapped())
@@ -466,17 +521,17 @@ namespace aprilui
 			if (atres::renderer->getTextWidth(this->font, text) > this->caretRect.w)
 			{
 				// left side
-				if (this->caretRect.x < fontHeight && (this->horzFormatting != atres::Horizontal::Left || this->renderOffsetX < 0))
+				if (this->caretRect.x < fontHeight && (this->horzFormatting != atres::Horizontal::Left || this->_renderOffsetX < 0))
 				{
 					jumps = hceil((fontHeight - this->caretRect.x) / fontHeight);
 					if (this->horzFormatting == atres::Horizontal::Left)
 					{
-						jumps = hmin(jumps, -this->renderOffsetX);
+						jumps = hmin(jumps, -this->_renderOffsetX);
 					}
 					if (jumps != 0)
 					{
 						this->caretRect.x += jumps * fontHeight;
-						this->renderOffsetX += jumps;
+						this->_renderOffsetX += jumps;
 						if (this->pushed)
 						{
 							this->_caretPositionDirty = true;
@@ -484,17 +539,17 @@ namespace aprilui
 					}
 				}
 				// right side
-				if (this->caretRect.x + fontHeight > this->rect.w && (this->horzFormatting != atres::Horizontal::Right || this->renderOffsetX > 0))
+				if (this->caretRect.x + fontHeight > this->rect.w && (this->horzFormatting != atres::Horizontal::Right || this->_renderOffsetX > 0))
 				{
 					jumps = -hceil((this->caretRect.x + fontHeight - this->rect.w) / fontHeight);
 					if (this->horzFormatting == atres::Horizontal::Right)
 					{
-						jumps = hmax(jumps, -this->renderOffsetX);
+						jumps = hmax(jumps, -this->_renderOffsetX);
 					}
 					if (jumps != 0)
 					{
 						this->caretRect.x += jumps * fontHeight;
-						this->renderOffsetX += jumps;
+						this->_renderOffsetX += jumps;
 						if (this->pushed)
 						{
 							this->_caretPositionDirty = true;
@@ -504,27 +559,27 @@ namespace aprilui
 			}
 			else
 			{
-				if (this->pushed && this->renderOffsetX != 0)
+				if (this->pushed && this->_renderOffsetX != 0)
 				{
 					this->_caretPositionDirty = true;
 				}
-				this->renderOffsetX = 0;
+				this->_renderOffsetX = 0;
 			}
 		}
 		if (this->multiLine || this->horzFormatting.isWrapped())
 		{
 			// top side
-			if (this->caretRect.y < fontHeight * 0.5f && (this->vertFormatting != atres::Vertical::Top || this->renderOffsetY < 0))
+			if (this->caretRect.y < fontHeight * 0.5f && (this->vertFormatting != atres::Vertical::Top || this->_renderOffsetY < 0))
 			{
 				jumps = hceil((fontHeight * 0.5f - this->caretRect.y) / fontHeight);
 				if (this->vertFormatting == atres::Vertical::Top)
 				{
-					jumps = hmin(jumps, -this->renderOffsetY);
+					jumps = hmin(jumps, -this->_renderOffsetY);
 				}
 				if (jumps != 0)
 				{
 					this->caretRect.y += jumps * fontHeight;
-					this->renderOffsetY += jumps;
+					this->_renderOffsetY += jumps;
 					if (this->pushed)
 					{
 						this->_caretPositionDirty = true;
@@ -532,17 +587,17 @@ namespace aprilui
 				}
 			}
 			// bottom side
-			if (this->caretRect.y + (fontHeight + lineHeight) * 0.5f > this->rect.h && (this->vertFormatting != atres::Vertical::Bottom || this->renderOffsetY > 0))
+			if (this->caretRect.y + (fontHeight + lineHeight) * 0.5f > this->rect.h && (this->vertFormatting != atres::Vertical::Bottom || this->_renderOffsetY > 0))
 			{
 				jumps = -hceil((this->caretRect.y + (fontHeight + lineHeight) * 0.5f - this->rect.h) / fontHeight);
 				if (this->vertFormatting == atres::Vertical::Bottom)
 				{
-					jumps = hmax(jumps, -this->renderOffsetY);
+					jumps = hmax(jumps, -this->_renderOffsetY);
 				}
 				if (jumps != 0)
 				{
 					this->caretRect.y += jumps * fontHeight;
-					this->renderOffsetY += jumps;
+					this->_renderOffsetY += jumps;
 					if (this->pushed)
 					{
 						this->_caretPositionDirty = true;
@@ -552,13 +607,13 @@ namespace aprilui
 		}
 		else
 		{
-			if (this->pushed && this->renderOffsetY != 0)
+			if (this->pushed && this->_renderOffsetY != 0)
 			{
 				this->_caretPositionDirty = true;
 			}
-			this->renderOffsetY = 0;
+			this->_renderOffsetY = 0;
 		}
-		this->textOffset.set(this->renderOffsetX * fontHeight, this->renderOffsetY * fontHeight);
+		this->textOffset.set(this->_renderOffsetX * fontHeight, this->_renderOffsetY * fontHeight);
 	}
 
 	void EditBox::_updateSelection()
@@ -586,22 +641,22 @@ namespace aprilui
 		gvec2 positionStart = this->_makeCaretPosition(lines, hmin(this->caretIndex, this->caretIndex + this->selectionCount), base, fontHeight, heightOffset, &lineIndexStart);
 		int lineIndexEnd = 0;
 		gvec2 positionEnd = this->_makeCaretPosition(lines, hmax(this->caretIndex, this->caretIndex + this->selectionCount), base, fontHeight, heightOffset, &lineIndexEnd);
-		gvec2 renderOffset(this->renderOffsetX * fontHeight, this->renderOffsetY * fontHeight);
+		gvec2 _renderOffset(this->_renderOffsetX * fontHeight, this->_renderOffsetY * fontHeight);
 		if (lineIndexStart == lineIndexEnd)
 		{
-			this->_selectionRects += grect(positionStart + renderOffset, positionEnd.x - positionStart.x, fontHeight);
+			this->_selectionRects += grect(positionStart + _renderOffset, positionEnd.x - positionStart.x, fontHeight);
 		}
 		else
 		{
-			this->_selectionRects += grect(positionStart + renderOffset, lines[lineIndexStart].rect.right() - positionStart.x, fontHeight);
+			this->_selectionRects += grect(positionStart + _renderOffset, lines[lineIndexStart].rect.right() - positionStart.x, fontHeight);
 			if (lineIndexEnd - lineIndexStart > 1)
 			{
 				for_iter (i, lineIndexStart + 1, lineIndexEnd)
 				{
-					this->_selectionRects += grect(lines[i].rect.x + renderOffset.x, lines[i].rect.y + renderOffset.y + heightOffset, lines[i].rect.w, fontHeight);
+					this->_selectionRects += grect(lines[i].rect.x + _renderOffset.x, lines[i].rect.y + _renderOffset.y + heightOffset, lines[i].rect.w, fontHeight);
 				}
 			}
-			this->_selectionRects += grect(lines[lineIndexEnd].rect.x + renderOffset.x, positionEnd.y + renderOffset.y, positionEnd.x - lines[lineIndexEnd].rect.x, fontHeight);
+			this->_selectionRects += grect(lines[lineIndexEnd].rect.x + _renderOffset.x, positionEnd.y + _renderOffset.y, positionEnd.x - lines[lineIndexEnd].rect.x, fontHeight);
 		}
 	}
 
@@ -772,51 +827,6 @@ namespace aprilui
 		this->text = text;
 		this->color = color;
 		this->textColor = textColor;
-	}
-
-	hstr EditBox::getProperty(chstr name)
-	{
-		if (name == "empty_text")			return this->getEmptyText();
-		if (name == "empty_text_key")		return this->getEmptyTextKey();
-		if (name == "empty_text_color")		return this->getEmptyTextColor().hex();
-		if (name == "max_length")			return this->getMaxLength();
-		if (name == "password_char")		return this->getPasswordChar();
-		if (name == "filter")				return this->getFilter();
-		if (name == "caret_index")			return this->getCaretIndex();
-		if (name == "caret_offset")			return april::gvec2ToHstr(this->getCaretOffset());
-		if (name == "caret_offset_x")		return this->getCaretOffsetX();
-		if (name == "caret_offset_y")		return this->getCaretOffsetY();
-		if (name == "caret_offset_y")		return this->getCaretColor().hex();
-		if (name == "multi_line")			return this->isMultiLine();
-		if (name == "selectable")			return this->isSelectable();
-		if (name == "selection_count")		return this->getSelectionCount();
-		if (name == "selection_color")		return this->getSelectionColor().hex();
-		if (name == "clipboard_enabled")	return this->isClipboardEnabled();
-		if (name == "disabled_offset")		return this->isDisabledOffset();
-		return Label::getProperty(name);
-	}
-
-	bool EditBox::setProperty(chstr name, chstr value)
-	{
-		if (name == "empty_text")				this->setEmptyText(value);
-		else if (name == "empty_text_key")		this->setEmptyTextKey(value);
-		else if (name == "empty_text_color")	this->setEmptyTextColor(aprilui::_makeColor(value));
-		else if (name == "max_length")			this->setMaxLength(value);
-		else if (name == "password_char")		this->setPasswordChar(value.cStr()[0]);
-		else if (name == "filter")				this->setFilter(value);
-		else if (name == "caret_index")			this->setCaretIndex(value);
-		else if (name == "caret_offset")		this->setCaretOffset(april::hstrToGvec2(value));
-		else if (name == "caret_offset_x")		this->setCaretOffsetX(value);
-		else if (name == "caret_offset_y")		this->setCaretOffsetY(value);
-		else if (name == "caret_color")			this->setCaretColor(aprilui::_makeColor(value));
-		else if (name == "multi_line")			this->setMultiLine(value);
-		else if (name == "selectable")			this->setSelectable(value);
-		else if (name == "selection_count")		this->setSelectionCount(value);
-		else if (name == "selection_color")		this->setSelectionColor(aprilui::_makeColor(value));
-		else if (name == "clipboard_enabled")	this->setClipboardEnabled(value);
-		else if (name == "disabled_offset")		this->setDisabledOffset(value);
-		else return Label::setProperty(name, value);
-		return true;
 	}
 
 	void EditBox::notifyEvent(chstr type, EventArgs* args)

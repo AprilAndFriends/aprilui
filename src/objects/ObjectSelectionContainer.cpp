@@ -21,15 +21,17 @@
 namespace aprilui
 {
 	harray<PropertyDescription> SelectionContainer::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> SelectionContainer::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> SelectionContainer::_setters;
 
 	SelectionContainer::SelectionContainer(chstr name) : Container(name)
 	{
 		this->selectedIndex = -1;
 		this->itemHeight = 32.0f;
-		this->hoverColor.set(april::Color::White, 192);
 		this->pushedColor.set(april::Color::LightGrey, 192);
-		this->selectedColor.set(april::Color::Aqua, 192);
+		this->hoverColor.set(april::Color::White, 192);
 		this->selectedHoverColor.set(april::Color::LightAqua, 192);
+		this->selectedColor.set(april::Color::Aqua, 192);
 		this->selectedPushedColor.set(april::Color::DarkAqua, 192);
 		this->allowDrag = false;
 	}
@@ -38,11 +40,11 @@ namespace aprilui
 	{
 		this->selectedIndex = -1; // a cloned SelectionContainer has no children
 		this->itemHeight = other.itemHeight;
-		this->hoverColor = other.hoverColor;
 		this->pushedColor = other.pushedColor;
+		this->hoverColor = other.hoverColor;
 		this->selectedColor = other.selectedColor;
-		this->selectedHoverColor = other.selectedHoverColor;
 		this->selectedPushedColor = other.selectedPushedColor;
+		this->selectedHoverColor = other.selectedHoverColor;
 		this->allowDrag = other.allowDrag;
 	}
 
@@ -54,20 +56,56 @@ namespace aprilui
 	{
 		if (SelectionContainer::_propertyDescriptions.size() == 0)
 		{
+			SelectionContainer::_propertyDescriptions = Container::getPropertyDescriptions();
 			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_index", PropertyDescription::Type::Int);
 			SelectionContainer::_propertyDescriptions += PropertyDescription("item_height", PropertyDescription::Type::Float);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
 			SelectionContainer::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
 			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_color", PropertyDescription::Type::Color);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_hover_color", PropertyDescription::Type::Color);
 			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_pushed_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_hover_color", PropertyDescription::Type::Color);
 			SelectionContainer::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
 			SelectionContainer::_propertyDescriptions += PropertyDescription("item_count", PropertyDescription::Type::Int);
 		}
-		return (Container::getPropertyDescriptions() + SelectionContainer::_propertyDescriptions);
+		return SelectionContainer::_propertyDescriptions;
 	}
 
-	void SelectionContainer::setSelectedIndex(int value)
+	hmap<hstr, PropertyDescription::Accessor*>& SelectionContainer::_getGetters() const
+	{
+		if (SelectionContainer::_getters.size() == 0)
+		{
+			SelectionContainer::_getters = Container::_getGetters();
+			SelectionContainer::_getters["selected_index"] = new PropertyDescription::Get<SelectionContainer, int>(&SelectionContainer::getSelectedIndex);
+			SelectionContainer::_getters["item_height"] = new PropertyDescription::Get<SelectionContainer, float>(&SelectionContainer::getItemHeight);
+			SelectionContainer::_getters["pushed_color"] = new PropertyDescription::GetColor<SelectionContainer>(&SelectionContainer::getPushedColor);
+			SelectionContainer::_getters["hover_color"] = new PropertyDescription::GetColor<SelectionContainer>(&SelectionContainer::getHoverColor);
+			SelectionContainer::_getters["selected_color"] = new PropertyDescription::GetColor<SelectionContainer>(&SelectionContainer::getSelectedColor);
+			SelectionContainer::_getters["selected_pushed_color"] = new PropertyDescription::GetColor<SelectionContainer>(&SelectionContainer::getSelectedPushedColor);
+			SelectionContainer::_getters["selected_hover_color"] = new PropertyDescription::GetColor<SelectionContainer>(&SelectionContainer::getSelectedHoverColor);
+			SelectionContainer::_getters["allow_drag"] = new PropertyDescription::Get<SelectionContainer, bool>(&SelectionContainer::isAllowDrag);
+			SelectionContainer::_getters["item_count"] = new PropertyDescription::Get<SelectionContainer, int>(&SelectionContainer::getItemCount);
+		}
+		return SelectionContainer::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& SelectionContainer::_getSetters() const
+	{
+		if (SelectionContainer::_setters.size() == 0)
+		{
+			SelectionContainer::_setters = Container::_getSetters();
+			SelectionContainer::_setters["selected_index"] = new PropertyDescription::Set<SelectionContainer, int>(&SelectionContainer::setSelectedIndex);
+			SelectionContainer::_setters["item_height"] = new PropertyDescription::Set<SelectionContainer, float>(&SelectionContainer::setItemHeight);
+			SelectionContainer::_setters["pushed_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setPushedSymbolicColor);
+			SelectionContainer::_setters["hover_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setHoverSymbolicColor);
+			SelectionContainer::_setters["selected_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setSelectedSymbolicColor);
+			SelectionContainer::_setters["selected_pushed_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setSelectedPushedSymbolicColor);
+			SelectionContainer::_setters["selected_hover_color"] = new PropertyDescription::Set<SelectionContainer, hstr>(&SelectionContainer::setSelectedHoverSymbolicColor);
+			SelectionContainer::_setters["allow_drag"] = new PropertyDescription::Set<SelectionContainer, bool>(&SelectionContainer::setAllowDrag);
+		}
+		return SelectionContainer::_setters;
+	}
+
+	void SelectionContainer::setSelectedIndex(const int& value)
 	{
 		if (this->selectedIndex != value)
 		{
@@ -82,27 +120,13 @@ namespace aprilui
 		}
 	}
 
-	void SelectionContainer::setItemHeight(float value)
+	void SelectionContainer::setItemHeight(const float& value)
 	{
 		if (this->itemHeight != value)
 		{
 			this->itemHeight = value;
 			this->_updateDisplay();
 		}
-	}
-
-	void SelectionContainer::setHoverColor(const april::Color& value)
-	{
-		if (this->hoverColor != value)
-		{
-			this->hoverColor = value;
-			this->_updateDisplay();
-		}
-	}
-
-	void SelectionContainer::setHoverSymbolicColor(chstr value)
-	{
-		this->setHoverColor(aprilui::_makeColor(value));
 	}
 
 	void SelectionContainer::setPushedColor(const april::Color& value)
@@ -119,6 +143,20 @@ namespace aprilui
 		this->setPushedColor(aprilui::_makeColor(value));
 	}
 
+	void SelectionContainer::setHoverColor(const april::Color& value)
+	{
+		if (this->hoverColor != value)
+		{
+			this->hoverColor = value;
+			this->_updateDisplay();
+		}
+	}
+
+	void SelectionContainer::setHoverSymbolicColor(chstr value)
+	{
+		this->setHoverColor(aprilui::_makeColor(value));
+	}
+
 	void SelectionContainer::setSelectedColor(const april::Color& value)
 	{
 		if (this->selectedColor != value)
@@ -131,20 +169,6 @@ namespace aprilui
 	void SelectionContainer::setSelectedSymbolicColor(chstr value)
 	{
 		this->setSelectedColor(aprilui::_makeColor(value));
-	}
-
-	void SelectionContainer::setSelectedHoverColor(const april::Color& value)
-	{
-		if (this->selectedHoverColor != value)
-		{
-			this->selectedHoverColor = value;
-			this->_updateDisplay();
-		}
-	}
-
-	void SelectionContainer::setSelectedHoverSymbolicColor(chstr value)
-	{
-		this->setSelectedHoverColor(aprilui::_makeColor(value));
 	}
 
 	void SelectionContainer::setSelectedPushedColor(const april::Color& value)
@@ -161,7 +185,21 @@ namespace aprilui
 		this->setSelectedPushedColor(aprilui::_makeColor(value));
 	}
 
-	void SelectionContainer::setAllowDrag(bool value)
+	void SelectionContainer::setSelectedHoverColor(const april::Color& value)
+	{
+		if (this->selectedHoverColor != value)
+		{
+			this->selectedHoverColor = value;
+			this->_updateDisplay();
+		}
+	}
+
+	void SelectionContainer::setSelectedHoverSymbolicColor(chstr value)
+	{
+		this->setSelectedHoverColor(aprilui::_makeColor(value));
+	}
+
+	void SelectionContainer::setAllowDrag(const bool& value)
 	{
 		if (this->allowDrag != value)
 		{
@@ -171,34 +209,6 @@ namespace aprilui
 				this->scrollArea->setAllowDrag(value);
 			}
 		}
-	}
-
-	hstr SelectionContainer::getProperty(chstr name)
-	{
-		if (name == "selected_index")			return this->getSelectedIndex();
-		if (name == "item_height")				return this->getItemHeight();
-		if (name == "hover_color")				return this->getHoverColor().hex();
-		if (name == "pushed_color")				return this->getPushedColor().hex();
-		if (name == "selected_color")			return this->getSelectedColor().hex();
-		if (name == "selected_hover_color")		return this->getSelectedHoverColor().hex();
-		if (name == "selected_pushed_color")	return this->getSelectedPushedColor().hex();
-		if (name == "allow_drag")				return this->isAllowDrag();
-		if (name == "item_count")				return this->getItemCount();
-		return Container::getProperty(name);
-	}
-
-	bool SelectionContainer::setProperty(chstr name, chstr value)
-	{
-		if		(name == "selected_index")			this->setSelectedIndex(value);
-		else if (name == "item_height")				this->setItemHeight(value);
-		else if (name == "hover_color")				this->setHoverColor(aprilui::_makeColor(value));
-		else if (name == "pushed_color")			this->setPushedColor(aprilui::_makeColor(value));
-		else if (name == "selected_color")			this->setSelectedColor(aprilui::_makeColor(value));
-		else if (name == "selected_hover_color")	this->setSelectedHoverColor(aprilui::_makeColor(value));
-		else if (name == "selected_pushed_color")	this->setSelectedPushedColor(aprilui::_makeColor(value));
-		else if (name == "allow_drag")				this->setAllowDrag(value);
-		else return Container::setProperty(name, value);
-		return true;
 	}
 
 	void SelectionContainer::notifyEvent(chstr type, EventArgs* args)

@@ -46,7 +46,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, emptyTextColor, EmptyTextColor);
 		void setEmptyTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(int, caretIndex, CaretIndex);
-		void setCaretIndex(int value);
+		void setCaretIndex(const int& value);
 		HL_DEFINE_GETSET(gvec2, caretOffset, CaretOffset);
 		HL_DEFINE_GETSET(float, caretOffset.x, CaretOffsetX);
 		HL_DEFINE_GETSET(float, caretOffset.y, CaretOffsetY);
@@ -55,13 +55,13 @@ namespace aprilui
 		HL_DEFINE_ISSET(multiLine, MultiLine);
 		HL_DEFINE_ISSET(selectable, Selectable);
 		HL_DEFINE_GET(int, selectionCount, SelectionCount);
-		void setSelectionCount(int value);
+		void setSelectionCount(const int& value);
 		HL_DEFINE_GETSET(april::Color, selectionColor, SelectionColor);
 		void setSelectionSymbolicColor(chstr value);
 		HL_DEFINE_ISSET(clipboardEnabled, ClipboardEnabled);
 		HL_DEFINE_GET(int, maxLength, MaxLength);
-		void setMaxLength(int value);
-		HL_DEFINE_GETSET(char, passwordChar, PasswordChar);
+		void setMaxLength(const int& value);
+		HL_DEFINE_GETSET(hstr, passwordChar, PasswordChar);
 		HL_DEFINE_ISSET(disabledOffset, DisabledOffset);
 		HL_DEFINE_GET(hstr, filter, Filter);
 		void setFilter(chstr value);
@@ -74,9 +74,6 @@ namespace aprilui
 
 		void setCaretIndexAt(cgvec2 position);
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-		
 		void notifyEvent(chstr type, EventArgs* args);
 
 		bool triggerEvent(chstr type, april::Key keyCode);
@@ -106,7 +103,7 @@ namespace aprilui
 		hstr emptyTextKey;
 		april::Color emptyTextColor;
 		int maxLength;
-		char passwordChar;
+		hstr passwordChar;
 		hstr filter;
 		int caretIndex;
 		gvec2 caretOffset;
@@ -117,10 +114,10 @@ namespace aprilui
 		april::Color selectionColor;
 		bool clipboardEnabled;
 		bool disabledOffset;
-
 		grect caretRect;
-		int renderOffsetX;
-		int renderOffsetY;
+
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		void _updateCaretPosition();
 		void _updateCaret();
@@ -164,6 +161,11 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
+
+		int _renderOffsetX;
+		int _renderOffsetY;
 
 		bool _consumeKey;
 		bool _ctrlMode;

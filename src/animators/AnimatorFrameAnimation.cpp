@@ -19,6 +19,8 @@ namespace aprilui
 	namespace Animators
 	{
 		harray<PropertyDescription> FrameAnimation::_propertyDescriptions;
+		hmap<hstr, PropertyDescription::Accessor*> FrameAnimation::_getters;
+		hmap<hstr, PropertyDescription::Accessor*> FrameAnimation::_setters;
 
 		FrameAnimation::FrameAnimation(chstr name) : Animator(name)
 		{
@@ -47,11 +49,36 @@ namespace aprilui
 		{
 			if (FrameAnimation::_propertyDescriptions.size() == 0)
 			{
+				FrameAnimation::_propertyDescriptions = Animator::getPropertyDescriptions();
 				FrameAnimation::_propertyDescriptions += PropertyDescription("base_name", PropertyDescription::Type::String);
 				FrameAnimation::_propertyDescriptions += PropertyDescription("first_frame", PropertyDescription::Type::Int);
 				FrameAnimation::_propertyDescriptions += PropertyDescription("frame_count", PropertyDescription::Type::Int);
 			}
-			return (Animator::getPropertyDescriptions() + FrameAnimation::_propertyDescriptions);
+			return FrameAnimation::_propertyDescriptions;
+		}
+
+		hmap<hstr, PropertyDescription::Accessor*>& FrameAnimation::_getGetters() const
+		{
+			if (FrameAnimation::_getters.size() == 0)
+			{
+				FrameAnimation::_getters = Animator::_getGetters();
+				FrameAnimation::_getters["base_name"] = new PropertyDescription::Get<FrameAnimation, hstr>(&FrameAnimation::getImageBaseName);
+				FrameAnimation::_getters["first_frame"] = new PropertyDescription::Get<FrameAnimation, int>(&FrameAnimation::getFirstFrame);
+				FrameAnimation::_getters["frame_count"] = new PropertyDescription::Get<FrameAnimation, int>(&FrameAnimation::getFrameCount);
+			}
+			return FrameAnimation::_getters;
+		}
+
+		hmap<hstr, PropertyDescription::Accessor*>& FrameAnimation::_getSetters() const
+		{
+			if (FrameAnimation::_setters.size() == 0)
+			{
+				FrameAnimation::_setters = Animator::_getSetters();
+				FrameAnimation::_setters["base_name"] = new PropertyDescription::Set<FrameAnimation, hstr>(&FrameAnimation::setImageBaseName);
+				FrameAnimation::_setters["first_frame"] = new PropertyDescription::Set<FrameAnimation, int>(&FrameAnimation::setFirstFrame);
+				FrameAnimation::_setters["frame_count"] = new PropertyDescription::Set<FrameAnimation, int>(&FrameAnimation::setFrameCount);
+			}
+			return FrameAnimation::_setters;
 		}
 
 		bool FrameAnimation::isAnimated() const
@@ -59,25 +86,14 @@ namespace aprilui
 			return (Animator::isAnimated() && this->imageBaseName != "" && this->frameCount > 0);
 		}
 
-		hstr FrameAnimation::getProperty(chstr name)
-		{
-			if (name == "base_name")	return this->getImageBaseName();
-			if (name == "first_frame")	return this->getFirstFrame();
-			if (name == "frame_count")	return this->getFrameCount();
-			return Animator::getProperty(name);
-		}
-
 		bool FrameAnimation::setProperty(chstr name, chstr value)
 		{
-			if		(name == "base_name")		this->setImageBaseName(value);
-			else if (name == "first_frame")		this->setFirstFrame(value);
-			else if (name == "frame_count")		this->setFrameCount(value);
-			else if (name == "inherit_value")
+			if (name == "inherit_value")
 			{
 				hlog::warn(logTag, "Animators::FrameAnimation does not support 'inherit_value'!");
+				return false;
 			}
-			else return Animator::setProperty(name, value);
-			return true;
+			return Animator::setProperty(name, value);
 		}
 
 		void FrameAnimation::notifyEvent(chstr type, EventArgs* args)

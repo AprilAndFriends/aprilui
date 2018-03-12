@@ -20,6 +20,9 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> OptionButton::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> OptionButton::_getters;
+
 	OptionButton::OptionButton(chstr name) : ToggleButton(name)
 	{
 	}
@@ -37,15 +40,29 @@ namespace aprilui
 		return new OptionButton(name);
 	}
 
+	harray<PropertyDescription> OptionButton::getPropertyDescriptions() const
+	{
+		if (OptionButton::_propertyDescriptions.size() == 0)
+		{
+			OptionButton::_propertyDescriptions = ToggleButton::getPropertyDescriptions();
+			OptionButton::_propertyDescriptions += PropertyDescription("option_count", PropertyDescription::Type::Int);
+		}
+		return OptionButton::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& OptionButton::_getGetters() const
+	{
+		if (OptionButton::_getters.size() == 0)
+		{
+			OptionButton::_getters = ToggleButton::_getGetters();
+			OptionButton::_getters["option_count"] = new PropertyDescription::Get<OptionButton, int>(&OptionButton::getOptionCount);
+		}
+		return OptionButton::_getters;
+	}
+
 	int OptionButton::getOptionCount() const
 	{
 		return (this->parent != NULL ? this->parent->getChildrenObjects().dynamicCast<OptionButton*>().size() : 0);
-	}
-
-	hstr OptionButton::getProperty(chstr name)
-	{
-		if (name == "option_count")	return this->getOptionCount();
-		return ToggleButton::getProperty(name);
 	}
 
 	void OptionButton::turnOn()

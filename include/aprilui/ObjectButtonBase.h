@@ -54,9 +54,6 @@ namespace aprilui
 		virtual Object* getParent() const = 0;
 		virtual Dataset* getDataset() const = 0;
 
-		virtual hstr getProperty(chstr name);
-		virtual bool setProperty(chstr name, chstr value);
-
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL) = 0;
@@ -90,8 +87,32 @@ namespace aprilui
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
 
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateGetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["push_dead_zone"] = new PropertyDescription::Get<T, float>(&T::getPushDeadZone);
+			result["hover_color"] = new PropertyDescription::GetColor<T>(&T::getHoverColor);
+			result["pushed_color"] = new PropertyDescription::GetColor<T>(&T::getPushedColor);
+			result["disabled_color"] = new PropertyDescription::GetColor<T>(&T::getDisabledColor);
+			return result;
+		}
+
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateSetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["push_dead_zone"] = new PropertyDescription::Set<T, float>(&T::setPushDeadZone);
+			result["hover_color"] = new PropertyDescription::Set<T, hstr>(&T::setHoverSymbolicColor);
+			result["pushed_color"] = new PropertyDescription::Set<T, hstr>(&T::setPushedSymbolicColor);
+			result["disabled_color"] = new PropertyDescription::Set<T, hstr>(&T::setDisabledSymbolicColor);
+			return result;
+		}
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 		gvec2 _mouseDownPosition;
 		Object* _thisObject; // used for internal optimization to avoid dynamic_cast
@@ -99,5 +120,4 @@ namespace aprilui
 	};
 	
 }
-
 #endif

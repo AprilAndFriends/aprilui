@@ -66,6 +66,9 @@ namespace aprilui
 	protected:
 		Direction direction;
 		
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		harray<BaseImage*> _getUsedImages() const;
 		april::Color _makeDrawColor(const april::Color& color) const;
 
@@ -74,8 +77,10 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

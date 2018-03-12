@@ -16,6 +16,10 @@
 
 namespace aprilui
 {
+	harray<PropertyDescription> Label::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> Label::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> Label::_setters;
+
 	Label::Label(chstr name) : Object(name), LabelBase()
 	{
 		this->text = "Label: " + name;
@@ -37,7 +41,29 @@ namespace aprilui
 
 	harray<PropertyDescription> Label::getPropertyDescriptions() const
 	{
-		return (Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions());
+		if (Label::_propertyDescriptions.size() == 0)
+		{
+			Label::_propertyDescriptions = Object::getPropertyDescriptions() + LabelBase::getPropertyDescriptions();
+		}
+		return Label::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& Label::_getGetters() const
+	{
+		if (Label::_getters.size() == 0)
+		{
+			Label::_getters = Object::_getGetters() + LabelBase::_generateGetters<Label>();
+		}
+		return Label::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& Label::_getSetters() const
+	{
+		if (Label::_setters.size() == 0)
+		{
+			Label::_setters = Object::_getSetters() + LabelBase::_generateSetters<Label>();
+		}
+		return Label::_setters;
 	}
 
 	Dataset* Label::getDataset() const
@@ -62,7 +88,7 @@ namespace aprilui
 
 	hstr Label::getProperty(chstr name)
 	{
-		hstr result = LabelBase::getProperty(name);
+		hstr result = LabelBase::getProperty(name); // check side-class first
 		if (result == "")
 		{
 			result = Object::getProperty(name);
@@ -72,7 +98,7 @@ namespace aprilui
 
 	bool Label::setProperty(chstr name, chstr value)
 	{
-		if (LabelBase::setProperty(name, value))
+		if (LabelBase::setProperty(name, value)) // check side-class first
 		{
 			return true;
 		}

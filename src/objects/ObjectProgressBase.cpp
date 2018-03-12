@@ -18,6 +18,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> ProgressBase::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressBase::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressBase::_setters;
 
 	ProgressBase::ProgressBase()
 	{
@@ -148,31 +150,6 @@ namespace aprilui
 	void ProgressBase::setMaskSymbolicColor(chstr value)
 	{
 		this->setMaskColor(aprilui::_makeColor(value));
-	}
-	
-	hstr ProgressBase::getProperty(chstr name)
-	{
-		if (name == "progress_image")		return this->getProgressImageName();
-		if (name == "anti_progress_image")	return this->getAntiProgressImageName();
-		if (name == "mask_image")			return this->getMaskImageName();
-		if (name == "progress")				return this->getProgress();
-		if (name == "progress_color")		return this->getProgressColor().hex();
-		if (name == "anti_progress_color")	return this->getAntiProgressColor().hex();
-		if (name == "mask_color")			return this->getMaskColor().hex();
-		return "";
-	}
-
-	bool ProgressBase::setProperty(chstr name, chstr value)
-	{
-		if		(name == "progress_image")		this->trySetProgressImageByName(value);
-		else if (name == "anti_progress_image")	this->trySetAntiProgressImageByName(value);
-		else if (name == "mask_image")			this->trySetMaskImageByName(value);
-		else if (name == "progress")			this->setProgress(value);
-		else if (name == "progress_color")		this->setProgressColor(aprilui::_makeColor(value));
-		else if (name == "anti_progress_color")	this->setAntiProgressColor(aprilui::_makeColor(value));
-		else if (name == "mask_color")			this->setMaskColor(aprilui::_makeColor(value));
-		else return false;
-		return true;
 	}
 	
 	april::Color ProgressBase::_makeDrawProgressColor() const

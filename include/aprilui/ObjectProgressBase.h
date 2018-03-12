@@ -65,9 +65,6 @@ namespace aprilui
 		bool trySetAntiProgressImageByName(chstr name);
 		bool trySetMaskImageByName(chstr name);
 		virtual bool trySetImageByName(chstr name) = 0;
-		
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 		HL_DEPRECATED("Deprecated API. Use setProgressSymbolicColor() instead.") void setSymbolicProgressColor(chstr value) { this->setProgressSymbolicColor(value); }
@@ -86,7 +83,7 @@ namespace aprilui
 		april::Color progressColor;
 		april::Color antiProgressColor;
 		april::Color maskColor;
-		
+
 		virtual april::Color _makeDrawColor(const april::Color& color) const = 0;
 		april::Color _makeDrawProgressColor() const;
 		april::Color _makeDrawAntiProgressColor() const;
@@ -94,10 +91,40 @@ namespace aprilui
 		
 		virtual harray<BaseImage*> _getUsedImages() const;
 
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateGetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["progress_image"] = new PropertyDescription::Get<T, hstr>(&T::getProgressImageName);
+			result["anti_progress_image"] = new PropertyDescription::Get<T, hstr>(&T::getAntiProgressImageName);
+			result["mask_image"] = new PropertyDescription::Get<T, hstr>(&T::getMaskImageName);
+			result["progress"] = new PropertyDescription::Get<T, float>(&T::getProgress);
+			result["progress_color"] = new PropertyDescription::GetColor<T>(&T::getProgressColor);
+			result["anti_progress_color"] = new PropertyDescription::GetColor<T>(&T::getAntiProgressColor);
+			result["mask_color"] = new PropertyDescription::GetColor<T>(&T::getMaskColor);
+			return result;
+		}
+
+		template <typename T>
+		static hmap<hstr, PropertyDescription::Accessor*> _generateSetters()
+		{
+			hmap<hstr, PropertyDescription::Accessor*> result;
+			result["progress_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetProgressImageByName);
+			result["anti_progress_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetAntiProgressImageByName);
+			result["mask_image"] = new PropertyDescription::TrySet<T, hstr>(&T::trySetMaskImageByName);
+			result["progress"] = new PropertyDescription::Set<T, float>(&T::setProgress);
+			result["progress_color"] = new PropertyDescription::Set<T, hstr>(&T::setProgressSymbolicColor);
+			result["anti_progress_color"] = new PropertyDescription::Set<T, hstr>(&T::setAntiProgressSymbolicColor);
+			result["mask_color"] = new PropertyDescription::Set<T, hstr>(&T::setMaskSymbolicColor);
+			return result;
+		}
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

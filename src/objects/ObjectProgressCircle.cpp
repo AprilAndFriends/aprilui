@@ -61,6 +61,8 @@ namespace aprilui
 	));
 
 	harray<PropertyDescription> ProgressCircle::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_setters;
 
 	ProgressCircle::ProgressCircle(chstr name) : ImageBox(name), ProgressBase()
 	{
@@ -85,9 +87,28 @@ namespace aprilui
 	{
 		if (ProgressCircle::_propertyDescriptions.size() == 0)
 		{
+			ProgressCircle::_propertyDescriptions = ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions();
 			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
 		}
-		return (ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions() + ProgressCircle::_propertyDescriptions);
+		return ProgressCircle::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ProgressCircle::_getGetters() const
+	{
+		if (ProgressCircle::_getters.size() == 0)
+		{
+			ProgressCircle::_getters = ImageBox::_getGetters() + ProgressBase::_generateGetters<ProgressCircle>();
+		}
+		return ProgressCircle::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& ProgressCircle::_getSetters() const
+	{
+		if (ProgressCircle::_setters.size() == 0)
+		{
+			ProgressCircle::_setters = ImageBox::_getSetters() + ProgressBase::_generateSetters<ProgressCircle>();
+		}
+		return ProgressCircle::_setters;
 	}
 
 	Dataset* ProgressCircle::getDataset() const
@@ -257,17 +278,12 @@ namespace aprilui
 	hstr ProgressCircle::getProperty(chstr name)
 	{
 		if (name == "direction")	return this->direction.getName().lowered();
-		hstr result = ProgressBase::getProperty(name);
-		if (result == "")
-		{
-			result = ImageBox::getProperty(name);
-		}
-		return result;
+		return ImageBox::getProperty(name);
 	}
 
 	bool ProgressCircle::setProperty(chstr name, chstr value)
 	{
-		if		(name == "direction")
+		if (name == "direction")
 		{
 			if (value == "clockwise")					this->setDirection(Direction::Clockwise);
 			else if (value == "clockwise90")			this->setDirection(Direction::Clockwise90);
@@ -282,10 +298,9 @@ namespace aprilui
 				hlog::warn(logTag, "'direction=' does not support value '" + value + "'.");
 				return false;
 			}
+			return true;
 		}
-		else if (ProgressBase::setProperty(name, value)) { }
-		else return ImageBox::setProperty(name, value);
-		return true;
+		return ImageBox::setProperty(name, value);
 	}
 	
 }

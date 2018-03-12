@@ -34,20 +34,20 @@ namespace aprilui
 
 		HL_DEFINE_ISSET(toggled, Toggled);
 		HL_DEFINE_GET(BaseImage*, toggledNormalImage, ToggledNormalImage);
-		HL_DEFINE_GET(BaseImage*, toggledHoverImage, ToggledHoverImage);
 		HL_DEFINE_GET(BaseImage*, toggledPushedImage, ToggledPushedImage);
+		HL_DEFINE_GET(BaseImage*, toggledHoverImage, ToggledHoverImage);
 		HL_DEFINE_GET(BaseImage*, toggledDisabledImage, ToggledDisabledImage);
 		HL_DEFINE_GET(hstr, toggledNormalImageName, ToggledNormalImageName);
-		HL_DEFINE_GET(hstr, toggledHoverImageName, ToggledHoverImageName);
 		HL_DEFINE_GET(hstr, toggledPushedImageName, ToggledPushedImageName);
+		HL_DEFINE_GET(hstr, toggledHoverImageName, ToggledHoverImageName);
 		HL_DEFINE_GET(hstr, toggledDisabledImageName, ToggledDisabledImageName);
 		void setToggledNormalImage(BaseImage* image);
-		void setToggledHoverImage(BaseImage* image);
 		void setToggledPushedImage(BaseImage* image);
+		void setToggledHoverImage(BaseImage* image);
 		void setToggledDisabledImage(BaseImage* image);
 		void setToggledNormalImageByName(chstr name);
-		void setToggledHoverImageByName(chstr name);
 		void setToggledPushedImageByName(chstr name);
+		void setToggledHoverImageByName(chstr name);
 		void setToggledDisabledImageByName(chstr name);
 
 		/// @brief Optimized versions.
@@ -55,9 +55,6 @@ namespace aprilui
 		bool trySetToggledHoverImageByName(chstr name);
 		bool trySetToggledPushedImageByName(chstr name);
 		bool trySetToggledDisabledImageByName(chstr name);
-		
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
 
 		void toggle();
 		virtual void turnOn();
@@ -66,13 +63,16 @@ namespace aprilui
 	protected:
 		bool toggled;
 		BaseImage* toggledNormalImage;
-		BaseImage* toggledHoverImage;
 		BaseImage* toggledPushedImage;
+		BaseImage* toggledHoverImage;
 		BaseImage* toggledDisabledImage;
 		hstr toggledNormalImageName;
-		hstr toggledHoverImageName;
 		hstr toggledPushedImageName;
+		hstr toggledHoverImageName;
 		hstr toggledDisabledImageName;
+
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		harray<BaseImage*> _getUsedImages() const;
 
@@ -83,8 +83,10 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
-}
 
+}
 #endif

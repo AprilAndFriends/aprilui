@@ -81,9 +81,6 @@ namespace aprilui
 		void snapScrollOffsetY();
 		void stopScrolling();
 
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 		void notifyEvent(chstr type, EventArgs* args);
 
 		bool triggerEvent(chstr type, april::Key keyCode);
@@ -113,6 +110,9 @@ namespace aprilui
 		bool optimizeOobChildrenAwake;
 		bool dragging;
 
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		Object* _findHoverObject();
 		bool _isScrollableScrollArea(Object* object) const;
 		bool _executeScroll(float x, float y, Container* parentContainer);
@@ -128,6 +128,8 @@ namespace aprilui
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 		gvec2 _clickPosition;
 		gvec2 _lastPosition;
@@ -138,6 +140,6 @@ namespace aprilui
 		bool _overrideHoverMode;
 
 	};
-}
 
+}
 #endif
