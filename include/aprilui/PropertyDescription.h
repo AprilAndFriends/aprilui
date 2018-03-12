@@ -49,18 +49,6 @@
 
 namespace aprilui
 {
-	// Temp to fix compile problems
-	inline april::Color __makeColor(chstr colorValue)
-	{
-		april::Color result;
-		if (april::findSymbolicColor(colorValue, result))
-		{
-			return result;
-		}
-		result.set(colorValue);
-		return result;
-	}
-	
 	class apriluiExport PropertyDescription
 	{
 	public:
