@@ -120,7 +120,7 @@ namespace aprilui
 		class apriluiExport Set : public _SetBase<O, T, void>
 		{
 		public:
-			inline Set(void (O::*function)(const T&)) : _SetBase(function) { }
+			inline Set(void (O::*function)(const T&)) : _SetBase<O, T, void>(function) { }
 
 		};
 
@@ -128,7 +128,7 @@ namespace aprilui
 		class apriluiExport TrySet : public _SetBase<O, T, bool>
 		{
 		public:
-			inline TrySet(bool (O::*function)(const T&)) : _SetBase(function) { }
+			inline TrySet(bool (O::*function)(const T&)) : _SetBase<O, T, bool>(function) { }
 
 		};
 
