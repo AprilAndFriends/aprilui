@@ -37,16 +37,13 @@ namespace aprilui
 
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
 		inline void setTile(float w, float h) { this->tile.set(w, h); }
-		HL_DEFINE_GETSET(float, tile.x, TileW);
-		HL_DEFINE_GETSET(float, tile.y, TileH);
+		HL_DEFINE_GETSET(float, tile.x, TileWidth);
+		HL_DEFINE_GETSET(float, tile.y, TileHeight);
 		HL_DEFINE_GETSET(gvec2, scroll, Scroll);
 		inline void setScroll(float x, float y) { this->scroll.set(x, y); }
 		HL_DEFINE_GETSET(float, scroll.x, ScrollX);
 		HL_DEFINE_GETSET(float, scroll.y, ScrollY);
 		HL_DEFINE_ISSET(useTileCount, UseTileCount);
-
-		virtual hstr getProperty(chstr name);
-		virtual bool setProperty(chstr name, chstr value);
 
 		void draw(cgrect rect, const april::Color& color = april::Color::White);
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
@@ -59,10 +56,15 @@ namespace aprilui
 		gvec2 _lastScroll;
 		grect _lastRect;
 
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 		void _createVertices(grect rect);
 
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 

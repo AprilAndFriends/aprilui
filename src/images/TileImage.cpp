@@ -19,6 +19,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> TileImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> TileImage::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> TileImage::_setters;
 
 	TileImage::TileImage(Texture* texture, chstr name, cgrect source) : Image(texture, name, source)
 	{
@@ -49,6 +51,7 @@ namespace aprilui
 	{
 		if (TileImage::_propertyDescriptions.size() == 0)
 		{
+			TileImage::_propertyDescriptions = Image::getPropertyDescriptions();
 			TileImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::Type::Gvec2);
 			TileImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::Type::Float);
 			TileImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::Type::Float);
@@ -57,32 +60,39 @@ namespace aprilui
 			TileImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::Type::Float);
 			TileImage::_propertyDescriptions += PropertyDescription("use_tile_count", PropertyDescription::Type::Bool);
 		}
-		return (Image::getPropertyDescriptions() + TileImage::_propertyDescriptions);
+		return TileImage::_propertyDescriptions;
 	}
 
-	hstr TileImage::getProperty(chstr name)
+	hmap<hstr, PropertyDescription::Accessor*>& TileImage::_getGetters() const
 	{
-		if (name == "tile")				return april::gvec2ToHstr(this->getTile());
-		if (name == "tile_w")			return this->getTileW();
-		if (name == "tile_h")			return this->getTileH();
-		if (name == "scroll")			return april::gvec2ToHstr(this->getScroll());
-		if (name == "scroll_x")			return this->getScrollX();
-		if (name == "scroll_y")			return this->getScrollY();
-		if (name == "use_tile_count")	return this->isUseTileCount();
-		return Image::getProperty(name);
+		if (TileImage::_getters.size() == 0)
+		{
+			TileImage::_getters = Image::_getGetters();
+			TileImage::_getters["tile"] = new PropertyDescription::GetGvec2<TileImage>(&TileImage::getTile);
+			TileImage::_getters["tile_w"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getTileWidth);
+			TileImage::_getters["tile_h"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getTileHeight);
+			TileImage::_getters["scroll"] = new PropertyDescription::GetGvec2<TileImage>(&TileImage::getScroll);
+			TileImage::_getters["scroll_x"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getScrollX);
+			TileImage::_getters["scroll_y"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getScrollY);
+			TileImage::_getters["use_tile_count"] = new PropertyDescription::Get<TileImage, bool>(&TileImage::isUseTileCount);
+		}
+		return TileImage::_getters;
 	}
 
-	bool TileImage::setProperty(chstr name, chstr value)
+	hmap<hstr, PropertyDescription::Accessor*>& TileImage::_getSetters() const
 	{
-		if		(name == "tile")			this->setTile(april::hstrToGvec2(value));
-		else if	(name == "tile_w")			this->setTileW(value);
-		else if (name == "tile_h")			this->setTileH(value);
-		else if	(name == "scroll")			this->setScroll(april::hstrToGvec2(value));
-		else if (name == "scroll_x")		this->setScrollX(value);
-		else if	(name == "scroll_y")		this->setScrollY(value);
-		else if (name == "use_tile_count")	this->setUseTileCount(value);
-		else return Image::setProperty(name, value);
-		return true;
+		if (TileImage::_setters.size() == 0)
+		{
+			TileImage::_setters = Image::_getSetters();
+			TileImage::_setters["tile"] = new PropertyDescription::SetGvec2<TileImage>(&TileImage::setTile);
+			TileImage::_setters["tile_w"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setTileWidth);
+			TileImage::_setters["tile_h"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setTileHeight);
+			TileImage::_setters["scroll"] = new PropertyDescription::SetGvec2<TileImage>(&TileImage::setScroll);
+			TileImage::_setters["scroll_x"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setScrollX);
+			TileImage::_setters["scroll_y"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setScrollY);
+			TileImage::_setters["use_tile_count"] = new PropertyDescription::Set<TileImage, bool>(&TileImage::setUseTileCount);
+		}
+		return TileImage::_setters;
 	}
 
 	void TileImage::_createVertices(grect rect)

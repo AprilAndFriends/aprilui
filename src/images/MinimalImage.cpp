@@ -21,6 +21,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> MinimalImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_setters;
 
 	MinimalImage::MinimalImage(Texture* texture, chstr name, cgrect source) : BaseImage(name)
 	{
@@ -53,13 +55,40 @@ namespace aprilui
 	{
 		if (MinimalImage::_propertyDescriptions.size() == 0)
 		{
+			MinimalImage::_propertyDescriptions = BaseImage::getPropertyDescriptions();
 			MinimalImage::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::Type::Grect);
 			MinimalImage::_propertyDescriptions += PropertyDescription("position", PropertyDescription::Type::Gvec2);
 			MinimalImage::_propertyDescriptions += PropertyDescription("x", PropertyDescription::Type::Float);
 			MinimalImage::_propertyDescriptions += PropertyDescription("y", PropertyDescription::Type::Float);
 			MinimalImage::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::Type::String);
 		}
-		return (MinimalImage::_propertyDescriptions + BaseImage::getPropertyDescriptions());
+		return MinimalImage::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& MinimalImage::_getGetters() const
+	{
+		if (MinimalImage::_getters.size() == 0)
+		{
+			MinimalImage::_getters = BaseImage::_getGetters();
+			MinimalImage::_getters["rect"] = new PropertyDescription::GetGrect<MinimalImage>(&MinimalImage::getSrcRect);
+			MinimalImage::_getters["position"] = new PropertyDescription::GetGvec2<MinimalImage>(&MinimalImage::getSrcPosition);
+			MinimalImage::_getters["x"] = new PropertyDescription::Get<MinimalImage, float>(&MinimalImage::getSrcX);
+			MinimalImage::_getters["y"] = new PropertyDescription::Get<MinimalImage, float>(&MinimalImage::getSrcY);
+		}
+		return MinimalImage::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& MinimalImage::_getSetters() const
+	{
+		if (MinimalImage::_setters.size() == 0)
+		{
+			MinimalImage::_setters = BaseImage::_getSetters();
+			MinimalImage::_setters["rect"] = new PropertyDescription::SetGrect<MinimalImage>(&MinimalImage::setSrcRect);
+			MinimalImage::_setters["position"] = new PropertyDescription::SetGvec2<MinimalImage>(&MinimalImage::setSrcPosition);
+			MinimalImage::_setters["x"] = new PropertyDescription::Set<MinimalImage, float>(&MinimalImage::setSrcX);
+			MinimalImage::_setters["y"] = new PropertyDescription::Set<MinimalImage, float>(&MinimalImage::setSrcY);
+		}
+		return MinimalImage::_setters;
 	}
 
 	void MinimalImage::setSrcRect(cgrect value)
@@ -71,7 +100,7 @@ namespace aprilui
 		}
 	}
 
-	void MinimalImage::setSrcX(float value)
+	void MinimalImage::setSrcX(const float& value)
 	{
 		if (this->srcRect.x != value)
 		{
@@ -80,7 +109,7 @@ namespace aprilui
 		}
 	}
 
-	void MinimalImage::setSrcY(float value)
+	void MinimalImage::setSrcY(const float& value)
 	{
 		if (this->srcRect.y != value)
 		{
@@ -116,7 +145,7 @@ namespace aprilui
 		}
 	}
 
-	void MinimalImage::setSrcPosition(float x, float y)
+	void MinimalImage::setSrcPosition(const float& x, const float& y)
 	{
 		if (this->srcRect.x != x || this->srcRect.y != y)
 		{
@@ -134,7 +163,7 @@ namespace aprilui
 		}
 	}
 
-	void MinimalImage::setSrcSize(float w, float h)
+	void MinimalImage::setSrcSize(const float& w, const float& h)
 	{
 		if (this->srcRect.w != w || this->srcRect.h != h)
 		{
@@ -145,10 +174,6 @@ namespace aprilui
 
 	hstr MinimalImage::getProperty(chstr name)
 	{
-		if (name == "rect")					return april::grectToHstr(this->getSrcRect());
-		if (name == "position")				return april::gvec2ToHstr(this->getSrcRect().getPosition());
-		if (name == "x")					return this->getSrcRect().x;
-		if (name == "y")					return this->getSrcRect().y;
 		if (name == "texture")
 		{
 			return (this->texture != NULL ? this->texture->getName() : "");
@@ -156,16 +181,6 @@ namespace aprilui
 		return BaseImage::getProperty(name);
 	}
 	
-	bool MinimalImage::setProperty(chstr name, chstr value)
-	{
-		if		(name == "rect")				this->setSrcRect(april::hstrToGrect(value));
-		else if	(name == "position")			this->setSrcPosition(april::hstrToGvec2(value));
-		else if	(name == "x")					this->setSrcX(value);
-		else if	(name == "y")					this->setSrcY(value);
-		else return BaseImage::setProperty(name, value);
-		return true;
-	}
-
 	void MinimalImage::tryLoadTextureCoordinates()
 	{
 		if ((!this->_textureCoordinatesLoaded || !this->_clipRectCalculated) && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)

@@ -47,19 +47,19 @@ namespace aprilui
 		HL_DEFINE_GET(grect, clipRect, ClipRect);
 		void setClipRect(cgrect value);
 		HL_DEFINE_GET(float, clipRect.x, ClipX);
-		void setClipX(float value);
+		void setClipX(const float& value);
 		HL_DEFINE_GET(float, clipRect.y, ClipY);
-		void setClipY(float value);
+		void setClipY(const float& value);
 		HL_DEFINE_GET(float, clipRect.w, ClipWidth);
-		void setClipWidth(float value);
+		void setClipWidth(const float& value);
 		HL_DEFINE_GET(float, clipRect.h, ClipHeight);
-		void setClipHeight(float value);
+		void setClipHeight(const float& value);
 		inline gvec2 getClipPosition() const { return this->clipRect.getPosition(); }
 		void setClipPosition(cgvec2 value);
-		void setClipPosition(float x, float y);
+		void setClipPosition(const float& x, const float& y);
 		inline gvec2 getClipSize() const { return this->clipRect.getSize(); }
 		void setClipSize(cgvec2 value);
-		void setClipSize(float w, float h);
+		void setClipSize(const float& w, const float& h);
 		hstr getFullName() const;
 
 		virtual gvec2 getSrcSize() const = 0;
@@ -85,8 +85,13 @@ namespace aprilui
 
 		bool _clipRectCalculated;
 
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 

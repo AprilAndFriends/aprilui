@@ -34,35 +34,32 @@ namespace aprilui
 		HL_DEFINE_GET(grect, skinRect, SkinRect);
 		void setSkinRect(cgrect value);
 		HL_DEFINE_GET(float, skinRect.x, SkinX);
-		void setSkinX(float value);
+		void setSkinX(const float& value);
 		HL_DEFINE_GET(float, skinRect.y, SkinY);
-		void setSkinY(float value);
+		void setSkinY(const float& value);
 		HL_DEFINE_GET(float, skinRect.w, SkinWidth);
-		void setSkinWidth(float value);
+		void setSkinWidth(const float& value);
 		HL_DEFINE_GET(float, skinRect.h, SkinHeight);
-		void setSkinHeight(float value);
+		void setSkinHeight(const float& value);
 		inline gvec2 getSkinPosition() const { return this->skinRect.getPosition(); }
 		void setSkinPosition(cgvec2 value);
-		void setSkinPosition(float x, float y);
+		void setSkinPosition(const float& x, const float& y);
 		inline gvec2 getSkinSize() const { return this->skinRect.getSize(); }
 		void setSkinSize(cgvec2 value);
-		void setSkinSize(float w, float h);
+		void setSkinSize(const float& w, const float& h);
 		HL_DEFINE_GET(gvec2, borderIndent, BorderIndent);
 		void setBorderIndent(cgvec2 value);
-		void setBorderIndent(float x, float y);
+		void setBorderIndent(const float& x, const float& y);
 		HL_DEFINE_GET(float, borderIndent.x, BorderIndentX);
-		void setBorderIndentX(float value);
+		void setBorderIndentX(const float& value);
 		HL_DEFINE_GET(float, borderIndent.y, BorderIndentY);
-		void setBorderIndentY(float value);
+		void setBorderIndentY(const float& value);
 		HL_DEFINE_IS(tiledBorders, TiledBorders);
-		void setTiledBorders(bool value);
+		void setTiledBorders(const bool& value);
 
 		void draw(cgrect rect, const april::Color& color = april::Color::White);
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 		
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-
 		static int maxRectCache;
 
 	protected:
@@ -70,8 +67,13 @@ namespace aprilui
 		gvec2 borderIndent;
 		bool tiledBorders;
 
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 		typedef std::pair<grect, harray<april::TexturedVertex> > RectVertices;
 

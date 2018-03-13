@@ -310,11 +310,11 @@ namespace aprilui
 
 	hstr BaseObject::getProperty(chstr name)
 	{
-		hmap<hstr, PropertyDescription::Accessor*>& getters = this->_getGetters();
-		if (getters.hasKey(name))
+		PropertyDescription::Accessor* getter = this->_getGetters().tryGet(name, NULL);
+		if (getter != NULL)
 		{
 			hstr result;
-			getters[name]->execute(this, result);
+			getter->execute(this, result);
 			return result;
 		}
 		if (name != "type")
@@ -326,11 +326,11 @@ namespace aprilui
 	
 	bool BaseObject::setProperty(chstr name, chstr value)
 	{
-		hmap<hstr, PropertyDescription::Accessor*>& setters = this->_getSetters();
-		if (setters.hasKey(name))
+		PropertyDescription::Accessor* setter = this->_getSetters().tryGet(name, NULL);
+		if (setter != NULL)
 		{
 			hstr newValue = value;
-			setters[name]->execute(this, newValue);
+			setter->execute(this, newValue);
 			return true;
 		}
 		if (name != "type")

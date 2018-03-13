@@ -12,6 +12,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> BaseImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> BaseImage::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> BaseImage::_setters;
 
 	BaseImage::BaseImage(chstr name) : Cloneable()
 	{
@@ -55,6 +57,47 @@ namespace aprilui
 		return BaseImage::_propertyDescriptions;
 	}
 
+	hmap<hstr, PropertyDescription::Accessor*>& BaseImage::_getGetters() const
+	{
+		if (BaseImage::_getters.size() == 0)
+		{
+			BaseImage::_getters["name"] = new PropertyDescription::Get<BaseImage, hstr>(&BaseImage::getName);
+			BaseImage::_getters["full_name"] = new PropertyDescription::Get<BaseImage, hstr>(&BaseImage::getFullName);
+			BaseImage::_getters["tag"] = new PropertyDescription::Get<BaseImage, hstr>(&BaseImage::getTag);
+			BaseImage::_getters["size"] = new PropertyDescription::GetGvec2<BaseImage>(&BaseImage::getSrcSize);
+			BaseImage::_getters["w"] = new PropertyDescription::Get<BaseImage, float>(&BaseImage::getSrcWidth);
+			BaseImage::_getters["h"] = new PropertyDescription::Get<BaseImage, float>(&BaseImage::getSrcHeight);
+			BaseImage::_getters["clip_rect"] = new PropertyDescription::GetGrect<BaseImage>(&BaseImage::getClipRect);
+			BaseImage::_getters["clip_position"] = new PropertyDescription::GetGvec2<BaseImage>(&BaseImage::getClipPosition);
+			BaseImage::_getters["clip_size"] = new PropertyDescription::GetGvec2<BaseImage>(&BaseImage::getClipSize);
+			BaseImage::_getters["clip_x"] = new PropertyDescription::Get<BaseImage, float>(&BaseImage::getClipX);
+			BaseImage::_getters["clip_y"] = new PropertyDescription::Get<BaseImage, float>(&BaseImage::getClipY);
+			BaseImage::_getters["clip_w"] = new PropertyDescription::Get<BaseImage, float>(&BaseImage::getClipWidth);
+			BaseImage::_getters["clip_h"] = new PropertyDescription::Get<BaseImage, float>(&BaseImage::getClipHeight);
+		}
+		return BaseImage::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& BaseImage::_getSetters() const
+	{
+		if (BaseImage::_setters.size() == 0)
+		{
+			BaseImage::_setters["name"] = new PropertyDescription::Set<BaseImage, hstr>(&BaseImage::setName);
+			BaseImage::_setters["tag"] = new PropertyDescription::Set<BaseImage, hstr>(&BaseImage::setTag);
+			BaseImage::_setters["size"] = new PropertyDescription::SetGvec2<BaseImage>(&BaseImage::setSrcSize);
+			BaseImage::_setters["w"] = new PropertyDescription::Set<BaseImage, float>(&BaseImage::setSrcWidth);
+			BaseImage::_setters["h"] = new PropertyDescription::Set<BaseImage, float>(&BaseImage::setSrcHeight);
+			BaseImage::_setters["clip_rect"] = new PropertyDescription::SetGrect<BaseImage>(&BaseImage::setClipRect);
+			BaseImage::_setters["clip_position"] = new PropertyDescription::SetGvec2<BaseImage>(&BaseImage::setClipPosition);
+			BaseImage::_setters["clip_size"] = new PropertyDescription::SetGvec2<BaseImage>(&BaseImage::setClipSize);
+			BaseImage::_setters["clip_x"] = new PropertyDescription::Set<BaseImage, float>(&BaseImage::setClipX);
+			BaseImage::_setters["clip_y"] = new PropertyDescription::Set<BaseImage, float>(&BaseImage::setClipY);
+			BaseImage::_setters["clip_w"] = new PropertyDescription::Set<BaseImage, float>(&BaseImage::setClipWidth);
+			BaseImage::_setters["clip_h"] = new PropertyDescription::Set<BaseImage, float>(&BaseImage::setClipHeight);
+		}
+		return BaseImage::_setters;
+	}
+
 	void BaseImage::setName(chstr value)
 	{
 		if (this->dataset != NULL)
@@ -79,7 +122,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipX(float value)
+	void BaseImage::setClipX(const float& value)
 	{
 		if (this->clipRect.x != value)
 		{
@@ -88,7 +131,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipY(float value)
+	void BaseImage::setClipY(const float& value)
 	{
 		if (this->clipRect.y != value)
 		{
@@ -97,7 +140,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipWidth(float value)
+	void BaseImage::setClipWidth(const float& value)
 	{
 		if (this->clipRect.w != value)
 		{
@@ -106,7 +149,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipHeight(float value)
+	void BaseImage::setClipHeight(const float& value)
 	{
 		if (this->clipRect.h != value)
 		{
@@ -124,7 +167,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipPosition(float x, float y)
+	void BaseImage::setClipPosition(const float& x, const float& y)
 	{
 		if (this->clipRect.x != x || this->clipRect.y != y)
 		{
@@ -142,7 +185,7 @@ namespace aprilui
 		}
 	}
 
-	void BaseImage::setClipSize(float w, float h)
+	void BaseImage::setClipSize(const float& w, const float& h)
 	{
 		if (this->clipRect.w != w || this->clipRect.h != h)
 		{
@@ -153,42 +196,30 @@ namespace aprilui
 
 	hstr BaseImage::getProperty(chstr name)
 	{
-		if (name == "name")				return this->getName();
-		if (name == "full_name")		return this->getFullName();
-		if (name == "tag")				return this->getTag();
 		if (name == "dataset")
 		{
 			return (this->dataset != NULL ? this->dataset->getName() : "");
 		}
-		if (name == "size")				return april::gvec2ToHstr(this->getSrcSize());
-		if (name == "w")				return this->getSrcWidth();
-		if (name == "h")				return this->getSrcHeight();
-		if (name == "clip_rect")		return april::grectToHstr(this->getClipRect());
-		if (name == "clip_position")	return april::gvec2ToHstr(this->getClipPosition());
-		if (name == "clip_size")		return april::gvec2ToHstr(this->getClipSize());
-		if (name == "clip_x")			return this->getClipRect().x;
-		if (name == "clip_y")			return this->getClipRect().y;
-		if (name == "clip_w")			return this->getClipRect().w;
-		if (name == "clip_h")			return this->getClipRect().h;
+		PropertyDescription::Accessor* getter = this->_getGetters().tryGet(name, NULL);
+		if (getter != NULL)
+		{
+			hstr result;
+			getter->execute(this, result);
+			return result;
+		}
 		return "";
 	}
 
 	bool BaseImage::setProperty(chstr name, chstr value)
 	{
-		if		(name == "name")			this->setName(value);
-		else if (name == "tag")				this->setTag(value);
-		else if (name == "size")			this->setSrcSize(april::hstrToGvec2(value));
-		else if	(name == "w")				this->setSrcWidth(value);
-		else if	(name == "h")				this->setSrcHeight(value);
-		else if (name == "clip_rect")		this->setClipRect(april::hstrToGrect(value));
-		else if (name == "clip_position")	this->setClipPosition(april::hstrToGvec2(value));
-		else if (name == "clip_size")		this->setClipSize(april::hstrToGvec2(value));
-		else if (name == "clip_x")			this->setClipX(value);
-		else if (name == "clip_y")			this->setClipY(value);
-		else if (name == "clip_w")			this->setClipWidth(value);
-		else if (name == "clip_h")			this->setClipHeight(value);
-		else return false;
-		return true;
+		PropertyDescription::Accessor* setter = this->_getSetters().tryGet(name, NULL);
+		if (setter != NULL)
+		{
+			hstr newValue = value;
+			setter->execute(this, newValue);
+			return true;
+		}
+		return false;
 	}
 
 	harray<Texture*> BaseImage::findTextures(harray<BaseImage*> baseImages)

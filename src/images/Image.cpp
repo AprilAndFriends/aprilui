@@ -23,6 +23,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> Image::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> Image::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> Image::_setters;
 
 	Image::Image(Texture* texture, chstr name, cgrect source) : MinimalImage(texture, name, source)
 	{
@@ -53,12 +55,35 @@ namespace aprilui
 	{
 		if (Image::_propertyDescriptions.size() == 0)
 		{
+			Image::_propertyDescriptions = MinimalImage::getPropertyDescriptions();
 			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::Type::Color);
 			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::Type::Float);
 		}
-		return (Image::_propertyDescriptions + MinimalImage::getPropertyDescriptions());
+		return Image::_propertyDescriptions;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& Image::_getGetters() const
+	{
+		if (Image::_getters.size() == 0)
+		{
+			Image::_getters = MinimalImage::_getGetters();
+			Image::_getters["color"] = new PropertyDescription::GetColor<Image>(&Image::getColor);
+			Image::_getters["color_mode_factor"] = new PropertyDescription::Get<Image, float>(&Image::getColorModeFactor);
+		}
+		return Image::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& Image::_getSetters() const
+	{
+		if (Image::_setters.size() == 0)
+		{
+			Image::_setters = MinimalImage::_getSetters();
+			Image::_setters["color"] = new PropertyDescription::Set<Image, hstr>(&Image::setSymbolicColor);
+			Image::_setters["color_mode_factor"] = new PropertyDescription::Set<Image, float>(&Image::setColorModeFactor);
+		}
+		return Image::_setters;
 	}
 
 	void Image::setSymbolicColor(chstr value)
@@ -68,7 +93,6 @@ namespace aprilui
 
 	hstr Image::getProperty(chstr name)
 	{
-		if (name == "color")				return this->getColor().hex();
 		if (name == "blend_mode")
 		{
 			if (this->blendMode == april::BlendMode::Alpha)		return "alpha";
@@ -84,31 +108,37 @@ namespace aprilui
 			if (this->colorMode == april::ColorMode::Lerp)		return "lerp";
 			return "";
 		}
-		if (name == "color_mode_factor")	return this->getColorModeFactor();
 		return MinimalImage::getProperty(name);
 	}
 	
 	bool Image::setProperty(chstr name, chstr value)
 	{
-		if (name == "color")					this->setColor(aprilui::_makeColor(value));
-		else if	(name == "blend_mode")
+		if (name == "blend_mode")
 		{
-			if	(value == "alpha")			this->setBlendMode(april::BlendMode::Alpha);
+			if (value == "alpha")			this->setBlendMode(april::BlendMode::Alpha);
 			else if	(value == "add")		this->setBlendMode(april::BlendMode::Add);
 			else if	(value == "subtract")	this->setBlendMode(april::BlendMode::Subtract);
 			else if	(value == "overwrite")	this->setBlendMode(april::BlendMode::Overwrite);
-			else hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
+			else
+			{
+				hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
+				return false;
+			}
+			return true;
 		}
-		else if	(name == "color_mode")
+		if	(name == "color_mode")
 		{
-			if	(value == "multiply")		this->setColorMode(april::ColorMode::Multiply);
+			if (value == "multiply")		this->setColorMode(april::ColorMode::Multiply);
 			else if	(value == "alpha_map")	this->setColorMode(april::ColorMode::AlphaMap);
 			else if (value == "lerp")		this->setColorMode(april::ColorMode::Lerp);
-			else hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
+			else
+			{
+				hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
+				return false;
+			}
+			return true;
 		}
-		else if	(name == "color_mode_factor")	this->setColorModeFactor(value);
-		else return MinimalImage::setProperty(name, value);
-		return true;
+		return MinimalImage::setProperty(name, value);
 	}
 
 	void Image::draw(cgrect rect, const april::Color& color)

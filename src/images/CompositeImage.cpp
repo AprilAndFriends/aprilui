@@ -21,6 +21,8 @@
 namespace aprilui
 {
 	harray<PropertyDescription> CompositeImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_getters;
+	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_setters;
 
 	CompositeImage::CompositeImage(chstr name, cgvec2 size) : BaseImage(name), restoreClipRects(true)
 	{
@@ -42,11 +44,32 @@ namespace aprilui
 	{
 		if (CompositeImage::_propertyDescriptions.size() == 0)
 		{
+			CompositeImage::_propertyDescriptions = BaseImage::getPropertyDescriptions();
 			CompositeImage::_propertyDescriptions += PropertyDescription("restore_clip_rects", PropertyDescription::Type::Bool);
 		}
-		return (CompositeImage::_propertyDescriptions + BaseImage::getPropertyDescriptions());
+		return CompositeImage::_propertyDescriptions;
 	}
 
+	hmap<hstr, PropertyDescription::Accessor*>& CompositeImage::_getGetters() const
+	{
+		if (CompositeImage::_getters.size() == 0)
+		{
+			CompositeImage::_getters = BaseImage::_getGetters();
+			CompositeImage::_getters["restore_clip_rects"] = new PropertyDescription::Get<CompositeImage, bool>(&CompositeImage::isRestoreClipRects);
+		}
+		return CompositeImage::_getters;
+	}
+
+	hmap<hstr, PropertyDescription::Accessor*>& CompositeImage::_getSetters() const
+	{
+		if (CompositeImage::_setters.size() == 0)
+		{
+			CompositeImage::_setters = BaseImage::_getSetters();
+			CompositeImage::_setters["restore_clip_rects"] = new PropertyDescription::Set<CompositeImage, bool>(&CompositeImage::setRestoreClipRects);
+		}
+		return CompositeImage::_setters;
+	}
+	
 	void CompositeImage::addImageRef(BaseImage* image, cgrect rect)
 	{
 		this->images += ImageRef(image, rect);
@@ -105,17 +128,4 @@ namespace aprilui
 		hlog::warn(logTag, "CompositeImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}
 	
-	hstr CompositeImage::getProperty(chstr name)
-	{
-		if (name == "restore_clip_rects")	return this->isRestoreClipRects();
-		return BaseImage::getProperty(name);
-	}
-	
-	bool CompositeImage::setProperty(chstr name, chstr value)
-	{
-		if		(name == "restore_clip_rects")	this->setRestoreClipRects(value);
-		else return BaseImage::setProperty(name, value);
-		return true;
-	}
-
 }

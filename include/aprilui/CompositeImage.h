@@ -40,9 +40,6 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, size.y, SrcHeight);
 		HL_DEFINE_ISSET(restoreClipRects, RestoreClipRects);
 		inline const harray<ImageRef>& getImages() { return this->images; }
-		
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
 
 		void addImageRef(BaseImage* image, cgrect rect);
 		void clearImages();
@@ -55,8 +52,13 @@ namespace aprilui
 		bool restoreClipRects;
 		harray<ImageRef> images;
 		
+		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
+		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
 	private:
 		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription::Accessor*> _getters;
+		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 	};
 	
