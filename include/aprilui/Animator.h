@@ -43,7 +43,7 @@ namespace aprilui
 		~Animator();
 		inline hstr getClassName() const { return "Animator"; }
 		
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GETSET(AnimationFunction, animationFunction, AnimationFunction);
 		HL_DEFINE_GETSET(float, value, Value);
@@ -115,7 +115,7 @@ namespace aprilui
 		virtual void _setObjectValue(float value) = 0;
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

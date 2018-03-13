@@ -33,7 +33,7 @@ namespace aprilui
 		~CompositeImage();
 		inline hstr getClassName() const { return "CompositeImage"; }
 		
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GETSET(gvec2, size, SrcSize);
 		HL_DEFINE_GETSET(float, size.x, SrcWidth);
@@ -56,7 +56,7 @@ namespace aprilui
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

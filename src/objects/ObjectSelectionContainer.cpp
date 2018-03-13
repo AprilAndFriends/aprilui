@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> SelectionContainer::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> SelectionContainer::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> SelectionContainer::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> SelectionContainer::_setters;
 
@@ -52,20 +52,20 @@ namespace aprilui
 	{
 	}
 	
-	harray<PropertyDescription> SelectionContainer::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& SelectionContainer::getPropertyDescriptions() const
 	{
 		if (SelectionContainer::_propertyDescriptions.size() == 0)
 		{
 			SelectionContainer::_propertyDescriptions = Container::getPropertyDescriptions();
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_index", PropertyDescription::Type::Int);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("item_height", PropertyDescription::Type::Float);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_color", PropertyDescription::Type::Color);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_pushed_color", PropertyDescription::Type::Color);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("selected_hover_color", PropertyDescription::Type::Color);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
-			SelectionContainer::_propertyDescriptions += PropertyDescription("item_count", PropertyDescription::Type::Int);
+			SelectionContainer::_propertyDescriptions["selected_index"] = PropertyDescription("selected_index", PropertyDescription::Type::Int);
+			SelectionContainer::_propertyDescriptions["item_height"] = PropertyDescription("item_height", PropertyDescription::Type::Float);
+			SelectionContainer::_propertyDescriptions["pushed_color"] = PropertyDescription("pushed_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions["hover_color"] = PropertyDescription("hover_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions["selected_color"] = PropertyDescription("selected_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions["selected_pushed_color"] = PropertyDescription("selected_pushed_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions["selected_hover_color"] = PropertyDescription("selected_hover_color", PropertyDescription::Type::Color);
+			SelectionContainer::_propertyDescriptions["allow_drag"] = PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
+			SelectionContainer::_propertyDescriptions["item_count"] = PropertyDescription("item_count", PropertyDescription::Type::Int);
 		}
 		return SelectionContainer::_propertyDescriptions;
 	}

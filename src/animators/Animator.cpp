@@ -30,7 +30,7 @@ namespace aprilui
 		HL_ENUM_DEFINE(Animator::AnimationFunction, Custom);
 	));
 
-	harray<PropertyDescription> Animator::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> Animator::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> Animator::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Animator::_setters;
 
@@ -80,28 +80,28 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> Animator::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& Animator::getPropertyDescriptions() const
 	{
 		if (Animator::_propertyDescriptions.size() == 0)
 		{
 			Animator::_propertyDescriptions = BaseObject::getPropertyDescriptions();
-			Animator::_propertyDescriptions += PropertyDescription("function", PropertyDescription::Type::Enum);
-			Animator::_propertyDescriptions += PropertyDescription("func", PropertyDescription::Type::Enum);
-			Animator::_propertyDescriptions += PropertyDescription("timer", PropertyDescription::Type::Double);
-			Animator::_propertyDescriptions += PropertyDescription("delay", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("periods", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("amplitude", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("speed", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("offset", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("multiplier", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("acceleration", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("discrete_step", PropertyDescription::Type::Int);
-			Animator::_propertyDescriptions += PropertyDescription("reset_on_expire", PropertyDescription::Type::Bool);
-			Animator::_propertyDescriptions += PropertyDescription("inherit_value", PropertyDescription::Type::Bool);
-			Animator::_propertyDescriptions += PropertyDescription("target", PropertyDescription::Type::Float);
-			Animator::_propertyDescriptions += PropertyDescription("time", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["function"] = PropertyDescription("function", PropertyDescription::Type::Enum);
+			Animator::_propertyDescriptions["func"] = PropertyDescription("func", PropertyDescription::Type::Enum);
+			Animator::_propertyDescriptions["timer"] = PropertyDescription("timer", PropertyDescription::Type::Double);
+			Animator::_propertyDescriptions["delay"] = PropertyDescription("delay", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["periods"] = PropertyDescription("periods", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["amplitude"] = PropertyDescription("amplitude", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["speed"] = PropertyDescription("speed", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["offset"] = PropertyDescription("offset", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["multiplier"] = PropertyDescription("multiplier", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["acceleration"] = PropertyDescription("acceleration", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["discrete_step"] = PropertyDescription("discrete_step", PropertyDescription::Type::Int);
+			Animator::_propertyDescriptions["reset_on_expire"] = PropertyDescription("reset_on_expire", PropertyDescription::Type::Bool);
+			Animator::_propertyDescriptions["inherit_value"] = PropertyDescription("inherit_value", PropertyDescription::Type::Bool);
+			Animator::_propertyDescriptions["target"] = PropertyDescription("target", PropertyDescription::Type::Float);
+			Animator::_propertyDescriptions["time"] = PropertyDescription("time", PropertyDescription::Type::Float);
 		}
-		return  Animator::_propertyDescriptions;
+		return Animator::_propertyDescriptions;
 	}
 	
 	hmap<hstr, PropertyDescription::Accessor*>& Animator::_getGetters() const

@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> CompositeImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> CompositeImage::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_setters;
 
@@ -40,12 +40,12 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> CompositeImage::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& CompositeImage::getPropertyDescriptions() const
 	{
 		if (CompositeImage::_propertyDescriptions.size() == 0)
 		{
 			CompositeImage::_propertyDescriptions = BaseImage::getPropertyDescriptions();
-			CompositeImage::_propertyDescriptions += PropertyDescription("restore_clip_rects", PropertyDescription::Type::Bool);
+			CompositeImage::_propertyDescriptions["restore_clip_rects"] = PropertyDescription("restore_clip_rects", PropertyDescription::Type::Bool);
 		}
 		return CompositeImage::_propertyDescriptions;
 	}

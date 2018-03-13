@@ -35,7 +35,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "ListBoxItem"; }
 		static Object* createInstance(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		hstr getName() const;
 		int getFocusIndex() const;
@@ -73,7 +73,7 @@ namespace aprilui
 		april::Color _hoverColor;
 		april::Color _pushedColor;
 
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 
 	};
 

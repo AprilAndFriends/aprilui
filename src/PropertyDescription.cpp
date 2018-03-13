@@ -29,15 +29,18 @@ namespace aprilui
 		HL_ENUM_DEFINE(PropertyDescription::Type, Color);
 	));
 
+	PropertyDescription::PropertyDescription()
+	{
+		this->name = "";
+		this->type = Type::Int;
+		this->arrayData = false;
+	}
+
 	PropertyDescription::PropertyDescription(chstr name, Type type, bool arrayData)
 	{
 		this->name = name;
 		this->type = type;
 		this->arrayData = arrayData;
-	}
-
-	PropertyDescription::~PropertyDescription()
-	{
 	}
 
 }

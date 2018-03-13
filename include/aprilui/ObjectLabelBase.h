@@ -37,7 +37,7 @@ namespace aprilui
 		LabelBase();
 		virtual ~LabelBase();
 
-		virtual harray<PropertyDescription> getPropertyDescriptions() const;
+		virtual hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(hstr, text, Text);
 		virtual void setText(chstr value);
@@ -179,7 +179,7 @@ namespace aprilui
 
 		void _calcAutoScaleFont(chstr fontName, cgrect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
 
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

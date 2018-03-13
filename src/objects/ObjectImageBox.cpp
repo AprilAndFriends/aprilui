@@ -16,7 +16,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> ImageBox::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ImageBox::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ImageBox::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ImageBox::_setters;
 
@@ -42,12 +42,12 @@ namespace aprilui
 		return new ImageBox(name);
 	}
 
-	harray<PropertyDescription> ImageBox::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ImageBox::getPropertyDescriptions() const
 	{
 		if (ImageBox::_propertyDescriptions.size() == 0)
 		{
 			ImageBox::_propertyDescriptions = Object::getPropertyDescriptions();
-			ImageBox::_propertyDescriptions += PropertyDescription("image", PropertyDescription::Type::String);
+			ImageBox::_propertyDescriptions["image"] = PropertyDescription("image", PropertyDescription::Type::String);
 		}
 		return ImageBox::_propertyDescriptions;
 	}

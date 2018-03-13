@@ -32,7 +32,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "TextImageButton"; }
 		static Object* createInstance(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(april::Color, pushedTextColor, PushedTextColor);
 		void setPushedTextColor(const april::Color& value);
@@ -69,7 +69,7 @@ namespace aprilui
 		void _draw();
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

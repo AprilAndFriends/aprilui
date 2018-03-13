@@ -105,7 +105,7 @@ namespace aprilui
 		HL_ENUM_DEFINE(Object::HitTest, DisabledRecursive);
 	));
 
-	harray<PropertyDescription> Object::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> Object::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> Object::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Object::_setters;
 
@@ -196,42 +196,42 @@ namespace aprilui
 		}
 	}
 
-	harray<PropertyDescription> Object::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& Object::getPropertyDescriptions() const
 	{
 		if (Object::_propertyDescriptions.size() == 0)
 		{
 			Object::_propertyDescriptions = BaseObject::getPropertyDescriptions();
-			Object::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::Type::Grect);
-			Object::_propertyDescriptions += PropertyDescription("position", PropertyDescription::Type::Gvec2);
-			Object::_propertyDescriptions += PropertyDescription("size", PropertyDescription::Type::Gvec2);
-			Object::_propertyDescriptions += PropertyDescription("x", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("y", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("w", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("h", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("visible", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("hit_test", PropertyDescription::Type::Enum);
-			Object::_propertyDescriptions += PropertyDescription("inherit_alpha", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("red", PropertyDescription::Type::UChar);
-			Object::_propertyDescriptions += PropertyDescription("green", PropertyDescription::Type::UChar);
-			Object::_propertyDescriptions += PropertyDescription("blue", PropertyDescription::Type::UChar);
-			Object::_propertyDescriptions += PropertyDescription("alpha", PropertyDescription::Type::UChar);
-			Object::_propertyDescriptions += PropertyDescription("color", PropertyDescription::Type::Color);
-			Object::_propertyDescriptions += PropertyDescription("angle", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("scale", PropertyDescription::Type::Gvec2);
-			Object::_propertyDescriptions += PropertyDescription("scale_x", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("scale_y", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("pivot", PropertyDescription::Type::Gvec2);
-			Object::_propertyDescriptions += PropertyDescription("pivot_x", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("pivot_y", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions += PropertyDescription("anchor_left", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("anchor_right", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("anchor_top", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("anchor_bottom", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("anchors", PropertyDescription::Type::String);
-			Object::_propertyDescriptions += PropertyDescription("retain_anchor_aspect", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("clip", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("use_disabled_alpha", PropertyDescription::Type::Bool);
-			Object::_propertyDescriptions += PropertyDescription("focus_index", PropertyDescription::Type::Int);
+			Object::_propertyDescriptions["rect"] = PropertyDescription("rect", PropertyDescription::Type::Grect);
+			Object::_propertyDescriptions["position"] = PropertyDescription("position", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions["size"] = PropertyDescription("size", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions["x"] = PropertyDescription("x", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["y"] = PropertyDescription("y", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["w"] = PropertyDescription("w", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["h"] = PropertyDescription("h", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["visible"] = PropertyDescription("visible", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["hit_test"] = PropertyDescription("hit_test", PropertyDescription::Type::Enum);
+			Object::_propertyDescriptions["inherit_alpha"] = PropertyDescription("inherit_alpha", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["red"] = PropertyDescription("red", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions["green"] = PropertyDescription("green", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions["blue"] = PropertyDescription("blue", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions["alpha"] = PropertyDescription("alpha", PropertyDescription::Type::UChar);
+			Object::_propertyDescriptions["color"] = PropertyDescription("color", PropertyDescription::Type::Color);
+			Object::_propertyDescriptions["angle"] = PropertyDescription("angle", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["scale"] = PropertyDescription("scale", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions["scale_x"] = PropertyDescription("scale_x", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["scale_y"] = PropertyDescription("scale_y", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["pivot"] = PropertyDescription("pivot", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions["pivot_x"] = PropertyDescription("pivot_x", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["pivot_y"] = PropertyDescription("pivot_y", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["anchor_left"] = PropertyDescription("anchor_left", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["anchor_right"] = PropertyDescription("anchor_right", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["anchor_top"] = PropertyDescription("anchor_top", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["anchor_bottom"] = PropertyDescription("anchor_bottom", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["anchors"] = PropertyDescription("anchors", PropertyDescription::Type::String);
+			Object::_propertyDescriptions["retain_anchor_aspect"] = PropertyDescription("retain_anchor_aspect", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["clip"] = PropertyDescription("clip", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["use_disabled_alpha"] = PropertyDescription("use_disabled_alpha", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["focus_index"] = PropertyDescription("focus_index", PropertyDescription::Type::Int);
 		}
 		return Object::_propertyDescriptions;
 	}

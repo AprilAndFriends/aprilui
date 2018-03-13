@@ -19,7 +19,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> TextImageButton::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> TextImageButton::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> TextImageButton::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> TextImageButton::_setters;
 
@@ -53,14 +53,14 @@ namespace aprilui
 		return new TextImageButton(name);
 	}
 
-	harray<PropertyDescription> TextImageButton::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& TextImageButton::getPropertyDescriptions() const
 	{
 		if (TextImageButton::_propertyDescriptions.size() == 0)
 		{
 			TextImageButton::_propertyDescriptions = ImageButton::getPropertyDescriptions() + LabelBase::getPropertyDescriptions();
-			TextImageButton::_propertyDescriptions += PropertyDescription("pushed_text_color", PropertyDescription::Type::Color);
-			TextImageButton::_propertyDescriptions += PropertyDescription("hover_text_color", PropertyDescription::Type::Color);
-			TextImageButton::_propertyDescriptions += PropertyDescription("disabled_text_color", PropertyDescription::Type::Color);
+			TextImageButton::_propertyDescriptions["pushed_text_color"] = PropertyDescription("pushed_text_color", PropertyDescription::Type::Color);
+			TextImageButton::_propertyDescriptions["hover_text_color"] = PropertyDescription("hover_text_color", PropertyDescription::Type::Color);
+			TextImageButton::_propertyDescriptions["disabled_text_color"] = PropertyDescription("disabled_text_color", PropertyDescription::Type::Color);
 		}
 		return TextImageButton::_propertyDescriptions;
 	}

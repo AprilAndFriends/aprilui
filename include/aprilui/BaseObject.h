@@ -43,7 +43,7 @@ namespace aprilui
 		~BaseObject();
 		virtual inline hstr getClassName() const { return "BaseObject"; }
 
-		virtual harray<PropertyDescription> getPropertyDescriptions() const;
+		virtual hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(hstr, name, Name);
 		void setName(chstr value);
@@ -111,7 +111,7 @@ namespace aprilui
 		void _sortChildren();
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

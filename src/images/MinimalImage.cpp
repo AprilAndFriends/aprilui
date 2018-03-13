@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> MinimalImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> MinimalImage::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_setters;
 
@@ -51,16 +51,16 @@ namespace aprilui
 		return new MinimalImage(texture, name, source);
 	}
 	
-	harray<PropertyDescription> MinimalImage::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& MinimalImage::getPropertyDescriptions() const
 	{
 		if (MinimalImage::_propertyDescriptions.size() == 0)
 		{
 			MinimalImage::_propertyDescriptions = BaseImage::getPropertyDescriptions();
-			MinimalImage::_propertyDescriptions += PropertyDescription("rect", PropertyDescription::Type::Grect);
-			MinimalImage::_propertyDescriptions += PropertyDescription("position", PropertyDescription::Type::Gvec2);
-			MinimalImage::_propertyDescriptions += PropertyDescription("x", PropertyDescription::Type::Float);
-			MinimalImage::_propertyDescriptions += PropertyDescription("y", PropertyDescription::Type::Float);
-			MinimalImage::_propertyDescriptions += PropertyDescription("texture", PropertyDescription::Type::String);
+			MinimalImage::_propertyDescriptions["rect"] = PropertyDescription("rect", PropertyDescription::Type::Grect);
+			MinimalImage::_propertyDescriptions["position"] = PropertyDescription("position", PropertyDescription::Type::Gvec2);
+			MinimalImage::_propertyDescriptions["x"] = PropertyDescription("x", PropertyDescription::Type::Float);
+			MinimalImage::_propertyDescriptions["y"] = PropertyDescription("y", PropertyDescription::Type::Float);
+			MinimalImage::_propertyDescriptions["texture"] = PropertyDescription("texture", PropertyDescription::Type::String);
 		}
 		return MinimalImage::_propertyDescriptions;
 	}

@@ -24,7 +24,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> TreeView::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> TreeView::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> TreeView::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> TreeView::_setters;
 
@@ -55,16 +55,16 @@ namespace aprilui
 		return new TreeView(name);
 	}
 
-	harray<PropertyDescription> TreeView::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& TreeView::getPropertyDescriptions() const
 	{
 		if (TreeView::_propertyDescriptions.size() == 0)
 		{
 			TreeView::_propertyDescriptions = SelectionContainer::getPropertyDescriptions();
-			TreeView::_propertyDescriptions += PropertyDescription("expander_width", PropertyDescription::Type::Float);
-			TreeView::_propertyDescriptions += PropertyDescription("image_width", PropertyDescription::Type::Float);
-			TreeView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::Type::Float);
-			TreeView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::Type::Float);
-			TreeView::_propertyDescriptions += PropertyDescription("connector_color", PropertyDescription::Type::Color);
+			TreeView::_propertyDescriptions["expander_width"] = PropertyDescription("expander_width", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions["image_width"] = PropertyDescription("image_width", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions["spacing_width"] = PropertyDescription("spacing_width", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions["spacing_height"] = PropertyDescription("spacing_height", PropertyDescription::Type::Float);
+			TreeView::_propertyDescriptions["connector_color"] = PropertyDescription("connector_color", PropertyDescription::Type::Color);
 		}
 		return TreeView::_propertyDescriptions;
 	}

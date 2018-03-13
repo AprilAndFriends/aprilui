@@ -43,7 +43,7 @@ namespace aprilui
 		~ScrollBar();
 		inline hstr getClassName() const { return "ScrollBar"; }
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GETSET(float, gridSize, GridSize);
 		HL_DEFINE_GETSET(float, scrollDistance, ScrollDistance);
@@ -131,7 +131,7 @@ namespace aprilui
 		bool _mouseMove();
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

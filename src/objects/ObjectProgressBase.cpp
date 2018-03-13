@@ -17,7 +17,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> ProgressBase::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ProgressBase::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressBase::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressBase::_setters;
 
@@ -50,17 +50,17 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> ProgressBase::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ProgressBase::getPropertyDescriptions() const
 	{
 		if (ProgressBase::_propertyDescriptions.size() == 0)
 		{
-			ProgressBase::_propertyDescriptions += PropertyDescription("progress_image", PropertyDescription::Type::String);
-			ProgressBase::_propertyDescriptions += PropertyDescription("anti_progress_image", PropertyDescription::Type::String);
-			ProgressBase::_propertyDescriptions += PropertyDescription("mask_image", PropertyDescription::Type::String);
-			ProgressBase::_propertyDescriptions += PropertyDescription("progress", PropertyDescription::Type::Float);
-			ProgressBase::_propertyDescriptions += PropertyDescription("progress_color", PropertyDescription::Type::Color);
-			ProgressBase::_propertyDescriptions += PropertyDescription("anti_progress_color", PropertyDescription::Type::Color);
-			ProgressBase::_propertyDescriptions += PropertyDescription("mask_color", PropertyDescription::Type::Color);
+			ProgressBase::_propertyDescriptions["progress_image"] = PropertyDescription("progress_image", PropertyDescription::Type::String);
+			ProgressBase::_propertyDescriptions["anti_progress_image"] = PropertyDescription("anti_progress_image", PropertyDescription::Type::String);
+			ProgressBase::_propertyDescriptions["mask_image"] = PropertyDescription("mask_image", PropertyDescription::Type::String);
+			ProgressBase::_propertyDescriptions["progress"] = PropertyDescription("progress", PropertyDescription::Type::Float);
+			ProgressBase::_propertyDescriptions["progress_color"] = PropertyDescription("progress_color", PropertyDescription::Type::Color);
+			ProgressBase::_propertyDescriptions["anti_progress_color"] = PropertyDescription("anti_progress_color", PropertyDescription::Type::Color);
+			ProgressBase::_propertyDescriptions["mask_color"] = PropertyDescription("mask_color", PropertyDescription::Type::Color);
 		}
 		return ProgressBase::_propertyDescriptions;
 	}

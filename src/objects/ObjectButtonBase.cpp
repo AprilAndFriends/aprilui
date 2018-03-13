@@ -21,7 +21,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> ButtonBase::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ButtonBase::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ButtonBase::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ButtonBase::_setters;
 
@@ -58,14 +58,14 @@ namespace aprilui
 	{
 	}
 	
-	harray<PropertyDescription> ButtonBase::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ButtonBase::getPropertyDescriptions() const
 	{
 		if (ButtonBase::_propertyDescriptions.size() == 0)
 		{
-			ButtonBase::_propertyDescriptions += PropertyDescription("push_dead_zone", PropertyDescription::Type::Float);
-			ButtonBase::_propertyDescriptions += PropertyDescription("hover_color", PropertyDescription::Type::Color);
-			ButtonBase::_propertyDescriptions += PropertyDescription("pushed_color", PropertyDescription::Type::Color);
-			ButtonBase::_propertyDescriptions += PropertyDescription("disabled_color", PropertyDescription::Type::Color);
+			ButtonBase::_propertyDescriptions["push_dead_zone"] = PropertyDescription("push_dead_zone", PropertyDescription::Type::Float);
+			ButtonBase::_propertyDescriptions["hover_color"] = PropertyDescription("hover_color", PropertyDescription::Type::Color);
+			ButtonBase::_propertyDescriptions["pushed_color"] = PropertyDescription("pushed_color", PropertyDescription::Type::Color);
+			ButtonBase::_propertyDescriptions["disabled_color"] = PropertyDescription("disabled_color", PropertyDescription::Type::Color);
 		}
 		return ButtonBase::_propertyDescriptions;
 	}

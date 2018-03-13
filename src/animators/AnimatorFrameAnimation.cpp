@@ -18,7 +18,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		harray<PropertyDescription> FrameAnimation::_propertyDescriptions;
+		hmap<hstr, PropertyDescription> FrameAnimation::_propertyDescriptions;
 		hmap<hstr, PropertyDescription::Accessor*> FrameAnimation::_getters;
 		hmap<hstr, PropertyDescription::Accessor*> FrameAnimation::_setters;
 
@@ -45,14 +45,14 @@ namespace aprilui
 			return new FrameAnimation(name);
 		}
 
-		harray<PropertyDescription> FrameAnimation::getPropertyDescriptions() const
+		hmap<hstr, PropertyDescription>& FrameAnimation::getPropertyDescriptions() const
 		{
 			if (FrameAnimation::_propertyDescriptions.size() == 0)
 			{
 				FrameAnimation::_propertyDescriptions = Animator::getPropertyDescriptions();
-				FrameAnimation::_propertyDescriptions += PropertyDescription("base_name", PropertyDescription::Type::String);
-				FrameAnimation::_propertyDescriptions += PropertyDescription("first_frame", PropertyDescription::Type::Int);
-				FrameAnimation::_propertyDescriptions += PropertyDescription("frame_count", PropertyDescription::Type::Int);
+				FrameAnimation::_propertyDescriptions["base_name"] = PropertyDescription("base_name", PropertyDescription::Type::String);
+				FrameAnimation::_propertyDescriptions["first_frame"] = PropertyDescription("first_frame", PropertyDescription::Type::Int);
+				FrameAnimation::_propertyDescriptions["frame_count"] = PropertyDescription("frame_count", PropertyDescription::Type::Int);
 			}
 			return FrameAnimation::_propertyDescriptions;
 		}

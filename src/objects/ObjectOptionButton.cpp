@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> OptionButton::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> OptionButton::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> OptionButton::_getters;
 
 	OptionButton::OptionButton(chstr name) : ToggleButton(name)
@@ -40,12 +40,12 @@ namespace aprilui
 		return new OptionButton(name);
 	}
 
-	harray<PropertyDescription> OptionButton::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& OptionButton::getPropertyDescriptions() const
 	{
 		if (OptionButton::_propertyDescriptions.size() == 0)
 		{
 			OptionButton::_propertyDescriptions = ToggleButton::getPropertyDescriptions();
-			OptionButton::_propertyDescriptions += PropertyDescription("option_count", PropertyDescription::Type::Int);
+			OptionButton::_propertyDescriptions["option_count"] = PropertyDescription("option_count", PropertyDescription::Type::Int);
 		}
 		return OptionButton::_propertyDescriptions;
 	}

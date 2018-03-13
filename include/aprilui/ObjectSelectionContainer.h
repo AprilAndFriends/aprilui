@@ -30,7 +30,7 @@ namespace aprilui
 		~SelectionContainer();
 		inline hstr getClassName() const { return "SelectionContainer"; }
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(int, selectedIndex, SelectedIndex);
 		void setSelectedIndex(const int& value);
@@ -78,7 +78,7 @@ namespace aprilui
 		virtual void _optimizeVisibility();
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

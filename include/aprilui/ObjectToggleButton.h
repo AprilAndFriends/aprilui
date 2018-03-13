@@ -30,7 +30,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "ToggleButton"; }
 		static Object* createInstance(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_ISSET(toggled, Toggled);
 		HL_DEFINE_GET(BaseImage*, toggledNormalImage, ToggledNormalImage);
@@ -82,7 +82,7 @@ namespace aprilui
 		bool _mouseUp(april::Key keyCode);
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

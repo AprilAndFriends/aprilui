@@ -34,7 +34,7 @@ namespace aprilui
 	float ScrollBar::defaultGridSize = 0.0f;
 	bool ScrollBar::useBackgroundInstantScroll = false;
 
-	harray<PropertyDescription> ScrollBar::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ScrollBar::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ScrollBar::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ScrollBar::_setters;
 
@@ -85,19 +85,19 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> ScrollBar::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ScrollBar::getPropertyDescriptions() const
 	{
 		if (ScrollBar::_propertyDescriptions.size() == 0)
 		{
 			ScrollBar::_propertyDescriptions = Object::getPropertyDescriptions();
-			ScrollBar::_propertyDescriptions += PropertyDescription("skin", PropertyDescription::Type::String);
-			ScrollBar::_propertyDescriptions += PropertyDescription("grid_size", PropertyDescription::Type::Float);
-			ScrollBar::_propertyDescriptions += PropertyDescription("scroll_distance", PropertyDescription::Type::Float);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_fading", PropertyDescription::Type::Bool);
-			ScrollBar::_propertyDescriptions += PropertyDescription("height_hide", PropertyDescription::Type::Bool);
-			ScrollBar::_propertyDescriptions += PropertyDescription("use_stretched_slider", PropertyDescription::Type::Bool);
-			ScrollBar::_propertyDescriptions += PropertyDescription("disabled_while_scrolling", PropertyDescription::Type::Bool);
-			ScrollBar::_propertyDescriptions += PropertyDescription("max_grid_scroll", PropertyDescription::Type::Int);
+			ScrollBar::_propertyDescriptions["skin"] = PropertyDescription("skin", PropertyDescription::Type::String);
+			ScrollBar::_propertyDescriptions["grid_size"] = PropertyDescription("grid_size", PropertyDescription::Type::Float);
+			ScrollBar::_propertyDescriptions["scroll_distance"] = PropertyDescription("scroll_distance", PropertyDescription::Type::Float);
+			ScrollBar::_propertyDescriptions["use_fading"] = PropertyDescription("use_fading", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions["height_hide"] = PropertyDescription("height_hide", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions["use_stretched_slider"] = PropertyDescription("use_stretched_slider", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions["disabled_while_scrolling"] = PropertyDescription("disabled_while_scrolling", PropertyDescription::Type::Bool);
+			ScrollBar::_propertyDescriptions["max_grid_scroll"] = PropertyDescription("max_grid_scroll", PropertyDescription::Type::Int);
 		}
 		return ScrollBar::_propertyDescriptions;
 	}

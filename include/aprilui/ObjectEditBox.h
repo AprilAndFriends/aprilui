@@ -31,7 +31,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "EditBox"; }
 		static Object* createInstance(chstr name);
 		
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		hstr getName() const;
 		int getFocusIndex() const;
@@ -160,7 +160,7 @@ namespace aprilui
 		void _pasteText();
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

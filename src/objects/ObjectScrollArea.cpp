@@ -27,7 +27,7 @@ namespace aprilui
 	gvec2 ScrollArea::defaultDragThreshold(16.0f, 16.0f);
 	float ScrollArea::defaultDragMaxSpeed = 0.0f;
 
-	harray<PropertyDescription> ScrollArea::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ScrollArea::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ScrollArea::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ScrollArea::_setters;
 
@@ -72,26 +72,26 @@ namespace aprilui
 		return new ScrollArea(name);
 	}
 
-	harray<PropertyDescription> ScrollArea::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ScrollArea::getPropertyDescriptions() const
 	{
 		if (ScrollArea::_propertyDescriptions.size() == 0)
 		{
 			ScrollArea::_propertyDescriptions = Object::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions();
-			ScrollArea::_propertyDescriptions += PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
-			ScrollArea::_propertyDescriptions += PropertyDescription("inertia", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold", PropertyDescription::Type::Gvec2);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold_x", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_threshold_y", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
-			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_size_factor", PropertyDescription::Type::Gvec2);
-			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_size_factor_x", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_size_factor_y", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_offset_factor", PropertyDescription::Type::Gvec2);
-			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_offset_factor_x", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("oob_children_fade_offset_factor_y", PropertyDescription::Type::Float);
-			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
-			ScrollArea::_propertyDescriptions += PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions["allow_drag"] = PropertyDescription("allow_drag", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions["inertia"] = PropertyDescription("inertia", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["drag_threshold"] = PropertyDescription("drag_threshold", PropertyDescription::Type::Gvec2);
+			ScrollArea::_propertyDescriptions["drag_threshold_x"] = PropertyDescription("drag_threshold_x", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["drag_threshold_y"] = PropertyDescription("drag_threshold_y", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["drag_max_speed"] = PropertyDescription("drag_max_speed", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["swap_scroll_wheels"] = PropertyDescription("swap_scroll_wheels", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions["oob_children_fade_size_factor"] = PropertyDescription("oob_children_fade_size_factor", PropertyDescription::Type::Gvec2);
+			ScrollArea::_propertyDescriptions["oob_children_fade_size_factor_x"] = PropertyDescription("oob_children_fade_size_factor_x", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["oob_children_fade_size_factor_y"] = PropertyDescription("oob_children_fade_size_factor_y", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["oob_children_fade_offset_factor"] = PropertyDescription("oob_children_fade_offset_factor", PropertyDescription::Type::Gvec2);
+			ScrollArea::_propertyDescriptions["oob_children_fade_offset_factor_x"] = PropertyDescription("oob_children_fade_offset_factor_x", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["oob_children_fade_offset_factor_y"] = PropertyDescription("oob_children_fade_offset_factor_y", PropertyDescription::Type::Float);
+			ScrollArea::_propertyDescriptions["optimize_oob_children_visible"] = PropertyDescription("optimize_oob_children_visible", PropertyDescription::Type::Bool);
+			ScrollArea::_propertyDescriptions["optimize_oob_children_awake"] = PropertyDescription("optimize_oob_children_awake", PropertyDescription::Type::Bool);
 		}
 		return ScrollArea::_propertyDescriptions;
 	}

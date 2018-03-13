@@ -30,7 +30,7 @@
 namespace aprilui
 {
 	float LabelBase::defaultMinAutoScale = 1.0f;
-	harray<PropertyDescription> LabelBase::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> LabelBase::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> LabelBase::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> LabelBase::_setters;
 
@@ -97,27 +97,27 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> LabelBase::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& LabelBase::getPropertyDescriptions() const
 	{
 		if (LabelBase::_propertyDescriptions.size() == 0)
 		{
-			LabelBase::_propertyDescriptions += PropertyDescription("font", PropertyDescription::Type::String);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_formatting", PropertyDescription::Type::Bool);
-			LabelBase::_propertyDescriptions += PropertyDescription("text", PropertyDescription::Type::String);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_key", PropertyDescription::Type::String);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_color", PropertyDescription::Type::Color);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset", PropertyDescription::Type::Gvec2);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_x", PropertyDescription::Type::Float);
-			LabelBase::_propertyDescriptions += PropertyDescription("text_offset_y", PropertyDescription::Type::Float);
-			LabelBase::_propertyDescriptions += PropertyDescription("min_auto_scale", PropertyDescription::Type::Float);
-			LabelBase::_propertyDescriptions += PropertyDescription("auto_scaled_font", PropertyDescription::Type::String);
-			LabelBase::_propertyDescriptions += PropertyDescription("horz_formatting", PropertyDescription::Type::Enum);
-			LabelBase::_propertyDescriptions += PropertyDescription("vert_formatting", PropertyDescription::Type::Enum);
-			LabelBase::_propertyDescriptions += PropertyDescription("effect", PropertyDescription::Type::Enum);
-			LabelBase::_propertyDescriptions += PropertyDescription("strike_through", PropertyDescription::Type::Bool);
-			LabelBase::_propertyDescriptions += PropertyDescription("underline", PropertyDescription::Type::Bool);
-			LabelBase::_propertyDescriptions += PropertyDescription("background_color", PropertyDescription::Type::Color);
-			LabelBase::_propertyDescriptions += PropertyDescription("background_border", PropertyDescription::Type::Bool);
+			LabelBase::_propertyDescriptions["font"] = PropertyDescription("font", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions["text_formatting"] = PropertyDescription("text_formatting", PropertyDescription::Type::Bool);
+			LabelBase::_propertyDescriptions["text"] = PropertyDescription("text", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions["text_key"] = PropertyDescription("text_key", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions["text_color"] = PropertyDescription("text_color", PropertyDescription::Type::Color);
+			LabelBase::_propertyDescriptions["text_offset"] = PropertyDescription("text_offset", PropertyDescription::Type::Gvec2);
+			LabelBase::_propertyDescriptions["text_offset_x"] = PropertyDescription("text_offset_x", PropertyDescription::Type::Float);
+			LabelBase::_propertyDescriptions["text_offset_y"] = PropertyDescription("text_offset_y", PropertyDescription::Type::Float);
+			LabelBase::_propertyDescriptions["min_auto_scale"] = PropertyDescription("min_auto_scale", PropertyDescription::Type::Float);
+			LabelBase::_propertyDescriptions["auto_scaled_font"] = PropertyDescription("auto_scaled_font", PropertyDescription::Type::String);
+			LabelBase::_propertyDescriptions["horz_formatting"] = PropertyDescription("horz_formatting", PropertyDescription::Type::Enum);
+			LabelBase::_propertyDescriptions["vert_formatting"] = PropertyDescription("vert_formatting", PropertyDescription::Type::Enum);
+			LabelBase::_propertyDescriptions["effect"] = PropertyDescription("effect", PropertyDescription::Type::Enum);
+			LabelBase::_propertyDescriptions["strike_through"] = PropertyDescription("strike_through", PropertyDescription::Type::Bool);
+			LabelBase::_propertyDescriptions["underline"] = PropertyDescription("underline", PropertyDescription::Type::Bool);
+			LabelBase::_propertyDescriptions["background_color"] = PropertyDescription("background_color", PropertyDescription::Type::Color);
+			LabelBase::_propertyDescriptions["background_border"] = PropertyDescription("background_border", PropertyDescription::Type::Bool);
 		}
 		return LabelBase::_propertyDescriptions;
 	}

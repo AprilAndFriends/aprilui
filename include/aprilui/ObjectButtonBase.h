@@ -34,7 +34,7 @@ namespace aprilui
 		ButtonBase();
 		virtual ~ButtonBase();
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GETSET(float, pushDeadZone, PushDeadZone);
 		HL_DEFINE_GET(april::Color, hoverColor, HoverColor);
@@ -110,7 +110,7 @@ namespace aprilui
 		}
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

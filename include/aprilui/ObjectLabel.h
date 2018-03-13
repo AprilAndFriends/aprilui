@@ -32,7 +32,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "Label"; }
 		static Object* createInstance(chstr name);
 		
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		Dataset* getDataset() const;
 		hstr getAutoScaledFont();
@@ -56,7 +56,7 @@ namespace aprilui
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 	};

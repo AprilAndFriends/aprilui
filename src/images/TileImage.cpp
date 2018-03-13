@@ -18,7 +18,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> TileImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> TileImage::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> TileImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> TileImage::_setters;
 
@@ -47,18 +47,18 @@ namespace aprilui
 		return new TileImage(texture, name, source);
 	}
 
-	harray<PropertyDescription> TileImage::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& TileImage::getPropertyDescriptions() const
 	{
 		if (TileImage::_propertyDescriptions.size() == 0)
 		{
 			TileImage::_propertyDescriptions = Image::getPropertyDescriptions();
-			TileImage::_propertyDescriptions += PropertyDescription("tile", PropertyDescription::Type::Gvec2);
-			TileImage::_propertyDescriptions += PropertyDescription("tile_w", PropertyDescription::Type::Float);
-			TileImage::_propertyDescriptions += PropertyDescription("tile_h", PropertyDescription::Type::Float);
-			TileImage::_propertyDescriptions += PropertyDescription("scroll", PropertyDescription::Type::Gvec2);
-			TileImage::_propertyDescriptions += PropertyDescription("scroll_x", PropertyDescription::Type::Float);
-			TileImage::_propertyDescriptions += PropertyDescription("scroll_y", PropertyDescription::Type::Float);
-			TileImage::_propertyDescriptions += PropertyDescription("use_tile_count", PropertyDescription::Type::Bool);
+			TileImage::_propertyDescriptions["tile"] = PropertyDescription("tile", PropertyDescription::Type::Gvec2);
+			TileImage::_propertyDescriptions["tile_w"] = PropertyDescription("tile_w", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions["tile_h"] = PropertyDescription("tile_h", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions["scroll"] = PropertyDescription("scroll", PropertyDescription::Type::Gvec2);
+			TileImage::_propertyDescriptions["scroll_x"] = PropertyDescription("scroll_x", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions["scroll_y"] = PropertyDescription("scroll_y", PropertyDescription::Type::Float);
+			TileImage::_propertyDescriptions["use_tile_count"] = PropertyDescription("use_tile_count", PropertyDescription::Type::Bool);
 		}
 		return TileImage::_propertyDescriptions;
 	}

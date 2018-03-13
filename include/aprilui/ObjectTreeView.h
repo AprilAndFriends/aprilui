@@ -41,7 +41,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "TreeView"; }
 		static Object* createInstance(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(float, expanderWidth, ExpanderWidth);
 		void setExpanderWidth(const float& value);
@@ -87,7 +87,7 @@ namespace aprilui
 		bool _findNode(harray<int> nodeIndices, TreeViewNode** node) const;
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

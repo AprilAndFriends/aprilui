@@ -31,7 +31,7 @@ namespace aprilui
 
 			static Animator* createInstance(chstr name);
 
-			harray<PropertyDescription> getPropertyDescriptions() const;
+			hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 			HL_DEFINE_GETSET(hstr, imageBaseName, ImageBaseName);
 			HL_DEFINE_GETSET(int, firstFrame, FirstFrame);
@@ -56,7 +56,7 @@ namespace aprilui
 			void _update(float timeDelta);
 
 		private:
-			static harray<PropertyDescription> _propertyDescriptions;
+			static hmap<hstr, PropertyDescription> _propertyDescriptions;
 			static hmap<hstr, PropertyDescription::Accessor*> _getters;
 			static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

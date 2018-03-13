@@ -19,7 +19,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> GridViewCell::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> GridViewCell::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> GridViewCell::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> GridViewCell::_setters;
 
@@ -44,12 +44,12 @@ namespace aprilui
 		return new GridViewCell(name);
 	}
 
-	harray<PropertyDescription> GridViewCell::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& GridViewCell::getPropertyDescriptions() const
 	{
 		if (GridViewCell::_propertyDescriptions.size() == 0)
 		{
 			GridViewCell::_propertyDescriptions = Container::getPropertyDescriptions();
-			GridViewCell::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::Type::Bool);
+			GridViewCell::_propertyDescriptions["selectable"] = PropertyDescription("selectable", PropertyDescription::Type::Bool);
 		}
 		return GridViewCell::_propertyDescriptions;
 	}

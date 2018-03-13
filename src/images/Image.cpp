@@ -22,7 +22,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> Image::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> Image::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> Image::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Image::_setters;
 
@@ -51,15 +51,15 @@ namespace aprilui
 		return new Image(texture, name, source);
 	}
 	
-	harray<PropertyDescription> Image::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& Image::getPropertyDescriptions() const
 	{
 		if (Image::_propertyDescriptions.size() == 0)
 		{
 			Image::_propertyDescriptions = MinimalImage::getPropertyDescriptions();
-			Image::_propertyDescriptions += PropertyDescription("color", PropertyDescription::Type::Color);
-			Image::_propertyDescriptions += PropertyDescription("blend_mode", PropertyDescription::Type::Enum);
-			Image::_propertyDescriptions += PropertyDescription("color_mode", PropertyDescription::Type::Enum);
-			Image::_propertyDescriptions += PropertyDescription("color_mode_factor", PropertyDescription::Type::Float);
+			Image::_propertyDescriptions["color"] = PropertyDescription("color", PropertyDescription::Type::Color);
+			Image::_propertyDescriptions["blend_mode"] = PropertyDescription("blend_mode", PropertyDescription::Type::Enum);
+			Image::_propertyDescriptions["color_mode"] = PropertyDescription("color_mode", PropertyDescription::Type::Enum);
+			Image::_propertyDescriptions["color_mode_factor"] = PropertyDescription("color_mode_factor", PropertyDescription::Type::Float);
 		}
 		return Image::_propertyDescriptions;
 	}

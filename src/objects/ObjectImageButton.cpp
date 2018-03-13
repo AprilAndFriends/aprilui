@@ -16,7 +16,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> ImageButton::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ImageButton::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ImageButton::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ImageButton::_setters;
 
@@ -49,14 +49,14 @@ namespace aprilui
 		return new ImageButton(name);
 	}
 
-	harray<PropertyDescription> ImageButton::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ImageButton::getPropertyDescriptions() const
 	{
 		if (ImageButton::_propertyDescriptions.size() == 0)
 		{
 			ImageButton::_propertyDescriptions = ImageBox::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions();
-			ImageButton::_propertyDescriptions += PropertyDescription("pushed_image", PropertyDescription::Type::String);
-			ImageButton::_propertyDescriptions += PropertyDescription("hover_image", PropertyDescription::Type::String);
-			ImageButton::_propertyDescriptions += PropertyDescription("disabled_image", PropertyDescription::Type::String);
+			ImageButton::_propertyDescriptions["pushed_image"] = PropertyDescription("pushed_image", PropertyDescription::Type::String);
+			ImageButton::_propertyDescriptions["hover_image"] = PropertyDescription("hover_image", PropertyDescription::Type::String);
+			ImageButton::_propertyDescriptions["disabled_image"] = PropertyDescription("disabled_image", PropertyDescription::Type::String);
 		}
 		return ImageButton::_propertyDescriptions;
 	}

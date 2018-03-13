@@ -16,7 +16,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> Label::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> Label::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> Label::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Label::_setters;
 
@@ -39,7 +39,7 @@ namespace aprilui
 		return new Label(name);
 	}
 
-	harray<PropertyDescription> Label::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& Label::getPropertyDescriptions() const
 	{
 		if (Label::_propertyDescriptions.size() == 0)
 		{

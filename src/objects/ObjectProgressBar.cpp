@@ -43,7 +43,7 @@ namespace aprilui
 		}
 	));
 
-	harray<PropertyDescription> ProgressBar::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ProgressBar::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressBar::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressBar::_setters;
 
@@ -72,14 +72,14 @@ namespace aprilui
 		return new ProgressBar(name);
 	}
 
-	harray<PropertyDescription> ProgressBar::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ProgressBar::getPropertyDescriptions() const
 	{
 		if (ProgressBar::_propertyDescriptions.size() == 0)
 		{
 			ProgressBar::_propertyDescriptions = ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions();
-			ProgressBar::_propertyDescriptions += PropertyDescription("stretching", PropertyDescription::Type::Bool);
-			ProgressBar::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
-			ProgressBar::_propertyDescriptions += PropertyDescription("interactable", PropertyDescription::Type::Bool);
+			ProgressBar::_propertyDescriptions["stretching"] = PropertyDescription("stretching", PropertyDescription::Type::Bool);
+			ProgressBar::_propertyDescriptions["direction"] = PropertyDescription("direction", PropertyDescription::Type::Enum);
+			ProgressBar::_propertyDescriptions["interactable"] = PropertyDescription("interactable", PropertyDescription::Type::Bool);
 		}
 		return ProgressBar::_propertyDescriptions;
 	}

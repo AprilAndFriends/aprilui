@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> BaseObject::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> BaseObject::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> BaseObject::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> BaseObject::_setters;
 
@@ -47,16 +47,16 @@ namespace aprilui
 	{
 	}
 
-	harray<PropertyDescription> BaseObject::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& BaseObject::getPropertyDescriptions() const
 	{
 		if (BaseObject::_propertyDescriptions.size() == 0)
 		{
-			BaseObject::_propertyDescriptions += PropertyDescription("name", PropertyDescription::Type::String);
-			BaseObject::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::Type::String);
-			BaseObject::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::Type::String);
-			BaseObject::_propertyDescriptions += PropertyDescription("enabled", PropertyDescription::Type::Bool);
-			BaseObject::_propertyDescriptions += PropertyDescription("awake", PropertyDescription::Type::Bool);
-			BaseObject::_propertyDescriptions += PropertyDescription("z_order", PropertyDescription::Type::Int);
+			BaseObject::_propertyDescriptions["name"] = PropertyDescription("name", PropertyDescription::Type::String);
+			BaseObject::_propertyDescriptions["full_name"] = PropertyDescription("full_name", PropertyDescription::Type::String);
+			BaseObject::_propertyDescriptions["tag"] = PropertyDescription("tag", PropertyDescription::Type::String);
+			BaseObject::_propertyDescriptions["enabled"] = PropertyDescription("enabled", PropertyDescription::Type::Bool);
+			BaseObject::_propertyDescriptions["awake"] = PropertyDescription("awake", PropertyDescription::Type::Bool);
+			BaseObject::_propertyDescriptions["z_order"] = PropertyDescription("z_order", PropertyDescription::Type::Int);
 		}
 		return BaseObject::_propertyDescriptions;
 	}
@@ -86,19 +86,6 @@ namespace aprilui
 			BaseObject::_setters["z_order"] = new PropertyDescription::Set<BaseObject, int>(&BaseObject::setZOrder);
 		}
 		return BaseObject::_setters;
-	}
-
-	bool BaseObject::hasProperty(chstr name)
-	{
-		harray<PropertyDescription> properties = this->getPropertyDescriptions();
-		foreach (PropertyDescription, it, properties)
-		{
-			if ((*it).getName() == name)
-			{
-				return true;
-			}
-		}
-		return false;
 	}
 
 	void BaseObject::setName(chstr value)
@@ -197,6 +184,11 @@ namespace aprilui
 	bool BaseObject::isDerivedAwake() const
 	{
 		return (this->isAwake() && (this->parent == NULL || this->parent->isDerivedAwake()));
+	}
+
+	bool BaseObject::hasProperty(chstr name)
+	{
+		return this->getPropertyDescriptions().hasKey(name);
 	}
 
 	bool BaseObject::isChild(BaseObject* object)

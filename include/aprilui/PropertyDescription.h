@@ -129,8 +129,8 @@ namespace aprilui
 		_DEFINE_SPECIAL_SET_CLASS(Grect, grect, april::hstrToGrect(parameter));
 		_DEFINE_SPECIAL_GET_CLASS(Color, april::Color, result.hex());
 
+		PropertyDescription();
 		PropertyDescription(chstr name, Type type, bool arrayData = false);
-		~PropertyDescription();
 
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(Type, type, Type);

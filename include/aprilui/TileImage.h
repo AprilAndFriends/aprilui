@@ -33,7 +33,7 @@ namespace aprilui
 		
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GETSET(gvec2, tile, Tile);
 		inline void setTile(float w, float h) { this->tile.set(w, h); }
@@ -62,7 +62,7 @@ namespace aprilui
 		void _createVertices(grect rect);
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

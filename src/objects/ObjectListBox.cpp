@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> ListBox::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ListBox::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ListBox::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ListBox::_setters;
 
@@ -45,13 +45,13 @@ namespace aprilui
 		return new ListBox(name);
 	}
 
-	harray<PropertyDescription> ListBox::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ListBox::getPropertyDescriptions() const
 	{
 		if (ListBox::_propertyDescriptions.size() == 0)
 		{
 			ListBox::_propertyDescriptions = SelectionContainer::getPropertyDescriptions();
-			ListBox::_propertyDescriptions += PropertyDescription("even_color", PropertyDescription::Type::Color);
-			ListBox::_propertyDescriptions += PropertyDescription("odd_color", PropertyDescription::Type::Color);
+			ListBox::_propertyDescriptions["even_color"] = PropertyDescription("even_color", PropertyDescription::Type::Color);
+			ListBox::_propertyDescriptions["odd_color"] = PropertyDescription("odd_color", PropertyDescription::Type::Color);
 		}
 		return ListBox::_propertyDescriptions;
 	}

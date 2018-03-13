@@ -33,7 +33,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> EditBox::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> EditBox::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> EditBox::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> EditBox::_setters;
 
@@ -132,28 +132,28 @@ namespace aprilui
 		return new EditBox(name);
 	}
 
-	harray<PropertyDescription> EditBox::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& EditBox::getPropertyDescriptions() const
 	{
 		if (EditBox::_propertyDescriptions.size() == 0)
 		{
 			EditBox::_propertyDescriptions = Label::getPropertyDescriptions() + ButtonBase::getPropertyDescriptions();
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text", PropertyDescription::Type::String);
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text_key", PropertyDescription::Type::String);
-			EditBox::_propertyDescriptions += PropertyDescription("empty_text_color", PropertyDescription::Type::Color);
-			EditBox::_propertyDescriptions += PropertyDescription("max_length", PropertyDescription::Type::Int);
-			EditBox::_propertyDescriptions += PropertyDescription("password_char", PropertyDescription::Type::String);
-			EditBox::_propertyDescriptions += PropertyDescription("filter", PropertyDescription::Type::String);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_index", PropertyDescription::Type::Int);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_offset", PropertyDescription::Type::Gvec2);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_x", PropertyDescription::Type::Float);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_offset_y", PropertyDescription::Type::Float);
-			EditBox::_propertyDescriptions += PropertyDescription("caret_color", PropertyDescription::Type::Color);
-			EditBox::_propertyDescriptions += PropertyDescription("multi_line", PropertyDescription::Type::Bool);
-			EditBox::_propertyDescriptions += PropertyDescription("selectable", PropertyDescription::Type::Bool);
-			EditBox::_propertyDescriptions += PropertyDescription("selection_count", PropertyDescription::Type::Int);
-			EditBox::_propertyDescriptions += PropertyDescription("selection_color", PropertyDescription::Type::Color);
-			EditBox::_propertyDescriptions += PropertyDescription("clipboard_enabled", PropertyDescription::Type::Bool);
-			EditBox::_propertyDescriptions += PropertyDescription("disabled_offset", PropertyDescription::Type::Bool);
+			EditBox::_propertyDescriptions["empty_text"] = PropertyDescription("empty_text", PropertyDescription::Type::String);
+			EditBox::_propertyDescriptions["empty_text_key"] = PropertyDescription("empty_text_key", PropertyDescription::Type::String);
+			EditBox::_propertyDescriptions["empty_text_color"] = PropertyDescription("empty_text_color", PropertyDescription::Type::Color);
+			EditBox::_propertyDescriptions["max_length"] = PropertyDescription("max_length", PropertyDescription::Type::Int);
+			EditBox::_propertyDescriptions["password_char"] = PropertyDescription("password_char", PropertyDescription::Type::String);
+			EditBox::_propertyDescriptions["filter"] = PropertyDescription("filter", PropertyDescription::Type::String);
+			EditBox::_propertyDescriptions["caret_index"] = PropertyDescription("caret_index", PropertyDescription::Type::Int);
+			EditBox::_propertyDescriptions["caret_offset"] = PropertyDescription("caret_offset", PropertyDescription::Type::Gvec2);
+			EditBox::_propertyDescriptions["caret_offset_x"] = PropertyDescription("caret_offset_x", PropertyDescription::Type::Float);
+			EditBox::_propertyDescriptions["caret_offset_y"] = PropertyDescription("caret_offset_y", PropertyDescription::Type::Float);
+			EditBox::_propertyDescriptions["caret_color"] = PropertyDescription("caret_color", PropertyDescription::Type::Color);
+			EditBox::_propertyDescriptions["multi_line"] = PropertyDescription("multi_line", PropertyDescription::Type::Bool);
+			EditBox::_propertyDescriptions["selectable"] = PropertyDescription("selectable", PropertyDescription::Type::Bool);
+			EditBox::_propertyDescriptions["selection_count"] = PropertyDescription("selection_count", PropertyDescription::Type::Int);
+			EditBox::_propertyDescriptions["selection_color"] = PropertyDescription("selection_color", PropertyDescription::Type::Color);
+			EditBox::_propertyDescriptions["clipboard_enabled"] = PropertyDescription("clipboard_enabled", PropertyDescription::Type::Bool);
+			EditBox::_propertyDescriptions["disabled_offset"] = PropertyDescription("disabled_offset", PropertyDescription::Type::Bool);
 		}
 		return EditBox::_propertyDescriptions;
 	}

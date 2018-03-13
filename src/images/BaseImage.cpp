@@ -11,7 +11,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> BaseImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> BaseImage::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> BaseImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> BaseImage::_setters;
 
@@ -35,24 +35,24 @@ namespace aprilui
 	{
 	}
 	
-	harray<PropertyDescription> BaseImage::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& BaseImage::getPropertyDescriptions() const
 	{
 		if (BaseImage::_propertyDescriptions.size() == 0)
 		{
-			BaseImage::_propertyDescriptions += PropertyDescription("name", PropertyDescription::Type::String);
-			BaseImage::_propertyDescriptions += PropertyDescription("full_name", PropertyDescription::Type::String);
-			BaseImage::_propertyDescriptions += PropertyDescription("tag", PropertyDescription::Type::String);
-			BaseImage::_propertyDescriptions += PropertyDescription("dataset", PropertyDescription::Type::String);
-			BaseImage::_propertyDescriptions += PropertyDescription("size", PropertyDescription::Type::Gvec2);
-			BaseImage::_propertyDescriptions += PropertyDescription("w", PropertyDescription::Type::Float);
-			BaseImage::_propertyDescriptions += PropertyDescription("h", PropertyDescription::Type::Float);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_rect", PropertyDescription::Type::Grect);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_position", PropertyDescription::Type::Gvec2);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_size", PropertyDescription::Type::Gvec2);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_x", PropertyDescription::Type::Float);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_y", PropertyDescription::Type::Float);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_w", PropertyDescription::Type::Float);
-			BaseImage::_propertyDescriptions += PropertyDescription("clip_h", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions["name"] = PropertyDescription("name", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions["full_name"] = PropertyDescription("full_name", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions["tag"] = PropertyDescription("tag", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions["dataset"] = PropertyDescription("dataset", PropertyDescription::Type::String);
+			BaseImage::_propertyDescriptions["size"] = PropertyDescription("size", PropertyDescription::Type::Gvec2);
+			BaseImage::_propertyDescriptions["w"] = PropertyDescription("w", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions["h"] = PropertyDescription("h", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions["clip_rect"] = PropertyDescription("clip_rect", PropertyDescription::Type::Grect);
+			BaseImage::_propertyDescriptions["clip_position"] = PropertyDescription("clip_position", PropertyDescription::Type::Gvec2);
+			BaseImage::_propertyDescriptions["clip_size"] = PropertyDescription("clip_size", PropertyDescription::Type::Gvec2);
+			BaseImage::_propertyDescriptions["clip_x"] = PropertyDescription("clip_x", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions["clip_y"] = PropertyDescription("clip_y", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions["clip_w"] = PropertyDescription("clip_w", PropertyDescription::Type::Float);
+			BaseImage::_propertyDescriptions["clip_h"] = PropertyDescription("clip_h", PropertyDescription::Type::Float);
 		}
 		return BaseImage::_propertyDescriptions;
 	}
@@ -106,11 +106,6 @@ namespace aprilui
 			return;
 		}
 		this->name = value;
-	}
-
-	hstr BaseImage::getFullName() const
-	{
-		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
 	}
 
 	void BaseImage::setClipRect(cgrect value)
@@ -192,6 +187,16 @@ namespace aprilui
 			this->clipRect.setSize(w, h);
 			this->_clipRectCalculated = false;
 		}
+	}
+
+	hstr BaseImage::getFullName() const
+	{
+		return (this->dataset != NULL ? this->dataset->getName() + "." + this->name : this->name);
+	}
+
+	bool BaseImage::hasProperty(chstr name)
+	{
+		return this->getPropertyDescriptions().hasKey(name);
 	}
 
 	hstr BaseImage::getProperty(chstr name)

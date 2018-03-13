@@ -29,7 +29,7 @@ namespace aprilui
 
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(grect, skinRect, SkinRect);
 		void setSkinRect(cgrect value);
@@ -71,7 +71,7 @@ namespace aprilui
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

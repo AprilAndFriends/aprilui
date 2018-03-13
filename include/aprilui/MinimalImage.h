@@ -41,7 +41,7 @@ namespace aprilui
 
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(Texture*, texture, Texture);
 		HL_DEFINE_GET(grect, srcRect, SrcRect);
@@ -81,7 +81,7 @@ namespace aprilui
 		virtual grect _makeClippedSrcRect() const;
 		
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

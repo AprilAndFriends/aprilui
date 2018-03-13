@@ -60,7 +60,7 @@ namespace aprilui
 
 	));
 
-	harray<PropertyDescription> ProgressCircle::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ProgressCircle::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_setters;
 
@@ -83,12 +83,12 @@ namespace aprilui
 		return new ProgressCircle(name);
 	}
 
-	harray<PropertyDescription> ProgressCircle::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ProgressCircle::getPropertyDescriptions() const
 	{
 		if (ProgressCircle::_propertyDescriptions.size() == 0)
 		{
 			ProgressCircle::_propertyDescriptions = ImageBox::getPropertyDescriptions() + ProgressBase::getPropertyDescriptions();
-			ProgressCircle::_propertyDescriptions += PropertyDescription("direction", PropertyDescription::Type::Enum);
+			ProgressCircle::_propertyDescriptions["direction"] = PropertyDescription("direction", PropertyDescription::Type::Enum);
 		}
 		return ProgressCircle::_propertyDescriptions;
 	}

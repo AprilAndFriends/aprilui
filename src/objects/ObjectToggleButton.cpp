@@ -24,7 +24,7 @@ namespace aprilui
 	static BaseImage* tempHoverImage = NULL;
 	static BaseImage* tempDisabledImage = NULL;
 
-	harray<PropertyDescription> ToggleButton::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ToggleButton::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> ToggleButton::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ToggleButton::_setters;
 
@@ -59,16 +59,16 @@ namespace aprilui
 		return new ToggleButton(name);
 	}
 
-	harray<PropertyDescription> ToggleButton::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ToggleButton::getPropertyDescriptions() const
 	{
 		if (ToggleButton::_propertyDescriptions.size() == 0)
 		{
 			ToggleButton::_propertyDescriptions = ImageButton::getPropertyDescriptions();
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled", PropertyDescription::Type::Bool);
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_image", PropertyDescription::Type::String);
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_pushed_image", PropertyDescription::Type::String);
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_hover_image", PropertyDescription::Type::String);
-			ToggleButton::_propertyDescriptions += PropertyDescription("toggled_disabled_image", PropertyDescription::Type::String);
+			ToggleButton::_propertyDescriptions["toggled"] = PropertyDescription("toggled", PropertyDescription::Type::Bool);
+			ToggleButton::_propertyDescriptions["toggled_image"] = PropertyDescription("toggled_image", PropertyDescription::Type::String);
+			ToggleButton::_propertyDescriptions["toggled_pushed_image"] = PropertyDescription("toggled_pushed_image", PropertyDescription::Type::String);
+			ToggleButton::_propertyDescriptions["toggled_hover_image"] = PropertyDescription("toggled_hover_image", PropertyDescription::Type::String);
+			ToggleButton::_propertyDescriptions["toggled_disabled_image"] = PropertyDescription("toggled_disabled_image", PropertyDescription::Type::String);
 		}
 		return ToggleButton::_propertyDescriptions;
 	}

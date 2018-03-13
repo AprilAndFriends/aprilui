@@ -32,7 +32,7 @@ namespace aprilui
 
 		static Object* createInstance(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		int getOptionCount() const;
 
@@ -43,7 +43,7 @@ namespace aprilui
 		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 
 	};

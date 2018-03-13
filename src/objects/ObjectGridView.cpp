@@ -22,7 +22,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> GridView::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> GridView::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> GridView::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> GridView::_setters;
 
@@ -50,13 +50,13 @@ namespace aprilui
 		return new GridView(name);
 	}
 
-	harray<PropertyDescription> GridView::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& GridView::getPropertyDescriptions() const
 	{
 		if (GridView::_propertyDescriptions.size() == 0)
 		{
 			GridView::_propertyDescriptions = SelectionContainer::getPropertyDescriptions();
-			GridView::_propertyDescriptions += PropertyDescription("spacing_width", PropertyDescription::Type::Float);
-			GridView::_propertyDescriptions += PropertyDescription("spacing_height", PropertyDescription::Type::Float);
+			GridView::_propertyDescriptions["spacing_width"] = PropertyDescription("spacing_width", PropertyDescription::Type::Float);
+			GridView::_propertyDescriptions["spacing_height"] = PropertyDescription("spacing_height", PropertyDescription::Type::Float);
 		}
 		return GridView::_propertyDescriptions;
 	}

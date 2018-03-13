@@ -17,7 +17,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> ListBoxItem::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> ListBoxItem::_propertyDescriptions;
 
 	ListBoxItem::ListBoxItem(chstr name) : Label(name), ButtonBase()
 	{
@@ -44,7 +44,7 @@ namespace aprilui
 		return new ListBoxItem(name);
 	}
 
-	harray<PropertyDescription> ListBoxItem::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& ListBoxItem::getPropertyDescriptions() const
 	{
 		if (ListBoxItem::_propertyDescriptions.size() == 0)
 		{

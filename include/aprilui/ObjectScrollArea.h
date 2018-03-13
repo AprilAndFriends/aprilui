@@ -39,7 +39,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "ScrollArea"; }
 		static Object* createInstance(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_ISSET(allowDrag, AllowDrag);
 		HL_DEFINE_GETSET(float, inertia, Inertia);
@@ -127,7 +127,7 @@ namespace aprilui
 		bool _buttonUp(april::Button buttonCode);
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

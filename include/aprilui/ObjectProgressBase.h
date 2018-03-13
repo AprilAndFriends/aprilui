@@ -32,7 +32,7 @@ namespace aprilui
 		ProgressBase();
 		virtual ~ProgressBase();
 
-		virtual harray<PropertyDescription> getPropertyDescriptions() const;
+		virtual hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		HL_DEFINE_GET(BaseImage*, progressImage, ProgressImage);
 		HL_DEFINE_GET(BaseImage*, antiProgressImage, AntiProgressImage);
@@ -120,7 +120,7 @@ namespace aprilui
 		}
 
 	private:
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 

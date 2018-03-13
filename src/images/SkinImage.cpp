@@ -40,7 +40,7 @@
 
 namespace aprilui
 {
-	harray<PropertyDescription> SkinImage::_propertyDescriptions;
+	hmap<hstr, PropertyDescription> SkinImage::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> SkinImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> SkinImage::_setters;
 	int SkinImage::maxRectCache = 30;
@@ -69,22 +69,22 @@ namespace aprilui
 		return new SkinImage(texture, name, source);
 	}
 
-	harray<PropertyDescription> SkinImage::getPropertyDescriptions() const
+	hmap<hstr, PropertyDescription>& SkinImage::getPropertyDescriptions() const
 	{
 		if (SkinImage::_propertyDescriptions.size() == 0)
 		{
 			SkinImage::_propertyDescriptions = Image::getPropertyDescriptions();
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_rect", PropertyDescription::Type::Grect);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_position", PropertyDescription::Type::Gvec2);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_size", PropertyDescription::Type::Gvec2);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_x", PropertyDescription::Type::Float);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_y", PropertyDescription::Type::Float);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_w", PropertyDescription::Type::Float);
-			SkinImage::_propertyDescriptions += PropertyDescription("skin_h", PropertyDescription::Type::Float);
-			SkinImage::_propertyDescriptions += PropertyDescription("border_indent", PropertyDescription::Type::Gvec2);
-			SkinImage::_propertyDescriptions += PropertyDescription("border_indent_x", PropertyDescription::Type::Float);
-			SkinImage::_propertyDescriptions += PropertyDescription("border_indent_y", PropertyDescription::Type::Float);
-			SkinImage::_propertyDescriptions += PropertyDescription("tiled_borders", PropertyDescription::Type::Bool);
+			SkinImage::_propertyDescriptions["skin_rect"] = PropertyDescription("skin_rect", PropertyDescription::Type::Grect);
+			SkinImage::_propertyDescriptions["skin_position"] = PropertyDescription("skin_position", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions["skin_size"] = PropertyDescription("skin_size", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions["skin_x"] = PropertyDescription("skin_x", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions["skin_y"] = PropertyDescription("skin_y", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions["skin_w"] = PropertyDescription("skin_w", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions["skin_h"] = PropertyDescription("skin_h", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions["border_indent"] = PropertyDescription("border_indent", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions["border_indent_x"] = PropertyDescription("border_indent_x", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions["border_indent_y"] = PropertyDescription("border_indent_y", PropertyDescription::Type::Float);
+			SkinImage::_propertyDescriptions["tiled_borders"] = PropertyDescription("tiled_borders", PropertyDescription::Type::Bool);
 		}
 		return SkinImage::_propertyDescriptions;
 	}

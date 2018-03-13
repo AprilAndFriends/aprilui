@@ -41,7 +41,7 @@ namespace aprilui
 		inline hstr getClassName() const { return "TreeViewNode"; }
 		static Object* createInstance(chstr name);
 
-		harray<PropertyDescription> getPropertyDescriptions() const;
+		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
 		hstr getName() const;
 		int getFocusIndex() const;
@@ -92,7 +92,7 @@ namespace aprilui
 		TreeView* _treeView;
 		TreeViewNode* _treeViewParentNode;
 
-		static harray<PropertyDescription> _propertyDescriptions;
+		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 
 	};
 
