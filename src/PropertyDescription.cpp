@@ -32,7 +32,7 @@ namespace aprilui
 	PropertyDescription::PropertyDescription()
 	{
 		this->name = "";
-		this->type = Type::Int;
+		this->type = Type::String;
 		this->arrayData = false;
 	}
 
