@@ -57,6 +57,10 @@ namespace aprilui
 		{
 			Image::_propertyDescriptions = MinimalImage::getPropertyDescriptions();
 			Image::_propertyDescriptions["color"] = PropertyDescription("color", PropertyDescription::Type::Color);
+			Image::_propertyDescriptions["red"] = PropertyDescription("red", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["green"] = PropertyDescription("green", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["blue"] = PropertyDescription("blue", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["alpha"] = PropertyDescription("alpha", PropertyDescription::Type::UChar);
 			Image::_propertyDescriptions["blend_mode"] = PropertyDescription("blend_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions["color_mode"] = PropertyDescription("color_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions["color_mode_factor"] = PropertyDescription("color_mode_factor", PropertyDescription::Type::Float);
@@ -70,6 +74,10 @@ namespace aprilui
 		{
 			Image::_getters = MinimalImage::_getGetters();
 			Image::_getters["color"] = new PropertyDescription::GetColor<Image>(&Image::getColor);
+			Image::_getters["red"] = new PropertyDescription::GetUChar<Image>(&Image::getRed);
+			Image::_getters["green"] = new PropertyDescription::GetUChar<Image>(&Image::getGreen);
+			Image::_getters["blue"] = new PropertyDescription::GetUChar<Image>(&Image::getBlue);
+			Image::_getters["alpha"] = new PropertyDescription::GetUChar<Image>(&Image::getAlpha);
 			Image::_getters["color_mode_factor"] = new PropertyDescription::Get<Image, float>(&Image::getColorModeFactor);
 		}
 		return Image::_getters;
@@ -81,6 +89,10 @@ namespace aprilui
 		{
 			Image::_setters = MinimalImage::_getSetters();
 			Image::_setters["color"] = new PropertyDescription::Set<Image, hstr>(&Image::setSymbolicColor);
+			Image::_setters["red"] = new PropertyDescription::SetUChar<Image>(&Image::setRed);
+			Image::_setters["green"] = new PropertyDescription::SetUChar<Image>(&Image::setGreen);
+			Image::_setters["blue"] = new PropertyDescription::SetUChar<Image>(&Image::setBlue);
+			Image::_setters["alpha"] = new PropertyDescription::SetUChar<Image>(&Image::setAlpha);
 			Image::_setters["color_mode_factor"] = new PropertyDescription::Set<Image, float>(&Image::setColorModeFactor);
 		}
 		return Image::_setters;

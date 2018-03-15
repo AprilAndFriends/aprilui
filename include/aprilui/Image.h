@@ -43,6 +43,10 @@ namespace aprilui
 
 		HL_DEFINE_GETSET(april::Color, color, Color);
 		void setSymbolicColor(chstr value);
+		HL_DEFINE_GETSET(unsigned char, color.r, Red);
+		HL_DEFINE_GETSET(unsigned char, color.g, Green);
+		HL_DEFINE_GETSET(unsigned char, color.b, Blue);
+		HL_DEFINE_GETSET(unsigned char, color.a, Alpha);
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
