@@ -248,7 +248,7 @@ namespace aprilui
 			Object::_getters["y"] = new PropertyDescription::Get<Object, float>(&Object::getY);
 			Object::_getters["w"] = new PropertyDescription::Get<Object, float>(&Object::getWidth);
 			Object::_getters["h"] = new PropertyDescription::Get<Object, float>(&Object::getHeight);
-			Object::_getters["visible"] = new PropertyDescription::Get<Object, bool>(&Object::isVisible);
+			Object::_getters["visible"] = new PropertyDescription::Get<Object, bool>(&Object::getVisibilityFlag);
 			Object::_getters["inherit_alpha"] = new PropertyDescription::Get<Object, bool>(&Object::isInheritAlpha);
 			Object::_getters["red"] = new PropertyDescription::GetUChar<Object>(&Object::getRed);
 			Object::_getters["green"] = new PropertyDescription::GetUChar<Object>(&Object::getGreen);
