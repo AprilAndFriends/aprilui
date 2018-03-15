@@ -1153,6 +1153,15 @@ namespace aprilui
 			if (this->hitTest == HitTest::Disabled)				return "disabled";
 			if (this->hitTest == HitTest::DisabledRecursive)	return "disabled_recursive";
 		}
+		if (name == "anchors")
+		{
+			harray<hstr> result;
+			if (this->anchorLeft)	result += "left";
+			if (this->anchorRight)	result += "right";
+			if (this->anchorTop)	result += "top";
+			if (this->anchorBottom)	result += "bottom";
+			return result.joined(',');
+		}
 		return BaseObject::getProperty(name);
 	}
 
