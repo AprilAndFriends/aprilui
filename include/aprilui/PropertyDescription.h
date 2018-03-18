@@ -27,7 +27,7 @@
 
 #define _DEFINE_SPECIAL_GET_CLASS(name, type, conversionCode) \
 	template <typename O> \
-	class apriluiExport Get ## name : public Accessor \
+	class Get ## name : public Accessor \
 	{ \
 	public: \
 		type (O::*function)() const;  \
@@ -38,7 +38,7 @@
 
 #define _DEFINE_SPECIAL_SET_CLASS(name, type, conversionCode) \
 	template <typename O> \
-	class apriluiExport Set ## name : public Accessor \
+	class Set ## name : public Accessor \
 	{ \
 	public: \
 		void (O::*function)(const type&); \
@@ -77,7 +77,7 @@ namespace aprilui
 		};
 
 		template <typename O, typename T>
-		class apriluiExport Get : public Accessor
+		class Get : public Accessor
 		{
 		public:
 			inline Get(T (O::*function)()) : Accessor() { this->function = function; }
@@ -91,7 +91,7 @@ namespace aprilui
 		};
 
 		template <typename O, typename T, typename R>
-		class apriluiExport _SetBase : public Accessor
+		class _SetBase : public Accessor
 		{
 		public:
 			inline _SetBase(R (O::*function)(const T&)) : Accessor() { this->function = function; }
@@ -104,7 +104,7 @@ namespace aprilui
 		};
 
 		template <typename O, typename T>
-		class apriluiExport Set : public _SetBase<O, T, void>
+		class Set : public _SetBase<O, T, void>
 		{
 		public:
 			inline Set(void (O::*function)(const T&)) : _SetBase<O, T, void>(function) { }
@@ -112,7 +112,7 @@ namespace aprilui
 		};
 
 		template <typename O, typename T>
-		class apriluiExport TrySet : public _SetBase<O, T, bool>
+		class TrySet : public _SetBase<O, T, bool>
 		{
 		public:
 			inline TrySet(bool (O::*function)(const T&)) : _SetBase<O, T, bool>(function) { }
