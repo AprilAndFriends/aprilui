@@ -243,11 +243,19 @@ namespace aprilui
 				gvec2 position = this->rect.getPosition() + this->transformToLocalSpace(aprilui::getCursorPosition());
 				if (this->pushed)
 				{
-					if (!this->dragging && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
-						!heqf(this->_clickPosition.x, position.x, this->dragThreshold.x) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold.y)) && this->isScrollable())
+					if (!this->dragging && this->isScrollable() && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
+						!heqf(this->_clickPosition.x, position.x, this->dragThreshold.x) || !heqf(this->_clickPosition.y, position.y, this->dragThreshold.y)))
 					{
 						this->dragging = true;
 						this->_clickScrollOffset = this->getScrollOffset();
+						gvec2 offsetVector = position - this->_clickPosition;
+						// if a threshold exists, adjust the click position
+						if (offsetVector.x != 0.0f || offsetVector.y != 0.0f)
+						{
+							offsetVector.normalize();
+							offsetVector /= hmax(habs(offsetVector.x), habs(offsetVector.y)); // upsize with the larger axis
+							this->_clickPosition += offsetVector * this->dragThreshold;
+						}
 						this->_lastPosition = position;
 						foreach (Object*, it, this->childrenObjects)
 						{
