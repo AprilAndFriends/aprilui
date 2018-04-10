@@ -67,6 +67,7 @@ namespace aprilui
 		{
 			BaseObject::_getters["name"] = new PropertyDescription::Get<BaseObject, hstr>(&BaseObject::getName);
 			BaseObject::_getters["full_name"] = new PropertyDescription::Get<BaseObject, hstr>(&BaseObject::getFullName);
+			BaseObject::_getters["dataset"] = new PropertyDescription::Get<BaseObject, hstr>(&BaseObject::getDatasetName);
 			BaseObject::_getters["tag"] = new PropertyDescription::Get<BaseObject, hstr>(&BaseObject::getTag);
 			BaseObject::_getters["enabled"] = new PropertyDescription::Get<BaseObject, bool>(&BaseObject::isEnabled);
 			BaseObject::_getters["awake"] = new PropertyDescription::Get<BaseObject, bool>(&BaseObject::isAwake);

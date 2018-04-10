@@ -20,6 +20,7 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
+#include "Dataset.h"
 #include "Event.h"
 #include "EventReceiver.h"
 #include "PropertyDescription.h"
@@ -27,7 +28,6 @@
 namespace aprilui
 {
 	class Animator;
-	class Dataset;
 	class EventArgs;
 	class Object;
 	class Style;
@@ -57,6 +57,7 @@ namespace aprilui
 		void setZOrder(const int& zorder);
 		virtual inline Dataset* getDataset() const { return this->dataset; }
 		virtual inline Object* getParent() const { return this->parent; }
+		inline hstr getDatasetName() const { return (this->dataset != NULL ? this->dataset->getName() : ""); }
 
 		inline harray<Object*>& getChildrenObjects() { return this->childrenObjects; }
 		inline harray<Animator*>& getChildrenAnimators() { return this->childrenAnimators; }
