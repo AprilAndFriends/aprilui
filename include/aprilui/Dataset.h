@@ -223,8 +223,8 @@ namespace aprilui
 
 		void parseGlobalInclude(chstr path, bool optional = false);
 		void parseGlobalIncludeFile(chstr filename);
-		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
-		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
+		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull = true);
+		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull = true);
 
 		HL_DEPRECATED("Deprecated API. Use getTextsPaths() instead.")
 			hstr getTextsPath() const { return (this->textsPaths.size() > 0 ? this->textsPaths.first() : ""); }
@@ -275,9 +275,9 @@ namespace aprilui
 		virtual inline void _parseExternalXmlNode(hlxml::Node* node) { }
 		virtual inline BaseObject* _parseExternalObjectClass(hlxml::Node* node, chstr objName, cgrect rect) { return NULL; }
 
-		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent);
-		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
-		BaseObject* _recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset);
+		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent, bool setRootIfNull = true);
+		BaseObject* _recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull = true);
+		BaseObject* _recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull = true);
 
 		void _load();
 		void _readFile(chstr filename);

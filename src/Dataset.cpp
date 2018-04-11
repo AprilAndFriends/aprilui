@@ -668,19 +668,19 @@ namespace aprilui
 		}
 	}
 	
-	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent)
+	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, bool setRootIfNull)
 	{
 		Style style;
-		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2());
+		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2(), setRootIfNull);
 	}
 
-	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
+	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
 	{
 		hstr objectName;
 		hstr className = node->name;
 		if (className == "Include")
 		{
-			return this->_recursiveObjectIncludeParse(node, parent, style, namePrefix, nameSuffix, offset);
+			return this->_recursiveObjectIncludeParse(node, parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
 		}
 		const hmap<hstr, Object* (*)(chstr)>& objectFactories = aprilui::getObjectFactories();
 		const hmap<hstr, Animator* (*)(chstr)>& animatorFactories = aprilui::getAnimatorFactories();
@@ -818,7 +818,7 @@ namespace aprilui
 		if (isObject)
 		{
 			this->objects[objectName] = object;
-			if (this->root == NULL)
+			if (this->root == NULL && setRootIfNull)
 			{
 				this->root = object;
 			}
@@ -870,7 +870,7 @@ namespace aprilui
 		return baseObject;
 	}
 
-	BaseObject* Dataset::_recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
+	BaseObject* Dataset::_recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
 	{
 		gvec2 newOffset = offset;
 		if (node->pexists("position"))
@@ -1119,7 +1119,7 @@ namespace aprilui
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", normalizedPath.cStr(), parsedCount);
 	}
 
-	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
+	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
@@ -1144,7 +1144,7 @@ namespace aprilui
 					hlog::errorf(logTag, "Detected multiple roots in '%s'. Ignoring other root objects.", path.cStr());
 					break;
 				}
-				root = this->_recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset);
+				root = this->_recursiveObjectParse((*node), parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
 			}
 			// preload was aborted
 			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
@@ -1155,11 +1155,11 @@ namespace aprilui
 		return root;
 	}
 	
-	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset)
+	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
 	{
 		if (!path.contains("*"))
 		{
-			return this->parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset);
+			return this->parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
 		}
 		hstr baseDir = hrdir::baseDir(path);
 		hstr filename = path(baseDir.size() + 1, -1);
@@ -1171,7 +1171,7 @@ namespace aprilui
 		{
 			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
-				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2());
+				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2(), setRootIfNull);
 			}
 			// preload was aborted
 			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
@@ -1490,7 +1490,7 @@ namespace aprilui
 			(*it)->notifyEvent(Event::RegisteredInDataset, &args);
 		}
 		// if no root objects exists, this root becomes the new root object
-		if (setRootIfNull && this->root == NULL)
+		if (this->root == NULL && setRootIfNull)
 		{
 			Object* rootObject = dynamic_cast<Object*>(root);
 			if (rootObject != NULL)
