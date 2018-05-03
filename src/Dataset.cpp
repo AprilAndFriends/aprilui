@@ -1317,25 +1317,28 @@ namespace aprilui
 	
 	void Dataset::_loadTexts(chstr path)
 	{
-		hlog::write(logTag, "Loading texts: " + path);
 		harray<hstr> files = hrdir::files(path, true);
-		hresource file;
-		hstream data;
-		foreach (hstr, it, files)
+		if (files.size() > 0)
 		{
-			file.open(*it);
-			data.writeRaw(file);
-			data.rewind();
-			file.close();
-			if (data.size() > 0)
+			hlog::write(logTag, "Loading texts: " + path);
+			hresource file;
+			hstream data;
+			foreach (hstr, it, files)
 			{
-				this->_loadTextResource(data, this->texts);
-				data.clear();
-			}
-			// preload was aborted
-			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
-			{
-				break;
+				file.open(*it);
+				data.writeRaw(file);
+				data.rewind();
+				file.close();
+				if (data.size() > 0)
+				{
+					this->_loadTextResource(data, this->texts);
+					data.clear();
+				}
+				// preload was aborted
+				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
+				{
+					break;
+				}
 			}
 		}
 	}
