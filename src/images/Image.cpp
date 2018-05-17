@@ -115,9 +115,11 @@ namespace aprilui
 		}
 		if (name == "color_mode")
 		{
-			if (this->colorMode == april::ColorMode::Multiply)	return "multiply";
-			if (this->colorMode == april::ColorMode::AlphaMap)	return "alpha_map";
-			if (this->colorMode == april::ColorMode::Lerp)		return "lerp";
+			if (this->colorMode == april::ColorMode::Multiply)		return "multiply";
+			if (this->colorMode == april::ColorMode::AlphaMap)		return "alpha_map";
+			if (this->colorMode == april::ColorMode::Lerp)			return "lerp";
+			if (this->colorMode == april::ColorMode::Desaturate)	return "desaturate";
+			if (this->colorMode == april::ColorMode::Sepia)			return "sepia";
 			return "";
 		}
 		return MinimalImage::getProperty(name);
@@ -138,11 +140,13 @@ namespace aprilui
 			}
 			return true;
 		}
-		if	(name == "color_mode")
+		if (name == "color_mode")
 		{
 			if (value == "multiply")		this->setColorMode(april::ColorMode::Multiply);
 			else if	(value == "alpha_map")	this->setColorMode(april::ColorMode::AlphaMap);
 			else if (value == "lerp")		this->setColorMode(april::ColorMode::Lerp);
+			else if (value == "desaturate")	this->setColorMode(april::ColorMode::Desaturate);
+			else if (value == "sepia")		this->setColorMode(april::ColorMode::Sepia);
 			else
 			{
 				hlog::warnf(logTag, "Value '%s' does not exist for property '%s' in '%s'!", value.cStr(), name.cStr(), this->name.cStr());
