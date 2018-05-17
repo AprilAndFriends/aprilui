@@ -1,30 +1,38 @@
 cmake_minimum_required(VERSION 3.4.1)
 set(CMAKE_VERBOSE_MAKEFILE on)
 
-project(demo_helloworld)
+project(demo_tileimage)
 
 include("../../../../hltypes/android-studio/generic/cmake-preprocessors.txt")
 
 file(
 	GLOB_RECURSE CppSrc
-	"../../../demos/demo_helloworld/*.cpp"
+	"../../../demos/demo_tileimage/*.cpp"
 )
 
-add_library(demo_helloworld SHARED ${CppSrc})
+add_library(demo_tileimage SHARED ${CppSrc})
 
 include_directories(AFTER "../../../include")
+include_directories(AFTER "../../../../atres/include")
+include_directories(AFTER "../../../../april/include")
 include_directories(AFTER "../../../../hltypes/include")
 include_directories(AFTER "../../../../gtypes/include")
 
+add_subdirectory("../../lib" aprilui)
+add_subdirectory("../../../../atres/android-studio/lib" atres)
+add_subdirectory("../../../../april/android-studio/lib" april)
+add_subdirectory("../../../../hltypes/hlxml/android-studio/lib" hlxml)
 add_subdirectory("../../../../hltypes/android-studio/lib" hltypes)
 add_subdirectory("../../../../gtypes/android-studio/lib" gtypes)
-add_subdirectory("../../../lib/jpeg/android-studio/lib" jpeg)
-add_subdirectory("../../../lib/png/android-studio/lib" png)
-add_subdirectory("../../lib" april)
+add_subdirectory("../../../../april/lib/jpeg/android-studio/lib" jpeg)
+add_subdirectory("../../../../april/lib/png/android-studio/lib" png)
 
 target_link_libraries(
-	demo_helloworld
+	demo_tileimage
+	aprilui
+	atres
 	april
+	hlxml
 	hltypes
 	gtypes
 	jpeg
