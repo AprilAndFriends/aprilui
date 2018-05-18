@@ -98,7 +98,10 @@ namespace aprilui
 
 	void ImageBox::setImageByName(chstr name)
 	{
-		this->setImage(name != "" ? this->dataset->getImage(name) : NULL);
+		if (this->dataset != NULL)
+		{
+			this->setImage(name != "" ? this->dataset->getImage(name) : NULL);
+		}
 	}
 
 	bool ImageBox::trySetImageByName(chstr name)
