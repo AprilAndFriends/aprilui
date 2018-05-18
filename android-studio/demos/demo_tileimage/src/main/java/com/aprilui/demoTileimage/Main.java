@@ -4,7 +4,7 @@ public class Main extends com.april.Activity
 {
 	static
 	{
-		System.loadLibrary("demo_htileimage");
+		System.loadLibrary("demo_tileimage");
 	}
 	
 	@Override
