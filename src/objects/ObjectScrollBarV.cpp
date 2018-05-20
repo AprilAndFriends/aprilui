@@ -170,8 +170,20 @@ namespace aprilui
 	{
 		if (this->_buttonBackgroundSkinned != NULL)
 		{
-			this->_buttonBackgroundSkinned->setY(this->_buttonBackwardSkinned->getHeight());
-			this->_buttonBackgroundSkinned->setSize(this->getWidth(), this->getHeight() - this->_buttonBackwardSkinned->getHeight() - this->_buttonForwardSkinned->getHeight());
+			float y = 0.0f;
+			float height = this->getHeight();
+			if (this->_buttonBackwardSkinned != NULL)
+			{
+				float backwardHeight = this->_buttonBackwardSkinned->getHeight();
+				y += backwardHeight;
+				height -= backwardHeight;
+			}
+			if (this->_buttonForwardSkinned != NULL)
+			{
+				height -= this->_buttonForwardSkinned->getHeight();
+			}
+			this->_buttonBackgroundSkinned->setY(y);
+			this->_buttonBackgroundSkinned->setHeight(height);
 			this->_buttonBackgroundSkinned->setAnchors(false, false, true, true);
 		}
 		if (this->_buttonSliderSkinned != NULL)

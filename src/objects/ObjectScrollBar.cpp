@@ -345,12 +345,14 @@ namespace aprilui
 					this->_buttonSliderSkinned = new ScrollBarButtonSlider(april::generateName("aprilui::ScrollButtonSlider"));
 					this->registerChild(this->_buttonSliderSkinned);
 				}
-				if (this->_buttonForwardSkinned == NULL)
+				bool hasForwardImage = this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameForwardNormal());
+				bool hasBackwardImage = this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameBackwardNormal());
+				if (hasForwardImage && this->_buttonForwardSkinned == NULL)
 				{
 					this->_buttonForwardSkinned = new ScrollBarButtonForward(april::generateName("aprilui::ScrollButtonForward"));
 					this->registerChild(this->_buttonForwardSkinned);
 				}
-				if (this->_buttonBackwardSkinned == NULL)
+				if (hasBackwardImage && this->_buttonBackwardSkinned == NULL)
 				{
 					this->_buttonBackwardSkinned = new ScrollBarButtonBackward(april::generateName("aprilui::ScrollButtonBackward"));
 					this->registerChild(this->_buttonBackwardSkinned);
@@ -361,20 +363,44 @@ namespace aprilui
 				this->_buttonBackgroundSkinned->resizeToFitImage();
 				this->_buttonBackgroundSkinned->setVisible(this->_buttonBackground == NULL);
 				this->_buttonSliderSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameSliderNormal());
-				this->_buttonSliderSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameSliderHover());
-				this->_buttonSliderSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameSliderPushed());
+				if (this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameSliderHover()))
+				{
+					this->_buttonSliderSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameSliderHover());
+				}
+				if (this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameSliderPushed()))
+				{
+					this->_buttonSliderSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameSliderPushed());
+				}
 				this->_buttonSliderSkinned->resizeToFitImage();
 				this->_buttonSliderSkinned->setVisible(this->_buttonSlider == NULL);
-				this->_buttonForwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameForwardNormal());
-				this->_buttonForwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameForwardHover());
-				this->_buttonForwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameForwardPushed());
-				this->_buttonForwardSkinned->resizeToFitImage();
-				this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
-				this->_buttonBackwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackwardNormal());
-				this->_buttonBackwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackwardHover());
-				this->_buttonBackwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackwardPushed());
-				this->_buttonBackwardSkinned->resizeToFitImage();
-				this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
+				if (hasForwardImage)
+				{
+					this->_buttonForwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameForwardNormal());
+					if (this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameForwardHover()))
+					{
+						this->_buttonForwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameForwardHover());
+					}
+					if (this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameForwardPushed()))
+					{
+						this->_buttonForwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameForwardPushed());
+					}
+					this->_buttonForwardSkinned->resizeToFitImage();
+					this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
+				}
+				if (hasBackwardImage)
+				{
+					this->_buttonBackwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackwardNormal());
+					if (this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameBackwardHover()))
+					{
+						this->_buttonBackwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackwardHover());
+					}
+					if (this->dataset->hasImage(this->skinName + "/" + this->_getSkinNameBackwardPushed()))
+					{
+						this->_buttonBackwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackwardPushed());
+					}
+					this->_buttonBackwardSkinned->resizeToFitImage();
+					this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
+				}
 				this->_updateChildren();
 				this->_updateBar();
 			}
