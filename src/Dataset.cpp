@@ -1123,7 +1123,8 @@ namespace aprilui
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
-		hlog::write(logTag, "Parsing object include file: " + path);
+//		silencing this log, it spams waaaay too much...
+//		hlog::write(logTag, "Parsing object include file: " + path);
 		hlxml::Document doc(path);
 		hlxml::Node* current = doc.root();
 		if (current == NULL)
