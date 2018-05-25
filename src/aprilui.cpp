@@ -421,6 +421,21 @@ namespace aprilui
 		return (gImageFactories.hasKey(typeName) ? (*gImageFactories[typeName])(texture, name, source) : NULL);
 	}
 
+	bool hasImage(Dataset* defaultDataset, chstr imageName)
+	{
+		if (defaultDataset->hasImage(imageName))
+		{
+			return true;
+		}
+		int dotIndex = imageName.indexOf('.');
+		if (dotIndex < 0)
+		{
+			return false;
+		}
+		hstr datasetName = imageName(0, dotIndex);
+		return (gDatasets.hasKey(datasetName) && aprilui::getDatasetByName(datasetName)->hasImage(imageName(dotIndex + 1, -1)));
+	}
+
 	gvec2 transformWindowPoint(cgvec2 point)
 	{
 		gvec2 result;
