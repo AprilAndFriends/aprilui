@@ -74,14 +74,14 @@ namespace aprilui
 		if (SkinImage::_propertyDescriptions.size() == 0)
 		{
 			SkinImage::_propertyDescriptions = Image::getPropertyDescriptions();
-			SkinImage::_propertyDescriptions["skin_rect"] = PropertyDescription("skin_rect", PropertyDescription::Type::Grect);
-			SkinImage::_propertyDescriptions["skin_position"] = PropertyDescription("skin_position", PropertyDescription::Type::Gvec2);
-			SkinImage::_propertyDescriptions["skin_size"] = PropertyDescription("skin_size", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions["skin_rect"] = PropertyDescription("skin_rect", PropertyDescription::Type::Grectf);
+			SkinImage::_propertyDescriptions["skin_position"] = PropertyDescription("skin_position", PropertyDescription::Type::Gvec2f);
+			SkinImage::_propertyDescriptions["skin_size"] = PropertyDescription("skin_size", PropertyDescription::Type::Gvec2f);
 			SkinImage::_propertyDescriptions["skin_x"] = PropertyDescription("skin_x", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions["skin_y"] = PropertyDescription("skin_y", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions["skin_w"] = PropertyDescription("skin_w", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions["skin_h"] = PropertyDescription("skin_h", PropertyDescription::Type::Float);
-			SkinImage::_propertyDescriptions["border_indent"] = PropertyDescription("border_indent", PropertyDescription::Type::Gvec2);
+			SkinImage::_propertyDescriptions["border_indent"] = PropertyDescription("border_indent", PropertyDescription::Type::Gvec2f);
 			SkinImage::_propertyDescriptions["border_indent_x"] = PropertyDescription("border_indent_x", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions["border_indent_y"] = PropertyDescription("border_indent_y", PropertyDescription::Type::Float);
 			SkinImage::_propertyDescriptions["tiled_borders"] = PropertyDescription("tiled_borders", PropertyDescription::Type::Bool);
@@ -94,14 +94,14 @@ namespace aprilui
 		if (SkinImage::_getters.size() == 0)
 		{
 			SkinImage::_getters = Image::_getGetters();
-			SkinImage::_getters["skin_rect"] = new PropertyDescription::GetGrect<SkinImage>(&SkinImage::getSkinRect);
-			SkinImage::_getters["skin_position"] = new PropertyDescription::GetGvec2<SkinImage>(&SkinImage::getSkinPosition);
-			SkinImage::_getters["skin_size"] = new PropertyDescription::GetGvec2<SkinImage>(&SkinImage::getSkinSize);
+			SkinImage::_getters["skin_rect"] = new PropertyDescription::GetGrectf<SkinImage>(&SkinImage::getSkinRect);
+			SkinImage::_getters["skin_position"] = new PropertyDescription::GetGvec2f<SkinImage>(&SkinImage::getSkinPosition);
+			SkinImage::_getters["skin_size"] = new PropertyDescription::GetGvec2f<SkinImage>(&SkinImage::getSkinSize);
 			SkinImage::_getters["skin_x"] = new PropertyDescription::Get<SkinImage, float>(&SkinImage::getSkinX);
 			SkinImage::_getters["skin_y"] = new PropertyDescription::Get<SkinImage, float>(&SkinImage::getSkinY);
 			SkinImage::_getters["skin_w"] = new PropertyDescription::Get<SkinImage, float>(&SkinImage::getSkinWidth);
 			SkinImage::_getters["skin_h"] = new PropertyDescription::Get<SkinImage, float>(&SkinImage::getSkinHeight);
-			SkinImage::_getters["border_indent"] = new PropertyDescription::GetGvec2<SkinImage>(&SkinImage::getBorderIndent);
+			SkinImage::_getters["border_indent"] = new PropertyDescription::GetGvec2f<SkinImage>(&SkinImage::getBorderIndent);
 			SkinImage::_getters["border_indent_x"] = new PropertyDescription::Get<SkinImage, float>(&SkinImage::getBorderIndentX);
 			SkinImage::_getters["border_indent_y"] = new PropertyDescription::Get<SkinImage, float>(&SkinImage::getBorderIndentY);
 			SkinImage::_getters["tiled_borders"] = new PropertyDescription::Get<SkinImage, bool>(&SkinImage::isTiledBorders);
@@ -114,14 +114,14 @@ namespace aprilui
 		if (SkinImage::_setters.size() == 0)
 		{
 			SkinImage::_setters = Image::_getSetters();
-			SkinImage::_setters["skin_rect"] = new PropertyDescription::SetGrect<SkinImage>(&SkinImage::setSkinRect);
-			SkinImage::_setters["skin_position"] = new PropertyDescription::SetGvec2<SkinImage>(&SkinImage::setSkinPosition);
-			SkinImage::_setters["skin_size"] = new PropertyDescription::SetGvec2<SkinImage>(&SkinImage::setSkinSize);
+			SkinImage::_setters["skin_rect"] = new PropertyDescription::SetGrectf<SkinImage>(&SkinImage::setSkinRect);
+			SkinImage::_setters["skin_position"] = new PropertyDescription::SetGvec2f<SkinImage>(&SkinImage::setSkinPosition);
+			SkinImage::_setters["skin_size"] = new PropertyDescription::SetGvec2f<SkinImage>(&SkinImage::setSkinSize);
 			SkinImage::_setters["skin_x"] = new PropertyDescription::Set<SkinImage, float>(&SkinImage::setSkinX);
 			SkinImage::_setters["skin_y"] = new PropertyDescription::Set<SkinImage, float>(&SkinImage::setSkinY);
 			SkinImage::_setters["skin_w"] = new PropertyDescription::Set<SkinImage, float>(&SkinImage::setSkinWidth);
 			SkinImage::_setters["skin_h"] = new PropertyDescription::Set<SkinImage, float>(&SkinImage::setSkinHeight);
-			SkinImage::_setters["border_indent"] = new PropertyDescription::SetGvec2<SkinImage>(&SkinImage::setBorderIndent);
+			SkinImage::_setters["border_indent"] = new PropertyDescription::SetGvec2f<SkinImage>(&SkinImage::setBorderIndent);
 			SkinImage::_setters["border_indent_x"] = new PropertyDescription::Set<SkinImage, float>(&SkinImage::setBorderIndentX);
 			SkinImage::_setters["border_indent_y"] = new PropertyDescription::Set<SkinImage, float>(&SkinImage::setBorderIndentY);
 			SkinImage::_setters["tiled_borders"] = new PropertyDescription::Set<SkinImage, bool>(&SkinImage::setTiledBorders);

@@ -201,9 +201,9 @@ namespace aprilui
 		if (Object::_propertyDescriptions.size() == 0)
 		{
 			Object::_propertyDescriptions = BaseObject::getPropertyDescriptions();
-			Object::_propertyDescriptions["rect"] = PropertyDescription("rect", PropertyDescription::Type::Grect);
-			Object::_propertyDescriptions["position"] = PropertyDescription("position", PropertyDescription::Type::Gvec2);
-			Object::_propertyDescriptions["size"] = PropertyDescription("size", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions["rect"] = PropertyDescription("rect", PropertyDescription::Type::Grectf);
+			Object::_propertyDescriptions["position"] = PropertyDescription("position", PropertyDescription::Type::Gvec2f);
+			Object::_propertyDescriptions["size"] = PropertyDescription("size", PropertyDescription::Type::Gvec2f);
 			Object::_propertyDescriptions["x"] = PropertyDescription("x", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["y"] = PropertyDescription("y", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["w"] = PropertyDescription("w", PropertyDescription::Type::Float);
@@ -217,10 +217,10 @@ namespace aprilui
 			Object::_propertyDescriptions["blue"] = PropertyDescription("blue", PropertyDescription::Type::UChar);
 			Object::_propertyDescriptions["alpha"] = PropertyDescription("alpha", PropertyDescription::Type::UChar);
 			Object::_propertyDescriptions["angle"] = PropertyDescription("angle", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions["scale"] = PropertyDescription("scale", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions["scale"] = PropertyDescription("scale", PropertyDescription::Type::Gvec2f);
 			Object::_propertyDescriptions["scale_x"] = PropertyDescription("scale_x", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["scale_y"] = PropertyDescription("scale_y", PropertyDescription::Type::Float);
-			Object::_propertyDescriptions["pivot"] = PropertyDescription("pivot", PropertyDescription::Type::Gvec2);
+			Object::_propertyDescriptions["pivot"] = PropertyDescription("pivot", PropertyDescription::Type::Gvec2f);
 			Object::_propertyDescriptions["pivot_x"] = PropertyDescription("pivot_x", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["pivot_y"] = PropertyDescription("pivot_y", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["anchor_left"] = PropertyDescription("anchor_left", PropertyDescription::Type::Bool);
@@ -241,9 +241,9 @@ namespace aprilui
 		if (Object::_getters.size() == 0)
 		{
 			Object::_getters = BaseObject::_getGetters();
-			Object::_getters["rect"] = new PropertyDescription::GetGrect<Object>(&Object::getRect);
-			Object::_getters["position"] = new PropertyDescription::GetGvec2<Object>(&Object::getPosition);
-			Object::_getters["size"] = new PropertyDescription::GetGvec2<Object>(&Object::getSize);
+			Object::_getters["rect"] = new PropertyDescription::GetGrectf<Object>(&Object::getRect);
+			Object::_getters["position"] = new PropertyDescription::GetGvec2f<Object>(&Object::getPosition);
+			Object::_getters["size"] = new PropertyDescription::GetGvec2f<Object>(&Object::getSize);
 			Object::_getters["x"] = new PropertyDescription::Get<Object, float>(&Object::getX);
 			Object::_getters["y"] = new PropertyDescription::Get<Object, float>(&Object::getY);
 			Object::_getters["w"] = new PropertyDescription::Get<Object, float>(&Object::getWidth);
@@ -256,10 +256,10 @@ namespace aprilui
 			Object::_getters["blue"] = new PropertyDescription::GetUChar<Object>(&Object::getBlue);
 			Object::_getters["alpha"] = new PropertyDescription::GetUChar<Object>(&Object::getAlpha);
 			Object::_getters["angle"] = new PropertyDescription::Get<Object, float>(&Object::getAngle);
-			Object::_getters["scale"] = new PropertyDescription::GetGvec2<Object>(&Object::getScale);
+			Object::_getters["scale"] = new PropertyDescription::GetGvec2f<Object>(&Object::getScale);
 			Object::_getters["scale_x"] = new PropertyDescription::Get<Object, float>(&Object::getScaleX);
 			Object::_getters["scale_y"] = new PropertyDescription::Get<Object, float>(&Object::getScaleY);
-			Object::_getters["pivot"] = new PropertyDescription::GetGvec2<Object>(&Object::getPivot);
+			Object::_getters["pivot"] = new PropertyDescription::GetGvec2f<Object>(&Object::getPivot);
 			Object::_getters["pivot_x"] = new PropertyDescription::Get<Object, float>(&Object::getPivotX);
 			Object::_getters["pivot_y"] = new PropertyDescription::Get<Object, float>(&Object::getPivotY);
 			Object::_getters["anchor_left"] = new PropertyDescription::Get<Object, bool>(&Object::isAnchorLeft);
@@ -279,9 +279,9 @@ namespace aprilui
 		if (Object::_setters.size() == 0)
 		{
 			Object::_setters = BaseObject::_getSetters();
-			Object::_setters["rect"] = new PropertyDescription::SetGrect<Object>(&Object::setRect);
-			Object::_setters["position"] = new PropertyDescription::SetGvec2<Object>(&Object::setPosition);
-			Object::_setters["size"] = new PropertyDescription::SetGvec2<Object>(&Object::setSize);
+			Object::_setters["rect"] = new PropertyDescription::SetGrectf<Object>(&Object::setRect);
+			Object::_setters["position"] = new PropertyDescription::SetGvec2f<Object>(&Object::setPosition);
+			Object::_setters["size"] = new PropertyDescription::SetGvec2f<Object>(&Object::setSize);
 			Object::_setters["x"] = new PropertyDescription::Set<Object, float>(&Object::setX);
 			Object::_setters["y"] = new PropertyDescription::Set<Object, float>(&Object::setY);
 			Object::_setters["w"] = new PropertyDescription::Set<Object, float>(&Object::setWidth);
@@ -294,10 +294,10 @@ namespace aprilui
 			Object::_setters["blue"] = new PropertyDescription::SetUChar<Object>(&Object::setBlue);
 			Object::_setters["alpha"] = new PropertyDescription::SetUChar<Object>(&Object::setAlpha);
 			Object::_setters["angle"] = new PropertyDescription::Set<Object, float>(&Object::setAngle);
-			Object::_setters["scale"] = new PropertyDescription::SetGvec2<Object>(&Object::setScale);
+			Object::_setters["scale"] = new PropertyDescription::SetGvec2f<Object>(&Object::setScale);
 			Object::_setters["scale_x"] = new PropertyDescription::Set<Object, float>(&Object::setScaleX);
 			Object::_setters["scale_y"] = new PropertyDescription::Set<Object, float>(&Object::setScaleY);
-			Object::_setters["pivot"] = new PropertyDescription::SetGvec2<Object>(&Object::setPivot);
+			Object::_setters["pivot"] = new PropertyDescription::SetGvec2f<Object>(&Object::setPivot);
 			Object::_setters["pivot_x"] = new PropertyDescription::Set<Object, float>(&Object::setPivotX);
 			Object::_setters["pivot_y"] = new PropertyDescription::Set<Object, float>(&Object::setPivotY);
 			Object::_setters["anchor_left"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorLeft);

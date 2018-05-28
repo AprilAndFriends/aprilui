@@ -41,13 +41,13 @@ namespace aprilui
 		rect.set(0.0f, 0.0f, 0.0f, 0.0f);
 		if (node->pexists("rect"))
 		{
-			rect = april::hstrToGrect(node->pstr("rect"));
+			rect = april::hstrToGrectf(node->pstr("rect"));
 		}
 		else
 		{
 			if (node->pexists("position"))
 			{
-				rect.setPosition(april::hstrToGvec2(node->pstr("position")));
+				rect.setPosition(april::hstrToGvec2f(node->pstr("position")));
 			}
 			else
 			{
@@ -62,7 +62,7 @@ namespace aprilui
 				}
 				else
 				{
-					rect.setSize(april::hstrToGvec2(node->pstr("size")));
+					rect.setSize(april::hstrToGvec2f(node->pstr("size")));
 				}
 			}
 			else

@@ -56,8 +56,8 @@ namespace aprilui
 		if (MinimalImage::_propertyDescriptions.size() == 0)
 		{
 			MinimalImage::_propertyDescriptions = BaseImage::getPropertyDescriptions();
-			MinimalImage::_propertyDescriptions["rect"] = PropertyDescription("rect", PropertyDescription::Type::Grect);
-			MinimalImage::_propertyDescriptions["position"] = PropertyDescription("position", PropertyDescription::Type::Gvec2);
+			MinimalImage::_propertyDescriptions["rect"] = PropertyDescription("rect", PropertyDescription::Type::Grectf);
+			MinimalImage::_propertyDescriptions["position"] = PropertyDescription("position", PropertyDescription::Type::Gvec2f);
 			MinimalImage::_propertyDescriptions["x"] = PropertyDescription("x", PropertyDescription::Type::Float);
 			MinimalImage::_propertyDescriptions["y"] = PropertyDescription("y", PropertyDescription::Type::Float);
 			MinimalImage::_propertyDescriptions["texture"] = PropertyDescription("texture", PropertyDescription::Type::String);
@@ -70,8 +70,8 @@ namespace aprilui
 		if (MinimalImage::_getters.size() == 0)
 		{
 			MinimalImage::_getters = BaseImage::_getGetters();
-			MinimalImage::_getters["rect"] = new PropertyDescription::GetGrect<MinimalImage>(&MinimalImage::getSrcRect);
-			MinimalImage::_getters["position"] = new PropertyDescription::GetGvec2<MinimalImage>(&MinimalImage::getSrcPosition);
+			MinimalImage::_getters["rect"] = new PropertyDescription::GetGrectf<MinimalImage>(&MinimalImage::getSrcRect);
+			MinimalImage::_getters["position"] = new PropertyDescription::GetGvec2f<MinimalImage>(&MinimalImage::getSrcPosition);
 			MinimalImage::_getters["x"] = new PropertyDescription::Get<MinimalImage, float>(&MinimalImage::getSrcX);
 			MinimalImage::_getters["y"] = new PropertyDescription::Get<MinimalImage, float>(&MinimalImage::getSrcY);
 		}
@@ -83,8 +83,8 @@ namespace aprilui
 		if (MinimalImage::_setters.size() == 0)
 		{
 			MinimalImage::_setters = BaseImage::_getSetters();
-			MinimalImage::_setters["rect"] = new PropertyDescription::SetGrect<MinimalImage>(&MinimalImage::setSrcRect);
-			MinimalImage::_setters["position"] = new PropertyDescription::SetGvec2<MinimalImage>(&MinimalImage::setSrcPosition);
+			MinimalImage::_setters["rect"] = new PropertyDescription::SetGrectf<MinimalImage>(&MinimalImage::setSrcRect);
+			MinimalImage::_setters["position"] = new PropertyDescription::SetGvec2f<MinimalImage>(&MinimalImage::setSrcPosition);
 			MinimalImage::_setters["x"] = new PropertyDescription::Set<MinimalImage, float>(&MinimalImage::setSrcX);
 			MinimalImage::_setters["y"] = new PropertyDescription::Set<MinimalImage, float>(&MinimalImage::setSrcY);
 		}

@@ -23,9 +23,9 @@ namespace aprilui
 		HL_ENUM_DEFINE(PropertyDescription::Type, Bool);
 		HL_ENUM_DEFINE(PropertyDescription::Type, String);
 		HL_ENUM_DEFINE(PropertyDescription::Type, Enum);
-		HL_ENUM_DEFINE(PropertyDescription::Type, Grect);
-		HL_ENUM_DEFINE(PropertyDescription::Type, Gvec2);
-		HL_ENUM_DEFINE(PropertyDescription::Type, Gvec3);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Grectf);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Gvec2f);
+		HL_ENUM_DEFINE(PropertyDescription::Type, Gvec3f);
 		HL_ENUM_DEFINE(PropertyDescription::Type, Color);
 	));
 

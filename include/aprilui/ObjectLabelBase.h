@@ -146,7 +146,7 @@ namespace aprilui
 			result["text"] = new PropertyDescription::Get<T, hstr>(&T::getText);
 			result["text_key"] = new PropertyDescription::Get<T, hstr>(&T::getTextKey);
 			result["text_color"] = new PropertyDescription::GetColor<T>(&T::getTextColor);
-			result["text_offset"] = new PropertyDescription::GetGvec2<T>(&T::getTextOffset);
+			result["text_offset"] = new PropertyDescription::GetGvec2f<T>(&T::getTextOffset);
 			result["text_offset_x"] = new PropertyDescription::Get<T, float>(&T::getTextOffsetX);
 			result["text_offset_y"] = new PropertyDescription::Get<T, float>(&T::getTextOffsetY);
 			result["min_auto_scale"] = new PropertyDescription::Get<T, float>(&T::getMinAutoScale);
@@ -165,7 +165,7 @@ namespace aprilui
 			result["text"] = new PropertyDescription::Set<T, hstr>(&T::setText);
 			result["text_key"] = new PropertyDescription::Set<T, hstr>(&T::setTextKey);
 			result["text_color"] = new PropertyDescription::Set<T, hstr>(&T::setTextSymbolicColor);
-			result["text_offset"] = new PropertyDescription::SetGvec2<T>(&T::setTextOffset);
+			result["text_offset"] = new PropertyDescription::SetGvec2f<T>(&T::setTextOffset);
 			result["text_offset_x"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetX);
 			result["text_offset_y"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetY);
 			result["min_auto_scale"] = new PropertyDescription::Set<T, float>(&T::setMinAutoScale);

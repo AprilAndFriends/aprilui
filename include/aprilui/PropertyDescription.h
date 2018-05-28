@@ -61,9 +61,9 @@ namespace aprilui
 			HL_ENUM_DECLARE(Type, Bool);
 			HL_ENUM_DECLARE(Type, String);
 			HL_ENUM_DECLARE(Type, Enum);
-			HL_ENUM_DECLARE(Type, Grect);
-			HL_ENUM_DECLARE(Type, Gvec2);
-			HL_ENUM_DECLARE(Type, Gvec3);
+			HL_ENUM_DECLARE(Type, Grectf);
+			HL_ENUM_DECLARE(Type, Gvec2f);
+			HL_ENUM_DECLARE(Type, Gvec3f);
 			HL_ENUM_DECLARE(Type, Color);
 		));
 
@@ -121,12 +121,12 @@ namespace aprilui
 
 		_DEFINE_SPECIAL_GET_CLASS(UChar, unsigned char, hstr((int)result));
 		_DEFINE_SPECIAL_SET_CLASS(UChar, unsigned char, (unsigned char)(int)parameter);
-		_DEFINE_SPECIAL_GET_CLASS(Gvec2, gvec2f, april::gvec2fToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Gvec2, gvec2f, april::hstrToGvec2(parameter));
-		_DEFINE_SPECIAL_GET_CLASS(Gvec3, gvec3f, april::gvec3fToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Gvec3, gvec3f, april::hstrToGvec3(parameter));
-		_DEFINE_SPECIAL_GET_CLASS(Grect, grectf, april::grectfToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Grect, grectf, april::hstrToGrect(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Gvec2f, gvec2f, april::gvec2fToHstr(result));
+		_DEFINE_SPECIAL_SET_CLASS(Gvec2f, gvec2f, april::hstrToGvec2f(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Gvec3f, gvec3f, april::gvec3fToHstr(result));
+		_DEFINE_SPECIAL_SET_CLASS(Gvec3f, gvec3f, april::hstrToGvec3f(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Grectf, grectf, april::grectfToHstr(result));
+		_DEFINE_SPECIAL_SET_CLASS(Grectf, grectf, april::hstrToGrectf(parameter));
 		_DEFINE_SPECIAL_GET_CLASS(Color, april::Color, result.hex());
 
 		PropertyDescription();

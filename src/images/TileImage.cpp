@@ -52,10 +52,10 @@ namespace aprilui
 		if (TileImage::_propertyDescriptions.size() == 0)
 		{
 			TileImage::_propertyDescriptions = Image::getPropertyDescriptions();
-			TileImage::_propertyDescriptions["tile"] = PropertyDescription("tile", PropertyDescription::Type::Gvec2);
+			TileImage::_propertyDescriptions["tile"] = PropertyDescription("tile", PropertyDescription::Type::Gvec2f);
 			TileImage::_propertyDescriptions["tile_w"] = PropertyDescription("tile_w", PropertyDescription::Type::Float);
 			TileImage::_propertyDescriptions["tile_h"] = PropertyDescription("tile_h", PropertyDescription::Type::Float);
-			TileImage::_propertyDescriptions["scroll"] = PropertyDescription("scroll", PropertyDescription::Type::Gvec2);
+			TileImage::_propertyDescriptions["scroll"] = PropertyDescription("scroll", PropertyDescription::Type::Gvec2f);
 			TileImage::_propertyDescriptions["scroll_x"] = PropertyDescription("scroll_x", PropertyDescription::Type::Float);
 			TileImage::_propertyDescriptions["scroll_y"] = PropertyDescription("scroll_y", PropertyDescription::Type::Float);
 			TileImage::_propertyDescriptions["use_tile_count"] = PropertyDescription("use_tile_count", PropertyDescription::Type::Bool);
@@ -68,10 +68,10 @@ namespace aprilui
 		if (TileImage::_getters.size() == 0)
 		{
 			TileImage::_getters = Image::_getGetters();
-			TileImage::_getters["tile"] = new PropertyDescription::GetGvec2<TileImage>(&TileImage::getTile);
+			TileImage::_getters["tile"] = new PropertyDescription::GetGvec2f<TileImage>(&TileImage::getTile);
 			TileImage::_getters["tile_w"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getTileWidth);
 			TileImage::_getters["tile_h"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getTileHeight);
-			TileImage::_getters["scroll"] = new PropertyDescription::GetGvec2<TileImage>(&TileImage::getScroll);
+			TileImage::_getters["scroll"] = new PropertyDescription::GetGvec2f<TileImage>(&TileImage::getScroll);
 			TileImage::_getters["scroll_x"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getScrollX);
 			TileImage::_getters["scroll_y"] = new PropertyDescription::Get<TileImage, float>(&TileImage::getScrollY);
 			TileImage::_getters["use_tile_count"] = new PropertyDescription::Get<TileImage, bool>(&TileImage::isUseTileCount);
@@ -84,10 +84,10 @@ namespace aprilui
 		if (TileImage::_setters.size() == 0)
 		{
 			TileImage::_setters = Image::_getSetters();
-			TileImage::_setters["tile"] = new PropertyDescription::SetGvec2<TileImage>(&TileImage::setTile);
+			TileImage::_setters["tile"] = new PropertyDescription::SetGvec2f<TileImage>(&TileImage::setTile);
 			TileImage::_setters["tile_w"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setTileWidth);
 			TileImage::_setters["tile_h"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setTileHeight);
-			TileImage::_setters["scroll"] = new PropertyDescription::SetGvec2<TileImage>(&TileImage::setScroll);
+			TileImage::_setters["scroll"] = new PropertyDescription::SetGvec2f<TileImage>(&TileImage::setScroll);
 			TileImage::_setters["scroll_x"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setScrollX);
 			TileImage::_setters["scroll_y"] = new PropertyDescription::Set<TileImage, float>(&TileImage::setScrollY);
 			TileImage::_setters["use_tile_count"] = new PropertyDescription::Set<TileImage, bool>(&TileImage::setUseTileCount);

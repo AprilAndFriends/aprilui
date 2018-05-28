@@ -144,7 +144,7 @@ namespace aprilui
 			EditBox::_propertyDescriptions["password_char"] = PropertyDescription("password_char", PropertyDescription::Type::String);
 			EditBox::_propertyDescriptions["filter"] = PropertyDescription("filter", PropertyDescription::Type::String);
 			EditBox::_propertyDescriptions["caret_index"] = PropertyDescription("caret_index", PropertyDescription::Type::Int);
-			EditBox::_propertyDescriptions["caret_offset"] = PropertyDescription("caret_offset", PropertyDescription::Type::Gvec2);
+			EditBox::_propertyDescriptions["caret_offset"] = PropertyDescription("caret_offset", PropertyDescription::Type::Gvec2f);
 			EditBox::_propertyDescriptions["caret_offset_x"] = PropertyDescription("caret_offset_x", PropertyDescription::Type::Float);
 			EditBox::_propertyDescriptions["caret_offset_y"] = PropertyDescription("caret_offset_y", PropertyDescription::Type::Float);
 			EditBox::_propertyDescriptions["caret_color"] = PropertyDescription("caret_color", PropertyDescription::Type::Color);
@@ -170,7 +170,7 @@ namespace aprilui
 			EditBox::_getters["password_char"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getPasswordChar);
 			EditBox::_getters["filter"] = new PropertyDescription::Get<EditBox, hstr>(&EditBox::getFilter);
 			EditBox::_getters["caret_index"] = new PropertyDescription::Get<EditBox, int>(&EditBox::getCaretIndex);
-			EditBox::_getters["caret_offset"] = new PropertyDescription::GetGvec2<EditBox>(&EditBox::getCaretOffset);
+			EditBox::_getters["caret_offset"] = new PropertyDescription::GetGvec2f<EditBox>(&EditBox::getCaretOffset);
 			EditBox::_getters["caret_offset_x"] = new PropertyDescription::Get<EditBox, float>(&EditBox::getCaretOffsetX);
 			EditBox::_getters["caret_offset_y"] = new PropertyDescription::Get<EditBox, float>(&EditBox::getCaretOffsetY);
 			EditBox::_getters["caret_color"] = new PropertyDescription::GetColor<EditBox>(&EditBox::getCaretColor);
@@ -196,7 +196,7 @@ namespace aprilui
 			EditBox::_setters["password_char"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setPasswordChar);
 			EditBox::_setters["filter"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setFilter);
 			EditBox::_setters["caret_index"] = new PropertyDescription::Set<EditBox, int>(&EditBox::setCaretIndex);
-			EditBox::_setters["caret_offset"] = new PropertyDescription::SetGvec2<EditBox>(&EditBox::setCaretOffset);
+			EditBox::_setters["caret_offset"] = new PropertyDescription::SetGvec2f<EditBox>(&EditBox::setCaretOffset);
 			EditBox::_setters["caret_offset_x"] = new PropertyDescription::Set<EditBox, float>(&EditBox::setCaretOffsetX);
 			EditBox::_setters["caret_offset_y"] = new PropertyDescription::Set<EditBox, float>(&EditBox::setCaretOffsetY);
 			EditBox::_setters["caret_color"] = new PropertyDescription::Set<EditBox, hstr>(&EditBox::setCaretSymbolicColor);

@@ -106,7 +106,7 @@ namespace aprilui
 			LabelBase::_propertyDescriptions["text"] = PropertyDescription("text", PropertyDescription::Type::String);
 			LabelBase::_propertyDescriptions["text_key"] = PropertyDescription("text_key", PropertyDescription::Type::String);
 			LabelBase::_propertyDescriptions["text_color"] = PropertyDescription("text_color", PropertyDescription::Type::Color);
-			LabelBase::_propertyDescriptions["text_offset"] = PropertyDescription("text_offset", PropertyDescription::Type::Gvec2);
+			LabelBase::_propertyDescriptions["text_offset"] = PropertyDescription("text_offset", PropertyDescription::Type::Gvec2f);
 			LabelBase::_propertyDescriptions["text_offset_x"] = PropertyDescription("text_offset_x", PropertyDescription::Type::Float);
 			LabelBase::_propertyDescriptions["text_offset_y"] = PropertyDescription("text_offset_y", PropertyDescription::Type::Float);
 			LabelBase::_propertyDescriptions["min_auto_scale"] = PropertyDescription("min_auto_scale", PropertyDescription::Type::Float);
