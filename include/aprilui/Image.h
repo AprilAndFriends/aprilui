@@ -33,11 +33,11 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(Image);
 	public:
-		Image(Texture* texture, chstr name, cgrect source);
+		Image(Texture* texture, chstr name, cgrectf source);
 		~Image();
 		inline hstr getClassName() const { return "Image"; }
 
-		static MinimalImage* createInstance(Texture* texture, chstr name, cgrect source);
+		static MinimalImage* createInstance(Texture* texture, chstr name, cgrectf source);
 
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
@@ -54,7 +54,7 @@ namespace aprilui
 		hstr getProperty(chstr name);
 		bool setProperty(chstr name, chstr value);
 
-		void draw(cgrect rect, const april::Color& color = april::Color::White);
+		void draw(cgrectf rect, const april::Color& color = april::Color::White);
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 
 	protected:

@@ -48,8 +48,8 @@ namespace aprilui
 		HL_DEFINE_ISSET(textFormatting, TextFormatting);
 		HL_DEFINE_GETSET(april::Color, textColor, TextColor);
 		void setTextSymbolicColor(chstr value);
-		HL_DEFINE_GET(gvec2, textOffset, TextOffset);
-		void setTextOffset(cgvec2 value);
+		HL_DEFINE_GET(gvec2f, textOffset, TextOffset);
+		void setTextOffset(cgvec2f value);
 		HL_DEFINE_GET(float, textOffset.x, TextOffsetX);
 		void setTextOffsetX(const float& value);
 		HL_DEFINE_GET(float, textOffset.y, TextOffsetY);
@@ -94,7 +94,7 @@ namespace aprilui
 
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
-		virtual bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL) = 0;
+		virtual bool triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, chstr string, void* userData = NULL) = 0;
 		virtual bool triggerEvent(chstr type, void* userData = NULL) = 0;
@@ -107,7 +107,7 @@ namespace aprilui
 		hstr font;
 		bool textFormatting;
 		april::Color textColor;
-		gvec2 textOffset;
+		gvec2f textOffset;
 		float minAutoScale;
 		hstr autoScaledFont;
 		atres::Horizontal horzFormatting;
@@ -130,12 +130,12 @@ namespace aprilui
 		april::Color backgroundColor;
 		bool backgroundBorder;
 
-		void _calcAutoScaledFont(cgrect rect);
+		void _calcAutoScaledFont(cgrectf rect);
 		april::Color _makeBackgroundDrawColor(const april::Color& drawColor) const;
 		bool _analyzeExtraParameters(chstr name, chstr value, bool& useColor, bool& useParameter, april::Color& color, hstr& parameter) const;
 		
-		void _drawLabelBackground(cgrect rect, const april::Color& color, const april::Color& backgroundColor);
-		void _drawLabel(cgrect rect, const april::Color& color);
+		void _drawLabelBackground(cgrectf rect, const april::Color& color, const april::Color& backgroundColor);
+		void _drawLabel(cgrectf rect, const april::Color& color);
 
 		template <typename T>
 		static hmap<hstr, PropertyDescription::Accessor*> _generateGetters()
@@ -177,7 +177,7 @@ namespace aprilui
 	private:
 		bool _autoScaleDirty;
 
-		void _calcAutoScaleFont(chstr fontName, cgrect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
+		void _calcAutoScaleFont(chstr fontName, cgrectf rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical);
 
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;

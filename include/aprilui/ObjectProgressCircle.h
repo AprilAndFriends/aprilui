@@ -73,7 +73,7 @@ namespace aprilui
 		april::Color _makeDrawColor(const april::Color& color) const;
 
 		void _draw();
-		harray<april::TexturedVertex> _calcVertices(cgrect rect, float progress, Direction direction);
+		harray<april::TexturedVertex> _calcVertices(cgrectf rect, float progress, Direction direction);
 
 	private:
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;

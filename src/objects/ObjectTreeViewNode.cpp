@@ -124,8 +124,8 @@ namespace aprilui
 				float itemHeight = this->_treeView->getItemHeight();
 				float expanderWidth = this->_treeView->getExpanderWidth();
 				float spacingHeight = this->_treeView->getSpacingHeight();
-				grect drawRect = this->_makeDrawRect();
-				grect vertical(-expanderWidth * 0.5f - 1.0f - this->_treeView->getSpacingWidth(), itemHeight + spacingHeight, 2.0f, itemHeight * 0.5f + 1.0f);
+				grectf drawRect = this->_makeDrawRect();
+				grectf vertical(-expanderWidth * 0.5f - 1.0f - this->_treeView->getSpacingWidth(), itemHeight + spacingHeight, 2.0f, itemHeight * 0.5f + 1.0f);
 				vertical += drawRect.getPosition();
 				drawRect.set(vertical.x + 2.0f, vertical.y + itemHeight * 0.5f - 1.0f, expanderWidth * 0.5f - 1.0f, 2.0f);
 				float offset = 0.0f;
@@ -273,7 +273,7 @@ namespace aprilui
 		return Container::triggerEvent(type, keyCode, string);
 	}
 
-	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool TreeViewNode::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return Container::triggerEvent(type, keyCode, position, string, userData);
 	}

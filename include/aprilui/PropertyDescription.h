@@ -121,12 +121,12 @@ namespace aprilui
 
 		_DEFINE_SPECIAL_GET_CLASS(UChar, unsigned char, hstr((int)result));
 		_DEFINE_SPECIAL_SET_CLASS(UChar, unsigned char, (unsigned char)(int)parameter);
-		_DEFINE_SPECIAL_GET_CLASS(Gvec2, gvec2, april::gvec2ToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Gvec2, gvec2, april::hstrToGvec2(parameter));
-		_DEFINE_SPECIAL_GET_CLASS(Gvec3, gvec3, april::gvec3ToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Gvec3, gvec3, april::hstrToGvec3(parameter));
-		_DEFINE_SPECIAL_GET_CLASS(Grect, grect, april::grectToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Grect, grect, april::hstrToGrect(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Gvec2, gvec2f, april::gvec2fToHstr(result));
+		_DEFINE_SPECIAL_SET_CLASS(Gvec2, gvec2f, april::hstrToGvec2(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Gvec3, gvec3f, april::gvec3fToHstr(result));
+		_DEFINE_SPECIAL_SET_CLASS(Gvec3, gvec3f, april::hstrToGvec3(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Grect, grectf, april::grectfToHstr(result));
+		_DEFINE_SPECIAL_SET_CLASS(Grect, grectf, april::hstrToGrect(parameter));
 		_DEFINE_SPECIAL_GET_CLASS(Color, april::Color, result.hex());
 
 		PropertyDescription();

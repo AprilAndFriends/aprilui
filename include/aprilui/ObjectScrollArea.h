@@ -43,16 +43,16 @@ namespace aprilui
 
 		HL_DEFINE_ISSET(allowDrag, AllowDrag);
 		HL_DEFINE_GETSET(float, inertia, Inertia);
-		HL_DEFINE_GETSET(gvec2, dragThreshold, DragThreshold);
+		HL_DEFINE_GETSET(gvec2f, dragThreshold, DragThreshold);
 		HL_DEFINE_GETSET(float, dragThreshold.x, DragThresholdX);
 		HL_DEFINE_GETSET(float, dragThreshold.y, DragThresholdY);
 		HL_DEFINE_GETSET(float, dragMaxSpeed, DragMaxSpeed);
 		HL_DEFINE_ISSET(swapScrollWheels, SwapScrollWheels);
-		HL_DEFINE_GETSET(gvec2, oobChildrenFadeSizeFactor, OobChildrenFadeSizeFactor);
+		HL_DEFINE_GETSET(gvec2f, oobChildrenFadeSizeFactor, OobChildrenFadeSizeFactor);
 		inline void setOobChildrenFadeSizeFactor(float x, float y) { this->oobChildrenFadeSizeFactor.set(x, y); }
 		HL_DEFINE_GETSET(float, oobChildrenFadeSizeFactor.x, OobChildrenFadeSizeFactorX);
 		HL_DEFINE_GETSET(float, oobChildrenFadeSizeFactor.y, OobChildrenFadeSizeFactorY);
-		HL_DEFINE_GETSET(gvec2, oobChildrenFadeOffsetFactor, OobChildrenFadeOffsetFactor);
+		HL_DEFINE_GETSET(gvec2f, oobChildrenFadeOffsetFactor, OobChildrenFadeOffsetFactor);
 		inline void setOobChildrenFadeOffsetFactor(float x, float y) { this->oobChildrenFadeOffsetFactor.set(x, y); }
 		HL_DEFINE_GETSET(float, oobChildrenFadeOffsetFactor.x, OobChildrenFadeOffsetFactorX);
 		HL_DEFINE_GETSET(float, oobChildrenFadeOffsetFactor.y, OobChildrenFadeOffsetFactorY);
@@ -68,8 +68,8 @@ namespace aprilui
 		bool isScrollable() const;
 		bool isScrollableX() const;
 		bool isScrollableY() const;
-		gvec2 getScrollOffset() const;
-		void setScrollOffset(cgvec2 value);
+		gvec2f getScrollOffset() const;
+		void setScrollOffset(cgvec2f value);
 		void setScrollOffset(float x, float y);
 		float getScrollOffsetX() const;
 		void setScrollOffsetX(float value);
@@ -85,7 +85,7 @@ namespace aprilui
 
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
-		bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);
@@ -95,17 +95,17 @@ namespace aprilui
 		bool onMouseScroll(float x, float y);
 
 		static float defaultInertia;
-		static gvec2 defaultDragThreshold;
+		static gvec2f defaultDragThreshold;
 		static float defaultDragMaxSpeed;
 
 	protected:
 		bool allowDrag;
 		float inertia;
-		gvec2 dragThreshold;
+		gvec2f dragThreshold;
 		float dragMaxSpeed;
 		bool swapScrollWheels;
-		gvec2 oobChildrenFadeSizeFactor;
-		gvec2 oobChildrenFadeOffsetFactor;
+		gvec2f oobChildrenFadeSizeFactor;
+		gvec2f oobChildrenFadeOffsetFactor;
 		bool optimizeOobChildrenVisible;
 		bool optimizeOobChildrenAwake;
 		bool dragging;
@@ -131,12 +131,12 @@ namespace aprilui
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
-		gvec2 _clickPosition;
-		gvec2 _lastPosition;
-		gvec2 _clickScrollOffset;
-		gvec2 _lastScrollOffset;
-		gvec2 _dragSpeed;
-		gvec2 _dragTimer;
+		gvec2f _clickPosition;
+		gvec2f _lastPosition;
+		gvec2f _clickScrollOffset;
+		gvec2f _lastScrollOffset;
+		gvec2f _dragSpeed;
+		gvec2f _dragTimer;
 		bool _overrideHoverMode;
 
 	};

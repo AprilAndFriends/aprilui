@@ -24,7 +24,7 @@
 namespace aprilui
 {
 	float ScrollArea::defaultInertia = 2000.0f;
-	gvec2 ScrollArea::defaultDragThreshold(16.0f, 16.0f);
+	gvec2f ScrollArea::defaultDragThreshold(16.0f, 16.0f);
 	float ScrollArea::defaultDragMaxSpeed = 0.0f;
 
 	hmap<hstr, PropertyDescription> ScrollArea::_propertyDescriptions;
@@ -192,12 +192,12 @@ namespace aprilui
 		return (parent != NULL && this->rect.h > parent->rect.h);
 	}
 
-	gvec2 ScrollArea::getScrollOffset() const
+	gvec2f ScrollArea::getScrollOffset() const
 	{
 		return -this->getPosition();
 	}
 
-	void ScrollArea::setScrollOffset(cgvec2 value)
+	void ScrollArea::setScrollOffset(cgvec2f value)
 	{
 		this->setScrollOffsetX(value.x);
 		this->setScrollOffsetY(value.y);
@@ -240,7 +240,7 @@ namespace aprilui
 			ButtonBase::_update(timeDelta);
 			if (timeDelta > 0.0f) // don't update this if no time has passed
 			{
-				gvec2 position = this->rect.getPosition() + this->transformToLocalSpace(aprilui::getCursorPosition());
+				gvec2f position = this->rect.getPosition() + this->transformToLocalSpace(aprilui::getCursorPosition());
 				if (this->pushed)
 				{
 					if (!this->dragging && this->isScrollable() && (this->_dragSpeed.x != 0.0f || this->_dragSpeed.y != 0.0f ||
@@ -248,7 +248,7 @@ namespace aprilui
 					{
 						this->dragging = true;
 						this->_clickScrollOffset = this->getScrollOffset();
-						gvec2 offsetVector = position - this->_clickPosition;
+						gvec2f offsetVector = position - this->_clickPosition;
 						// if a threshold exists, adjust the click position
 						if (offsetVector.x != 0.0f || offsetVector.y != 0.0f)
 						{
@@ -296,8 +296,8 @@ namespace aprilui
 		{
 			this->_dragTimer.x += timeDelta;
 			this->_dragTimer.y += timeDelta;
-			gvec2 inertiaTime(habs(this->_dragSpeed.x) / this->inertia, habs(this->_dragSpeed.y) / this->inertia);
-			gvec2 distance;
+			gvec2f inertiaTime(habs(this->_dragSpeed.x) / this->inertia, habs(this->_dragSpeed.y) / this->inertia);
+			gvec2f distance;
 			if (this->_dragSpeed.x != 0.0f)
 			{
 				if (this->_dragTimer.x < inertiaTime.x)
@@ -324,10 +324,10 @@ namespace aprilui
 					this->_dragTimer.y = 0.0f;
 				}
 			}
-			gvec2 offset = this->getScrollOffset();
+			gvec2f offset = this->getScrollOffset();
 			this->setScrollOffset(this->_lastScrollOffset - distance);
 			this->snapScrollOffset();
-			gvec2 newOffset = this->getScrollOffset();
+			gvec2f newOffset = this->getScrollOffset();
 			if (offset.x == newOffset.x)
 			{
 				this->_lastScrollOffset.x = offset.x;
@@ -351,9 +351,9 @@ namespace aprilui
 	{
 		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake || this->oobChildrenFadeSizeFactor.x > 0.0f || this->oobChildrenFadeSizeFactor.y > 0.0f))
 		{
-			grect rect(0.0f, 0.0f, this->parent->getSize());
-			grect adjustedRect;
-			grect boundingRect;
+			grectf rect(0.0f, 0.0f, this->parent->getSize());
+			grectf adjustedRect;
+			grectf boundingRect;
 			float alpha = 1.0f;
 			float ratio = 1.0f;
 			foreach (Object*, it, this->childrenObjects)
@@ -422,7 +422,7 @@ namespace aprilui
 
 	void ScrollArea::snapScrollOffset()
 	{
-		gvec2 offset = this->getScrollOffset();
+		gvec2f offset = this->getScrollOffset();
 		this->setScrollOffset(hroundf(offset.x), hroundf(offset.y));
 	}
 
@@ -513,7 +513,7 @@ namespace aprilui
 		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool ScrollArea::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool ScrollArea::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return Object::triggerEvent(type, keyCode, position, string, userData);
 	}

@@ -36,17 +36,17 @@ namespace aprilui
 		Object* object;
 		Animator* animator;
 		Dataset* dataset;
-		gvec2 position;
+		gvec2f position;
 		hstr string;
 		april::Key keyCode;
 		april::Button buttonCode;
 		void* userData;
 		
-		EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, cgvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, cgvec2f position = gvec2f(), chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, EventReceiver* receiver, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, EventReceiver* receiver, chstr string, void* userData = NULL);
 		EventArgs(chstr eventType, EventReceiver* receiver, void* userData = NULL);
-		EventArgs(chstr eventType, Object* object, april::Key keyCode, cgvec2 position = gvec2(), chstr string = "", void* userData = NULL);
+		EventArgs(chstr eventType, Object* object, april::Key keyCode, cgvec2f position = gvec2f(), chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, Object* object, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		EventArgs(chstr eventType, Object* object, chstr string, void* userData = NULL);
 		EventArgs(chstr eventType, Object* object, void* userData = NULL);

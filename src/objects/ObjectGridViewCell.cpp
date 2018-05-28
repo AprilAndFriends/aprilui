@@ -206,7 +206,7 @@ namespace aprilui
 		return Container::triggerEvent(type, keyCode, string);
 	}
 
-	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool GridViewCell::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return Container::triggerEvent(type, keyCode, position, string, userData);
 	}

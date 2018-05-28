@@ -46,13 +46,13 @@ namespace aprilui
 	static hmutex gTexturesMutex;
 	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
 	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
-	static hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)> gImageFactories;
+	static hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrectf)> gImageFactories;
 	static BaseImage* gCursor = NULL;
 	static bool cursorVisible = true;
-	static gvec2 cursorPosition;
+	static gvec2f cursorPosition;
 	static bool limitCursorToViewport = false;
 	static bool hoverEffectEnabled = true;
-	static grect viewport;
+	static grectf viewport;
 	static bool debugEnabled = false;
 	static hstr defaultTextsPath = "texts";
 	static hstr defaultLocalization = "";
@@ -163,12 +163,12 @@ namespace aprilui
 		debugEnabled = value;
 	}
 	
-	grect getViewport()
+	grectf getViewport()
 	{
 		return viewport;
 	}
 	
-	void setViewport(cgrect value)
+	void setViewport(cgrectf value)
 	{
 		viewport = value;
 	}
@@ -340,7 +340,7 @@ namespace aprilui
 		delete temp;
 	}
 	
-	void registerImageFactory(chstr typeName, MinimalImage* (*factory)(Texture*, chstr, cgrect))
+	void registerImageFactory(chstr typeName, MinimalImage* (*factory)(Texture*, chstr, cgrectf))
 	{
 		if (gImageFactories.hasKey(typeName))
 		{
@@ -386,7 +386,7 @@ namespace aprilui
 		return gAnimatorFactories;
 	}
 
-	const hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)>& getImageFactories()
+	const hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrectf)>& getImageFactories()
 	{
 		return gImageFactories;
 	}
@@ -416,7 +416,7 @@ namespace aprilui
 		return (gAnimatorFactories.hasKey(typeName) ? (*gAnimatorFactories[typeName])(name) : NULL);
 	}
 	
-	MinimalImage* createImage(chstr typeName, Texture* texture, chstr name, cgrect source)
+	MinimalImage* createImage(chstr typeName, Texture* texture, chstr name, cgrectf source)
 	{
 		return (gImageFactories.hasKey(typeName) ? (*gImageFactories[typeName])(texture, name, source) : NULL);
 	}
@@ -436,9 +436,9 @@ namespace aprilui
 		return (gDatasets.hasKey(datasetName) && aprilui::getDatasetByName(datasetName)->hasImage(imageName(dotIndex + 1, -1)));
 	}
 
-	gvec2 transformWindowPoint(cgvec2 point)
+	gvec2f transformWindowPoint(cgvec2f point)
 	{
-		gvec2 result;
+		gvec2f result;
 		result.x = (float)(int)(point.x * viewport.w / april::window->getWidth()) - viewport.x;
 		result.y = (float)(int)(point.y * viewport.h / april::window->getHeight()) - viewport.y;
 		if (limitCursorToViewport)
@@ -449,7 +449,7 @@ namespace aprilui
 		return result;
 	}
 
-	void updateViewportPosition(cgrect newViewport, bool updateOrthoProjection)
+	void updateViewportPosition(cgrectf newViewport, bool updateOrthoProjection)
 	{
 		viewport = newViewport;
 		bool keyboardVisible = (useKeyboardAutoOffset && april::window->isVirtualKeyboardVisible());
@@ -466,7 +466,7 @@ namespace aprilui
 		float keyboardHeight = viewportHeight - visibleHeight;
 		aprilui::Object* object = NULL;
 		aprilui::EditBox* editBox = NULL;
-		grect rect;
+		grectf rect;
 		float h = 0.0f;
 		foreach_m (Dataset*, it, gDatasets)
 		{
@@ -495,12 +495,12 @@ namespace aprilui
 		cursorPosition = transformWindowPoint(april::window->getCursorPosition());
 	}
 	
-	void setCursorPosition(cgvec2 position)
+	void setCursorPosition(cgvec2f position)
 	{
 		cursorPosition = position;
 	}
 	
-	gvec2 getCursorPosition()
+	gvec2f getCursorPosition()
 	{
 		return cursorPosition;
 	}
@@ -524,7 +524,7 @@ namespace aprilui
 	{
 		if (gCursor != NULL && cursorVisible)
 		{
-			gCursor->draw(grect(getCursorPosition(), gCursor->getSrcSize()));
+			gCursor->draw(grectf(getCursorPosition(), gCursor->getSrcSize()));
 		}
 	}
 
@@ -772,7 +772,7 @@ namespace aprilui
 		}
 	}
 	
-	void onTouch(const harray<gvec2>& touches)
+	void onTouch(const harray<gvec2f>& touches)
 	{
 		foreach_m (Dataset*, it, gDatasets)
 		{

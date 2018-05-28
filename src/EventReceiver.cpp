@@ -114,7 +114,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		if (this->events.hasKey(type))
 		{

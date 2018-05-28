@@ -36,7 +36,7 @@ namespace aprilui
 	extern bool objectExistenceDebugExceptionsEnabled;
 	extern bool systemConsistencyDebugExceptionsEnabled;
 
-	inline void _readRectNode(grect& rect, hlxml::Node* node, const gvec2* parentSize = NULL)
+	inline void _readRectNode(grectf& rect, hlxml::Node* node, const gvec2f* parentSize = NULL)
 	{
 		rect.set(0.0f, 0.0f, 0.0f, 0.0f);
 		if (node->pexists("rect"))

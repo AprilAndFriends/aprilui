@@ -27,28 +27,28 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE(CompositeImage);
 	public:
-		typedef std::pair<BaseImage*, grect> ImageRef;
+		typedef std::pair<BaseImage*, grectf> ImageRef;
 
-		CompositeImage(chstr name, cgvec2 size);
+		CompositeImage(chstr name, cgvec2f size);
 		~CompositeImage();
 		inline hstr getClassName() const { return "CompositeImage"; }
 		
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
-		HL_DEFINE_GETSET(gvec2, size, SrcSize);
+		HL_DEFINE_GETSET(gvec2f, size, SrcSize);
 		HL_DEFINE_GETSET(float, size.x, SrcWidth);
 		HL_DEFINE_GETSET(float, size.y, SrcHeight);
 		HL_DEFINE_ISSET(restoreClipRects, RestoreClipRects);
 		inline const harray<ImageRef>& getImages() { return this->images; }
 
-		void addImageRef(BaseImage* image, cgrect rect);
+		void addImageRef(BaseImage* image, cgrectf rect);
 		void clearImages();
 		
-		void draw(cgrect rect, const april::Color& color = april::Color::White);
+		void draw(cgrectf rect, const april::Color& color = april::Color::White);
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 		
 	protected:
-		gvec2 size;
+		gvec2f size;
 		bool restoreClipRects;
 		harray<ImageRef> images;
 		

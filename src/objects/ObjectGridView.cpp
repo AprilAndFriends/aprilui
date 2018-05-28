@@ -178,7 +178,7 @@ namespace aprilui
 	{
 		if (this->scrollArea != NULL)
 		{
-			grect rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
+			grectf rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
 			foreach (GridViewRow*, it, this->rows)
 			{
 				if (rect.intersects((*it)->getRect()))

@@ -35,7 +35,7 @@ namespace aprilui
 	class EventArgs;
 	class Object;
 	
-	typedef bool (*CustomPointInsideCallback)(const Object*, cgvec2);
+	typedef bool (*CustomPointInsideCallback)(const Object*, cgvec2f);
 
 	class apriluiExport Object : public BaseObject
 	{
@@ -57,11 +57,11 @@ namespace aprilui
 
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
-		HL_DEFINE_GET(grect, rect, Rect);
-		void setRect(cgrect value);
-		void setRect(cgvec2 position, cgvec2 size);
-		void setRect(cgvec2 position, float w, float h);
-		void setRect(float x, float y, cgvec2 size);
+		HL_DEFINE_GET(grectf, rect, Rect);
+		void setRect(cgrectf value);
+		void setRect(cgvec2f position, cgvec2f size);
+		void setRect(cgvec2f position, float w, float h);
+		void setRect(float x, float y, cgvec2f size);
 		void setRect(float x, float y, float w, float h);
 		HL_DEFINE_GETSET(float, rect.x, X);
 		HL_DEFINE_GETSET(float, rect.y, Y);
@@ -69,14 +69,14 @@ namespace aprilui
 		void setWidth(const float& value);
 		HL_DEFINE_GET(float, rect.h, Height);
 		void setHeight(const float& value);
-		inline gvec2 getPosition() const { return this->rect.getPosition(); }
-		inline void setPosition(cgvec2 value) { this->rect.setPosition(value); }
+		inline gvec2f getPosition() const { return this->rect.getPosition(); }
+		inline void setPosition(cgvec2f value) { this->rect.setPosition(value); }
 		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
-		inline gvec2 getSize() const { return this->rect.getSize(); }
-		void setSize(cgvec2 value);
+		inline gvec2f getSize() const { return this->rect.getSize(); }
+		void setSize(cgvec2f value);
 		void setSize(float w, float h);
 
-		HL_DEFINE_GETSET(gvec2, pivot, Pivot);
+		HL_DEFINE_GETSET(gvec2f, pivot, Pivot);
 		inline void setPivot(float x, float y) { this->pivot.set(x, y); }
 		HL_DEFINE_GETSET(float, pivot.x, PivotX);
 		HL_DEFINE_GETSET(float, pivot.y, PivotY);
@@ -92,7 +92,7 @@ namespace aprilui
 		HL_DEFINE_SET(bool, visible, Visible);
 		inline bool getVisibilityFlag() const { return this->visible; }
 
-		HL_DEFINE_GETSET(gvec2, scaleFactor, Scale);
+		HL_DEFINE_GETSET(gvec2f, scaleFactor, Scale);
 		inline void setScale(float x, float y) { this->scaleFactor.set(x, y); }
 		HL_DEFINE_GETSET(float, scaleFactor.x, ScaleX);
 		HL_DEFINE_GETSET(float, scaleFactor.y, ScaleY);
@@ -128,26 +128,26 @@ namespace aprilui
 		void removeChildren(bool recursive = false);
 		void destroyChildren();
 
-		Object* getChildUnderPoint(cgvec2 point) const;
+		Object* getChildUnderPoint(cgvec2f point) const;
 		Object* getChildUnderPoint(float x, float y) const;
 		virtual void clearChildUnderCursor();
 		void clearDescendantChildrenUnderCursor();
-		virtual bool isPointInside(cgvec2 position) const;
+		virtual bool isPointInside(cgvec2f position) const;
 		bool angleEquals(float angle) const;
 
-		harray<gvec2> transformToLocalSpace(const harray<gvec2>& points, aprilui::Object* overrideRoot = NULL) const;
-		gvec2 transformToLocalSpace(cgvec2 point, aprilui::Object* overrideRoot = NULL) const;
+		harray<gvec2f> transformToLocalSpace(const harray<gvec2f>& points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2f transformToLocalSpace(cgvec2f point, aprilui::Object* overrideRoot = NULL) const;
 
-		harray<gvec2> getDerivedPoints(const harray<gvec2>& points, aprilui::Object* overrideRoot = NULL) const;
-		gvec2 getDerivedPoint(cgvec2 point, aprilui::Object* overrideRoot = NULL) const;
-		grect getBoundingRect(aprilui::Object* overrideRoot = NULL) const;
+		harray<gvec2f> getDerivedPoints(const harray<gvec2f>& points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedPoint(cgvec2f point, aprilui::Object* overrideRoot = NULL) const;
+		grectf getBoundingRect(aprilui::Object* overrideRoot = NULL) const;
 		/// @note The points are ordered as top-left, top-right, bottom-left, bottom-right within the local space.
-		harray<gvec2> getDerivedCorners(aprilui::Object* overrideRoot = NULL) const;
+		harray<gvec2f> getDerivedCorners(aprilui::Object* overrideRoot = NULL) const;
 
-		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL) const;
-		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL) const;
-		gvec2 getDerivedPivot(aprilui::Object* overrideRoot = NULL) const;
-		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedPosition(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedSize(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedPivot(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedScale(aprilui::Object* overrideRoot = NULL) const;
 		float getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
 		bool isDerivedVisible() const;
 		bool isAnimated() const;
@@ -164,7 +164,7 @@ namespace aprilui
 		virtual bool onKeyDown(april::Key keyCode);
 		virtual bool onKeyUp(april::Key keyCode);
 		virtual bool onChar(unsigned int charCode);
-		virtual bool onTouch(const harray<gvec2>& touches);
+		virtual bool onTouch(const harray<gvec2f>& touches);
 		virtual bool onButtonDown(april::Button buttonCode);
 		virtual bool onButtonUp(april::Button buttonCode);
 
@@ -192,13 +192,13 @@ namespace aprilui
 		Animator* fadeAlpha(unsigned char a, float speed);
 		Animator* changeZOrder(int z, float speed);
 		void move(float x, float y, float speed);
-		void move(cgvec2 position, float speed);
+		void move(cgvec2f position, float speed);
 		void scale(float x, float y, float speed);
-		void scale(cgvec2 scale, float speed);
+		void scale(cgvec2f scale, float speed);
 		void resize(float x, float y, float speed);
-		void resize(cgvec2 size, float speed);
+		void resize(cgvec2f size, float speed);
 		void movePivot(float x, float y, float speed);
-		void movePivot(cgvec2 pivot, float speed);
+		void movePivot(cgvec2f pivot, float speed);
 		void fadeColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed);
 		void fadeColor(const april::Color& color, float speed);
 
@@ -217,13 +217,13 @@ namespace aprilui
 		Animator* fadeAlphaQueue(unsigned char a, float speed, float delay = 0.0f);
 		Animator* changeZOrderQueue(int z, float speed, float delay = 0.0f);
 		void moveQueue(float x, float y, float speed, float delay = 0.0f);
-		void moveQueue(cgvec2 position, float speed, float delay = 0.0f);
+		void moveQueue(cgvec2f position, float speed, float delay = 0.0f);
 		void scaleQueue(float x, float y, float speed, float delay = 0.0f);
-		void scaleQueue(cgvec2 scale, float speed, float delay = 0.0f);
+		void scaleQueue(cgvec2f scale, float speed, float delay = 0.0f);
 		void resizeQueue(float x, float y, float speed, float delay = 0.0f);
-		void resizeQueue(cgvec2 size, float speed, float delay = 0.0f);
+		void resizeQueue(cgvec2f size, float speed, float delay = 0.0f);
 		void movePivotQueue(float x, float y, float speed, float delay = 0.0f);
-		void movePivotQueue(cgvec2 pivot, float speed, float delay = 0.0f);
+		void movePivotQueue(cgvec2f pivot, float speed, float delay = 0.0f);
 		void fadeColorQueue(unsigned char r, unsigned char g, unsigned char b, unsigned char a, float speed, float delay = 0.0f);
 		void fadeColorQueue(const april::Color& color, float speed, float delay = 0.0f);
 
@@ -270,11 +270,11 @@ namespace aprilui
 		void animateStopAll();
 
 	protected:
-		grect rect;
-		gvec2 pivot;
+		grectf rect;
+		gvec2f pivot;
 		april::Color color;
 		bool visible;
-		gvec2 scaleFactor;
+		gvec2f scaleFactor;
 		float angle;
 		bool anchorLeft;
 		bool anchorRight;
@@ -299,7 +299,7 @@ namespace aprilui
 
 		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
 		bool _isDerivedHitTestEnabled() const;
-		grect _makeDrawRect() const;
+		grectf _makeDrawRect() const;
 		april::Color _makeDrawColor() const;
 		virtual april::Color _makeDrawColor(const april::Color& color) const;
 		virtual harray<BaseImage*> _getUsedImages() const;
@@ -317,7 +317,7 @@ namespace aprilui
 		virtual bool _keyDown(april::Key keyCode);
 		virtual bool _keyUp(april::Key keyCode);
 		virtual bool _char(unsigned int charCode);
-		virtual bool _touch(const harray<gvec2>& touches);
+		virtual bool _touch(const harray<gvec2f>& touches);
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
 

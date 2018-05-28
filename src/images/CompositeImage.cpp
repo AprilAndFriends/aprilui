@@ -24,7 +24,7 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_setters;
 
-	CompositeImage::CompositeImage(chstr name, cgvec2 size) : BaseImage(name), restoreClipRects(true)
+	CompositeImage::CompositeImage(chstr name, cgvec2f size) : BaseImage(name), restoreClipRects(true)
 	{
 		this->size = size;
 	}
@@ -70,7 +70,7 @@ namespace aprilui
 		return CompositeImage::_setters;
 	}
 	
-	void CompositeImage::addImageRef(BaseImage* image, cgrect rect)
+	void CompositeImage::addImageRef(BaseImage* image, cgrectf rect)
 	{
 		this->images += ImageRef(image, rect);
 	}
@@ -80,14 +80,14 @@ namespace aprilui
 		this->images.clear();
 	}
 	
-	void CompositeImage::draw(cgrect rect, const april::Color& color)
+	void CompositeImage::draw(cgrectf rect, const april::Color& color)
 	{
 		if (color.a == 0)
 		{
 			return;
 		}
-		gvec2 sf = rect.getSize() / this->size;
-		grect drawRect;
+		gvec2f sf = rect.getSize() / this->size;
+		grectf drawRect;
 		// using separate loops for performance reasons
 		if (this->clipRect.w == 0.0f || this->clipRect.h == 0.0f)
 		{
@@ -99,9 +99,9 @@ namespace aprilui
 		}
 		else
 		{
-			gvec2 cf;
-			grect oldClipRect;
-			grect clipRect;
+			gvec2f cf;
+			grectf oldClipRect;
+			grectf clipRect;
 			foreach (ImageRef, it, this->images)
 			{
 				clipRect.set(0.0f, 0.0f, (*it).second.getSize());

@@ -24,7 +24,7 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_setters;
 
-	MinimalImage::MinimalImage(Texture* texture, chstr name, cgrect source) : BaseImage(name)
+	MinimalImage::MinimalImage(Texture* texture, chstr name, cgrectf source) : BaseImage(name)
 	{
 		this->texture = texture;
 		this->srcRect = source;
@@ -46,7 +46,7 @@ namespace aprilui
 	{
 	}
 
-	MinimalImage* MinimalImage::createInstance(Texture* texture, chstr name, cgrect source)
+	MinimalImage* MinimalImage::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new MinimalImage(texture, name, source);
 	}
@@ -91,7 +91,7 @@ namespace aprilui
 		return MinimalImage::_setters;
 	}
 
-	void MinimalImage::setSrcRect(cgrect value)
+	void MinimalImage::setSrcRect(cgrectf value)
 	{
 		if (this->srcRect != value)
 		{
@@ -136,7 +136,7 @@ namespace aprilui
 		}
 	}
 
-	void MinimalImage::setSrcPosition(cgvec2 value)
+	void MinimalImage::setSrcPosition(cgvec2f value)
 	{
 		if (this->srcRect.getPosition() != value)
 		{
@@ -154,7 +154,7 @@ namespace aprilui
 		}
 	}
 
-	void MinimalImage::setSrcSize(cgvec2 value)
+	void MinimalImage::setSrcSize(cgvec2f value)
 	{
 		if (this->srcRect.getSize() != value)
 		{
@@ -189,11 +189,11 @@ namespace aprilui
 			this->_clipRectCalculated = true;
 			float iw = 1.0f / this->texture->getWidth();
 			float ih = 1.0f / this->texture->getHeight();
-			grect rect = this->_makeClippedSrcRect();
-			gvec2 topLeft;
-			gvec2 topRight;
-			gvec2 bottomLeft;
-			gvec2 bottomRight;
+			grectf rect = this->_makeClippedSrcRect();
+			gvec2f topLeft;
+			gvec2f topRight;
+			gvec2f bottomLeft;
+			gvec2f bottomRight;
 			topLeft.x = bottomLeft.x = rect.left() * iw;
 			topLeft.y = topRight.y = rect.top() * ih;
 			topRight.x = bottomRight.x = rect.right() * iw;
@@ -211,7 +211,7 @@ namespace aprilui
 		}
 	}
 
-	grect MinimalImage::_makeClippedSrcRect() const
+	grectf MinimalImage::_makeClippedSrcRect() const
 	{
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
@@ -220,17 +220,17 @@ namespace aprilui
 		return this->srcRect;
 	}
 
-	void MinimalImage::draw(cgrect rect, const april::Color& color)
+	void MinimalImage::draw(cgrectf rect, const april::Color& color)
 	{
 		if (color.a == 0)
 		{
 			return;
 		}
 		april::Color drawColor = color;
-		grect drawRect = rect;
+		grectf drawRect = rect;
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
-			gvec2 sizeRatio = drawRect.getSize() / this->srcRect.getSize();
+			gvec2f sizeRatio = drawRect.getSize() / this->srcRect.getSize();
 			drawRect += this->clipRect.getPosition() * sizeRatio;
 			drawRect.setSize(this->clipRect.getSize() * sizeRatio);
 		}
@@ -262,7 +262,7 @@ namespace aprilui
 		// texture coordinate scaling
 		float iw = 1.0f / this->texture->getWidth();
 		float ih = 1.0f / this->texture->getHeight();
-		grect rect = this->_makeClippedSrcRect();
+		grectf rect = this->_makeClippedSrcRect();
 		harray<april::TexturedVertex> textureVertices = vertices;
 		foreach (april::TexturedVertex, it, textureVertices)
 		{

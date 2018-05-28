@@ -187,7 +187,7 @@ namespace aprilui
 		{
 			backgroundDrawColor.a = (unsigned char)(backgroundDrawColor.a * 0.75f);
 		}
-		grect drawRect = this->_makeDrawRect();
+		grectf drawRect = this->_makeDrawRect();
 		LabelBase::_drawLabelBackground(drawRect, drawLabelColor, backgroundDrawColor);
 		LabelBase::_drawLabel(drawRect, drawLabelColor);
 		this->backgroundColor = backgroundColor;
@@ -229,7 +229,7 @@ namespace aprilui
 		return ImageButton::triggerEvent(type, keyCode, string);
 	}
 
-	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool TextImageButton::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return ImageButton::triggerEvent(type, keyCode, position, string, userData);
 	}

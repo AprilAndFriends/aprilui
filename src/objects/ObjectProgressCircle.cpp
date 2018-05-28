@@ -155,7 +155,7 @@ namespace aprilui
 	{
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
-		grect drawRect = this->_makeDrawRect();
+		grectf drawRect = this->_makeDrawRect();
 		if (this->antiProgressImage != NULL)
 		{
 			if (progress <= 0.0f)
@@ -185,14 +185,14 @@ namespace aprilui
 		}
 	}
 
-	harray<april::TexturedVertex> ProgressCircle::_calcVertices(cgrect rect, float progress, Direction direction)
+	harray<april::TexturedVertex> ProgressCircle::_calcVertices(cgrectf rect, float progress, Direction direction)
 	{
 		harray<april::TexturedVertex> result;
-		gvec2 splitCenter;
-		gvec2 topLeft;
-		gvec2 topRight;
-		gvec2 bottomLeft;
-		gvec2 bottomRight;
+		gvec2f splitCenter;
+		gvec2f topLeft;
+		gvec2f topRight;
+		gvec2f bottomLeft;
+		gvec2f bottomRight;
 		if (direction == Direction::Clockwise)
 		{
 			splitCenter.set(1.0f, 0.5f);	topLeft.set(0.0f, 1.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(1.0f, 0.0f);
@@ -226,11 +226,11 @@ namespace aprilui
 			splitCenter.set(0.5f, 1.0f);	topLeft.set(1.0f, 0.0f);	topRight.set(1.0f, 1.0f);	bottomLeft.set(0.0f, 0.0f);		bottomRight.set(0.0f, 1.0f);
 		}
 		harray<april::TexturedVertex> vertices;
-		result += MAKE_VERTEX(gvec2(0.5f, 0.5f));
+		result += MAKE_VERTEX(gvec2f(0.5f, 0.5f));
 		result += MAKE_VERTEX(splitCenter);
 		april::TexturedVertex vertex;
-		gvec2 p0 = bottomRight;
-		gvec2 p1 = topRight;
+		gvec2f p0 = bottomRight;
+		gvec2f p1 = topRight;
 		if (progress >= 0.125f)
 		{
 			vertex = MAKE_VERTEX(topRight);

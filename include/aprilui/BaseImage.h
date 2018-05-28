@@ -44,8 +44,8 @@ namespace aprilui
 		void setName(chstr value);
 		HL_DEFINE_GETSET(hstr, tag, Tag);
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
-		HL_DEFINE_GET(grect, clipRect, ClipRect);
-		void setClipRect(cgrect value);
+		HL_DEFINE_GET(grectf, clipRect, ClipRect);
+		void setClipRect(cgrectf value);
 		HL_DEFINE_GET(float, clipRect.x, ClipX);
 		void setClipX(const float& value);
 		HL_DEFINE_GET(float, clipRect.y, ClipY);
@@ -54,16 +54,16 @@ namespace aprilui
 		void setClipWidth(const float& value);
 		HL_DEFINE_GET(float, clipRect.h, ClipHeight);
 		void setClipHeight(const float& value);
-		inline gvec2 getClipPosition() const { return this->clipRect.getPosition(); }
-		void setClipPosition(cgvec2 value);
+		inline gvec2f getClipPosition() const { return this->clipRect.getPosition(); }
+		void setClipPosition(cgvec2f value);
 		void setClipPosition(const float& x, const float& y);
-		inline gvec2 getClipSize() const { return this->clipRect.getSize(); }
-		void setClipSize(cgvec2 value);
+		inline gvec2f getClipSize() const { return this->clipRect.getSize(); }
+		void setClipSize(cgvec2f value);
 		void setClipSize(const float& w, const float& h);
 		hstr getFullName() const;
 
-		virtual gvec2 getSrcSize() const = 0;
-		virtual void setSrcSize(cgvec2 value) = 0;
+		virtual gvec2f getSrcSize() const = 0;
+		virtual void setSrcSize(cgvec2f value) = 0;
 		virtual float getSrcWidth() const = 0;
 		virtual void setSrcWidth(const float& value) = 0;
 		virtual float getSrcHeight() const = 0;
@@ -74,7 +74,7 @@ namespace aprilui
 		virtual hstr getProperty(chstr name);
 		virtual bool setProperty(chstr name, chstr value);
 
-		virtual void draw(cgrect rect, const april::Color& color = april::Color::White) = 0;
+		virtual void draw(cgrectf rect, const april::Color& color = april::Color::White) = 0;
 		virtual void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White) = 0;
 
 		static harray<Texture*> findTextures(harray<BaseImage*> baseImages);
@@ -83,7 +83,7 @@ namespace aprilui
 		hstr name;
 		hstr tag;
 		Dataset* dataset;
-		grect clipRect;
+		grectf clipRect;
 
 		bool _clipRectCalculated;
 

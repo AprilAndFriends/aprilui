@@ -372,7 +372,7 @@ namespace aprilui
 	{
 		if (this->scrollArea != NULL)
 		{
-			grect rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
+			grectf rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
 			foreach(TreeViewNode*, it, this->nodes)
 			{
 				if ((*it)->isExpanded() || rect.intersects((*it)->getRect()))

@@ -37,7 +37,7 @@ namespace aprilui
 		HL_DEFINE_GET(april::Texture*, texture, Texture);
 		HL_DEFINE_GET(april::Texture::LoadMode, loadMode, LoadMode);
 		HL_DEFINE_IS(managed, Managed);
-		HL_DEFINE_GET(gvec2, scale, Scale);
+		HL_DEFINE_GET(gvec2f, scale, Scale);
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);
 		HL_DEFINE_GET(float, unusedTime, UnusedTime);
 		HL_DEFINE_GET(harray<Texture*>, links, Links);
@@ -72,7 +72,7 @@ namespace aprilui
 		bool managed;
 		april::Texture::Filter filter;
 		april::Texture::AddressMode addressMode;
-		gvec2 scale;
+		gvec2f scale;
 		Dataset* dataset;
 		harray<Texture*> links;
 		float unusedTime;

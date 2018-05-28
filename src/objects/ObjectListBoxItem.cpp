@@ -139,7 +139,7 @@ namespace aprilui
 		return Label::triggerEvent(type, keyCode, string);
 	}
 
-	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool ListBoxItem::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return Label::triggerEvent(type, keyCode, position, string, userData);
 	}

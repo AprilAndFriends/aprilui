@@ -50,9 +50,9 @@ namespace aprilui
 		return new ScrollBarV(name);
 	}
 
-	grect ScrollBarV::_getBarDrawRect() const
+	grectf ScrollBarV::_getBarDrawRect() const
 	{
-		grect result = this->_makeDrawRect();
+		grectf result = this->_makeDrawRect();
 		if (this->skinName == "")
 		{
 			Container* parent = dynamic_cast<Container*>(this->parent);
@@ -105,7 +105,7 @@ namespace aprilui
 		this->_updateBar();
 	}
 
-	float ScrollBarV::_calcScrollJump(float x, float y, cgvec2 size)
+	float ScrollBarV::_calcScrollJump(float x, float y, cgvec2f size)
 	{
 		if (this->_getButtonSlider() == NULL)
 		{

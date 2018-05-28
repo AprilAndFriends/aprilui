@@ -112,7 +112,7 @@ namespace aprilui
 
 	void ImageButton::_draw()
 	{
-		grect drawRect = this->_makeDrawRect();
+		grectf drawRect = this->_makeDrawRect();
 		bool enabled = this->isDerivedEnabled();
 		if (!enabled && this->disabledImage != NULL)
 		{
@@ -274,7 +274,7 @@ namespace aprilui
 		return ImageBox::triggerEvent(type, keyCode, string);
 	}
 
-	bool ImageButton::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool ImageButton::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return ImageBox::triggerEvent(type, keyCode, position, string, userData);
 	}

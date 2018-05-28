@@ -114,10 +114,10 @@ namespace aprilui
 		virtual hstr _getSkinNameBackwardHover() const = 0;
 		virtual hstr _getSkinNameBackwardPushed() const = 0;
 
-		virtual grect _getBarDrawRect() const = 0;
+		virtual grectf _getBarDrawRect() const = 0;
 
 		/// @note x and y range from 0 to 1
-		virtual float _calcScrollJump(float x, float y, cgvec2 size) = 0;
+		virtual float _calcScrollJump(float x, float y, cgvec2f size) = 0;
 		virtual float _calcScrollMove(float x, float y) = 0;
 		virtual void _updateChildren() = 0;
 		virtual void _moveScrollBar(float x, float y) = 0;
@@ -135,7 +135,7 @@ namespace aprilui
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
-		gvec2 _clickPosition;
+		gvec2f _clickPosition;
 		float _retainTime;
 		bool _scrolling;
 

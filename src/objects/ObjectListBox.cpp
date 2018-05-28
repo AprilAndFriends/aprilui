@@ -163,7 +163,7 @@ namespace aprilui
 	{
 		if (this->scrollArea != NULL)
 		{
-			grect rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
+			grectf rect(this->scrollArea->getScrollOffset(), this->scrollArea->getParent()->getSize());
 			foreach (ListBoxItem*, it, this->items)
 			{
 				if (rect.intersects((*it)->getRect()))

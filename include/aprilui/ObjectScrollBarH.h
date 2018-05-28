@@ -61,9 +61,9 @@ namespace aprilui
 		inline hstr _getSkinNameBackwardHover() const { return skinNameHBackwardHover; }
 		inline hstr _getSkinNameBackwardPushed() const { return skinNameHBackwardPushed; }
 
-		grect _getBarDrawRect() const;
+		grectf _getBarDrawRect() const;
 
-		float _calcScrollJump(float x, float y, cgvec2 size);
+		float _calcScrollJump(float x, float y, cgvec2f size);
 		float _calcScrollMove(float x, float y);
 		void _updateChildren();
 		void _moveScrollBar(float x, float y);

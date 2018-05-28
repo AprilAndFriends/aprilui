@@ -77,7 +77,7 @@ namespace aprilui
 		this->image = image;
 		if (image != NULL)
 		{
-			gvec2 size = image->getSrcSize();
+			gvec2f size = image->getSrcSize();
 			if (this->rect.w == 0.0f)
 			{
 				this->rect.w = size.x;

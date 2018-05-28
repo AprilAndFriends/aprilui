@@ -529,7 +529,7 @@ namespace aprilui
 		}
 	}
 
-	void Object::setRect(cgrect value)
+	void Object::setRect(cgrectf value)
 	{
 		this->_updateChildrenHorizontal(value.w - this->rect.w);
 		this->_updateChildrenVertical(value.h - this->rect.h);
@@ -537,7 +537,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setRect(cgvec2 position, cgvec2 size)
+	void Object::setRect(cgvec2f position, cgvec2f size)
 	{
 		this->_updateChildrenHorizontal(size.x - this->rect.w);
 		this->_updateChildrenVertical(size.y - this->rect.h);
@@ -545,7 +545,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setRect(cgvec2 position, float w, float h)
+	void Object::setRect(cgvec2f position, float w, float h)
 	{
 		this->_updateChildrenHorizontal(w - this->rect.w);
 		this->_updateChildrenVertical(h - this->rect.h);
@@ -553,7 +553,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setRect(float x, float y, cgvec2 size)
+	void Object::setRect(float x, float y, cgvec2f size)
 	{
 		this->_updateChildrenHorizontal(size.x - this->rect.w);
 		this->_updateChildrenVertical(size.y - this->rect.h);
@@ -583,7 +583,7 @@ namespace aprilui
 		this->notifyEvent(Event::Resized, NULL);
 	}
 
-	void Object::setSize(cgvec2 value)
+	void Object::setSize(cgvec2f value)
 	{
 		this->_updateChildrenHorizontal(value.x - this->rect.w);
 		this->_updateChildrenVertical(value.y - this->rect.h);
@@ -645,9 +645,9 @@ namespace aprilui
 		return harray<BaseImage*>();
 	}
 
-	grect Object::_makeDrawRect() const
+	grectf Object::_makeDrawRect() const
 	{
-		return grect(-this->pivot, this->rect.getSize());
+		return grectf(-this->pivot, this->rect.getSize());
 	}
 
 	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot) const
@@ -704,26 +704,26 @@ namespace aprilui
 		}
 		gmat4 modelviewMatrix = april::rendersys->getModelviewMatrix();
 		gmat4 projectionMatrix;
-		grect viewport;
+		grectf viewport;
 		bool clipped = (this->clip && this->parent != NULL);
 		if (clipped)
 		{
 			projectionMatrix = april::rendersys->getProjectionMatrix();
 			viewport = april::rendersys->getViewport();
-			gvec2 ratio = viewport.getSize() / april::rendersys->getOrthoProjection().getSize();
-			grect originalRect = this->parent->getBoundingRect();
-			grect newViewport(originalRect.getPosition() * ratio, originalRect.getSize() * ratio);
+			gvec2f ratio = viewport.getSize() / april::rendersys->getOrthoProjection().getSize();
+			grectf originalRect = this->parent->getBoundingRect();
+			grectf newViewport(originalRect.getPosition() * ratio, originalRect.getSize() * ratio);
 			newViewport.clip(viewport);
 			if (newViewport.w <= 0.0f || newViewport.h <= 0.0f)
 			{
 				return;
 			}
-			grect newRect(newViewport.getPosition() / ratio, newViewport.getSize() / ratio);
+			grectf newRect(newViewport.getPosition() / ratio, newViewport.getSize() / ratio);
 			originalRect.clip(newRect);
-			april::rendersys->setOrthoProjection(grect(-originalRect.getPosition(), originalRect.getSize()));
+			april::rendersys->setOrthoProjection(grectf(-originalRect.getPosition(), originalRect.getSize()));
 			april::rendersys->setViewport(newViewport);
 		}
-		gvec2 position = this->rect.getPosition() + this->pivot;
+		gvec2f position = this->rect.getPosition() + this->pivot;
 		if (position.x != 0.0f || position.y != 0.0f)
 		{
 			april::rendersys->translate(position.x, position.y);
@@ -792,7 +792,7 @@ namespace aprilui
 
 	void Object::_drawDebug()
 	{
-		grect rect = this->_makeDrawRect();
+		grectf rect = this->_makeDrawRect();
 		april::rendersys->setBlendMode(april::BlendMode::Alpha);
 		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		if (this->debugColor.a > 0)
@@ -813,8 +813,8 @@ namespace aprilui
 			frameColor = april::Color::Cyan;
 		}
 		april::rendersys->drawRect(rect, april::Color(frameColor, 224));
-		april::rendersys->drawRect(grect(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
-		april::rendersys->drawRect(grect(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
+		april::rendersys->drawRect(grectf(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
+		april::rendersys->drawRect(grectf(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
 	}
 
 	bool Object::isCursorInside() const
@@ -822,7 +822,7 @@ namespace aprilui
 		return this->isPointInside(aprilui::getCursorPosition());
 	}
 	
-	bool Object::isPointInside(cgvec2 position) const
+	bool Object::isPointInside(cgvec2f position) const
 	{
 		if (heqf(this->scaleFactor.x, 0.0f, 0.0001f) || heqf(this->scaleFactor.y, 0.0f, 0.0001f))
 		{
@@ -846,7 +846,7 @@ namespace aprilui
 		{
 			return (*this->customPointInsideCallback)(this, position);
 		}
-		return grect(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
+		return grectf(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
 	}
 
 	bool Object::onMouseDown(april::Key keyCode)
@@ -1048,7 +1048,7 @@ namespace aprilui
 		return false;
 	}
 
-	bool Object::onTouch(const harray<gvec2>& touches)
+	bool Object::onTouch(const harray<gvec2f>& touches)
 	{
 		if (!this->isVisible() || !this->isDerivedEnabled())
 		{
@@ -1066,7 +1066,7 @@ namespace aprilui
 		return this->_touch(touches);
 	}
 
-	bool Object::_touch(const harray<gvec2>& touches)
+	bool Object::_touch(const harray<gvec2f>& touches)
 	{
 		return false;
 	}
@@ -1212,7 +1212,7 @@ namespace aprilui
 		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
 	}
 
-	Object* Object::getChildUnderPoint(cgvec2 point) const
+	Object* Object::getChildUnderPoint(cgvec2f point) const
 	{
 		if (!this->isVisible() || this->hitTest == HitTest::DisabledRecursive)
 		{
@@ -1232,7 +1232,7 @@ namespace aprilui
 
 	Object* Object::getChildUnderPoint(float x, float y) const
 	{
-		return this->getChildUnderPoint(gvec2(x, y));
+		return this->getChildUnderPoint(gvec2f(x, y));
 	}
 	
 	Object* Object::getChildUnderCursor()
@@ -1260,7 +1260,7 @@ namespace aprilui
 		}
 	}
 	
-	harray<gvec2> Object::transformToLocalSpace(const harray<gvec2>& points, aprilui::Object* overrideRoot) const
+	harray<gvec2f> Object::transformToLocalSpace(const harray<gvec2f>& points, aprilui::Object* overrideRoot) const
 	{
 		harray<const Object*> sequence;
 		const Object* current = this;
@@ -1270,10 +1270,10 @@ namespace aprilui
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
-		harray<gvec2> result = points;
-		gvec2 pivot;
-		gvec2 scale;
-		gvec2 position;
+		harray<gvec2f> result = points;
+		gvec2f pivot;
+		gvec2f scale;
+		gvec2f position;
 		float angle;
 		foreach (const Object*, it, sequence)
 		{
@@ -1281,7 +1281,7 @@ namespace aprilui
 			scale = (*it)->getScale();
 			position = (*it)->getPosition();
 			angle = (*it)->getAngle();
-			foreach (gvec2, it2, result)
+			foreach (gvec2f, it2, result)
 			{
 				(*it2) -= pivot + position;
 				(*it2).rotate(angle);
@@ -1292,7 +1292,7 @@ namespace aprilui
 		return result;
 	}
 	
-	gvec2 Object::transformToLocalSpace(cgvec2 point, aprilui::Object* overrideRoot) const
+	gvec2f Object::transformToLocalSpace(cgvec2f point, aprilui::Object* overrideRoot) const
 	{
 		harray<const Object*> sequence;
 		const Object* current = this;
@@ -1302,8 +1302,8 @@ namespace aprilui
 			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
 		}
 		sequence.reverse();
-		gvec2 result = point;
-		gvec2 pivot;
+		gvec2f result = point;
+		gvec2f pivot;
 		foreach (const Object*, it, sequence)
 		{
 			pivot = (*it)->getPivot();
@@ -1315,13 +1315,13 @@ namespace aprilui
 		return result;
 	}
 
-	harray<gvec2> Object::getDerivedPoints(const harray<gvec2>& points, aprilui::Object* overrideRoot) const
+	harray<gvec2f> Object::getDerivedPoints(const harray<gvec2f>& points, aprilui::Object* overrideRoot) const
 	{
 		const Object* current = this;
-		harray<gvec2> result = points;
-		gvec2 pivot;
-		gvec2 scale;
-		gvec2 position;
+		harray<gvec2f> result = points;
+		gvec2f pivot;
+		gvec2f scale;
+		gvec2f position;
 		float angle;
 		while (current != NULL)
 		{
@@ -1329,7 +1329,7 @@ namespace aprilui
 			scale = current->getScale();
 			position = current->getPosition();
 			angle = current->getAngle();
-			foreach (gvec2, it, result)
+			foreach (gvec2f, it, result)
 			{
 				(*it) -= pivot;
 				(*it) *= scale;
@@ -1341,11 +1341,11 @@ namespace aprilui
 		return result;
 	}
 
-	gvec2 Object::getDerivedPoint(cgvec2 point, aprilui::Object* overrideRoot) const
+	gvec2f Object::getDerivedPoint(cgvec2f point, aprilui::Object* overrideRoot) const
 	{
 		const Object* current = this;
-		gvec2 result = point;
-		gvec2 pivot;
+		gvec2f result = point;
+		gvec2f pivot;
 		while (current != NULL)
 		{
 			pivot = current->getPivot();
@@ -1358,13 +1358,13 @@ namespace aprilui
 		return result;
 	}
 
-	grect Object::getBoundingRect(aprilui::Object* overrideRoot) const
+	grectf Object::getBoundingRect(aprilui::Object* overrideRoot) const
 	{
-		gvec2 max;
-		gvec2 min;
-		harray<gvec2> corners = this->getDerivedCorners(overrideRoot);
+		gvec2f max;
+		gvec2f min;
+		harray<gvec2f> corners = this->getDerivedCorners(overrideRoot);
 		min = max = corners.removeFirst(); // guaranteed to return 4 corner points previously
-		gvec2 corner;
+		gvec2f corner;
 		while (corners.size() > 0)
 		{
 			corner = corners.removeFirst();
@@ -1373,41 +1373,41 @@ namespace aprilui
 			min.x = hmin(min.x, corner.x);
 			min.y = hmin(min.y, corner.y);
 		}
-		return grect(min, max - min);
+		return grectf(min, max - min);
 	}
 	
-	harray<gvec2> Object::getDerivedCorners(aprilui::Object* overrideRoot) const
+	harray<gvec2f> Object::getDerivedCorners(aprilui::Object* overrideRoot) const
 	{
-		harray<gvec2> points;
-		points += gvec2(0.0f, 0.0f);
-		points += gvec2(0.0f, this->rect.h);
-		points += gvec2(this->rect.w, 0.0f);
-		points += gvec2(this->rect.w, this->rect.h);
+		harray<gvec2f> points;
+		points += gvec2f(0.0f, 0.0f);
+		points += gvec2f(0.0f, this->rect.h);
+		points += gvec2f(this->rect.w, 0.0f);
+		points += gvec2f(this->rect.w, this->rect.h);
 		return this->getDerivedPoints(points, overrideRoot);
 	}
 	
-	gvec2 Object::getDerivedPosition(aprilui::Object* overrideRoot) const
+	gvec2f Object::getDerivedPosition(aprilui::Object* overrideRoot) const
 	{
-		return this->getDerivedPoint(gvec2(0.0f, 0.0f), overrideRoot);
+		return this->getDerivedPoint(gvec2f(0.0f, 0.0f), overrideRoot);
 	}
 	
-	gvec2 Object::getDerivedSize(aprilui::Object* overrideRoot) const
+	gvec2f Object::getDerivedSize(aprilui::Object* overrideRoot) const
 	{
 		return this->getBoundingRect(overrideRoot).getSize();
 	}
 
-	gvec2 Object::getDerivedPivot(aprilui::Object* overrideRoot) const
+	gvec2f Object::getDerivedPivot(aprilui::Object* overrideRoot) const
 	{
 		return this->getDerivedPoint(this->pivot, overrideRoot);
 	}
 	
-	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot) const
+	gvec2f Object::getDerivedScale(aprilui::Object* overrideRoot) const
 	{
 		if (overrideRoot == this)
 		{
 			return this->scaleFactor;
 		}
-		gvec2 scaleFactor = this->scaleFactor;
+		gvec2f scaleFactor = this->scaleFactor;
 		if (this->parent != overrideRoot && this->parent != NULL)
 		{
 			scaleFactor *= this->parent->getDerivedScale(overrideRoot);
@@ -1554,7 +1554,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed);
 	}
 
-	void Object::move(cgvec2 position, float speed)
+	void Object::move(cgvec2f position, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);
 		REMOVE_EXISTING_ANIMATORS(MoverY);
@@ -1570,7 +1570,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed);
 	}
 
-	void Object::scale(cgvec2 scale, float speed)
+	void Object::scale(cgvec2f scale, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ScalerX);
 		REMOVE_EXISTING_ANIMATORS(ScalerY);
@@ -1586,7 +1586,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed);
 	}
 
-	void Object::resize(cgvec2 size, float speed)
+	void Object::resize(cgvec2f size, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(ResizerX);
 		REMOVE_EXISTING_ANIMATORS(ResizerY);
@@ -1602,7 +1602,7 @@ namespace aprilui
 		CREATE_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed);
 	}
 
-	void Object::movePivot(cgvec2 pivot, float speed)
+	void Object::movePivot(cgvec2f pivot, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(PivotMoverX);
 		REMOVE_EXISTING_ANIMATORS(PivotMoverY);
@@ -1724,7 +1724,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, y, speed, delay);
 	}
 
-	void Object::moveQueue(cgvec2 position, float speed, float delay)
+	void Object::moveQueue(cgvec2f position, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverX, this->rect.x, position.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(MoverY, this->rect.y, position.y, speed, delay);
@@ -1736,7 +1736,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, y, speed, delay);
 	}
 
-	void Object::scaleQueue(cgvec2 scale, float speed, float delay)
+	void Object::scaleQueue(cgvec2f scale, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerX, this->scaleFactor.x, scale.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ScalerY, this->scaleFactor.y, scale.y, speed, delay);
@@ -1748,7 +1748,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, y, speed, delay);
 	}
 
-	void Object::resizeQueue(cgvec2 size, float speed, float delay)
+	void Object::resizeQueue(cgvec2f size, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerX, this->rect.w, size.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(ResizerY, this->rect.h, size.y, speed, delay);
@@ -1760,7 +1760,7 @@ namespace aprilui
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, y, speed, delay);
 	}
 
-	void Object::movePivotQueue(cgvec2 pivot, float speed, float delay)
+	void Object::movePivotQueue(cgvec2f pivot, float speed, float delay)
 	{
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverX, this->pivot.x, pivot.x, speed, delay);
 		CREATE_DELAYED_DYNAMIC_ANIMATOR(PivotMoverY, this->pivot.y, pivot.y, speed, delay);

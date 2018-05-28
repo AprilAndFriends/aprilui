@@ -47,7 +47,7 @@ namespace aprilui
 		void setEmptyTextSymbolicColor(chstr value);
 		HL_DEFINE_GET(int, caretIndex, CaretIndex);
 		void setCaretIndex(const int& value);
-		HL_DEFINE_GETSET(gvec2, caretOffset, CaretOffset);
+		HL_DEFINE_GETSET(gvec2f, caretOffset, CaretOffset);
 		HL_DEFINE_GETSET(float, caretOffset.x, CaretOffsetX);
 		HL_DEFINE_GETSET(float, caretOffset.y, CaretOffsetY);
 		HL_DEFINE_GETSET(april::Color, caretColor, CaretColor);
@@ -65,20 +65,20 @@ namespace aprilui
 		HL_DEFINE_ISSET(disabledOffset, DisabledOffset);
 		HL_DEFINE_GET(hstr, filter, Filter);
 		void setFilter(chstr value);
-		HL_DEFINE_GET(grect, caretRect, CaretRect);
+		HL_DEFINE_GET(grectf, caretRect, CaretRect);
 		void setText(chstr value);
 		void setFocused(bool value);
 		hstr getSelectedText() const;
 		hstr getDisplayedText() const;
 		void setMinAutoScale(float value);
 
-		void setCaretIndexAt(cgvec2 position);
+		void setCaretIndexAt(cgvec2f position);
 
 		void notifyEvent(chstr type, EventArgs* args);
 
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
-		bool triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string = "", void* userData = NULL);
+		bool triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, april::Button buttonCode, chstr string = "", void* userData = NULL);
 		bool triggerEvent(chstr type, chstr string, void* userData = NULL);
 		bool triggerEvent(chstr type, void* userData = NULL);
@@ -106,7 +106,7 @@ namespace aprilui
 		hstr passwordChar;
 		hstr filter;
 		int caretIndex;
-		gvec2 caretOffset;
+		gvec2f caretOffset;
 		april::Color caretColor;
 		bool multiLine;
 		bool selectable;
@@ -114,7 +114,7 @@ namespace aprilui
 		april::Color selectionColor;
 		bool clipboardEnabled;
 		bool disabledOffset;
-		grect caretRect;
+		grectf caretRect;
 
 		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
@@ -122,8 +122,8 @@ namespace aprilui
 		void _updateCaretPosition();
 		void _updateCaret();
 		void _updateSelection();
-		gvec2 _makeCaretPosition(const harray<atres::RenderLine>& lines, int index, cgvec2 base, float fontHeight, float heightOffset, int* lineIndex = NULL);
-		void _makeBaseOffset(gvec2& offset, float& heightOffset, float* heightFactor = NULL) const;
+		gvec2f _makeCaretPosition(const harray<atres::RenderLine>& lines, int index, cgvec2f base, float fontHeight, float heightOffset, int* lineIndex = NULL);
+		void _makeBaseOffset(gvec2f& offset, float& heightOffset, float* heightFactor = NULL) const;
 
 		void _update(float timeDelta);
 		void _draw();
@@ -176,8 +176,8 @@ namespace aprilui
 		bool _selectionDirty;
 		bool _caretPositionDirty;
 		bool _sizeProblemReported;
-		gvec2 _caretCursorPosition;
-		harray<grect> _selectionRects;
+		gvec2f _caretCursorPosition;
+		harray<grectf> _selectionRects;
 
 	};
 

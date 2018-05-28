@@ -22,7 +22,7 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> TileImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> TileImage::_setters;
 
-	TileImage::TileImage(Texture* texture, chstr name, cgrect source) : Image(texture, name, source)
+	TileImage::TileImage(Texture* texture, chstr name, cgrectf source) : Image(texture, name, source)
 	{
 		this->tile = source.getSize();
 		this->useTileCount = false;
@@ -42,7 +42,7 @@ namespace aprilui
 	{
 	}
 
-	MinimalImage* TileImage::createInstance(Texture* texture, chstr name, cgrect source)
+	MinimalImage* TileImage::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new TileImage(texture, name, source);
 	}
@@ -95,16 +95,16 @@ namespace aprilui
 		return TileImage::_setters;
 	}
 
-	void TileImage::_createVertices(grect rect)
+	void TileImage::_createVertices(grectf rect)
 	{
 		this->tileVertices.clear();
-		gvec2 positions[2] = { rect.getTopLeft(), rect.getBottomRight() };
-		gvec2 srcs[2];
-		gvec2 scroll = this->scroll;
-		gvec2 tile = this->tile;
+		gvec2f positions[2] = { rect.getTopLeft(), rect.getBottomRight() };
+		gvec2f srcs[2];
+		gvec2f scroll = this->scroll;
+		gvec2f tile = this->tile;
 		april::TexturedVertex v;
 		april::Texture* renderTexture = this->texture->getTexture();
-		gvec2 srcSize = this->srcRect.getSize();
+		gvec2f srcSize = this->srcRect.getSize();
 		bool fullTexture = (this->texture->isValid() && renderTexture->getAddressMode() == april::Texture::AddressMode::Wrap &&
 			this->srcRect.x == 0.0f && this->srcRect.y == 0.0f && srcSize.x == (float)this->texture->getWidth() && srcSize.y == (float)this->texture->getHeight());
 		if (fullTexture)
@@ -130,9 +130,9 @@ namespace aprilui
 			{
 				tile = rect.getSize() / tile;
 			}
-			gvec2 invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
-			grect invSrcRect(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
-			gvec2 srcFactor = invSrcRect.getSize() / tile;
+			gvec2f invSize(1.0f / this->texture->getWidth(), 1.0f / this->texture->getHeight());
+			grectf invSrcRect(this->srcRect.getPosition() * invSize, this->srcRect.getSize() * invSize);
+			gvec2f srcFactor = invSrcRect.getSize() / tile;
 			float difference = 0.0f;
 			scroll.x = hmodf(this->scroll.x, tile.x) - tile.x;
 			scroll.y = hmodf(this->scroll.y, tile.y) - tile.y;
@@ -144,7 +144,7 @@ namespace aprilui
 			{
 				for_iterx (i, 0, countX)
 				{
-					positions[0] = rect.getPosition() + scroll + gvec2((float)i, (float)j) * tile;
+					positions[0] = rect.getPosition() + scroll + gvec2f((float)i, (float)j) * tile;
 					positions[1] = positions[0] + tile;
 					srcs[0] = invSrcRect.getTopLeft();
 					srcs[1] = invSrcRect.getBottomRight();
@@ -182,7 +182,7 @@ namespace aprilui
 		}
 	}
 
-	void TileImage::draw(cgrect rect, const april::Color& color)
+	void TileImage::draw(cgrectf rect, const april::Color& color)
 	{
 		if (color.a == 0 || this->color.a == 0)
 		{

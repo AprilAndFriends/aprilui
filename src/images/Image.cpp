@@ -26,7 +26,7 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> Image::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Image::_setters;
 
-	Image::Image(Texture* texture, chstr name, cgrect source) : MinimalImage(texture, name, source)
+	Image::Image(Texture* texture, chstr name, cgrectf source) : MinimalImage(texture, name, source)
 	{
 		this->color = april::Color::White;
 		this->blendMode = april::BlendMode::Alpha;
@@ -46,7 +46,7 @@ namespace aprilui
 	{
 	}
 
-	MinimalImage* Image::createInstance(Texture* texture, chstr name, cgrect source)
+	MinimalImage* Image::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new Image(texture, name, source);
 	}
@@ -157,7 +157,7 @@ namespace aprilui
 		return MinimalImage::setProperty(name, value);
 	}
 
-	void Image::draw(cgrect rect, const april::Color& color)
+	void Image::draw(cgrectf rect, const april::Color& color)
 	{
 		if (color.a == 0 || this->color.a == 0)
 		{
@@ -172,10 +172,10 @@ namespace aprilui
 				return;
 			}
 		}
-		grect drawRect = rect;
+		grectf drawRect = rect;
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
-			gvec2 sizeRatio = drawRect.getSize() / this->srcRect.getSize();
+			gvec2f sizeRatio = drawRect.getSize() / this->srcRect.getSize();
 			drawRect += this->clipRect.getPosition() * sizeRatio;
 			drawRect.setSize(this->clipRect.getSize() * sizeRatio);
 		}
@@ -215,7 +215,7 @@ namespace aprilui
 		// texture coordinate scaling
 		float iw = 1.0f / this->texture->getWidth();
 		float ih = 1.0f / this->texture->getHeight();
-		grect rect = this->_makeClippedSrcRect();
+		grectf rect = this->_makeClippedSrcRect();
 		harray<april::TexturedVertex> textureVertices = vertices;
 		foreach (april::TexturedVertex, it, textureVertices)
 		{

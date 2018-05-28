@@ -13,7 +13,7 @@
 
 namespace aprilui
 {
-	EventArgs::EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, EventReceiver* receiver, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		this->_initDefaults(eventType);
 		this->receiver = receiver;
@@ -63,7 +63,7 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::EventArgs(chstr eventType, Object* object, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	EventArgs::EventArgs(chstr eventType, Object* object, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		this->_initDefaults(eventType);
 		this->object = object;

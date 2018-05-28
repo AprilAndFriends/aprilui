@@ -25,7 +25,7 @@
 
 #define APRILUI_REGISTER_OBJECT_TYPE(name) aprilui::registerObjectFactory(name("").getClassName(), &name::createInstance)
 #define APRILUI_REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(name("").getClassName(), &name::createInstance)
-#define APRILUI_REGISTER_IMAGE_TYPE(name) aprilui::registerImageFactory(name(NULL, "", grect()).getClassName(), &name::createInstance)
+#define APRILUI_REGISTER_IMAGE_TYPE(name) aprilui::registerImageFactory(name(NULL, "", grectf()).getClassName(), &name::createInstance)
 
 namespace aprilui
 {
@@ -46,8 +46,8 @@ namespace aprilui
 	apriluiFnExport bool isDebugEnabled();
 	apriluiFnExport void setDebugEnabled(bool value);
 	
-	apriluiFnExport grect getViewport();
-	apriluiFnExport void setViewport(cgrect value);
+	apriluiFnExport grectf getViewport();
+	apriluiFnExport void setViewport(cgrectf value);
 	apriluiFnExport bool isLimitCursorToViewport();
 	apriluiFnExport void setLimitCursorToViewport(bool value);
 	apriluiFnExport bool isHoverEffectEnabled();
@@ -73,7 +73,7 @@ namespace aprilui
 
 	apriluiFnExport void registerObjectFactory(chstr typeName, Object* (*factory)(chstr));
 	apriluiFnExport void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr));
-	apriluiFnExport void registerImageFactory(chstr typeName, MinimalImage* (*factory)(Texture*, chstr, cgrect));
+	apriluiFnExport void registerImageFactory(chstr typeName, MinimalImage* (*factory)(Texture*, chstr, cgrectf));
 	apriluiFnExport bool hasObjectFactory(chstr typeName);
 	apriluiFnExport bool hasAnimatorFactory(chstr typeName);
 	apriluiFnExport bool hasImageFactory(chstr typeName);
@@ -82,18 +82,18 @@ namespace aprilui
 	apriluiFnExport void unregisterImageFactory(chstr typeName);
 	apriluiFnExport const hmap<hstr, Object* (*)(chstr)>& getObjectFactories();
 	apriluiFnExport const hmap<hstr, Animator* (*)(chstr)>& getAnimatorFactories();
-	apriluiFnExport const hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrect)>& getImageFactories();
+	apriluiFnExport const hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrectf)>& getImageFactories();
 
 	apriluiFnExport Object* createObject(chstr type, chstr name);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
-	apriluiFnExport MinimalImage* createImage(chstr type, Texture* texture, chstr name, cgrect source);
+	apriluiFnExport MinimalImage* createImage(chstr type, Texture* texture, chstr name, cgrectf source);
 	apriluiFnExport bool hasImage(Dataset* defaultDataset, chstr imageName);
 
-	apriluiFnExport gvec2 transformWindowPoint(cgvec2 point);
-	apriluiFnExport void updateViewportPosition(cgrect newViewport, bool updateOrthoProjection = true);
+	apriluiFnExport gvec2f transformWindowPoint(cgvec2f point);
+	apriluiFnExport void updateViewportPosition(cgrectf newViewport, bool updateOrthoProjection = true);
 	apriluiFnExport void updateCursorPosition();
-	apriluiFnExport gvec2 getCursorPosition();
-	apriluiFnExport void setCursorPosition(cgvec2 position);
+	apriluiFnExport gvec2f getCursorPosition();
+	apriluiFnExport void setCursorPosition(cgvec2f position);
 	apriluiFnExport void setCursorImage(BaseImage* image);
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
@@ -129,7 +129,7 @@ namespace aprilui
 	apriluiFnExport void onKeyDown(april::Key keyCode);
 	apriluiFnExport void onKeyUp(april::Key keyCode);
 	apriluiFnExport void onChar(unsigned int charCode);
-	apriluiFnExport void onTouch(const harray<gvec2>& touches);
+	apriluiFnExport void onTouch(const harray<gvec2f>& touches);
 	apriluiFnExport void onButtonDown(april::Button buttonCode);
 	apriluiFnExport void onButtonUp(april::Button buttonCode);
 

@@ -442,7 +442,7 @@ namespace aprilui
 			ScrollBarButtonBackground* buttonBackground = this->_getButtonBackground();
 			if (buttonBackground != NULL)
 			{
-				gvec2 position = buttonBackground->transformToLocalSpace(aprilui::getCursorPosition()) - this->_clickPosition;
+				gvec2f position = buttonBackground->transformToLocalSpace(aprilui::getCursorPosition()) - this->_clickPosition;
 				this->_moveScrollBar(position.x, position.y);
 			}
 		}

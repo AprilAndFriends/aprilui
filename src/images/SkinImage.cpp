@@ -45,7 +45,7 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> SkinImage::_setters;
 	int SkinImage::maxRectCache = 30;
 
-	SkinImage::SkinImage(Texture* texture, chstr name, cgrect source) : Image(texture, name, source)
+	SkinImage::SkinImage(Texture* texture, chstr name, cgrectf source) : Image(texture, name, source)
 	{
 		this->_skinCoordinatesCalculated = false;
 		this->tiledBorders = false;
@@ -64,7 +64,7 @@ namespace aprilui
 	{
 	}
 
-	MinimalImage* SkinImage::createInstance(Texture* texture, chstr name, cgrect source)
+	MinimalImage* SkinImage::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new SkinImage(texture, name, source);
 	}
@@ -129,7 +129,7 @@ namespace aprilui
 		return SkinImage::_setters;
 	}
 
-	void SkinImage::setSkinRect(cgrect value)
+	void SkinImage::setSkinRect(cgrectf value)
 	{
 		if (this->skinRect != value)
 		{
@@ -174,7 +174,7 @@ namespace aprilui
 		}
 	}
 
-	void SkinImage::setSkinPosition(cgvec2 value)
+	void SkinImage::setSkinPosition(cgvec2f value)
 	{
 		if (this->skinRect.getPosition() != value)
 		{
@@ -192,7 +192,7 @@ namespace aprilui
 		}
 	}
 
-	void SkinImage::setSkinSize(cgvec2 value)
+	void SkinImage::setSkinSize(cgvec2f value)
 	{
 		if (this->skinRect.getSize() != value)
 		{
@@ -210,7 +210,7 @@ namespace aprilui
 		}
 	}
 
-	void SkinImage::setBorderIndent(cgvec2 value)
+	void SkinImage::setBorderIndent(cgvec2f value)
 	{
 		if (this->borderIndent != value)
 		{
@@ -255,7 +255,7 @@ namespace aprilui
 		}
 	}
 
-	void SkinImage::draw(cgrect rect, const april::Color& color)
+	void SkinImage::draw(cgrectf rect, const april::Color& color)
 	{
 		if (color.a == 0 || this->color.a == 0)
 		{
@@ -282,7 +282,7 @@ namespace aprilui
 		april::rendersys->setTexture(this->texture->getTexture());
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
-		grect originalClipRect = this->clipRect; // prevents wrong calculations for src coordinates
+		grectf originalClipRect = this->clipRect; // prevents wrong calculations for src coordinates
 		this->clipRect.set(0.0f, 0.0f, 0.0f, 0.0f);
 		this->tryLoadTextureCoordinates();
 		this->clipRect = originalClipRect;
@@ -309,8 +309,8 @@ namespace aprilui
 				this->_rectVertices.clear();
 			}
 			// which pieces will be rendered
-			grect indentedSkinRect(this->skinRect.getPosition() + this->borderIndent, this->skinRect.getSize() - this->borderIndent * 2);
-			grect clippedIndentedSkinRect = indentedSkinRect.clipped(grect(0.0f, 0.0f, this->srcRect.getSize()));
+			grectf indentedSkinRect(this->skinRect.getPosition() + this->borderIndent, this->skinRect.getSize() - this->borderIndent * 2);
+			grectf clippedIndentedSkinRect = indentedSkinRect.clipped(grectf(0.0f, 0.0f, this->srcRect.getSize()));
 			if (indentedSkinRect != clippedIndentedSkinRect)
 			{
 				hlog::warnf(logTag, "Image '%s' uses a border_indent (%g,%g) that is bigger than the actual border defined by skin_rect (%g,%g,%g,%g) resulting in (%g,%g,%g,%g)!",
@@ -318,8 +318,8 @@ namespace aprilui
 					clippedIndentedSkinRect.x, clippedIndentedSkinRect.y, clippedIndentedSkinRect.w, clippedIndentedSkinRect.h);
 				indentedSkinRect = clippedIndentedSkinRect;
 			}
-			grect skinRect = this->skinRect;
-			gvec2 srcSize = this->srcRect.getSize();
+			grectf skinRect = this->skinRect;
+			gvec2f srcSize = this->srcRect.getSize();
 			bool left = (indentedSkinRect.x > 0.0f);
 			bool hcenter = (rect.w > this->srcRect.w - indentedSkinRect.w);
 			bool right = (this->srcRect.w > indentedSkinRect.right());
@@ -346,12 +346,12 @@ namespace aprilui
 				indentedSkinRect.h += difference;
 			}
 			// coordinate translation
-			gvec2 pos[4];
+			gvec2f pos[4];
 			pos[0] = rect.getPosition();
 			pos[3] = rect.getBottomRight();
 			pos[1] = pos[0] + indentedSkinRect.getPosition();
 			pos[2] = pos[0] + rect.getSize() - (srcRect.getSize() - indentedSkinRect.getBottomRight());
-			gvec2 uv[4];
+			gvec2f uv[4];
 			uv[0].set(Image::vertices[0].u, Image::vertices[0].v);
 			uv[3].set(Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].u, Image::vertices[APRILUI_IMAGE_MAX_VERTICES - 1].v);
 			uv[1] = uv[0] + skinRect.getPosition() / srcSize * (uv[3] - uv[0]);
@@ -392,8 +392,8 @@ namespace aprilui
 			{
 				// when tiled borders are enabled, a more complicated procedure is required to arrange all vertices into triangles
 				april::TexturedVertex w[6];
-				gvec2 tile = this->skinRect.getSize();
-				gvec2 border = rect.getSize() - (this->srcRect.getSize() - indentedSkinRect.getSize());
+				gvec2f tile = this->skinRect.getSize();
+				gvec2f border = rect.getSize() - (this->srcRect.getSize() - indentedSkinRect.getSize());
 				float tileCountX = border.x / tile.x;
 				float tileCountY = border.y / tile.y;
 				int countX = (int)tileCountX;
@@ -534,8 +534,8 @@ namespace aprilui
 			{
 				float range = 0.0f;
 				float offset = 0.0f;
-				gvec2 clipScale = rect.getSize() / this->srcRect.getSize();
-				grect clipRect(rect.getPosition() + this->clipRect.getPosition() * clipScale, this->clipRect.getSize() * clipScale);
+				gvec2f clipScale = rect.getSize() / this->srcRect.getSize();
+				grectf clipRect(rect.getPosition() + this->clipRect.getPosition() * clipScale, this->clipRect.getSize() * clipScale);
 				for_iter (i, 0, this->_vertices.size() / 6)
 				{
 					// remove out-of bounds

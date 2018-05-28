@@ -65,7 +65,7 @@ namespace aprilui
 			ScrollBar* scrollBar = dynamic_cast<ScrollBar*>(args->object->getParent());
 			if (scrollBar != NULL)
 			{
-				gvec2 position = args->object->transformToLocalSpace(aprilui::getCursorPosition());
+				gvec2f position = args->object->transformToLocalSpace(aprilui::getCursorPosition());
 				scrollBar->addScrollValueBackground(scrollBar->_calcScrollJump(position.x, position.y, args->object->getSize()));
 			}
 		}

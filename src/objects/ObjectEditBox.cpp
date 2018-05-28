@@ -24,7 +24,7 @@
 #define UNICODE_CHAR_ZERO_WIDTH_SPACE 0x200B
 #define UNICODE_CHAR_NEWLINE 0x0A
 #define CHECK_RECT_HEIGHT 100000.0f
-#define CHECK_RECT (grect(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT))
+#define CHECK_RECT (grectf(0.0f, 0.0f, this->rect.w, CHECK_RECT_HEIGHT))
 
 #define MAKE_RENDER_LINES(text) \
 	(this->textFormatting ? \
@@ -353,7 +353,7 @@ namespace aprilui
 		hlog::warn(logTag, "EditBox does not support setting of 'min_auto_scale'! Call will be ignored.");
 	}
 
-	void EditBox::setCaretIndexAt(cgvec2 position)
+	void EditBox::setCaretIndexAt(cgvec2f position)
 	{
 		if (!this->pushed || this->_caretCursorPosition != position)
 		{
@@ -409,10 +409,10 @@ namespace aprilui
 		}
 		hstr text = this->getDisplayedText();
 		float fontHeight = font->getLineHeight();
-		gvec2 position = this->_caretCursorPosition;
+		gvec2f position = this->_caretCursorPosition;
 		// full text
 		harray<atres::RenderLine> lines = MAKE_RENDER_LINES(text);
-		gvec2 base;
+		gvec2f base;
 		float heightOffset = 0.0f;
 		this->_makeBaseOffset(base, heightOffset);
 		int offsetIndex = text.size();
@@ -502,7 +502,7 @@ namespace aprilui
 		// full text
 		hstr text = this->getDisplayedText();
 		harray<atres::RenderLine> lines = MAKE_RENDER_LINES(text);
-		gvec2 base;
+		gvec2f base;
 		float heightOffset = 0.0f;
 		float heightFactor = 0.0f;
 		this->_makeBaseOffset(base, heightOffset, &heightFactor);
@@ -513,7 +513,7 @@ namespace aprilui
 		{
 			this->caretRect.x -= 1.0f;
 		}
-		this->caretRect += gvec2((float)this->_renderOffsetX, (float)this->_renderOffsetY) * fontHeight;
+		this->caretRect += gvec2f((float)this->_renderOffsetX, (float)this->_renderOffsetY) * fontHeight;
 		// calculate render offset
 		int jumps = 0;
 		if (!this->disabledOffset && !this->horzFormatting.isWrapped())
@@ -629,38 +629,38 @@ namespace aprilui
 			return;
 		}
 		hstr text = this->getDisplayedText();
-		grect rect;
+		grectf rect;
 		float fontHeight = atres::renderer->getFont(this->font)->getLineHeight();
 		// full text
 		harray<atres::RenderLine> lines = MAKE_RENDER_LINES(text);
-		gvec2 base;
+		gvec2f base;
 		float heightOffset = 0.0f;
 		this->_makeBaseOffset(base, heightOffset);
 		// vars
 		int lineIndexStart = 0;
-		gvec2 positionStart = this->_makeCaretPosition(lines, hmin(this->caretIndex, this->caretIndex + this->selectionCount), base, fontHeight, heightOffset, &lineIndexStart);
+		gvec2f positionStart = this->_makeCaretPosition(lines, hmin(this->caretIndex, this->caretIndex + this->selectionCount), base, fontHeight, heightOffset, &lineIndexStart);
 		int lineIndexEnd = 0;
-		gvec2 positionEnd = this->_makeCaretPosition(lines, hmax(this->caretIndex, this->caretIndex + this->selectionCount), base, fontHeight, heightOffset, &lineIndexEnd);
-		gvec2 _renderOffset(this->_renderOffsetX * fontHeight, this->_renderOffsetY * fontHeight);
+		gvec2f positionEnd = this->_makeCaretPosition(lines, hmax(this->caretIndex, this->caretIndex + this->selectionCount), base, fontHeight, heightOffset, &lineIndexEnd);
+		gvec2f _renderOffset(this->_renderOffsetX * fontHeight, this->_renderOffsetY * fontHeight);
 		if (lineIndexStart == lineIndexEnd)
 		{
-			this->_selectionRects += grect(positionStart + _renderOffset, positionEnd.x - positionStart.x, fontHeight);
+			this->_selectionRects += grectf(positionStart + _renderOffset, positionEnd.x - positionStart.x, fontHeight);
 		}
 		else
 		{
-			this->_selectionRects += grect(positionStart + _renderOffset, lines[lineIndexStart].rect.right() - positionStart.x, fontHeight);
+			this->_selectionRects += grectf(positionStart + _renderOffset, lines[lineIndexStart].rect.right() - positionStart.x, fontHeight);
 			if (lineIndexEnd - lineIndexStart > 1)
 			{
 				for_iter (i, lineIndexStart + 1, lineIndexEnd)
 				{
-					this->_selectionRects += grect(lines[i].rect.x + _renderOffset.x, lines[i].rect.y + _renderOffset.y + heightOffset, lines[i].rect.w, fontHeight);
+					this->_selectionRects += grectf(lines[i].rect.x + _renderOffset.x, lines[i].rect.y + _renderOffset.y + heightOffset, lines[i].rect.w, fontHeight);
 				}
 			}
-			this->_selectionRects += grect(lines[lineIndexEnd].rect.x + _renderOffset.x, positionEnd.y + _renderOffset.y, positionEnd.x - lines[lineIndexEnd].rect.x, fontHeight);
+			this->_selectionRects += grectf(lines[lineIndexEnd].rect.x + _renderOffset.x, positionEnd.y + _renderOffset.y, positionEnd.x - lines[lineIndexEnd].rect.x, fontHeight);
 		}
 	}
 
-	gvec2 EditBox::_makeCaretPosition(const harray<atres::RenderLine>& lines, int index, cgvec2 base, float fontHeight, float heightOffset, int* lineIndex)
+	gvec2f EditBox::_makeCaretPosition(const harray<atres::RenderLine>& lines, int index, cgvec2f base, float fontHeight, float heightOffset, int* lineIndex)
 	{
 		if (lineIndex != NULL)
 		{
@@ -672,13 +672,13 @@ namespace aprilui
 		}
 		if (index <= 0)
 		{
-			return gvec2(lines[0].rect.x, lines[0].rect.y + heightOffset);
+			return gvec2f(lines[0].rect.x, lines[0].rect.y + heightOffset);
 		}
 		if (lineIndex != NULL)
 		{
 			*lineIndex = hmax(lines.size() - 1, 0);
 		}
-		gvec2 result(lines.last().rect.right(), lines.last().rect.y + heightOffset);
+		gvec2f result(lines.last().rect.right(), lines.last().rect.y + heightOffset);
 		int currentIndex = 0;
 		std::ustring ustr;
 		int size = 0;
@@ -719,7 +719,7 @@ namespace aprilui
 		return result;
 	}
 
-	void EditBox::_makeBaseOffset(gvec2& offset, float& heightOffset, float* heightFactor) const
+	void EditBox::_makeBaseOffset(gvec2f& offset, float& heightOffset, float* heightFactor) const
 	{
 		offset.set(0.0f, 0.0f);
 		heightOffset = 0.0f;
@@ -780,7 +780,7 @@ namespace aprilui
 		}
 		// not using Label::_draw() directly, because the selection needs to be drawn inbetween the background and border
 		Object::_draw();
-		grect drawRect = this->_makeDrawRect();
+		grectf drawRect = this->_makeDrawRect();
 		april::Color drawColor = this->_makeDrawColor();
 		april::Color backgroundColor = this->_makeBackgroundDrawColor(drawColor);
 		// background
@@ -789,10 +789,10 @@ namespace aprilui
 		if (this->selectionCount != 0 && focused)
 		{
 			april::Color selectionColor = this->_makeSelectionDrawColor(drawColor);
-			harray<grect> selectionRects = this->_selectionRects;
+			harray<grectf> selectionRects = this->_selectionRects;
 			april::rendersys->setBlendMode(april::BlendMode::Alpha);
 			april::rendersys->setColorMode(april::ColorMode::Multiply);
-			foreach (grect, it, selectionRects)
+			foreach (grectf, it, selectionRects)
 			{
 				(*it) += drawRect.getPosition() + this->caretOffset;
 				(*it).clip(drawRect);
@@ -807,7 +807,7 @@ namespace aprilui
 		// caret render
 		if (this->dataset != NULL && focused && this->_blinkTimer < 0.5f)
 		{
-			grect renderRect = this->caretRect - this->pivot + this->caretOffset;
+			grectf renderRect = this->caretRect - this->pivot + this->caretOffset;
 			// make sure the caret is visible if the editbox is empty
 			if (renderRect.x < drawRect.x + 1.0f && (this->horzFormatting.isLeft() || this->horzFormatting == atres::Horizontal::Justified))
 			{
@@ -860,7 +860,7 @@ namespace aprilui
 		return Label::triggerEvent(type, keyCode, string);
 	}
 
-	bool EditBox::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool EditBox::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return Label::triggerEvent(type, keyCode, position, string, userData);
 	}
@@ -1181,7 +1181,7 @@ namespace aprilui
 		if (this->caretIndex > 0)
 		{
 			this->_updateCaretPosition();
-			this->setCaretIndexAt(gvec2(this->caretRect.x, this->caretRect.y - atres::renderer->getFont(this->font)->getLineHeight() * 0.5f));
+			this->setCaretIndexAt(gvec2f(this->caretRect.x, this->caretRect.y - atres::renderer->getFont(this->font)->getLineHeight() * 0.5f));
 			this->_updateCaretPosition();
 		}
 		this->_updateSelectionCount(index);
@@ -1193,7 +1193,7 @@ namespace aprilui
 		if (this->caretIndex < this->text.utf8Size())
 		{
 			this->_updateCaretPosition();
-			this->setCaretIndexAt(gvec2(this->caretRect.x, this->caretRect.y + atres::renderer->getFont(this->font)->getLineHeight() * 1.5f));
+			this->setCaretIndexAt(gvec2f(this->caretRect.x, this->caretRect.y + atres::renderer->getFont(this->font)->getLineHeight() * 1.5f));
 			this->_updateCaretPosition();
 		}
 		this->_updateSelectionCount(index);

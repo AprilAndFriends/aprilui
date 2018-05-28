@@ -154,8 +154,8 @@ namespace aprilui
 	{
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
-		grect drawRect = this->_makeDrawRect();
-		grect directionRect;
+		grectf drawRect = this->_makeDrawRect();
+		grectf directionRect;
 		if (this->antiProgressImage != NULL && progress < 1.0f && this->direction.hasAntiProgress())
 		{
 			april::Color drawAntiProgressColor = this->_makeDrawAntiProgressColor();
@@ -167,8 +167,8 @@ namespace aprilui
 			}
 			else
 			{
-				grect clipRect = (this->progressImage != NULL ? this->progressImage->getClipRect() : this->rect);
-				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
+				grectf clipRect = (this->progressImage != NULL ? this->progressImage->getClipRect() : this->rect);
+				directionRect = this->_calcRectDirection(grectf(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
 				this->antiProgressImage->setClipRect(directionRect);
 				this->antiProgressImage->draw(drawRect, drawAntiProgressColor);
 				this->antiProgressImage->setClipRect(clipRect);
@@ -183,8 +183,8 @@ namespace aprilui
 			}
 			else
 			{
-				grect clipRect = this->progressImage->getClipRect();
-				directionRect = this->_calcRectDirection(grect(0.0f, 0.0f, this->progressImage->getSrcSize()), progress, this->direction);
+				grectf clipRect = this->progressImage->getClipRect();
+				directionRect = this->_calcRectDirection(grectf(0.0f, 0.0f, this->progressImage->getSrcSize()), progress, this->direction);
 				this->progressImage->setClipRect(directionRect);
 				this->progressImage->draw(drawRect, drawProgressColor);
 				this->progressImage->setClipRect(clipRect);
@@ -201,9 +201,9 @@ namespace aprilui
 		return ImageBox::_makeDrawColor(color);
 	}
 
-	grect ProgressBar::_calcRectDirection(cgrect rect, float progress, Direction direction)
+	grectf ProgressBar::_calcRectDirection(cgrectf rect, float progress, Direction direction)
 	{
-		grect result = rect;
+		grectf result = rect;
 		float size = 0.0f;
 		if (direction == Direction::Right)
 		{
@@ -312,7 +312,7 @@ namespace aprilui
 
 	void ProgressBar::_updateInteractablePosition()
 	{
-		gvec2 position = this->transformToLocalSpace(aprilui::getCursorPosition());
+		gvec2f position = this->transformToLocalSpace(aprilui::getCursorPosition());
 		float newProgress = 0.0f;
 		if (this->direction == Direction::Right)
 		{

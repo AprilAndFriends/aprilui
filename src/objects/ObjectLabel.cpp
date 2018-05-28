@@ -80,7 +80,7 @@ namespace aprilui
 	void Label::_draw()
 	{
 		Object::_draw();
-		grect drawRect = this->_makeDrawRect();
+		grectf drawRect = this->_makeDrawRect();
 		april::Color drawColor = this->_makeDrawColor();
 		this->_drawLabelBackground(drawRect, drawColor, this->_makeBackgroundDrawColor(drawColor));
 		this->_drawLabel(drawRect, drawColor);
@@ -121,7 +121,7 @@ namespace aprilui
 		return Object::triggerEvent(type, keyCode, string);
 	}
 
-	bool Label::triggerEvent(chstr type, april::Key keyCode, cgvec2 position, chstr string, void* userData)
+	bool Label::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
 		return Object::triggerEvent(type, keyCode, position, string, userData);
 	}

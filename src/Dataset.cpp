@@ -432,7 +432,7 @@ namespace aprilui
 				__THROW_EXCEPTION(ObjectExistsException("Image", filename, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 			}
 			aprilTexture->loadMetaData();
-			BaseImage* image = new Image(texture, filename, grect(0.0f, 0.0f, (float)texture->getWidth(), (float)texture->getHeight()));
+			BaseImage* image = new Image(texture, filename, grectf(0.0f, 0.0f, (float)texture->getWidth(), (float)texture->getHeight()));
 			this->images[filename] = image;
 			image->dataset = this;
 		}
@@ -440,7 +440,7 @@ namespace aprilui
 		{
 			BaseImage* image = NULL;
 			hstr name;
-			grect rect;
+			grectf rect;
 			foreach_xmlnode (child, node)
 			{
 				name = namePrefix + (*child)->properties["name"];
@@ -478,7 +478,7 @@ namespace aprilui
 		{
 			__THROW_EXCEPTION(ObjectExistsException("CompositeImage", name, this->name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 		}
-		gvec2 size;
+		gvec2f size;
 		if (node->pexists("size"))
 		{
 			size = april::hstrToGvec2(node->pstr("size"));
@@ -489,7 +489,7 @@ namespace aprilui
 			size.y = node->pfloat("h");
 		}
 		CompositeImage* image = new CompositeImage(name, size);
-		grect rect;
+		grectf rect;
 		foreach_xmlnode (child, node)
 		{
 			if ((*child)->name == "ImageRef")
@@ -636,7 +636,7 @@ namespace aprilui
 	BaseObject* Dataset::parseObject(hlxml::Node* node, Object* parent)
 	{
 		Style style;
-		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2());
+		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2f());
 	}
 	
 	void Dataset::_parseTextureGroup(hlxml::Node* node)
@@ -671,10 +671,10 @@ namespace aprilui
 	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, bool setRootIfNull)
 	{
 		Style style;
-		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2(), setRootIfNull);
+		return this->_recursiveObjectParse(node, parent, &style, "", "", gvec2f(), setRootIfNull);
 	}
 
-	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
+	BaseObject* Dataset::_recursiveObjectParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
 	{
 		hstr objectName;
 		hstr className = node->name;
@@ -704,7 +704,7 @@ namespace aprilui
 				isAnimator = animatorFactories.hasKey(className);
 			}
 		}
-		grect rect(0.0f, 0.0f, 1.0f, 1.0f);
+		grectf rect(0.0f, 0.0f, 1.0f, 1.0f);
 		if (!isObject && !isAnimator)
 		{
 			return NULL;
@@ -722,7 +722,7 @@ namespace aprilui
 			// has to be done with way with an if-statement, because some compilers complain about using a pointer on temporary objects
 			if (parent != NULL)
 			{
-				gvec2 parentSize = parent->getSize();
+				gvec2f parentSize = parent->getSize();
 				aprilui::_readRectNode(rect, node, &parentSize);
 			}
 			else
@@ -854,7 +854,7 @@ namespace aprilui
 			{
 				if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 				{
-					this->_recursiveObjectParse((*child), object, style, namePrefix, nameSuffix, gvec2());
+					this->_recursiveObjectParse((*child), object, style, namePrefix, nameSuffix, gvec2f());
 				}
 				// preload was aborted
 				if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
@@ -870,16 +870,16 @@ namespace aprilui
 		return baseObject;
 	}
 
-	BaseObject* Dataset::_recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
+	BaseObject* Dataset::_recursiveObjectIncludeParse(hlxml::Node* node, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
 	{
-		gvec2 newOffset = offset;
+		gvec2f newOffset = offset;
 		if (node->pexists("position"))
 		{
 			newOffset += april::hstrToGvec2(node->pstr("position"));
 		}
 		else
 		{
-			newOffset += gvec2(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
+			newOffset += gvec2f(node->pfloat("x", 0.0f), node->pfloat("y", 0.0f));
 		}
 		hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
 		hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
@@ -1119,7 +1119,7 @@ namespace aprilui
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", normalizedPath.cStr(), parsedCount);
 	}
 
-	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
+	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
@@ -1156,7 +1156,7 @@ namespace aprilui
 		return root;
 	}
 	
-	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2 offset, bool setRootIfNull)
+	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
 	{
 		if (!path.contains("*"))
 		{
@@ -1172,7 +1172,7 @@ namespace aprilui
 		{
 			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
-				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2(), setRootIfNull);
+				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2f(), setRootIfNull);
 			}
 			// preload was aborted
 			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
@@ -1933,7 +1933,7 @@ namespace aprilui
 		return (this->root != NULL && this->root->onChar(charCode));
 	}
 	
-	bool Dataset::onTouch(const harray<gvec2>& touches)
+	bool Dataset::onTouch(const harray<gvec2f>& touches)
 	{
 		ASSERT_NO_ASYNC_LOADING(onTouch, (false));
 		return (this->root != NULL && this->root->onTouch(touches));

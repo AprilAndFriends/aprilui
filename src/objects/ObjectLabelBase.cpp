@@ -161,7 +161,7 @@ namespace aprilui
 		this->setTextColor(aprilui::_makeColor(value));
 	}
 
-	void LabelBase::setTextOffset(cgvec2 value)
+	void LabelBase::setTextOffset(cgvec2f value)
 	{
 		if (this->textOffset != value)
 		{
@@ -218,7 +218,7 @@ namespace aprilui
 		this->setUnderlineColor(aprilui::_makeColor(value));
 	}
 
-	void LabelBase::_calcAutoScaledFont(cgrect rect)
+	void LabelBase::_calcAutoScaledFont(cgrectf rect)
 	{
 		if (this->_autoScaleDirty)
 		{
@@ -269,7 +269,7 @@ namespace aprilui
 		return aprilui::_makeModifiedDrawColor(this->backgroundColor, drawColor);
 	}
 
-	void LabelBase::_drawLabelBackground(cgrect rect, const april::Color& color, const april::Color& backgroundColor)
+	void LabelBase::_drawLabelBackground(cgrectf rect, const april::Color& color, const april::Color& backgroundColor)
 	{
 		if (backgroundColor.a > 0)
 		{
@@ -283,7 +283,7 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::_drawLabel(cgrect rect, const april::Color& color)
+	void LabelBase::_drawLabel(cgrectf rect, const april::Color& color)
 	{
 		if (this->text.size() == 0)
 		{
@@ -353,7 +353,7 @@ namespace aprilui
 			}
 			text = "[u" + colorCode + "]" + text;
 		}
-		gvec2 offset = -this->textOffset;
+		gvec2f offset = -this->textOffset;
 		if (this->_autoScaleDirty)
 		{
 			this->_calcAutoScaleFont(this->font, rect, text, this->horzFormatting, this->vertFormatting);
@@ -607,7 +607,7 @@ namespace aprilui
 		}
 	}
 	
-	void LabelBase::_calcAutoScaleFont(chstr fontName, cgrect rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical)
+	void LabelBase::_calcAutoScaleFont(chstr fontName, cgrectf rect, chstr text, atres::Horizontal horizontal, atres::Vertical vertical)
 	{
 		this->autoScaledFont = "";
 		if (this->minAutoScale >= 1.0f || rect.w <= 0.0f || rect.h <= 0.0f)
@@ -624,7 +624,7 @@ namespace aprilui
 		float fontScale = font->getScale() / font->getBaseScale();
 		hstr realFontName = font->getName();
 		bool needsScaling = false;
-		gvec2 size;
+		gvec2f size;
 		size.y = atres::renderer->getTextHeight(fontName, text, rect.w);
 		// either one word that doesn't even fit in the initial rect-width or the height is too large for the rect
 		if (size.y <= 0.0f || size.y > rect.h)
