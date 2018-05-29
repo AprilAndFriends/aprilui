@@ -26,11 +26,9 @@
 #include "apriluiUtil.h"
 #include "Dataset.h"
 #include "Exception.h"
-#include "Image.h"
+#include "Images.h"
 #include "Objects.h"
-#include "SkinImage.h"
 #include "Texture.h"
-#include "TileImage.h"
 
 #define REGISTER_ANIMATOR_TYPE(name) aprilui::registerAnimatorFactory(#name, &Animators::name::createInstance)
 
@@ -134,6 +132,7 @@ namespace aprilui
 
 		APRILUI_REGISTER_IMAGE_TYPE(MinimalImage);
 		APRILUI_REGISTER_IMAGE_TYPE(Image);
+		APRILUI_REGISTER_IMAGE_TYPE(BoxImage);
 		APRILUI_REGISTER_IMAGE_TYPE(SkinImage);
 		APRILUI_REGISTER_IMAGE_TYPE(TileImage);
 	}

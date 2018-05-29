@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Textures>
+	
+	<Texture filename="{{texture.trimmedName}}" managed="true" load_mode="on_demand">{% for sprite in allSprites %}
+		<BoxImage name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{{sprite.untrimmedSize.width}},{{sprite.untrimmedSize.height}}" draw_position="{{sprite.sourceRect.x}},{{sprite.sourceRect.y}}" real_src_size="{{sprite.frameRect.width}},{{sprite.frameRect.height}}"/>{% endfor %}
+	</Texture>
+	
+<!--
+{{smartUpdateKey}}
+-->
+</Textures>
