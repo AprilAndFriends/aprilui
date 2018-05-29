@@ -62,14 +62,14 @@ Library.addFilter(checkPosition.filterName);
 
 var checkSize = function(input)
 {
-    return (width != ununtrimmedWidth || height != ununtrimmedHeight ? "true" : "");
+    return (width != untrimmedWidth || height != untrimmedHeight ? "true" : "");
 };
 checkSize.filterName = "checkSize";
 Library.addFilter(checkSize.filterName);
 
 var checkRect = function(input)
 {
-    return (x != 0 || y != 0 || width != ununtrimmedWidth || height != ununtrimmedHeight? "true" : "");
+    return (x != 0 || y != 0 || width != untrimmedWidth || height != untrimmedHeight? "true" : "");
 };
 checkRect.filterName = "checkRect";
 Library.addFilter(checkRect.filterName);
