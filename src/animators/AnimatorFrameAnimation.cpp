@@ -98,7 +98,7 @@ namespace aprilui
 
 		void FrameAnimation::notifyEvent(chstr type, EventArgs* args)
 		{
-			if (type == Event::AttachedToObject)
+			if (type == Event::AttachedToObject && this->applyValuesOnAttach)
 			{
 				this->value = (float)this->firstFrame;
 				float delay = this->delay;

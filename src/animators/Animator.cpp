@@ -53,6 +53,7 @@ namespace aprilui
 		this->target = 0.0f;
 		this->useTarget = false;
 		this->customFunction = NULL;
+		this->applyValuesOnAttach = true;
 	}
 
 	Animator::Animator(const Animator& other) : BaseObject(other)
@@ -74,6 +75,7 @@ namespace aprilui
 		this->target = other.target;
 		this->useTarget = other.useTarget;
 		this->customFunction = other.customFunction;
+		this->applyValuesOnAttach = other.applyValuesOnAttach;
 	}
 
 	Animator::~Animator()
@@ -362,8 +364,9 @@ namespace aprilui
 	
 	void Animator::notifyEvent(chstr type, EventArgs* args)
 	{
-		if (type == Event::AttachedToObject || type == Event::AnimationDelayExpired && this->inheritValue)
+		if (this->applyValuesOnAttach && (type == Event::AttachedToObject || type == Event::AnimationDelayExpired && this->inheritValue))
 		{
+			this->applyValuesOnAttach = false;
 			this->value = this->offset = this->_getObjectValue();
 			if (this->useTarget)
 			{
