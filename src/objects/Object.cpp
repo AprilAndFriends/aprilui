@@ -704,7 +704,7 @@ namespace aprilui
 		}
 		gmat4 modelviewMatrix = april::rendersys->getModelviewMatrix();
 		gmat4 projectionMatrix;
-		grectf viewport;
+		grecti viewport;
 		bool clipped = (this->clip && this->parent != NULL);
 		if (clipped)
 		{
