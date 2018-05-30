@@ -183,7 +183,7 @@ namespace aprilui
 				height -= this->_buttonForwardSkinned->getHeight();
 			}
 			this->_buttonBackgroundSkinned->setY(y);
-			this->_buttonBackgroundSkinned->setHeight(height);
+			this->_buttonBackgroundSkinned->setSize(this->getWidth(), height);
 			this->_buttonBackgroundSkinned->setAnchors(false, false, true, true);
 		}
 		if (this->_buttonSliderSkinned != NULL)

@@ -183,7 +183,7 @@ namespace aprilui
 				width -= this->_buttonForwardSkinned->getWidth();
 			}
 			this->_buttonBackgroundSkinned->setX(x);
-			this->_buttonBackgroundSkinned->setWidth(width);
+			this->_buttonBackgroundSkinned->setSize(width, this->getHeight());
 			this->_buttonBackgroundSkinned->setAnchors(true, true, false, false);
 		}
 		if (this->_buttonSliderSkinned != NULL)
