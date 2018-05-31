@@ -320,9 +320,11 @@ namespace aprilui
 			__THROW_EXCEPTION(ObjectFactoryExistsException("Object", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
 		gObjectFactories[typeName] = factory;
-		// create getters here already to avoid issues with multi-threaded first-time setup of _getters and _setters
+		// create all important property meta data here already to avoid issues with multi-threaded first-time setup
 		Object* temp = (*factory)("temp");
+		temp->getPropertyDescriptions();
 		temp->getProperty("name");
+		temp->setProperty("name", "");
 		delete temp;
 	}
 	
@@ -333,9 +335,11 @@ namespace aprilui
 			__THROW_EXCEPTION(ObjectFactoryExistsException("Animator", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
 		gAnimatorFactories[typeName] = factory;
-		// create getters here already to avoid issues with multi-threaded first-time setup of _getters and _setters
+		// create all important property meta data here already to avoid issues with multi-threaded first-time setup
 		Animator* temp = (*factory)("temp");
+		temp->getPropertyDescriptions();
 		temp->getProperty("name");
+		temp->setProperty("name", "");
 		delete temp;
 	}
 	
@@ -346,6 +350,12 @@ namespace aprilui
 			__THROW_EXCEPTION(ObjectFactoryExistsException("Image", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
 		gImageFactories[typeName] = factory;
+		// create all important property meta data here already to avoid issues with multi-threaded first-time setup
+		MinimalImage* temp = (*factory)(NULL, "temp", grectf(0.0f, 0.0f, 0.0f, 0.0f));
+		temp->getPropertyDescriptions();
+		temp->getProperty("name");
+		temp->setProperty("name", "");
+		delete temp;
 	}
 
 	void unregisterObjectFactory(chstr typeName)
