@@ -41,8 +41,8 @@
 
 #define LOG_TAG "demo_simple"
 
-grect drawRect(0.0f, 0.0f, 800.0f, 600.0f);
-grect viewport = drawRect;
+grectf drawRect(0.0f, 0.0f, 800.0f, 600.0f);
+grectf viewport = drawRect;
 
 april::Cursor* cursor = NULL;
 aprilui::Dataset* dataset = NULL;
@@ -59,7 +59,7 @@ public:
 		april::rendersys->setBlendMode(april::BlendMode::Alpha);
 		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		april::rendersys->drawFilledRect(viewport, april::Color::Grey);
-		april::rendersys->drawFilledRect(grect(0.0f, 0.0f, 100.0f, 75.0f), april::Color::Yellow);
+		april::rendersys->drawFilledRect(grectf(0.0f, 0.0f, 100.0f, 75.0f), april::Color::Yellow);
 		dataset->draw();
 		dataset->update(timeDelta);
 		return true;
