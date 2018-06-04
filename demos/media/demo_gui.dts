@@ -82,10 +82,11 @@
 				</Include>
 				<Include path="demo_gui_include.dts" name_suffix="_1" position="100,100"/>
 			</Container>
-			<Label name="label_auto_scale_0" font="Arial:1.05" text="I am scaled" background_color="7F00FF9F" background_border="false" min_auto_scale="0.25" rect="824,448,160,14"/>
-			<Label name="label_auto_scale_1" font="Arial:1.05" text="I am scaled" background_color="7F00FF9F" background_border="false" rect="824,472,160,14"/>
-			<Label name="label_auto_scale_2" font="Arial:1.05" text="I am scaled&#x0A;in many lines" background_color="7F00FF9F" background_border="false" min_auto_scale="0.25" rect="824,496,160,30"/>
-			<Label name="label_auto_scale_3" font="Arial:1.05" text="I am scaled&#x0A;in many lines" background_color="7F00FF9F" background_border="false" rect="824,534,160,30"/>
+			<Label name="label_auto_scale_0" text="I am scaled" background_color="7F00FF9F" background_border="false" min_auto_scale="0.25" rect="824,448,160,14"/>
+			<Label name="label_auto_scale_1" text="I am not scaled" background_color="7F00FF9F" background_border="false" rect="824,472,160,14"/>
+			<Label name="label_auto_scale_2" text="I am scaled&#x0A;in many lines" background_color="7F00FF9F" background_border="false" min_auto_scale="0.25" rect="824,496,160,30"/>
+			<Label name="label_auto_scale_3" text="I am not scaled&#x0A;in many lines" background_color="7F00FF9F" background_border="false" rect="824,534,160,30"/>
+			<Label name="label_italic" text="I am italic" italic="true" background_color="7F00FF9F" background_border="false" rect="824,572,160,30"/>
 			<ToggleButton name="toggle_button" image="texture/test_green" toggled_image="texture/test_hover_3" rect="60,528,128,64" z_order="100">
 				<MoverX function="sine" amplitude="50"/>
 				<MoverY function="sine" amplitude="50" timer="0.25" enabled="false"/>

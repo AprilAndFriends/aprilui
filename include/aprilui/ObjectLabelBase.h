@@ -80,6 +80,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(april::Color, underlineColor, UnderlineColor);
 		void setUnderlineSymbolicColor(chstr value);
 		HL_DEFINE_GETSET(hstr, underlineParameter, UnderlineParameter);
+		HL_DEFINE_ISSET(italic, Italic);
 		HL_DEFINE_ISSET(backgroundBorder, BackgroundBorder);
 
 		virtual Dataset* getDataset() const = 0;
@@ -127,6 +128,7 @@ namespace aprilui
 		bool useUnderlineParameter;
 		april::Color underlineColor;
 		hstr underlineParameter;
+		bool italic;
 		april::Color backgroundColor;
 		bool backgroundBorder;
 
@@ -151,6 +153,7 @@ namespace aprilui
 			result["text_offset_y"] = new PropertyDescription::Get<T, float>(&T::getTextOffsetY);
 			result["min_auto_scale"] = new PropertyDescription::Get<T, float>(&T::getMinAutoScale);
 			result["auto_scaled_font"] = new PropertyDescription::Get<T, hstr>(&T::getAutoScaledFont);
+			result["italic"] = new PropertyDescription::Get<T, bool>(&T::isItalic);
 			result["background_color"] = new PropertyDescription::GetColor<T>(&T::getBackgroundColor);
 			result["background_border"] = new PropertyDescription::Get<T, bool>(&T::isBackgroundBorder);
 			return result;
@@ -169,6 +172,7 @@ namespace aprilui
 			result["text_offset_x"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetX);
 			result["text_offset_y"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetY);
 			result["min_auto_scale"] = new PropertyDescription::Set<T, float>(&T::setMinAutoScale);
+			result["italic"] = new PropertyDescription::Set<T, bool>(&T::setItalic);
 			result["background_color"] = new PropertyDescription::Set<T, hstr>(&T::setBackgroundSymbolicColor);
 			result["background_border"] = new PropertyDescription::Set<T, bool>(&T::setBackgroundBorder);
 			return result;
