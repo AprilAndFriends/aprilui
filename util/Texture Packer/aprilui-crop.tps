@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/Daygames/kob/kob2/lib/aprilui/util/Texture Packer/aprilui-box.tps</string>
+        <string>D:/Daygames/kob/kob2/lib/aprilui/util/Texture Packer/aprilui-crop.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -34,7 +34,7 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>aprilui-box</string>
+        <string>aprilui-crop</string>
         <key>textureFileName</key>
         <filename>C:/_NAME_.png</filename>
         <key>flipPVR</key>
