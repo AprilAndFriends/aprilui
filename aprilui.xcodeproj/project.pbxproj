@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0207F39D20BD5DF7001AD3B7 /* BoxImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 0207F39C20BD5DF6001AD3B7 /* BoxImage.h */; };
-		0207F39F20BD5E16001AD3B7 /* BoxImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0207F39E20BD5E16001AD3B7 /* BoxImage.cpp */; };
-		0207F3A020BD5E1D001AD3B7 /* BoxImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0207F39E20BD5E16001AD3B7 /* BoxImage.cpp */; };
-		0207F3A120BD5E1E001AD3B7 /* BoxImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0207F39E20BD5E16001AD3B7 /* BoxImage.cpp */; };
+		0207F39D20BD5DF7001AD3B7 /* CropImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 0207F39C20BD5DF6001AD3B7 /* CropImage.h */; };
+		0207F39F20BD5E16001AD3B7 /* CropImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0207F39E20BD5E16001AD3B7 /* CropImage.cpp */; };
+		0207F3A020BD5E1D001AD3B7 /* CropImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0207F39E20BD5E16001AD3B7 /* CropImage.cpp */; };
+		0207F3A120BD5E1E001AD3B7 /* CropImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0207F39E20BD5E16001AD3B7 /* CropImage.cpp */; };
 		7F1B523F12E4716B00E958D8 /* ObjectContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */; };
 		7F1B524412E4717500E958D8 /* AnimatorBlueChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */; };
 		7F1B524512E4717500E958D8 /* AnimatorGreenChanger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */; };
@@ -345,8 +345,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0207F39C20BD5DF6001AD3B7 /* BoxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoxImage.h; path = include/aprilui/BoxImage.h; sourceTree = "<group>"; };
-		0207F39E20BD5E16001AD3B7 /* BoxImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoxImage.cpp; sourceTree = "<group>"; };
+		0207F39C20BD5DF6001AD3B7 /* CropImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CropImage.h; path = include/aprilui/CropImage.h; sourceTree = "<group>"; };
+		0207F39E20BD5E16001AD3B7 /* CropImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CropImage.cpp; sourceTree = "<group>"; };
 		7F1B523E12E4716B00E958D8 /* ObjectContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectContainer.cpp; sourceTree = "<group>"; };
 		7F1B524112E4717500E958D8 /* AnimatorBlueChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorBlueChanger.cpp; sourceTree = "<group>"; };
 		7F1B524212E4717500E958D8 /* AnimatorGreenChanger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimatorGreenChanger.cpp; sourceTree = "<group>"; };
@@ -732,7 +732,7 @@
 		7F7A4A9E129D21A300E0ED12 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				0207F39E20BD5E16001AD3B7 /* BoxImage.cpp */,
+				0207F39E20BD5E16001AD3B7 /* CropImage.cpp */,
 				7F7A4AA2129D21A300E0ED12 /* Image.cpp */,
 				D165B2391EF2975A009B87AD /* MinimalImage.cpp */,
 				D12C44831A35831C0025EBF5 /* BaseImage.cpp */,
@@ -869,7 +869,7 @@
 		C942B3FF13278C7100C1D1E8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				0207F39C20BD5DF6001AD3B7 /* BoxImage.h */,
+				0207F39C20BD5DF6001AD3B7 /* CropImage.h */,
 				D12C44911A3583470025EBF5 /* BaseImage.h */,
 				D12C44921A3583470025EBF5 /* SkinImage.h */,
 				D12C44931A3583470025EBF5 /* TileImage.h */,
@@ -923,7 +923,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0207F39D20BD5DF7001AD3B7 /* BoxImage.h in Headers */,
+				0207F39D20BD5DF7001AD3B7 /* CropImage.h in Headers */,
 				7FC8041E11EC721E00851062 /* Animators.h in Headers */,
 				7FC8042111EC721E00851062 /* Dataset.h in Headers */,
 				D165B2381EF29750009B87AD /* MinimalImage.h in Headers */,
@@ -1150,7 +1150,7 @@
 				7F38C6CD120967B9002B5134 /* ObjectEditBox.cpp in Sources */,
 				7F38C6CE120967B9002B5134 /* ObjectImageBox.cpp in Sources */,
 				D1147B4A1A3B499C00C592A4 /* ObjectGridViewRowTemplate.cpp in Sources */,
-				0207F39F20BD5E16001AD3B7 /* BoxImage.cpp in Sources */,
+				0207F39F20BD5E16001AD3B7 /* CropImage.cpp in Sources */,
 				7F38C6CF120967B9002B5134 /* ObjectImageButton.cpp in Sources */,
 				7F38C6D0120967B9002B5134 /* ObjectLabel.cpp in Sources */,
 				7F38C6D1120967B9002B5134 /* ObjectLabelBase.cpp in Sources */,
@@ -1233,7 +1233,7 @@
 				D18CB61B1902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */,
 				D140388218EAF8150092608C /* ObjectProgressCircle.cpp in Sources */,
 				D1522E7F140F6A6B0012F290 /* CompositeImage.cpp in Sources */,
-				0207F3A120BD5E1E001AD3B7 /* BoxImage.cpp in Sources */,
+				0207F3A120BD5E1E001AD3B7 /* CropImage.cpp in Sources */,
 				D1147B4C1A3B499C00C592A4 /* ObjectGridViewRowTemplate.cpp in Sources */,
 				D1522E80140F6A6B0012F290 /* Image.cpp in Sources */,
 				D12C448E1A35831C0025EBF5 /* TileImage.cpp in Sources */,
@@ -1324,7 +1324,7 @@
 				D18CB61A1902CE040071C391 /* ObjectScrollBarButtonBackward.cpp in Sources */,
 				D140388118EAF8150092608C /* ObjectProgressCircle.cpp in Sources */,
 				D1F27B30177A2FCA00E5C131 /* CompositeImage.cpp in Sources */,
-				0207F3A020BD5E1D001AD3B7 /* BoxImage.cpp in Sources */,
+				0207F3A020BD5E1D001AD3B7 /* CropImage.cpp in Sources */,
 				D1147B4B1A3B499C00C592A4 /* ObjectGridViewRowTemplate.cpp in Sources */,
 				D1F27B31177A2FCA00E5C131 /* Image.cpp in Sources */,
 				D12C448D1A35831C0025EBF5 /* TileImage.cpp in Sources */,

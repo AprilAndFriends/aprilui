@@ -83,7 +83,7 @@
     <ClCompile Include="..\..\src\EventReceiver.cpp" />
     <ClCompile Include="..\..\src\Exception.cpp" />
     <ClCompile Include="..\..\src\images\BaseImage.cpp" />
-    <ClCompile Include="..\..\src\images\BoxImage.cpp" />
+    <ClCompile Include="..\..\src\images\CropImage.cpp" />
     <ClCompile Include="..\..\src\images\MinimalImage.cpp" />
     <ClCompile Include="..\..\src\images\SkinImage.cpp" />
     <ClCompile Include="..\..\src\images\TileImage.cpp" />
@@ -153,7 +153,7 @@
     <ClInclude Include="..\..\include\aprilui\AnimatorZOrderChanger.h" />
     <ClInclude Include="..\..\include\aprilui\BaseImage.h" />
     <ClInclude Include="..\..\include\aprilui\BaseObject.h" />
-    <ClInclude Include="..\..\include\aprilui\BoxImage.h" />
+    <ClInclude Include="..\..\include\aprilui\CropImage.h" />
     <ClInclude Include="..\..\include\aprilui\Cloneable.h" />
     <ClInclude Include="..\..\include\aprilui\EventReceiver.h" />
     <ClInclude Include="..\..\include\aprilui\EventUtils.h" />

@@ -8,10 +8,10 @@
 /// 
 /// @section DESCRIPTION
 /// 
-/// Defines a class for box image definitions.
+/// Defines a class for crop image definitions.
 
-#ifndef APRILUI_BOX_IMAGE_H
-#define APRILUI_BOX_IMAGE_H
+#ifndef APRILUI_CROP_IMAGE_H
+#define APRILUI_CROP_IMAGE_H
 
 #include <april/aprilUtil.h>
 #include <april/Color.h>
@@ -32,13 +32,13 @@ namespace aprilui
 
 namespace aprilui
 {
-	class apriluiExport BoxImage : public Image
+	class apriluiExport CropImage : public Image
 	{
-		APRILUI_CLONEABLE(BoxImage);
+		APRILUI_CLONEABLE(CropImage);
 	public:
-		BoxImage(Texture* texture, chstr name, cgrectf source);
-		~BoxImage();
-		inline hstr getClassName() const { return "BoxImage"; }
+		CropImage(Texture* texture, chstr name, cgrectf source);
+		~CropImage();
+		inline hstr getClassName() const { return "CropImage"; }
 
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrectf source);
 

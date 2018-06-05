@@ -6,7 +6,7 @@
 	<displayName>AprilUI Box</displayName>
 
 	<!-- description of the exporter -->
-	<description>Exports into AprilUI .tex format using BoxImage.</description>
+	<description>Exports into AprilUI .tex format using CropImage.</description>
 
 	<!-- exporter version -->
 	<version>1.0</version>

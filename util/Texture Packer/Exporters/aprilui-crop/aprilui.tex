@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Textures>
+	{% load conditions %}
+	<Texture filename="{{texture.trimmedName}}" managed="true" load_mode="on_demand">{% for sprite in allSprites %}{{sprite.sourceRect.x|setX}}{{sprite.sourceRect.y|setY}}{{sprite.frameRect.width|setWidth}}{{sprite.frameRect.height|setHeight}}{{sprite.untrimmedSize.width|setUntrimmedWidth}}{{sprite.untrimmedSize.height|setUntrimmedHeight}}
+		{% if sprite.sourceRect|checkRect %}<CropImage name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{{sprite.untrimmedSize.width}},{{sprite.untrimmedSize.height}}"{% if sprite.sourceRect|checkPosition %} draw_position="{{sprite.sourceRect.x}},{{sprite.sourceRect.y}}"{% endif %}{% if sprite.frameRect|checkSize %} real_src_size="{{sprite.frameRect.width}},{{sprite.frameRect.height}}"{% endif %}/>{% else %}<Image name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{{sprite.untrimmedSize.width}},{{sprite.untrimmedSize.height}}"/>{% endif %}{% endfor %}
+	</Texture>
+	
+<!--
+{{smartUpdateKey}}
+-->
+</Textures>

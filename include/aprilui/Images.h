@@ -14,7 +14,7 @@
 #define APRILUI_IMAGES_H
 
 #include "Image.h"
-#include "BoxImage.h"
+#include "CropImage.h"
 #include "CompositeImage.h"
 #include "SkinImage.h"
 #include "TileImage.h"
