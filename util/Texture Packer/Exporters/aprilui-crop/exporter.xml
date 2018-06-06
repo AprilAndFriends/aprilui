@@ -1,9 +1,9 @@
 <exporter version="1.0">
 	<!-- identifier of the exporter -->
-	<name>aprilui-box</name>
+	<name>aprilui-crop</name>
 
-	<!-- display name of the exporter for the combo box -->
-	<displayName>AprilUI Box</displayName>
+	<!-- display name of the exporter for the combo crop -->
+	<displayName>AprilUI Crop</displayName>
 
 	<!-- description of the exporter -->
 	<description>Exports into AprilUI .tex format using CropImage.</description>
