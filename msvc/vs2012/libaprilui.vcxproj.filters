@@ -257,7 +257,7 @@
     <ClCompile Include="..\..\src\images\MinimalImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\images\BoxImage.cpp">
+    <ClCompile Include="..\..\src\images\CropImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
   </ItemGroup>
@@ -505,7 +505,7 @@
     <ClInclude Include="..\..\include\aprilui\MinimalImage.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\aprilui\BoxImage.h">
+    <ClInclude Include="..\..\include\aprilui\CropImage.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
   </ItemGroup>
