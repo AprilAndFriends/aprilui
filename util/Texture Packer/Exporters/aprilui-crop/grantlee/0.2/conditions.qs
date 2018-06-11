@@ -68,11 +68,3 @@ var checkSize = function(input)
 checkSize.filterName = "checkSize";
 Library.addFilter(checkSize.filterName);
 
-var checkRect = function(input)
-{
-	// must use weird arithmetic for comparison, comparing normal and untrimmed size always yields that they are different
-    return (x > 0 || y > 0 || untrimmedWidth - width > 0 || untrimmedHeight - height > 0 ? "true" : "");
-};
-checkRect.filterName = "checkRect";
-Library.addFilter(checkRect.filterName);
-

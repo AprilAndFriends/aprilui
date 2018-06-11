@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Textures>
 	{% load conditions %}
-	<Texture filename="{{texture.trimmedName}}" managed="true" load_mode="on_demand">{% for sprite in allSprites %}{{sprite.sourceRect.x|setX}}{{sprite.sourceRect.y|setY}}{{sprite.frameRect.width|setWidth}}{{sprite.frameRect.height|setHeight}}{{sprite.untrimmedSize.width|setUntrimmedWidth}}{{sprite.untrimmedSize.height|setUntrimmedHeight}}
-		{% if sprite|checkRect %}<CropImage name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{{sprite.untrimmedSize.width}},{{sprite.untrimmedSize.height}}"{% if sprite|checkPosition %} draw_position="{{sprite.sourceRect.x}},{{sprite.sourceRect.y}}"{% endif %}{% if sprite|checkSize %} real_src_size="{{sprite.frameRect.width}},{{sprite.frameRect.height}}"{% endif %}/>{% else %}<Image name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{{sprite.untrimmedSize.width}},{{sprite.untrimmedSize.height}}"/>{% endif %}{% endfor %}
+	<Texture filename="{{texture.trimmedName}}" managed="true" load_mode="on_demand">{% for sprite in allSprites %}{{sprite.frameRect.width|setWidth}}{{sprite.frameRect.height|setHeight}}{{sprite.untrimmedSize.width|setUntrimmedWidth}}{{sprite.untrimmedSize.height|setUntrimmedHeight}}
+		{% if sprite|checkSize %}<CropImage name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{{sprite.untrimmedSize.width}},{{sprite.untrimmedSize.height}}"{{sprite.sourceRect.x|setX}}{{sprite.sourceRect.y|setY}}{% if sprite|checkPosition %} draw_position="{{sprite.sourceRect.x}},{{sprite.sourceRect.y}}"{% endif %} real_src_size="{{sprite.frameRect.width}},{{sprite.frameRect.height}}"/>{% else %}<Image name="{{sprite.trimmedName}}" rect="{{sprite.frameRect.x}},{{sprite.frameRect.y}},{{sprite.untrimmedSize.width}},{{sprite.untrimmedSize.height}}"/>{% endif %}{% endfor %}
 	</Texture>
 	
 <!--
