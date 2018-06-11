@@ -179,7 +179,7 @@ namespace aprilui
 
 	void CropImage::draw(const harray<april::TexturedVertex>& vertices, const april::Color& color)
 	{
-		hlog::warn(logTag, "scedge::CropImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
+		hlog::warn(logTag, "CropImage::draw(harray<april::TexturedVertex>, april::Color) is not supported!");
 	}
 	
 }
