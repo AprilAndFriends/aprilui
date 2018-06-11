@@ -55,21 +55,23 @@ Library.addFilter(setUntrimmedHeight.filterName);
 
 var checkPosition = function(input)
 {
-    return (x != 0 || y != 0 ? "true" : "");
+    return (x > 0 || y > 0 ? "true" : "");
 };
 checkPosition.filterName = "checkPosition";
 Library.addFilter(checkPosition.filterName);
 
 var checkSize = function(input)
 {
-    return (width != untrimmedWidth || height != untrimmedHeight ? "true" : "");
+	// must use weird arithmetic for comparison, comparing normal and untrimmed size always yields that they are different
+    return (untrimmedWidth - width > 0 || untrimmedHeight - height > 0 ? "true" : "");
 };
 checkSize.filterName = "checkSize";
 Library.addFilter(checkSize.filterName);
 
 var checkRect = function(input)
 {
-    return (x != 0 || y != 0 || width != untrimmedWidth || height != untrimmedHeight? "true" : "");
+	// must use weird arithmetic for comparison, comparing normal and untrimmed size always yields that they are different
+    return (x > 0 || y > 0 || untrimmedWidth - width > 0 || untrimmedHeight - height > 0 ? "true" : "");
 };
 checkRect.filterName = "checkRect";
 Library.addFilter(checkRect.filterName);
