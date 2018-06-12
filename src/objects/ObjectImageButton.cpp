@@ -176,7 +176,6 @@ namespace aprilui
 		}
 		bool pushedFade = (this->_pushedMultiplyTime > 0.0f && this->_pushedMultiplyTime > 0.0f);
 		bool hoverFade = (this->hoverAddFadeSpeed > 0.0f && this->_hoverAddTime > 0.0f);
-		bool completeFade = (pushedFade && hoverFade);
 		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
 		// so why bother providing a pushed image when this can work. also it covers situations where people forget to set a pushed image
 		if (this->pushedImage == NULL && this->image != NULL && (this->pushed && this->isCursorInside() || pushedFade))
