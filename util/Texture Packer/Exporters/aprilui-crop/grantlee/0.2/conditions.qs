@@ -47,7 +47,7 @@ Library.addFilter(setUntrimmedWidth.filterName);
 
 var setUntrimmedHeight = function(input)
 {
-    untrimmedheight = input;
+    untrimmedHeight = input;
 	return;
 };
 setUntrimmedHeight.filterName = "setUntrimmedHeight";
