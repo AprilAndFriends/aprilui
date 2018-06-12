@@ -45,7 +45,7 @@
 			</ImageBox>
 		</ImageBox>
 		<Container rect="0,0,1024,768">
-			<ImageButton name="hover_image_button" image="texture/test" rect="32,96,64,64"/>
+			<ImageButton name="hover_image_button" image="texture/test" hover_add_factor="1" pushed_multiply_factor="0.5" hover_add_fade_speed="4" pushed_multiply_fade_speed="4" rect="32,96,64,64"/>
 			<ImageButton name="hover_image_button_color_mode" image="texture/test_color_mode" rect="96,96,64,64"/>
 			<ImageBox name="colored_image_box" image="texture/test" color="FF7F7F" rect="32,128,128,64">
 				<MoverX periods="1" amplitude="100" speed="0.5" delay="1.0"/>

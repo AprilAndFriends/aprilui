@@ -26,6 +26,12 @@ namespace aprilui
 		this->pushedImage = NULL;
 		this->hoverImage = NULL;
 		this->disabledImage = NULL;
+		this->hoverAddFactor = 0.25f;
+		this->pushedMultiplyFactor = 0.75f;
+		this->hoverAddFadeSpeed = 0.0f;
+		this->pushedMultiplyFadeSpeed = 0.0f;
+		this->_hoverAddTime = 0.0f;
+		this->_pushedMultiplyTime = 0.0f;
 	}
 
 	ImageButton::ImageButton(const ImageButton& other) : ImageBox(other), ButtonBase(other)
@@ -38,6 +44,12 @@ namespace aprilui
 		this->hoverImageName = other.hoverImageName;
 		this->pushedImageName = other.pushedImageName;
 		this->disabledImageName = other.disabledImageName;
+		this->hoverAddFactor = other.hoverAddFactor;
+		this->pushedMultiplyFactor = other.pushedMultiplyFactor;
+		this->hoverAddFadeSpeed = other.hoverAddFadeSpeed;
+		this->pushedMultiplyFadeSpeed = other.pushedMultiplyFadeSpeed;
+		this->_hoverAddTime = other._hoverAddTime;
+		this->_pushedMultiplyTime = other._pushedMultiplyTime;
 	}
 
 	ImageButton::~ImageButton()
@@ -57,6 +69,10 @@ namespace aprilui
 			ImageButton::_propertyDescriptions["pushed_image"] = PropertyDescription("pushed_image", PropertyDescription::Type::String);
 			ImageButton::_propertyDescriptions["hover_image"] = PropertyDescription("hover_image", PropertyDescription::Type::String);
 			ImageButton::_propertyDescriptions["disabled_image"] = PropertyDescription("disabled_image", PropertyDescription::Type::String);
+			ImageButton::_propertyDescriptions["hover_add_factor"] = PropertyDescription("hover_add_factor", PropertyDescription::Type::Float);
+			ImageButton::_propertyDescriptions["pushed_multiply_factor"] = PropertyDescription("pushed_multiply_factor", PropertyDescription::Type::Float);
+			ImageButton::_propertyDescriptions["hover_add_fade_speed"] = PropertyDescription("hover_add_fade_speed", PropertyDescription::Type::Float);
+			ImageButton::_propertyDescriptions["pushed_multiply_fade_speed"] = PropertyDescription("pushed_multiply_fade_speed", PropertyDescription::Type::Float);
 		}
 		return ImageButton::_propertyDescriptions;
 	}
@@ -69,6 +85,10 @@ namespace aprilui
 			ImageButton::_getters["pushed_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getPushedImageName);
 			ImageButton::_getters["hover_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getHoverImageName);
 			ImageButton::_getters["disabled_image"] = new PropertyDescription::Get<ImageButton, hstr>(&ImageButton::getDisabledImageName);
+			ImageButton::_getters["hover_add_factor"] = new PropertyDescription::Get<ImageButton, float>(&ImageButton::getHoverAddFactor);
+			ImageButton::_getters["pushed_multiply_factor"] = new PropertyDescription::Get<ImageButton, float>(&ImageButton::getPushedMultiplyFactor);
+			ImageButton::_getters["hover_add_fade_speed"] = new PropertyDescription::Get<ImageButton, float>(&ImageButton::getHoverAddFadeSpeed);
+			ImageButton::_getters["pushed_multiply_fade_speed"] = new PropertyDescription::Get<ImageButton, float>(&ImageButton::getPushedMultiplyFadeSpeed);
 		}
 		return ImageButton::_getters;
 	}
@@ -81,6 +101,10 @@ namespace aprilui
 			ImageButton::_setters["pushed_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetPushedImageByName);
 			ImageButton::_setters["hover_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetHoverImageByName);
 			ImageButton::_setters["disabled_image"] = new PropertyDescription::TrySet<ImageButton, hstr>(&ImageButton::trySetDisabledImageByName);
+			ImageButton::_setters["hover_add_factor"] = new PropertyDescription::Set<ImageButton, float>(&ImageButton::setHoverAddFactor);
+			ImageButton::_setters["pushed_multiply_factor"] = new PropertyDescription::Set<ImageButton, float>(&ImageButton::setPushedMultiplyFactor);
+			ImageButton::_setters["hover_add_fade_speed"] = new PropertyDescription::Set<ImageButton, float>(&ImageButton::setHoverAddFadeSpeed);
+			ImageButton::_setters["pushed_multiply_fade_speed"] = new PropertyDescription::Set<ImageButton, float>(&ImageButton::setPushedMultiplyFadeSpeed);
 		}
 		return ImageButton::_setters;
 	}
@@ -110,6 +134,34 @@ namespace aprilui
 		return ImageBox::isCursorInside();
 	}
 
+	void ImageButton::setHoverAddFactor(const float& value)
+	{
+		this->hoverAddFactor = hclamp(value, 0.0f, 1.0f);
+	}
+	
+	void ImageButton::setPushedMultiplyFactor(const float& value)
+	{
+		this->pushedMultiplyFactor = hclamp(value, 0.0f, 1.0f);
+	}
+
+	void ImageButton::setHoverAddFadeSpeed(const float& value)
+	{
+		this->hoverAddFadeSpeed = value;
+		if (this->hoverAddFadeSpeed <= 0.0f)
+		{
+			this->_hoverAddTime = 0.0f;
+		}
+	}
+
+	void ImageButton::setPushedMultiplyFadeSpeed(const float& value)
+	{
+		this->pushedMultiplyFadeSpeed = value;
+		if (this->pushedMultiplyFadeSpeed <= 0.0f)
+		{
+			this->_pushedMultiplyTime = 0.0f;
+		}
+	}
+
 	void ImageButton::_draw()
 	{
 		grectf drawRect = this->_makeDrawRect();
@@ -122,36 +174,41 @@ namespace aprilui
 			this->useDisabledAlpha = useDisabledAlpha;
 			return;
 		}
+		bool pushedFade = (this->_pushedMultiplyTime > 0.0f && this->_pushedMultiplyTime > 0.0f);
+		bool hoverFade = (this->hoverAddFadeSpeed > 0.0f && this->_hoverAddTime > 0.0f);
+		bool completeFade = (pushedFade && hoverFade);
 		// this is a fallback feature if you haven't defined a pushed image. this solution works for most use cases
 		// so why bother providing a pushed image when this can work. also it covers situations where people forget to set a pushed image
-		if (this->pushed && this->pushedImage == NULL && this->isCursorInside())
+		if (this->pushedImage == NULL && this->image != NULL && (this->pushed && this->isCursorInside() || pushedFade))
 		{
-			if (this->image != NULL)
+			april::Color color = this->color;
+			float factor = 1.0f - (1.0f - this->pushedMultiplyFactor) * (this->_pushedMultiplyTime > 0.0f ? this->_pushedMultiplyTime : 1.0f);
+			this->color.r = (unsigned char)(this->color.r * factor);
+			this->color.g = (unsigned char)(this->color.g * factor);
+			this->color.b = (unsigned char)(this->color.b * factor);
+			ImageBox::_draw();
+			this->color = color;
+			if (!pushedFade)
+			{
+				return;
+			}
+		}
+		else
+		{
+			ImageBox::_draw();
+		}
+		// the same thing for a hover image fallback solution
+		if (this->hoverImage == NULL && this->image != NULL && enabled && aprilui::isHoverEffectEnabled() && (!this->pushed && this->hovered || hoverFade))
+		{
+			Image* blendableImage = dynamic_cast<Image*>(this->image);
+			if (blendableImage != NULL)
 			{
 				april::Color drawColor = this->_makeDrawColor();
-				drawColor.r = (unsigned char)(drawColor.r * 0.75f);
-				drawColor.g = (unsigned char)(drawColor.g * 0.75f);
-				drawColor.b = (unsigned char)(drawColor.b * 0.75f);
-				this->image->draw(drawRect, drawColor);
-			}
-			return;
-		}
-		ImageBox::_draw();
-		// the same thing for a hover image fallback solution
-		if (enabled && this->hovered && !this->pushed && this->hoverImage == NULL && aprilui::isHoverEffectEnabled())
-		{
-			if (this->image != NULL)
-			{
-				Image* blendableImage = dynamic_cast<Image*>(this->image);
-				if (blendableImage != NULL)
-				{
-					april::Color drawColor = this->_makeDrawColor();
-					drawColor.a = (unsigned char)(drawColor.a * 0.25f);
-					april::BlendMode blendMode = blendableImage->getBlendMode();
-					blendableImage->setBlendMode(april::BlendMode::Add);
-					blendableImage->draw(drawRect, drawColor);
-					blendableImage->setBlendMode(blendMode);
-				}
+				drawColor.a = (unsigned char)(drawColor.a * this->hoverAddFactor * (this->hoverAddFadeSpeed > 0.0f ? this->_hoverAddTime : 1.0f));
+				april::BlendMode blendMode = blendableImage->getBlendMode();
+				blendableImage->setBlendMode(april::BlendMode::Add);
+				blendableImage->draw(drawRect, drawColor);
+				blendableImage->setBlendMode(blendMode);
 			}
 		}
 	}
@@ -160,6 +217,8 @@ namespace aprilui
 	{
 		ButtonBase::_update(timeDelta);
 		this->image = this->normalImage;
+		int pushedDirection = -1;
+		int hoveredDirection = -1;
 		if (!this->isDerivedEnabled())
 		{
 			if (this->disabledImage != NULL)
@@ -171,15 +230,32 @@ namespace aprilui
 		{
 			if (this->pushed)
 			{
+				if (this->pushedMultiplyFadeSpeed <= 0.0f)
+				{
+					this->_hoverAddTime = 0.0f;
+				}
+				pushedDirection = 1;
 				if (this->pushedImage != NULL)
 				{
 					this->image = this->pushedImage;
 				}
 			}
-			else if (this->hoverImage != NULL && aprilui::isHoverEffectEnabled())
+			else
 			{
-				this->image = this->hoverImage;
+				hoveredDirection = 1;
+				if (this->hoverImage != NULL && aprilui::isHoverEffectEnabled())
+				{
+					this->image = this->hoverImage;
+				}
 			}
+		}
+		if (this->hoverAddFadeSpeed > 0.0f)
+		{
+			this->_hoverAddTime = hclamp(this->_hoverAddTime + timeDelta * this->hoverAddFadeSpeed * hoveredDirection, 0.0f, 1.0f);
+		}
+		if (this->pushedMultiplyFadeSpeed > 0.0f)
+		{
+			this->_pushedMultiplyTime = hclamp(this->_pushedMultiplyTime + timeDelta * this->pushedMultiplyFadeSpeed * pushedDirection, 0.0f, 1.0f);
 		}
 		ImageBox::_update(timeDelta);
 	}

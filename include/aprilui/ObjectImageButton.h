@@ -41,6 +41,14 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, pushedImageName, PushedImageName);
 		HL_DEFINE_GET(hstr, disabledImageName, DisabledImageName);
 		HL_DEFINE_GET(BaseImage*, normalImage, Image);
+		HL_DEFINE_GET(float, hoverAddFactor, HoverAddFactor);
+		void setHoverAddFactor(const float& value);
+		HL_DEFINE_GET(float, pushedMultiplyFactor, PushedMultiplyFactor);
+		void setPushedMultiplyFactor(const float& value);
+		HL_DEFINE_GET(float, hoverAddFadeSpeed, HoverAddFadeSpeed);
+		void setHoverAddFadeSpeed(const float& value);
+		HL_DEFINE_GET(float, pushedMultiplyFadeSpeed, PushedMultiplyFadeSpeed);
+		void setPushedMultiplyFadeSpeed(const float& value);
 		void setImage(BaseImage* value);
 		hstr getName() const;
 		int getFocusIndex() const;
@@ -77,7 +85,11 @@ namespace aprilui
 		hstr hoverImageName;
 		hstr pushedImageName;
 		hstr disabledImageName;
-		
+		float hoverAddFactor;
+		float pushedMultiplyFactor;
+		float hoverAddFadeSpeed;
+		float pushedMultiplyFadeSpeed;
+
 		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
@@ -94,6 +106,9 @@ namespace aprilui
 		bool _buttonUp(april::Button buttonCode);
 		
 	private:
+		float _hoverAddTime;
+		float _pushedMultiplyTime;
+
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
