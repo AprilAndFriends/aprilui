@@ -3,7 +3,7 @@
 		package="com.aprilui.demoZorder">
 		
 	<application android:label="Demo Z Order"
-			android:icon="@drawable/icon"
+			android:icon="@mipmap/icon"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		<activity android:name=".Main"
 				android:label="Demo Z Order"
