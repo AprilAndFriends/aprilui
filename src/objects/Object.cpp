@@ -122,6 +122,7 @@ namespace aprilui
 		this->retainAnchorAspect = false;
 		this->hitTest = HitTest::Enabled;
 		this->clip = false;
+		this->useClipRound = true;
 		this->inheritAlpha = true;
 		this->useDisabledAlpha = true;
 		this->focusIndex = -1;
@@ -146,6 +147,7 @@ namespace aprilui
 		this->retainAnchorAspect = other.retainAnchorAspect;
 		this->hitTest = other.hitTest;
 		this->clip = other.clip;
+		this->useClipRound = other.clip;
 		this->inheritAlpha = other.inheritAlpha;
 		this->useDisabledAlpha = other.useDisabledAlpha;
 		this->focusIndex = other.focusIndex;
@@ -230,6 +232,7 @@ namespace aprilui
 			Object::_propertyDescriptions["anchors"] = PropertyDescription("anchors", PropertyDescription::Type::String);
 			Object::_propertyDescriptions["retain_anchor_aspect"] = PropertyDescription("retain_anchor_aspect", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions["clip"] = PropertyDescription("clip", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["use_clip_round"] = PropertyDescription("use_clip_round", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions["use_disabled_alpha"] = PropertyDescription("use_disabled_alpha", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions["focus_index"] = PropertyDescription("focus_index", PropertyDescription::Type::Int);
 		}
@@ -268,6 +271,7 @@ namespace aprilui
 			Object::_getters["anchor_bottom"] = new PropertyDescription::Get<Object, bool>(&Object::isAnchorBottom);
 			Object::_getters["retain_anchor_aspect"] = new PropertyDescription::Get<Object, bool>(&Object::isRetainAnchorAspect);
 			Object::_getters["clip"] = new PropertyDescription::Get<Object, bool>(&Object::isClip);
+			Object::_getters["use_clip_round"] = new PropertyDescription::Get<Object, bool>(&Object::isUseClipRound);
 			Object::_getters["use_disabled_alpha"] = new PropertyDescription::Get<Object, bool>(&Object::isUseDisabledAlpha);
 			Object::_getters["focus_index"] = new PropertyDescription::Get<Object, int>(&Object::getFocusIndex);
 		}
@@ -306,6 +310,7 @@ namespace aprilui
 			Object::_setters["anchor_bottom"] = new PropertyDescription::Set<Object, bool>(&Object::setAnchorBottom);
 			Object::_setters["retain_anchor_aspect"] = new PropertyDescription::Set<Object, bool>(&Object::setRetainAnchorAspect);
 			Object::_setters["clip"] = new PropertyDescription::Set<Object, bool>(&Object::setClip);
+			Object::_setters["use_clip_round"] = new PropertyDescription::Set<Object, bool>(&Object::setUseClipRound);
 			Object::_setters["use_disabled_alpha"] = new PropertyDescription::Set<Object, bool>(&Object::setUseDisabledAlpha);
 			Object::_setters["focus_index"] = new PropertyDescription::Set<Object, int>(&Object::setFocusIndex);
 		}
@@ -714,14 +719,28 @@ namespace aprilui
 			grectf originalRect = this->parent->getBoundingRect();
 			grectf newViewport(originalRect.getPosition() * ratio, originalRect.getSize() * ratio);
 			newViewport.clip(viewport);
-			if (newViewport.w <= 0.0f || newViewport.h <= 0.0f)
+			if (!this->useClipRound)
+			{
+				if (newViewport.w <= 0.0f || newViewport.h <= 0.0f)
+				{
+					return;
+				}
+			}
+			else if (newViewport.w < 0.5f || newViewport.h < 0.5f)
 			{
 				return;
 			}
 			grectf newRect(newViewport.getPosition() / ratio, newViewport.getSize() / ratio);
 			originalRect.clip(newRect);
 			april::rendersys->setOrthoProjection(grectf(-originalRect.getPosition(), originalRect.getSize()));
-			april::rendersys->setViewport(newViewport);
+			if (!this->useClipRound)
+			{
+				april::rendersys->setViewport(newViewport);
+			}
+			else
+			{
+				april::rendersys->setViewport(grecti(hround(newViewport.x), hround(newViewport.y), hround(newViewport.w), hround(newViewport.h)));
+			}
 		}
 		gvec2f position = this->rect.getPosition() + this->pivot;
 		if (position.x != 0.0f || position.y != 0.0f)

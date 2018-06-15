@@ -108,6 +108,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
 		HL_DEFINE_ISSET(clip, Clip);
+		HL_DEFINE_ISSET(useClipRound, UseClipRound);
 		virtual inline int getFocusIndex() const { return this->focusIndex; }
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
@@ -283,6 +284,7 @@ namespace aprilui
 		bool retainAnchorAspect;
 		HitTest hitTest;
 		bool clip;
+		bool useClipRound;
 		bool inheritAlpha;
 		bool useDisabledAlpha;
 		int focusIndex;
