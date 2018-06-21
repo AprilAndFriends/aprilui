@@ -24,14 +24,16 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> MinimalImage::_setters;
 
-	MinimalImage::MinimalImage(Texture* texture, chstr name, cgrectf source) : BaseImage(name)
+	MinimalImage::MinimalImage(Texture* texture, chstr name, cgrectf source) :
+		BaseImage(name)
 	{
 		this->texture = texture;
 		this->srcRect = source;
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	MinimalImage::MinimalImage(const MinimalImage& other) : BaseImage(other)
+	MinimalImage::MinimalImage(const MinimalImage& other) :
+		BaseImage(other)
 	{
 		this->texture = other.texture;
 		this->srcRect = other.srcRect;

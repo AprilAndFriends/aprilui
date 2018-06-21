@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		RedChanger::RedChanger(chstr name) : Animator(name)
+		RedChanger::RedChanger(chstr name) :
+			Animator(name)
 		{
 		}
 
-		RedChanger::RedChanger(const RedChanger& other) : Animator(other)
+		RedChanger::RedChanger(const RedChanger& other) :
+			Animator(other)
 		{
 		}
 

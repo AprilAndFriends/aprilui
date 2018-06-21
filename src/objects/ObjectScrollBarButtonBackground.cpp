@@ -19,12 +19,14 @@
 
 namespace aprilui
 {
-	ScrollBarButtonBackground::ScrollBarButtonBackground(chstr name) : ImageButton(name)
+	ScrollBarButtonBackground::ScrollBarButtonBackground(chstr name) :
+		ImageButton(name)
 	{
 		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
 
-	ScrollBarButtonBackground::ScrollBarButtonBackground(const ScrollBarButtonBackground& other) : ImageButton(other)
+	ScrollBarButtonBackground::ScrollBarButtonBackground(const ScrollBarButtonBackground& other) :
+		ImageButton(other)
 	{
 	}
 

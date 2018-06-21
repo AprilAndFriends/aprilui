@@ -17,13 +17,15 @@
 
 namespace aprilui
 {
-	TreeViewImage::TreeViewImage(chstr name) : ImageBox(name)
+	TreeViewImage::TreeViewImage(chstr name) :
+		ImageBox(name)
 	{
 		this->_treeView = NULL;
 		this->_treeViewNode = NULL;
 	}
 
-	TreeViewImage::TreeViewImage(const TreeViewImage& other) : ImageBox(other)
+	TreeViewImage::TreeViewImage(const TreeViewImage& other) :
+		ImageBox(other)
 	{
 		this->_treeView = NULL;
 		this->_treeViewNode = NULL;

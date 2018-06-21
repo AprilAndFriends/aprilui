@@ -15,11 +15,13 @@
 
 namespace aprilui
 {
-	FilledRect::FilledRect(chstr name) : Object(name)
+	FilledRect::FilledRect(chstr name) :
+		Object(name)
 	{
 	}
 
-	FilledRect::FilledRect(const FilledRect& other) : Object(other)
+	FilledRect::FilledRect(const FilledRect& other) :
+		Object(other)
 	{
 	}
 

@@ -58,11 +58,13 @@ namespace aprilui
 	hstr Event::AnimationDelayExpired = "AnimationDelayExpired";
 	hstr Event::AnimationExpired = "AnimationExpired";
 
-	Event::Event() : Cloneable()
+	Event::Event() :
+		Cloneable()
 	{
 	}
 
-	Event::Event(const Event& other) : Cloneable(other)
+	Event::Event(const Event& other) :
+		Cloneable(other)
 	{
 	}
 

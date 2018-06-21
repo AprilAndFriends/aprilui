@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		PivotMoverX::PivotMoverX(chstr name) : Animator(name)
+		PivotMoverX::PivotMoverX(chstr name) :
+			Animator(name)
 		{
 		}
 
-		PivotMoverX::PivotMoverX(const PivotMoverX& other) : Animator(other)
+		PivotMoverX::PivotMoverX(const PivotMoverX& other) :
+			Animator(other)
 		{
 		}
 

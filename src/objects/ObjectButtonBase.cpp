@@ -28,7 +28,8 @@ namespace aprilui
 	harray<april::Key> ButtonBase::allowedKeys;
 	harray<april::Button> ButtonBase::allowedButtons;
 
-	ButtonBase::ButtonBase() : _thisObject(NULL)
+	ButtonBase::ButtonBase() :
+		_thisObject(NULL)
 	{
 		this->pushDeadZone = -1.0f;
 		this->hoverColor = april::Color::White;
@@ -41,7 +42,8 @@ namespace aprilui
 		this->_useDisabledColor = false;
 	}
 
-	ButtonBase::ButtonBase(const ButtonBase& other) : _thisObject(NULL)
+	ButtonBase::ButtonBase(const ButtonBase& other) :
+		_thisObject(NULL)
 	{
 		this->pushDeadZone = other.pushDeadZone;
 		this->hoverColor = other.hoverColor;

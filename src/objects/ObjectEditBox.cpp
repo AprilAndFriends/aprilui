@@ -52,7 +52,9 @@ namespace aprilui
 	hstr EditBox::defaultFilterEmail = EditBox::defaultFilterAlphaNumeric + "+-_.@";
 	hstr EditBox::defaultFilterEmailComplete = EditBox::defaultFilterEmail + "!#$%&'*/=?^`{|}~";
 	
-	EditBox::EditBox(chstr name) : Label(name), ButtonBase()
+	EditBox::EditBox(chstr name) :
+		Label(name),
+		ButtonBase()
 	{
 		this->text = "";
 		this->horzFormatting = atres::Horizontal::Left;
@@ -87,7 +89,9 @@ namespace aprilui
 		this->minAutoScale = 1.0f;
 	}
 
-	EditBox::EditBox(const EditBox& other) : Label(other), ButtonBase(other)
+	EditBox::EditBox(const EditBox& other) :
+		Label(other),
+		ButtonBase(other)
 	{
 		this->emptyText = other.emptyText;
 		this->emptyTextKey = other.emptyTextKey;

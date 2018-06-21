@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ZOrderChanger::ZOrderChanger(chstr name) : Animator(name)
+		ZOrderChanger::ZOrderChanger(chstr name) :
+			Animator(name)
 		{
 		}
 
-		ZOrderChanger::ZOrderChanger(const ZOrderChanger& other) : Animator(other)
+		ZOrderChanger::ZOrderChanger(const ZOrderChanger& other) :
+			Animator(other)
 		{
 		}
 

@@ -19,7 +19,9 @@ namespace aprilui
 {
 	hmap<hstr, PropertyDescription> ListBoxItem::_propertyDescriptions;
 
-	ListBoxItem::ListBoxItem(chstr name) : Label(name), ButtonBase()
+	ListBoxItem::ListBoxItem(chstr name) :
+		Label(name),
+		ButtonBase()
 	{
 		this->_listBox = NULL;
 		this->_backColor = april::Color::Clear;
@@ -27,7 +29,9 @@ namespace aprilui
 		this->_pushedColor.set(april::Color::LightGrey, 192);
 	}
 
-	ListBoxItem::ListBoxItem(const ListBoxItem& other) : Label(other), ButtonBase(other)
+	ListBoxItem::ListBoxItem(const ListBoxItem& other) :
+		Label(other),
+		ButtonBase(other)
 	{
 		this->_listBox = NULL;
 		this->_backColor = other._backColor;

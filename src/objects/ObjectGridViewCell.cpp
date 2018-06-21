@@ -23,13 +23,15 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> GridViewCell::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> GridViewCell::_setters;
 
-	GridViewCell::GridViewCell(chstr name) : Container(name)
+	GridViewCell::GridViewCell(chstr name) :
+		Container(name)
 	{
 		this->selectable = true;
 		this->gridView = NULL;
 	}
 
-	GridViewCell::GridViewCell(const GridViewCell& other) : Container(other)
+	GridViewCell::GridViewCell(const GridViewCell& other) :
+		Container(other)
 	{
 		this->selectable = other.selectable;
 		this->gridView = NULL;

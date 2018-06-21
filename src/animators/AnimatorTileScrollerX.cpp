@@ -18,11 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		TileScrollerX::TileScrollerX(chstr name) : Animator(name)
+		TileScrollerX::TileScrollerX(chstr name) :
+			Animator(name)
 		{
 		}
 
-		TileScrollerX::TileScrollerX(const TileScrollerX& other) : Animator(other)
+		TileScrollerX::TileScrollerX(const TileScrollerX& other) :
+			Animator(other)
 		{
 		}
 

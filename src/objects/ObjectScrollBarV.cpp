@@ -33,11 +33,13 @@ namespace aprilui
 	hstr ScrollBarV::skinNameVBackwardHover = "up_hover";
 	hstr ScrollBarV::skinNameVBackwardPushed = "up_pushed";
 
-	ScrollBarV::ScrollBarV(chstr name) : ScrollBar(name)
+	ScrollBarV::ScrollBarV(chstr name) :
+		ScrollBar(name)
 	{
 	}
 
-	ScrollBarV::ScrollBarV(const ScrollBarV& other) : ScrollBar(other)
+	ScrollBarV::ScrollBarV(const ScrollBarV& other) :
+		ScrollBar(other)
 	{
 	}
 

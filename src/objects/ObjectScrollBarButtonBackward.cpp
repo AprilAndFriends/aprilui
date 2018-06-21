@@ -19,12 +19,14 @@
 
 namespace aprilui
 {
-	ScrollBarButtonBackward::ScrollBarButtonBackward(chstr name) : ImageButton(name)
+	ScrollBarButtonBackward::ScrollBarButtonBackward(chstr name) :
+		ImageButton(name)
 	{
 		this->registerEvent(aprilui::Event::Click, new aprilui::CallbackEvent(&_click));
 	}
 
-	ScrollBarButtonBackward::ScrollBarButtonBackward(const ScrollBarButtonBackward& other) : ImageButton(other)
+	ScrollBarButtonBackward::ScrollBarButtonBackward(const ScrollBarButtonBackward& other) :
+		ImageButton(other)
 	{
 	}
 

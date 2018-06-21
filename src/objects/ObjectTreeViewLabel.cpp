@@ -17,13 +17,15 @@
 
 namespace aprilui
 {
-	TreeViewLabel::TreeViewLabel(chstr name) : Label(name)
+	TreeViewLabel::TreeViewLabel(chstr name) :
+		Label(name)
 	{
 		this->_treeView = NULL;
 		this->_treeViewNode = NULL;
 	}
 
-	TreeViewLabel::TreeViewLabel(const TreeViewLabel& other) : Label(other)
+	TreeViewLabel::TreeViewLabel(const TreeViewLabel& other) :
+		Label(other)
 	{
 		this->_treeView = NULL;
 		this->_treeViewNode = NULL;

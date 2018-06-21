@@ -24,13 +24,15 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ListBox::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ListBox::_setters;
 
-	ListBox::ListBox(chstr name) : SelectionContainer(name)
+	ListBox::ListBox(chstr name) :
+		SelectionContainer(name)
 	{
 		this->evenColor.set(april::Color::Black, 128);
 		this->oddColor.set(april::Color::DarkGrey, 128);
 	}
 
-	ListBox::ListBox(const ListBox& other) : SelectionContainer(other)
+	ListBox::ListBox(const ListBox& other) :
+		SelectionContainer(other)
 	{
 		this->evenColor = other.evenColor;
 		this->oddColor = other.oddColor;

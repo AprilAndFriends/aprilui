@@ -15,14 +15,16 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> BaseImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> BaseImage::_setters;
 
-	BaseImage::BaseImage(chstr name) : Cloneable()
+	BaseImage::BaseImage(chstr name) :
+		Cloneable()
 	{
 		this->name = name;
 		this->dataset = NULL;
 		this->_clipRectCalculated = false;
 	}
 
-	BaseImage::BaseImage(const BaseImage& other) : Cloneable(other)
+	BaseImage::BaseImage(const BaseImage& other) :
+		Cloneable(other)
 	{
 		this->name = other.name;
 		this->tag = other.tag;

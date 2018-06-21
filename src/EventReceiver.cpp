@@ -20,12 +20,14 @@
 
 namespace aprilui
 {
-	EventReceiver::EventReceiver() : Cloneable()
+	EventReceiver::EventReceiver() :
+		Cloneable()
 	{
 		this->dataset = NULL;
 	}
 
-	EventReceiver::EventReceiver(const EventReceiver& other) : Cloneable(other)
+	EventReceiver::EventReceiver(const EventReceiver& other) :
+		Cloneable(other)
 	{
 		this->dataset = NULL;
 		foreachc_m (Event*, it, other.events)

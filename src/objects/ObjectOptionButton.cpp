@@ -23,11 +23,13 @@ namespace aprilui
 	hmap<hstr, PropertyDescription> OptionButton::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> OptionButton::_getters;
 
-	OptionButton::OptionButton(chstr name) : ToggleButton(name)
+	OptionButton::OptionButton(chstr name) :
+		ToggleButton(name)
 	{
 	}
 
-	OptionButton::OptionButton(const OptionButton& other) : ToggleButton(other)
+	OptionButton::OptionButton(const OptionButton& other) :
+		ToggleButton(other)
 	{
 	}
 

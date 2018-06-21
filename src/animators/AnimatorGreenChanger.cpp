@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		GreenChanger::GreenChanger(chstr name) : Animator(name)
+		GreenChanger::GreenChanger(chstr name) :
+			Animator(name)
 		{
 		}
 
-		GreenChanger::GreenChanger(const GreenChanger& other) : Animator(other)
+		GreenChanger::GreenChanger(const GreenChanger& other) :
+			Animator(other)
 		{
 		}
 

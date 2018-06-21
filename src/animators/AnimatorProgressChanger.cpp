@@ -18,11 +18,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ProgressChanger::ProgressChanger(chstr name) : Animator(name)
+		ProgressChanger::ProgressChanger(chstr name) :
+			Animator(name)
 		{
 		}
 
-		ProgressChanger::ProgressChanger(const ProgressChanger& other) : Animator(other)
+		ProgressChanger::ProgressChanger(const ProgressChanger& other) :
+			Animator(other)
 		{
 		}
 

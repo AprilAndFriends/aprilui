@@ -13,14 +13,16 @@
 
 namespace aprilui
 {
-	CallbackObject::CallbackObject(chstr name) : Object(name)
+	CallbackObject::CallbackObject(chstr name) :
+		Object(name)
 	{
 		this->drawCallback = NULL;
 		this->updateCallback = NULL;
 		this->debugColor.a = 0;
 	}
 
-	CallbackObject::CallbackObject(const CallbackObject& other) : Object(other)
+	CallbackObject::CallbackObject(const CallbackObject& other) :
+		Object(other)
 	{
 		this->drawCallback = other.drawCallback;
 		this->updateCallback = other.updateCallback;

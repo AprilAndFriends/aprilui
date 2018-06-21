@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		MoverX::MoverX(chstr name) : Animator(name)
+		MoverX::MoverX(chstr name) :
+			Animator(name)
 		{
 		}
 
-		MoverX::MoverX(const MoverX& other) : Animator(other)
+		MoverX::MoverX(const MoverX& other) :
+			Animator(other)
 		{
 		}
 

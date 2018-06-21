@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ResizerY::ResizerY(chstr name) : Animator(name)
+		ResizerY::ResizerY(chstr name) :
+			Animator(name)
 		{
 		}
 
-		ResizerY::ResizerY(const ResizerY& other) : Animator(other)
+		ResizerY::ResizerY(const ResizerY& other) :
+			Animator(other)
 		{
 		}
 

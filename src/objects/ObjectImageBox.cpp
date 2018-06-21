@@ -20,13 +20,15 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ImageBox::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ImageBox::_setters;
 
-	ImageBox::ImageBox(chstr name) : Object(name)
+	ImageBox::ImageBox(chstr name) :
+		Object(name)
 	{
 		this->image = NULL;
 		this->debugColor = april::Color::Clear;
 	}
 
-	ImageBox::ImageBox(const ImageBox& other) : Object(other)
+	ImageBox::ImageBox(const ImageBox& other) :
+		Object(other)
 	{
 		this->image = other.image;
 		this->imageName = other.imageName;

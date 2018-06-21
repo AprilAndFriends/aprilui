@@ -23,7 +23,9 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> TextImageButton::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> TextImageButton::_setters;
 
-	TextImageButton::TextImageButton(chstr name) : ImageButton(name), LabelBase()
+	TextImageButton::TextImageButton(chstr name) :
+		ImageButton(name),
+		LabelBase()
 	{
 		this->text = "TextImageButton: " + name;
 		this->hoverTextColor = april::Color::Grey;
@@ -34,7 +36,9 @@ namespace aprilui
 		this->_useDisabledTextColor = false;
 	}
 
-	TextImageButton::TextImageButton(const TextImageButton& other) : ImageButton(other), LabelBase(other)
+	TextImageButton::TextImageButton(const TextImageButton& other) :
+		ImageButton(other),
+		LabelBase(other)
 	{
 		this->pushedTextColor = other.pushedTextColor;
 		this->hoverTextColor = other.hoverTextColor;

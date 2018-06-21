@@ -64,12 +64,16 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressCircle::_setters;
 
-	ProgressCircle::ProgressCircle(chstr name) : ImageBox(name), ProgressBase()
+	ProgressCircle::ProgressCircle(chstr name) :
+		ImageBox(name),
+		ProgressBase()
 	{
 		this->direction = Direction::Clockwise;
 	}
 
-	ProgressCircle::ProgressCircle(const ProgressCircle& other) : ImageBox(other), ProgressBase(other)
+	ProgressCircle::ProgressCircle(const ProgressCircle& other) :
+		ImageBox(other),
+		ProgressBase(other)
 	{
 		this->direction = other.direction;
 	}

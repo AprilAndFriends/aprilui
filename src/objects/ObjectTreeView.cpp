@@ -28,7 +28,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> TreeView::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> TreeView::_setters;
 
-	TreeView::TreeView(chstr name) : SelectionContainer(name)
+	TreeView::TreeView(chstr name) :
+		SelectionContainer(name)
 	{
 		this->expanderWidth = 32.0f;
 		this->imageWidth = 32.0f;
@@ -37,7 +38,8 @@ namespace aprilui
 		this->connectorColor.set(april::Color::White, 192);
 	}
 
-	TreeView::TreeView(const TreeView& other) : SelectionContainer(other)
+	TreeView::TreeView(const TreeView& other) :
+		SelectionContainer(other)
 	{
 		this->expanderWidth = other.expanderWidth;
 		this->imageWidth = other.imageWidth;

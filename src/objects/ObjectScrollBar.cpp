@@ -38,7 +38,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ScrollBar::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ScrollBar::_setters;
 
-	ScrollBar::ScrollBar(chstr name) : Object(name)
+	ScrollBar::ScrollBar(chstr name) :
+		Object(name)
 	{
 		this->gridSize = ScrollBar::defaultGridSize;
 		this->scrollDistance = ScrollBar::defaultScrollDistance;
@@ -59,7 +60,8 @@ namespace aprilui
 		this->_scrolling = false;
 	}
 
-	ScrollBar::ScrollBar(const ScrollBar& other) : Object(other)
+	ScrollBar::ScrollBar(const ScrollBar& other) :
+		Object(other)
 	{
 		this->skinName = other.skinName;
 		this->gridSize = other.gridSize;

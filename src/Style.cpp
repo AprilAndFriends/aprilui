@@ -25,13 +25,15 @@ namespace aprilui
 	{
 	}
 
-	Style::Style(chstr name) : Cloneable()
+	Style::Style(chstr name) :
+		Cloneable()
 	{
 		this->name = name;
 		this->dataset = NULL;
 	}
 
-	Style::Style(const Style& other) : Cloneable(other)
+	Style::Style(const Style& other) :
+		Cloneable(other)
 	{
 		this->name = other.name;
 		this->dataset = NULL;

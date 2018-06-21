@@ -24,12 +24,14 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> CropImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> CropImage::_setters;
 
-	CropImage::CropImage(Texture* texture, chstr name, cgrectf source) : Image(texture, name, source)
+	CropImage::CropImage(Texture* texture, chstr name, cgrectf source) :
+		Image(texture, name, source)
 	{
 		this->realSrcSize = source.getSize();
 	}
 
-	CropImage::CropImage(const CropImage& other) : Image(other)
+	CropImage::CropImage(const CropImage& other) :
+		Image(other)
 	{
 		this->drawPosition = other.drawPosition;
 		this->realSrcSize = other.realSrcSize;

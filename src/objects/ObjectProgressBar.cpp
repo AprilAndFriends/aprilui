@@ -47,7 +47,9 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ProgressBar::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ProgressBar::_setters;
 
-	ProgressBar::ProgressBar(chstr name) : ImageBox(name), ProgressBase()
+	ProgressBar::ProgressBar(chstr name) :
+		ImageBox(name),
+		ProgressBase()
 	{
 		this->stretching = false;
 		this->direction = Direction::Right;
@@ -55,7 +57,9 @@ namespace aprilui
 		this->pushed = false;
 	}
 
-	ProgressBar::ProgressBar(const ProgressBar& other) : ImageBox(other), ProgressBase(other)
+	ProgressBar::ProgressBar(const ProgressBar& other) :
+		ImageBox(other),
+		ProgressBase(other)
 	{
 		this->stretching = other.stretching;
 		this->direction = other.direction;

@@ -24,7 +24,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> SelectionContainer::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> SelectionContainer::_setters;
 
-	SelectionContainer::SelectionContainer(chstr name) : Container(name)
+	SelectionContainer::SelectionContainer(chstr name) :
+		Container(name)
 	{
 		this->selectedIndex = -1;
 		this->itemHeight = 32.0f;
@@ -36,7 +37,8 @@ namespace aprilui
 		this->allowDrag = false;
 	}
 
-	SelectionContainer::SelectionContainer(const SelectionContainer& other) : Container(other)
+	SelectionContainer::SelectionContainer(const SelectionContainer& other) :
+		Container(other)
 	{
 		this->selectedIndex = -1; // a cloned SelectionContainer has no children
 		this->itemHeight = other.itemHeight;

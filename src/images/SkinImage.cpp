@@ -45,13 +45,15 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> SkinImage::_setters;
 	int SkinImage::maxRectCache = 30;
 
-	SkinImage::SkinImage(Texture* texture, chstr name, cgrectf source) : Image(texture, name, source)
+	SkinImage::SkinImage(Texture* texture, chstr name, cgrectf source) :
+		Image(texture, name, source)
 	{
 		this->_skinCoordinatesCalculated = false;
 		this->tiledBorders = false;
 	}
 
-	SkinImage::SkinImage(const SkinImage& other) : Image(other)
+	SkinImage::SkinImage(const SkinImage& other) :
+		Image(other)
 	{
 		this->skinRect = other.skinRect;
 		this->borderIndent = other.borderIndent;

@@ -26,7 +26,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> Image::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Image::_setters;
 
-	Image::Image(Texture* texture, chstr name, cgrectf source) : MinimalImage(texture, name, source)
+	Image::Image(Texture* texture, chstr name, cgrectf source) :
+		MinimalImage(texture, name, source)
 	{
 		this->color = april::Color::White;
 		this->blendMode = april::BlendMode::Alpha;
@@ -34,7 +35,8 @@ namespace aprilui
 		this->colorModeFactor = 1.0f;
 	}
 
-	Image::Image(const Image& other) : MinimalImage(other)
+	Image::Image(const Image& other) :
+		MinimalImage(other)
 	{
 		this->color = other.color;
 		this->blendMode = other.blendMode;

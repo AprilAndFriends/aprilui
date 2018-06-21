@@ -20,13 +20,17 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> Label::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Label::_setters;
 
-	Label::Label(chstr name) : Object(name), LabelBase()
+	Label::Label(chstr name) :
+		Object(name),
+		LabelBase()
 	{
 		this->text = "Label: " + name;
 		this->debugColor.set(april::Color::Aqua, 32);
 	}
 
-	Label::Label(const Label& other) : Object(other), LabelBase(other)
+	Label::Label(const Label& other) :
+		Object(other),
+		LabelBase(other)
 	{
 	}
 

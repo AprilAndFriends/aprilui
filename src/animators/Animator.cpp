@@ -34,7 +34,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> Animator::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Animator::_setters;
 
-	Animator::Animator(chstr name) : BaseObject(name)
+	Animator::Animator(chstr name) :
+		BaseObject(name)
 	{
 		this->timeDelta = 0.0f;
 		this->value = 0.0f;
@@ -56,7 +57,8 @@ namespace aprilui
 		this->applyValuesOnAttach = true;
 	}
 
-	Animator::Animator(const Animator& other) : BaseObject(other)
+	Animator::Animator(const Animator& other) :
+		BaseObject(other)
 	{
 		this->timeDelta = other.timeDelta;
 		this->value = other.value;

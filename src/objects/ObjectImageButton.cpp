@@ -20,7 +20,9 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ImageButton::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ImageButton::_setters;
 
-	ImageButton::ImageButton(chstr name) : ImageBox(name), ButtonBase()
+	ImageButton::ImageButton(chstr name) :
+		ImageBox(name),
+		ButtonBase()
 	{
 		this->normalImage = NULL;
 		this->pushedImage = NULL;
@@ -34,7 +36,9 @@ namespace aprilui
 		this->_pushedMultiplyTime = 0.0f;
 	}
 
-	ImageButton::ImageButton(const ImageButton& other) : ImageBox(other), ButtonBase(other)
+	ImageButton::ImageButton(const ImageButton& other) :
+		ImageBox(other),
+		ButtonBase(other)
 	{
 		this->normalImage = other.normalImage;
 		this->pushedImage = other.pushedImage;

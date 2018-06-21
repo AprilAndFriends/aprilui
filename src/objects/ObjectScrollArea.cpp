@@ -31,7 +31,9 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ScrollArea::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ScrollArea::_setters;
 
-	ScrollArea::ScrollArea(chstr name) : Object(name), ButtonBase()
+	ScrollArea::ScrollArea(chstr name) :
+		Object(name),
+		ButtonBase()
 	{
 		this->clip = true;
 		this->allowDrag = false;
@@ -48,7 +50,9 @@ namespace aprilui
 		this->_overrideHoverMode = false;
 	}
 
-	ScrollArea::ScrollArea(const ScrollArea& other) : Object(other), ButtonBase(other)
+	ScrollArea::ScrollArea(const ScrollArea& other) :
+		Object(other),
+		ButtonBase(other)
 	{
 		this->allowDrag = other.allowDrag;
 		this->inertia = other.inertia;

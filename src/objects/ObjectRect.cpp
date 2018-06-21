@@ -15,11 +15,13 @@
 
 namespace aprilui
 {
-	Rect::Rect(chstr name) : Object(name)
+	Rect::Rect(chstr name) :
+		Object(name)
 	{
 	}
 
-	Rect::Rect(const Rect& other) : Object(other)
+	Rect::Rect(const Rect& other) :
+		Object(other)
 	{
 	}
 

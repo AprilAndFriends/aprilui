@@ -109,7 +109,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> Object::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> Object::_setters;
 
-	Object::Object(chstr name) : BaseObject(name)
+	Object::Object(chstr name) :
+		BaseObject(name)
 	{
 		this->color = april::Color::White;
 		this->visible = true;
@@ -132,7 +133,8 @@ namespace aprilui
 		this->_checkedChildUnderCursor = false;
 	}
 
-	Object::Object(const Object& other) : BaseObject(other)
+	Object::Object(const Object& other) :
+		BaseObject(other)
 	{
 		this->rect = other.rect;
 		this->pivot = other.pivot;

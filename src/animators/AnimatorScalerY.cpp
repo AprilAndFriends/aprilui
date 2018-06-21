@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ScalerY::ScalerY(chstr name) : Animator(name)
+		ScalerY::ScalerY(chstr name) :
+			Animator(name)
 		{
 		}
 
-		ScalerY::ScalerY(const ScalerY& other) : Animator(other)
+		ScalerY::ScalerY(const ScalerY& other) :
+			Animator(other)
 		{
 		}
 

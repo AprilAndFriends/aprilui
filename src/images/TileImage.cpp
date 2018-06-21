@@ -22,13 +22,15 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> TileImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> TileImage::_setters;
 
-	TileImage::TileImage(Texture* texture, chstr name, cgrectf source) : Image(texture, name, source)
+	TileImage::TileImage(Texture* texture, chstr name, cgrectf source) :
+		Image(texture, name, source)
 	{
 		this->tile = source.getSize();
 		this->useTileCount = false;
 	}
 
-	TileImage::TileImage(const TileImage& other) : Image(other)
+	TileImage::TileImage(const TileImage& other) :
+		Image(other)
 	{
 		this->tile = other.tile;
 		this->scroll = other.scroll;

@@ -51,7 +51,8 @@ namespace aprilui
 	void _registerDataset(chstr name, Dataset* dataset);
 	void _unregisterDataset(chstr name, Dataset* dataset);
 	
-	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath) : EventReceiver()
+	Dataset::Dataset(chstr filename, chstr name, bool useNameBasePath) :
+		EventReceiver()
 	{
 		this->dataset = this;
 		this->focusedObject = NULL;
@@ -969,7 +970,8 @@ namespace aprilui
 		this->filePath = originalFilePath;
 	}
 
-	Dataset::LoadThread::LoadThread(void (*function)(hthread*)) : hthread(function, "aprilui async hlxml")
+	Dataset::LoadThread::LoadThread(void (*function)(hthread*)) :
+		hthread(function, "aprilui async hlxml")
 	{
 		this->dataset = NULL;
 	}

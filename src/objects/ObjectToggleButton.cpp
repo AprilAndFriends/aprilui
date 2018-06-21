@@ -28,7 +28,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> ToggleButton::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> ToggleButton::_setters;
 
-	ToggleButton::ToggleButton(chstr name) : ImageButton(name)
+	ToggleButton::ToggleButton(chstr name) :
+		ImageButton(name)
 	{
 		this->toggled = false;
 		this->toggledNormalImage = NULL;
@@ -37,7 +38,8 @@ namespace aprilui
 		this->toggledDisabledImage = NULL;
 	}
 
-	ToggleButton::ToggleButton(const ToggleButton& other) : ImageButton(other)
+	ToggleButton::ToggleButton(const ToggleButton& other) :
+		ImageButton(other)
 	{
 		this->toggled = other.toggled;
 		this->toggledNormalImage = other.toggledNormalImage;

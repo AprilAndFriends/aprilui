@@ -26,14 +26,16 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> GridView::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> GridView::_setters;
 
-	GridView::GridView(chstr name) : SelectionContainer(name)
+	GridView::GridView(chstr name) :
+		SelectionContainer(name)
 	{
 		this->spacingWidth = 4.0f;
 		this->spacingHeight = 4.0f;
 		this->rowTemplate = NULL;
 	}
 
-	GridView::GridView(const GridView& other) : SelectionContainer(other)
+	GridView::GridView(const GridView& other) :
+		SelectionContainer(other)
 	{
 		this->spacingWidth = other.spacingWidth;
 		this->spacingHeight = other.spacingHeight;

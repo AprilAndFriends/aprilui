@@ -10,12 +10,14 @@
 
 namespace aprilui
 {
-	CallbackEvent::CallbackEvent(void (*callback)(EventArgs*)) : Event()
+	CallbackEvent::CallbackEvent(void (*callback)(EventArgs*)) :
+		Event()
 	{
 		this->callback = callback;
 	}
 
-	CallbackEvent::CallbackEvent(const CallbackEvent& other) : Event(other)
+	CallbackEvent::CallbackEvent(const CallbackEvent& other) :
+		Event(other)
 	{
 		this->callback = other.callback;
 	}

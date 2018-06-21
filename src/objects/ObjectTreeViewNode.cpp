@@ -22,7 +22,9 @@ namespace aprilui
 {
 	hmap<hstr, PropertyDescription> TreeViewNode::_propertyDescriptions;
 
-	TreeViewNode::TreeViewNode(chstr name) : Container(name), ButtonBase()
+	TreeViewNode::TreeViewNode(chstr name) :
+		Container(name),
+		ButtonBase()
 	{
 		this->depth = -1;
 		this->expander = NULL;
@@ -32,7 +34,9 @@ namespace aprilui
 		this->_treeViewParentNode = NULL;
 	}
 
-	TreeViewNode::TreeViewNode(const TreeViewNode& other) : Container(other), ButtonBase(other)
+	TreeViewNode::TreeViewNode(const TreeViewNode& other) :
+		Container(other),
+		ButtonBase(other)
 	{
 		this->depth = -1;
 		this->expander = NULL;

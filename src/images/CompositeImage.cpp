@@ -24,12 +24,15 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> CompositeImage::_setters;
 
-	CompositeImage::CompositeImage(chstr name, cgvec2f size) : BaseImage(name), restoreClipRects(true)
+	CompositeImage::CompositeImage(chstr name, cgvec2f size) :
+		BaseImage(name),
+		restoreClipRects(true)
 	{
 		this->size = size;
 	}
 	
-	CompositeImage::CompositeImage(const CompositeImage& other) : BaseImage(other)
+	CompositeImage::CompositeImage(const CompositeImage& other) :
+		BaseImage(other)
 	{
 		this->size = other.size;
 		this->images = other.images;

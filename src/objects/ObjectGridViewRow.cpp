@@ -17,12 +17,14 @@
 
 namespace aprilui
 {
-	GridViewRow::GridViewRow(chstr name) : Container(name)
+	GridViewRow::GridViewRow(chstr name) :
+		Container(name)
 	{
 		this->gridView = NULL;
 	}
 
-	GridViewRow::GridViewRow(const GridViewRow& other) : Container(other)
+	GridViewRow::GridViewRow(const GridViewRow& other) :
+		Container(other)
 	{
 		this->gridView = NULL;
 	}

@@ -15,11 +15,13 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		Rotator::Rotator(chstr name) : Animator(name)
+		Rotator::Rotator(chstr name) :
+			Animator(name)
 		{
 		}
 
-		Rotator::Rotator(const Rotator& other) : Animator(other)
+		Rotator::Rotator(const Rotator& other) :
+			Animator(other)
 		{
 		}
 

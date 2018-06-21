@@ -24,7 +24,8 @@ namespace aprilui
 	hmap<hstr, PropertyDescription::Accessor*> BaseObject::_getters;
 	hmap<hstr, PropertyDescription::Accessor*> BaseObject::_setters;
 
-	BaseObject::BaseObject(chstr name) : EventReceiver()
+	BaseObject::BaseObject(chstr name) :
+		EventReceiver()
 	{
 		this->name = name;
 		this->parent = NULL;
@@ -33,7 +34,8 @@ namespace aprilui
 		this->zOrder = 0;
 	}
 
-	BaseObject::BaseObject(const BaseObject& other) : EventReceiver(other)
+	BaseObject::BaseObject(const BaseObject& other) :
+		EventReceiver(other)
 	{
 		this->name = other.name;
 		this->tag = other.tag;

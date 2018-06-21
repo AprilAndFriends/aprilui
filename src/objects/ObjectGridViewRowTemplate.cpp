@@ -18,13 +18,15 @@
 
 namespace aprilui
 {
-	GridViewRowTemplate::GridViewRowTemplate(chstr name) : GridViewRow(name)
+	GridViewRowTemplate::GridViewRowTemplate(chstr name) :
+		GridViewRow(name)
 	{
 		this->visible = false;
 		this->enabled = false;
 	}
 
-	GridViewRowTemplate::GridViewRowTemplate(const GridViewRowTemplate& other) : GridViewRow(other)
+	GridViewRowTemplate::GridViewRowTemplate(const GridViewRowTemplate& other) :
+		GridViewRow(other)
 	{
 		this->visible = false;
 		this->enabled = false;

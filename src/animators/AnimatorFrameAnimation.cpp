@@ -22,14 +22,16 @@ namespace aprilui
 		hmap<hstr, PropertyDescription::Accessor*> FrameAnimation::_getters;
 		hmap<hstr, PropertyDescription::Accessor*> FrameAnimation::_setters;
 
-		FrameAnimation::FrameAnimation(chstr name) : Animator(name)
+		FrameAnimation::FrameAnimation(chstr name) :
+			Animator(name)
 		{
 			this->imageBaseName = "";
 			this->firstFrame = 0;
 			this->frameCount = 0;
 		}
 
-		FrameAnimation::FrameAnimation(const FrameAnimation& other) : Animator(other)
+		FrameAnimation::FrameAnimation(const FrameAnimation& other) :
+			Animator(other)
 		{
 			this->imageBaseName = other.imageBaseName;
 			this->firstFrame = other.firstFrame;
