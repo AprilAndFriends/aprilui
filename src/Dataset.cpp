@@ -412,6 +412,7 @@ namespace aprilui
 			else if	(filter == "nearest")	texture->setFilter(april::Texture::Filter::Nearest);
 			else
 			{
+				delete texture;
 				__THROW_EXCEPTION(Exception("Texture Filter '" + filter + "' is not supported!"), aprilui::systemConsistencyDebugExceptionsEnabled, return);
 			}
 		}
