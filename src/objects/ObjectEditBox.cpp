@@ -767,11 +767,6 @@ namespace aprilui
 			this->text = this->emptyText;
 			this->textColor = this->emptyTextColor;
 		}
-		unsigned char alpha = this->backgroundColor.a;
-		if (this->pushed)
-		{
-			alpha = (unsigned char)(alpha * 0.75f);
-		}
 		atres::Font* font = atres::renderer->getFont(this->font);
 		if (font != NULL)
 		{
