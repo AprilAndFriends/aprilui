@@ -277,11 +277,7 @@ namespace aprilui
 			this->_skinCoordinatesCalculated = false;
 			this->_clipRectCalculated = true; // not used for texture coordinates in this class so it's disabled
 		}
-		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
-		{
-			this->texture->load();
-		}
-		april::rendersys->setTexture(this->texture->getTexture());
+		this->_setDeviceTexture();
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
 		grectf originalClipRect = this->clipRect; // prevents wrong calculations for src coordinates

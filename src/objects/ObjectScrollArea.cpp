@@ -391,7 +391,6 @@ namespace aprilui
 				if (this->oobChildrenFadeSizeFactor.x > 0.0f || this->oobChildrenFadeSizeFactor.y > 0.0f)
 				{
 					alpha = 1.0f;
-					ratio = 1.0f;
 					if (this->oobChildrenFadeSizeFactor.x > 0.0f)
 					{
 						adjustedRect.set(rect.x + boundingRect.w, rect.y - boundingRect.h, rect.w - boundingRect.w * 2.0f, rect.h + boundingRect.h * 2.0f);

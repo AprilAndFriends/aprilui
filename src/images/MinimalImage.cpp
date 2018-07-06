@@ -183,6 +183,20 @@ namespace aprilui
 		return BaseImage::getProperty(name);
 	}
 	
+	void MinimalImage::_setDeviceTexture()
+	{
+		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
+		{
+			this->texture->load();
+			april::rendersys->setTexture(this->texture->getTexture());
+		}
+		else
+		{
+			hlog::errorf(logTag, "Image '%s' has no texture assigned!", this->name.cStr());
+			april::rendersys->setTexture(NULL);
+		}
+	}
+
 	void MinimalImage::tryLoadTextureCoordinates()
 	{
 		if ((!this->_textureCoordinatesLoaded || !this->_clipRectCalculated) && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)
@@ -240,11 +254,7 @@ namespace aprilui
 		this->vertices[0].y = this->vertices[1].y = this->vertices[3].y = drawRect.top();
 		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = drawRect.right();
 		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = drawRect.bottom();
-		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
-		{
-			this->texture->load();
-		}
-		april::rendersys->setTexture(this->texture->getTexture());
+		this->_setDeviceTexture();
 		this->tryLoadTextureCoordinates();
 		april::rendersys->setBlendMode(april::BlendMode::Alpha);
 		april::rendersys->setColorMode(april::ColorMode::Multiply, 1.0f);

@@ -465,7 +465,6 @@ namespace aprilui
 					{
 						if (hbetweenIE(position.x, (*it).rect.x, (*it).rect.right()))
 						{
-							offsetWidth = (*it).rect.x;
 							offsetIndex = (*it).start;
 							count = 0;
 							for_iter (i, 0, (*it).charXs.size())

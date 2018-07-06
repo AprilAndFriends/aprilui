@@ -199,11 +199,7 @@ namespace aprilui
 				return;
 			}
 		}
-		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
-		{
-			this->texture->load();
-		}
-		april::rendersys->setTexture(this->texture->getTexture());
+		this->_setDeviceTexture();
 		bool recreateVertices = (!this->_textureCoordinatesLoaded || !this->_clipRectCalculated);
 		this->tryLoadTextureCoordinates();
 		if (recreateVertices || this->_lastScroll != this->scroll || this->_lastRect != rect)

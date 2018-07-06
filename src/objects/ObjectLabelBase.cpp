@@ -664,7 +664,7 @@ namespace aprilui
 			{
 				float upperAutoScale = 1.0f;
 				float lowerAutoScale = this->minAutoScale;
-				float currentAutoScale = this->minAutoScale;
+				float currentAutoScale = 0;
 				autoScale = this->minAutoScale;
 				for_iter (i, 0, MAX_AUTO_SCALE_STEPS)
 				{

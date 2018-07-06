@@ -80,6 +80,8 @@ namespace aprilui
 
 		virtual grectf _makeClippedSrcRect() const;
 		
+		void _setDeviceTexture();
+		
 	private:
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;

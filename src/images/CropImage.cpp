@@ -168,11 +168,7 @@ namespace aprilui
 		this->vertices[0].y = this->vertices[1].y = this->vertices[3].y = drawRect.top();
 		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = drawRect.right();
 		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = drawRect.bottom();
-		if (this->texture != NULL) // to prevent a crash in Texture::load so that a possible crash happens below instead
-		{
-			this->texture->load();
-		}
-		april::rendersys->setTexture(this->texture->getTexture());
+		this->_setDeviceTexture();
 		this->tryLoadTextureCoordinates();
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
