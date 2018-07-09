@@ -14,7 +14,6 @@ file(
 add_library(aprilui STATIC ${CppSrc})
 
 include_directories(AFTER "../../include/aprilui")
-include_directories(AFTER "../../src")
 include_directories(AFTER "../../../atres/include")
 include_directories(AFTER "../../../april/include")
 include_directories(AFTER "../../../hltypes/hlxml/include")

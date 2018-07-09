@@ -12,7 +12,6 @@ file(
 
 add_library(demo_gui SHARED ${CppSrc})
 
-include_directories(AFTER "../../../include")
 include_directories(AFTER "../../../../atres/include")
 include_directories(AFTER "../../../../april/include")
 include_directories(AFTER "../../../../hltypes/include")
