@@ -797,7 +797,7 @@ namespace aprilui
 					newStyle = this->getStyle(styleName);
 					if (newStyle != NULL)
 					{
-						style = newStyle->_injected(newStyle);
+						style = style->_injected(newStyle);
 					}
 					else
 					{
