@@ -223,9 +223,29 @@ namespace aprilui
 
 		void parseGlobalInclude(chstr path, bool optional = false);
 		void parseGlobalIncludeFile(chstr filename);
-		BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull = true);
-		BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull = true);
+		/// @note style must not be NULL!
+		BaseObject* parseObjectDirectory(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset = gvec2f(), bool setRootIfNull = true);
+		/// @note style must not be NULL!
+		BaseObject* parseObjectDirectory(chstr path, Object* parent, Style* style, bool setRootIfNull = true);
+		BaseObject* parseObjectDirectory(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, cgvec2f offset = gvec2f(), bool setRootIfNull = true);
+		BaseObject* parseObjectDirectory(chstr path, Object* parent, bool setRootIfNull = true);
+		/// @note style must not be NULL!
+		BaseObject* parseObjectFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset = gvec2f(), bool setRootIfNull = true);
+		/// @note style must not be NULL!
+		BaseObject* parseObjectFile(chstr filename, Object* parent, Style* style, bool setRootIfNull = true);
+		BaseObject* parseObjectFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, cgvec2f offset = gvec2f(), bool setRootIfNull = true);
+		BaseObject* parseObjectFile(chstr filename, Object* parent, bool setRootIfNull = true);
 
+		HL_DEPRECATED("Deprecated API. Use parseObjectDirectory() instead.")
+			BaseObject* parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull = true)
+		{
+			return this->parseObjectDirectory(path, parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
+		}
+		HL_DEPRECATED("Deprecated API. Use parseObjectFile() instead.")
+			BaseObject* parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull = true)
+		{
+			return this->parseObjectFile(filename, parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
+		}
 		HL_DEPRECATED("Deprecated API. Use getTextsPaths() instead.")
 			hstr getTextsPath() const { return (this->textsPaths.size() > 0 ? this->textsPaths.first() : ""); }
 

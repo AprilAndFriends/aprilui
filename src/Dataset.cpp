@@ -886,7 +886,7 @@ namespace aprilui
 		hstr path = hrdir::joinPath(this->filePath, node->pstr("path"), false);
 		hstr newNamePrefix = node->pstr("name_prefix", "") + namePrefix;
 		hstr newNameSuffix = nameSuffix + node->pstr("name_suffix", "");
-		BaseObject* includeRoot = this->parseObjectInclude(path, parent, style, newNamePrefix, newNameSuffix, newOffset);
+		BaseObject* includeRoot = this->parseObjectDirectory(path, parent, style, newNamePrefix, newNameSuffix, newOffset);
 		if (includeRoot != NULL)
 		{
 			BaseObject* descendant = NULL;
@@ -1122,7 +1122,7 @@ namespace aprilui
 		hlog::writef(logTag, "Parsed dataset include command: '%s', %d files parsed", normalizedPath.cStr(), parsedCount);
 	}
 
-	BaseObject* Dataset::parseObjectIncludeFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
+	BaseObject* Dataset::parseObjectFile(chstr filename, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
 	{
 		// parse dataset xml file, error checking first
 		hstr path = hrdir::normalize(filename);
@@ -1158,12 +1158,29 @@ namespace aprilui
 		}
 		return root;
 	}
-	
-	BaseObject* Dataset::parseObjectInclude(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
+
+	BaseObject* Dataset::parseObjectFile(chstr filename, Object* parent, Style* style, bool setRootIfNull)
+	{
+		return this->parseObjectFile(filename, parent, style, "", "", gvec2f(), setRootIfNull);
+	}
+
+	BaseObject* Dataset::parseObjectFile(chstr filename, Object* parent, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
+	{
+		Style style;
+		return this->parseObjectFile(filename, parent, &style, namePrefix, nameSuffix, offset, setRootIfNull);
+	}
+
+	BaseObject* Dataset::parseObjectFile(chstr filename, Object* parent, bool setRootIfNull)
+	{
+		Style style;
+		return this->parseObjectFile(filename, parent, &style, "", "", gvec2f(), setRootIfNull);
+	}
+
+	BaseObject* Dataset::parseObjectDirectory(chstr path, Object* parent, Style* style, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
 	{
 		if (!path.contains("*"))
 		{
-			return this->parseObjectIncludeFile(path, parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
+			return this->parseObjectFile(path, parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
 		}
 		hstr baseDir = hrdir::baseDir(path);
 		hstr filename = path(baseDir.size() + 1, -1);
@@ -1175,7 +1192,9 @@ namespace aprilui
 		{
 			if ((*it).startsWith(left) && (*it).endsWith(right))
 			{
-				this->parseObjectIncludeFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2f(), setRootIfNull);
+				// TODO - is this correct or should the parameters be passed on?
+				this->parseObjectFile(hrdir::joinPath(baseDir, (*it), false), parent, style, "", "", gvec2f(), setRootIfNull);
+				//this->parseObjectFile(hrdir::joinPath(baseDir, (*it), false), parent, style, namePrefix, nameSuffix, offset, setRootIfNull);
 			}
 			// preload was aborted
 			if (this->_asyncPreLoadThread != NULL && !this->_asyncPreLoading)
@@ -1185,7 +1204,24 @@ namespace aprilui
 		}
 		return NULL; // since multiple files are loaded, no object is returned
 	}
-	
+
+	BaseObject* Dataset::parseObjectDirectory(chstr path, Object* parent, Style* style, bool setRootIfNull)
+	{
+		return this->parseObjectDirectory(path, parent, style, "", "", gvec2f(), setRootIfNull);
+	}
+
+	BaseObject* Dataset::parseObjectDirectory(chstr path, Object* parent, chstr namePrefix, chstr nameSuffix, cgvec2f offset, bool setRootIfNull)
+	{
+		Style style;
+		return this->parseObjectDirectory(path, parent, &style, namePrefix, nameSuffix, offset, setRootIfNull);
+	}
+
+	BaseObject* Dataset::parseObjectDirectory(chstr path, Object* parent, bool setRootIfNull)
+	{
+		Style style;
+		return this->parseObjectDirectory(path, parent, &style, "", "", gvec2f(), setRootIfNull);
+	}
+
 	hlxml::Document* Dataset::_openDocument(chstr filename)
 	{
 		hlxml::Document* document = this->includeDocuments.tryGet(filename, NULL);
