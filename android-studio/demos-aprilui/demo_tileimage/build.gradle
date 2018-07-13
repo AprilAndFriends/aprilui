@@ -30,5 +30,5 @@ dependencies {
 	implementation project(":gtypes")
 	implementation project(":jpeg")
 	implementation project(":png")
-	implementation fileTree(include: ["*.jar"], dir: "libs")
+	api fileTree(include: ["*.jar"], dir: "libs")
 }
