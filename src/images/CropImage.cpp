@@ -100,7 +100,7 @@ namespace aprilui
 		}
 	}
 
-	void CropImage::setRealSrcSize(float w, float h)
+	void CropImage::setRealSrcSize(const float& w, const float& h)
 	{
 		if (this->realSrcSize.x != h || this->realSrcSize.y != h)
 		{

@@ -102,6 +102,15 @@ namespace aprilui
 		}
 	}
 
+	void MinimalImage::setSrcRect(const float& x, const float& y, const float& width, const float& height)
+	{
+		if (this->srcRect.x != x || this->srcRect.y != y || this->srcRect.w != width || this->srcRect.h != height)
+		{
+			this->srcRect.set(x, y, width, height);
+			this->_textureCoordinatesLoaded = false;
+		}
+	}
+
 	void MinimalImage::setSrcX(const float& value)
 	{
 		if (this->srcRect.x != value)

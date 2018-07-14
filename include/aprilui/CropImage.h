@@ -43,11 +43,12 @@ namespace aprilui
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrectf source);
 
 		HL_DEFINE_GETSET(gvec2f, drawPosition, DrawPosition);
+		inline void setDrawPosition(const float& x, const float& y) { this->drawPosition.set(x, y); }
 		HL_DEFINE_GETSET(float, drawPosition.x, DrawX);
 		HL_DEFINE_GETSET(float, drawPosition.y, DrawY);
 		HL_DEFINE_GET(gvec2f, realSrcSize, RealSrcSize);
 		void setRealSrcSize(cgvec2f value);
-		void setRealSrcSize(float w, float h);
+		void setRealSrcSize(const float& w, const float& h);
 		HL_DEFINE_GET(float, realSrcSize.x, RealSrcWidth);
 		void setRealSrcWidth(float const& value);
 		HL_DEFINE_GET(float, realSrcSize.y, RealSrcHeight);

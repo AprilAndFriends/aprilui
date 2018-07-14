@@ -46,6 +46,7 @@ namespace aprilui
 		HL_DEFINE_GET(Texture*, texture, Texture);
 		HL_DEFINE_GET(grectf, srcRect, SrcRect);
 		void setSrcRect(cgrectf value);
+		void setSrcRect(const float& x, const float& y, const float& width, const float& height);
 		HL_DEFINE_GET(float, srcRect.x, SrcX);
 		void setSrcX(const float& value);
 		HL_DEFINE_GET(float, srcRect.y, SrcY);
