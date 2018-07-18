@@ -33,6 +33,7 @@ namespace aprilui
 
 		HL_DEFINE_GET(grectf, skinRect, SkinRect);
 		void setSkinRect(cgrectf value);
+		void setSkinRect(const float& x, const float& y, const float& w, const float& h);
 		HL_DEFINE_GET(float, skinRect.x, SkinX);
 		void setSkinX(const float& value);
 		HL_DEFINE_GET(float, skinRect.y, SkinY);

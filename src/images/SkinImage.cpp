@@ -140,6 +140,15 @@ namespace aprilui
 		}
 	}
 
+	void SkinImage::setSkinRect(const float& x, const float& y, const float& w, const float& h)
+	{
+		if (this->skinRect.x != x || this->skinRect.y != y || this->skinRect.w != w || this->skinRect.h != h)
+		{
+			this->skinRect.set(x, y, w, h);
+			this->_skinCoordinatesCalculated = false;
+		}
+	}
+
 	void SkinImage::setSkinX(const float& value)
 	{
 		if (this->skinRect.x != value)
