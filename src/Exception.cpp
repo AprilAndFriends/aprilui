@@ -38,7 +38,7 @@ namespace aprilui
 	_InvalidObjectTypeCast::_InvalidObjectTypeCast(chstr type, chstr objectName, chstr datasetName, const char* file, int line) :
 		hexception("", file, line)
 	{
-		this->_setInternalMessage(hsprintf("%s '%s' found in dataset '%s' but dynamic cast failed.", type.cStr(), objectName.cStr(), datasetName.cStr()), file, line);
+		this->_setInternalMessage(type + " '" + objectName + "' found in dataset '" + datasetName + "' but dynamic cast failed.", file, line);
 	}
 	
 	_ObjectHasParentException::_ObjectHasParentException(chstr child, chstr parent, const char* file, int line) :
