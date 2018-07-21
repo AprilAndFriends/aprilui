@@ -206,7 +206,7 @@ namespace aprilui
 				this->_mouseCancel(april::Key::None);
 			}
 		}
-		return false;
+		return this->pushed;
 	}
 
 	bool ButtonBase::_buttonDown(april::Button buttonCode)

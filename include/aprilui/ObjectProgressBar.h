@@ -36,6 +36,8 @@ namespace aprilui
 			HL_ENUM_DECLARE(Direction, Up);
 			HL_ENUM_DECLARE(Direction, Horizontal);
 			HL_ENUM_DECLARE(Direction, Vertical);
+			bool isHorizontal() const;
+			bool isVertical() const;
 			bool hasAntiProgress() const;
 			Direction getOppositeDirection() const;
 		));
