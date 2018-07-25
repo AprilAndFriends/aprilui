@@ -49,9 +49,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="..\..\demos\demo_gui\Package-uwp.appxmanifest" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="media\assets\Logo.scale-100.png">
       <Filter>uwp\media\assets\Logo</Filter>
     </Image>
@@ -213,9 +210,11 @@
     <None Include="media\skin_image.tex">
       <Filter>uwp\media</Filter>
     </None>
-    <None Include="..\..\demos\demo_gui\TemporaryKey.pfx" />
     <None Include="media\skin_tiled_image.tex">
       <Filter>uwp\media</Filter>
+    </None>
+    <None Include="..\..\demos\demo_gui\TemporaryKey.pfx">
+      <Filter>uwp</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +223,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\demos\demo_simple\winrt-cursors.rc" />
+    <ResourceCompile Include="..\..\demos\demo_simple\winrt-cursors.rc">
+      <Filter>uwp</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="..\..\demos\demo_gui\Package-uwp.appxmanifest">
+      <Filter>uwp</Filter>
+    </AppxManifest>
   </ItemGroup>
 </Project>

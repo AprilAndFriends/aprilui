@@ -213,7 +213,9 @@
     <None Include="media\skin_tiled_image.tex">
       <Filter>uwp\media</Filter>
     </None>
-    <None Include="..\..\demos\demo_gui\TemporaryKey.pfx" />
+    <None Include="..\..\demos\demo_gui\TemporaryKey.pfx">
+      <Filter>uwp</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\demos\demo_gui\demo_gui.cpp">
@@ -221,9 +223,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\demos\demo_gui\winrt-cursors.rc" />
+    <AppxManifest Include="..\..\demos\demo_gui\Package-uwp.appxmanifest">
+      <Filter>uwp</Filter>
+    </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="..\..\demos\demo_gui\Package-uwp.appxmanifest" />
+    <ResourceCompile Include="..\..\demos\demo_gui\winrt-cursors.rc">
+      <Filter>uwp</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

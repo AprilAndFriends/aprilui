@@ -49,11 +49,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="..\..\demos\demo_zorder\Package-uwp.appxmanifest">
-      <Filter>uwp</Filter>
-    </AppxManifest>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="media\assets\Logo.scale-100.png">
       <Filter>uwp\media\assets\Logo</Filter>
     </Image>
@@ -218,7 +213,9 @@
     <None Include="media\skin_tiled_image.tex">
       <Filter>uwp\media</Filter>
     </None>
-    <None Include="..\..\demos\demo_zorder\TemporaryKey.pfx" />
+    <None Include="..\..\demos\demo_gui\TemporaryKey.pfx">
+      <Filter>uwp</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\demos\demo_zorder\winrt-cursors.rc">
@@ -229,5 +226,10 @@
     <ClCompile Include="..\..\demos\demo_zorder\demo_zorder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="..\..\demos\demo_gui\Package-uwp.appxmanifest">
+      <Filter>uwp</Filter>
+    </AppxManifest>
   </ItemGroup>
 </Project>
