@@ -246,7 +246,8 @@
 				<OptionButton name="option_button_3" rect="8,88,32,32"/>
 			</FilledRect>
 		</Container>
-		<Label name="keyboard_height" background_color="0000007F" anchors="" rect="368,0,64,32"/>
+		<Label name="keyboard_height" background_color="0000007F" anchors="" rect="384,0,128,32"/>
+		<Label name="fps" background_color="0000007F" anchors="" rect="512,0,128,32"/>
 	</Container>
 	
 </Dataset>

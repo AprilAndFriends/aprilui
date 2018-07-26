@@ -29,6 +29,7 @@
 #define __APRIL_SINGLE_INSTANCE_NAME "demo_gui"
 
 #include <april/april.h>
+#include <april/Application.h>
 #include <april/Cursor.h>
 #include <april/KeyDelegate.h>
 #include <april/main.h>
@@ -101,7 +102,8 @@ public:
 		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.2f));
 		progressObject = dataset->getObject<aprilui::ProgressBase*>("progress_circle_1");
 		progressObject->setProgress(hmodf(progressObject->getProgress() + timeDelta * 0.2f, 1.2f));
-		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("%d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
+		dataset->getObject<aprilui::Label*>("keyboard_height")->setText(hsprintf("KBH: %d%%", (int)(april::window->getVirtualKeyboardHeightRatio() * 100)));
+		dataset->getObject<aprilui::Label*>("fps")->setText("FPS: " + hstr(april::application->getFps()));
 		dataset->update(timeDelta);
 		dataset->draw();
 		return true;
