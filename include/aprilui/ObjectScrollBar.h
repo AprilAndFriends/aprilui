@@ -128,6 +128,11 @@ namespace aprilui
 		void _update(float timeDelta);
 		void _draw();
 
+		void _updateButtonBackgroundSkinned();
+		void _updateButtonSliderSkinned();
+		void _updateButtonForwardkinned();
+		void _updateButtonBackwardSkinned();
+
 		bool _mouseMove();
 
 	private:

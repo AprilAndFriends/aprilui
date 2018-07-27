@@ -337,72 +337,10 @@ namespace aprilui
 		{
 			if (this->skinName != "")
 			{
-				if (this->_buttonBackgroundSkinned == NULL)
-				{
-					this->_buttonBackgroundSkinned = new ScrollBarButtonBackground(april::generateName("aprilui::ScrollButtonBackground"));
-					this->registerChild(this->_buttonBackgroundSkinned);
-				}
-				if (this->_buttonSliderSkinned == NULL)
-				{
-					this->_buttonSliderSkinned = new ScrollBarButtonSlider(april::generateName("aprilui::ScrollButtonSlider"));
-					this->registerChild(this->_buttonSliderSkinned);
-				}
-				bool hasForwardImage = aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameForwardNormal());
-				bool hasBackwardImage = aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameBackwardNormal());
-				if (hasForwardImage && this->_buttonForwardSkinned == NULL)
-				{
-					this->_buttonForwardSkinned = new ScrollBarButtonForward(april::generateName("aprilui::ScrollButtonForward"));
-					this->registerChild(this->_buttonForwardSkinned);
-				}
-				if (hasBackwardImage && this->_buttonBackwardSkinned == NULL)
-				{
-					this->_buttonBackwardSkinned = new ScrollBarButtonBackward(april::generateName("aprilui::ScrollButtonBackward"));
-					this->registerChild(this->_buttonBackwardSkinned);
-				}
-				this->_buttonBackgroundSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->_buttonBackgroundSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->_buttonBackgroundSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackground());
-				this->_buttonBackgroundSkinned->resizeToFitImage();
-				this->_buttonBackgroundSkinned->setVisible(this->_buttonBackground == NULL);
-				this->_buttonSliderSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameSliderNormal());
-				if (aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameSliderHover()))
-				{
-					this->_buttonSliderSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameSliderHover());
-				}
-				if (aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameSliderPushed()))
-				{
-					this->_buttonSliderSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameSliderPushed());
-				}
-				this->_buttonSliderSkinned->resizeToFitImage();
-				this->_buttonSliderSkinned->setVisible(this->_buttonSlider == NULL);
-				if (hasForwardImage)
-				{
-					this->_buttonForwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameForwardNormal());
-					if (aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameForwardHover()))
-					{
-						this->_buttonForwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameForwardHover());
-					}
-					if (aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameForwardPushed()))
-					{
-						this->_buttonForwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameForwardPushed());
-					}
-					this->_buttonForwardSkinned->resizeToFitImage();
-					this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
-				}
-				if (hasBackwardImage)
-				{
-					this->_buttonBackwardSkinned->trySetImageByName(this->skinName + "/" + this->_getSkinNameBackwardNormal());
-					if (aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameBackwardHover()))
-					{
-						this->_buttonBackwardSkinned->trySetHoverImageByName(this->skinName + "/" + this->_getSkinNameBackwardHover());
-					}
-					if (aprilui::hasImage(this->dataset, this->skinName + "/" + this->_getSkinNameBackwardPushed()))
-					{
-						this->_buttonBackwardSkinned->trySetPushedImageByName(this->skinName + "/" + this->_getSkinNameBackwardPushed());
-					}
-					this->_buttonBackwardSkinned->resizeToFitImage();
-					this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
-				}
+				this->_updateButtonBackgroundSkinned();
+				this->_updateButtonSliderSkinned();
+				this->_updateButtonForwardkinned();
+				this->_updateButtonBackwardSkinned();
 				this->_updateChildren();
 				this->_updateBar();
 			}
@@ -433,6 +371,108 @@ namespace aprilui
 					this->_buttonBackwardSkinned = NULL;
 				}
 			}
+		}
+	}
+
+	void ScrollBar::_updateButtonBackgroundSkinned()
+	{
+		hstr imageName = this->skinName + "/" + this->_getSkinNameBackground();
+		if (aprilui::hasImage(this->dataset, imageName))
+		{
+			if (this->_buttonBackgroundSkinned == NULL)
+			{
+				this->_buttonBackgroundSkinned = new ScrollBarButtonBackground(april::generateName("aprilui::ScrollButtonBackground"));
+				this->registerChild(this->_buttonBackgroundSkinned);
+			}
+			this->_buttonBackgroundSkinned->trySetImageByName(imageName);
+			this->_buttonBackgroundSkinned->trySetHoverImageByName(imageName);
+			this->_buttonBackgroundSkinned->trySetPushedImageByName(imageName);
+			this->_buttonBackgroundSkinned->resizeToFitImage();
+			this->_buttonBackgroundSkinned->setVisible(this->_buttonBackground == NULL);
+		}
+		else if (this->_buttonBackgroundSkinned != NULL)
+		{
+			this->unregisterChild(this->_buttonBackgroundSkinned);
+			delete this->_buttonBackgroundSkinned;
+			this->_buttonBackgroundSkinned = NULL;
+		}
+	}
+
+	void ScrollBar::_updateButtonSliderSkinned()
+	{
+		hstr imageName = this->skinName + "/" + this->_getSkinNameSliderNormal();
+		if (aprilui::hasImage(this->dataset, imageName))
+		{
+			if (this->_buttonSliderSkinned == NULL)
+			{
+				this->_buttonSliderSkinned = new ScrollBarButtonSlider(april::generateName("aprilui::ScrollButtonSlider"));
+				this->registerChild(this->_buttonSliderSkinned);
+			}
+			this->_buttonSliderSkinned->trySetImageByName(imageName);
+			hstr hoverImageName = this->skinName + "/" + this->_getSkinNameSliderHover();
+			this->_buttonSliderSkinned->trySetHoverImageByName(aprilui::hasImage(this->dataset, hoverImageName) ? hoverImageName : "");
+			hstr pushedImageName = this->skinName + "/" + this->_getSkinNameSliderPushed();
+			this->_buttonSliderSkinned->trySetPushedImageByName(aprilui::hasImage(this->dataset, pushedImageName) ? pushedImageName : "");
+			this->_buttonSliderSkinned->resizeToFitImage();
+			this->_buttonSliderSkinned->setVisible(this->_buttonSlider == NULL);
+		}
+		else if (this->_buttonSliderSkinned != NULL)
+		{
+			this->unregisterChild(this->_buttonSliderSkinned);
+			delete this->_buttonSliderSkinned;
+			this->_buttonSliderSkinned = NULL;
+		}
+	}
+
+	void ScrollBar::_updateButtonForwardkinned()
+	{
+		hstr imageName = this->skinName + "/" + this->_getSkinNameForwardNormal();
+		if (aprilui::hasImage(this->dataset, imageName))
+		{
+			if (this->_buttonForwardSkinned == NULL)
+			{
+				this->_buttonForwardSkinned = new ScrollBarButtonForward(april::generateName("aprilui::ScrollButtonForward"));
+				this->registerChild(this->_buttonForwardSkinned);
+			}
+			this->_buttonForwardSkinned->trySetImageByName(imageName);
+			hstr hoverImageName = this->skinName + "/" + this->_getSkinNameForwardHover();
+			this->_buttonForwardSkinned->trySetHoverImageByName(aprilui::hasImage(this->dataset, hoverImageName) ? hoverImageName : "");
+			hstr pushedImageName = this->skinName + "/" + this->_getSkinNameForwardPushed();
+			this->_buttonForwardSkinned->trySetPushedImageByName(aprilui::hasImage(this->dataset, pushedImageName) ? pushedImageName : "");
+			this->_buttonForwardSkinned->resizeToFitImage();
+			this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
+		}
+		else if (this->_buttonForwardSkinned != NULL)
+		{
+			this->unregisterChild(this->_buttonForwardSkinned);
+			delete this->_buttonForwardSkinned;
+			this->_buttonForwardSkinned = NULL;
+		}
+	}
+
+	void ScrollBar::_updateButtonBackwardSkinned()
+	{
+		hstr imageName = this->skinName + "/" + this->_getSkinNameBackwardNormal();
+		if (aprilui::hasImage(this->dataset, imageName))
+		{
+			if (this->_buttonBackwardSkinned == NULL)
+			{
+				this->_buttonBackwardSkinned = new ScrollBarButtonBackward(april::generateName("aprilui::ScrollButtonBackward"));
+				this->registerChild(this->_buttonBackwardSkinned);
+			}
+			this->_buttonBackwardSkinned->trySetImageByName(imageName);
+			hstr hoverImageName = this->skinName + "/" + this->_getSkinNameBackwardHover();
+			this->_buttonBackwardSkinned->trySetHoverImageByName(aprilui::hasImage(this->dataset, hoverImageName) ? hoverImageName : "");
+			hstr pushedImageName = this->skinName + "/" + this->_getSkinNameBackwardPushed();
+			this->_buttonBackwardSkinned->trySetPushedImageByName(aprilui::hasImage(this->dataset, pushedImageName) ? pushedImageName : "");
+			this->_buttonBackwardSkinned->resizeToFitImage();
+			this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
+		}
+		else if (this->_buttonBackwardSkinned != NULL)
+		{
+			this->unregisterChild(this->_buttonBackwardSkinned);
+			delete this->_buttonBackwardSkinned;
+			this->_buttonBackwardSkinned = NULL;
 		}
 	}
 
