@@ -1545,6 +1545,11 @@ namespace aprilui
 	
 	void Dataset::unregisterObjects(BaseObject* root)
 	{
+		if (root == NULL)
+		{
+			// this exception cannot be disabled on purpose
+			throw ObjectNotExistsException("Object", "NULL", this->name);
+		}
 		bool hasObject = this->objects.hasKey(root->getName());
 		bool hasAnimator = this->animators.hasKey(root->getName());
 		if (!hasObject && !hasAnimator)

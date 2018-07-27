@@ -572,21 +572,28 @@ namespace aprilui
 		// has to override its children which is why onMouseScroll() is overriden and not _mouseScroll()
 		if (this->hitTest != HitTest::DisabledRecursive && this->isVisible() && this->isDerivedEnabled())
 		{
-			Container* parent = dynamic_cast<Container*>(this->parent);
-			if (parent != NULL)
+			if (this->parent != NULL)
 			{
-				if (this->swapScrollWheels)
+				Container* parent = dynamic_cast<Container*>(this->parent);
+				if (parent != NULL)
 				{
-					hswap(x, y);
+					if (this->swapScrollWheels)
+					{
+						hswap(x, y);
+					}
+					if (this->_executeScroll(x, y, parent))
+					{
+						return true;
+					}
 				}
-				if (this->_executeScroll(x, y, parent))
+				else
 				{
-					return true;
+					hlog::errorf(logTag, "ScrollArea '%s' attached to object '%s' which is not a Container!", this->name.cStr(), this->parent->getName().cStr());
 				}
 			}
 			else
 			{
-				hlog::errorf(logTag, "ScrollArea '%s' attached to object '%s' which is not a Container!", this->name.cStr(), this->parent->getName().cStr());
+				hlog::errorf(logTag, "ScrollArea '%s' is not attached to an object!", this->name.cStr());
 			}
 		}
 		return Object::onMouseScroll(x, y);

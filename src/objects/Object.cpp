@@ -321,6 +321,11 @@ namespace aprilui
 
 	void Object::addChild(BaseObject* obj)
 	{
+		if (obj == NULL)
+		{
+			// this exception cannot be disabled on purpose
+			throw ObjectNotExistsException("Object", "NULL", this->name);
+		}
 		if (obj->getParent() != NULL)
 		{
 			__THROW_EXCEPTION(ObjectHasParentException(obj->getName(), this->getName()), aprilui::childManipulationDebugExceptionsEnabled, return);
@@ -345,6 +350,11 @@ namespace aprilui
 
 	void Object::removeChild(BaseObject* obj)
 	{
+		if (obj == NULL)
+		{
+			// this exception cannot be disabled on purpose
+			throw ObjectNotExistsException("Object", "NULL", this->name);
+		}
 		if (obj->getParent() != this)
 		{
 			__THROW_EXCEPTION(ObjectNotChildException(obj->getName(), this->getName()), aprilui::childManipulationDebugExceptionsEnabled, return);
