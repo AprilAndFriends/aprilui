@@ -950,7 +950,7 @@ namespace aprilui
 				}
 				return true;
 			}
-#if !defined(__ANDROID__) && !defined(_IOS) && !defined(_WINP8) // these keys aren't really available on Android, iOS and WinP8
+#if !defined(__ANDROID__) && !defined(_IOS) && !defined(_WINPHONE) // these keys aren't really available on Android, iOS and WinP8
 			if (keyCode == april::Key::ArrowLeft)
 			{
 				this->_ctrlMode && !this->_altMode ? this->_caretMoveLeftWord() : this->_caretMoveLeft();
