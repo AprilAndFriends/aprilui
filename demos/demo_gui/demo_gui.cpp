@@ -7,7 +7,7 @@
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
 #ifndef __ANDROID__
-	#ifndef _WINRT
+	#ifndef _UWP
 		#define RESOURCE_PATH "../../demos/media/"
 	#else
 		#define RESOURCE_PATH "media/"
@@ -36,6 +36,7 @@
 #include <april/MouseDelegate.h>
 #include <april/Platform.h>
 #include <april/RenderSystem.h>
+#include <april/SystemDelegate.h>
 #include <april/UpdateDelegate.h>
 #include <april/Window.h>
 #include <aprilui/Animator.h>
@@ -107,6 +108,56 @@ public:
 		dataset->update(timeDelta);
 		dataset->draw();
 		return true;
+	}
+
+};
+
+class SystemDelegate : public april::SystemDelegate
+{
+public:
+	SystemDelegate() : april::SystemDelegate()
+	{
+	}
+
+	void onWindowSizeChanged(int width, int height, bool fullScreen)
+	{
+		//this is called when the window size is changed
+		april::rendersys->setViewport(drawRect);
+		aprilui::setViewport(drawRect);
+	}
+
+};
+
+class MouseDelegate : public april::MouseDelegate
+{
+	void onMouseDown(april::Key button)
+	{
+		aprilui::onMouseDown(button);
+		aprilui::processEvents();
+	}
+
+	void onMouseUp(april::Key button)
+	{
+		aprilui::onMouseUp(button);
+		aprilui::processEvents();
+	}
+
+	void onMouseCancel(april::Key button)
+	{
+		aprilui::onMouseCancel(button);
+		aprilui::processEvents();
+	}
+
+	void onMouseMove()
+	{
+		aprilui::onMouseMove();
+		aprilui::processEvents();
+	}
+
+	void onMouseScroll(float x, float y)
+	{
+		aprilui::onMouseScroll(x, y);
+		aprilui::processEvents();
 	}
 
 };
@@ -213,43 +264,10 @@ class KeyDelegate : public april::KeyDelegate
 
 };
 
-class MouseDelegate : public april::MouseDelegate
-{
-	void onMouseDown(april::Key button)
-	{
-		aprilui::onMouseDown(button);
-		aprilui::processEvents();
-	}
-	
-	void onMouseUp(april::Key button)
-	{
-		aprilui::onMouseUp(button);
-		aprilui::processEvents();
-	}
-	
-	void onMouseCancel(april::Key button)
-	{
-		aprilui::onMouseCancel(button);
-		aprilui::processEvents();
-	}
-	
-	void onMouseMove()
-	{
-		aprilui::onMouseMove();
-		aprilui::processEvents();
-	}
-	
-	void onMouseScroll(float x, float y)
-	{
-		aprilui::onMouseScroll(x, y);
-		aprilui::processEvents();
-	}
-
-};
-
 static UpdateDelegate* updateDelegate = NULL;
-static KeyDelegate* keyDelegate = NULL;
+static SystemDelegate* systemDelegate = NULL;
 static MouseDelegate* mouseDelegate = NULL;
+static KeyDelegate* keyDelegate = NULL;
 
 #ifdef __APPLE__
 static void ObjCUtil_setCWD(const char* override_default_dir)
@@ -273,19 +291,19 @@ static void ObjCUtil_setCWD(const char* override_default_dir)
 }
 #endif
 
-
 void __aprilApplicationInit()
 {
 #ifdef __APPLE__
 	ObjCUtil_setCWD(nil);
 #endif
 	updateDelegate = new UpdateDelegate();
-	keyDelegate = new KeyDelegate();
+	systemDelegate = new SystemDelegate();
 	mouseDelegate = new MouseDelegate();
+	keyDelegate = new KeyDelegate();
 	try
 	{
 		hlog::setLevelDebug(true);
-#if defined(__ANDROID__) || defined(_IOS) || defined(_WINRT)
+#if defined(__ANDROID__) || defined(_IOS)
 		drawRect.setSize(april::getSystemInfo().displayResolution);
 #endif
 		april::init(april::RenderSystemType::Default, april::WindowType::Default);
@@ -295,12 +313,13 @@ void __aprilApplicationInit()
 		april::createWindow((int)drawRect.w, (int)drawRect.h, false, "demo_gui", options);
 		atres::init();
 		aprilui::init();
-#ifdef _WINRT
+#ifdef _UWP
 		april::window->setParam("cursor_mappings", "101 " RESOURCE_PATH "cursor\n102 " RESOURCE_PATH "simple");
 #endif
 		april::window->setUpdateDelegate(updateDelegate);
-		april::window->setKeyDelegate(keyDelegate);
+		april::window->setSystemDelegate(systemDelegate);
 		april::window->setMouseDelegate(mouseDelegate);
+		april::window->setKeyDelegate(keyDelegate);
 		cursor = april::window->createCursorFromResource(RESOURCE_PATH "cursor");
 		april::window->setCursor(cursor);
 		atres::renderer->registerFont(new atres::FontBitmap(RESOURCE_PATH "arial.font"));
