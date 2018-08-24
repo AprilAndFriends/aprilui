@@ -1463,7 +1463,12 @@ namespace aprilui
 	
 	april::Color Object::_makeDrawColor() const
 	{
-		return this->_makeDrawColor(this->color);
+		april::Color color = this->color;
+		if (this->inheritAlpha)
+		{
+			color.a = 255; // required, because this->_makeDrawColor(color) will already apply the derived object alpha
+		}
+		return this->_makeDrawColor(color);
 	}
 	
 	april::Color Object::_makeDrawColor(const april::Color& color) const
