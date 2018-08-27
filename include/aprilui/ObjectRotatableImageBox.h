@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport RotatableImageBox : public RotationImageBox
 	{
 	public:
-		RotatableImageBox(chstr name, grect rect);
+		RotatableImageBox(chstr name, grectf rect);
 		
 		float getRotationSpeed() { return mRotationSpeed; }
 		void setRotationSpeed(float value) { mRotationSpeed = value; }

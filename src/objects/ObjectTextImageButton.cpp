@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	TextImageButton::TextImageButton(chstr name, grect rect) :
+	TextImageButton::TextImageButton(chstr name, grectf rect) :
 		ImageButton(name, rect),
 		LabelBase(name)
 	{
@@ -28,7 +28,7 @@ namespace aprilui
 		return ImageButton::getDataset();
 	}
 
-	void TextImageButton::OnDraw(gvec2 offset)
+	void TextImageButton::OnDraw(gvec2f offset)
 	{
 		ImageButton::OnDraw(offset);
 		float alpha = getDerivedAlpha();

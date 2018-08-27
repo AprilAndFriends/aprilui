@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	ColoredImage::ColoredImage(Texture* texture, chstr name, grect source, bool vertical, april::Color color) :
+	ColoredImage::ColoredImage(Texture* texture, chstr name, grectf source, bool vertical, april::Color color) :
 				  Image(texture, name, source, vertical)
 	{
 		mColor = color;
@@ -31,12 +31,12 @@ namespace aprilui
 		mColor.a = (unsigned char)(alpha * 255);
 	}
 	
-	void ColoredImage::draw(grect rect, april::Color color)
+	void ColoredImage::draw(grectf rect, april::Color color)
 	{
 		Image::draw(rect, mColor * color);
 	}
 
-	void ColoredImage::draw(grect rect, april::Color color, float angle, gvec2 center)
+	void ColoredImage::draw(grectf rect, april::Color color, float angle, gvec2f center)
 	{
 		Image::draw(rect, mColor * color, angle, center);
 	}

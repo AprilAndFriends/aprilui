@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	RotatableImageBox::RotatableImageBox(chstr name, grect rect) :
+	RotatableImageBox::RotatableImageBox(chstr name, grectf rect) :
 		RotationImageBox(name, rect)
 	{
 		mDestAngle = 0.0f;

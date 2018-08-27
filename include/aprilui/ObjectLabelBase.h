@@ -35,8 +35,8 @@ namespace aprilui
 		hstr getFont() { return mFontName; }
 		void setFont(chstr value) { mFontName = value; }
 		
-		gvec2 getDrawOffset() { return mDrawOffset; }
-		void setDrawOffset(gvec2 value) { mDrawOffset = value; }
+		gvec2f getDrawOffset() { return mDrawOffset; }
+		void setDrawOffset(gvec2f value) { mDrawOffset = value; }
 		atres::Horizontal getHorzFormatting() { return mHorzFormatting; }
 		void setHorzFormatting(atres::Horizontal value) { mHorzFormatting = value; }
 		atres::Vertical getVertFormatting() { return mVertFormatting; }
@@ -55,7 +55,7 @@ namespace aprilui
 		hstr mTextKey;
 		hstr mFontName;
 		bool mTextFormatting;
-		gvec2 mDrawOffset;
+		gvec2f mDrawOffset;
 		atres::Horizontal mHorzFormatting;
 		atres::Vertical mVertFormatting;
 		atres::TextEffect mFontEffect;
@@ -65,7 +65,7 @@ namespace aprilui
 		hstr mEffectParameter;
 		april::Color mTextColor;
 		
-		void _drawLabel(grect rect, float alpha);
+		void _drawLabel(grectf rect, float alpha);
 		
 	};
 	

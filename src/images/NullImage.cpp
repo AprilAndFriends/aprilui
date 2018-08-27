@@ -12,7 +12,7 @@
 
 namespace aprilui
 {
-	NullImage::NullImage() : Image(0, "null", grect())
+	NullImage::NullImage() : Image(0, "null", grectf())
 	{
 	}
 	

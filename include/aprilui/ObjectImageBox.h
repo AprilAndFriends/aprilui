@@ -22,7 +22,7 @@ namespace aprilui
 	class apriluiExport ImageBox : public Object
 	{
 	public:
-		ImageBox(chstr name, grect rect);
+		ImageBox(chstr name, grectf rect);
 		
 		virtual Image* getImage() { return mImage; };
 		virtual void setImage(Image* value);
@@ -43,7 +43,7 @@ namespace aprilui
 		Image* mImage;
 		hstr mImageName;
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	};
 }

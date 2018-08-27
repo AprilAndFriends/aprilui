@@ -21,7 +21,7 @@ namespace aprilui
 	class apriluiExport ColoredImageBox : public ImageBox
 	{
 	public:
-		ColoredImageBox(chstr name, grect rect);
+		ColoredImageBox(chstr name, grectf rect);
 		
 		april::Color getColor() { return mColor; }
 		void setColor(april::Color value) { mColor = value; }
@@ -32,7 +32,7 @@ namespace aprilui
 	protected:
 		april::Color mColor;
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	};
 }

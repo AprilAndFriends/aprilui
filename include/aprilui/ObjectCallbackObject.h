@@ -20,13 +20,13 @@ namespace aprilui
 	class apriluiExport CallbackObject : public Object
 	{
 	public:
-		CallbackObject(chstr name, grect rect);
+		CallbackObject(chstr name, grectf rect);
 		bool setProperty(chstr name, chstr value);
 		
 		void (*getCallback())() { return mCallback; }
 		void setCallback(void (*value)()) { mCallback = value; }
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	protected:
 		void (*mCallback)();

@@ -25,17 +25,17 @@ namespace aprilui
 		struct ImageRef
 		{
 			Image* image;
-			grect rect;
+			grectf rect;
 		};
 		
 	public:
 		CompositeImage(chstr name, float w, float h);
 		CompositeImage(chstr name, CompositeImage& base);
 		
-		void addImageRef(Image* image, grect rect);
+		void addImageRef(Image* image, grectf rect);
 		
-		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
+		void draw(grectf rect, april::Color color);
+		void draw(grectf rect, april::Color color, float angle, gvec2f center);
 		
 		harray<ImageRef>& getImageList() { return mImages; }
 		

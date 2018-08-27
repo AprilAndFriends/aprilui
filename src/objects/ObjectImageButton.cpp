@@ -16,7 +16,7 @@
 
 namespace aprilui
 {
-	ImageButton::ImageButton(chstr name, grect rect) : ImageBox(name, rect)
+	ImageButton::ImageButton(chstr name, grectf rect) : ImageBox(name, rect)
 	{
 		_setTypeName("ImageButton");
 		mPushed = false;
@@ -26,7 +26,7 @@ namespace aprilui
 		mDisabledImage = NULL;
 	}
 
-	ImageButton::ImageButton(chstr name) : ImageBox(name, grect())// aprilui trunk compatibility
+	ImageButton::ImageButton(chstr name) : ImageBox(name, grectf())// aprilui trunk compatibility
 	{
 		_setTypeName("ImageButton");
 		mPushed = false;
@@ -36,9 +36,9 @@ namespace aprilui
 		mDisabledImage = NULL;
 	}
 
-	void ImageButton::OnDraw(gvec2 offset)
+	void ImageButton::OnDraw(gvec2f offset)
 	{
-		grect rect = _getDrawRect() + offset;
+		grectf rect = _getDrawRect() + offset;
 		bool enabled = this->isDerivedEnabled();
 		if (!enabled && mDisabledImage != NULL)
 		{
@@ -66,7 +66,7 @@ namespace aprilui
 					april::Color drawColor;
 					drawColor.a = (unsigned char)(drawColor.a * 0.5f);
 					april::BlendMode blendMode = blendableImage->getBlendMode();
-					blendableImage->setBlendMode(april::BM_ADD);
+					blendableImage->setBlendMode(april::BlendMode::Add);
 					blendableImage->draw(rect, drawColor);
 					blendableImage->setBlendMode(blendMode);
 				}

@@ -24,12 +24,12 @@ namespace aprilui
 	{
 	public:
 		ColorImage(chstr name);
-		ColorImage(chstr name, grect rect);
-		ColorImage(chstr name, grect rect, chstr color);
-		ColorImage(chstr name, grect rect, april::Color color);
+		ColorImage(chstr name, grectf rect);
+		ColorImage(chstr name, grectf rect, chstr color);
+		ColorImage(chstr name, grectf rect, april::Color color);
 		
-		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
+		void draw(grectf rect, april::Color color);
+		void draw(grectf rect, april::Color color, float angle, gvec2f center);
 		
 	protected:
 		april::Color mColor;

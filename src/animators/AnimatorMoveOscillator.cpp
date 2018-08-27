@@ -17,7 +17,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		MoveOscillator::MoveOscillator(chstr name) : Animator("Animators::MoveOscillator", name, grect(0, 0, 1, 1))
+		MoveOscillator::MoveOscillator(chstr name) : Animator("Animators::MoveOscillator", name, grectf(0, 0, 1, 1))
 		{
 			mBaseline.x = 0.0f;
 			mBaseline.y = 0.0f;

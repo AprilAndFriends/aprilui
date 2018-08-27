@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport Animator : public Object
 	{
 	public:
-		Animator(chstr type, chstr name, grect rect);
+		Animator(chstr type, chstr name, grectf rect);
 		
 		virtual bool isAnimated() = 0;
 		

@@ -31,7 +31,7 @@ namespace aprilui
 			void update(float k);
 			
 		protected:
-			gvec2 mInitial;
+			gvec2f mInitial;
 			float mIntensity;
 			float mDuration;
 			float mConstDuration;

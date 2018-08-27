@@ -19,7 +19,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		Mover::Mover(chstr name) : Animator("Animators::Mover", name, grect(0, 0, 1, 1))
+		Mover::Mover(chstr name) : Animator("Animators::Mover", name, grectf(0, 0, 1, 1))
 		{
 			mDest.x = -10000.0f;
 			mDest.y = -10000.0f;
@@ -54,7 +54,7 @@ namespace aprilui
 		
 		void Mover::move(float dest_x, float dest_y, float time)
 		{
-			mDest = gvec2(dest_x, dest_y);
+			mDest = gvec2f(dest_x, dest_y);
 			mStart = mParent->getPosition();
 			mSpeed = mDest - mStart;
 			mSpeed = mSpeed.normalized() * (mSpeed.length() / time);
@@ -65,7 +65,7 @@ namespace aprilui
 		void Mover::update(float k)
 		{
 			if (mSpeed.x == 0 && mSpeed.y == 0) return;
-			gvec2 v = mParent->getPosition();
+			gvec2f v = mParent->getPosition();
 			if (v.x == mDest.x && v.y == mDest.y)
 			{
 				return;
@@ -85,13 +85,13 @@ namespace aprilui
 				mStart = mParent->getPosition();
 			if (mDest.x == -10000.0f)
 				mDest = mStart + mSpeed * 100000;
-			gvec2 vec = mDest - mStart;
+			gvec2f vec = mDest - mStart;
 			float speedx = vec.x == 0 ? 0 : fabs(mSpeed.x / vec.x);
 			float speedy = vec.y == 0 ? 0 : fabs(mSpeed.y / vec.y);
 			mT.x += k * speedx;
 			mT.y += k * speedy;
 			if (mT.x < 1.0f && mT.y < 1.0f)
-				v = mStart + gvec2(vec.x*mT.x, vec.y*mT.y);
+				v = mStart + gvec2f(vec.x*mT.x, vec.y*mT.y);
 			else
 				v = mDest;
 			mParent->setPosition(v);

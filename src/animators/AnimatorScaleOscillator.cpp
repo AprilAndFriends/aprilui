@@ -17,7 +17,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ScaleOscillator::ScaleOscillator(chstr name) : Animator("Animators::ScaleOscillator", name, grect(0, 0, 1, 1))
+		ScaleOscillator::ScaleOscillator(chstr name) : Animator("Animators::ScaleOscillator", name, grectf(0, 0, 1, 1))
 		{
 			mBaseline = 0.0f;
 			mAmplitude = 0.5f;

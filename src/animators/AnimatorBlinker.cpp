@@ -16,7 +16,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		Blinker::Blinker(chstr name) : Animator("Animators::Blinker", name, grect(0, 0, 1, 1))
+		Blinker::Blinker(chstr name) : Animator("Animators::Blinker", name, grectf(0, 0, 1, 1))
 		{
 			mDuration = 0.0f;
 			mTimer = 0.0f;

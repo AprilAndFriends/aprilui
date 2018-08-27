@@ -21,7 +21,7 @@ namespace aprilui
 	class apriluiExport TextImageButton : public ImageButton, public LabelBase
 	{
 	public:
-		TextImageButton(chstr name, grect rect);
+		TextImageButton(chstr name, grectf rect);
 		
 		Dataset* getDataset();
 
@@ -29,7 +29,7 @@ namespace aprilui
 		bool setProperty(chstr name, chstr value);
 		
 	protected:
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 
 	};
 	

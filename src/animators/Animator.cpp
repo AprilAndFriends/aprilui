@@ -12,7 +12,7 @@
 
 namespace aprilui
 {
-	Animator::Animator(chstr type, chstr name, grect rect) :
+	Animator::Animator(chstr type, chstr name, grectf rect) :
 		Object(type, name, rect)
 	{
 		mDelay = 0.0f;

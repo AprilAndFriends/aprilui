@@ -13,7 +13,7 @@
 
 namespace aprilui
 {
-	CallbackObject::CallbackObject(chstr name, grect rect) :
+	CallbackObject::CallbackObject(chstr name, grectf rect) :
 		Object("CallbackObject", name, rect)
 	{
 		mCallback = NULL;
@@ -24,7 +24,7 @@ namespace aprilui
 		return Object::setProperty(name, value);
 	}
 	
-	void CallbackObject::OnDraw(gvec2 offset)
+	void CallbackObject::OnDraw(gvec2f offset)
 	{
 		if (mCallback != NULL)
 		{

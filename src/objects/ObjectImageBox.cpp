@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	ImageBox::ImageBox(chstr name, grect rect) :
+	ImageBox::ImageBox(chstr name, grectf rect) :
 		Object("ImageBox", name, rect)
 	{
 		mImage = NULL;
@@ -27,7 +27,7 @@ namespace aprilui
 		if (image != NULL)
 		{
 			mImageName = image->getName();
-			grect rect = image->getSource();
+			grectf rect = image->getSource();
 			if (mRect.w == -1)
 			{
 				mRect.w = rect.w * getDefaultScale();
@@ -63,12 +63,12 @@ namespace aprilui
 	{
 		if (mImage)
 		{
-			grect rect = mImage->getSource();
+			grectf rect = mImage->getSource();
 			setSize(rect.w * getDefaultScale(), rect.h * getDefaultScale());
 		}
 	}
 
-	void ImageBox::OnDraw(gvec2 offset)
+	void ImageBox::OnDraw(gvec2f offset)
 	{
 		if (mImage == NULL)
 		{
@@ -82,8 +82,8 @@ namespace aprilui
 		april::Color color;
 		color.a = (unsigned char)(alpha * 255);
 		mImage->draw(_getDrawRect() + offset, color);
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 	}
 
 	bool ImageBox::setProperty(chstr name, chstr value)

@@ -19,7 +19,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		Scaler::Scaler(chstr name) : Animator("Animators::Scaler", name, grect(0, 0, 1, 1))
+		Scaler::Scaler(chstr name) : Animator("Animators::Scaler", name, grectf(0, 0, 1, 1))
 		{
 			mAccel.y = 0.0f;
 			mAccel.x = 0.0f;
@@ -61,7 +61,7 @@ namespace aprilui
 
 		void Scaler::scale(float dest_w, float dest_h, float time)
 		{
-			mDest = gvec2(dest_w, dest_h);
+			mDest = gvec2f(dest_w, dest_h);
 			mStart = mParent->getSize();
 			mSpeed = mDest - mStart;
 			mSpeed = mSpeed.normalized() * (mSpeed.length() / time);
@@ -72,7 +72,7 @@ namespace aprilui
 		void Scaler::update(float k)
 		{
 			if (mSpeed.x == 0 && mSpeed.y == 0) return;
-			gvec2 v = mParent->getSize();
+			gvec2f v = mParent->getSize();
 			if (v.x == mDest.x && v.y == mDest.y)
 			{
 				return;
@@ -90,13 +90,13 @@ namespace aprilui
 				mStart = mParent->getSize();
 			if (mDest.x == -10000.0f)
 				mDest = mStart + mSpeed * 100000;		
-			gvec2 vec = mDest - mStart;
+			gvec2f vec = mDest - mStart;
 			float speedx = vec.x == 0 ? 0 : fabs(mSpeed.x / vec.x);
 			float speedy = vec.y == 0 ? 0 : fabs(mSpeed.y / vec.y);
 			mT.x += k * speedx;
 			mT.y += k * speedy;
 			if (mT.x < 1.0f && mT.y < 1.0f)
-				v = mStart + gvec2(vec.x*mT.x, vec.y*mT.y);
+				v = mStart + gvec2f(vec.x*mT.x, vec.y*mT.y);
 			else
 				v = mDest;
 			mParent->setSize(v);

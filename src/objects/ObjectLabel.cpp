@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	Label::Label(chstr name, grect rect) :
+	Label::Label(chstr name, grectf rect) :
 		Object("Label", name, rect),
 		LabelBase(name)
 	{
@@ -26,7 +26,7 @@ namespace aprilui
 		return Object::getDataset();
 	}
 
-	void Label::OnDraw(gvec2 offset)
+	void Label::OnDraw(gvec2f offset)
 	{
 		Object::OnDraw(offset);
 		float alpha = getDerivedAlpha();

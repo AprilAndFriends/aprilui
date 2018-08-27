@@ -126,7 +126,7 @@ namespace aprilui
 		virtual void parseRamTexture(hlxml::Node* node);
 		virtual void parseCompositeImage(hlxml::Node* node);
 		virtual void parseExternalXMLNode(hlxml::Node* node) { }
-		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr obj_name, grect rect) { return 0; }
+		virtual Object* parseExternalObjectClass(hlxml::Node* node, chstr obj_name, grectf rect) { return 0; }
 		
 		virtual Object* recursiveObjectParse(hlxml::Node* node, Object* parent);
 		

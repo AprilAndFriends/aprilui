@@ -181,7 +181,7 @@ namespace aprilui
 			{
 				throw ApriluiResourceExistsException(filename, "Texture", this);
 			}
-			mImages[textureName] = new Image(texture, filename, grect(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
+			mImages[textureName] = new Image(texture, filename, grectf(0, 0, (float)texture->getWidth(), (float)texture->getHeight()));
 		}
 		else
 		{
@@ -195,10 +195,10 @@ namespace aprilui
 					{
 						throw ApriluiResourceExistsException(name, "Image", this);
 					}
-					grect rect;
+					grectf rect;
 					if ((*child)->pexists("rect")) // aprilui trunk compatibility
 					{
-						rect = april::hstrToGrect((*child)->pstr("rect"));
+						rect = april::hstrToGrectf((*child)->pstr("rect"));
 					}
 					else
 					{
@@ -227,7 +227,7 @@ namespace aprilui
 					hstr mode = (*child)->pstr("blend_mode", "default");
 					if (mode == "add")
 					{
-						image->setBlendMode(april::BM_ADD);
+						image->setBlendMode(april::BlendMode::Add);
 					}
 					mImages[name] = image;
 				}
@@ -270,7 +270,7 @@ namespace aprilui
 			if ((*child)->name == "ImageRef")
 			{
 				refname = (*child)->pstr("name");
-				image->addImageRef(getImage(refname), grect((*child)->pfloat("x"), (*child)->pfloat("y"), (*child)->pfloat("w"), (*child)->pfloat("h")));
+				image->addImageRef(getImage(refname), grectf((*child)->pfloat("x"), (*child)->pfloat("y"), (*child)->pfloat("w"), (*child)->pfloat("h")));
 			}
 		}
 		mImages[name] = image;
@@ -284,7 +284,7 @@ namespace aprilui
 	Object* Dataset::recursiveObjectParse(hlxml::Node* node, Object* parent)
 	{
 		hstr objectName;
-		grect rect(0, 0, 1, 1);
+		grectf rect(0, 0, 1, 1);
 		hstr className = node->pstr("type");
 		
 		if (node->name == "Object")
@@ -377,7 +377,7 @@ namespace aprilui
 		
 		foreach_xmlnode (child, node)
 		{
-			if ((*child)->type != hlxml::Node::TYPE_TEXT && (*child)->type != hlxml::Node::TYPE_COMMENT)
+			if ((*child)->type != hlxml::Node::Type::Text && (*child)->type != hlxml::Node::Type::Comment)
 			{
 				if ((*child)->name == "Property")
 				{
@@ -420,7 +420,7 @@ namespace aprilui
 			else if ((*node)->name == "RamTexture")     parseRamTexture(*node);
 			else if ((*node)->name == "CompositeImage") parseCompositeImage(*node);
 			else if ((*node)->name == "Object")         parseObject(*node);
-			else if ((*node)->type != hlxml::Node::TYPE_TEXT && (*node)->type != hlxml::Node::TYPE_COMMENT)
+			else if ((*node)->type != hlxml::Node::Type::Text && (*node)->type != hlxml::Node::Type::Comment)
 			{
 				parseExternalXMLNode(*node);
 			}

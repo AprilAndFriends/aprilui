@@ -24,10 +24,10 @@ namespace aprilui
 	class apriluiExport ColoredImage : public Image
 	{
 	public:
-		ColoredImage(Texture* texture, chstr name, grect source, bool vertical = false, april::Color color = april::Color());
+		ColoredImage(Texture* texture, chstr name, grectf source, bool vertical = false, april::Color color = april::Color());
 		
-		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
+		void draw(grectf rect, april::Color color);
+		void draw(grectf rect, april::Color color, float angle, gvec2f center);
 
 		float getAlpha();
 		void setAlpha(float alpha);

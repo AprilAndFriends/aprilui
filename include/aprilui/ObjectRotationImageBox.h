@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport RotationImageBox : public ImageBox
 	{
 	public:
-		RotationImageBox(chstr name, grect rect);
+		RotationImageBox(chstr name, grectf rect);
 
 		float getAngle() { return mAngle; }
 		virtual void setAngle(float value) { mAngle = value; }
@@ -30,7 +30,7 @@ namespace aprilui
 	protected:
 		float mAngle;
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	};
 	

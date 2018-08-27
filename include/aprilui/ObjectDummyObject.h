@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport DummyObject : public Object
 	{
 	public:
-		DummyObject(chstr name, grect rect);
+		DummyObject(chstr name, grectf rect);
 		
 		bool setProperty(chstr name, chstr value);
 		

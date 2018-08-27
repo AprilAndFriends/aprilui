@@ -21,7 +21,7 @@ namespace aprilui
 	class apriluiExport ImageButton : public ImageBox
 	{
 	public:
-		ImageButton(chstr name, grect rect);
+		ImageButton(chstr name, grectf rect);
 		ImageButton(chstr name); // aprilui trunk compatibility
 
 		Image* getPushedImage() { return mPushedImage; }
@@ -55,7 +55,7 @@ namespace aprilui
 		bool mPushed;
 		
 		void update(float k);
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	};
 }

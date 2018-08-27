@@ -24,13 +24,13 @@ namespace aprilui
 	class apriluiExport Image
 	{
 	public:
-		Image(Texture* texture, chstr name, grect source, bool vertical = false, bool invertX = false, bool invertY = false);
+		Image(Texture* texture, chstr name, grectf source, bool vertical = false, bool invertX = false, bool invertY = false);
 		virtual ~Image();
 		
-		virtual void draw(grect rect);
-		virtual void draw(grect rect, april::Color color);
-		virtual void draw(grect rect, april::Color color, float angle, gvec2 center);
-		virtual void draw(grect rect, april::Color color, float angle);
+		virtual void draw(grectf rect);
+		virtual void draw(grectf rect, april::Color color);
+		virtual void draw(grectf rect, april::Color color, float angle, gvec2f center);
+		virtual void draw(grectf rect, april::Color color, float angle);
 		
 		bool isVertical() { return mVertical; };
 		bool isXInverted() { return mInvertX; };
@@ -40,8 +40,8 @@ namespace aprilui
 	
 		hstr getName() const { return mName; }
 		hstr getImageName() const { return mImageName; }
-		const grect& getSource() const { return mSource; }
-		void setSourceRect(grect r);
+		const grectf& getSource() const { return mSource; }
+		void setSourceRect(grectf r);
 		
 		april::BlendMode getBlendMode() { return mBlendMode; }
 		void setBlendMode(april::BlendMode mode) { mBlendMode = mode; }
@@ -50,7 +50,7 @@ namespace aprilui
 		Texture* mTexture;
 		hstr mName;
 		hstr mImageName;
-		grect mSource;
+		grectf mSource;
 		april::BlendMode mBlendMode;
 		bool mVertical;
 		bool mInvertX;

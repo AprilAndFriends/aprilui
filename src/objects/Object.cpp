@@ -26,7 +26,7 @@
 
 namespace aprilui
 {
-	Object::Object(chstr type, chstr name, grect rect) : EventReceiver()
+	Object::Object(chstr type, chstr name, grectf rect) : EventReceiver()
 	{
 		mTypeName = type;
 		mName = name;
@@ -43,7 +43,7 @@ namespace aprilui
 		mUseScale = false;
 	}
 	
-	Object::Object(chstr name, grect rect) : EventReceiver()
+	Object::Object(chstr name, grectf rect) : EventReceiver()
 	{
 		mTypeName = "undefined";
 		mName = name;
@@ -127,12 +127,12 @@ namespace aprilui
 		return alpha;
 	}
 
-	void Object::draw(gvec2 offset)
+	void Object::draw(gvec2f offset)
 	{
 		if (isVisible())
 		{
 			OnDraw(offset);
-			gvec2 rect(offset.x + mRect.x, offset.y + mRect.y);
+			gvec2f rect(offset.x + mRect.x, offset.y + mRect.y);
 			foreach (Object*, it, mChildren)
 			{
 				(*it)->draw(rect);
@@ -150,7 +150,7 @@ namespace aprilui
 
 	bool Object::isCursorInside()
 	{
-		gvec2 pos = getCursorPosition();
+		gvec2f pos = getCursorPosition();
 		for (Object* p = mParent; p != NULL; p = p->mParent)
 		{
 			pos -= p->getPosition();
@@ -158,7 +158,7 @@ namespace aprilui
 		return isPointInside(pos);
 	}
 
-	bool Object::isPointInside(gvec2 position)
+	bool Object::isPointInside(gvec2f position)
 	{
 		return mRect.isPointInside(position);
 	}
@@ -326,15 +326,15 @@ namespace aprilui
 		return "";
 	}
 	
-	grect Object::getBoundingRect(aprilui::Object* overrideRoot)
+	grectf Object::getBoundingRect(aprilui::Object* overrideRoot)
 	{
 		return mRect;
 	}
 	
-	gvec2 Object::getDerivedPosition(aprilui::Object* overrideRoot)
+	gvec2f Object::getDerivedPosition(aprilui::Object* overrideRoot)
 	{
-		gvec2 position = getPosition();
-		position += mRect.getSize() * gvec2(0.5f, 0.5f);
+		gvec2f position = getPosition();
+		position += mRect.getSize() * gvec2f(0.5f, 0.5f);
 		if (mParent != overrideRoot)
 		{
 			position += mParent->getDerivedPosition(overrideRoot);
@@ -342,17 +342,17 @@ namespace aprilui
 		return position;
 	}
 	
-	gvec2 Object::getDerivedSize(aprilui::Object* overrideRoot)
+	gvec2f Object::getDerivedSize(aprilui::Object* overrideRoot)
 	{
 		return mRect.getSize();
 	}
 	
-	gvec2 Object::getDerivedScale(aprilui::Object* overrideRoot)
+	gvec2f Object::getDerivedScale(aprilui::Object* overrideRoot)
 	{
-		return gvec2(1.0f, 1.0f);
+		return gvec2f(1.0f, 1.0f);
 	}
 
-	grect Object::_getDrawRect()
+	grectf Object::_getDrawRect()
 	{
 		return (!mUseScale ? mRect : (mRect - mRect.getSize() * 0.5f));
 	}
@@ -454,10 +454,10 @@ namespace aprilui
 
 	Object* Object::getChildUnderPoint(float x, float y)
 	{
-		return getChildUnderPoint(gvec2(x, y));
+		return getChildUnderPoint(gvec2f(x, y));
 	}
 	
-	Object* Object::getChildUnderPoint(gvec2 pos)
+	Object* Object::getChildUnderPoint(gvec2f pos)
 	{
 		if (!isVisible() || !isPointInside(pos))
 		{
@@ -479,7 +479,7 @@ namespace aprilui
 		return (object != NULL ? object : this);
 	}
 
-	gvec2 Object::transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot)
+	gvec2f Object::transformToLocalSpace(gvec2f point, aprilui::Object* overrideRoot)
 	{
 		harray<Object*> sequence;
 		Object* current = this;
@@ -489,7 +489,7 @@ namespace aprilui
 			current = (overrideRoot == NULL || overrideRoot != current ? current->getParent() : NULL);
 		}
 		sequence.reverse();
-		gvec2 center;
+		gvec2f center;
 		foreach (Object*, it, sequence)
 		{
 			if ((*it)->isUseScale())

@@ -29,12 +29,12 @@ namespace aprilui
 		mUseEffectColor = false;
 		mUseEffectParameter = false;
 		mEffectColor = april::Color::Black;
-		mDrawOffset = gvec2();
+		mDrawOffset = gvec2f();
 		mTextFormatting = true;
 		mText = "LabelBase: " + name;
 	}
 	
-	void LabelBase::_drawLabel(grect rect, float alpha)
+	void LabelBase::_drawLabel(grectf rect, float alpha)
 	{
 #ifdef _DEBUG
 		if (aprilui::isDebugMode())

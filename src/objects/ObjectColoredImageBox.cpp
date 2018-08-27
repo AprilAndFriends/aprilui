@@ -17,13 +17,13 @@
 
 namespace aprilui
 {
-	ColoredImageBox::ColoredImageBox(chstr name, grect rect) :
+	ColoredImageBox::ColoredImageBox(chstr name, grectf rect) :
 		ImageBox(name, rect)
 	{
 		_setTypeName("ColoredImageBox");
 	}
 
-	void ColoredImageBox::OnDraw(gvec2 offset)
+	void ColoredImageBox::OnDraw(gvec2f offset)
 	{
 		if (mImage == NULL)
 		{

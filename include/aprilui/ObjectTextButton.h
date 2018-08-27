@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport TextButton : public Label
 	{
 	public:
-		TextButton(chstr name, grect rect);
+		TextButton(chstr name, grectf rect);
 		
 		april::Color getHoverTextColor() { return mHoverTextColor; }
 		void setHoverTextColor(april::Color value) { mHoverTextColor = value; }
@@ -44,7 +44,7 @@ namespace aprilui
 		april::Color mPushedTextColor;
 		april::Color mDisabledTextColor;
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	};
 }

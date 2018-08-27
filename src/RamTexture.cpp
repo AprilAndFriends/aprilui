@@ -30,7 +30,7 @@ namespace aprilui
 	{
 		this->width = w;
 		this->height = h;
-		this->source = april::Image::create(w, h, april::Color::Clear, april::Image::FORMAT_RGBA);
+		this->source = april::Image::create(w, h, april::Color::Clear, april::Image::Format::RGBA);
 		hlog::write(aprilui::logTag, "Creating RAM texture.");
 	}
 
@@ -52,7 +52,7 @@ namespace aprilui
 			}
 			else
 			{
-				this->source = april::Image::create(this->width, this->height, april::Color::Clear, april::Image::FORMAT_RGBA);
+				this->source = april::Image::create(this->width, this->height, april::Color::Clear, april::Image::Format::RGBA);
 			}
 			return true;
 		}
@@ -77,7 +77,10 @@ namespace aprilui
 	april::Color RamTexture::getInterpolatedPixel(float x, float y)
 	{
 		april::Color color = april::Color::White;
-		if (this->source == NULL) load();
+		if (this->source == NULL)
+		{
+			this->load();
+		}
 		if (this->source != NULL)
 		{
 			color = this->source->getInterpolatedPixel(x, y);

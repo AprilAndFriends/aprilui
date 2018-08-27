@@ -32,12 +32,12 @@ namespace aprilui
 			void scale(float dest_w, float dest_h, float time);
             
 		protected:
-			gvec2 mInitialSize;
-			gvec2 mInitialS;
-			gvec2 mAccel;
-			gvec2 mSpeed;
-			gvec2 mDest,mStart;
-			gvec2 mT;
+			gvec2f mInitialSize;
+			gvec2f mInitialS;
+			gvec2f mAccel;
+			gvec2f mSpeed;
+			gvec2f mDest,mStart;
+			gvec2f mT;
 		};
 	}
 }

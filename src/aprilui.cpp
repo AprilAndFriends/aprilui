@@ -24,7 +24,7 @@ namespace aprilui
 	hmap<int, april::Texture*> gFontTextures;
 	hmap<hstr, Dataset*> gDatasets;
 	float defaultScale = 1.0f;
-	gvec2 cursorPosition;
+	gvec2f cursorPosition;
 	hstr (*g_macroCallback)(chstr) = 0;
 #ifdef _DEBUG
 	bool debugMode = false;
@@ -32,7 +32,7 @@ namespace aprilui
 	hstr defaultTextsPath = "texts";
 	hstr g_locale;
 	float textureIdleUnloadTime = 0.0f;
-	grect viewport(0.0f, 0.0f, 1024.0f, 768.0f);
+	grectf viewport(0.0f, 0.0f, 1024.0f, 768.0f);
 	// TODO - hack, has to be removed
 	bool forcedDynamicLoading = false;
 	
@@ -69,39 +69,27 @@ namespace aprilui
 		gDatasets.clear();
 	}
 	
-	// deprecated
-	gvec2 getCursorPos()
+	gvec2f getCursorPosition()
 	{
 		return cursorPosition;
 	}
 
-	// deprecated
-	void setCursorPos(float x, float y)
-	{
-		cursorPosition.set(x, y);
-	}
-	
-	gvec2 getCursorPosition()
-	{
-		return cursorPosition;
-	}
-
-	void setCursorPosition(gvec2 position)
+	void setCursorPosition(cgvec2f position)
 	{
 		cursorPosition = position;
 	}
 	
 	void setCursorPosition(float x, float y)
 	{
-		cursorPosition = gvec2(x, y);
+		cursorPosition = gvec2f(x, y);
 	}
 	
-	grect getViewport()
+	grectf getViewport()
 	{
 		return viewport;
 	}
 
-	void setViewport(grect value)
+	void setViewport(cgrectf value)
 	{
 		viewport = value;
 	}

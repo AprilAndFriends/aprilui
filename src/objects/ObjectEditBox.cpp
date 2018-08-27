@@ -21,7 +21,7 @@
 
 namespace aprilui
 {
-	EditBox::EditBox(chstr name, grect rect) :
+	EditBox::EditBox(chstr name, grectf rect) :
 		Label(name, rect)
 	{
 		mText = "";
@@ -72,7 +72,7 @@ namespace aprilui
 		mPushed = false;
 	}
 
-	void EditBox::OnDraw(gvec2 offset)
+	void EditBox::OnDraw(gvec2f offset)
 	{
 		//////////////
 		// TODO - remove this hack, fix it in ATRES
@@ -88,7 +88,7 @@ namespace aprilui
 			}
 		}
 		//////////////
-		grect rect = _getDrawRect();
+		grectf rect = _getDrawRect();
         april::Color color = april::Color::Black;
         if (mBackground)
         {
@@ -134,7 +134,7 @@ namespace aprilui
 		{
 			mOffsetIndex = mCursorIndex - count;
 		}
-		Label::OnDraw(gvec2(0,0));
+		Label::OnDraw(gvec2f(0,0));
 		if (mDataset != NULL && mDataset->getFocusedObject() == this && mBlinkTimer < 0.5f)
 		{
 			mText = hstr::fromUnicode(mUnicodeChars(mOffsetIndex, mCursorIndex - mOffsetIndex));
@@ -181,7 +181,7 @@ namespace aprilui
 		}
 		//mText = hstr::fromUnicode(mUnicodeChars(mOffsetIndex, mUnicodeChars.size() - mOffsetIndex));
 		//count = atres::renderer->getTextCountUnformatted(mFontName, mText, rect.w);
-		grect rect = mRect;
+		grectf rect = mRect;
 		rect.w = x - rect.x;
 		harray<atres::RenderLine> lines = atres::renderer->makeRenderLines(mFontName, rect, text);
 		int count = 0;
@@ -269,36 +269,49 @@ namespace aprilui
 		{
 			return true;
 		}
-		switch (keyCode)
+#ifndef _ANDROID // these keys aren't really available on Android
+		if (keyCode == april::Key::ArrowLeft.value)
 		{
-#ifndef _ANDROID // these keys aren't really available on Android
-		case april::AK_LEFT:
 			mCtrlMode ? _cursorMoveLeftWord() : _cursorMoveLeft();
-			break;
-		case april::AK_RIGHT:
+			return false;
+		}
+		if (keyCode == april::Key::ArrowRight.value)
+		{
 			mCtrlMode ? _cursorMoveRightWord() : _cursorMoveRight();
-			break;
+			return false;
+		}
 #endif
-		case april::AK_BACK:
+		if (keyCode == april::Key::Backspace.value)
+		{
 			mCtrlMode ? _deleteLeftWord() : _deleteLeft();
-			break;
-		case april::AK_DELETE:
+			return false;
+		}
+		if (keyCode == april::Key::Delete.value)
+		{
 			mCtrlMode ? _deleteRightWord() : _deleteRight();
-			break;
+			return false;
+		}
 #ifndef _ANDROID // these keys aren't really available on Android
-		case april::AK_HOME:
+		if (keyCode == april::Key::Home.value)
+		{
 			setCursorIndex(0);
-			break;
-		case april::AK_END:
+			return false;
+		}
+		if (keyCode == april::Key::End.value)
+		{
 			setCursorIndex(mUnicodeChars.size());
-			break;
-		case april::AK_CONTROL:
+			return false;
+		}
+		if (keyCode == april::Key::Control.value)
+		{
 			mCtrlMode = true;
-			break;
+			return false;
+		}
 #endif
-		case april::AK_RETURN:
-			triggerEvent("Submit", april::AK_RETURN);
-			break;
+		if (keyCode == april::Key::Return.value)
+		{
+			triggerEvent("Submit", 0, 0, april::Key::Return.value);
+			return false;
 		}
 		return false;
 	}
@@ -309,12 +322,10 @@ namespace aprilui
 		{
 			return true;
 		}
-		switch (keyCode)
+		if (keyCode == april::Key::Control.value || keyCode == april::Key::Menu.value)
 		{
-		case april::AK_CONTROL:
-		case april::AK_MENU:
 			mCtrlMode = false;
-			break;
+			return false;
 		}
 		return false;
 	}

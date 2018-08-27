@@ -9,7 +9,7 @@
 #ifndef APRILUI_H
 #define APRILUI_H
 
-#define APRILUI_VER 1.34
+#define APRILUI_VER 1.4
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/hstring.h>
@@ -46,13 +46,11 @@ namespace aprilui
 	apriluiFnExport float getTextureIdleUnloadTime();
 	apriluiFnExport void setTextureIdleUnloadTime(float value);
 	
-	DEPRECATED_ATTRIBUTE apriluiFnExport gvec2 getCursorPos();
-	DEPRECATED_ATTRIBUTE apriluiFnExport void setCursorPos(float x, float y);
-	apriluiFnExport gvec2 getCursorPosition();
-	apriluiFnExport void setCursorPosition(gvec2 position);
+	apriluiFnExport gvec2f getCursorPosition();
+	apriluiFnExport void setCursorPosition(cgvec2f position);
 	apriluiFnExport void setCursorPosition(float x, float y);
-	apriluiFnExport grect getViewport();
-	apriluiFnExport void setViewport(grect value);
+	apriluiFnExport grectf getViewport();
+	apriluiFnExport void setViewport(cgrectf value);
 	
 	apriluiFnExport void OnMouseDown(float x, float y, int button);
 	apriluiFnExport void OnMouseUp(float x, float y, int button);

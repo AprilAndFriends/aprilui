@@ -18,7 +18,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler", name, grect(0, 0, 1, 1))
+		AlphaFader::AlphaFader(chstr name) : Animator("Animators::Scaler", name, grectf(0, 0, 1, 1))
 		{
 			mInitialAccel = mAccel = 0.0f;
 			mInitialSpeed = mSpeed = 0.0f;

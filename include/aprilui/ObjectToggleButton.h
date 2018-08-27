@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport ToggleButton : public ImageButton
 	{
 	public:
-		ToggleButton(chstr name, grect rect);
+		ToggleButton(chstr name, grectf rect);
 
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);
@@ -29,7 +29,7 @@ namespace aprilui
 		void turnOff() { mPushed = false; }
 		
 	protected:
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	};
 }

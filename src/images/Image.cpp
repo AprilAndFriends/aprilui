@@ -20,7 +20,7 @@
 
 namespace aprilui
 {
-	Image::Image(Texture* texture, chstr name, grect source, bool vertical, bool invertX, bool invertY)
+	Image::Image(Texture* texture, chstr name, grectf source, bool vertical, bool invertX, bool invertY)
 	{
 		mTexture = texture;
 		mName = name;
@@ -28,7 +28,7 @@ namespace aprilui
 		mImageName = name(index, name.size() - index); // the name without the dataset's name prefix
 		mSource = source;
 
-		mBlendMode = april::BM_DEFAULT;
+		mBlendMode = april::BlendMode::Alpha;
 		mVertical = vertical;
 		mInvertX = invertX;
 		mInvertY = invertY;
@@ -39,7 +39,7 @@ namespace aprilui
 	{
 	}
 	
-	void Image::setSourceRect(grect r)
+	void Image::setSourceRect(grectf r)
 	{
 		if (mSource != r)
 		{
@@ -93,12 +93,12 @@ namespace aprilui
 		}
 	}
 
-	void Image::draw(grect rect)
+	void Image::draw(grectf rect)
 	{
 		draw(rect, april::Color());
 	}
 	
-	void Image::draw(grect rect, april::Color color)
+	void Image::draw(grectf rect, april::Color color)
 	{
 		if (rect.w == -1)
 		{
@@ -118,20 +118,20 @@ namespace aprilui
 		_tryLoadTexCoords();
 			
 		april::rendersys->setBlendMode(mBlendMode);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
+			april::rendersys->render(april::RenderOperation::TriangleStrip, _tVertexes, 4, color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
+			april::rendersys->render(april::RenderOperation::TriangleStrip, _tVertexes, 4);
 		}
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 	}
 
-	void Image::draw(grect rect, april::Color color, float angle, gvec2 center)
+	void Image::draw(grectf rect, april::Color color, float angle, gvec2f center)
 	{
 		if (rect.w == -1)
 		{
@@ -157,23 +157,23 @@ namespace aprilui
 		_tryLoadTexCoords();
 		
 		april::rendersys->setBlendMode(mBlendMode);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		if (color.r < 255 || color.g < 255 || color.b < 255 || color.a < 255)
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4, color);
+			april::rendersys->render(april::RenderOperation::TriangleStrip, _tVertexes, 4, color);
 		}
 		else
 		{
-			april::rendersys->render(april::RO_TRIANGLE_STRIP, _tVertexes, 4);
+			april::rendersys->render(april::RenderOperation::TriangleStrip, _tVertexes, 4);
 		}
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}
 
-	void Image::draw(grect rect, april::Color color, float angle)
+	void Image::draw(grectf rect, april::Color color, float angle)
 	{
-		draw(rect, color, angle, gvec2(rect.w / 2, rect.h / 2));
+		draw(rect, color, angle, gvec2f(rect.w / 2, rect.h / 2));
 	}
 
 }

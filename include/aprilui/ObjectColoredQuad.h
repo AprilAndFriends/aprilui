@@ -21,12 +21,12 @@ namespace aprilui
 	class ColoredQuad : public Object
 	{
 	public:
-		ColoredQuad(chstr name, grect rect);
+		ColoredQuad(chstr name, grectf rect);
 		
 		void setColor(float a, float r, float g, float b);
 		bool setProperty(chstr name, chstr value);
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 
 		bool OnMouseDown(float x, float y, int button);
 		bool OnMouseUp(float x, float y, int button);

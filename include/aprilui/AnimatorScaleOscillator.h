@@ -33,7 +33,7 @@ namespace aprilui
 			float mAmplitude;
 			float mSpeed;
 			float mTimer;
-			gvec2 mInitialSize;
+			gvec2f mInitialSize;
 			
 		};
 	}

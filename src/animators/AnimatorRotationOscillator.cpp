@@ -17,7 +17,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		RotationOscillator::RotationOscillator(chstr name) : Animator("Animators::RotationOscillator", name, grect(0, 0, 1, 1))
+		RotationOscillator::RotationOscillator(chstr name) : Animator("Animators::RotationOscillator", name, grectf(0, 0, 1, 1))
 		{
 			mBaseline = 0.0f;
 			mAmplitude = 0.5f;

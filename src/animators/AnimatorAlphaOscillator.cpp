@@ -16,7 +16,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		AlphaOscillator::AlphaOscillator(chstr name) : Animator("Animators::Oscillator", name, grect(0, 0, 1, 1))
+		AlphaOscillator::AlphaOscillator(chstr name) : Animator("Animators::Oscillator", name, grectf(0, 0, 1, 1))
 		{
 			mBaseline = 0.5f;
 			mAmplitude = 0.5f;

@@ -26,7 +26,7 @@ namespace aprilui
 
 		hstr getOriginalFilename() { return mOriginalFilename; }
 		hstr getFilename() { return mFilename; }
-		gvec2 getScale() { return mScale; }
+		gvec2f getScale() { return mScale; }
 		float getUnusedTime() { return mUnusedTime; }
 		bool isDynamic() { return mDynamic; }
 
@@ -53,7 +53,7 @@ namespace aprilui
 		hstr mOriginalFilename;
 		hstr mFilename;
 		april::Texture* mTexture;
-		gvec2 mScale;
+		gvec2f mScale;
 		float mUnusedTime;
 		bool mDynamic;
 		harray<Texture*> mDynamicLinks;

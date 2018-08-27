@@ -16,7 +16,7 @@
 
 namespace aprilui
 {
-	RotationImageBox::RotationImageBox(chstr name, grect rect) :
+	RotationImageBox::RotationImageBox(chstr name, grectf rect) :
 		ImageBox(name, rect)
 	{
 		mAngle = 0.0f;
@@ -29,7 +29,7 @@ namespace aprilui
 		return 1;
 	}
 
-	void RotationImageBox::OnDraw(gvec2 offset)
+	void RotationImageBox::OnDraw(gvec2f offset)
 	{
 		if (mImage == NULL)
 		{

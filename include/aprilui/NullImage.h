@@ -20,8 +20,8 @@ namespace aprilui
 	public:
 		NullImage();
 		
-		void draw(grect rect, april::Color color) { }
-		void draw(grect rect, april::Color color, float angle) { }
+		void draw(grectf rect, april::Color color) { }
+		void draw(grectf rect, april::Color color, float angle) { }
 		
 	};
 

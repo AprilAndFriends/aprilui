@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport Slider : public ImageBox
 	{
 	public:
-		Slider(chstr name, grect rect);
+		Slider(chstr name, grectf rect);
 		
 		float getValue() { return mValue; }
 		void setValue(float value);
@@ -34,7 +34,7 @@ namespace aprilui
 		bool mPushed;
 		float mValue;
 		
-		void OnDraw(gvec2 offset = gvec2());
+		void OnDraw(gvec2f offset = gvec2f());
 		
 	};
 	

@@ -24,7 +24,7 @@ namespace aprilui
 		mAddressMode = texture->getAddressMode();
 		mScale.set(1.0f, 1.0f);
 		mUnusedTime = 0.0f;
-		mDynamic = !texture->isLoaded();
+		mDynamic = texture->isUnloaded();
 	}
 
 	Texture::Texture(chstr name, chstr filename, april::Texture* texture, bool managed) // aprilui trunk compatibility
@@ -96,7 +96,7 @@ namespace aprilui
 	
 	void Texture::update(float k)
 	{
-		if (mDynamic && mTexture->isLoaded())
+		if (mDynamic && !mTexture->isUnloaded())
 		{
 			// TODO - change to aprilui variable
 			float maxTime = aprilui::getTextureIdleUnloadTime();
@@ -119,11 +119,11 @@ namespace aprilui
 	void Texture::load()
 	{
 		mUnusedTime = 0.0f;
-		mTexture->load();
+		mTexture->loadAsync();
 		foreach (Texture*, it, mDynamicLinks)
 		{
 			(*it)->resetUnusedTime();
-			(*it)->getRenderTexture()->load();
+			(*it)->getRenderTexture()->loadAsync();
 		}
 	}
 

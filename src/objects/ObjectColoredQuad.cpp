@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	ColoredQuad::ColoredQuad(chstr name, grect rect) :
+	ColoredQuad::ColoredQuad(chstr name, grectf rect) :
 		Object("ColoredQuad", name, rect)
 	{
 	}
@@ -28,7 +28,7 @@ namespace aprilui
 				   COLOR_COMP_FOR_NEW_APRIL(a));
 	}
 
-	void ColoredQuad::OnDraw(gvec2 offset)
+	void ColoredQuad::OnDraw(gvec2f offset)
 	{
 		float alpha = getDerivedAlpha() * mColor.a_f();
 		april::rendersys->drawFilledRect(_getDrawRect() + offset, april::Color(mColor, COLOR_COMP_FOR_NEW_APRIL(alpha)));

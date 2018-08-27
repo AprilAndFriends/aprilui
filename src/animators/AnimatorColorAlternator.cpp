@@ -20,7 +20,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		ColorAlternator::ColorAlternator(chstr name) : Animator("Animators::ColorAlternator", name, grect(0, 0, 1, 1))
+		ColorAlternator::ColorAlternator(chstr name) : Animator("Animators::ColorAlternator", name, grectf(0, 0, 1, 1))
 		{
 			mLow.set("00000000");
 			mHigh.set("FFFFFFFF");

@@ -20,7 +20,7 @@ namespace aprilui
 	class apriluiExport EditBox : public Label
 	{
 	public:
-		EditBox(chstr name, grect rect);
+		EditBox(chstr name, grectf rect);
 		
 		int getCursorIndex() { return mCursorIndex; }
 		void setCursorIndex(int cursorIndex);
@@ -58,7 +58,7 @@ namespace aprilui
 		harray<unsigned int> mUnicodeChars;
 		harray<unsigned int> mFilterChars;
 		
-		void OnDraw(gvec2 offset);
+		void OnDraw(gvec2f offset);
 		
 		void _cursorMoveLeft();
 		void _cursorMoveRight();

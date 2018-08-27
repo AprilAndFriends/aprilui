@@ -32,10 +32,10 @@ namespace aprilui
 			void move(float dest_x, float dest_y, float time);
             
 		protected:
-			gvec2 mInitialS;
-			gvec2 mAccel;
-			gvec2 mSpeed;
-			gvec2 mDest, mStart, mT;
+			gvec2f mInitialS;
+			gvec2f mAccel;
+			gvec2f mSpeed;
+			gvec2f mDest, mStart, mT;
 			
 		};
 	}

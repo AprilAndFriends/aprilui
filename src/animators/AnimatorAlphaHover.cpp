@@ -16,7 +16,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		AlphaHover::AlphaHover(chstr name) : Animator("Animators::AlphaHover", name, grect(0, 0, 1, 1))
+		AlphaHover::AlphaHover(chstr name) : Animator("Animators::AlphaHover", name, grectf(0, 0, 1, 1))
 		{
 			mMin = 0.0f;
 			mOwnerAlpha = 0.0f;

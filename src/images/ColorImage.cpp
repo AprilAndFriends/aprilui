@@ -16,27 +16,27 @@
 
 namespace aprilui
 {
-	ColorImage::ColorImage(chstr name) : Image(0, name, grect())
+	ColorImage::ColorImage(chstr name) : Image(0, name, grectf())
 	{
 		mColor.set(name);
 	}
 
-	ColorImage::ColorImage(chstr name, grect rect) : Image(0, name, rect)
+	ColorImage::ColorImage(chstr name, grectf rect) : Image(0, name, rect)
 	{
 		mColor.set(name);
 	}
 
-	ColorImage::ColorImage(chstr name, grect rect, chstr color) : Image(0, name, rect)
+	ColorImage::ColorImage(chstr name, grectf rect, chstr color) : Image(0, name, rect)
 	{
 		mColor.set(color);
 	}
 
-	ColorImage::ColorImage(chstr name, grect rect, april::Color color) : Image(0, name, rect)
+	ColorImage::ColorImage(chstr name, grectf rect, april::Color color) : Image(0, name, rect)
 	{
 		mColor = color;
 	}
 
-	void ColorImage::draw(grect rect, april::Color color)
+	void ColorImage::draw(grectf rect, april::Color color)
 	{
 		_pVertices[0].x = rect.x;          _pVertices[0].y = rect.y;
 		_pVertices[1].x = rect.x + rect.w; _pVertices[1].y = rect.y;
@@ -44,14 +44,14 @@ namespace aprilui
 		_pVertices[3].x = rect.x + rect.w; _pVertices[3].y = rect.y + rect.h;
 		
 		april::rendersys->setBlendMode(mBlendMode);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		color *= mColor;
-		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->render(april::RenderOperation::TriangleStrip, _pVertices, 4, color);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 	}
 
-	void ColorImage::draw(grect rect, april::Color color, float angle, gvec2 center)
+	void ColorImage::draw(grectf rect, april::Color color, float angle, gvec2f center)
 	{
 		_pVertices[0].x = -center.x;			_pVertices[0].y = -center.y;
 		_pVertices[1].x = rect.w - center.x;	_pVertices[1].y = -center.y;
@@ -63,10 +63,10 @@ namespace aprilui
 		april::rendersys->translate(rect.x + center.x, rect.y + center.y);
 		april::rendersys->rotate(angle);
 		april::rendersys->setBlendMode(mBlendMode);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
-		april::rendersys->render(april::RO_TRIANGLE_STRIP, _pVertices, 4, color);
-		april::rendersys->setBlendMode(april::BM_DEFAULT);
-		april::rendersys->setColorMode(april::CM_DEFAULT);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
+		april::rendersys->render(april::RenderOperation::TriangleStrip, _pVertices, 4, color);
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		april::rendersys->setModelviewMatrix(temp_matrix);
 	}
 

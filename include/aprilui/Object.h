@@ -32,8 +32,8 @@ namespace aprilui
 	class apriluiExport Object : public EventReceiver
 	{
 	public:
-		Object(chstr name, grect rect);
-		Object(chstr type, chstr name, grect rect);
+		Object(chstr name, grectf rect);
+		Object(chstr type, chstr name, grectf rect);
 		~Object();
 
 		void addChild(Object* object);
@@ -41,7 +41,7 @@ namespace aprilui
 		Object* getParent() { return mParent; }
 		void removeAllChildren();
 		harray<Object*>& getChildren() { return mChildren; }
-		Object* getChildUnderPoint(gvec2 pos);
+		Object* getChildUnderPoint(gvec2f pos);
 		Object* getChildUnderPoint(float x, float y);
 
 		int getZOrder() { return mZOrder; }
@@ -49,7 +49,7 @@ namespace aprilui
 		virtual void reset() { } // hack
 		
 		bool isCursorInside();
-		virtual bool isPointInside(gvec2 position);
+		virtual bool isPointInside(gvec2f position);
 		virtual bool isPointInside(float x, float y);
 		void registerEvent(chstr name, void (*callback)(EventArgs*));
 
@@ -57,18 +57,18 @@ namespace aprilui
 		void setX(float value) { mRect.x = value; }
 		float getY() { return mRect.y; }
 		void setY(float value) { mRect.y = value; }
-		gvec2 getPosition() { return gvec2(mRect.x, mRect.y); }
-		void setPosition(gvec2 value) { mRect.x = value.x; mRect.y = value.y; }
+		gvec2f getPosition() { return gvec2f(mRect.x, mRect.y); }
+		void setPosition(gvec2f value) { mRect.x = value.x; mRect.y = value.y; }
 		void setPosition(float x, float y) { mRect.x = x; mRect.y = y; }
 		float getWidth() { return mRect.w; }
 		void setWidth(float value) { mRect.w = value; }
 		float getHeight() { return mRect.h; }
 		void setHeight(float value) { mRect.h = value; }
-		gvec2 getSize() { return gvec2(mRect.w, mRect.h); }
-		void setSize(gvec2 value) { mRect.w = value.x; mRect.h = value.y; }
+		gvec2f getSize() { return gvec2f(mRect.w, mRect.h); }
+		void setSize(gvec2f value) { mRect.w = value.x; mRect.h = value.y; }
 		void setSize(float w, float h) { mRect.w = w; mRect.h = h; }
-		grect getRect() { return mRect; }
-		void setRect(grect value) { mRect = value; }
+		grectf getRect() { return mRect; }
+		void setRect(grectf value) { mRect = value; }
 		void setRect(float x, float y, float w, float h) { mRect.set(x, y, w, h); }
 
 		bool isVisible() { return (mVisible && mAlpha > 0.0f); }
@@ -81,14 +81,14 @@ namespace aprilui
 		void setInheritsAlpha(bool value) { mInheritsAlpha = value; }
 		bool getVisibilityFlag() { return mVisible; }
 		
-		gvec2 getScale() { return mScale; }
-		void setScale(gvec2 value) { mScale = value; }
+		gvec2f getScale() { return mScale; }
+		void setScale(gvec2f value) { mScale = value; }
 		void setScale(float x, float y) { mScale.set(x, y); }
 		bool isUseScale() { return mUseScale; }
 		void setUseScale(bool value) { mUseScale = value; }
-		void setCenter(gvec2 value) { }
+		void setCenter(gvec2f value) { }
 		void setCenter(float x, float y) { }
-		inline void setPivot(gvec2 value) { } // aprilui trunk compatibility
+		inline void setPivot(gvec2f value) { } // aprilui trunk compatibility
 		inline void setPivot(float x, float y) { } // aprilui trunk compatibility
 
 		float getAlpha() { return mAlpha; }
@@ -98,11 +98,11 @@ namespace aprilui
 		void moveToFront();
 		void moveToBack();
 		
-		grect getBoundingRect(aprilui::Object* overrideRoot = NULL);
-		grect getDerivedRect(aprilui::Object* overrideRoot = NULL) { return getBoundingRect(overrideRoot); }
-		gvec2 getDerivedPosition(aprilui::Object* overrideRoot = NULL);
-		gvec2 getDerivedSize(aprilui::Object* overrideRoot = NULL);
-		gvec2 getDerivedScale(aprilui::Object* overrideRoot = NULL);
+		grectf getBoundingRect(aprilui::Object* overrideRoot = NULL);
+		grectf getDerivedRect(aprilui::Object* overrideRoot = NULL) { return getBoundingRect(overrideRoot); }
+		gvec2f getDerivedPosition(aprilui::Object* overrideRoot = NULL);
+		gvec2f getDerivedSize(aprilui::Object* overrideRoot = NULL);
+		gvec2f getDerivedScale(aprilui::Object* overrideRoot = NULL);
 		hstr getProperty(chstr prop, bool* prop_exists = NULL); // new-april compatibility
 		
 		void _setTypeName(chstr type) { mTypeName = type; }
@@ -130,7 +130,7 @@ namespace aprilui
 		void notifyEvent(chstr name, void* params);
 		
 		virtual void update(float k);
-		void draw(gvec2 offset = gvec2());
+		void draw(gvec2f offset = gvec2f());
 
 		virtual bool setProperty(chstr name, chstr value);
 		// system call, do not use!
@@ -138,15 +138,15 @@ namespace aprilui
 		virtual Dataset* getDataset() { return mDataset; }
 		void triggerEvent(chstr name, float x = 0.0f, float y = 0.0f, chstr extra = "");
 
-		gvec2 transformToLocalSpace(gvec2 point, aprilui::Object* overrideRoot = NULL);
-		virtual void OnDraw(gvec2 offset = gvec2()) { }
+		gvec2f transformToLocalSpace(gvec2f point, aprilui::Object* overrideRoot = NULL);
+		virtual void OnDraw(gvec2f offset = gvec2f()) { }
 
 	protected:
 		Object* mParent;
 		hstr mTypeName;
 		hstr mName;
-		grect mRect;
-		gvec2 mScale;
+		grectf mRect;
+		gvec2f mScale;
 		bool mUseScale;
 		int mZOrder;
 		float mAlpha;
@@ -159,7 +159,7 @@ namespace aprilui
 		Dataset* mDataset;
 		
 		void sortChildren();
-		grect _getDrawRect();
+		grectf _getDrawRect();
 		
 		float getDerivedAlpha();
 		bool isDerivedEnabled();

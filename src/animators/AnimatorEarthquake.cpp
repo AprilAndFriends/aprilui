@@ -16,7 +16,7 @@ namespace aprilui
 {
 	namespace Animators
 	{
-		Earthquake::Earthquake(chstr name) : Animator("Animators::Earthquake", name, grect(0, 0, 1, 1))
+		Earthquake::Earthquake(chstr name) : Animator("Animators::Earthquake", name, grectf(0, 0, 1, 1))
 		{
 			mIntensity = 0.0f;
 			mDuration = 1.0f;
@@ -65,7 +65,7 @@ namespace aprilui
 			else if (mFreqTimer > 1.0f / mFreq)
 			{
 				mFreqTimer -= 1.0f / mFreq;
-				mParent->setPosition(mInitial + gvec2((float)hrand((int)intensity), (float)hrand((int)intensity)));
+				mParent->setPosition(mInitial + gvec2f((float)hrand((int)intensity), (float)hrand((int)intensity)));
 			}
 		}
 		

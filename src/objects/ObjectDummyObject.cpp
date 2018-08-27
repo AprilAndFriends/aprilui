@@ -14,7 +14,7 @@
 namespace aprilui
 {
 	/********************************************************************************************************/
-	DummyObject::DummyObject(chstr name, grect rect) :
+	DummyObject::DummyObject(chstr name, grectf rect) :
 		Object("DummyObject", name, rect)
 	{
 	}

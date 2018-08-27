@@ -30,10 +30,10 @@ namespace aprilui
 			
 		protected:
 			float mTimer;
-			gvec2 mBaseline;
-			gvec2 mAmplitude;
-			gvec2 mSpeed;
-			gvec2 mInitialPosition;
+			gvec2f mBaseline;
+			gvec2f mAmplitude;
+			gvec2f mSpeed;
+			gvec2f mInitialPosition;
 			
 		};
 	}

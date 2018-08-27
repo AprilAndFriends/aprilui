@@ -15,7 +15,7 @@
 
 namespace aprilui
 {
-	TextButton::TextButton(chstr name, grect rect) :
+	TextButton::TextButton(chstr name, grectf rect) :
 		Label(name, rect)
 	{
 		mText = "TextButton: " + name;
@@ -27,12 +27,12 @@ namespace aprilui
 		mDisabledTextColor.set(0x7F,0x7F,0x7F);
 	}
 
-	void TextButton::OnDraw(gvec2 offset)
+	void TextButton::OnDraw(gvec2f offset)
 	{
 		bool cursorInside = isCursorInside();
 		if (mBackground)
 		{
-			grect rect = _getDrawRect() + offset;
+			grectf rect = _getDrawRect() + offset;
 			float a=0.5f + /* 0.25f * cursorInside + */ 0.25f * mPushed;
 			april::rendersys->drawFilledRect(rect, april::Color(COLOR_COMP_FOR_NEW_APRIL(0), 
 																 COLOR_COMP_FOR_NEW_APRIL(0),
@@ -42,7 +42,7 @@ namespace aprilui
 #ifdef _DEBUG
 		else if (aprilui::isDebugMode())
 		{
-			grect rect = _getDrawRect() + offset;
+			grectf rect = _getDrawRect() + offset;
 			april::rendersys->drawFilledRect(rect, april::Color(0, 0, 0, (int) (178 + 77 * (cursorInside && mPushed))));
 		}
 #endif

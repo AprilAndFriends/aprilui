@@ -22,7 +22,7 @@ namespace aprilui
 	class apriluiExport TiledImage : public Image
 	{
 	public:
-		TiledImage(Texture* texture, chstr name, grect source, bool vertical, float tileW, float tileH);
+		TiledImage(Texture* texture, chstr name, grectf source, bool vertical, float tileW, float tileH);
 		
 		float getTileW() { return mTileW; }
 		void setTileW(float w) { mTileW = w; }
@@ -36,8 +36,8 @@ namespace aprilui
 		void setTile(float w, float h);
 		void setScroll(float x, float y);
 		
-		void draw(grect rect, april::Color color);
-		void draw(grect rect, april::Color color, float angle, gvec2 center);
+		void draw(grectf rect, april::Color color);
+		void draw(grectf rect, april::Color color, float angle, gvec2f center);
 		
 	protected:
 		float mTileW;

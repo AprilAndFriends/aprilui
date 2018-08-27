@@ -17,19 +17,19 @@
 
 namespace aprilui
 {
-	ToggleButton::ToggleButton(chstr name, grect rect) :
+	ToggleButton::ToggleButton(chstr name, grectf rect) :
 		ImageButton(name, rect)
 	{
 		_setTypeName("ToggleButton");
 		mPushed = false;
 	}
 
-	void ToggleButton::OnDraw(gvec2 offset)
+	void ToggleButton::OnDraw(gvec2f offset)
 	{
 		float alpha = getDerivedAlpha();
 		april::Color color;
 		color.a = (unsigned char)(alpha * 255);
-		grect rect = _getDrawRect() + offset;
+		grectf rect = _getDrawRect() + offset;
 		if (mPushed && mPushedImage != NULL)
 		{
 			mPushedImage->draw(rect, color);
