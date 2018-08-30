@@ -326,12 +326,29 @@ namespace aprilui
 		virtual bool _buttonUp(april::Button buttonCode);
 
 	private:
+		Object* _childUnderCursor;
+		bool _checkedChildUnderCursor;
+
+		// optimizations
+		harray<Animator*> _dynamicAnimators;
+		gmat4 _drawModelviewMatrix;
+		gmat4 _drawProjectionMatrix;
+		grecti _drawViewport;
+		bool _drawClipped;
+		gvec2f _drawViewportOffset;
+		grectf _drawOriginalRect;
+		gvec2f _drawRatio;
+		grectf _drawNewViewport;
+		grectf _drawNewRect;
+		grectf _drawModelviewMatrixRect;
+		grecti _drawNewViewportRect;
+		gvec2f _drawPosition;
+		grectf _drawRect;
+		april::Color _drawFrameColor;
+
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
-
-		Object* _childUnderCursor;
-		bool _checkedChildUnderCursor;
 
 	};
 	

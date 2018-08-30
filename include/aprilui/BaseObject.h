@@ -112,6 +112,10 @@ namespace aprilui
 		void _sortChildren();
 
 	private:
+		// optimizations
+		harray<Object*> _childrenObjects;
+		harray<Animator*> _childrenAnimators;
+
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
@@ -119,5 +123,4 @@ namespace aprilui
 	};
 	
 }
-
 #endif

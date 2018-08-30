@@ -721,46 +721,46 @@ namespace aprilui
 		{
 			return;
 		}
-		gmat4 modelviewMatrix = april::rendersys->getModelviewMatrix();
-		gmat4 projectionMatrix;
-		grecti viewport;
-		bool clipped = (this->clip && this->parent != NULL);
-		if (clipped)
+		this->_drawModelviewMatrix = april::rendersys->getModelviewMatrix();
+		this->_drawClipped = (this->clip && this->parent != NULL);
+		if (this->_drawClipped)
 		{
-			projectionMatrix = april::rendersys->getProjectionMatrix();
-			viewport = april::rendersys->getViewport();
-			gvec2f viewportOffset = aprilui::getViewport().getPosition();
-			grectf originalRect = this->parent->getBoundingRect() + viewportOffset;
-			gvec2f ratio = gvec2f(viewport.getSize()) / april::rendersys->getOrthoProjection().getSize();
-			grectf newViewport((originalRect.getPosition()) * ratio, originalRect.getSize() * ratio);
-			newViewport.clip(viewport);
+			this->_drawProjectionMatrix = april::rendersys->getProjectionMatrix();
+			this->_drawViewport = april::rendersys->getViewport();
+			this->_drawViewportOffset = aprilui::getViewport().getPosition();
+			this->_drawOriginalRect = this->parent->getBoundingRect() + this->_drawViewportOffset;
+			this->_drawRatio = gvec2f(this->_drawViewport.getSize()) / april::rendersys->getOrthoProjection().getSize();
+			this->_drawNewViewport.set((this->_drawOriginalRect.getPosition()) * this->_drawRatio, this->_drawOriginalRect.getSize() * this->_drawRatio);
+			this->_drawNewViewport.clip(this->_drawViewport);
 			if (!this->useClipRound)
 			{
-				if (newViewport.w <= 0.0f || newViewport.h <= 0.0f)
+				if (this->_drawNewViewport.w <= 0.0f || this->_drawNewViewport.h <= 0.0f)
 				{
 					return;
 				}
 			}
-			else if (newViewport.w < 0.5f || newViewport.h < 0.5f)
+			else if (this->_drawNewViewport.w < 0.5f || this->_drawNewViewport.h < 0.5f)
 			{
 				return;
 			}
-			grectf newRect(newViewport.getPosition() / ratio, newViewport.getSize() / ratio);
-			originalRect.clip(newRect);
-			april::rendersys->setOrthoProjection(grectf(viewportOffset - originalRect.getPosition(), originalRect.getSize()));
+			this->_drawNewRect.set(this->_drawNewViewport.getPosition() / this->_drawRatio, this->_drawNewViewport.getSize() / this->_drawRatio);
+			this->_drawOriginalRect.clip(this->_drawNewRect);
+			this->_drawModelviewMatrixRect.set(this->_drawViewportOffset - this->_drawOriginalRect.getPosition(), this->_drawOriginalRect.getSize());
+			april::rendersys->setOrthoProjection(this->_drawModelviewMatrixRect);
 			if (!this->useClipRound)
 			{
-				april::rendersys->setViewport(newViewport);
+				april::rendersys->setViewport(this->_drawNewViewport);
 			}
 			else
 			{
-				april::rendersys->setViewport(grecti(hround(newViewport.x), hround(newViewport.y), hround(newViewport.w), hround(newViewport.h)));
+				this->_drawNewViewportRect.set(hround(this->_drawNewViewport.x), hround(this->_drawNewViewport.y), hround(this->_drawNewViewport.w), hround(this->_drawNewViewport.h));
+				april::rendersys->setViewport(this->_drawNewViewportRect);
 			}
 		}
-		gvec2f position = this->rect.getPosition() + this->pivot;
-		if (position.x != 0.0f || position.y != 0.0f)
+		this->_drawPosition = this->rect.getPosition() + this->pivot;
+		if (this->_drawPosition.x != 0.0f || this->_drawPosition.y != 0.0f)
 		{
-			april::rendersys->translate(position.x, position.y);
+			april::rendersys->translate(this->_drawPosition.x, this->_drawPosition.y);
 		}
 		if (this->angle != 0.0f)
 		{
@@ -783,12 +783,12 @@ namespace aprilui
 		{
 			(*it)->draw();
 		}
-		if (clipped)
+		if (this->_drawClipped)
 		{
-			april::rendersys->setProjectionMatrix(projectionMatrix);
-			april::rendersys->setViewport(viewport);
+			april::rendersys->setProjectionMatrix(this->_drawProjectionMatrix);
+			april::rendersys->setViewport(this->_drawViewport);
 		}
-		april::rendersys->setModelviewMatrix(modelviewMatrix);
+		april::rendersys->setModelviewMatrix(this->_drawModelviewMatrix);
 	}
 	
 	void Object::_update(float timeDelta)
@@ -799,15 +799,15 @@ namespace aprilui
 		}
 		BaseObject::_update(timeDelta);
 		// because this list could change during the update() call
-		harray<Animator*> animators = this->dynamicAnimators;
+		this->_dynamicAnimators = this->dynamicAnimators;
 		// first update the animators
-		foreach (Animator*, it, animators)
+		foreach (Animator*, it, this->_dynamicAnimators)
 		{
 			(*it)->update(timeDelta);
 		}
-		animators = this->dynamicAnimators;
+		this->_dynamicAnimators = this->dynamicAnimators;
 		this->dynamicAnimators.clear();
-		foreach (Animator*, it, animators)
+		foreach (Animator*, it, this->_dynamicAnimators)
 		{
 			if ((*it)->isExpired())
 			{
@@ -826,29 +826,31 @@ namespace aprilui
 
 	void Object::_drawDebug()
 	{
-		grectf rect = this->_makeDrawRect();
+		this->_drawRect = this->_makeDrawRect();
 		april::rendersys->setBlendMode(april::BlendMode::Alpha);
 		april::rendersys->setColorMode(april::ColorMode::Multiply);
 		if (this->debugColor.a > 0)
 		{
-			april::rendersys->drawFilledRect(rect, this->debugColor);
+			april::rendersys->drawFilledRect(this->_drawRect, this->debugColor);
 		}
-		april::Color frameColor = april::Color::Green;
+		this->_drawFrameColor = april::Color::Green;
 		if (this->hitTest == HitTest::Enabled)
 		{
-			frameColor = april::Color::Yellow;
+			this->_drawFrameColor = april::Color::Yellow;
 		}
 		else if (this->hitTest == HitTest::DisabledRecursive)
 		{
-			frameColor = april::Color::Red;
+			this->_drawFrameColor = april::Color::Red;
 		}
 		else if (!this->_isDerivedHitTestEnabled())
 		{
-			frameColor = april::Color::Cyan;
+			this->_drawFrameColor = april::Color::Cyan;
 		}
-		april::rendersys->drawRect(rect, april::Color(frameColor, 224));
-		april::rendersys->drawRect(grectf(-1.0f, -1.0f, 2.0f, 2.0f), april::Color::White);
-		april::rendersys->drawRect(grectf(-3.0f, -3.0f, 6.0f, 6.0f), april::Color::Green);
+		april::rendersys->drawRect(this->_drawRect, april::Color(this->_drawFrameColor, 224));
+		static grectf whiteRect(-1.0f, -1.0f, 2.0f, 2.0f);
+		static grectf greenRect(-3.0f, -3.0f, 6.0f, 6.0f);
+		april::rendersys->drawRect(whiteRect, april::Color::White);
+		april::rendersys->drawRect(greenRect, april::Color::Green);
 	}
 
 	bool Object::isCursorInside() const
