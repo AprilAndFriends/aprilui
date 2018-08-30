@@ -111,6 +111,7 @@ namespace aprilui
 		HL_DEFINE_ISSET(useClipRound, UseClipRound);
 		virtual inline int getFocusIndex() const { return this->focusIndex; }
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
+		HL_DEFINE_GET(Object*, lastChildUnderCursor, LastChildUnderCursor);
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
 
@@ -291,6 +292,7 @@ namespace aprilui
 		CustomPointInsideCallback customPointInsideCallback;
 		harray<Animator*> dynamicAnimators;
 		april::Color debugColor;
+		Object* lastChildUnderCursor;
 		
 		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;

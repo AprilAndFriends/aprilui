@@ -129,6 +129,7 @@ namespace aprilui
 		this->focusIndex = -1;
 		this->customPointInsideCallback = NULL;
 		this->debugColor.set(april::Color::Black, 32);
+		this->lastChildUnderCursor = NULL;
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -161,6 +162,7 @@ namespace aprilui
 		{
 			(*it)->parent = this;
 		}
+		this->lastChildUnderCursor = NULL;
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -1279,6 +1281,7 @@ namespace aprilui
 	
 	void Object::clearChildUnderCursor()
 	{
+		this->lastChildUnderCursor = this->_childUnderCursor;
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
