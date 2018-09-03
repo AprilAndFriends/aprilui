@@ -2006,7 +2006,7 @@ namespace aprilui
 	
 	void Dataset::processEvents()
 	{
-		if (this->callbackQueue.size() > 1)
+		if (this->callbackQueue.size() > 0)
 		{
 			QueuedCallback callback;
 			do
