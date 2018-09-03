@@ -349,71 +349,76 @@ namespace aprilui
 
 	void ScrollArea::_updateOobChildren()
 	{
-		if (this->parent != NULL && (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake || this->oobChildrenFadeSizeFactor.x > 0.0f || this->oobChildrenFadeSizeFactor.y > 0.0f))
+		if (this->parent != NULL)
 		{
-			grectf rect(0.0f, 0.0f, this->parent->getSize());
-			grectf adjustedRect;
-			grectf boundingRect;
-			float alpha = 1.0f;
-			float ratio = 1.0f;
-			foreach (Object*, it, this->childrenObjects)
+			bool optimizeOob = (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake);
+			bool oobFade = (this->oobChildrenFadeSizeFactor.x > 0.0f || this->oobChildrenFadeSizeFactor.y > 0.0f);
+			if (optimizeOob || oobFade)
 			{
-				boundingRect = (*it)->getBoundingRect(this);
-				if (this->optimizeOobChildrenVisible || this->optimizeOobChildrenAwake)
+				grectf rect(0.0f, 0.0f, this->parent->getSize());
+				grectf adjustedRect;
+				grectf boundingRect;
+				float alpha = 1.0f;
+				float ratio = 1.0f;
+				foreach (Object*, it, this->childrenObjects)
 				{
-					if (rect.intersects(boundingRect))
+					boundingRect = (*it)->getBoundingRect(this);
+					if (optimizeOob)
 					{
-						if (this->optimizeOobChildrenVisible)
+						if (rect.intersects(boundingRect))
 						{
-							(*it)->setVisible(true);
-						}
-						if (this->optimizeOobChildrenAwake)
-						{
-							(*it)->setAwake(true);
-						}
-					}
-					else
-					{
-						if (this->optimizeOobChildrenVisible)
-						{
-							(*it)->setVisible(false);
-						}
-						if (this->optimizeOobChildrenAwake)
-						{
-							(*it)->setAwake(false);
-						}
-					}
-				}
-				if (this->oobChildrenFadeSizeFactor.x > 0.0f || this->oobChildrenFadeSizeFactor.y > 0.0f)
-				{
-					alpha = 1.0f;
-					if (this->oobChildrenFadeSizeFactor.x > 0.0f)
-					{
-						adjustedRect.set(rect.x + boundingRect.w, rect.y - boundingRect.h, rect.w - boundingRect.w * 2.0f, rect.h + boundingRect.h * 2.0f);
-						if (adjustedRect.w > 0.0f)
-						{
-							ratio = boundingRect.clipped(adjustedRect).getArea() / boundingRect.getArea() - this->oobChildrenFadeOffsetFactor.x;
-							alpha *= hclamp(ratio / this->oobChildrenFadeSizeFactor.x, 0.0f, 1.0f);
+							if (this->optimizeOobChildrenVisible)
+							{
+								(*it)->setVisible(true);
+							}
+							if (this->optimizeOobChildrenAwake)
+							{
+								(*it)->setAwake(true);
+							}
 						}
 						else
 						{
-							alpha = 0.0f;
+							if (this->optimizeOobChildrenVisible)
+							{
+								(*it)->setVisible(false);
+							}
+							if (this->optimizeOobChildrenAwake)
+							{
+								(*it)->setAwake(false);
+							}
 						}
 					}
-					if (alpha > 0.0f && this->oobChildrenFadeSizeFactor.y > 0.0f)
+					if (oobFade)
 					{
-						adjustedRect.set(rect.x - boundingRect.w, rect.y + boundingRect.h, rect.w + boundingRect.w * 2.0f, rect.h - boundingRect.h * 2.0f);
-						if (adjustedRect.h > 0.0f)
+						alpha = 1.0f;
+						if (this->oobChildrenFadeSizeFactor.x > 0.0f)
 						{
-							ratio = boundingRect.clipped(adjustedRect).getArea() / boundingRect.getArea() - this->oobChildrenFadeOffsetFactor.y;
-							alpha *= hclamp(ratio / this->oobChildrenFadeSizeFactor.y, 0.0f, 1.0f);
+							adjustedRect.set(rect.x + boundingRect.w, rect.y - boundingRect.h, rect.w - boundingRect.w * 2.0f, rect.h + boundingRect.h * 2.0f);
+							if (adjustedRect.w > 0.0f)
+							{
+								ratio = boundingRect.clipped(adjustedRect).getArea() / boundingRect.getArea() - this->oobChildrenFadeOffsetFactor.x;
+								alpha *= hclamp(ratio / this->oobChildrenFadeSizeFactor.x, 0.0f, 1.0f);
+							}
+							else
+							{
+								alpha = 0.0f;
+							}
 						}
-						else
+						if (alpha > 0.0f && this->oobChildrenFadeSizeFactor.y > 0.0f)
 						{
-							alpha = 0.0f;
+							adjustedRect.set(rect.x - boundingRect.w, rect.y + boundingRect.h, rect.w + boundingRect.w * 2.0f, rect.h - boundingRect.h * 2.0f);
+							if (adjustedRect.h > 0.0f)
+							{
+								ratio = boundingRect.clipped(adjustedRect).getArea() / boundingRect.getArea() - this->oobChildrenFadeOffsetFactor.y;
+								alpha *= hclamp(ratio / this->oobChildrenFadeSizeFactor.y, 0.0f, 1.0f);
+							}
+							else
+							{
+								alpha = 0.0f;
+							}
 						}
+						(*it)->setAlpha((unsigned char)(alpha * 255.0f));
 					}
-					(*it)->setAlpha((unsigned char)(alpha * 255.0f));
 				}
 			}
 		}
