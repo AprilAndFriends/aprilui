@@ -40,7 +40,6 @@ namespace aprilui
 		friend class ScrollBarButtonSlider;
 
 		ScrollBar(chstr name);
-		~ScrollBar();
 		inline hstr getClassName() const { return "ScrollBar"; }
 
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;

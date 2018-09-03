@@ -31,7 +31,6 @@ namespace aprilui
 		friend class ListBox;
 
 		ListBoxItem(chstr name);
-		~ListBoxItem();
 		inline hstr getClassName() const { return "ListBoxItem"; }
 		static Object* createInstance(chstr name);
 

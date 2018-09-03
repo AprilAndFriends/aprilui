@@ -31,10 +31,6 @@ namespace aprilui
 		this->_treeViewNode = NULL;
 	}
 
-	TreeViewImage::~TreeViewImage()
-	{
-	}
-
 	Object* TreeViewImage::createInstance(chstr name)
 	{
 		return new TreeViewImage(name);

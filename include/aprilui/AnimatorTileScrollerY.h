@@ -28,7 +28,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(TileScrollerY);
 		public:
 			TileScrollerY(chstr name);
-			~TileScrollerY();
 			inline hstr getClassName() const { return "TileScrollerY"; }
 
 			static Animator* createInstance(chstr name);
@@ -44,5 +43,4 @@ namespace aprilui
 
 	}
 }
-
 #endif

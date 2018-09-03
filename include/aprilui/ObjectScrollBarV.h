@@ -30,7 +30,6 @@ namespace aprilui
 		friend class ScrollArea;
 
 		ScrollBarV(chstr name);
-		~ScrollBarV();
 		inline hstr getClassName() const { return "ScrollBarV"; }
 		static Object* createInstance(chstr name);
 
@@ -72,6 +71,6 @@ namespace aprilui
 		bool _checkAreaSize();
 
 	};
-}
 
+}
 #endif

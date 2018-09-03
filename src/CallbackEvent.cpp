@@ -22,10 +22,6 @@ namespace aprilui
 		this->callback = other.callback;
 	}
 
-	CallbackEvent::~CallbackEvent()
-	{
-	}
-
 	void CallbackEvent::execute(EventArgs* args)
 	{
 		(*this->callback)(args);

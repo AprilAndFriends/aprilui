@@ -83,10 +83,6 @@ namespace aprilui
 		this->_scrolling = false;
 	}
 
-	ScrollBar::~ScrollBar()
-	{
-	}
-
 	hmap<hstr, PropertyDescription>& ScrollBar::getPropertyDescriptions() const
 	{
 		if (ScrollBar::_propertyDescriptions.size() == 0)

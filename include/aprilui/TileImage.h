@@ -28,7 +28,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(TileImage);
 	public:
 		TileImage(Texture* texture, chstr name, cgrectf source);
-		~TileImage();
 		inline hstr getClassName() const { return "TileImage"; }
 		
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrectf source);

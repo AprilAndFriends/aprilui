@@ -27,7 +27,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(ScrollBarButtonBackground);
 	public:
 		ScrollBarButtonBackground(chstr name);
-		~ScrollBarButtonBackground();
 		inline hstr getClassName() const { return "ScrollBarButtonBackground"; }
 		static Object* createInstance(chstr name);
 
@@ -37,6 +36,6 @@ namespace aprilui
 		static void _click(EventArgs* args);
 
 	};
-}
 
+}
 #endif

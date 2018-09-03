@@ -25,10 +25,6 @@ namespace aprilui
 		{
 		}
 
-		ZOrderChanger::~ZOrderChanger()
-		{
-		}
-
 		Animator* ZOrderChanger::createInstance(chstr name)
 		{
 			return new ZOrderChanger(name);

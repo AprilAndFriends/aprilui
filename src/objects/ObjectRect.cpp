@@ -25,10 +25,6 @@ namespace aprilui
 	{
 	}
 
-	Rect::~Rect()
-	{
-	}
-
 	Object* Rect::createInstance(chstr name)
 	{
 		return new Rect(name);

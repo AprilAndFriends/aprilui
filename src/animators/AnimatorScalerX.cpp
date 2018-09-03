@@ -25,10 +25,6 @@ namespace aprilui
 		{
 		}
 
-		ScalerX::~ScalerX()
-		{
-		}
-
 		Animator* ScalerX::createInstance(chstr name)
 		{
 			return new ScalerX(name);

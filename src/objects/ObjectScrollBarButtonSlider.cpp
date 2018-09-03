@@ -31,10 +31,6 @@ namespace aprilui
 	{
 	}
 
-	ScrollBarButtonSlider::~ScrollBarButtonSlider()
-	{
-	}
-
 	Object* ScrollBarButtonSlider::createInstance(chstr name)
 	{
 		return new ScrollBarButtonSlider(name);

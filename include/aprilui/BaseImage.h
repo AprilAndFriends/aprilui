@@ -35,7 +35,6 @@ namespace aprilui
 		friend class Dataset;
 
 		BaseImage(chstr name);
-		~BaseImage();
 		virtual inline hstr getClassName() const { return "BaseImage"; }
 		
 		virtual hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;

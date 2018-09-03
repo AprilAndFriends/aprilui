@@ -29,10 +29,6 @@ namespace aprilui
 		this->gridView = NULL;
 	}
 
-	GridViewRow::~GridViewRow()
-	{
-	}
-
 	Object* GridViewRow::createInstance(chstr name)
 	{
 		return new GridViewRow(name);

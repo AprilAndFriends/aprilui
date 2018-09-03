@@ -25,10 +25,6 @@ namespace aprilui
 	{
 	}
 
-	FilledRect::~FilledRect()
-	{
-	}
-
 	Object* FilledRect::createInstance(chstr name)
 	{
 		return new FilledRect(name);

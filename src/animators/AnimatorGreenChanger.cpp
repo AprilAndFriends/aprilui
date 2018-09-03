@@ -25,10 +25,6 @@ namespace aprilui
 		{
 		}
 
-		GreenChanger::~GreenChanger()
-		{
-		}
-
 		Animator* GreenChanger::createInstance(chstr name)
 		{
 			return new GreenChanger(name);

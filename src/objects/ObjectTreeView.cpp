@@ -48,10 +48,6 @@ namespace aprilui
 		this->connectorColor = other.connectorColor;
 	}
 
-	TreeView::~TreeView()
-	{
-	}
-
 	Object* TreeView::createInstance(chstr name)
 	{
 		return new TreeView(name);

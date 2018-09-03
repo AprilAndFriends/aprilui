@@ -35,10 +35,6 @@ namespace aprilui
 		this->debugColor = april::Color::Clear;
 	}
 
-	ImageBox::~ImageBox()
-	{
-	}
-
 	Object* ImageBox::createInstance(chstr name)
 	{
 		return new ImageBox(name);

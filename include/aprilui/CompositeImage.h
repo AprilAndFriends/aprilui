@@ -30,7 +30,6 @@ namespace aprilui
 		typedef std::pair<BaseImage*, grectf> ImageRef;
 
 		CompositeImage(chstr name, cgvec2f size);
-		~CompositeImage();
 		inline hstr getClassName() const { return "CompositeImage"; }
 		
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;

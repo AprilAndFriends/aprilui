@@ -46,10 +46,6 @@ namespace aprilui
 		this->_treeViewParentNode = NULL;
 	}
 
-	TreeViewNode::~TreeViewNode()
-	{
-	}
-
 	Object* TreeViewNode::createInstance(chstr name)
 	{
 		return new TreeViewNode(name);

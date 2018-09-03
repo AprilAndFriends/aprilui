@@ -38,10 +38,6 @@ namespace aprilui
 			this->frameCount = other.frameCount;
 		}
 
-		FrameAnimation::~FrameAnimation()
-		{
-		}
-
 		Animator* FrameAnimation::createInstance(chstr name)
 		{
 			return new FrameAnimation(name);

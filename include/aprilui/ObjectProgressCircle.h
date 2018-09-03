@@ -45,7 +45,6 @@ namespace aprilui
 		));
 
 		ProgressCircle(chstr name);
-		~ProgressCircle();
 		inline hstr getClassName() const { return "ProgressCircle"; }
 		static Object* createInstance(chstr name);
 		

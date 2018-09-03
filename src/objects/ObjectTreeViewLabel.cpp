@@ -31,10 +31,6 @@ namespace aprilui
 		this->_treeViewNode = NULL;
 	}
 
-	TreeViewLabel::~TreeViewLabel()
-	{
-	}
-
 	Object* TreeViewLabel::createInstance(chstr name)
 	{
 		return new TreeViewLabel(name);

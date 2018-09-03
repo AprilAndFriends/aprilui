@@ -52,10 +52,6 @@ namespace aprilui
 		this->toggledDisabledImageName = other.toggledDisabledImageName;
 	}
 
-	ToggleButton::~ToggleButton()
-	{
-	}
-
 	Object* ToggleButton::createInstance(chstr name)
 	{
 		return new ToggleButton(name);

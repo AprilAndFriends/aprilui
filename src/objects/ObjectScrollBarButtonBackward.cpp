@@ -30,10 +30,6 @@ namespace aprilui
 	{
 	}
 
-	ScrollBarButtonBackward::~ScrollBarButtonBackward()
-	{
-	}
-
 	Object* ScrollBarButtonBackward::createInstance(chstr name)
 	{
 		return new ScrollBarButtonBackward(name);

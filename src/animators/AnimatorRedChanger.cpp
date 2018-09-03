@@ -25,10 +25,6 @@ namespace aprilui
 		{
 		}
 
-		RedChanger::~RedChanger()
-		{
-		}
-
 		Animator* RedChanger::createInstance(chstr name)
 		{
 			return new RedChanger(name);

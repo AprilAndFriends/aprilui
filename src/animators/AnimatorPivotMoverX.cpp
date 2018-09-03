@@ -25,10 +25,6 @@ namespace aprilui
 		{
 		}
 
-		PivotMoverX::~PivotMoverX()
-		{
-		}
-
 		Animator* PivotMoverX::createInstance(chstr name)
 		{
 			return new PivotMoverX(name);

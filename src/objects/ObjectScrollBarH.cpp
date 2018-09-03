@@ -43,10 +43,6 @@ namespace aprilui
 	{
 	}
 
-	ScrollBarH::~ScrollBarH()
-	{
-	}
-
 	Object* ScrollBarH::createInstance(chstr name)
 	{
 		return new ScrollBarH(name);

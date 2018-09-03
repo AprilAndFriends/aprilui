@@ -26,7 +26,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(ProgressChanger);
 		public:
 			ProgressChanger(chstr name);
-			~ProgressChanger();
 			inline hstr getClassName() const { return "ProgressChanger"; }
 
 			static Animator* createInstance(chstr name);
@@ -38,7 +37,7 @@ namespace aprilui
 			void _update(float timeDelta);
 
 		};
+
 	}
 }
-
 #endif

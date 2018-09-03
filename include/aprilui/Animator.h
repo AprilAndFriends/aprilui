@@ -40,7 +40,6 @@ namespace aprilui
 		friend class BaseObject;
 
 		Animator(chstr name);
-		~Animator();
 		inline hstr getClassName() const { return "Animator"; }
 		
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;

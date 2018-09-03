@@ -43,10 +43,6 @@ namespace aprilui
 		this->rowTemplate = NULL;
 	}
 
-	GridView::~GridView()
-	{
-	}
-
 	Object* GridView::createInstance(chstr name)
 	{
 		return new GridView(name);

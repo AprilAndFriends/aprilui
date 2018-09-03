@@ -56,10 +56,6 @@ namespace aprilui
 		this->_pushedMultiplyTime = other._pushedMultiplyTime;
 	}
 
-	ImageButton::~ImageButton()
-	{
-	}
-
 	Object* ImageButton::createInstance(chstr name)
 	{
 		return new ImageButton(name);

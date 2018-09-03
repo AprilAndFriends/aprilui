@@ -29,10 +29,6 @@ namespace aprilui
 		this->debugColor.a = 0;
 	}
 
-	CallbackObject::~CallbackObject()
-	{
-	}
-
 	Object* CallbackObject::createInstance(chstr name)
 	{
 		return new CallbackObject(name);

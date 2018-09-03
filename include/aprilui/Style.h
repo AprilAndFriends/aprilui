@@ -36,12 +36,10 @@ namespace aprilui
 			hmap<hstr, hstr> properties;
 
 			Group(hmap<hstr, hstr> properties = hmap<hstr, hstr>());
-			~Group();
 
 		};
 
 		Style(chstr name = "");
-		~Style();
 
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(Dataset*, dataset, Dataset);

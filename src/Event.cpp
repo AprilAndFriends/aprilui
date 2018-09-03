@@ -68,10 +68,6 @@ namespace aprilui
 	{
 	}
 
-	Event::~Event()
-	{
-	}
-
 	bool Event::isSystemEvent(chstr type, bool caseSensitive)
 	{
 		SYSTEM_EVENT_CHECK(DatasetLoaded);

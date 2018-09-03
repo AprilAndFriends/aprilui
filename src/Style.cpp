@@ -21,10 +21,6 @@ namespace aprilui
 		this->properties = properties;
 	}
 
-	Style::Group::~Group()
-	{
-	}
-
 	Style::Style(chstr name) :
 		Cloneable()
 	{
@@ -41,10 +37,6 @@ namespace aprilui
 		this->animatorDefaults = other.animatorDefaults;
 		this->objects = other.objects;
 		this->animators = other.animators;
-	}
-
-	Style::~Style()
-	{
 	}
 
 	hstr Style::getFullName() const

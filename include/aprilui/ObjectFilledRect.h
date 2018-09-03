@@ -27,7 +27,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(FilledRect);
 	public:
 		FilledRect(chstr name);
-		~FilledRect();
 		inline hstr getClassName() const { return "FilledRect"; }
 		static Object* createInstance(chstr name);
 
@@ -35,6 +34,6 @@ namespace aprilui
 		void _draw();
 
 	};
-}
 
+}
 #endif

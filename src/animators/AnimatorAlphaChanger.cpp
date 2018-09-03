@@ -25,10 +25,6 @@ namespace aprilui
 		{
 		}
 
-		AlphaChanger::~AlphaChanger()
-		{
-		}
-
 		Animator* AlphaChanger::createInstance(chstr name)
 		{
 			return new AlphaChanger(name);

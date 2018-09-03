@@ -37,7 +37,6 @@ namespace aprilui
 		friend class TreeViewNode;
 
 		TreeView(chstr name);
-		~TreeView();
 		inline hstr getClassName() const { return "TreeView"; }
 		static Object* createInstance(chstr name);
 

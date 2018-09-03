@@ -38,10 +38,6 @@ namespace aprilui
 		this->oddColor = other.oddColor;
 	}
 
-	ListBox::~ListBox()
-	{
-	}
-
 	Object* ListBox::createInstance(chstr name)
 	{
 		return new ListBox(name);

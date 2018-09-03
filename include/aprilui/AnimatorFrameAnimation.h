@@ -26,7 +26,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(FrameAnimation);
 		public:
 			FrameAnimation(chstr name);
-			~FrameAnimation();
 			inline hstr getClassName() const { return "FrameAnimation"; }
 
 			static Animator* createInstance(chstr name);

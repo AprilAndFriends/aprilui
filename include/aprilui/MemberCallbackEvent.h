@@ -24,20 +24,18 @@ namespace aprilui
 	class MemberCallbackEvent : public Event
 	{
 	public:
-		inline MemberCallbackEvent(void (T::*function)(EventArgs*), T* object) : Event()
+		inline MemberCallbackEvent(void (T::*function)(EventArgs*), T* object) :
+			Event()
 		{
 			this->object = object;
 			this->function = function;
 		}
 
-		inline MemberCallbackEvent(const MemberCallbackEvent& other) : Event(other)
+		inline MemberCallbackEvent(const MemberCallbackEvent& other) :
+			Event(other)
 		{
 			this->object = other.object;
 			this->function = other.function;
-		}
-
-		inline ~MemberCallbackEvent()
-		{
 		}
 
 		inline void execute(EventArgs* args)
@@ -54,5 +52,4 @@ namespace aprilui
 	};
 
 }
-
 #endif

@@ -80,10 +80,6 @@ namespace aprilui
 		this->applyValuesOnAttach = other.applyValuesOnAttach;
 	}
 
-	Animator::~Animator()
-	{
-	}
-
 	hmap<hstr, PropertyDescription>& Animator::getPropertyDescriptions() const
 	{
 		if (Animator::_propertyDescriptions.size() == 0)

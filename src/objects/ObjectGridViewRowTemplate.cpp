@@ -32,10 +32,6 @@ namespace aprilui
 		this->enabled = false;
 	}
 
-	GridViewRowTemplate::~GridViewRowTemplate()
-	{
-	}
-
 	Object* GridViewRowTemplate::createInstance(chstr name)
 	{
 		return new GridViewRowTemplate(name);

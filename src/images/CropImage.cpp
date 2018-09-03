@@ -37,10 +37,6 @@ namespace aprilui
 		this->realSrcSize = other.realSrcSize;
 	}
 
-	CropImage::~CropImage()
-	{
-	}
-
 	MinimalImage* CropImage::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new CropImage(texture, name, source);

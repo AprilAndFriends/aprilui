@@ -26,7 +26,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(RedChanger);
 		public:
 			RedChanger(chstr name);
-			~RedChanger();
 			inline hstr getClassName() const { return "RedChanger"; }
 
 			static Animator* createInstance(chstr name);
@@ -38,7 +37,7 @@ namespace aprilui
 			void _update(float timeDelta);
 
 		};
+
 	}
 }
-
 #endif

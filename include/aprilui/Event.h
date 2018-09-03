@@ -65,7 +65,6 @@ namespace aprilui
 		static hstr AnimationExpired;
 
 		Event();
-		virtual ~Event();
 
 		virtual void execute(EventArgs* args) = 0;
 
@@ -74,5 +73,4 @@ namespace aprilui
 	};
 
 }
-
 #endif

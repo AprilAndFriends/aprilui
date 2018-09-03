@@ -44,10 +44,6 @@ namespace aprilui
 		this->_textureCoordinatesLoaded = false;
 	}
 
-	MinimalImage::~MinimalImage()
-	{
-	}
-
 	MinimalImage* MinimalImage::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new MinimalImage(texture, name, source);

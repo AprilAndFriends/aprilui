@@ -35,10 +35,6 @@ namespace aprilui
 		this->debugColor = other.debugColor;
 	}
 
-	Container::~Container()
-	{
-	}
-
 	Object* Container::createInstance(chstr name)
 	{
 		return new Container(name);

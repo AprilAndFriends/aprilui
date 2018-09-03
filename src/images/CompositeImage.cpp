@@ -39,10 +39,6 @@ namespace aprilui
 		this->restoreClipRects = other.restoreClipRects;
 	}
 
-	CompositeImage::~CompositeImage()
-	{
-	}
-
 	hmap<hstr, PropertyDescription>& CompositeImage::getPropertyDescriptions() const
 	{
 		if (CompositeImage::_propertyDescriptions.size() == 0)

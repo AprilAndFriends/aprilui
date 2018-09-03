@@ -62,10 +62,6 @@ namespace aprilui
 		this->_rectVertices = other._rectVertices;
 	}
 
-	SkinImage::~SkinImage()
-	{
-	}
-
 	MinimalImage* SkinImage::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new SkinImage(texture, name, source);

@@ -28,7 +28,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(Label);
 	public:
 		Label(chstr name);
-		~Label();
 		inline hstr getClassName() const { return "Label"; }
 		static Object* createInstance(chstr name);
 		
@@ -59,6 +58,7 @@ namespace aprilui
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;
 		static hmap<hstr, PropertyDescription::Accessor*> _getters;
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
+
 	};
 	
 }

@@ -26,7 +26,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(ZOrderChanger);
 		public:
 			ZOrderChanger(chstr name);
-			~ZOrderChanger();
 			inline hstr getClassName() const { return "ZOrderChanger"; }
 
 			static Animator* createInstance(chstr name);
@@ -38,7 +37,7 @@ namespace aprilui
 			void _update(float timeDelta);
 
 		};
+
 	}
 }
-
 #endif

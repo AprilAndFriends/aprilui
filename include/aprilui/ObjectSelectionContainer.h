@@ -27,7 +27,6 @@ namespace aprilui
 		APRILUI_CLONEABLE_ABSTRACT(SelectionContainer);
 	public:
 		SelectionContainer(chstr name);
-		~SelectionContainer();
 		inline hstr getClassName() const { return "SelectionContainer"; }
 
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;

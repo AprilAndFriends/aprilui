@@ -28,7 +28,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(TextImageButton);
 	public:
 		TextImageButton(chstr name);
-		~TextImageButton();
 		inline hstr getClassName() const { return "TextImageButton"; }
 		static Object* createInstance(chstr name);
 

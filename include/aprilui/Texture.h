@@ -29,7 +29,7 @@ namespace aprilui
 		friend class Dataset;
 
 		Texture(chstr name, chstr filename, april::Texture* texture, bool managed = false);
-		virtual ~Texture();
+		~Texture();
 
 		HL_DEFINE_GET(hstr, name, Name);
 		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);

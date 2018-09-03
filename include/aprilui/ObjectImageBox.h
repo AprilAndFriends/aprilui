@@ -28,7 +28,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(ImageBox);
 	public:
 		ImageBox(chstr name);
-		~ImageBox();
 		inline hstr getClassName() const { return "ImageBox"; }
 		static Object* createInstance(chstr name);
 		

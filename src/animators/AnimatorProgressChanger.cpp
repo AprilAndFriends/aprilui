@@ -28,10 +28,6 @@ namespace aprilui
 		{
 		}
 
-		ProgressChanger::~ProgressChanger()
-		{
-		}
-
 		Animator* ProgressChanger::createInstance(chstr name)
 		{
 			return new ProgressChanger(name);

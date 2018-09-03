@@ -30,10 +30,6 @@ namespace aprilui
 	{
 	}
 
-	ScrollBarButtonForward::~ScrollBarButtonForward()
-	{
-	}
-
 	Object* ScrollBarButtonForward::createInstance(chstr name)
 	{
 		return new ScrollBarButtonForward(name);

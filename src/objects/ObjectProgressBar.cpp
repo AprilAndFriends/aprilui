@@ -77,10 +77,6 @@ namespace aprilui
 		this->pushed = false;
 	}
 
-	ProgressBar::~ProgressBar()
-	{
-	}
-
 	Object* ProgressBar::createInstance(chstr name)
 	{
 		return new ProgressBar(name);

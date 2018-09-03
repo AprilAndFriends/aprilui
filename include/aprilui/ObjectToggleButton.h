@@ -26,7 +26,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(ToggleButton);
 	public:
 		ToggleButton(chstr name);
-		~ToggleButton();
 		inline hstr getClassName() const { return "ToggleButton"; }
 		static Object* createInstance(chstr name);
 

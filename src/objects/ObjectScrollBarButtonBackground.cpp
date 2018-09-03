@@ -30,10 +30,6 @@ namespace aprilui
 	{
 	}
 
-	ScrollBarButtonBackground::~ScrollBarButtonBackground()
-	{
-	}
-
 	Object* ScrollBarButtonBackground::createInstance(chstr name)
 	{
 		return new ScrollBarButtonBackground(name);

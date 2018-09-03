@@ -33,10 +33,6 @@ namespace aprilui
 		this->_clipRectCalculated = false;
 	}
 
-	BaseImage::~BaseImage()
-	{
-	}
-	
 	hmap<hstr, PropertyDescription>& BaseImage::getPropertyDescriptions() const
 	{
 		if (BaseImage::_propertyDescriptions.size() == 0)

@@ -44,10 +44,6 @@ namespace aprilui
 		this->colorModeFactor = other.colorModeFactor;
 	}
 
-	Image::~Image()
-	{
-	}
-
 	MinimalImage* Image::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new Image(texture, name, source);

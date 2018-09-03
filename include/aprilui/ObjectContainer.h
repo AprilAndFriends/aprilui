@@ -36,7 +36,6 @@ namespace aprilui
 		friend class ScrollBarV;
 
 		Container(chstr name);
-		~Container();
 		inline hstr getClassName() const { return "Container"; }
 		static Object* createInstance(chstr name);
 
@@ -48,6 +47,6 @@ namespace aprilui
 		ScrollBarV* scrollBarV;
 
 	};
-}
 
+}
 #endif

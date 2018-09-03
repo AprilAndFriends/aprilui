@@ -36,7 +36,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(MinimalImage);
 	public:
 		MinimalImage(Texture* texture, chstr name, cgrectf source);
-		~MinimalImage();
 		inline hstr getClassName() const { return "MinimalImage"; }
 
 		static MinimalImage* createInstance(Texture* texture, chstr name, cgrectf source);

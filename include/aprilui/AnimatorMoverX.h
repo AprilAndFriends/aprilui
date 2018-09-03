@@ -26,7 +26,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(MoverX);
 		public:
 			MoverX(chstr name);
-			~MoverX();
 			inline hstr getClassName() const { return "MoverX"; }
 
 			static Animator* createInstance(chstr name);
@@ -38,7 +37,7 @@ namespace aprilui
 			void _update(float timeDelta);
 
 		};
+
 	}
 }
-
 #endif

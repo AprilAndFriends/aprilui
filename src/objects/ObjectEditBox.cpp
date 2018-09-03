@@ -124,7 +124,7 @@ namespace aprilui
 
 	EditBox::~EditBox()
 	{
-		// required, because setFocused() is virtual
+		// required here, because setFocused() is virtual
 		if (this->isFocused())
 		{
 			this->setFocused(false);

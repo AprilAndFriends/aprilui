@@ -27,7 +27,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(OptionButton);
 	public:
 		OptionButton(chstr name);
-		~OptionButton();
 		inline hstr getClassName() const { return "OptionButton"; }
 
 		static Object* createInstance(chstr name);

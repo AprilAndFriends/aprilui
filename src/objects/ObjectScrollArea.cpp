@@ -67,10 +67,6 @@ namespace aprilui
 		this->_overrideHoverMode = false;
 	}
 
-	ScrollArea::~ScrollArea()
-	{
-	}
-
 	Object* ScrollArea::createInstance(chstr name)
 	{
 		return new ScrollArea(name);

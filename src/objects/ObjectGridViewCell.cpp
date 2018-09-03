@@ -37,10 +37,6 @@ namespace aprilui
 		this->gridView = NULL;
 	}
 
-	GridViewCell::~GridViewCell()
-	{
-	}
-
 	Object* GridViewCell::createInstance(chstr name)
 	{
 		return new GridViewCell(name);

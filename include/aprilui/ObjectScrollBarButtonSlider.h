@@ -27,7 +27,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(ScrollBarButtonSlider);
 	public:
 		ScrollBarButtonSlider(chstr name);
-		~ScrollBarButtonSlider();
 		inline hstr getClassName() const { return "ScrollBarButtonSlider"; }
 		static Object* createInstance(chstr name);
 
@@ -38,6 +37,6 @@ namespace aprilui
 		static void _click(EventArgs* args);
 
 	};
-}
 
+}
 #endif

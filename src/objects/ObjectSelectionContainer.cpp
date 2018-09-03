@@ -50,10 +50,6 @@ namespace aprilui
 		this->allowDrag = other.allowDrag;
 	}
 
-	SelectionContainer::~SelectionContainer()
-	{
-	}
-	
 	hmap<hstr, PropertyDescription>& SelectionContainer::getPropertyDescriptions() const
 	{
 		if (SelectionContainer::_propertyDescriptions.size() == 0)

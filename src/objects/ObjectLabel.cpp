@@ -34,10 +34,6 @@ namespace aprilui
 	{
 	}
 
-	Label::~Label()
-	{
-	}
-
 	Object* Label::createInstance(chstr name)
 	{
 		return new Label(name);

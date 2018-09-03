@@ -39,10 +39,6 @@ namespace aprilui
 		this->_pushedColor = other._pushedColor;
 	}
 
-	ListBoxItem::~ListBoxItem()
-	{
-	}
-
 	Object* ListBoxItem::createInstance(chstr name)
 	{
 		return new ListBoxItem(name);

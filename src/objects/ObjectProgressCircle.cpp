@@ -78,10 +78,6 @@ namespace aprilui
 		this->direction = other.direction;
 	}
 
-	ProgressCircle::~ProgressCircle()
-	{
-	}
-
 	Object* ProgressCircle::createInstance(chstr name)
 	{
 		return new ProgressCircle(name);

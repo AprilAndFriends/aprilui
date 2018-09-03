@@ -33,10 +33,6 @@ namespace aprilui
 		this->_treeViewNode = NULL;
 	}
 
-	TreeViewExpander::~TreeViewExpander()
-	{
-	}
-
 	Object* TreeViewExpander::createInstance(chstr name)
 	{
 		return new TreeViewExpander(name);

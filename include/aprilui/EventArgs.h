@@ -54,7 +54,6 @@ namespace aprilui
 		EventArgs(chstr eventType, Animator* animator, void* userData = NULL);
 		EventArgs(chstr eventType, Dataset* dataset, chstr string, void* userData = NULL);
 		EventArgs(chstr eventType, Dataset* dataset, void* userData = NULL);
-		~EventArgs();
 
 	protected:
 		void _initDefaults(chstr eventType);
@@ -62,6 +61,5 @@ namespace aprilui
 	};
 
 }
-
 #endif
 

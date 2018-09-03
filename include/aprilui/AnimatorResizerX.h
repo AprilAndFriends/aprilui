@@ -26,7 +26,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(ResizerX);
 		public:
 			ResizerX(chstr name);
-			~ResizerX();
 			inline hstr getClassName() const { return "ResizerX"; }
 
 			static Animator* createInstance(chstr name);
@@ -38,7 +37,7 @@ namespace aprilui
 			void _update(float timeDelta);
 
 		};
+
 	}
 }
-
 #endif

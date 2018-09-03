@@ -28,10 +28,6 @@ namespace aprilui
 		{
 		}
 
-		TileScrollerY::~TileScrollerY()
-		{
-		}
-
 		Animator* TileScrollerY::createInstance(chstr name)
 		{
 			return new TileScrollerY(name);

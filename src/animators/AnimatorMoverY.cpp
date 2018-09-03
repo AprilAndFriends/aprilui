@@ -25,10 +25,6 @@ namespace aprilui
 		{
 		}
 
-		MoverY::~MoverY()
-		{
-		}
-
 		Animator* MoverY::createInstance(chstr name)
 		{
 			return new MoverY(name);

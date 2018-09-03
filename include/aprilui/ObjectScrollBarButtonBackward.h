@@ -27,7 +27,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(ScrollBarButtonBackward);
 	public:
 		ScrollBarButtonBackward(chstr name);
-		~ScrollBarButtonBackward();
 		inline hstr getClassName() const { return "ScrollBarButtonBackward"; }
 		static Object* createInstance(chstr name);
 
@@ -37,6 +36,6 @@ namespace aprilui
 		static void _click(EventArgs* args);
 
 	};
-}
 
+}
 #endif

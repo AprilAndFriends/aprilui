@@ -33,10 +33,6 @@ namespace aprilui
 	{
 	}
 
-	OptionButton::~OptionButton()
-	{
-	}
-
 	Object* OptionButton::createInstance(chstr name)
 	{
 		return new OptionButton(name);

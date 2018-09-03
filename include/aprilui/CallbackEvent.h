@@ -24,7 +24,6 @@ namespace aprilui
 		APRILUI_CLONEABLE(CallbackEvent);
 	public:
 		CallbackEvent(void (*callback)(EventArgs*));
-		~CallbackEvent();
 
 		void execute(EventArgs* args);
 		
@@ -34,5 +33,4 @@ namespace aprilui
 	};
 
 }
-
 #endif

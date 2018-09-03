@@ -40,10 +40,6 @@ namespace aprilui
 		this->_lastRect = other._lastRect;
 	}
 
-	TileImage::~TileImage()
-	{
-	}
-
 	MinimalImage* TileImage::createInstance(Texture* texture, chstr name, cgrectf source)
 	{
 		return new TileImage(texture, name, source);

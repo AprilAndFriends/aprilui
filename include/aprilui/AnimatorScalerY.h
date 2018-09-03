@@ -26,7 +26,6 @@ namespace aprilui
 			APRILUI_CLONEABLE(ScalerY);
 		public:
 			ScalerY(chstr name);
-			~ScalerY();
 			inline hstr getClassName() const { return "ScalerY"; }
 
 			static Animator* createInstance(chstr name);
@@ -38,7 +37,7 @@ namespace aprilui
 			void _update(float timeDelta);
 
 		};
+
 	}
 }
-
 #endif

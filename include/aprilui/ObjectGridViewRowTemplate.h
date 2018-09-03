@@ -31,7 +31,6 @@ namespace aprilui
 		friend class GridViewCell;
 
 		GridViewRowTemplate(chstr name);
-		~GridViewRowTemplate();
 		inline hstr getClassName() const { return "GridViewRowTemplate"; }
 		static Object* createInstance(chstr name);
 
@@ -46,5 +45,4 @@ namespace aprilui
 	};
 
 }
-
 #endif

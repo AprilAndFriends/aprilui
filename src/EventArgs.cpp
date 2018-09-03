@@ -141,10 +141,6 @@ namespace aprilui
 		this->userData = userData;
 	}
 
-	EventArgs::~EventArgs()
-	{
-	}
-
 	void EventArgs::_initDefaults(chstr eventType)
 	{
 		this->eventType = eventType;
