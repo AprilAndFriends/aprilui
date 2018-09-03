@@ -58,23 +58,26 @@ namespace aprilui
 		virtual inline Dataset* getDataset() const { return this->dataset; }
 		virtual inline Object* getParent() const { return this->parent; }
 		inline hstr getDatasetName() const { return (this->dataset != NULL ? this->dataset->getName() : ""); }
+		virtual inline bool isAnimated() const { return false; }
+		virtual inline bool isWaitingAnimation() const { return false; }
 
 		inline harray<Object*>& getChildrenObjects() { return this->childrenObjects; }
 		inline harray<Animator*>& getChildrenAnimators() { return this->childrenAnimators; }
 		inline const harray<Object*>& getChildrenObjects() const { return this->childrenObjects; }
 		inline const harray<Animator*>& getChildrenAnimators() const { return this->childrenAnimators; }
 		harray<BaseObject*> getChildren() const;
-		virtual inline bool isAnimated() const { return false; }
-		virtual inline bool isWaitingAnimation() const { return false; }
 
+		bool isDerivedEnabled() const;
+		bool isDerivedAwake() const;
 		harray<Object*> getAncestors() const;
 		harray<BaseObject*> getDescendants() const;
 		harray<Object*> getDescendantObjects() const;
 
-		bool isDerivedEnabled() const;
-		bool isDerivedAwake() const;
-
+		virtual hstr getProperty(chstr name);
+		virtual bool setProperty(chstr name, chstr value);
 		bool hasProperty(chstr name);
+
+		virtual void update(float timeDelta);
 
 		/// @returns Whether or not a given object is a direct child of this object
 		bool isChild(BaseObject* object);
@@ -90,11 +93,6 @@ namespace aprilui
 		void applyStyle(Style* value);
 		void applyStyleByName(chstr name);
 
-		virtual hstr getProperty(chstr name);
-		virtual bool setProperty(chstr name, chstr value);
-
-		void update(float timeDelta);
-
 	protected:
 		hstr name;
 		hstr tag;
@@ -109,6 +107,7 @@ namespace aprilui
 		virtual hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
 		virtual void _update(float timeDelta);
+
 		void _sortChildren();
 
 	private:

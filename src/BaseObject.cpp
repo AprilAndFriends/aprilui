@@ -136,6 +136,21 @@ namespace aprilui
 		}
 	}
 
+	harray<BaseObject*> BaseObject::getChildren() const
+	{
+		return (this->childrenObjects.cast<BaseObject*>() + this->childrenAnimators.cast<BaseObject*>());
+	}
+
+	bool BaseObject::isDerivedEnabled() const
+	{
+		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
+	}
+
+	bool BaseObject::isDerivedAwake() const
+	{
+		return (this->isAwake() && (this->parent == NULL || this->parent->isDerivedAwake()));
+	}
+
 	harray<Object*> BaseObject::getAncestors() const
 	{
 		harray<Object*> result;
@@ -168,30 +183,70 @@ namespace aprilui
 		return result;
 	}
 
-	harray<BaseObject*> BaseObject::getChildren() const
+	hstr BaseObject::getProperty(chstr name)
 	{
-		return (this->childrenObjects.cast<BaseObject*>() + this->childrenAnimators.cast<BaseObject*>());
+		PropertyDescription::Accessor* getter = this->_getGetters().tryGet(name, NULL);
+		if (getter != NULL)
+		{
+			hstr result;
+			getter->execute(this, result);
+			return result;
+		}
+		if (name != "type")
+		{
+			hlog::errorf(logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
+		}
+		return "";
+	}
+
+	bool BaseObject::setProperty(chstr name, chstr value)
+	{
+		PropertyDescription::Accessor* setter = this->_getSetters().tryGet(name, NULL);
+		if (setter != NULL)
+		{
+			hstr newValue = value;
+			setter->execute(this, newValue);
+			return true;
+		}
+		if (name != "type")
+		{
+			hlog::errorf(logTag, "Could not set property '%s' to '%s' in '%s'!", name.cStr(), value.cStr(), this->name.cStr());
+		}
+		return false;
+	}
+
+	bool BaseObject::hasProperty(chstr name)
+	{
+		return this->getPropertyDescriptions().hasKey(name);
+	}
+
+	void BaseObject::update(float timeDelta)
+	{
+		if (this->awake)
+		{
+			this->_update(timeDelta);
+		}
+	}
+
+	void BaseObject::_update(float timeDelta)
+	{
+		// because update() could change the Z order and thus the child order
+		this->_childrenObjects = this->childrenObjects;
+		this->_childrenAnimators = this->childrenAnimators;
+		foreach (Object*, it, this->_childrenObjects)
+		{
+			(*it)->update(timeDelta);
+		}
+		foreach (Animator*, it, this->_childrenAnimators)
+		{
+			(*it)->update(timeDelta);
+		}
 	}
 
 	void BaseObject::_sortChildren()
 	{
 		HL_LAMBDA_CLASS(_sortObjects, bool, ((Object* const& a, Object* const& b) { return (a->getZOrder() < b->getZOrder()); }));
 		this->childrenObjects.sort(&_sortObjects::lambda);
-	}
-
-	bool BaseObject::isDerivedEnabled() const
-	{
-		return (this->isEnabled() && (this->parent == NULL || this->parent->isDerivedEnabled()));
-	}
-
-	bool BaseObject::isDerivedAwake() const
-	{
-		return (this->isAwake() && (this->parent == NULL || this->parent->isDerivedAwake()));
-	}
-
-	bool BaseObject::hasProperty(chstr name)
-	{
-		return this->getPropertyDescriptions().hasKey(name);
 	}
 
 	bool BaseObject::isChild(BaseObject* object)
@@ -263,29 +318,6 @@ namespace aprilui
 		return NULL;
 	}
 
-	void BaseObject::update(float timeDelta)
-	{
-		if (this->awake)
-		{
-			this->_update(timeDelta);
-		}
-	}
-
-	void BaseObject::_update(float timeDelta)
-	{
-		// because update() could change the Z order and thus the child order
-		this->_childrenObjects = this->childrenObjects;
-		this->_childrenAnimators = this->childrenAnimators;
-		foreach (Object*, it, this->_childrenObjects)
-		{
-			(*it)->update(timeDelta);
-		}
-		foreach (Animator*, it, this->_childrenAnimators)
-		{
-			(*it)->update(timeDelta);
-		}
-	}
-
 	void BaseObject::applyStyle(Style* style)
 	{
 		if (style != NULL)
@@ -303,36 +335,4 @@ namespace aprilui
 		this->applyStyle(name != "" ? this->dataset->getStyle(name) : NULL);
 	}
 
-	hstr BaseObject::getProperty(chstr name)
-	{
-		PropertyDescription::Accessor* getter = this->_getGetters().tryGet(name, NULL);
-		if (getter != NULL)
-		{
-			hstr result;
-			getter->execute(this, result);
-			return result;
-		}
-		if (name != "type")
-		{
-			hlog::errorf(logTag, "Could not get property '%s' in '%s'!", name.cStr(), this->name.cStr());
-		}
-		return "";
-	}
-	
-	bool BaseObject::setProperty(chstr name, chstr value)
-	{
-		PropertyDescription::Accessor* setter = this->_getSetters().tryGet(name, NULL);
-		if (setter != NULL)
-		{
-			hstr newValue = value;
-			setter->execute(this, newValue);
-			return true;
-		}
-		if (name != "type")
-		{
-			hlog::errorf(logTag, "Could not set property '%s' to '%s' in '%s'!", name.cStr(), value.cStr(), this->name.cStr());
-		}
-		return false;
-	}
-	
 }

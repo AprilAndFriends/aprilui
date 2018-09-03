@@ -2058,7 +2058,6 @@ namespace aprilui
 		{
 			this->root->update(timeDelta);
 		}
-		this->clearChildUnderCursor();
 	}
 
 	void Dataset::clearChildUnderCursor()

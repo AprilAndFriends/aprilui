@@ -129,7 +129,6 @@ namespace aprilui
 		this->focusIndex = -1;
 		this->customPointInsideCallback = NULL;
 		this->debugColor.set(april::Color::Black, 32);
-		this->lastChildUnderCursor = NULL;
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -162,7 +161,6 @@ namespace aprilui
 		{
 			(*it)->parent = this;
 		}
-		this->lastChildUnderCursor = NULL;
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -319,6 +317,652 @@ namespace aprilui
 			Object::_setters["focus_index"] = new PropertyDescription::Set<Object, int>(&Object::setFocusIndex);
 		}
 		return Object::_setters;
+	}
+
+	void Object::setRect(cgrectf value)
+	{
+		this->_updateChildrenHorizontal(value.w - this->rect.w);
+		this->_updateChildrenVertical(value.h - this->rect.h);
+		this->rect = value;
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(cgvec2f position, cgvec2f size)
+	{
+		this->_updateChildrenHorizontal(size.x - this->rect.w);
+		this->_updateChildrenVertical(size.y - this->rect.h);
+		this->rect.set(position, size);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(cgvec2f position, float w, float h)
+	{
+		this->_updateChildrenHorizontal(w - this->rect.w);
+		this->_updateChildrenVertical(h - this->rect.h);
+		this->rect.set(position, w, h);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(float x, float y, cgvec2f size)
+	{
+		this->_updateChildrenHorizontal(size.x - this->rect.w);
+		this->_updateChildrenVertical(size.y - this->rect.h);
+		this->rect.set(x, y, size);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setRect(float x, float y, float w, float h)
+	{
+		this->_updateChildrenHorizontal(w - this->rect.w);
+		this->_updateChildrenVertical(h - this->rect.h);
+		this->rect.set(x, y, w, h);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setWidth(const float& value)
+	{
+		this->_updateChildrenHorizontal(value - this->rect.w);
+		this->rect.w = value;
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setHeight(const float& value)
+	{
+		this->_updateChildrenVertical(value - this->rect.h);
+		this->rect.h = value;
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setSize(cgvec2f value)
+	{
+		this->_updateChildrenHorizontal(value.x - this->rect.w);
+		this->_updateChildrenVertical(value.y - this->rect.h);
+		this->rect.setSize(value);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setSize(float w, float h)
+	{
+		this->_updateChildrenHorizontal(w - this->rect.w);
+		this->_updateChildrenVertical(h - this->rect.h);
+		this->rect.setSize(w, h);
+		this->notifyEvent(Event::Resized, NULL);
+	}
+
+	void Object::setSymbolicColor(chstr value)
+	{
+		this->setColor(aprilui::_makeColor(value));
+	}
+
+	bool Object::isDerivedVisible() const
+	{
+		return (this->isVisible() && (this->parent == NULL || this->parent->isDerivedVisible()));
+	}
+
+	bool Object::_isDerivedHitTestEnabled() const
+	{
+		if (this->hitTest != HitTest::Enabled)
+		{
+			return false;
+		}
+		Object* ancestor = this->parent;
+		while (ancestor != NULL)
+		{
+			if (ancestor->hitTest == HitTest::DisabledRecursive)
+			{
+				return false;
+			}
+			ancestor = ancestor->getParent();
+		}
+		return true;
+	}
+
+	bool Object::isAnimated() const
+	{
+		HL_LAMBDA_CLASS(_isAnimated, bool, ((Animator* const& animator) { return animator->isAnimated(); }));
+		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_isAnimated::lambda);
+	}
+
+	bool Object::isWaitingAnimation() const
+	{
+		HL_LAMBDA_CLASS(_isWaitingAnimation, bool, ((Animator* const& animator) { return animator->isWaitingAnimation(); }));
+		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_isWaitingAnimation::lambda);
+	}
+
+	bool Object::hasDynamicAnimation() const
+	{
+		return (this->dynamicAnimators.size() > 0);
+	}
+
+	bool Object::isFocused() const
+	{
+		return (this->dataset != NULL && this->dataset->getFocusedObject() == this);
+	}
+
+	void Object::setFocused(bool value)
+	{
+		if (this->dataset != NULL)
+		{
+			if (value)
+			{
+				this->dataset->focus(this);
+			}
+			else if (this->dataset->getFocusedObject() == this)
+			{
+				this->dataset->removeFocus();
+			}
+		}
+	}
+
+	bool Object::isCursorInside() const
+	{
+		return this->isPointInside(aprilui::getCursorPosition());
+	}
+
+	harray<BaseImage*> Object::getUsedImages() const
+	{
+		harray<BaseImage*> images = this->_getUsedImages();
+		images.removeAll(NULL);
+		images.removeDuplicates();
+		return images;
+	}
+
+	harray<BaseImage*> Object::_getUsedImages() const
+	{
+		return harray<BaseImage*>();
+	}
+
+	Object* Object::getChildUnderCursor()
+	{
+		if (!this->_checkedChildUnderCursor)
+		{
+			this->_childUnderCursor = this->getChildUnderPoint(aprilui::getCursorPosition());
+			this->_checkedChildUnderCursor = true;
+		}
+		return this->_childUnderCursor;
+	}
+
+	void Object::update(float timeDelta)
+	{
+		if (this->_checkedChildUnderCursor)
+		{
+			this->clearChildUnderCursor();
+		}
+		BaseObject::update(timeDelta);
+	}
+	
+	void Object::_update(float timeDelta)
+	{
+		BaseObject::_update(timeDelta);
+		if (this->dynamicAnimators.size() > 0)
+		{
+			// because this list could change during the update() call
+			this->_dynamicAnimators = this->dynamicAnimators;
+			// first update the animators
+			foreach (Animator*, it, this->_dynamicAnimators)
+			{
+				(*it)->update(timeDelta);
+			}
+			if (this->dynamicAnimators.size() > 0)
+			{
+				this->_dynamicAnimators = this->dynamicAnimators;
+				this->dynamicAnimators.clear();
+				foreach (Animator*, it, this->_dynamicAnimators)
+				{
+					if ((*it)->isExpired())
+					{
+						delete (*it);
+					}
+					else
+					{
+						this->dynamicAnimators += (*it);
+					}
+				}
+			}
+		}
+	}
+
+	void Object::draw()
+	{
+		if (!this->isVisible() || heqf(this->scaleFactor.x, 0.0f, 0.0001f) || heqf(this->scaleFactor.y, 0.0f, 0.0001f))
+		{
+			return;
+		}
+		this->_drawModelviewMatrix = april::rendersys->getModelviewMatrix();
+		this->_drawClipped = (this->clip && this->parent != NULL);
+		if (this->_drawClipped)
+		{
+			this->_drawProjectionMatrix = april::rendersys->getProjectionMatrix();
+			this->_drawViewport = april::rendersys->getViewport();
+			this->_drawViewportOffset = aprilui::getViewport().getPosition();
+			this->_drawOriginalRect = this->parent->getBoundingRect() + this->_drawViewportOffset;
+			this->_drawRatio = gvec2f(this->_drawViewport.getSize()) / april::rendersys->getOrthoProjection().getSize();
+			this->_drawNewViewport.set((this->_drawOriginalRect.getPosition()) * this->_drawRatio, this->_drawOriginalRect.getSize() * this->_drawRatio);
+			this->_drawNewViewport.clip(this->_drawViewport);
+			if (!this->useClipRound)
+			{
+				if (this->_drawNewViewport.w <= 0.0f || this->_drawNewViewport.h <= 0.0f)
+				{
+					return;
+				}
+			}
+			else if (this->_drawNewViewport.w < 0.5f || this->_drawNewViewport.h < 0.5f)
+			{
+				return;
+			}
+			this->_drawNewRect.set(this->_drawNewViewport.getPosition() / this->_drawRatio, this->_drawNewViewport.getSize() / this->_drawRatio);
+			this->_drawOriginalRect.clip(this->_drawNewRect);
+			this->_drawModelviewMatrixRect.set(this->_drawViewportOffset - this->_drawOriginalRect.getPosition(), this->_drawOriginalRect.getSize());
+			april::rendersys->setOrthoProjection(this->_drawModelviewMatrixRect);
+			if (!this->useClipRound)
+			{
+				april::rendersys->setViewport(this->_drawNewViewport);
+			}
+			else
+			{
+				this->_drawNewViewportRect.set(hround(this->_drawNewViewport.x), hround(this->_drawNewViewport.y), hround(this->_drawNewViewport.w), hround(this->_drawNewViewport.h));
+				april::rendersys->setViewport(this->_drawNewViewportRect);
+			}
+		}
+		this->_drawPosition = this->rect.getPosition() + this->pivot;
+		if (this->_drawPosition.x != 0.0f || this->_drawPosition.y != 0.0f)
+		{
+			april::rendersys->translate(this->_drawPosition.x, this->_drawPosition.y);
+		}
+		if (this->angle != 0.0f)
+		{
+			april::rendersys->rotate(this->angle);
+		}
+		if (this->scaleFactor.x != 1.0f || this->scaleFactor.y != 1.0f)
+		{
+			april::rendersys->scale(this->scaleFactor.x, this->scaleFactor.y, 1.0f);
+		}
+		this->_draw();
+		if (aprilui::isDebugEnabled())
+		{
+			this->_drawDebug();
+		}
+		if (this->pivot.x != 0.0f || this->pivot.y != 0.0f)
+		{
+			april::rendersys->translate(-this->pivot.x, -this->pivot.y);
+		}
+		foreach (Object*, it, this->childrenObjects)
+		{
+			(*it)->draw();
+		}
+		if (this->_drawClipped)
+		{
+			april::rendersys->setProjectionMatrix(this->_drawProjectionMatrix);
+			april::rendersys->setViewport(this->_drawViewport);
+		}
+		april::rendersys->setModelviewMatrix(this->_drawModelviewMatrix);
+	}
+
+	void Object::_draw()
+	{
+	}
+
+	void Object::_drawDebug()
+	{
+		this->_drawRect = this->_makeDrawRect();
+		april::rendersys->setBlendMode(april::BlendMode::Alpha);
+		april::rendersys->setColorMode(april::ColorMode::Multiply);
+		if (this->debugColor.a > 0)
+		{
+			april::rendersys->drawFilledRect(this->_drawRect, this->debugColor);
+		}
+		this->_drawFrameColor = april::Color::Green;
+		if (this->hitTest == HitTest::Enabled)
+		{
+			this->_drawFrameColor = april::Color::Yellow;
+		}
+		else if (this->hitTest == HitTest::DisabledRecursive)
+		{
+			this->_drawFrameColor = april::Color::Red;
+		}
+		else if (!this->_isDerivedHitTestEnabled())
+		{
+			this->_drawFrameColor = april::Color::Cyan;
+		}
+		april::rendersys->drawRect(this->_drawRect, april::Color(this->_drawFrameColor, 224));
+		static grectf whiteRect(-1.0f, -1.0f, 2.0f, 2.0f);
+		static grectf greenRect(-3.0f, -3.0f, 6.0f, 6.0f);
+		april::rendersys->drawRect(whiteRect, april::Color::White);
+		april::rendersys->drawRect(greenRect, april::Color::Green);
+	}
+
+	hstr Object::getProperty(chstr name)
+	{
+		if (name == "hit_test")
+		{
+			if (this->hitTest == HitTest::Enabled)				return "enabled";
+			if (this->hitTest == HitTest::Disabled)				return "disabled";
+			if (this->hitTest == HitTest::DisabledRecursive)	return "disabled_recursive";
+		}
+		if (name == "anchors")
+		{
+			harray<hstr> result;
+			if (this->anchorLeft)	result += "left";
+			if (this->anchorRight)	result += "right";
+			if (this->anchorTop)	result += "top";
+			if (this->anchorBottom)	result += "bottom";
+			return result.joined(',');
+		}
+		return BaseObject::getProperty(name);
+	}
+
+	bool Object::setProperty(chstr name, chstr value)
+	{
+		if (name == "hit_test")
+		{
+			if (value == "enabled")					this->setHitTest(HitTest::Enabled);
+			else if (value == "disabled")			this->setHitTest(HitTest::Disabled);
+			else if (value == "disabled_recursive")	this->setHitTest(HitTest::DisabledRecursive);
+			else
+			{
+				hlog::warn(logTag, "'hit_test=' does not support value '" + value + "'.");
+				return false;
+			}
+			return true;
+		}
+		if (name == "anchors")
+		{
+			harray<hstr> anchors = value.replaced(" ", "").lowered().split(",", -1, true);
+			harray<hstr> testAnchors = anchors;
+			testAnchors.removeAll("left");
+			testAnchors.removeAll("right");
+			testAnchors.removeAll("top");
+			testAnchors.removeAll("bottom");
+			testAnchors.removeAll("none");
+			testAnchors.removeAll("all");
+			if (testAnchors.size() > 0)
+			{
+				hlog::warn(logTag, "Found invalid values in 'anchors=' ('" + testAnchors.joined(",") + "').");
+				return false;
+			}
+			this->setAnchorLeft(anchors.has("all") || anchors.has("left"));
+			this->setAnchorRight(anchors.has("all") || anchors.has("right"));
+			this->setAnchorTop(anchors.has("all") || anchors.has("top"));
+			this->setAnchorBottom(anchors.has("all") || anchors.has("bottom"));
+			return true;
+		}
+		return BaseObject::setProperty(name, value);
+	}
+
+	void Object::setAnchors(bool left, bool right, bool top, bool bottom)
+	{
+		this->anchorLeft = left;
+		this->anchorRight = right;
+		this->anchorTop = top;
+		this->anchorBottom = bottom;
+	}
+
+	void Object::resetPivot()
+	{
+		this->pivot = this->rect.getSize() / 2;
+	}
+
+	harray<gvec2f> Object::transformToLocalSpace(const harray<gvec2f>& points, aprilui::Object* overrideRoot) const
+	{
+		harray<const Object*> sequence;
+		const Object* current = this;
+		while (current != NULL)
+		{
+			sequence += current;
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
+		}
+		sequence.reverse();
+		harray<gvec2f> result = points;
+		gvec2f pivot;
+		gvec2f scale;
+		gvec2f position;
+		float angle;
+		foreach (const Object*, it, sequence)
+		{
+			pivot = (*it)->getPivot();
+			scale = (*it)->getScale();
+			position = (*it)->getPosition();
+			angle = (*it)->getAngle();
+			foreach (gvec2f, it2, result)
+			{
+				(*it2) -= pivot + position;
+				(*it2).rotate(angle);
+				(*it2) /= scale;
+				(*it2) += pivot;
+			}
+		}
+		return result;
+	}
+	
+	gvec2f Object::transformToLocalSpace(cgvec2f point, aprilui::Object* overrideRoot) const
+	{
+		harray<const Object*> sequence;
+		const Object* current = this;
+		while (current != NULL)
+		{
+			sequence += current;
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
+		}
+		sequence.reverse();
+		gvec2f result = point;
+		gvec2f pivot;
+		foreach (const Object*, it, sequence)
+		{
+			pivot = (*it)->getPivot();
+			result -= pivot + (*it)->getPosition();
+			result.rotate((*it)->getAngle());
+			result /= (*it)->getScale();
+			result += pivot;
+		}
+		return result;
+	}
+
+	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot) const
+	{
+		// recursive function that combines all the alpha from the parents (if any)
+		float factor = 1.0f;
+		if (overrideRoot == this)
+		{
+			return this->getAlpha();
+		}
+		if (this->inheritAlpha && this->parent != NULL && this->parent != overrideRoot)
+		{
+			factor *= this->parent->getDerivedAlpha(overrideRoot) / 255.0f;
+		}
+		return (unsigned char)(this->getAlpha() * factor);
+	}
+
+	harray<gvec2f> Object::getDerivedPoints(const harray<gvec2f>& points, aprilui::Object* overrideRoot) const
+	{
+		const Object* current = this;
+		harray<gvec2f> result = points;
+		gvec2f pivot;
+		gvec2f scale;
+		gvec2f position;
+		float angle;
+		while (current != NULL)
+		{
+			pivot = current->getPivot();
+			scale = current->getScale();
+			position = current->getPosition();
+			angle = current->getAngle();
+			foreach (gvec2f, it, result)
+			{
+				(*it) -= pivot;
+				(*it) *= scale;
+				(*it).rotate(-angle);
+				(*it) += pivot + position;
+			}
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
+		}
+		return result;
+	}
+
+	gvec2f Object::getDerivedPoint(cgvec2f point, aprilui::Object* overrideRoot) const
+	{
+		const Object* current = this;
+		gvec2f result = point;
+		gvec2f pivot;
+		while (current != NULL)
+		{
+			pivot = current->getPivot();
+			result -= pivot;
+			result *= current->getScale();
+			result.rotate(-current->getAngle());
+			result += pivot + current->getPosition();
+			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
+		}
+		return result;
+	}
+
+	grectf Object::getBoundingRect(aprilui::Object* overrideRoot) const
+	{
+		gvec2f max;
+		gvec2f min;
+		harray<gvec2f> corners = this->getDerivedCorners(overrideRoot);
+		min = max = corners.removeFirst(); // guaranteed to return 4 corner points previously
+		gvec2f corner;
+		while (corners.size() > 0)
+		{
+			corner = corners.removeFirst();
+			max.x = hmax(max.x, corner.x);
+			max.y = hmax(max.y, corner.y);
+			min.x = hmin(min.x, corner.x);
+			min.y = hmin(min.y, corner.y);
+		}
+		return grectf(min, max - min);
+	}
+
+	harray<gvec2f> Object::getDerivedCorners(aprilui::Object* overrideRoot) const
+	{
+		harray<gvec2f> points;
+		points += gvec2f(0.0f, 0.0f);
+		points += gvec2f(0.0f, this->rect.h);
+		points += gvec2f(this->rect.w, 0.0f);
+		points += this->rect.getSize();
+		return this->getDerivedPoints(points, overrideRoot);
+	}
+
+	gvec2f Object::getDerivedPosition(aprilui::Object* overrideRoot) const
+	{
+		return this->getDerivedPoint(gvec2f(0.0f, 0.0f), overrideRoot);
+	}
+
+	gvec2f Object::getDerivedSize(aprilui::Object* overrideRoot) const
+	{
+		return this->getBoundingRect(overrideRoot).getSize();
+	}
+
+	gvec2f Object::getDerivedPivot(aprilui::Object* overrideRoot) const
+	{
+		return this->getDerivedPoint(this->pivot, overrideRoot);
+	}
+
+	gvec2f Object::getDerivedScale(aprilui::Object* overrideRoot) const
+	{
+		if (overrideRoot == this)
+		{
+			return this->scaleFactor;
+		}
+		gvec2f scaleFactor = this->scaleFactor;
+		if (this->parent != overrideRoot && this->parent != NULL)
+		{
+			scaleFactor *= this->parent->getDerivedScale(overrideRoot);
+		}
+		return scaleFactor;
+	}
+
+	float Object::getDerivedAngle(aprilui::Object* overrideRoot) const
+	{
+		if (overrideRoot == this)
+		{
+			return this->angle;
+		}
+		float angle = this->angle;
+		if (this->parent != overrideRoot && this->parent != NULL)
+		{
+			angle += this->parent->getDerivedAngle(overrideRoot);
+		}
+		return angle;
+	}
+
+	float Object::_getDerivedAngle(aprilui::Object* overrideRoot) const
+	{
+		float angle = this->angle;
+		if (overrideRoot == this)
+		{
+			return angle;
+		}
+		if (this->parent != overrideRoot && this->parent != NULL)
+		{
+			angle += this->parent->_getDerivedAngle(overrideRoot);
+		}
+		return angle;
+	}
+
+	bool Object::isPointInside(cgvec2f position) const
+	{
+		if (heqf(this->scaleFactor.x, 0.0f, 0.0001f) || heqf(this->scaleFactor.y, 0.0f, 0.0001f))
+		{
+			return false;
+		}
+		if (this->parent != NULL)
+		{
+			const Object* obj = this;
+			const Object* ancestor = this->parent;
+			while (ancestor != NULL)
+			{
+				if (obj->isClip() && !ancestor->getBoundingRect().isPointInside(position))
+				{
+					return false;
+				}
+				obj = ancestor;
+				ancestor = obj->getParent();
+			}
+		}
+		if (this->customPointInsideCallback != NULL)
+		{
+			return (*this->customPointInsideCallback)(this, position);
+		}
+		return grectf(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
+	}
+
+	Object* Object::getChildUnderPoint(cgvec2f point) const
+	{
+		if (!this->isVisible() || this->hitTest == HitTest::DisabledRecursive)
+		{
+			return NULL;
+		}
+		Object* object = NULL;
+		foreachc_r (Object*, it, this->childrenObjects)
+		{
+			object = (*it)->getChildUnderPoint(point);
+			if (object != NULL)
+			{
+				break;
+			}
+		}
+		return (object == NULL && this->hitTest == HitTest::Enabled && this->isPointInside(point) ? (Object*)this : object);
+	}
+
+	Object* Object::getChildUnderPoint(float x, float y) const
+	{
+		return this->getChildUnderPoint(gvec2f(x, y));
+	}
+	
+	void Object::clearChildUnderCursor()
+	{
+		this->_childUnderCursor = NULL;
+		this->_checkedChildUnderCursor = false;
+	}
+
+	void Object::clearDescendantChildrenUnderCursor()
+	{
+		this->clearChildUnderCursor();
+		foreach (Object*, it, this->childrenObjects)
+		{
+			(*it)->clearDescendantChildrenUnderCursor();
+		}
 	}
 
 	void Object::addChild(BaseObject* obj)
@@ -548,342 +1192,50 @@ namespace aprilui
 		}
 	}
 
-	void Object::setRect(cgrectf value)
-	{
-		this->_updateChildrenHorizontal(value.w - this->rect.w);
-		this->_updateChildrenVertical(value.h - this->rect.h);
-		this->rect = value;
-		this->notifyEvent(Event::Resized, NULL);
-	}
 
-	void Object::setRect(cgvec2f position, cgvec2f size)
-	{
-		this->_updateChildrenHorizontal(size.x - this->rect.w);
-		this->_updateChildrenVertical(size.y - this->rect.h);
-		this->rect.set(position, size);
-		this->notifyEvent(Event::Resized, NULL);
-	}
 
-	void Object::setRect(cgvec2f position, float w, float h)
-	{
-		this->_updateChildrenHorizontal(w - this->rect.w);
-		this->_updateChildrenVertical(h - this->rect.h);
-		this->rect.set(position, w, h);
-		this->notifyEvent(Event::Resized, NULL);
-	}
 
-	void Object::setRect(float x, float y, cgvec2f size)
-	{
-		this->_updateChildrenHorizontal(size.x - this->rect.w);
-		this->_updateChildrenVertical(size.y - this->rect.h);
-		this->rect.set(x, y, size);
-		this->notifyEvent(Event::Resized, NULL);
-	}
 
-	void Object::setRect(float x, float y, float w, float h)
+	
+	april::Color Object::_makeDrawColor() const
 	{
-		this->_updateChildrenHorizontal(w - this->rect.w);
-		this->_updateChildrenVertical(h - this->rect.h);
-		this->rect.set(x, y, w, h);
-		this->notifyEvent(Event::Resized, NULL);
-	}
-
-	void Object::setWidth(const float& value)
-	{
-		this->_updateChildrenHorizontal(value - this->rect.w);
-		this->rect.w = value;
-		this->notifyEvent(Event::Resized, NULL);
-	}
-
-	void Object::setHeight(const float& value)
-	{
-		this->_updateChildrenVertical(value - this->rect.h);
-		this->rect.h = value;
-		this->notifyEvent(Event::Resized, NULL);
-	}
-
-	void Object::setSize(cgvec2f value)
-	{
-		this->_updateChildrenHorizontal(value.x - this->rect.w);
-		this->_updateChildrenVertical(value.y - this->rect.h);
-		this->rect.setSize(value);
-		this->notifyEvent(Event::Resized, NULL);
-	}
-
-	void Object::setSize(float w, float h)
-	{
-		this->_updateChildrenHorizontal(w - this->rect.w);
-		this->_updateChildrenVertical(h - this->rect.h);
-		this->rect.setSize(w, h);
-		this->notifyEvent(Event::Resized, NULL);
-	}
-
-	void Object::setSymbolicColor(chstr value)
-	{
-		this->setColor(aprilui::_makeColor(value));
-	}
-
-	void Object::setAnchors(bool left, bool right, bool top, bool bottom)
-	{
-		this->anchorLeft = left;
-		this->anchorRight = right;
-		this->anchorTop = top;
-		this->anchorBottom = bottom;
-	}
-
-	bool Object::isFocused() const
-	{
-		return (this->dataset != NULL && this->dataset->getFocusedObject() == this);
-	}
-
-	void Object::setFocused(bool value)
-	{
-		if (this->dataset != NULL)
+		april::Color color = this->color;
+		if (this->inheritAlpha)
 		{
-			if (value)
-			{
-				this->dataset->focus(this);
-			}
-			else if (this->dataset->getFocusedObject() == this)
-			{
-				this->dataset->removeFocus();
-			}
+			color.a = 255; // required, because this->_makeDrawColor(color) will already apply the derived object alpha
 		}
+		return this->_makeDrawColor(color);
 	}
-
-	harray<BaseImage*> Object::getUsedImages() const
+	
+	april::Color Object::_makeDrawColor(const april::Color& color) const
 	{
-		harray<BaseImage*> images = this->_getUsedImages();
-		images.removeAll(NULL);
-		images.removeDuplicates();
-		return images;
+		float alpha = (float)color.a;
+		if (this->inheritAlpha)
+		{
+			alpha *= this->getDerivedAlpha() / 255.0f;
+		}
+		if (this->useDisabledAlpha && !this->isDerivedEnabled())
+		{
+			alpha *= 0.5f;
+		}
+		return april::Color(color, (unsigned char)alpha);
 	}
-
-	harray<BaseImage*> Object::_getUsedImages() const
-	{
-		return harray<BaseImage*>();
-	}
-
+	
 	grectf Object::_makeDrawRect() const
 	{
 		return grectf(-this->pivot, this->rect.getSize());
 	}
 
-	unsigned char Object::getDerivedAlpha(aprilui::Object* overrideRoot) const
-	{
-		// recursive function that combines all the alpha from the parents (if any)
-		float factor = 1.0f;
-		if (overrideRoot == this)
-		{
-			return this->getAlpha();
-		}
-		if (this->inheritAlpha && this->parent != NULL && this->parent != overrideRoot)
-		{
-			factor *= this->parent->getDerivedAlpha(overrideRoot) / 255.0f;
-		}
-		return (unsigned char)(this->getAlpha() * factor);
-	}
 
-	float Object::_getDerivedAngle(aprilui::Object* overrideRoot) const
-	{
-		float angle = this->angle;
-		if (overrideRoot == this)
-		{
-			return angle;
-		}
-		if (this->parent != overrideRoot && this->parent != NULL)
-		{
-			angle += this->parent->_getDerivedAngle(overrideRoot);
-		}
-		return angle;
-	}
 
-	bool Object::isAnimated() const
-	{
-		HL_LAMBDA_CLASS(_isAnimated, bool, ((Animator* const& animator) { return animator->isAnimated(); }));
-		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_isAnimated::lambda);
-	}
 
-	bool Object::isWaitingAnimation() const
-	{
-		HL_LAMBDA_CLASS(_isWaitingAnimation, bool, ((Animator* const& animator) { return animator->isWaitingAnimation(); }));
-		return (this->dynamicAnimators + this->childrenAnimators).matchesAny(&_isWaitingAnimation::lambda);
-	}
 
-	bool Object::hasDynamicAnimation() const
-	{
-		return (this->dynamicAnimators.size() > 0);
-	}
 
-	void Object::draw()
-	{
-		if (!this->isVisible() || heqf(this->scaleFactor.x, 0.0f, 0.0001f) || heqf(this->scaleFactor.y, 0.0f, 0.0001f))
-		{
-			return;
-		}
-		this->_drawModelviewMatrix = april::rendersys->getModelviewMatrix();
-		this->_drawClipped = (this->clip && this->parent != NULL);
-		if (this->_drawClipped)
-		{
-			this->_drawProjectionMatrix = april::rendersys->getProjectionMatrix();
-			this->_drawViewport = april::rendersys->getViewport();
-			this->_drawViewportOffset = aprilui::getViewport().getPosition();
-			this->_drawOriginalRect = this->parent->getBoundingRect() + this->_drawViewportOffset;
-			this->_drawRatio = gvec2f(this->_drawViewport.getSize()) / april::rendersys->getOrthoProjection().getSize();
-			this->_drawNewViewport.set((this->_drawOriginalRect.getPosition()) * this->_drawRatio, this->_drawOriginalRect.getSize() * this->_drawRatio);
-			this->_drawNewViewport.clip(this->_drawViewport);
-			if (!this->useClipRound)
-			{
-				if (this->_drawNewViewport.w <= 0.0f || this->_drawNewViewport.h <= 0.0f)
-				{
-					return;
-				}
-			}
-			else if (this->_drawNewViewport.w < 0.5f || this->_drawNewViewport.h < 0.5f)
-			{
-				return;
-			}
-			this->_drawNewRect.set(this->_drawNewViewport.getPosition() / this->_drawRatio, this->_drawNewViewport.getSize() / this->_drawRatio);
-			this->_drawOriginalRect.clip(this->_drawNewRect);
-			this->_drawModelviewMatrixRect.set(this->_drawViewportOffset - this->_drawOriginalRect.getPosition(), this->_drawOriginalRect.getSize());
-			april::rendersys->setOrthoProjection(this->_drawModelviewMatrixRect);
-			if (!this->useClipRound)
-			{
-				april::rendersys->setViewport(this->_drawNewViewport);
-			}
-			else
-			{
-				this->_drawNewViewportRect.set(hround(this->_drawNewViewport.x), hround(this->_drawNewViewport.y), hround(this->_drawNewViewport.w), hround(this->_drawNewViewport.h));
-				april::rendersys->setViewport(this->_drawNewViewportRect);
-			}
-		}
-		this->_drawPosition = this->rect.getPosition() + this->pivot;
-		if (this->_drawPosition.x != 0.0f || this->_drawPosition.y != 0.0f)
-		{
-			april::rendersys->translate(this->_drawPosition.x, this->_drawPosition.y);
-		}
-		if (this->angle != 0.0f)
-		{
-			april::rendersys->rotate(this->angle);
-		}
-		if (this->scaleFactor.x != 1.0f || this->scaleFactor.y != 1.0f)
-		{
-			april::rendersys->scale(this->scaleFactor.x, this->scaleFactor.y, 1.0f);
-		}
-		this->_draw();
-		if (aprilui::isDebugEnabled())
-		{
-			this->_drawDebug();
-		}
-		if (this->pivot.x != 0.0f || this->pivot.y != 0.0f)
-		{
-			april::rendersys->translate(-this->pivot.x, -this->pivot.y);
-		}
-		foreach (Object*, it, this->childrenObjects)
-		{
-			(*it)->draw();
-		}
-		if (this->_drawClipped)
-		{
-			april::rendersys->setProjectionMatrix(this->_drawProjectionMatrix);
-			april::rendersys->setViewport(this->_drawViewport);
-		}
-		april::rendersys->setModelviewMatrix(this->_drawModelviewMatrix);
-	}
-	
-	void Object::_update(float timeDelta)
-	{
-		if (this->_checkedChildUnderCursor)
-		{
-			this->clearChildUnderCursor();
-		}
-		BaseObject::_update(timeDelta);
-		// because this list could change during the update() call
-		this->_dynamicAnimators = this->dynamicAnimators;
-		// first update the animators
-		foreach (Animator*, it, this->_dynamicAnimators)
-		{
-			(*it)->update(timeDelta);
-		}
-		this->_dynamicAnimators = this->dynamicAnimators;
-		this->dynamicAnimators.clear();
-		foreach (Animator*, it, this->_dynamicAnimators)
-		{
-			if ((*it)->isExpired())
-			{
-				delete (*it);
-			}
-			else
-			{
-				this->dynamicAnimators += (*it);
-			}
-		}
-	}
 
-	void Object::_draw()
-	{
-	}
 
-	void Object::_drawDebug()
-	{
-		this->_drawRect = this->_makeDrawRect();
-		april::rendersys->setBlendMode(april::BlendMode::Alpha);
-		april::rendersys->setColorMode(april::ColorMode::Multiply);
-		if (this->debugColor.a > 0)
-		{
-			april::rendersys->drawFilledRect(this->_drawRect, this->debugColor);
-		}
-		this->_drawFrameColor = april::Color::Green;
-		if (this->hitTest == HitTest::Enabled)
-		{
-			this->_drawFrameColor = april::Color::Yellow;
-		}
-		else if (this->hitTest == HitTest::DisabledRecursive)
-		{
-			this->_drawFrameColor = april::Color::Red;
-		}
-		else if (!this->_isDerivedHitTestEnabled())
-		{
-			this->_drawFrameColor = april::Color::Cyan;
-		}
-		april::rendersys->drawRect(this->_drawRect, april::Color(this->_drawFrameColor, 224));
-		static grectf whiteRect(-1.0f, -1.0f, 2.0f, 2.0f);
-		static grectf greenRect(-3.0f, -3.0f, 6.0f, 6.0f);
-		april::rendersys->drawRect(whiteRect, april::Color::White);
-		april::rendersys->drawRect(greenRect, april::Color::Green);
-	}
 
-	bool Object::isCursorInside() const
-	{
-		return this->isPointInside(aprilui::getCursorPosition());
-	}
-	
-	bool Object::isPointInside(cgvec2f position) const
-	{
-		if (heqf(this->scaleFactor.x, 0.0f, 0.0001f) || heqf(this->scaleFactor.y, 0.0f, 0.0001f))
-		{
-			return false;
-		}
-		if (this->parent != NULL)
-		{
-			const Object* obj = this;
-			const Object* ancestor = this->parent;
-			while (ancestor != NULL)
-			{
-				if (obj->isClip() && !ancestor->getBoundingRect().isPointInside(position))
-				{
-					return false;
-				}
-				obj = ancestor;
-				ancestor = obj->getParent();
-			}
-		}
-		if (this->customPointInsideCallback != NULL)
-		{
-			return (*this->customPointInsideCallback)(this, position);
-		}
-		return grectf(0.0f, 0.0f, this->rect.getSize()).isPointInside(this->transformToLocalSpace(position));
-	}
+
+
 
 	bool Object::onMouseDown(april::Key keyCode)
 	{
@@ -1153,343 +1505,6 @@ namespace aprilui
 		return false;
 	}
 
-	void Object::resetPivot()
-	{
-		this->pivot = this->rect.getSize() / 2;
-	}
-
-	bool Object::isDerivedVisible() const
-	{
-		return (this->isVisible() && (this->parent == NULL || this->parent->isDerivedVisible()));
-	}
-	
-	bool Object::_isDerivedHitTestEnabled() const
-	{
-		if (this->hitTest != HitTest::Enabled)
-		{
-			return false;
-		}
-		Object* ancestor = this->parent;
-		while (ancestor != NULL)
-		{
-			if (ancestor->hitTest == HitTest::DisabledRecursive)
-			{
-				return false;
-			}
-			ancestor = ancestor->getParent();
-		}
-		return true;
-	}
-
-	hstr Object::getProperty(chstr name)
-	{
-		if (name == "hit_test")
-		{
-			if (this->hitTest == HitTest::Enabled)				return "enabled";
-			if (this->hitTest == HitTest::Disabled)				return "disabled";
-			if (this->hitTest == HitTest::DisabledRecursive)	return "disabled_recursive";
-		}
-		if (name == "anchors")
-		{
-			harray<hstr> result;
-			if (this->anchorLeft)	result += "left";
-			if (this->anchorRight)	result += "right";
-			if (this->anchorTop)	result += "top";
-			if (this->anchorBottom)	result += "bottom";
-			return result.joined(',');
-		}
-		return BaseObject::getProperty(name);
-	}
-
-	bool Object::setProperty(chstr name, chstr value)
-	{
-		if (name == "hit_test")
-		{
-			if (value == "enabled")					this->setHitTest(HitTest::Enabled);
-			else if (value == "disabled")			this->setHitTest(HitTest::Disabled);
-			else if (value == "disabled_recursive")	this->setHitTest(HitTest::DisabledRecursive);
-			else
-			{
-				hlog::warn(logTag, "'hit_test=' does not support value '" + value + "'.");
-				return false;
-			}
-			return true;
-		}
-		if (name == "anchors")
-		{
-			harray<hstr> anchors = value.replaced(" ", "").lowered().split(",", -1, true);
-			harray<hstr> testAnchors = anchors;
-			testAnchors.removeAll("left");
-			testAnchors.removeAll("right");
-			testAnchors.removeAll("top");
-			testAnchors.removeAll("bottom");
-			testAnchors.removeAll("none");
-			testAnchors.removeAll("all");
-			if (testAnchors.size() > 0)
-			{
-				hlog::warn(logTag, "Found invalid values in 'anchors=' ('" + testAnchors.joined(",") + "').");
-				return false;
-			}
-			this->setAnchorLeft(anchors.has("all") || anchors.has("left"));
-			this->setAnchorRight(anchors.has("all") || anchors.has("right"));
-			this->setAnchorTop(anchors.has("all") || anchors.has("top"));
-			this->setAnchorBottom(anchors.has("all") || anchors.has("bottom"));
-			return true;
-		}
-		return BaseObject::setProperty(name, value);
-	}
-
-	bool Object::angleEquals(float angle) const
-	{
-		float s1 = (float)hsin(angle);
-		float c1 = (float)hcos(angle);
-		float s2 = (float)hsin(angle);
-		float c2 = (float)hcos(angle);
-		return (heqf(s1, s2, (float)HL_E_TOLERANCE) && heqf(c1, c2, (float)HL_E_TOLERANCE));
-	}
-
-	Object* Object::getChildUnderPoint(cgvec2f point) const
-	{
-		if (!this->isVisible() || this->hitTest == HitTest::DisabledRecursive)
-		{
-			return NULL;
-		}
-		Object* object = NULL;
-		foreachc_r (Object*, it, this->childrenObjects)
-		{
-			object = (*it)->getChildUnderPoint(point);
-			if (object != NULL)
-			{
-				break;
-			}
-		}
-		return (object == NULL && this->hitTest == HitTest::Enabled && this->isPointInside(point) ? (Object*)this : object);
-	}
-
-	Object* Object::getChildUnderPoint(float x, float y) const
-	{
-		return this->getChildUnderPoint(gvec2f(x, y));
-	}
-	
-	Object* Object::getChildUnderCursor()
-	{
-		if (!this->_checkedChildUnderCursor)
-		{
-			this->_childUnderCursor = this->getChildUnderPoint(aprilui::getCursorPosition());
-			this->_checkedChildUnderCursor = true;
-		}
-		return this->_childUnderCursor;
-	}
-	
-	void Object::clearChildUnderCursor()
-	{
-		this->lastChildUnderCursor = this->_childUnderCursor;
-		this->_childUnderCursor = NULL;
-		this->_checkedChildUnderCursor = false;
-	}
-
-	void Object::clearDescendantChildrenUnderCursor()
-	{
-		this->clearChildUnderCursor();
-		foreach (Object*, it, this->childrenObjects)
-		{
-			(*it)->clearDescendantChildrenUnderCursor();
-		}
-	}
-	
-	harray<gvec2f> Object::transformToLocalSpace(const harray<gvec2f>& points, aprilui::Object* overrideRoot) const
-	{
-		harray<const Object*> sequence;
-		const Object* current = this;
-		while (current != NULL)
-		{
-			sequence += current;
-			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
-		}
-		sequence.reverse();
-		harray<gvec2f> result = points;
-		gvec2f pivot;
-		gvec2f scale;
-		gvec2f position;
-		float angle;
-		foreach (const Object*, it, sequence)
-		{
-			pivot = (*it)->getPivot();
-			scale = (*it)->getScale();
-			position = (*it)->getPosition();
-			angle = (*it)->getAngle();
-			foreach (gvec2f, it2, result)
-			{
-				(*it2) -= pivot + position;
-				(*it2).rotate(angle);
-				(*it2) /= scale;
-				(*it2) += pivot;
-			}
-		}
-		return result;
-	}
-	
-	gvec2f Object::transformToLocalSpace(cgvec2f point, aprilui::Object* overrideRoot) const
-	{
-		harray<const Object*> sequence;
-		const Object* current = this;
-		while (current != NULL)
-		{
-			sequence += current;
-			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
-		}
-		sequence.reverse();
-		gvec2f result = point;
-		gvec2f pivot;
-		foreach (const Object*, it, sequence)
-		{
-			pivot = (*it)->getPivot();
-			result -= pivot + (*it)->getPosition();
-			result.rotate((*it)->getAngle());
-			result /= (*it)->getScale();
-			result += pivot;
-		}
-		return result;
-	}
-
-	harray<gvec2f> Object::getDerivedPoints(const harray<gvec2f>& points, aprilui::Object* overrideRoot) const
-	{
-		const Object* current = this;
-		harray<gvec2f> result = points;
-		gvec2f pivot;
-		gvec2f scale;
-		gvec2f position;
-		float angle;
-		while (current != NULL)
-		{
-			pivot = current->getPivot();
-			scale = current->getScale();
-			position = current->getPosition();
-			angle = current->getAngle();
-			foreach (gvec2f, it, result)
-			{
-				(*it) -= pivot;
-				(*it) *= scale;
-				(*it).rotate(-angle);
-				(*it) += pivot + position;
-			}
-			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
-		}
-		return result;
-	}
-
-	gvec2f Object::getDerivedPoint(cgvec2f point, aprilui::Object* overrideRoot) const
-	{
-		const Object* current = this;
-		gvec2f result = point;
-		gvec2f pivot;
-		while (current != NULL)
-		{
-			pivot = current->getPivot();
-			result -= pivot;
-			result *= current->getScale();
-			result.rotate(-current->getAngle());
-			result += pivot + current->getPosition();
-			current = ((overrideRoot == NULL || overrideRoot != current) ? current->getParent() : NULL);
-		}
-		return result;
-	}
-
-	grectf Object::getBoundingRect(aprilui::Object* overrideRoot) const
-	{
-		gvec2f max;
-		gvec2f min;
-		harray<gvec2f> corners = this->getDerivedCorners(overrideRoot);
-		min = max = corners.removeFirst(); // guaranteed to return 4 corner points previously
-		gvec2f corner;
-		while (corners.size() > 0)
-		{
-			corner = corners.removeFirst();
-			max.x = hmax(max.x, corner.x);
-			max.y = hmax(max.y, corner.y);
-			min.x = hmin(min.x, corner.x);
-			min.y = hmin(min.y, corner.y);
-		}
-		return grectf(min, max - min);
-	}
-	
-	harray<gvec2f> Object::getDerivedCorners(aprilui::Object* overrideRoot) const
-	{
-		harray<gvec2f> points;
-		points += gvec2f(0.0f, 0.0f);
-		points += gvec2f(0.0f, this->rect.h);
-		points += gvec2f(this->rect.w, 0.0f);
-		points += gvec2f(this->rect.w, this->rect.h);
-		return this->getDerivedPoints(points, overrideRoot);
-	}
-	
-	gvec2f Object::getDerivedPosition(aprilui::Object* overrideRoot) const
-	{
-		return this->getDerivedPoint(gvec2f(0.0f, 0.0f), overrideRoot);
-	}
-	
-	gvec2f Object::getDerivedSize(aprilui::Object* overrideRoot) const
-	{
-		return this->getBoundingRect(overrideRoot).getSize();
-	}
-
-	gvec2f Object::getDerivedPivot(aprilui::Object* overrideRoot) const
-	{
-		return this->getDerivedPoint(this->pivot, overrideRoot);
-	}
-	
-	gvec2f Object::getDerivedScale(aprilui::Object* overrideRoot) const
-	{
-		if (overrideRoot == this)
-		{
-			return this->scaleFactor;
-		}
-		gvec2f scaleFactor = this->scaleFactor;
-		if (this->parent != overrideRoot && this->parent != NULL)
-		{
-			scaleFactor *= this->parent->getDerivedScale(overrideRoot);
-		}
-		return scaleFactor;
-	}
-	
-	float Object::getDerivedAngle(aprilui::Object* overrideRoot) const
-	{
-		if (overrideRoot == this)
-		{
-			return this->angle;
-		}
-		float angle = this->angle;
-		if (this->parent != overrideRoot && this->parent != NULL)
-		{
-			angle += this->parent->getDerivedAngle(overrideRoot);
-		}
-		return angle;
-	}
-	
-	april::Color Object::_makeDrawColor() const
-	{
-		april::Color color = this->color;
-		if (this->inheritAlpha)
-		{
-			color.a = 255; // required, because this->_makeDrawColor(color) will already apply the derived object alpha
-		}
-		return this->_makeDrawColor(color);
-	}
-	
-	april::Color Object::_makeDrawColor(const april::Color& color) const
-	{
-		float alpha = (float)color.a;
-		if (this->inheritAlpha)
-		{
-			alpha *= this->getDerivedAlpha() / 255.0f;
-		}
-		if (this->useDisabledAlpha && !this->isDerivedEnabled())
-		{
-			alpha *= 0.5f;
-		}
-		return april::Color(color, (unsigned char)alpha);
-	}
-	
 	Animator* Object::moveX(float x, float speed)
 	{
 		REMOVE_EXISTING_ANIMATORS(MoverX);

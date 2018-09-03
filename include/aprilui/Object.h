@@ -102,7 +102,6 @@ namespace aprilui
 		HL_DEFINE_ISSET(anchorRight, AnchorRight);
 		HL_DEFINE_ISSET(anchorTop, AnchorTop);
 		HL_DEFINE_ISSET(anchorBottom, AnchorBottom);
-		void setAnchors(bool left, bool right, bool top, bool bottom);
 		HL_DEFINE_ISSET(retainAnchorAspect, RetainAnchorAspect);
 		HL_DEFINE_GETSET(HitTest, hitTest, HitTest);
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
@@ -111,17 +110,46 @@ namespace aprilui
 		HL_DEFINE_ISSET(useClipRound, UseClipRound);
 		virtual inline int getFocusIndex() const { return this->focusIndex; }
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
-		HL_DEFINE_GET(Object*, lastChildUnderCursor, LastChildUnderCursor);
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
-
+		bool isDerivedVisible() const;
+		bool isAnimated() const;
+		bool isWaitingAnimation() const;
+		bool hasDynamicAnimation() const;
 		bool isFocused() const;
 		virtual void setFocused(bool focused);
 		virtual bool isCursorInside() const;
+		harray<BaseImage*> getUsedImages() const;
 		Object* getChildUnderCursor();
 
-		harray<BaseImage*> getUsedImages() const;
+		void update(float timeDelta);
+		void draw();
+
+		hstr getProperty(chstr name);
+		bool setProperty(chstr name, chstr value);
+
+		void setAnchors(bool left, bool right, bool top, bool bottom);
+		void resetPivot();
+		harray<gvec2f> transformToLocalSpace(const harray<gvec2f>& points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2f transformToLocalSpace(cgvec2f point, aprilui::Object* overrideRoot = NULL) const;
+
 		unsigned char getDerivedAlpha(aprilui::Object* overrideRoot = NULL) const;
+		harray<gvec2f> getDerivedPoints(const harray<gvec2f>& points, aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedPoint(cgvec2f point, aprilui::Object* overrideRoot = NULL) const;
+		grectf getBoundingRect(aprilui::Object* overrideRoot = NULL) const;
+		/// @note The points are ordered as top-left, top-right, bottom-left, bottom-right within the local space.
+		harray<gvec2f> getDerivedCorners(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedPosition(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedSize(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedPivot(aprilui::Object* overrideRoot = NULL) const;
+		gvec2f getDerivedScale(aprilui::Object* overrideRoot = NULL) const;
+		float getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
+
+		virtual bool isPointInside(cgvec2f position) const;
+		Object* getChildUnderPoint(cgvec2f point) const;
+		Object* getChildUnderPoint(float x, float y) const;
+		virtual void clearChildUnderCursor();
+		void clearDescendantChildrenUnderCursor();
 
 		void addChild(BaseObject* object);
 		void removeChild(BaseObject* object);
@@ -130,32 +158,6 @@ namespace aprilui
 		void removeChildren(bool recursive = false);
 		void destroyChildren();
 
-		Object* getChildUnderPoint(cgvec2f point) const;
-		Object* getChildUnderPoint(float x, float y) const;
-		virtual void clearChildUnderCursor();
-		void clearDescendantChildrenUnderCursor();
-		virtual bool isPointInside(cgvec2f position) const;
-		bool angleEquals(float angle) const;
-
-		harray<gvec2f> transformToLocalSpace(const harray<gvec2f>& points, aprilui::Object* overrideRoot = NULL) const;
-		gvec2f transformToLocalSpace(cgvec2f point, aprilui::Object* overrideRoot = NULL) const;
-
-		harray<gvec2f> getDerivedPoints(const harray<gvec2f>& points, aprilui::Object* overrideRoot = NULL) const;
-		gvec2f getDerivedPoint(cgvec2f point, aprilui::Object* overrideRoot = NULL) const;
-		grectf getBoundingRect(aprilui::Object* overrideRoot = NULL) const;
-		/// @note The points are ordered as top-left, top-right, bottom-left, bottom-right within the local space.
-		harray<gvec2f> getDerivedCorners(aprilui::Object* overrideRoot = NULL) const;
-
-		gvec2f getDerivedPosition(aprilui::Object* overrideRoot = NULL) const;
-		gvec2f getDerivedSize(aprilui::Object* overrideRoot = NULL) const;
-		gvec2f getDerivedPivot(aprilui::Object* overrideRoot = NULL) const;
-		gvec2f getDerivedScale(aprilui::Object* overrideRoot = NULL) const;
-		float getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
-		bool isDerivedVisible() const;
-		bool isAnimated() const;
-		bool isWaitingAnimation() const;
-		bool hasDynamicAnimation() const;
-		
 		// if this returns true, the event is processed and is not propagated to parents or other siblings, etc.
 		// (these should usually not be overriden)
 		virtual bool onMouseDown(april::Key keyCode);
@@ -170,13 +172,6 @@ namespace aprilui
 		virtual bool onButtonDown(april::Button buttonCode);
 		virtual bool onButtonUp(april::Button buttonCode);
 
-		void draw();
-		
-		void resetPivot();
-		
-		hstr getProperty(chstr name);
-		bool setProperty(chstr name, chstr value);
-		
 		// dynamic animators
 		
 		Animator* moveX(float x, float speed);
@@ -271,6 +266,9 @@ namespace aprilui
 
 		void animateStopAll();
 
+		HL_DEPRECATED("angleEquals() is deprecated, use your own implementation.")
+		bool angleEquals(float angle) const { return (heqf((float)hsin(angle), (float)hsin(angle), (float)HL_E_TOLERANCE) && heqf((float)hcos(angle), (float)hcos(angle), (float)HL_E_TOLERANCE)); }
+
 	protected:
 		grectf rect;
 		gvec2f pivot;
@@ -292,25 +290,27 @@ namespace aprilui
 		CustomPointInsideCallback customPointInsideCallback;
 		harray<Animator*> dynamicAnimators;
 		april::Color debugColor;
-		Object* lastChildUnderCursor;
 		
+		void _cloneChildren(const harray<Object*>& objects, const harray<Animator*>& animators);
+
 		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
 
-		void _updateChildrenHorizontal(float difference);
-		void _updateChildrenVertical(float difference);
-		void _cloneChildren(const harray<Object*>& objects, const harray<Animator*>& animators);
-
-		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
 		bool _isDerivedHitTestEnabled() const;
-		grectf _makeDrawRect() const;
-		april::Color _makeDrawColor() const;
-		virtual april::Color _makeDrawColor(const april::Color& color) const;
 		virtual harray<BaseImage*> _getUsedImages() const;
 
 		void _update(float timeDelta);
 		virtual void _draw();
 		virtual void _drawDebug();
+
+		float _getDerivedAngle(aprilui::Object* overrideRoot = NULL) const;
+
+		void _updateChildrenHorizontal(float difference);
+		void _updateChildrenVertical(float difference);
+
+		grectf _makeDrawRect() const;
+		april::Color _makeDrawColor() const;
+		virtual april::Color _makeDrawColor(const april::Color& color) const;
 
 		// if this returns true, the event is processed and is not propagated to parents or other siblings, etc.
 		virtual bool _mouseDown(april::Key keyCode);
