@@ -54,11 +54,11 @@ namespace aprilui
 		void update(float timeDelta);
 		void resetUnusedTime();
 
-		virtual bool loadMetaData(bool ignoreDynamicLinks = false);
-		virtual bool load(bool ignoreDynamicLinks = false);
-		virtual bool loadAsync(bool ignoreDynamicLinks = false);
-		virtual void unload();
-		virtual void reload(chstr filename);
+		bool loadMetaData(bool ignoreDynamicLinks = false);
+		bool load(bool ignoreDynamicLinks = false);
+		bool loadAsync(bool ignoreDynamicLinks = false);
+		void unload();
+		void reload(chstr filename);
 		
 		void addLink(Texture* link);
 		void removeLink(Texture* link);
