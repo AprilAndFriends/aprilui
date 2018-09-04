@@ -10,7 +10,7 @@
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hstring.h>
 
-#include "AnimatorEArthquake.h"
+#include "AnimatorEarthquake.h"
 
 namespace aprilui
 {
