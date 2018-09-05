@@ -1,0 +1,25 @@
+apply plugin: "com.android.library"
+apply from: "../../../hltypes/android-studio/generic/default.gradle"
+apply from: "../../../hltypes/android-studio/generic/native.gradle"
+apply from: "../../../hltypes/android-studio/generic/cpp.gradle"
+
+android {
+	defaultConfig {
+		versionCode 1340
+		versionName "1.3.4"
+	}
+	externalNativeBuild {
+		cmake {
+			path "CMakeLists.txt"
+		}
+	}
+}
+
+dependencies {
+	implementation project(":hltypes")
+	implementation project(":gtypes")
+	implementation project(":april")
+	implementation project(":atres")
+	implementation project(":hlxml")
+	api fileTree(include: ["*.jar"], dir: "libs")
+}
