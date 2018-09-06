@@ -74,7 +74,7 @@ namespace aprilui
 		return cursorPosition;
 	}
 
-	void setCursorPosition(cgvec2f position)
+	void setCursorPosition(gvec2f position)
 	{
 		cursorPosition = position;
 	}
@@ -89,7 +89,7 @@ namespace aprilui
 		return viewport;
 	}
 
-	void setViewport(cgrectf value)
+	void setViewport(grectf value)
 	{
 		viewport = value;
 	}

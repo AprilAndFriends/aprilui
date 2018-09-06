@@ -47,10 +47,10 @@ namespace aprilui
 	apriluiFnExport void setTextureIdleUnloadTime(float value);
 	
 	apriluiFnExport gvec2f getCursorPosition();
-	apriluiFnExport void setCursorPosition(cgvec2f position);
+	apriluiFnExport void setCursorPosition(gvec2f position);
 	apriluiFnExport void setCursorPosition(float x, float y);
 	apriluiFnExport grectf getViewport();
-	apriluiFnExport void setViewport(cgrectf value);
+	apriluiFnExport void setViewport(grectf value);
 	
 	apriluiFnExport void OnMouseDown(float x, float y, int button);
 	apriluiFnExport void OnMouseUp(float x, float y, int button);
