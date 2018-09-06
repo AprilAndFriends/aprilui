@@ -1065,7 +1065,6 @@
 			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/aprilui_ios.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1088,7 +1087,6 @@
 			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/aprilui_ios.dst;
 				GCC_THUMB_SUPPORT = NO;
@@ -1106,7 +1104,6 @@
 			baseConfigurationReference = D1126262191792520091950A /* iOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/aprilui_ios.dst;
 				GCC_THUMB_SUPPORT = NO;
