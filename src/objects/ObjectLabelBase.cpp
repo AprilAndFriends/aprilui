@@ -161,10 +161,9 @@ namespace aprilui
 
 	void LabelBase::setTextKey(chstr value)
 	{
-		if (value == "")
-			mTextKey = "";
-		mText = getDataset()->getText(value);
-		mTextKey = value;
+		hstr newTextKey = value; // because value is a chstr which could reference this->textKey itself
+		mText = getDataset()->getText(newTextKey);
+		mTextKey = newTextKey;
 	}
 
 	void LabelBase::trySetTextKey(chstr value)
