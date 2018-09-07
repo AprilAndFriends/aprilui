@@ -247,7 +247,7 @@ namespace aprilui
 			throw ApriluiResourceExistsException(filename, "RamTexture", this);
 		}
 //		bool dynamicLoad = node->pbool("dynamic_load", false);
-		hstr locpath = _makeLocalizedTextureName(filepath);
+		hstr locpath = april::rendersys->findTextureResource(_makeLocalizedTextureName(filepath));
 		if (!hresource::exists(locpath))
 		{
 			throw FileNotFoundException(locpath);
