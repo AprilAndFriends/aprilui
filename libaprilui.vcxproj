@@ -1,49 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugS|Android">
-      <Configuration>DebugS</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugS|Android-x86">
-      <Configuration>DebugS</Configuration>
-      <Platform>Android-x86</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugS|Win32">
-      <Configuration>DebugS</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Android">
-      <Configuration>Debug</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Android-x86">
-      <Configuration>Debug</Configuration>
-      <Platform>Android-x86</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseS|Android">
-      <Configuration>ReleaseS</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseS|Android-x86">
-      <Configuration>ReleaseS</Configuration>
-      <Platform>Android-x86</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseS|Win32">
-      <Configuration>ReleaseS</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Android">
-      <Configuration>Release</Configuration>
-      <Platform>Android</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Android-x86">
-      <Configuration>Release</Configuration>
-      <Platform>Android-x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -52,72 +12,88 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{56FF74D1-34D0-4DDB-8B89-F6F9200842B8}</ProjectGuid>
-    <RootNamespace>aprilui</RootNamespace>
+    <RootNamespace>hltypes</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="props\v110.default.props" />
-  <Import Project="..\hltypes\props\generic\v110.$(Platform).props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android-x86'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseS|Android-x86'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android-x86'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS|Android'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugS|Android-x86'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Condition="'$(WholeProgramOptimization)'!='true'" Project="..\hltypes\props\generic\v110.Debug.props" />
-  <Import Condition="'$(WholeProgramOptimization)'=='true'" Project="..\hltypes\props\generic\v110.Release.props" />
-  <Import Project="props\v110.configuration.props" />
-  <ImportGroup Label="PropertySheets">
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Platform)\lib\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;_DEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libatres.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc90;$(SolutionDir)bin\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command />
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>src;include/aprilui;../gtypes/include;../hltypes/include;../hltypes/hlxml/include;../atres/include;../april/include;../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WIN32;NDEBUG;APRILUI_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level2</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libgtypes.lib;libhltypes.lib;libhlxml.lib;libapril.lib;libatres.lib;libxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>..\lib\msvc90;$(SolutionDir)bin\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command />
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\aprilui.cpp" />
-    <ClCompile Include="src\CallbackEvent.cpp" />
-    <ClCompile Include="src\Dataset.cpp" />
-    <ClCompile Include="src\EventArgs.cpp" />
-    <ClCompile Include="src\EventReceiver.cpp" />
-    <ClCompile Include="src\Exception.cpp" />
-    <ClCompile Include="src\apriluiUtil.cpp" />
     <ClCompile Include="src\animators\Animator.cpp" />
     <ClCompile Include="src\animators\AnimatorAlphaFader.cpp" />
     <ClCompile Include="src\animators\AnimatorAlphaHover.cpp" />
@@ -132,6 +108,19 @@
     <ClCompile Include="src\animators\AnimatorRotator.cpp" />
     <ClCompile Include="src\animators\AnimatorScaleOscillator.cpp" />
     <ClCompile Include="src\animators\AnimatorScaler.cpp" />
+    <ClCompile Include="src\aprilui.cpp" />
+    <ClCompile Include="src\apriluiUtil.cpp" />
+    <ClCompile Include="src\CallbackEvent.cpp" />
+    <ClCompile Include="src\Dataset.cpp" />
+    <ClCompile Include="src\EventArgs.cpp" />
+    <ClCompile Include="src\EventReceiver.cpp" />
+    <ClCompile Include="src\Exception.cpp" />
+    <ClCompile Include="src\images\ColoredImage.cpp" />
+    <ClCompile Include="src\images\ColorImage.cpp" />
+    <ClCompile Include="src\images\CompositeImage.cpp" />
+    <ClCompile Include="src\images\Image.cpp" />
+    <ClCompile Include="src\images\NullImage.cpp" />
+    <ClCompile Include="src\images\TiledImage.cpp" />
     <ClCompile Include="src\objects\Object.cpp" />
     <ClCompile Include="src\objects\ObjectCallbackObject.cpp" />
     <ClCompile Include="src\objects\ObjectColoredImageBox.cpp" />
@@ -148,30 +137,9 @@
     <ClCompile Include="src\objects\ObjectTextButton.cpp" />
     <ClCompile Include="src\objects\ObjectTextImageButton.cpp" />
     <ClCompile Include="src\objects\ObjectToggleButton.cpp" />
-    <ClCompile Include="src\images\ColoredImage.cpp" />
-    <ClCompile Include="src\images\ColorImage.cpp" />
-    <ClCompile Include="src\images\CompositeImage.cpp" />
-    <ClCompile Include="src\images\Image.cpp" />
-    <ClCompile Include="src\images\NullImage.cpp" />
-    <ClCompile Include="src\images\TiledImage.cpp" />
-    <ClCompile Include="src\RamTexture.cpp" />
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\aprilui\RamTexture.h" />
-    <ClInclude Include="src\apriluiUtil.h" />
-    <ClInclude Include="include\aprilui\EventReceiver.h" />
-    <ClInclude Include="include\aprilui\Texture.h" />
-    <ClInclude Include="include\aprilui\Animators.h" />
-    <ClInclude Include="include\aprilui\aprilui.h" />
-    <ClInclude Include="include\aprilui\apriluiExport.h" />
-    <ClInclude Include="include\aprilui\CallbackEvent.h" />
-    <ClInclude Include="include\aprilui\Dataset.h" />
-    <ClInclude Include="include\aprilui\Event.h" />
-    <ClInclude Include="include\aprilui\EventArgs.h" />
-    <ClInclude Include="include\aprilui\Exception.h" />
-    <ClInclude Include="include\aprilui\Images.h" />
-    <ClInclude Include="include\aprilui\Objects.h" />
     <ClInclude Include="include\aprilui\Animator.h" />
     <ClInclude Include="include\aprilui\AnimatorAlphaFader.h" />
     <ClInclude Include="include\aprilui\AnimatorAlphaHover.h" />
@@ -184,8 +152,23 @@
     <ClInclude Include="include\aprilui\AnimatorMover.h" />
     <ClInclude Include="include\aprilui\AnimatorRotationOscillator.h" />
     <ClInclude Include="include\aprilui\AnimatorRotator.h" />
+    <ClInclude Include="include\aprilui\Animators.h" />
     <ClInclude Include="include\aprilui\AnimatorScaleOscillator.h" />
     <ClInclude Include="include\aprilui\AnimatorScaler.h" />
+    <ClInclude Include="include\aprilui\aprilui.h" />
+    <ClInclude Include="include\aprilui\apriluiExport.h" />
+    <ClInclude Include="include\aprilui\CallbackEvent.h" />
+    <ClInclude Include="include\aprilui\ColoredImage.h" />
+    <ClInclude Include="include\aprilui\ColorImage.h" />
+    <ClInclude Include="include\aprilui\CompositeImage.h" />
+    <ClInclude Include="include\aprilui\Dataset.h" />
+    <ClInclude Include="include\aprilui\Event.h" />
+    <ClInclude Include="include\aprilui\EventArgs.h" />
+    <ClInclude Include="include\aprilui\EventReceiver.h" />
+    <ClInclude Include="include\aprilui\Exception.h" />
+    <ClInclude Include="include\aprilui\Image.h" />
+    <ClInclude Include="include\aprilui\Images.h" />
+    <ClInclude Include="include\aprilui\NullImage.h" />
     <ClInclude Include="include\aprilui\Object.h" />
     <ClInclude Include="include\aprilui\ObjectCallbackObject.h" />
     <ClInclude Include="include\aprilui\ObjectColoredImageBox.h" />
@@ -198,55 +181,17 @@
     <ClInclude Include="include\aprilui\ObjectLabelBase.h" />
     <ClInclude Include="include\aprilui\ObjectRotatableImageBox.h" />
     <ClInclude Include="include\aprilui\ObjectRotationImageBox.h" />
+    <ClInclude Include="include\aprilui\Objects.h" />
     <ClInclude Include="include\aprilui\ObjectSlider.h" />
     <ClInclude Include="include\aprilui\ObjectTextButton.h" />
     <ClInclude Include="include\aprilui\ObjectTextImageButton.h" />
     <ClInclude Include="include\aprilui\ObjectToggleButton.h" />
-    <ClInclude Include="include\aprilui\ColoredImage.h" />
-    <ClInclude Include="include\aprilui\ColorImage.h" />
-    <ClInclude Include="include\aprilui\CompositeImage.h" />
-    <ClInclude Include="include\aprilui\Image.h" />
-    <ClInclude Include="include\aprilui\NullImage.h" />
+    <ClInclude Include="include\aprilui\Texture.h" />
     <ClInclude Include="include\aprilui\TiledImage.h" />
+    <ClInclude Include="src\apriluiUtil.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\april\libapril.vcxproj">
-      <Project>{2d053cda-686b-4b36-80eb-1da5f0cef8f9}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\atres\libatres.vcxproj">
-      <Project>{a1e808a0-fe36-47fe-9e3b-cf195ea31f0a}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\hltypes\hlxml\libhlxml.vcxproj">
-      <Private>false</Private>
-      <Project>{601bcb9e-aaf2-412e-8aeb-9fc77d0505d8}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\hltypes\libhltypes.vcxproj">
-      <Project>{e4d373bf-e227-48b9-99e6-84987e8674ec}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="fileproperties.rc">
-      <ExcludedFromBuild Condition="'$(Platform)'=='Android' or '$(ConfigurationType)'=='StaticLibrary'">true</ExcludedFromBuild>
-    </ResourceCompile>
+    <ResourceCompile Include="fileproperties.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
