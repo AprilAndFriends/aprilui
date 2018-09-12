@@ -646,6 +646,14 @@ namespace aprilui
 		harray<hstr> names = node->pstr("names").split(",", -1, true);
 		foreach (hstr, it, names)
 		{
+			if ((*it).startsWith(" "))
+			{
+				hlog::warnf(logTag, "Detected texture group with prefixed spaces '%s'. Are you sure this is correct?", (*it).cStr());
+			}
+			if ((*it).endsWith(" "))
+			{
+				hlog::warnf(logTag, "Detected texture group with suffixed spaces '%s'. Are you sure this is correct?", (*it).cStr());
+			}
 			foreach (hstr, it2, names)
 			{
 				if ((*it) != (*it2))
