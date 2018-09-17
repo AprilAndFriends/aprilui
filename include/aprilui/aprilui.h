@@ -12,6 +12,7 @@
 #define APRILUI_VER 1.4
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
@@ -34,6 +35,7 @@ namespace aprilui
 	//! used to determine width and height of objects that don't have w & h params in xml
 	apriluiFnExport void setDefaultScale(float value);
 	apriluiFnExport float getDefaultScale();
+	apriluiFnExport hmap<hstr, Dataset*> getDatasets();
 	
 	apriluiFnExport bool hasDataset(chstr name);
 	apriluiFnExport Dataset* getDatasetByName(chstr name);
@@ -61,6 +63,7 @@ namespace aprilui
 		
 	apriluiFnExport void setMacroCallback(hstr (*callback)(chstr));
 	apriluiFnExport hstr expandMacro(chstr macro);
+	apriluiFnExport void unloadUnusedTextures();
 
 	// TODO - hack, has to be removed completely
 	apriluiFnExport bool getForcedDynamicLoading();

@@ -44,6 +44,8 @@ namespace aprilui
 		virtual void load(chstr path = "");
 		virtual void unload();
 		virtual bool isLoaded() { return mLoaded; }
+		virtual void unloadUnusedTextures();
+
 		void registerManualObject(Object* o);
 		void unregisterManualObject(Object* o);
 		void registerObjects(Object* object, bool unused = true); // aprilui trunk compatibility

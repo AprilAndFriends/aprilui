@@ -573,6 +573,21 @@ namespace aprilui
 		mLoaded = false;
 	}
 	
+	void Dataset::unloadUnusedTextures()
+	{
+		foreach_m (aprilui::Texture*, it, mTextures)
+		{
+			if (it->second->isDynamic() && it->second->getUnusedTime() > 1)
+			{
+				it->second->unload();
+			}
+		}
+		foreach_m (aprilui::RamTexture*, it, mRamTextures)
+		{
+			it->second->unload();
+		}
+	}
+
 	void Dataset::registerManualObject(Object* object)
 	{
 		hstr name = object->getName();

@@ -94,6 +94,11 @@ namespace aprilui
 		viewport = value;
 	}
 
+	hmap<hstr, Dataset*> getDatasets()
+	{
+		return gDatasets;
+	}
+
 	bool hasDataset(chstr name)
 	{
 		return gDatasets.hasKey(name);
@@ -254,15 +259,26 @@ namespace aprilui
 		}
 	}
 	
-	apriluiFnExport void setMacroCallback(hstr (*callback)(chstr))
+	void setMacroCallback(hstr (*callback)(chstr))
 	{
 		g_macroCallback = callback;
 	}
 	
-	apriluiFnExport hstr expandMacro(chstr macro)
+	hstr expandMacro(chstr macro)
 	{
-		if (g_macroCallback == NULL) throw Exception("aprilui macro callback not set, trying to expand macro '" + macro + "'");
+		if (g_macroCallback == NULL)
+		{
+			throw Exception("aprilui macro callback not set, trying to expand macro '" + macro + "'");
+		}
 		return g_macroCallback(macro);
+	}
+
+	void unloadUnusedTextures()
+	{
+		foreach_m( Dataset*, it, gDatasets)
+		{
+			it->second->unloadUnusedTextures();
+		}
 	}
 
 	// TODO - hack, has to be removed
