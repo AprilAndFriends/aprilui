@@ -1,8 +1,8 @@
 /// @file
 /// @version 1.34
-/// 
+///
 /// @section LICENSE
-/// 
+///
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
@@ -42,7 +42,7 @@ namespace aprilui
 
 	Texture::~Texture()
 	{
-		if (mTexture != NULL)
+	if (mTexture != NULL)
 		{
 			april::rendersys->destroyTexture(mTexture);
 		}
@@ -96,17 +96,15 @@ namespace aprilui
 	
 	void Texture::update(float k)
 	{
-		if (mDynamic && !mTexture->isUnloaded())
+		if (mDynamic && !mTexture->isUnloaded() && mTexture != NULL)
 		{
 			// TODO - change to aprilui variable
 			float maxTime = aprilui::getTextureIdleUnloadTime();
-			if (maxTime > 0.0f)
+			mUnusedTime += k;
+			if (maxTime > 0.0f && mUnusedTime >= maxTime)
 			{
-				mUnusedTime += k;
-				if (mUnusedTime > maxTime)
-				{
-					mTexture->unload();
-				}
+				mTexture->unload();
+				mUnusedTime = 0.0f;
 			}
 		}
 	}
@@ -129,13 +127,20 @@ namespace aprilui
 
 	void Texture::unload()
 	{
-		mTexture->unload();
+		if (mTexture != NULL)
+		{
+			mTexture->unload();
+		}
 	}
 
 	void Texture::reload(chstr filename)
 	{
 		if (mFilename != filename)
 		{
+			if (mTexture != NULL)
+			{
+				april::rendersys->destroyTexture(mTexture);
+			}
 			mUnusedTime = 0.0f;
 			mFilename = filename;
 			mTexture = april::rendersys->createTextureFromResource(mFilename, april::Texture::Type::Immutable, april::Texture::LoadMode::OnDemand);
