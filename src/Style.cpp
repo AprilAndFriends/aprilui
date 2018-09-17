@@ -65,7 +65,7 @@ namespace aprilui
 		}
 		else
 		{
-			hlog::warn(logTag, "Class '" + className + "' not registered in aprilui!");
+			hlog::debug(logTag, "Class '" + className + "' not registered in aprilui.");
 		}
 		return result;
 	}

@@ -1461,6 +1461,11 @@ namespace aprilui
 		{
 			return;
 		}
+		this->_unload();
+	}
+	
+	void Dataset::_unload()
+	{
 		this->_closeDocuments();
 		aprilui::Object* parent = NULL;
 		foreach_m (Animator*, it, this->animators)
