@@ -113,6 +113,7 @@ namespace aprilui
 	apriluiFnExport void processEvents();
 	apriluiFnExport void update(float timeDelta);
 	apriluiFnExport void updateTextures(float timeDelta);
+	apriluiFnExport void clearChildUnderCursor();
 	apriluiFnExport void unloadUnusedResources();
 	apriluiFnExport void reloadTextures();
 

@@ -620,6 +620,14 @@ namespace aprilui
 		}
 	}
 	
+	void clearChildUnderCursor()
+	{
+		foreach_m(Dataset*, it, gDatasets)
+		{
+			it->second->clearChildUnderCursor();
+		}
+	}
+
 	void unloadUnusedResources()
 	{
 		foreach_m (Dataset*, it, gDatasets)
