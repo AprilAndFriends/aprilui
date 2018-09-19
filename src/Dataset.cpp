@@ -2019,12 +2019,17 @@ namespace aprilui
 	
 	void Dataset::processEvents()
 	{
-		for_iter (i, 0, this->callbackQueue.size())
+		// do not change this code, it needs to be robust to any kind of changes in this->callbackQueue
+		if (this->callbackQueue.size() > 0)
 		{
-			this->callbackQueue[i].event->execute(this->callbackQueue[i].args);
-			delete this->callbackQueue[i].args; // deleting only args because event is a pointer to object's events which get deleted by the owning object, while args are allocated by the callback queue.
+			QueuedCallback callback;
+			do
+			{
+				callback = this->callbackQueue.removeFirst();
+				callback.event->execute(callback.args);
+				delete callback.args; // deleting only args because event is a pointer to object's events which get deleted by the owning object, while args are allocated by the callback queue.
+			} while (this->callbackQueue.size() > 0);
 		}
-		this->callbackQueue.clear();
 	}
 	
 	void Dataset::queueCallback(Event* event, EventArgs* args)
