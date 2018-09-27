@@ -606,7 +606,7 @@ namespace aprilui
 				this->_autoScaleDirty = true;
 			}
 		}
-		else if (type == Event::TextChanged || type == Event::TextKeyChanged || type == Event::Resized)
+		else if (type == Event::TextChanged || type == Event::TextKeyChanged || type == Event::SizeChanged)
 		{
 			this->_autoScaleDirty = true;
 		}

@@ -60,21 +60,23 @@ namespace aprilui
 		HL_DEFINE_GET(grectf, rect, Rect);
 		void setRect(cgrectf value);
 		void setRect(cgvec2f position, cgvec2f size);
-		void setRect(cgvec2f position, float w, float h);
-		void setRect(float x, float y, cgvec2f size);
-		void setRect(float x, float y, float w, float h);
-		HL_DEFINE_GETSET(float, rect.x, X);
-		HL_DEFINE_GETSET(float, rect.y, Y);
+		void setRect(cgvec2f position, const float& w, const float& h);
+		void setRect(const float& x, const float& y, cgvec2f size);
+		void setRect(const float& x, const float& y, const float& w, const float& h);
+		HL_DEFINE_GET(float, rect.x, X);
+		void setX(const float& value);
+		HL_DEFINE_GET(float, rect.y, Y);
+		void setY(const float& value);
 		HL_DEFINE_GET(float, rect.w, Width);
 		void setWidth(const float& value);
 		HL_DEFINE_GET(float, rect.h, Height);
 		void setHeight(const float& value);
 		inline gvec2f getPosition() const { return this->rect.getPosition(); }
-		inline void setPosition(cgvec2f value) { this->rect.setPosition(value); }
-		inline void setPosition(float x, float y) { this->rect.setPosition(x, y); }
+		void setPosition(cgvec2f value);
+		void setPosition(const float& x, const float& y);
 		inline gvec2f getSize() const { return this->rect.getSize(); }
 		void setSize(cgvec2f value);
-		void setSize(float w, float h);
+		void setSize(const float& w, const float& h);
 
 		HL_DEFINE_GETSET(gvec2f, pivot, Pivot);
 		inline void setPivot(float x, float y) { this->pivot.set(x, y); }

@@ -500,7 +500,7 @@ namespace aprilui
 				parent->scrollArea = NULL;
 			}
 		}
-		else if (type == Event::Resized)
+		else if (type == Event::SizeChanged)
 		{
 			this->snapScrollOffset();
 			this->_updateOobChildren();

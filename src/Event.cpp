@@ -41,7 +41,8 @@ namespace aprilui
 	hstr Event::ButtonTrigger = "ButtonTrigger";
 	hstr Event::EnabledChanged = "EnabledChanged";
 	hstr Event::AwakeChanged = "AwakeChanged";
-	hstr Event::Resized = "Resized";
+	hstr Event::PositionChanged = "PositionChanged";
+	hstr Event::SizeChanged = "SizeChanged";
 	hstr Event::FocusGained = "FocusGained";
 	hstr Event::FocusLost = "FocusLost";
 	hstr Event::HoverStarted = "HoverStarted";
@@ -70,6 +71,11 @@ namespace aprilui
 
 	bool Event::isSystemEvent(chstr type, bool caseSensitive)
 	{
+		if (type == DEPRECATED_EVENT_RESIZED)
+		{
+			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
+			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
+		}
 		SYSTEM_EVENT_CHECK(DatasetLoaded);
 		SYSTEM_EVENT_CHECK(DatasetUnloaded);
 		SYSTEM_EVENT_CHECK(RegisteredInDataset);
@@ -91,7 +97,8 @@ namespace aprilui
 		SYSTEM_EVENT_CHECK(ButtonTrigger);
 		SYSTEM_EVENT_CHECK(EnabledChanged);
 		SYSTEM_EVENT_CHECK(AwakeChanged);
-		SYSTEM_EVENT_CHECK(Resized);
+		SYSTEM_EVENT_CHECK(PositionChanged);
+		SYSTEM_EVENT_CHECK(SizeChanged);
 		SYSTEM_EVENT_CHECK(FocusGained);
 		SYSTEM_EVENT_CHECK(FocusLost);
 		SYSTEM_EVENT_CHECK(HoverStarted);

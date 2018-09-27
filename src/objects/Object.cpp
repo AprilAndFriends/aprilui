@@ -324,7 +324,8 @@ namespace aprilui
 		this->_updateChildrenHorizontal(value.w - this->rect.w);
 		this->_updateChildrenVertical(value.h - this->rect.h);
 		this->rect = value;
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::PositionChanged, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setRect(cgvec2f position, cgvec2f size)
@@ -332,45 +333,73 @@ namespace aprilui
 		this->_updateChildrenHorizontal(size.x - this->rect.w);
 		this->_updateChildrenVertical(size.y - this->rect.h);
 		this->rect.set(position, size);
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::PositionChanged, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
-	void Object::setRect(cgvec2f position, float w, float h)
+	void Object::setRect(cgvec2f position, const float& w, const float& h)
 	{
 		this->_updateChildrenHorizontal(w - this->rect.w);
 		this->_updateChildrenVertical(h - this->rect.h);
 		this->rect.set(position, w, h);
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::PositionChanged, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
-	void Object::setRect(float x, float y, cgvec2f size)
+	void Object::setRect(const float& x, const float& y, cgvec2f size)
 	{
 		this->_updateChildrenHorizontal(size.x - this->rect.w);
 		this->_updateChildrenVertical(size.y - this->rect.h);
 		this->rect.set(x, y, size);
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::PositionChanged, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
-	void Object::setRect(float x, float y, float w, float h)
+	void Object::setRect(const float& x, const float& y, const float& w, const float& h)
 	{
 		this->_updateChildrenHorizontal(w - this->rect.w);
 		this->_updateChildrenVertical(h - this->rect.h);
 		this->rect.set(x, y, w, h);
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::PositionChanged, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
+	}
+
+	void Object::setX(const float& value)
+	{
+		this->rect.x = value;
+		this->notifyEvent(Event::PositionChanged, NULL);
+	}
+
+	void Object::setY(const float& value)
+	{
+		this->rect.y = value;
+		this->notifyEvent(Event::PositionChanged, NULL);
 	}
 
 	void Object::setWidth(const float& value)
 	{
 		this->_updateChildrenHorizontal(value - this->rect.w);
 		this->rect.w = value;
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setHeight(const float& value)
 	{
 		this->_updateChildrenVertical(value - this->rect.h);
 		this->rect.h = value;
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
+	}
+
+	void Object::setPosition(cgvec2f value)
+	{
+		this->rect.setPosition(value);
+		this->notifyEvent(Event::PositionChanged, NULL);
+	}
+
+	void Object::setPosition(const float& x, const float& y)
+	{
+		this->rect.setPosition(x, y);
+		this->notifyEvent(Event::PositionChanged, NULL);
 	}
 
 	void Object::setSize(cgvec2f value)
@@ -378,15 +407,15 @@ namespace aprilui
 		this->_updateChildrenHorizontal(value.x - this->rect.w);
 		this->_updateChildrenVertical(value.y - this->rect.h);
 		this->rect.setSize(value);
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
-	void Object::setSize(float w, float h)
+	void Object::setSize(const float& w, const float& h)
 	{
 		this->_updateChildrenHorizontal(w - this->rect.w);
 		this->_updateChildrenVertical(h - this->rect.h);
 		this->rect.setSize(w, h);
-		this->notifyEvent(Event::Resized, NULL);
+		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setSymbolicColor(chstr value)

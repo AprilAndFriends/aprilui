@@ -18,6 +18,8 @@
 #include "apriluiExport.h"
 #include "Cloneable.h"
 
+#define DEPRECATED_EVENT_RESIZED "Resized"
+
 namespace aprilui
 {
 	class EventArgs;
@@ -47,7 +49,8 @@ namespace aprilui
 		static hstr ButtonTrigger;
 		static hstr EnabledChanged;
 		static hstr AwakeChanged;
-		static hstr Resized;
+		static hstr PositionChanged;
+		static hstr SizeChanged;
 		static hstr FocusGained;
 		static hstr FocusLost;
 		static hstr HoverStarted;

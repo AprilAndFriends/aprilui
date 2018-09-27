@@ -43,7 +43,7 @@ namespace aprilui
 	void Container::notifyEvent(chstr type, EventArgs* args)
 	{
 		Object::notifyEvent(type, args);
-		if (type == Event::Resized)
+		if (type == Event::SizeChanged)
 		{
 			if (this->scrollArea != NULL)
 			{
