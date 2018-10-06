@@ -46,8 +46,9 @@ class TsvParser:
 			for i in xrange(len(columns)):
 				if columns[i].startswith("\"") and columns[i].endswith("\""):
 					columns[i] = columns[i][1:-1].replace("\"\"", "\"")
+				# this feature has been disabled, because it breaks other spreadsheet software
 				# changes back the MS Excel fix for "-"
-				columns[i] = columns[i].replace(TsvParser.DASH, "-")
+				#columns[i] = columns[i].replace(TsvParser.DASH, "-")
 			if columns[0] == "###":
 				if locFile != None:
 					locFiles.append(locFile)
@@ -75,9 +76,10 @@ class TsvParser:
 			for locEntry in locFile.entries:
 				key, value, original, comment = locEntry.key, locEntry.value, locEntry.original, locEntry.comment
 				columns = [key, value, original, comment]
-				for i in xrange(len(columns)):
-					# prevents MS Excel from seeing "-" as a formula indicator
-					columns[i] = columns[i].replace("-", TsvParser.DASH)
+				# this feature has been disabled, because it breaks other spreadsheet software
+				#for i in xrange(len(columns)):
+				#	# prevents MS Excel from seeing "-" as a formula indicator
+				#	columns[i] = columns[i].replace("-", TsvParser.DASH)
 				result += TsvParser._makeEntry(columns[0], columns[1], columns[2], columns[3])
 		return result
 		
