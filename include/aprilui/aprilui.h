@@ -87,7 +87,7 @@ namespace aprilui
 	apriluiFnExport Object* createObject(chstr type, chstr name);
 	apriluiFnExport Animator* createAnimator(chstr type, chstr name);
 	apriluiFnExport MinimalImage* createImage(chstr type, Texture* texture, chstr name, cgrectf source);
-	apriluiFnExport bool hasImage(Dataset* defaultDataset, chstr imageName);
+	apriluiFnExport bool hasImage(chstr imageName, Dataset* defaultDataset = NULL);
 
 	apriluiFnExport gvec2f transformWindowPoint(cgvec2f point);
 	apriluiFnExport void updateViewportPosition(cgrectf newViewport, bool updateOrthoProjection = true);

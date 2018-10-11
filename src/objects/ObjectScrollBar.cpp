@@ -373,7 +373,7 @@ namespace aprilui
 	void ScrollBar::_updateButtonBackgroundSkinned()
 	{
 		hstr imageName = this->skinName + "/" + this->_getSkinNameBackground();
-		if (aprilui::hasImage(this->dataset, imageName))
+		if (aprilui::hasImage(imageName, this->dataset))
 		{
 			if (this->_buttonBackgroundSkinned == NULL)
 			{
@@ -397,7 +397,7 @@ namespace aprilui
 	void ScrollBar::_updateButtonSliderSkinned()
 	{
 		hstr imageName = this->skinName + "/" + this->_getSkinNameSliderNormal();
-		if (aprilui::hasImage(this->dataset, imageName))
+		if (aprilui::hasImage(imageName, this->dataset))
 		{
 			if (this->_buttonSliderSkinned == NULL)
 			{
@@ -406,9 +406,9 @@ namespace aprilui
 			}
 			this->_buttonSliderSkinned->trySetImageByName(imageName);
 			hstr hoverImageName = this->skinName + "/" + this->_getSkinNameSliderHover();
-			this->_buttonSliderSkinned->trySetHoverImageByName(aprilui::hasImage(this->dataset, hoverImageName) ? hoverImageName : "");
+			this->_buttonSliderSkinned->trySetHoverImageByName(aprilui::hasImage(hoverImageName, this->dataset) ? hoverImageName : "");
 			hstr pushedImageName = this->skinName + "/" + this->_getSkinNameSliderPushed();
-			this->_buttonSliderSkinned->trySetPushedImageByName(aprilui::hasImage(this->dataset, pushedImageName) ? pushedImageName : "");
+			this->_buttonSliderSkinned->trySetPushedImageByName(aprilui::hasImage(pushedImageName, this->dataset) ? pushedImageName : "");
 			this->_buttonSliderSkinned->resizeToFitImage();
 			this->_buttonSliderSkinned->setVisible(this->_buttonSlider == NULL);
 		}
@@ -423,7 +423,7 @@ namespace aprilui
 	void ScrollBar::_updateButtonForwardkinned()
 	{
 		hstr imageName = this->skinName + "/" + this->_getSkinNameForwardNormal();
-		if (aprilui::hasImage(this->dataset, imageName))
+		if (aprilui::hasImage(imageName, this->dataset))
 		{
 			if (this->_buttonForwardSkinned == NULL)
 			{
@@ -432,9 +432,9 @@ namespace aprilui
 			}
 			this->_buttonForwardSkinned->trySetImageByName(imageName);
 			hstr hoverImageName = this->skinName + "/" + this->_getSkinNameForwardHover();
-			this->_buttonForwardSkinned->trySetHoverImageByName(aprilui::hasImage(this->dataset, hoverImageName) ? hoverImageName : "");
+			this->_buttonForwardSkinned->trySetHoverImageByName(aprilui::hasImage(hoverImageName, this->dataset) ? hoverImageName : "");
 			hstr pushedImageName = this->skinName + "/" + this->_getSkinNameForwardPushed();
-			this->_buttonForwardSkinned->trySetPushedImageByName(aprilui::hasImage(this->dataset, pushedImageName) ? pushedImageName : "");
+			this->_buttonForwardSkinned->trySetPushedImageByName(aprilui::hasImage(pushedImageName, this->dataset) ? pushedImageName : "");
 			this->_buttonForwardSkinned->resizeToFitImage();
 			this->_buttonForwardSkinned->setVisible(this->_buttonForward == NULL);
 		}
@@ -449,7 +449,7 @@ namespace aprilui
 	void ScrollBar::_updateButtonBackwardSkinned()
 	{
 		hstr imageName = this->skinName + "/" + this->_getSkinNameBackwardNormal();
-		if (aprilui::hasImage(this->dataset, imageName))
+		if (aprilui::hasImage(imageName, this->dataset))
 		{
 			if (this->_buttonBackwardSkinned == NULL)
 			{
@@ -458,9 +458,9 @@ namespace aprilui
 			}
 			this->_buttonBackwardSkinned->trySetImageByName(imageName);
 			hstr hoverImageName = this->skinName + "/" + this->_getSkinNameBackwardHover();
-			this->_buttonBackwardSkinned->trySetHoverImageByName(aprilui::hasImage(this->dataset, hoverImageName) ? hoverImageName : "");
+			this->_buttonBackwardSkinned->trySetHoverImageByName(aprilui::hasImage(hoverImageName, this->dataset) ? hoverImageName : "");
 			hstr pushedImageName = this->skinName + "/" + this->_getSkinNameBackwardPushed();
-			this->_buttonBackwardSkinned->trySetPushedImageByName(aprilui::hasImage(this->dataset, pushedImageName) ? pushedImageName : "");
+			this->_buttonBackwardSkinned->trySetPushedImageByName(aprilui::hasImage(pushedImageName, this->dataset) ? pushedImageName : "");
 			this->_buttonBackwardSkinned->resizeToFitImage();
 			this->_buttonBackwardSkinned->setVisible(this->_buttonBackward == NULL);
 		}

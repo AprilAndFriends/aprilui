@@ -430,9 +430,9 @@ namespace aprilui
 		return (gImageFactories.hasKey(typeName) ? (*gImageFactories[typeName])(texture, name, source) : NULL);
 	}
 
-	bool hasImage(Dataset* defaultDataset, chstr imageName)
+	bool hasImage(chstr imageName, Dataset* defaultDataset)
 	{
-		if (defaultDataset->hasImage(imageName))
+		if (defaultDataset != NULL && defaultDataset->hasImage(imageName))
 		{
 			return true;
 		}
