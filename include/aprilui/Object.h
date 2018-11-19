@@ -77,6 +77,16 @@ namespace aprilui
 		inline gvec2f getSize() const { return this->rect.getSize(); }
 		void setSize(cgvec2f value);
 		void setSize(const float& w, const float& h);
+		HL_DEFINE_GET(float, maxSize.x, MaxWidth);
+		void setMaxWidth(const float& value);
+		HL_DEFINE_GET(float, maxSize.y, MaxHeight);
+		void setMaxHeight(const float& value);
+		HL_DEFINE_GET(gvec2f, maxSize, MaxSize);
+		void setMaxSize(cgvec2f value);
+		void setMaxSize(const float& w, const float& h);
+		HL_DEFINE_GET(gvec2f, unlimitedSize, UnlimitedSize);
+		HL_DEFINE_GET(float, unlimitedSize.x, UnlimitedWidth);
+		HL_DEFINE_GET(float, unlimitedSize.y, UnlimitedHeight);
 
 		HL_DEFINE_GETSET(gvec2f, pivot, Pivot);
 		inline void setPivot(float x, float y) { this->pivot.set(x, y); }
@@ -104,7 +114,8 @@ namespace aprilui
 		HL_DEFINE_ISSET(anchorRight, AnchorRight);
 		HL_DEFINE_ISSET(anchorTop, AnchorTop);
 		HL_DEFINE_ISSET(anchorBottom, AnchorBottom);
-		HL_DEFINE_ISSET(retainAnchorAspect, RetainAnchorAspect);
+		HL_DEFINE_IS(retainAnchorAspect, RetainAnchorAspect);
+		void setRetainAnchorAspect(const bool& value);
 		HL_DEFINE_GETSET(HitTest, hitTest, HitTest);
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
@@ -273,6 +284,8 @@ namespace aprilui
 
 	protected:
 		grectf rect;
+		gvec2f maxSize;
+		gvec2f unlimitedSize;
 		gvec2f pivot;
 		april::Color color;
 		bool visible;
@@ -310,6 +323,9 @@ namespace aprilui
 		void _updateChildrenHorizontal(float difference);
 		void _updateChildrenVertical(float difference);
 
+		gvec2f _makeCorrectedSize(cgvec2f size);
+		float _makeCorrectedWidth(const float& width);
+		float _makeCorrectedHeight(const float& height);
 		grectf _makeDrawRect() const;
 		april::Color _makeDrawColor() const;
 		virtual april::Color _makeDrawColor(const april::Color& color) const;

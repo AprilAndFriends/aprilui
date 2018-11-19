@@ -98,7 +98,6 @@ namespace aprilui
 			Animator::_propertyDescriptions["discrete_step"] = PropertyDescription("discrete_step", PropertyDescription::Type::Int);
 			Animator::_propertyDescriptions["reset_on_expire"] = PropertyDescription("reset_on_expire", PropertyDescription::Type::Bool);
 			Animator::_propertyDescriptions["inherit_value"] = PropertyDescription("inherit_value", PropertyDescription::Type::Bool);
-			Animator::_propertyDescriptions["target"] = PropertyDescription("target", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions["time"] = PropertyDescription("time", PropertyDescription::Type::Float);
 		}
 		return Animator::_propertyDescriptions;
@@ -120,7 +119,6 @@ namespace aprilui
 			Animator::_getters["discrete_step"] = new PropertyDescription::Get<Animator, int>(&Animator::getDiscreteStep);
 			Animator::_getters["reset_on_expire"] = new PropertyDescription::Get<Animator, bool>(&Animator::isResetOnExpire);
 			Animator::_getters["inherit_value"] = new PropertyDescription::Get<Animator, bool>(&Animator::isInheritValue);
-			Animator::_getters["target"] = new PropertyDescription::Get<Animator, float>(&Animator::getTarget);
 		}
 		return Animator::_getters;
 	}
@@ -141,7 +139,6 @@ namespace aprilui
 			Animator::_setters["discrete_step"] = new PropertyDescription::Set<Animator, int>(&Animator::setDiscreteStep);
 			Animator::_setters["reset_on_expire"] = new PropertyDescription::Set<Animator, bool>(&Animator::setResetOnExpire);
 			Animator::_setters["inherit_value"] = new PropertyDescription::Set<Animator, bool>(&Animator::setInheritValue);
-			Animator::_setters["target"] = new PropertyDescription::Set<Animator, float>(&Animator::setTarget);
 			Animator::_setters["time"] = new PropertyDescription::Set<Animator, float>(&Animator::setTime);
 		}
 		return Animator::_setters;
@@ -342,14 +339,6 @@ namespace aprilui
 				hlog::warn(logTag, "'function=' does not support value '" + value + "'.");
 				return false;
 			}
-			return true;
-		}
-		// derived values
-		if (name == "target")
-		{
-			this->setTarget(value);
-			this->setUseTarget(true);
-			this->setInheritValue(true);
 			return true;
 		}
 		if (name == "time")

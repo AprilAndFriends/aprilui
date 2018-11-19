@@ -137,6 +137,8 @@ namespace aprilui
 		BaseObject(other)
 	{
 		this->rect = other.rect;
+		this->maxSize = other.maxSize;
+		this->unlimitedSize = other.unlimitedSize;
 		this->pivot = other.pivot;
 		this->color = other.color;
 		this->visible = other.visible;
@@ -212,6 +214,9 @@ namespace aprilui
 			Object::_propertyDescriptions["y"] = PropertyDescription("y", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["w"] = PropertyDescription("w", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["h"] = PropertyDescription("h", PropertyDescription::Type::Float);
+			Object::_propertyDescriptions["max_size"] = PropertyDescription("max_size", PropertyDescription::Type::Gvec2f);
+			Object::_propertyDescriptions["max_w"] = PropertyDescription("max_w", PropertyDescription::Type::Gvec2f);
+			Object::_propertyDescriptions["max_h"] = PropertyDescription("max_h", PropertyDescription::Type::Gvec2f);
 			Object::_propertyDescriptions["visible"] = PropertyDescription("visible", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions["hit_test"] = PropertyDescription("hit_test", PropertyDescription::Type::Enum);
 			Object::_propertyDescriptions["inherit_alpha"] = PropertyDescription("inherit_alpha", PropertyDescription::Type::Bool);
@@ -253,6 +258,9 @@ namespace aprilui
 			Object::_getters["y"] = new PropertyDescription::Get<Object, float>(&Object::getY);
 			Object::_getters["w"] = new PropertyDescription::Get<Object, float>(&Object::getWidth);
 			Object::_getters["h"] = new PropertyDescription::Get<Object, float>(&Object::getHeight);
+			Object::_getters["max_size"] = new PropertyDescription::GetGvec2f<Object>(&Object::getMaxSize);
+			Object::_getters["max_w"] = new PropertyDescription::Get<Object, float>(&Object::getMaxWidth);
+			Object::_getters["max_h"] = new PropertyDescription::Get<Object, float>(&Object::getMaxHeight);
 			Object::_getters["visible"] = new PropertyDescription::Get<Object, bool>(&Object::getVisibilityFlag);
 			Object::_getters["inherit_alpha"] = new PropertyDescription::Get<Object, bool>(&Object::isInheritAlpha);
 			Object::_getters["color"] = new PropertyDescription::GetColor<Object>(&Object::getColor);
@@ -292,6 +300,9 @@ namespace aprilui
 			Object::_setters["y"] = new PropertyDescription::Set<Object, float>(&Object::setY);
 			Object::_setters["w"] = new PropertyDescription::Set<Object, float>(&Object::setWidth);
 			Object::_setters["h"] = new PropertyDescription::Set<Object, float>(&Object::setHeight);
+			Object::_setters["max_size"] = new PropertyDescription::SetGvec2f<Object>(&Object::setMaxSize);
+			Object::_setters["max_w"] = new PropertyDescription::Set<Object, float>(&Object::setMaxWidth);
+			Object::_setters["max_h"] = new PropertyDescription::Set<Object, float>(&Object::setMaxHeight);
 			Object::_setters["visible"] = new PropertyDescription::Set<Object, bool>(&Object::setVisible);
 			Object::_setters["inherit_alpha"] = new PropertyDescription::Set<Object, bool>(&Object::setInheritAlpha);
 			Object::_setters["color"] = new PropertyDescription::Set<Object, hstr>(&Object::setSymbolicColor);
@@ -321,45 +332,55 @@ namespace aprilui
 
 	void Object::setRect(cgrectf value)
 	{
-		this->_updateChildrenHorizontal(value.w - this->rect.w);
-		this->_updateChildrenVertical(value.h - this->rect.h);
-		this->rect = value;
+		this->unlimitedSize = value.getSize();
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+		this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+		this->rect.set(value.getPosition(), correctedSize);
 		this->notifyEvent(Event::PositionChanged, NULL);
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setRect(cgvec2f position, cgvec2f size)
 	{
-		this->_updateChildrenHorizontal(size.x - this->rect.w);
-		this->_updateChildrenVertical(size.y - this->rect.h);
-		this->rect.set(position, size);
+		this->unlimitedSize = size;
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+		this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+		this->rect.set(position, correctedSize);
 		this->notifyEvent(Event::PositionChanged, NULL);
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setRect(cgvec2f position, const float& w, const float& h)
 	{
-		this->_updateChildrenHorizontal(w - this->rect.w);
-		this->_updateChildrenVertical(h - this->rect.h);
-		this->rect.set(position, w, h);
+		this->unlimitedSize.set(w, h);
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+		this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+		this->rect.set(position, correctedSize);
 		this->notifyEvent(Event::PositionChanged, NULL);
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setRect(const float& x, const float& y, cgvec2f size)
 	{
-		this->_updateChildrenHorizontal(size.x - this->rect.w);
-		this->_updateChildrenVertical(size.y - this->rect.h);
-		this->rect.set(x, y, size);
+		this->unlimitedSize = size;
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+		this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+		this->rect.set(x, y, correctedSize);
 		this->notifyEvent(Event::PositionChanged, NULL);
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setRect(const float& x, const float& y, const float& w, const float& h)
 	{
-		this->_updateChildrenHorizontal(w - this->rect.w);
-		this->_updateChildrenVertical(h - this->rect.h);
-		this->rect.set(x, y, w, h);
+		this->unlimitedSize.set(w, h);
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+		this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+		this->rect.set(x, y, correctedSize);
 		this->notifyEvent(Event::PositionChanged, NULL);
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
@@ -378,15 +399,19 @@ namespace aprilui
 
 	void Object::setWidth(const float& value)
 	{
-		this->_updateChildrenHorizontal(value - this->rect.w);
-		this->rect.w = value;
+		this->unlimitedSize.x = value;
+		float correctedValue = this->_makeCorrectedWidth(this->unlimitedSize.x);
+		this->_updateChildrenHorizontal(correctedValue - this->rect.w);
+		this->rect.w = correctedValue;
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setHeight(const float& value)
 	{
-		this->_updateChildrenVertical(value - this->rect.h);
-		this->rect.h = value;
+		this->unlimitedSize.y = value;
+		float correctedValue = this->_makeCorrectedHeight(this->unlimitedSize.y);
+		this->_updateChildrenVertical(correctedValue - this->rect.h);
+		this->rect.h = correctedValue;
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
@@ -404,23 +429,69 @@ namespace aprilui
 
 	void Object::setSize(cgvec2f value)
 	{
-		this->_updateChildrenHorizontal(value.x - this->rect.w);
-		this->_updateChildrenVertical(value.y - this->rect.h);
-		this->rect.setSize(value);
+		this->unlimitedSize = value;
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+		this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+		this->rect.setSize(correctedSize);
 		this->notifyEvent(Event::SizeChanged, NULL);
 	}
 
 	void Object::setSize(const float& w, const float& h)
 	{
-		this->_updateChildrenHorizontal(w - this->rect.w);
-		this->_updateChildrenVertical(h - this->rect.h);
-		this->rect.setSize(w, h);
+		this->unlimitedSize.set(w, h);
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+		this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+		this->rect.setSize(correctedSize);
 		this->notifyEvent(Event::SizeChanged, NULL);
+	}
+
+	void Object::setMaxSize(cgvec2f value)
+	{
+		this->maxSize = value;
+		if (this->retainAnchorAspect && (this->maxSize.x > 0.0f || this->maxSize.x > 0.0f))
+		{
+			hlog::warn(logTag, "Using any 'max_size' together with 'retain_anchor_aspect' cannot work properly due to them modifying the same values!");
+		}
+		gvec2f size = this->rect.getSize();
+		gvec2f correctedSize = this->_makeCorrectedSize(this->unlimitedSize);
+		if (size != correctedSize)
+		{
+			this->_updateChildrenHorizontal(correctedSize.x - this->rect.w);
+			this->_updateChildrenVertical(correctedSize.y - this->rect.h);
+			this->rect.setSize(correctedSize);
+			this->notifyEvent(Event::SizeChanged, NULL);
+		}
+	}
+
+	void Object::setMaxSize(const float& w, const float& h)
+	{
+		this->setMaxSize(gvec2f(w, h));
+	}
+
+	void Object::setMaxWidth(const float& value)
+	{
+		this->setMaxSize(gvec2f(value, this->maxSize.y));
+	}
+
+	void Object::setMaxHeight(const float& value)
+	{
+		this->setMaxSize(gvec2f(this->maxSize.x, value));
 	}
 
 	void Object::setSymbolicColor(chstr value)
 	{
 		this->setColor(aprilui::_makeColor(value));
+	}
+
+	void Object::setRetainAnchorAspect(const bool& value)
+	{
+		this->retainAnchorAspect = value;
+		if (this->retainAnchorAspect && (this->maxSize.x > 0.0f || this->maxSize.x > 0.0f))
+		{
+			hlog::warn(logTag, "Using any 'max_size' together with 'retain_anchor_aspect' cannot work properly due to them modifying the same values!");
+		}
 	}
 
 	bool Object::isDerivedVisible() const
@@ -1119,14 +1190,14 @@ namespace aprilui
 		{
 			this->pivot.x = difference * 0.5f;
 		}
-		float width = 0.0f;
-		float height = 0.0f;
+		gvec2f size;
+		gvec2f unlimitedSize;
 		float differenceAlt = 0.0f;
+		float sizeDifference = 0.0f;
 		foreach (Object*, it, this->childrenObjects)
 		{
-			width = (*it)->getWidth();
-			height = (*it)->getHeight();
-			differenceAlt = difference * height / width;
+			size = (*it)->getSize();
+			unlimitedSize = (*it)->getUnlimitedSize();
 			if (!(*it)->isAnchorLeft())
 			{
 				if ((*it)->isAnchorRight())
@@ -1140,14 +1211,20 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorRight())
 			{
-				(*it)->setWidth(width + difference);
-				if (width != 0.0f)
+				(*it)->setWidth(unlimitedSize.x + difference);
+				if (size.x != 0.0f)
 				{
-					(*it)->setPivotX((*it)->getPivotX() * (width + difference) / width);
+					(*it)->setPivotX((*it)->getPivotX() * (*it)->getWidth() / size.x);
+				}
+				sizeDifference = size.x + difference - (*it)->getWidth();
+				if (sizeDifference != 0.0f)
+				{
+					(*it)->setX((*it)->getX() + sizeDifference * 0.5f);
 				}
 				if ((*it)->isRetainAnchorAspect())
 				{
-					(*it)->setHeight(height + differenceAlt);
+					differenceAlt = difference * size.y / size.x;
+					(*it)->setHeight(unlimitedSize.y + differenceAlt);
 					if ((*it)->isAnchorTop() == (*it)->isAnchorBottom())
 					{
 						(*it)->setY((*it)->getY() - differenceAlt * 0.5f);
@@ -1156,9 +1233,9 @@ namespace aprilui
 					{
 						(*it)->setY((*it)->getY() - differenceAlt);
 					}
-					if (height != 0.0f)
+					if (unlimitedSize.y != 0.0f)
 					{
-						(*it)->setPivotY((*it)->getPivotY() * (height + differenceAlt) / height);
+						(*it)->setPivotY((*it)->getPivotY() * (unlimitedSize.y + differenceAlt) / unlimitedSize.y);
 					}
 				}
 			}
@@ -1175,14 +1252,14 @@ namespace aprilui
 		{
 			this->pivot.y = difference * 0.5f;
 		}
-		float width = 0.0f;
-		float height = 0.0f;
+		gvec2f size;
+		gvec2f unlimitedSize;
 		float differenceAlt = 0.0f;
+		float sizeDifference = 0.0f;
 		foreach (Object*, it, this->childrenObjects)
 		{
-			width = (*it)->getWidth();
-			height = (*it)->getHeight();
-			differenceAlt = difference * width / height;
+			size = (*it)->getSize();
+			unlimitedSize = (*it)->getUnlimitedSize();
 			if (!(*it)->isAnchorTop())
 			{
 				if ((*it)->isAnchorBottom())
@@ -1196,14 +1273,20 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorBottom())
 			{
-				(*it)->setHeight(height + difference);
-				if (height != 0.0f)
+				(*it)->setHeight(unlimitedSize.y + difference);
+				if (size.y != 0.0f)
 				{
-					(*it)->setPivotY((*it)->getPivotY() * (height + difference) / height);
+					(*it)->setPivotY((*it)->getPivotY() * (*it)->getHeight() / size.y);
+				}
+				sizeDifference = size.y + difference - (*it)->getHeight();
+				if (sizeDifference != 0.0f)
+				{
+					(*it)->setY((*it)->getY() + sizeDifference * 0.5f);
 				}
 				if ((*it)->isRetainAnchorAspect())
 				{
-					(*it)->setWidth(width + differenceAlt);
+					differenceAlt = difference * size.x / size.y;
+					(*it)->setWidth(unlimitedSize.x + differenceAlt);
 					if ((*it)->isAnchorLeft() == (*it)->isAnchorRight())
 					{
 						(*it)->setX((*it)->getX() - differenceAlt * 0.5f);
@@ -1212,20 +1295,15 @@ namespace aprilui
 					{
 						(*it)->setX((*it)->getX() - differenceAlt);
 					}
-					if (width != 0.0f)
+					if (unlimitedSize.x != 0.0f)
 					{
-						(*it)->setPivotX((*it)->getPivotX() * (width + differenceAlt) / width);
+						(*it)->setPivotX((*it)->getPivotX() * (unlimitedSize.x + differenceAlt) / unlimitedSize.x);
 					}
 				}
 			}
 		}
 	}
 
-
-
-
-
-	
 	april::Color Object::_makeDrawColor() const
 	{
 		april::Color color = this->color;
@@ -1255,16 +1333,20 @@ namespace aprilui
 		return grectf(-this->pivot, this->rect.getSize());
 	}
 
+	gvec2f Object::_makeCorrectedSize(cgvec2f size)
+	{
+		return gvec2f(this->_makeCorrectedWidth(size.x), this->_makeCorrectedHeight(size.y));
+	}
 
+	float Object::_makeCorrectedWidth(const float& width)
+	{
+		return (this->maxSize.x > 0.0f ? hmin(width, this->maxSize.x) : width);
+	}
 
-
-
-
-
-
-
-
-
+	float Object::_makeCorrectedHeight(const float& height)
+	{
+		return (this->maxSize.y > 0.0f ? hmin(height, this->maxSize.y) : height);
+	}
 
 	bool Object::onMouseDown(april::Key keyCode)
 	{

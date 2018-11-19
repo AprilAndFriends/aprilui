@@ -53,12 +53,14 @@
 				<MoverX periods="1" amplitude="-50" speed="0.5" delay="3.0" inherit_value="true"/>
 				<ZOrderChanger function="sine" amplitude="50"/>
 			</ImageBox>
-			<FilledRect name="colored_quad" style="trembling_blue_rects">
+			<FilledRect name="colored_quad" style="trembling_blue_rects" rect="170,80,32,32">
 				<MoverX/>
 				<MoverY/>
 			</FilledRect>
-			<ImageButton name="image_button_disabled" image="texture/test" disabled_image="texture/test_grey" rect="232,160,128,64" enabled="false">
-				<Rotator periods="1" time="2" target="360" delay="1.5" discrete_step="30"/>
+			<ImageButton name="image_button_disabled" image="texture/test" disabled_image="texture/test_grey" rect="232,160,160,64" enabled="false">
+				<ImageButton name="image_button_disabled_internal" disabled_image="texture/test_green" anchors="all" rect="16,16,128,32" max_w="128"/>
+				<Rotator periods="1" time="2" amplitude="360" delay="0.5" discrete_step="30"/>
+				<ResizerX function="sine" amplitude="32" delay="2.5"/>
 			</ImageButton>
 			<EditBox name="edit_box" text="wow&#10;such Edit&#10;much Box&#10;amaze" empty_text="I feel empty inside." empty_text_color="FFFF00" filter="ABCDEMNLSTXYZabcdefghilmnostuwxyz +-=()" max_length="30" selectable="true" selection_color="009FFFBF" multi_line="true" font="Arial" horz_formatting="left" vert_formatting="top" rect="600,200,192,64"/>
 			<FilledRect color="007F00" rect="32,320,192,160">
