@@ -121,12 +121,12 @@ namespace aprilui
 
 		_DEFINE_SPECIAL_GET_CLASS(UChar, unsigned char, hstr((int)result));
 		_DEFINE_SPECIAL_SET_CLASS(UChar, unsigned char, (unsigned char)(int)parameter);
-		_DEFINE_SPECIAL_GET_CLASS(Gvec2f, gvec2f, april::gvec2fToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Gvec2f, gvec2f, april::hstrToGvec2f(parameter));
-		_DEFINE_SPECIAL_GET_CLASS(Gvec3f, gvec3f, april::gvec3fToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Gvec3f, gvec3f, april::hstrToGvec3f(parameter));
-		_DEFINE_SPECIAL_GET_CLASS(Grectf, grectf, april::grectfToHstr(result));
-		_DEFINE_SPECIAL_SET_CLASS(Grectf, grectf, april::hstrToGrectf(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Gvec2f, gvec2f, april::gvec2ToHstr<float>(result));
+		_DEFINE_SPECIAL_SET_CLASS(Gvec2f, gvec2f, april::hstrToGvec2<float>(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Gvec3f, gvec3f, april::gvec3ToHstr<float>(result));
+		_DEFINE_SPECIAL_SET_CLASS(Gvec3f, gvec3f, april::hstrToGvec3<float>(parameter));
+		_DEFINE_SPECIAL_GET_CLASS(Grectf, grectf, april::grectToHstr<float>(result));
+		_DEFINE_SPECIAL_SET_CLASS(Grectf, grectf, april::hstrToGrect<float>(parameter));
 		_DEFINE_SPECIAL_GET_CLASS(Color, april::Color, result.hex());
 
 		PropertyDescription();
