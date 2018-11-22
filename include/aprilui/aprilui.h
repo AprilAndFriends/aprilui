@@ -98,6 +98,7 @@ namespace aprilui
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
 	apriluiFnExport void drawCursor();
+	apriluiFnExport void getNotchOffsets(gvec2i& topLeft, gvec2i& bottomRight);
 	/// @brief Allows certain exception types to be disabled.
 	/// @param[in] textureFiles Exceptions related to proper loading of textures.
 	/// @param[in] childManipulation Exceptions related to proper handling of BaseObject children.

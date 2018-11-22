@@ -10,6 +10,7 @@
 
 #include <april/april.h>
 #include <april/Keys.h>
+#include <april/Platform.h>
 #include <april/RenderSystem.h>
 #include <april/Window.h>
 #include <atres/atres.h>
@@ -535,6 +536,14 @@ namespace aprilui
 		{
 			gCursor->draw(grectf(getCursorPosition(), gCursor->getSrcSize()));
 		}
+	}
+
+	void getNotchOffsets(gvec2i& topLeft, gvec2i& bottomRight)
+	{
+		april::getNotchOffsets(topLeft, bottomRight, viewport.getAspect() > 1.0f);
+		gvec2f ratio = viewport.getSize() / april::window->getSize();
+		topLeft.set(hceil(topLeft.x * ratio.x), hceil(topLeft.y * ratio.y));
+		bottomRight.set(hceil(bottomRight.x * ratio.x), hceil(bottomRight.y * ratio.y));
 	}
 
 	void setDebugExceptionsEnabled(bool textureFiles, bool childManipulation, bool creationFactories, bool objectExistence, bool systemConsistency)
