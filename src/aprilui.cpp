@@ -540,7 +540,12 @@ namespace aprilui
 
 	void getNotchOffsets(gvec2i& topLeft, gvec2i& bottomRight)
 	{
-		april::getNotchOffsets(topLeft, bottomRight, viewport.getAspect() > 1.0f);
+		aprilui::getNotchOffsets(topLeft, bottomRight, (viewport.getAspect() > 1.0f));
+	}
+
+	void getNotchOffsets(gvec2i& topLeft, gvec2i& bottomRight, bool landscape)
+	{
+		april::getNotchOffsets(topLeft, bottomRight, landscape);
 		gvec2f ratio = viewport.getSize() / april::window->getSize();
 		topLeft.set(hceil(topLeft.x * ratio.x), hceil(topLeft.y * ratio.y));
 		bottomRight.set(hceil(bottomRight.x * ratio.x), hceil(bottomRight.y * ratio.y));
