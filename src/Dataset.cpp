@@ -58,6 +58,10 @@ namespace aprilui
 		this->focusedObject = NULL;
 		this->root = NULL;
 		this->filename = hrdir::normalize(filename);
+		if (name.contains("custom_category/info"))
+		{
+			int i = 0;
+		}
 		this->filePath = this->_makeFilePath(this->filename, name, useNameBasePath);
 		this->name = name;
 		if (this->name == "")
@@ -211,7 +215,7 @@ namespace aprilui
 				hstr newFilename = hrdir::baseDir(filename);
 				if (newFilename.endsWith(namePath))
 				{
-					return hrdir::normalize(newFilename.replaced(namePath, ""));
+					return hrdir::normalize(newFilename(0, newFilename.size() - namePath.size() - 1));
 				}
 			}
 			else
@@ -219,7 +223,7 @@ namespace aprilui
 				hstr namePath = name + "." + hresource::extensionOf(filename);
 				if (filename.endsWith(namePath))
 				{
-					return hrdir::normalize(filename.replaced(namePath, ""));
+					return hrdir::normalize(filename(0, filename.size() - namePath.size() - 1));
 				}
 			}
 		}
