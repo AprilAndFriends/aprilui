@@ -58,10 +58,6 @@ namespace aprilui
 		this->focusedObject = NULL;
 		this->root = NULL;
 		this->filename = hrdir::normalize(filename);
-		if (name.contains("custom_category/info"))
-		{
-			int i = 0;
-		}
 		this->filePath = this->_makeFilePath(this->filename, name, useNameBasePath);
 		this->name = name;
 		if (this->name == "")
