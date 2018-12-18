@@ -40,13 +40,14 @@ namespace aprilui
 	static hversion version(5, 0, 0);
 
 	bool _datasetRegisterLock = false; // not static, because it is used elsewhere
-	static hmap<hstr, Dataset*> gDatasets;
-	static harray<Texture*> gTextures;
-	static hmutex gTexturesMutex;
-	static hmap<hstr, Object* (*)(chstr)> gObjectFactories;
-	static hmap<hstr, Animator* (*)(chstr)> gAnimatorFactories;
-	static hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrectf)> gImageFactories;
-	static BaseImage* gCursor = NULL;
+	static hmap<hstr, Dataset*> datasets;
+	static Dataset* colorDataset = NULL;
+	static harray<Texture*> textures;
+	static hmutex texturesMutex;
+	static hmap<hstr, Object* (*)(chstr)> objectFactories;
+	static hmap<hstr, Animator* (*)(chstr)> animatorFactories;
+	static hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrectf)> imageFactories;
+	static BaseImage* cursorImage = NULL;
 	static bool cursorVisible = true;
 	static gvec2f cursorPosition;
 	static bool limitCursorToViewport = false;
@@ -81,6 +82,8 @@ namespace aprilui
 		ButtonBase::allowedKeys += april::Key::MouseL;
 		ButtonBase::allowedButtons.clear();
 		ButtonBase::allowedButtons += april::Button::A;
+		colorDataset = new Dataset("", COLOR_DATASET_NAME);
+		colorDataset->load();
 
 		APRILUI_REGISTER_OBJECT_TYPE(CallbackObject);
 		APRILUI_REGISTER_OBJECT_TYPE(Container);
@@ -142,15 +145,16 @@ namespace aprilui
 	{
 		hlog::write(logTag, "Destroying AprilUI.");
 		_datasetRegisterLock = true;
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			delete it->second;
 		}
-		gDatasets.clear();
-		gObjectFactories.clear();
-		gAnimatorFactories.clear();
-		gImageFactories.clear();
-		gCursor = NULL;
+		datasets.clear();
+		colorDataset = NULL;
+		objectFactories.clear();
+		animatorFactories.clear();
+		imageFactories.clear();
+		cursorImage = NULL;
 	}
 	
 	bool isDebugEnabled()
@@ -222,8 +226,7 @@ namespace aprilui
 	{
 		hlog::write(logTag, "Setting localization to: " + value);
 		hstr previousLocalization = localization;
-		if (supportedLocalizations.size() > 0 && !supportedLocalizations.has(value) &&
-			value != defaultLocalization)
+		if (supportedLocalizations.size() > 0 && !supportedLocalizations.has(value) && value != defaultLocalization)
 		{
 			hlog::warnf(logTag, "Localization '%s' not supported, defaulting back to '%s'.", value.cStr(), defaultLocalization.cStr());
 			localization = defaultLocalization;
@@ -234,7 +237,7 @@ namespace aprilui
 		}
 		if (previousLocalization != localization)
 		{
-			foreach_m (Dataset*, it, gDatasets)
+			foreach_m (Dataset*, it, datasets)
 			{
 				if (it->second->isLoaded())
 				{
@@ -243,7 +246,7 @@ namespace aprilui
 				}
 			}
 			// finished localization change, now call the appropriate event
-			foreach_m (Dataset*, it, gDatasets)
+			foreach_m (Dataset*, it, datasets)
 			{
 				if (it->second->isLoaded())
 				{
@@ -305,22 +308,22 @@ namespace aprilui
 
 	hmap<hstr, Dataset*> getDatasets()
 	{
-		return gDatasets;
+		return datasets;
 	}
 
 	harray<Texture*> getTextures()
 	{
-		hmutex::ScopeLock lock(&gTexturesMutex);
-		return gTextures;
+		hmutex::ScopeLock lock(&texturesMutex);
+		return textures;
 	}
 	
 	void registerObjectFactory(chstr typeName, Object* (*factory)(chstr))
 	{
-		if (gObjectFactories.hasKey(typeName))
+		if (objectFactories.hasKey(typeName))
 		{
 			__THROW_EXCEPTION(ObjectFactoryExistsException("Object", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
-		gObjectFactories[typeName] = factory;
+		objectFactories[typeName] = factory;
 		// create all important property meta data here already to avoid issues with multi-threaded first-time setup
 		Object* temp = (*factory)("temp");
 		temp->getPropertyDescriptions();
@@ -331,11 +334,11 @@ namespace aprilui
 	
 	void registerAnimatorFactory(chstr typeName, Animator* (*factory)(chstr))
 	{
-		if (gAnimatorFactories.hasKey(typeName))
+		if (animatorFactories.hasKey(typeName))
 		{
 			__THROW_EXCEPTION(ObjectFactoryExistsException("Animator", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
-		gAnimatorFactories[typeName] = factory;
+		animatorFactories[typeName] = factory;
 		// create all important property meta data here already to avoid issues with multi-threaded first-time setup
 		Animator* temp = (*factory)("temp");
 		temp->getPropertyDescriptions();
@@ -346,11 +349,11 @@ namespace aprilui
 	
 	void registerImageFactory(chstr typeName, MinimalImage* (*factory)(Texture*, chstr, cgrectf))
 	{
-		if (gImageFactories.hasKey(typeName))
+		if (imageFactories.hasKey(typeName))
 		{
 			__THROW_EXCEPTION(ObjectFactoryExistsException("Image", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
-		gImageFactories[typeName] = factory;
+		imageFactories[typeName] = factory;
 		// create all important property meta data here already to avoid issues with multi-threaded first-time setup
 		MinimalImage* temp = (*factory)(NULL, "temp", grectf(0.0f, 0.0f, 0.0f, 0.0f));
 		temp->getPropertyDescriptions();
@@ -361,74 +364,74 @@ namespace aprilui
 
 	void unregisterObjectFactory(chstr typeName)
 	{
-		if (!gObjectFactories.hasKey(typeName))
+		if (!objectFactories.hasKey(typeName))
 		{
 			__THROW_EXCEPTION(ObjectFactoryNotExistsException("Object", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
-		gObjectFactories.removeKey(typeName);
+		objectFactories.removeKey(typeName);
 	}
 	
 	void unregisterAnimatorFactory(chstr typeName)
 	{
-		if (!gAnimatorFactories.hasKey(typeName))
+		if (!animatorFactories.hasKey(typeName))
 		{
 			__THROW_EXCEPTION(ObjectFactoryNotExistsException("Animator", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
-		gAnimatorFactories.removeKey(typeName);
+		animatorFactories.removeKey(typeName);
 	}
 
 	void unregisterImageFactory(chstr typeName)
 	{
-		if (!gImageFactories.hasKey(typeName))
+		if (!imageFactories.hasKey(typeName))
 		{
 			__THROW_EXCEPTION(ObjectFactoryNotExistsException("Image", typeName), aprilui::creationFactoriesDebugExceptionsEnabled, return);
 		}
-		gImageFactories.removeKey(typeName);
+		imageFactories.removeKey(typeName);
 	}
 
 	const hmap<hstr, Object* (*)(chstr)>& getObjectFactories()
 	{
-		return gObjectFactories;
+		return objectFactories;
 	}
 
 	const hmap<hstr, Animator* (*)(chstr)>& getAnimatorFactories()
 	{
-		return gAnimatorFactories;
+		return animatorFactories;
 	}
 
 	const hmap<hstr, MinimalImage* (*)(Texture*, chstr, cgrectf)>& getImageFactories()
 	{
-		return gImageFactories;
+		return imageFactories;
 	}
 
 	bool hasObjectFactory(chstr typeName)
 	{
-		return gObjectFactories.hasKey(typeName);
+		return objectFactories.hasKey(typeName);
 	}
 	
 	bool hasAnimatorFactory(chstr typeName)
 	{
-		return gAnimatorFactories.hasKey(typeName);
+		return animatorFactories.hasKey(typeName);
 	}
 	
 	bool hasImageFactory(chstr typeName)
 	{
-		return gImageFactories.hasKey(typeName);
+		return imageFactories.hasKey(typeName);
 	}
 
 	Object* createObject(chstr typeName, chstr name)
 	{
-		return (gObjectFactories.hasKey(typeName) ? (*gObjectFactories[typeName])(name) : NULL);
+		return (objectFactories.hasKey(typeName) ? (*objectFactories[typeName])(name) : NULL);
 	}
 	
 	Animator* createAnimator(chstr typeName, chstr name)
 	{
-		return (gAnimatorFactories.hasKey(typeName) ? (*gAnimatorFactories[typeName])(name) : NULL);
+		return (animatorFactories.hasKey(typeName) ? (*animatorFactories[typeName])(name) : NULL);
 	}
 	
 	MinimalImage* createImage(chstr typeName, Texture* texture, chstr name, cgrectf source)
 	{
-		return (gImageFactories.hasKey(typeName) ? (*gImageFactories[typeName])(texture, name, source) : NULL);
+		return (imageFactories.hasKey(typeName) ? (*imageFactories[typeName])(texture, name, source) : NULL);
 	}
 
 	bool hasImage(chstr imageName, Dataset* defaultDataset)
@@ -443,7 +446,7 @@ namespace aprilui
 			return false;
 		}
 		hstr datasetName = imageName(0, dotIndex);
-		return (gDatasets.hasKey(datasetName) && aprilui::getDatasetByName(datasetName)->hasImage(imageName(dotIndex + 1, -1)));
+		return (datasets.hasKey(datasetName) && aprilui::getDatasetByName(datasetName)->hasImage(imageName(dotIndex + 1, -1)));
 	}
 
 	gvec2f transformWindowPoint(cgvec2f point)
@@ -478,7 +481,7 @@ namespace aprilui
 		aprilui::EditBox* editBox = NULL;
 		grectf rect;
 		float h = 0.0f;
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			object = it->second->getFocusedObject();
 			if (object != NULL)
@@ -517,7 +520,7 @@ namespace aprilui
 	
 	void setCursorImage(BaseImage* image)
 	{
-		gCursor = image;
+		cursorImage = image;
 	}
 	
 	void showCursor()
@@ -532,9 +535,9 @@ namespace aprilui
 	
 	void drawCursor()
 	{
-		if (gCursor != NULL && cursorVisible)
+		if (cursorImage != NULL && cursorVisible)
 		{
-			gCursor->draw(grectf(getCursorPosition(), gCursor->getSrcSize()));
+			cursorImage->draw(grectf(getCursorPosition(), cursorImage->getSrcSize()));
 		}
 	}
 
@@ -563,22 +566,22 @@ namespace aprilui
 	
 	Dataset* getDatasetByName(chstr name)
 	{
-		if (!gDatasets.hasKey(name))
+		if (!datasets.hasKey(name))
 		{
 			__THROW_EXCEPTION(ObjectNotExistsException("Dataset", name, name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
 		}
-		return gDatasets[name];
+		return datasets[name];
 	}
 	
 	void _registerDataset(chstr name, Dataset* dataset)
 	{
 		if (!_datasetRegisterLock)
 		{
-			if (gDatasets.hasKey(name))
+			if (datasets.hasKey(name))
 			{
 				__THROW_EXCEPTION(ObjectExistsException("Dataset", name, name), aprilui::objectExistenceDebugExceptionsEnabled, return);
 			}
-			gDatasets[name] = dataset;
+			datasets[name] = dataset;
 		}
 	}
 	
@@ -586,25 +589,25 @@ namespace aprilui
 	{
 		if (!_datasetRegisterLock)
 		{
-			gDatasets.removeKey(name);
+			datasets.removeKey(name);
 		}
 	}
 	
 	void _registerTexture(Texture* texture)
 	{
-		hmutex::ScopeLock lock(&gTexturesMutex);
-		gTextures += texture;
+		hmutex::ScopeLock lock(&texturesMutex);
+		textures += texture;
 	}
 
 	void _unregisterTexture(Texture* texture)
 	{
-		hmutex::ScopeLock lock(&gTexturesMutex);
-		gTextures -= texture;
+		hmutex::ScopeLock lock(&texturesMutex);
+		textures -= texture;
 	}
 
 	void notifyEvent(chstr type, EventArgs* args)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->notifyEvent(type, args);
 		}
@@ -612,7 +615,7 @@ namespace aprilui
 
 	void processEvents()
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->processEvents();
 		}
@@ -620,7 +623,7 @@ namespace aprilui
 
 	void update(float timeDelta)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->update(timeDelta);
 		}
@@ -628,7 +631,7 @@ namespace aprilui
 	
 	void updateTextures(float timeDelta)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->updateTextures(timeDelta);
 		}
@@ -636,7 +639,7 @@ namespace aprilui
 	
 	void clearChildUnderCursor()
 	{
-		foreach_m(Dataset*, it, gDatasets)
+		foreach_m(Dataset*, it, datasets)
 		{
 			it->second->clearChildUnderCursor();
 		}
@@ -644,7 +647,7 @@ namespace aprilui
 
 	void unloadUnusedResources()
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->unloadUnusedResources();
 		}
@@ -652,7 +655,7 @@ namespace aprilui
 
 	void reloadTextures()
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->reloadTextures();
 		}
@@ -738,7 +741,7 @@ namespace aprilui
 	void onMouseDown(april::Key keyCode)
 	{
 		aprilui::updateCursorPosition();
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onMouseDown(keyCode);
 		}
@@ -747,7 +750,7 @@ namespace aprilui
 	void onMouseUp(april::Key keyCode)
 	{
 		aprilui::updateCursorPosition();
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onMouseUp(keyCode);
 		}
@@ -756,7 +759,7 @@ namespace aprilui
 	void onMouseCancel(april::Key keyCode)
 	{
 		aprilui::updateCursorPosition();
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onMouseCancel(keyCode);
 		}
@@ -765,7 +768,7 @@ namespace aprilui
 	void onMouseMove()
 	{
 		aprilui::updateCursorPosition();
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onMouseMove();
 		}
@@ -773,7 +776,7 @@ namespace aprilui
 	
 	void onMouseScroll(float x, float y)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onMouseScroll(x, y);
 		}
@@ -781,7 +784,7 @@ namespace aprilui
 	
 	void onKeyDown(april::Key keyCode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onKeyDown(keyCode);
 		}
@@ -789,7 +792,7 @@ namespace aprilui
 	
 	void onKeyUp(april::Key keyCode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onKeyUp(keyCode);
 		}
@@ -797,7 +800,7 @@ namespace aprilui
 	
 	void onChar(unsigned int charCode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onChar(charCode);
 		}
@@ -805,7 +808,7 @@ namespace aprilui
 	
 	void onTouch(const harray<gvec2f>& touches)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onTouch(touches);
 		}
@@ -813,7 +816,7 @@ namespace aprilui
 	
 	void onButtonDown(april::Button buttonCode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onButtonDown(buttonCode);
 		}
@@ -821,7 +824,7 @@ namespace aprilui
 	
 	void onButtonUp(april::Button buttonCode)
 	{
-		foreach_m (Dataset*, it, gDatasets)
+		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onButtonUp(buttonCode);
 		}

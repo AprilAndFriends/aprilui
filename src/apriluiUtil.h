@@ -20,6 +20,8 @@
 #include <gtypes/Vector2.h>
 #include <hlxml/Node.h>
 
+#define COLOR_DATASET_NAME "color"
+
 #define __THROW_EXCEPTION(exception, enabled, returnCode) \
 	if (enabled) \
 	{ \

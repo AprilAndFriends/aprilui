@@ -1774,6 +1774,36 @@ namespace aprilui
 	BaseImage* Dataset::_getImage(chstr name)
 	{
 		BaseImage* image = this->images.tryGet(name, NULL);
+		if (image == NULL && this->name == COLOR_DATASET_NAME) // this is a bit hacky, but avoids creating 3 new classes
+		{
+			harray<hstr> colorNames = name.split(':');
+			if (colorNames.size() == 1 || colorNames.size() == 4)
+			{
+				harray<april::Color> colors;
+				hstr colorValue;
+				foreach (hstr, it, colorNames)
+				{
+					if (april::Color::isColor(*it))
+					{
+						colors += april::Color(*it);
+					}
+					else if (april::findSymbolicColor((*it), colorValue))
+					{
+						colors += april::Color(colorValue);
+					}
+					else
+					{
+						__THROW_EXCEPTION(ObjectNotExistsException("Color", (*it), this->name), aprilui::objectExistenceDebugExceptionsEnabled, return NULL);
+					}
+				}
+				if (colors.size() == 1 || colors.size() == 4)
+				{
+					ColorImage* colorImage = new ColorImage(name, colors);
+					this->images[name] = colorImage;
+					image = colorImage;
+				}
+			}
+		}
 		if (image == NULL && this->_internalLoadDataset != NULL)
 		{
 			image = this->_internalLoadDataset->images.tryGet(name, NULL);

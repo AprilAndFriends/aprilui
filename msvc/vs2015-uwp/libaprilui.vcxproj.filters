@@ -260,6 +260,9 @@
     <ClCompile Include="..\..\src\images\CropImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\images\ColorImage.cpp">
+      <Filter>Source Files\Images</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -506,6 +509,9 @@
       <Filter>Header Files\Images</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\CropImage.h">
+      <Filter>Header Files\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ColorImage.h">
       <Filter>Header Files\Images</Filter>
     </ClInclude>
   </ItemGroup>

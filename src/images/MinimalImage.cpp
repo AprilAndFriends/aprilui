@@ -9,7 +9,6 @@
 #include <april/RenderSystem.h>
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
-#include <hltypes/hdir.h>
 #include <hltypes/hltypesUtil.h>
 
 #include "apriluiUtil.h"
