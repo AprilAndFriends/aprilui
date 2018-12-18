@@ -1,5 +1,5 @@
 /// @file
-/// @version 5.0
+/// @version 5.1
 /// 
 /// @section LICENSE
 /// 
@@ -37,7 +37,7 @@ namespace aprilui
 {
 	hstr logTag = "aprilui";
 
-	static hversion version(5, 0, 0);
+	static hversion version(5, 1, 0);
 
 	bool _datasetRegisterLock = false; // not static, because it is used elsewhere
 	static hmap<hstr, Dataset*> datasets;
