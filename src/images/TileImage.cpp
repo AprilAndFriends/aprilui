@@ -182,14 +182,14 @@ namespace aprilui
 
 	void TileImage::draw(cgrectf rect, const april::Color& color)
 	{
-		if (color.a == 0 || this->color.a == 0)
+		if (color.a == 0 || this->colorTopLeft.a == 0)
 		{
 			return;
 		}
 		april::Color drawColor = color;
-		if (this->color != april::Color::White)
+		if (this->colorTopLeft != april::Color::White)
 		{
-			drawColor *= this->color;
+			drawColor *= this->colorTopLeft;
 			if (drawColor.a == 0)
 			{
 				return;

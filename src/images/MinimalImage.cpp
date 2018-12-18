@@ -201,7 +201,7 @@ namespace aprilui
 		}
 	}
 
-	void MinimalImage::tryLoadTextureCoordinates()
+	bool MinimalImage::tryLoadTextureCoordinates()
 	{
 		if ((!this->_textureCoordinatesLoaded || !this->_clipRectCalculated) && this->texture != NULL && this->texture->getWidth() > 0 && this->texture->getHeight() > 0)
 		{
@@ -228,7 +228,9 @@ namespace aprilui
 			this->vertices[4] = this->vertices[2];
 			this->vertices[5].u = bottomRight.x;
 			this->vertices[5].v = bottomRight.y;
+			return true;
 		}
+		return false;
 	}
 
 	grectf MinimalImage::_makeClippedSrcRect() const
@@ -272,8 +274,7 @@ namespace aprilui
 			return;
 		}
 		april::Color drawColor = color;
-		this->texture->load();
-		april::rendersys->setTexture(this->texture->getTexture());
+		this->_setDeviceTexture();
 		this->tryLoadTextureCoordinates();
 		// texture coordinate scaling
 		float iw = 1.0f / this->texture->getWidth();

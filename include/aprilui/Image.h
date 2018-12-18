@@ -40,12 +40,34 @@ namespace aprilui
 
 		hmap<hstr, PropertyDescription>& getPropertyDescriptions() const;
 
-		HL_DEFINE_GETSET(april::Color, color, Color);
+		HL_DEFINE_GETSET(april::Color, colorTopLeft, Color);
 		void setSymbolicColor(chstr value);
-		HL_DEFINE_GETSET(unsigned char, color.r, Red);
-		HL_DEFINE_GETSET(unsigned char, color.g, Green);
-		HL_DEFINE_GETSET(unsigned char, color.b, Blue);
-		HL_DEFINE_GETSET(unsigned char, color.a, Alpha);
+		HL_DEFINE_GETSET(unsigned char, colorTopLeft.r, Red);
+		HL_DEFINE_GETSET(unsigned char, colorTopLeft.g, Green);
+		HL_DEFINE_GETSET(unsigned char, colorTopLeft.b, Blue);
+		HL_DEFINE_GETSET(unsigned char, colorTopLeft.a, Alpha);
+		HL_DEFINE_GET(april::Color, colorTopRight, ColorTopRight);
+		void setColorTopRight(const april::Color& value);
+		void setSymbolicColorTopRight(chstr value);
+		HL_DEFINE_GETSET(unsigned char, colorTopRight.r, RedTopRight);
+		HL_DEFINE_GETSET(unsigned char, colorTopRight.g, GreenTopRight);
+		HL_DEFINE_GETSET(unsigned char, colorTopRight.b, BlueTopRight);
+		HL_DEFINE_GETSET(unsigned char, colorTopRight.a, AlphaTopRight);
+		HL_DEFINE_GET(april::Color, colorBottomLeft, ColorBottomLeft);
+		void setColorBottomLeft(const april::Color& value);
+		void setSymbolicColorBottomLeft(chstr value);
+		HL_DEFINE_GETSET(unsigned char, colorBottomLeft.r, RedBottomLeft);
+		HL_DEFINE_GETSET(unsigned char, colorBottomLeft.g, GreenBottomLeft);
+		HL_DEFINE_GETSET(unsigned char, colorBottomLeft.b, BlueBottomLeft);
+		HL_DEFINE_GETSET(unsigned char, colorBottomLeft.a, AlphaBottomLeft);
+		HL_DEFINE_GET(april::Color, colorBottomRight, ColorBottomRight);
+		void setColorBottomRight(const april::Color& value);
+		void setSymbolicColorBottomRight(chstr value);
+		HL_DEFINE_GETSET(unsigned char, colorBottomRight.r, RedBottomRight);
+		HL_DEFINE_GETSET(unsigned char, colorBottomRight.g, GreenBottomRight);
+		HL_DEFINE_GETSET(unsigned char, colorBottomRight.b, BlueBottomRight);
+		HL_DEFINE_GETSET(unsigned char, colorBottomRight.a, AlphaBottomRight);
+		HL_DEFINE_ISSET(useAdditionalColors, UseAdditionalColors);
 		HL_DEFINE_GETSET(april::BlendMode, blendMode, BlendMode);
 		HL_DEFINE_GETSET(april::ColorMode, colorMode, ColorMode);
 		HL_DEFINE_GETSET(float, colorModeFactor, ColorModeFactor);
@@ -57,13 +79,20 @@ namespace aprilui
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 
 	protected:
-		april::Color color;
+		april::Color colorTopLeft;
+		april::Color colorTopRight;
+		april::Color colorBottomLeft;
+		april::Color colorBottomRight;
+		bool useAdditionalColors;
 		april::BlendMode blendMode;
 		april::ColorMode colorMode;
 		float colorModeFactor;
-		
+		april::ColoredTexturedVertex coloredVertices[APRILUI_IMAGE_MAX_VERTICES];
+
 		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
+
+		void _drawWithCorners(cgrectf rect, const april::Color& color);
 
 	private:
 		static hmap<hstr, PropertyDescription> _propertyDescriptions;

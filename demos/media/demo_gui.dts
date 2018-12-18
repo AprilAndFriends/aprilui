@@ -84,7 +84,7 @@
 				</Include>
 				<Include path="demo_gui_include.dts" name_suffix="_1" position="100,100"/>
 			</Container>
-			<ImageButton name="color_image_button" image="color.FFFF00:orange:orange:red" hover_image="color.cyan:green:purple:blue" rect="500,240,64,64"/>
+			<ImageButton name="color_image_button" image="color.FFFF00:orange:orange:red" hover_image="color.cyan:green:purple:blue" pushed_image="texture/test_colorful" rect="500,240,64,64"/>
 			<Label name="label_auto_scale_0" text="I am scaled" background_color="7F00FF9F" background_border="false" min_auto_scale="0.25" rect="824,448,160,14"/>
 			<Label name="label_auto_scale_1" text="I am not scaled" background_color="7F00FF9F" background_border="false" rect="824,472,160,14"/>
 			<Label name="label_auto_scale_2" text="I am scaled&#x0A;in many lines" background_color="7F00FF9F" background_border="false" min_auto_scale="0.25" rect="824,496,160,30"/>

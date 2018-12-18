@@ -67,7 +67,7 @@ namespace aprilui
 		void draw(cgrectf rect, const april::Color& color = april::Color::White);
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 
-		void tryLoadTextureCoordinates();
+		bool tryLoadTextureCoordinates();
 
 	protected:
 		Texture* texture;

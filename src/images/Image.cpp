@@ -28,7 +28,11 @@ namespace aprilui
 	Image::Image(Texture* texture, chstr name, cgrectf source) :
 		MinimalImage(texture, name, source)
 	{
-		this->color = april::Color::White;
+		this->colorTopLeft = april::Color::White;
+		this->colorTopRight = april::Color::White;
+		this->colorBottomLeft = april::Color::White;
+		this->colorBottomRight = april::Color::White;
+		this->useAdditionalColors = false;
 		this->blendMode = april::BlendMode::Alpha;
 		this->colorMode = april::ColorMode::Multiply;
 		this->colorModeFactor = 1.0f;
@@ -37,7 +41,11 @@ namespace aprilui
 	Image::Image(const Image& other) :
 		MinimalImage(other)
 	{
-		this->color = other.color;
+		this->colorTopLeft = other.colorTopLeft;
+		this->colorTopRight = other.colorTopRight;
+		this->colorBottomLeft = other.colorBottomLeft;
+		this->colorBottomRight = other.colorBottomRight;
+		this->useAdditionalColors = other.useAdditionalColors;
 		this->blendMode = other.blendMode;
 		this->colorMode = other.colorMode;
 		this->colorModeFactor = other.colorModeFactor;
@@ -58,6 +66,22 @@ namespace aprilui
 			Image::_propertyDescriptions["green"] = PropertyDescription("green", PropertyDescription::Type::UChar);
 			Image::_propertyDescriptions["blue"] = PropertyDescription("blue", PropertyDescription::Type::UChar);
 			Image::_propertyDescriptions["alpha"] = PropertyDescription("alpha", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["color_top_right"] = PropertyDescription("color_top_right", PropertyDescription::Type::Color);
+			Image::_propertyDescriptions["red_top_right"] = PropertyDescription("red_top_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["green_top_right"] = PropertyDescription("green_top_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["blue_top_right"] = PropertyDescription("blue_top_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["alpha_top_right"] = PropertyDescription("alpha_top_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["color_bottom_left"] = PropertyDescription("color_bottom_left", PropertyDescription::Type::Color);
+			Image::_propertyDescriptions["red_bottom_left"] = PropertyDescription("red_bottom_left", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["green_bottom_left"] = PropertyDescription("green_bottom_left", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["blue_bottom_left"] = PropertyDescription("blue_bottom_left", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["alpha_bottom_left"] = PropertyDescription("alpha_bottom_left", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["color_bottom_right"] = PropertyDescription("color_bottom_right", PropertyDescription::Type::Color);
+			Image::_propertyDescriptions["red_bottom_right"] = PropertyDescription("red_bottom_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["green_bottom_right"] = PropertyDescription("green_bottom_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["blue_bottom_right"] = PropertyDescription("blue_bottom_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["alpha_bottom_right"] = PropertyDescription("alpha_bottom_right", PropertyDescription::Type::UChar);
+			Image::_propertyDescriptions["use_additional_colors"] = PropertyDescription("use_additional_colors", PropertyDescription::Type::Bool);
 			Image::_propertyDescriptions["blend_mode"] = PropertyDescription("blend_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions["color_mode"] = PropertyDescription("color_mode", PropertyDescription::Type::Enum);
 			Image::_propertyDescriptions["color_mode_factor"] = PropertyDescription("color_mode_factor", PropertyDescription::Type::Float);
@@ -75,6 +99,22 @@ namespace aprilui
 			Image::_getters["green"] = new PropertyDescription::GetUChar<Image>(&Image::getGreen);
 			Image::_getters["blue"] = new PropertyDescription::GetUChar<Image>(&Image::getBlue);
 			Image::_getters["alpha"] = new PropertyDescription::GetUChar<Image>(&Image::getAlpha);
+			Image::_getters["color_top_right"] = new PropertyDescription::GetColor<Image>(&Image::getColorTopRight);
+			Image::_getters["red_top_right"] = new PropertyDescription::GetUChar<Image>(&Image::getRedTopRight);
+			Image::_getters["green_top_right"] = new PropertyDescription::GetUChar<Image>(&Image::getGreenTopRight);
+			Image::_getters["blue_top_right"] = new PropertyDescription::GetUChar<Image>(&Image::getBlueTopRight);
+			Image::_getters["alpha_top_right"] = new PropertyDescription::GetUChar<Image>(&Image::getAlphaTopRight);
+			Image::_getters["color_bottom_left"] = new PropertyDescription::GetColor<Image>(&Image::getColorBottomLeft);
+			Image::_getters["red_bottom_left"] = new PropertyDescription::GetUChar<Image>(&Image::getRedBottomLeft);
+			Image::_getters["green_bottom_left"] = new PropertyDescription::GetUChar<Image>(&Image::getGreenBottomLeft);
+			Image::_getters["blue_bottom_left"] = new PropertyDescription::GetUChar<Image>(&Image::getBlueBottomLeft);
+			Image::_getters["alpha_bottom_left"] = new PropertyDescription::GetUChar<Image>(&Image::getAlphaBottomLeft);
+			Image::_getters["color_bottom_right"] = new PropertyDescription::GetColor<Image>(&Image::getColorBottomRight);
+			Image::_getters["red_bottom_right"] = new PropertyDescription::GetUChar<Image>(&Image::getRedBottomRight);
+			Image::_getters["green_bottom_right"] = new PropertyDescription::GetUChar<Image>(&Image::getGreenBottomRight);
+			Image::_getters["blue_bottom_right"] = new PropertyDescription::GetUChar<Image>(&Image::getBlueBottomRight);
+			Image::_getters["alpha_bottom_right"] = new PropertyDescription::GetUChar<Image>(&Image::getAlphaBottomRight);
+			Image::_getters["use_additional_colors"] = new PropertyDescription::Get<Image, bool>(&Image::isUseAdditionalColors);
 			Image::_getters["color_mode_factor"] = new PropertyDescription::Get<Image, float>(&Image::getColorModeFactor);
 		}
 		return Image::_getters;
@@ -90,6 +130,22 @@ namespace aprilui
 			Image::_setters["green"] = new PropertyDescription::SetUChar<Image>(&Image::setGreen);
 			Image::_setters["blue"] = new PropertyDescription::SetUChar<Image>(&Image::setBlue);
 			Image::_setters["alpha"] = new PropertyDescription::SetUChar<Image>(&Image::setAlpha);
+			Image::_setters["color_top_right"] = new PropertyDescription::Set<Image, hstr>(&Image::setSymbolicColorTopRight);
+			Image::_setters["red_top_right"] = new PropertyDescription::SetUChar<Image>(&Image::setRedTopRight);
+			Image::_setters["green_top_right"] = new PropertyDescription::SetUChar<Image>(&Image::setGreenTopRight);
+			Image::_setters["blue_top_right"] = new PropertyDescription::SetUChar<Image>(&Image::setBlueTopRight);
+			Image::_setters["alpha_top_right"] = new PropertyDescription::SetUChar<Image>(&Image::setAlphaTopRight);
+			Image::_setters["color_bottom_left"] = new PropertyDescription::Set<Image, hstr>(&Image::setSymbolicColorBottomLeft);
+			Image::_setters["red_bottom_left"] = new PropertyDescription::SetUChar<Image>(&Image::setRedBottomLeft);
+			Image::_setters["green_bottom_left"] = new PropertyDescription::SetUChar<Image>(&Image::setGreenBottomLeft);
+			Image::_setters["blue_bottom_left"] = new PropertyDescription::SetUChar<Image>(&Image::setBlueBottomLeft);
+			Image::_setters["alpha_bottom_left"] = new PropertyDescription::SetUChar<Image>(&Image::setAlphaBottomLeft);
+			Image::_setters["color_bottom_right"] = new PropertyDescription::Set<Image, hstr>(&Image::setSymbolicColorBottomRight);
+			Image::_setters["red_bottom_right"] = new PropertyDescription::SetUChar<Image>(&Image::setRedBottomRight);
+			Image::_setters["green_bottom_right"] = new PropertyDescription::SetUChar<Image>(&Image::setGreenBottomRight);
+			Image::_setters["blue_bottom_right"] = new PropertyDescription::SetUChar<Image>(&Image::setBlueBottomRight);
+			Image::_setters["alpha_bottom_right"] = new PropertyDescription::SetUChar<Image>(&Image::setAlphaBottomRight);
+			Image::_setters["use_additional_colors"] = new PropertyDescription::Set<Image, bool>(&Image::setUseAdditionalColors);
 			Image::_setters["color_mode_factor"] = new PropertyDescription::Set<Image, float>(&Image::setColorModeFactor);
 		}
 		return Image::_setters;
@@ -98,6 +154,39 @@ namespace aprilui
 	void Image::setSymbolicColor(chstr value)
 	{
 		this->setColor(aprilui::_makeColor(value));
+	}
+
+	void Image::setColorTopRight(const april::Color& value)
+	{
+		this->colorTopRight = value;
+		this->useAdditionalColors = true;
+	}
+
+	void Image::setSymbolicColorTopRight(chstr value)
+	{
+		this->setColorTopRight(aprilui::_makeColor(value));
+	}
+
+	void Image::setColorBottomLeft(const april::Color& value)
+	{
+		this->colorBottomLeft = value;
+		this->useAdditionalColors = true;
+	}
+
+	void Image::setSymbolicColorBottomLeft(chstr value)
+	{
+		this->setColorBottomLeft(aprilui::_makeColor(value));
+	}
+
+	void Image::setColorBottomRight(const april::Color& value)
+	{
+		this->colorBottomRight = value;
+		this->useAdditionalColors = true;
+	}
+
+	void Image::setSymbolicColorBottomRight(chstr value)
+	{
+		this->setColorBottomRight(aprilui::_makeColor(value));
 	}
 
 	hstr Image::getProperty(chstr name)
@@ -156,14 +245,23 @@ namespace aprilui
 
 	void Image::draw(cgrectf rect, const april::Color& color)
 	{
-		if (color.a == 0 || this->color.a == 0)
+		if (color.a == 0)
+		{
+			return;
+		}
+		if (this->useAdditionalColors)
+		{
+			this->_drawWithCorners(rect, color);
+			return;
+		}
+		if (this->colorTopLeft.a == 0)
 		{
 			return;
 		}
 		april::Color drawColor = color;
-		if (this->color != april::Color::White)
+		if (this->colorTopLeft != april::Color::White)
 		{
-			drawColor *= this->color;
+			drawColor *= this->colorTopLeft;
 			if (drawColor.a == 0)
 			{
 				return;
@@ -181,30 +279,98 @@ namespace aprilui
 		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = drawRect.right();
 		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = drawRect.bottom();
 		this->_setDeviceTexture();
-		this->tryLoadTextureCoordinates();
+		if (this->tryLoadTextureCoordinates())
+		{
+			for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
+			{
+				this->coloredVertices[i].u = this->vertices[i].u;
+				this->coloredVertices[i].v = this->vertices[i].v;
+			}
+		}
 		april::rendersys->setBlendMode(this->blendMode);
 		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
 		april::rendersys->render(april::RenderOperation::TriangleList, this->vertices, APRILUI_IMAGE_MAX_VERTICES, drawColor);
 	}
 
+	void Image::_drawWithCorners(cgrectf rect, const april::Color& color)
+	{
+		if (this->colorTopLeft.a == 0 && this->colorTopRight.a == 0 && this->colorBottomLeft.a == 0 && this->colorBottomRight.a == 0)
+		{
+			return;
+		}
+		april::Color topLeft = this->colorTopLeft * color;
+		if (topLeft.a == 0)
+		{
+			return;
+		}
+		april::Color topRight = this->colorTopRight * color;
+		if (topRight.a == 0)
+		{
+			return;
+		}
+		april::Color bottomLeft = this->colorBottomLeft * color;
+		if (bottomLeft.a == 0)
+		{
+			return;
+		}
+		april::Color bottomRight = this->colorBottomRight * color;
+		if (bottomRight.a == 0)
+		{
+			return;
+		}
+		grectf drawRect = rect;
+		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
+		{
+			gvec2f sizeRatio = drawRect.getSize() / this->srcRect.getSize();
+			drawRect += this->clipRect.getPosition() * sizeRatio;
+			drawRect.setSize(this->clipRect.getSize() * sizeRatio);
+		}
+		this->coloredVertices[0].x = this->coloredVertices[2].x = this->coloredVertices[4].x = drawRect.left();
+		this->coloredVertices[0].y = this->coloredVertices[1].y = this->coloredVertices[3].y = drawRect.top();
+		this->coloredVertices[1].x = this->coloredVertices[3].x = this->coloredVertices[5].x = drawRect.right();
+		this->coloredVertices[2].y = this->coloredVertices[4].y = this->coloredVertices[5].y = drawRect.bottom();
+		this->coloredVertices[0].color = april::rendersys->getNativeColorUInt(topLeft);
+		this->coloredVertices[1].color = this->coloredVertices[3].color = april::rendersys->getNativeColorUInt(topRight);
+		this->coloredVertices[2].color = this->coloredVertices[4].color = april::rendersys->getNativeColorUInt(bottomLeft);
+		this->coloredVertices[5].color = april::rendersys->getNativeColorUInt(bottomRight);
+		this->_setDeviceTexture();
+		if (this->tryLoadTextureCoordinates())
+		{
+			for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
+			{
+				this->coloredVertices[i].u = this->vertices[i].u;
+				this->coloredVertices[i].v = this->vertices[i].v;
+			}
+		}
+		april::rendersys->setBlendMode(this->blendMode);
+		april::rendersys->setColorMode(this->colorMode, this->colorModeFactor);
+		april::rendersys->render(april::RenderOperation::TriangleList, this->coloredVertices, APRILUI_IMAGE_MAX_VERTICES);
+	}
+
 	void Image::draw(const harray<april::TexturedVertex>& vertices, const april::Color& color)
 	{
-		if (color.a == 0 || this->color.a == 0)
+		if (color.a == 0 || this->colorTopLeft.a == 0)
 		{
 			return;
 		}
 		april::Color drawColor = color;
-		if (this->color != april::Color::White)
+		if (this->colorTopLeft != april::Color::White)
 		{
-			drawColor *= this->color;
+			drawColor *= this->colorTopLeft;
 			if (drawColor.a == 0)
 			{
 				return;
 			}
 		}
-		this->texture->load();
-		april::rendersys->setTexture(this->texture->getTexture());
-		this->tryLoadTextureCoordinates();
+		this->_setDeviceTexture();
+		if (this->tryLoadTextureCoordinates())
+		{
+			for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
+			{
+				this->coloredVertices[i].u = this->vertices[i].u;
+				this->coloredVertices[i].v = this->vertices[i].v;
+			}
+		}
 		// texture coordinate scaling
 		float iw = 1.0f / this->texture->getWidth();
 		float ih = 1.0f / this->texture->getHeight();
