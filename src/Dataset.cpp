@@ -483,7 +483,7 @@ namespace aprilui
 		gvec2f size;
 		if (node->pexists("size"))
 		{
-			size = april::hstrToGvec2f(node->pstr("size"));
+			size = april::hstrToGvec2<float>(node->pstr("size"));
 		}
 		else
 		{
@@ -885,7 +885,7 @@ namespace aprilui
 		gvec2f newOffset = offset;
 		if (node->pexists("position"))
 		{
-			newOffset += april::hstrToGvec2f(node->pstr("position"));
+			newOffset += april::hstrToGvec2<float>(node->pstr("position"));
 		}
 		else
 		{
