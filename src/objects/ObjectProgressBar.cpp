@@ -165,7 +165,8 @@ namespace aprilui
 		ImageBox::_draw();
 		float progress = hclamp(this->progress, 0.0f, 1.0f);
 		grectf drawRect = this->_makeDrawRect();
-		grectf directionRect;
+		grectf clipRect;
+		grectf sizeRect;
 		if (this->antiProgressImage != NULL && progress < 1.0f && this->direction.hasAntiProgress())
 		{
 			april::Color drawAntiProgressColor = this->_makeDrawAntiProgressColor();
@@ -177,9 +178,13 @@ namespace aprilui
 			}
 			else
 			{
-				grectf clipRect = (this->progressImage != NULL ? this->progressImage->getClipRect() : this->rect);
-				directionRect = this->_calcRectDirection(grectf(0.0f, 0.0f, this->antiProgressImage->getSrcSize()), antiProgress, antiDirection);
-				this->antiProgressImage->setClipRect(directionRect);
+				clipRect = (this->progressImage != NULL ? this->progressImage->getClipRect() : this->rect);
+				sizeRect.setSize(this->antiProgressImage->getSrcSize());
+				if (sizeRect.w <= 0.0f && sizeRect.h <= 0.0f)
+				{
+					sizeRect.setSize(drawRect.getSize());
+				}
+				this->antiProgressImage->setClipRect(this->_calcRectDirection(sizeRect, antiProgress, antiDirection));
 				this->antiProgressImage->draw(drawRect, drawAntiProgressColor);
 				this->antiProgressImage->setClipRect(clipRect);
 			}
@@ -193,9 +198,13 @@ namespace aprilui
 			}
 			else
 			{
-				grectf clipRect = this->progressImage->getClipRect();
-				directionRect = this->_calcRectDirection(grectf(0.0f, 0.0f, this->progressImage->getSrcSize()), progress, this->direction);
-				this->progressImage->setClipRect(directionRect);
+				clipRect = this->progressImage->getClipRect();
+				sizeRect.setSize(this->progressImage->getSrcSize());
+				if (sizeRect.w <= 0.0f && sizeRect.h <= 0.0f)
+				{
+					sizeRect.setSize(drawRect.getSize());
+				}
+				this->progressImage->setClipRect(this->_calcRectDirection(sizeRect, progress, this->direction));
 				this->progressImage->draw(drawRect, drawProgressColor);
 				this->progressImage->setClipRect(clipRect);
 			}

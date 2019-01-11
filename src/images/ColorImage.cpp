@@ -52,29 +52,23 @@ namespace aprilui
 			return;
 		}
 		april::Color topLeft = this->colorTopLeft * color;
-		if (topLeft.a == 0)
-		{
-			return;
-		}
 		april::Color topRight = this->colorTopRight * color;
-		if (topRight.a == 0)
-		{
-			return;
-		}
 		april::Color bottomLeft = this->colorBottomLeft * color;
-		if (bottomLeft.a == 0)
-		{
-			return;
-		}
 		april::Color bottomRight = this->colorBottomRight * color;
-		if (bottomRight.a == 0)
+		if (topLeft.a == 0 && topRight.a == 0 && bottomLeft.a == 0 && bottomRight.a == 0)
 		{
 			return;
 		}
-		this->vertices[0].x = this->vertices[2].x = this->vertices[4].x = rect.left();
-		this->vertices[0].y = this->vertices[1].y = this->vertices[3].y = rect.top();
-		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = rect.right();
-		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = rect.bottom();
+		grectf drawRect = rect;
+		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
+		{
+			drawRect += this->clipRect.getPosition();
+			drawRect.setSize(this->clipRect.getSize());
+		}
+		this->vertices[0].x = this->vertices[2].x = this->vertices[4].x = drawRect.left();
+		this->vertices[0].y = this->vertices[1].y = this->vertices[3].y = drawRect.top();
+		this->vertices[1].x = this->vertices[3].x = this->vertices[5].x = drawRect.right();
+		this->vertices[2].y = this->vertices[4].y = this->vertices[5].y = drawRect.bottom();
 		this->vertices[0].color = april::rendersys->getNativeColorUInt(topLeft);
 		this->vertices[1].color = this->vertices[3].color = april::rendersys->getNativeColorUInt(topRight);
 		this->vertices[2].color = this->vertices[4].color = april::rendersys->getNativeColorUInt(bottomLeft);

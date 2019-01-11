@@ -248,7 +248,6 @@ namespace aprilui
 		{
 			return;
 		}
-		april::Color drawColor = color;
 		grectf drawRect = rect;
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
@@ -264,7 +263,7 @@ namespace aprilui
 		this->tryLoadTextureCoordinates();
 		april::rendersys->setBlendMode(april::BlendMode::Alpha);
 		april::rendersys->setColorMode(april::ColorMode::Multiply, 1.0f);
-		april::rendersys->render(april::RenderOperation::TriangleList, this->vertices, APRILUI_IMAGE_MAX_VERTICES, drawColor);
+		april::rendersys->render(april::RenderOperation::TriangleList, this->vertices, APRILUI_IMAGE_MAX_VERTICES, color);
 	}
 
 	void MinimalImage::draw(const harray<april::TexturedVertex>& vertices, const april::Color& color)
@@ -273,7 +272,6 @@ namespace aprilui
 		{
 			return;
 		}
-		april::Color drawColor = color;
 		this->_setDeviceTexture();
 		this->tryLoadTextureCoordinates();
 		// texture coordinate scaling
@@ -288,7 +286,7 @@ namespace aprilui
 		}
 		april::rendersys->setBlendMode(april::BlendMode::Alpha);
 		april::rendersys->setColorMode(april::ColorMode::Multiply, 1.0f);
-		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)textureVertices, textureVertices.size(), drawColor);
+		april::rendersys->render(april::RenderOperation::TriangleList, (april::TexturedVertex*)textureVertices, textureVertices.size(), color);
 	}
 	
 }

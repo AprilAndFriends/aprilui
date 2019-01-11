@@ -294,27 +294,11 @@ namespace aprilui
 
 	void Image::_drawWithCorners(cgrectf rect, const april::Color& color)
 	{
-		if (this->colorTopLeft.a == 0 && this->colorTopRight.a == 0 && this->colorBottomLeft.a == 0 && this->colorBottomRight.a == 0)
-		{
-			return;
-		}
 		april::Color topLeft = this->colorTopLeft * color;
-		if (topLeft.a == 0)
-		{
-			return;
-		}
 		april::Color topRight = this->colorTopRight * color;
-		if (topRight.a == 0)
-		{
-			return;
-		}
 		april::Color bottomLeft = this->colorBottomLeft * color;
-		if (bottomLeft.a == 0)
-		{
-			return;
-		}
 		april::Color bottomRight = this->colorBottomRight * color;
-		if (bottomRight.a == 0)
+		if (topLeft.a == 0 && topRight.a == 0 && bottomLeft.a == 0 && bottomRight.a == 0)
 		{
 			return;
 		}
