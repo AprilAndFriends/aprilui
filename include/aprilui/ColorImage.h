@@ -25,7 +25,9 @@
 #include "BaseImage.h"
 #include "PropertyDescription.h"
 
+#ifndef APRILUI_COLOR_MAX_VERTICES
 #define APRILUI_COLOR_MAX_VERTICES 6
+#endif
 
 namespace aprilui
 {
@@ -74,10 +76,10 @@ namespace aprilui
 		void draw(const harray<april::TexturedVertex>& vertices, const april::Color& color = april::Color::White);
 
 	protected:
-		april::Color colorTopRight;
 		april::Color colorTopLeft;
-		april::Color colorBottomRight;
+		april::Color colorTopRight;
 		april::Color colorBottomLeft;
+		april::Color colorBottomRight;
 		april::ColoredVertex vertices[APRILUI_COLOR_MAX_VERTICES];
 
 	};

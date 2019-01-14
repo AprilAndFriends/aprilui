@@ -95,6 +95,7 @@
     <ClCompile Include="..\..\src\images\MinimalImage.cpp" />
     <ClCompile Include="..\..\src\images\SkinImage.cpp" />
     <ClCompile Include="..\..\src\images\TileImage.cpp" />
+    <ClCompile Include="..\..\src\objects\ObjectColored.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectGridView.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectGridViewCell.cpp" />
     <ClCompile Include="..\..\src\objects\ObjectGridViewRow.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="..\..\include\aprilui\EventUtils.h" />
     <ClInclude Include="..\..\include\aprilui\MemberCallbackEvent.h" />
     <ClInclude Include="..\..\include\aprilui\MinimalImage.h" />
+    <ClInclude Include="..\..\include\aprilui\ObjectColored.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectGridView.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectGridViewCell.h" />
     <ClInclude Include="..\..\include\aprilui\ObjectGridViewRow.h" />

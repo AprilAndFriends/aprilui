@@ -18,11 +18,13 @@
 #include <hltypes/hstring.h>
 
 #include "apriluiExport.h"
-#include "Object.h"
+#include "ObjectColored.h"
+
+#define APRILUI_COLOR_MAX_VERTICES_RECT 5
 
 namespace aprilui
 {
-	class apriluiExport Rect : public Object
+	class apriluiExport Rect : public Colored
 	{
 		APRILUI_CLONEABLE(Rect);
 	public:
@@ -31,6 +33,8 @@ namespace aprilui
 		static Object* createInstance(chstr name);
 
 	protected:
+		april::ColoredVertex vertices[APRILUI_COLOR_MAX_VERTICES_RECT];
+
 		void _draw();
 
 	};

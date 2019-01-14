@@ -263,6 +263,9 @@
     <ClCompile Include="..\..\src\images\ColorImage.cpp">
       <Filter>Source Files\Images</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\objects\ObjectColored.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\aprilui\Animators.h">
@@ -513,6 +516,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\aprilui\ColorImage.h">
       <Filter>Header Files\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\aprilui\ObjectColored.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
