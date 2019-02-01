@@ -13,7 +13,7 @@
 #include "Event.h"
 
 #define SYSTEM_EVENT_CHECK(checkType) \
-	if (type == checkType || !caseSensitive && type.lowered() == checkType.lowered()) \
+	if (type == checkType || (!caseSensitive && type.lowered() == checkType.lowered())) \
 	{ \
 		return true; \
 	}
@@ -71,11 +71,6 @@ namespace aprilui
 
 	bool Event::isSystemEvent(chstr type, bool caseSensitive)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		SYSTEM_EVENT_CHECK(DatasetLoaded);
 		SYSTEM_EVENT_CHECK(DatasetUnloaded);
 		SYSTEM_EVENT_CHECK(RegisteredInDataset);

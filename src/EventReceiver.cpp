@@ -51,11 +51,6 @@ namespace aprilui
 
 	bool EventReceiver::registerEvent(chstr type, void(*callback)(EventArgs*))
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		CallbackEvent* event = new CallbackEvent(callback);
 		bool result = this->registerEvent(type, event);
 		if (!result && event != NULL)
@@ -67,11 +62,6 @@ namespace aprilui
 
 	bool EventReceiver::registerEvent(chstr type, Event* event)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (event != NULL)
 		{
 			this->unregisterEvent(type);
@@ -83,11 +73,6 @@ namespace aprilui
 
 	bool EventReceiver::unregisterEvent(chstr type)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (this->events.hasKey(type))
 		{
 			Event* event = this->events[type];
@@ -104,30 +89,15 @@ namespace aprilui
 
 	bool EventReceiver::isEventRegistered(chstr type) const
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		return this->events.hasKey(type);
 	}
 
 	void EventReceiver::notifyEvent(chstr type, EventArgs* args)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 	}
 
 	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, keyCode, aprilui::getCursorPosition(), "", NULL));
@@ -138,11 +108,6 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode, chstr string)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, keyCode, aprilui::getCursorPosition(), string, NULL));
@@ -153,11 +118,6 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string, void* userData)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, keyCode, position, string, userData));
@@ -168,11 +128,6 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, april::Button buttonCode, chstr string, void* userData)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, buttonCode, string, userData));
@@ -183,11 +138,6 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, chstr string, void* userData)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, string, userData));
@@ -198,11 +148,6 @@ namespace aprilui
 
 	bool EventReceiver::triggerEvent(chstr type, void* userData)
 	{
-		if (type == DEPRECATED_EVENT_RESIZED)
-		{
-			hlog::errorf(logTag, "Event '%s' is deprecated, use '%s' instead!", DEPRECATED_EVENT_RESIZED, Event::SizeChanged.cStr());
-			((hstr)type).replace(DEPRECATED_EVENT_RESIZED, Event::SizeChanged);
-		}
 		if (this->events.hasKey(type))
 		{
 			this->dataset->queueCallback(this->events[type], new EventArgs(type, this, userData));

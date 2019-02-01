@@ -18,8 +18,6 @@
 #include "apriluiExport.h"
 #include "Cloneable.h"
 
-#define DEPRECATED_EVENT_RESIZED "Resized"
-
 namespace aprilui
 {
 	class EventArgs;
