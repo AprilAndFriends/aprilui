@@ -487,7 +487,7 @@ namespace aprilui
 		return aprilui::getDatasetByName(datasetName)->getText(textKey(dotIndex + 1, -1));
 	}
 
-	hstr hasTextEntry(chstr textKey, Dataset* defaultDataset)
+	bool hasTextEntry(chstr textKey, Dataset* defaultDataset)
 	{
 		if (defaultDataset != NULL && defaultDataset->hasTextEntry(textKey))
 		{
