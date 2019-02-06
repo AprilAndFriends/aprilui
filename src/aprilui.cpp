@@ -434,6 +434,25 @@ namespace aprilui
 		return (imageFactories.hasKey(typeName) ? (*imageFactories[typeName])(texture, name, source) : NULL);
 	}
 
+	BaseImage* getImage(chstr imageName, Dataset* defaultDataset)
+	{
+		if (defaultDataset != NULL)
+		{
+			return defaultDataset->getImage(imageName);
+		}
+		int dotIndex = imageName.indexOf('.');
+		if (dotIndex < 0)
+		{
+			return NULL;
+		}
+		hstr datasetName = imageName(0, dotIndex);
+		if (!datasets.hasKey(datasetName))
+		{
+			return NULL;
+		}
+		return aprilui::getDatasetByName(datasetName)->getImage(imageName(dotIndex + 1, -1));
+	}
+
 	bool hasImage(chstr imageName, Dataset* defaultDataset)
 	{
 		if (defaultDataset != NULL && defaultDataset->hasImage(imageName))
@@ -447,6 +466,40 @@ namespace aprilui
 		}
 		hstr datasetName = imageName(0, dotIndex);
 		return (datasets.hasKey(datasetName) && aprilui::getDatasetByName(datasetName)->hasImage(imageName(dotIndex + 1, -1)));
+	}
+
+	hstr getText(chstr textKey, Dataset* defaultDataset)
+	{
+		if (defaultDataset != NULL)
+		{
+			return defaultDataset->getText(textKey);
+		}
+		int dotIndex = textKey.indexOf('.');
+		if (dotIndex < 0)
+		{
+			return NULL;
+		}
+		hstr datasetName = textKey(0, dotIndex);
+		if (!datasets.hasKey(datasetName))
+		{
+			return NULL;
+		}
+		return aprilui::getDatasetByName(datasetName)->getText(textKey(dotIndex + 1, -1));
+	}
+
+	hstr hasTextEntry(chstr textKey, Dataset* defaultDataset)
+	{
+		if (defaultDataset != NULL && defaultDataset->hasTextEntry(textKey))
+		{
+			return true;
+		}
+		int dotIndex = textKey.indexOf('.');
+		if (dotIndex < 0)
+		{
+			return false;
+		}
+		hstr datasetName = textKey(0, dotIndex);
+		return (datasets.hasKey(datasetName) && aprilui::getDatasetByName(datasetName)->hasTextEntry(textKey(dotIndex + 1, -1)));
 	}
 
 	gvec2f transformWindowPoint(cgvec2f point)
