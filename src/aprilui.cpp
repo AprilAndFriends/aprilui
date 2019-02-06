@@ -477,12 +477,14 @@ namespace aprilui
 		int dotIndex = textKey.indexOf('.');
 		if (dotIndex < 0)
 		{
-			return NULL;
+			hlog::warnf(logTag, "Text key '%s' does not exist!", textKey.cStr());
+			return hsprintf("ERROR: Text '%s' not found!", textKey.cStr());
 		}
 		hstr datasetName = textKey(0, dotIndex);
 		if (!datasets.hasKey(datasetName))
 		{
-			return NULL;
+			hlog::warnf(logTag, "Text key '%s' does not exist!", textKey.cStr());
+			return hsprintf("ERROR: Text '%s' not found!", textKey.cStr());
 		}
 		return aprilui::getDatasetByName(datasetName)->getText(textKey(dotIndex + 1, -1));
 	}
