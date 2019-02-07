@@ -344,6 +344,8 @@ namespace aprilui
 		virtual bool _buttonUp(april::Button buttonCode);
 
 	private:
+		bool _initialPivotX;
+		bool _initialPivotY;
 		Object* _childUnderCursor;
 		bool _checkedChildUnderCursor;
 

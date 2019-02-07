@@ -129,6 +129,8 @@ namespace aprilui
 		this->focusIndex = -1;
 		this->customPointInsideCallback = NULL;
 		this->debugColor.set(april::Color::Black, 32);
+		this->_initialPivotX = true;
+		this->_initialPivotY = true;
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -163,6 +165,8 @@ namespace aprilui
 		{
 			(*it)->parent = this;
 		}
+		this->_initialPivotX = other._initialPivotX;
+		this->_initialPivotY = other._initialPivotY;
 		this->_childUnderCursor = NULL;
 		this->_checkedChildUnderCursor = false;
 	}
@@ -1186,14 +1190,16 @@ namespace aprilui
 		{
 			return;
 		}
-		if (this->rect.w <= 0.0f)
+		if (this->_initialPivotX)
 		{
+			this->_initialPivotX = false;
 			this->pivot.x = difference * 0.5f;
 		}
 		gvec2f size;
 		gvec2f unlimitedSize;
 		float differenceAlt = 0.0f;
 		float sizeDifference = 0.0f;
+		float width = 0.0f;
 		foreach (Object*, it, this->childrenObjects)
 		{
 			size = (*it)->getSize();
@@ -1211,12 +1217,13 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorRight())
 			{
-				(*it)->setWidth(unlimitedSize.x + difference);
+				width = unlimitedSize.x + difference;
+				(*it)->setWidth(width);
 				if (size.x != 0.0f)
 				{
-					(*it)->setPivotX((*it)->getPivotX() * (*it)->getWidth() / size.x);
+					(*it)->setPivotX((*it)->getPivotX() * width / size.x);
 				}
-				sizeDifference = size.x + difference - (*it)->getWidth();
+				sizeDifference = size.x + difference - width;
 				if (sizeDifference != 0.0f)
 				{
 					(*it)->setX((*it)->getX() + sizeDifference * 0.5f);
@@ -1248,14 +1255,16 @@ namespace aprilui
 		{
 			return;
 		}
-		if (this->rect.h <= 0.0f)
+		if (this->_initialPivotY)
 		{
+			this->_initialPivotY = false;
 			this->pivot.y = difference * 0.5f;
 		}
 		gvec2f size;
 		gvec2f unlimitedSize;
 		float differenceAlt = 0.0f;
 		float sizeDifference = 0.0f;
+		float height = 0.0f;
 		foreach (Object*, it, this->childrenObjects)
 		{
 			size = (*it)->getSize();
@@ -1273,12 +1282,13 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorBottom())
 			{
-				(*it)->setHeight(unlimitedSize.y + difference);
+				height = unlimitedSize.y + difference;
+				(*it)->setHeight(height);
 				if (size.y != 0.0f)
 				{
-					(*it)->setPivotY((*it)->getPivotY() * (*it)->getHeight() / size.y);
+					(*it)->setPivotY((*it)->getPivotY() * height / size.y);
 				}
-				sizeDifference = size.y + difference - (*it)->getHeight();
+				sizeDifference = size.y + difference - height;
 				if (sizeDifference != 0.0f)
 				{
 					(*it)->setY((*it)->getY() + sizeDifference * 0.5f);
