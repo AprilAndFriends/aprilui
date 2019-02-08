@@ -1217,8 +1217,8 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorRight())
 			{
-				width = unlimitedSize.x + difference;
-				(*it)->setWidth(width);
+				(*it)->setWidth(unlimitedSize.x + difference);
+				width = (*it)->getWidth(); // required due to max height parameter
 				if (size.x != 0.0f)
 				{
 					(*it)->setPivotX((*it)->getPivotX() * width / size.x);
@@ -1282,8 +1282,8 @@ namespace aprilui
 			}
 			else if ((*it)->isAnchorBottom())
 			{
-				height = unlimitedSize.y + difference;
-				(*it)->setHeight(height);
+				(*it)->setHeight(unlimitedSize.y + difference);
+				height = (*it)->getHeight(); // required due to max height parameter
 				if (size.y != 0.0f)
 				{
 					(*it)->setPivotY((*it)->getPivotY() * height / size.y);
