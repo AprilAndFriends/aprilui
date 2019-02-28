@@ -181,6 +181,10 @@ namespace aprilui
 		virtual bool onKeyDown(april::Key keyCode);
 		virtual bool onKeyUp(april::Key keyCode);
 		virtual bool onChar(unsigned int charCode);
+		virtual bool onTouchDown(int index);
+		virtual bool onTouchUp(int index);
+		virtual bool onTouchCancel(int index);
+		virtual bool onTouchMove(int index);
 		virtual bool onTouch(const harray<gvec2f>& touches);
 		virtual bool onButtonDown(april::Button buttonCode);
 		virtual bool onButtonUp(april::Button buttonCode);
@@ -339,6 +343,10 @@ namespace aprilui
 		virtual bool _keyDown(april::Key keyCode);
 		virtual bool _keyUp(april::Key keyCode);
 		virtual bool _char(unsigned int charCode);
+		virtual bool _touchDown(int index);
+		virtual bool _touchUp(int index);
+		virtual void _touchCancel(int index);
+		virtual bool _touchMove(int index);
 		virtual bool _touch(const harray<gvec2f>& touches);
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);

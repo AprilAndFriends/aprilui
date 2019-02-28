@@ -1557,6 +1557,113 @@ namespace aprilui
 		return false;
 	}
 
+	bool Object::onTouchDown(int index)
+	{
+		if (this->hitTest == HitTest::DisabledRecursive || !this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
+		if (this->hitTest == HitTest::Enabled && this->dataset != NULL)
+		{
+			this->dataset->removeFocus();
+		}
+		// needs to be copied in case children gets changed
+		harray<Object*> objects = this->childrenObjects;
+		foreach_r (Object*, it, objects)
+		{
+			if ((*it)->onTouchDown(index))
+			{
+				return true;
+			}
+		}
+		return this->_touchDown(index);
+	}
+
+	bool Object::_touchDown(int index)
+	{
+		return false;
+	}
+
+	bool Object::onTouchUp(int index)
+	{
+		if (this->hitTest == HitTest::DisabledRecursive || !this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
+		harray<Object*> canceledObjects;
+		Object* object = NULL;
+		// needs to be copied in case children gets changed
+		harray<Object*> objects = this->childrenObjects;
+		for_iter_r (i, objects.size(), 0)
+		{
+			if (objects[i]->onTouchUp(index))
+			{
+				object = objects[i];
+				++i;
+				if (i < objects.size())
+				{
+					canceledObjects += objects(i, -1);
+				}
+				break;
+			}
+			canceledObjects += objects[i];
+		}
+		if (object != NULL)
+		{
+			// does not call onTouchCancel() on self, because it would affect all children, not just a select few
+			this->_touchCancel(index);
+			foreach (Object*, it, canceledObjects)
+			{
+				(*it)->onTouchCancel(index);
+			}
+			return true;
+		}
+		return this->_touchUp(index);
+	}
+
+	bool Object::_touchUp(int index)
+	{
+		return false;
+	}
+
+	bool Object::onTouchCancel(int index)
+	{
+		harray<Object*> objects = this->childrenObjects;
+		this->_touchCancel(index); // _touchCancel() is the only one that is first called on this object and then on all children afterwards
+		foreach_r (Object*, it, objects)
+		{
+			(*it)->onTouchCancel(index);
+		}
+		return false;
+	}
+
+	void Object::_touchCancel(int index)
+	{
+	}
+
+	bool Object::onTouchMove(int index)
+	{
+		if (!this->isVisible() || !this->isDerivedEnabled())
+		{
+			return false;
+		}
+		// needs to be copied in case children gets changed
+		harray<Object*> objects = this->childrenObjects;
+		foreach_r (Object*, it, objects)
+		{
+			if ((*it)->onTouchMove(index))
+			{
+				return true;
+			}
+		}
+		return this->_touchMove(index);
+	}
+
+	bool Object::_touchMove(int index)
+	{
+		return false;
+	}
+
 	bool Object::onTouch(const harray<gvec2f>& touches)
 	{
 		if (!this->isVisible() || !this->isDerivedEnabled())

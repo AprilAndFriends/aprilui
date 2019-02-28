@@ -131,6 +131,10 @@ namespace aprilui
 		bool onKeyDown(april::Key keyCode);
 		bool onKeyUp(april::Key keyCode);
 		bool onChar(unsigned int charCode);
+		bool onTouchDown(int index);
+		bool onTouchUp(int index);
+		bool onTouchCancel(int index);
+		bool onTouchMove(int index);
 		bool onTouch(const harray<gvec2f>& touches);
 		bool onButtonDown(april::Button buttonCode);
 		bool onButtonUp(april::Button buttonCode);

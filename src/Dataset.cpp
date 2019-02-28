@@ -2018,6 +2018,30 @@ namespace aprilui
 		return (this->root != NULL && this->root->onChar(charCode));
 	}
 	
+	bool Dataset::onTouchDown(int index)
+	{
+		ASSERT_NO_ASYNC_LOADING(onTouchDown, (false));
+		return (this->root != NULL && this->root->onTouchDown(index));
+	}
+
+	bool Dataset::onTouchUp(int index)
+	{
+		ASSERT_NO_ASYNC_LOADING(onTouchUp, (false));
+		return (this->root != NULL && this->root->onTouchUp(index));
+	}
+
+	bool Dataset::onTouchCancel(int index)
+	{
+		ASSERT_NO_ASYNC_LOADING(onTouchCancel, (false));
+		return (this->root != NULL && this->root->onTouchCancel(index));
+	}
+
+	bool Dataset::onTouchMove(int index)
+	{
+		ASSERT_NO_ASYNC_LOADING(onTouchMove, (false));
+		return (this->root != NULL && this->root->onTouchMove(index));
+	}
+
 	bool Dataset::onTouch(const harray<gvec2f>& touches)
 	{
 		ASSERT_NO_ASYNC_LOADING(onTouch, (false));
