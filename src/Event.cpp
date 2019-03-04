@@ -36,6 +36,11 @@ namespace aprilui
 	hstr Event::Click = "Click";
 	hstr Event::KeyDown = "KeyDown";
 	hstr Event::KeyUp = "KeyUp";
+	hstr Event::TouchDown = "TouchDown";
+	hstr Event::TouchUp = "TouchUp";
+	hstr Event::TouchMove = "TouchMove";
+	hstr Event::TouchCancel = "TouchCancel";
+	hstr Event::Tap = "Tap";
 	hstr Event::ButtonDown = "ButtonDown";
 	hstr Event::ButtonUp = "ButtonUp";
 	hstr Event::ButtonTrigger = "ButtonTrigger";

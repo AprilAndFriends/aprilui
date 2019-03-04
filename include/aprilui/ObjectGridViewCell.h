@@ -46,6 +46,8 @@ namespace aprilui
 		HL_DEFINE_ISSET(selectable, Selectable);
 		bool isSelected() const;
 
+		bool isPointInside(cgvec2f position) const;
+
 		void notifyEvent(chstr type, EventArgs* args);
 
 		bool triggerEvent(chstr type, april::Key keyCode);
@@ -69,11 +71,16 @@ namespace aprilui
 		april::Color _getCurrentBackgroundColor() const;
 		void _setSelected();
 		aprilui::Object* _findHoverObject();
+		aprilui::Object* _findTouchObject(int index);
 
 		bool _mouseDown(april::Key keyCode);
 		bool _mouseUp(april::Key keyCode);
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
+		bool _touchDown(int index);
+		bool _touchUp(int index);
+		void _touchCancel(int index);
+		bool _touchMove(int index);
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 

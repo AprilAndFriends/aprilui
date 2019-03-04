@@ -67,6 +67,8 @@ namespace aprilui
 		bool trySetPushedImageByName(chstr name);
 		/// @brief Optimized version.
 		bool trySetDisabledImageByName(chstr name);
+
+		bool isPointInside(cgvec2f position) const;
 		
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
@@ -101,6 +103,10 @@ namespace aprilui
 		bool _mouseUp(april::Key keyCode);
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
+		bool _touchDown(int index);
+		bool _touchUp(int index);
+		void _touchCancel(int index);
+		bool _touchMove(int index);
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 		

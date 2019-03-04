@@ -357,6 +357,11 @@ namespace aprilui
 		hlog::warn(logTag, "EditBox does not support setting of 'min_auto_scale'! Call will be ignored.");
 	}
 
+	bool EditBox::isPointInside(cgvec2f position) const
+	{
+		return Label::isPointInside(position);
+	}
+
 	void EditBox::setCaretIndexAt(cgvec2f position)
 	{
 		if (!this->pushed || this->_caretCursorPosition != position)

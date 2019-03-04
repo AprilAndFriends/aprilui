@@ -43,6 +43,8 @@ namespace aprilui
 		bool isCursorInside() const;
 		bool isSelected() const;
 
+		bool isPointInside(cgvec2f position) const;
+
 		void notifyEvent(chstr type, EventArgs* args);
 
 		bool triggerEvent(chstr type, april::Key keyCode);
@@ -63,6 +65,10 @@ namespace aprilui
 		bool _mouseUp(april::Key keyCode);
 		void _mouseCancel(april::Key keyCode);
 		bool _mouseMove();
+		bool _touchDown(int index);
+		bool _touchUp(int index);
+		void _touchCancel(int index);
+		bool _touchMove(int index);
 		bool _buttonDown(april::Button buttonCode);
 		bool _buttonUp(april::Button buttonCode);
 

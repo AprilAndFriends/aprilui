@@ -96,6 +96,11 @@ namespace aprilui
 			this->_treeView->items[this->_treeView->selectedIndex] == this);
 	}
 
+	bool TreeViewNode::isPointInside(cgvec2f position) const
+	{
+		return Container::isPointInside(position);
+	}
+
 	void TreeViewNode::_update(float timeDelta)
 	{
 		ButtonBase::_update(timeDelta);
@@ -356,6 +361,43 @@ namespace aprilui
 	bool TreeViewNode::_mouseMove()
 	{
 		return (ButtonBase::_mouseMove() || Container::_mouseMove());
+	}
+
+	bool TreeViewNode::_touchDown(int index)
+	{
+		bool result = ButtonBase::_touchDown(index);
+		if (result)
+		{
+			this->triggerEvent(Event::TouchDown, april::Key::None, hstr(index));
+		}
+		return (result || Container::_touchDown(index));
+	}
+
+	bool TreeViewNode::_touchUp(int index)
+	{
+		bool result = this->touched.has(index);
+		bool released = ButtonBase::_touchUp(index);
+		bool up = false;
+		if (released)
+		{
+			up = this->triggerEvent(Event::TouchUp, april::Key::None, hstr(index));
+			if (result)
+			{
+				this->triggerEvent(Event::Tap, april::Key::None, hstr(index));
+			}
+		}
+		return (result || up || Container::_touchUp(index));
+	}
+
+	void TreeViewNode::_touchCancel(int index)
+	{
+		ButtonBase::_touchCancel(index);
+		Container::_touchCancel(index);
+	}
+
+	bool TreeViewNode::_touchMove(int index)
+	{
+		return (ButtonBase::_touchMove(index) || Container::_touchMove(index));
 	}
 
 	bool TreeViewNode::_buttonDown(april::Button buttonCode)

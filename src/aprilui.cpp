@@ -50,6 +50,7 @@ namespace aprilui
 	static BaseImage* cursorImage = NULL;
 	static bool cursorVisible = true;
 	static gvec2f cursorPosition;
+	static hmap<int, gvec2f> touchPositions;
 	static bool limitCursorToViewport = false;
 	static bool hoverEffectEnabled = true;
 	static grectf viewport;
@@ -63,6 +64,8 @@ namespace aprilui
 	static april::Texture::LoadMode defaultTextureLoadMode = april::Texture::LoadMode::Async;
 	static bool useKeyboardAutoOffset = false;
 	static hmap<hstr, float> extensionScales;
+
+	static const gvec2f _unusedTouchPosition(-10000.0f, -10000.0f);
 
 	void init()
 	{
@@ -563,16 +566,31 @@ namespace aprilui
 		cursorPosition = transformWindowPoint(april::window->getCursorPosition());
 	}
 	
-	void setCursorPosition(cgvec2f position)
-	{
-		cursorPosition = position;
-	}
-	
 	gvec2f getCursorPosition()
 	{
 		return cursorPosition;
 	}
 	
+	void setCursorPosition(cgvec2f position)
+	{
+		cursorPosition = position;
+	}
+
+	void updateTouchPosition(int index)
+	{
+		touchPositions[index] = transformWindowPoint(april::window->getTouchPositions().tryGet(index, _unusedTouchPosition));
+	}
+
+	gvec2f getTouchPosition(int index)
+	{
+		return touchPositions.tryGet(index, _unusedTouchPosition);
+	}
+
+	void setTouchPosition(int index, cgvec2f position)
+	{
+		touchPositions[index] = position;
+	}
+
 	void setCursorImage(BaseImage* image)
 	{
 		cursorImage = image;
@@ -858,6 +876,42 @@ namespace aprilui
 		foreach_m (Dataset*, it, datasets)
 		{
 			it->second->onChar(charCode);
+		}
+	}
+	
+	void onTouchDown(int index)
+	{
+		aprilui::updateTouchPosition(index);
+		foreach_m (Dataset*, it, datasets)
+		{
+			it->second->onTouchDown(index);
+		}
+	}
+	
+	void onTouchUp(int index)
+	{
+		aprilui::updateTouchPosition(index);
+		foreach_m (Dataset*, it, datasets)
+		{
+			it->second->onTouchUp(index);
+		}
+	}
+	
+	void onTouchCancel(int index)
+	{
+		aprilui::updateTouchPosition(index);
+		foreach_m (Dataset*, it, datasets)
+		{
+			it->second->onTouchCancel(index);
+		}
+	}
+	
+	void onTouchMove(int index)
+	{
+		aprilui::updateTouchPosition(index);
+		foreach_m (Dataset*, it, datasets)
+		{
+			it->second->onTouchMove(index);
 		}
 	}
 	

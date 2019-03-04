@@ -231,6 +231,11 @@ namespace aprilui
 		this->_updateOobChildren();
 	}
 
+	bool ScrollArea::isPointInside(cgvec2f position) const
+	{
+		return Object::isPointInside(position);
+	}
+
 	void ScrollArea::_update(float timeDelta)
 	{
 		this->_updateOobChildren();

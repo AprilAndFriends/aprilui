@@ -75,6 +75,8 @@ namespace aprilui
 		float getScrollOffsetY() const;
 		void setScrollOffsetY(float value);
 
+		bool isPointInside(cgvec2f position) const;
+
 		void snapScrollOffset();
 		void snapScrollOffsetX();
 		void snapScrollOffsetY();

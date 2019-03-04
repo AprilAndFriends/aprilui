@@ -158,6 +158,42 @@ namespace aprilui
 		}
 	}
 
+	aprilui::Object* ButtonBase::_findTouchObject(int index)
+	{
+		Object* root = NULL;
+		Dataset* dataset = this->getDataset();
+		if (dataset != NULL)
+		{
+			int focusIndex = this->getFocusIndex();
+			if (focusIndex >= 0 && dataset->getFocusedObjectIndex() == focusIndex)
+			{
+				return _THIS_OBJECT;
+			}
+			root = dataset->getRoot();
+		}
+		if (root == NULL)
+		{
+			Object* parent = this->getParent();
+			while (parent != NULL)
+			{
+				root = parent;
+				parent = root->getParent();
+			}
+		}
+		gvec2f position = aprilui::getTouchPosition(index);
+		if (root == NULL)
+		{
+			return (this->isPointInside(position) ? _THIS_OBJECT : NULL);
+		}
+		return root->getChildUnderPoint(position);
+	}
+
+	bool ButtonBase::_checkTouchPosition(int index)
+	{
+		Object* thisObject = _THIS_OBJECT;
+		return (thisObject->isDerivedEnabled() && this->_findTouchObject(index) == thisObject);
+	}
+
 	bool ButtonBase::_mouseDown(april::Key keyCode)
 	{
 		if (!allowedKeys.has(keyCode))
@@ -204,6 +240,40 @@ namespace aprilui
 			if ((this->_mouseDownPosition - this->_thisObject->transformToLocalSpace(aprilui::getCursorPosition())).squaredLength() > this->pushDeadZone * this->pushDeadZone)
 			{
 				this->_mouseCancel(april::Key::None);
+			}
+		}
+		return false;
+	}
+
+	bool ButtonBase::_touchDown(int index)
+	{
+		if (this->_checkTouchPosition(index))
+		{
+			this->touched |= index;
+			this->_touchDownPositions[index] = this->_thisObject->transformToLocalSpace(aprilui::getTouchPosition(index));
+			return true;
+		}
+		return false;
+	}
+
+	bool ButtonBase::_touchUp(int index)
+	{
+		this->touched /= index;
+		return this->_checkTouchPosition(index);
+	}
+
+	void ButtonBase::_touchCancel(int index)
+	{
+		this->touched /= index;
+	}
+
+	bool ButtonBase::_touchMove(int index)
+	{
+		if (this->touched.has(index))
+		{
+			if ((this->_touchDownPositions[index] - this->_thisObject->transformToLocalSpace(aprilui::getTouchPosition(index))).squaredLength() > this->pushDeadZone * this->pushDeadZone)
+			{
+				this->_touchCancel(index);
 			}
 		}
 		return false;

@@ -103,6 +103,11 @@ namespace aprilui
 			this->gridView->cells[this->gridView->selectedIndex] == this);
 	}
 
+	bool GridViewCell::isPointInside(cgvec2f position) const
+	{
+		return Container::isPointInside(position);
+	}
+
 	void GridViewCell::_update(float timeDelta)
 	{
 		ButtonBase::_update(timeDelta);
@@ -132,6 +137,15 @@ namespace aprilui
 			return (this->isCursorInside() ? this : NULL);
 		}
 		return ButtonBase::_findHoverObject();
+	}
+
+	aprilui::Object* GridViewCell::_findTouchObject(int index)
+	{
+		if (this->selectable)
+		{
+			return (this->isPointInside(aprilui::getTouchPosition(index)) ? this : NULL);
+		}
+		return ButtonBase::_findTouchObject(index);
 	}
 
 	april::Color GridViewCell::_getCurrentBackgroundColor() const
@@ -261,6 +275,43 @@ namespace aprilui
 		return (ButtonBase::_mouseMove() || Container::_mouseMove());
 	}
 
+	bool GridViewCell::_touchDown(int index)
+	{
+		bool result = ButtonBase::_touchDown(index);
+		if (result)
+		{
+			this->triggerEvent(Event::TouchDown, april::Key::None, hstr(index));
+		}
+		return (result || Container::_touchDown(index));
+	}
+
+	bool GridViewCell::_touchUp(int index)
+	{
+		bool result = this->touched.has(index);
+		bool released = ButtonBase::_touchUp(index);
+		bool up = false;
+		if (released)
+		{
+			up = this->triggerEvent(Event::TouchUp, april::Key::None, hstr(index));
+			if (result)
+			{
+				this->triggerEvent(Event::Tap, april::Key::None, hstr(index));
+			}
+		}
+		return (result || up || Container::_touchUp(index));
+	}
+
+	void GridViewCell::_touchCancel(int index)
+	{
+		ButtonBase::_touchCancel(index);
+		Container::_touchCancel(index);
+	}
+
+	bool GridViewCell::_touchMove(int index)
+	{
+		return (ButtonBase::_touchMove(index) || Container::_touchMove(index));
+	}
+	
 	bool GridViewCell::_buttonDown(april::Button buttonCode)
 	{
 		bool result = ButtonBase::_buttonDown(buttonCode);

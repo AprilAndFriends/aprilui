@@ -72,6 +72,7 @@ namespace aprilui
 		hstr getDisplayedText() const;
 		void setMinAutoScale(float value);
 
+		bool isPointInside(cgvec2f position) const;
 		void setCaretIndexAt(cgvec2f position);
 
 		void notifyEvent(chstr type, EventArgs* args);

@@ -162,6 +162,91 @@ namespace aprilui
 		}
 	}
 
+	void ImageButton::setPushedImage(BaseImage* image)
+	{
+		this->pushedImage = image;
+		this->pushedImageName = (image != NULL ? image->getFullName() : "");
+	}
+
+	void ImageButton::setHoverImage(BaseImage* image)
+	{
+		this->hoverImage = image;
+		this->hoverImageName = (image != NULL ? image->getFullName() : "");
+	}
+
+	void ImageButton::setDisabledImage(BaseImage* image)
+	{
+		this->disabledImage = image;
+		this->disabledImageName = (image != NULL ? image->getFullName() : "");
+	}
+
+	void ImageButton::setHoverImageByName(chstr name)
+	{
+		this->setHoverImage(name != "" ? this->dataset->getImage(name) : NULL);
+	}
+
+	void ImageButton::setPushedImageByName(chstr name)
+	{
+		this->setPushedImage(name != "" ? this->dataset->getImage(name) : NULL);
+	}
+
+	void ImageButton::setDisabledImageByName(chstr name)
+	{
+		this->setDisabledImage(name != "" ? this->dataset->getImage(name) : NULL);
+	}
+
+	bool ImageButton::trySetPushedImageByName(chstr name)
+	{
+		if (this->pushedImageName != name)
+		{
+			this->setPushedImageByName(name);
+			return true;
+		}
+		return false;
+	}
+
+	bool ImageButton::trySetHoverImageByName(chstr name)
+	{
+		if (this->hoverImageName != name)
+		{
+			this->setHoverImageByName(name);
+			return true;
+		}
+		return false;
+	}
+
+	bool ImageButton::trySetDisabledImageByName(chstr name)
+	{
+		if (this->disabledImageName != name)
+		{
+			this->setDisabledImageByName(name);
+			return true;
+		}
+		return false;
+	}
+
+	void ImageButton::setImage(BaseImage* image)
+	{
+		ImageBox::setImage(image);
+		this->normalImage = this->image;
+		this->normalImageName = this->imageName;
+	}
+
+	harray<BaseImage*> ImageButton::_getUsedImages() const
+	{
+		harray<BaseImage*> images = ImageBox::_getUsedImages();
+		images += this->normalImage;
+		images += this->pushedImage;
+		images += this->hoverImage;
+		images += this->disabledImage;
+		return images;
+	}
+
+	bool ImageButton::isPointInside(cgvec2f position) const
+	{
+		return ImageBox::isPointInside(position);
+	}
+
 	void ImageButton::_draw()
 	{
 		grectf drawRect = this->_makeDrawRect();
@@ -259,86 +344,6 @@ namespace aprilui
 		ImageBox::_update(timeDelta);
 	}
 	
-	void ImageButton::setPushedImage(BaseImage* image)
-	{
-		this->pushedImage = image;
-		this->pushedImageName = (image != NULL ? image->getFullName() : "");
-	}
-
-	void ImageButton::setHoverImage(BaseImage* image)
-	{
-		this->hoverImage = image;
-		this->hoverImageName = (image != NULL ? image->getFullName() : "");
-	}
-
-	void ImageButton::setDisabledImage(BaseImage* image)
-	{
-		this->disabledImage = image;
-		this->disabledImageName = (image != NULL ? image->getFullName() : "");
-	}
-
-	void ImageButton::setHoverImageByName(chstr name)
-	{
-		this->setHoverImage(name != "" ? this->dataset->getImage(name) : NULL);
-	}
-
-	void ImageButton::setPushedImageByName(chstr name)
-	{
-		this->setPushedImage(name != "" ? this->dataset->getImage(name) : NULL);
-	}
-
-	void ImageButton::setDisabledImageByName(chstr name)
-	{
-		this->setDisabledImage(name != "" ? this->dataset->getImage(name) : NULL);
-	}
-
-	bool ImageButton::trySetPushedImageByName(chstr name)
-	{
-		if (this->pushedImageName != name)
-		{
-			this->setPushedImageByName(name);
-			return true;
-		}
-		return false;
-	}
-	
-	bool ImageButton::trySetHoverImageByName(chstr name)
-	{
-		if (this->hoverImageName != name)
-		{
-			this->setHoverImageByName(name);
-			return true;
-		}
-		return false;
-	}
-	
-	bool ImageButton::trySetDisabledImageByName(chstr name)
-	{
-		if (this->disabledImageName != name)
-		{
-			this->setDisabledImageByName(name);
-			return true;
-		}
-		return false;
-	}
-	
-	void ImageButton::setImage(BaseImage* image)
-	{
-		ImageBox::setImage(image);
-		this->normalImage = this->image;
-		this->normalImageName = this->imageName;
-	}
-	
-	harray<BaseImage*> ImageButton::_getUsedImages() const
-	{
-		harray<BaseImage*> images = ImageBox::_getUsedImages();
-		images += this->normalImage;
-		images += this->pushedImage;
-		images += this->hoverImage;
-		images += this->disabledImage;
-		return images;
-	}
-	
 	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)
 	{
 		return ImageBox::triggerEvent(type, keyCode);
@@ -394,10 +399,57 @@ namespace aprilui
 		return (result || up || ImageBox::_mouseUp(keyCode));
 	}
 	
+	void ImageButton::_mouseCancel(april::Key keyCode)
+	{
+		ButtonBase::_mouseCancel(keyCode);
+		ImageBox::_mouseCancel(keyCode);
+	}
+
 	bool ImageButton::_mouseMove()
 	{
 		bool result = (ButtonBase::_mouseMove() || ImageBox::_mouseMove());
 		if (this->pushed)
+		{
+			this->triggerEvent(Event::MouseMove);
+		}
+		return result;
+	}
+
+	bool ImageButton::_touchDown(int index)
+	{
+		bool result = ButtonBase::_touchDown(index);
+		if (result)
+		{
+			this->triggerEvent(Event::TouchDown, april::Key::None, hstr(index));
+		}
+		return (result || ImageBox::_touchDown(index));
+	}
+
+	bool ImageButton::_touchUp(int index)
+	{
+		bool result = this->touched.has(index);
+		bool released = ButtonBase::_touchUp(index);
+		if (released)
+		{
+			this->triggerEvent(Event::TouchUp, april::Key::None, hstr(index));
+			if (result)
+			{
+				this->triggerEvent(Event::Tap, april::Key::None, hstr(index));
+			}
+		}
+		return (result || released || ImageBox::_touchUp(index));
+	}
+
+	void ImageButton::_touchCancel(int index)
+	{
+		ButtonBase::_touchCancel(index);
+		ImageBox::_touchCancel(index);
+	}
+
+	bool ImageButton::_touchMove(int index)
+	{
+		bool result = (ButtonBase::_touchMove(index) || ImageBox::_touchMove(index));
+		if (this->touched.has(index))
 		{
 			this->triggerEvent(Event::MouseMove);
 		}
@@ -431,12 +483,6 @@ namespace aprilui
 			this->triggerEvent(Event::ButtonTrigger, buttonCode);
 		}
 		return (result || up || ImageBox::_buttonUp(buttonCode));
-	}
-	
-	void ImageButton::_mouseCancel(april::Key keyCode)
-	{
-		ButtonBase::_mouseCancel(keyCode);
-		ImageBox::_mouseCancel(keyCode);
 	}
 	
 }

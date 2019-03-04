@@ -84,6 +84,11 @@ namespace aprilui
 			this->_listBox->items[this->_listBox->selectedIndex] == this);
 	}
 
+	bool ListBoxItem::isPointInside(cgvec2f position) const
+	{
+		return Label::isPointInside(position);
+	}
+
 	void ListBoxItem::_update(float timeDelta)
 	{
 		ButtonBase::_update(timeDelta);
@@ -238,6 +243,43 @@ namespace aprilui
 	bool ListBoxItem::_mouseMove()
 	{
 		return (ButtonBase::_mouseMove() || Label::_mouseMove());
+	}
+
+	bool ListBoxItem::_touchDown(int index)
+	{
+		bool result = ButtonBase::_touchDown(index);
+		if (result)
+		{
+			this->triggerEvent(Event::TouchDown, april::Key::None, hstr(index));
+		}
+		return (result || Label::_touchDown(index));
+	}
+
+	bool ListBoxItem::_touchUp(int index)
+	{
+		bool result = this->touched.has(index);
+		bool released = ButtonBase::_touchUp(index);
+		bool up = false;
+		if (released)
+		{
+			up = this->triggerEvent(Event::TouchUp, april::Key::None, hstr(index));
+			if (result)
+			{
+				this->triggerEvent(Event::Tap, april::Key::None, hstr(index));
+			}
+		}
+		return (result || up || Label::_touchUp(index));
+	}
+
+	void ListBoxItem::_touchCancel(int index)
+	{
+		ButtonBase::_touchCancel(index);
+		Label::_touchCancel(index);
+	}
+
+	bool ListBoxItem::_touchMove(int index)
+	{
+		return (ButtonBase::_touchMove(index) || Label::_touchMove(index));
 	}
 
 	bool ListBoxItem::_buttonDown(april::Button buttonCode)

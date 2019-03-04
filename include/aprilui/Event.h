@@ -42,6 +42,11 @@ namespace aprilui
 		static hstr Click;
 		static hstr KeyDown;
 		static hstr KeyUp;
+		static hstr TouchDown;
+		static hstr TouchUp;
+		static hstr TouchMove;
+		static hstr TouchCancel;
+		static hstr Tap;
 		static hstr ButtonDown;
 		static hstr ButtonUp;
 		static hstr ButtonTrigger;

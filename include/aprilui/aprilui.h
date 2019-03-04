@@ -98,6 +98,9 @@ namespace aprilui
 	apriluiFnExport void updateCursorPosition();
 	apriluiFnExport gvec2f getCursorPosition();
 	apriluiFnExport void setCursorPosition(cgvec2f position);
+	apriluiFnExport void updateTouchPosition(int index);
+	apriluiFnExport gvec2f getTouchPosition(int index);
+	apriluiFnExport void setTouchPosition(int index, cgvec2f position);
 	apriluiFnExport void setCursorImage(BaseImage* image);
 	apriluiFnExport void showCursor();
 	apriluiFnExport void hideCursor();
@@ -136,6 +139,10 @@ namespace aprilui
 	apriluiFnExport void onKeyDown(april::Key keyCode);
 	apriluiFnExport void onKeyUp(april::Key keyCode);
 	apriluiFnExport void onChar(unsigned int charCode);
+	apriluiFnExport void onTouchDown(int index);
+	apriluiFnExport void onTouchUp(int index);
+	apriluiFnExport void onTouchCancel(int index);
+	apriluiFnExport void onTouchMove(int index);
 	apriluiFnExport void onTouch(const harray<gvec2f>& touches);
 	apriluiFnExport void onButtonDown(april::Button buttonCode);
 	apriluiFnExport void onButtonUp(april::Button buttonCode);

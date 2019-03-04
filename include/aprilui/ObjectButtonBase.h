@@ -54,6 +54,8 @@ namespace aprilui
 		virtual Object* getParent() const = 0;
 		virtual Dataset* getDataset() const = 0;
 
+		virtual bool isPointInside(cgvec2f position) const = 0;
+
 		virtual bool triggerEvent(chstr type, april::Key keyCode) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, chstr string) = 0;
 		virtual bool triggerEvent(chstr type, april::Key keyCode, cgvec2f position, chstr string = "", void* userData = NULL) = 0;
@@ -71,6 +73,7 @@ namespace aprilui
 		april::Color disabledColor;
 		bool hovered;
 		bool pushed;
+		harray<int> touched;
 		
 		bool _useHoverColor;
 		bool _usePushedColor;
@@ -79,11 +82,17 @@ namespace aprilui
 		virtual void _update(float timeDelta);
 		virtual aprilui::Object* _findHoverObject();
 		void _updateHover();
+		virtual aprilui::Object* _findTouchObject(int index);
+		bool _checkTouchPosition(int index);
 
 		virtual bool _mouseDown(april::Key keyCode);
 		virtual bool _mouseUp(april::Key keyCode);
 		virtual void _mouseCancel(april::Key keyCode);
 		virtual bool _mouseMove();
+		virtual bool _touchDown(int index);
+		virtual bool _touchUp(int index);
+		virtual void _touchCancel(int index);
+		virtual bool _touchMove(int index);
 		virtual bool _buttonDown(april::Button buttonCode);
 		virtual bool _buttonUp(april::Button buttonCode);
 
@@ -115,6 +124,7 @@ namespace aprilui
 		static hmap<hstr, PropertyDescription::Accessor*> _setters;
 
 		gvec2f _mouseDownPosition;
+		hmap<int, gvec2f> _touchDownPositions;
 		Object* _thisObject; // used for internal optimization to avoid dynamic_cast
 
 	};
