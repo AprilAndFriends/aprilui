@@ -451,7 +451,7 @@ namespace aprilui
 		bool result = (ButtonBase::_touchMove(index) || ImageBox::_touchMove(index));
 		if (this->touched.has(index))
 		{
-			this->triggerEvent(Event::MouseMove);
+			this->triggerEvent(Event::TouchMove, april::Key::None, hstr(index));
 		}
 		return result;
 	}

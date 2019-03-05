@@ -269,7 +269,7 @@ namespace aprilui
 
 	bool ButtonBase::_touchMove(int index)
 	{
-		if (this->touched.has(index))
+		if (this->pushDeadZone >= 0.0f && this->touched.has(index))
 		{
 			if ((this->_touchDownPositions[index] - this->_thisObject->transformToLocalSpace(aprilui::getTouchPosition(index))).squaredLength() > this->pushDeadZone * this->pushDeadZone)
 			{
