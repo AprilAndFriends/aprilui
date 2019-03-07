@@ -300,9 +300,23 @@ namespace aprilui
 	void ImageButton::_update(float timeDelta)
 	{
 		ButtonBase::_update(timeDelta);
-		this->image = this->normalImage;
-		int pushedDirection = -1;
 		int hoveredDirection = -1;
+		int pushedDirection = -1;
+		this->_updateImage(&hoveredDirection, &pushedDirection);
+		if (this->hoverAddFadeSpeed > 0.0f)
+		{
+			this->_hoverAddTime = hclamp(this->_hoverAddTime + timeDelta * this->hoverAddFadeSpeed * hoveredDirection, 0.0f, 1.0f);
+		}
+		if (this->pushedMultiplyFadeSpeed > 0.0f)
+		{
+			this->_pushedMultiplyTime = hclamp(this->_pushedMultiplyTime + timeDelta * this->pushedMultiplyFadeSpeed * pushedDirection, 0.0f, 1.0f);
+		}
+		ImageBox::_update(timeDelta);
+	}
+
+	void ImageButton::_updateImage(int* hoveredDirection, int* pushedDirection)
+	{
+		this->image = this->normalImage;
 		if (!this->isDerivedEnabled())
 		{
 			if (this->disabledImage != NULL)
@@ -318,7 +332,10 @@ namespace aprilui
 				{
 					this->_hoverAddTime = 0.0f;
 				}
-				pushedDirection = 1;
+				if (pushedDirection != NULL)
+				{
+					*pushedDirection = 1;
+				}
 				if (this->pushedImage != NULL)
 				{
 					this->image = this->pushedImage;
@@ -326,24 +343,27 @@ namespace aprilui
 			}
 			else
 			{
-				hoveredDirection = 1;
+				if (hoveredDirection != NULL)
+				{
+					*hoveredDirection = 1;
+				}
 				if (this->hoverImage != NULL && aprilui::isHoverEffectEnabled())
 				{
 					this->image = this->hoverImage;
 				}
 			}
 		}
-		if (this->hoverAddFadeSpeed > 0.0f)
-		{
-			this->_hoverAddTime = hclamp(this->_hoverAddTime + timeDelta * this->hoverAddFadeSpeed * hoveredDirection, 0.0f, 1.0f);
-		}
-		if (this->pushedMultiplyFadeSpeed > 0.0f)
-		{
-			this->_pushedMultiplyTime = hclamp(this->_pushedMultiplyTime + timeDelta * this->pushedMultiplyFadeSpeed * pushedDirection, 0.0f, 1.0f);
-		}
-		ImageBox::_update(timeDelta);
 	}
 	
+	void ImageButton::notifyEvent(chstr type, EventArgs* args)
+	{
+		if (type == Event::EnabledChanged)
+		{
+			this->_updateImage();
+		}
+		ImageBox::notifyEvent(type, args);
+	}
+
 	bool ImageButton::triggerEvent(chstr type, april::Key keyCode)
 	{
 		return ImageBox::triggerEvent(type, keyCode);

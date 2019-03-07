@@ -69,6 +69,8 @@ namespace aprilui
 		bool trySetDisabledImageByName(chstr name);
 
 		bool isPointInside(cgvec2f position) const;
+
+		void notifyEvent(chstr type, EventArgs* args);
 		
 		bool triggerEvent(chstr type, april::Key keyCode);
 		bool triggerEvent(chstr type, april::Key keyCode, chstr string);
@@ -97,6 +99,7 @@ namespace aprilui
 		harray<BaseImage*> _getUsedImages() const;
 
 		void _update(float timeDelta);
+		void _updateImage(int* hoveredDirection = NULL, int* pushedDirection = NULL);
 		void _draw();
 		
 		bool _mouseDown(april::Key keyCode);
