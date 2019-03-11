@@ -19,7 +19,7 @@
 
 namespace aprilui
 {
-	class TileImage;
+	class ImageBox;
 
 	namespace Animators
 	{
@@ -35,7 +35,7 @@ namespace aprilui
 		protected:
 			float _getObjectValue() const;
 			void _setObjectValue(float value);
-			TileImage* _getParentsTileImage() const;
+			ImageBox* _getValidParent() const;
 			
 			void _update(float timeDelta);
 

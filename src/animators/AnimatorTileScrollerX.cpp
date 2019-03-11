@@ -35,20 +35,20 @@ namespace aprilui
 
 		float TileScrollerX::_getObjectValue() const
 		{
-			TileImage* image = this->_getParentsTileImage();
-			return (image != NULL ? image->getScrollX() : 0.0f);
+			ImageBox* imageBox = this->_getValidParent();
+			return (imageBox != NULL ? imageBox->getTileScrollX() : 0.0f);
 		}
 
 		void TileScrollerX::_setObjectValue(float value)
 		{
-			TileImage* image = this->_getParentsTileImage();
-			if (image != NULL)
+			ImageBox* imageBox = this->_getValidParent();
+			if (imageBox != NULL)
 			{
-				image->setScrollX(value);
+				imageBox->setTileScrollX(value);
 			}
 		}
 
-		TileImage* TileScrollerX::_getParentsTileImage() const
+		ImageBox* TileScrollerX::_getValidParent() const
 		{
 			hstr parentName = (this->parent != NULL ? this->parent->getName() : "NULL");
 			ImageBox* imageBox = dynamic_cast<ImageBox*>(this->parent);
@@ -64,7 +64,7 @@ namespace aprilui
 				hlog::errorf(logTag, "Animators::TileScrollerX: Image '%s' in ImageBox '%s' not a subclass of TileImage!", imageName.cStr(), parentName.cStr());
 				return NULL;
 			}
-			return image;
+			return imageBox;
 		}
 
 		void TileScrollerX::_update(float timeDelta)

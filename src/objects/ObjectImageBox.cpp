@@ -13,6 +13,7 @@
 #include "BaseImage.h"
 #include "Dataset.h"
 #include "ObjectImageBox.h"
+#include "TileImage.h"
 
 namespace aprilui
 {
@@ -24,6 +25,7 @@ namespace aprilui
 		Object(name)
 	{
 		this->image = NULL;
+		this->tileImage = NULL;
 		this->debugColor = april::Color::Clear;
 	}
 
@@ -31,6 +33,7 @@ namespace aprilui
 		Object(other)
 	{
 		this->image = other.image;
+		this->tileImage = other.tileImage;
 		this->imageName = other.imageName;
 		this->debugColor = april::Color::Clear;
 	}
@@ -75,6 +78,7 @@ namespace aprilui
 		this->image = image;
 		if (image != NULL)
 		{
+			this->tileImage = dynamic_cast<TileImage*>(this->image);
 			gvec2f size = image->getSrcSize();
 			if (this->rect.w == 0.0f)
 			{
@@ -90,6 +94,7 @@ namespace aprilui
 		}
 		else
 		{
+			this->tileImage = NULL;
 			this->imageName = "";
 		}
 	}
@@ -121,7 +126,17 @@ namespace aprilui
 	{
 		if (this->image != NULL)
 		{
+			gvec2f scroll;
+			if (this->tileImage != NULL)
+			{
+				scroll = this->tileImage->getScroll();
+				this->tileImage->setScroll(this->tileScroll);
+			}
 			this->image->draw(this->_makeDrawRect(), this->_makeDrawColor());
+			if (this->tileImage != NULL)
+			{
+				this->tileImage->setScroll(scroll);
+			}
 		}
 		Object::_draw();
 	}
