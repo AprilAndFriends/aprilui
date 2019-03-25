@@ -543,7 +543,7 @@ namespace aprilui
 		return (this->dataset != NULL && this->dataset->getFocusedObject() == this);
 	}
 
-	void Object::setFocused(bool value)
+	void Object::setFocused(const bool& value)
 	{
 		if (this->dataset != NULL)
 		{
@@ -1562,10 +1562,6 @@ namespace aprilui
 		if (this->hitTest == HitTest::DisabledRecursive || !this->isVisible() || !this->isDerivedEnabled())
 		{
 			return false;
-		}
-		if (this->hitTest == HitTest::Enabled && this->dataset != NULL)
-		{
-			this->dataset->removeFocus();
 		}
 		// needs to be copied in case children gets changed
 		harray<Object*> objects = this->childrenObjects;

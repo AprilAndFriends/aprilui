@@ -67,7 +67,7 @@ namespace aprilui
 		void setFilter(chstr value);
 		HL_DEFINE_GET(grectf, caretRect, CaretRect);
 		void setText(chstr value);
-		void setFocused(bool value);
+		void setFocused(const bool& value);
 		hstr getSelectedText() const;
 		hstr getDisplayedText() const;
 		void setMinAutoScale(float value);

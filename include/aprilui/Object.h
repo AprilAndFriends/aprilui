@@ -130,7 +130,7 @@ namespace aprilui
 		bool isWaitingAnimation() const;
 		bool hasDynamicAnimation() const;
 		bool isFocused() const;
-		virtual void setFocused(bool focused);
+		virtual void setFocused(const bool& focused);
 		virtual bool isCursorInside() const;
 		harray<BaseImage*> getUsedImages() const;
 		Object* getChildUnderCursor();

@@ -333,7 +333,7 @@ namespace aprilui
 		this->setSelectionCount(0);
 	}
 
-	void EditBox::setFocused(bool value)
+	void EditBox::setFocused(const bool& value)
 	{
 		Label::setFocused(value);
 		if (this->dataset != NULL && value)
