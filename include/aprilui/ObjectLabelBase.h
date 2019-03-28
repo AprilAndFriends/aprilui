@@ -34,6 +34,13 @@ namespace aprilui
 	{
 		APRILUI_CLONEABLE_ABSTRACT(LabelBase)
 	public:
+		HL_ENUM_CLASS_PREFIX_DECLARE(apriluiExport, CaseMode,
+		(
+			HL_ENUM_DECLARE(CaseMode, None);
+			HL_ENUM_DECLARE(CaseMode, Upper);
+			HL_ENUM_DECLARE(CaseMode, Lower);
+		));
+
 		LabelBase();
 		virtual ~LabelBase();
 
@@ -57,10 +64,12 @@ namespace aprilui
 		HL_DEFINE_GET(float, minAutoScale, MinAutoScale);
 		virtual void setMinAutoScale(const float& value);
 		HL_DEFINE_GET(atres::Horizontal, horzFormatting, HorzFormatting);
-		void setHorzFormatting(atres::Horizontal value);
+		void setHorzFormatting(const atres::Horizontal& value);
 		HL_DEFINE_GET(atres::Vertical, vertFormatting, VertFormatting);
-		void setVertFormatting(atres::Vertical value);
+		void setVertFormatting(const atres::Vertical& value);
 		HL_DEFINE_GETSET(atres::TextEffect, effect, Effect);
+		HL_DEFINE_GET(CaseMode, caseMode, CaseMode);
+		void setCaseMode(const CaseMode& value);
 		HL_DEFINE_ISSET(useEffectColor, UseEffectColor);
 		HL_DEFINE_ISSET(useEffectParameter, UseEffectParameter);
 		HL_DEFINE_GETSET(april::Color, effectColor, EffectColor);
@@ -114,6 +123,7 @@ namespace aprilui
 		atres::Horizontal horzFormatting;
 		atres::Vertical vertFormatting;
 		atres::TextEffect effect;
+		CaseMode caseMode;
 		bool useEffectColor;
 		bool useEffectParameter;
 		april::Color effectColor;

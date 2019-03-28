@@ -29,6 +29,13 @@
 
 namespace aprilui
 {
+	HL_ENUM_CLASS_DEFINE(LabelBase::CaseMode,
+	(
+		HL_ENUM_DEFINE(LabelBase::CaseMode, None);
+		HL_ENUM_DEFINE(LabelBase::CaseMode, Upper);
+		HL_ENUM_DEFINE(LabelBase::CaseMode, Lower);
+	));
+
 	float LabelBase::defaultMinAutoScale = 1.0f;
 	hmap<hstr, PropertyDescription> LabelBase::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> LabelBase::_getters;
@@ -46,6 +53,7 @@ namespace aprilui
 		this->horzFormatting = atres::Horizontal::CenterWrapped;
 		this->vertFormatting = atres::Vertical::Center;
 		this->effect = atres::TextEffect::None;
+		this->caseMode = CaseMode::None;
 		this->useEffectColor = false;
 		this->useEffectParameter = false;
 		this->effectColor = april::Color::Black;
@@ -75,6 +83,7 @@ namespace aprilui
 		this->horzFormatting = other.horzFormatting;
 		this->vertFormatting = other.vertFormatting;
 		this->effect = other.effect;
+		this->caseMode = other.caseMode;
 		this->useEffectColor = other.useEffectColor;
 		this->useEffectParameter = other.useEffectParameter;
 		this->effectColor = other.effectColor;
@@ -116,6 +125,7 @@ namespace aprilui
 			LabelBase::_propertyDescriptions["horz_formatting"] = PropertyDescription("horz_formatting", PropertyDescription::Type::Enum);
 			LabelBase::_propertyDescriptions["vert_formatting"] = PropertyDescription("vert_formatting", PropertyDescription::Type::Enum);
 			LabelBase::_propertyDescriptions["effect"] = PropertyDescription("effect", PropertyDescription::Type::Enum);
+			LabelBase::_propertyDescriptions["case_mode"] = PropertyDescription("case_mode", PropertyDescription::Type::Enum);
 			LabelBase::_propertyDescriptions["strike_through"] = PropertyDescription("strike_through", PropertyDescription::Type::Bool);
 			LabelBase::_propertyDescriptions["underline"] = PropertyDescription("underline", PropertyDescription::Type::Bool);
 			LabelBase::_propertyDescriptions["italic"] = PropertyDescription("italic", PropertyDescription::Type::Bool);
@@ -226,6 +236,14 @@ namespace aprilui
 		if (this->_autoScaleDirty)
 		{
 			hstr text = this->text;
+			if (this->caseMode == CaseMode::Upper)
+			{
+				text = text.uppered();
+			}
+			else if (this->caseMode == CaseMode::Lower)
+			{
+				text = text.lowered();
+			}
 			if (!this->textFormatting)
 			{
 				text = "[-]" + text;
@@ -235,7 +253,7 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::setHorzFormatting(atres::Horizontal value)
+	void LabelBase::setHorzFormatting(const atres::Horizontal& value)
 	{
 		if (this->horzFormatting != value)
 		{
@@ -244,11 +262,20 @@ namespace aprilui
 		}
 	}
 
-	void LabelBase::setVertFormatting(atres::Vertical value)
+	void LabelBase::setVertFormatting(const atres::Vertical& value)
 	{
 		if (this->vertFormatting != value)
 		{
 			this->vertFormatting = value;
+			this->_autoScaleDirty = true;
+		}
+	}
+
+	void LabelBase::setCaseMode(const CaseMode& value)
+	{
+		if (this->caseMode != value)
+		{
+			this->caseMode = value;
 			this->_autoScaleDirty = true;
 		}
 	}
@@ -294,6 +321,14 @@ namespace aprilui
 		}
 		april::Color drawColor = color * this->textColor;
 		hstr text = this->text;
+		if (this->caseMode == CaseMode::Upper)
+		{
+			text = text.uppered();
+		}
+		else if (this->caseMode == CaseMode::Lower)
+		{
+			text = text.lowered();
+		}
 		if (!this->textFormatting)
 		{
 			text = "[-]" + text;
@@ -409,6 +444,12 @@ namespace aprilui
 			}
 			return effect;
 		}
+		if (name == "case_mode")
+		{
+			if (this->caseMode == CaseMode::None)	return "none";
+			if (this->caseMode == CaseMode::Upper)	return "upper";
+			if (this->caseMode == CaseMode::Lower)	return "lower";
+		}
 		if (name == "strike_through")
 		{
 			hstr strikeThrough = this->strikeThrough;
@@ -510,6 +551,18 @@ namespace aprilui
 					this->setEffectColor(color);
 					this->setEffectParameter(parameter);
 				}
+			}
+			return true;
+		}
+		if (name == "case_mode")
+		{
+			if (value == "none")		this->setCaseMode(CaseMode::None);
+			else if (value == "upper")	this->setCaseMode(CaseMode::Upper);
+			else if (value == "lower")	this->setCaseMode(CaseMode::Lower);
+			else
+			{
+				hlog::warn(logTag, "'case_mode=' does not support value '" + value + "'.");
+				return false;
 			}
 			return true;
 		}
