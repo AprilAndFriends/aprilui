@@ -111,9 +111,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
 			);
 			mainGroup = 7FC804AA11EC774B00851062;
 			productRefGroup = 7FC804C311EC778F00851062 /* Products */;
