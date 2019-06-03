@@ -114,6 +114,8 @@ namespace aprilui
 		HL_DEFINE_SET(int, focusIndex, FocusIndex);
 		CustomPointInsideCallback getCustomPointInsideCallback() { return this->customPointInsideCallback; }
 		void setCustomPointInsideCallback(CustomPointInsideCallback callback) { this->customPointInsideCallback = callback; }
+		inline harray<Animator*>& getChildrenDynamicAnimators() { return this->dynamicAnimators; }
+		inline const harray<Animator*>& getChildrenDynamicAnimators() const { return this->dynamicAnimators; }
 		bool isDerivedVisible() const;
 		bool isAnimated() const;
 		bool isWaitingAnimation() const;
