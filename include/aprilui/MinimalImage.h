@@ -61,6 +61,7 @@ namespace aprilui
 		void setSrcSize(cgvec2f value);
 		void setSrcSize(const float& w, const float& h);
 		inline const april::TexturedVertex* getVertices() const { return this->vertices; } // use with care!
+		HL_DEFINE_ISSET(rotated, Rotated);
 
 		hstr getProperty(chstr name);
 
@@ -72,6 +73,7 @@ namespace aprilui
 	protected:
 		Texture* texture;
 		grectf srcRect;
+		bool rotated;
 		april::TexturedVertex vertices[APRILUI_IMAGE_MAX_VERTICES];
 		bool _textureCoordinatesLoaded;
 

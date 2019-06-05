@@ -29,6 +29,7 @@ namespace aprilui
 	{
 		this->texture = texture;
 		this->srcRect = source;
+		this->rotated = false;
 		this->_textureCoordinatesLoaded = false;
 	}
 
@@ -37,6 +38,7 @@ namespace aprilui
 	{
 		this->texture = other.texture;
 		this->srcRect = other.srcRect;
+		this->rotated = other.rotated;
 		for_iter (i, 0, APRILUI_IMAGE_MAX_VERTICES)
 		{
 			this->vertices[i] = other.vertices[i];
@@ -59,6 +61,8 @@ namespace aprilui
 			MinimalImage::_propertyDescriptions["x"] = PropertyDescription("x", PropertyDescription::Type::Float);
 			MinimalImage::_propertyDescriptions["y"] = PropertyDescription("y", PropertyDescription::Type::Float);
 			MinimalImage::_propertyDescriptions["texture"] = PropertyDescription("texture", PropertyDescription::Type::String);
+			MinimalImage::_propertyDescriptions["rotated"] = PropertyDescription("rotated", PropertyDescription::Type::Bool);
+			MinimalImage::_propertyDescriptions["vertical"] = PropertyDescription("vertical", PropertyDescription::Type::Bool);
 		}
 		return MinimalImage::_propertyDescriptions;
 	}
@@ -72,6 +76,8 @@ namespace aprilui
 			MinimalImage::_getters["position"] = new PropertyDescription::GetGvec2f<MinimalImage>(&MinimalImage::getSrcPosition);
 			MinimalImage::_getters["x"] = new PropertyDescription::Get<MinimalImage, float>(&MinimalImage::getSrcX);
 			MinimalImage::_getters["y"] = new PropertyDescription::Get<MinimalImage, float>(&MinimalImage::getSrcY);
+			MinimalImage::_getters["rotated"] = new PropertyDescription::Get<MinimalImage, bool>(&MinimalImage::isRotated);
+			MinimalImage::_getters["vertical"] = new PropertyDescription::Get<MinimalImage, bool>(&MinimalImage::isRotated);
 		}
 		return MinimalImage::_getters;
 	}
@@ -85,6 +91,8 @@ namespace aprilui
 			MinimalImage::_setters["position"] = new PropertyDescription::SetGvec2f<MinimalImage>(&MinimalImage::setSrcPosition);
 			MinimalImage::_setters["x"] = new PropertyDescription::Set<MinimalImage, float>(&MinimalImage::setSrcX);
 			MinimalImage::_setters["y"] = new PropertyDescription::Set<MinimalImage, float>(&MinimalImage::setSrcY);
+			MinimalImage::_setters["rotated"] = new PropertyDescription::Set<MinimalImage, bool>(&MinimalImage::setRotated);
+			MinimalImage::_setters["vertical"] = new PropertyDescription::Set<MinimalImage, bool>(&MinimalImage::setRotated);
 		}
 		return MinimalImage::_setters;
 	}
@@ -215,10 +223,20 @@ namespace aprilui
 			gvec2f topRight;
 			gvec2f bottomLeft;
 			gvec2f bottomRight;
-			topLeft.x = bottomLeft.x = rect.left() * iw;
-			topLeft.y = topRight.y = rect.top() * ih;
-			topRight.x = bottomRight.x = rect.right() * iw;
-			bottomLeft.y = bottomRight.y = rect.bottom() * ih;
+			if (!this->rotated)
+			{
+				topLeft.x = bottomLeft.x = rect.left() * iw;
+				topLeft.y = topRight.y = rect.top() * ih;
+				topRight.x = bottomRight.x = rect.right() * iw;
+				bottomLeft.y = bottomRight.y = rect.bottom() * ih;
+			}
+			else
+			{
+				topLeft.x = topRight.x = (rect.x + rect.h) * iw;
+				topLeft.y = bottomLeft.y = rect.y * ih;
+				topRight.y = bottomRight.y = (rect.y + rect.w) * ih;
+				bottomLeft.x = bottomRight.x = rect.x * iw;
+			}
 			this->vertices[0].u = topLeft.x;
 			this->vertices[0].v = topLeft.y;
 			this->vertices[1].u = topRight.x;
@@ -236,6 +254,18 @@ namespace aprilui
 	{
 		if (this->clipRect.w > 0.0f && this->clipRect.h > 0.0f)
 		{
+			if (this->rotated)
+			{
+				grectf rect = this->clipRect;
+				grectf srcRect = this->srcRect;
+				hswap(rect.x, rect.y);
+				hswap(rect.w, rect.h);
+				hswap(srcRect.w, srcRect.h);
+				rect.x = srcRect.w - (rect.x + rect.w);
+				srcRect.clip(rect + srcRect.getPosition());
+				hswap(srcRect.w, srcRect.h);
+				return srcRect;
+			}
 			return this->srcRect.clipped(this->clipRect + this->srcRect.getPosition());
 		}
 		return this->srcRect;
