@@ -99,7 +99,6 @@ namespace aprilui
 		bool useTarget;
 		double (*customFunction)(Animator*, double);
 		/// @brief This is a special hack to doesn't apply the values when attaching to a parent, usually used to prevent this feature after cloning.
-		bool applyValuesOnAttach;
 
 		hmap<hstr, PropertyDescription::Accessor*>& _getGetters() const;
 		hmap<hstr, PropertyDescription::Accessor*>& _getSetters() const;
