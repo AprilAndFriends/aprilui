@@ -37,6 +37,14 @@ namespace aprilui
 			HL_ENUM_DECLARE(AnimationFunction, Custom);
 		));
 
+		HL_ENUM_CLASS_PREFIX_DECLARE(apriluiExport, DiscreteStepMode,
+		(
+			HL_ENUM_DECLARE(DiscreteStepMode, Floor);
+			HL_ENUM_DECLARE(DiscreteStepMode, Ceil);
+			HL_ENUM_DECLARE(DiscreteStepMode, Truncate);
+			HL_ENUM_DECLARE(DiscreteStepMode, Round);
+		));
+
 		friend class BaseObject;
 
 		Animator(chstr name);
@@ -58,6 +66,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(float, acceleration, Acceleration);
 		HL_DEFINE_GET(int, discreteStep, DiscreteStep);
 		void setDiscreteStep(const int& value);
+		HL_DEFINE_GETSET(DiscreteStepMode, discreteStepMode, DiscreteStepMode);
 		HL_DEFINE_ISSET(resetOnExpire, ResetOnExpire);
 		HL_DEFINE_ISSET(inheritValue, InheritValue);
 		HL_DEFINE_GETSET(float, target, Target);
@@ -93,6 +102,7 @@ namespace aprilui
 		float multiplier;
 		float acceleration;
 		int discreteStep;
+		DiscreteStepMode discreteStepMode;
 		bool resetOnExpire;
 		bool inheritValue;
 		float target;

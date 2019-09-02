@@ -29,6 +29,13 @@ namespace aprilui
 		HL_ENUM_DEFINE(Animator::AnimationFunction, Noise);
 		HL_ENUM_DEFINE(Animator::AnimationFunction, Custom);
 	));
+	HL_ENUM_CLASS_DEFINE(Animator::DiscreteStepMode,
+	(
+		HL_ENUM_DEFINE(Animator::DiscreteStepMode, Floor);
+		HL_ENUM_DEFINE(Animator::DiscreteStepMode, Ceil);
+		HL_ENUM_DEFINE(Animator::DiscreteStepMode, Truncate);
+		HL_ENUM_DEFINE(Animator::DiscreteStepMode, Round);
+	));
 
 	hmap<hstr, PropertyDescription> Animator::_propertyDescriptions;
 	hmap<hstr, PropertyDescription::Accessor*> Animator::_getters;
@@ -49,6 +56,7 @@ namespace aprilui
 		this->multiplier = 0.0f;
 		this->acceleration = 0.0f;
 		this->discreteStep = 0;
+		this->discreteStepMode = DiscreteStepMode::Floor;
 		this->resetOnExpire = false;
 		this->inheritValue = false;
 		this->target = 0.0f;
@@ -72,6 +80,7 @@ namespace aprilui
 		this->multiplier = other.multiplier;
 		this->acceleration = other.acceleration;
 		this->discreteStep = other.discreteStep;
+		this->discreteStepMode = other.discreteStepMode;
 		this->resetOnExpire = other.resetOnExpire;
 		this->inheritValue = other.inheritValue;
 		this->target = other.target;
@@ -96,6 +105,7 @@ namespace aprilui
 			Animator::_propertyDescriptions["multiplier"] = PropertyDescription("multiplier", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions["acceleration"] = PropertyDescription("acceleration", PropertyDescription::Type::Float);
 			Animator::_propertyDescriptions["discrete_step"] = PropertyDescription("discrete_step", PropertyDescription::Type::Int);
+			Animator::_propertyDescriptions["discrete_step_mode"] = PropertyDescription("discrete_step_mode", PropertyDescription::Type::Enum);
 			Animator::_propertyDescriptions["reset_on_expire"] = PropertyDescription("reset_on_expire", PropertyDescription::Type::Bool);
 			Animator::_propertyDescriptions["inherit_value"] = PropertyDescription("inherit_value", PropertyDescription::Type::Bool);
 			Animator::_propertyDescriptions["time"] = PropertyDescription("time", PropertyDescription::Type::Float);
@@ -236,14 +246,52 @@ namespace aprilui
 	{
 		if (this->delay > 0.0f)
 		{
-			return (this->discreteStep > 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
+			if (this->discreteStep > 0)
+			{
+				if (this->discreteStepMode == DiscreteStepMode::Floor)
+				{
+					return (hfloorf(this->offset / this->discreteStep) * this->discreteStep);
+				}
+				if (this->discreteStepMode == DiscreteStepMode::Ceil)
+				{
+					return (hceilf(this->offset / this->discreteStep) * this->discreteStep);
+				}
+				if (this->discreteStepMode == DiscreteStepMode::Truncate)
+				{
+					return (float)((int)(this->offset / this->discreteStep) * this->discreteStep);
+				}
+				if (this->discreteStepMode == DiscreteStepMode::Round)
+				{
+					return (hroundf(this->offset / this->discreteStep) * this->discreteStep);
+				}
+			}
+			return this->offset;
 		}
 		double time = this->timer;
 		if (this->isExpired())
 		{
 			if (this->resetOnExpire)
 			{
-				return (this->discreteStep > 0 ? hfloorf(this->offset / this->discreteStep) * this->discreteStep : this->offset);
+				if (this->discreteStep > 0)
+				{
+					if (this->discreteStepMode == DiscreteStepMode::Floor)
+					{
+						return (hfloorf(this->offset / this->discreteStep) * this->discreteStep);
+					}
+					if (this->discreteStepMode == DiscreteStepMode::Ceil)
+					{
+						return (hceilf(this->offset / this->discreteStep) * this->discreteStep);
+					}
+					if (this->discreteStepMode == DiscreteStepMode::Truncate)
+					{
+						return (float)((int)(this->offset / this->discreteStep) * this->discreteStep);
+					}
+					if (this->discreteStepMode == DiscreteStepMode::Round)
+					{
+						return (hroundf(this->offset / this->discreteStep) * this->discreteStep);
+					}
+				}
+				return this->offset;
 			}
 			// speed being 0 does not affect calculations in general, because time is multiplied with speed in each implementation
 			// so time can be "undefined" (which is in this case simply the previous value of this->timer)
@@ -297,7 +345,27 @@ namespace aprilui
 			}
 		}
 		result *= 1.0 + time * habs(this->speed) * this->multiplier;
-		return (float)(this->discreteStep > 0 ? hfloord((result + this->offset) / this->discreteStep) * this->discreteStep : result + this->offset);
+
+		if (this->discreteStep > 0)
+		{
+			if (this->discreteStepMode == DiscreteStepMode::Floor)
+			{
+				return (float)(hfloord((result + this->offset) / this->discreteStep) * this->discreteStep);
+			}
+			if (this->discreteStepMode == DiscreteStepMode::Ceil)
+			{
+				return (float)(hceild((result + this->offset) / this->discreteStep) * this->discreteStep);
+			}
+			if (this->discreteStepMode == DiscreteStepMode::Truncate)
+			{
+				return (float)((int)((result + this->offset) / this->discreteStep) * this->discreteStep);
+			}
+			if (this->discreteStepMode == DiscreteStepMode::Round)
+			{
+				return (float)(hroundd((result + this->offset) / this->discreteStep) * this->discreteStep);
+			}
+		}
+		return (float)(result + this->offset);
 	}
 
 	void Animator::reset()
@@ -319,6 +387,13 @@ namespace aprilui
 			if (this->animationFunction == Animator::AnimationFunction::Noise)		return "noise";
 			if (this->animationFunction == Animator::AnimationFunction::Custom)		return "custom";
 		}
+		if (name == "discrete_step_mode")
+		{
+			if (this->discreteStepMode == Animator::DiscreteStepMode::Floor)	return "floor";
+			if (this->discreteStepMode == Animator::DiscreteStepMode::Ceil)		return "ceil";
+			if (this->discreteStepMode == Animator::DiscreteStepMode::Truncate)	return "truncate";
+			if (this->discreteStepMode == Animator::DiscreteStepMode::Round)	return "round";
+		}
 		return BaseObject::getProperty(name);
 	}
 	
@@ -337,6 +412,19 @@ namespace aprilui
 			else
 			{
 				hlog::warn(logTag, "'function=' does not support value '" + value + "'.");
+				return false;
+			}
+			return true;
+		}
+		if (name == "discrete_step_mode")
+		{
+			if (value == "floor")			this->setDiscreteStepMode(Animator::DiscreteStepMode::Floor);
+			else if (value == "ceil")		this->setDiscreteStepMode(Animator::DiscreteStepMode::Ceil);
+			else if (value == "truncate")	this->setDiscreteStepMode(Animator::DiscreteStepMode::Truncate);
+			else if (value == "round")		this->setDiscreteStepMode(Animator::DiscreteStepMode::Round);
+			else
+			{
+				hlog::warn(logTag, "'discrete_step_mode=' does not support value '" + value + "'.");
 				return false;
 			}
 			return true;
