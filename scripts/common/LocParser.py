@@ -139,35 +139,6 @@ class LocParser:
 		return result
 
 	@staticmethod
-	def getDirectoryList(path, silent = False):
-		if not silent:
-			print "  checking %s" % path
-		folders = []
-		dirs = []
-		dirListing = os.listdir(path + "/")
-		dirListing.sort(key = lambda filename: [int(match) if match.isdigit() else match for match in re.split('(\d+)', filename)])
-		for f in dirListing:
-			if f == ".svn" or f == "." or f == "..":
-				continue
-			name = path + "/" + f
-			try:
-				os.listdir(name)
-				dirs.append(name)
-			except:
-				if name.lower().endswith(LocParser.EXTENSION.lower()):
-					folders.append(os.path.dirname(path))
-					if not silent:
-						print "  -> %s" % LocParser._getBasename(name, path)
-		folders = list(dict.fromkeys(folders)) # remove duplicates
-		if len(folders) > 0:
-			return folders
-		result = []
-		for dir in dirs:
-			result.extend(LocParser.getDirectoryList(dir, silent))
-		result = list(dict.fromkeys(result)) # remove duplicates
-		return result
-
-	@staticmethod
 	def joinEntries(locEntries):
 		merged = []
 		for locEntry in locEntries:

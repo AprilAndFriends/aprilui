@@ -68,8 +68,8 @@ class LocKit:
 			for locFile in locFiles[filename]:
 				if locFile != None:
 					for entry in locFile.entries:
-						keys.append(entry.key)
-			keys = list(dict.fromkeys(keys)) # remove duplicates
+						if not entry.key in keys:
+							keys.append(entry.key)
 			entries = []
 			for key in keys:
 				values = []
@@ -79,7 +79,7 @@ class LocKit:
 						entry = locFile.findEntry(key)
 						if entry != None:
 							values.append(entry.value)
-							if language == baseLanguage:
+							if locFile.language == baseLanguage:
 								comment = entry.comment
 					else:
 						values.append("")
@@ -130,6 +130,17 @@ class LocKit:
 		file = open(filename, "wb")
 		file.write(LocParser.BOM + text)
 		file.close()
+
+	@staticmethod
+	def readFullTsvFile(inputFilename, silent = False):
+		if not silent:
+			print ""
+			print "Parsing Full-TSV file..."
+		locFiles = FullTsvParser.parse(inputFilename)
+		if not silent:
+			for locFile in locFiles:
+				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+		return locFiles
 
 	@staticmethod
 	def writeFullTsvFile(filename, locFiles, silent = False):

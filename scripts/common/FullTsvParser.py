@@ -13,7 +13,7 @@ class FullTsvParser:
 	@staticmethod
 	def parse(filename):
 		entries = []
-		file = open(filename, "r")
+		file = open(filename, "rb")
 		# the first line of a UTF8 file can be "screwed up"
 		skip = 0
 		line = file.readline()
@@ -25,6 +25,7 @@ class FullTsvParser:
 		# read data
 		string = file.read().replace("\r", "")
 		file.close()
+		columnCount = len(string.split("\n")[0].split(FullTsvParser.DELIMITER))
 		# regular expressions are awesome
 		regex = ""
 		# normal entry
@@ -32,34 +33,38 @@ class FullTsvParser:
 		# special entry with escaped characters and \n support
 		special = "\"(?:.|\n)*?\""
 		# one entry is either normal or special
-		entry = "(" + normal + "|" + special + ")?"
-		# the regex is 4 entries separated by delimiter characters and ending with \n
-		regex += "(?:" + entry + FullTsvParser.DELIMITER + entry + FullTsvParser.DELIMITER + entry + FullTsvParser.DELIMITER + entry + "\n)"
+		entry = "(" + special + "|" + normal + ")?"
+		# the regex is 3+ entries separated by delimiter characters and ending with \n
+		regex += "(?:" + entry + FullTsvParser.DELIMITER + entry
+		for i in xrange(columnCount - 2):
+			regex += FullTsvParser.DELIMITER + entry
+		regex += "\n)"
 		# now using that regex to extract all entries
 		matches = re.findall(regex, string)
 		# extracting LocFile instances
+		languages = []
 		locFiles = []
-		locFile = None
+		locFile = []
+		newLocFiles = []
 		for match in matches:
-			key, value, original, comment = match
-			columns = [key, value, original, comment]
+			columns = list(match)
 			for i in xrange(len(columns)):
 				if columns[i].startswith("\"") and columns[i].endswith("\""):
 					columns[i] = columns[i][1:-1].replace("\"\"", "\"")
-				# this feature has been disabled, because it breaks other spreadsheet software
-				# changes back the MS Excel fix for "-"
-				#columns[i] = columns[i].replace(FullTsvParser.DASH, "-")
 			if columns[0] == "###":
-				if locFile != None:
-					locFiles.append(locFile)
-				language = columns[2]
-				if language == "###":
-					language = ""
-				locFile = LocFile(columns[3], language, []) # cannot make [] a default argument because there's a bug in Python
-			elif columns[0] != "" and locFile != None:
-				locFile.entries.append(LocEntry(columns[0], columns[1], columns[2], columns[3]))
-		if locFile != None:
-			locFiles.append(locFile)
+				if len(newLocFiles) > 0:
+					locFiles.extend(newLocFiles)
+					newLocFiles = []
+				if len(languages) == 0:
+					languages = columns[2:len(columns)]
+				for language in languages:
+					locFile = LocFile(os.path.dirname(columns[1]) + "/" + language + "/" + os.path.basename(columns[1]), language, []) # cannot make [] a default argument because there's a bug in Python
+					newLocFiles.append(locFile)
+			elif columns[0] != "" and len(newLocFiles) > 0:
+				for i in xrange(len(newLocFiles)):
+					newLocFiles[i].entries.append(LocEntry(columns[0], columns[2 + i], columns[2], columns[1]))
+		if len(newLocFiles) > 0:
+			locFiles.extend(newLocFiles)
 		return locFiles
 	
 	@staticmethod
