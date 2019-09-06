@@ -17,6 +17,15 @@ class LocFile:
 			filename = filename.replace("/" + self.language + "/", "/")
 		return filename
 
+	def getShortFilename(self):
+		return os.path.basename(self.filename)
+
+	def findEntry(self, key):
+		for entry in self.entries:
+			if entry.key == key:
+				return entry
+		return None
+
 	def __repr__(self):
 		return "%s<%s, %d entries>" % (self.__class__.__name__, self.filename.__repr__(), len(self.entries))
 
@@ -33,6 +42,36 @@ class LocEntry:
 		if self.comment != "":
 			result += " (%s)" % self.comment
 		result += ":%s" % self.value.__repr__()
+		return "%s<%s>" % (self.__class__.__name__, result)
+
+class LocFullFile:
+
+	def __init__(self, path, filename, languages, entries):
+		self.path = path
+		self.filename = filename
+		self.languages = languages
+		self.entries = entries
+
+	def getFullFilename(self):
+		return (self.path + "/" + self.filename)
+
+	def __repr__(self):
+		return "%s<%s, %s, %d entries>" % (self.__class__.__name__, self.path.__repr__(), self.filename.__repr__(), len(self.entries))
+
+class LocFullEntry:
+
+	def __init__(self, key, values, comment):
+		self.key = key
+		self.values = []
+		for value in values:
+			self.values.append(value.replace("­", "-").replace("–", "-").replace("´", "'").replace("’", "'").replace("`", "'").replace("‘", "'").replace("''", '"').replace("“", '"').replace("”", '"'))
+		self.comment = comment
+
+	def __repr__(self):
+		result = self.key
+		if self.comment != "":
+			result += " (%s)" % self.comment
+		result += ":%d languages" % len(self.languages)
 		return "%s<%s>" % (self.__class__.__name__, result)
 
 class LocParser:
@@ -68,6 +107,8 @@ class LocParser:
 		matches = re.findall(regex, string)
 		for match in matches:
 			entries.append(LocEntry(match[0], match[2], match[2], match[1]))
+		if language == "":
+			language = os.path.basename(os.path.dirname(filename))
 		return LocFile(filename, language, entries)
 
 	@staticmethod
@@ -92,10 +133,39 @@ class LocParser:
 						print "  -> %s" % LocParser._getBasename(name, path)
 		if len(files) > 0:
 			return files
-		list = []
+		result = []
 		for dir in dirs:
-			list.extend(LocParser.getFileList(dir, language, silent))
-		return list
+			result.extend(LocParser.getFileList(dir, language, silent))
+		return result
+
+	@staticmethod
+	def getDirectoryList(path, silent = False):
+		if not silent:
+			print "  checking %s" % path
+		folders = []
+		dirs = []
+		dirListing = os.listdir(path + "/")
+		dirListing.sort(key = lambda filename: [int(match) if match.isdigit() else match for match in re.split('(\d+)', filename)])
+		for f in dirListing:
+			if f == ".svn" or f == "." or f == "..":
+				continue
+			name = path + "/" + f
+			try:
+				os.listdir(name)
+				dirs.append(name)
+			except:
+				if name.lower().endswith(LocParser.EXTENSION.lower()):
+					folders.append(os.path.dirname(path))
+					if not silent:
+						print "  -> %s" % LocParser._getBasename(name, path)
+		folders = list(dict.fromkeys(folders)) # remove duplicates
+		if len(folders) > 0:
+			return folders
+		result = []
+		for dir in dirs:
+			result.extend(LocParser.getDirectoryList(dir, silent))
+		result = list(dict.fromkeys(result)) # remove duplicates
+		return result
 
 	@staticmethod
 	def joinEntries(locEntries):
