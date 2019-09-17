@@ -47,7 +47,7 @@ namespace aprilui
 		this->timeDelta = 0.0f;
 		this->value = 0.0f;
 		this->animationFunction = AnimationFunction::Linear;
-		this->timer = 0.0f;
+		this->timer = 0.0;
 		this->delay = 0.0f;
 		this->periods = 1.0f;
 		this->amplitude = 0.5f;
