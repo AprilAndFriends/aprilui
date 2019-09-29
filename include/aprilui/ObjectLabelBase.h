@@ -171,7 +171,7 @@ namespace aprilui
 			result["text_offset"] = new PropertyDescription::SetGvec2f<T>(&T::setTextOffset);
 			result["text_offset_x"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetX);
 			result["text_offset_y"] = new PropertyDescription::Set<T, float>(&T::setTextOffsetY);
-			result["min_auto_scale"] = new PropertyDescription::Set<T, float>(&T::setMinAutoScale);
+			result["min_auto_scale"] = new PropertyDescription::Set<T, const float&>(&T::setMinAutoScale);
 			result["italic"] = new PropertyDescription::Set<T, bool>(&T::setItalic);
 			result["background_color"] = new PropertyDescription::Set<T, hstr>(&T::setBackgroundSymbolicColor);
 			result["background_border"] = new PropertyDescription::Set<T, bool>(&T::setBackgroundBorder);

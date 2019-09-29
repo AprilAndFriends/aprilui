@@ -352,7 +352,7 @@ namespace aprilui
 		return (this->passwordChar == "" || this->text == "" ? this->text : harray<hstr>(this->passwordChar, this->text.utf8Size()).joined(""));
 	}
 
-	void EditBox::setMinAutoScale(float value)
+	void EditBox::setMinAutoScale(const float& value)
 	{
 		hlog::warn(logTag, "EditBox does not support setting of 'min_auto_scale'! Call will be ignored.");
 	}

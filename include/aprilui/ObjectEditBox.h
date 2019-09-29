@@ -70,7 +70,7 @@ namespace aprilui
 		void setFocused(bool value);
 		hstr getSelectedText() const;
 		hstr getDisplayedText() const;
-		void setMinAutoScale(float value);
+		void setMinAutoScale(const float& value);
 
 		void setCaretIndexAt(cgvec2f position);
 
