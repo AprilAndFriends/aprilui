@@ -53,6 +53,19 @@ namespace aprilui
 		}
 	}
 
+	void Texture::setTexture(april::Texture* const& value)
+	{
+		this->texture = value;
+		if (this->texture != NULL)
+		{
+			this->filename = this->texture->getFilename();
+			this->texture->setFilter(this->filter);
+			this->texture->setAddressMode(this->addressMode);
+			float factor = aprilui::findTextureExtensionScale(this->filename);
+			this->scale.set(factor, factor);
+		}
+	}
+
 	int Texture::getWidth() const
 	{
 		return (int)(this->texture->getWidth() * this->scale.x);
@@ -236,17 +249,14 @@ namespace aprilui
 			{
 				april::rendersys->destroyTexture(this->texture);
 			}
+			this->texture = NULL;
 			this->unusedTime = 0.0f;
-			this->texture = april::rendersys->createTextureFromResource(filename, april::Texture::Type::Immutable, this->loadMode);
-			if (this->texture == NULL)
+			april::Texture* texture = april::rendersys->createTextureFromResource(filename, april::Texture::Type::Immutable, this->loadMode);
+			if (texture == NULL)
 			{
 				__THROW_EXCEPTION(ResourceFileCouldNotOpenException(filename), aprilui::textureFilesDebugExceptionsEnabled, return);
 			}
-			this->filename = this->texture->getFilename();
-			this->texture->setFilter(this->filter);
-			this->texture->setAddressMode(this->addressMode);
-			float factor = aprilui::findTextureExtensionScale(this->filename);
-			this->scale.set(factor, factor);
+			this->setTexture(texture);
 		}
 	}
 

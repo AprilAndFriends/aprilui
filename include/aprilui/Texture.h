@@ -35,6 +35,7 @@ namespace aprilui
 		HL_DEFINE_GET(hstr, originalFilename, OriginalFilename);
 		HL_DEFINE_GET(hstr, filename, Filename);
 		HL_DEFINE_GET(april::Texture*, texture, Texture);
+		void setTexture(april::Texture* const& value);
 		HL_DEFINE_GET(april::Texture::LoadMode, loadMode, LoadMode);
 		HL_DEFINE_IS(managed, Managed);
 		HL_DEFINE_GET(gvec2f, scale, Scale);
