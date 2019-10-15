@@ -690,7 +690,8 @@ namespace aprilui
 		int currentIndex = 0;
 		std::ustring ustr;
 		int size = 0;
-		// going backwards here, because when using wrapped, a line will consider the last space to be within its limits even though the caret should be placed in the next line
+		const atres::RenderWord* word = NULL;
+		// going backwards here, because when using "wrapped", a line will consider the last space to be within its limits even though the caret should be placed in the next line
 		for_iter_r (i, lines.size(), 0)
 		{
 			if (hbetweenII(index, lines[i].start, lines[i].start + lines[i].count))
@@ -701,6 +702,15 @@ namespace aprilui
 				}
 				result.y = lines[i].rect.y + heightOffset;
 				result.x = base.x + lines[i].rect.x;
+				// this make sure that "wrapped" positions itself properly at the end of the line
+				if (lines[i].words.size() > 0)
+				{
+					word = &lines[i].words.last();
+					if (index > word->start + word->count && word->text.utf8Size() > 0)
+					{
+						result.x = word->rect.x + word->segmentWidths.last();
+					}
+				}
 				foreachc (atres::RenderWord, it, lines[i].words)
 				{
 					if (hbetweenII(index, (*it).start, (*it).start + (*it).count))
