@@ -23,7 +23,7 @@ class TsvParser:
 			skip += 1
 		file.seek(skip, os.SEEK_SET)
 		# read data
-		string = file.read().replace("\r", "")
+		string = file.read().decode().replace("\r", "")
 		file.close()
 		# regular expressions are awesome
 		regex = ""
@@ -43,7 +43,7 @@ class TsvParser:
 		for match in matches:
 			key, value, original, comment = match
 			columns = [key, value, original, comment]
-			for i in xrange(len(columns)):
+			for i in range(len(columns)):
 				if columns[i].startswith("\"") and columns[i].endswith("\""):
 					columns[i] = columns[i][1:-1].replace("\"\"", "\"")
 				# this feature has been disabled, because it breaks other spreadsheet software
@@ -77,7 +77,7 @@ class TsvParser:
 				key, value, original, comment = locEntry.key, locEntry.value, locEntry.original, locEntry.comment
 				columns = [key, value, original, comment]
 				# this feature has been disabled, because it breaks other spreadsheet software
-				#for i in xrange(len(columns)):
+				#for i in range(len(columns)):
 				#	# prevents MS Excel from seeing "-" as a formula indicator
 				#	columns[i] = columns[i].replace("-", TsvParser.DASH)
 				result += TsvParser._makeEntry(columns[0], columns[1], columns[2], columns[3])

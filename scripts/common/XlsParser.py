@@ -7,7 +7,7 @@ try:
 	from openpyxl import *
 	from openpyxl.styles import Font, Alignment
 except:
-	print "WARNING: Using XLS requires OpenPyXL installed!"
+	print("WARNING: Using XLS requires OpenPyXL installed!")
 
 from LocParser import *
 
@@ -17,7 +17,7 @@ class XlsParser:
 	DASH = "\xC2\xAD" # the "other" dash character in UTF-8
 
 	@staticmethod
-	def parse(filename):		
+	def parse(filename):
 		wb = load_workbook(filename)
 		ws = wb.active
 		
@@ -29,11 +29,11 @@ class XlsParser:
 		
 		matches = []
 		
-		while currentRow < rowCount:			
+		while currentRow < rowCount:
 			key = ws["A" + str(currentRow)].value
 			value = ws["B" + str(currentRow)].value
 			original = ws["C" + str(currentRow)].value
-			comment = ws["D" + str(currentRow)].value			
+			comment = ws["D" + str(currentRow)].value
 			
 			if key is None:
 				key = ""
@@ -58,7 +58,7 @@ class XlsParser:
 		for match in matches:
 			key, value, original, comment = match
 			columns = [key, value, original, comment]
-			for i in xrange(len(columns)):				
+			for i in range(len(columns)):
 				columns[i] = columns[i].replace(XlsParser.DASH, "-")
 			if columns[0] == "###":
 				if locFile != None:
@@ -70,14 +70,14 @@ class XlsParser:
 			elif columns[0] != "" and locFile != None:
 				locFile.entries.append(LocEntry(columns[0], columns[1], columns[2], columns[3]))
 		if locFile != None:
-			locFiles.append(locFile)		
+			locFiles.append(locFile)
 		return locFiles
 	
 	@staticmethod
 	def generateFile(locFiles):
 		wb = Workbook()
 		ws = wb.active
-		font = Font(bold = True)		
+		font = Font(bold = True)
 		ws["A1"].value = "Key"
 		ws["A1"].font = font
 		ws["B1"].value = "Translation"
@@ -89,7 +89,7 @@ class XlsParser:
 		currentRow = 1;
 		maxWidth = 10
 		for locFile in locFiles:
-			currentRow+=2			
+			currentRow+=2
 			language = locFile.language
 			if language == "":
 				language = "###"
@@ -97,16 +97,16 @@ class XlsParser:
 			ws["A" + str(currentRow)].value = "###"
 			ws["B" + str(currentRow)].value = "###"
 			ws["C" + str(currentRow)].value = language
-			ws["D" + str(currentRow)].value = locFile.filename		
+			ws["D" + str(currentRow)].value = locFile.filename
 		
 			currentRow+=1
 			for locEntry in locFile.entries:
 				currentRow += 1
 				key, value, original, comment = locEntry.key, locEntry.value, locEntry.original, locEntry.comment
 				columns = [key, value, original, comment]
-				for i in xrange(len(columns)):
+				for i in range(len(columns)):
 					 #prevents MS Excel from seeing "-" as a formula indicator
-					columns[i] = columns[i].replace("-", XlsParser.DASH)	
+					columns[i] = columns[i].replace("-", XlsParser.DASH)
 				
 				ws["A" + str(currentRow)].alignment = Alignment(horizontal='general', vertical='top',wrap_text = True)
 				ws["B" + str(currentRow)].alignment = Alignment(horizontal='general', vertical='top',wrap_text = True)
@@ -116,7 +116,7 @@ class XlsParser:
 				ws["A" + str(currentRow)].value = columns[0]
 				ws["B" + str(currentRow)].value = columns[1]
 				ws["C" + str(currentRow)].value = columns[2]
-				ws["D" + str(currentRow)].value = columns[3]	
+				ws["D" + str(currentRow)].value = columns[3]
 				
 				if maxWidth < len(columns[0]):
 					maxWidth = len(columns[0])

@@ -23,7 +23,7 @@ class FullTsvParser:
 			skip += 1
 		file.seek(skip, os.SEEK_SET)
 		# read data
-		string = file.read().replace("\r", "")
+		string = file.read().decode().replace("\r", "")
 		file.close()
 		columnCount = len(string.split("\n")[0].split(FullTsvParser.DELIMITER))
 		# regular expressions are awesome
@@ -36,7 +36,7 @@ class FullTsvParser:
 		entry = "(" + special + "|" + normal + ")?"
 		# the regex is 3+ entries separated by delimiter characters and ending with \n
 		regex += "(?:" + entry + FullTsvParser.DELIMITER + entry
-		for i in xrange(columnCount - 2):
+		for i in range(columnCount - 2):
 			regex += FullTsvParser.DELIMITER + entry
 		regex += "\n)"
 		# now using that regex to extract all entries
@@ -48,7 +48,7 @@ class FullTsvParser:
 		newLocFiles = []
 		for match in matches:
 			columns = list(match)
-			for i in xrange(len(columns)):
+			for i in range(len(columns)):
 				if columns[i].startswith("\"") and columns[i].endswith("\""):
 					columns[i] = columns[i][1:-1].replace("\"\"", "\"")
 			if columns[0] == "###":
@@ -61,7 +61,7 @@ class FullTsvParser:
 					locFile = LocFile(os.path.dirname(columns[1]) + "/" + language + "/" + os.path.basename(columns[1]), language, []) # cannot make [] a default argument because there's a bug in Python
 					newLocFiles.append(locFile)
 			elif columns[0] != "" and len(newLocFiles) > 0:
-				for i in xrange(len(newLocFiles)):
+				for i in range(len(newLocFiles)):
 					newLocFiles[i].entries.append(LocEntry(columns[0], columns[2 + i], columns[2], columns[1]))
 		if len(newLocFiles) > 0:
 			locFiles.extend(newLocFiles)
@@ -87,7 +87,6 @@ class FullTsvParser:
 		finalValues = []
 		for value in values:
 			finalValues.append(value.replace("\"", "\"\""))
-		#'"' + ('"' + FullTsvParser.DELIMITER + '"').join(finalValues) + '"'
 		return '"%s"%s"%s"%s"%s"\n' % (key.replace("\"", "\"\""), FullTsvParser.DELIMITER, comment.replace("\"", "\"\""), FullTsvParser.DELIMITER,
 			('"' + FullTsvParser.DELIMITER + '"').join(finalValues))
 	

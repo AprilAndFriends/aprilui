@@ -8,9 +8,9 @@ from common.LocKit import *
 VERSION = "2.2"
 
 def process():
-	print "-------------------------------------------------------------------------------"
-	print "| AprilUI Localization TSV Extractor " + VERSION
-	print "-------------------------------------------------------------------------------"
+	print("-------------------------------------------------------------------------------")
+	print("| AprilUI Localization TSV Extractor " + VERSION)
+	print("-------------------------------------------------------------------------------")
 	
 	if len(sys.argv) != 3:
 		help()
@@ -23,17 +23,17 @@ def process():
 	LocKit.writeLocFiles(path, locFiles)
 	
 def help():
-	print ""
-	print "Splits localization TSV file into localization files (as defined by AprilUI)."
-	print "See examples/merged.txt for reference."
-	print ""
-	print "usage:   loc_kit_extract_tsv.py PATH TSV_FILENAME"
-	print ""
-	print "  PATH          - Directory path to for .loc file output."
-	print "  TSV_FILENAME  - Filename of the input TSV file."
-	print ""
-	print "example: loc_kit_extract_tsv.py ../data/localization locale.txt"
-	print ""
+	print("")
+	print("Splits localization TSV file into localization files (as defined by AprilUI).")
+	print("See examples/merged.txt for reference.")
+	print("")
+	print("usage:   loc_kit_extract_tsv.py PATH TSV_FILENAME")
+	print("")
+	print("  PATH          - Directory path to for .loc file output.")
+	print("  TSV_FILENAME  - Filename of the input TSV file.")
+	print("")
+	print("example: loc_kit_extract_tsv.py ../data/localization locale.txt")
+	print("")
 	os.system("pause")
 
 process()

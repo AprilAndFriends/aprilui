@@ -6,7 +6,7 @@ class Util:
 	
 	@staticmethod
 	def getFileList(path):
-		print "  checking %s" % path
+		print("  checking %s" % path)
 		files = []
 		dirs = []
 		for f in os.listdir(path + "/"):

@@ -13,20 +13,20 @@ class LocKit:
 	@staticmethod
 	def readLocFiles(path, language = "", silent = False):
 		if not silent:
-			print ""
-			print "Checking for files..."
-			print "- path: %s" % path
+			print("")
+			print("Checking for files...")
+			print("- path: %s" % path)
 		files = LocParser.getFileList(path, language, silent)
 		if not silent:
-			print ""
-			print "Parsing of %d file(s)..." % len(files)
+			print("")
+			print("Parsing of %d file(s)..." % len(files))
 		locFiles = []
 		for filename in files:
 			locFile = LocParser.parse(filename, language)
 			locFile.filename = locFile.filename.replace(path + "/", "", 1)
 			locFiles.append(locFile)
 			if not silent:
-				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 		return locFiles
 
 	@staticmethod
@@ -90,15 +90,15 @@ class LocKit:
 	@staticmethod
 	def writeLocFiles(path, locFiles, silent = False):
 		if not silent:
-			print ""
-			print "Writing output %d file(s)..." % len(locFiles)
+			print("")
+			print("Writing output %d file(s)..." % len(locFiles))
 		try:
 			os.makedirs(path)
 		except:
 			pass
 		for locFile in locFiles:
 			if not silent:
-				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 			text = LocParser.joinEntries(locFile.entries)
 			try:
 				os.makedirs(os.path.dirname(path + "/" + locFile.filename))
@@ -111,21 +111,21 @@ class LocKit:
 	@staticmethod
 	def readTsvFile(inputFilename, silent = False):
 		if not silent:
-			print ""
-			print "Parsing TSV file..."
+			print("")
+			print("Parsing TSV file...")
 		locFiles = TsvParser.parse(inputFilename)
 		if not silent:
 			for locFile in locFiles:
-				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 		return locFiles
 
 	@staticmethod
 	def writeTsvFile(filename, locFiles, silent = False):
 		if not silent:
-			print ""
-			print "Writing output file..."
+			print("")
+			print("Writing output file...")
 			for locFile in locFiles:
-				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 		text = TsvParser.generateFile(locFiles)
 		file = open(filename, "wb")
 		file.write(LocParser.BOM + text)
@@ -134,21 +134,21 @@ class LocKit:
 	@staticmethod
 	def readFullTsvFile(inputFilename, silent = False):
 		if not silent:
-			print ""
-			print "Parsing Full-TSV file..."
+			print("")
+			print("Parsing Full-TSV file...")
 		locFiles = FullTsvParser.parse(inputFilename)
 		if not silent:
 			for locFile in locFiles:
-				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 		return locFiles
 
 	@staticmethod
 	def writeFullTsvFile(filename, locFiles, silent = False):
 		if not silent:
-			print ""
-			print "Writing output file..."
+			print("")
+			print("Writing output file...")
 			for locFile in locFiles:
-				print "  - %s - %s  (%d entries)" % (locFile.path, locFile.filename, len(locFile.entries))
+				print("  - %s - %s  (%d entries)" % (locFile.path, locFile.filename, len(locFile.entries)))
 		text = FullTsvParser.generateFile(locFiles)
 		file = open(filename, "wb")
 		file.write(LocParser.BOM + text)
@@ -157,21 +157,21 @@ class LocKit:
 	@staticmethod
 	def readXlsFile(inputFilename, silent = False):
 		if not silent:
-			print ""
-			print "Parsing XLS file..."
+			print("")
+			print("Parsing XLS file...")
 		locFiles = XlsParser.parse(inputFilename)
 		if not silent:
 			for locFile in locFiles:
-				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 		return locFiles
 
 	@staticmethod
 	def writeXlsFile(filename, locFiles, silent = False):
 		if not silent:
-			print ""
-			print "Writing output file..."
+			print("")
+			print("Writing output file...")
 			for locFile in locFiles:
-				print "  - %s  (%d entries)" % (locFile.filename, len(locFile.entries))
+				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 		wb = XlsParser.generateFile(locFiles)
 		wb.save(filename)
 
@@ -181,9 +181,9 @@ class LocKit:
 			if file.getReferenceFilename() == locFile.getReferenceFilename():
 				return file
 		if warning:
-			print "----"
-			print "WARNING! No corresponding original file exists for '%s'." % locFile.filename
-			print "----"
+			print("----")
+			print("WARNING! No corresponding original file exists for '%s'." % locFile.filename)
+			print("----")
 		return None
 
 	@staticmethod
@@ -192,9 +192,9 @@ class LocKit:
 			if entry.key == locEntry.key:
 				return entry
 		if warning:
-			print "----"
-			print "WARNING! Key '%s' exists in new file, but does not exist in original." % locEntry.key
-			print "----"
+			print("----")
+			print("WARNING! Key '%s' exists in new file, but does not exist in original." % locEntry.key)
+			print("----")
 		return None
 
 	@staticmethod
@@ -258,12 +258,12 @@ class LocKit:
 	@staticmethod
 	def renameKeys(locFiles, renamedKeys):
 		for locFile in locFiles:
-			print "RENAME " + locFile.filename
+			print("RENAME " + locFile.filename)
 			for locEntry in locFile.entries:
-				print "   KEY " + locEntry.key
-				print renamedKeys
+				print("   KEY " + locEntry.key)
+				print(renamedKeys)
 				if renamedKeys.has_key(locEntry.key):
 					locEntry.key = renamedKeys[locEntry.key]
-					print "REANEMD"
+					print("REANEMD")
 					break
 		return locFiles

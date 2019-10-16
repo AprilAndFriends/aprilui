@@ -9,9 +9,9 @@ VERSION = "1.0"
 DATA_DIR_LOCATION = "../../../data"
 
 def process():
-	print "-------------------------------------------------------------------------------"
-	print "| AprilUI Localization UTF-8 Character Exporter " + VERSION
-	print "-------------------------------------------------------------------------------"
+	print("-------------------------------------------------------------------------------")
+	print("| AprilUI Localization UTF-8 Character Exporter " + VERSION)
+	print("-------------------------------------------------------------------------------")
 
 	if len(sys.argv) != 2:
 		help()
@@ -26,10 +26,10 @@ def process():
 	locFiles = LocKit.readLocFiles(DATA_DIR_LOCATION, language)
 	for locFile in locFiles:
 		for entry in locFile.entries:
-			# print entry.value
+			# print(entry.value)
 			for character in entry.value.decode("utf-8"):
 				if not character in characterString.decode("utf-8") and ord(character) >= 128:
-					print character.encode("utf-8") + " " + str(ord(character))
+					print(character.encode("utf-8") + " " + str(ord(character)))
 					characterString += character.encode("utf-8")
 					spaces = "    "
 					if i < 10:
@@ -39,17 +39,17 @@ def process():
 	file.close()
 
 def help():
-	print ""
-	print "Exports UTF-8 character list for a given language."
-	print ""
-	print "usage:   loc_kit_export_characters.py LANG"
-	print ""
-	print "  LANG      - Specific directory prefix for the language files."
-	print "              e.g. 'de' would cause only files that look like"
-	print "              '*de/FILENAME.EXTENSION' to be read."
-	print ""
-	print "example: loc_kit_export_characters.py pl"
-	print ""
+	print("")
+	print("Exports UTF-8 character list for a given language.")
+	print("")
+	print("usage:   loc_kit_export_characters.py LANG")
+	print("")
+	print("  LANG      - Specific directory prefix for the language files.")
+	print("              e.g. 'de' would cause only files that look like")
+	print("              '*de/FILENAME.EXTENSION' to be read.")
+	print("")
+	print("example: loc_kit_export_characters.py pl")
+	print("")
 	os.system("pause")
 
 process()

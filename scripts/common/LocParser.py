@@ -92,7 +92,7 @@ class LocParser:
 			skip += 1
 		file.seek(skip, os.SEEK_SET)
 		# read data
-		string = file.read().replace("\r", "")
+		string = file.read().decode().replace("\r", "")
 		file.close()
 		# regular expressions are awesome
 		regex = ""
@@ -114,7 +114,7 @@ class LocParser:
 	@staticmethod
 	def getFileList(path, language, silent = False):
 		if not silent:
-			print "  checking %s" % path
+			print("  checking %s" % path)
 		files = []
 		dirs = []
 		dirListing = os.listdir(path + "/")
@@ -130,7 +130,7 @@ class LocParser:
 				if name.lower().endswith(LocParser.EXTENSION.lower()) and (language == "" or path.lower().endswith("/" + language.lower())):
 					files.append(name)
 					if not silent:
-						print "  -> %s" % LocParser._getBasename(name, path)
+						print("  -> %s" % LocParser._getBasename(name, path))
 		if len(files) > 0:
 			return files
 		result = []
