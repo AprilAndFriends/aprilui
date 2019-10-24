@@ -3,10 +3,10 @@
 import os.path
 import re
 
-from LocParser import *
-from TsvParser import *
-from XlsParser import *
-from FullTsvParser import *
+from .LocParser import *
+from .TsvParser import *
+from .XlsParser import *
+from .FullTsvParser import *
 
 class LocKit:
 
@@ -105,7 +105,7 @@ class LocKit:
 			except:
 				pass
 			file = open(path + "/" + locFile.filename, "wb")
-			file.write(LocParser.BOM + text)
+			file.write((LocParser.BOM + text).encode())
 			file.close()
 
 	@staticmethod
@@ -128,7 +128,7 @@ class LocKit:
 				print("  - %s  (%d entries)" % (locFile.filename, len(locFile.entries)))
 		text = TsvParser.generateFile(locFiles)
 		file = open(filename, "wb")
-		file.write(LocParser.BOM + text)
+		file.write((LocParser.BOM + text).encode())
 		file.close()
 
 	@staticmethod
@@ -151,7 +151,7 @@ class LocKit:
 				print("  - %s - %s  (%d entries)" % (locFile.path, locFile.filename, len(locFile.entries)))
 		text = FullTsvParser.generateFile(locFiles)
 		file = open(filename, "wb")
-		file.write(LocParser.BOM + text)
+		file.write((LocParser.BOM + text).encode())
 		file.close()
 
 	@staticmethod

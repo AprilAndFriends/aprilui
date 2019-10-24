@@ -9,7 +9,7 @@ try:
 except:
 	print("WARNING: Using XLS requires OpenPyXL installed!")
 
-from LocParser import *
+from .LocParser import *
 
 class XlsParser:
 

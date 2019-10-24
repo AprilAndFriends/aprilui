@@ -3,7 +3,7 @@
 import os.path
 import re
 
-from LocParser import *
+from .LocParser import *
 
 class TsvParser:
 
@@ -18,7 +18,7 @@ class TsvParser:
 		skip = 0
 		line = file.readline()
 		for i in line:
-			if ord(i) < 128:
+			if i < 128:
 				break
 			skip += 1
 		file.seek(skip, os.SEEK_SET)
