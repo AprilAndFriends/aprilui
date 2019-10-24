@@ -126,6 +126,7 @@ namespace aprilui
 		this->useClipRound = true;
 		this->inheritAlpha = true;
 		this->useDisabledAlpha = true;
+		this->disabledAlphaFactor = 0.5f;
 		this->focusIndex = -1;
 		this->customPointInsideCallback = NULL;
 		this->debugColor.set(april::Color::Black, 32);
@@ -156,6 +157,7 @@ namespace aprilui
 		this->useClipRound = other.clip;
 		this->inheritAlpha = other.inheritAlpha;
 		this->useDisabledAlpha = other.useDisabledAlpha;
+		this->disabledAlphaFactor = other.disabledAlphaFactor;
 		this->focusIndex = other.focusIndex;
 		this->customPointInsideCallback = other.customPointInsideCallback;
 		this->debugColor = other.debugColor;
@@ -245,6 +247,7 @@ namespace aprilui
 			Object::_propertyDescriptions["clip"] = PropertyDescription("clip", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions["use_clip_round"] = PropertyDescription("use_clip_round", PropertyDescription::Type::Bool);
 			Object::_propertyDescriptions["use_disabled_alpha"] = PropertyDescription("use_disabled_alpha", PropertyDescription::Type::Bool);
+			Object::_propertyDescriptions["disabled_alpha_factor"] = PropertyDescription("disabled_alpha_factor", PropertyDescription::Type::Float);
 			Object::_propertyDescriptions["focus_index"] = PropertyDescription("focus_index", PropertyDescription::Type::Int);
 		}
 		return Object::_propertyDescriptions;
@@ -287,6 +290,7 @@ namespace aprilui
 			Object::_getters["clip"] = new PropertyDescription::Get<Object, bool>(&Object::isClip);
 			Object::_getters["use_clip_round"] = new PropertyDescription::Get<Object, bool>(&Object::isUseClipRound);
 			Object::_getters["use_disabled_alpha"] = new PropertyDescription::Get<Object, bool>(&Object::isUseDisabledAlpha);
+			Object::_getters["disabled_alpha_factor"] = new PropertyDescription::Get<Object, float>(&Object::getDisabledAlphaFactor);
 			Object::_getters["focus_index"] = new PropertyDescription::Get<Object, int>(&Object::getFocusIndex);
 		}
 		return Object::_getters;
@@ -329,6 +333,7 @@ namespace aprilui
 			Object::_setters["clip"] = new PropertyDescription::Set<Object, bool>(&Object::setClip);
 			Object::_setters["use_clip_round"] = new PropertyDescription::Set<Object, bool>(&Object::setUseClipRound);
 			Object::_setters["use_disabled_alpha"] = new PropertyDescription::Set<Object, bool>(&Object::setUseDisabledAlpha);
+			Object::_setters["disabled_alpha_factor"] = new PropertyDescription::Set<Object, float>(&Object::setDisabledAlphaFactor);
 			Object::_setters["focus_index"] = new PropertyDescription::Set<Object, int>(&Object::setFocusIndex);
 		}
 		return Object::_setters;
@@ -1333,7 +1338,7 @@ namespace aprilui
 		}
 		if (this->useDisabledAlpha && !this->isDerivedEnabled())
 		{
-			alpha *= 0.5f;
+			alpha *= this->disabledAlphaFactor;
 		}
 		return april::Color(color, (unsigned char)alpha);
 	}

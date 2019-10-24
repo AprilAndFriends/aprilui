@@ -119,6 +119,7 @@ namespace aprilui
 		HL_DEFINE_GETSET(HitTest, hitTest, HitTest);
 		HL_DEFINE_ISSET(inheritAlpha, InheritAlpha);
 		HL_DEFINE_ISSET(useDisabledAlpha, UseDisabledAlpha);
+		HL_DEFINE_GETSET(float, disabledAlphaFactor, DisabledAlphaFactor);
 		HL_DEFINE_ISSET(clip, Clip);
 		HL_DEFINE_ISSET(useClipRound, UseClipRound);
 		virtual inline int getFocusIndex() const { return this->focusIndex; }
@@ -305,6 +306,7 @@ namespace aprilui
 		bool useClipRound;
 		bool inheritAlpha;
 		bool useDisabledAlpha;
+		float disabledAlphaFactor;
 		int focusIndex;
 		CustomPointInsideCallback customPointInsideCallback;
 		harray<Animator*> dynamicAnimators;
