@@ -349,16 +349,29 @@ namespace aprilui
 		hstr localization = aprilui::getLocalization();
 		if (localization != "")
 		{
-			hstr locpath = hrdir::joinPath(hrdir::joinPath(hrdir::baseDir(filename), localization), hrdir::baseName(filename));
-			locpath = april::rendersys->findTextureResource(locpath);
-			if (locpath != "")
+			hstr locPath = this->_findLocalizedTextureFilename(filename, localization);
+			if (locPath != "")
 			{
-				return locpath;
+				return locPath;
+			}
+			locPath = this->_findLocalizedTextureFilename(filename, aprilui::getDefaultLocalization());
+			if (locPath != "")
+			{
+				return locPath;
 			}
 		}
 		return filename;
 	}
 	
+	hstr Dataset::_findLocalizedTextureFilename(chstr filename, chstr localization)
+	{
+		if (localization != "")
+		{
+			return april::rendersys->findTextureResource(hrdir::joinPath(hrdir::joinPath(hrdir::baseDir(filename), localization), hrdir::baseName(filename)));
+		}
+		return "";
+	}
+
 	void Dataset::_parseTexture(hlxml::Node* node)
 	{
 		hstr filename = hrdir::normalize(node->pstr("filename"));

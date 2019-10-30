@@ -297,6 +297,7 @@ namespace aprilui
 		virtual void _unload();
 		hstr _makeFilePath(chstr filename, chstr name = "", bool useNameBasePath = false);
 		hstr _makeLocalizedTextureName(chstr filename);
+		hstr _findLocalizedTextureFilename(chstr filename, chstr localization);
 		hstr _makeTextsPath(chstr textsPath);
 		bool _findTextEntry(chstr textKey, hstr* text);
 
