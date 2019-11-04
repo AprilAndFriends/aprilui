@@ -77,7 +77,7 @@ class LocFullEntry:
 class LocParser:
 
 	EXTENSION = ".loc"
-	BOM = "\xEF\xBB\xBF"
+	BOM = b"\xEF\xBB\xBF"
 
 	@staticmethod
 	def parse(filename, language):

@@ -31,7 +31,7 @@ class FullTsvParser:
 		# normal entry
 		normal = "(?:.*?)"
 		# special entry with escaped characters and \n support
-		special = "\"(?:.|\n)*?\""
+		special = "\"(?:.|\n)*?\"?"
 		# one entry is either normal or special
 		entry = "(" + special + "|" + normal + ")?"
 		# the regex is 3+ entries separated by delimiter characters and ending with \n

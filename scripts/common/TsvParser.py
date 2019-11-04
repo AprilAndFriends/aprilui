@@ -30,7 +30,7 @@ class TsvParser:
 		# normal entry
 		normal = "(?:.*?)"
 		# special entry with escaped characters and \n support
-		special = "\"(?:.|\n)*?\""
+		special = "\"(?:.|\n)*?\"?"
 		# one entry is either normal or special
 		entry = "(" + normal + "|" + special + ")?"
 		# the regex is 4 entries separated by delimiter characters and ending with \n
